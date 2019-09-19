@@ -125,6 +125,7 @@
     "dotenv": "^4.0.0",
     "electron": "4.2.4",
     "electron-builder": "20.43.0",
+    "electron-notarize": "0.1.1",
     "electron-rebuild": "1.8.4",
     "eslint": "5.10.0",
     "eslint-config-airbnb": "17.1.0",
