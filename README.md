@@ -4,7 +4,7 @@
 
 # Ferdi 
 
-[![Build Status Windows](https://ci.appveyor.com/api/projects/status/2ckfbmoxp36fye5b?svg=true)](https://ci.appveyor.com/project/getferdi/ferdi)
+[![Build Status Windows](https://ci.appveyor.com/api/projects/status/2ckfbmoxp36fye5b?svg=true)](https://ci.appveyor.com/project/kytwb/ferdi)
  [![Build Status Mac & Linux](https://travis-ci.org/getferdi/ferdi.svg?branch=master)](https://travis-ci.org/getferdi/ferdi)
 
 🤴🏽 Hard-fork of [Franz](https://github.com/meetfranz/franz), adding awesome features and removing unwanted ones.
