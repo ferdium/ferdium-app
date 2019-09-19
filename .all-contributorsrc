@@ -6,7 +6,7 @@
   "files": [
     "README.md"
   ],
-  "imageSize": 100,
+  "imageSize": 40,
   "commit": true,
   "commitConvention": "none",
   "contributors": [
@@ -20,7 +20,15 @@
         "design",
         "doc",
         "ideas",
-        "translation"
+        "translation",
+        "example",
+        "bug",
+        "content",
+        "infra",
+        "userTesting",
+        "question",
+        "projectManagement",
+        "review"
       ]
     },
     {
@@ -53,7 +61,8 @@
         "maintenance",
         "platform",
         "projectManagement",
-        "review"
+        "review",
+        "infra"
       ]
     },
     {
@@ -81,7 +90,8 @@
       "avatar_url": "https://avatars2.githubusercontent.com/u/665072?v=4",
       "profile": "https://djangogigs.com/developers/peter-bittner/",
       "contributions": [
-        "ideas"
+        "ideas",
+        "bug"
       ]
     },
     {
@@ -140,5 +150,5 @@
       ]
     }
   ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 6
 }

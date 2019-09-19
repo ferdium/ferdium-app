@@ -21,19 +21,6 @@ script:
   - npm run test
   - travis_wait 30 npm run build
 cache: npm
-deploy:
-  provider: s3
-  access_key_id: AKIAQ5BBD2PS3SMVP3EZ
-  secret_access_key:
-    secure: E57KoS2chEeYbW3LNXDpXIUAHWRV0IXSu6QxondJqXTK+Nh486+RaOx2Ln8xwjsN57rgE1nJkRrWzOzTGXjU1AEWWk4BLXeKrd/1nAK0akw7BYB7+IOPX15+n+PxO057oHyhzpf36iPhmXc3xz6mI8qvF6g5XIHGlTTs/+W6Va+OuhlXlotT5i4bRhsszpn7Mjd0fc5pVergFTu279eQtPkKEGfAyX1pAZJ5OObbsUckpFYTw2UG26qvAGZhzN6NdzNItKjDLzTw6WN1AJ6PZUu78xQRCbHJ0D+2BZSw+yvVx4UxC+ifJuouyzSlsRgRoOI4zNHDzOqDbiZ0gxbq7Eh0M+mFqMMq9U4FTZw7EjUuF3+929fLiyrdC+MD5+S98O3xZMdNl8C1rBUunWo/0nLMLROElZ/Zq9C7+Hfzz3HsN6+YHcvkKCBibHUmQB970090NspVy4fFCjze3XyJGDVgYMSB7dJ+zjawkZ3irEsA9g1h9V9GXiwHQ5Anuek1PtLHlwfNg9rOZDJQyaaZ96D6F1jYPw+JSDhiSvQgjeLbCPVdkp/UPWu8Aiks6p9oqMheKmd6J647H+/wrjU2GDbZiBOv0bSlPnaoBnapM3yVUSX8nkfVBpbewvIC+U9duzq7rZTVEwRWS3AIh1Z6aLYpGss9iZHE7vxJUKWVpyk=
-  bucket: ferdi-travis
-  region: ap-southeast-1
-  local_dir: out
-  upload-dir: "$TRAVIS_BUILD_NUMBER"
-  skip_cleanup: true
-  acl: public_read
-  on:
-    tags: true
 
 branches:
   except:
