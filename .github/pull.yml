@@ -1,4 +1,0 @@
-version: "1"
-rules:
-  - base: master
-    upstream: meetfranz/franz
