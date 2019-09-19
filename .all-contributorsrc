@@ -25,7 +25,10 @@
         "bug",
         "content",
         "infra",
-        "userTesting"
+        "userTesting",
+        "question",
+        "projectManagement",
+        "review"
       ]
     },
     {
