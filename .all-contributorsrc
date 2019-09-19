@@ -21,7 +21,11 @@
         "doc",
         "ideas",
         "translation",
-        "example"
+        "example",
+        "bug",
+        "content",
+        "infra",
+        "userTesting"
       ]
     },
     {
