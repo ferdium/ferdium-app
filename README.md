@@ -31,6 +31,7 @@ You can find the installers in the [latest release](https://github.com/kytwb/fer
 - [x] Add CTRL+← and CTRL+→ shortcuts and menu options to go back and forward in the service browsing history([#39](https://github.com/kytwb/ferdi/issues/39))
 - [x] Add "npm run prepare-code" command for development to lint and beautify code
 - [x] Remove "Franz is better together" popup
+- [x] Remove bug that would incorrectly display unread messages count on some services (more info in (7566ccd)[https://github.com/getferdi/ferdi/commit/7566ccd])
 - [x] [Makes it possible to edit the "Franz Todo" server](https://github.com/kytwb/ferdi/wiki/Custom-Todo)
 - [x] Makes RocketChat self-hosted generally available ([#6](https://github.com/kytwb/ferdi/issues/6))
 - [x] Comes with a custom branding proper to Ferdi
