@@ -19,7 +19,6 @@
     "test:watch": "jest --watch",
     "lint": "eslint --quiet --fix src",
     "manage-translations": "node ./src/i18n/manage-translations.js",
-    "sign": "gulp sign",
     "prebuild": "gulp build",
     "build": "npx electron-builder --publish onTag",
     "rebuild": "npx electron-rebuild",
