@@ -39,9 +39,15 @@ class RecipeWebview {
     if (this.countCache.direct === direct
       && this.countCache.indirect === indirect) return;
 
+    // Parse number to integer
+    // This will correct errors that recipes may introduce, e.g.
+    // by sending a String instead of an integer
+    const directInt = parseInt(direct);
+    const indirectInt = parseInt(indirect);
+
     const count = {
-      direct: direct > 0 ? direct : 0,
-      indirect: indirect > 0 ? indirect : 0,
+      direct: directInt > 0 ? directInt : 0,
+      indirect: indirectInt > 0 ? indirectInt : 0,
     };
 
     ipcRenderer.sendToHost('messages', count);
