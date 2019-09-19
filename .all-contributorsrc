@@ -54,7 +54,8 @@
         "maintenance",
         "platform",
         "projectManagement",
-        "review"
+        "review",
+        "infra"
       ]
     },
     {
