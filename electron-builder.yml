@@ -12,6 +12,8 @@ mac:
   category: public.app-category.productivity
   icon: ./build-helpers/images/icon.icns
 
+afterSign: ./build-helpers/notarize.js
+
 dmg:
   background: ./build-helpers/images/dmgInstaller.tiff
   icon: ./build-helpers/images/icon.icns
