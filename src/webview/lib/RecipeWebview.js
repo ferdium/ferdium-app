@@ -42,8 +42,8 @@ class RecipeWebview {
     // Parse number to integer
     // This will correct errors that recipes may introduce, e.g.
     // by sending a String instead of an integer
-    const directInt = parseInt(direct);
-    const indirectInt = parseInt(indirect);
+    const directInt = parseInt(direct, 10);
+    const indirectInt = parseInt(indirect, 10);
 
     const count = {
       direct: directInt > 0 ? directInt : 0,
