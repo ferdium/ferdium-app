@@ -30,7 +30,8 @@
     "packages": "npx lerna publish --no-git-tag-version",
     "uidev": "cd uidev && webpack-dev-server",
     "postinstall": "npx lerna run prepare",
-    "prepare-code": "npm run lint && npm run reformat-files && npm run manage-translations"
+    "apply-branding": "node ./src/i18n/apply-branding.js",
+    "prepare-code": "npm run lint && npm run reformat-files && npm run apply-branding && npm run manage-translations"
   },
   "keywords": [],
   "author": "Amine Mouafik <amine@mouafik.fr>",
@@ -171,7 +172,7 @@
   ],
   "husky": {
     "hooks": {
-      "pre-push": "npm run lint && npm run reformat-files && npm run manage-translations"
+      "pre-push": "npm run lint && npm run reformat-files && npm run apply-branding && npm run manage-translations"
     }
   }
 }
