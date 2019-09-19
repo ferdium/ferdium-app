@@ -6,8 +6,8 @@
   "description": "Messaging app for WhatsApp, Slack, Telegram, HipChat, Hangouts and many many more.",
   "copyright": "kytwb",
   "main": "index.js",
-  "homepage": "https://github.com/kytwb/ferdi",
-  "repository": "https://github.com/kytwb/ferdi.git",
+  "homepage": "https://github.com/getferdi/ferdi",
+  "repository": "https://github.com/getferdi/ferdi.git",
   "private": true,
   "scripts": {
     "prestart": "npm run rebuild",

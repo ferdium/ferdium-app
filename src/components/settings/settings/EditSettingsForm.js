@@ -217,7 +217,7 @@ export default @observer class EditSettingsForm extends Component {
                   {' '}
                   or
                   {' '}
-                  <a href="https://github.com/vantezzen/ferdi-server" target="_blank">using a self-hosted ferdi-server</a>
+                  <a href="https://github.com/getferdi/server" target="_blank">using a self-hosted ferdi-server</a>
                   {' '}
                   (if you have the knowledge and resources to do so).
                   <br />
