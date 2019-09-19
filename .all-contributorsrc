@@ -6,7 +6,7 @@
   "files": [
     "README.md"
   ],
-  "imageSize": 100,
+  "imageSize": 40,
   "commit": true,
   "commitConvention": "none",
   "contributors": [
@@ -150,5 +150,5 @@
       ]
     }
   ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 6
 }
