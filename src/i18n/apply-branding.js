@@ -21,8 +21,9 @@ const ignoreFiles = [
 
 // What to replace
 const replace = {
-  franz: 'Ferdi',
-  'meetfranz.com': 'getferdi.com',
+    'meetfranz.com': 'getferdi.com',
+    'meetferdi.com': 'getferdi.com', // If Franz already got replaced with Ferdi
+    franz: 'Ferdi',
 };
 
 
