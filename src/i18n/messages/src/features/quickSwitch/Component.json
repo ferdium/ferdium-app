@@ -1,0 +1,28 @@
+[
+  {
+    "id": "feature.quickSwitch.search",
+    "defaultMessage": "!!!Search...",
+    "file": "src/features/quickSwitch/Component.js",
+    "start": {
+      "line": 14,
+      "column": 10
+    },
+    "end": {
+      "line": 17,
+      "column": 3
+    }
+  },
+  {
+    "id": "feature.quickSwitch.info",
+    "defaultMessage": "!!!Select a service with TAB, ↑ and ↓. Open a service with ENTER.",
+    "file": "src/features/quickSwitch/Component.js",
+    "start": {
+      "line": 18,
+      "column": 8
+    },
+    "end": {
+      "line": 21,
+      "column": 3
+    }
+  }
+]

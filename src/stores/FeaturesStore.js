@@ -13,6 +13,7 @@ import spellchecker from '../features/spellchecker';
 import serviceProxy from '../features/serviceProxy';
 import basicAuth from '../features/basicAuth';
 import workspaces from '../features/workspaces';
+import quickSwitch from '../features/quickSwitch';
 import shareFranz from '../features/shareFranz';
 import announcements from '../features/announcements';
 import settingsWS from '../features/settingsWS';
@@ -75,6 +76,7 @@ export default class FeaturesStore extends Store {
     serviceProxy(this.stores, this.actions);
     basicAuth(this.stores, this.actions);
     workspaces(this.stores, this.actions);
+    quickSwitch(this.stores, this.actions);
     shareFranz(this.stores, this.actions);
     announcements(this.stores, this.actions);
     settingsWS(this.stores, this.actions);

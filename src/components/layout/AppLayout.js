@@ -8,6 +8,7 @@ import injectSheet from 'react-jss';
 import InfoBar from '../ui/InfoBar';
 import { Component as BasicAuth } from '../../features/basicAuth';
 import { Component as ShareFranz } from '../../features/shareFranz';
+import { Component as QuickSwitch } from '../../features/quickSwitch';
 import ErrorBoundary from '../util/ErrorBoundary';
 
 // import globalMessages from '../../i18n/globalMessages';
@@ -185,6 +186,7 @@ class AppLayout extends Component {
               )}
               <BasicAuth />
               <ShareFranz />
+              <QuickSwitch />
               {services}
               {children}
             </div>
