@@ -24,6 +24,7 @@ const replace = {
   'meetfranz.com': 'getferdi.com',
   'meetferdi.com': 'getferdi.com', // If Franz already got replaced with Ferdi
   franz: 'Ferdi',
+  '!!!': '',
 };
 
 

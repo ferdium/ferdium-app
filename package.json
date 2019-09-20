@@ -31,7 +31,7 @@
     "uidev": "cd uidev && webpack-dev-server",
     "postinstall": "npx lerna run prepare",
     "apply-branding": "node ./src/i18n/apply-branding.js",
-    "prepare-code": "npm run lint && npm run reformat-files && npm run apply-branding && npm run manage-translations"
+    "prepare-code": "npm run lint && npm run reformat-files && npm run manage-translations && npm run apply-branding"
   },
   "keywords": [],
   "author": "Amine Mouafik <amine@mouafik.fr>",
