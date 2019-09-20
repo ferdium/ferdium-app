@@ -994,7 +994,7 @@ export default class FranzMenu {
 
   todosMenu() {
     const { isTodosPanelVisible, isFeatureEnabledByUser } = this.stores.todos;
-    const { intl } = window.franz;
+    const { intl } = window.ferdi;
     const menu = [];
 
     const drawerLabel = isTodosPanelVisible ? menuItems.closeTodosDrawer : menuItems.openTodosDrawer;
