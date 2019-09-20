@@ -248,6 +248,8 @@ export default @observer class EditSettingsForm extends Component {
                   onChange={e => this.submit(e)}
                   field={form.$('lockedPassword')}
                   type="password"
+                  scorePassword
+                  showPasswordToggle
                 />
                 <p>
                   { intl.formatMessage(messages.lockedPasswordInfo) }
