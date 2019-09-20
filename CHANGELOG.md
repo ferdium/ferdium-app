@@ -1,4 +1,10 @@
-# [5.3.3](https://github.com/meetfranz/franz/compare/v5.3.1...v5.3.3) (2019-09-18)
+# [5.3.4](https://github.com/meetfranz/franz/compare/v5.3.3...v5.3.4) (2019-09-25)
+- Fix continuous releases/assets delivery on tags builds #53
+- Attempt at making menubar hiding feature cross-platform #7 (comment)
+- Attempt at making "About Ferdi" consistent across platforms #47 (comment)
+- Add "Quick Switch" feature
+
+# [5.3.3](https://github.com/meetfranz/franz/compare/v5.3.2...v5.3.3) (2019-09-18)
 - Merged Franz v5.3.3 into Ferdi
 - Allow hiding menubar (#7)
 - Add "back" and "forward" options for browsing history inside services (#39)
