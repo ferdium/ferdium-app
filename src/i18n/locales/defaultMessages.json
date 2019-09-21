@@ -2540,211 +2540,237 @@
         }
       },
       {
-        "defaultMessage": "!!!Language",
+        "defaultMessage": "!!!Times in 24-Hour-Format. End time can be before start time (e.g. start 17:00, end 09:00) to enable Do-not-Disturb overnight.",
         "end": {
           "column": 3,
           "line": 44
         },
         "file": "src/components/settings/settings/EditSettingsForm.js",
+        "id": "settings.app.scheduledDNDTimeInfo",
+        "start": {
+          "column": 24,
+          "line": 41
+        }
+      },
+      {
+        "defaultMessage": "!!!Scheduled Do-not-Disturb allows you to define a period of time in which you do not want to get Notifications from Ferdi.",
+        "end": {
+          "column": 3,
+          "line": 48
+        },
+        "file": "src/components/settings/settings/EditSettingsForm.js",
+        "id": "settings.app.scheduledDNDInfo",
+        "start": {
+          "column": 20,
+          "line": 45
+        }
+      },
+      {
+        "defaultMessage": "!!!Language",
+        "end": {
+          "column": 3,
+          "line": 52
+        },
+        "file": "src/components/settings/settings/EditSettingsForm.js",
         "id": "settings.app.headlineLanguage",
         "start": {
           "column": 20,
-          "line": 41
+          "line": 49
         }
       },
       {
         "defaultMessage": "!!!Updates",
         "end": {
           "column": 3,
-          "line": 48
+          "line": 56
         },
         "file": "src/components/settings/settings/EditSettingsForm.js",
         "id": "settings.app.headlineUpdates",
         "start": {
           "column": 19,
-          "line": 45
+          "line": 53
         }
       },
       {
         "defaultMessage": "!!!Appearance",
         "end": {
           "column": 3,
-          "line": 52
+          "line": 60
         },
         "file": "src/components/settings/settings/EditSettingsForm.js",
         "id": "settings.app.headlineAppearance",
         "start": {
           "column": 22,
-          "line": 49
+          "line": 57
         }
       },
       {
         "defaultMessage": "!!!Advanced",
         "end": {
           "column": 3,
-          "line": 56
-        },
-        "file": "src/components/settings/settings/EditSettingsForm.js",
-        "id": "settings.app.headlineAdvanced",
-        "start": {
-          "column": 20,
-          "line": 53
-        }
-      },
-      {
-        "defaultMessage": "!!!Help us to translate Ferdi into your language.",
-        "end": {
-          "column": 3,
-          "line": 60
-        },
-        "file": "src/components/settings/settings/EditSettingsForm.js",
-        "id": "settings.app.translationHelp",
-        "start": {
-          "column": 19,
-          "line": 57
-        }
-      },
-      {
-        "defaultMessage": "!!!Cache",
-        "end": {
-          "column": 3,
           "line": 64
         },
         "file": "src/components/settings/settings/EditSettingsForm.js",
-        "id": "settings.app.subheadlineCache",
+        "id": "settings.app.headlineAdvanced",
         "start": {
           "column": 20,
           "line": 61
         }
       },
       {
-        "defaultMessage": "!!!Ferdi cache is currently using {size} of disk space.",
+        "defaultMessage": "!!!Help us to translate Ferdi into your language.",
         "end": {
           "column": 3,
           "line": 68
         },
         "file": "src/components/settings/settings/EditSettingsForm.js",
+        "id": "settings.app.translationHelp",
+        "start": {
+          "column": 19,
+          "line": 65
+        }
+      },
+      {
+        "defaultMessage": "!!!Cache",
+        "end": {
+          "column": 3,
+          "line": 72
+        },
+        "file": "src/components/settings/settings/EditSettingsForm.js",
+        "id": "settings.app.subheadlineCache",
+        "start": {
+          "column": 20,
+          "line": 69
+        }
+      },
+      {
+        "defaultMessage": "!!!Ferdi cache is currently using {size} of disk space.",
+        "end": {
+          "column": 3,
+          "line": 76
+        },
+        "file": "src/components/settings/settings/EditSettingsForm.js",
         "id": "settings.app.cacheInfo",
         "start": {
           "column": 13,
-          "line": 65
+          "line": 73
         }
       },
       {
         "defaultMessage": "!!!Clear cache",
         "end": {
           "column": 3,
-          "line": 72
-        },
-        "file": "src/components/settings/settings/EditSettingsForm.js",
-        "id": "settings.app.buttonClearAllCache",
-        "start": {
-          "column": 23,
-          "line": 69
-        }
-      },
-      {
-        "defaultMessage": "!!!Check for updates",
-        "end": {
-          "column": 3,
-          "line": 76
-        },
-        "file": "src/components/settings/settings/EditSettingsForm.js",
-        "id": "settings.app.buttonSearchForUpdate",
-        "start": {
-          "column": 25,
-          "line": 73
-        }
-      },
-      {
-        "defaultMessage": "!!!Restart & install update",
-        "end": {
-          "column": 3,
           "line": 80
         },
         "file": "src/components/settings/settings/EditSettingsForm.js",
-        "id": "settings.app.buttonInstallUpdate",
+        "id": "settings.app.buttonClearAllCache",
         "start": {
           "column": 23,
           "line": 77
         }
       },
       {
-        "defaultMessage": "!!!Is searching for update",
+        "defaultMessage": "!!!Check for updates",
         "end": {
           "column": 3,
           "line": 84
         },
         "file": "src/components/settings/settings/EditSettingsForm.js",
-        "id": "settings.app.updateStatusSearching",
+        "id": "settings.app.buttonSearchForUpdate",
         "start": {
           "column": 25,
           "line": 81
         }
       },
       {
-        "defaultMessage": "!!!Update available, downloading...",
+        "defaultMessage": "!!!Restart & install update",
         "end": {
           "column": 3,
           "line": 88
         },
         "file": "src/components/settings/settings/EditSettingsForm.js",
+        "id": "settings.app.buttonInstallUpdate",
+        "start": {
+          "column": 23,
+          "line": 85
+        }
+      },
+      {
+        "defaultMessage": "!!!Is searching for update",
+        "end": {
+          "column": 3,
+          "line": 92
+        },
+        "file": "src/components/settings/settings/EditSettingsForm.js",
+        "id": "settings.app.updateStatusSearching",
+        "start": {
+          "column": 25,
+          "line": 89
+        }
+      },
+      {
+        "defaultMessage": "!!!Update available, downloading...",
+        "end": {
+          "column": 3,
+          "line": 96
+        },
+        "file": "src/components/settings/settings/EditSettingsForm.js",
         "id": "settings.app.updateStatusAvailable",
         "start": {
           "column": 25,
-          "line": 85
+          "line": 93
         }
       },
       {
         "defaultMessage": "!!!You are using the latest version of Ferdi",
         "end": {
           "column": 3,
-          "line": 92
+          "line": 100
         },
         "file": "src/components/settings/settings/EditSettingsForm.js",
         "id": "settings.app.updateStatusUpToDate",
         "start": {
           "column": 24,
-          "line": 89
+          "line": 97
         }
       },
       {
         "defaultMessage": "!!!Current version:",
         "end": {
           "column": 3,
-          "line": 96
+          "line": 104
         },
         "file": "src/components/settings/settings/EditSettingsForm.js",
         "id": "settings.app.currentVersion",
         "start": {
           "column": 18,
-          "line": 93
+          "line": 101
         }
       },
       {
         "defaultMessage": "!!!Changes require restart",
         "end": {
           "column": 3,
-          "line": 100
+          "line": 108
         },
         "file": "src/components/settings/settings/EditSettingsForm.js",
         "id": "settings.app.restartRequired",
         "start": {
           "column": 29,
-          "line": 97
+          "line": 105
         }
       },
       {
         "defaultMessage": "!!!Official translations are English & German. All other languages are community based translations.",
         "end": {
           "column": 3,
-          "line": 104
+          "line": 112
         },
         "file": "src/components/settings/settings/EditSettingsForm.js",
         "id": "settings.app.languageDisclaimer",
         "start": {
           "column": 22,
-          "line": 101
+          "line": 109
         }
       }
     ],
@@ -3767,120 +3793,159 @@
         }
       },
       {
-        "defaultMessage": "!!!Language",
+        "defaultMessage": "!!!Enable scheduled Do-not-Disturb",
         "end": {
           "column": 3,
           "line": 71
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
+        "id": "settings.app.form.scheduledDNDEnabled",
+        "start": {
+          "column": 23,
+          "line": 68
+        }
+      },
+      {
+        "defaultMessage": "!!!From",
+        "end": {
+          "column": 3,
+          "line": 75
+        },
+        "file": "src/containers/settings/EditSettingsScreen.js",
+        "id": "settings.app.form.scheduledDNDStart",
+        "start": {
+          "column": 21,
+          "line": 72
+        }
+      },
+      {
+        "defaultMessage": "!!!To",
+        "end": {
+          "column": 3,
+          "line": 79
+        },
+        "file": "src/containers/settings/EditSettingsScreen.js",
+        "id": "settings.app.form.scheduledDNDEnd",
+        "start": {
+          "column": 19,
+          "line": 76
+        }
+      },
+      {
+        "defaultMessage": "!!!Language",
+        "end": {
+          "column": 3,
+          "line": 83
+        },
+        "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.language",
         "start": {
           "column": 12,
-          "line": 68
+          "line": 80
         }
       },
       {
         "defaultMessage": "!!!Dark Mode",
         "end": {
           "column": 3,
-          "line": 75
+          "line": 87
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.darkMode",
         "start": {
           "column": 12,
-          "line": 72
+          "line": 84
         }
       },
       {
         "defaultMessage": "!!!Display disabled services tabs",
         "end": {
           "column": 3,
-          "line": 79
+          "line": 91
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.showDisabledServices",
         "start": {
           "column": 24,
-          "line": 76
+          "line": 88
         }
       },
       {
         "defaultMessage": "!!!Show unread message badge when notifications are disabled",
         "end": {
           "column": 3,
-          "line": 83
+          "line": 95
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.showMessagesBadgesWhenMuted",
         "start": {
           "column": 29,
-          "line": 80
+          "line": 92
         }
       },
       {
         "defaultMessage": "!!!Enable spell checking",
         "end": {
           "column": 3,
-          "line": 87
+          "line": 99
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.enableSpellchecking",
         "start": {
           "column": 23,
-          "line": 84
+          "line": 96
         }
       },
       {
         "defaultMessage": "!!!Enable GPU Acceleration",
         "end": {
           "column": 3,
-          "line": 91
+          "line": 103
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.enableGPUAcceleration",
         "start": {
           "column": 25,
-          "line": 88
+          "line": 100
         }
       },
       {
         "defaultMessage": "!!!Include beta versions",
         "end": {
           "column": 3,
-          "line": 95
+          "line": 107
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.beta",
         "start": {
           "column": 8,
-          "line": 92
+          "line": 104
         }
       },
       {
         "defaultMessage": "!!!Enable Franz Todos",
         "end": {
           "column": 3,
-          "line": 99
+          "line": 111
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.enableTodos",
         "start": {
           "column": 15,
-          "line": 96
+          "line": 108
         }
       },
       {
         "defaultMessage": "!!!Keep all workspaces loaded",
         "end": {
           "column": 3,
-          "line": 103
+          "line": 115
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.keepAllWorkspacesLoaded",
         "start": {
           "column": 27,
-          "line": 100
+          "line": 112
         }
       }
     ],

@@ -11,6 +11,7 @@ import Store from './lib/Store';
 import Request from './lib/Request';
 import CachedRequest from './lib/CachedRequest';
 import { matchRoute } from '../helpers/routing-helpers';
+import { isInTimeframe } from '../helpers/schedule-helpers';
 import { workspaceStore } from '../features/workspaces';
 import { serviceLimitStore } from '../features/serviceLimit';
 import { RESTRICTION_TYPES } from '../models/Service';
@@ -422,6 +423,18 @@ export default class ServicesStore extends Store {
       });
     } else if (channel === 'notification') {
       const { options } = args[0];
+
+      // Check if we are in scheduled Do-not-Disturb time
+      const {
+        scheduledDNDEnabled,
+        scheduledDNDStart,
+        scheduledDNDEnd,
+      } = this.stores.settings.all.app;
+
+      if (scheduledDNDEnabled && isInTimeframe(scheduledDNDStart, scheduledDNDEnd)) {
+        return;
+      }
+
       if (service.recipe.hasNotificationSound || service.isMuted || this.stores.settings.all.app.isAppMuted) {
         Object.assign(options, {
           silent: true,

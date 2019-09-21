@@ -38,6 +38,14 @@ const messages = defineMessages({
     id: 'settings.app.lockedPasswordInfo',
     defaultMessage: '!!!Please make sure to set a password you\'ll remember.\nIf you loose this password, you will have to reinstall Ferdi.',
   },
+  scheduledDNDTimeInfo: {
+    id: 'settings.app.scheduledDNDTimeInfo',
+    defaultMessage: '!!!Times in 24-Hour-Format. End time can be before start time (e.g. start 17:00, end 09:00) to enable Do-not-Disturb overnight.',
+  },
+  scheduledDNDInfo: {
+    id: 'settings.app.scheduledDNDInfo',
+    defaultMessage: '!!!Scheduled Do-not-Disturb allows you to define a period of time in which you do not want to get Notifications from Ferdi.',
+  },
   headlineLanguage: {
     id: 'settings.app.headlineLanguage',
     defaultMessage: '!!!Language',
@@ -167,7 +175,11 @@ export default @observer class EditSettingsForm extends Component {
     }
 
     const isLoggedIn = Boolean(localStorage.getItem('authToken'));
-    const lockingFeatureEnabled = window.ferdi.stores.settings.all.app.lockingFeatureEnabled;
+
+    const {
+      lockingFeatureEnabled,
+      scheduledDNDEnabled,
+    } = window.ferdi.stores.settings.all.app;
 
     return (
       <div className="settings__main">
@@ -269,6 +281,56 @@ export default @observer class EditSettingsForm extends Component {
                   start Ferdi or lock Ferdi yourself using the lock symbol in the bottom left corner or the shortcut
                 {' '}
                 <code>CMD/CTRL+Shift+L</code>
+              </span>
+            </p>
+
+
+            <Toggle field={form.$('scheduledDNDEnabled')} />
+            {scheduledDNDEnabled && (
+              <>
+                <div style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+                >
+                  <div style={{
+                    padding: '0 1rem',
+                    width: '100%',
+                  }}
+                  >
+                    <Input
+                      placeholder="17:00"
+                      onChange={e => this.submit(e)}
+                      field={form.$('scheduledDNDStart')}
+                      type="time"
+                    />
+                  </div>
+                  <div style={{
+                    padding: '0 1rem',
+                    width: '100%',
+                  }}
+                  >
+                    <Input
+                      placeholder="09:00"
+                      onChange={e => this.submit(e)}
+                      field={form.$('scheduledDNDEnd')}
+                      type="time"
+                    />
+                  </div>
+                </div>
+                <p>
+                  { intl.formatMessage(messages.scheduledDNDTimeInfo) }
+                </p>
+              </>
+            )}
+            <p
+              className="settings__message"
+              style={{
+                borderTop: 0, marginTop: 0, paddingTop: 0, marginBottom: '2rem',
+              }}
+            >
+              <span>
+                { intl.formatMessage(messages.scheduledDNDInfo) }
               </span>
             </p>
 
