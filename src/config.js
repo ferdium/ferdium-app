@@ -76,6 +76,7 @@ export const DEFAULT_FEATURES_CONFIG = {
   isAnnouncementsEnabled: true,
   isWorkspaceIncludedInCurrentPlan: true,
   isWorkspaceEnabled: false,
+  isCommunityRecipesIncludedInCurrentPlan: true,
 };
 
 export const DEFAULT_WINDOW_OPTIONS = {

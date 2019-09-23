@@ -19,7 +19,7 @@ export default function initCommunityRecipes(stores, actions) {
     ),
     (isPremiumFeature) => {
       debug('Community recipes is premium feature: ', isPremiumFeature);
-      communityRecipesStore.isCommunityRecipesIncludedInCurrentPlan = isPremiumFeature;
+      communityRecipesStore.isCommunityRecipesIncludedInCurrentPlan = true;
     },
     {
       fireImmediately: true,
