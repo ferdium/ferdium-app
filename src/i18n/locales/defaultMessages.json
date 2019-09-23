@@ -4167,26 +4167,26 @@
         "defaultMessage": "!!!Search...",
         "end": {
           "column": 3,
-          "line": 17
+          "line": 18
         },
         "file": "src/features/quickSwitch/Component.js",
         "id": "feature.quickSwitch.search",
         "start": {
           "column": 10,
-          "line": 14
+          "line": 15
         }
       },
       {
         "defaultMessage": "!!!Select a service with TAB, ↑ and ↓. Open a service with ENTER.",
         "end": {
           "column": 3,
-          "line": 21
+          "line": 22
         },
         "file": "src/features/quickSwitch/Component.js",
         "id": "feature.quickSwitch.info",
         "start": {
           "column": 8,
-          "line": 18
+          "line": 19
         }
       }
     ],

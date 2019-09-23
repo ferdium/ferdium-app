@@ -4,11 +4,11 @@
     "defaultMessage": "!!!Search...",
     "file": "src/features/quickSwitch/Component.js",
     "start": {
-      "line": 14,
+      "line": 15,
       "column": 10
     },
     "end": {
-      "line": 17,
+      "line": 18,
       "column": 3
     }
   },
@@ -17,11 +17,11 @@
     "defaultMessage": "!!!Select a service with TAB, ↑ and ↓. Open a service with ENTER.",
     "file": "src/features/quickSwitch/Component.js",
     "start": {
-      "line": 18,
+      "line": 19,
       "column": 8
     },
     "end": {
-      "line": 21,
+      "line": 22,
       "column": 3
     }
   }

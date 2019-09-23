@@ -1,4 +1,5 @@
 import React, { Component, createRef } from 'react';
+import { remote } from 'electron';
 import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react';
 import { reaction } from 'mobx';
@@ -190,6 +191,8 @@ export default @injectSheet(styles) @inject('stores', 'actions') @observer class
     if (isModalVisible && !this.state.wasPrevVisible) {
       // Set focus back on current window if its in a service
       // TODO: Find a way to gain back focus
+      remote.getCurrentWindow().blurWebView();
+      remote.getCurrentWindow().webContents.focus();
 
       // The input "focus" attribute will only work on first modal open
       // Manually add focus to the input element

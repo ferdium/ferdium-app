@@ -173,7 +173,7 @@
   ],
   "husky": {
     "hooks": {
-      "pre-push": "npm run lint && npm run reformat-files && npm run apply-branding && npm run manage-translations"
+      "pre-push": "npm run lint && npm run reformat-files && npm run manage-translations && npm run apply-branding"
     }
   }
 }
