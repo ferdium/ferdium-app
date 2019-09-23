@@ -4,6 +4,7 @@
 - Attempt at making "About Ferdi" consistent across platforms #47 (comment)
 - Attempt at fixing "Launch on start" feature on Linux #63
 - Add "Quick Switch" feature
+- Add universal Dark-Mode via the [DarkReader extension](https://github.com/darkreader/darkreader)
 - Add "Scheduled Do-not-Disturb" feature
 
 # [5.3.3](https://github.com/meetfranz/franz/compare/v5.3.2...v5.3.3) (2019-09-18)
