@@ -9,6 +9,8 @@ import {
   disable as disableDarkMode,
 } from 'darkreader';
 
+import ignoreList from './darkmode/ignore';
+
 import RecipeWebview from './lib/RecipeWebview';
 
 import spellchecker, { switchDict, disable as disableSpellchecker, getSpellcheckerLocaleByFuzzyIdentifier } from './spellchecker';
@@ -123,7 +125,7 @@ class RecipeController {
 
       if (darkModeExists) {
         injectDarkModeStyle(this.settings.service.recipe.path);
-      } else {
+      } else if (!ignoreList.includes(window.location.host)) {
         // Use darkreader instead
         enableDarkMode();
       }
