@@ -166,7 +166,7 @@ export function dictionaries(done) {
   let packages = '';
   Object.keys(SPELLCHECKER_LOCALES).forEach((key) => { packages = `${packages} hunspell-dict-${key}`; });
 
-  _shell(`npm install --prefix ${path.join(__dirname, 'temp')} ${packages}`, () => {
+  _shell(`npm install --prefix "${path.join(__dirname, 'temp')}" ${packages}`, () => {
     moveSync(
       path.join(__dirname, 'temp', 'node_modules'),
       path.join(__dirname, 'build', paths.dictionaries),
