@@ -9,6 +9,8 @@ import {
   disable as disableDarkMode,
 } from 'darkreader';
 
+import ignoreList from './darkmode/ignore';
+
 import RecipeWebview from './lib/RecipeWebview';
 
 import spellchecker, { switchDict, disable as disableSpellchecker, getSpellcheckerLocaleByFuzzyIdentifier } from './spellchecker';
@@ -123,7 +125,7 @@ class RecipeController {
 
       if (darkModeExists) {
         injectDarkModeStyle(this.settings.service.recipe.path);
-      } else {
+      } else if (!ignoreList.includes(window.location.host)) {
         // Use darkreader instead
         enableDarkMode();
       }
@@ -194,6 +196,32 @@ new RecipeController();
 const originalWindowOpen = window.open;
 
 window.open = (url, frameName, features) => {
+  if (!url && !frameName && !features) {
+    // The service hasn't yet supplied a URL (as used in Skype).
+    // Return a new dummy window object and wait for the service to change the properties
+    const newWindow = {
+      location: {
+        href: '',
+      },
+    };
+
+    const checkInterval = setInterval(() => {
+      // Has the service changed the URL yet?
+      if (newWindow.location.href !== '') {
+        // Open the new URL
+        window.open(newWindow.location.href);
+        clearInterval(checkInterval);
+      }
+    }, 0);
+
+    setTimeout(() => {
+      // Stop checking for location changes after 1 second
+      clearInterval(checkInterval);
+    }, 1000);
+
+    return newWindow;
+  }
+
   // We need to differentiate if the link should be opened in a popup or in the systems default browser
   if (!frameName && !features) {
     return ipcRenderer.sendToHost('new-window', url);

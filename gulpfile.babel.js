@@ -180,7 +180,7 @@ export function dictionaries(done) {
   });
 
   _shell(
-    `npm install --prefix ${path.join(__dirname, 'temp')} ${packages}`,
+    `npm install --prefix "${path.join(__dirname, 'temp')}" ${packages}`,
     () => {
       moveSync(
         path.join(__dirname, 'temp', 'node_modules'),
