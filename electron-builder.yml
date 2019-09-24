@@ -11,8 +11,6 @@ mac:
   gatekeeperAssess: false
   category: public.app-category.productivity
   icon: ./build-helpers/images/icon.icns
-  entitlements: ./build-helpers/default.entitlements.mac.plist
-  entitlementsInherit: ./build-helpers/default.entitlements.mac.inherit.plist
 
 afterSign: ./build-helpers/notarize.js
 
