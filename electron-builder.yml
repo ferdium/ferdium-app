@@ -7,22 +7,30 @@ appId: "com.kytwb.ferdi"
 compression: maximum
 
 mac:
+  hardenedRuntime: true
+  gatekeeperAssess: false
   category: public.app-category.productivity
   icon: ./build-helpers/images/icon.icns
+
+afterSign: ./build-helpers/notarize.js
 
 dmg:
   background: ./build-helpers/images/dmgInstaller.tiff
   icon: ./build-helpers/images/icon.icns
   iconSize: 128
-  contents: [{x: 380, y: 240, type: link, path: /Applications}, {x: 122, y: 240, type: file}]
+  contents:
+    [
+      { x: 380, y: 240, type: link, path: /Applications },
+      { x: 122, y: 240, type: file },
+    ]
 
 win:
   icon: ./build-helpers/images/icon.ico
   target:
     target: nsis
     arch:
-    - x64
-    - ia32
+      - x64
+      - ia32
 
 linux:
   icon: ./build-helpers/images/icons
@@ -39,10 +47,10 @@ nsis:
   perMachine: false
   oneClick: true
 
-protocols: 
+protocols:
   name: Ferdi
-  schemes: [ferdi] 
+  schemes: [ferdi]
 
-asarUnpack: 
+asarUnpack:
   - ./dictionaries
   - ./assets/images/taskbar
