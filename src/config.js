@@ -40,8 +40,6 @@ export const DEFAULT_APP_SETTINGS = {
   enableSystemTray: true,
   minimizeToSystemTray: false,
   privateNotifications: false,
-  server: LIVE_API,
-  todoServer: PRODUCTION_TODOS_FRONTEND_URL,
   showDisabledServices: true,
   showMessageBadgeWhenMuted: true,
   enableSpellchecking: true,
@@ -53,10 +51,17 @@ export const DEFAULT_APP_SETTINGS = {
   isAppMuted: false,
   enableGPUAcceleration: true,
   serviceLimit: 5,
+
+  // Ferdi specific options
+  server: LIVE_API,
+  todoServer: PRODUCTION_TODOS_FRONTEND_URL,
   autohideMenuBar: false,
   lockingFeatureEnabled: false,
   locked: false,
   lockedPassword: '',
+  scheduledDNDEnabled: false,
+  scheduledDNDStart: '17:00',
+  scheduledDNDEnd: '09:00',
 };
 
 export const DEFAULT_FEATURES_CONFIG = {
@@ -71,6 +76,7 @@ export const DEFAULT_FEATURES_CONFIG = {
   isAnnouncementsEnabled: true,
   isWorkspaceIncludedInCurrentPlan: true,
   isWorkspaceEnabled: false,
+  isCommunityRecipesIncludedInCurrentPlan: true,
 };
 
 export const DEFAULT_WINDOW_OPTIONS = {

@@ -1,8 +1,13 @@
 import { ipcRenderer } from 'electron';
 import path from 'path';
 import { autorun, computed, observable } from 'mobx';
+import fs from 'fs-extra';
 import { loadModule } from 'cld3-asm';
 import { debounce } from 'lodash';
+import {
+  enable as enableDarkMode,
+  disable as disableDarkMode,
+} from 'darkreader';
 
 import RecipeWebview from './lib/RecipeWebview';
 
@@ -109,12 +114,27 @@ class RecipeController {
       }
     }
 
-    if (this.settings.service.isDarkModeEnabled) {
+    if (this.settings.service.isDarkModeEnabled || this.settings.app.darkMode) {
       debug('Enable dark mode');
-      injectDarkModeStyle(this.settings.service.recipe.path);
-    } else if (isDarkModeStyleInjected()) {
+
+      // Check if recipe has a darkmode.css
+      const darkModeStyle = path.join(this.settings.service.recipe.path, 'darkmode.css');
+      const darkModeExists = fs.pathExistsSync(darkModeStyle);
+
+      if (darkModeExists) {
+        injectDarkModeStyle(this.settings.service.recipe.path);
+      } else {
+        // Use darkreader instead
+        enableDarkMode();
+      }
+    } else {
       debug('Remove dark mode');
-      removeDarkModeStyle();
+
+      if (isDarkModeStyleInjected()) {
+        removeDarkModeStyle();
+      } else {
+        disableDarkMode();
+      }
     }
   }
 

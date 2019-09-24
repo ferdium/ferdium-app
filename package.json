@@ -6,8 +6,8 @@
   "description": "Messaging app for WhatsApp, Slack, Telegram, HipChat, Hangouts and many many more.",
   "copyright": "kytwb",
   "main": "index.js",
-  "homepage": "https://github.com/kytwb/ferdi",
-  "repository": "https://github.com/kytwb/ferdi.git",
+  "homepage": "https://github.com/getferdi/ferdi",
+  "repository": "https://github.com/getferdi/ferdi.git",
   "private": true,
   "scripts": {
     "prestart": "npm run rebuild",
@@ -29,7 +29,8 @@
     "packages": "npx lerna publish --no-git-tag-version",
     "uidev": "cd uidev && webpack-dev-server",
     "postinstall": "npx lerna run prepare",
-    "prepare-code": "npm run lint && npm run reformat-files && npm run manage-translations"
+    "apply-branding": "node ./src/i18n/apply-branding.js",
+    "prepare-code": "npm run lint && npm run reformat-files && npm run manage-translations && npm run apply-branding"
   },
   "keywords": [],
   "author": "Amine Mouafik <amine@mouafik.fr>",
@@ -43,9 +44,10 @@
     "@meetfranz/theme": "file:packages/theme",
     "@meetfranz/ui": "file:packages/ui",
     "address-rfc2822": "^2.0.1",
-    "auto-launch": "https://github.com/meetfranz/node-auto-launch.git",
+    "auto-launch": "5.0.5",
     "classnames": "2.2.6",
     "cld3-asm": "1.0.1",
+    "darkreader": "4.7.15",
     "du": "^0.1.0",
     "electron-dl": "1.12.0",
     "electron-fetch": "1.3.0",
@@ -171,7 +173,7 @@
   ],
   "husky": {
     "hooks": {
-      "pre-push": "npm run lint && npm run reformat-files && npm run manage-translations"
+      "pre-push": "npm run lint && npm run reformat-files && npm run manage-translations && npm run apply-branding"
     }
   }
 }

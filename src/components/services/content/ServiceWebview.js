@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
+import { observable, reaction } from 'mobx';
 import ElectronWebView from 'react-electron-web-view';
 
 import ServiceModel from '../../../models/Service';
+
+const debug = require('debug')('Ferdi:Services');
 
 @observer
 class ServiceWebview extends Component {
@@ -13,7 +16,22 @@ class ServiceWebview extends Component {
     detachService: PropTypes.func.isRequired,
   };
 
-  webview = null;
+  @observable webview = null;
+
+  constructor(props) {
+    super(props);
+
+    reaction(
+      () => this.webview,
+      () => {
+        if (this.webview.view) {
+          this.webview.view.addEventListener('console-message', (e) => {
+            debug('Service logged a message:', e.message);
+          });
+        }
+      },
+    );
+  }
 
   componentWillUnmount() {
     const { service, detachService } = this.props;

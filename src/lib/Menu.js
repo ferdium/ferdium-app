@@ -69,6 +69,10 @@ const menuItems = defineMessages({
     id: 'menu.edit.emojiSymbols',
     defaultMessage: '!!!Emoji & Symbols',
   },
+  openQuickSwitch: {
+    id: 'menu.view.openQuickSwitch',
+    defaultMessage: '!!!Open Quick Switch',
+  },
   back: {
     id: 'menu.view.back',
     defaultMessage: '!!!Back',
@@ -332,6 +336,16 @@ const _templateFactory = intl => [
   {
     label: intl.formatMessage(menuItems.view),
     submenu: [
+      {
+        type: 'separator',
+      },
+      {
+        label: intl.formatMessage(menuItems.openQuickSwitch),
+        accelerator: 'CmdOrCtrl+P',
+        click() {
+          window.ferdi.features.quickSwitch.state.isModalVisible = true;
+        },
+      },
       {
         type: 'separator',
       },
@@ -994,7 +1008,7 @@ export default class FranzMenu {
 
   todosMenu() {
     const { isTodosPanelVisible, isFeatureEnabledByUser } = this.stores.todos;
-    const { intl } = window.franz;
+    const { intl } = window.ferdi;
     const menu = [];
 
     const drawerLabel = isTodosPanelVisible ? menuItems.closeTodosDrawer : menuItems.openTodosDrawer;

@@ -7,7 +7,7 @@ debug('Preloading Todos Webview');
 
 let hostMessageListener = () => {};
 
-window.franz = {
+window.ferdi = {
   onInitialize(ipcHostMessageListener) {
     hostMessageListener = ipcHostMessageListener;
     ipcRenderer.sendToHost(IPC.TODOS_CLIENT_CHANNEL, { action: 'todos:initialized' });

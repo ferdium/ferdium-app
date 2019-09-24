@@ -1,5 +1,5 @@
 {
-  "global.api.unhealthy": "無法連接到Franz網路服務",
+  "global.api.unhealthy": "無法連接到Ferdi網路服務",
   "global.notConnectedToTheInternet": "您未連上網際網路",
   "welcome.signupButton": "建立一個免費帳戶",
   "welcome.loginButton": "登入",
@@ -87,7 +87,7 @@
   "settings.navigation.account": "帳戶",
   "settings.navigation.settings": "設定",
   "settings.navigation.logout": "登出",
-  "settings.recipes.headline":  "可用服務",
+  "settings.recipes.headline": "可用服務",
   "settings.recipes.mostPopular": "熱門",
   "settings.recipes.all": "全部",
   "settings.recipes.dev": "開發中",

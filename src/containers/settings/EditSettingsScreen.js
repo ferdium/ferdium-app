@@ -65,6 +65,18 @@ const messages = defineMessages({
     id: 'settings.app.form.lockPassword',
     defaultMessage: '!!!Ferdi Lock password',
   },
+  scheduledDNDEnabled: {
+    id: 'settings.app.form.scheduledDNDEnabled',
+    defaultMessage: '!!!Enable scheduled Do-not-Disturb',
+  },
+  scheduledDNDStart: {
+    id: 'settings.app.form.scheduledDNDStart',
+    defaultMessage: '!!!From',
+  },
+  scheduledDNDEnd: {
+    id: 'settings.app.form.scheduledDNDEnd',
+    defaultMessage: '!!!To',
+  },
   language: {
     id: 'settings.app.form.language',
     defaultMessage: '!!!Language',
@@ -134,6 +146,9 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
         todoServer: settingsData.todoServer,
         lockingFeatureEnabled: settingsData.lockingFeatureEnabled,
         lockedPassword: settingsData.lockedPassword,
+        scheduledDNDEnabled: settingsData.scheduledDNDEnabled,
+        scheduledDNDStart: settingsData.scheduledDNDStart,
+        scheduledDNDEnd: settingsData.scheduledDNDEnd,
         enableGPUAcceleration: settingsData.enableGPUAcceleration,
         showDisabledServices: settingsData.showDisabledServices,
         darkMode: settingsData.darkMode,
@@ -234,6 +249,23 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           value: settings.all.app.lockedPassword,
           default: DEFAULT_LOCK_PASSWORD,
           type: 'password',
+        },
+        scheduledDNDEnabled: {
+          label: intl.formatMessage(messages.scheduledDNDEnabled),
+          value: settings.all.app.scheduledDNDEnabled || false,
+          default: false,
+        },
+        scheduledDNDStart: {
+          label: intl.formatMessage(messages.scheduledDNDStart),
+          value: settings.all.app.scheduledDNDStart,
+          default: '17:00',
+          type: 'time',
+        },
+        scheduledDNDEnd: {
+          label: intl.formatMessage(messages.scheduledDNDEnd),
+          value: settings.all.app.scheduledDNDEnd,
+          default: '09:00',
+          type: 'time',
         },
         showDisabledServices: {
           label: intl.formatMessage(messages.showDisabledServices),

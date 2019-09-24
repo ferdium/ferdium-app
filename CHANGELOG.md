@@ -1,4 +1,13 @@
-# [5.3.3](https://github.com/meetfranz/franz/compare/v5.3.1...v5.3.3) (2019-09-18)
+# [5.3.4](https://github.com/meetfranz/franz/compare/v5.3.3...v5.3.4) (2019-09-25)
+- Fix continuous releases/assets delivery on tags builds #53
+- Attempt at making menubar hiding feature cross-platform #7 (comment)
+- Attempt at making "About Ferdi" consistent across platforms #47 (comment)
+- Attempt at fixing "Launch on start" feature on Linux #63
+- Add "Quick Switch" feature
+- Add universal Dark-Mode via the [DarkReader extension](https://github.com/darkreader/darkreader)
+- Add "Scheduled Do-not-Disturb" feature
+
+# [5.3.3](https://github.com/meetfranz/franz/compare/v5.3.2...v5.3.3) (2019-09-18)
 - Merged Franz v5.3.3 into Ferdi
 - Allow hiding menubar (#7)
 - Add "back" and "forward" options for browsing history inside services (#39)
@@ -8,7 +17,7 @@
 # [5.3.2](https://github.com/meetfranz/franz/compare/v5.3.1...v5.3.2) (2019-09-13)
 Merged Franz v5.3.2 into Ferdi
 
-## [5.3.1](https://github.com/kytwb/ferdi/compare/v5.3.0...v5.3.1) (2019-09-09)
+## [5.3.1](https://github.com/getferdi/ferdi/compare/v5.3.0...v5.3.1) (2019-09-09)
 Merge Franz v5.3.1 into Ferdi.
 
 - Enable todos for all users
@@ -16,19 +25,19 @@ Merge Franz v5.3.1 into Ferdi.
 
 ### Bug Fixes
 
-* **Windows:** Fix app size in fullscreen ([e210701](https://github.com/kytwb/ferdi/commit/e210701))
-* **Windows:** Fix app to be cropped at the bottom on Windows ([42f97b4](https://github.com/kytwb/ferdi/commit/42f97b4))
+* **Windows:** Fix app size in fullscreen ([e210701](https://github.com/getferdi/ferdi/commit/e210701))
+* **Windows:** Fix app to be cropped at the bottom on Windows ([42f97b4](https://github.com/getferdi/ferdi/commit/42f97b4))
 
 
 ### Features
 
-* **Todos:** Add option to disable todos ([5d03b91](https://github.com/kytwb/ferdi/commit/5d03b91))
+* **Todos:** Add option to disable todos ([5d03b91](https://github.com/getferdi/ferdi/commit/5d03b91))
 
 
-## [5.3.0](https://github.com/kytwb/ferdi/compare/v5.2.1-beta.1...v5.3.0) (2019-09-06)
+## [5.3.0](https://github.com/getferdi/ferdi/compare/v5.2.1-beta.1...v5.3.0) (2019-09-06)
 - Removes pages begging you to donate after registration
 - Makes all users Premium by default
-- [Add option to change server to a custom](https://github.com/kytwb/ferdi#servers) [ferdi-server](https://github.com/vantezzen/ferdi-server)
+- [Add option to change server to a custom](https://github.com/getferdi/ferdi#servers) [ferdi-server](https://github.com/getferdi/server)
 - Remove "Franz is better together" popup
 - Makes RocketChat self-hosted generally available
 - Comes with a custom branding proper to Ferdi
