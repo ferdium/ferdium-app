@@ -28,6 +28,10 @@ const paths = {
   tmp: '.tmp',
   dictionaries: 'dictionaries',
   package: `out/${config.version}`,
+  recipes: {
+    src: 'recipes/*.tar.gz',
+    dest: 'build/recipes/',
+  },
   html: {
     src: 'src/**/*.html',
     dest: 'build/',
@@ -178,6 +182,11 @@ export function dictionaries(done) {
   });
 }
 
+export function recipes() {
+  return gulp.src(paths.recipes.src, { since: gulp.lastRun(recipes) })
+    .pipe(gulp.dest(paths.recipes.dest));
+}
+
 export function sign(done) {
   _shell(`codesign --verbose=4 --deep --strict --force --sign "${process.env.SIGNING_IDENTITY}" "${__dirname}/node_modules/electron/dist/Electron.app"`, done);
 }
@@ -185,7 +194,7 @@ export function sign(done) {
 const build = gulp.series(
   clean,
   gulp.parallel(mvSrc, mvPackageJson, mvLernaPackages),
-  gulp.parallel(html, scripts, styles),
+  gulp.parallel(html, scripts, styles, recipes),
   dictionaries,
 );
 export { build };

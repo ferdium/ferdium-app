@@ -13,6 +13,7 @@ import UserModel from '../../models/User';
 import OrderModel from '../../models/Order';
 
 import { sleep } from '../../helpers/async-helpers';
+import { asarPath } from '../../helpers/asar-helpers';
 
 import { API } from '../../environment';
 import apiBase from '../apiBase';
@@ -369,14 +370,30 @@ export default class ServerApi {
     try {
       const recipesDirectory = path.join(app.getPath('userData'), 'recipes');
       const recipeTempDirectory = path.join(recipesDirectory, 'temp', recipeId);
-      const archivePath = path.join(recipeTempDirectory, 'recipe.tar.gz');
-      const packageUrl = `${apiBase()}/recipes/download/${recipeId}`;
+      const tempArchivePath = path.join(recipeTempDirectory, 'recipe.tar.gz');
+
+      const internalRecipesDirectory = asarPath(path.join(__dirname, '../../', 'recipes'));
+      const internalRecipeFile = path.join(internalRecipesDirectory, `${recipeId}.tar.gz`);
 
       fs.ensureDirSync(recipeTempDirectory);
-      const res = await fetch(packageUrl);
-      debug('Recipe downloaded', recipeId);
-      const buffer = await res.buffer();
-      fs.writeFileSync(archivePath, buffer);
+
+      let archivePath;
+
+      if (await fs.exists(internalRecipeFile)) {
+        console.log('[ServerApi::getRecipePackage] Using internal recipe file');
+        archivePath = internalRecipeFile;
+      } else {
+        console.log('[ServerApi::getRecipePackage] Downloading recipe from server');
+        archivePath = tempArchivePath;
+
+        const packageUrl = `${apiBase()}/recipes/download/${recipeId}`;
+
+        const res = await fetch(packageUrl);
+        debug('Recipe downloaded', recipeId);
+        const buffer = await res.buffer();
+        fs.writeFileSync(archivePath, buffer);
+      }
+      console.log(archivePath);
 
       await sleep(10);
 
