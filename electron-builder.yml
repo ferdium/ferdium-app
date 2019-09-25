@@ -53,4 +53,5 @@ protocols:
 
 asarUnpack:
   - ./dictionaries
+  - ./recipes
   - ./assets/images/taskbar

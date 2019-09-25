@@ -13,9 +13,9 @@ import UserModel from '../../models/User';
 import OrderModel from '../../models/Order';
 
 import { sleep } from '../../helpers/async-helpers';
-import { asarPath } from '../../helpers/asar-helpers';
 
 import { API } from '../../environment';
+import { RECIPES_PATH } from '../../config';
 import apiBase from '../apiBase';
 import { prepareAuthRequest, sendAuthRequest } from '../utils/auth';
 
@@ -372,8 +372,7 @@ export default class ServerApi {
       const recipeTempDirectory = path.join(recipesDirectory, 'temp', recipeId);
       const tempArchivePath = path.join(recipeTempDirectory, 'recipe.tar.gz');
 
-      const internalRecipesDirectory = asarPath(path.join(__dirname, '../../', 'recipes'));
-      const internalRecipeFile = path.join(internalRecipesDirectory, `${recipeId}.tar.gz`);
+      const internalRecipeFile = path.join(RECIPES_PATH, `${recipeId}.tar.gz`);
 
       fs.ensureDirSync(recipeTempDirectory);
 

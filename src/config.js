@@ -100,6 +100,7 @@ export const SETTINGS_PATH = path.join(app.getPath('userData'), 'config');
 
 // Replacing app.asar is not beautiful but unforunately necessary
 export const DICTIONARY_PATH = asarPath(path.join(__dirname, 'dictionaries'));
+export const RECIPES_PATH = asarPath(path.join(__dirname, 'recipes'));
 
 export const ALLOWED_PROTOCOLS = [
   'https:',
