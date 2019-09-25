@@ -62,6 +62,7 @@ export const DEFAULT_APP_SETTINGS = {
   scheduledDNDEnabled: false,
   scheduledDNDStart: '17:00',
   scheduledDNDEnd: '09:00',
+  hibernate: false,
 };
 
 export const DEFAULT_FEATURES_CONFIG = {

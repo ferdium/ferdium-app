@@ -198,6 +198,7 @@ export default @observer class EditSettingsForm extends Component {
             <Toggle field={form.$('runInBackground')} />
             <Toggle field={form.$('enableSystemTray')} />
             <Toggle field={form.$('privateNotifications')} />
+            <Toggle field={form.$('hibernate')} />
             {process.platform === 'win32' && (
               <Toggle field={form.$('minimizeToSystemTray')} />
             )}

@@ -1,8 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { autorun } from 'mobx';
-import { observer } from 'mobx-react';
+import { autorun, reaction } from 'mobx';
+import { observer, inject } from 'mobx-react';
 import classnames from 'classnames';
+import ms from 'ms';
 
 import ServiceModel from '../../../models/Service';
 import StatusBarTargetUrl from '../../ui/StatusBarTargetUrl';
@@ -11,8 +12,9 @@ import WebviewCrashHandler from './WebviewCrashHandler';
 import WebviewErrorHandler from './ErrorHandlers/WebviewErrorHandler';
 import ServiceDisabled from './ServiceDisabled';
 import ServiceWebview from './ServiceWebview';
+import SettingsStore from '../../../stores/SettingsStore';
 
-export default @observer class ServiceView extends Component {
+export default @observer @inject('stores') class ServiceView extends Component {
   static propTypes = {
     service: PropTypes.instanceOf(ServiceModel).isRequired,
     setWebviewReference: PropTypes.func.isRequired,
@@ -21,6 +23,9 @@ export default @observer class ServiceView extends Component {
     edit: PropTypes.func.isRequired,
     enable: PropTypes.func.isRequired,
     isActive: PropTypes.bool,
+    stores: PropTypes.shape({
+      settings: PropTypes.instanceOf(SettingsStore).isRequired,
+    }).isRequired,
   };
 
   static defaultProps = {
@@ -31,11 +36,19 @@ export default @observer class ServiceView extends Component {
     forceRepaint: false,
     targetUrl: '',
     statusBarVisible: false,
+    hibernate: false,
+    hibernationTimer: null,
   };
 
   autorunDisposer = null;
 
   forceRepaintTimeout = null;
+
+  constructor(props) {
+    super(props);
+
+    this.startHibernationTimer = this.startHibernationTimer.bind(this);
+  }
 
   componentDidMount() {
     this.autorunDisposer = autorun(() => {
@@ -46,6 +59,31 @@ export default @observer class ServiceView extends Component {
         }, 100);
       }
     });
+
+    reaction(
+      () => this.props.service.isActive,
+      () => {
+        if (!this.props.service.isActive && this.props.stores.settings.all.app.hibernate) {
+          // Service is inactive - start hibernation countdown
+          this.startHibernationTimer();
+        } else {
+          if (this.state.hibernationTimer) {
+            // Service is active but we have an active hibernation timer: Clear timeout
+            clearTimeout(this.state.hibernationTimer);
+          }
+
+          // Service is active, wake up service from hibernation
+          this.setState({
+            hibernate: false,
+          });
+        }
+      },
+    );
+
+    // Start hibernation counter if we are in background
+    if (!this.props.service.isActive && this.props.stores.settings.all.app.hibernate) {
+      this.startHibernationTimer();
+    }
   }
 
   componentWillUnmount() {
@@ -63,6 +101,18 @@ export default @observer class ServiceView extends Component {
       statusBarVisible: visible,
     });
   };
+
+  startHibernationTimer() {
+    const hibernationTimer = setTimeout(() => {
+      this.setState({
+        hibernate: true,
+      });
+    }, ms('5m'));
+
+    this.setState({
+      hibernationTimer,
+    });
+  }
 
   render() {
     const {
@@ -127,11 +177,19 @@ export default @observer class ServiceView extends Component {
           </Fragment>
         ) : (
           <>
-            <ServiceWebview
-              service={service}
-              setWebviewReference={setWebviewReference}
-              detachService={detachService}
-            />
+            {!this.state.hibernate ? (
+              <ServiceWebview
+                service={service}
+                setWebviewReference={setWebviewReference}
+                detachService={detachService}
+              />
+            ) : (
+              <div>
+                <span role="img" aria-label="Sleeping Emoji">😴</span>
+                {' '}
+This service is currently hibernating. If this page doesn&#x27;t close soon, please try reloading Ferdi.
+              </div>
+            )}
           </>
         )}
         {statusBar}

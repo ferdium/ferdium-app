@@ -49,6 +49,10 @@ const messages = defineMessages({
     id: 'settings.app.form.privateNotifications',
     defaultMessage: '!!!Don\'t show message content in notifications',
   },
+  hibernate: {
+    id: 'settings.app.form.hibernate',
+    defaultMessage: '!!!Enable service hibernation',
+  },
   server: {
     id: 'settings.app.form.server',
     defaultMessage: '!!!Server',
@@ -142,6 +146,7 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
         enableSystemTray: settingsData.enableSystemTray,
         minimizeToSystemTray: settingsData.minimizeToSystemTray,
         privateNotifications: settingsData.privateNotifications,
+        hibernate: settingsData.hibernate,
         server: settingsData.server,
         todoServer: settingsData.todoServer,
         lockingFeatureEnabled: settingsData.lockingFeatureEnabled,
@@ -228,6 +233,11 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           label: intl.formatMessage(messages.privateNotifications),
           value: settings.all.app.privateNotifications,
           default: DEFAULT_APP_SETTINGS.privateNotifications,
+        },
+        hibernate: {
+          label: intl.formatMessage(messages.hibernate),
+          value: settings.all.app.hibernate,
+          default: DEFAULT_APP_SETTINGS.hibernate,
         },
         server: {
           label: intl.formatMessage(messages.server),
