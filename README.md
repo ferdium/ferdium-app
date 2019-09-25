@@ -2,10 +2,10 @@
     <img src="./build-helpers/images/icon.png" alt="" width="200"/>
 </p>
 
-# Ferdi 
+# Ferdi
 
-[![Build Status Windows](https://ci.appveyor.com/api/projects/status/2ckfbmoxp36fye5b?svg=true)](https://ci.appveyor.com/project/kytwb/ferdi)
- [![Build Status Mac & Linux](https://travis-ci.org/getferdi/ferdi.svg?branch=master)](https://travis-ci.org/getferdi/ferdi)
+[![Backers on Open Collective](https://opencollective.com/getferdi/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/getferdi/sponsors/badge.svg)](#sponsors) [![Build Status Windows](https://ci.appveyor.com/api/projects/status/2ckfbmoxp36fye5b?svg=true)](https://ci.appveyor.com/project/kytwb/ferdi)
+[![Build Status Mac & Linux](https://travis-ci.org/getferdi/ferdi.svg?branch=master)](https://travis-ci.org/getferdi/ferdi)
 
 🤴🏽 Hard-fork of [Franz](https://github.com/meetfranz/franz), adding awesome features and removing unwanted ones.
 
@@ -20,6 +20,7 @@ You can find the installers in the [latest release](https://github.com/getferdi/
 (Don't know homebrew? [brew.sh](https://brew.sh/))
 
 ## Ferdi-specific Features
+
 - [x] Removes the counter-productive fullscreen app delay inviting users to upgrade
 - [x] Removes pages begging you to donate after registration
 - [x] Makes all users Premium by default ([#15](https://github.com/getferdi/ferdi/issues/15))
@@ -44,34 +45,42 @@ You can find the installers in the [latest release](https://github.com/getferdi/
 ### Preparations
 
 #### Install Linux OS dependencies
+
 [Guide: Linux distribution specific dependencies](docs/linux.md)
 
 #### Use right NodeJS version
+
 Please make sure you are running NodeJS v10 (v10.16.3 suggested). Versions above will throw an errow when trying to install due to an [old fsevent dependency](https://github.com/fsevents/fsevents/issues/278)
 
 #### Fix native modules to match current electron node version
+
 ```bash
 $ npm run rebuild
 ```
 
 ### Install dependencies
+
 Run the following command to install all dependencies, and link sibling modules with Franz.
+
 ```bash
 $ npx lerna bootstrap
 ```
 
-If you previously ran `npm install` it sometimes is necessary to delete your `node_modules` folder before running `npx lerna bootstrap`. 
+If you previously ran `npm install` it sometimes is necessary to delete your `node_modules` folder before running `npx lerna bootstrap`.
 
 ### Run Ferdi Development App
-Run these two commands __simultaneously__ in different console tabs.
+
+Run these two commands **simultaneously** in different console tabs.
 
 ```bash
 $ npm run dev
 $ npm run start
 ```
+
 Be aware that the development database will be reset regularly.
 
 ## Packaging
+
 ```bash
 $ npm run build
 ```
@@ -81,6 +90,7 @@ Deliverables will be available in the ./out folder.
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
@@ -105,6 +115,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
@@ -112,6 +123,11 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+
+## Backers via OpenCollective
+<a href="https://opencollective.com/getferdi#backers" target="_blank"><img src="https://opencollective.com/getferdi/backers.svg?width=890"></a>
