@@ -44,6 +44,15 @@ You can find the installers in the [latest release](https://github.com/getferdi/
 
 ### Preparations
 
+
+#### Clone repository with submodule
+
+```bash
+$ git clone git@github.com:getferdi/ferdi.git
+$ cd getferdi
+$ git submodule update --init --recursive
+```
+
 #### Install Linux OS dependencies
 
 [Guide: Linux distribution specific dependencies](docs/linux.md)
