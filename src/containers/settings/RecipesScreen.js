@@ -16,7 +16,7 @@ import { FRANZ_DEV_DOCS } from '../../config';
 import { communityRecipesStore } from '../../features/communityRecipes';
 import RecipePreview from '../../models/RecipePreview';
 
-import allFerdiRecipes from '../../../recipes/all.json'
+import allFerdiRecipes from '../../../recipes/all.json';
 
 const { app } = remote;
 
@@ -74,16 +74,16 @@ export default @inject('stores', 'actions') @observer class RecipesScreen extend
   prepareRecipes(recipes) {
     return recipes
     // Filter out duplicate recipes
-    .filter((recipe, index, self) => {
-      const ids = self.map(rec => rec.id);
-      return ids.indexOf(recipe.id) === index;
+      .filter((recipe, index, self) => {
+        const ids = self.map(rec => rec.id);
+        return ids.indexOf(recipe.id) === index;
 
-    // Sort alphabetically
-    }).sort((a, b) => {
-      if(a.id < b.id) { return -1; }
-      if(a.id > b.id) { return 1; }
-      return 0;
-    });
+        // Sort alphabetically
+      }).sort((a, b) => {
+        if (a.id < b.id) { return -1; }
+        if (a.id > b.id) { return 1; }
+        return 0;
+      });
   }
 
   // Create an array of RecipePreviews from an array of recipe objects
@@ -114,8 +114,8 @@ export default @inject('stores', 'actions') @observer class RecipesScreen extend
     if (filter === 'all') {
       recipeFilter = this.prepareRecipes([
         ...recipePreviews.all,
-        ...this.createPreviews(allFerdiRecipes)
-      ])
+        ...this.createPreviews(allFerdiRecipes),
+      ]);
     } else if (filter === 'dev') {
       recipeFilter = communityRecipesStore.communityRecipes;
     } else {
@@ -127,9 +127,9 @@ export default @inject('stores', 'actions') @observer class RecipesScreen extend
       ...recipePreviews.searchResults,
       // All search recipes from local recipes
       ...this.createPreviews(
-          allFerdiRecipes
-            .filter(service => service.name.toLowerCase().includes(this.state.needle.toLowerCase()))
-         )
+        allFerdiRecipes
+          .filter(service => service.name.toLowerCase().includes(this.state.needle.toLowerCase())),
+      ),
     ]) : recipeFilter;
 
     const isLoading = recipePreviews.featuredRecipePreviewsRequest.isExecuting
