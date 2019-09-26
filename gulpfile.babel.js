@@ -38,6 +38,10 @@ const paths = {
     src: 'recipes/*.tar.gz',
     dest: 'build/recipes/',
   },
+  recipeInfo: {
+    src: 'recipes/*.json',
+    dest: 'build/recipes/',
+  },
   html: {
     src: 'src/**/*.html',
     dest: 'build/',
@@ -202,11 +206,15 @@ export function recipes() {
   return gulp.src(paths.recipes.src, { since: gulp.lastRun(recipes) })
     .pipe(gulp.dest(paths.recipes.dest));
 }
+export function recipeInfo() {
+  return gulp.src(paths.recipeInfo.src, { since: gulp.lastRun(recipeInfo) })
+    .pipe(gulp.dest(paths.recipeInfo.dest));
+}
 
 const build = gulp.series(
   clean,
   gulp.parallel(mvSrc, mvPackageJson, mvLernaPackages),
-  gulp.parallel(html, scripts, styles, recipes),
+  gulp.parallel(html, scripts, styles, recipes, recipeInfo),
   dictionaries,
 );
 export { build };
