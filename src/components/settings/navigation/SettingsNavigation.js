@@ -35,9 +35,9 @@ const messages = defineMessages({
     id: 'settings.navigation.settings',
     defaultMessage: '!!!Settings',
   },
-  inviteFriends: {
-    id: 'settings.navigation.inviteFriends',
-    defaultMessage: '!!!Invite Friends',
+  supportFerdi: {
+    id: 'settings.navigation.supportFerdi',
+    defaultMessage: '!!!Support Ferdi',
   },
   logout: {
     id: 'settings.navigation.logout',
@@ -129,11 +129,11 @@ export default @inject('stores') @observer class SettingsNavigation extends Comp
           {intl.formatMessage(messages.settings)}
         </Link>
         <Link
-          to="/settings/invite"
+          to="/settings/support"
           className="settings-navigation__link"
           activeClassName="is-active"
         >
-          {intl.formatMessage(messages.inviteFriends)}
+          {intl.formatMessage(messages.supportFerdi)}
         </Link>
         <span className="settings-navigation__expander" />
         <Link

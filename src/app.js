@@ -30,6 +30,7 @@ import TeamScreen from './containers/settings/TeamScreen';
 import EditUserScreen from './containers/settings/EditUserScreen';
 import EditSettingsScreen from './containers/settings/EditSettingsScreen';
 import InviteSettingsScreen from './containers/settings/InviteScreen';
+import SupportFerdiScreen from './containers/settings/SupportScreen';
 import WelcomeScreen from './containers/auth/WelcomeScreen';
 import LoginScreen from './containers/auth/LoginScreen';
 import LockedScreen from './containers/auth/LockedScreen';
@@ -89,6 +90,7 @@ window.addEventListener('load', () => {
                   <Route path="/settings/team" component={TeamScreen} />
                   <Route path="/settings/app" component={EditSettingsScreen} />
                   <Route path="/settings/invite" component={InviteSettingsScreen} />
+                  <Route path="/settings/support" component={SupportFerdiScreen} />
                 </Route>
               </Route>
               <Route path="/auth" component={AuthLayoutContainer}>

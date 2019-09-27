@@ -1730,15 +1730,15 @@
         }
       },
       {
-        "defaultMessage": "!!!Invite Friends",
+        "defaultMessage": "!!!Support Ferdi",
         "end": {
           "column": 3,
           "line": 41
         },
         "file": "src/components/settings/navigation/SettingsNavigation.js",
-        "id": "settings.navigation.inviteFriends",
+        "id": "settings.navigation.supportFerdi",
         "start": {
-          "column": 17,
+          "column": 16,
           "line": 38
         }
       },
@@ -2775,6 +2775,76 @@
       }
     ],
     "path": "src/components/settings/settings/EditSettingsForm.json"
+  },
+  {
+    "descriptors": [
+      {
+        "defaultMessage": "!!!Support Ferdi",
+        "end": {
+          "column": 3,
+          "line": 11
+        },
+        "file": "src/components/settings/supportFerdi/SupportFerdiDashboard.js",
+        "id": "settings.supportFerdi.headline",
+        "start": {
+          "column": 12,
+          "line": 8
+        }
+      },
+      {
+        "defaultMessage": "!!!Do you like Ferdi? Spread the love!",
+        "end": {
+          "column": 3,
+          "line": 15
+        },
+        "file": "src/components/settings/supportFerdi/SupportFerdiDashboard.js",
+        "id": "settings.supportFerdi.title",
+        "start": {
+          "column": 9,
+          "line": 12
+        }
+      },
+      {
+        "defaultMessage": "!!!Star on GitHub",
+        "end": {
+          "column": 3,
+          "line": 19
+        },
+        "file": "src/components/settings/supportFerdi/SupportFerdiDashboard.js",
+        "id": "settings.supportFerdi.github",
+        "start": {
+          "column": 10,
+          "line": 16
+        }
+      },
+      {
+        "defaultMessage": "!!!Tell your Friends",
+        "end": {
+          "column": 3,
+          "line": 23
+        },
+        "file": "src/components/settings/supportFerdi/SupportFerdiDashboard.js",
+        "id": "settings.supportFerdi.share",
+        "start": {
+          "column": 9,
+          "line": 20
+        }
+      },
+      {
+        "defaultMessage": "!!!Support our Open Collective",
+        "end": {
+          "column": 3,
+          "line": 27
+        },
+        "file": "src/components/settings/supportFerdi/SupportFerdiDashboard.js",
+        "id": "settings.supportFerdi.openCollective",
+        "start": {
+          "column": 18,
+          "line": 24
+        }
+      }
+    ],
+    "path": "src/components/settings/supportFerdi/SupportFerdiDashboard.json"
   },
   {
     "descriptors": [

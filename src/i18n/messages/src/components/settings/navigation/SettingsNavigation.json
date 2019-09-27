@@ -78,12 +78,12 @@
     }
   },
   {
-    "id": "settings.navigation.inviteFriends",
-    "defaultMessage": "!!!Invite Friends",
+    "id": "settings.navigation.supportFerdi",
+    "defaultMessage": "!!!Support Ferdi",
     "file": "src/components/settings/navigation/SettingsNavigation.js",
     "start": {
       "line": 38,
-      "column": 17
+      "column": 16
     },
     "end": {
       "line": 41,

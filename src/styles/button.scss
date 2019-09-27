@@ -61,6 +61,11 @@
 
   &:disabled { opacity: .2; }
 
+  &.franz-form__button--large {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
   &.franz-form__button--secondary {
     background: $theme-gray-lighter;
     color: $theme-gray;
