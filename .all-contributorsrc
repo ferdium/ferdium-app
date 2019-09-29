@@ -62,7 +62,8 @@
         "platform",
         "projectManagement",
         "review",
-        "infra"
+        "infra",
+        "fundingFinding"
       ]
     },
     {
