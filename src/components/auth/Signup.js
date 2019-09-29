@@ -117,7 +117,8 @@ export default @observer class Signup extends Component {
     const { intl } = this.context;
     const { isSubmitting, loginRoute, error } = this.props;
 
-    const termsBase = window.ferdi.stores.settings.all.app.server !== 'https://api.franzinfra.com' ? window.ferdi.stores.settings.all.app.server : 'https://meetfranz.com';
+    //Old code before my commit
+    //const termsBase = window.ferdi.stores.settings.all.app.server !== 'https://api.franzinfra.com' ? window.ferdi.stores.settings.all.app.server : 'https://meetfranz.com';
 
     //This is the change for the issue #80, need testing
 	const termsBase = window.ferdi.stores.settings.all.app.server !== 'https://server.getferdi.com' ? window.ferdi.stores.settings.all.app.server : 'https://getferdi.com';
