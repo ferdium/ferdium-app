@@ -287,6 +287,10 @@ function getActiveWebview() {
   return window.ferdi.stores.services.active.webview;
 }
 
+function termsBase() {
+  return window.ferdi.stores.settings.all.app.server !== 'https://api.franzinfra.com' ? window.ferdi.stores.settings.all.app.server : 'https://meetfranz.com';
+}
+
 const _templateFactory = intl => [
   {
     label: intl.formatMessage(menuItems.edit),
@@ -463,11 +467,11 @@ const _templateFactory = intl => [
       },
       {
         label: intl.formatMessage(menuItems.tos),
-        click() { shell.openExternal('${termsBase}/terms'); },
+        click() { shell.openExternal(`${termsBase()}/terms`); },
       },
       {
         label: intl.formatMessage(menuItems.privacy),
-        click() { shell.openExternal('${termsBase}/privacy'); },
+        click() { shell.openExternal(`${termsBase()}/privacy`); },
       },
     ],
   },
@@ -684,11 +688,11 @@ const _titleBarTemplateFactory = intl => [
       },
       {
         label: intl.formatMessage(menuItems.tos),
-        click() { shell.openExternal('${termsBase}/terms'); },
+        click() { shell.openExternal(`${termsBase()}/terms`); },
       },
       {
         label: intl.formatMessage(menuItems.privacy),
-        click() { shell.openExternal('${termsBase}/privacy'); },
+        click() { shell.openExternal(`${termsBase()}/privacy`); },
       },
     ],
   },
