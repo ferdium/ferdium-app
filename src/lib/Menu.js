@@ -345,7 +345,7 @@ const _templateFactory = intl => [
       },
       {
         label: intl.formatMessage(menuItems.openQuickSwitch),
-        accelerator: 'CmdOrCtrl+P',
+        accelerator: 'CmdOrCtrl+S',
         click() {
           window.ferdi.features.quickSwitch.state.isModalVisible = true;
         },
@@ -549,7 +549,7 @@ const _titleBarTemplateFactory = intl => [
       },
       {
         label: intl.formatMessage(menuItems.openQuickSwitch),
-        accelerator: 'CmdOrCtrl+P',
+        accelerator: 'CmdOrCtrl+S',
         click() {
           window.ferdi.features.quickSwitch.state.isModalVisible = true;
         },
@@ -804,7 +804,7 @@ export default class FranzMenu {
         },
         {
           label: intl.formatMessage(menuItems.settings),
-          accelerator: 'CmdOrCtrl+,',
+          accelerator: 'CmdOrCtrl+P',
           click: () => {
             this.actions.ui.openSettings({ path: 'app' });
           },
