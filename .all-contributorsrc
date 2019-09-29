@@ -148,6 +148,16 @@
       "contributions": [
         "platform"
       ]
+    },
+    {
+      "login": "Makazzz",
+      "name": "Makazzz",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/49844464?v=4",
+      "profile": "https://github.com/Makazzz",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 6
