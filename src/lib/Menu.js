@@ -544,6 +544,35 @@ const _titleBarTemplateFactory = intl => [
         type: 'separator',
       },
       {
+        label: intl.formatMessage(menuItems.openQuickSwitch),
+        accelerator: 'CmdOrCtrl+P',
+        click() {
+          window.ferdi.features.quickSwitch.state.isModalVisible = true;
+        },
+      },
+      {
+        type: 'separator',
+      },
+      {
+        label: intl.formatMessage(menuItems.back),
+        accelerator: 'CmdOrCtrl+Left',
+        click() {
+          const activeService = getActiveWebview();
+          activeService.goBack();
+        },
+      },
+      {
+        label: intl.formatMessage(menuItems.forward),
+        accelerator: 'CmdOrCtrl+Right',
+        click() {
+          const activeService = getActiveWebview();
+          activeService.goForward();
+        },
+      },
+      {
+        type: 'separator',
+      },
+      {
         label: intl.formatMessage(menuItems.resetZoom),
         accelerator: `${ctrlKey}+0`,
         click() {
