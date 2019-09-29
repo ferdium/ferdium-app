@@ -463,11 +463,11 @@ const _templateFactory = intl => [
       },
       {
         label: intl.formatMessage(menuItems.tos),
-        click() { shell.openExternal('${termsBase}/terms'); },
+        click() { shell.openExternal(`${termsBase}/terms`); },
       },
       {
         label: intl.formatMessage(menuItems.privacy),
-        click() { shell.openExternal('${termsBase}/privacy'); },
+        click() { shell.openExternal(`${termsBase}/privacy`); },
       },
     ],
   },
@@ -655,11 +655,11 @@ const _titleBarTemplateFactory = intl => [
       },
       {
         label: intl.formatMessage(menuItems.tos),
-        click() { shell.openExternal('${termsBase}/terms'); },
+        click() { shell.openExternal(`${termsBase}/terms`); },
       },
       {
         label: intl.formatMessage(menuItems.privacy),
-        click() { shell.openExternal('${termsBase}/privacy'); },
+        click() { shell.openExternal(`${termsBase}/privacy`); },
       },
     ],
   },
