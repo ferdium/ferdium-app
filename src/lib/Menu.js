@@ -442,7 +442,7 @@ const _templateFactory = intl => [
     submenu: [
       {
         label: intl.formatMessage(menuItems.learnMore),
-        click() { shell.openExternal('https://meetfranz.com'); },
+        click() { shell.openExternal('https://getferdi.com'); },
       },
       {
         label: intl.formatMessage(menuItems.announcement),
@@ -456,18 +456,18 @@ const _templateFactory = intl => [
       },
       {
         label: intl.formatMessage(menuItems.support),
-        click() { shell.openExternal('https://meetfranz.com/support'); },
+        click() { shell.openExternal('https://getferdi.com/contact'); },
       },
       {
         type: 'separator',
       },
       {
         label: intl.formatMessage(menuItems.tos),
-        click() { shell.openExternal('https://meetfranz.com/terms'); },
+        click() { shell.openExternal('https://getferdi.com/terms'); },
       },
       {
         label: intl.formatMessage(menuItems.privacy),
-        click() { shell.openExternal('https://meetfranz.com/privacy'); },
+        click() { shell.openExternal('https://getferdi.com/privacy'); },
       },
     ],
   },
@@ -637,29 +637,29 @@ const _titleBarTemplateFactory = intl => [
     submenu: [
       {
         label: intl.formatMessage(menuItems.learnMore),
-        click() { shell.openExternal('https://meetfranz.com'); },
+        click() { shell.openExternal('https://getferdi.com'); },
       },
       {
         label: intl.formatMessage(menuItems.changelog),
-        click() { shell.openExternal('https://github.com/meetfranz/franz/blob/master/CHANGELOG.md'); },
+        click() { shell.openExternal('https://github.com/getferdi/ferdi/blob/master/CHANGELOG.md'); },
       },
       {
         type: 'separator',
       },
       {
         label: intl.formatMessage(menuItems.support),
-        click() { shell.openExternal('https://meetfranz.com/support'); },
+        click() { shell.openExternal('https://getferdi.com/contact'); },
       },
       {
         type: 'separator',
       },
       {
         label: intl.formatMessage(menuItems.tos),
-        click() { shell.openExternal('https://meetfranz.com/terms'); },
+        click() { shell.openExternal('https://getferdi.com/terms'); },
       },
       {
         label: intl.formatMessage(menuItems.privacy),
-        click() { shell.openExternal('https://meetfranz.com/privacy'); },
+        click() { shell.openExternal('https://getferdi.com/privacy'); },
       },
     ],
   },
