@@ -463,11 +463,11 @@ const _templateFactory = intl => [
       },
       {
         label: intl.formatMessage(menuItems.tos),
-        click() { shell.openExternal('https://getferdi.com/terms'); },
+        click() { shell.openExternal('https://meetfranz.com/terms'); },
       },
       {
         label: intl.formatMessage(menuItems.privacy),
-        click() { shell.openExternal('https://getferdi.com/privacy'); },
+        click() { shell.openExternal('https://meetfranz.com/privacy'); },
       },
     ],
   },
@@ -655,11 +655,11 @@ const _titleBarTemplateFactory = intl => [
       },
       {
         label: intl.formatMessage(menuItems.tos),
-        click() { shell.openExternal('https://getferdi.com/terms'); },
+        click() { shell.openExternal('https://meetfranz.com/terms'); },
       },
       {
         label: intl.formatMessage(menuItems.privacy),
-        click() { shell.openExternal('https://getferdi.com/privacy'); },
+        click() { shell.openExternal('https://meetfranz.com/privacy'); },
       },
     ],
   },
