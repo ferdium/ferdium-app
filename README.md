@@ -94,7 +94,16 @@ Be aware that the development database will be reset regularly.
 $ npm run build
 ```
 
-Deliverables will be available in the ./out folder.
+Deliverables will be available in the `out` folder.
+
+## Release
+
+```bash
+$ git tag v5.3.4-beta.4
+$ git push --tags
+```
+
+When pushing a new tag, the CI build will create a draft GitHub release and upload the deliverables in the release assets.
 
 ## Contributors ✨
 
