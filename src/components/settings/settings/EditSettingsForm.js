@@ -13,6 +13,15 @@ import Input from '../../ui/Input';
 
 import { FRANZ_TRANSLATION } from '../../../config';
 
+function escapeHtml(unsafe) {
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 const messages = defineMessages({
   headline: {
     id: 'settings.app.headline',
@@ -26,6 +35,10 @@ const messages = defineMessages({
     id: 'settings.app.serverInfo',
     defaultMessage: '!!!We advice you to logout after changing your server as your settings might not be saved otherwise.',
   },
+  serverMoneyInfo: {
+    id: 'settings.app.serverMoneyInfo',
+    defaultMessage: '!!!You are using the official Franz Server for Ferdi.\nWe know that Ferdi allows you to use all its features for free but you are still using Franz\'s server resources - which Franz\'s creator has to pay for.\nPlease still consider [Link 1]paying for a Franz account[/Link] or [Link 2]using a self-hosted ferdi-server[/Link] (if you have the knowledge and resources to do so). \nBy using Ferdi, you still profit greatly from Franz\'s recipe store, server resources and its development.',
+  },
   todoServerInfo: {
     id: 'settings.app.todoServerInfo',
     defaultMessage: '!!!This server will be used for the "Franz Todo" feature. (default: https://app.franztodos.com)',
@@ -37,6 +50,10 @@ const messages = defineMessages({
   lockedPasswordInfo: {
     id: 'settings.app.lockedPasswordInfo',
     defaultMessage: '!!!Please make sure to set a password you\'ll remember.\nIf you loose this password, you will have to reinstall Ferdi.',
+  },
+  lockInfo: {
+    id: 'settings.app.lockInfo',
+    defaultMessage: '!!!Ferdi password lock allows you to keep your messages protected.\nUsing Ferdi password lock, you will be prompted to enter your password everytime you start Ferdi or lock Ferdi yourself using the lock symbol in the bottom left corner or the shortcut CMD/CTRL+Shift+L.',
   },
   scheduledDNDTimeInfo: {
     id: 'settings.app.scheduledDNDTimeInfo',
@@ -218,24 +235,20 @@ export default @observer class EditSettingsForm extends Component {
                   borderTop: 0, marginTop: 0, paddingTop: 0, marginBottom: '2rem',
                 }}
               >
-                <span>
-                  You are using the official Franz Server for Ferdi.
-                  <br />
-                  We know that Ferdi allows you to use all its features for free but you are
-                  still using Franz&#x27;s server resources - which Franz&#x27;s creator has to pay for.
-                  <br />
-                  Please still consider
-                  {' '}
-                  <a href="https://www.meetfranz.com/pricing" target="_blank">paying for a Franz account</a>
-                  {' '}
-                  or
-                  {' '}
-                  <a href="https://github.com/getferdi/server" target="_blank">using a self-hosted ferdi-server</a>
-                  {' '}
-                  (if you have the knowledge and resources to do so).
-                  <br />
-                  By using Ferdi, you still profit greatly from Franz&#x27;s recipe store, server resources and its development.
-                </span>
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html:
+                  // Needed to make links work
+                  escapeHtml(
+                    intl.formatMessage(messages.serverMoneyInfo),
+                  ).replace('[Link 1]', '<a href="https://www.meetfranz.com/pricing" target="_blank">')
+                    .replace('[Link 2]', '<a href="https://github.com/getferdi/server" target="_blank">')
+                    .replace(/\[\/Link]/g, '</a>'),
+                  }}
+                  style={{
+                    whiteSpace: 'pre-wrap',
+                  }}
+                />
               </p>
             )}
             {isWorkspaceEnabled && (
@@ -276,12 +289,7 @@ export default @observer class EditSettingsForm extends Component {
               }}
             >
               <span>
-                  Ferdi password lock allows you to keep your messages protected.
-                <br />
-                  Using Ferdi password lock, you will be prompted to enter your password everytime you
-                  start Ferdi or lock Ferdi yourself using the lock symbol in the bottom left corner or the shortcut
-                {' '}
-                <code>CMD/CTRL+Shift+L</code>
+                { intl.formatMessage(messages.lockInfo) }
               </span>
             </p>
 
