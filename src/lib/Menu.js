@@ -804,7 +804,7 @@ export default class FranzMenu {
         },
         {
           label: intl.formatMessage(menuItems.settings),
-          accelerator: 'CmdOrCtrl+P',
+          accelerator: 'CmdOrCtrl+,',
           click: () => {
             this.actions.ui.openSettings({ path: 'app' });
           },
