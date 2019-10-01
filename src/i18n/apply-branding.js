@@ -10,6 +10,7 @@ console.log('Applying Ferdi branding to translations...');
 const ignore = [
   'login.customServerSuggestion',
   'settings.app.todoServerInfo',
+  'settings.app.serverMoneyInfo',
 ];
 
 // Files to ignore when applying branding
