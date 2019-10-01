@@ -42,7 +42,6 @@ linux:
     - target: AppImage
     - target: deb
     - target: tar.gz
-    - target: pacman
 
 nsis:
   perMachine: false
