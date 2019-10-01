@@ -103,7 +103,7 @@ $ git tag v5.3.4-beta.4
 $ git push --tags
 ```
 
-When pushing a new tag, the CI build will create a draft GitHub release and upload the deliverables in the release assets.
+When pushing a new tag, the CI build will create a draft GitHub release and upload the deliverables in the draft release assets. Wait for all the assets to be uploaded before publishing the draft release.
 
 ## Contributors ✨
 
