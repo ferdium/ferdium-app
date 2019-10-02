@@ -25,3 +25,4 @@ artifacts:
 branches:
   except:
     - i18n
+    - l10n_master
