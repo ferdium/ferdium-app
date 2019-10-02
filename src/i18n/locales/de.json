@@ -231,6 +231,7 @@
   "settings.app.form.language": "Sprache",
   "settings.app.form.lockPassword": "Passwort für die Passwort-Sperre",
   "settings.app.form.minimizeToSystemTray": "Ferdi in den Infobereich minimieren",
+  "settings.app.form.noUpdates": "Disable updates",
   "settings.app.form.privateNotifications": "Nachrichteninhalt nicht in Benachrichtigungen anzeigen",
   "settings.app.form.runInBackground": "Ferdi im Hintergrund behalten, wenn das Fenster geschlossen wird",
   "settings.app.form.scheduledDNDEnabled": "Geplante \"Nicht-stören\"-Funktion aktivieren",
