@@ -231,6 +231,7 @@
   "settings.app.form.language": "Jezik",
   "settings.app.form.lockPassword": "Ferdi Lock password",
   "settings.app.form.minimizeToSystemTray": "Smanji Franca u sustavsku traku",
+  "settings.app.form.noUpdates": "Disable updates",
   "settings.app.form.privateNotifications": "Don't show message content in notifications",
   "settings.app.form.runInBackground": "Neka se Franc održava u pozadini i ako je prozor zatvoren",
   "settings.app.form.scheduledDNDEnabled": "Enable scheduled Do-not-Disturb",
