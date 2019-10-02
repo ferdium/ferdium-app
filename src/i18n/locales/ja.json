@@ -231,6 +231,7 @@
   "settings.app.form.language": "言語",
   "settings.app.form.lockPassword": "Ferdi Lock password",
   "settings.app.form.minimizeToSystemTray": "Ferdiをシステムトレイに最小化する",
+  "settings.app.form.noUpdates": "Disable updates",
   "settings.app.form.privateNotifications": "Don't show message content in notifications",
   "settings.app.form.runInBackground": "ウインドウを閉じた際にFerdiをバックグラウンドで実行させておく",
   "settings.app.form.scheduledDNDEnabled": "Enable scheduled Do-not-Disturb",
