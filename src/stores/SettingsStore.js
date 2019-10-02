@@ -71,12 +71,21 @@ export default class SettingsStore extends Store {
     // Make sure to lock app on launch if locking feature is enabled
     setTimeout(() => {
       if (this.all.app.lockingFeatureEnabled) {
+        // Disable lock first - otherwise the lock might not get activated corrently
         this.actions.settings.update({
           type: 'app',
           data: {
-            locked: true,
+            locked: false,
           },
         });
+        setTimeout(() => {
+          this.actions.settings.update({
+            type: 'app',
+            data: {
+              locked: true,
+            },
+          });
+        }, 0);
       }
     }, 1000);
   }
