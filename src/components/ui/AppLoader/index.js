@@ -9,14 +9,13 @@ import { shuffleArray } from '../../../helpers/array-helpers';
 import styles from './styles';
 
 const textList = shuffleArray([
-  'Looking for Sisi',
-  'Contacting the herald',
-  'Saddling the unicorn',
-  'Learning the Waltz',
-  'Visiting Horst & Grete',
-  'Twisting my moustache',
-  'Playing the trumpet',
-  'Traveling through space & time',
+  'Adding free features',
+  'Making application usable',
+  'Removing unproductive paywalls',
+  'Creating custom server software',
+  'Increasing productivity',
+  'Listening to our userbase',
+  'Fixing bugs',
 ]);
 
 export default @injectSheet(styles) @withTheme class AppLoader extends Component {
