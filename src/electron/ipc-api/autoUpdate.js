@@ -4,24 +4,33 @@ import { autoUpdater } from 'electron-updater';
 const debug = require('debug')('Ferdi:ipcApi:autoUpdate');
 
 export default (params) => {
-  if (process.platform === 'darwin' || process.platform === 'win32' || process.env.APPIMAGE) {
+  const disableUpdates = Boolean(params.settings.app.get('noUpdates'));
+
+  if (disableUpdates) {
+    autoUpdater.autoInstallOnAppQuit = false;
+    autoUpdater.autoDownload = false;
+  } else if (process.platform === 'darwin' || process.platform === 'win32' || process.env.APPIMAGE) {
     ipcMain.on('autoUpdate', (event, args) => {
-      try {
-        autoUpdater.autoInstallOnAppQuit = false;
-        autoUpdater.allowPrerelease = Boolean(params.settings.app.get('beta'));
-        if (args.action === 'check') {
-          autoUpdater.checkForUpdates();
-        } else if (args.action === 'install') {
-          debug('install update');
-          autoUpdater.quitAndInstall();
-          // we need to send a quit event
-          setTimeout(() => {
-            app.quit();
-          }, 20);
+      const enableUpdate = !params.settings.app.get('noUpdates');
+
+      if (enableUpdate) {
+        try {
+          autoUpdater.autoInstallOnAppQuit = false;
+          autoUpdater.allowPrerelease = Boolean(params.settings.app.get('beta'));
+          if (args.action === 'check') {
+            autoUpdater.checkForUpdates();
+          } else if (args.action === 'install') {
+            debug('install update');
+            autoUpdater.quitAndInstall();
+            // we need to send a quit event
+            setTimeout(() => {
+              app.quit();
+            }, 20);
+          }
+        } catch (e) {
+          console.error(e);
+          event.sender.send('autoUpdate', { error: true });
         }
-      } catch (e) {
-        console.error(e);
-        event.sender.send('autoUpdate', { error: true });
       }
     });
 
@@ -32,10 +41,14 @@ export default (params) => {
 
     autoUpdater.on('update-available', (event) => {
       debug('update-available');
-      params.mainWindow.webContents.send('autoUpdate', {
-        version: event.version,
-        available: true,
-      });
+
+      const enableUpdate = !params.settings.app.get('noUpdates');
+      if (enableUpdate) {
+        params.mainWindow.webContents.send('autoUpdate', {
+          version: event.version,
+          available: true,
+        });
+      }
     });
 
     autoUpdater.on('download-progress', (progressObj) => {

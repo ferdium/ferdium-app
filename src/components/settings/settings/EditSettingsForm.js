@@ -146,6 +146,7 @@ export default @observer class EditSettingsForm extends Component {
     isTodosEnabled: PropTypes.bool.isRequired,
     isWorkspaceEnabled: PropTypes.bool.isRequired,
     server: PropTypes.string.isRequired,
+    noUpdates: PropTypes.bool.isRequired,
   };
 
   static contextTypes = {
@@ -179,6 +180,7 @@ export default @observer class EditSettingsForm extends Component {
       isTodosEnabled,
       isWorkspaceEnabled,
       server,
+      noUpdates,
     } = this.props;
     const { intl } = this.context;
 
@@ -412,7 +414,7 @@ export default @observer class EditSettingsForm extends Component {
                 buttonType="secondary"
                 label={intl.formatMessage(updateButtonLabelMessage)}
                 onClick={checkForUpdates}
-                disabled={isCheckingForUpdates || isUpdateAvailable}
+                disabled={noUpdates || isCheckingForUpdates || isUpdateAvailable}
                 loaded={!isCheckingForUpdates || !isUpdateAvailable}
               />
             )}
@@ -421,6 +423,7 @@ export default @observer class EditSettingsForm extends Component {
             )}
             <br />
             <Toggle field={form.$('beta')} />
+            <Toggle field={form.$('noUpdates')} />
             {intl.formatMessage(messages.currentVersion)}
             {' '}
             {remote.app.getVersion()}

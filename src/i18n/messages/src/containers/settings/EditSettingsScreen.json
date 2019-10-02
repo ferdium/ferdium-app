@@ -273,15 +273,28 @@
     }
   },
   {
+    "id": "settings.app.form.noUpdates",
+    "defaultMessage": "!!!Disable updates",
+    "file": "src/containers/settings/EditSettingsScreen.js",
+    "start": {
+      "line": 112,
+      "column": 13
+    },
+    "end": {
+      "line": 115,
+      "column": 3
+    }
+  },
+  {
     "id": "settings.app.form.enableTodos",
     "defaultMessage": "!!!Enable Franz Todos",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
-      "line": 112,
+      "line": 116,
       "column": 15
     },
     "end": {
-      "line": 115,
+      "line": 119,
       "column": 3
     }
   },
@@ -290,11 +303,11 @@
     "defaultMessage": "!!!Keep all workspaces loaded",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
-      "line": 116,
+      "line": 120,
       "column": 27
     },
     "end": {
-      "line": 119,
+      "line": 123,
       "column": 3
     }
   }

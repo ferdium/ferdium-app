@@ -109,6 +109,10 @@ const messages = defineMessages({
     id: 'settings.app.form.beta',
     defaultMessage: '!!!Include beta versions',
   },
+  noUpdates: {
+    id: 'settings.app.form.noUpdates',
+    defaultMessage: '!!!Disable updates',
+  },
   enableTodos: {
     id: 'settings.app.form.enableTodos',
     defaultMessage: '!!!Enable Franz Todos',
@@ -161,12 +165,14 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
         enableSpellchecking: settingsData.enableSpellchecking,
         spellcheckerLanguage: settingsData.spellcheckerLanguage,
         beta: settingsData.beta, // we need this info in the main process as well
+        noUpdates: settingsData.noUpdates, // we need this info in the main process as well
         locale: settingsData.locale, // we need this info in the main process as well
       },
     });
 
     user.update({
       userData: {
+        noUpdates: settingsData.noUpdates,
         beta: settingsData.beta,
         locale: settingsData.locale,
       },
@@ -319,6 +325,11 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           value: user.data.beta,
           default: DEFAULT_APP_SETTINGS.beta,
         },
+        noUpdates: {
+          label: intl.formatMessage(messages.noUpdates),
+          value: settings.app.noUpdates,
+          default: DEFAULT_APP_SETTINGS.noUpdates,
+        },
       },
     };
 
@@ -381,6 +392,7 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           isWorkspaceEnabled={workspaces.isFeatureActive}
           server={server || 'https://api.franzinfra.com'}
           lockingFeatureEnabled={lockingFeatureEnabled}
+          noUpdates={this.props.stores.settings.app.noUpdates}
         />
       </ErrorBoundary>
     );
