@@ -231,6 +231,7 @@
   "settings.app.form.language": "Teanga",
   "settings.app.form.lockPassword": "Ferdi Lock password",
   "settings.app.form.minimizeToSystemTray": "Íoslaghdaigh Ferdi chuig tráidire an chórais",
+  "settings.app.form.noUpdates": "Disable updates",
   "settings.app.form.privateNotifications": "Don't show message content in notifications",
   "settings.app.form.runInBackground": "Coimeád Ferdi sa chúlra nuair a dhúntar an fhuinneog",
   "settings.app.form.scheduledDNDEnabled": "Enable scheduled Do-not-Disturb",
