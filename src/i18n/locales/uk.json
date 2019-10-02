@@ -231,6 +231,7 @@
   "settings.app.form.language": "Мова",
   "settings.app.form.lockPassword": "Ferdi Lock password",
   "settings.app.form.minimizeToSystemTray": "Мінімізувати Ferdi до системного лотка",
+  "settings.app.form.noUpdates": "Disable updates",
   "settings.app.form.privateNotifications": "Don't show message content in notifications",
   "settings.app.form.runInBackground": "Тримати Ferdi в фоні при закритті вікна",
   "settings.app.form.scheduledDNDEnabled": "Enable scheduled Do-not-Disturb",
