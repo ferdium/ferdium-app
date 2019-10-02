@@ -118,12 +118,21 @@ export default @inject('stores', 'actions') @observer class Sidebar extends Comp
                 type="button"
                 className={`sidebar__button sidebar__button--audio ${isAppMuted ? 'is-muted' : ''}`}
                 onClick={() => {
+                  // Disable lock first - otherwise the application might not update correctly
                   actions.settings.update({
                     type: 'app',
                     data: {
-                      locked: true,
+                      locked: false,
                     },
                   });
+                  setTimeout(() => {
+                    actions.settings.update({
+                      type: 'app',
+                      data: {
+                        locked: true,
+                      },
+                    });
+                  }, 0);
                 }}
                 data-tip={`${intl.formatMessage(messages.lockFerdi)} (${ctrlKey}+Shift+L)`}
               >

@@ -783,12 +783,21 @@ export default class FranzMenu {
       accelerator: 'CmdOrCtrl+Shift+L',
       enabled: this.stores.settings.app.lockingFeatureEnabled,
       click() {
+        // Disable lock first - otherwise the application might not update correctly
         actions.settings.update({
           type: 'app',
           data: {
-            locked: true,
+            locked: false,
           },
         });
+        setTimeout(() => {
+          actions.settings.update({
+            type: 'app',
+            data: {
+              locked: true,
+            },
+          });
+        }, 0);
       },
     });
 
