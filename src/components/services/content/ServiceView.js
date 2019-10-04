@@ -13,6 +13,7 @@ import WebviewErrorHandler from './ErrorHandlers/WebviewErrorHandler';
 import ServiceDisabled from './ServiceDisabled';
 import ServiceWebview from './ServiceWebview';
 import SettingsStore from '../../../stores/SettingsStore';
+import WebControlsScreen from '../../../features/webControls/containers/WebControlsScreen';
 
 export default @observer @inject('stores') class ServiceView extends Component {
   static propTypes = {
@@ -177,6 +178,9 @@ export default @observer @inject('stores') class ServiceView extends Component {
           </Fragment>
         ) : (
           <>
+            {service.recipe.id === 'franz-custom-website' && (
+              <WebControlsScreen service={service} />
+            )}
             {!this.state.hibernate ? (
               <ServiceWebview
                 service={service}
@@ -187,7 +191,7 @@ export default @observer @inject('stores') class ServiceView extends Component {
               <div>
                 <span role="img" aria-label="Sleeping Emoji">😴</span>
                 {' '}
-This service is currently hibernating. If this page doesn&#x27;t close soon, please try reloading Ferdi.
+                This service is currently hibernating. If this page doesn&#x27;t close soon, please try reloading Ferdi.
               </div>
             )}
           </>
