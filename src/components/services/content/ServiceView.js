@@ -178,31 +178,21 @@ export default @observer @inject('stores') class ServiceView extends Component {
           </Fragment>
         ) : (
           <>
-            {service.isServiceAccessRestricted ? (
-              <ServiceRestricted
-                name={service.recipe.name}
-                upgrade={upgrade}
-                type={service.restrictionType}
+            {service.recipe.id === 'franz-custom-website' && (
+              <WebControlsScreen service={service} />
+            )}
+            {!this.state.hibernate ? (
+              <ServiceWebview
+                service={service}
+                setWebviewReference={setWebviewReference}
+                detachService={detachService}
               />
             ) : (
-              <>
-                {service.recipe.id === 'franz-custom-website' && (
-                  <WebControlsScreen service={service} />
-                )}
-                {!this.state.hibernate ? (
-                  <ServiceWebview
-                    service={service}
-                    setWebviewReference={setWebviewReference}
-                    detachService={detachService}
-                  />
-                ) : (
-                  <div>
-                    <span role="img" aria-label="Sleeping Emoji">😴</span>
-                    {' '}
-                    This service is currently hibernating. If this page doesn&#x27;t close soon, please try reloading Ferdi.
-                  </div>
-                )}
-              </>
+              <div>
+                <span role="img" aria-label="Sleeping Emoji">😴</span>
+                {' '}
+                This service is currently hibernating. If this page doesn&#x27;t close soon, please try reloading Ferdi.
+              </div>
             )}
           </>
         )}
