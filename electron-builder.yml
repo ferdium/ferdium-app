@@ -27,12 +27,10 @@ dmg:
 win:
   icon: ./build-helpers/images/icon.ico
   target:
-    target:
-      - nsis
-      - portable
-    arch:
-      - x64
-      - ia32
+    - target: nsis
+      arch: [x64, ia32]
+    - target: portable
+      arch: [x64, ia32]
 
 linux:
   icon: ./build-helpers/images/icons
