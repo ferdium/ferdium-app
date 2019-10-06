@@ -1,3 +1,4 @@
+import { ipcRenderer } from 'electron';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
@@ -196,6 +197,10 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
         todosActions.toggleTodosFeatureVisibility();
       }
     }
+  }
+
+  openProcessManager() {
+    ipcRenderer.send('openProcessManager');
   }
 
   prepareForm() {
@@ -410,6 +415,7 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           lockingFeatureEnabled={lockingFeatureEnabled}
           noUpdates={this.props.stores.settings.app.noUpdates}
           hibernationEnabled={this.props.stores.settings.app.hibernate}
+          openProcessManager={() => this.openProcessManager()}
         />
       </ErrorBoundary>
     );

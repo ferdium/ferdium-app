@@ -3775,325 +3775,325 @@
         "defaultMessage": "!!!Launch Ferdi on start",
         "end": {
           "column": 3,
-          "line": 31
+          "line": 32
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.autoLaunchOnStart",
         "start": {
           "column": 21,
-          "line": 28
+          "line": 29
         }
       },
       {
         "defaultMessage": "!!!Open in background",
         "end": {
           "column": 3,
-          "line": 35
+          "line": 36
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.autoLaunchInBackground",
         "start": {
           "column": 26,
-          "line": 32
+          "line": 33
         }
       },
       {
         "defaultMessage": "!!!Keep Ferdi in background when closing the window",
         "end": {
           "column": 3,
-          "line": 39
+          "line": 40
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.runInBackground",
         "start": {
           "column": 19,
-          "line": 36
+          "line": 37
         }
       },
       {
         "defaultMessage": "!!!Show Ferdi in system tray",
         "end": {
           "column": 3,
-          "line": 43
+          "line": 44
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.enableSystemTray",
         "start": {
           "column": 20,
-          "line": 40
+          "line": 41
         }
       },
       {
         "defaultMessage": "!!!Minimize Ferdi to system tray",
         "end": {
           "column": 3,
-          "line": 47
+          "line": 48
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.minimizeToSystemTray",
         "start": {
           "column": 24,
-          "line": 44
+          "line": 45
         }
       },
       {
         "defaultMessage": "!!!Don't show message content in notifications",
         "end": {
           "column": 3,
-          "line": 51
+          "line": 52
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.privateNotifications",
         "start": {
           "column": 24,
-          "line": 48
+          "line": 49
         }
       },
       {
         "defaultMessage": "!!!Enable service hibernation",
         "end": {
           "column": 3,
-          "line": 55
+          "line": 56
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.hibernate",
         "start": {
           "column": 13,
-          "line": 52
+          "line": 53
         }
       },
       {
         "defaultMessage": "!!!Hibernation strategy",
         "end": {
           "column": 3,
-          "line": 59
+          "line": 60
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.hibernationStrategy",
         "start": {
           "column": 23,
-          "line": 56
+          "line": 57
         }
       },
       {
         "defaultMessage": "!!!Server",
         "end": {
           "column": 3,
-          "line": 63
+          "line": 64
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.server",
         "start": {
           "column": 10,
-          "line": 60
+          "line": 61
         }
       },
       {
         "defaultMessage": "!!!Todo Server",
         "end": {
           "column": 3,
-          "line": 67
+          "line": 68
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.todoServer",
         "start": {
           "column": 14,
-          "line": 64
+          "line": 65
         }
       },
       {
         "defaultMessage": "!!!Enable Ferdi password lock",
         "end": {
           "column": 3,
-          "line": 71
+          "line": 72
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.enableLock",
         "start": {
           "column": 14,
-          "line": 68
+          "line": 69
         }
       },
       {
         "defaultMessage": "!!!Ferdi Lock password",
         "end": {
           "column": 3,
-          "line": 75
+          "line": 76
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.lockPassword",
         "start": {
           "column": 16,
-          "line": 72
+          "line": 73
         }
       },
       {
         "defaultMessage": "!!!Enable scheduled Do-not-Disturb",
         "end": {
           "column": 3,
-          "line": 79
+          "line": 80
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.scheduledDNDEnabled",
         "start": {
           "column": 23,
-          "line": 76
+          "line": 77
         }
       },
       {
         "defaultMessage": "!!!From",
         "end": {
           "column": 3,
-          "line": 83
+          "line": 84
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.scheduledDNDStart",
         "start": {
           "column": 21,
-          "line": 80
+          "line": 81
         }
       },
       {
         "defaultMessage": "!!!To",
         "end": {
           "column": 3,
-          "line": 87
+          "line": 88
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.scheduledDNDEnd",
         "start": {
           "column": 19,
-          "line": 84
+          "line": 85
         }
       },
       {
         "defaultMessage": "!!!Language",
         "end": {
           "column": 3,
-          "line": 91
+          "line": 92
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.language",
         "start": {
           "column": 12,
-          "line": 88
+          "line": 89
         }
       },
       {
         "defaultMessage": "!!!Dark Mode",
         "end": {
           "column": 3,
-          "line": 95
+          "line": 96
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.darkMode",
         "start": {
           "column": 12,
-          "line": 92
+          "line": 93
         }
       },
       {
         "defaultMessage": "!!!Display disabled services tabs",
         "end": {
           "column": 3,
-          "line": 99
+          "line": 100
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.showDisabledServices",
         "start": {
           "column": 24,
-          "line": 96
+          "line": 97
         }
       },
       {
         "defaultMessage": "!!!Show unread message badge when notifications are disabled",
         "end": {
           "column": 3,
-          "line": 103
+          "line": 104
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.showMessagesBadgesWhenMuted",
         "start": {
           "column": 29,
-          "line": 100
+          "line": 101
         }
       },
       {
         "defaultMessage": "!!!Enable spell checking",
         "end": {
           "column": 3,
-          "line": 107
+          "line": 108
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.enableSpellchecking",
         "start": {
           "column": 23,
-          "line": 104
+          "line": 105
         }
       },
       {
         "defaultMessage": "!!!Enable GPU Acceleration",
         "end": {
           "column": 3,
-          "line": 111
+          "line": 112
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.enableGPUAcceleration",
         "start": {
           "column": 25,
-          "line": 108
+          "line": 109
         }
       },
       {
         "defaultMessage": "!!!Include beta versions",
         "end": {
           "column": 3,
-          "line": 115
+          "line": 116
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.beta",
         "start": {
           "column": 8,
-          "line": 112
+          "line": 113
         }
       },
       {
         "defaultMessage": "!!!Disable updates",
         "end": {
           "column": 3,
-          "line": 119
+          "line": 120
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.noUpdates",
         "start": {
           "column": 13,
-          "line": 116
+          "line": 117
         }
       },
       {
         "defaultMessage": "!!!Enable Franz Todos",
         "end": {
           "column": 3,
-          "line": 123
+          "line": 124
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.enableTodos",
         "start": {
           "column": 15,
-          "line": 120
+          "line": 121
         }
       },
       {
         "defaultMessage": "!!!Keep all workspaces loaded",
         "end": {
           "column": 3,
-          "line": 127
+          "line": 128
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.keepAllWorkspacesLoaded",
         "start": {
           "column": 27,
-          "line": 124
+          "line": 125
         }
       }
     ],

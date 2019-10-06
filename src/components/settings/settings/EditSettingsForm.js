@@ -152,6 +152,7 @@ export default @observer class EditSettingsForm extends Component {
     server: PropTypes.string.isRequired,
     noUpdates: PropTypes.bool.isRequired,
     hibernationEnabled: PropTypes.bool.isRequired,
+    openProcessManager: PropTypes.func.isRequired,
   };
 
   static contextTypes = {
@@ -187,6 +188,7 @@ export default @observer class EditSettingsForm extends Component {
       server,
       noUpdates,
       hibernationEnabled,
+      openProcessManager,
     } = this.props;
     const { intl } = this.context;
 
@@ -419,6 +421,16 @@ export default @observer class EditSettingsForm extends Component {
                   loaded={!isClearingAllCache}
                 />
               </p>
+              <div style={{
+                marginTop: 20,
+              }}
+              >
+                <Button
+                  buttonType="secondary"
+                  label="Open Process Manager"
+                  onClick={openProcessManager}
+                />
+              </div>
             </div>
 
             {/* Updates */}
