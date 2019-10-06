@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { autorun, reaction } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import classnames from 'classnames';
-import ms from 'ms';
 
 import ServiceModel from '../../../models/Service';
 import StatusBarTargetUrl from '../../ui/StatusBarTargetUrl';
@@ -104,11 +103,13 @@ export default @observer @inject('stores') class ServiceView extends Component {
   };
 
   startHibernationTimer() {
+    const timerDuration = (Number(this.props.stores.settings.all.app.hibernationStrategy) || 300) * 1000;
+
     const hibernationTimer = setTimeout(() => {
       this.setState({
         hibernate: true,
       });
-    }, ms('5m'));
+    }, timerDuration);
 
     this.setState({
       hibernationTimer,

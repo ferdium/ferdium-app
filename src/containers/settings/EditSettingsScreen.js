@@ -9,7 +9,7 @@ import UserStore from '../../stores/UserStore';
 import TodosStore from '../../features/todos/store';
 import Form from '../../lib/Form';
 import { APP_LOCALES, SPELLCHECKER_LOCALES } from '../../i18n/languages';
-import { DEFAULT_APP_SETTINGS, DEFAULT_LOCK_PASSWORD } from '../../config';
+import { DEFAULT_APP_SETTINGS, DEFAULT_LOCK_PASSWORD, HIBERNATION_STRATEGIES } from '../../config';
 import { config as spellcheckerConfig } from '../../features/spellchecker';
 
 import { getSelectOptions } from '../../helpers/i18n-helpers';
@@ -52,6 +52,10 @@ const messages = defineMessages({
   hibernate: {
     id: 'settings.app.form.hibernate',
     defaultMessage: '!!!Enable service hibernation',
+  },
+  hibernationStrategy: {
+    id: 'settings.app.form.hibernationStrategy',
+    defaultMessage: '!!!Hibernation strategy',
   },
   server: {
     id: 'settings.app.form.server',
@@ -151,6 +155,7 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
         minimizeToSystemTray: settingsData.minimizeToSystemTray,
         privateNotifications: settingsData.privateNotifications,
         hibernate: settingsData.hibernate,
+        hibernationStrategy: settingsData.hibernationStrategy,
         server: settingsData.server,
         todoServer: settingsData.todoServer,
         lockingFeatureEnabled: settingsData.lockingFeatureEnabled,
@@ -203,6 +208,11 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
       locales: APP_LOCALES,
     });
 
+    const hibernationStrategies = getSelectOptions({
+      locales: HIBERNATION_STRATEGIES,
+      sort: false,
+    });
+
     const spellcheckingLanguages = getSelectOptions({
       locales: SPELLCHECKER_LOCALES,
       automaticDetectionText: this.context.intl.formatMessage(globalMessages.spellcheckerAutomaticDetection),
@@ -244,6 +254,12 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           label: intl.formatMessage(messages.hibernate),
           value: settings.all.app.hibernate,
           default: DEFAULT_APP_SETTINGS.hibernate,
+        },
+        hibernationStrategy: {
+          label: intl.formatMessage(messages.hibernationStrategy),
+          value: settings.all.app.hibernationStrategy,
+          options: hibernationStrategies,
+          default: DEFAULT_APP_SETTINGS.hibernationStrategy,
         },
         server: {
           label: intl.formatMessage(messages.server),
@@ -393,6 +409,7 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           server={server || 'https://api.franzinfra.com'}
           lockingFeatureEnabled={lockingFeatureEnabled}
           noUpdates={this.props.stores.settings.app.noUpdates}
+          hibernationEnabled={this.props.stores.settings.app.hibernate}
         />
       </ErrorBoundary>
     );
