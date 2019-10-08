@@ -334,7 +334,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Using a custom Ferdi server?",
+        "defaultMessage": "!!!Using a Franz account to log in?",
         "end": {
           "column": 3,
           "line": 40
@@ -347,7 +347,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Try importing your Franz account",
+        "defaultMessage": "!!!Try importing your Franz account into Ferdi",
         "end": {
           "column": 3,
           "line": 44

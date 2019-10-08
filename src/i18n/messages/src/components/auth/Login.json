@@ -66,7 +66,7 @@
   },
   {
     "id": "login.customServerQuestion",
-    "defaultMessage": "!!!Using a custom Ferdi server?",
+    "defaultMessage": "!!!Using a Franz account to log in?",
     "file": "src/components/auth/Login.js",
     "start": {
       "line": 37,
@@ -79,7 +79,7 @@
   },
   {
     "id": "login.customServerSuggestion",
-    "defaultMessage": "!!!Try importing your Franz account",
+    "defaultMessage": "!!!Try importing your Franz account into Ferdi",
     "file": "src/components/auth/Login.js",
     "start": {
       "line": 41,

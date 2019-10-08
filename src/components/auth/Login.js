@@ -36,11 +36,11 @@ const messages = defineMessages({
   },
   customServerQuestion: {
     id: 'login.customServerQuestion',
-    defaultMessage: '!!!Using a custom Ferdi server?',
+    defaultMessage: '!!!Using a Franz account to log in?',
   },
   customServerSuggestion: {
     id: 'login.customServerSuggestion',
-    defaultMessage: '!!!Try importing your Franz account',
+    defaultMessage: '!!!Try importing your Franz account into Ferdi',
   },
   tokenExpired: {
     id: 'login.tokenExpired',

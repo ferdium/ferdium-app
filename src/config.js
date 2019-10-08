@@ -12,7 +12,7 @@ export const CHECK_INTERVAL = ms('1h'); // How often should we perform checks
 
 export const LOCAL_API = 'http://localhost:3000';
 export const DEV_API = 'https://dev.franzinfra.com';
-export const LIVE_API = 'https://api.franzinfra.com';
+export const LIVE_API = 'https://api.getferdi.com';
 
 export const LOCAL_WS_API = 'ws://localhost:3000';
 export const DEV_WS_API = 'wss://dev.franzinfra.com';
@@ -21,7 +21,7 @@ export const LIVE_WS_API = 'wss://api.franzinfra.com';
 export const LOCAL_API_WEBSITE = 'http://localhost:3333';
 // export const DEV_API_WEBSITE = 'https://meetfranz.com';t
 export const DEV_API_WEBSITE = 'http://hash-58883791519ef6288c952316bdce7fb462283893.franzstaging.com/'; // TODO: revert me
-export const LIVE_API_WEBSITE = 'https://meetfranz.com';
+export const LIVE_API_WEBSITE = 'https://getferdi.com';
 
 export const STATS_API = 'https://stats.franzinfra.com';
 
@@ -99,8 +99,8 @@ export const DEFAULT_WINDOW_OPTIONS = {
   y: 0,
 };
 
-export const FRANZ_SERVICE_REQUEST = 'https://bit.ly/franz-plugin-docs';
-export const FRANZ_TRANSLATION = 'https://bit.ly/franz-translate';
+export const FRANZ_SERVICE_REQUEST = 'https://github.com/getferdi/recipes/issues';
+export const FRANZ_TRANSLATION = 'https://crowdin.com/project/getferdi';
 export const FRANZ_DEV_DOCS = 'http://bit.ly/franz-dev-hub';
 
 export const FILE_SYSTEM_SETTINGS_TYPES = [
