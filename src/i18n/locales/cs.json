@@ -242,6 +242,7 @@
   "settings.app.form.server": "Server",
   "settings.app.form.showDisabledServices": "Zobrazit záložky vypnutých služeb",
   "settings.app.form.showMessagesBadgesWhenMuted": "Zobrazit odznak pro nepřečtené zprávy když jsou upozornění vypnutá",
+  "settings.app.form.showServiceNavigationBar": "Always show service navigation bar",
   "settings.app.form.todoServer": "Todo Server",
   "settings.app.headline": "Nastavení",
   "settings.app.headlineAdvanced": "Pokročilé",
