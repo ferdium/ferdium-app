@@ -242,6 +242,7 @@
   "settings.app.form.server": "Server",
   "settings.app.form.showDisabledServices": "Mostrar pestañas de servicios desactivados",
   "settings.app.form.showMessagesBadgesWhenMuted": "Mostrar la insignia de mensajes sin leer cuando las notificaciones están desactivadas",
+  "settings.app.form.showServiceNavigationBar": "Always show service navigation bar",
   "settings.app.form.todoServer": "Todo Server",
   "settings.app.headline": "Configuración",
   "settings.app.headlineAdvanced": "Avanzado",
