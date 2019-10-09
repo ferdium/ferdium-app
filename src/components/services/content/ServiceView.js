@@ -13,6 +13,7 @@ import ServiceDisabled from './ServiceDisabled';
 import ServiceWebview from './ServiceWebview';
 import SettingsStore from '../../../stores/SettingsStore';
 import WebControlsScreen from '../../../features/webControls/containers/WebControlsScreen';
+import { CUSTOM_WEBSITE_ID } from '../../../features/webControls/constants';
 
 export default @observer @inject('stores') class ServiceView extends Component {
   static propTypes = {
@@ -183,11 +184,16 @@ export default @observer @inject('stores') class ServiceView extends Component {
               <WebControlsScreen service={service} />
             )}
             {!this.state.hibernate ? (
-              <ServiceWebview
-                service={service}
-                setWebviewReference={setWebviewReference}
-                detachService={detachService}
-              />
+              <>
+                {service.recipe.id === CUSTOM_WEBSITE_ID && (
+                  <WebControlsScreen service={service} />
+                )}
+                <ServiceWebview
+                  service={service}
+                  setWebviewReference={setWebviewReference}
+                  detachService={detachService}
+                />
+              </>
             ) : (
               <div>
                 <span role="img" aria-label="Sleeping Emoji">😴</span>

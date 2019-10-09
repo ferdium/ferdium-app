@@ -199,8 +199,9 @@ class WorkspaceDrawer extends Component {
               }}
               services={getServicesForWorkspace(null)}
               isActive={actualWorkspace == null}
+              shortcutIndex={0}
             />
-            {workspaces.map(workspace => (
+            {workspaces.map((workspace, index) => (
               <WorkspaceDrawerItem
                 key={workspace.id}
                 name={workspace.name}
@@ -212,6 +213,7 @@ class WorkspaceDrawer extends Component {
                 }}
                 onContextMenuEditClick={() => workspaceActions.edit({ workspace })}
                 services={getServicesForWorkspace(workspace)}
+                shortcutIndex={index + 1}
               />
             ))}
             <div

@@ -19,6 +19,7 @@ import contextMenu from './contextMenu';
 import './notifications';
 
 import { DEFAULT_APP_SETTINGS } from '../config';
+import { isDevMode } from '../environment';
 
 const debug = require('debug')('Ferdi:Plugin');
 
@@ -39,7 +40,7 @@ class RecipeController {
     'settings-update': 'updateAppSettings',
     'service-settings-update': 'updateServiceSettings',
     'get-service-id': 'serviceIdEcho',
-  }
+  };
 
   constructor() {
     this.initialize();
@@ -195,6 +196,7 @@ new RecipeController();
 // Patching window.open
 const originalWindowOpen = window.open;
 
+
 window.open = (url, frameName, features) => {
   if (!url && !frameName && !features) {
     // The service hasn't yet supplied a URL (as used in Skype).
@@ -209,7 +211,7 @@ window.open = (url, frameName, features) => {
       // Has the service changed the URL yet?
       if (newWindow.location.href !== '') {
         // Open the new URL
-        window.open(newWindow.location.href);
+        ipcRenderer.sendToHost('new-window', newWindow.location.href);
         clearInterval(checkInterval);
       }
     }, 0);
@@ -223,9 +225,13 @@ window.open = (url, frameName, features) => {
   }
 
   // We need to differentiate if the link should be opened in a popup or in the systems default browser
-  if (!frameName && !features) {
+  if (!frameName && !features && typeof features !== 'string') {
     return ipcRenderer.sendToHost('new-window', url);
   }
 
   return originalWindowOpen(url, frameName, features);
 };
+
+if (isDevMode) {
+  window.log = console.log;
+}

@@ -9,6 +9,7 @@ import { announcementActions } from '../features/announcements/actions';
 import { announcementsStore } from '../features/announcements';
 import { todosStore } from '../features/todos';
 import { todoActions } from '../features/todos/actions';
+import { CUSTOM_WEBSITE_ID } from '../features/webControls/constants';
 
 const { app, Menu, dialog } = remote;
 
@@ -280,6 +281,10 @@ const menuItems = defineMessages({
   enableTodos: {
     id: 'menu.todos.enableTodos',
     defaultMessage: '!!!Enable Todos',
+  },
+  serviceGoHome: {
+    id: 'menu.services.goHome',
+    defaultMessage: '!!!Home',
   },
 });
 
@@ -767,8 +772,12 @@ export default class FranzMenu {
       accelerator: `${cmdKey}+R`,
       click: () => {
         if (this.stores.user.isLoggedIn
-          && this.stores.services.enabled.length > 0) {
-          this.actions.service.reloadActive();
+        && this.stores.services.enabled.length > 0) {
+          if (this.stores.services.active.recipe.id === CUSTOM_WEBSITE_ID) {
+            this.stores.services.active.webview.reload();
+          } else {
+            this.actions.service.reloadActive();
+          }
         } else {
           window.location.reload();
         }
@@ -994,6 +1003,16 @@ export default class FranzMenu {
         }
       },
     })));
+
+    if (services.active && services.active.recipe.id === CUSTOM_WEBSITE_ID) {
+      menu.push({
+        type: 'separator',
+      }, {
+        label: intl.formatMessage(menuItems.serviceGoHome),
+        accelerator: `${cmdKey}+shift+H`,
+        click: () => this.actions.service.reloadActive(),
+      });
+    }
 
     return menu;
   }

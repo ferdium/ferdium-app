@@ -57,12 +57,12 @@ export default function init(stores) {
 
             setVisibility(true);
 
-            timeLastDelay = moment();
-            shownAfterLaunch = true;
 
             setTimeout(() => {
               debug('Resetting app delay');
 
+              shownAfterLaunch = true;
+              timeLastDelay = moment();
               setVisibility(false);
             }, config.delayDuration + 1000); // timer needs to be able to hit 0
           } else {
