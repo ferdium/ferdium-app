@@ -242,6 +242,7 @@
   "settings.app.form.server": "Serveur",
   "settings.app.form.showDisabledServices": "Afficher les onglets des services désactivés",
   "settings.app.form.showMessagesBadgesWhenMuted": "Afficher les badges de messages non lus quand les notifications sont désactivées.",
+  "settings.app.form.showServiceNavigationBar": "Always show service navigation bar",
   "settings.app.form.todoServer": "Serveur Todo",
   "settings.app.headline": "Paramètres",
   "settings.app.headlineAdvanced": "Paramètres avancés",
