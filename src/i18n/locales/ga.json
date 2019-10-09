@@ -242,6 +242,7 @@
   "settings.app.form.server": "Server",
   "settings.app.form.showDisabledServices": "Taispeáin tabanna do sheirbhísí dhíchumasaithe",
   "settings.app.form.showMessagesBadgesWhenMuted": "Taispeáin teachtaireachtaí neamhléite, nuair a dhíchumasaítear fógraí",
+  "settings.app.form.showServiceNavigationBar": "Always show service navigation bar",
   "settings.app.form.todoServer": "Todo Server",
   "settings.app.headline": "Socruithe",
   "settings.app.headlineAdvanced": "Casta",
