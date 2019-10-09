@@ -242,6 +242,7 @@
   "settings.app.form.server": "Server",
   "settings.app.form.showDisabledServices": "Προβολή καρτελών των απενεργοποιημένων υπηρεσιών",
   "settings.app.form.showMessagesBadgesWhenMuted": "Προβολή του εικονιδίου μη αναγνωσμένου μηνύματος όταν οι ειδοποιήσεις είναι απενεργοποιημένες",
+  "settings.app.form.showServiceNavigationBar": "Always show service navigation bar",
   "settings.app.form.todoServer": "Todo Server",
   "settings.app.headline": "Ρυθμίσεις",
   "settings.app.headlineAdvanced": "Για προχωρημένους",
