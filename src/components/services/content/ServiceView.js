@@ -180,9 +180,6 @@ export default @observer @inject('stores') class ServiceView extends Component {
           </Fragment>
         ) : (
           <>
-            {service.recipe.id === 'franz-custom-website' && (
-              <WebControlsScreen service={service} />
-            )}
             {!this.state.hibernate ? (
               <>
                 {service.recipe.id === CUSTOM_WEBSITE_ID && (
