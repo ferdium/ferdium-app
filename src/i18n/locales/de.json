@@ -242,6 +242,7 @@
   "settings.app.form.server": "Server",
   "settings.app.form.showDisabledServices": "Deaktivierte Services-Tabs anzeigen",
   "settings.app.form.showMessagesBadgesWhenMuted": "Ungelesene Nachrichten zeigen, wenn die Benachrichtigungen deaktiviert sind",
+  "settings.app.form.showServiceNavigationBar": "Always show service navigation bar",
   "settings.app.form.todoServer": "Todo-Server",
   "settings.app.headline": "Einstellungen",
   "settings.app.headlineAdvanced": "Erweitert",
