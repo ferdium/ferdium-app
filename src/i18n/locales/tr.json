@@ -242,6 +242,7 @@
   "settings.app.form.server": "Server",
   "settings.app.form.showDisabledServices": "Devre dışı bırakılan servis sekmelerini göster",
   "settings.app.form.showMessagesBadgesWhenMuted": "Bildirimler kapalı iken okunmamış mesaj sayısını göster",
+  "settings.app.form.showServiceNavigationBar": "Always show service navigation bar",
   "settings.app.form.todoServer": "Todo Server",
   "settings.app.headline": "Ayarlar",
   "settings.app.headlineAdvanced": "Gelişmiş",
