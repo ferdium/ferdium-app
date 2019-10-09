@@ -242,6 +242,7 @@
   "settings.app.form.server": "Server",
   "settings.app.form.showDisabledServices": "Prikaži ploče s onemogućenim servisima",
   "settings.app.form.showMessagesBadgesWhenMuted": "Покажи беџ за непрочитане поруке када су обавештења онемогућена",
+  "settings.app.form.showServiceNavigationBar": "Always show service navigation bar",
   "settings.app.form.todoServer": "Todo Server",
   "settings.app.headline": "Postavke",
   "settings.app.headlineAdvanced": "Napredne alatke",
