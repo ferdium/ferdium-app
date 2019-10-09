@@ -75,6 +75,7 @@ export const DEFAULT_APP_SETTINGS = {
   hibernate: false,
   hibernationStrategy: 300,
   noUpdates: false,
+  showServiceNavigationBar: false,
 };
 
 export const DEFAULT_FEATURES_CONFIG = {

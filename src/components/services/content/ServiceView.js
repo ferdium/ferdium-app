@@ -125,7 +125,12 @@ export default @observer @inject('stores') class ServiceView extends Component {
       reload,
       edit,
       enable,
+      stores,
     } = this.props;
+
+    const {
+      showServiceNavigationBar,
+    } = stores.settings.app;
 
     const webviewClasses = classnames({
       services__webview: true,
@@ -182,7 +187,7 @@ export default @observer @inject('stores') class ServiceView extends Component {
           <>
             {!this.state.hibernate ? (
               <>
-                {service.recipe.id === CUSTOM_WEBSITE_ID && (
+                {(service.recipe.id === CUSTOM_WEBSITE_ID || showServiceNavigationBar) && (
                   <WebControlsScreen service={service} />
                 )}
                 <ServiceWebview

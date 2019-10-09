@@ -225,6 +225,7 @@ export default @observer class EditSettingsForm extends Component {
             <Toggle field={form.$('runInBackground')} />
             <Toggle field={form.$('enableSystemTray')} />
             <Toggle field={form.$('privateNotifications')} />
+            <Toggle field={form.$('showServiceNavigationBar')} />
             <Toggle field={form.$('hibernate')} />
             {hibernationEnabled && (
               <Select field={form.$('hibernationStrategy')} />

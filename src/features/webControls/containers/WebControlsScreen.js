@@ -32,6 +32,7 @@ class WebControlsScreen extends Component {
     this.autorunDisposer = autorun(() => {
       if (service.isAttached) {
         this.webview = service.webview;
+        this.url = this.webview.getURL();
 
         URL_EVENTS.forEach((event) => {
           this.webview.addEventListener(event, (e) => {

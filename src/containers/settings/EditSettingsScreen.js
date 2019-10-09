@@ -50,6 +50,10 @@ const messages = defineMessages({
     id: 'settings.app.form.privateNotifications',
     defaultMessage: '!!!Don\'t show message content in notifications',
   },
+  showServiceNavigationBar: {
+    id: 'settings.app.form.showServiceNavigationBar',
+    defaultMessage: '!!!Always show service navigation bar',
+  },
   hibernate: {
     id: 'settings.app.form.hibernate',
     defaultMessage: '!!!Enable service hibernation',
@@ -155,6 +159,7 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
         enableSystemTray: settingsData.enableSystemTray,
         minimizeToSystemTray: settingsData.minimizeToSystemTray,
         privateNotifications: settingsData.privateNotifications,
+        showServiceNavigationBar: settingsData.showServiceNavigationBar,
         hibernate: settingsData.hibernate,
         hibernationStrategy: settingsData.hibernationStrategy,
         server: settingsData.server,
@@ -254,6 +259,11 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           label: intl.formatMessage(messages.privateNotifications),
           value: settings.all.app.privateNotifications,
           default: DEFAULT_APP_SETTINGS.privateNotifications,
+        },
+        showServiceNavigationBar: {
+          label: intl.formatMessage(messages.showServiceNavigationBar),
+          value: settings.all.app.showServiceNavigationBar,
+          default: DEFAULT_APP_SETTINGS.showServiceNavigationBar,
         },
         hibernate: {
           label: intl.formatMessage(messages.hibernate),
