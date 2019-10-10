@@ -242,6 +242,7 @@
   "settings.app.form.server": "Server",
   "settings.app.form.showDisabledServices": "Wyłącz wyświetlanie zakładek z usługami",
   "settings.app.form.showMessagesBadgesWhenMuted": "Pokaż licznik nieprzeczytanych wiadomości gdy powiadomienia są wyłączone",
+  "settings.app.form.showServiceNavigationBar": "Always show service navigation bar",
   "settings.app.form.todoServer": "Todo Server",
   "settings.app.headline": "Ustawienia",
   "settings.app.headlineAdvanced": "Zaawansowane",

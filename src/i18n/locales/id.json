@@ -242,6 +242,7 @@
   "settings.app.form.server": "Server",
   "settings.app.form.showDisabledServices": "Tampilkan tab layanan yang dinonaktifkan",
   "settings.app.form.showMessagesBadgesWhenMuted": "Tampilkan lencana pesan belum dibaca saat pemberitahuan dinonaktifkan",
+  "settings.app.form.showServiceNavigationBar": "Always show service navigation bar",
   "settings.app.form.todoServer": "Todo Server",
   "settings.app.headline": "Pengaturan",
   "settings.app.headlineAdvanced": "Tingkat Lanjut",
