@@ -32,7 +32,9 @@ const styles = theme => ({
   },
   services: {
     width: '100%',
+    maxHeight: '50vh',
     marginTop: 30,
+    overflow: 'scroll',
   },
   service: {
     background: theme.styleTypes.primary.contrast,
@@ -88,6 +90,8 @@ export default @injectSheet(styles) @inject('stores', 'actions') @observer class
   TAB = 9;
 
   inputRef = createRef();
+
+  serviceElements = {};
 
   constructor(props) {
     super(props);
@@ -149,6 +153,13 @@ export default @injectSheet(styles) @inject('stores', 'actions') @observer class
       } else if ((state.selected >= (services - 1)) && factor === 1) {
         newSelected = 0;
       }
+
+      // Make sure new selection is visible
+      const serviceElement = this.serviceElements[newSelected];
+      if (serviceElement) {
+        serviceElement.scrollIntoViewIfNeeded(false);
+      }
+
 
       return {
         selected: newSelected,
@@ -244,7 +255,7 @@ export default @injectSheet(styles) @inject('stores', 'actions') @observer class
     return (
       <Modal
         isOpen={isModalVisible}
-        className={classes.modal}
+        className={`${classes.modal} quick-switch`}
         shouldCloseOnOverlayClick
         close={this.close.bind(this)}
       >
@@ -260,9 +271,12 @@ export default @injectSheet(styles) @inject('stores', 'actions') @observer class
         <div className={classes.services}>
           { services.map((service, index) => (
             <div
-              className={`${classes.service} ${this.state.selected === index ? classes.activeService : ''}`}
+              className={`${classes.service} ${this.state.selected === index ? `${classes.activeService} active` : ''} service`}
               onClick={() => openService(index)}
               key={service.id}
+              ref={(el) => {
+                this.serviceElements[index] = el;
+              }}
             >
               <img
                 src={service.icon}
