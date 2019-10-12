@@ -59,6 +59,10 @@
     "electron-updater": "4.1.2",
     "electron-window-state": "5.0.3",
     "fs-extra": "7.0.1",
+    "gulp-csso": "3.0.1",
+    "gulp-htmlmin": "5.0.1",
+    "gulp-if": "3.0.0",
+    "gulp-uglify": "3.0.2",
     "hex-to-rgba": "1.0.2",
     "jsonwebtoken": "8.5.1",
     "lodash": "4.17.15",
@@ -92,6 +96,7 @@
     "semver": "^5.4.1",
     "smoothscroll-polyfill": "^0.3.4",
     "tar": "^4.0.2",
+    "terser": "4.3.8",
     "uuid": "^3.0.1",
     "validator": "11.0.0",
     "ws": "6.2.1"

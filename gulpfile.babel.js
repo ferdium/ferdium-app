@@ -1,7 +1,12 @@
 /* eslint max-len: 0 */
 import gulp from 'gulp';
+import gulpIf from 'gulp-if';
 import babel from 'gulp-babel';
 import sass from 'gulp-sass';
+import csso from 'gulp-csso';
+import terser from 'terser';
+import composer from 'gulp-uglify/composer';
+import htmlMin from 'gulp-htmlmin';
 import server from 'gulp-server-livereload';
 import { exec } from 'child_process';
 import dotenv from 'dotenv';
@@ -16,6 +21,8 @@ import config from './package.json';
 import * as rawStyleConfig from './src/theme/default/legacy.js';
 
 dotenv.config();
+
+const uglify = composer(terser, console);
 
 const styleConfig = Object.keys(rawStyleConfig).map((key) => {
   const isHex = /^#[0-9A-F]{6}$/i.test(rawStyleConfig[key]);
@@ -124,6 +131,10 @@ export function mvLernaPackages() {
 export function html() {
   return gulp
     .src(paths.html.src, { since: gulp.lastRun(html) })
+    .pipe(gulpIf(process.env.NODE_ENV !== 'development', htmlMin({ // Only minify in production to speed up dev builds
+      collapseWhitespace: true,
+      removeComments: true
+    })))
     .pipe(gulp.dest(paths.html.dest));
 }
 
@@ -148,6 +159,9 @@ export function styles() {
         includePaths: ['./node_modules', '../node_modules'],
       }).on('error', sass.logError),
     )
+    .pipe((gulpIf(process.env.NODE_ENV !== 'development', csso({ // Only minify in production to speed up dev builds
+      restructure: false, // Don't restructure CSS, otherwise it will break the styles
+    }))))
     .pipe(gulp.dest(paths.styles.dest));
 }
 
@@ -159,6 +173,7 @@ export function scripts() {
         comments: false,
       }),
     )
+    .pipe(gulpIf(process.env.NODE_ENV !== 'development', uglify())) // Only uglify in production to speed up dev builds
     .pipe(gulp.dest(paths.scripts.dest));
 }
 
