@@ -11,6 +11,7 @@
   "feature.delayApp.upgrade.actionShort": "Апгрейдить аккаунт",
   "feature.quickSwitch.info": "Select a service with TAB, ↑ and ↓. Open a service with ENTER.",
   "feature.quickSwitch.search": "Search...",
+  "feature.quickSwitch.title": "QuickSwitch",
   "feature.serviceLimit.limitReached": "Вы добавили {amount} максимальное {limit} количество сервисов, входящих в ваш план. Пожалуйста, обновите свой план чтобы добавить больше сервисов.",
   "feature.shareFranz.action.email": "Отправить по email",
   "feature.shareFranz.action.facebook": "Поделиться на Facebook",
