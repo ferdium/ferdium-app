@@ -75,6 +75,7 @@ export default class ServicesStore extends Store {
     this.actions.service.toggleAudio.listen(this._toggleAudio.bind(this));
     this.actions.service.openDevTools.listen(this._openDevTools.bind(this));
     this.actions.service.openDevToolsForActiveService.listen(this._openDevToolsForActiveService.bind(this));
+    this.actions.service.setHibernation.listen(this._setHibernation.bind(this));
 
     this.registerReactions([
       this._focusServiceReaction.bind(this),
@@ -646,6 +647,11 @@ export default class ServicesStore extends Store {
     } else {
       debug('No service is active');
     }
+  }
+
+  @action _setHibernation({ serviceId, hibernating }) {
+    const service = this.one(serviceId);
+    service.isHibernating = hibernating;
   }
 
   // Reactions

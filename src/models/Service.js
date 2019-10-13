@@ -36,6 +36,8 @@ export default class Service {
 
   @observable isMuted = false;
 
+  @observable isHibernating = false;
+
   @observable team = '';
 
   @observable customUrl = '';

@@ -64,6 +64,13 @@
     right: 8px;
 
     &.is-indirect { padding-top: 0; }
+    &.hibernating { 
+      padding-top: 0; 
+      background: $theme-gray; 
+      font-size: 0px;
+      min-height: 10px;
+      min-width: 10px;
+    }
   }
 
   .tab-item__info-badge {

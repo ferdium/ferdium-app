@@ -91,4 +91,8 @@ export default {
     serviceId: PropTypes.string.isRequired,
   },
   openDevToolsForActiveService: {},
+  setHibernation: {
+    serviceId: PropTypes.string.isRequired,
+    hibernating: PropTypes.bool.isRequired,
+  },
 };

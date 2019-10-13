@@ -15,7 +15,7 @@ import SettingsStore from '../../../stores/SettingsStore';
 import WebControlsScreen from '../../../features/webControls/containers/WebControlsScreen';
 import { CUSTOM_WEBSITE_ID } from '../../../features/webControls/constants';
 
-export default @observer @inject('stores') class ServiceView extends Component {
+export default @observer @inject('stores', 'actions') class ServiceView extends Component {
   static propTypes = {
     service: PropTypes.instanceOf(ServiceModel).isRequired,
     setWebviewReference: PropTypes.func.isRequired,
@@ -26,6 +26,11 @@ export default @observer @inject('stores') class ServiceView extends Component {
     isActive: PropTypes.bool,
     stores: PropTypes.shape({
       settings: PropTypes.instanceOf(SettingsStore).isRequired,
+    }).isRequired,
+    actions: PropTypes.shape({
+      service: PropTypes.shape({
+        setHibernation: PropTypes.func.isRequired,
+      }).isRequired,
     }).isRequired,
   };
 
@@ -77,7 +82,21 @@ export default @observer @inject('stores') class ServiceView extends Component {
           this.setState({
             hibernate: false,
           });
+          this.props.actions.service.setHibernation({
+            serviceId: this.props.service.id,
+            hibernating: false,
+          });
         }
+      },
+    );
+
+    // Store hibernation status to state, otherwise the webview won't get unloaded correctly
+    reaction(
+      () => this.props.service.isHibernating,
+      () => {
+        this.setState({
+          hibernate: this.props.service.isHibernating,
+        });
       },
     );
 
@@ -109,6 +128,10 @@ export default @observer @inject('stores') class ServiceView extends Component {
     const hibernationTimer = setTimeout(() => {
       this.setState({
         hibernate: true,
+      });
+      this.props.actions.service.setHibernation({
+        serviceId: this.props.service.id,
+        hibernating: true,
       });
     }, timerDuration);
 

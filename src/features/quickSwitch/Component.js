@@ -43,7 +43,6 @@ const styles = theme => ({
   services: {
     width: '100%',
     maxHeight: '50vh',
-    marginTop: 30,
     overflow: 'scroll',
   },
   service: {
