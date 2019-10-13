@@ -6,12 +6,17 @@ import { reaction } from 'mobx';
 import injectSheet from 'react-jss';
 import { defineMessages, intlShape } from 'react-intl';
 import { Input } from '@meetfranz/forms';
+import { H1 } from '@meetfranz/ui';
 
 import Modal from '../../components/ui/Modal';
 import { state as ModalState } from '.';
 import ServicesStore from '../../stores/ServicesStore';
 
 const messages = defineMessages({
+  title: {
+    id: 'feature.quickSwitch.title',
+    defaultMessage: '!!!QuickSwitch',
+  },
   search: {
     id: 'feature.quickSwitch.search',
     defaultMessage: '!!!Search...',
@@ -29,6 +34,11 @@ const styles = theme => ({
     background: theme.styleTypes.primary.contrast,
     color: theme.styleTypes.primary.accent,
     paddingTop: 30,
+  },
+  headline: {
+    fontSize: 20,
+    marginBottom: 20,
+    marginTop: -27,
   },
   services: {
     width: '100%',
@@ -276,6 +286,9 @@ export default @injectSheet(styles) @inject('stores', 'actions') @observer class
         shouldCloseOnOverlayClick
         close={this.close.bind(this)}
       >
+        <H1 className={classes.headline}>
+          {intl.formatMessage(messages.title)}
+        </H1>
         <div ref={this.inputRef}>
           <Input
             placeholder={intl.formatMessage(messages.search)}

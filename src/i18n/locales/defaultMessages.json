@@ -4325,29 +4325,42 @@
   {
     "descriptors": [
       {
+        "defaultMessage": "!!!QuickSwitch",
+        "end": {
+          "column": 3,
+          "line": 19
+        },
+        "file": "src/features/quickSwitch/Component.js",
+        "id": "feature.quickSwitch.title",
+        "start": {
+          "column": 9,
+          "line": 16
+        }
+      },
+      {
         "defaultMessage": "!!!Search...",
         "end": {
           "column": 3,
-          "line": 18
+          "line": 23
         },
         "file": "src/features/quickSwitch/Component.js",
         "id": "feature.quickSwitch.search",
         "start": {
           "column": 10,
-          "line": 15
+          "line": 20
         }
       },
       {
         "defaultMessage": "!!!Select a service with TAB, ↑ and ↓. Open a service with ENTER.",
         "end": {
           "column": 3,
-          "line": 22
+          "line": 27
         },
         "file": "src/features/quickSwitch/Component.js",
         "id": "feature.quickSwitch.info",
         "start": {
           "column": 8,
-          "line": 19
+          "line": 24
         }
       }
     ],
