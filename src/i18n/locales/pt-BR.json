@@ -11,6 +11,7 @@
   "feature.delayApp.upgrade.actionShort": "Atualizar conta",
   "feature.quickSwitch.info": "Select a service with TAB, ↑ and ↓. Open a service with ENTER.",
   "feature.quickSwitch.search": "Search...",
+  "feature.quickSwitch.title": "QuickSwitch",
   "feature.serviceLimit.limitReached": "Você adicionou {amount} serviços de um total de {limit} que estão inclusos no seu plano. Por favor, atualize sua conta para adicionar mais serviços.",
   "feature.shareFranz.action.email": "Enviar por e-mail",
   "feature.shareFranz.action.facebook": "Compartilhar no Facebook",
