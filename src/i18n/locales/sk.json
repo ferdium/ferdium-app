@@ -11,6 +11,7 @@
   "feature.delayApp.upgrade.actionShort": "Upgradovať účet",
   "feature.quickSwitch.info": "Select a service with TAB, ↑ and ↓. Open a service with ENTER.",
   "feature.quickSwitch.search": "Search...",
+  "feature.quickSwitch.title": "QuickSwitch",
   "feature.serviceLimit.limitReached": "You have added {amount} out of {limit} services that are included in your plan. Please upgrade your account to add more services.",
   "feature.shareFranz.action.email": "Odoslať ako e-mail",
   "feature.shareFranz.action.facebook": "Zdielať na Facebook-u",
