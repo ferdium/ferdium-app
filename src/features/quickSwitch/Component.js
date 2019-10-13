@@ -119,10 +119,27 @@ export default @injectSheet(styles) @inject('stores', 'actions') @observer class
 
   // Get currently shown services
   services() {
-    let services = this.props.stores.services.allDisplayed;
+    let services = [];
     if (this.state.search) {
-      // Apply simple search algorythm
+      // Apply simple search algorythm to list of all services
+      services = this.props.stores.services.allDisplayed;
       services = services.filter(service => service.name.toLowerCase().includes(this.state.search.toLowerCase()));
+    } else {
+      // Add last used services to services array
+      for (const service of this.props.stores.services.lastUsedServices) {
+        if (this.props.stores.services.one(service)) {
+          services.push(
+            this.props.stores.services.one(service),
+          );
+        }
+      }
+
+      // Add all other services in the default order
+      for (const service of this.props.stores.services.allDisplayed) {
+        if (!services.includes(service)) {
+          services.push(service);
+        }
+      }
     }
 
     return services;

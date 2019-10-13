@@ -34,6 +34,11 @@ export default class ServicesStore extends Store {
 
   @observable filterNeedle = null;
 
+  // Array of service IDs that have recently been used
+  // [0] => Most recent, [n] => Least recent
+  // No service ID should be in the list multiple times, not all service IDs have to be in the list
+  @observable lastUsedServices = [];
+
   constructor(...args) {
     super(...args);
 
@@ -324,6 +329,10 @@ export default class ServicesStore extends Store {
       this.all[index].isActive = false;
     });
     service.isActive = true;
+
+    // Update list of last used services
+    this.lastUsedServices = this.lastUsedServices.filter(id => id !== serviceId);
+    this.lastUsedServices.unshift(serviceId);
 
     this._focusActiveService();
   }
