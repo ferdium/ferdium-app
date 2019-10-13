@@ -11,6 +11,7 @@
   "feature.delayApp.upgrade.actionShort": "アカウントをアップグレード",
   "feature.quickSwitch.info": "Select a service with TAB, ↑ and ↓. Open a service with ENTER.",
   "feature.quickSwitch.search": "Search...",
+  "feature.quickSwitch.title": "QuickSwitch",
   "feature.serviceLimit.limitReached": "You have added {amount} out of {limit} services that are included in your plan. Please upgrade your account to add more services.",
   "feature.shareFranz.action.email": "メールで送信",
   "feature.shareFranz.action.facebook": "Facebookでシェア",
