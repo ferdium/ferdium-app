@@ -57,18 +57,9 @@ Route.group(() => {
   Route.get('announcements/:version', 'StaticController.announcement');
 }).prefix('v1');
 
-// Recipe creation
-Route.post('new', 'RecipeController.create');
-Route.get('new', ({ response, view }) => {
-  if (Env.get('IS_CREATION_ENABLED') == 'false') { // eslint-disable-line eqeqeq
-    return response.send('This server doesn\'t allow the creation of new recipes.\n\nIf you are the server owner, please set IS_CREATION_ENABLED to true to enable recipe creation.');
-  }
-  return view.render('others.new');
-});
-
 // Franz account import
 Route.post('import', 'UserController.import');
-Route.get('import', ({ view }) => view.render('others.import'));
+Route.get('import', ({ view }) => view.render('import'));
 
 // Index
-Route.get('/', ({ view }) => view.render('others.index'));
+Route.get('/', ({ view }) => view.render('index'));
