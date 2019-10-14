@@ -10,13 +10,22 @@
 const Route = use('Route');
 const Env = use('Env');
 
+const OnlyAllowFerdi = async ({ request, response }, next) => {
+  const user = request.header('User-Agent');
+  if (!/Ferdi\/\d(\.\d){2}/g.test(user)) {
+    return response.status(403).redirect('/');
+  }
+
+  await next()
+};
+
 // Health: Returning if all systems function correctly
 Route.get('health', ({
   response,
 }) => response.send({
   api: 'success',
   db: 'success',
-}));
+})).middleware(OnlyAllowFerdi);
 
 // API is grouped under '/v1/' route
 Route.group(() => {
@@ -55,7 +64,7 @@ Route.group(() => {
   Route.get('news', 'StaticController.emptyArray');
   Route.get('payment/plans', 'StaticController.plans');
   Route.get('announcements/:version', 'StaticController.announcement');
-}).prefix('v1');
+}).prefix('v1').middleware(OnlyAllowFerdi);
 
 // Franz account import
 Route.post('import', 'UserController.import');
