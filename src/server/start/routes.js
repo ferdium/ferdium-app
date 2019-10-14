@@ -8,7 +8,6 @@
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route');
-const Env = use('Env');
 
 const OnlyAllowFerdi = async ({ request, response }, next) => {
   const user = request.header('User-Agent');
@@ -16,7 +15,8 @@ const OnlyAllowFerdi = async ({ request, response }, next) => {
     return response.status(403).redirect('/');
   }
 
-  await next()
+  await next();
+  return true;
 };
 
 // Health: Returning if all systems function correctly
