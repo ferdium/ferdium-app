@@ -272,143 +272,169 @@
         "defaultMessage": "!!!Sign in",
         "end": {
           "column": 3,
-          "line": 20
+          "line": 22
         },
         "file": "src/components/auth/Login.js",
         "id": "login.headline",
         "start": {
           "column": 12,
-          "line": 17
+          "line": 19
         }
       },
       {
         "defaultMessage": "!!!Email address",
         "end": {
           "column": 3,
-          "line": 24
+          "line": 26
         },
         "file": "src/components/auth/Login.js",
         "id": "login.email.label",
         "start": {
           "column": 14,
-          "line": 21
+          "line": 23
         }
       },
       {
         "defaultMessage": "!!!Password",
         "end": {
           "column": 3,
-          "line": 28
+          "line": 30
         },
         "file": "src/components/auth/Login.js",
         "id": "login.password.label",
         "start": {
           "column": 17,
-          "line": 25
+          "line": 27
         }
       },
       {
         "defaultMessage": "!!!Sign in",
         "end": {
           "column": 3,
-          "line": 32
+          "line": 34
         },
         "file": "src/components/auth/Login.js",
         "id": "login.submit.label",
         "start": {
           "column": 21,
-          "line": 29
+          "line": 31
         }
       },
       {
         "defaultMessage": "!!!Email or password not valid",
         "end": {
           "column": 3,
-          "line": 36
+          "line": 38
         },
         "file": "src/components/auth/Login.js",
         "id": "login.invalidCredentials",
         "start": {
           "column": 22,
-          "line": 33
+          "line": 35
         }
       },
       {
         "defaultMessage": "!!!Using a Franz account to log in?",
         "end": {
           "column": 3,
-          "line": 40
+          "line": 42
         },
         "file": "src/components/auth/Login.js",
         "id": "login.customServerQuestion",
         "start": {
           "column": 24,
-          "line": 37
+          "line": 39
         }
       },
       {
         "defaultMessage": "!!!Try importing your Franz account into Ferdi",
         "end": {
           "column": 3,
-          "line": 44
+          "line": 46
         },
         "file": "src/components/auth/Login.js",
         "id": "login.customServerSuggestion",
         "start": {
           "column": 26,
-          "line": 41
+          "line": 43
         }
       },
       {
         "defaultMessage": "!!!Your session expired, please login again.",
         "end": {
           "column": 3,
-          "line": 48
+          "line": 50
         },
         "file": "src/components/auth/Login.js",
         "id": "login.tokenExpired",
         "start": {
           "column": 16,
-          "line": 45
+          "line": 47
         }
       },
       {
         "defaultMessage": "!!!Your session expired, please login again.",
         "end": {
           "column": 3,
-          "line": 52
+          "line": 54
         },
         "file": "src/components/auth/Login.js",
         "id": "login.serverLogout",
         "start": {
           "column": 16,
-          "line": 49
+          "line": 51
         }
       },
       {
         "defaultMessage": "!!!Create a free account",
         "end": {
           "column": 3,
-          "line": 56
+          "line": 58
         },
         "file": "src/components/auth/Login.js",
         "id": "login.link.signup",
         "start": {
           "column": 14,
-          "line": 53
+          "line": 55
+        }
+      },
+      {
+        "defaultMessage": "!!!Change server",
+        "end": {
+          "column": 3,
+          "line": 62
+        },
+        "file": "src/components/auth/Login.js",
+        "id": "login.changeServer",
+        "start": {
+          "column": 16,
+          "line": 59
+        }
+      },
+      {
+        "defaultMessage": "!!!Use Ferdi without an Account",
+        "end": {
+          "column": 3,
+          "line": 66
+        },
+        "file": "src/components/auth/Login.js",
+        "id": "services.serverless",
+        "start": {
+          "column": 14,
+          "line": 63
         }
       },
       {
         "defaultMessage": "!!!Forgot password",
         "end": {
           "column": 3,
-          "line": 60
+          "line": 70
         },
         "file": "src/components/auth/Login.js",
         "id": "login.link.password",
         "start": {
           "column": 16,
-          "line": 57
+          "line": 67
         }
       }
     ],
@@ -638,143 +664,169 @@
         "defaultMessage": "!!!Sign up",
         "end": {
           "column": 3,
-          "line": 20
+          "line": 22
         },
         "file": "src/components/auth/Signup.js",
         "id": "signup.headline",
         "start": {
           "column": 12,
-          "line": 17
+          "line": 19
         }
       },
       {
         "defaultMessage": "!!!Firstname",
         "end": {
           "column": 3,
-          "line": 24
+          "line": 26
         },
         "file": "src/components/auth/Signup.js",
         "id": "signup.firstname.label",
         "start": {
           "column": 18,
-          "line": 21
+          "line": 23
         }
       },
       {
         "defaultMessage": "!!!Lastname",
         "end": {
           "column": 3,
-          "line": 28
+          "line": 30
         },
         "file": "src/components/auth/Signup.js",
         "id": "signup.lastname.label",
         "start": {
           "column": 17,
-          "line": 25
+          "line": 27
         }
       },
       {
         "defaultMessage": "!!!Email address",
         "end": {
           "column": 3,
-          "line": 32
+          "line": 34
         },
         "file": "src/components/auth/Signup.js",
         "id": "signup.email.label",
         "start": {
           "column": 14,
-          "line": 29
+          "line": 31
         }
       },
       {
         "defaultMessage": "!!!Password",
         "end": {
           "column": 3,
-          "line": 40
+          "line": 42
         },
         "file": "src/components/auth/Signup.js",
         "id": "signup.password.label",
         "start": {
           "column": 17,
-          "line": 37
+          "line": 39
         }
       },
       {
         "defaultMessage": "!!!By creating a Ferdi account you accept the",
         "end": {
           "column": 3,
-          "line": 44
+          "line": 46
         },
         "file": "src/components/auth/Signup.js",
         "id": "signup.legal.info",
         "start": {
           "column": 13,
-          "line": 41
+          "line": 43
         }
       },
       {
         "defaultMessage": "!!!Terms of service",
         "end": {
           "column": 3,
-          "line": 48
+          "line": 50
         },
         "file": "src/components/auth/Signup.js",
         "id": "signup.legal.terms",
         "start": {
           "column": 9,
-          "line": 45
+          "line": 47
         }
       },
       {
         "defaultMessage": "!!!Privacy Statement",
         "end": {
           "column": 3,
-          "line": 52
+          "line": 54
         },
         "file": "src/components/auth/Signup.js",
         "id": "signup.legal.privacy",
         "start": {
           "column": 11,
-          "line": 49
+          "line": 51
         }
       },
       {
         "defaultMessage": "!!!Create account",
         "end": {
           "column": 3,
-          "line": 56
+          "line": 58
         },
         "file": "src/components/auth/Signup.js",
         "id": "signup.submit.label",
         "start": {
           "column": 21,
-          "line": 53
+          "line": 55
         }
       },
       {
         "defaultMessage": "!!!Already have an account, sign in?",
         "end": {
           "column": 3,
-          "line": 60
+          "line": 62
         },
         "file": "src/components/auth/Signup.js",
         "id": "signup.link.login",
         "start": {
           "column": 13,
-          "line": 57
+          "line": 59
+        }
+      },
+      {
+        "defaultMessage": "!!!Change server",
+        "end": {
+          "column": 3,
+          "line": 66
+        },
+        "file": "src/components/auth/Signup.js",
+        "id": "login.changeServer",
+        "start": {
+          "column": 16,
+          "line": 63
+        }
+      },
+      {
+        "defaultMessage": "!!!Use Ferdi without an Account",
+        "end": {
+          "column": 3,
+          "line": 70
+        },
+        "file": "src/components/auth/Signup.js",
+        "id": "services.serverless",
+        "start": {
+          "column": 14,
+          "line": 67
         }
       },
       {
         "defaultMessage": "!!!A user with that email address already exists",
         "end": {
           "column": 3,
-          "line": 64
+          "line": 74
         },
         "file": "src/components/auth/Signup.js",
         "id": "signup.emailDuplicate",
         "start": {
           "column": 18,
-          "line": 61
+          "line": 71
         }
       }
     ],
@@ -786,26 +838,39 @@
         "defaultMessage": "!!!Create a free account",
         "end": {
           "column": 3,
-          "line": 12
+          "line": 14
         },
         "file": "src/components/auth/Welcome.js",
         "id": "welcome.signupButton",
         "start": {
           "column": 16,
-          "line": 9
+          "line": 11
         }
       },
       {
         "defaultMessage": "!!!Login to your account",
         "end": {
           "column": 3,
-          "line": 16
+          "line": 18
         },
         "file": "src/components/auth/Welcome.js",
         "id": "welcome.loginButton",
         "start": {
           "column": 15,
-          "line": 13
+          "line": 15
+        }
+      },
+      {
+        "defaultMessage": "!!!Use Ferdi without an Account",
+        "end": {
+          "column": 3,
+          "line": 22
+        },
+        "file": "src/components/auth/Welcome.js",
+        "id": "services.serverless",
+        "start": {
+          "column": 14,
+          "line": 19
         }
       }
     ],
@@ -1167,52 +1232,65 @@
         "defaultMessage": "!!!Welcome to Ferdi",
         "end": {
           "column": 3,
-          "line": 17
+          "line": 18
         },
         "file": "src/components/services/content/Services.js",
         "id": "services.welcome",
         "start": {
           "column": 11,
-          "line": 14
+          "line": 15
         }
       },
       {
         "defaultMessage": "!!!Get started",
         "end": {
           "column": 3,
-          "line": 21
+          "line": 22
         },
         "file": "src/components/services/content/Services.js",
         "id": "services.getStarted",
         "start": {
           "column": 14,
-          "line": 18
+          "line": 19
         }
       },
       {
         "defaultMessage": "!!!Please login to use Ferdi.",
         "end": {
           "column": 3,
-          "line": 25
+          "line": 26
         },
         "file": "src/components/services/content/Services.js",
         "id": "services.login",
         "start": {
           "column": 9,
-          "line": 22
+          "line": 23
+        }
+      },
+      {
+        "defaultMessage": "!!!Use Ferdi without an Account",
+        "end": {
+          "column": 3,
+          "line": 30
+        },
+        "file": "src/components/services/content/Services.js",
+        "id": "services.serverless",
+        "start": {
+          "column": 14,
+          "line": 27
         }
       },
       {
         "defaultMessage": "!!!Optionally, you can change your Ferdi server by clicking the cog in the bottom left corner.",
         "end": {
           "column": 3,
-          "line": 29
+          "line": 34
         },
         "file": "src/components/services/content/Services.js",
         "id": "services.serverInfo",
         "start": {
           "column": 14,
-          "line": 26
+          "line": 31
         }
       }
     ],

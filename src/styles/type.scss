@@ -33,7 +33,7 @@ p {
 
 strong { font-weight: bold; }
 
-a {
+a, button {
   color: $theme-text-color;
   text-decoration: none;
 
@@ -47,6 +47,7 @@ a {
     position: relative;
     text-align: center;
     transition: background .5s, color .5s;
+    cursor: pointer;
 
     &:hover {
       background: darken($theme-brand-primary, 5%);

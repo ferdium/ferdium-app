@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
+import { observer, PropTypes as MobxPropTypes, inject } from 'mobx-react';
 import { Link } from 'react-router';
 import { defineMessages, intlShape } from 'react-intl';
 import Confetti from 'react-confetti';
@@ -9,6 +9,7 @@ import injectSheet from 'react-jss';
 
 import ServiceView from './ServiceView';
 import Appear from '../../ui/effects/Appear';
+import serverlessLogin from '../../../helpers/serverless-helpers';
 
 const messages = defineMessages({
   welcome: {
@@ -22,6 +23,10 @@ const messages = defineMessages({
   login: {
     id: 'services.login',
     defaultMessage: '!!!Please login to use Ferdi.',
+  },
+  serverless: {
+    id: 'services.serverless',
+    defaultMessage: '!!!Use Ferdi without an Account',
   },
   serverInfo: {
     id: 'services.serverInfo',
@@ -39,7 +44,7 @@ const styles = {
   },
 };
 
-export default @observer @injectSheet(styles) class Services extends Component {
+export default @observer @inject('actions') @injectSheet(styles) class Services extends Component {
   static propTypes = {
     services: MobxPropTypes.arrayOrObservableArray,
     setWebviewReference: PropTypes.func.isRequired,
@@ -52,6 +57,7 @@ export default @observer @injectSheet(styles) class Services extends Component {
     userHasCompletedSignup: PropTypes.bool.isRequired,
     hasActivatedTrial: PropTypes.bool.isRequired,
     classes: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired,
   };
 
   static defaultProps = {
@@ -68,6 +74,12 @@ export default @observer @injectSheet(styles) class Services extends Component {
 
   _confettiTimeout = null;
 
+  constructor(props) {
+    super(props);
+
+    this.useLocalServer = this.useLocalServer.bind(this);
+  }
+
   componentDidMount() {
     this._confettiTimeout = window.setTimeout(() => {
       this.setState({
@@ -80,6 +92,10 @@ export default @observer @injectSheet(styles) class Services extends Component {
     if (this._confettiTimeout) {
       clearTimeout(this._confettiTimeout);
     }
+  }
+
+  useLocalServer() {
+    serverlessLogin(this.props.actions);
   }
 
   render() {
@@ -136,6 +152,18 @@ export default @observer @injectSheet(styles) class Services extends Component {
                 <Link to={isLoggedIn ? '/settings/services' : '/auth/welcome'} className="button">
                   { isLoggedIn ? intl.formatMessage(messages.getStarted) : 'Login' }
                 </Link>
+                {!isLoggedIn && (
+                  <button
+                    type="button"
+                    className="button"
+                    style={{
+                      marginLeft: 10,
+                    }}
+                    onClick={this.useLocalServer}
+                  >
+                    {intl.formatMessage(messages.serverless)}
+                  </button>
+                )}
               </Appear>
             </div>
           </Appear>

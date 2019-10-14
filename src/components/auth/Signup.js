@@ -1,11 +1,13 @@
+/* eslint jsx-a11y/anchor-is-valid: 0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import { defineMessages, intlShape } from 'react-intl';
 
 import { isDevMode, useLiveAPI } from '../../environment';
 import Form from '../../lib/Form';
 import { required, email, minLength } from '../../helpers/validation-helpers';
+import serverlessLogin from '../../helpers/serverless-helpers';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import Link from '../ui/Link';
@@ -58,18 +60,27 @@ const messages = defineMessages({
     id: 'signup.link.login',
     defaultMessage: '!!!Already have an account, sign in?',
   },
+  changeServer: {
+    id: 'login.changeServer',
+    defaultMessage: '!!!Change server',
+  },
+  serverless: {
+    id: 'services.serverless',
+    defaultMessage: '!!!Use Ferdi without an Account',
+  },
   emailDuplicate: {
     id: 'signup.emailDuplicate',
     defaultMessage: '!!!A user with that email address already exists',
   },
 });
 
-export default @observer class Signup extends Component {
+export default @observer @inject('actions') class Signup extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
     isSubmitting: PropTypes.bool.isRequired,
     loginRoute: PropTypes.string.isRequired,
     error: globalErrorPropType.isRequired,
+    actions: PropTypes.object.isRequired,
   };
 
   static contextTypes = {
@@ -110,6 +121,10 @@ export default @observer class Signup extends Component {
       },
       onError: () => {},
     });
+  }
+
+  useLocalServer() {
+    serverlessLogin(this.props.actions);
   }
 
   render() {
@@ -183,7 +198,8 @@ export default @observer class Signup extends Component {
             </p>
           </form>
           <div className="auth__links">
-            <Link to="/settings/app">Change server</Link>
+            <Link to="/settings/app">{intl.formatMessage(messages.changeServer)}</Link>
+            <a onClick={this.useLocalServer.bind(this)}>{intl.formatMessage(messages.serverless)}</a>
             <Link to={loginRoute}>{intl.formatMessage(messages.loginLink)}</Link>
           </div>
         </div>
