@@ -38,7 +38,7 @@ class UserController {
     // Validate user input
     const validation = await validateAll(request.all(), {
       firstname: 'required',
-      email: 'required|email|unique:users,email',
+      email: 'required|email',
       password: 'required',
     });
     if (validation.fails()) {
@@ -100,7 +100,7 @@ class UserController {
   }) {
     // Validate user input
     const validation = await validateAll(request.all(), {
-      email: 'required|email|unique:users,email',
+      email: 'required|email',
       password: 'required',
     });
     if (validation.fails()) {
