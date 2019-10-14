@@ -1,0 +1,19 @@
+@layout('layouts.main')
+
+@section('content')
+<h1>Import a Franz account</h1>
+<p>Please login using your Franz account. We will create a new Ferdi account with the same credentials.</p>
+<form action="import" method="post">
+  <label for="email">E-Mail address</label><br />
+  <input type="email" name="email" placeholder="joe@example.com" required><br />
+
+  <label for="password">Password</label><br />
+  <input type="password" name="password" placeholder="********" required><br />
+
+  <button type="submit" id="submitbutton">Import Franz account</button>
+  <small>
+    By importing your Franz account, you accept the <a href="/terms">Terms of service</a> and <a href="/privacy">Privacy
+      policy</a>
+  </small>
+</form>
+@endsection
