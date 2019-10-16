@@ -10,6 +10,7 @@ import {
 } from 'darkreader';
 
 import ignoreList from './darkmode/ignore';
+import customDarkModeCss from './darkmode/custom';
 
 import RecipeWebview from './lib/RecipeWebview';
 
@@ -116,7 +117,7 @@ class RecipeController {
         this.cldIdentifier.destroy();
       }
     }
-
+    
     if (this.settings.service.isDarkModeEnabled || this.settings.app.darkMode) {
       debug('Enable dark mode');
 
@@ -128,7 +129,9 @@ class RecipeController {
         injectDarkModeStyle(this.settings.service.recipe.path);
       } else if (!ignoreList.includes(window.location.host)) {
         // Use darkreader instead
-        enableDarkMode();
+        enableDarkMode({}, {
+          css: customDarkModeCss[window.location.host] || ''
+        });
       }
     } else {
       debug('Remove dark mode');
