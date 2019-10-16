@@ -316,6 +316,7 @@
   "settings.service.form.indirectMessages": "აჩვენე შეტყობინებების ნიშანი ყოველი ახალი შეტყობინებისთვის",
   "settings.service.form.isMutedInfo": "When disabled, all notification sounds and audio playback are muted",
   "settings.service.form.name": "სახელი ",
+  "settings.service.form.openDarkmodeCss": "Open darkmode.css",
   "settings.service.form.proxy.headline": "HTTP/HTTPS Proxy Settings",
   "settings.service.form.proxy.host": "Proxy Host/IP",
   "settings.service.form.proxy.info": "Proxy settings will not synced with the Ferdi servers.",
