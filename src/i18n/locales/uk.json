@@ -316,6 +316,7 @@
   "settings.service.form.indirectMessages": "Показувати значок повідомлення для всіх нових повідомлень",
   "settings.service.form.isMutedInfo": "Коли вимкнено, всі сповищення та відтворення ігноруються",
   "settings.service.form.name": "Ім'я",
+  "settings.service.form.openDarkmodeCss": "Open darkmode.css",
   "settings.service.form.proxy.headline": "Налаштування HTTP/HTTPS проксі ",
   "settings.service.form.proxy.host": "Проксі Host/IP",
   "settings.service.form.proxy.info": "Налаштування проксі не будуть синхронізовані із серверами Ferdi",
