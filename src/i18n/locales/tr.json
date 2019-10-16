@@ -316,6 +316,7 @@
   "settings.service.form.indirectMessages": "Mesaj rozetini tüm yeni mesajlar için göster",
   "settings.service.form.isMutedInfo": "Devre dışı bırakıldığında, tüm bildirim sesleri sessize alınır",
   "settings.service.form.name": "Ad",
+  "settings.service.form.openDarkmodeCss": "Open darkmode.css",
   "settings.service.form.proxy.headline": "HTTP/HTTPS Proxy Ayarları",
   "settings.service.form.proxy.host": "Proxy Sunucusu/IP",
   "settings.service.form.proxy.info": "Proxy ayarları Ferdi serverlarına yüklenmeyecektir.",
