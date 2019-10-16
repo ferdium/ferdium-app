@@ -316,6 +316,7 @@
   "settings.service.form.indirectMessages": "Pokaż ikonę wiadomości dla wszystkich nowych wiadomości",
   "settings.service.form.isMutedInfo": "Kiedy nieaktywne, wszystkie dźwięki powiadomień są wyciszone",
   "settings.service.form.name": "Imię",
+  "settings.service.form.openDarkmodeCss": "Open darkmode.css",
   "settings.service.form.proxy.headline": "Ustawienia Proxy HTTP/HTTPS",
   "settings.service.form.proxy.host": "Host Proxy/IP",
   "settings.service.form.proxy.info": "Ustawienia proxy nie będą zsynchronizowane z serwerami Ferdia.",
