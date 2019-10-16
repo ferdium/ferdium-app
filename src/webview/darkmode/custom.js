@@ -1,5 +1,5 @@
 // CSS for pages that need custom styles to work correctly in darkmode
-export default { 
+export default {
   'web.whatsapp.com': `
     div.landing-window > div.landing-main {
       background-color: #FFFFFF !important;
@@ -18,5 +18,5 @@ export default {
     .scan input.md-input {
       color: #212121;
     }
-  `
+  `,
 };
