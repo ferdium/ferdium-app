@@ -316,6 +316,7 @@
   "settings.service.form.indirectMessages": "Zobrazovat znak zprávy pro všechny nové zprávy",
   "settings.service.form.isMutedInfo": "Pokud je vypnuto, všechny zvuky notifikací a jiného audia budou ztišeny",
   "settings.service.form.name": "Jméno",
+  "settings.service.form.openDarkmodeCss": "Open darkmode.css",
   "settings.service.form.proxy.headline": "Nastavení HTTP/HTTPS Proxy",
   "settings.service.form.proxy.host": "Proxy Host/IP",
   "settings.service.form.proxy.info": "Proxy settings will not synced with the Ferdi servers.",
