@@ -316,6 +316,7 @@
   "settings.service.form.indirectMessages": "Taispeáin comhartha theachtaireachta do gach teachtaireacht nua",
   "settings.service.form.isMutedInfo": "Tachtar gach fuaim fógraí agus athchasadh fuaime",
   "settings.service.form.name": "Ainm",
+  "settings.service.form.openDarkmodeCss": "Open darkmode.css",
   "settings.service.form.proxy.headline": "HTTP/HTTPS Proxy Settings",
   "settings.service.form.proxy.host": "Proxy Host/IP",
   "settings.service.form.proxy.info": "Proxy settings will not synced with the Ferdi servers.",
