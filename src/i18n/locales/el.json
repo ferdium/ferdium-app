@@ -316,6 +316,7 @@
   "settings.service.form.indirectMessages": "Εμφάνιση ειδοποίησης μηνύματος για όλα τα νέα μηνύματα",
   "settings.service.form.isMutedInfo": "Όλοι οι ήχοι καθώς και η αναπαραγωγή ήχου θα απενεργοποιηθούν",
   "settings.service.form.name": "Όνομα",
+  "settings.service.form.openDarkmodeCss": "Open darkmode.css",
   "settings.service.form.proxy.headline": "HTTP/HTTPS Proxy Settings",
   "settings.service.form.proxy.host": "Proxy Host/IP",
   "settings.service.form.proxy.info": "Proxy settings will not synced with the Ferdi servers.",

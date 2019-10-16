@@ -316,6 +316,7 @@
   "settings.service.form.indirectMessages": "Показывать значок уведомлений для всех новых сообщений",
   "settings.service.form.isMutedInfo": "Когда выключено, все звуковые уведомления будут отключены",
   "settings.service.form.name": "Имя",
+  "settings.service.form.openDarkmodeCss": "Open darkmode.css",
   "settings.service.form.proxy.headline": "Настройки Прокси HTTP/HTTPS",
   "settings.service.form.proxy.host": "Прокси Host/IP",
   "settings.service.form.proxy.info": "Настройки прокси не будут синхронизированны с серверами Ferdi",

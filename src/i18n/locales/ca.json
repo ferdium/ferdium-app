@@ -316,6 +316,7 @@
   "settings.service.form.indirectMessages": "Mostra la insígnia de missatge per a tots els missatges nous",
   "settings.service.form.isMutedInfo": "Quan es desactiva, tots els sons de notificació i reproducció d'àudio es silenciaran",
   "settings.service.form.name": "Nom",
+  "settings.service.form.openDarkmodeCss": "Open darkmode.css",
   "settings.service.form.proxy.headline": "Ajustaments Proxy HTTP/HTTPS",
   "settings.service.form.proxy.host": "Host Proxy / IP",
   "settings.service.form.proxy.info": "Els ajustaments del Proxy no es sincronitzaran amb els servidors de Ferdi",

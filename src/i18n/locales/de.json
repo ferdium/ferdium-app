@@ -316,6 +316,7 @@
   "settings.service.form.indirectMessages": "Nachrichten-Badge für alle neuen Nachrichten anzeigen",
   "settings.service.form.isMutedInfo": "Sämtliche Wiedergabe von Tönen wird deaktiviert",
   "settings.service.form.name": "Name",
+  "settings.service.form.openDarkmodeCss": "Open darkmode.css",
   "settings.service.form.proxy.headline": "HTTP-/HTTPS-Proxy-Einstellungen",
   "settings.service.form.proxy.host": "Proxy Host/IP",
   "settings.service.form.proxy.info": "Proxy-Einstellungen werden nicht mit den Ferdi Servern synchronisiert.",

@@ -316,6 +316,7 @@
   "settings.service.form.indirectMessages": "Tampilkan lencana pesan untuk semua pesan baru",
   "settings.service.form.isMutedInfo": "Saat dinonaktifkan, semua suara pemberitahuan dan pemutaran audio akan dibisukan",
   "settings.service.form.name": "Nama",
+  "settings.service.form.openDarkmodeCss": "Open darkmode.css",
   "settings.service.form.proxy.headline": "Pengaturan Proxy HTTP/HTTPS",
   "settings.service.form.proxy.host": "Host/IP Proksi",
   "settings.service.form.proxy.info": "Pengaturan proksi tidak akan disinkronkan dengan server Ferdi.",

@@ -316,6 +316,7 @@
   "settings.service.form.indirectMessages": "すべての新規メッセージについてバッジを表示する",
   "settings.service.form.isMutedInfo": "無効化されている場合、全ての通知音やオーディオ再生は無音になります",
   "settings.service.form.name": "氏名",
+  "settings.service.form.openDarkmodeCss": "Open darkmode.css",
   "settings.service.form.proxy.headline": "HTTP/HTTPSのプロキシ設定",
   "settings.service.form.proxy.host": "プロキシサーバー/IP",
   "settings.service.form.proxy.info": "プロキシ設定はFerdi アカウントで同期されません。",

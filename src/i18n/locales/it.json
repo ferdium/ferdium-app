@@ -316,6 +316,7 @@
   "settings.service.form.indirectMessages": "Mostra l'etichetta per tutti i nuovi messaggi",
   "settings.service.form.isMutedInfo": "Se disattivato, tutte le notifiche sonore e le riproduzioni audio saranno mutate",
   "settings.service.form.name": "Nome",
+  "settings.service.form.openDarkmodeCss": "Open darkmode.css",
   "settings.service.form.proxy.headline": "Impostazioni Proxy HTTP/HTTPS",
   "settings.service.form.proxy.host": "Proxy Host/IP",
   "settings.service.form.proxy.info": "Le impostazioni proxy non verranno sincronizzate con i server Ferdi.",
