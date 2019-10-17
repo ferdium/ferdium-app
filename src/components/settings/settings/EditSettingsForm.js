@@ -79,6 +79,10 @@ const messages = defineMessages({
     id: 'settings.app.headlineAppearance',
     defaultMessage: '!!!Appearance',
   },
+  universalDarkModeInfo: {
+    id: 'settings.app.universalDarkModeInfo',
+    defaultMessage: '!!!Universal Dark Mode tries to dynamically generate dark mode styles for services that are otherwise not currently supported.',
+  },
   accentColorInfo: {
     id: 'settings.app.accentColorInfo',
     defaultMessage: '!!!Write your accent color in a CSS-compatible format. (Default: #7367f0)',
@@ -156,6 +160,7 @@ export default @observer class EditSettingsForm extends Component {
     server: PropTypes.string.isRequired,
     noUpdates: PropTypes.bool.isRequired,
     hibernationEnabled: PropTypes.bool.isRequired,
+    isDarkmodeEnabled: PropTypes.bool.isRequired,
     openProcessManager: PropTypes.func.isRequired,
   };
 
@@ -192,6 +197,7 @@ export default @observer class EditSettingsForm extends Component {
       server,
       noUpdates,
       hibernationEnabled,
+      isDarkmodeEnabled,
       openProcessManager,
     } = this.props;
     const { intl } = this.context;
@@ -377,6 +383,22 @@ export default @observer class EditSettingsForm extends Component {
             <Toggle field={form.$('showDisabledServices')} />
             <Toggle field={form.$('showMessageBadgeWhenMuted')} />
             <Toggle field={form.$('darkMode')} />
+            {isDarkmodeEnabled && (
+              <>
+                <Toggle field={form.$('universalDarkMode')} />
+                <p
+                  className="settings__message"
+                  style={{
+                    borderTop: 0, marginTop: 0, paddingTop: 0, marginBottom: '2rem',
+                  }}
+                >
+                  <span>
+                    { intl.formatMessage(messages.universalDarkModeInfo) }
+                  </span>
+                </p>
+              </>
+            )}
+
             <Input
               placeholder="Accent Color"
               onChange={e => this.submit(e)}

@@ -98,6 +98,10 @@ const messages = defineMessages({
     id: 'settings.app.form.darkMode',
     defaultMessage: '!!!Dark Mode',
   },
+  universalDarkMode: {
+    id: 'settings.app.form.universalDarkMode',
+    defaultMessage: '!!!Enable universal Dark Mode',
+  },
   accentColor: {
     id: 'settings.app.form.accentColor',
     defaultMessage: '!!!Accent color',
@@ -176,6 +180,7 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
         enableGPUAcceleration: settingsData.enableGPUAcceleration,
         showDisabledServices: settingsData.showDisabledServices,
         darkMode: settingsData.darkMode,
+        universalDarkMode: settingsData.universalDarkMode,
         accentColor: settingsData.accentColor,
         showMessageBadgeWhenMuted: settingsData.showMessageBadgeWhenMuted,
         enableSpellchecking: settingsData.enableSpellchecking,
@@ -345,6 +350,11 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           value: settings.all.app.darkMode,
           default: DEFAULT_APP_SETTINGS.darkMode,
         },
+        universalDarkMode: {
+          label: intl.formatMessage(messages.universalDarkMode),
+          value: settings.all.app.universalDarkMode,
+          default: DEFAULT_APP_SETTINGS.universalDarkMode,
+        },
         accentColor: {
           label: intl.formatMessage(messages.accentColor),
           value: settings.all.app.accentColor,
@@ -435,6 +445,7 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           lockingFeatureEnabled={lockingFeatureEnabled}
           noUpdates={this.props.stores.settings.app.noUpdates}
           hibernationEnabled={this.props.stores.settings.app.hibernate}
+          isDarkmodeEnabled={this.props.stores.settings.app.darkMode}
           openProcessManager={() => this.openProcessManager()}
         />
       </ErrorBoundary>

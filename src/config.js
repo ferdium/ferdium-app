@@ -76,6 +76,7 @@ export const DEFAULT_APP_SETTINGS = {
   hibernationStrategy: 300,
   noUpdates: false,
   showServiceNavigationBar: false,
+  universalDarkMode: true,
   accentColor: '#7367f0',
 };
 

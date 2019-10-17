@@ -43,6 +43,8 @@ class RecipeController {
     'get-service-id': 'serviceIdEcho',
   };
 
+  universalDarkModeInjected = false;
+
   constructor() {
     this.initialize();
   }
@@ -127,11 +129,12 @@ class RecipeController {
 
       if (darkModeExists) {
         injectDarkModeStyle(this.settings.service.recipe.path);
-      } else if (!ignoreList.includes(window.location.host)) {
+      } else if (this.settings.app.universalDarkMode && !ignoreList.includes(window.location.host)) {
         // Use darkreader instead
         enableDarkMode({}, {
           css: customDarkModeCss[window.location.host] || '',
         });
+        this.universalDarkModeInjected = true;
       }
     } else {
       debug('Remove dark mode');
@@ -140,7 +143,14 @@ class RecipeController {
         removeDarkModeStyle();
       } else {
         disableDarkMode();
+        this.universalDarkModeInjected = false;
       }
+    }
+
+    // Remove dark reader if (universal) dark mode was just disabled
+    if (this.universalDarkModeInjected && (!this.settings.app.darkMode || !this.settings.app.universalDarkMode)) {
+      disableDarkMode();
+      this.universalDarkModeInjected = false;
     }
   }
 
