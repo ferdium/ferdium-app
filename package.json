@@ -30,7 +30,8 @@
     "uidev": "cd uidev && webpack-dev-server",
     "postinstall": "npx lerna run prepare",
     "apply-branding": "node ./src/i18n/apply-branding.js",
-    "prepare-code": "npm run lint && npm run reformat-files && npm run manage-translations && npm run apply-branding"
+    "prepare-code": "npm run lint && npm run reformat-files && npm run manage-translations && npm run apply-branding",
+    "build-theme-info": "node src/scripts/build-theme-info.js"
   },
   "keywords": [],
   "author": "Amine Mouafik <amine@mouafik.fr>",
@@ -47,6 +48,7 @@
     "auto-launch": "5.0.5",
     "classnames": "2.2.6",
     "cld3-asm": "1.0.1",
+    "css": "2.2.4",
     "darkreader": "4.7.15",
     "du": "^0.1.0",
     "electron-dl": "1.14.0",

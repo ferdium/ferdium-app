@@ -34,7 +34,9 @@
 
   &.is-active {
     background: lighten($theme-brand-primary, 35%);
-    border-left: 4px solid $theme-brand-primary;
+    border-left-width: 4px;
+    border-left-style: solid;
+    border-left-color: $theme-brand-primary;
 
     .tab-item__icon { margin-left: -4px; }
   }

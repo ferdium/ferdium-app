@@ -98,6 +98,10 @@ const messages = defineMessages({
     id: 'settings.app.form.darkMode',
     defaultMessage: '!!!Dark Mode',
   },
+  accentColor: {
+    id: 'settings.app.form.accentColor',
+    defaultMessage: '!!!Accent color',
+  },
   showDisabledServices: {
     id: 'settings.app.form.showDisabledServices',
     defaultMessage: '!!!Display disabled services tabs',
@@ -172,6 +176,7 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
         enableGPUAcceleration: settingsData.enableGPUAcceleration,
         showDisabledServices: settingsData.showDisabledServices,
         darkMode: settingsData.darkMode,
+        accentColor: settingsData.accentColor,
         showMessageBadgeWhenMuted: settingsData.showMessageBadgeWhenMuted,
         enableSpellchecking: settingsData.enableSpellchecking,
         spellcheckerLanguage: settingsData.spellcheckerLanguage,
@@ -339,6 +344,11 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           label: intl.formatMessage(messages.darkMode),
           value: settings.all.app.darkMode,
           default: DEFAULT_APP_SETTINGS.darkMode,
+        },
+        accentColor: {
+          label: intl.formatMessage(messages.accentColor),
+          value: settings.all.app.accentColor,
+          default: DEFAULT_APP_SETTINGS.accentColor,
         },
         enableGPUAcceleration: {
           label: intl.formatMessage(messages.enableGPUAcceleration),

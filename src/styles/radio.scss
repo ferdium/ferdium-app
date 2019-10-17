@@ -30,7 +30,9 @@
 
     &.is-selected {
       background: #FFF;
-      border: 2px solid $theme-brand-primary;
+      border-width: 2px;
+      border-style: solid;
+      border-color: $theme-brand-primary;
       color: $theme-brand-primary;
     }
 

@@ -4,7 +4,6 @@ export default {
     alignItems: 'center',
     position: 'absolute',
     width: '100%',
-    background: 'linear-gradient( 135deg, #CE9FFC 10%, #7367F0 100%)',
   },
   component: {
     width: '100%',

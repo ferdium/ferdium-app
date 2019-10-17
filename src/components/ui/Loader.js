@@ -1,22 +1,30 @@
 import React, { Component } from 'react';
+import { observer, inject } from 'mobx-react';
 import PropTypes from 'prop-types';
 import Loader from 'react-loader';
 
 import { oneOrManyChildElements } from '../../prop-types';
 
-export default class LoaderComponent extends Component {
+export default @observer @inject('stores') class LoaderComponent extends Component {
   static propTypes = {
     children: oneOrManyChildElements,
     loaded: PropTypes.bool,
     className: PropTypes.string,
     color: PropTypes.string,
+    stores: PropTypes.shape({
+      settings: PropTypes.shape({
+        app: PropTypes.shape({
+          accentColor: PropTypes.string.isRequired,
+        }).isRequired,
+      }).isRequired,
+    }).isRequired,
   };
 
   static defaultProps = {
     children: null,
     loaded: false,
     className: '',
-    color: '#7367F0',
+    color: 'ACCENT',
   };
 
   render() {
@@ -24,8 +32,9 @@ export default class LoaderComponent extends Component {
       children,
       loaded,
       className,
-      color,
     } = this.props;
+
+    const color = this.props.color !== 'ACCENT' ? this.props.color : this.props.stores.settings.app.accentColor;
 
     return (
       <Loader

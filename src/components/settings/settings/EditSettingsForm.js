@@ -79,6 +79,10 @@ const messages = defineMessages({
     id: 'settings.app.headlineAppearance',
     defaultMessage: '!!!Appearance',
   },
+  accentColorInfo: {
+    id: 'settings.app.accentColorInfo',
+    defaultMessage: '!!!Write your accent color in a CSS-compatible format. (Default: #7367f0)',
+  },
   headlineAdvanced: {
     id: 'settings.app.headlineAdvanced',
     defaultMessage: '!!!Advanced',
@@ -373,6 +377,12 @@ export default @observer class EditSettingsForm extends Component {
             <Toggle field={form.$('showDisabledServices')} />
             <Toggle field={form.$('showMessageBadgeWhenMuted')} />
             <Toggle field={form.$('darkMode')} />
+            <Input
+              placeholder="Accent Color"
+              onChange={e => this.submit(e)}
+              field={form.$('accentColor')}
+            />
+            <p>{intl.formatMessage(messages.accentColorInfo)}</p>
 
             {/* Language */}
             <h2 id="language">{intl.formatMessage(messages.headlineLanguage)}</h2>

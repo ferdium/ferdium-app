@@ -144,6 +144,13 @@ const createWindow = () => {
   }
 
   // Create the browser window.
+  let backgroundColor = '#7367F0';
+  if (settings.get('accentColor') !== '#7367f0') {
+    backgroundColor = settings.get('accentColor');
+  } else if (settings.get('darkMode')) {
+    backgroundColor = '#1E1E1E';
+  }
+
   mainWindow = new BrowserWindow({
     x: posX,
     y: posY,
@@ -153,7 +160,7 @@ const createWindow = () => {
     minHeight: 500,
     titleBarStyle: isMac ? 'hidden' : '',
     frame: isLinux,
-    backgroundColor: !settings.get('darkMode') ? '#7367F0' : '#1E1E1E',
+    backgroundColor,
     webPreferences: {
       nodeIntegration: true,
       webviewTag: true,

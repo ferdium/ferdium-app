@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import Loader from 'react-loader';
 import classnames from 'classnames';
 
-export default @observer class Button extends Component {
+export default @observer @inject('stores') class Button extends Component {
   static propTypes = {
     className: PropTypes.string,
     label: PropTypes.string.isRequired,
@@ -14,6 +14,13 @@ export default @observer class Button extends Component {
     buttonType: PropTypes.string,
     loaded: PropTypes.bool,
     htmlForm: PropTypes.string,
+    stores: PropTypes.shape({
+      settings: PropTypes.shape({
+        app: PropTypes.shape({
+          accentColor: PropTypes.string.isRequired,
+        }).isRequired,
+      }).isRequired,
+    }).isRequired,
   };
 
   static defaultProps = {
@@ -69,7 +76,7 @@ export default @observer class Button extends Component {
           loaded={loaded}
           lines={10}
           scale={0.4}
-          color={buttonType !== 'secondary' ? '#FFF' : '#7367F0'}
+          color={buttonType !== 'secondary' ? '#FFF' : this.props.stores.settings.app.accentColor}
           component="span"
         />
         {label}
