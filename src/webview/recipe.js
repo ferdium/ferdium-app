@@ -120,7 +120,7 @@ class RecipeController {
       }
     }
 
-    if (this.settings.service.isDarkModeEnabled || this.settings.app.darkMode) {
+    if (this.settings.service.isDarkModeEnabled) {
       debug('Enable dark mode');
 
       // Check if recipe has a darkmode.css
@@ -148,7 +148,7 @@ class RecipeController {
     }
 
     // Remove dark reader if (universal) dark mode was just disabled
-    if (this.universalDarkModeInjected && (!this.settings.app.darkMode || !this.settings.app.universalDarkMode)) {
+    if (this.universalDarkModeInjected && (!this.settings.service.isDarkModeEnabled || !this.settings.app.universalDarkMode)) {
       disableDarkMode();
       this.universalDarkModeInjected = false;
     }

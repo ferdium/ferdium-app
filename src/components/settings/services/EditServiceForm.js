@@ -354,9 +354,7 @@ export default @observer class EditServiceForm extends Component {
 
                 <div className="settings__settings-group">
                   <h3>{intl.formatMessage(messages.headlineGeneral)}</h3>
-                  {recipe.hasDarkMode && (
-                    <Toggle field={form.$('isDarkModeEnabled')} />
-                  )}
+                  <Toggle field={form.$('isDarkModeEnabled')} />
                   <Toggle field={form.$('isEnabled')} />
                 </div>
               </div>
