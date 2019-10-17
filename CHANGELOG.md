@@ -1,4 +1,14 @@
-# [5.3.4](https://github.com/meetfranz/franz/compare/v5.3.3...v5.3.4) (2019-09-25)
+# [5.4.0](https://github.com/getferdi/ferdi/compare/v5.3.4...v5.4.0)
+- Merge Franz v5.4.0
+- Add option to always show service navigation bar
+- Minifying build files to improve app size
+- Sorting applications in QuickSwitch by last used
+- Add service hibernation
+- Fix universal darkmode for WhatsApp and Threema
+- Add button to open darkmode.css for a service
+- Add option to change accent color
+
+# [5.3.4](https://github.com/getferdi/ferdi/compare/v5.3.3...v5.3.4) (2019-09-25)
 - Fix continuous releases/assets delivery on tags builds #53
 - Attempt at making menubar hiding feature cross-platform #7 (comment)
 - Attempt at making "About Ferdi" consistent across platforms #47 (comment)
@@ -7,14 +17,14 @@
 - Add universal Dark-Mode via the [DarkReader extension](https://github.com/darkreader/darkreader)
 - Add "Scheduled Do-not-Disturb" feature
 
-# [5.3.3](https://github.com/meetfranz/franz/compare/v5.3.2...v5.3.3) (2019-09-18)
+# [5.3.3](https://github.com/getferdi/ferdi/compare/v5.3.2...v5.3.3) (2019-09-18)
 - Merged Franz v5.3.3 into Ferdi
 - Allow hiding menubar (#7)
 - Add "back" and "forward" options for browsing history inside services (#39)
 - Add password protection feature (#41)
 - Add keep workspace loaded option per workspace (#37)
 
-# [5.3.2](https://github.com/meetfranz/franz/compare/v5.3.1...v5.3.2) (2019-09-13)
+# [5.3.2](https://github.com/getferdi/ferdi/compare/v5.3.1...v5.3.2) (2019-09-13)
 Merged Franz v5.3.2 into Ferdi
 
 ## [5.3.1](https://github.com/getferdi/ferdi/compare/v5.3.0...v5.3.1) (2019-09-09)
