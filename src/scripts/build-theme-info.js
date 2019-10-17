@@ -27,12 +27,12 @@ async function getRulesFromCssFile(file) {
 /**
  * Get all selectors from a list of parsed CSS rules that set any property to one of the specified
  * values.
- * 
+ *
  * This function will output an object in this format:
  * {
  *  'property-name': [ array of selectors ]
  * }
- * 
+ *
  * e.g.
  * {
  *  'background-color': [
@@ -40,7 +40,7 @@ async function getRulesFromCssFile(file) {
  *   '.input-dark'
  *  ]
  * }
- * 
+ *
  * @param {Array} rules Rules as outputted by the `css` module
  * @param {Array} values Array of values that should be searched for
  */
