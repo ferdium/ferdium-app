@@ -36,10 +36,13 @@ You can find the installers in the [latest release](https://github.com/getferdi/
 - [x] Add "Scheduled Do-not-Disturb" feature in which you won't get notifications (similar to Rambox's [Work Hours](https://rambox.pro/#feature-details/work_hours))
 - [x] Add CTRL+← and CTRL+→ shortcuts and menu options to go back and forward in the service browsing history([#39](https://github.com/getferdi/ferdi/issues/39))
 - [x] Add option to show a browser-like navigation bar on all services
+- [x] Add option to change accent color
 - [x] Add "`FERDI_APPDATA_DIR`" env variable to set a custom path for storing all data
 - [x] Add Process Manager to find services using a lot of resources
 - [x] Add "npm run prepare-code" command for development to lint and beautify code
+- [x] Add button to open darkmode.css for a service
 - [x] Improve "About Ferdi" screen to better display versions
+- [x] Minifying build files to improve app size
 - [x] Remove "Franz is better together" popup
 - [x] Remove bug that would incorrectly display unread messages count on some services (more info in [7566ccd](https://github.com/getferdi/ferdi/commit/7566ccd))
 - [x] [Makes it possible to edit the "Franz Todo" server](https://github.com/getferdi/ferdi/wiki/Custom-Todo)
