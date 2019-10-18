@@ -10,8 +10,8 @@ const fetch = require('node-fetch');
 const uuid = require('uuid/v4');
 const crypto = require('crypto');
 
-const franzRequest = (route, method, auth) => new Promise((resolve, reject) => {
-  const base = 'https://api.franzinfra.com/v1/';
+const apiRequest = (url, route, method, auth) => new Promise((resolve, reject) => {
+  const base = url + '/v1/';
   const user = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Ferdi/5.3.0-beta.1 Chrome/69.0.3497.128 Electron/4.2.4 Safari/537.36';
 
   try {
@@ -102,6 +102,7 @@ class UserController {
     const validation = await validateAll(request.all(), {
       email: 'required|email',
       password: 'required',
+      server: 'required',
     });
     if (validation.fails()) {
       let errorMessage = 'There was an error while trying to import your account:\n';
@@ -120,15 +121,12 @@ class UserController {
     const {
       email,
       password,
+      server,
     } = request.all();
 
     const hashedPassword = crypto.createHash('sha256').update(password).digest('base64');
 
-    if (Env.get('CONNECT_WITH_FRANZ') == 'false') { // eslint-disable-line eqeqeq
-      return response.send('Your account has been created but due to this server\'s configuration, we could not import your Franz account data.\n\nIf you are the server owner, please set CONNECT_WITH_FRANZ to true to enable account imports.');
-    }
-
-    const base = 'https://api.franzinfra.com/v1/';
+    const base = server + '/v1/';
     const userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Ferdi/5.3.0-beta.1 Chrome/69.0.3497.128 Electron/4.2.4 Safari/537.36';
 
     // Try to get an authentication token
@@ -162,7 +160,7 @@ class UserController {
     // Get user information
     let userInf = false;
     try {
-      userInf = await franzRequest('me', 'GET', token);
+      userInf = await apiRequest(server, 'me', 'GET', token);
     } catch (e) {
       const errorMessage = `Could not get your user info from Franz. Please check your credentials or try again later.\nError: ${e}`;
       return response.status(401).send(errorMessage);
@@ -176,7 +174,7 @@ class UserController {
 
     // Import services
     try {
-      const services = await franzRequest('me/services', 'GET', token);
+      const services = await apiRequest(server, 'me/services', 'GET', token);
 
       for (const service of services) {
         // Get new, unused uuid
@@ -201,7 +199,7 @@ class UserController {
 
     // Import workspaces
     try {
-      const workspaces = await franzRequest('workspace', 'GET', token);
+      const workspaces = await apiRequest(server, 'workspace', 'GET', token);
 
       for (const workspace of workspaces) {
         let workspaceId;
