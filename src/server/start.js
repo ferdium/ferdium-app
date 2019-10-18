@@ -17,24 +17,25 @@
 */
 const path = require('path');
 const fs = require('fs-extra');
-// eslint-disable-next-line import/no-extraneous-dependencies
-const { app } = require('electron');
 
 process.env.ENV_PATH = path.join(__dirname, 'env.ini');
-
-// Make sure local database exists
-const dbPath = path.join(app.getPath('userData'), 'server.sqlite');
-if (!fs.existsSync(dbPath)) {
-  fs.copySync(
-    path.join(__dirname, 'database', 'template.sqlite'),
-    dbPath,
-  );
-}
 
 const { Ignitor } = require('@adonisjs/ignitor');
 const fold = require('@adonisjs/fold');
 
-new Ignitor(fold)
-  .appRoot(__dirname)
-  .fireHttpServer()
-  .catch(console.error); // eslint-disable-line no-console
+module.exports = (dbPath, port) => {
+  if (!fs.existsSync(dbPath)) {
+    fs.copySync(
+      path.join(__dirname, 'database', 'template.sqlite'),
+      dbPath,
+    );
+  }
+
+  process.env.DB_PATH = dbPath;
+  process.env.PORT = port;
+
+  new Ignitor(fold)
+    .appRoot(__dirname)
+    .fireHttpServer()
+    .catch(console.error); // eslint-disable-line no-console
+};

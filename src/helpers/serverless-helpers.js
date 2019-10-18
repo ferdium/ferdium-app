@@ -1,9 +1,11 @@
+import { LOCAL_SERVER } from '../config';
+
 export default function useLocalServer(actions) {
   // Use local server for user
   actions.settings.update({
     type: 'app',
     data: {
-      server: 'http://localhost:45569',
+      server: LOCAL_SERVER,
     },
   });
 

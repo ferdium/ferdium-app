@@ -2,11 +2,7 @@
 /** @type {import('@adonisjs/framework/src/Env')} */
 const Env = use('Env');
 
-// eslint-disable-next-line import/no-extraneous-dependencies
-const { app } = require('electron');
-const path = require('path');
-
-const dbPath = path.join(app.getPath('userData'), 'server.sqlite');
+const dbPath = process.env.DB_PATH;
 
 module.exports = {
   /*

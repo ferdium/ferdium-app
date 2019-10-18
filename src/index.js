@@ -34,9 +34,6 @@ import { isPositionValid } from './electron/windowUtils';
 import { appId } from './package.json'; // eslint-disable-line import/no-unresolved
 import './electron/exception';
 
-// Start internal server
-import './server/start';
-
 import {
   DEFAULT_APP_SETTINGS,
   DEFAULT_WINDOW_OPTIONS,

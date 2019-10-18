@@ -111,6 +111,8 @@ export const FILE_SYSTEM_SETTINGS_TYPES = [
   'proxy',
 ];
 
+export const LOCAL_SERVER = 'You are using Ferdi without a server';
+
 export const SETTINGS_PATH = path.join(app.getPath('userData'), 'config');
 
 // Replacing app.asar is not beautiful but unforunately necessary
