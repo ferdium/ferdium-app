@@ -11,7 +11,7 @@ import windowStateKeeper from 'electron-window-state';
 
 // Set app directory before loading user modules
 if (process.env.FERDI_APPDATA_DIR || process.env.PORTABLE_EXECUTABLE_DIR) {
-  const appDataPath = process.env.FERDI_APPDATA_DIR || process.env.PORTABLE_EXECUTABLE_DIR
+  const appDataPath = process.env.FERDI_APPDATA_DIR || process.env.PORTABLE_EXECUTABLE_DIR;
   app.setPath('appData', appDataPath);
   app.setPath('userData', path.join(app.getPath('appData'), app.getName()));
 }
