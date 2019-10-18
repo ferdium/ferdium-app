@@ -108,7 +108,7 @@ export default class RecipesStore extends Store {
   async _checkIfRecipeIsInstalled() {
     const { router } = this.stores;
 
-    const match = matchRoute('/settings/services/add/:id', router.location.pathname);
+    const match = router.location && matchRoute('/settings/services/add/:id', router.location.pathname);
     if (match) {
       const recipeId = match.id;
 

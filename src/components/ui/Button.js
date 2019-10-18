@@ -4,7 +4,7 @@ import { observer, inject } from 'mobx-react';
 import Loader from 'react-loader';
 import classnames from 'classnames';
 
-export default @observer @inject('stores') class Button extends Component {
+export default @inject('stores') @observer class Button extends Component {
   static propTypes = {
     className: PropTypes.string,
     label: PropTypes.string.isRequired,
@@ -26,7 +26,7 @@ export default @observer @inject('stores') class Button extends Component {
   static defaultProps = {
     className: null,
     disabled: false,
-    onClick: () => {},
+    onClick: () => { },
     type: 'button',
     buttonType: '',
     loaded: true,

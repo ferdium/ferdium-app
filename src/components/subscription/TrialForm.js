@@ -56,7 +56,7 @@ const styles = theme => ({
   },
 });
 
-export default @observer @injectSheet(styles) class TrialForm extends Component {
+export default @injectSheet(styles) @observer class TrialForm extends Component {
   static propTypes = {
     activateTrial: PropTypes.func.isRequired,
     isActivatingTrial: PropTypes.bool.isRequired,

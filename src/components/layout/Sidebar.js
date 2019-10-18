@@ -116,7 +116,7 @@ export default @inject('stores', 'actions') @observer class Sidebar extends Comp
             { stores.settings.all.app.lockingFeatureEnabled ? (
               <button
                 type="button"
-                className={`sidebar__button sidebar__button--audio ${isAppMuted ? 'is-muted' : ''}`}
+                className={`sidebar__button`}
                 onClick={() => {
                   // Disable lock first - otherwise the application might not update correctly
                   actions.settings.update({

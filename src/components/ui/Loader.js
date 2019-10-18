@@ -5,7 +5,7 @@ import Loader from 'react-loader';
 
 import { oneOrManyChildElements } from '../../prop-types';
 
-export default @observer @inject('stores') class LoaderComponent extends Component {
+export default @inject('stores') @observer class LoaderComponent extends Component {
   static propTypes = {
     children: oneOrManyChildElements,
     loaded: PropTypes.bool,

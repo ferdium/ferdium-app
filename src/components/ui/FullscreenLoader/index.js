@@ -8,7 +8,7 @@ import Loader from '../Loader';
 
 import styles from './styles';
 
-export default @observer @inject('stores') @withTheme @injectSheet(styles) class FullscreenLoader extends Component {
+export default @inject('stores') @withTheme @injectSheet(styles) @observer class FullscreenLoader extends Component {
   static propTypes = {
     className: PropTypes.string,
     title: PropTypes.string.isRequired,
