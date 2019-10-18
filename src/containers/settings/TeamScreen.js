@@ -4,6 +4,7 @@ import { inject, observer } from 'mobx-react';
 
 import UserStore from '../../stores/UserStore';
 import AppStore from '../../stores/AppStore';
+import SettingsStore from '../../stores/SettingsStore';
 
 import TeamDashboard from '../../components/settings/team/TeamDashboard';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
@@ -43,6 +44,7 @@ TeamScreen.wrappedComponent.propTypes = {
   stores: PropTypes.shape({
     user: PropTypes.instanceOf(UserStore).isRequired,
     app: PropTypes.instanceOf(AppStore).isRequired,
+    settings: PropTypes.instanceOf(SettingsStore).isRequired,
   }).isRequired,
   actions: PropTypes.shape({
     payment: PropTypes.shape({

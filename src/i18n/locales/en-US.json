@@ -356,6 +356,8 @@
   "settings.team.headline": "Team",
   "settings.team.intro": "You and your team use Ferdi? You can now manage Premium subscriptions for as many colleagues, friends or family members as you want, all from within one account.",
   "settings.team.manageAction": "Manage your Team on getferdi.com",
+  "settings.team.teamsUnavailible": "Teams are unavailible",
+  "settings.team.teamsUnavailibleInfo": "Teams are currently only availible when using the Franz Server and after paying for Franz Professional. Please change your server to https://api.franzinfra.com to use teams.",
   "settings.team.upgradeAction": "Upgrade your Account",
   "settings.user.form.accountType.company": "Company",
   "settings.user.form.accountType.individual": "Individual",

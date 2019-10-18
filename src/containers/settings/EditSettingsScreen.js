@@ -414,7 +414,6 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
       cacheSize,
       updateStatusTypes,
       isClearingAllCache,
-      server,
       lockingFeatureEnabled,
     } = app;
     const {
@@ -441,7 +440,7 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           isSpellcheckerIncludedInCurrentPlan={spellcheckerConfig.isIncludedInCurrentPlan}
           isTodosEnabled={todos.isFeatureActive}
           isWorkspaceEnabled={workspaces.isFeatureActive}
-          server={server || 'https://api.franzinfra.com'}
+          server={this.props.stores.settings.app.server}
           lockingFeatureEnabled={lockingFeatureEnabled}
           noUpdates={this.props.stores.settings.app.noUpdates}
           hibernationEnabled={this.props.stores.settings.app.hibernate}
