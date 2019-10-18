@@ -19,9 +19,10 @@ export default @inject('stores', 'actions') @observer class TeamScreen extends C
   }
 
   render() {
-    const { user } = this.props.stores;
+    const { user, settings } = this.props.stores;
 
     const isLoadingUserInfo = user.getUserInfoRequest.isExecuting;
+    const { server } = settings.app;
 
     return (
       <ErrorBoundary>
@@ -31,6 +32,7 @@ export default @inject('stores', 'actions') @observer class TeamScreen extends C
           retryUserInfoRequest={() => this.reloadData()}
           openTeamManagement={() => this.handleWebsiteLink('/user/team')}
           isProUser={user.isPro}
+          server={server}
         />
       </ErrorBoundary>
     );
