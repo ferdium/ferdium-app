@@ -79,7 +79,7 @@ const styles = theme => ({
   },
 });
 
-@injectSheet(styles) @observer @inject('stores')
+@injectSheet(styles) @inject('stores') @observer
 class TodosWebview extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,

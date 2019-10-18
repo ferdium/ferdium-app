@@ -76,6 +76,8 @@ export const DEFAULT_APP_SETTINGS = {
   hibernationStrategy: 300,
   noUpdates: false,
   showServiceNavigationBar: false,
+  universalDarkMode: true,
+  accentColor: '#7367f0',
 };
 
 export const DEFAULT_FEATURES_CONFIG = {
@@ -87,7 +89,7 @@ export const DEFAULT_FEATURES_CONFIG = {
   },
   isServiceProxyEnabled: false,
   isServiceProxyIncludedInCurrentPlan: true,
-  isAnnouncementsEnabled: true,
+  isAnnouncementsEnabled: false,
   isWorkspaceIncludedInCurrentPlan: true,
   isWorkspaceEnabled: false,
   isCommunityRecipesIncludedInCurrentPlan: true,
@@ -100,7 +102,7 @@ export const DEFAULT_WINDOW_OPTIONS = {
   y: 0,
 };
 
-export const FRANZ_SERVICE_REQUEST = 'https://github.com/getferdi/recipes/issues';
+export const FRANZ_SERVICE_REQUEST = 'https://github.com/getferdi/recipes/issues/new/choose';
 export const FRANZ_TRANSLATION = 'https://crowdin.com/project/getferdi';
 export const FRANZ_DEV_DOCS = 'http://bit.ly/franz-dev-hub';
 

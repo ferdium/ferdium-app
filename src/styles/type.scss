@@ -39,7 +39,9 @@ a, button {
 
   &.button {
     background: none;
-    border: 2px solid $theme-brand-primary;
+    border-width: 2px;
+    border-style: solid;
+    border-color: $theme-brand-primary;
     border-radius: 3px;
     color: $theme-brand-primary;
     display: inline-block;

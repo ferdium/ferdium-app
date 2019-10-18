@@ -20,6 +20,7 @@ import settingsWS from '../features/settingsWS';
 import serviceLimit from '../features/serviceLimit';
 import communityRecipes from '../features/communityRecipes';
 import todos from '../features/todos';
+import accentColor from '../features/accentColor';
 
 import { DEFAULT_FEATURES_CONFIG } from '../config';
 
@@ -83,5 +84,6 @@ export default class FeaturesStore extends Store {
     serviceLimit(this.stores, this.actions);
     communityRecipes(this.stores, this.actions);
     todos(this.stores, this.actions);
+    accentColor(this.stores, this.actions);
   }
 }

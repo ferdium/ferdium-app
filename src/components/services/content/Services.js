@@ -44,7 +44,7 @@ const styles = {
   },
 };
 
-export default @observer @inject('actions') @injectSheet(styles) class Services extends Component {
+export default @injectSheet(styles) @inject('actions') @observer class Services extends Component {
   static propTypes = {
     services: MobxPropTypes.arrayOrObservableArray,
     setWebviewReference: PropTypes.func.isRequired,

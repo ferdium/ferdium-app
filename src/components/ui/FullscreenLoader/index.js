@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import injectSheet, { withTheme } from 'react-jss';
 import classnames from 'classnames';
 
@@ -8,7 +8,7 @@ import Loader from '../Loader';
 
 import styles from './styles';
 
-export default @observer @withTheme @injectSheet(styles) class FullscreenLoader extends Component {
+export default @inject('stores') @withTheme @injectSheet(styles) @observer class FullscreenLoader extends Component {
   static propTypes = {
     className: PropTypes.string,
     title: PropTypes.string.isRequired,
@@ -16,6 +16,13 @@ export default @observer @withTheme @injectSheet(styles) class FullscreenLoader 
     theme: PropTypes.object.isRequired,
     spinnerColor: PropTypes.string,
     children: PropTypes.node,
+    stores: PropTypes.shape({
+      settings: PropTypes.shape({
+        app: PropTypes.shape({
+          accentColor: PropTypes.string.isRequired,
+        }).isRequired,
+      }).isRequired,
+    }).isRequired,
   };
 
   static defaultProps = {
@@ -32,10 +39,16 @@ export default @observer @withTheme @injectSheet(styles) class FullscreenLoader 
       spinnerColor,
       className,
       theme,
+      stores,
     } = this.props;
 
     return (
-      <div className={classes.wrapper}>
+      <div
+        className={classes.wrapper}
+        style={{
+          background: stores.app.accentColor,
+        }}
+      >
         <div
           className={classnames({
             [`${classes.component}`]: true,

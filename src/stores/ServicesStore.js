@@ -1,3 +1,4 @@
+import { shell } from 'electron';
 import {
   action,
   reaction,
@@ -6,12 +7,15 @@ import {
 } from 'mobx';
 import { remove } from 'lodash';
 import ms from 'ms';
+import fs from 'fs-extra';
+import path from 'path';
 
 import Store from './lib/Store';
 import Request from './lib/Request';
 import CachedRequest from './lib/CachedRequest';
 import { matchRoute } from '../helpers/routing-helpers';
 import { isInTimeframe } from '../helpers/schedule-helpers';
+import { getRecipeDirectory, getDevRecipeDirectory } from '../helpers/recipe-helpers';
 import { workspaceStore } from '../features/workspaces';
 import { serviceLimitStore } from '../features/serviceLimit';
 import { RESTRICTION_TYPES } from '../models/Service';
@@ -52,6 +56,7 @@ export default class ServicesStore extends Store {
     this.actions.service.createFromLegacyService.listen(this._createFromLegacyService.bind(this));
     this.actions.service.updateService.listen(this._updateService.bind(this));
     this.actions.service.deleteService.listen(this._deleteService.bind(this));
+    this.actions.service.openDarkmodeCss.listen(this._openDarkmodeCss.bind(this));
     this.actions.service.clearCache.listen(this._clearCache.bind(this));
     this.actions.service.setWebviewReference.listen(this._setWebviewReference.bind(this));
     this.actions.service.detachService.listen(this._detachService.bind(this));
@@ -105,6 +110,11 @@ export default class ServicesStore extends Store {
 
     reaction(
       () => this.stores.settings.app.darkMode,
+      () => this._shareSettingsWithServiceProcess(),
+    );
+
+    reaction(
+      () => this.stores.settings.app.universalDarkMode,
       () => this._shareSettingsWithServiceProcess(),
     );
   }
@@ -314,6 +324,27 @@ export default class ServicesStore extends Store {
 
     await request._promise;
     this.actionStatus = request.result.status;
+  }
+
+  @action async _openDarkmodeCss({ recipe }) {
+    // Get directory for recipe
+    const normalDirectory = getRecipeDirectory(recipe);
+    const devDirectory = getDevRecipeDirectory(recipe);
+    let directory;
+
+    if (await fs.pathExists(normalDirectory)) {
+      directory = normalDirectory;
+    } else if (await fs.pathExists(devDirectory)) {
+      directory = devDirectory;
+    } else {
+      // Recipe cannot be found on drive
+      return;
+    }
+
+    // Create and open darkmode.css
+    const file = path.join(directory, 'darkmode.css');
+    await fs.ensureFile(file);
+    shell.showItemInFolder(file);
   }
 
   @action async _clearCache({ serviceId }) {
