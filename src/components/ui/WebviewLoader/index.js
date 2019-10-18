@@ -14,7 +14,7 @@ const messages = defineMessages({
   },
 });
 
-export default @observer @injectSheet(styles) class WebviewLoader extends Component {
+export default @injectSheet(styles) @observer class WebviewLoader extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
     classes: PropTypes.object.isRequired,
