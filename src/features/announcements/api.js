@@ -21,7 +21,7 @@ export const announcementsApi = {
 
   async getAnnouncement(version) {
     debug('fetching release announcement from api');
-    const url = `${apiBase()}/announcements/${version}`;
+    const url = `https://api.getferdi.com/v1/announcements/${version}`;
     const response = await window.fetch(url, { method: 'GET' });
     if (!response.ok) return null;
     return response.json();
