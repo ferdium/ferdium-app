@@ -201,6 +201,12 @@ export default @inject('stores', 'actions') @observer class Sidebar extends Comp
           data-tip={`${intl.formatMessage(messages.settings)} (${ctrlKey}+,)`}
         >
           <i className="mdi mdi-settings" />
+          { (this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.AVAILABLE ||
+            this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.DOWNLOADED) && (
+            <span className="update-availible">
+              •
+            </span>
+          ) }
         </button>
         {this.state.tooltipEnabled && (
           <ReactTooltip place="right" type="dark" effect="solid" />
