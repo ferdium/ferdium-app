@@ -3,7 +3,6 @@ const Workspace = use('App/Models/Workspace');
 const {
   validateAll,
 } = use('Validator');
-const Env = use('Env');
 
 const btoa = require('btoa');
 const fetch = require('node-fetch');
@@ -11,7 +10,7 @@ const uuid = require('uuid/v4');
 const crypto = require('crypto');
 
 const apiRequest = (url, route, method, auth) => new Promise((resolve, reject) => {
-  const base = url + '/v1/';
+  const base = `${url}/v1/`;
   const user = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Ferdi/5.3.0-beta.1 Chrome/69.0.3497.128 Electron/4.2.4 Safari/537.36';
 
   try {
@@ -126,7 +125,7 @@ class UserController {
 
     const hashedPassword = crypto.createHash('sha256').update(password).digest('base64');
 
-    const base = server + '/v1/';
+    const base = `${server}/v1/`;
     const userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Ferdi/5.3.0-beta.1 Chrome/69.0.3497.128 Electron/4.2.4 Safari/537.36';
 
     // Try to get an authentication token
