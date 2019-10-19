@@ -1,5 +1,5 @@
 import { webFrame } from 'electron';
-import {SpellCheckHandler, ContextMenuListener, ContextMenuBuilder} from 'electron-spellchecker';
+import { SpellCheckHandler, ContextMenuListener, ContextMenuBuilder } from 'electron-spellchecker';
 
 import { SPELLCHECKER_LOCALES } from '../i18n/languages';
 
@@ -48,6 +48,7 @@ export default async function initialize(languageCode = 'en-us') {
     switchDict(locale);
 
     contextMenuBuilder = new ContextMenuBuilder(handler);
+    // eslint-disable-next-line no-new
     new ContextMenuListener((info) => {
       contextMenuBuilder.showPopupMenu(info);
     });
