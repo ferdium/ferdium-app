@@ -89,7 +89,7 @@ export const DEFAULT_FEATURES_CONFIG = {
   },
   isServiceProxyEnabled: false,
   isServiceProxyIncludedInCurrentPlan: true,
-  isAnnouncementsEnabled: false,
+  isAnnouncementsEnabled: true,
   isWorkspaceIncludedInCurrentPlan: true,
   isWorkspaceEnabled: false,
   isCommunityRecipesIncludedInCurrentPlan: true,
