@@ -1,3 +1,4 @@
+import { ipcRenderer } from 'electron';
 import { action, computed, observable } from 'mobx';
 import ms from 'ms';
 
@@ -11,6 +12,8 @@ export default class RequestStore extends Store {
   @observable servicesRequest;
 
   @observable showRequiredRequestsError = false;
+
+  @observable localServerPort = 45569;
 
   retries = 0;
 
@@ -29,6 +32,12 @@ export default class RequestStore extends Store {
   setup() {
     this.userInfoRequest = this.stores.user.getUserInfoRequest;
     this.servicesRequest = this.stores.services.allServicesRequest;
+
+    ipcRenderer.on('localServerPort', (event, data) => {
+      if (data.port) {
+        this.localServerPort = data.port;
+      }
+    });
   }
 
   @computed get areRequiredRequestsSuccessful() {

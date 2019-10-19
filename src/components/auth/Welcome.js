@@ -1,7 +1,9 @@
+/* eslint jsx-a11y/anchor-is-valid: 0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
+import { observer, PropTypes as MobxPropTypes, inject } from 'mobx-react';
 import { defineMessages, intlShape } from 'react-intl';
+import serverlessLogin from '../../helpers/serverless-helpers';
 
 import Link from '../ui/Link';
 
@@ -14,18 +16,27 @@ const messages = defineMessages({
     id: 'welcome.loginButton',
     defaultMessage: '!!!Login to your account',
   },
+  serverless: {
+    id: 'services.serverless',
+    defaultMessage: '!!!Use Ferdi without an Account',
+  },
 });
 
-export default @observer class Login extends Component {
+export default @observer @inject('actions') class Login extends Component {
   static propTypes = {
     loginRoute: PropTypes.string.isRequired,
     signupRoute: PropTypes.string.isRequired,
     recipes: MobxPropTypes.arrayOrObservableArray.isRequired,
+    actions: PropTypes.object.isRequired,
   };
 
   static contextTypes = {
     intl: intlShape,
   };
+
+  useLocalServer() {
+    serverlessLogin(this.props.actions);
+  }
 
   render() {
     const { intl } = this.context;
@@ -53,6 +64,12 @@ export default @observer class Login extends Component {
           </Link>
           <br />
           <br />
+          <a className="button" onClick={this.useLocalServer.bind(this)}>
+            {intl.formatMessage(messages.serverless)}
+          </a>
+          <br />
+          <br />
+
 
           <Link to="settings/app">
             <span style={{

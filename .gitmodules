@@ -1,3 +1,6 @@
 [submodule "recipes"]
 	path = recipes
 	url = https://github.com/getferdi/recipes
+[submodule "src/server"]
+	path = src/server
+	url = https://github.com/getferdi/internal-server.git

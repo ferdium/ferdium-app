@@ -4,6 +4,9 @@
 import {
   API_VERSION,
 } from '../environment';
+import {
+  LOCAL_SERVER,
+} from '../config';
 
 const apiBase = () => {
   let url;
@@ -21,6 +24,9 @@ const apiBase = () => {
     //    on some routes. This would result in Ferdi deleting its current authToken as it thinks it
     //    has gone invalid.
     url = 'https://1.1.1.1';
+  } else if (window.ferdi.stores.settings.all.app.server === LOCAL_SERVER) {
+    // Use URL for local server
+    url = `http://127.0.0.1:${window.ferdi.stores.requests.localServerPort}`;
   } else {
     // Load URL from store
     url = window.ferdi.stores.settings.all.app.server;
