@@ -1,36 +1,21 @@
 import { webFrame } from 'electron';
-import { attachSpellCheckProvider, SpellCheckerProvider } from 'electron-hunspell';
-import path from 'path';
-import { readFileSync } from 'fs';
+import {SpellCheckHandler, ContextMenuListener, ContextMenuBuilder} from 'electron-spellchecker';
 
-import { DICTIONARY_PATH } from '../config';
 import { SPELLCHECKER_LOCALES } from '../i18n/languages';
 
-const debug = require('debug')('Ferdi:spellchecker');
+const debug = require('debug')('Franz:spellchecker');
 
-let provider;
+let handler;
 let currentDict;
+let contextMenuBuilder;
 let _isEnabled = false;
-let attached;
 
-const DEFAULT_LOCALE = 'en-us';
-
-async function loadDictionary(locale) {
-  try {
-    const fileLocation = path.join(DICTIONARY_PATH, `hunspell-dict-${locale}/${locale}`);
-    debug('Loaded dictionary', locale, 'from', fileLocation);
-    return provider.loadDictionary(locale, readFileSync(`${fileLocation}.dic`), readFileSync(`${fileLocation}.aff`));
-  } catch (err) {
-    console.error('Could not load dictionary', err);
-  }
-}
-
-export async function switchDict(locale = DEFAULT_LOCALE) {
+export async function switchDict(locale) {
   try {
     debug('Trying to load dictionary', locale);
 
-    if (!provider) {
-      console.warn('SpellcheckProvider not initialized');
+    if (!handler) {
+      console.warn('SpellcheckHandler not initialized');
 
       return;
     }
@@ -41,11 +26,7 @@ export async function switchDict(locale = DEFAULT_LOCALE) {
       return;
     }
 
-    if (currentDict) {
-      provider.unloadDictionary(locale);
-    }
-    await loadDictionary(locale);
-    await attached.switchLanguage(locale);
+    handler.switchLanguage(locale);
 
     debug('Switched dictionary to', locale);
 
@@ -56,34 +37,22 @@ export async function switchDict(locale = DEFAULT_LOCALE) {
   }
 }
 
-export function getSpellcheckerLocaleByFuzzyIdentifier(identifier) {
-  const locales = Object.keys(SPELLCHECKER_LOCALES).filter(key => key === identifier.toLowerCase() || key.split('-')[0] === identifier.toLowerCase());
-
-  if (locales.length >= 1) {
-    return locales[0];
-  }
-
-  return null;
-}
-
-export default async function initialize(languageCode = DEFAULT_LOCALE) {
+export default async function initialize(languageCode = 'en-us') {
   try {
-    provider = new SpellCheckerProvider();
-    const locale = getSpellcheckerLocaleByFuzzyIdentifier(languageCode);
+    handler = new SpellCheckHandler();
+    handler.attachToInput();
+    const locale = languageCode.toLowerCase();
 
     debug('Init spellchecker');
-    await provider.initialize();
 
-    debug('Attaching spellcheck provider');
-    attached = await attachSpellCheckProvider(provider);
+    switchDict(locale);
 
-    const availableDictionaries = await provider.getAvailableDictionaries();
+    contextMenuBuilder = new ContextMenuBuilder(handler);
+    new ContextMenuListener((info) => {
+      contextMenuBuilder.showPopupMenu(info);
+    });
 
-    debug('Available spellchecker dictionaries', availableDictionaries);
-
-    await switchDict(locale);
-
-    return provider;
+    return handler;
   } catch (err) {
     console.error(err);
     return false;
@@ -96,8 +65,19 @@ export function isEnabled() {
 
 export function disable() {
   if (isEnabled()) {
+    handler.unsubscribe();
     webFrame.setSpellCheckProvider(currentDict, { spellCheck: () => true });
     _isEnabled = false;
     currentDict = null;
   }
+}
+
+export function getSpellcheckerLocaleByFuzzyIdentifier(identifier) {
+  const locales = Object.keys(SPELLCHECKER_LOCALES).filter(key => key === identifier.toLowerCase() || key.split('-')[0] === identifier.toLowerCase());
+
+  if (locales.length >= 1) {
+    return locales[0];
+  }
+
+  return null;
 }

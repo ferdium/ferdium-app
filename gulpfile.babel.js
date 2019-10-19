@@ -39,7 +39,6 @@ const paths = {
   src: 'src',
   dest: 'build',
   tmp: '.tmp',
-  dictionaries: 'dictionaries',
   package: `out/${config.version}`,
   recipes: {
     src: 'recipes/*.tar.gz',
@@ -194,29 +193,6 @@ export function webserver() {
   );
 }
 
-export function dictionaries(done) {
-  const { SPELLCHECKER_LOCALES } = require('./build/i18n/languages');
-
-  let packages = '';
-  Object.keys(SPELLCHECKER_LOCALES).forEach((key) => {
-    packages = `${packages} hunspell-dict-${key}`;
-  });
-
-  _shell(
-    `npm install --prefix "${path.join(__dirname, 'temp')}" ${packages}`,
-    () => {
-      moveSync(
-        path.join(__dirname, 'temp', 'node_modules'),
-        path.join(__dirname, 'build', paths.dictionaries),
-      );
-
-      removeSync(path.join(__dirname, 'temp'));
-
-      done();
-    },
-  );
-}
-
 export function recipes() {
   return gulp.src(paths.recipes.src, { since: gulp.lastRun(recipes) })
     .pipe(gulp.dest(paths.recipes.dest));
@@ -230,7 +206,6 @@ const build = gulp.series(
   clean,
   gulp.parallel(mvSrc, mvPackageJson, mvLernaPackages),
   gulp.parallel(html, scripts, styles, recipes, recipeInfo),
-  dictionaries,
 );
 export { build };
 

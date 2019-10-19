@@ -53,6 +53,5 @@ protocols:
   schemes: [ferdi]
 
 asarUnpack:
-  - ./dictionaries
   - ./recipes
   - ./assets/images/taskbar
