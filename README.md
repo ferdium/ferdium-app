@@ -38,7 +38,7 @@ You can find the installers in the [latest release](https://github.com/getferdi/
 - [x] Add CTRL+← and CTRL+→ shortcuts and menu options to go back and forward in the service browsing history([#39](https://github.com/getferdi/ferdi/issues/39))
 - [x] Add option to show a browser-like navigation bar on all services
 - [x] Add option to change accent color
-- [x] Add "`LOCALAPPDATA`" env variable to set a custom path for storing all data
+- [x] Add portable version for Windows
 - [x] Add Process Manager to find services using a lot of resources
 - [x] Add "npm run prepare-code" command for development to lint and beautify code
 - [x] Add button to open darkmode.css for a service
