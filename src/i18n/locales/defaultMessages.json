@@ -3083,26 +3083,26 @@
         }
       },
       {
-        "defaultMessage": "!!!Teams are unavailible",
+        "defaultMessage": "!!!Teams are unavailable",
         "end": {
           "column": 3,
           "line": 44
         },
         "file": "src/components/settings/team/TeamDashboard.js",
-        "id": "settings.team.teamsUnavailible",
+        "id": "settings.team.teamsUnavailable",
         "start": {
           "column": 20,
           "line": 41
         }
       },
       {
-        "defaultMessage": "!!!Teams are currently only availible when using the Franz Server and after paying for Franz Professional. Please change your server to https://api.franzinfra.com to use teams.",
+        "defaultMessage": "!!!Teams are currently only available when using the Franz Server and after paying for Franz Professional. Please change your server to https://api.franzinfra.com to use teams.",
         "end": {
           "column": 3,
           "line": 48
         },
         "file": "src/components/settings/team/TeamDashboard.js",
-        "id": "settings.team.teamsUnavailibleInfo",
+        "id": "settings.team.teamsUnavailableInfo",
         "start": {
           "column": 24,
           "line": 45
