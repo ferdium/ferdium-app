@@ -1733,104 +1733,104 @@
         "defaultMessage": "!!!Available services",
         "end": {
           "column": 3,
-          "line": 17
+          "line": 20
         },
         "file": "src/components/settings/navigation/SettingsNavigation.js",
         "id": "settings.navigation.availableServices",
         "start": {
           "column": 21,
-          "line": 14
+          "line": 17
         }
       },
       {
         "defaultMessage": "!!!Your services",
         "end": {
           "column": 3,
-          "line": 21
+          "line": 24
         },
         "file": "src/components/settings/navigation/SettingsNavigation.js",
         "id": "settings.navigation.yourServices",
         "start": {
           "column": 16,
-          "line": 18
+          "line": 21
         }
       },
       {
         "defaultMessage": "!!!Your workspaces",
         "end": {
           "column": 3,
-          "line": 25
+          "line": 28
         },
         "file": "src/components/settings/navigation/SettingsNavigation.js",
         "id": "settings.navigation.yourWorkspaces",
         "start": {
           "column": 18,
-          "line": 22
+          "line": 25
         }
       },
       {
         "defaultMessage": "!!!Account",
         "end": {
           "column": 3,
-          "line": 29
+          "line": 32
         },
         "file": "src/components/settings/navigation/SettingsNavigation.js",
         "id": "settings.navigation.account",
         "start": {
           "column": 11,
-          "line": 26
+          "line": 29
         }
       },
       {
         "defaultMessage": "!!!Manage Team",
         "end": {
           "column": 3,
-          "line": 33
+          "line": 36
         },
         "file": "src/components/settings/navigation/SettingsNavigation.js",
         "id": "settings.navigation.team",
         "start": {
           "column": 8,
-          "line": 30
+          "line": 33
         }
       },
       {
         "defaultMessage": "!!!Settings",
         "end": {
           "column": 3,
-          "line": 37
+          "line": 40
         },
         "file": "src/components/settings/navigation/SettingsNavigation.js",
         "id": "settings.navigation.settings",
         "start": {
           "column": 12,
-          "line": 34
+          "line": 37
         }
       },
       {
         "defaultMessage": "!!!Support Ferdi",
         "end": {
           "column": 3,
-          "line": 41
+          "line": 44
         },
         "file": "src/components/settings/navigation/SettingsNavigation.js",
         "id": "settings.navigation.supportFerdi",
         "start": {
           "column": 16,
-          "line": 38
+          "line": 41
         }
       },
       {
         "defaultMessage": "!!!Logout",
         "end": {
           "column": 3,
-          "line": 45
+          "line": 48
         },
         "file": "src/components/settings/navigation/SettingsNavigation.js",
         "id": "settings.navigation.logout",
         "start": {
           "column": 10,
-          "line": 42
+          "line": 45
         }
       }
     ],

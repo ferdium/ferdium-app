@@ -22,7 +22,12 @@ export default @injectSheet(styles) @withTheme class AppLoader extends Component
   static propTypes = {
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
+    texts: PropTypes.array,
   };
+
+  static defaultProps = {
+    texts: textList,
+  }
 
   state = {
     step: 0,
@@ -43,7 +48,7 @@ export default @injectSheet(styles) @withTheme class AppLoader extends Component
   }
 
   render() {
-    const { classes, theme } = this.props;
+    const { classes, theme, texts } = this.props;
     const { step } = this.state;
 
     return (
@@ -52,7 +57,7 @@ export default @injectSheet(styles) @withTheme class AppLoader extends Component
         className={classes.component}
         spinnerColor={theme.colorAppLoaderSpinner}
       >
-        {textList.map((text, i) => (
+        {texts.map((text, i) => (
           <span
             key={text}
             className={classnames({

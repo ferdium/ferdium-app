@@ -56,6 +56,8 @@ export default class UserStore extends Store {
 
   @observable isImportLegacyServicesCompleted = false;
 
+  @observable isLoggingOut = false;
+
   @observable id;
 
   @observable authToken = localStorage.getItem('authToken') || null;
