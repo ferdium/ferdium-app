@@ -38,7 +38,7 @@ You can find the installers in the [latest release](https://github.com/getferdi/
 - [x] Add CTRL+← and CTRL+→ shortcuts and menu options to go back and forward in the service browsing history([#39](https://github.com/getferdi/ferdi/issues/39))
 - [x] Add option to show a browser-like navigation bar on all services
 - [x] Add option to change accent color
-- [x] Add "`FERDI_APPDATA_DIR`" env variable to set a custom path for storing all data
+- [x] Add "`LOCALAPPDATA`" env variable to set a custom path for storing all data
 - [x] Add Process Manager to find services using a lot of resources
 - [x] Add "npm run prepare-code" command for development to lint and beautify code
 - [x] Add button to open darkmode.css for a service
@@ -53,7 +53,6 @@ You can find the installers in the [latest release](https://github.com/getferdi/
 ## Development
 
 ### Preparations
-
 
 #### Clone repository with submodule
 
@@ -147,6 +146,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
@@ -159,6 +159,6 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
 
-
 ## Backers via OpenCollective
+
 <a href="https://opencollective.com/getferdi#backers" target="_blank"><img src="https://opencollective.com/getferdi/backers.svg?width=890"></a>
