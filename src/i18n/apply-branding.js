@@ -13,6 +13,7 @@ const ignore = [
   'settings.app.todoServerInfo',
   'settings.app.serverMoneyInfo',
   'settings.team.teamsUnavailableInfo',
+  'settings.app.serverMoneyInfo',
 ];
 
 // Files to ignore when applying branding
