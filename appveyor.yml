@@ -18,12 +18,18 @@ before_build:
 build_script:
   - npm run build
 
-artifacts:
-  - path: out\*.exe
-  - path: out\*.yml
-
 branches:
   except:
     - i18n
     - l10n_master
     - l10n_develop
+
+for:
+  - branches:
+      only:
+        - master
+        - /v\d*\.\d*\.\d*/
+        - /v\d*\.\d*\.\d*-beta\.\d*/
+    artifacts:
+      - path: out\*.exe
+      - path: out\*.yml
