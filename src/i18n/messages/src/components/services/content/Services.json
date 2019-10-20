@@ -4,11 +4,11 @@
     "defaultMessage": "!!!Welcome to Ferdi",
     "file": "src/components/services/content/Services.js",
     "start": {
-      "line": 14,
+      "line": 15,
       "column": 11
     },
     "end": {
-      "line": 17,
+      "line": 18,
       "column": 3
     }
   },
@@ -17,11 +17,11 @@
     "defaultMessage": "!!!Get started",
     "file": "src/components/services/content/Services.js",
     "start": {
-      "line": 18,
+      "line": 19,
       "column": 14
     },
     "end": {
-      "line": 21,
+      "line": 22,
       "column": 3
     }
   },
@@ -30,11 +30,24 @@
     "defaultMessage": "!!!Please login to use Ferdi.",
     "file": "src/components/services/content/Services.js",
     "start": {
-      "line": 22,
+      "line": 23,
       "column": 9
     },
     "end": {
-      "line": 25,
+      "line": 26,
+      "column": 3
+    }
+  },
+  {
+    "id": "services.serverless",
+    "defaultMessage": "!!!Use Ferdi without an Account",
+    "file": "src/components/services/content/Services.js",
+    "start": {
+      "line": 27,
+      "column": 14
+    },
+    "end": {
+      "line": 30,
       "column": 3
     }
   },
@@ -43,11 +56,11 @@
     "defaultMessage": "!!!Optionally, you can change your Ferdi server by clicking the cog in the bottom left corner.",
     "file": "src/components/services/content/Services.js",
     "start": {
-      "line": 26,
+      "line": 31,
       "column": 14
     },
     "end": {
-      "line": 29,
+      "line": 34,
       "column": 3
     }
   }

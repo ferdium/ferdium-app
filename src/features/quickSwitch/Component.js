@@ -6,12 +6,17 @@ import { reaction } from 'mobx';
 import injectSheet from 'react-jss';
 import { defineMessages, intlShape } from 'react-intl';
 import { Input } from '@meetfranz/forms';
+import { H1 } from '@meetfranz/ui';
 
 import Modal from '../../components/ui/Modal';
 import { state as ModalState } from '.';
 import ServicesStore from '../../stores/ServicesStore';
 
 const messages = defineMessages({
+  title: {
+    id: 'feature.quickSwitch.title',
+    defaultMessage: '!!!QuickSwitch',
+  },
   search: {
     id: 'feature.quickSwitch.search',
     defaultMessage: '!!!Search...',
@@ -30,9 +35,15 @@ const styles = theme => ({
     color: theme.styleTypes.primary.accent,
     paddingTop: 30,
   },
+  headline: {
+    fontSize: 20,
+    marginBottom: 20,
+    marginTop: -27,
+  },
   services: {
     width: '100%',
-    marginTop: 30,
+    maxHeight: '50vh',
+    overflow: 'scroll',
   },
   service: {
     background: theme.styleTypes.primary.contrast,
@@ -89,6 +100,8 @@ export default @injectSheet(styles) @inject('stores', 'actions') @observer class
 
   inputRef = createRef();
 
+  serviceElements = {};
+
   constructor(props) {
     super(props);
 
@@ -115,10 +128,27 @@ export default @injectSheet(styles) @inject('stores', 'actions') @observer class
 
   // Get currently shown services
   services() {
-    let services = this.props.stores.services.allDisplayed;
+    let services = [];
     if (this.state.search) {
-      // Apply simple search algorythm
+      // Apply simple search algorythm to list of all services
+      services = this.props.stores.services.allDisplayed;
       services = services.filter(service => service.name.toLowerCase().includes(this.state.search.toLowerCase()));
+    } else {
+      // Add last used services to services array
+      for (const service of this.props.stores.services.lastUsedServices) {
+        if (this.props.stores.services.one(service)) {
+          services.push(
+            this.props.stores.services.one(service),
+          );
+        }
+      }
+
+      // Add all other services in the default order
+      for (const service of this.props.stores.services.allDisplayed) {
+        if (!services.includes(service)) {
+          services.push(service);
+        }
+      }
     }
 
     return services;
@@ -149,6 +179,13 @@ export default @injectSheet(styles) @inject('stores', 'actions') @observer class
       } else if ((state.selected >= (services - 1)) && factor === 1) {
         newSelected = 0;
       }
+
+      // Make sure new selection is visible
+      const serviceElement = this.serviceElements[newSelected];
+      if (serviceElement) {
+        serviceElement.scrollIntoViewIfNeeded(false);
+      }
+
 
       return {
         selected: newSelected,
@@ -244,10 +281,13 @@ export default @injectSheet(styles) @inject('stores', 'actions') @observer class
     return (
       <Modal
         isOpen={isModalVisible}
-        className={classes.modal}
+        className={`${classes.modal} quick-switch`}
         shouldCloseOnOverlayClick
         close={this.close.bind(this)}
       >
+        <H1 className={classes.headline}>
+          {intl.formatMessage(messages.title)}
+        </H1>
         <div ref={this.inputRef}>
           <Input
             placeholder={intl.formatMessage(messages.search)}
@@ -260,9 +300,12 @@ export default @injectSheet(styles) @inject('stores', 'actions') @observer class
         <div className={classes.services}>
           { services.map((service, index) => (
             <div
-              className={`${classes.service} ${this.state.selected === index ? classes.activeService : ''}`}
+              className={`${classes.service} ${this.state.selected === index ? `${classes.activeService} active` : ''} service`}
               onClick={() => openService(index)}
               key={service.id}
+              ref={(el) => {
+                this.serviceElements[index] = el;
+              }}
             >
               <img
                 src={service.icon}

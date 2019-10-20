@@ -1,0 +1,13 @@
+.theme__dark .quick-switch {
+  background: $dark-theme-gray-darkest;
+
+  .service {
+    background: $dark-theme-gray-dark;
+    color: $dark-theme-gray-lightest;
+    border: inherit;
+  }
+
+  .active {
+    background: $theme-brand-primary;
+  }
+}

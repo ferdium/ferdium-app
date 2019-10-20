@@ -28,6 +28,9 @@ export default {
     serviceId: PropTypes.string.isRequired,
     redirect: PropTypes.string,
   },
+  openDarkmodeCss: {
+    recipe: PropTypes.string.isRequired,
+  },
   clearCache: {
     serviceId: PropTypes.string.isRequired,
   },
@@ -91,4 +94,8 @@ export default {
     serviceId: PropTypes.string.isRequired,
   },
   openDevToolsForActiveService: {},
+  setHibernation: {
+    serviceId: PropTypes.string.isRequired,
+    hibernating: PropTypes.bool.isRequired,
+  },
 };

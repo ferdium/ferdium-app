@@ -1,32 +1,21 @@
 import { webFrame } from 'electron';
-import { SpellCheckerProvider } from 'electron-hunspell';
-import path from 'path';
+import { SpellCheckHandler, ContextMenuListener, ContextMenuBuilder } from 'electron-spellchecker';
 
-import { DICTIONARY_PATH } from '../config';
 import { SPELLCHECKER_LOCALES } from '../i18n/languages';
 
-const debug = require('debug')('Ferdi:spellchecker');
+const debug = require('debug')('Franz:spellchecker');
 
-let provider;
+let handler;
 let currentDict;
+let contextMenuBuilder;
 let _isEnabled = false;
-
-async function loadDictionary(locale) {
-  try {
-    const fileLocation = path.join(DICTIONARY_PATH, `hunspell-dict-${locale}/${locale}`);
-    await provider.loadDictionary(locale, `${fileLocation}.dic`, `${fileLocation}.aff`);
-    debug('Loaded dictionary', locale, 'from', fileLocation);
-  } catch (err) {
-    console.error('Could not load dictionary', err);
-  }
-}
 
 export async function switchDict(locale) {
   try {
     debug('Trying to load dictionary', locale);
 
-    if (!provider) {
-      console.warn('SpellcheckProvider not initialized');
+    if (!handler) {
+      console.warn('SpellcheckHandler not initialized');
 
       return;
     }
@@ -37,11 +26,7 @@ export async function switchDict(locale) {
       return;
     }
 
-    if (currentDict) {
-      provider.unloadDictionary(locale);
-    }
-    loadDictionary(locale);
-    provider.switchDictionary(locale);
+    handler.switchLanguage(locale);
 
     debug('Switched dictionary to', locale);
 
@@ -54,18 +39,21 @@ export async function switchDict(locale) {
 
 export default async function initialize(languageCode = 'en-us') {
   try {
-    provider = new SpellCheckerProvider();
+    handler = new SpellCheckHandler();
+    handler.attachToInput();
     const locale = languageCode.toLowerCase();
 
     debug('Init spellchecker');
-    await provider.initialize();
-    // await loadDictionaries();
-
-    debug('Available spellchecker dictionaries', provider.availableDictionaries);
 
     switchDict(locale);
 
-    return provider;
+    contextMenuBuilder = new ContextMenuBuilder(handler);
+    // eslint-disable-next-line no-new
+    new ContextMenuListener((info) => {
+      contextMenuBuilder.showPopupMenu(info);
+    });
+
+    return handler;
   } catch (err) {
     console.error(err);
     return false;
@@ -78,7 +66,8 @@ export function isEnabled() {
 
 export function disable() {
   if (isEnabled()) {
-    webFrame.setSpellCheckProvider(currentDict, true, { spellCheck: () => true });
+    handler.unsubscribe();
+    webFrame.setSpellCheckProvider(currentDict, { spellCheck: () => true });
     _isEnabled = false;
     currentDict = null;
   }

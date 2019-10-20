@@ -10,6 +10,7 @@ import {
 } from 'darkreader';
 
 import ignoreList from './darkmode/ignore';
+import customDarkModeCss from './darkmode/custom';
 
 import RecipeWebview from './lib/RecipeWebview';
 
@@ -19,6 +20,7 @@ import contextMenu from './contextMenu';
 import './notifications';
 
 import { DEFAULT_APP_SETTINGS } from '../config';
+import { isDevMode } from '../environment';
 
 const debug = require('debug')('Ferdi:Plugin');
 
@@ -39,7 +41,9 @@ class RecipeController {
     'settings-update': 'updateAppSettings',
     'service-settings-update': 'updateServiceSettings',
     'get-service-id': 'serviceIdEcho',
-  }
+  };
+
+  universalDarkModeInjected = false;
 
   constructor() {
     this.initialize();
@@ -116,7 +120,7 @@ class RecipeController {
       }
     }
 
-    if (this.settings.service.isDarkModeEnabled || this.settings.app.darkMode) {
+    if (this.settings.service.isDarkModeEnabled) {
       debug('Enable dark mode');
 
       // Check if recipe has a darkmode.css
@@ -125,9 +129,12 @@ class RecipeController {
 
       if (darkModeExists) {
         injectDarkModeStyle(this.settings.service.recipe.path);
-      } else if (!ignoreList.includes(window.location.host)) {
+      } else if (this.settings.app.universalDarkMode && !ignoreList.includes(window.location.host)) {
         // Use darkreader instead
-        enableDarkMode();
+        enableDarkMode({}, {
+          css: customDarkModeCss[window.location.host] || '',
+        });
+        this.universalDarkModeInjected = true;
       }
     } else {
       debug('Remove dark mode');
@@ -136,7 +143,14 @@ class RecipeController {
         removeDarkModeStyle();
       } else {
         disableDarkMode();
+        this.universalDarkModeInjected = false;
       }
+    }
+
+    // Remove dark reader if (universal) dark mode was just disabled
+    if (this.universalDarkModeInjected && (!this.settings.service.isDarkModeEnabled || !this.settings.app.universalDarkMode)) {
+      disableDarkMode();
+      this.universalDarkModeInjected = false;
     }
   }
 
@@ -195,6 +209,7 @@ new RecipeController();
 // Patching window.open
 const originalWindowOpen = window.open;
 
+
 window.open = (url, frameName, features) => {
   if (!url && !frameName && !features) {
     // The service hasn't yet supplied a URL (as used in Skype).
@@ -209,7 +224,7 @@ window.open = (url, frameName, features) => {
       // Has the service changed the URL yet?
       if (newWindow.location.href !== '') {
         // Open the new URL
-        window.open(newWindow.location.href);
+        ipcRenderer.sendToHost('new-window', newWindow.location.href);
         clearInterval(checkInterval);
       }
     }, 0);
@@ -223,9 +238,13 @@ window.open = (url, frameName, features) => {
   }
 
   // We need to differentiate if the link should be opened in a popup or in the systems default browser
-  if (!frameName && !features) {
+  if (!frameName && !features && typeof features !== 'string') {
     return ipcRenderer.sendToHost('new-window', url);
   }
 
   return originalWindowOpen(url, frameName, features);
 };
+
+if (isDevMode) {
+  window.log = console.log;
+}

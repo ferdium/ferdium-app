@@ -31,6 +31,10 @@ const messages = defineMessages({
     id: 'settings.app.headlineGeneral',
     defaultMessage: '!!!General',
   },
+  hibernateInfo: {
+    id: 'settings.app.hibernateInfo',
+    defaultMessage: '!!!By default, Ferdi will keep all your services open and loaded in the background so they are ready when you want to use them. Service Hibernation will unload your services after a specified amount. This is useful to save RAM or keeping services from slowing down your computer.',
+  },
   serverInfo: {
     id: 'settings.app.serverInfo',
     defaultMessage: '!!!We advice you to logout after changing your server as your settings might not be saved otherwise.',
@@ -74,6 +78,14 @@ const messages = defineMessages({
   headlineAppearance: {
     id: 'settings.app.headlineAppearance',
     defaultMessage: '!!!Appearance',
+  },
+  universalDarkModeInfo: {
+    id: 'settings.app.universalDarkModeInfo',
+    defaultMessage: '!!!Universal Dark Mode tries to dynamically generate dark mode styles for services that are otherwise not currently supported.',
+  },
+  accentColorInfo: {
+    id: 'settings.app.accentColorInfo',
+    defaultMessage: '!!!Write your accent color in a CSS-compatible format. (Default: #7367f0)',
   },
   headlineAdvanced: {
     id: 'settings.app.headlineAdvanced',
@@ -147,6 +159,9 @@ export default @observer class EditSettingsForm extends Component {
     isWorkspaceEnabled: PropTypes.bool.isRequired,
     server: PropTypes.string.isRequired,
     noUpdates: PropTypes.bool.isRequired,
+    hibernationEnabled: PropTypes.bool.isRequired,
+    isDarkmodeEnabled: PropTypes.bool.isRequired,
+    openProcessManager: PropTypes.func.isRequired,
   };
 
   static contextTypes = {
@@ -181,6 +196,9 @@ export default @observer class EditSettingsForm extends Component {
       isWorkspaceEnabled,
       server,
       noUpdates,
+      hibernationEnabled,
+      isDarkmodeEnabled,
+      openProcessManager,
     } = this.props;
     const { intl } = this.context;
 
@@ -217,7 +235,21 @@ export default @observer class EditSettingsForm extends Component {
             <Toggle field={form.$('runInBackground')} />
             <Toggle field={form.$('enableSystemTray')} />
             <Toggle field={form.$('privateNotifications')} />
+            <Toggle field={form.$('showServiceNavigationBar')} />
             <Toggle field={form.$('hibernate')} />
+            {hibernationEnabled && (
+              <Select field={form.$('hibernationStrategy')} />
+            )}
+            <p
+              className="settings__message"
+              style={{
+                borderTop: 0, marginTop: 0, paddingTop: 0, marginBottom: '2rem',
+              }}
+            >
+              <span>
+                { intl.formatMessage(messages.hibernateInfo) }
+              </span>
+            </p>
             {process.platform === 'win32' && (
               <Toggle field={form.$('minimizeToSystemTray')} />
             )}
@@ -351,6 +383,28 @@ export default @observer class EditSettingsForm extends Component {
             <Toggle field={form.$('showDisabledServices')} />
             <Toggle field={form.$('showMessageBadgeWhenMuted')} />
             <Toggle field={form.$('darkMode')} />
+            {isDarkmodeEnabled && (
+              <>
+                <Toggle field={form.$('universalDarkMode')} />
+                <p
+                  className="settings__message"
+                  style={{
+                    borderTop: 0, marginTop: 0, paddingTop: 0, marginBottom: '2rem',
+                  }}
+                >
+                  <span>
+                    { intl.formatMessage(messages.universalDarkModeInfo) }
+                  </span>
+                </p>
+              </>
+            )}
+
+            <Input
+              placeholder="Accent Color"
+              onChange={e => this.submit(e)}
+              field={form.$('accentColor')}
+            />
+            <p>{intl.formatMessage(messages.accentColorInfo)}</p>
 
             {/* Language */}
             <h2 id="language">{intl.formatMessage(messages.headlineLanguage)}</h2>
@@ -400,6 +454,16 @@ export default @observer class EditSettingsForm extends Component {
                   loaded={!isClearingAllCache}
                 />
               </p>
+              <div style={{
+                marginTop: 20,
+              }}
+              >
+                <Button
+                  buttonType="secondary"
+                  label="Open Process Manager"
+                  onClick={openProcessManager}
+                />
+              </div>
             </div>
 
             {/* Updates */}

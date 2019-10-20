@@ -76,5 +76,31 @@
       "line": 40,
       "column": 3
     }
+  },
+  {
+    "id": "settings.team.teamsUnavailible",
+    "defaultMessage": "!!!Teams are unavailible",
+    "file": "src/components/settings/team/TeamDashboard.js",
+    "start": {
+      "line": 41,
+      "column": 20
+    },
+    "end": {
+      "line": 44,
+      "column": 3
+    }
+  },
+  {
+    "id": "settings.team.teamsUnavailibleInfo",
+    "defaultMessage": "!!!Teams are currently only availible when using the Franz Server and after paying for Franz Professional. Please change your server to https://api.franzinfra.com to use teams.",
+    "file": "src/components/settings/team/TeamDashboard.js",
+    "start": {
+      "line": 45,
+      "column": 24
+    },
+    "end": {
+      "line": 48,
+      "column": 3
+    }
   }
 ]

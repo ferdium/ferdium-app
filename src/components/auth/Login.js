@@ -1,11 +1,13 @@
+/* eslint jsx-a11y/anchor-is-valid: 0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import { defineMessages, intlShape } from 'react-intl';
 
 import { isDevMode, useLiveAPI } from '../../environment';
 import Form from '../../lib/Form';
 import { required, email } from '../../helpers/validation-helpers';
+import serverlessLogin from '../../helpers/serverless-helpers';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import Link from '../ui/Link';
@@ -36,11 +38,11 @@ const messages = defineMessages({
   },
   customServerQuestion: {
     id: 'login.customServerQuestion',
-    defaultMessage: '!!!Using a custom Ferdi server?',
+    defaultMessage: '!!!Using a Franz account to log in?',
   },
   customServerSuggestion: {
     id: 'login.customServerSuggestion',
-    defaultMessage: '!!!Try importing your Franz account',
+    defaultMessage: '!!!Try importing your Franz account into Ferdi',
   },
   tokenExpired: {
     id: 'login.tokenExpired',
@@ -54,13 +56,21 @@ const messages = defineMessages({
     id: 'login.link.signup',
     defaultMessage: '!!!Create a free account',
   },
+  changeServer: {
+    id: 'login.changeServer',
+    defaultMessage: '!!!Change server',
+  },
+  serverless: {
+    id: 'services.serverless',
+    defaultMessage: '!!!Use Ferdi without an Account',
+  },
   passwordLink: {
     id: 'login.link.password',
     defaultMessage: '!!!Forgot password',
   },
 });
 
-export default @observer class Login extends Component {
+export default @observer @inject('actions') class Login extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
     isSubmitting: PropTypes.bool.isRequired,
@@ -69,6 +79,7 @@ export default @observer class Login extends Component {
     signupRoute: PropTypes.string.isRequired,
     passwordRoute: PropTypes.string.isRequired,
     error: globalErrorPropType.isRequired,
+    actions: PropTypes.object.isRequired,
   };
 
   static contextTypes = {
@@ -101,6 +112,10 @@ export default @observer class Login extends Component {
       },
       onError: () => { },
     });
+  }
+
+  useLocalServer() {
+    serverlessLogin(this.props.actions);
   }
 
   render() {
@@ -179,7 +194,8 @@ export default @observer class Login extends Component {
           )}
         </form>
         <div className="auth__links">
-          <Link to="/settings/app">Change server</Link>
+          <Link to="/settings/app">{intl.formatMessage(messages.changeServer)}</Link>
+          <a onClick={this.useLocalServer.bind(this)}>{intl.formatMessage(messages.serverless)}</a>
           <Link to={signupRoute}>{intl.formatMessage(messages.signupLink)}</Link>
           <Link to={passwordRoute}>{intl.formatMessage(messages.passwordLink)}</Link>
         </div>

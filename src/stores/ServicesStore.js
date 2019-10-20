@@ -1,3 +1,4 @@
+import { shell } from 'electron';
 import {
   action,
   reaction,
@@ -6,12 +7,15 @@ import {
 } from 'mobx';
 import { remove } from 'lodash';
 import ms from 'ms';
+import fs from 'fs-extra';
+import path from 'path';
 
 import Store from './lib/Store';
 import Request from './lib/Request';
 import CachedRequest from './lib/CachedRequest';
 import { matchRoute } from '../helpers/routing-helpers';
 import { isInTimeframe } from '../helpers/schedule-helpers';
+import { getRecipeDirectory, getDevRecipeDirectory } from '../helpers/recipe-helpers';
 import { workspaceStore } from '../features/workspaces';
 import { serviceLimitStore } from '../features/serviceLimit';
 import { RESTRICTION_TYPES } from '../models/Service';
@@ -34,6 +38,11 @@ export default class ServicesStore extends Store {
 
   @observable filterNeedle = null;
 
+  // Array of service IDs that have recently been used
+  // [0] => Most recent, [n] => Least recent
+  // No service ID should be in the list multiple times, not all service IDs have to be in the list
+  @observable lastUsedServices = [];
+
   constructor(...args) {
     super(...args);
 
@@ -47,6 +56,7 @@ export default class ServicesStore extends Store {
     this.actions.service.createFromLegacyService.listen(this._createFromLegacyService.bind(this));
     this.actions.service.updateService.listen(this._updateService.bind(this));
     this.actions.service.deleteService.listen(this._deleteService.bind(this));
+    this.actions.service.openDarkmodeCss.listen(this._openDarkmodeCss.bind(this));
     this.actions.service.clearCache.listen(this._clearCache.bind(this));
     this.actions.service.setWebviewReference.listen(this._setWebviewReference.bind(this));
     this.actions.service.detachService.listen(this._detachService.bind(this));
@@ -70,6 +80,7 @@ export default class ServicesStore extends Store {
     this.actions.service.toggleAudio.listen(this._toggleAudio.bind(this));
     this.actions.service.openDevTools.listen(this._openDevTools.bind(this));
     this.actions.service.openDevToolsForActiveService.listen(this._openDevToolsForActiveService.bind(this));
+    this.actions.service.setHibernation.listen(this._setHibernation.bind(this));
 
     this.registerReactions([
       this._focusServiceReaction.bind(this),
@@ -99,6 +110,11 @@ export default class ServicesStore extends Store {
 
     reaction(
       () => this.stores.settings.app.darkMode,
+      () => this._shareSettingsWithServiceProcess(),
+    );
+
+    reaction(
+      () => this.stores.settings.app.universalDarkMode,
       () => this._shareSettingsWithServiceProcess(),
     );
   }
@@ -310,6 +326,27 @@ export default class ServicesStore extends Store {
     this.actionStatus = request.result.status;
   }
 
+  @action async _openDarkmodeCss({ recipe }) {
+    // Get directory for recipe
+    const normalDirectory = getRecipeDirectory(recipe);
+    const devDirectory = getDevRecipeDirectory(recipe);
+    let directory;
+
+    if (await fs.pathExists(normalDirectory)) {
+      directory = normalDirectory;
+    } else if (await fs.pathExists(devDirectory)) {
+      directory = devDirectory;
+    } else {
+      // Recipe cannot be found on drive
+      return;
+    }
+
+    // Create and open darkmode.css
+    const file = path.join(directory, 'darkmode.css');
+    await fs.ensureFile(file);
+    shell.showItemInFolder(file);
+  }
+
   @action async _clearCache({ serviceId }) {
     this.clearCacheRequest.reset();
     const request = this.clearCacheRequest.execute(serviceId);
@@ -324,6 +361,10 @@ export default class ServicesStore extends Store {
       this.all[index].isActive = false;
     });
     service.isActive = true;
+
+    // Update list of last used services
+    this.lastUsedServices = this.lastUsedServices.filter(id => id !== serviceId);
+    this.lastUsedServices.unshift(serviceId);
 
     this._focusActiveService();
   }
@@ -370,6 +411,7 @@ export default class ServicesStore extends Store {
       service.initializeWebViewEvents({
         handleIPCMessage: this.actions.service.handleIPCMessage,
         openWindow: this.actions.service.openWindow,
+        stores: this.stores,
       });
       service.initializeWebViewListener();
     }
@@ -638,6 +680,11 @@ export default class ServicesStore extends Store {
     }
   }
 
+  @action _setHibernation({ serviceId, hibernating }) {
+    const service = this.one(serviceId);
+    service.isHibernating = hibernating;
+  }
+
   // Reactions
   _focusServiceReaction() {
     const service = this.active;
@@ -726,6 +773,8 @@ export default class ServicesStore extends Store {
   _cleanUpTeamIdAndCustomUrl(recipeId, data) {
     const serviceData = data;
     const recipe = this.stores.recipes.one(recipeId);
+
+    if (!recipe) return;
 
     if (recipe.hasTeamId && recipe.hasCustomUrl && data.team && data.customUrl) {
       delete serviceData.team;

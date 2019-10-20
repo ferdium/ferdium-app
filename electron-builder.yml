@@ -11,6 +11,7 @@ mac:
   gatekeeperAssess: false
   category: public.app-category.productivity
   icon: ./build-helpers/images/icon.icns
+  darkModeSupport: true
 
 afterSign: ./build-helpers/notarize.js
 
@@ -52,6 +53,5 @@ protocols:
   schemes: [ferdi]
 
 asarUnpack:
-  - ./dictionaries
   - ./recipes
   - ./assets/images/taskbar

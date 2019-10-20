@@ -10,12 +10,13 @@ import path from 'path';
 import windowStateKeeper from 'electron-window-state';
 
 // Set app directory before loading user modules
+if (process.env.FERDI_APPDATA_DIR || process.env.PORTABLE_EXECUTABLE_DIR) {
+  const appDataPath = process.env.FERDI_APPDATA_DIR || process.env.PORTABLE_EXECUTABLE_DIR;
+  app.setPath('appData', appDataPath);
+  app.setPath('userData', path.join(app.getPath('appData'), app.getName()));
+}
 if (isDevMode) {
-  app.setPath('userData', path.join(app.getPath('appData'), app.getName() + 'Dev'));
-} else if (process.env.FERDI_USERDATA_DIR != null) {
-  app.setPath('userData', process.env.FERDI_USERDATA_DIR)
-} else if (process.env.PORTABLE_EXECUTABLE_DIR != null) {
-  app.setPath('userData', path.join(process.env.PORTABLE_EXECUTABLE_DIR, app.getName()));
+  app.setPath('userData', path.join(app.getPath('appData'), `${app.getName()}Dev`));
 }
 
 /* eslint-disable import/first */
@@ -143,6 +144,13 @@ const createWindow = () => {
   }
 
   // Create the browser window.
+  let backgroundColor = '#7367F0';
+  if (settings.get('accentColor') !== '#7367f0') {
+    backgroundColor = settings.get('accentColor');
+  } else if (settings.get('darkMode')) {
+    backgroundColor = '#1E1E1E';
+  }
+
   mainWindow = new BrowserWindow({
     x: posX,
     y: posY,
@@ -152,7 +160,7 @@ const createWindow = () => {
     minHeight: 500,
     titleBarStyle: isMac ? 'hidden' : '',
     frame: isLinux,
-    backgroundColor: !settings.get('darkMode') ? '#7367F0' : '#1E1E1E',
+    backgroundColor,
     webPreferences: {
       nodeIntegration: true,
       webviewTag: true,
@@ -335,22 +343,7 @@ app.on('login', (event, webContents, request, authInfo, callback) => {
   debug('browser login event', authInfo);
   event.preventDefault();
 
-  if (authInfo.isProxy && authInfo.scheme === 'basic') {
-    debug('Sending service echo ping');
-    webContents.send('get-service-id');
-
-    ipcMain.once('service-id', (e, id) => {
-      debug('Received service id', id);
-
-      const ps = proxySettings.get(id);
-      if (ps) {
-        debug('Sending proxy auth callback for service', id);
-        callback(ps.user, ps.password);
-      } else {
-        debug('No proxy auth config found for', id);
-      }
-    });
-  } else if (authInfo.scheme === 'basic') {
+  if (!authInfo.isProxy && authInfo.scheme === 'basic') {
     debug('basic auth handler', authInfo);
     basicAuthHandler(mainWindow, authInfo);
   }

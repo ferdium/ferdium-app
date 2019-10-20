@@ -1,7 +1,12 @@
 /* eslint max-len: 0 */
 import gulp from 'gulp';
+import gulpIf from 'gulp-if';
 import babel from 'gulp-babel';
 import sass from 'gulp-sass';
+import csso from 'gulp-csso';
+import terser from 'terser';
+import composer from 'gulp-uglify/composer';
+import htmlMin from 'gulp-htmlmin';
 import server from 'gulp-server-livereload';
 import { exec } from 'child_process';
 import dotenv from 'dotenv';
@@ -16,6 +21,8 @@ import config from './package.json';
 import * as rawStyleConfig from './src/theme/default/legacy.js';
 
 dotenv.config();
+
+const uglify = composer(terser, console);
 
 const styleConfig = Object.keys(rawStyleConfig).map((key) => {
   const isHex = /^#[0-9A-F]{6}$/i.test(rawStyleConfig[key]);
@@ -32,7 +39,6 @@ const paths = {
   src: 'src',
   dest: 'build',
   tmp: '.tmp',
-  dictionaries: 'dictionaries',
   package: `out/${config.version}`,
   recipes: {
     src: 'recipes/*.tar.gz',
@@ -124,6 +130,10 @@ export function mvLernaPackages() {
 export function html() {
   return gulp
     .src(paths.html.src, { since: gulp.lastRun(html) })
+    .pipe(gulpIf(process.env.NODE_ENV !== 'development', htmlMin({ // Only minify in production to speed up dev builds
+      collapseWhitespace: true,
+      removeComments: true
+    })))
     .pipe(gulp.dest(paths.html.dest));
 }
 
@@ -148,6 +158,9 @@ export function styles() {
         includePaths: ['./node_modules', '../node_modules'],
       }).on('error', sass.logError),
     )
+    .pipe((gulpIf(process.env.NODE_ENV !== 'development', csso({ // Only minify in production to speed up dev builds
+      restructure: false, // Don't restructure CSS, otherwise it will break the styles
+    }))))
     .pipe(gulp.dest(paths.styles.dest));
 }
 
@@ -159,6 +172,7 @@ export function scripts() {
         comments: false,
       }),
     )
+    .pipe(gulpIf(process.env.NODE_ENV !== 'development', uglify())) // Only uglify in production to speed up dev builds
     .pipe(gulp.dest(paths.scripts.dest));
 }
 
@@ -179,29 +193,6 @@ export function webserver() {
   );
 }
 
-export function dictionaries(done) {
-  const { SPELLCHECKER_LOCALES } = require('./build/i18n/languages');
-
-  let packages = '';
-  Object.keys(SPELLCHECKER_LOCALES).forEach((key) => {
-    packages = `${packages} hunspell-dict-${key}`;
-  });
-
-  _shell(
-    `npm install --prefix "${path.join(__dirname, 'temp')}" ${packages}`,
-    () => {
-      moveSync(
-        path.join(__dirname, 'temp', 'node_modules'),
-        path.join(__dirname, 'build', paths.dictionaries),
-      );
-
-      removeSync(path.join(__dirname, 'temp'));
-
-      done();
-    },
-  );
-}
-
 export function recipes() {
   return gulp.src(paths.recipes.src, { since: gulp.lastRun(recipes) })
     .pipe(gulp.dest(paths.recipes.dest));
@@ -215,7 +206,6 @@ const build = gulp.series(
   clean,
   gulp.parallel(mvSrc, mvPackageJson, mvLernaPackages),
   gulp.parallel(html, scripts, styles, recipes, recipeInfo),
-  dictionaries,
 );
 export { build };
 

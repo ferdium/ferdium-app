@@ -38,6 +38,14 @@ const messages = defineMessages({
     id: 'settings.team.upgradeAction',
     defaultMessage: '!!!Upgrade your Account',
   },
+  teamsUnavailible: {
+    id: 'settings.team.teamsUnavailible',
+    defaultMessage: '!!!Teams are unavailible',
+  },
+  teamsUnavailibleInfo: {
+    id: 'settings.team.teamsUnavailibleInfo',
+    defaultMessage: '!!!Teams are currently only availible when using the Franz Server and after paying for Franz Professional. Please change your server to https://api.franzinfra.com to use teams.',
+  },
 });
 
 const styles = {
@@ -98,6 +106,7 @@ export default @injectSheet(styles) @observer class TeamDashboard extends Compon
     openTeamManagement: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
     isProUser: PropTypes.bool.isRequired,
+    server: PropTypes.string.isRequired,
   };
 
   static contextTypes = {
@@ -112,9 +121,84 @@ export default @injectSheet(styles) @observer class TeamDashboard extends Compon
       openTeamManagement,
       isProUser,
       classes,
+      server,
     } = this.props;
     const { intl } = this.context;
 
+    if (server === 'https://api.franzinfra.com') {
+      return (
+        <div className="settings__main">
+          <div className="settings__header">
+            <span className="settings__header-item">
+              {intl.formatMessage(messages.headline)}
+            </span>
+          </div>
+          <div className="settings__body">
+            {isLoading && (
+              <Loader />
+            )}
+
+            {!isLoading && userInfoRequestFailed && (
+              <Infobox
+                icon="alert"
+                type="danger"
+                ctaLabel={intl.formatMessage(messages.tryReloadUserInfoRequest)}
+                ctaLoading={isLoading}
+                ctaOnClick={retryUserInfoRequest}
+              >
+                {intl.formatMessage(messages.userInfoRequestFailed)}
+              </Infobox>
+            )}
+
+            {!userInfoRequestFailed && (
+              <>
+                {!isLoading && (
+                  <>
+                    <>
+                      <h1 className={classnames({
+                        [classes.headline]: true,
+                        [classes.headlineWithSpacing]: isProUser,
+                      })}
+                      >
+                        {intl.formatMessage(messages.contentHeadline)}
+
+                      </h1>
+                      {!isProUser && (
+                        <Badge className={classes.proRequired}>{intl.formatMessage(globalMessages.proRequired)}</Badge>
+                      )}
+                      <div className={classes.container}>
+                        <div className={classes.content}>
+                          <p>{intl.formatMessage(messages.intro)}</p>
+                          <p>{intl.formatMessage(messages.copy)}</p>
+                        </div>
+                        <img className={classes.image} src="https://cdn.franzinfra.com/announcements/assets/teams.png" alt="Franz for Teams" />
+                      </div>
+                      <div className={classes.buttonContainer}>
+                        {!isProUser ? (
+                          <UpgradeButton
+                            className={classes.cta}
+                            gaEventInfo={{ category: 'Todos', event: 'upgrade' }}
+                            requiresPro
+                            short
+                          />
+                        ) : (
+                          <Button
+                            label={intl.formatMessage(messages.manageButton)}
+                            onClick={openTeamManagement}
+                            className={classes.cta}
+                          />
+                        )}
+                      </div>
+                    </>
+                  </>
+                )}
+              </>
+            )}
+          </div>
+          <ReactTooltip place="right" type="dark" effect="solid" />
+        </div>
+      );
+    }
     return (
       <div className="settings__main">
         <div className="settings__header">
@@ -123,68 +207,11 @@ export default @injectSheet(styles) @observer class TeamDashboard extends Compon
           </span>
         </div>
         <div className="settings__body">
-          {isLoading && (
-            <Loader />
-          )}
-
-          {!isLoading && userInfoRequestFailed && (
-            <Infobox
-              icon="alert"
-              type="danger"
-              ctaLabel={intl.formatMessage(messages.tryReloadUserInfoRequest)}
-              ctaLoading={isLoading}
-              ctaOnClick={retryUserInfoRequest}
-            >
-              {intl.formatMessage(messages.userInfoRequestFailed)}
-            </Infobox>
-          )}
-
-          {!userInfoRequestFailed && (
-            <>
-              {!isLoading && (
-                <>
-                  <>
-                    <h1 className={classnames({
-                      [classes.headline]: true,
-                      [classes.headlineWithSpacing]: isProUser,
-                    })}
-                    >
-                      {intl.formatMessage(messages.contentHeadline)}
-
-                    </h1>
-                    {!isProUser && (
-                      <Badge className={classes.proRequired}>{intl.formatMessage(globalMessages.proRequired)}</Badge>
-                    )}
-                    <div className={classes.container}>
-                      <div className={classes.content}>
-                        <p>{intl.formatMessage(messages.intro)}</p>
-                        <p>{intl.formatMessage(messages.copy)}</p>
-                      </div>
-                      <img className={classes.image} src="https://cdn.franzinfra.com/announcements/assets/teams.png" alt="Franz for Teams" />
-                    </div>
-                    <div className={classes.buttonContainer}>
-                      {!isProUser ? (
-                        <UpgradeButton
-                          className={classes.cta}
-                          gaEventInfo={{ category: 'Todos', event: 'upgrade' }}
-                          requiresPro
-                          short
-                        />
-                      ) : (
-                        <Button
-                          label={intl.formatMessage(messages.manageButton)}
-                          onClick={openTeamManagement}
-                          className={classes.cta}
-                        />
-                      )}
-                    </div>
-                  </>
-                </>
-              )}
-            </>
-          )}
+          <h1 className={classes.headline}>
+            {intl.formatMessage(messages.teamsUnavailible)}
+          </h1>
+          {intl.formatMessage(messages.teamsUnavailibleInfo)}
         </div>
-        <ReactTooltip place="right" type="dark" effect="solid" />
       </div>
     );
   }

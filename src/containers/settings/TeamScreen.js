@@ -4,6 +4,7 @@ import { inject, observer } from 'mobx-react';
 
 import UserStore from '../../stores/UserStore';
 import AppStore from '../../stores/AppStore';
+import SettingsStore from '../../stores/SettingsStore';
 
 import TeamDashboard from '../../components/settings/team/TeamDashboard';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
@@ -19,9 +20,10 @@ export default @inject('stores', 'actions') @observer class TeamScreen extends C
   }
 
   render() {
-    const { user } = this.props.stores;
+    const { user, settings } = this.props.stores;
 
     const isLoadingUserInfo = user.getUserInfoRequest.isExecuting;
+    const { server } = settings.app;
 
     return (
       <ErrorBoundary>
@@ -31,6 +33,7 @@ export default @inject('stores', 'actions') @observer class TeamScreen extends C
           retryUserInfoRequest={() => this.reloadData()}
           openTeamManagement={() => this.handleWebsiteLink('/user/team')}
           isProUser={user.isPro}
+          server={server}
         />
       </ErrorBoundary>
     );
@@ -41,6 +44,7 @@ TeamScreen.wrappedComponent.propTypes = {
   stores: PropTypes.shape({
     user: PropTypes.instanceOf(UserStore).isRequired,
     app: PropTypes.instanceOf(AppStore).isRequired,
+    settings: PropTypes.instanceOf(SettingsStore).isRequired,
   }).isRequired,
   actions: PropTypes.shape({
     payment: PropTypes.shape({

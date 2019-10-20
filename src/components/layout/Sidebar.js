@@ -116,7 +116,7 @@ export default @inject('stores', 'actions') @observer class Sidebar extends Comp
             { stores.settings.all.app.lockingFeatureEnabled ? (
               <button
                 type="button"
-                className={`sidebar__button sidebar__button--audio ${isAppMuted ? 'is-muted' : ''}`}
+                className="sidebar__button"
                 onClick={() => {
                   // Disable lock first - otherwise the application might not update correctly
                   actions.settings.update({
@@ -201,6 +201,12 @@ export default @inject('stores', 'actions') @observer class Sidebar extends Comp
           data-tip={`${intl.formatMessage(messages.settings)} (${ctrlKey}+,)`}
         >
           <i className="mdi mdi-settings" />
+          { (this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.AVAILABLE
+            || this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.DOWNLOADED) && (
+            <span className="update-availible">
+              •
+            </span>
+          ) }
         </button>
         {this.state.tooltipEnabled && (
           <ReactTooltip place="right" type="dark" effect="solid" />

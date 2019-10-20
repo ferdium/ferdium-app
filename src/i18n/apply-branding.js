@@ -9,8 +9,10 @@ console.log('Applying Ferdi branding to translations...');
 // Keys to ignore when applying branding
 const ignore = [
   'login.customServerSuggestion',
+  'login.customServerQuestion',
   'settings.app.todoServerInfo',
   'settings.app.serverMoneyInfo',
+  'settings.team.teamsUnavailibleInfo',
 ];
 
 // Files to ignore when applying branding

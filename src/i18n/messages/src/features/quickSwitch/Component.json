@@ -1,14 +1,27 @@
 [
   {
+    "id": "feature.quickSwitch.title",
+    "defaultMessage": "!!!QuickSwitch",
+    "file": "src/features/quickSwitch/Component.js",
+    "start": {
+      "line": 16,
+      "column": 9
+    },
+    "end": {
+      "line": 19,
+      "column": 3
+    }
+  },
+  {
     "id": "feature.quickSwitch.search",
     "defaultMessage": "!!!Search...",
     "file": "src/features/quickSwitch/Component.js",
     "start": {
-      "line": 15,
+      "line": 20,
       "column": 10
     },
     "end": {
-      "line": 18,
+      "line": 23,
       "column": 3
     }
   },
@@ -17,11 +30,11 @@
     "defaultMessage": "!!!Select a service with TAB, ↑ and ↓. Open a service with ENTER.",
     "file": "src/features/quickSwitch/Component.js",
     "start": {
-      "line": 19,
+      "line": 24,
       "column": 8
     },
     "end": {
-      "line": 22,
+      "line": 27,
       "column": 3
     }
   }

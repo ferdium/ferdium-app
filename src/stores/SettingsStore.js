@@ -9,7 +9,7 @@ import Request from './lib/Request';
 import { getLocale } from '../helpers/i18n-helpers';
 import { API } from '../environment';
 
-import { DEFAULT_APP_SETTINGS, FILE_SYSTEM_SETTINGS_TYPES } from '../config';
+import { DEFAULT_APP_SETTINGS, FILE_SYSTEM_SETTINGS_TYPES, LOCAL_SERVER } from '../config';
 import { SPELLCHECKER_LOCALES } from '../i18n/languages';
 
 const debug = require('debug')('Ferdi:SettingsStore');
@@ -50,6 +50,18 @@ export default class SettingsStore extends Store {
       () => remote.getCurrentWindow().setAutoHideMenuBar(
         this.all.app.autohideMenuBar,
       ),
+    );
+
+    reaction(
+      () => this.all.app.server,
+      (server) => {
+        if (server === LOCAL_SERVER) {
+          ipcRenderer.send('startLocalServer');
+        }
+      },
+      {
+        fireImmediately: true,
+      },
     );
 
     reaction(

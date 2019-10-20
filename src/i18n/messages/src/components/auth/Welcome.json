@@ -4,11 +4,11 @@
     "defaultMessage": "!!!Create a free account",
     "file": "src/components/auth/Welcome.js",
     "start": {
-      "line": 9,
+      "line": 11,
       "column": 16
     },
     "end": {
-      "line": 12,
+      "line": 14,
       "column": 3
     }
   },
@@ -17,11 +17,24 @@
     "defaultMessage": "!!!Login to your account",
     "file": "src/components/auth/Welcome.js",
     "start": {
-      "line": 13,
+      "line": 15,
       "column": 15
     },
     "end": {
-      "line": 16,
+      "line": 18,
+      "column": 3
+    }
+  },
+  {
+    "id": "services.serverless",
+    "defaultMessage": "!!!Use Ferdi without an Account",
+    "file": "src/components/auth/Welcome.js",
+    "start": {
+      "line": 19,
+      "column": 14
+    },
+    "end": {
+      "line": 22,
       "column": 3
     }
   }

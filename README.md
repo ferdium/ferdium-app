@@ -24,16 +24,26 @@ You can find the installers in the [latest release](https://github.com/getferdi/
 - [x] Removes the counter-productive fullscreen app delay inviting users to upgrade
 - [x] Removes pages begging you to donate after registration
 - [x] Makes all users Premium by default ([#15](https://github.com/getferdi/ferdi/issues/15))
+- [x] Using the Ferdi API instead of Franz's servers
 - [x] [Add option to change server to a custom](https://github.com/getferdi/ferdi/wiki/Custom-Server) [ferdi-server](https://github.com/getferdi/server)
+- [x] Add option to use Ferdi without an account ([#5](https://github.com/getferdi/ferdi/issues/5))
 - [x] Add "Private Notification"-Mode, that hides message content from notifications ([franz#879](https://github.com/meetfranz/franz/issues/879))
 - [x] Add Password Lock feature to keep your messages protected ([#41](https://github.com/getferdi/ferdi/issues/41), [franz#810](https://github.com/meetfranz/franz/issues/810), [franz#950](https://github.com/meetfranz/franz/issues/950), [franz#1430](https://github.com/meetfranz/franz/issues/1430))
 - [x] Add an option to keep individual workspaces always loaded ([#37](https://github.com/getferdi/ferdi/issues/37))
 - [x] Add universal Dark-Mode via the [DarkReader extension](https://github.com/darkreader/darkreader) ([#71](https://github.com/getferdi/ferdi/issues/71))
 - [x] Add an option to auto-hide the menubar ([#7](https://github.com/getferdi/ferdi/issues/7), [franz#833](https://github.com/meetfranz/franz/issues/833))
 - [x] Add "Quick Switch" feature to help you navigate a long list of services (similar to Rambox's [Quick Switcher](https://rambox.pro/#feature-details/quick_switcher))
+- [x] Add "Service Hibernation" that will automatically unload services when they are unused
 - [x] Add "Scheduled Do-not-Disturb" feature in which you won't get notifications (similar to Rambox's [Work Hours](https://rambox.pro/#feature-details/work_hours))
 - [x] Add CTRL+← and CTRL+→ shortcuts and menu options to go back and forward in the service browsing history([#39](https://github.com/getferdi/ferdi/issues/39))
+- [x] Add option to show a browser-like navigation bar on all services
+- [x] Add option to change accent color
+- [x] Add "`FERDI_APPDATA_DIR`" env variable to set a custom path for storing all data
+- [x] Add Process Manager to find services using a lot of resources
 - [x] Add "npm run prepare-code" command for development to lint and beautify code
+- [x] Add button to open darkmode.css for a service
+- [x] Improve "About Ferdi" screen to better display versions
+- [x] Minifying build files to improve app size
 - [x] Remove "Franz is better together" popup
 - [x] Remove bug that would incorrectly display unread messages count on some services (more info in [7566ccd](https://github.com/getferdi/ferdi/commit/7566ccd))
 - [x] [Makes it possible to edit the "Franz Todo" server](https://github.com/getferdi/ferdi/wiki/Custom-Todo)
@@ -130,7 +140,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/AGCaesar"><img src="https://avatars3.githubusercontent.com/u/7844066?v=4" width="40px;" alt="AGCaesar"/><br /><sub><b>AGCaesar</b></sub></a><br /><a href="#platform-AGCaesar" title="Packaging/porting to new platform">📦</a></td>
   </tr>
   <tr>
-    <td align="center"><a href="https://github.com/Makazzz"><img src="https://avatars2.githubusercontent.com/u/49844464?v=4" width="40px;" alt="Makazzz"/><br /><sub><b>Makazzz</b></sub></a><br /><a href="https://github.com/kytwb/ferdi/issues?q=author%3AMakazzz" title="Bug reports">🐛</a> <a href="https://github.com/kytwb/ferdi/commits?author=Makazzz" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/Makazzz"><img src="https://avatars2.githubusercontent.com/u/49844464?v=4" width="40px;" alt="Makazzz"/><br /><sub><b>Makazzz</b></sub></a><br /><a href="https://github.com/kytwb/ferdi/issues?q=author%3AMakazzz" title="Bug reports">🐛</a> <a href="https://github.com/kytwb/ferdi/commits?author=Makazzz" title="Code">💻</a> <a href="#translation-Makazzz" title="Translation">🌍</a></td>
     <td align="center"><a href="https://github.com/xthursdayx"><img src="https://avatars0.githubusercontent.com/u/18044308?v=4" width="40px;" alt="xthursdayx"/><br /><sub><b>xthursdayx</b></sub></a><br /><a href="https://github.com/kytwb/ferdi/commits?author=xthursdayx" title="Code">💻</a> <a href="https://github.com/kytwb/ferdi/commits?author=xthursdayx" title="Documentation">📖</a> <a href="#infra-xthursdayx" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#platform-xthursdayx" title="Packaging/porting to new platform">📦</a></td>
   </tr>
 </table>

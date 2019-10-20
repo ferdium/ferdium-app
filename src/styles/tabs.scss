@@ -34,7 +34,9 @@
 
   &.is-active {
     background: lighten($theme-brand-primary, 35%);
-    border-left: 4px solid $theme-brand-primary;
+    border-left-width: 4px;
+    border-left-style: solid;
+    border-left-color: $theme-brand-primary;
 
     .tab-item__icon { margin-left: -4px; }
   }
@@ -64,6 +66,13 @@
     right: 8px;
 
     &.is-indirect { padding-top: 0; }
+    &.hibernating { 
+      padding-top: 0; 
+      background: $theme-gray; 
+      font-size: 0px;
+      min-height: 10px;
+      min-width: 10px;
+    }
   }
 
   .tab-item__info-badge {

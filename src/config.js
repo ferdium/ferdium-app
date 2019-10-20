@@ -12,7 +12,7 @@ export const CHECK_INTERVAL = ms('1h'); // How often should we perform checks
 
 export const LOCAL_API = 'http://localhost:3000';
 export const DEV_API = 'https://dev.franzinfra.com';
-export const LIVE_API = 'https://api.franzinfra.com';
+export const LIVE_API = 'https://api.getferdi.com';
 
 export const LOCAL_WS_API = 'ws://localhost:3000';
 export const DEV_WS_API = 'wss://dev.franzinfra.com';
@@ -21,7 +21,7 @@ export const LIVE_WS_API = 'wss://api.franzinfra.com';
 export const LOCAL_API_WEBSITE = 'http://localhost:3333';
 // export const DEV_API_WEBSITE = 'https://meetfranz.com';t
 export const DEV_API_WEBSITE = 'http://hash-58883791519ef6288c952316bdce7fb462283893.franzstaging.com/'; // TODO: revert me
-export const LIVE_API_WEBSITE = 'https://meetfranz.com';
+export const LIVE_API_WEBSITE = 'https://getferdi.com';
 
 export const STATS_API = 'https://stats.franzinfra.com';
 
@@ -33,6 +33,16 @@ export const GA_ID = !isDevMode ? 'UA-74126766-10' : 'UA-74126766-12';
 
 export const DEFAULT_LOCK_PASSWORD = 'ferdi';
 export const KEEP_WS_LOADED_USID = '0a0aa000-0a0a-49a0-a000-a0a0a0a0a0a0';
+
+export const HIBERNATION_STRATEGIES = {
+  10: 'Extemely Fast Hibernation (10sec)',
+  30: 'Very Fast Hibernation (30sec)',
+  60: 'Fast Hibernation (1min)',
+  300: 'Normal Hibernation (5min)',
+  600: 'Slow Hibernation (10min)',
+  1800: 'Very Slow Hibernation (30min)',
+  3600: 'Extemely Slow Hibernation (1hour)',
+};
 
 export const DEFAULT_APP_SETTINGS = {
   autoLaunchInBackground: false,
@@ -63,7 +73,11 @@ export const DEFAULT_APP_SETTINGS = {
   scheduledDNDStart: '17:00',
   scheduledDNDEnd: '09:00',
   hibernate: false,
+  hibernationStrategy: 300,
   noUpdates: false,
+  showServiceNavigationBar: false,
+  universalDarkMode: true,
+  accentColor: '#7367f0',
 };
 
 export const DEFAULT_FEATURES_CONFIG = {
@@ -88,8 +102,8 @@ export const DEFAULT_WINDOW_OPTIONS = {
   y: 0,
 };
 
-export const FRANZ_SERVICE_REQUEST = 'https://bit.ly/franz-plugin-docs';
-export const FRANZ_TRANSLATION = 'https://bit.ly/franz-translate';
+export const FRANZ_SERVICE_REQUEST = 'https://github.com/getferdi/recipes/issues/new/choose';
+export const FRANZ_TRANSLATION = 'https://crowdin.com/project/getferdi';
 export const FRANZ_DEV_DOCS = 'http://bit.ly/franz-dev-hub';
 
 export const FILE_SYSTEM_SETTINGS_TYPES = [
@@ -97,10 +111,11 @@ export const FILE_SYSTEM_SETTINGS_TYPES = [
   'proxy',
 ];
 
+export const LOCAL_SERVER = 'You are using Ferdi without a server';
+
 export const SETTINGS_PATH = path.join(app.getPath('userData'), 'config');
 
 // Replacing app.asar is not beautiful but unforunately necessary
-export const DICTIONARY_PATH = asarPath(path.join(__dirname, 'dictionaries'));
 export const RECIPES_PATH = asarPath(path.join(__dirname, 'recipes'));
 
 export const ALLOWED_PROTOCOLS = [

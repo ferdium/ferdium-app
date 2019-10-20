@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { autorun, reaction } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import classnames from 'classnames';
-import ms from 'ms';
 
 import ServiceModel from '../../../models/Service';
 import StatusBarTargetUrl from '../../ui/StatusBarTargetUrl';
@@ -13,8 +12,10 @@ import WebviewErrorHandler from './ErrorHandlers/WebviewErrorHandler';
 import ServiceDisabled from './ServiceDisabled';
 import ServiceWebview from './ServiceWebview';
 import SettingsStore from '../../../stores/SettingsStore';
+import WebControlsScreen from '../../../features/webControls/containers/WebControlsScreen';
+import { CUSTOM_WEBSITE_ID } from '../../../features/webControls/constants';
 
-export default @observer @inject('stores') class ServiceView extends Component {
+export default @inject('stores', 'actions') @observer class ServiceView extends Component {
   static propTypes = {
     service: PropTypes.instanceOf(ServiceModel).isRequired,
     setWebviewReference: PropTypes.func.isRequired,
@@ -25,6 +26,11 @@ export default @observer @inject('stores') class ServiceView extends Component {
     isActive: PropTypes.bool,
     stores: PropTypes.shape({
       settings: PropTypes.instanceOf(SettingsStore).isRequired,
+    }).isRequired,
+    actions: PropTypes.shape({
+      service: PropTypes.shape({
+        setHibernation: PropTypes.func.isRequired,
+      }).isRequired,
     }).isRequired,
   };
 
@@ -76,7 +82,21 @@ export default @observer @inject('stores') class ServiceView extends Component {
           this.setState({
             hibernate: false,
           });
+          this.props.actions.service.setHibernation({
+            serviceId: this.props.service.id,
+            hibernating: false,
+          });
         }
+      },
+    );
+
+    // Store hibernation status to state, otherwise the webview won't get unloaded correctly
+    reaction(
+      () => this.props.service.isHibernating,
+      () => {
+        this.setState({
+          hibernate: this.props.service.isHibernating,
+        });
       },
     );
 
@@ -103,11 +123,17 @@ export default @observer @inject('stores') class ServiceView extends Component {
   };
 
   startHibernationTimer() {
+    const timerDuration = (Number(this.props.stores.settings.all.app.hibernationStrategy) || 300) * 1000;
+
     const hibernationTimer = setTimeout(() => {
       this.setState({
         hibernate: true,
       });
-    }, ms('5m'));
+      this.props.actions.service.setHibernation({
+        serviceId: this.props.service.id,
+        hibernating: true,
+      });
+    }, timerDuration);
 
     this.setState({
       hibernationTimer,
@@ -122,7 +148,12 @@ export default @observer @inject('stores') class ServiceView extends Component {
       reload,
       edit,
       enable,
+      stores,
     } = this.props;
+
+    const {
+      showServiceNavigationBar,
+    } = stores.settings.app;
 
     const webviewClasses = classnames({
       services__webview: true,
@@ -178,16 +209,21 @@ export default @observer @inject('stores') class ServiceView extends Component {
         ) : (
           <>
             {!this.state.hibernate ? (
-              <ServiceWebview
-                service={service}
-                setWebviewReference={setWebviewReference}
-                detachService={detachService}
-              />
+              <>
+                {(service.recipe.id === CUSTOM_WEBSITE_ID || showServiceNavigationBar) && (
+                  <WebControlsScreen service={service} />
+                )}
+                <ServiceWebview
+                  service={service}
+                  setWebviewReference={setWebviewReference}
+                  detachService={detachService}
+                />
+              </>
             ) : (
               <div>
                 <span role="img" aria-label="Sleeping Emoji">😴</span>
                 {' '}
-This service is currently hibernating. If this page doesn&#x27;t close soon, please try reloading Ferdi.
+                This service is currently hibernating. If this page doesn&#x27;t close soon, please try reloading Ferdi.
               </div>
             )}
           </>

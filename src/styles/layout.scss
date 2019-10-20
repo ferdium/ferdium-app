@@ -2,6 +2,18 @@
 
 html { overflow: hidden; }
 
+@keyframes pulse-danger {
+  0% {
+    background: darken($theme-brand-danger, 10%);
+  }
+  50% {
+    background: lighten($theme-brand-danger, 10%);
+  }
+  100% {
+    background: darken($theme-brand-danger, 10%);
+  }
+}
+
 .theme__dark .app {
   .sidebar {
     background: $dark-theme-gray-darker;
@@ -25,6 +37,27 @@ html { overflow: hidden; }
       &.is-muted,
       &.is-active {
         color: $theme-brand-primary;
+      }
+
+      .update-availible { 
+        align-items: center;
+        background: $theme-brand-danger;
+        border-radius: 20px;
+        bottom: 5px;
+        color: #FFF;
+        display: flex;
+        justify-content: center;
+        padding: 0px 5px;
+        position: absolute;
+        right: 16px;
+        padding-top: 0;
+        font-size: 0px;
+        min-height: 15px;
+        min-width: 15px;
+
+        animation-name: pulse-danger;
+        animation-duration: 0.75s;
+        animation-iteration-count: 6;
       }
     }
   }

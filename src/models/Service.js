@@ -36,6 +36,8 @@ export default class Service {
 
   @observable isMuted = false;
 
+  @observable isHibernating = false;
+
   @observable team = '';
 
   @observable customUrl = '';
@@ -134,6 +136,9 @@ export default class Service {
       id: this.id,
       spellcheckerLanguage: this.spellcheckerLanguage,
       isDarkModeEnabled: this.isDarkModeEnabled,
+      team: this.team,
+      url: this.url,
+      hasCustomIcon: this.hasCustomIcon,
     };
   }
 
@@ -189,19 +194,24 @@ export default class Service {
     return userAgent;
   }
 
-  initializeWebViewEvents({ handleIPCMessage, openWindow }) {
+  initializeWebViewEvents({ handleIPCMessage, openWindow, stores }) {
+    const webContents = this.webview.getWebContents();
+
     this.webview.addEventListener('ipc-message', e => handleIPCMessage({
       serviceId: this.id,
       channel: e.channel,
       args: e.args,
     }));
 
-    this.webview.addEventListener('new-window', (event, url, frameName, options) => openWindow({
-      event,
-      url,
-      frameName,
-      options,
-    }));
+    this.webview.addEventListener('new-window', (event, url, frameName, options) => {
+      console.log('open window', event, url, frameName, options);
+      openWindow({
+        event,
+        url,
+        frameName,
+        options,
+      });
+    });
 
     this.webview.addEventListener('did-start-loading', (event) => {
       debug('Did start load', this.name, event);
@@ -234,6 +244,28 @@ export default class Service {
     this.webview.addEventListener('crashed', () => {
       debug('Service crashed', this.name);
       this.hasCrashed = true;
+    });
+
+    webContents.on('login', (event, request, authInfo, callback) => {
+      // const authCallback = callback;
+      debug('browser login event', authInfo);
+      event.preventDefault();
+
+      if (authInfo.isProxy && authInfo.scheme === 'basic') {
+        debug('Sending service echo ping');
+        webContents.send('get-service-id');
+
+        debug('Received service id', this.id);
+
+        const ps = stores.settings.proxy[this.id];
+
+        if (ps) {
+          debug('Sending proxy auth callback for service', this.id);
+          callback(ps.user, ps.password);
+        } else {
+          debug('No proxy auth config found for', this.id);
+        }
+      }
     });
   }
 

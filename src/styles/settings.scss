@@ -59,7 +59,9 @@
 
     .premium-info {
       background: $dark-theme-gray-darker;
-      border: 2px solid $theme-brand-primary;
+      border-width: 2px;
+      border-style: solid;
+      border-color: $theme-brand-primary;
     }
     .legal { color: $theme-gray-light; }
   }
@@ -170,7 +172,9 @@
     }
 
     .separator {
-      border-right: 1px solid darken($theme-brand-primary, 8%);
+      border-right-width: 1px;
+      border-right-style: solid;
+      border-right-color: $theme-brand-primary;
       height: 100%;
       margin: 0 15px;
       transform: skew(15deg) rotate(2deg);
@@ -224,7 +228,7 @@
 
   .settings__close {
     background: $theme-brand-primary;
-    border-left: 1px solid darken($theme-brand-primary, 8%);
+    // border-left: 1px solid darken($theme-brand-primary, 8%);
     color: #FFF;
     font-size: 20px;
     height: 50px;
@@ -233,7 +237,9 @@
     right: 0;
     transition: background $theme-transition-time;
     border-top-right-radius: $theme-border-radius;
+    cursor: pointer;
 
+    &::before { cursor: pointer; }
     &:hover { background: darken($theme-brand-primary, 5%); }
   }
 
@@ -296,6 +302,7 @@
   }
 
   .settings__delete-button { right: 0; }
+  .settings__open-dark-mode-button { right: 0; cursor:pointer; }
 
   .settings__empty-state {
     align-items: center;

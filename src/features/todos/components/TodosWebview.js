@@ -37,9 +37,6 @@ const styles = theme => ({
 
     transform: ({ isVisible, width }) => `translateX(${isVisible ? 0 : width}px)`,
 
-    '&:hover $closeTodosButton': {
-      opacity: 1,
-    },
     '& webview': {
       height: '100%',
     },
@@ -82,7 +79,7 @@ const styles = theme => ({
   },
 });
 
-@injectSheet(styles) @observer @inject('stores')
+@injectSheet(styles) @inject('stores') @observer
 class TodosWebview extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,

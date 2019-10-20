@@ -12,13 +12,12 @@ export const ANNOUNCEMENTS_ROUTES = {
 };
 
 export default function initAnnouncements(stores, actions) {
-  // const { features } = stores;
+  const { features } = stores;
 
-  // Toggle workspace feature
+  // Toggle announcement feature
   reaction(
     () => (
-      true
-      // features.features.isAnnouncementsEnabled
+      features.features.isAnnouncementsEnabled
     ),
     (isEnabled) => {
       if (isEnabled) {

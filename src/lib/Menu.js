@@ -9,6 +9,7 @@ import { announcementActions } from '../features/announcements/actions';
 import { announcementsStore } from '../features/announcements';
 import { todosStore } from '../features/todos';
 import { todoActions } from '../features/todos/actions';
+import { CUSTOM_WEBSITE_ID } from '../features/webControls/constants';
 
 const { app, Menu, dialog } = remote;
 
@@ -281,6 +282,10 @@ const menuItems = defineMessages({
     id: 'menu.todos.enableTodos',
     defaultMessage: '!!!Enable Todos',
   },
+  serviceGoHome: {
+    id: 'menu.services.goHome',
+    defaultMessage: '!!!Home',
+  },
 });
 
 function getActiveWebview() {
@@ -325,6 +330,9 @@ const _templateFactory = intl => [
         label: intl.formatMessage(menuItems.pasteAndMatchStyle),
         accelerator: 'Cmd+Shift+V',
         selector: 'pasteAndMatchStyle:',
+        click() {
+          getActiveWebview().pasteAndMatchStyle();
+        },
       },
       {
         label: intl.formatMessage(menuItems.delete),
@@ -764,8 +772,12 @@ export default class FranzMenu {
       accelerator: `${cmdKey}+R`,
       click: () => {
         if (this.stores.user.isLoggedIn
-          && this.stores.services.enabled.length > 0) {
-          this.actions.service.reloadActive();
+        && this.stores.services.enabled.length > 0) {
+          if (this.stores.services.active.recipe.id === CUSTOM_WEBSITE_ID) {
+            this.stores.services.active.webview.reload();
+          } else {
+            this.actions.service.reloadActive();
+          }
         } else {
           window.location.reload();
         }
@@ -868,7 +880,7 @@ export default class FranzMenu {
           type: 'info',
           title: 'Franz Ferdinand',
           message: 'Ferdi',
-          detail: `Version: ${remote.app.getVersion()}\nElectron: ${process.versions.electron} / ${process.platform} / ${process.arch}`,
+          detail: `Version: ${remote.app.getVersion()} (${process.arch})\nElectron: ${process.versions.electron}\nNode.js: ${process.version}\nPlatform: ${process.platform}`,
         });
       },
     };
@@ -985,8 +997,22 @@ export default class FranzMenu {
       checked: service.isActive,
       click: () => {
         this.actions.service.setActive({ serviceId: service.id });
+
+        if (isMac && i === 0) {
+          app.mainWindow.restore();
+        }
       },
     })));
+
+    if (services.active && services.active.recipe.id === CUSTOM_WEBSITE_ID) {
+      menu.push({
+        type: 'separator',
+      }, {
+        label: intl.formatMessage(menuItems.serviceGoHome),
+        accelerator: `${cmdKey}+shift+H`,
+        click: () => this.actions.service.reloadActive(),
+      });
+    }
 
     return menu;
   }

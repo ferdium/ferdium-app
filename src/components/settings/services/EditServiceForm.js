@@ -29,6 +29,10 @@ const messages = defineMessages({
     id: 'settings.service.form.deleteButton',
     defaultMessage: '!!!Delete Service',
   },
+  openDarkmodeCss: {
+    id: 'settings.service.form.openDarkmodeCss',
+    defaultMessage: '!!!Open darkmode.css',
+  },
   availableServices: {
     id: 'settings.service.form.availableServices',
     defaultMessage: '!!!Available services',
@@ -127,6 +131,8 @@ export default @observer class EditServiceForm extends Component {
     form: PropTypes.instanceOf(Form).isRequired,
     onSubmit: PropTypes.func.isRequired,
     onDelete: PropTypes.func.isRequired,
+    openDarkmodeCss: PropTypes.func.isRequired,
+    isOpeningDarkModeCss: PropTypes.bool.isRequired,
     isSaving: PropTypes.bool.isRequired,
     isDeleting: PropTypes.bool.isRequired,
     isProxyFeatureEnabled: PropTypes.bool.isRequired,
@@ -193,6 +199,8 @@ export default @observer class EditServiceForm extends Component {
       isSaving,
       isDeleting,
       onDelete,
+      openDarkmodeCss,
+      isOpeningDarkModeCss,
       isProxyFeatureEnabled,
       isServiceProxyIncludedInCurrentPlan,
       isSpellcheckerIncludedInCurrentPlan,
@@ -215,6 +223,23 @@ export default @observer class EditServiceForm extends Component {
         label={intl.formatMessage(messages.deleteService)}
         className="settings__delete-button"
         onClick={onDelete}
+      />
+    );
+
+    const openDarkmodeCssButton = isOpeningDarkModeCss ? (
+      <Button
+        label={intl.formatMessage(messages.openDarkmodeCss)}
+        loaded={false}
+        buttonType="secondary"
+        className="settings__open-dark-mode-button"
+        disabled
+      />
+    ) : (
+      <Button
+        buttonType="secondary"
+        label={intl.formatMessage(messages.openDarkmodeCss)}
+        className="settings__open-dark-mode-button"
+        onClick={openDarkmodeCss}
       />
     );
 
@@ -329,9 +354,7 @@ export default @observer class EditServiceForm extends Component {
 
                 <div className="settings__settings-group">
                   <h3>{intl.formatMessage(messages.headlineGeneral)}</h3>
-                  {recipe.hasDarkMode && (
-                    <Toggle field={form.$('isDarkModeEnabled')} />
-                  )}
+                  <Toggle field={form.$('isDarkModeEnabled')} />
                   <Toggle field={form.$('isEnabled')} />
                 </div>
               </div>
@@ -406,6 +429,7 @@ export default @observer class EditServiceForm extends Component {
         <div className="settings__controls">
           {/* Delete Button */}
           {action === 'edit' && deleteButton}
+          {action === 'edit' && openDarkmodeCssButton}
 
           {/* Save Button */}
           {isSaving || isValidatingCustomUrl ? (

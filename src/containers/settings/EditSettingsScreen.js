@@ -1,3 +1,4 @@
+import { ipcRenderer } from 'electron';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
@@ -9,7 +10,7 @@ import UserStore from '../../stores/UserStore';
 import TodosStore from '../../features/todos/store';
 import Form from '../../lib/Form';
 import { APP_LOCALES, SPELLCHECKER_LOCALES } from '../../i18n/languages';
-import { DEFAULT_APP_SETTINGS, DEFAULT_LOCK_PASSWORD } from '../../config';
+import { DEFAULT_APP_SETTINGS, DEFAULT_LOCK_PASSWORD, HIBERNATION_STRATEGIES } from '../../config';
 import { config as spellcheckerConfig } from '../../features/spellchecker';
 
 import { getSelectOptions } from '../../helpers/i18n-helpers';
@@ -49,9 +50,17 @@ const messages = defineMessages({
     id: 'settings.app.form.privateNotifications',
     defaultMessage: '!!!Don\'t show message content in notifications',
   },
+  showServiceNavigationBar: {
+    id: 'settings.app.form.showServiceNavigationBar',
+    defaultMessage: '!!!Always show service navigation bar',
+  },
   hibernate: {
     id: 'settings.app.form.hibernate',
     defaultMessage: '!!!Enable service hibernation',
+  },
+  hibernationStrategy: {
+    id: 'settings.app.form.hibernationStrategy',
+    defaultMessage: '!!!Hibernation strategy',
   },
   server: {
     id: 'settings.app.form.server',
@@ -88,6 +97,14 @@ const messages = defineMessages({
   darkMode: {
     id: 'settings.app.form.darkMode',
     defaultMessage: '!!!Dark Mode',
+  },
+  universalDarkMode: {
+    id: 'settings.app.form.universalDarkMode',
+    defaultMessage: '!!!Enable universal Dark Mode',
+  },
+  accentColor: {
+    id: 'settings.app.form.accentColor',
+    defaultMessage: '!!!Accent color',
   },
   showDisabledServices: {
     id: 'settings.app.form.showDisabledServices',
@@ -150,7 +167,9 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
         enableSystemTray: settingsData.enableSystemTray,
         minimizeToSystemTray: settingsData.minimizeToSystemTray,
         privateNotifications: settingsData.privateNotifications,
+        showServiceNavigationBar: settingsData.showServiceNavigationBar,
         hibernate: settingsData.hibernate,
+        hibernationStrategy: settingsData.hibernationStrategy,
         server: settingsData.server,
         todoServer: settingsData.todoServer,
         lockingFeatureEnabled: settingsData.lockingFeatureEnabled,
@@ -161,6 +180,8 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
         enableGPUAcceleration: settingsData.enableGPUAcceleration,
         showDisabledServices: settingsData.showDisabledServices,
         darkMode: settingsData.darkMode,
+        universalDarkMode: settingsData.universalDarkMode,
+        accentColor: settingsData.accentColor,
         showMessageBadgeWhenMuted: settingsData.showMessageBadgeWhenMuted,
         enableSpellchecking: settingsData.enableSpellchecking,
         spellcheckerLanguage: settingsData.spellcheckerLanguage,
@@ -193,6 +214,10 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
     }
   }
 
+  openProcessManager() {
+    ipcRenderer.send('openProcessManager');
+  }
+
   prepareForm() {
     const {
       app, settings, user, todos, workspaces,
@@ -201,6 +226,11 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
 
     const locales = getSelectOptions({
       locales: APP_LOCALES,
+    });
+
+    const hibernationStrategies = getSelectOptions({
+      locales: HIBERNATION_STRATEGIES,
+      sort: false,
     });
 
     const spellcheckingLanguages = getSelectOptions({
@@ -240,10 +270,21 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           value: settings.all.app.privateNotifications,
           default: DEFAULT_APP_SETTINGS.privateNotifications,
         },
+        showServiceNavigationBar: {
+          label: intl.formatMessage(messages.showServiceNavigationBar),
+          value: settings.all.app.showServiceNavigationBar,
+          default: DEFAULT_APP_SETTINGS.showServiceNavigationBar,
+        },
         hibernate: {
           label: intl.formatMessage(messages.hibernate),
           value: settings.all.app.hibernate,
           default: DEFAULT_APP_SETTINGS.hibernate,
+        },
+        hibernationStrategy: {
+          label: intl.formatMessage(messages.hibernationStrategy),
+          value: settings.all.app.hibernationStrategy,
+          options: hibernationStrategies,
+          default: DEFAULT_APP_SETTINGS.hibernationStrategy,
         },
         server: {
           label: intl.formatMessage(messages.server),
@@ -309,6 +350,16 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           value: settings.all.app.darkMode,
           default: DEFAULT_APP_SETTINGS.darkMode,
         },
+        universalDarkMode: {
+          label: intl.formatMessage(messages.universalDarkMode),
+          value: settings.all.app.universalDarkMode,
+          default: DEFAULT_APP_SETTINGS.universalDarkMode,
+        },
+        accentColor: {
+          label: intl.formatMessage(messages.accentColor),
+          value: settings.all.app.accentColor,
+          default: DEFAULT_APP_SETTINGS.accentColor,
+        },
         enableGPUAcceleration: {
           label: intl.formatMessage(messages.enableGPUAcceleration),
           value: settings.all.app.enableGPUAcceleration,
@@ -363,7 +414,6 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
       cacheSize,
       updateStatusTypes,
       isClearingAllCache,
-      server,
       lockingFeatureEnabled,
     } = app;
     const {
@@ -390,9 +440,12 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           isSpellcheckerIncludedInCurrentPlan={spellcheckerConfig.isIncludedInCurrentPlan}
           isTodosEnabled={todos.isFeatureActive}
           isWorkspaceEnabled={workspaces.isFeatureActive}
-          server={server || 'https://api.franzinfra.com'}
+          server={this.props.stores.settings.app.server}
           lockingFeatureEnabled={lockingFeatureEnabled}
           noUpdates={this.props.stores.settings.app.noUpdates}
+          hibernationEnabled={this.props.stores.settings.app.hibernate}
+          isDarkmodeEnabled={this.props.stores.settings.app.darkMode}
+          openProcessManager={() => this.openProcessManager()}
         />
       </ErrorBoundary>
     );
@@ -424,7 +477,7 @@ EditSettingsScreen.wrappedComponent.propTypes = {
       toggleTodosFeatureVisibility: PropTypes.func.isRequired,
     }).isRequired,
     workspaces: PropTypes.shape({
-      toggleAllWorkspacesLoadedSetting: PropTypes.func.isRequired,
+      toggleKeepAllWorkspacesLoadedSetting: PropTypes.func.isRequired,
     }).isRequired,
   }).isRequired,
 };

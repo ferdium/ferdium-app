@@ -95,7 +95,7 @@ const styles = theme => ({
   },
 });
 
-export default @observer @injectSheet(styles) class Signup extends Component {
+export default @injectSheet(styles) @observer class Signup extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
     isLoadingRequiredData: PropTypes.bool.isRequired,
