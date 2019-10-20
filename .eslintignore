@@ -1,3 +1,5 @@
 build/
 out/
 packages/*/lib
+src/server
+recipes/
