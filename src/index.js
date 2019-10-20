@@ -9,9 +9,9 @@ import fs from 'fs-extra';
 import path from 'path';
 import windowStateKeeper from 'electron-window-state';
 
-if (process.platform === "win32") {
-  app.setPath("appData", process.env.LOCALAPPDATA);
-  app.setPath("userData", path.join(process.env.LOCALAPPDATA, app.getName()));
+if (process.platform === 'win32') {
+  app.setPath('appData', process.env.LOCALAPPDATA);
+  app.setPath('userData', path.join(process.env.LOCALAPPDATA, app.getName()));
 }
 
 if (isDevMode) {
