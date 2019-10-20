@@ -38,13 +38,13 @@ const messages = defineMessages({
     id: 'settings.team.upgradeAction',
     defaultMessage: '!!!Upgrade your Account',
   },
-  teamsUnavailible: {
-    id: 'settings.team.teamsUnavailible',
-    defaultMessage: '!!!Teams are unavailible',
+  teamsUnavailable: {
+    id: 'settings.team.teamsUnavailable',
+    defaultMessage: '!!!Teams are unavailable',
   },
-  teamsUnavailibleInfo: {
-    id: 'settings.team.teamsUnavailibleInfo',
-    defaultMessage: '!!!Teams are currently only availible when using the Franz Server and after paying for Franz Professional. Please change your server to https://api.franzinfra.com to use teams.',
+  teamsUnavailableInfo: {
+    id: 'settings.team.teamsUnavailableInfo',
+    defaultMessage: '!!!Teams are currently only available when using the Franz Server and after paying for Franz Professional. Please change your server to https://api.franzinfra.com to use teams.',
   },
 });
 
@@ -208,9 +208,9 @@ export default @injectSheet(styles) @observer class TeamDashboard extends Compon
         </div>
         <div className="settings__body">
           <h1 className={classes.headline}>
-            {intl.formatMessage(messages.teamsUnavailible)}
+            {intl.formatMessage(messages.teamsUnavailable)}
           </h1>
-          {intl.formatMessage(messages.teamsUnavailibleInfo)}
+          {intl.formatMessage(messages.teamsUnavailableInfo)}
         </div>
       </div>
     );
