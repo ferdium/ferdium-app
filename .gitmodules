@@ -1,6 +1,8 @@
 [submodule "recipes"]
 	path = recipes
-	url = https://github.com/getferdi/recipes
+	url = git@github.com:getferdi/recipes.git
+	ignore = all
 [submodule "src/server"]
 	path = src/server
-	url = https://github.com/getferdi/internal-server.git
+	url = git@github.com:getferdi/internal-server.git
+	ignore = all
