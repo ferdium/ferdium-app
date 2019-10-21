@@ -23,6 +23,8 @@ You can find the installers in the [latest release](https://github.com/getferdi/
 
 - [x] Removes the counter-productive fullscreen app delay inviting users to upgrade
 - [x] Removes pages begging you to donate after registration
+- [x] Remove "Franz is better together" popup
+- [x] Remove bug that would incorrectly display unread messages count on some services (more info in [7566ccd](https://github.com/getferdi/ferdi/commit/7566ccd))
 - [x] Makes all users Premium by default ([#15](https://github.com/getferdi/ferdi/issues/15))
 - [x] Using the Ferdi API instead of Franz's servers
 - [x] [Add option to change server to a custom](https://github.com/getferdi/ferdi/wiki/Custom-Server) [ferdi-server](https://github.com/getferdi/server)
@@ -42,10 +44,9 @@ You can find the installers in the [latest release](https://github.com/getferdi/
 - [x] Add Process Manager to find services using a lot of resources
 - [x] Add "npm run prepare-code" command for development to lint and beautify code
 - [x] Add button to open darkmode.css for a service
+- [x] Switch to [`electron-spellchecker`](https://github.com/electron-userland/electron-spellchecker) ti improve application size
 - [x] Improve "About Ferdi" screen to better display versions
 - [x] Minifying build files to improve app size
-- [x] Remove "Franz is better together" popup
-- [x] Remove bug that would incorrectly display unread messages count on some services (more info in [7566ccd](https://github.com/getferdi/ferdi/commit/7566ccd))
 - [x] [Makes it possible to edit the "Franz Todo" server](https://github.com/getferdi/ferdi/wiki/Custom-Todo)
 - [x] Makes RocketChat self-hosted generally available ([#6](https://github.com/getferdi/ferdi/issues/6))
 - [x] Comes with a custom branding proper to Ferdi
