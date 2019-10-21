@@ -330,9 +330,12 @@ export default @observer class EditServiceForm extends Component {
             )}
 
             {recipe.message && (
-              <p className="settings__message" style={{
-                marginTop: 0,
-              }}>
+              <p
+                className="settings__message"
+                style={{
+                  marginTop: 0,
+                }}
+              >
                 <span className="mdi mdi-information" />
                 {recipe.message}
               </p>
