@@ -22,7 +22,7 @@ const messages = defineMessages({
   },
 });
 
-export default @observer @inject('actions') class Login extends Component {
+export default @inject('actions') @observer class Login extends Component {
   static propTypes = {
     loginRoute: PropTypes.string.isRequired,
     signupRoute: PropTypes.string.isRequired,
