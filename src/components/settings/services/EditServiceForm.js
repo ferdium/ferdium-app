@@ -328,6 +328,15 @@ export default @observer class EditServiceForm extends Component {
                 )}
               </Tabs>
             )}
+
+            {recipe.message && (
+              <p className="settings__message" style={{
+                marginTop: 0,
+              }}>
+                <span className="mdi mdi-information" />
+                {recipe.message}
+              </p>
+            )}
             <div className="service-flex-grid">
               <div className="settings__options">
                 <div className="settings__settings-group">
@@ -416,13 +425,6 @@ export default @observer class EditServiceForm extends Component {
                   )}
                 </div>
               </PremiumFeatureContainer>
-            )}
-
-            {recipe.message && (
-              <p className="settings__message">
-                <span className="mdi mdi-information" />
-                {recipe.message}
-              </p>
             )}
           </form>
         </div>
