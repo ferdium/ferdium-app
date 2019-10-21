@@ -34,7 +34,7 @@ const styles = () => ({
   },
 });
 
-export default @observer @injectSheet(styles) class SubscriptionForm extends Component {
+export default @injectSheet(styles) @observer class SubscriptionForm extends Component {
   static propTypes = {
     selectPlan: PropTypes.func.isRequired,
     isActivatingTrial: PropTypes.bool.isRequired,
