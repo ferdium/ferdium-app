@@ -54,6 +54,27 @@ You can find the installers in the [latest release](https://github.com/getferdi/
 
 ### Preparations
 
+#### Install OS dependencies
+
+##### Debian/Ubuntu
+
+```bash
+$ apt install libx11-dev libxext-dev libxss-dev libxkbfile-dev
+```
+
+##### Fedora
+
+```bash
+$ dnf install libX11-devel libXext-devel libXScrnSaver-devel libxkbfile-devel
+```
+
+##### Windows
+
+```bash
+$ npm install --global windows-build-tools // Windows 10
+$ npm install --global windows-build-tools --vs2015 // Windows 7
+```
+
 #### Clone repository with submodule
 
 ```bash
@@ -62,13 +83,11 @@ $ cd getferdi
 $ git submodule update --init --recursive
 ```
 
-#### Install Linux OS dependencies
-
-[Guide: Linux distribution specific dependencies](docs/linux.md)
+It is important you execute the last command to get the required submodules (recipes, server).
 
 #### Use right NodeJS version
 
-Please make sure you are running NodeJS v10 (v10.16.3 suggested). Versions above will throw an errow when trying to install due to an [old fsevent dependency](https://github.com/fsevents/fsevents/issues/278)
+Please make sure you are running NodeJS v10 (v10.16.3 suggested). Versions above will throw an errow when trying to install due to an [old fsevent dependency](https://github.com/fsevents/fsevents/issues/278).
 
 #### Fix native modules to match current electron node version
 
@@ -78,7 +97,7 @@ $ npm run rebuild
 
 ### Install dependencies
 
-Run the following command to install all dependencies, and link sibling modules with Franz.
+Run the following command to install all dependencies, and link sibling modules with Ferdi.
 
 ```bash
 $ npx lerna bootstrap
@@ -86,9 +105,9 @@ $ npx lerna bootstrap
 
 If you previously ran `npm install` it sometimes is necessary to delete your `node_modules` folder before running `npx lerna bootstrap`.
 
-### Run Ferdi Development App
+### Start development app
 
-Run these two commands **simultaneously** in different console tabs.
+Run these two commands **simultaneously** in different console tabs:
 
 ```bash
 $ npm run dev
@@ -97,7 +116,7 @@ $ npm run start
 
 Be aware that the development database will be reset regularly.
 
-## Packaging
+### Packaging
 
 ```bash
 $ npm run build
@@ -105,14 +124,16 @@ $ npm run build
 
 Deliverables will be available in the `out` folder.
 
-## Release
+### Release
 
 ```bash
+$ git checkout develop && git pull && git checkout master
+$ git merge --no-ff develop
 $ git tag v5.3.4-beta.4
 $ git push --tags
 ```
 
-When pushing a new tag, the CI build will create a draft GitHub release and upload the deliverables in the draft release assets. Wait for all the assets to be uploaded before publishing the draft release.
+When pushing a new tag, the CI builds will create a draft GitHub release and upload the deliverables in the draft release assets. Wait for all the assets to be uploaded before publishing the draft release.
 
 ## Contributors ✨
 
