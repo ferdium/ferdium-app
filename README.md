@@ -63,7 +63,7 @@ Please make sure you are running NodeJS v10 ([v10.16.3](https://nodejs.org/dist/
 
 ##### Git
 
-The version [2.23.0](https://github.com/git-for-windows/git/releases/tag/v2.23.0.windows.1) for Git is working fine for development. You can then use the console from Git to continu the development procedure.
+The version [2.23.0](https://github.com/git-for-windows/git/releases/tag/v2.23.0.windows.1) for Git is working fine for development. You can then use the console from Git to do the development procedure.
 
 ##### Debian/Ubuntu
 
