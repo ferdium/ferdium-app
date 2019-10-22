@@ -57,6 +57,14 @@ You can find the installers in the [latest release](https://github.com/getferdi/
 
 #### Install OS dependencies
 
+##### Node.js
+
+Please make sure you are running NodeJS v10 ([v10.16.3](https://nodejs.org/dist/v10.16.3/) suggested). Versions above will throw an errow when trying to install due to an [old fsevent dependency](https://github.com/fsevents/fsevents/issues/278).
+
+##### Git
+
+The version [2.23.0](https://github.com/git-for-windows/git/releases/tag/v2.23.0.windows.1) for Git is working fine for development. You can then use the console from Git to do the development procedure.
+
 ##### Debian/Ubuntu
 
 ```bash
@@ -79,22 +87,13 @@ $ npm install --global windows-build-tools --vs2015 // Windows 7
 #### Clone repository with submodule
 
 ```bash
-$ git clone git@github.com:getferdi/ferdi.git
-$ cd getferdi
+$ git clone https://github.com/getferdi/ferdi.git
+$ cd ferdi
+$ git status
 $ git submodule update --init --recursive
 ```
 
 It is important you execute the last command to get the required submodules (recipes, server).
-
-#### Use right NodeJS version
-
-Please make sure you are running NodeJS v10 (v10.16.3 suggested). Versions above will throw an errow when trying to install due to an [old fsevent dependency](https://github.com/fsevents/fsevents/issues/278).
-
-#### Fix native modules to match current electron node version
-
-```bash
-$ npm run rebuild
-```
 
 ### Install dependencies
 
@@ -105,6 +104,12 @@ $ npx lerna bootstrap
 ```
 
 If you previously ran `npm install` it sometimes is necessary to delete your `node_modules` folder before running `npx lerna bootstrap`.
+
+### Fix native modules to match current electron node version
+
+```bash
+$ npm run rebuild
+```
 
 ### Start development app
 
