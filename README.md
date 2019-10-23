@@ -89,7 +89,6 @@ $ npm install --global windows-build-tools --vs2015 // Windows 7
 ```bash
 $ git clone https://github.com/getferdi/ferdi.git
 $ cd ferdi
-$ git status
 $ git submodule update --init --recursive
 ```
 
