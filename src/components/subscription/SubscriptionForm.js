@@ -30,11 +30,12 @@ const messages = defineMessages({
 
 const styles = () => ({
   activateTrialButton: {
-    margin: [40, 0, 50],
+    margin: [40, 'auto', 50],
+    display: 'flex',
   },
 });
 
-export default @observer @injectSheet(styles) class SubscriptionForm extends Component {
+export default @injectSheet(styles) @observer class SubscriptionForm extends Component {
   static propTypes = {
     selectPlan: PropTypes.func.isRequired,
     isActivatingTrial: PropTypes.bool.isRequired,
@@ -62,7 +63,6 @@ export default @observer @injectSheet(styles) class SubscriptionForm extends Com
           className={classes.activateTrialButton}
           busy={isActivatingTrial}
           onClick={selectPlan}
-          stretch
         />
         <div className="subscription__premium-info">
           <H3>

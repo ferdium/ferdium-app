@@ -1,4 +1,4 @@
-import { shell } from 'electron';
+import { shell, remote } from 'electron';
 import {
   action,
   reaction,
@@ -22,6 +22,8 @@ import { RESTRICTION_TYPES } from '../models/Service';
 import { KEEP_WS_LOADED_USID } from '../config';
 
 const debug = require('debug')('Ferdi:ServiceStore');
+
+const { app } = remote;
 
 export default class ServicesStore extends Store {
   @observable allServicesRequest = new CachedRequest(this.api.services, 'all');
@@ -818,7 +820,9 @@ export default class ServicesStore extends Store {
 
     if (service.webview) {
       debug('Initialize recipe', service.recipe.id, service.name);
-      service.webview.send('initialize-recipe', service.shareWithWebview, service.recipe);
+      service.webview.send('initialize-recipe', Object.assign({
+        franzVersion: app.getVersion(),
+      }, service.shareWithWebview), service.recipe);
     }
   }
 

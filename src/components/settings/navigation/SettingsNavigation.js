@@ -86,9 +86,9 @@ export default @inject('stores', 'actions') @observer class SettingsNavigation e
           },
         });
       }
+      this.props.stores.user.isLoggingOut = true;
     }
 
-    this.props.stores.user.isLoggingOut = true;
     this.props.stores.router.push(isLoggedIn ? '/auth/logout' : '/auth/welcome');
 
     if (isLoggedIn) {

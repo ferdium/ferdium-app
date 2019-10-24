@@ -26,7 +26,9 @@ import { sleep } from '../helpers/async-helpers';
 
 const debug = require('debug')('Ferdi:AppStore');
 
-const { app, systemPreferences, screen } = remote;
+const {
+  app, systemPreferences, screen, powerMonitor,
+} = remote;
 
 const mainWindow = remote.getCurrentWindow();
 
@@ -34,6 +36,8 @@ const defaultLocale = DEFAULT_APP_SETTINGS.locale;
 const autoLauncher = new AutoLaunch({
   name: 'Ferdi',
 });
+
+const CATALINA_NOTIFICATION_HACK_KEY = '_temp_askedForCatalinaNotificationPermissions';
 
 export default class AppStore extends Store {
   updateStatusTypes = {
@@ -56,6 +60,8 @@ export default class AppStore extends Store {
 
   @observable authRequestFailed = false;
 
+  @observable timeSuspensionStart;
+
   @observable timeOfflineStart;
 
   @observable updateStatus = null;
@@ -75,6 +81,8 @@ export default class AppStore extends Store {
   @observable nextAppReleaseVersion = null;
 
   dictionaries = [];
+
+  fetchDataInterval = null;
 
   constructor(...args) {
     super(...args);
@@ -97,6 +105,7 @@ export default class AppStore extends Store {
       this._setLocale.bind(this),
       this._muteAppHandler.bind(this),
       this._handleFullScreen.bind(this),
+      this._handleLogout.bind(this),
     ]);
   }
 
@@ -123,6 +132,12 @@ export default class AppStore extends Store {
     // There are no events to subscribe so we need to poll everey 5s
     this._systemDND();
     setInterval(() => this._systemDND(), ms('5s'));
+
+    this.fetchDataInterval = setInterval(() => {
+      this.stores.user.getUserInfoRequest.invalidate({ immediately: true });
+      this.stores.features.featuresRequest.invalidate({ immediately: true });
+      this.stores.news.latestNewsRequest.invalidate({ immediately: true });
+    }, ms('10m'));
 
     // Check for updates once every 4 hours
     setInterval(() => this._checkForUpdates(), CHECK_INTERVAL);
@@ -175,6 +190,36 @@ export default class AppStore extends Store {
 
       debug('Window is visible/focused', isVisible);
     });
+
+    powerMonitor.on('suspend', () => {
+      debug('System suspended starting timer');
+
+      this.timeSuspensionStart = moment();
+    });
+
+    powerMonitor.on('resume', () => {
+      debug('System resumed, last suspended on', this.timeSuspensionStart.toString());
+
+      if (this.timeSuspensionStart.add(10, 'm').isBefore(moment())) {
+        debug('Reloading services, user info and features');
+
+        setTimeout(() => {
+          window.location.reload();
+        }, ms('2s'));
+      }
+    });
+
+    // macOS catalina notifications hack
+    // notifications got stuck after upgrade but forcing a notification
+    // via `new Notification` triggered the permission request
+    if (isMac && !localStorage.getItem(CATALINA_NOTIFICATION_HACK_KEY)) {
+      // eslint-disable-next-line no-new
+      new window.Notification('Welcome to Franz 5', {
+        body: 'Have a wonderful day & happy messaging.',
+      });
+
+      localStorage.setItem(CATALINA_NOTIFICATION_HACK_KEY, true);
+    }
   }
 
   @computed get cacheSize() {
@@ -380,6 +425,12 @@ export default class AppStore extends Store {
       body.classList.add('isFullScreen');
     } else {
       body.classList.remove('isFullScreen');
+    }
+  }
+
+  _handleLogout() {
+    if (!this.stores.user.isLoggedIn) {
+      clearInterval(this.fetchDataInterval);
     }
   }
 
