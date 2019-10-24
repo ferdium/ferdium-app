@@ -12,7 +12,8 @@ const ignore = [
   'login.customServerQuestion',
   'settings.app.todoServerInfo',
   'settings.app.serverMoneyInfo',
-  'settings.team.teamsUnavailibleInfo',
+  'settings.team.teamsUnavailableInfo',
+  'settings.app.serverMoneyInfo',
 ];
 
 // Files to ignore when applying branding

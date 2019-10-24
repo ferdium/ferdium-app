@@ -3,6 +3,7 @@ import moment from 'moment';
 import DelayAppComponent from './Component';
 
 import { DEFAULT_FEATURES_CONFIG } from '../../config';
+import { getUserWorkspacesRequest } from '../workspaces/api';
 
 const debug = require('debug')('Ferdi:feature:delayApp');
 
@@ -32,7 +33,13 @@ export default function init(stores) {
   };
 
   reaction(
-    () => stores.user.isLoggedIn && stores.services.allServicesRequest.wasExecuted && stores.features.features.needToWaitToProceed && !stores.user.data.isPremium,
+    () => (
+      stores.user.isLoggedIn
+      && stores.services.allServicesRequest.wasExecuted
+      && getUserWorkspacesRequest.wasExecuted
+      && stores.features.features.needToWaitToProceed
+      && !stores.user.data.isPremium
+    ),
     (isEnabled) => {
       if (isEnabled) {
         debug('Enabling `delayApp` feature');

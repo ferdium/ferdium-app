@@ -74,7 +74,7 @@ const messages = defineMessages({
   },
 });
 
-export default @observer @inject('actions') class Signup extends Component {
+export default @inject('actions') @observer class Signup extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
     isSubmitting: PropTypes.bool.isRequired,

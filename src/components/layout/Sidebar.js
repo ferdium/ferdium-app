@@ -203,7 +203,7 @@ export default @inject('stores', 'actions') @observer class Sidebar extends Comp
           <i className="mdi mdi-settings" />
           { (this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.AVAILABLE
             || this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.DOWNLOADED) && (
-            <span className="update-availible">
+            <span className="update-available">
               •
             </span>
           ) }

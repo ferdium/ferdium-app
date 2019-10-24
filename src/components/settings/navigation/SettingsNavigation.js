@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 import { defineMessages, intlShape } from 'react-intl';
 import { inject, observer } from 'mobx-react';
 import { ProBadge } from '@meetfranz/ui';
+import { RouterStore } from 'mobx-react-router';
 
+import { LOCAL_SERVER, LIVE_API } from '../../../config';
 import Link from '../../ui/Link';
 import { workspaceStore } from '../../../features/workspaces';
 import UIStore from '../../../stores/UIStore';
+import SettingsStore from '../../../stores/SettingsStore';
 import UserStore from '../../../stores/UserStore';
 import { serviceLimitStore } from '../../../features/serviceLimit';
 
@@ -45,11 +48,18 @@ const messages = defineMessages({
   },
 });
 
-export default @inject('stores') @observer class SettingsNavigation extends Component {
+export default @inject('stores', 'actions') @observer class SettingsNavigation extends Component {
   static propTypes = {
     stores: PropTypes.shape({
       ui: PropTypes.instanceOf(UIStore).isRequired,
       user: PropTypes.instanceOf(UserStore).isRequired,
+      settings: PropTypes.instanceOf(SettingsStore).isRequired,
+      router: PropTypes.instanceOf(RouterStore).isRequired,
+    }).isRequired,
+    actions: PropTypes.shape({
+      settings: PropTypes.shape({
+        update: PropTypes.func.isRequired,
+      }).isRequired,
     }).isRequired,
     serviceCount: PropTypes.number.isRequired,
     workspaceCount: PropTypes.number.isRequired,
@@ -59,12 +69,42 @@ export default @inject('stores') @observer class SettingsNavigation extends Comp
     intl: intlShape,
   };
 
+  handleLoginLogout() {
+    const isLoggedIn = Boolean(localStorage.getItem('authToken'));
+    const isUsingWithoutAccount = this.props.stores.settings.app.server === LOCAL_SERVER;
+
+    if (isLoggedIn) {
+      // Remove current auth token
+      localStorage.removeItem('authToken');
+
+      if (isUsingWithoutAccount) {
+        // Reset server back to Ferdi API
+        this.props.actions.settings.update({
+          type: 'app',
+          data: {
+            server: LIVE_API,
+          },
+        });
+      }
+      this.props.stores.user.isLoggingOut = true;
+    }
+
+    this.props.stores.router.push(isLoggedIn ? '/auth/logout' : '/auth/welcome');
+
+    if (isLoggedIn) {
+      // Reload Ferdi, otherwise many settings won't sync correctly with the server
+      // after logging into another account
+      window.location.reload();
+    }
+  }
+
   render() {
     const { serviceCount, workspaceCount, stores } = this.props;
     const { isDarkThemeActive } = stores.ui;
     const { router, user } = stores;
     const { intl } = this.context;
     const isLoggedIn = Boolean(localStorage.getItem('authToken'));
+    const isUsingWithoutAccount = stores.settings.app.server === LOCAL_SERVER;
 
     return (
       <div className="settings-navigation">
@@ -136,12 +176,14 @@ export default @inject('stores') @observer class SettingsNavigation extends Comp
           {intl.formatMessage(messages.supportFerdi)}
         </Link>
         <span className="settings-navigation__expander" />
-        <Link
+        <button
+          type="button"
           to={isLoggedIn ? '/auth/logout' : '/auth/welcome'}
           className="settings-navigation__link"
+          onClick={this.handleLoginLogout.bind(this)}
         >
-          { isLoggedIn ? intl.formatMessage(messages.logout) : 'Login'}
-        </Link>
+          { isLoggedIn && !isUsingWithoutAccount ? intl.formatMessage(messages.logout) : 'Login'}
+        </button>
       </div>
     );
   }

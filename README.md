@@ -23,6 +23,8 @@ You can find the installers in the [latest release](https://github.com/getferdi/
 
 - [x] Removes the counter-productive fullscreen app delay inviting users to upgrade
 - [x] Removes pages begging you to donate after registration
+- [x] Remove "Franz is better together" popup
+- [x] Remove bug that would incorrectly display unread messages count on some services (more info in [7566ccd](https://github.com/getferdi/ferdi/commit/7566ccd))
 - [x] Makes all users Premium by default ([#15](https://github.com/getferdi/ferdi/issues/15))
 - [x] Using the Ferdi API instead of Franz's servers
 - [x] [Add option to change server to a custom](https://github.com/getferdi/ferdi/wiki/Custom-Server) [ferdi-server](https://github.com/getferdi/server)
@@ -38,14 +40,13 @@ You can find the installers in the [latest release](https://github.com/getferdi/
 - [x] Add CTRL+← and CTRL+→ shortcuts and menu options to go back and forward in the service browsing history([#39](https://github.com/getferdi/ferdi/issues/39))
 - [x] Add option to show a browser-like navigation bar on all services
 - [x] Add option to change accent color
-- [x] Add "`FERDI_APPDATA_DIR`" env variable to set a custom path for storing all data
+- [x] Add portable version for Windows
 - [x] Add Process Manager to find services using a lot of resources
 - [x] Add "npm run prepare-code" command for development to lint and beautify code
 - [x] Add button to open darkmode.css for a service
+- [x] Switch to [`electron-spellchecker`](https://github.com/electron-userland/electron-spellchecker) ti improve application size
 - [x] Improve "About Ferdi" screen to better display versions
 - [x] Minifying build files to improve app size
-- [x] Remove "Franz is better together" popup
-- [x] Remove bug that would incorrectly display unread messages count on some services (more info in [7566ccd](https://github.com/getferdi/ferdi/commit/7566ccd))
 - [x] [Makes it possible to edit the "Franz Todo" server](https://github.com/getferdi/ferdi/wiki/Custom-Todo)
 - [x] Makes RocketChat self-hosted generally available ([#6](https://github.com/getferdi/ferdi/issues/6))
 - [x] Comes with a custom branding proper to Ferdi
@@ -54,32 +55,48 @@ You can find the installers in the [latest release](https://github.com/getferdi/
 
 ### Preparations
 
+#### Install OS dependencies
+
+##### Node.js
+
+Please make sure you are running NodeJS v10 ([v10.16.3](https://nodejs.org/dist/v10.16.3/) suggested). Versions above will throw an errow when trying to install due to an [old fsevent dependency](https://github.com/fsevents/fsevents/issues/278).
+
+##### Git
+
+The version [2.23.0](https://github.com/git-for-windows/git/releases/tag/v2.23.0.windows.1) for Git is working fine for development. You can then use the console from Git to do the development procedure.
+
+##### Debian/Ubuntu
+
+```bash
+$ apt install libx11-dev libxext-dev libxss-dev libxkbfile-dev
+```
+
+##### Fedora
+
+```bash
+$ dnf install libX11-devel libXext-devel libXScrnSaver-devel libxkbfile-devel
+```
+
+##### Windows
+
+```bash
+$ npm install --global windows-build-tools // Windows 10
+$ npm install --global windows-build-tools --vs2015 // Windows 7
+```
 
 #### Clone repository with submodule
 
 ```bash
-$ git clone git@github.com:getferdi/ferdi.git
-$ cd getferdi
+$ git clone https://github.com/getferdi/ferdi.git
+$ cd ferdi
 $ git submodule update --init --recursive
 ```
 
-#### Install Linux OS dependencies
-
-[Guide: Linux distribution specific dependencies](docs/linux.md)
-
-#### Use right NodeJS version
-
-Please make sure you are running NodeJS v10 (v10.16.3 suggested). Versions above will throw an errow when trying to install due to an [old fsevent dependency](https://github.com/fsevents/fsevents/issues/278)
-
-#### Fix native modules to match current electron node version
-
-```bash
-$ npm run rebuild
-```
+It is important you execute the last command to get the required submodules (recipes, server).
 
 ### Install dependencies
 
-Run the following command to install all dependencies, and link sibling modules with Franz.
+Run the following command to install all dependencies, and link sibling modules with Ferdi.
 
 ```bash
 $ npx lerna bootstrap
@@ -87,9 +104,15 @@ $ npx lerna bootstrap
 
 If you previously ran `npm install` it sometimes is necessary to delete your `node_modules` folder before running `npx lerna bootstrap`.
 
-### Run Ferdi Development App
+### Fix native modules to match current electron node version
 
-Run these two commands **simultaneously** in different console tabs.
+```bash
+$ npm run rebuild
+```
+
+### Start development app
+
+Run these two commands **simultaneously** in different console tabs:
 
 ```bash
 $ npm run dev
@@ -98,7 +121,7 @@ $ npm run start
 
 Be aware that the development database will be reset regularly.
 
-## Packaging
+### Packaging
 
 ```bash
 $ npm run build
@@ -106,14 +129,16 @@ $ npm run build
 
 Deliverables will be available in the `out` folder.
 
-## Release
+### Release
 
 ```bash
+$ git checkout develop && git pull && git checkout master
+$ git merge --no-ff develop
 $ git tag v5.3.4-beta.4
 $ git push --tags
 ```
 
-When pushing a new tag, the CI build will create a draft GitHub release and upload the deliverables in the draft release assets. Wait for all the assets to be uploaded before publishing the draft release.
+When pushing a new tag, the CI builds will create a draft GitHub release and upload the deliverables in the draft release assets. Wait for all the assets to be uploaded before publishing the draft release.
 
 ## Contributors ✨
 
@@ -147,6 +172,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
@@ -159,6 +185,6 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
 
-
 ## Backers via OpenCollective
+
 <a href="https://opencollective.com/getferdi#backers" target="_blank"><img src="https://opencollective.com/getferdi/backers.svg?width=890"></a>

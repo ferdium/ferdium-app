@@ -242,7 +242,9 @@ window.open = (url, frameName, features) => {
     return ipcRenderer.sendToHost('new-window', url);
   }
 
-  return originalWindowOpen(url, frameName, features);
+  if (url) {
+    return originalWindowOpen(url, frameName, features);
+  }
 };
 
 if (isDevMode) {

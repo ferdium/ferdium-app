@@ -5,6 +5,7 @@ import { ThemeProvider } from 'react-jss';
 
 import AuthLayout from '../../components/auth/AuthLayout';
 import AppStore from '../../stores/AppStore';
+import UserStore from '../../stores/UserStore';
 import GlobalErrorStore from '../../stores/GlobalErrorStore';
 import AppLoader from '../../components/ui/AppLoader';
 
@@ -23,7 +24,7 @@ export default @inject('stores', 'actions') @observer class AuthLayoutContainer 
       stores, actions, children, location,
     } = this.props;
     const {
-      app, features, globalError,
+      app, features, globalError, user,
     } = stores;
 
     const isLoadingBaseFeatures = features.defaultFeaturesRequest.isExecuting
@@ -33,6 +34,15 @@ export default @inject('stores', 'actions') @observer class AuthLayoutContainer 
       return (
         <ThemeProvider theme={stores.ui.theme}>
           <AppLoader />
+        </ThemeProvider>
+      );
+    }
+
+    const { isLoggingOut } = user;
+    if (isLoggingOut) {
+      return (
+        <ThemeProvider theme={stores.ui.theme}>
+          <AppLoader texts={['Logging you out...']} />
         </ThemeProvider>
       );
     }
@@ -62,6 +72,7 @@ AuthLayoutContainer.wrappedComponent.propTypes = {
   stores: PropTypes.shape({
     app: PropTypes.instanceOf(AppStore).isRequired,
     globalError: PropTypes.instanceOf(GlobalErrorStore).isRequired,
+    user: PropTypes.instanceOf(UserStore).isRequired,
   }).isRequired,
   actions: PropTypes.shape({
     app: PropTypes.shape({

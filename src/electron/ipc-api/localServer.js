@@ -1,5 +1,4 @@
 import { ipcMain, app } from 'electron';
-import path from 'path';
 import net from 'net';
 import startServer from '../../server/start';
 
@@ -38,7 +37,7 @@ export default (params) => {
         console.log('Starting local server on port', port);
 
         startServer(
-          path.join(app.getPath('userData'), 'server.sqlite'),
+          app.getPath('userData'),
           port,
         );
 
