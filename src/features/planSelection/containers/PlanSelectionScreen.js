@@ -8,7 +8,7 @@ import FeaturesStore from '../../../stores/FeaturesStore';
 import UserStore from '../../../stores/UserStore';
 import PlanSelection from '../components/PlanSelection';
 import ErrorBoundary from '../../../components/util/ErrorBoundary';
-import { planSelectionStore, GA_CATEGORY_PLAN_SELECTION } from '..';
+import { planSelectionStore } from '..';
 
 const { dialog, app } = remote;
 

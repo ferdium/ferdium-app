@@ -9,7 +9,7 @@ import { oneOrManyChildElements } from '../../../prop-types';
 import UserStore from '../../../stores/UserStore';
 
 import styles from './styles';
-import FeatureStore from '../../../stores/FeaturesStore';
+import FeaturesStore from '../../../stores/FeaturesStore';
 
 const messages = defineMessages({
   action: {

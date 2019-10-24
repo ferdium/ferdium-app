@@ -59,7 +59,7 @@ export default class AppStore extends Store {
   @observable isOnline = navigator.onLine;
 
   @observable authRequestFailed = false;
-  
+
   @observable timeSuspensionStart;
 
   @observable timeOfflineStart;
@@ -206,8 +206,6 @@ export default class AppStore extends Store {
         setTimeout(() => {
           window.location.reload();
         }, ms('2s'));
-
-        statsEvent('resumed-app');
       }
     });
 
@@ -222,8 +220,6 @@ export default class AppStore extends Store {
 
       localStorage.setItem(CATALINA_NOTIFICATION_HACK_KEY, true);
     }
-
-    statsEvent('app-start');
   }
 
   @computed get cacheSize() {

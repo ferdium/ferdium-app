@@ -3,8 +3,6 @@ import PlanSelectionStore from './store';
 
 const debug = require('debug')('Franz:feature:planSelection');
 
-export const GA_CATEGORY_PLAN_SELECTION = 'planSelection';
-
 export const planSelectionStore = new PlanSelectionStore();
 
 export default function initPlanSelection(stores, actions) {
