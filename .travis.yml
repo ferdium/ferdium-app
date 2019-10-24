@@ -16,7 +16,7 @@ language: node_js
 install:
   - echo do nothing
 before_script:
-  - npx lerna bootstrap
+  - travis_wait 60 npx lerna bootstrap
   - npm install node-sass -g
 script:
   - npm run test
