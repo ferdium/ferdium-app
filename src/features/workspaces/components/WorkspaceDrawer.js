@@ -7,7 +7,7 @@ import { H1, Icon, ProBadge } from '@meetfranz/ui';
 import { Button } from '@meetfranz/forms/lib';
 import ReactTooltip from 'react-tooltip';
 
-import { mdiPlusBox, mdiSettings } from '@mdi/js';
+import { mdiPlusBox, mdiSettings, mdiStar } from '@mdi/js';
 import WorkspaceDrawerItem from './WorkspaceDrawerItem';
 import { workspaceActions } from '../actions';
 import { workspaceStore } from '../index';
@@ -51,6 +51,8 @@ const styles = theme => ({
   drawer: {
     background: theme.workspaces.drawer.background,
     width: `${theme.workspaces.drawer.width}px`,
+    display: 'flex',
+    flexDirection: 'column',
   },
   headline: {
     fontSize: '24px',
@@ -74,6 +76,7 @@ const styles = theme => ({
   },
   workspaces: {
     height: 'auto',
+    overflowY: 'scroll',
   },
   premiumAnnouncement: {
     padding: '20px',
@@ -88,7 +91,7 @@ const styles = theme => ({
   addNewWorkspaceLabel: {
     height: 'auto',
     color: theme.workspaces.drawer.buttons.color,
-    marginTop: 40,
+    margin: [40, 0],
     textAlign: 'center',
     '& > svg': {
       fill: theme.workspaces.drawer.buttons.color,
@@ -172,7 +175,7 @@ class WorkspaceDrawer extends Component {
                 className={classes.premiumCtaButton}
                 buttonType="primary"
                 label={intl.formatMessage(messages.reactivatePremiumAccount)}
-                icon="mdiStar"
+                icon={mdiStar}
                 onClick={() => {
                   onUpgradeAccountClick();
                 }}

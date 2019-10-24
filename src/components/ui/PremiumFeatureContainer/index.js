@@ -90,7 +90,7 @@ PremiumFeatureContainer.wrappedComponent.propTypes = {
   children: oneOrManyChildElements.isRequired,
   stores: PropTypes.shape({
     user: PropTypes.instanceOf(UserStore).isRequired,
-    features: PropTypes.instanceOf(FeatureStore).isRequired,
+    features: PropTypes.instanceOf(FeaturesStore).isRequired,
   }).isRequired,
   actions: PropTypes.shape({
     ui: PropTypes.shape({
