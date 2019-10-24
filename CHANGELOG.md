@@ -1,12 +1,13 @@
 # [5.4.0](https://github.com/getferdi/ferdi/compare/v5.3.4...v5.4.0)
 - Merge Franz v5.4.0
-- Add option to always show service navigation bar
-- Minifying build files to improve app size
-- Sorting applications in QuickSwitch by last used
+- Add option to show a service navigation bar
 - Add service hibernation
-- Fix universal darkmode for WhatsApp and Threema
+- Minifying build files to improve app size
+- Switching to `electron-spellchecker` for improved spellchecking
 - Add button to open darkmode.css for a service
 - Add option to change accent color
+- Fix universal darkmode for WhatsApp and Threema
+- Sorting applications in QuickSwitch by last used
 
 # [5.3.4](https://github.com/getferdi/ferdi/compare/v5.3.3...v5.3.4) (2019-09-25)
 - Fix continuous releases/assets delivery on tags builds #53
