@@ -120,6 +120,7 @@ class RecipeController {
       }
     }
 
+    console.log('Set theme to: ', this.settings.service.isDarkModeEnabled ? 'Dark' : 'Light');
     if (this.settings.service.isDarkModeEnabled) {
       debug('Enable dark mode');
 
@@ -127,9 +128,18 @@ class RecipeController {
       const darkModeStyle = path.join(this.settings.service.recipe.path, 'darkmode.css');
       const darkModeExists = fs.pathExistsSync(darkModeStyle);
 
+      console.log('darkmode.css exists? ', darkModeExists ? 'Yes': 'No');
+
       if (darkModeExists) {
+        console.log('Injecting darkmode.css');
         injectDarkModeStyle(this.settings.service.recipe.path);
+
+        // Make sure universal dark mode is disabled
+        disableDarkMode();
+        this.universalDarkModeInjected = false;
       } else if (this.settings.app.universalDarkMode && !ignoreList.includes(window.location.host)) {
+        console.log('Injecting DarkReader');
+
         // Use darkreader instead
         enableDarkMode({}, {
           css: customDarkModeCss[window.location.host] || '',
@@ -138,10 +148,14 @@ class RecipeController {
       }
     } else {
       debug('Remove dark mode');
+      console.log('DarkMode disabled - removing remaining styles');
 
       if (isDarkModeStyleInjected()) {
+        console.log('Removing injected darkmode.css');
         removeDarkModeStyle();
       } else {
+        console.log('Removing DarkReader');
+
         disableDarkMode();
         this.universalDarkModeInjected = false;
       }
