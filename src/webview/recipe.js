@@ -128,7 +128,7 @@ class RecipeController {
       const darkModeStyle = path.join(this.settings.service.recipe.path, 'darkmode.css');
       const darkModeExists = fs.pathExistsSync(darkModeStyle);
 
-      console.log('darkmode.css exists? ', darkModeExists ? 'Yes': 'No');
+      console.log('darkmode.css exists? ', darkModeExists ? 'Yes' : 'No');
 
       if (darkModeExists) {
         console.log('Injecting darkmode.css');
