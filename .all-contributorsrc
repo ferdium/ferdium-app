@@ -158,7 +158,10 @@
       "contributions": [
         "bug",
         "code",
-        "translation"
+        "translation",
+        "content",
+        "doc",
+        "platform"
       ]
     },
     {
