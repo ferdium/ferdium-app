@@ -191,6 +191,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "pztrn",
+      "name": "Stanislav N.",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/869402?v=4",
+      "profile": "http://pztrn.name/",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 6
