@@ -13,13 +13,13 @@
 
 🤴🏽 Hard-fork of [Franz](https://github.com/meetfranz/franz), adding awesome features and removing unwanted ones.
 
-#### Table of contents
+### Table of contents
 
 <details>
 <summary>Ferdi</summary>
 <ul>
-<li><a href="#what-is-ferdi">What is Ferdi ?</a></li>
-<li><a href="#what-ferdi-looks-like">What Ferdi looks like ?</a></li>
+<li><a href="#what-is-ferdi-">What is Ferdi ?</a></li>
+<li><a href="#what-ferdi-looks-like-">What Ferdi looks like ?</a></li>
 <li><a href="#download-ferdi">Download Ferdi</a>
 <ul>
 <li><a href="#or-use-homebrew-macos-only">Or use homebrew</a></li>
@@ -27,7 +27,7 @@
 </li>
 <li><a href="#ferdi-specific-features">Ferdi-specific Features</a></li>
 <li><a href="#development">Development</a></li>
-<li><a href="#contributors">Contributors ✨</a></li>
+<li><a href="#contributors-">Contributors ✨</a></li>
 <li><a href="#backers-via-opencollective">Backers via OpenCollective</a></li>
 <li><a href="#sponsors-via-opencollective">Sponsors via OpenCollective</a></li>
 </ul>
@@ -49,7 +49,7 @@ Ferdi is based on Franz - a messaging browser already used by thousands of peopl
 
 ## Download Ferdi
 
-You can find the installers in the [latest stable release](https://github.com/getferdi/ferdi/releases/latest) assets and the [pre-release ones here](https://github.com/getferdi/ferdi/releases).
+You can find the installers in the [latest stable release](https://github.com/getferdi/ferdi/releases/latest) assets and [all the release here](https://github.com/getferdi/ferdi/releases).
 
 ### Or use homebrew (macOS only)
 
@@ -122,7 +122,7 @@ $ npm install --global windows-build-tools // Windows 10
 $ npm install --global windows-build-tools --vs2015 // Windows 7
 ```
 
-#### Clone repository with submodule
+### Clone repository with submodule
 
 ```bash
 $ git clone https://github.com/getferdi/ferdi.git
@@ -132,7 +132,7 @@ $ git submodule update --init --recursive
 
 It is important you execute the last command to get the required submodules (recipes, server).
 
-#### Install dependencies
+### Install dependencies
 
 Run the following command to install all dependencies, and link sibling modules with Ferdi.
 
@@ -142,13 +142,13 @@ $ npx lerna bootstrap
 
 If you previously ran `npm install` it sometimes is necessary to delete your `node_modules` folder before running `npx lerna bootstrap`.
 
-#### Fix native modules to match current electron node version
+### Fix native modules to match current electron node version
 
 ```bash
 $ npm run rebuild
 ```
 
-#### Start development app
+### Start development app
 
 Run these two commands **simultaneously** in different console tabs:
 
@@ -159,7 +159,7 @@ $ npm run start
 
 Be aware that the development database will be reset regularly.
 
-#### Packaging
+### Packaging
 
 ```bash
 $ npm run build
@@ -167,7 +167,7 @@ $ npm run build
 
 Deliverables will be available in the `out` folder.
 
-#### Release
+### Release
 
 ```bash
 $ git checkout develop && git pull && git checkout master
