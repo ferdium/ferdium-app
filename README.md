@@ -49,7 +49,7 @@ Ferdi is based on Franz - a messaging browser already used by thousands of peopl
 
 ## Download Ferdi
 
-You can find the installers in the [latest stable release](https://github.com/getferdi/ferdi/releases/latest) assets and [all the release here](https://github.com/getferdi/ferdi/releases).
+You can find the installers in the [latest stable release](https://github.com/getferdi/ferdi/releases/latest) assets and [all the other release here](https://github.com/getferdi/ferdi/releases).
 
 ### Or use homebrew (macOS only)
 
