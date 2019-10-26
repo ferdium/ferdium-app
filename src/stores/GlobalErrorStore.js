@@ -15,10 +15,10 @@ export default class GlobalErrorStore extends Store {
     window.onerror = this._handleConsoleError.bind(this);
 
     const origConsoleError = console.error;
-    console.error = (...args) => {
-      this._handleConsoleError.call(this, args);
-      origConsoleError.apply(this, args);
-    }
+    console.error = (...errorArgs) => {
+      this._handleConsoleError.call(this, errorArgs);
+      origConsoleError.apply(this, errorArgs);
+    };
 
     Request.registerHook(this._handleRequests);
   }
@@ -27,7 +27,7 @@ export default class GlobalErrorStore extends Store {
     this.errors.push({
       error,
       url,
-      line
+      line,
     });
   }
 
