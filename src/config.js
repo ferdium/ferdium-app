@@ -113,7 +113,8 @@ export const FILE_SYSTEM_SETTINGS_TYPES = [
 
 export const LOCAL_SERVER = 'You are using Ferdi without a server';
 
-export const SETTINGS_PATH = path.join(app.getPath('userData'), 'config');
+// export const SETTINGS_PATH = path.join(app.getPath('userData'), 'config');
+export const SETTINGS_PATH = path.join(app.getPath('appData'), 'config');
 
 // Replacing app.asar is not beautiful but unforunately necessary
 export const RECIPES_PATH = asarPath(path.join(__dirname, 'recipes'));
