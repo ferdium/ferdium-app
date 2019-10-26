@@ -227,6 +227,9 @@ export default class AppStore extends Store {
   }
 
   @computed get debugInfo() {
+    const settings = JSON.parse(JSON.stringify(this.stores.settings.app));
+    settings.lockedPassword = '******';
+
     return {
       host: {
         platform: process.platform,
@@ -238,19 +241,20 @@ export default class AppStore extends Store {
         electron: process.versions.electron,
         installedRecipes: this.stores.recipes.all.map(recipe => ({ id: recipe.id, version: recipe.version })),
         devRecipes: this.stores.recipePreviews.dev.map(recipe => ({ id: recipe.id, version: recipe.version })),
-        services: this.stores.services.all.map(service => ({ 
-          id: service.id, 
-          recipe: service.recipe.id, 
-          isAttached: service.isAttached, 
+        services: this.stores.services.all.map(service => ({
+          id: service.id,
+          recipe: service.recipe.id,
+          isAttached: service.isAttached,
           isActive: service.isActive,
           isEnabled: service.isEnabled,
           isHibernating: service.isHibernating,
           hasCrashed: service.hasCrashed,
           isDarkModeEnabled: service.isDarkModeEnabled,
         })),
+        errors: this.stores.globalError.errors,
         workspaces: this.stores.workspaces.workspaces.map(workspace => ({ id: workspace.id, services: workspace.services })),
         windowSettings: readJsonSync(path.join(app.getPath('userData'), 'window-state.json')),
-        settings: this.stores.settings.app,
+        settings,
         features: this.stores.features.features,
         user: this.stores.user.data.id,
       },

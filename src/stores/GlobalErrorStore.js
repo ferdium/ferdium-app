@@ -5,12 +5,30 @@ import Request from './lib/Request';
 export default class GlobalErrorStore extends Store {
   @observable error = null;
 
+  @observable errors = [];
+
   @observable response = {};
 
   constructor(...args) {
     super(...args);
 
+    window.onerror = this._handleConsoleError.bind(this);
+
+    const origConsoleError = console.error;
+    console.error = (...args) => {
+      this._handleConsoleError.call(this, args);
+      origConsoleError.apply(this, args);
+    }
+
     Request.registerHook(this._handleRequests);
+  }
+
+  _handleConsoleError(error, url, line) {
+    this.errors.push({
+      error,
+      url,
+      line
+    });
   }
 
   _handleRequests = action(async (request) => {
@@ -28,6 +46,17 @@ export default class GlobalErrorStore extends Store {
           // this.actions.user.logout({ serverLogout: true });
         }
       }
+
+      this.errors.push({
+        request: {
+          result: request.result,
+          wasExecuted: request.wasExecuted,
+          method: request._method,
+        },
+        error: this.error,
+        response: this.response,
+        server: window.ferdi.stores.settings.app.server,
+      });
     } else {
       window.ferdi.stores.app.authRequestFailed = false;
     }
