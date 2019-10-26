@@ -18,11 +18,7 @@ git:
   submodules: false
 # Use sed to replace the SSH URL with the public URL, then initialize submodules
 before_install:
-  - if [ $TRAVIS_OS_NAME == "linux" ]; then
-      sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
-    else
-      sed -i '' 's/git@github.com:/https:\/\/github.com\//' .gitmodules # macOS
-    fi
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules; else sed -i '' 's/git@github.com:/https:\/\/github.com\//' .gitmodules; fi
   - git submodule update --init --recursive
 install:
   - echo do nothing
