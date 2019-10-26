@@ -1,18 +1,25 @@
 matrix:
   include:
-  - os: linux
-    dist: xenial
-    addons:
-      apt:
-        packages:
-        - libx11-dev
-        - libxext-dev
-        - libxss-dev
-        - libxkbfile-dev
-  - os: osx
-    osx_image: xcode11
+    - os: linux
+      dist: xenial
+      addons:
+        apt:
+          packages:
+            - libx11-dev
+            - libxext-dev
+            - libxss-dev
+            - libxkbfile-dev
+    - os: osx
+      osx_image: xcode11
 
 language: node_js
+# Handle git submodules yourself
+git:
+  submodules: false
+# Use sed to replace the SSH URL with the public URL, then initialize submodules
+before_install:
+  - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+  - git submodule update --init --recursive
 install:
   - echo do nothing
 before_script:
