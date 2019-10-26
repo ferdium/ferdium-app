@@ -4,14 +4,52 @@
 
 # Ferdi
 
-[![Backers on Open Collective](https://opencollective.com/getferdi/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/getferdi/sponsors/badge.svg)](#sponsors) [![Build Status Windows](https://ci.appveyor.com/api/projects/status/2ckfbmoxp36fye5b?svg=true)](https://ci.appveyor.com/project/kytwb/ferdi)
-[![Build Status Mac & Linux](https://travis-ci.org/getferdi/ferdi.svg?branch=master)](https://travis-ci.org/getferdi/ferdi)
+<p align="center">
+<a href="#backers-via-opencollective"><img alt="Open Collective backers" src="https://img.shields.io/opencollective/backers/getferdi?logo=open-collective"></a>
+<a href="#sponsors-via-opencollective"><img alt="Open Collective sponsors" src="https://img.shields.io/opencollective/sponsors/getferdi?logo=open-collective"></a>
+<a href="https://ci.appveyor.com/project/kytwb/ferdi"><img alt="Build Status Windows" src="https://img.shields.io/appveyor/ci/kytwb/ferdi/master?logo=appveyor"></a>
+<a href="https://travis-ci.org/getferdi/ferdi"><img alt="Build Status Mac & Linux" src="https://img.shields.io/travis/getferdi/ferdi/master?logo=travis"></a>
+</p>
 
 🤴🏽 Hard-fork of [Franz](https://github.com/meetfranz/franz), adding awesome features and removing unwanted ones.
 
+#### Table of contents
+
+<details>
+<summary>Ferdi</summary>
+<ul>
+<li><a href="#what-is-ferdi">What is Ferdi ?</a></li>
+<li><a href="#what-ferdi-looks-like">What Ferdi looks like ?</a></li>
+<li><a href="#download-ferdi">Download Ferdi</a>
+<ul>
+<li><a href="#or-use-homebrew-macos-only">Or use homebrew</a></li>
+</ul>
+</li>
+<li><a href="#ferdi-specific-features">Ferdi-specific Features</a></li>
+<li><a href="#development">Development</a></li>
+<li><a href="#contributors">Contributors ✨</a></li>
+<li><a href="#backers-via-opencollective">Backers via OpenCollective</a></li>
+<li><a href="#sponsors-via-opencollective">Sponsors via OpenCollective</a></li>
+</ul>
+</details>
+
+### What is Ferdi ?
+
+Ferdi is based on Franz - a messaging browser already used by thousands of people. Due to this, Ferdi is compatible with all Franz recipes and your existing Franz account. Ferdi is a messaging browser that allows you to combine your favorite messaging services into one application and doesn't restrict its usage. Use every service you want, as many times as you want and how you want.
+
+### What Ferdi looks like ?
+
+<details>
+<summary>Screenshots</summary>
+<img alt="Keep all your messaging services in one place." src="./branding/screenshots/hero.png">
+<img alt="Order your services with Ferdi Workspaces." src="./branding/screenshots/workspaces.png">
+<img alt="Always keep your Todo list open with Ferdi Todos." src="./branding/screenshots/todos.png">
+<img alt="Supporting all your services." src="./branding/screenshots/service-store.png">
+</details>
+
 ## Download Ferdi
 
-You can find the installers in the [latest release](https://github.com/getferdi/ferdi/releases) assets.
+You can find the installers in the [latest stable release](https://github.com/getferdi/ferdi/releases/latest) assets and the [pre-release ones here](https://github.com/getferdi/ferdi/releases).
 
 ### Or use homebrew (macOS only)
 
@@ -94,7 +132,7 @@ $ git submodule update --init --recursive
 
 It is important you execute the last command to get the required submodules (recipes, server).
 
-### Install dependencies
+#### Install dependencies
 
 Run the following command to install all dependencies, and link sibling modules with Ferdi.
 
@@ -104,13 +142,13 @@ $ npx lerna bootstrap
 
 If you previously ran `npm install` it sometimes is necessary to delete your `node_modules` folder before running `npx lerna bootstrap`.
 
-### Fix native modules to match current electron node version
+#### Fix native modules to match current electron node version
 
 ```bash
 $ npm run rebuild
 ```
 
-### Start development app
+#### Start development app
 
 Run these two commands **simultaneously** in different console tabs:
 
@@ -121,7 +159,7 @@ $ npm run start
 
 Be aware that the development database will be reset regularly.
 
-### Packaging
+#### Packaging
 
 ```bash
 $ npm run build
@@ -129,7 +167,7 @@ $ npm run build
 
 Deliverables will be available in the `out` folder.
 
-### Release
+#### Release
 
 ```bash
 $ git checkout develop && git pull && git checkout master
@@ -187,4 +225,8 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 
 ## Backers via OpenCollective
 
-<a href="https://opencollective.com/getferdi#backers" target="_blank"><img src="https://opencollective.com/getferdi/backers.svg?width=890"></a>
+<a href="https://opencollective.com/getferdi#section-contribute" target="_blank"><img src="https://opencollective.com/getferdi/backers.svg?width=890"></a>
+
+## Sponsors via OpenCollective
+
+<a href="https://opencollective.com/getferdi#section-contribute" target="_blank"><img src="https://opencollective.com/getferdi/sponsors.svg?width=890"></a>
