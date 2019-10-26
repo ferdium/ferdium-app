@@ -35,7 +35,7 @@
 
 ### What is Ferdi ?
 
-Ferdi is based on Franz - a messaging browser already used by thousands of people. Due to this, Ferdi is compatible with all Franz recipes and your existing Franz account. Ferdi is a messaging browser that allows you to combine your favorite messaging services into one application and doesn't restrict its usage. Use every service you want, as many times as you want and how you want.
+Ferdi is a messaging browser that allows you to combine your favorite messaging services into one application. It is based on Franz - a software already used by thousands of people - with the difference that Ferdi gives you many additonal features and doesn't restrict its usage! Ferdi is compatible with your existing Franz account so you can continue right where you left off. Find out more about Ferdi and its features on [getferdi.com](https://getferdi.com).
 
 ### What Ferdi looks like ?
 
