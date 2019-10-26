@@ -172,6 +172,16 @@
         "infra",
         "platform"
       ]
+    },
+    {
+      "login": "Gaboris",
+      "name": "Gaboris",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/9462372?v=4",
+      "profile": "https://github.com/Gaboris",
+      "contributions": [
+        "question",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 6
