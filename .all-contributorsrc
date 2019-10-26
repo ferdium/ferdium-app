@@ -200,6 +200,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "patrickcurl",
+      "name": "Patrick Curl",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1470061?v=4",
+      "profile": "http://www.patrickcurl.com",
+      "contributions": [
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 6

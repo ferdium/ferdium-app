@@ -170,6 +170,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/Gaboris"><img src="https://avatars2.githubusercontent.com/u/9462372?v=4" width="40px;" alt="Gaboris"/><br /><sub><b>Gaboris</b></sub></a><br /><a href="#question-Gaboris" title="Answering Questions">💬</a> <a href="https://github.com/kytwb/ferdi/issues?q=author%3AGaboris" title="Bug reports">🐛</a></td>
     <td align="center"><a href="http://www.cu3ed.com/"><img src="https://avatars1.githubusercontent.com/u/61343?v=4" width="40px;" alt="Ce"/><br /><sub><b>Ce</b></sub></a><br /><a href="https://github.com/kytwb/ferdi/issues?q=author%3Aincace" title="Bug reports">🐛</a></td>
     <td align="center"><a href="http://pztrn.name/"><img src="https://avatars1.githubusercontent.com/u/869402?v=4" width="40px;" alt="Stanislav N."/><br /><sub><b>Stanislav N.</b></sub></a><br /><a href="https://github.com/kytwb/ferdi/issues?q=author%3Apztrn" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="http://www.patrickcurl.com"><img src="https://avatars1.githubusercontent.com/u/1470061?v=4" width="40px;" alt="Patrick Curl"/><br /><sub><b>Patrick Curl</b></sub></a><br /><a href="#ideas-patrickcurl" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
