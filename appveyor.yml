@@ -4,6 +4,10 @@ environment:
 version: 5.0.1.{build}
 
 install:
+  - ps: $fileContent = "-----BEGIN RSA PRIVATE KEY-----`n"
+  - ps: $fileContent += $env:priv_key.Replace(' ', "`n")
+  - ps: $fileContent += "`n-----END RSA PRIVATE KEY-----`n"
+  - ps: Set-Content $env:userprofile\.ssh\id_rsa $fileContent
   - git submodule update --init --recursive
   - ps: Install-Product node 10
   - npx lerna bootstrap
