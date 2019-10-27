@@ -50,10 +50,16 @@ Ferdi is a messaging browser that allows you to combine your favorite messaging 
 
 <details>
 <summary>Screenshots</summary>
+<p align="center">
 <img alt="Keep all your messaging services in one place." src="./branding/screenshots/hero.png">
+<em>"Keep all your messaging services in one place."</em>
 <img alt="Order your services with Ferdi Workspaces." src="./branding/screenshots/workspaces.png">
+<em>"Order your services with Ferdi Workspaces."</em>
 <img alt="Always keep your Todo list open with Ferdi Todos." src="./branding/screenshots/todos.png">
+<em>"Always keep your Todo list open with Ferdi Todos."</em>
 <img alt="Supporting all your services." src="./branding/screenshots/service-store.png">
+<em>"Supporting all your services."</em>
+</p>
 </details>
 
 ## Download Ferdi
