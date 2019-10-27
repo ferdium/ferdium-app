@@ -181,7 +181,9 @@ export default class AppStore extends Store {
 
     this.locale = this._getDefaultLocale();
 
-    this._healthCheck();
+    setTimeout(() => {
+      this._healthCheck();
+    }, 1000);
 
     this.isSystemDarkModeEnabled = systemPreferences.isDarkMode();
 

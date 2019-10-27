@@ -39,7 +39,7 @@ export default class CachedRequest extends Request {
     }), 0);
 
     // Issue api call & save it as promise that is handled to update the results of the operation
-    this._promise = new Promise((resolve, reject) => {
+    this._promise = new Promise((resolve) => {
       this._api[this._method](...callArgs)
         .then((result) => {
           setTimeout(action(() => {
@@ -63,7 +63,7 @@ export default class CachedRequest extends Request {
             this.wasExecuted = true;
             this._isWaitingForResponse = false;
             this._triggerHooks();
-            reject(error);
+            // reject(error);
           }), 1);
         }));
     });

@@ -112,6 +112,7 @@ export const FILE_SYSTEM_SETTINGS_TYPES = [
 ];
 
 export const LOCAL_SERVER = 'You are using Ferdi without a server';
+export const SERVER_NOT_LOADED = 'Ferdi::SERVER_NOT_LOADED';
 
 export const SETTINGS_PATH = path.join(app.getPath('userData'), 'config');
 
