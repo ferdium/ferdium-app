@@ -253,7 +253,7 @@ export default class AppStore extends Store {
           hasCrashed: service.hasCrashed,
           isDarkModeEnabled: service.isDarkModeEnabled,
         })),
-        errors: this.stores.globalError.errors,
+        messages: this.stores.globalError.messages,
         workspaces: this.stores.workspaces.workspaces.map(workspace => ({ id: workspace.id, services: workspace.services })),
         windowSettings: readJsonSync(path.join(app.getPath('userData'), 'window-state.json')),
         settings,
