@@ -27,6 +27,15 @@
 </li>
 <li><a href="#ferdi-specific-features">Ferdi-specific Features</a></li>
 <li><a href="#development">Development</a></li>
+<ul>
+<li><a href="#install-os-dependencies">Install OS dependencies</a></li>
+<li><a href="#clone-repository-with-submodule">Clone repository with submodule</a></li>
+<li><a href="#install-dependencies">Install dependencies</a></li>
+<li><a href="#fix-native-modules-to-match-current-electron-node-version">Fix native modules to match current electron node version</a></li>
+<li><a href="#start-development-app">Start development app</a></li>
+<li><a href="#packaging">Packaging</a></li>
+<li><a href="#release">Release</a></li>
+</ul>
 <li><a href="#contributors-">Contributors ✨</a></li>
 <li><a href="#backers-via-opencollective">Backers via OpenCollective</a></li>
 <li><a href="#sponsors-via-opencollective">Sponsors via OpenCollective</a></li>
@@ -90,8 +99,6 @@ You can find the installers in the [latest stable release](https://github.com/ge
 - [x] Comes with a custom branding proper to Ferdi
 
 ## Development
-
-### Preparations
 
 #### Install OS dependencies
 
