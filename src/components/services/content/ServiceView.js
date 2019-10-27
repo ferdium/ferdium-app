@@ -42,9 +42,9 @@ export default @inject('stores', 'actions') @observer class ServiceView extends 
     forceRepaint: false,
     targetUrl: '',
     statusBarVisible: false,
-    hibernate: false,
-    hibernationTimer: null,
   };
+
+  hibernationTimer = null;
 
   autorunDisposer = null;
 
@@ -73,30 +73,17 @@ export default @inject('stores', 'actions') @observer class ServiceView extends 
           // Service is inactive - start hibernation countdown
           this.startHibernationTimer();
         } else {
-          if (this.state.hibernationTimer) {
+          if (this.hibernationTimer) {
             // Service is active but we have an active hibernation timer: Clear timeout
-            clearTimeout(this.state.hibernationTimer);
+            clearTimeout(this.hibernationTimer);
           }
 
           // Service is active, wake up service from hibernation
-          this.setState({
-            hibernate: false,
-          });
           this.props.actions.service.setHibernation({
             serviceId: this.props.service.id,
             hibernating: false,
           });
         }
-      },
-    );
-
-    // Store hibernation status to state, otherwise the webview won't get unloaded correctly
-    reaction(
-      () => this.props.service.isHibernating,
-      () => {
-        this.setState({
-          hibernate: this.props.service.isHibernating,
-        });
       },
     );
 
@@ -126,18 +113,13 @@ export default @inject('stores', 'actions') @observer class ServiceView extends 
     const timerDuration = (Number(this.props.stores.settings.all.app.hibernationStrategy) || 300) * 1000;
 
     const hibernationTimer = setTimeout(() => {
-      this.setState({
-        hibernate: true,
-      });
       this.props.actions.service.setHibernation({
         serviceId: this.props.service.id,
         hibernating: true,
       });
     }, timerDuration);
 
-    this.setState({
-      hibernationTimer,
-    });
+    this.hibernationTimer = hibernationTimer;
   }
 
   render() {
@@ -208,7 +190,7 @@ export default @inject('stores', 'actions') @observer class ServiceView extends 
           </Fragment>
         ) : (
           <>
-            {!this.state.hibernate ? (
+            {!service.isHibernating ? (
               <>
                 {(service.recipe.id === CUSTOM_WEBSITE_ID || showServiceNavigationBar) && (
                   <WebControlsScreen service={service} />
