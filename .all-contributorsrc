@@ -1,6 +1,6 @@
 {
   "projectName": "ferdi",
-  "projectOwner": "kytwb",
+  "projectOwner": "getferdi",
   "repoType": "github",
   "repoHost": "https://github.com",
   "files": [
@@ -212,6 +212,15 @@
       "profile": "http://www.patrickcurl.com",
       "contributions": [
         "ideas"
+      ]
+    },
+    {
+      "login": "Stanzilla",
+      "name": "Benjamin Staneck",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/75278?v=4",
+      "profile": "https://github.com/Stanzilla",
+      "contributions": [
+        "design"
       ]
     }
   ],
