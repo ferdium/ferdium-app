@@ -106,29 +106,29 @@ You can find the installers in the [latest stable release](https://github.com/ge
 
 ## Development
 
-#### Install OS dependencies
+### Install OS dependencies
 
-##### Node.js
+#### Node.js
 
 Please make sure you are running NodeJS v10 ([v10.16.3](https://nodejs.org/dist/v10.16.3/) suggested). Versions above will throw an errow when trying to install due to an [old fsevent dependency](https://github.com/fsevents/fsevents/issues/278).
 
-##### Git
+#### Git
 
 The version [2.23.0](https://github.com/git-for-windows/git/releases/tag/v2.23.0.windows.1) for Git is working fine for development. You can then use the console from Git to do the development procedure.
 
-##### Debian/Ubuntu
+#### Debian/Ubuntu
 
 ```bash
 $ apt install libx11-dev libxext-dev libxss-dev libxkbfile-dev
 ```
 
-##### Fedora
+#### Fedora
 
 ```bash
 $ dnf install libX11-devel libXext-devel libXScrnSaver-devel libxkbfile-devel
 ```
 
-##### Windows
+#### Windows
 
 ```bash
 $ npm install --global windows-build-tools // Windows 10
