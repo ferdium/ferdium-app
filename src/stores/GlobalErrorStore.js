@@ -13,7 +13,7 @@ export default class GlobalErrorStore extends Store {
     super(...args);
 
     window.onerror = (...errorArgs) => {
-      this._handleConsoleError.call(this, ['error', ...errorArgs])
+      this._handleConsoleError.call(this, ['error', ...errorArgs]);
     };
 
     const origConsoleError = console.error;
@@ -21,13 +21,13 @@ export default class GlobalErrorStore extends Store {
       this._handleConsoleError.call(this, ['error', ...errorArgs]);
       origConsoleError.apply(this, errorArgs);
     };
-    
+
     const origConsoleLog = console.log;
     window.console.log = (...logArgs) => {
       this._handleConsoleError.call(this, ['log', ...logArgs]);
       origConsoleLog.apply(this, logArgs);
     };
-    
+
     const origConsoleInfo = console.info;
     window.console.info = (...infoArgs) => {
       this._handleConsoleError.call(this, ['info', ...infoArgs]);
@@ -38,7 +38,7 @@ export default class GlobalErrorStore extends Store {
   }
 
   _handleConsoleError(type, error, url, line) {
-    if (typeof type === "object" && type.length && type.length >= 1) {
+    if (typeof type === 'object' && type.length && type.length >= 1) {
       this.messages.push({
         type: type[0],
         info: type,
