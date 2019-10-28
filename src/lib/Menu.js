@@ -678,7 +678,8 @@ const _titleBarTemplateFactory = intl => [
     ],
   },
   {
-    label: '&?',
+    label: '?',
+    accelerator: 'Alt+?',
     submenu: [
       {
         label: intl.formatMessage(menuItems.learnMore),
