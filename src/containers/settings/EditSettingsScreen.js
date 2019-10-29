@@ -98,6 +98,10 @@ const messages = defineMessages({
     id: 'settings.app.form.darkMode',
     defaultMessage: '!!!Dark Mode',
   },
+  adaptableDarkMode: {
+    id: 'settings.app.form.adaptableDarkMode',
+    defaultMessage: '!!!Enable adaptable Dark Mode',
+  },
   universalDarkMode: {
     id: 'settings.app.form.universalDarkMode',
     defaultMessage: '!!!Enable universal Dark Mode',
@@ -180,6 +184,7 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
         enableGPUAcceleration: settingsData.enableGPUAcceleration,
         showDisabledServices: settingsData.showDisabledServices,
         darkMode: settingsData.darkMode,
+        adaptableDarkMode: settingsData.adaptableDarkMode,
         universalDarkMode: settingsData.universalDarkMode,
         accentColor: settingsData.accentColor,
         showMessageBadgeWhenMuted: settingsData.showMessageBadgeWhenMuted,
@@ -349,6 +354,11 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           label: intl.formatMessage(messages.darkMode),
           value: settings.all.app.darkMode,
           default: DEFAULT_APP_SETTINGS.darkMode,
+        },
+        adaptableDarkMode: {
+          label: intl.formatMessage(messages.adaptableDarkMode),
+          value: settings.all.app.adaptableDarkMode,
+          default: DEFAULT_APP_SETTINGS.adaptableDarkMode,
         },
         universalDarkMode: {
           label: intl.formatMessage(messages.universalDarkMode),

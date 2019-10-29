@@ -12,6 +12,7 @@ import PremiumFeatureContainer from '../../ui/PremiumFeatureContainer';
 import Input from '../../ui/Input';
 
 import { FRANZ_TRANSLATION } from '../../../config';
+import { isMac } from '../../../environment';
 
 function escapeHtml(unsafe) {
   return unsafe
@@ -383,8 +384,10 @@ export default @observer class EditSettingsForm extends Component {
             <Toggle field={form.$('showDisabledServices')} />
             <Toggle field={form.$('showMessageBadgeWhenMuted')} />
             <Toggle field={form.$('darkMode')} />
+            {isMac && <Toggle field={form.$('adaptableDarkMode')} disabled={isDarkmodeEnabled} />}
             {isDarkmodeEnabled && (
               <>
+                <Toggle field={form.$('adaptableDarkMode')} />
                 <Toggle field={form.$('universalDarkMode')} />
                 <p
                   className="settings__message"
