@@ -5,11 +5,17 @@ import {
   reaction,
 } from 'mobx';
 import { theme } from '@meetfranz/theme';
+import { remote } from 'electron';
 
 import Store from './lib/Store';
+import { isMac } from '../environment';
+
+const { systemPreferences } = remote;
 
 export default class UIStore extends Store {
   @observable showServicesUpdatedInfoBar = false;
+
+  @observable isOsDarkThemeActive = isMac ? systemPreferences.isDarkMode() : false;
 
   constructor(...args) {
     super(...args);
@@ -18,6 +24,13 @@ export default class UIStore extends Store {
     this.actions.ui.openSettings.listen(this._openSettings.bind(this));
     this.actions.ui.closeSettings.listen(this._closeSettings.bind(this));
     this.actions.ui.toggleServiceUpdatedInfoBar.listen(this._toggleServiceUpdatedInfoBar.bind(this));
+
+    // Listen for theme change on MacOS
+    if (isMac) {
+      systemPreferences.subscribeNotification('AppleInterfaceThemeChangedNotification', () => {
+        this.isOsDarkThemeActive = systemPreferences.isDarkMode();
+      });
+    }
   }
 
   setup() {
@@ -35,7 +48,7 @@ export default class UIStore extends Store {
   }
 
   @computed get isDarkThemeActive() {
-    return this.stores.settings.all.app.darkMode;
+    return this.stores.settings.all.app.darkMode || (this.stores.settings.all.app.adaptableDarkMode && this.isOsDarkThemeActive);
   }
 
   @computed get theme() {
