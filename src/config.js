@@ -14,6 +14,8 @@ export const LOCAL_API = 'http://localhost:3000';
 export const DEV_API = 'https://dev.franzinfra.com';
 export const LIVE_API = 'https://api.getferdi.com';
 
+export const DEBUG_API = 'http://localhost:3333';
+
 export const LOCAL_WS_API = 'ws://localhost:3000';
 export const DEV_WS_API = 'wss://dev.franzinfra.com';
 export const LIVE_WS_API = 'wss://api.franzinfra.com';

@@ -154,6 +154,10 @@ const menuItems = defineMessages({
     id: 'menu.help.debugInfo',
     defaultMessage: '!!!Copy Debug Information',
   },
+  publishDebugInfo: {
+    id: 'menu.help.publishDebugInfo',
+    defaultMessage: '!!!Publish Debug Information',
+  },
   debugInfoCopiedHeadline: {
     id: 'menu.help.debugInfoCopiedHeadline',
     defaultMessage: '!!!Ferdi Debug Information',
@@ -959,7 +963,7 @@ export default class FranzMenu {
 
     tpl[tpl.length - 1].submenu.push({
       type: 'separator',
-    }, this.debugMenu());
+    }, ...this.debugMenu());
 
     this.currentTemplate = tpl;
     const menu = Menu.buildFromTemplate(tpl);
@@ -1116,7 +1120,7 @@ export default class FranzMenu {
   debugMenu() {
     const { intl } = window.ferdi;
 
-    return {
+    return [{
       label: intl.formatMessage(menuItems.debugInfo),
       click: () => {
         const { debugInfo } = this.stores.app;
@@ -1132,7 +1136,12 @@ export default class FranzMenu {
           },
         });
       },
-    };
+    }, {
+      label: intl.formatMessage(menuItems.publishDebugInfo),
+      click: () => {
+        window.ferdi.features.publishDebugInfo.state.isModalVisible = true;
+      },
+    }];
   }
 
   _getServiceName(service) {
