@@ -114,6 +114,18 @@ export const FILE_SYSTEM_SETTINGS_TYPES = [
 export const LOCAL_SERVER = 'You are using Ferdi without a server';
 export const SERVER_NOT_LOADED = 'Ferdi::SERVER_NOT_LOADED';
 
+// Set app directory before loading user modules
+if (process.env.FERDI_APPDATA_DIR != null) {
+  app.setPath('appData', process.env.FERDI_APPDATA_DIR);
+  app.setPath('userData', path.join(app.getPath('appData')));
+} else if (process.env.PORTABLE_EXECUTABLE_DIR != null) {
+  app.setPath('appData', process.env.PORTABLE_EXECUTABLE_DIR, `${app.getName()}AppData`);
+  app.setPath('userData', path.join(app.getPath('appData'), `${app.getName()}AppData`));
+} else if (process.platform === 'win32') {
+  app.setPath('appData', process.env.APPDATA);
+  app.setPath('userData', path.join(app.getPath('appData'), app.getName()));
+}
+
 export const SETTINGS_PATH = path.join(app.getPath('userData'), 'config');
 
 // Replacing app.asar is not beautiful but unforunately necessary

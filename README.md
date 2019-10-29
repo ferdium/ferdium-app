@@ -4,14 +4,67 @@
 
 # Ferdi
 
-[![Backers on Open Collective](https://opencollective.com/getferdi/backers/badge.svg)](#backers) [![Sponsors on Open Collective](https://opencollective.com/getferdi/sponsors/badge.svg)](#sponsors) [![Build Status Windows](https://ci.appveyor.com/api/projects/status/2ckfbmoxp36fye5b?svg=true)](https://ci.appveyor.com/project/kytwb/ferdi)
-[![Build Status Mac & Linux](https://travis-ci.org/getferdi/ferdi.svg?branch=master)](https://travis-ci.org/getferdi/ferdi)
+<p align="center">
+<a href="#backers-via-opencollective"><img alt="Open Collective backers" src="https://img.shields.io/opencollective/backers/getferdi?logo=open-collective"></a>
+<a href="#sponsors-via-opencollective"><img alt="Open Collective sponsors" src="https://img.shields.io/opencollective/sponsors/getferdi?logo=open-collective"></a>
+<a href="https://ci.appveyor.com/project/kytwb/ferdi"><img alt="Build Status Windows" src="https://img.shields.io/appveyor/ci/kytwb/ferdi/master?logo=appveyor"></a>
+<a href="https://travis-ci.org/getferdi/ferdi"><img alt="Build Status Mac & Linux" src="https://img.shields.io/travis/getferdi/ferdi/master?logo=travis"></a>
+</p>
 
 🤴🏽 Hard-fork of [Franz](https://github.com/meetfranz/franz), adding awesome features and removing unwanted ones.
 
+### Table of contents
+
+<details>
+<summary>Ferdi</summary>
+<ul>
+<li><a href="#what-is-ferdi-">What is Ferdi ?</a></li>
+<li><a href="#what-ferdi-looks-like-">What Ferdi looks like ?</a></li>
+<li><a href="#download-ferdi">Download Ferdi</a>
+<ul>
+<li><a href="#or-use-homebrew-macos-only">Or use homebrew</a></li>
+</ul>
+</li>
+<li><a href="#ferdi-specific-features">Ferdi-specific Features</a></li>
+<li><a href="#development">Development</a></li>
+<ul>
+<li><a href="#install-os-dependencies">Install OS dependencies</a></li>
+<li><a href="#clone-repository-with-submodule">Clone repository with submodule</a></li>
+<li><a href="#install-dependencies">Install dependencies</a></li>
+<li><a href="#fix-native-modules-to-match-current-electron-node-version">Fix native modules to match current electron node version</a></li>
+<li><a href="#start-development-app">Start development app</a></li>
+<li><a href="#packaging">Packaging</a></li>
+<li><a href="#release">Release</a></li>
+</ul>
+<li><a href="#contributors-">Contributors ✨</a></li>
+<li><a href="#backers-via-opencollective">Backers via OpenCollective</a></li>
+<li><a href="#sponsors-via-opencollective">Sponsors via OpenCollective</a></li>
+</ul>
+</details>
+
+### What is Ferdi ?
+
+Ferdi is a messaging browser that allows you to combine your favorite messaging services into one application. It is based on Franz - a software already used by thousands of people - with the difference that Ferdi gives you many additonal features and doesn't restrict its usage! Ferdi is compatible with your existing Franz account so you can continue right where you left off. Find out more about Ferdi and its features on [getferdi.com](https://getferdi.com).
+
+### What Ferdi looks like ?
+
+<details>
+<summary>Screenshots</summary>
+<p align="center">
+<img alt="Keep all your messaging services in one place." src="./branding/screenshots/hero.png">
+<em>"Keep all your messaging services in one place."</em>
+<img alt="Order your services with Ferdi Workspaces." src="./branding/screenshots/workspaces.png">
+<em>"Order your services with Ferdi Workspaces."</em>
+<img alt="Always keep your Todo list open with Ferdi Todos." src="./branding/screenshots/todos.png">
+<em>"Always keep your Todo list open with Ferdi Todos."</em>
+<img alt="Supporting all your services." src="./branding/screenshots/service-store.png">
+<em>"Supporting all your services."</em>
+</p>
+</details>
+
 ## Download Ferdi
 
-You can find the installers in the [latest release](https://github.com/getferdi/ferdi/releases) assets.
+You can find the installers in the [latest stable release](https://github.com/getferdi/ferdi/releases/latest) assets and [all the other release here](https://github.com/getferdi/ferdi/releases).
 
 ### Or use homebrew (macOS only)
 
@@ -53,38 +106,36 @@ You can find the installers in the [latest release](https://github.com/getferdi/
 
 ## Development
 
-### Preparations
+### Install OS dependencies
 
-#### Install OS dependencies
-
-##### Node.js
+#### Node.js
 
 Please make sure you are running NodeJS v10 ([v10.16.3](https://nodejs.org/dist/v10.16.3/) suggested). Versions above will throw an errow when trying to install due to an [old fsevent dependency](https://github.com/fsevents/fsevents/issues/278).
 
-##### Git
+#### Git
 
 The version [2.23.0](https://github.com/git-for-windows/git/releases/tag/v2.23.0.windows.1) for Git is working fine for development. You can then use the console from Git to do the development procedure.
 
-##### Debian/Ubuntu
+#### Debian/Ubuntu
 
 ```bash
 $ apt install libx11-dev libxext-dev libxss-dev libxkbfile-dev
 ```
 
-##### Fedora
+#### Fedora
 
 ```bash
 $ dnf install libX11-devel libXext-devel libXScrnSaver-devel libxkbfile-devel
 ```
 
-##### Windows
+#### Windows
 
 ```bash
 $ npm install --global windows-build-tools // Windows 10
 $ npm install --global windows-build-tools --vs2015 // Windows 7
 ```
 
-#### Clone repository with submodule
+### Clone repository with submodule
 
 ```bash
 $ git clone https://github.com/getferdi/ferdi.git
@@ -194,4 +245,8 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 
 ## Backers via OpenCollective
 
-<a href="https://opencollective.com/getferdi#backers" target="_blank"><img src="https://opencollective.com/getferdi/backers.svg?width=890"></a>
+<a href="https://opencollective.com/getferdi#section-contribute" target="_blank"><img src="https://opencollective.com/getferdi/backers.svg?width=890"></a>
+
+## Sponsors via OpenCollective
+
+<a href="https://opencollective.com/getferdi#section-contribute" target="_blank"><img src="https://opencollective.com/getferdi/sponsors.svg?width=890"></a>
