@@ -255,6 +255,7 @@
   "settings.app.cacheInfo": "A Ferdi gyorsítótár jelenleg {size} lemezterületet használ.",
   "settings.app.currentVersion": "Aktuális verzió:",
   "settings.app.form.accentColor": "Accent color",
+  "settings.app.form.adaptableDarkMode": "Enable adaptable Dark Mode",
   "settings.app.form.autoLaunchInBackground": "Megnyitás háttérben",
   "settings.app.form.autoLaunchOnStart": "Ferdi betöltése indításkor",
   "settings.app.form.beta": "Béta verziók keresése",

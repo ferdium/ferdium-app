@@ -255,6 +255,7 @@
   "settings.app.cacheInfo": "Ferdi predmemorija trenutno koristi {size} prostora na disku",
   "settings.app.currentVersion": "Trenutna verzija:",
   "settings.app.form.accentColor": "Accent color",
+  "settings.app.form.adaptableDarkMode": "Enable adaptable Dark Mode",
   "settings.app.form.autoLaunchInBackground": "Otvori u pozadini",
   "settings.app.form.autoLaunchOnStart": "Pokreni Ferdi sa sistemom",
   "settings.app.form.beta": "Obuhvati i beta verzije",
