@@ -255,6 +255,7 @@
   "settings.app.cacheInfo": "La memòria cau de Ferdi està utilitzant {size} d'espai al disc",
   "settings.app.currentVersion": "Versió actual:",
   "settings.app.form.accentColor": "Accent color",
+  "settings.app.form.adaptableDarkMode": "Enable adaptable Dark Mode",
   "settings.app.form.autoLaunchInBackground": "Obrir en segon plà",
   "settings.app.form.autoLaunchOnStart": "Iniciar Ferdi a l'inici",
   "settings.app.form.beta": "Inclou versions beta",
