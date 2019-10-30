@@ -10,6 +10,7 @@ v5.4.0-beta.5:
 - Move hibernation indicator to bottom left (#129 (comment))
 - Add fix for 1.1.1.1 hack (#146)
 - Fix darkmode not loading correctly (#158)
+- Add adaptable Dark Mode that will respect the system's darkmode setting ([#173](https://github.com/getferdi/ferdi/issues/173))
 
 ## Minor
 v5.4.0
@@ -18,7 +19,9 @@ v5.4.0
 - **Merge Franz 5.4.0**
 - **Use Ferdi without an Account**: Simply choose "Use Ferdi without an Account" on the login screen
 - **Accent color**: Change Ferdi's accent color
-- **Darkmode**: Easily open and edit any service's `darkmode.css` through the new "Open darkmode.css" button
+- **Darkmode**: 
+  - Easily open and edit any service's `darkmode.css` through the new "Open darkmode.css" button
+  - Add adaptable Dark Mode that will respect the system's darkmode setting ([#173](https://github.com/getferdi/ferdi/issues/173) - @steliyan)
 - **Hibernation**: Activate service hibernation to save battery
 - **Smaller file size**: Ferdi is now 17% smaller
 - **Annoucements**: Always get notified about the latest features of Ferdi
