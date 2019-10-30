@@ -116,6 +116,11 @@ export default class ServicesStore extends Store {
     );
 
     reaction(
+      () => this.stores.settings.app.adaptableDarkMode,
+      () => this._shareSettingsWithServiceProcess(),
+    );
+
+    reaction(
       () => this.stores.settings.app.universalDarkMode,
       () => this._shareSettingsWithServiceProcess(),
     );

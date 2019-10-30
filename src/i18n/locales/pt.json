@@ -255,6 +255,7 @@
   "settings.app.cacheInfo": "A cache do Ferdi está a usar {size} de espaço em disco.",
   "settings.app.currentVersion": "Versão atual",
   "settings.app.form.accentColor": "Accent color",
+  "settings.app.form.adaptableDarkMode": "Enable adaptable Dark Mode",
   "settings.app.form.autoLaunchInBackground": "Abrir em segundo plano",
   "settings.app.form.autoLaunchOnStart": "Iniciar o Ferdi após iniciar o computador",
   "settings.app.form.beta": "Incluir versões instáveis (beta)",
