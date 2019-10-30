@@ -255,6 +255,7 @@
   "settings.app.cacheInfo": "Ferdi gebruikt op dit moment {size} schijfruimte aan tijdelijke bestanden.",
   "settings.app.currentVersion": "Huidige versie:",
   "settings.app.form.accentColor": "Accent color",
+  "settings.app.form.adaptableDarkMode": "Enable adaptable Dark Mode",
   "settings.app.form.autoLaunchInBackground": "Open op de achtergrond",
   "settings.app.form.autoLaunchOnStart": "Open Ferdi bij opstarten",
   "settings.app.form.beta": "Inclusief bètaversies",
