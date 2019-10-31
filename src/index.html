@@ -14,6 +14,7 @@
   <script>
     document.querySelector('body').classList.add(process.env.OS_PLATFORM ? process.env.OS_PLATFORM : process.platform);
 
+    require('./sentry')
     const { isDevMode } = require('./environment');
     if (isDevMode) {
       const debugging = require('debug');
