@@ -458,7 +458,7 @@ export default class ServerApi {
 
   // News
   async getLatestNews() {
-    const url = `${apiBase()}/news?platform=${os.platform()}&arch=${os.arch()}&version=${app.getVersion()}`;
+    const url = `https://api.getferdi.com/v1/news?platform=${os.platform()}&arch=${os.arch()}&version=${app.getVersion()}`;
     const request = await sendAuthRequest(url);
     if (!request.ok) throw request;
     const data = await request.json();
@@ -468,7 +468,7 @@ export default class ServerApi {
   }
 
   async hideNews(id) {
-    const request = await sendAuthRequest(`${apiBase()}/news/${id}/read`);
+    const request = await sendAuthRequest(`https://api.getferdi.com/v1/news/${id}/read`);
     if (!request.ok) throw request;
     debug('ServerApi::hideNews resolves', id);
   }
