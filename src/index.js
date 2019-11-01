@@ -39,6 +39,7 @@ import handleDeepLink from './electron/deepLinking';
 import { isPositionValid } from './electron/windowUtils';
 import { appId } from './package.json'; // eslint-disable-line import/no-unresolved
 import './electron/exception';
+import './sentry';
 
 import {
   DEFAULT_APP_SETTINGS,
@@ -173,6 +174,7 @@ const createWindow = () => {
     webPreferences: {
       nodeIntegration: true,
       webviewTag: true,
+      preload: path.join(__dirname, 'sentry.js')
     },
   });
 
