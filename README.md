@@ -132,8 +132,7 @@ $ dnf install libX11-devel libXext-devel libXScrnSaver-devel libxkbfile-devel
 #### Windows
 
 ```bash
-$ npm install --global windows-build-tools // Windows 10
-$ npm install --global windows-build-tools --vs2015 // Windows 7
+$ npm install --global windows-build-tools --vs2015
 ```
 
 ### Clone repository with submodule
