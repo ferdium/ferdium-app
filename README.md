@@ -72,6 +72,14 @@ You can find the installers in the [latest stable release](https://github.com/ge
 
 (Don't know homebrew? [brew.sh](https://brew.sh/))
 
+### Or use AUR (Arch Linux)
+
+Ferdi has two seperate AUR packages you can use:
+- **ferdi-git**: Uses system electron version
+- **ferdi-build**: Uses your debian build and extracts it to Arch
+
+If you use a AUR Helper e.g. yay, simply install it via ´yay -S ferdi-bin´
+
 ## Ferdi-specific Features
 
 - [x] Removes the counter-productive fullscreen app delay inviting users to upgrade
