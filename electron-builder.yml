@@ -12,12 +12,16 @@ mac:
   category: public.app-category.productivity
   icon: ./build-helpers/images/icon.icns
   darkModeSupport: true
+  extendInfo:
 
 afterSign: ./build-helpers/notarize.js
 
 dmg:
   background: ./build-helpers/images/dmgInstaller.tiff
   icon: ./build-helpers/images/icon.icns
+  extendInfo:
+    NSMicrophoneUsageDescription: "Allow to enable audio messaging services."
+    NSCameraUsageDescription: "Allow to enable video messaging services."
   iconSize: 128
   contents:
     [
