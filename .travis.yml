@@ -9,6 +9,7 @@ matrix:
             - libxext-dev
             - libxss-dev
             - libxkbfile-dev
+            - rpm
     - os: osx
       osx_image: xcode11
 
