@@ -13,15 +13,14 @@ mac:
   icon: ./build-helpers/images/icon.icns
   darkModeSupport: true
   extendInfo:
+    NSMicrophoneUsageDescription: "This app requires camera access for video messaging services."
+    NSCameraUsageDescription: "This app requires microphone access for audio messaging services."
 
 afterSign: ./build-helpers/notarize.js
 
 dmg:
   background: ./build-helpers/images/dmgInstaller.tiff
   icon: ./build-helpers/images/icon.icns
-  extendInfo:
-    NSMicrophoneUsageDescription: "Allow to enable audio messaging services."
-    NSCameraUsageDescription: "Allow to enable video messaging services."
   iconSize: 128
   contents:
     [
