@@ -174,7 +174,7 @@ const createWindow = () => {
     webPreferences: {
       nodeIntegration: true,
       webviewTag: true,
-      preload: path.join(__dirname, 'sentry.js')
+      preload: path.join(__dirname, 'sentry.js'),
     },
   });
 
