@@ -43,6 +43,7 @@ linux:
     - target: AppImage
     - target: deb
     - target: tar.gz
+    - target: rpm
 
 nsis:
   perMachine: false

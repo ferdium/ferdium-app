@@ -72,6 +72,16 @@ You can find the installers in the [latest stable release](https://github.com/ge
 
 (Don't know homebrew? [brew.sh](https://brew.sh/))
 
+### Or use AUR (Arch Linux)
+
+Ferdi has two seperate AUR packages you can use:
+- **ferdi-build**: Uses your debian build and extracts it to Arch
+- **ferdi-git**: Uses system electron version
+
+If you use a AUR Helper e.g. yay, simply install it via ´yay -S ferdi-bin´
+
+`ferdi-git` may not work on all systems so we advice you to use `ferdi-bin` instead.
+
 ## Ferdi-specific Features
 
 - [x] Removes the counter-productive fullscreen app delay inviting users to upgrade
@@ -132,8 +142,7 @@ $ dnf install libX11-devel libXext-devel libXScrnSaver-devel libxkbfile-devel
 #### Windows
 
 ```bash
-$ npm install --global windows-build-tools // Windows 10
-$ npm install --global windows-build-tools --vs2015 // Windows 7
+$ npm install --global windows-build-tools --vs2015
 ```
 
 ### Clone repository with submodule
