@@ -108,7 +108,7 @@ If you use a AUR Helper e.g. yay, simply install it via ´yay -S ferdi-bin´
 - [x] Add Process Manager to find services using a lot of resources
 - [x] Add "npm run prepare-code" command for development to lint and beautify code
 - [x] Add button to open darkmode.css for a service
-- [x] Switch to [`electron-spellchecker`](https://github.com/electron-userland/electron-spellchecker) ti improve application size
+- [x] Switch to [`electron-spellchecker`](https://github.com/electron-userland/electron-spellchecker) to improve application size
 - [x] Improve "About Ferdi" screen to better display versions
 - [x] Minifying build files to improve app size
 - [x] [Makes it possible to edit the "Franz Todo" server](https://github.com/getferdi/ferdi/wiki/Custom-Todo)
