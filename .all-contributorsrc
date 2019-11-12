@@ -242,6 +242,15 @@
         "code",
         "ideas"
       ]
+    },
+    {
+      "login": "brorbw",
+      "name": "Bror Winther",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/5909562?v=4",
+      "profile": "https://github.com/brorbw",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 6
