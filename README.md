@@ -108,7 +108,7 @@ If you use a AUR Helper e.g. yay, simply install it via ´yay -S ferdi-bin´
 - [x] Add Process Manager to find services using a lot of resources
 - [x] Add "npm run prepare-code" command for development to lint and beautify code
 - [x] Add button to open darkmode.css for a service
-- [x] Switch to [`electron-spellchecker`](https://github.com/electron-userland/electron-spellchecker) ti improve application size
+- [x] Switch to [`electron-spellchecker`](https://github.com/electron-userland/electron-spellchecker) to improve application size
 - [x] Improve "About Ferdi" screen to better display versions
 - [x] Minifying build files to improve app size
 - [x] [Makes it possible to edit the "Franz Todo" server](https://github.com/getferdi/ferdi/wiki/Custom-Todo)
@@ -236,6 +236,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/Stanzilla"><img src="https://avatars3.githubusercontent.com/u/75278?v=4" width="40px;" alt="Benjamin Staneck"/><br /><sub><b>Benjamin Staneck</b></sub></a><br /><a href="#design-Stanzilla" title="Design">🎨</a></td>
     <td align="center"><a href="https://github.com/ammarmalhas"><img src="https://avatars1.githubusercontent.com/u/57057209?v=4" width="40px;" alt="ammarmalhas"/><br /><sub><b>ammarmalhas</b></sub></a><br /><a href="https://github.com/getferdi/ferdi/issues?q=author%3Aammarmalhas" title="Bug reports">🐛</a> <a href="#security-ammarmalhas" title="Security">🛡️</a></td>
     <td align="center"><a href="https://github.com/steliyan"><img src="https://avatars1.githubusercontent.com/u/1850292?v=4" width="40px;" alt="Steliyan Stoyanov"/><br /><sub><b>Steliyan Stoyanov</b></sub></a><br /><a href="https://github.com/getferdi/ferdi/commits?author=steliyan" title="Code">💻</a> <a href="#ideas-steliyan" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/brorbw"><img src="https://avatars2.githubusercontent.com/u/5909562?v=4" width="40px;" alt="Bror Winther"/><br /><sub><b>Bror Winther</b></sub></a><br /><a href="https://github.com/getferdi/ferdi/commits?author=brorbw" title="Documentation">📖</a></td>
   </tr>
 </table>
 
