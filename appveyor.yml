@@ -13,7 +13,6 @@ cache:
 
 before_build:
   - npm run lint
-  - npm run test
   - cmd: set NODE_ENV=production
 
 build_script:
