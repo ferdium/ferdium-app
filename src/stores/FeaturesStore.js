@@ -57,7 +57,10 @@ export default class FeaturesStore extends Store {
   _updateFeatures = () => {
     const features = Object.assign({}, DEFAULT_FEATURES_CONFIG);
     if (this.stores.user.isLoggedIn) {
-      const requestResult = this.featuresRequest.execute().result;
+      let requestResult = {};
+      try {
+        requestResult = this.featuresRequest.execute().result;
+      } catch (e) {} // eslint-disable-line no-empty
       Object.assign(features, requestResult);
     }
     runInAction('FeaturesStore::_updateFeatures', () => {

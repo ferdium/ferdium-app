@@ -1,6 +1,6 @@
 {
   "projectName": "ferdi",
-  "projectOwner": "kytwb",
+  "projectOwner": "getferdi",
   "repoType": "github",
   "repoHost": "https://github.com",
   "files": [
@@ -63,7 +63,8 @@
         "projectManagement",
         "review",
         "infra",
-        "fundingFinding"
+        "fundingFinding",
+        "blog"
       ]
     },
     {
@@ -158,7 +159,10 @@
       "contributions": [
         "bug",
         "code",
-        "translation"
+        "translation",
+        "content",
+        "doc",
+        "platform"
       ]
     },
     {
@@ -171,6 +175,81 @@
         "doc",
         "infra",
         "platform"
+      ]
+    },
+    {
+      "login": "Gaboris",
+      "name": "Gaboris",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/9462372?v=4",
+      "profile": "https://github.com/Gaboris",
+      "contributions": [
+        "question",
+        "bug"
+      ]
+    },
+    {
+      "login": "incace",
+      "name": "Ce",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/61343?v=4",
+      "profile": "http://www.cu3ed.com/",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "pztrn",
+      "name": "Stanislav N.",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/869402?v=4",
+      "profile": "http://pztrn.name/",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "patrickcurl",
+      "name": "Patrick Curl",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1470061?v=4",
+      "profile": "http://www.patrickcurl.com",
+      "contributions": [
+        "ideas"
+      ]
+    },
+    {
+      "login": "Stanzilla",
+      "name": "Benjamin Staneck",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/75278?v=4",
+      "profile": "https://github.com/Stanzilla",
+      "contributions": [
+        "design"
+      ]
+    },
+    {
+      "login": "ammarmalhas",
+      "name": "ammarmalhas",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/57057209?v=4",
+      "profile": "https://github.com/ammarmalhas",
+      "contributions": [
+        "bug",
+        "security"
+      ]
+    },
+    {
+      "login": "steliyan",
+      "name": "Steliyan Stoyanov",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1850292?v=4",
+      "profile": "https://github.com/steliyan",
+      "contributions": [
+        "code",
+        "ideas"
+      ]
+    },
+    {
+      "login": "brorbw",
+      "name": "Bror Winther",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/5909562?v=4",
+      "profile": "https://github.com/brorbw",
+      "contributions": [
+        "doc"
       ]
     }
   ],

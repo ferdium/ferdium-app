@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { observable, reaction } from 'mobx';
 import ElectronWebView from 'react-electron-web-view';
+import path from 'path';
 
 import ServiceModel from '../../../models/Service';
 
@@ -51,6 +52,8 @@ class ServiceWebview extends Component {
       setWebviewReference,
     } = this.props;
 
+    const preloadScript = path.join(__dirname, '../../../', 'webview', 'recipe.js');
+
     return (
       <ElectronWebView
         ref={(webview) => {
@@ -61,7 +64,7 @@ class ServiceWebview extends Component {
         }}
         autosize
         src={service.url}
-        preload="./webview/recipe.js"
+        preload={preloadScript}
         partition={`persist:service-${service.id}`}
         onDidAttach={() => {
           setWebviewReference({

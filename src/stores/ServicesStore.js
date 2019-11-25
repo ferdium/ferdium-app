@@ -116,6 +116,11 @@ export default class ServicesStore extends Store {
     );
 
     reaction(
+      () => this.stores.settings.app.adaptableDarkMode,
+      () => this._shareSettingsWithServiceProcess(),
+    );
+
+    reaction(
       () => this.stores.settings.app.universalDarkMode,
       () => this._shareSettingsWithServiceProcess(),
     );
@@ -585,7 +590,8 @@ export default class ServicesStore extends Store {
 
     service.resetMessageCount();
 
-    service.webview.loadURL(service.url);
+    // service.webview.loadURL(service.url);
+    service.webview.reload();
   }
 
   @action _reloadActive() {

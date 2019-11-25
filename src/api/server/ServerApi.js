@@ -14,8 +14,7 @@ import OrderModel from '../../models/Order';
 
 import { sleep } from '../../helpers/async-helpers';
 
-import { API } from '../../environment';
-import { RECIPES_PATH } from '../../config';
+import { RECIPES_PATH, SERVER_NOT_LOADED } from '../../config';
 import apiBase from '../apiBase';
 import { prepareAuthRequest, sendAuthRequest } from '../utils/auth';
 
@@ -38,8 +37,6 @@ module.paths.unshift(
 
 const { app } = remote;
 const { default: fetch } = remote.require('electron-fetch');
-
-const SERVER_URL = API;
 
 export default class ServerApi {
   recipePreviews = [];
@@ -121,6 +118,10 @@ export default class ServerApi {
   }
 
   async userInfo() {
+    if (apiBase() === SERVER_NOT_LOADED) {
+      throw new Error('Server not loaded');
+    }
+
     const request = await sendAuthRequest(`${apiBase()}/me`);
     if (!request.ok) {
       throw request;
@@ -163,6 +164,10 @@ export default class ServerApi {
 
   // Services
   async getServices() {
+    if (apiBase() === SERVER_NOT_LOADED) {
+      throw new Error('Server not loaded');
+    }
+
     const request = await sendAuthRequest(`${apiBase()}/me/services`);
     if (!request.ok) {
       throw request;
@@ -287,6 +292,10 @@ export default class ServerApi {
   }
 
   async getFeatures() {
+    if (apiBase() === SERVER_NOT_LOADED) {
+      throw new Error('Server not loaded');
+    }
+
     const request = await sendAuthRequest(`${apiBase()}/features`);
     if (!request.ok) {
       throw request;
@@ -449,7 +458,7 @@ export default class ServerApi {
 
   // News
   async getLatestNews() {
-    const url = `${apiBase()}/news?platform=${os.platform()}&arch=${os.arch()}&version=${app.getVersion()}`;
+    const url = `https://api.getferdi.com/v1/news?platform=${os.platform()}&arch=${os.arch()}&version=${app.getVersion()}`;
     const request = await sendAuthRequest(url);
     if (!request.ok) throw request;
     const data = await request.json();
@@ -459,14 +468,18 @@ export default class ServerApi {
   }
 
   async hideNews(id) {
-    const request = await sendAuthRequest(`${apiBase()}/news/${id}/read`);
+    const request = await sendAuthRequest(`https://api.getferdi.com/v1/news/${id}/read`);
     if (!request.ok) throw request;
     debug('ServerApi::hideNews resolves', id);
   }
 
   // Health Check
   async healthCheck() {
-    const request = await sendAuthRequest(`${SERVER_URL}/health`, {
+    if (apiBase() === SERVER_NOT_LOADED) {
+      throw new Error('Server not loaded');
+    }
+
+    const request = await sendAuthRequest(`${apiBase(false)}/health`, {
       method: 'GET',
     }, false);
     if (!request.ok) {

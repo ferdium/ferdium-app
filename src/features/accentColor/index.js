@@ -4,6 +4,15 @@ import { DEFAULT_APP_SETTINGS } from '../../config';
 
 const STYLE_ELEMENT_ID = 'accent-color';
 
+// Additional styles needed to make accent colors work properly
+// "[ACCENT]" will be replaced with the accent color
+const ADDITIONAL_STYLES = `
+.franz-form__button {
+  background: inherit !important;
+  border: 2px solid [ACCENT] !important;
+}
+`;
+
 function createAccentStyleElement() {
   const styles = document.createElement('style');
   styles.id = STYLE_ELEMENT_ID;
@@ -13,6 +22,7 @@ function createAccentStyleElement() {
 
 function setAccentStyle(style) {
   const styleElement = document.getElementById(STYLE_ELEMENT_ID);
+
   styleElement.innerHTML = style;
 }
 
@@ -26,6 +36,8 @@ function generateAccentStyle(color) {
       }
     `;
   });
+
+  style += ADDITIONAL_STYLES.replace(/\[ACCENT\]/g, color);
 
   return style;
 }

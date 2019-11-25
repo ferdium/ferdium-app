@@ -2,7 +2,9 @@
 	path = recipes
 	url = https://github.com/getferdi/recipes.git
 	ignore = all
+	branch = master
 [submodule "src/server"]
 	path = src/server
 	url = https://github.com/getferdi/internal-server.git
 	ignore = all
+	branch = master

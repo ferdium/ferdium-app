@@ -1,25 +1,31 @@
 matrix:
   include:
-  - os: linux
-    dist: xenial
-    addons:
-      apt:
-        packages:
-        - libx11-dev
-        - libxext-dev
-        - libxss-dev
-        - libxkbfile-dev
-  - os: osx
-    osx_image: xcode11
+    - os: linux
+      dist: xenial
+      addons:
+        apt:
+          packages:
+            - libx11-dev
+            - libxext-dev
+            - libxss-dev
+            - libxkbfile-dev
+            - rpm
+    - os: osx
+      osx_image: xcode11
 
 language: node_js
+# Handle git submodules yourself
+git:
+  submodules: false
+# Use sed to replace the SSH URL with the public URL, then initialize submodules
+before_install:
+  - git submodule update --init --recursive
 install:
   - echo do nothing
 before_script:
   - travis_wait 60 npx lerna bootstrap
   - npm install node-sass -g
 script:
-  - npm run test
   - travis_wait 30 npm run build
 cache: npm
 

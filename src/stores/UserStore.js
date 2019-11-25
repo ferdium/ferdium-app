@@ -348,7 +348,12 @@ export default class UserStore extends Store {
   // Reactions
   async _getUserData() {
     if (this.isLoggedIn) {
-      const data = await this.getUserInfoRequest.execute()._promise;
+      let data;
+      try {
+        data = await this.getUserInfoRequest.execute()._promise;
+      } catch (e) {
+        return false;
+      }
 
       // We need to set the beta flag for the SettingsStore
       this.actions.settings.update({
@@ -408,7 +413,11 @@ export default class UserStore extends Store {
   }
 
   async _migrateUserLocale() {
-    await this.getUserInfoRequest._promise;
+    try {
+      await this.getUserInfoRequest._promise;
+    } catch (e) {
+      return false;
+    }
 
     if (!this.data.locale) {
       debug('Migrate "locale" to user data');
