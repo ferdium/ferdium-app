@@ -384,10 +384,9 @@ export default @observer class EditSettingsForm extends Component {
             <Toggle field={form.$('showDisabledServices')} />
             <Toggle field={form.$('showMessageBadgeWhenMuted')} />
             <Toggle field={form.$('darkMode')} />
-            {isMac && <Toggle field={form.$('adaptableDarkMode')} disabled={isDarkmodeEnabled} />}
             {isDarkmodeEnabled && (
               <>
-                <Toggle field={form.$('adaptableDarkMode')} />
+                {isMac && <Toggle field={form.$('adaptableDarkMode')} />}
                 <Toggle field={form.$('universalDarkMode')} />
                 <p
                   className="settings__message"
