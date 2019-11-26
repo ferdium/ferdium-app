@@ -261,7 +261,11 @@ export default @observer class EditSettingsForm extends Component {
               autoFocus
             />
             {isLoggedIn && (
-              <p>{ intl.formatMessage(messages.serverInfo) }</p>
+              <p className="settings__message" style={{
+                borderTop: 0, marginTop: 0, paddingTop: 0, marginBottom: '2rem',
+              }}>
+                { intl.formatMessage(messages.serverInfo) }
+              </p>
             )}
             {server === 'https://api.franzinfra.com' && (
               <p
@@ -297,7 +301,11 @@ export default @observer class EditSettingsForm extends Component {
                   onChange={e => this.submit(e)}
                   field={form.$('todoServer')}
                 />
-                <p>{ intl.formatMessage(messages.todoServerInfo) }</p>
+                <p className="settings__message" style={{
+                  borderTop: 0, marginTop: 0, paddingTop: 0, marginBottom: '2rem',
+                }}>
+                  { intl.formatMessage(messages.todoServerInfo) }
+                </p>
               </>
             )}
 
