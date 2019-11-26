@@ -809,6 +809,7 @@ export default class FranzMenu {
             locked: false,
           },
         });
+        window.ferdi.menu.rebuild()
         setTimeout(() => {
           actions.settings.update({
             type: 'app',
@@ -963,7 +964,8 @@ export default class FranzMenu {
 
     this.currentTemplate = tpl;
     const menu = Menu.buildFromTemplate(tpl);
-    Menu.setApplicationMenu(menu);
+    const lockedMenu = Menu.buildFromTemplate([]);
+    Menu.setApplicationMenu(this.stores.settings.app.locked ? lockedMenu : menu);
   }
 
   serviceTpl() {
