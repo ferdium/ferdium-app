@@ -809,7 +809,6 @@ export default class FranzMenu {
             locked: false,
           },
         });
-        window.ferdi.menu.rebuild();
         setTimeout(() => {
           actions.settings.update({
             type: 'app',
