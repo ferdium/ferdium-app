@@ -210,9 +210,12 @@ export default @injectSheet(styles) @observer class TeamDashboard extends Compon
           <h1 className={classes.headline}>
             {intl.formatMessage(messages.teamsUnavailable)}
           </h1>
-          <p className="settings__message" style={{
-            borderTop: 0, marginTop: 0
-          }}>
+          <p
+            className="settings__message"
+            style={{
+              borderTop: 0, marginTop: 0,
+            }}
+          >
             {intl.formatMessage(messages.teamsUnavailableInfo)}
           </p>
         </div>
