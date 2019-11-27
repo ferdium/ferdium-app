@@ -40,7 +40,7 @@ export async function switchDict(locale) {
 export default async function initialize(languageCode = 'en-us') {
   try {
     handler = new SpellCheckHandler();
-    handler.attachToInput();
+    setTimeout(() => handler.attachToInput(), 1000);
     const locale = languageCode.toLowerCase();
 
     debug('Init spellchecker');
