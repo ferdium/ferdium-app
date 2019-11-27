@@ -48,7 +48,7 @@ export default class UIStore extends Store {
   }
 
   @computed get isDarkThemeActive() {
-    return this.stores.settings.all.app.darkMode || (this.stores.settings.all.app.adaptableDarkMode && this.isOsDarkThemeActive);
+    return this.stores.settings.all.app.darkMode && this.stores.settings.all.app.adaptableDarkMode && this.isOsDarkThemeActive ? true : !!this.stores.settings.all.app.darkMode;
   }
 
   @computed get theme() {
