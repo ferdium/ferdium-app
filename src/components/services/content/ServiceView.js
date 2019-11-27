@@ -96,6 +96,7 @@ export default @inject('stores', 'actions') @observer class ServiceView extends 
   componentWillUnmount() {
     this.autorunDisposer();
     clearTimeout(this.forceRepaintTimeout);
+    clearTimeout(this.hibernationTimer);
   }
 
   updateTargetUrl = (event) => {
