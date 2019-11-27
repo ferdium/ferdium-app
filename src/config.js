@@ -76,6 +76,7 @@ export const DEFAULT_APP_SETTINGS = {
   noUpdates: false,
   showServiceNavigationBar: false,
   universalDarkMode: true,
+  adaptableDarkMode: true,
   accentColor: '#7367f0',
 };
 
