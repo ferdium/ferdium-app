@@ -12,6 +12,8 @@ mac:
   category: public.app-category.productivity
   icon: ./build-helpers/images/icon.icns
   darkModeSupport: true
+  entitlements: "./build-helpers/default.entitlements.mac.plist"
+  entitlementsInherit: "./build-helpers/default.entitlements.mac.plist"
   extendInfo:
     NSMicrophoneUsageDescription: "This app requires camera access for video messaging services."
     NSCameraUsageDescription: "This app requires microphone access for audio messaging services."
