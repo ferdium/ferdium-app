@@ -165,6 +165,12 @@ $ npx lerna bootstrap
 
 If you previously ran `npm install` it sometimes is necessary to delete your `node_modules` folder before running `npx lerna bootstrap`.
 
+### Fix native modules to match current electron node version
+
+```bash
+$ npm run rebuild
+```
+
 ### Start development app
 
 Run these two commands **simultaneously** in different console tabs:

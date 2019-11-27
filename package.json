@@ -28,7 +28,7 @@
     "reformat-files": "./node_modules/.bin/prettier --ignore-path .eslintignore --write --require-pragma \"**/*.{js,jsx,scss}\"",
     "packages": "npx lerna publish --no-git-tag-version",
     "uidev": "cd uidev && webpack-dev-server",
-    "postinstall": "electron-builder install-app-deps && npx lerna run prepare",
+    "postinstall": "npx lerna run prepare",
     "apply-branding": "node ./src/i18n/apply-branding.js",
     "prepare-code": "npm run lint && npm run reformat-files && npm run manage-translations && npm run apply-branding",
     "build-theme-info": "node src/scripts/build-theme-info.js"
@@ -155,6 +155,7 @@
     "electron": "6.0.10",
     "electron-builder": "21.2.0",
     "electron-notarize": "0.1.1",
+    "electron-rebuild": "1.8.6",
     "eslint": "5.10.0",
     "eslint-config-airbnb": "17.1.0",
     "eslint-loader": "^1.9.0",
