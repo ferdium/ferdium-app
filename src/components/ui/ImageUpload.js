@@ -89,14 +89,16 @@ export default @observer class ImageUpload extends Component {
             <Dropzone
               ref={(node) => { this.dropzoneRef = node; }}
               onDrop={this.onDrop.bind(this)}
-              className={cssClasses}
               multiple={multiple}
               accept="image/jpeg, image/png"
             >
-              <i className="mdi mdi-file-image" />
-              <p>
-                {textUpload}
-              </p>
+              {({ getRootProps, getInputProps }) => (
+                <div {...getRootProps()} className={cssClasses}>
+                  <i className="mdi mdi-file-image" />
+                  <p>{textUpload}</p>
+                  <input {...getInputProps()} />
+                </div>
+              )}
             </Dropzone>
           )}
         </div>
