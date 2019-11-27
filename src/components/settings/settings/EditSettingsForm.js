@@ -498,20 +498,17 @@ export default @observer class EditSettingsForm extends Component {
                 loaded={!isCheckingForUpdates || !isUpdateAvailable}
               />
             )}
-            {noUpdateAvailable && (
-              <p>{intl.formatMessage(messages.updateStatusUpToDate)}</p>
-            )}
             <br />
             <Toggle field={form.$('beta')} />
             <Toggle field={form.$('noUpdates')} />
             {intl.formatMessage(messages.currentVersion)}
             {' '}
             {remote.app.getVersion()}
+            <br />
+            <br />
+            {noUpdateAvailable && intl.formatMessage(messages.updateStatusUpToDate)}
             <p className="settings__message">
-              <span className="mdi mdi-information" />
-              {intl.formatMessage(messages.languageDisclaimer)}
-            </p>
-            <p className="settings__message">
+
               <span className="mdi mdi-github-face" />
               <span>
                 Ferdi is based on
@@ -522,6 +519,9 @@ export default @observer class EditSettingsForm extends Component {
                 {' '}
                 <a href="https://github.com/meetfranz/franz/blob/master/LICENSE" target="_blank">Apache-2.0 License</a>
               </span>
+              <br />
+              <span className="mdi mdi-information" />
+              {intl.formatMessage(messages.languageDisclaimer)}
             </p>
           </form>
         </div>
