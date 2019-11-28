@@ -56,6 +56,9 @@ const styles = theme => ({
     marginBottom: 10,
     display: 'flex',
     alignItems: 'center',
+    '&:last-child': {
+      marginBottom: 0,
+    },
     '&:hover': {
       background: theme.styleTypes.primary.accent,
       color: theme.styleTypes.primary.contrast,
@@ -319,7 +322,10 @@ export default @injectSheet(styles) @inject('stores', 'actions') @observer class
           ))}
         </div>
 
-        <p>{intl.formatMessage(messages.info)}</p>
+        <p>
+          <br />
+          {intl.formatMessage(messages.info)}
+        </p>
       </Modal>
     );
   }

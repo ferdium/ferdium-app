@@ -22,7 +22,6 @@ export default function init(stores) {
     config.isIncludedInCurrentPlan = true;
 
     const services = stores.services.enabled;
-    const isPremiumUser = stores.user.data.isPremium;
     const proxySettings = stores.settings.proxy;
 
     debug('Service Proxy autorun');
@@ -30,7 +29,7 @@ export default function init(stores) {
     services.forEach((service) => {
       const s = session.fromPartition(`persist:service-${service.id}`);
 
-      if (config.isEnabled && (isPremiumUser || !config.isIncludedInCurrentPlan)) {
+      if (config.isEnabled) {
         const serviceProxyConfig = proxySettings[service.id];
 
         if (serviceProxyConfig && serviceProxyConfig.isEnabled && serviceProxyConfig.host) {

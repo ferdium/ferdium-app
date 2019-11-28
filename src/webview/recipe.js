@@ -162,9 +162,15 @@ class RecipeController {
     }
 
     // Remove dark reader if (universal) dark mode was just disabled
-    if (this.universalDarkModeInjected && (!this.settings.service.isDarkModeEnabled || !this.settings.app.universalDarkMode)) {
-      disableDarkMode();
-      this.universalDarkModeInjected = false;
+    if (this.universalDarkModeInjected) {
+      if (
+        !this.settings.app.darkMode
+        || !this.settings.service.isDarkModeEnabled
+        || !this.settings.app.universalDarkMode
+      ) {
+        disableDarkMode();
+        this.universalDarkModeInjected = false;
+      }
     }
   }
 
