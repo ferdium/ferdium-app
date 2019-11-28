@@ -1,7 +1,7 @@
 environment:
   APPVEYOR_CACHE_SKIP_RESTORE: true
 
-version: 5.4.0.{build}
+version: 5.4.1-beta.2.{build}
 
 install:
   - git submodule update --init --recursive

@@ -10,7 +10,7 @@ import UserStore from '../../stores/UserStore';
 import TodosStore from '../../features/todos/store';
 import Form from '../../lib/Form';
 import { APP_LOCALES, SPELLCHECKER_LOCALES } from '../../i18n/languages';
-import { DEFAULT_APP_SETTINGS, DEFAULT_LOCK_PASSWORD, HIBERNATION_STRATEGIES } from '../../config';
+import { DEFAULT_APP_SETTINGS, HIBERNATION_STRATEGIES } from '../../config';
 import { config as spellcheckerConfig } from '../../features/spellchecker';
 
 import { getSelectOptions } from '../../helpers/i18n-helpers';
@@ -309,7 +309,7 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
         lockedPassword: {
           label: intl.formatMessage(messages.lockPassword),
           value: settings.all.app.lockedPassword,
-          default: DEFAULT_LOCK_PASSWORD,
+          default: '',
           type: 'password',
         },
         scheduledDNDEnabled: {

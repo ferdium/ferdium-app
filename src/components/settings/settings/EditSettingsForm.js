@@ -261,7 +261,14 @@ export default @observer class EditSettingsForm extends Component {
               autoFocus
             />
             {isLoggedIn && (
-              <p>{ intl.formatMessage(messages.serverInfo) }</p>
+              <p
+                className="settings__message"
+                style={{
+                  borderTop: 0, marginTop: 0, paddingTop: 0, marginBottom: '2rem',
+                }}
+              >
+                { intl.formatMessage(messages.serverInfo) }
+              </p>
             )}
             {server === 'https://api.franzinfra.com' && (
               <p
@@ -297,7 +304,14 @@ export default @observer class EditSettingsForm extends Component {
                   onChange={e => this.submit(e)}
                   field={form.$('todoServer')}
                 />
-                <p>{ intl.formatMessage(messages.todoServerInfo) }</p>
+                <p
+                  className="settings__message"
+                  style={{
+                    borderTop: 0, marginTop: 0, paddingTop: 0, marginBottom: '2rem',
+                  }}
+                >
+                  { intl.formatMessage(messages.todoServerInfo) }
+                </p>
               </>
             )}
 
@@ -384,10 +398,9 @@ export default @observer class EditSettingsForm extends Component {
             <Toggle field={form.$('showDisabledServices')} />
             <Toggle field={form.$('showMessageBadgeWhenMuted')} />
             <Toggle field={form.$('darkMode')} />
-            {isMac && <Toggle field={form.$('adaptableDarkMode')} disabled={isDarkmodeEnabled} />}
             {isDarkmodeEnabled && (
               <>
-                <Toggle field={form.$('adaptableDarkMode')} />
+                {isMac && <Toggle field={form.$('adaptableDarkMode')} />}
                 <Toggle field={form.$('universalDarkMode')} />
                 <p
                   className="settings__message"
@@ -485,20 +498,17 @@ export default @observer class EditSettingsForm extends Component {
                 loaded={!isCheckingForUpdates || !isUpdateAvailable}
               />
             )}
-            {noUpdateAvailable && (
-              <p>{intl.formatMessage(messages.updateStatusUpToDate)}</p>
-            )}
             <br />
             <Toggle field={form.$('beta')} />
             <Toggle field={form.$('noUpdates')} />
             {intl.formatMessage(messages.currentVersion)}
             {' '}
             {remote.app.getVersion()}
+            <br />
+            <br />
+            {noUpdateAvailable && intl.formatMessage(messages.updateStatusUpToDate)}
             <p className="settings__message">
-              <span className="mdi mdi-information" />
-              {intl.formatMessage(messages.languageDisclaimer)}
-            </p>
-            <p className="settings__message">
+
               <span className="mdi mdi-github-face" />
               <span>
                 Ferdi is based on
@@ -509,6 +519,9 @@ export default @observer class EditSettingsForm extends Component {
                 {' '}
                 <a href="https://github.com/meetfranz/franz/blob/master/LICENSE" target="_blank">Apache-2.0 License</a>
               </span>
+              <br />
+              <span className="mdi mdi-information" />
+              {intl.formatMessage(messages.languageDisclaimer)}
             </p>
           </form>
         </div>
