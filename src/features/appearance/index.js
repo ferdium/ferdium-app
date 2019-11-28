@@ -54,7 +54,7 @@ function generateServiceRibbonWidthStyle(width) {
     .tab-item .tab-item__icon {
       width: ${width / 2}px !important;
     }
-  `
+  `;
 }
 
 function generateStyle(settings) {
@@ -62,7 +62,7 @@ function generateStyle(settings) {
 
   const {
     accentColor,
-    serviceRibbonWidth
+    serviceRibbonWidth,
   } = settings;
 
   if (accentColor !== DEFAULT_APP_SETTINGS.accentColor) {
