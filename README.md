@@ -16,7 +16,7 @@
 ### Table of contents
 
 <details>
-<summary>Ferdi</summary>
+<summary>Toggle navigation</summary>
 <ul>
 <li><a href="#what-is-ferdi-">What is Ferdi ?</a></li>
 <li><a href="#what-ferdi-looks-like-">What Ferdi looks like ?</a></li>
@@ -49,7 +49,7 @@ Ferdi is a messaging browser that allows you to combine your favorite messaging 
 ### What Ferdi looks like ?
 
 <details>
-<summary>Screenshots</summary>
+<summary>Toggle screenshots</summary>
 <p align="center">
 <img alt="Keep all your messaging services in one place." src="./branding/screenshots/hero.png">
 <em>"Keep all your messaging services in one place."</em>
