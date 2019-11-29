@@ -153,6 +153,8 @@ export default @injectSheet(styles) @observer class RecipesDashboard extends Com
     const communityRecipes = recipes.filter(r => !r.isDevRecipe);
     const devRecipes = recipes.filter(r => r.isDevRecipe);
 
+    const isLoggedIn = Boolean(localStorage.getItem('authToken'));
+
     return (
       <div className="settings__main">
         <div className="settings__header">
@@ -265,7 +267,7 @@ export default @injectSheet(styles) @observer class RecipesDashboard extends Com
                     <RecipeItem
                       key={recipe.id}
                       recipe={recipe}
-                      onClick={() => showAddServiceInterface({ recipeId: recipe.id })}
+                      onClick={() => isLoggedIn && showAddServiceInterface({ recipeId: recipe.id })}
                     />
                   ))}
                 </div>
@@ -278,7 +280,7 @@ export default @injectSheet(styles) @observer class RecipesDashboard extends Com
                       <RecipeItem
                         key={recipe.id}
                         recipe={recipe}
-                        onClick={() => showAddServiceInterface({ recipeId: recipe.id })}
+                        onClick={() => isLoggedIn && showAddServiceInterface({ recipeId: recipe.id })}
                       />
                     ))}
                   </div>
