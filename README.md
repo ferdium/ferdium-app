@@ -16,7 +16,7 @@
 ### Table of contents
 
 <details>
-<summary>Ferdi</summary>
+<summary>Toggle navigation</summary>
 <ul>
 <li><a href="#what-is-ferdi-">What is Ferdi ?</a></li>
 <li><a href="#what-ferdi-looks-like-">What Ferdi looks like ?</a></li>
@@ -49,7 +49,7 @@ Ferdi is a messaging browser that allows you to combine your favorite messaging 
 ### What Ferdi looks like ?
 
 <details>
-<summary>Screenshots</summary>
+<summary>Toggle screenshots</summary>
 <p align="center">
 <img alt="Keep all your messaging services in one place." src="./branding/screenshots/hero.png">
 <em>"Keep all your messaging services in one place."</em>
@@ -95,8 +95,8 @@ If you use a AUR Helper e.g. yay, simply install it via ´yay -S ferdi-bin´
 - [x] Add "Private Notification"-Mode, that hides message content from notifications ([franz#879](https://github.com/meetfranz/franz/issues/879))
 - [x] Add Password Lock feature to keep your messages protected ([#41](https://github.com/getferdi/ferdi/issues/41), [franz#810](https://github.com/meetfranz/franz/issues/810), [franz#950](https://github.com/meetfranz/franz/issues/950), [franz#1430](https://github.com/meetfranz/franz/issues/1430))
 - [x] Add an option to keep individual workspaces always loaded ([#37](https://github.com/getferdi/ferdi/issues/37))
-- [x] Add universal Dark-Mode via the [DarkReader extension](https://github.com/darkreader/darkreader) ([#71](https://github.com/getferdi/ferdi/issues/71))
-- [x] Add adaptable Dark Mode that will respect the system's darkmode setting ([#173](https://github.com/getferdi/ferdi/issues/173))
+- [x] Add Universal Dark Mode via the [DarkReader extension](https://github.com/darkreader/darkreader) ([#71](https://github.com/getferdi/ferdi/issues/71))
+- [x] Add adaptable Dark Mode that will respect the system's Dark Mode setting ([#173](https://github.com/getferdi/ferdi/issues/173))
 - [x] Add an option to auto-hide the menubar ([#7](https://github.com/getferdi/ferdi/issues/7), [franz#833](https://github.com/meetfranz/franz/issues/833))
 - [x] Add "Quick Switch" feature to help you navigate a long list of services (similar to Rambox's [Quick Switcher](https://rambox.pro/#feature-details/quick_switcher))
 - [x] Add "Service Hibernation" that will automatically unload services when they are unused

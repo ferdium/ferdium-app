@@ -92,6 +92,10 @@
         }
       }
 
+      &.is-disabled {
+        filter: grayscale(100%) opacity(.2);
+      }
+
       &.is-active {
         background: $dark-theme-gray;
         color: $dark-theme-gray-smoke;

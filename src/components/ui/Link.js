@@ -11,7 +11,8 @@ import { matchRoute } from '../../helpers/routing-helpers';
 // TODO: create container component for this component
 export default @inject('stores') @observer class Link extends Component {
   onClick(e) {
-    if (this.props.target === '_blank') {
+    if (this.props.disabled) e.preventDefault();
+    else if (this.props.target === '_blank') {
       e.preventDefault();
       shell.openExternal(this.props.to);
     }
@@ -39,6 +40,7 @@ export default @inject('stores') @observer class Link extends Component {
     const linkClasses = classnames({
       [`${className}`]: true,
       [`${activeClassName}`]: match,
+      'is-disabled': this.props.disabled,
     });
 
     return (
@@ -68,12 +70,14 @@ Link.wrappedComponent.propTypes = {
   strictFilter: PropTypes.bool,
   target: PropTypes.string,
   style: PropTypes.object,
+  disabled: PropTypes.bool,
 };
 
 Link.wrappedComponent.defaultProps = {
   className: '',
   activeClassName: '',
   strictFilter: false,
+  disabled: false,
   target: '',
   style: {},
 };

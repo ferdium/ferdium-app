@@ -1,7 +1,7 @@
 environment:
   APPVEYOR_CACHE_SKIP_RESTORE: true
 
-version: 5.4.1-beta.1.{build}
+version: 5.4.1-beta.2.{build}
 
 install:
   - git submodule update --init --recursive
@@ -23,13 +23,3 @@ branches:
     - i18n
     - l10n_master
     - l10n_develop
-
-for:
-  - branches:
-      only:
-        - master
-        - /v\d*\.\d*\.\d*/
-        - /v\d*\.\d*\.\d*-beta\.\d*/
-    artifacts:
-      - path: out\*.exe
-      - path: out\*.yml
