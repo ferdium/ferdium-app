@@ -18,14 +18,14 @@
 <details>
 <summary>Toggle navigation</summary>
 <ul>
-<li><a href="#what-is-ferdi-">What is Ferdi ?</a></li>
-<li><a href="#what-ferdi-looks-like-">What Ferdi looks like ?</a></li>
+<li><a href="#what-is-ferdi">What is Ferdi?</a></li>
+<li><a href="#what-does-ferdi-look-like">What does Ferdi look like?</a></li>
 <li><a href="#download-ferdi">Download Ferdi</a>
 <ul>
 <li><a href="#or-use-homebrew-macos-only">Or use homebrew</a></li>
 </ul>
 </li>
-<li><a href="#ferdi-specific-features">Ferdi-specific Features</a></li>
+<li><a href="#ferdi-specific-features">Ferdi-specific features</a></li>
 <li><a href="#development">Development</a></li>
 <ul>
 <li><a href="#install-os-dependencies">Install OS dependencies</a></li>
@@ -42,11 +42,11 @@
 </ul>
 </details>
 
-### What is Ferdi ?
+### What is Ferdi?
 
 Ferdi is a messaging browser that allows you to combine your favorite messaging services into one application. It is based on Franz - a software already used by thousands of people - with the difference that Ferdi gives you many additonal features and doesn't restrict its usage! Ferdi is compatible with your existing Franz account so you can continue right where you left off. Find out more about Ferdi and its features on [getferdi.com](https://getferdi.com).
 
-### What Ferdi looks like ?
+### What does Ferdi look like?
 
 <details>
 <summary>Toggle screenshots</summary>
@@ -78,7 +78,7 @@ Ferdi has two seperate AUR packages you can use:
 - **ferdi-bin**: Uses your debian build and extracts it to Arch
 - **ferdi-git**: Uses system electron version
 
-If you use a AUR Helper e.g. yay, simply install it via ´yay -S ferdi-bin´
+If you use an AUR Helper e.g. yay, simply install it via `yay -S ferdi-bin`.
 
 `ferdi-git` may not work on all systems so we advice you to use `ferdi-bin` instead.
 
