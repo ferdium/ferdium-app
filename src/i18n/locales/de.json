@@ -224,6 +224,8 @@
   "settings.account.account.editButton": "Konto bearbeiten",
   "settings.account.accountType.basic": "Basis-Konto",
   "settings.account.accountType.premium": "Premium Lizenz",
+  "settings.account.accountUnavailable": "Account is unavailable",
+  "settings.account.accountUnavailableInfo": "You are using Ferdi without an account. If you want to use Ferdi with an account and keep your services synchronized across installations, please select a server in the Settings tab then login.",
   "settings.account.buttonSave": "Profil aktualisieren",
   "settings.account.deleteAccount": "Benutzerkonto löschen",
   "settings.account.deleteEmailSent": "Du hast eine E-Mail zur Bestätigung der Löschung Deines Benutzerkontos erhalten. Dein Benutzerkonto und Deine Daten können nach der Löschung nicht wiederhergestellt werden!",
