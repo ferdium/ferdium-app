@@ -144,7 +144,7 @@
   },
   {
     "id": "settings.app.form.enableLock",
-    "defaultMessage": "!!!Enable Ferdi password lock",
+    "defaultMessage": "!!!Enable Password Lock",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
       "line": 73,
@@ -157,7 +157,7 @@
   },
   {
     "id": "settings.app.form.lockPassword",
-    "defaultMessage": "!!!Ferdi Lock password",
+    "defaultMessage": "!!!Password",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
       "line": 77,

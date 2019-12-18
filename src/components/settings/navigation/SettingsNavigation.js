@@ -119,6 +119,7 @@ export default @inject('stores', 'actions') @observer class SettingsNavigation e
           to="/settings/services"
           className="settings-navigation__link"
           activeClassName="is-active"
+          disabled={!isLoggedIn}
         >
           {intl.formatMessage(messages.yourServices)}
           {' '}
@@ -134,6 +135,7 @@ export default @inject('stores', 'actions') @observer class SettingsNavigation e
             to="/settings/workspaces"
             className="settings-navigation__link"
             activeClassName="is-active"
+            disabled={!isLoggedIn}
           >
             {intl.formatMessage(messages.yourWorkspaces)}
             {' '}
@@ -148,6 +150,7 @@ export default @inject('stores', 'actions') @observer class SettingsNavigation e
           to="/settings/user"
           className="settings-navigation__link"
           activeClassName="is-active"
+          disabled={!isLoggedIn}
         >
           {intl.formatMessage(messages.account)}
         </Link>
@@ -155,6 +158,7 @@ export default @inject('stores', 'actions') @observer class SettingsNavigation e
           to="/settings/team"
           className="settings-navigation__link"
           activeClassName="is-active"
+          disabled={!isLoggedIn}
         >
           {intl.formatMessage(messages.team)}
           {!user.data.isPremium && (
