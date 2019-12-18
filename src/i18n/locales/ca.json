@@ -224,6 +224,8 @@
   "settings.account.account.editButton": "Editar Compte",
   "settings.account.accountType.basic": "Compte bàsic",
   "settings.account.accountType.premium": "Compte de Suport Premium",
+  "settings.account.accountUnavailable": "Account is unavailable",
+  "settings.account.accountUnavailableInfo": "You are using Ferdi without an account. If you want to use Ferdi with an account and keep your services synchronized across installations, please select a server in the Settings tab then login.",
   "settings.account.buttonSave": "Actualitzar el perfil",
   "settings.account.deleteAccount": "Esborrar compte",
   "settings.account.deleteEmailSent": "Has rebut un correu electrònic amb un enllaç per confirmar l'eliminació del compte. El teu compte i la seva informació no podran ser restaurats!",
