@@ -224,6 +224,8 @@
   "settings.account.account.editButton": "Редактировать аккаунт",
   "settings.account.accountType.basic": "Базовый аккаунт",
   "settings.account.accountType.premium": "Премиум аккаунт",
+  "settings.account.accountUnavailable": "Account is unavailable",
+  "settings.account.accountUnavailableInfo": "You are using Ferdi without an account. If you want to use Ferdi with an account and keep your services synchronized across installations, please select a server in the Settings tab then login.",
   "settings.account.buttonSave": "Обновить профиль",
   "settings.account.deleteAccount": "Удалить аккаунт",
   "settings.account.deleteEmailSent": "Вам выслано письмо с ссылкой для подтверждения удаления аккаунта. После этого ваш аккаунт и данные не смогут быть восстановлены!",

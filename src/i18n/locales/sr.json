@@ -224,6 +224,8 @@
   "settings.account.account.editButton": "Uredi račun",
   "settings.account.accountType.basic": "Osnovni račun",
   "settings.account.accountType.premium": "Premium račun",
+  "settings.account.accountUnavailable": "Account is unavailable",
+  "settings.account.accountUnavailableInfo": "You are using Ferdi without an account. If you want to use Ferdi with an account and keep your services synchronized across installations, please select a server in the Settings tab then login.",
   "settings.account.buttonSave": "Ažuriraj profil",
   "settings.account.deleteAccount": "Обриши налог",
   "settings.account.deleteEmailSent": "Добили сте имејл са линком путем којег потврђујете брисање свог налога. Ваш налог и подаци не могу бити повраћени!",

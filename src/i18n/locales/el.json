@@ -224,6 +224,8 @@
   "settings.account.account.editButton": "Επεξεργασία λογαριασμού",
   "settings.account.accountType.basic": "Βασικός λογαριασμός",
   "settings.account.accountType.premium": "Λογαριασμός Premium Υποστηρικτή",
+  "settings.account.accountUnavailable": "Account is unavailable",
+  "settings.account.accountUnavailableInfo": "You are using Ferdi without an account. If you want to use Ferdi with an account and keep your services synchronized across installations, please select a server in the Settings tab then login.",
   "settings.account.buttonSave": "Ενημέρωση προφίλ",
   "settings.account.deleteAccount": "Διαγραφή λογαριασμού",
   "settings.account.deleteEmailSent": "Έχετε λάβει ένα email με έναν σύνδεσμο για την επιβεβαίωση της διαγραφής του λογαριασμού σας. Ο λογαριασμός και τα δεδομένα σας δεν μπορούν να ανακτηθούν!",

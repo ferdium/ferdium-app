@@ -224,6 +224,8 @@
   "settings.account.account.editButton": "Modifica account",
   "settings.account.accountType.basic": "Account Base",
   "settings.account.accountType.premium": "Account Supporter Premium ",
+  "settings.account.accountUnavailable": "Account is unavailable",
+  "settings.account.accountUnavailableInfo": "You are using Ferdi without an account. If you want to use Ferdi with an account and keep your services synchronized across installations, please select a server in the Settings tab then login.",
   "settings.account.buttonSave": "Aggiorna profilo",
   "settings.account.deleteAccount": "Elimina account",
   "settings.account.deleteEmailSent": "Hai ricevuto un'email con un link per confermare l'eliminazione del tuo account. I dati del tuo account non potranno più essere ripristinati!",
