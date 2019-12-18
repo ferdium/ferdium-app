@@ -251,7 +251,17 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "FWDekker",
+      "name": "Felix W. Dekker",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/13442533?v=4",
+      "profile": "https://fwdekker.com/",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
-  "contributorsPerLine": 6
+  "contributorsPerLine": 6,
+  "skipCi": true
 }
