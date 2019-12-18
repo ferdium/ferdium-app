@@ -224,6 +224,8 @@
   "settings.account.account.editButton": "Upravit účet",
   "settings.account.accountType.basic": "Základní účet",
   "settings.account.accountType.premium": "Prémiový účet podporovatele",
+  "settings.account.accountUnavailable": "Account is unavailable",
+  "settings.account.accountUnavailableInfo": "You are using Ferdi without an account. If you want to use Ferdi with an account and keep your services synchronized across installations, please select a server in the Settings tab then login.",
   "settings.account.buttonSave": "Aktualizovat profil",
   "settings.account.deleteAccount": "Smazat účet",
   "settings.account.deleteEmailSent": "Na váš mail byl odeslán email s odkazem pro potvrzení smazání účtu. Váš účet a data poté nepůjde obnovit!",
