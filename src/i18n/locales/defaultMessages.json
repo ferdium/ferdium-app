@@ -3936,7 +3936,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Custom server",
+        "defaultMessage": "!!!Service URL",
         "end": {
           "column": 3,
           "line": 55
