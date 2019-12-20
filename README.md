@@ -193,7 +193,9 @@ Deliverables will be available in the `out` folder.
 ### Release
 
 ```bash
-$ git checkout develop && git pull && git checkout master
+$ git checkout develop && git pull
+$ git submodule update --remote --force
+$ git checkout master
 $ git merge --no-ff develop
 $ git tag v5.3.4-beta.4
 $ git push --tags
