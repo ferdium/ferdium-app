@@ -215,7 +215,7 @@
   "service.restrictedHandler.customUrl.text": "S'il vous plaît améliorer au Plan Ferdi Professionnel pour utilisé les urls modifié et les services hébergé soi-même.",
   "service.restrictedHandler.serviceLimit.headline": "Vous avez atteint votre limite de service.",
   "service.restrictedHandler.serviceLimit.text": "S'il vous plaît améliorer votre compte pour utilisé plus que {count} services.",
-  "service.webviewLoader.loading": "Chargement",
+  "service.webviewLoader.loading": "Loading {service}",
   "services.getStarted": "Commencer",
   "services.login": "S'il vous plaît connectez-vous pour utiliser Ferdi.",
   "services.serverInfo": "Optionnellement, vous pouvez changer votre serveur Ferdi en cliquant sur la roue dentée en bas au coin gauche.",
