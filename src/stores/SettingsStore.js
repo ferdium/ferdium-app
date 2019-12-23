@@ -68,7 +68,6 @@ export default class SettingsStore extends Store {
       () => this.all.app.locked,
       () => {
         const { router } = window.ferdi.stores;
-
         if (this.all.app.locked && this.all.app.lockingFeatureEnabled) {
           // App just got locked, redirect to unlock screen
           router.push('/auth/locked');
@@ -82,7 +81,8 @@ export default class SettingsStore extends Store {
 
     // Make sure to lock app on launch if locking feature is enabled
     setTimeout(() => {
-      if (this.all.app.lockingFeatureEnabled) {
+      const isLoggedIn = Boolean(localStorage.getItem('authToken'));
+      if (isLoggedIn && this.all.app.lockingFeatureEnabled) {
         // Disable lock first - otherwise the lock might not get activated corrently
         this.actions.settings.update({
           type: 'app',

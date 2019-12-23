@@ -82,7 +82,8 @@ export default class Request {
   }
 
   reload() {
-    return this.execute(...this._currentApiCall.args);
+    const args = this._currentApiCall ? this._currentApiCall.args : [];
+    return this.execute(...args);
   }
 
   retry = () => this.reload();

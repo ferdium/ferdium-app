@@ -50,7 +50,7 @@ const messages = defineMessages({
   },
   lockedPassword: {
     id: 'settings.app.lockedPassword',
-    defaultMessage: '!!!Ferdi Lock Password',
+    defaultMessage: '!!!Password',
   },
   lockedPasswordInfo: {
     id: 'settings.app.lockedPasswordInfo',
@@ -58,7 +58,7 @@ const messages = defineMessages({
   },
   lockInfo: {
     id: 'settings.app.lockInfo',
-    defaultMessage: '!!!Ferdi password lock allows you to keep your messages protected.\nUsing Ferdi password lock, you will be prompted to enter your password everytime you start Ferdi or lock Ferdi yourself using the lock symbol in the bottom left corner or the shortcut CMD/CTRL+Shift+L.',
+    defaultMessage: '!!!Password Lock allows you to keep your messages protected.\nUsing Password Lock, you will be prompted to enter your password everytime you start Ferdi or lock Ferdi yourself using the lock symbol in the bottom left corner or the shortcut CMD/CTRL+Shift+L.',
   },
   scheduledDNDTimeInfo: {
     id: 'settings.app.scheduledDNDTimeInfo',

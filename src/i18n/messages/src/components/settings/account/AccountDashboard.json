@@ -4,11 +4,11 @@
     "defaultMessage": "!!!Account",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 18,
+      "line": 17,
       "column": 12
     },
     "end": {
-      "line": 21,
+      "line": 20,
       "column": 3
     }
   },
@@ -17,11 +17,11 @@
     "defaultMessage": "!!!Your Subscription",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 22,
+      "line": 21,
       "column": 24
     },
     "end": {
-      "line": 25,
+      "line": 24,
       "column": 3
     }
   },
@@ -30,11 +30,11 @@
     "defaultMessage": "!!Danger Zone",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 26,
+      "line": 25,
       "column": 22
     },
     "end": {
-      "line": 29,
+      "line": 28,
       "column": 3
     }
   },
@@ -43,11 +43,11 @@
     "defaultMessage": "!!!Manage your subscription",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 30,
+      "line": 29,
       "column": 33
     },
     "end": {
-      "line": 33,
+      "line": 32,
       "column": 3
     }
   },
@@ -56,11 +56,11 @@
     "defaultMessage": "!!!Upgrade to Franz Professional",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 34,
+      "line": 33,
       "column": 23
     },
     "end": {
-      "line": 37,
+      "line": 36,
       "column": 3
     }
   },
@@ -69,11 +69,11 @@
     "defaultMessage": "!!!Basic Account",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 38,
+      "line": 37,
       "column": 20
     },
     "end": {
-      "line": 41,
+      "line": 40,
       "column": 3
     }
   },
@@ -82,11 +82,11 @@
     "defaultMessage": "!!!Premium Supporter Account",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 42,
+      "line": 41,
       "column": 22
     },
     "end": {
-      "line": 45,
+      "line": 44,
       "column": 3
     }
   },
@@ -95,11 +95,11 @@
     "defaultMessage": "!!!Edit Account",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 46,
+      "line": 45,
       "column": 21
     },
     "end": {
-      "line": 49,
+      "line": 48,
       "column": 3
     }
   },
@@ -108,11 +108,11 @@
     "defaultMessage": "!!Invoices",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 50,
+      "line": 49,
       "column": 18
     },
     "end": {
-      "line": 53,
+      "line": 52,
       "column": 3
     }
   },
@@ -121,11 +121,11 @@
     "defaultMessage": "!!!Download",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 54,
+      "line": 53,
       "column": 19
     },
     "end": {
-      "line": 57,
+      "line": 56,
       "column": 3
     }
   },
@@ -134,11 +134,11 @@
     "defaultMessage": "!!!Could not load user information",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 58,
+      "line": 57,
       "column": 25
     },
     "end": {
-      "line": 61,
+      "line": 60,
       "column": 3
     }
   },
@@ -147,11 +147,11 @@
     "defaultMessage": "!!!Try again",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 62,
+      "line": 61,
       "column": 28
     },
     "end": {
-      "line": 65,
+      "line": 64,
       "column": 3
     }
   },
@@ -160,11 +160,11 @@
     "defaultMessage": "!!!Delete account",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 66,
+      "line": 65,
       "column": 17
     },
     "end": {
-      "line": 69,
+      "line": 68,
       "column": 3
     }
   },
@@ -173,7 +173,7 @@
     "defaultMessage": "!!!If you don't need your Ferdi account any longer, you can delete your account and all related data here.",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 70,
+      "line": 69,
       "column": 14
     },
     "end": {
@@ -190,7 +190,7 @@
       "column": 19
     },
     "end": {
-      "line": 77,
+      "line": 78,
       "column": 3
     }
   },
@@ -199,11 +199,11 @@
     "defaultMessage": "!!!Free Trial",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 78,
+      "line": 79,
       "column": 9
     },
     "end": {
-      "line": 81,
+      "line": 82,
       "column": 3
     }
   },
@@ -212,11 +212,11 @@
     "defaultMessage": "!!!Your Franz License:",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 82,
+      "line": 83,
       "column": 15
     },
     "end": {
-      "line": 85,
+      "line": 86,
       "column": 3
     }
   },
@@ -225,11 +225,11 @@
     "defaultMessage": "!!!Your free trial ends in {duration}.",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 86,
+      "line": 87,
       "column": 15
     },
     "end": {
-      "line": 89,
+      "line": 90,
       "column": 3
     }
   },
@@ -238,11 +238,37 @@
     "defaultMessage": "!!!Please update your billing info to continue using {license} after your trial period.",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 90,
+      "line": 91,
       "column": 33
     },
     "end": {
-      "line": 93,
+      "line": 95,
+      "column": 3
+    }
+  },
+  {
+    "id": "settings.account.accountUnavailable",
+    "defaultMessage": "Account is unavailable",
+    "file": "src/components/settings/account/AccountDashboard.js",
+    "start": {
+      "line": 96,
+      "column": 22
+    },
+    "end": {
+      "line": 99,
+      "column": 3
+    }
+  },
+  {
+    "id": "settings.account.accountUnavailableInfo",
+    "defaultMessage": "You are using Ferdi without an account. If you want to use Ferdi with an account and keep your services synchronized across installations, please select a server in the Settings tab then login.",
+    "file": "src/components/settings/account/AccountDashboard.js",
+    "start": {
+      "line": 100,
+      "column": 26
+    },
+    "end": {
+      "line": 103,
       "column": 3
     }
   }

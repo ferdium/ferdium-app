@@ -72,11 +72,11 @@ const messages = defineMessages({
   },
   enableLock: {
     id: 'settings.app.form.enableLock',
-    defaultMessage: '!!!Enable Ferdi password lock',
+    defaultMessage: '!!!Enable Password Lock',
   },
   lockPassword: {
     id: 'settings.app.form.lockPassword',
-    defaultMessage: '!!!Ferdi Lock password',
+    defaultMessage: '!!!Password',
   },
   scheduledDNDEnabled: {
     id: 'settings.app.form.scheduledDNDEnabled',
