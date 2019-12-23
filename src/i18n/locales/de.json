@@ -215,7 +215,7 @@
   "service.restrictedHandler.customUrl.text": "Bitte ein Upgrade zu Ferdi Professional durchführen um benutzerdefinierte URLs und Self Hosted Services verwenden zu können.",
   "service.restrictedHandler.serviceLimit.headline": "Du hast deine maximale Anzahl an Services erreicht.",
   "service.restrictedHandler.serviceLimit.text": "Bitte führe eine Upgrade deines Accounts durch um mehr als {count} Services verwenden zu können.",
-  "service.webviewLoader.loading": "Lade",
+  "service.webviewLoader.loading": "Loading {service}",
   "services.getStarted": "Los geht's!",
   "services.login": "Bitte melde dich an, um Ferdi zu benutzen.",
   "services.serverInfo": "Optional können Sie Ihren Ferdi-Server durch Klicken auf das Zahnrad unten-links ändern.",
