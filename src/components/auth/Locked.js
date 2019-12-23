@@ -87,6 +87,7 @@ export default @observer class Locked extends Component {
           <Input
             field={form.$('password')}
             showPasswordToggle
+            focus
           />
           {error.code === 'invalid-credentials' && (
             <p className="error-message center">{intl.formatMessage(messages.invalidCredentials)}</p>
