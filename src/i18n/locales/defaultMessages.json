@@ -3809,7 +3809,7 @@
   {
     "descriptors": [
       {
-        "defaultMessage": "!!!Loading",
+        "defaultMessage": "!!!Loading {service}",
         "end": {
           "column": 3,
           "line": 14
@@ -3936,7 +3936,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Custom server",
+        "defaultMessage": "!!!Service URL",
         "end": {
           "column": 3,
           "line": 55

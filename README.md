@@ -104,6 +104,7 @@ If you use an AUR Helper e.g. yay, simply install it via `yay -S ferdi-bin`.
 - [x] Add CTRL+← and CTRL+→ shortcuts and menu options to go back and forward in the service browsing history([#39](https://github.com/getferdi/ferdi/issues/39))
 - [x] Add option to show a browser-like navigation bar on all services
 - [x] Add option to change accent color
+- [x] Add local [recipe repository](https://github.com/getferdi/recipes) that removes the need of downloading recipes from a remote server
 - [x] Add portable version for Windows
 - [x] Add Process Manager to find services using a lot of resources
 - [x] Add "npm run prepare-code" command for development to lint and beautify code
@@ -193,7 +194,9 @@ Deliverables will be available in the `out` folder.
 ### Release
 
 ```bash
-$ git checkout develop && git pull && git checkout master
+$ git checkout develop && git pull
+$ git submodule update --remote --force
+$ git checkout master
 $ git merge --no-ff develop
 $ git tag v5.3.4-beta.4
 $ git push --tags
