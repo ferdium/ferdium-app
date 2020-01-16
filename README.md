@@ -17,29 +17,24 @@
 
 <details>
 <summary>Toggle navigation</summary>
-<ul>
-<li><a href="#what-is-ferdi">What is Ferdi?</a></li>
-<li><a href="#what-does-ferdi-look-like">What does Ferdi look like?</a></li>
-<li><a href="#download-ferdi">Download Ferdi</a>
-<ul>
-<li><a href="#or-use-homebrew-macos-only">Or use homebrew</a></li>
-</ul>
-</li>
-<li><a href="#ferdi-specific-features">Ferdi-specific features</a></li>
-<li><a href="#development">Development</a></li>
-<ul>
-<li><a href="#install-os-dependencies">Install OS dependencies</a></li>
-<li><a href="#clone-repository-with-submodule">Clone repository with submodule</a></li>
-<li><a href="#install-dependencies">Install dependencies</a></li>
-<li><a href="#fix-native-modules-to-match-current-electron-node-version">Fix native modules to match current electron node version</a></li>
-<li><a href="#start-development-app">Start development app</a></li>
-<li><a href="#packaging">Packaging</a></li>
-<li><a href="#release">Release</a></li>
-</ul>
-<li><a href="#contributors-">Contributors ✨</a></li>
-<li><a href="#backers-via-opencollective">Backers via OpenCollective</a></li>
-<li><a href="#sponsors-via-opencollective">Sponsors via OpenCollective</a></li>
-</ul>
+
+- [What is Ferdi?](#what-is-ferdi)
+- [What does Ferdi look like?](#what-does-ferdi-look-like)
+- [Download Ferdi](#download-ferdi)
+  - [Or use homebrew](#or-use-homebrew-macos-only)
+  - [Or use AUR (Arch Linux)](#or-use-aur-arch-linux)
+- [Ferdi-specific features](#ferdi-specific-features)
+- [Development](#development)
+  - [Install OS dependencies](#install-os-dependencies)
+  - [Clone repository with submodule](#clone-repository-with-submodule)
+  - [Install dependencies](#install-dependencies)
+  - [Fix native modules to match current electron node version](#fix-native-modules-to-match-current-electron-node-version)
+  - [Start development app](#start-development-app)
+  - [Packaging](#packaging)
+  - [Release](#release)
+- [Contributors ✨](#contributors-)
+- [Backers via OpenCollective](#backers-via-opencollective)
+- [Sponsors via OpenCollective](#sponsors-via-opencollective)
 </details>
 
 ### What is Ferdi?
