@@ -237,6 +237,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/steliyan"><img src="https://avatars1.githubusercontent.com/u/1850292?v=4" width="40px;" alt=""/><br /><sub><b>Steliyan Stoyanov</b></sub></a><br /><a href="https://github.com/getferdi/ferdi/commits?author=steliyan" title="Code">💻</a> <a href="#ideas-steliyan" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/brorbw"><img src="https://avatars2.githubusercontent.com/u/5909562?v=4" width="40px;" alt=""/><br /><sub><b>Bror Winther</b></sub></a><br /><a href="https://github.com/getferdi/ferdi/commits?author=brorbw" title="Documentation">📖</a></td>
     <td align="center"><a href="https://fwdekker.com/"><img src="https://avatars0.githubusercontent.com/u/13442533?v=4" width="40px;" alt=""/><br /><sub><b>Felix W. Dekker</b></sub></a><br /><a href="https://github.com/getferdi/ferdi/commits?author=FWDekker" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/Sauceee"><img src="https://avatars2.githubusercontent.com/u/17987941?v=4" width="40px;" alt=""/><br /><sub><b>Sauceee</b></sub></a><br /><a href="#design-Sauceee" title="Design">🎨</a></td>
   </tr>
 </table>
 
