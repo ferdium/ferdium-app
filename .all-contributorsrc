@@ -269,6 +269,15 @@
       "contributions": [
         "design"
       ]
+    },
+    {
+      "login": "lhw",
+      "name": "Lennart Weller",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/351875?v=4",
+      "profile": "http://lhw.ring0.de",
+      "contributions": [
+        "platform"
+      ]
     }
   ],
   "contributorsPerLine": 6,
