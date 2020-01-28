@@ -17,29 +17,31 @@
 
 <details>
 <summary>Toggle navigation</summary>
-<ul>
-<li><a href="#what-is-ferdi">What is Ferdi?</a></li>
-<li><a href="#what-does-ferdi-look-like">What does Ferdi look like?</a></li>
-<li><a href="#download-ferdi">Download Ferdi</a>
-<ul>
-<li><a href="#or-use-homebrew-macos-only">Or use homebrew</a></li>
-</ul>
-</li>
-<li><a href="#ferdi-specific-features">Ferdi-specific features</a></li>
-<li><a href="#development">Development</a></li>
-<ul>
-<li><a href="#install-os-dependencies">Install OS dependencies</a></li>
-<li><a href="#clone-repository-with-submodule">Clone repository with submodule</a></li>
-<li><a href="#install-dependencies">Install dependencies</a></li>
-<li><a href="#fix-native-modules-to-match-current-electron-node-version">Fix native modules to match current electron node version</a></li>
-<li><a href="#start-development-app">Start development app</a></li>
-<li><a href="#packaging">Packaging</a></li>
-<li><a href="#release">Release</a></li>
-</ul>
-<li><a href="#contributors-">Contributors ✨</a></li>
-<li><a href="#backers-via-opencollective">Backers via OpenCollective</a></li>
-<li><a href="#sponsors-via-opencollective">Sponsors via OpenCollective</a></li>
-</ul>
+
+- [Ferdi](#ferdi)
+    - [Table of contents](#table-of-contents)
+    - [What is Ferdi?](#what-is-ferdi)
+    - [What does Ferdi look like?](#what-does-ferdi-look-like)
+  - [Download Ferdi](#download-ferdi)
+    - [Or use homebrew (macOS only)](#or-use-homebrew-macos-only)
+    - [Or use AUR (Arch Linux)](#or-use-aur-arch-linux)
+  - [Ferdi-specific Features](#ferdi-specific-features)
+  - [Development](#development)
+    - [Install OS dependencies](#install-os-dependencies)
+      - [Node.js](#nodejs)
+      - [Git](#git)
+      - [Debian/Ubuntu](#debianubuntu)
+      - [Fedora](#fedora)
+      - [Windows](#windows)
+    - [Clone repository with submodule](#clone-repository-with-submodule)
+    - [Install dependencies](#install-dependencies)
+    - [Fix native modules to match current electron node version](#fix-native-modules-to-match-current-electron-node-version)
+    - [Start development app](#start-development-app)
+    - [Packaging](#packaging)
+    - [Release](#release)
+  - [Contributors ✨](#contributors-%e2%9c%a8)
+  - [Backers via OpenCollective](#backers-via-opencollective)
+  - [Sponsors via OpenCollective](#sponsors-via-opencollective)
 </details>
 
 ### What is Ferdi?
@@ -196,6 +198,8 @@ Deliverables will be available in the `out` folder.
 ```bash
 $ git checkout develop && git pull
 $ git submodule update --remote --force
+$ git add .
+$ git commit -m "Update submodules"
 $ git checkout master
 $ git merge --no-ff develop
 $ git tag v5.3.4-beta.4
@@ -242,6 +246,10 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/steliyan"><img src="https://avatars1.githubusercontent.com/u/1850292?v=4" width="40px;" alt=""/><br /><sub><b>Steliyan Stoyanov</b></sub></a><br /><a href="https://github.com/getferdi/ferdi/commits?author=steliyan" title="Code">💻</a> <a href="#ideas-steliyan" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/brorbw"><img src="https://avatars2.githubusercontent.com/u/5909562?v=4" width="40px;" alt=""/><br /><sub><b>Bror Winther</b></sub></a><br /><a href="https://github.com/getferdi/ferdi/commits?author=brorbw" title="Documentation">📖</a></td>
     <td align="center"><a href="https://fwdekker.com/"><img src="https://avatars0.githubusercontent.com/u/13442533?v=4" width="40px;" alt=""/><br /><sub><b>Felix W. Dekker</b></sub></a><br /><a href="https://github.com/getferdi/ferdi/commits?author=FWDekker" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/Sauceee"><img src="https://avatars2.githubusercontent.com/u/17987941?v=4" width="40px;" alt=""/><br /><sub><b>Sauceee</b></sub></a><br /><a href="#design-Sauceee" title="Design">🎨</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="http://lhw.ring0.de"><img src="https://avatars2.githubusercontent.com/u/351875?v=4" width="40px;" alt=""/><br /><sub><b>Lennart Weller</b></sub></a><br /><a href="#platform-lhw" title="Packaging/porting to new platform">📦</a></td>
   </tr>
 </table>
 

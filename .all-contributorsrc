@@ -260,6 +260,24 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "Sauceee",
+      "name": "Sauceee",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/17987941?v=4",
+      "profile": "https://github.com/Sauceee",
+      "contributions": [
+        "design"
+      ]
+    },
+    {
+      "login": "lhw",
+      "name": "Lennart Weller",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/351875?v=4",
+      "profile": "http://lhw.ring0.de",
+      "contributions": [
+        "platform"
+      ]
     }
   ],
   "contributorsPerLine": 6,
