@@ -26,7 +26,7 @@ before_script:
   - npx lerna bootstrap
   - npm install node-sass -g
 script:
-  - travis_wait 30 npm run build
+  - travis_wait 100 npm run build
 cache: npm
 
 branches:
