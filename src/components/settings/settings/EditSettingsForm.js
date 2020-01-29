@@ -162,6 +162,7 @@ export default @observer class EditSettingsForm extends Component {
     noUpdates: PropTypes.bool.isRequired,
     hibernationEnabled: PropTypes.bool.isRequired,
     isDarkmodeEnabled: PropTypes.bool.isRequired,
+    isTrayEnabled: PropTypes.bool.isRequired,
     openProcessManager: PropTypes.func.isRequired,
   };
 
@@ -199,6 +200,7 @@ export default @observer class EditSettingsForm extends Component {
       noUpdates,
       hibernationEnabled,
       isDarkmodeEnabled,
+      isTrayEnabled,
       openProcessManager,
     } = this.props;
     const { intl } = this.context;
@@ -235,6 +237,7 @@ export default @observer class EditSettingsForm extends Component {
             <Toggle field={form.$('autoLaunchOnStart')} />
             <Toggle field={form.$('runInBackground')} />
             <Toggle field={form.$('enableSystemTray')} />
+            {isTrayEnabled && <Toggle field={form.$('startMinimized')} />}
             <Toggle field={form.$('privateNotifications')} />
             <Toggle field={form.$('showServiceNavigationBar')} />
             <Toggle field={form.$('hibernate')} />

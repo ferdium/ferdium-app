@@ -91,7 +91,7 @@ if (!gotTheLock) {
   app.on('second-instance', (event, argv) => {
     // Someone tried to run a second instance, we should focus our window.
     if (mainWindow) {
-      mainWindow.show();
+      //mainWindow.show();
       if (mainWindow.isMinimized()) {
         mainWindow.restore();
       }
@@ -142,6 +142,8 @@ const createWindow = () => {
   const mainWindowState = windowStateKeeper({
     defaultWidth: DEFAULT_WINDOW_OPTIONS.width,
     defaultHeight: DEFAULT_WINDOW_OPTIONS.height,
+    maximize: false,
+    fullScreen: false
   });
 
   let posX = mainWindowState.x || DEFAULT_WINDOW_OPTIONS.x;
@@ -168,6 +170,7 @@ const createWindow = () => {
     height: mainWindowState.height,
     minWidth: 600,
     minHeight: 500,
+    show: false,
     titleBarStyle: isMac ? 'hidden' : '',
     frame: isLinux,
     backgroundColor,
@@ -298,6 +301,11 @@ const createWindow = () => {
       shell.openExternal(url);
     }
   });
+
+  if (!(settings.get('enableSystemTray') && settings.get('startMinimized'))) {
+    mainWindow.show();
+  }
+
 };
 
 // Allow passing command line parameters/switches to electron
