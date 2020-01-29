@@ -40,7 +40,7 @@ const messages = defineMessages({
   },
   startMinimized: {
     id: 'settings.app.form.startMinimized',
-    defaultMessage: '!!!Start minimized'
+    defaultMessage: '!!!Start minimized',
   },
   enableSystemTray: {
     id: 'settings.app.form.enableSystemTray',

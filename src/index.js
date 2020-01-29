@@ -91,7 +91,7 @@ if (!gotTheLock) {
   app.on('second-instance', (event, argv) => {
     // Someone tried to run a second instance, we should focus our window.
     if (mainWindow) {
-      //mainWindow.show();
+      mainWindow.show();
       if (mainWindow.isMinimized()) {
         mainWindow.restore();
       }
@@ -143,7 +143,7 @@ const createWindow = () => {
     defaultWidth: DEFAULT_WINDOW_OPTIONS.width,
     defaultHeight: DEFAULT_WINDOW_OPTIONS.height,
     maximize: false,
-    fullScreen: false
+    fullScreen: false,
   });
 
   let posX = mainWindowState.x || DEFAULT_WINDOW_OPTIONS.x;
@@ -305,7 +305,6 @@ const createWindow = () => {
   if (!(settings.get('enableSystemTray') && settings.get('startMinimized'))) {
     mainWindow.show();
   }
-
 };
 
 // Allow passing command line parameters/switches to electron
