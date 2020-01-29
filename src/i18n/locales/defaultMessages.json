@@ -4071,7 +4071,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Start minimized",
+        "defaultMessage": "!!!Start minimized in tray",
         "end": {
           "column": 3,
           "line": 44
