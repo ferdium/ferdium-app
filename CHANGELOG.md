@@ -1,3 +1,28 @@
+# [5.4.3](https://github.com/getferdi/ferdi/compare/v5.4.0...v5.4.3)
+### Features
+- Add inactivity lock #179
+
+### Minor changes
+- Upgrading to Electron 7 https://github.com/getferdi/ferdi/issues/170
+- Review empty lock password behaviour https://github.com/getferdi/ferdi/issues/232
+- Several minor UI improvements
+- Add several new services
+- Better handling of (adaptable/universal) dark mode eff719b87c60097342d393922048662c32255d88
+- Enhance icon file for better rendering on Windows #272
+- Add auto-focus on lock screen password field #269
+- Allow SVG mimetype for service custom icon #271
+- Add multisize tray icon for Windows (#316)
+
+### Bug fixes
+- Fix bypass flaw in lock feature https://github.com/getferdi/ferdi/issues/168
+- Fix spellchecker by using setTimeout https://github.com/getferdi/ferdi/issues/220
+- Fix zoom +/- in services https://github.com/getferdi/ferdi/issues/143
+- Fix microphone/camera access on some versions of macOS #193
+- Fix bugs with using Ferdi without an account
+
+### Build changes
+- Extended Travis build time from 30 to 100 minutes
+
 # [5.4.0](https://github.com/getferdi/ferdi/compare/v5.3.4...v5.4.0)
 - Merge Franz v5.4.0
 - Add option to show a service navigation bar
