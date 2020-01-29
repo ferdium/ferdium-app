@@ -78,6 +78,10 @@ const messages = defineMessages({
     id: 'settings.app.form.lockPassword',
     defaultMessage: '!!!Password',
   },
+  inactivityLock: {
+    id: 'settings.app.form.inactivityLock',
+    defaultMessage: '!!!Lock after inactivity',
+  },
   scheduledDNDEnabled: {
     id: 'settings.app.form.scheduledDNDEnabled',
     defaultMessage: '!!!Enable scheduled Do-not-Disturb',
@@ -178,6 +182,7 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
         todoServer: settingsData.todoServer,
         lockingFeatureEnabled: settingsData.lockingFeatureEnabled,
         lockedPassword: settingsData.lockedPassword,
+        inactivityLock: settingsData.inactivityLock,
         scheduledDNDEnabled: settingsData.scheduledDNDEnabled,
         scheduledDNDStart: settingsData.scheduledDNDStart,
         scheduledDNDEnd: settingsData.scheduledDNDEnd,
@@ -311,6 +316,12 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           value: settings.all.app.lockedPassword,
           default: '',
           type: 'password',
+        },
+        inactivityLock: {
+          label: intl.formatMessage(messages.inactivityLock),
+          value: settings.all.app.inactivityLock,
+          default: 0,
+          type: 'number',
         },
         scheduledDNDEnabled: {
           label: intl.formatMessage(messages.scheduledDNDEnabled),

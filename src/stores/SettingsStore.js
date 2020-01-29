@@ -79,6 +79,26 @@ export default class SettingsStore extends Store {
       },
     );
 
+    // Inactivity lock timer
+    let inactivityTimer;
+    remote.getCurrentWindow().on('blur', () => {
+      if (this.all.app.inactivityLock !== 0) {
+        inactivityTimer = setTimeout(() => {
+          this.actions.settings.update({
+            type: 'app',
+            data: {
+              locked: true,
+            },
+          });
+        }, this.all.app.inactivityLock * 1000 * 60);
+      }
+    });
+    remote.getCurrentWindow().on('focus', () => {
+      if (inactivityTimer) {
+        clearTimeout(inactivityTimer);
+      }
+    });
+
     // Make sure to lock app on launch if locking feature is enabled
     setTimeout(() => {
       const isLoggedIn = Boolean(localStorage.getItem('authToken'));

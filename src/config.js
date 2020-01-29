@@ -73,6 +73,7 @@ export const DEFAULT_APP_SETTINGS = {
   scheduledDNDEnd: '09:00',
   hibernate: false,
   hibernationStrategy: 300,
+  inactivityLock: 0,
   noUpdates: false,
   showServiceNavigationBar: false,
   universalDarkMode: true,
