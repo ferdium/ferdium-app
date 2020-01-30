@@ -278,6 +278,15 @@
       "contributions": [
         "platform"
       ]
+    },
+    {
+      "login": "jereksel",
+      "name": "Andrzej Ressel",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1307829?v=4",
+      "profile": "https://github.com/jereksel",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 6,
