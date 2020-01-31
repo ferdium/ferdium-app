@@ -4318,7 +4318,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Enable adaptable Dark Mode",
+        "defaultMessage": "!!!Synchronize dark mode with my Mac's dark mode setting",
         "end": {
           "column": 3,
           "line": 108

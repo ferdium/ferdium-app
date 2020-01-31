@@ -774,7 +774,7 @@ export default class ServicesStore extends Store {
   _shareSettingsWithServiceProcess() {
     const settings = {
       ...this.stores.settings.app,
-      isDarkThemeActive: this.stores.ui.isDarkThemeActive
+      isDarkThemeActive: this.stores.ui.isDarkThemeActive,
     };
     this.actions.service.sendIPCMessageToAllServices({
       channel: 'settings-update',
