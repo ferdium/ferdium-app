@@ -4,6 +4,12 @@ import { autorun, computed, observable } from 'mobx';
 import fs from 'fs-extra';
 import { loadModule } from 'cld3-asm';
 import { debounce } from 'lodash';
+
+// For some services darkreader tries to use the chrome extension message API
+// This will cause the service to fail loading
+// As the message API is not actually needed, we'll add this shim sendMessage
+// function in order for darkreader to continue working
+window.chrome.runtime.sendMessage = () => {};
 import {
   enable as enableDarkMode,
   disable as disableDarkMode,
