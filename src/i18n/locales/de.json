@@ -284,6 +284,7 @@
   "settings.app.form.showDisabledServices": "Deaktivierte Services-Tabs anzeigen",
   "settings.app.form.showMessagesBadgesWhenMuted": "Ungelesene Nachrichten zeigen, wenn die Benachrichtigungen deaktiviert sind",
   "settings.app.form.showServiceNavigationBar": "Navigationsleiste immer anzeigen",
+  "settings.app.form.startMinimized": "Start minimized in tray",
   "settings.app.form.todoServer": "Todo-Server",
   "settings.app.form.universalDarkMode": "Universellen Dark Mode aktivieren",
   "settings.app.headline": "Einstellungen",
