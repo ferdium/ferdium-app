@@ -284,6 +284,7 @@
   "settings.app.form.showDisabledServices": "Afficher les onglets des services désactivés",
   "settings.app.form.showMessagesBadgesWhenMuted": "Afficher les badges de messages non lus quand les notifications sont désactivées",
   "settings.app.form.showServiceNavigationBar": "Toujours afficher la barre de navigation du service",
+  "settings.app.form.startMinimized": "Start minimized in tray",
   "settings.app.form.todoServer": "Serveur Todo",
   "settings.app.form.universalDarkMode": "Activer le mode sombre universel",
   "settings.app.headline": "Paramètres",
