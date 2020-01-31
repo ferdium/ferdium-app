@@ -284,6 +284,7 @@
   "settings.app.form.showDisabledServices": "Mostrar pestañas de servicios desactivados",
   "settings.app.form.showMessagesBadgesWhenMuted": "Mostrar la insignia de mensajes sin leer cuando las notificaciones están desactivadas",
   "settings.app.form.showServiceNavigationBar": "Mostrar siempre barra de navegación",
+  "settings.app.form.startMinimized": "Start minimized in tray",
   "settings.app.form.todoServer": "Servidor de tareas",
   "settings.app.form.universalDarkMode": "Activar modo oscuro universal",
   "settings.app.headline": "Configuración",
