@@ -41,12 +41,15 @@ const messages = defineMessages({
 });
 
 const styles = theme => ({
+  container: {
+    minWidth: '70vw',
+  },
   info: {
     paddingTop: 20,
     paddingBottom: 20,
   },
   link: {
-    color: theme.styleTypes.primary.accent + ' !important',
+    color: `${theme.styleTypes.primary.accent} !important`,
     padding: 10,
     cursor: 'pointer',
   },
@@ -57,9 +60,17 @@ const styles = theme => ({
   },
   url: {
     marginTop: 20,
+    width: '100%',
 
-    '& > div': {
+    '& div': {
       fontFamily: 'SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace',
+    },
+
+    '& input': {
+      width: '100%',
+      padding: 15,
+      borderRadius: 6,
+      border: `solid 1px ${theme.styleTypes.primary.accent}`,
     },
   },
 });
@@ -86,22 +97,22 @@ export default @injectSheet(styles) @inject('stores') @observer class PublishDeb
   async publishDebugInfo() {
     this.setState({
       isSendingLog: true,
-    })
+    });
 
     const debugInfo = JSON.stringify(this.props.stores.app.debugInfo);
-    
+
     const request = await sendAuthRequest(`${DEBUG_API}/create`, {
       method: 'POST',
       body: JSON.stringify({
-        log: debugInfo
+        log: debugInfo,
       }),
     }, false);
     const response = await request.json();
-    console.log(response);
+
     if (response.id) {
       this.setState({
         log: response.id,
-      })
+      });
     } else {
       // TODO: Show error message
       this.close();
@@ -116,7 +127,7 @@ export default @injectSheet(styles) @inject('stores') @observer class PublishDeb
     } = this.props;
 
     const {
-      log
+      log,
     } = this.state;
 
     const { intl } = this.context;
@@ -127,43 +138,45 @@ export default @injectSheet(styles) @inject('stores') @observer class PublishDeb
         shouldCloseOnOverlayClick
         close={this.close.bind(this)}
       >
-        <H1>
-          {intl.formatMessage(messages.title)}
-        </H1>
-        { log ? (
-          <>
-            <p className={classes.info}>{intl.formatMessage(messages.published)}</p>
+        <div className={classes.container}>
+          <H1>
+            {intl.formatMessage(messages.title)}
+          </H1>
+          { log ? (
+            <>
+              <p className={classes.info}>{intl.formatMessage(messages.published)}</p>
               <Input
                 className={classes.url}
                 showLabel={false}
                 field={{
                   type: 'url',
-                  value: DEBUG_API + '/' + log,
+                  value: `${DEBUG_API}/${log}`,
                   disabled: true,
                 }}
                 readonly
               />
-          </>
-        ) : (
-          <>
-            <p className={classes.info}>{intl.formatMessage(messages.info)}</p>
+            </>
+          ) : (
+            <>
+              <p className={classes.info}>{intl.formatMessage(messages.info)}</p>
 
-            <a href={ DEBUG_API + '/privacy.html' } target="_blank" className={classes.link}>
-              {intl.formatMessage(messages.privacy)}
-            </a>
-            <a href={ DEBUG_API + '/terms.html' } target="_blank" className={classes.link}>
-              {intl.formatMessage(messages.terms)}
-            </a>
+              <a href={`${DEBUG_API}/privacy.html`} target="_blank" className={classes.link}>
+                {intl.formatMessage(messages.privacy)}
+              </a>
+              <a href={`${DEBUG_API}/terms.html`} target="_blank" className={classes.link}>
+                {intl.formatMessage(messages.terms)}
+              </a>
 
-            <Button
-              type="button"
-              label={intl.formatMessage(messages.publish)}
-              className={classes.button}
-              onClick={this.publishDebugInfo.bind(this)}
-              disabled={this.state.isSendingLog}
-            />
-          </>
-        ) }
+              <Button
+                type="button"
+                label={intl.formatMessage(messages.publish)}
+                className={classes.button}
+                onClick={this.publishDebugInfo.bind(this)}
+                disabled={this.state.isSendingLog}
+              />
+            </>
+          ) }
+        </div>
       </Modal>
     );
   }
