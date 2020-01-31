@@ -184,8 +184,10 @@ const createWindow = () => {
   mainWindow.webContents.on('did-finish-load', () => {
     const fns = onDidLoadFns;
     onDidLoadFns = null;
-    for (const fn of fns) { // eslint-disable-line no-unused-vars
-      fn(mainWindow);
+    if (fns) {
+      for (const fn of fns) { // eslint-disable-line no-unused-vars
+        fn(mainWindow);
+      }
     }
   });
 

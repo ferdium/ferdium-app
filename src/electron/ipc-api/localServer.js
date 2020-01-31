@@ -1,6 +1,6 @@
 import { ipcMain, app } from 'electron';
 import net from 'net';
-import startServer from '../../server/start';
+import startServer from '../../internal-server/start';
 
 const DEFAULT_PORT = 45569;
 
@@ -31,15 +31,12 @@ export default (params) => {
       let port = DEFAULT_PORT;
       (async () => {
         // eslint-disable-next-line no-await-in-loop
-        while (await portInUse(port) && port < DEFAULT_PORT + 10) {
+        while ((await portInUse(port)) && port < DEFAULT_PORT + 10) {
           port += 1;
         }
         console.log('Starting local server on port', port);
 
-        startServer(
-          app.getPath('userData'),
-          port,
-        );
+        startServer(app.getPath('userData'), port);
 
         params.mainWindow.webContents.send('localServerPort', {
           port,

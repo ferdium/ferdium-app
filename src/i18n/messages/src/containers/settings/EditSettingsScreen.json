@@ -157,7 +157,7 @@
   },
   {
     "id": "settings.app.form.enableLock",
-    "defaultMessage": "!!!Enable Ferdi password lock",
+    "defaultMessage": "!!!Enable Password Lock",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
       "line": 77,
@@ -170,11 +170,24 @@
   },
   {
     "id": "settings.app.form.lockPassword",
-    "defaultMessage": "!!!Ferdi Lock password",
+    "defaultMessage": "!!!Password",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
       "line": 81,
       "column": 16
+    },
+    "end": {
+      "line": 84,
+      "column": 3
+    }
+  },
+  {
+    "id": "settings.app.form.inactivityLock",
+    "defaultMessage": "!!!Lock after inactivity",
+    "file": "src/containers/settings/EditSettingsScreen.js",
+    "start": {
+      "line": 81,
+      "column": 18
     },
     "end": {
       "line": 84,
@@ -248,7 +261,7 @@
   },
   {
     "id": "settings.app.form.adaptableDarkMode",
-    "defaultMessage": "!!!Enable adaptable Dark Mode",
+    "defaultMessage": "!!!Synchronize dark mode with my Mac's dark mode setting",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
       "line": 105,

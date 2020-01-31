@@ -91,7 +91,7 @@ export default @observer class ImageUpload extends Component {
               onDrop={this.onDrop.bind(this)}
               className={cssClasses}
               multiple={multiple}
-              accept="image/jpeg, image/png"
+              accept="image/jpeg, image/png, image/svg+xml"
             >
               <i className="mdi mdi-file-image" />
               <p>

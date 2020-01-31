@@ -36,6 +36,10 @@ const messages = defineMessages({
     id: 'settings.app.hibernateInfo',
     defaultMessage: '!!!By default, Ferdi will keep all your services open and loaded in the background so they are ready when you want to use them. Service Hibernation will unload your services after a specified amount. This is useful to save RAM or keeping services from slowing down your computer.',
   },
+  inactivityLockInfo: {
+    id: 'settings.app.inactivityLockInfo',
+    defaultMessage: '!!!Minutes of inactivity, after which Ferdi should automatically lock. Use 0 to disable',
+  },
   serverInfo: {
     id: 'settings.app.serverInfo',
     defaultMessage: '!!!We advice you to logout after changing your server as your settings might not be saved otherwise.',
@@ -50,7 +54,7 @@ const messages = defineMessages({
   },
   lockedPassword: {
     id: 'settings.app.lockedPassword',
-    defaultMessage: '!!!Ferdi Lock Password',
+    defaultMessage: '!!!Password',
   },
   lockedPasswordInfo: {
     id: 'settings.app.lockedPasswordInfo',
@@ -58,7 +62,7 @@ const messages = defineMessages({
   },
   lockInfo: {
     id: 'settings.app.lockInfo',
-    defaultMessage: '!!!Ferdi password lock allows you to keep your messages protected.\nUsing Ferdi password lock, you will be prompted to enter your password everytime you start Ferdi or lock Ferdi yourself using the lock symbol in the bottom left corner or the shortcut CMD/CTRL+Shift+L.',
+    defaultMessage: '!!!Password Lock allows you to keep your messages protected.\nUsing Password Lock, you will be prompted to enter your password everytime you start Ferdi or lock Ferdi yourself using the lock symbol in the bottom left corner or the shortcut CMD/CTRL+Shift+L.',
   },
   scheduledDNDTimeInfo: {
     id: 'settings.app.scheduledDNDTimeInfo',
@@ -142,6 +146,10 @@ const messages = defineMessages({
   },
 });
 
+const Hr = () => (
+  <hr style={{ marginBottom: 20 }} />
+);
+
 export default @observer class EditSettingsForm extends Component {
   static propTypes = {
     checkForUpdates: PropTypes.func.isRequired,
@@ -163,6 +171,7 @@ export default @observer class EditSettingsForm extends Component {
     hibernationEnabled: PropTypes.bool.isRequired,
     isDarkmodeEnabled: PropTypes.bool.isRequired,
     isTrayEnabled: PropTypes.bool.isRequired,
+    isAdaptableDarkModeEnabled: PropTypes.bool.isRequired,
     openProcessManager: PropTypes.func.isRequired,
   };
 
@@ -187,6 +196,7 @@ export default @observer class EditSettingsForm extends Component {
       installUpdate,
       form,
       isCheckingForUpdates,
+      isAdaptableDarkModeEnabled,
       isUpdateAvailable,
       noUpdateAvailable,
       updateIsReadyToInstall,
@@ -240,6 +250,9 @@ export default @observer class EditSettingsForm extends Component {
             {isTrayEnabled && <Toggle field={form.$('startMinimized')} />}
             <Toggle field={form.$('privateNotifications')} />
             <Toggle field={form.$('showServiceNavigationBar')} />
+
+            <Hr />
+
             <Toggle field={form.$('hibernate')} />
             {hibernationEnabled && (
               <Select field={form.$('hibernationStrategy')} />
@@ -254,9 +267,13 @@ export default @observer class EditSettingsForm extends Component {
                 { intl.formatMessage(messages.hibernateInfo) }
               </span>
             </p>
+
+            <Hr />
+
             {process.platform === 'win32' && (
               <Toggle field={form.$('minimizeToSystemTray')} />
             )}
+
             <Input
               placeholder="Server"
               onChange={e => this.submit(e)}
@@ -264,7 +281,14 @@ export default @observer class EditSettingsForm extends Component {
               autoFocus
             />
             {isLoggedIn && (
-              <p>{ intl.formatMessage(messages.serverInfo) }</p>
+              <p
+                className="settings__message"
+                style={{
+                  borderTop: 0, marginTop: 0, paddingTop: 0, marginBottom: '2rem',
+                }}
+              >
+                { intl.formatMessage(messages.serverInfo) }
+              </p>
             )}
             {server === 'https://api.franzinfra.com' && (
               <p
@@ -292,6 +316,10 @@ export default @observer class EditSettingsForm extends Component {
             {isWorkspaceEnabled && (
               <Toggle field={form.$('keepAllWorkspacesLoaded')} />
             )}
+
+
+            <Hr />
+
             {isTodosEnabled && (
               <>
                 <Toggle field={form.$('enableTodos')} />
@@ -300,9 +328,18 @@ export default @observer class EditSettingsForm extends Component {
                   onChange={e => this.submit(e)}
                   field={form.$('todoServer')}
                 />
-                <p>{ intl.formatMessage(messages.todoServerInfo) }</p>
+                <p
+                  className="settings__message"
+                  style={{
+                    borderTop: 0, marginTop: 0, paddingTop: 0, marginBottom: '2rem',
+                  }}
+                >
+                  { intl.formatMessage(messages.todoServerInfo) }
+                </p>
               </>
             )}
+
+            <Hr />
 
             <Toggle field={form.$('lockingFeatureEnabled')} />
             {lockingFeatureEnabled && (
@@ -318,6 +355,16 @@ export default @observer class EditSettingsForm extends Component {
                 <p>
                   { intl.formatMessage(messages.lockedPasswordInfo) }
                 </p>
+
+                <Input
+                  placeholder="Lock after inactivity"
+                  onChange={e => this.submit(e)}
+                  field={form.$('inactivityLock')}
+                  autoFocus
+                />
+                <p>
+                  { intl.formatMessage(messages.inactivityLockInfo) }
+                </p>
               </>
             )}
             <p
@@ -331,6 +378,7 @@ export default @observer class EditSettingsForm extends Component {
               </span>
             </p>
 
+            <Hr />
 
             <Toggle field={form.$('scheduledDNDEnabled')} />
             {scheduledDNDEnabled && (
@@ -386,11 +434,10 @@ export default @observer class EditSettingsForm extends Component {
             <h2 id="apperance">{intl.formatMessage(messages.headlineAppearance)}</h2>
             <Toggle field={form.$('showDisabledServices')} />
             <Toggle field={form.$('showMessageBadgeWhenMuted')} />
-            <Toggle field={form.$('darkMode')} />
-            {isMac && <Toggle field={form.$('adaptableDarkMode')} disabled={isDarkmodeEnabled} />}
-            {isDarkmodeEnabled && (
+            {isMac && <Toggle field={form.$('adaptableDarkMode')} />}
+            {!(isMac && isAdaptableDarkModeEnabled) && <Toggle field={form.$('darkMode')} disabled={isAdaptableDarkModeEnabled} />}
+            {(isDarkmodeEnabled || isAdaptableDarkModeEnabled) && (
               <>
-                <Toggle field={form.$('adaptableDarkMode')} />
                 <Toggle field={form.$('universalDarkMode')} />
                 <p
                   className="settings__message"
@@ -488,20 +535,17 @@ export default @observer class EditSettingsForm extends Component {
                 loaded={!isCheckingForUpdates || !isUpdateAvailable}
               />
             )}
-            {noUpdateAvailable && (
-              <p>{intl.formatMessage(messages.updateStatusUpToDate)}</p>
-            )}
             <br />
             <Toggle field={form.$('beta')} />
             <Toggle field={form.$('noUpdates')} />
             {intl.formatMessage(messages.currentVersion)}
             {' '}
             {remote.app.getVersion()}
+            <br />
+            <br />
+            {noUpdateAvailable && intl.formatMessage(messages.updateStatusUpToDate)}
             <p className="settings__message">
-              <span className="mdi mdi-information" />
-              {intl.formatMessage(messages.languageDisclaimer)}
-            </p>
-            <p className="settings__message">
+
               <span className="mdi mdi-github-face" />
               <span>
                 Ferdi is based on
@@ -512,6 +556,9 @@ export default @observer class EditSettingsForm extends Component {
                 {' '}
                 <a href="https://github.com/meetfranz/franz/blob/master/LICENSE" target="_blank">Apache-2.0 License</a>
               </span>
+              <br />
+              <span className="mdi mdi-information" />
+              {intl.formatMessage(messages.languageDisclaimer)}
             </p>
           </form>
         </div>

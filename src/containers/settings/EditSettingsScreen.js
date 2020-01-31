@@ -10,7 +10,7 @@ import UserStore from '../../stores/UserStore';
 import TodosStore from '../../features/todos/store';
 import Form from '../../lib/Form';
 import { APP_LOCALES, SPELLCHECKER_LOCALES } from '../../i18n/languages';
-import { DEFAULT_APP_SETTINGS, DEFAULT_LOCK_PASSWORD, HIBERNATION_STRATEGIES } from '../../config';
+import { DEFAULT_APP_SETTINGS, HIBERNATION_STRATEGIES } from '../../config';
 import { config as spellcheckerConfig } from '../../features/spellchecker';
 
 import { getSelectOptions } from '../../helpers/i18n-helpers';
@@ -76,11 +76,15 @@ const messages = defineMessages({
   },
   enableLock: {
     id: 'settings.app.form.enableLock',
-    defaultMessage: '!!!Enable Ferdi password lock',
+    defaultMessage: '!!!Enable Password Lock',
   },
   lockPassword: {
     id: 'settings.app.form.lockPassword',
-    defaultMessage: '!!!Ferdi Lock password',
+    defaultMessage: '!!!Password',
+  },
+  inactivityLock: {
+    id: 'settings.app.form.inactivityLock',
+    defaultMessage: '!!!Lock after inactivity',
   },
   scheduledDNDEnabled: {
     id: 'settings.app.form.scheduledDNDEnabled',
@@ -104,7 +108,7 @@ const messages = defineMessages({
   },
   adaptableDarkMode: {
     id: 'settings.app.form.adaptableDarkMode',
-    defaultMessage: '!!!Enable adaptable Dark Mode',
+    defaultMessage: '!!!Synchronize dark mode with my Mac\'s dark mode setting',
   },
   universalDarkMode: {
     id: 'settings.app.form.universalDarkMode',
@@ -183,6 +187,7 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
         todoServer: settingsData.todoServer,
         lockingFeatureEnabled: settingsData.lockingFeatureEnabled,
         lockedPassword: settingsData.lockedPassword,
+        inactivityLock: settingsData.inactivityLock,
         scheduledDNDEnabled: settingsData.scheduledDNDEnabled,
         scheduledDNDStart: settingsData.scheduledDNDStart,
         scheduledDNDEnd: settingsData.scheduledDNDEnd,
@@ -319,8 +324,14 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
         lockedPassword: {
           label: intl.formatMessage(messages.lockPassword),
           value: settings.all.app.lockedPassword,
-          default: DEFAULT_LOCK_PASSWORD,
+          default: '',
           type: 'password',
+        },
+        inactivityLock: {
+          label: intl.formatMessage(messages.inactivityLock),
+          value: settings.all.app.inactivityLock,
+          default: 0,
+          type: 'number',
         },
         scheduledDNDEnabled: {
           label: intl.formatMessage(messages.scheduledDNDEnabled),
@@ -466,6 +477,7 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           hibernationEnabled={this.props.stores.settings.app.hibernate}
           isDarkmodeEnabled={this.props.stores.settings.app.darkMode}
           isTrayEnabled={this.props.stores.settings.app.enableSystemTray}
+          isAdaptableDarkModeEnabled={this.props.stores.settings.app.adaptableDarkMode}
           openProcessManager={() => this.openProcessManager()}
         />
       </ErrorBoundary>

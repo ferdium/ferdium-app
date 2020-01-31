@@ -98,4 +98,5 @@ export default {
     serviceId: PropTypes.string.isRequired,
     hibernating: PropTypes.bool.isRequired,
   },
+  shareSettingsWithServiceProcess: {},
 };

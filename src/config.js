@@ -6,7 +6,7 @@ import ms from 'ms';
 import { asarPath } from './helpers/asar-helpers';
 
 const app = process.type === 'renderer' ? electron.remote.app : electron.app;
-const systemPreferences = process.type === 'renderer' ? electron.remote.systemPreferences : electron.systemPreferences;
+const nativeTheme = process.type === 'renderer' ? electron.remote.nativeTheme : electron.nativeTheme;
 
 export const CHECK_INTERVAL = ms('1h'); // How often should we perform checks
 
@@ -31,7 +31,6 @@ export const DEVELOPMENT_TODOS_FRONTEND_URL = 'https://development--franz-todos.
 
 export const GA_ID = !isDevMode ? 'UA-74126766-10' : 'UA-74126766-12';
 
-export const DEFAULT_LOCK_PASSWORD = 'ferdi';
 export const KEEP_WS_LOADED_USID = '0a0aa000-0a0a-49a0-a000-a0a0a0a0a0a0';
 
 export const HIBERNATION_STRATEGIES = {
@@ -55,7 +54,7 @@ export const DEFAULT_APP_SETTINGS = {
   showMessageBadgeWhenMuted: true,
   enableSpellchecking: true,
   spellcheckerLanguage: 'en-us',
-  darkMode: process.platform === 'darwin' ? systemPreferences.isDarkMode() : false, // We can't use refs from `./environment` at this time
+  darkMode: process.platform === 'darwin' ? nativeTheme.shouldUseDarkColors : false, // We can't use refs from `./environment` at this time
   locale: '',
   fallbackLocale: 'en-US',
   beta: false,
@@ -75,10 +74,13 @@ export const DEFAULT_APP_SETTINGS = {
   scheduledDNDEnd: '09:00',
   hibernate: false,
   hibernationStrategy: 300,
+  inactivityLock: 0,
   noUpdates: false,
   showServiceNavigationBar: false,
   universalDarkMode: true,
+  adaptableDarkMode: true,
   accentColor: '#7367f0',
+  serviceRibbonWidth: 68,
 };
 
 export const DEFAULT_FEATURES_CONFIG = {

@@ -51,7 +51,7 @@ const messages = defineMessages({
   },
   customUrl: {
     id: 'settings.service.form.customUrl',
-    defaultMessage: '!!!Custom server',
+    defaultMessage: '!!!Service URL',
   },
   indirectMessages: {
     id: 'settings.service.form.indirectMessages',

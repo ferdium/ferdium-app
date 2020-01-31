@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 import { defineMessages, intlShape } from 'react-intl';
 
 import Form from '../../lib/Form';
-import { required } from '../../helpers/validation-helpers';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import Infobox from '../ui/Infobox';
@@ -50,7 +49,6 @@ export default @observer class Locked extends Component {
       password: {
         label: this.context.intl.formatMessage(messages.passwordLabel),
         value: '',
-        validators: [required],
         type: 'password',
       },
     },
@@ -89,6 +87,7 @@ export default @observer class Locked extends Component {
           <Input
             field={form.$('password')}
             showPasswordToggle
+            focus
           />
           {error.code === 'invalid-credentials' && (
             <p className="error-message center">{intl.formatMessage(messages.invalidCredentials)}</p>
