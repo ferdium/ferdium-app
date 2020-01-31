@@ -284,6 +284,7 @@
   "settings.app.form.showDisabledServices": "無効化されたサービスのタブを表示する",
   "settings.app.form.showMessagesBadgesWhenMuted": "通知の無効時に未読メッセージ件数を表示する",
   "settings.app.form.showServiceNavigationBar": "Always show service navigation bar",
+  "settings.app.form.startMinimized": "Start minimized in tray",
   "settings.app.form.todoServer": "Todo Server",
   "settings.app.form.universalDarkMode": "Enable universal Dark Mode",
   "settings.app.headline": "設定",

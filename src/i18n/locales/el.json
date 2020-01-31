@@ -284,6 +284,7 @@
   "settings.app.form.showDisabledServices": "Προβολή καρτελών των απενεργοποιημένων υπηρεσιών",
   "settings.app.form.showMessagesBadgesWhenMuted": "Προβολή του εικονιδίου μη αναγνωσμένου μηνύματος όταν οι ειδοποιήσεις είναι απενεργοποιημένες",
   "settings.app.form.showServiceNavigationBar": "Always show service navigation bar",
+  "settings.app.form.startMinimized": "Start minimized in tray",
   "settings.app.form.todoServer": "Todo Server",
   "settings.app.form.universalDarkMode": "Enable universal Dark Mode",
   "settings.app.headline": "Ρυθμίσεις",
