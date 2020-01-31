@@ -81,6 +81,7 @@ export const DEFAULT_APP_SETTINGS = {
   adaptableDarkMode: true,
   accentColor: '#7367f0',
   serviceRibbonWidth: 68,
+  sentry: false,
 };
 
 export const DEFAULT_FEATURES_CONFIG = {

@@ -58,6 +58,10 @@ const messages = defineMessages({
     id: 'settings.app.form.showServiceNavigationBar',
     defaultMessage: '!!!Always show service navigation bar',
   },
+  sentry: {
+    id: 'settings.app.form.sentry',
+    defaultMessage: '!!!Send telemetry data',
+  },
   hibernate: {
     id: 'settings.app.form.hibernate',
     defaultMessage: '!!!Enable service hibernation',
@@ -181,6 +185,7 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
         minimizeToSystemTray: settingsData.minimizeToSystemTray,
         privateNotifications: settingsData.privateNotifications,
         showServiceNavigationBar: settingsData.showServiceNavigationBar,
+        sentry: settingsData.sentry,
         hibernate: settingsData.hibernate,
         hibernationStrategy: settingsData.hibernationStrategy,
         server: settingsData.server,
@@ -294,6 +299,11 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           label: intl.formatMessage(messages.showServiceNavigationBar),
           value: settings.all.app.showServiceNavigationBar,
           default: DEFAULT_APP_SETTINGS.showServiceNavigationBar,
+        },
+        sentry: {
+          label: intl.formatMessage(messages.sentry),
+          value: settings.all.app.sentry,
+          default: DEFAULT_APP_SETTINGS.sentry,
         },
         hibernate: {
           label: intl.formatMessage(messages.hibernate),

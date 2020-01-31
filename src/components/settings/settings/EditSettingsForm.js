@@ -32,6 +32,10 @@ const messages = defineMessages({
     id: 'settings.app.headlineGeneral',
     defaultMessage: '!!!General',
   },
+  sentryInfo: {
+    id: 'settings.app.sentryInfo',
+    defaultMessage: '!!!Sending telemetry data allows us to find errors in Ferdi - we will not send any personal information like your message data! Changing this option requires you to restart Ferdi.',
+  },
   hibernateInfo: {
     id: 'settings.app.hibernateInfo',
     defaultMessage: '!!!By default, Ferdi will keep all your services open and loaded in the background so they are ready when you want to use them. Service Hibernation will unload your services after a specified amount. This is useful to save RAM or keeping services from slowing down your computer.',
@@ -250,6 +254,8 @@ export default @observer class EditSettingsForm extends Component {
             {isTrayEnabled && <Toggle field={form.$('startMinimized')} />}
             <Toggle field={form.$('privateNotifications')} />
             <Toggle field={form.$('showServiceNavigationBar')} />
+            <Toggle field={form.$('sentry')} />
+            <p>{intl.formatMessage(messages.sentryInfo)}</p>
 
             <Hr />
 

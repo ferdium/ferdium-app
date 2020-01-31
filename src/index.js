@@ -39,7 +39,6 @@ import handleDeepLink from './electron/deepLinking';
 import { isPositionValid } from './electron/windowUtils';
 import { appId } from './package.json'; // eslint-disable-line import/no-unresolved
 import './electron/exception';
-import './sentry';
 
 import {
   DEFAULT_APP_SETTINGS,
@@ -79,6 +78,11 @@ if (isWindows) {
 // Initialize Settings
 const settings = new Settings('app', DEFAULT_APP_SETTINGS);
 const proxySettings = new Settings('proxy');
+
+if (settings.get('sentry')) {
+  // eslint-disable-next-line global-require
+  require('./sentry');
+}
 
 // add `liftSingleInstanceLock` to settings.json to override the single instance lock
 const liftSingleInstanceLock = settings.get('liftSingleInstanceLock') || false;
