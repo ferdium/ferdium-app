@@ -248,7 +248,7 @@
   },
   {
     "id": "settings.app.form.adaptableDarkMode",
-    "defaultMessage": "!!!Enable adaptable Dark Mode",
+    "defaultMessage": "!!!Synchronize dark mode with my Mac's dark mode setting",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
       "line": 105,

@@ -57,7 +57,6 @@ export default class UIStore extends Store {
 
   @computed get isDarkThemeActive() {
     const isMacWithAdaptableInDarkMode = isMac
-      && this.stores.settings.all.app.darkMode
       && this.stores.settings.all.app.adaptableDarkMode
       && this.isOsDarkThemeActive;
     const isMacWithoutAdaptableInDarkMode = isMac

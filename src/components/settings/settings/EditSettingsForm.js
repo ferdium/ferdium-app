@@ -170,6 +170,7 @@ export default @observer class EditSettingsForm extends Component {
     noUpdates: PropTypes.bool.isRequired,
     hibernationEnabled: PropTypes.bool.isRequired,
     isDarkmodeEnabled: PropTypes.bool.isRequired,
+    isAdaptableDarkModeEnabled: PropTypes.bool.isRequired,
     openProcessManager: PropTypes.func.isRequired,
   };
 
@@ -194,6 +195,7 @@ export default @observer class EditSettingsForm extends Component {
       installUpdate,
       form,
       isCheckingForUpdates,
+      isAdaptableDarkModeEnabled,
       isUpdateAvailable,
       noUpdateAvailable,
       updateIsReadyToInstall,
@@ -429,10 +431,10 @@ export default @observer class EditSettingsForm extends Component {
             <h2 id="apperance">{intl.formatMessage(messages.headlineAppearance)}</h2>
             <Toggle field={form.$('showDisabledServices')} />
             <Toggle field={form.$('showMessageBadgeWhenMuted')} />
-            <Toggle field={form.$('darkMode')} />
-            {isDarkmodeEnabled && (
+            {isMac && <Toggle field={form.$('adaptableDarkMode')} />}
+            {!(isMac && isAdaptableDarkModeEnabled) && <Toggle field={form.$('darkMode')} disabled={isAdaptableDarkModeEnabled} />}
+            {(isDarkmodeEnabled || isAdaptableDarkModeEnabled) && (
               <>
-                {isMac && <Toggle field={form.$('adaptableDarkMode')} />}
                 <Toggle field={form.$('universalDarkMode')} />
                 <p
                   className="settings__message"
