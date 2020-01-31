@@ -30,7 +30,8 @@
     "uidev": "cd uidev && webpack-dev-server",
     "postinstall": "npx lerna run prepare",
     "apply-branding": "node ./src/i18n/apply-branding.js",
-    "prepare-code": "npm run lint && npm run reformat-files && npm run manage-translations && npm run apply-branding",
+    "update-submodules": "git submodule update --remote --force && git add .",
+    "prepare-code": "npm run update-submodules && npm run lint && npm run reformat-files && npm run manage-translations && npm run apply-branding",
     "build-theme-info": "node src/scripts/build-theme-info.js"
   },
   "keywords": [],
