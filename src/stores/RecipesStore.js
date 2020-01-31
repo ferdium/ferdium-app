@@ -98,7 +98,7 @@ export default class RecipesStore extends Store {
       const version = recipes[recipe];
 
       // Find recipe in local recipe repository
-      const localRecipe = allJson.find((r) => r.id === recipe);
+      const localRecipe = allJson.find(r => r.id === recipe);
 
       if (localRecipe && semver.lt(version, localRecipe.version)) {
         localUpdates.push(recipe);

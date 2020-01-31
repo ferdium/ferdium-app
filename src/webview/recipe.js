@@ -1,3 +1,4 @@
+/* eslint-disable import/first */
 import { ipcRenderer } from 'electron';
 import path from 'path';
 import { autorun, computed, observable } from 'mobx';
