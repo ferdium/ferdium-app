@@ -32,6 +32,7 @@ export default class UIStore extends Store {
         'AppleInterfaceThemeChangedNotification',
         () => {
           this.isOsDarkThemeActive = nativeTheme.shouldUseDarkColors;
+          this.actions.service.shareSettingsWithServiceProcess();
         },
       );
     }
