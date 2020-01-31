@@ -1,9 +1,13 @@
 import { action, computed, observable } from 'mobx';
+import fs from 'fs-extra';
+import path from 'path';
+import semver from 'semver';
 
 import Store from './lib/Store';
 import CachedRequest from './lib/CachedRequest';
 import Request from './lib/Request';
 import { matchRoute } from '../helpers/routing-helpers';
+import { RECIPES_PATH } from '../config';
 
 const debug = require('debug')('Ferdi:RecipeStore');
 
@@ -83,7 +87,30 @@ export default class RecipesStore extends Store {
 
     if (Object.keys(recipes).length === 0) return;
 
-    const updates = await this.getRecipeUpdatesRequest.execute(recipes)._promise;
+    const remoteUpdates = await this.getRecipeUpdatesRequest.execute(recipes)._promise;
+
+    // Check for local updates
+    const allJsonFile = path.join(RECIPES_PATH, 'all.json');
+    const allJson = await fs.readJSON(allJsonFile);
+    const localUpdates = [];
+
+    Object.keys(recipes).forEach((recipe) => {
+      const version = recipes[recipe];
+
+      // Find recipe in local recipe repository
+      const localRecipe = allJson.find(r => r.id === recipe);
+
+      if (localRecipe && semver.lt(version, localRecipe.version)) {
+        localUpdates.push(recipe);
+      }
+    });
+
+    const updates = [
+      ...remoteUpdates,
+      ...localUpdates,
+    ];
+    debug('Got update information (local, remote):', localUpdates, remoteUpdates);
+
     const length = updates.length - 1;
     const syncUpdate = async (i) => {
       const update = updates[i];

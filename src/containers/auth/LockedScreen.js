@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import Locked from '../../components/auth/Locked';
 import SettingsStore from '../../stores/SettingsStore';
-import { DEFAULT_LOCK_PASSWORD } from '../../config';
 
 import { globalError as globalErrorPropType } from '../../prop-types';
 
@@ -27,9 +26,7 @@ export default @inject('stores', 'actions') @observer class LockedScreen extends
 
     let correctPassword = this.props.stores.settings.all.app.lockedPassword;
     if (!correctPassword) {
-      // Lock feature was enabled but no password was set
-      // Use default lock password so user can exit
-      correctPassword = DEFAULT_LOCK_PASSWORD;
+      correctPassword = '';
     }
 
     if (String(password) === String(correctPassword)) {

@@ -10,7 +10,7 @@ import styles from './styles';
 const messages = defineMessages({
   loading: {
     id: 'service.webviewLoader.loading',
-    defaultMessage: '!!!Loading',
+    defaultMessage: '!!!Loading {service}',
   },
 });
 
@@ -30,7 +30,7 @@ export default @injectSheet(styles) @observer class WebviewLoader extends Compon
     return (
       <FullscreenLoader
         className={classes.component}
-        title={`${intl.formatMessage(messages.loading)} ${name}`}
+        title={`${intl.formatMessage(messages.loading, { service: name })}`}
       />
     );
   }

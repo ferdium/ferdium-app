@@ -21,7 +21,7 @@ import settingsWS from '../features/settingsWS';
 import serviceLimit from '../features/serviceLimit';
 import communityRecipes from '../features/communityRecipes';
 import todos from '../features/todos';
-import accentColor from '../features/accentColor';
+import appearance from '../features/appearance';
 import planSelection from '../features/planSelection';
 import trialStatusBar from '../features/trialStatusBar';
 
@@ -92,7 +92,7 @@ export default class FeaturesStore extends Store {
     serviceLimit(this.stores, this.actions);
     communityRecipes(this.stores, this.actions);
     todos(this.stores, this.actions);
-    accentColor(this.stores, this.actions);
+    appearance(this.stores, this.actions);
     planSelection(this.stores, this.actions);
     trialStatusBar(this.stores, this.actions);
   }

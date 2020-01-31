@@ -232,7 +232,63 @@
         "bug",
         "security"
       ]
+    },
+    {
+      "login": "steliyan",
+      "name": "Steliyan Stoyanov",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1850292?v=4",
+      "profile": "https://github.com/steliyan",
+      "contributions": [
+        "code",
+        "ideas"
+      ]
+    },
+    {
+      "login": "brorbw",
+      "name": "Bror Winther",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/5909562?v=4",
+      "profile": "https://github.com/brorbw",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "FWDekker",
+      "name": "Felix W. Dekker",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/13442533?v=4",
+      "profile": "https://fwdekker.com/",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "Sauceee",
+      "name": "Sauceee",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/17987941?v=4",
+      "profile": "https://github.com/Sauceee",
+      "contributions": [
+        "design"
+      ]
+    },
+    {
+      "login": "lhw",
+      "name": "Lennart Weller",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/351875?v=4",
+      "profile": "http://lhw.ring0.de",
+      "contributions": [
+        "platform"
+      ]
+    },
+    {
+      "login": "jereksel",
+      "name": "Andrzej Ressel",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1307829?v=4",
+      "profile": "https://github.com/jereksel",
+      "contributions": [
+        "code"
+      ]
     }
   ],
-  "contributorsPerLine": 6
+  "contributorsPerLine": 6,
+  "skipCi": true
 }

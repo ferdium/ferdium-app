@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 import { defineMessages, intlShape } from 'react-intl';
 import ReactTooltip from 'react-tooltip';
-import {
-  ProBadge, H1, H2,
-} from '@meetfranz/ui';
+import { ProBadge, H1, H2 } from '@meetfranz/ui';
 import moment from 'moment';
 
 import Loader from '../../ui/Loader';
@@ -13,6 +11,7 @@ import Button from '../../ui/Button';
 import Infobox from '../../ui/Infobox';
 import SubscriptionForm from '../../../containers/subscription/SubscriptionFormScreen';
 import { i18nPlanName } from '../../../helpers/plan-helpers';
+import { LOCAL_SERVER } from '../../../config';
 
 const messages = defineMessages({
   headline: {
@@ -69,11 +68,13 @@ const messages = defineMessages({
   },
   deleteInfo: {
     id: 'settings.account.deleteInfo',
-    defaultMessage: '!!!If you don\'t need your Ferdi account any longer, you can delete your account and all related data here.',
+    defaultMessage:
+      "!!!If you don't need your Ferdi account any longer, you can delete your account and all related data here.",
   },
   deleteEmailSent: {
     id: 'settings.account.deleteEmailSent',
-    defaultMessage: '!!!You have received an email with a link to confirm your account deletion. Your account and data cannot be restored!',
+    defaultMessage:
+      '!!!You have received an email with a link to confirm your account deletion. Your account and data cannot be restored!',
   },
   trial: {
     id: 'settings.account.trial',
@@ -89,7 +90,16 @@ const messages = defineMessages({
   },
   trialUpdateBillingInformation: {
     id: 'settings.account.trialUpdateBillingInfo',
-    defaultMessage: '!!!Please update your billing info to continue using {license} after your trial period.',
+    defaultMessage:
+      '!!!Please update your billing info to continue using {license} after your trial period.',
+  },
+  accountUnavailable: {
+    id: 'settings.account.accountUnavailable',
+    defaultMessage: 'Account is unavailable',
+  },
+  accountUnavailableInfo: {
+    id: 'settings.account.accountUnavailableInfo',
+    defaultMessage: 'You are using Ferdi without an account. If you want to use Ferdi with an account and keep your services synchronized across installations, please select a server in the Settings tab then login.',
   },
 });
 
@@ -110,6 +120,7 @@ class AccountDashboard extends Component {
     upgradeToPro: PropTypes.func.isRequired,
     openInvoices: PropTypes.func.isRequired,
     onCloseSubscriptionWindow: PropTypes.func.isRequired,
+    server: PropTypes.string.isRequired,
   };
 
   static contextTypes = {
@@ -132,6 +143,7 @@ class AccountDashboard extends Component {
       upgradeToPro,
       openInvoices,
       onCloseSubscriptionWindow,
+      server,
     } = this.props;
     const { intl } = this.context;
 
@@ -141,6 +153,8 @@ class AccountDashboard extends Component {
       planName = i18nPlanName(user.team.plan, intl);
     }
 
+    const isUsingWithoutAccount = server === LOCAL_SERVER;
+
     return (
       <div className="settings__main">
         <div className="settings__header">
@@ -149,154 +163,186 @@ class AccountDashboard extends Component {
           </span>
         </div>
         <div className="settings__body">
-          {isLoading && (
-            <Loader />
-          )}
-
-          {!isLoading && userInfoRequestFailed && (
-            <Infobox
-              icon="alert"
-              type="danger"
-              ctaLabel={intl.formatMessage(messages.tryReloadUserInfoRequest)}
-              ctaLoading={isLoading}
-              ctaOnClick={retryUserInfoRequest}
-            >
-              {intl.formatMessage(messages.userInfoRequestFailed)}
-            </Infobox>
-          )}
-
-          {!userInfoRequestFailed && (
+          {isUsingWithoutAccount && (
             <>
-              {!isLoading && (
+              <h1 style={{ marginBottom: 0 }}>
+                {intl.formatMessage(messages.accountUnavailable)}
+              </h1>
+              <p
+                className="settings__message"
+                style={{
+                  borderTop: 0,
+                  marginTop: 0,
+                }}
+              >
+                {intl.formatMessage(messages.accountUnavailableInfo)}
+              </p>
+            </>
+          )}
+          {!isUsingWithoutAccount && (
+            <>
+              {isLoading && <Loader />}
+
+              {!isLoading && userInfoRequestFailed && (
+                <Infobox
+                  icon="alert"
+                  type="danger"
+                  ctaLabel={intl.formatMessage(
+                    messages.tryReloadUserInfoRequest,
+                  )}
+                  ctaLoading={isLoading}
+                  ctaOnClick={retryUserInfoRequest}
+                >
+                  {intl.formatMessage(messages.userInfoRequestFailed)}
+                </Infobox>
+              )}
+
+              {!userInfoRequestFailed && (
                 <>
-                  <div className="account">
-                    <div className="account__box account__box--flex">
-                      <div className="account__avatar">
-                        <img
-                          src="./assets/images/logo.svg"
-                          alt=""
-                        />
-                      </div>
-                      <div className="account__info">
-                        <H1>
-                          <span className="username">{`${user.firstname} ${user.lastname}`}</span>
-                          {user.isPremium && (
-                            <>
-                              {' '}
-                              <ProBadge />
-                            </>
-                          )}
-                        </H1>
-                        <p>
-                          {user.organization && `${user.organization}, `}
-                          {user.email}
-                        </p>
-                        {user.isPremium && (
-                          <div className="manage-user-links">
+                  {!isLoading && (
+                    <>
+                      <div className="account">
+                        <div className="account__box account__box--flex">
+                          <div className="account__avatar">
+                            <img src="./assets/images/logo.svg" alt="" />
+                          </div>
+                          <div className="account__info">
+                            <H1>
+                              <span className="username">{`${user.firstname} ${user.lastname}`}</span>
+                              {user.isPremium && (
+                                <>
+                                  {' '}
+                                  <ProBadge />
+                                </>
+                              )}
+                            </H1>
+                            <p>
+                              {user.organization && `${user.organization}, `}
+                              {user.email}
+                            </p>
+                            {user.isPremium && (
+                              <div className="manage-user-links">
+                                <Button
+                                  label={intl.formatMessage(
+                                    messages.accountEditButton,
+                                  )}
+                                  className="franz-form__button--inverted"
+                                  onClick={openEditAccount}
+                                />
+                              </div>
+                            )}
+                          </div>
+                          {!user.isPremium && (
                             <Button
-                              label={intl.formatMessage(messages.accountEditButton)}
+                              label={intl.formatMessage(
+                                messages.accountEditButton,
+                              )}
                               className="franz-form__button--inverted"
                               onClick={openEditAccount}
                             />
-                          </div>
-                        )}
+                          )}
+                        </div>
                       </div>
+                      {user.isPremium && user.isSubscriptionOwner && (
+                        <div className="account">
+                          <div className="account__box">
+                            <H2>{intl.formatMessage(messages.yourLicense)}</H2>
+                            <p>
+                              Franz
+                              {' '}
+                              {isPremiumOverrideUser ? 'Premium' : planName}
+                              {user.team.isTrial && (
+                                <>
+                                  {' – '}
+                                  {intl.formatMessage(messages.trial)}
+                                </>
+                              )}
+                            </p>
+                            {user.team.isTrial && (
+                              <>
+                                <br />
+                                <p>
+                                  {intl.formatMessage(messages.trialEndsIn, {
+                                    duration: moment
+                                      .duration(
+                                        moment().diff(user.team.trialEnd),
+                                      )
+                                      .humanize(),
+                                  })}
+                                </p>
+                                <p>
+                                  {intl.formatMessage(
+                                    messages.trialUpdateBillingInformation,
+                                    {
+                                      license: planName,
+                                    },
+                                  )}
+                                </p>
+                              </>
+                            )}
+                            {!isProUser && (
+                              <div className="manage-user-links">
+                                <Button
+                                  label={intl.formatMessage(
+                                    messages.upgradeAccountToPro,
+                                  )}
+                                  className="franz-form__button--primary"
+                                  onClick={upgradeToPro}
+                                />
+                              </div>
+                            )}
+                            <div className="manage-user-links">
+                              <Button
+                                label={intl.formatMessage(
+                                  messages.manageSubscriptionButtonLabel,
+                                )}
+                                className="franz-form__button--inverted"
+                                onClick={openBilling}
+                              />
+                              <Button
+                                label={intl.formatMessage(
+                                  messages.invoicesButton,
+                                )}
+                                className="franz-form__button--inverted"
+                                onClick={openInvoices}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      )}
                       {!user.isPremium && (
-                        <Button
-                          label={intl.formatMessage(messages.accountEditButton)}
-                          className="franz-form__button--inverted"
-                          onClick={openEditAccount}
-                        />
+                        <div className="account franz-form">
+                          <div className="account__box">
+                            <SubscriptionForm
+                              onCloseWindow={onCloseSubscriptionWindow}
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </>
+                  )}
+
+                  <div className="account franz-form">
+                    <div className="account__box">
+                      <H2>{intl.formatMessage(messages.headlineDangerZone)}</H2>
+                      {!isDeleteAccountSuccessful && (
+                        <div className="account__subscription">
+                          <p>{intl.formatMessage(messages.deleteInfo)}</p>
+                          <Button
+                            label={intl.formatMessage(messages.deleteAccount)}
+                            buttonType="danger"
+                            onClick={() => deleteAccount()}
+                            loaded={!isLoadingDeleteAccount}
+                          />
+                        </div>
+                      )}
+                      {isDeleteAccountSuccessful && (
+                        <p>{intl.formatMessage(messages.deleteEmailSent)}</p>
                       )}
                     </div>
                   </div>
-                  {user.isPremium && user.isSubscriptionOwner && (
-                    <div className="account">
-                      <div className="account__box">
-                        <H2>
-                          {intl.formatMessage(messages.yourLicense)}
-                        </H2>
-                        <p>
-                          Franz
-                          {' '}
-                          {isPremiumOverrideUser ? 'Premium' : planName}
-                          {user.team.isTrial && (
-                            <>
-                              {' – '}
-                              {intl.formatMessage(messages.trial)}
-                            </>
-                          )}
-                        </p>
-                        {user.team.isTrial && (
-                          <>
-                            <br />
-                            <p>
-                              {intl.formatMessage(messages.trialEndsIn, {
-                                duration: moment.duration(moment().diff(user.team.trialEnd)).humanize(),
-                              })}
-                            </p>
-                            <p>
-                              {intl.formatMessage(messages.trialUpdateBillingInformation, {
-                                license: planName,
-                              })}
-                            </p>
-                          </>
-                        )}
-                        {!isProUser && (
-                          <div className="manage-user-links">
-                            <Button
-                              label={intl.formatMessage(messages.upgradeAccountToPro)}
-                              className="franz-form__button--primary"
-                              onClick={upgradeToPro}
-                            />
-                          </div>
-                        )}
-                        <div className="manage-user-links">
-                          <Button
-                            label={intl.formatMessage(messages.manageSubscriptionButtonLabel)}
-                            className="franz-form__button--inverted"
-                            onClick={openBilling}
-                          />
-                          <Button
-                            label={intl.formatMessage(messages.invoicesButton)}
-                            className="franz-form__button--inverted"
-                            onClick={openInvoices}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  {!user.isPremium && (
-                    <div className="account franz-form">
-                      <div className="account__box">
-                        <SubscriptionForm
-                          onCloseWindow={onCloseSubscriptionWindow}
-                        />
-                      </div>
-                    </div>
-                  )}
                 </>
               )}
-
-              <div className="account franz-form">
-                <div className="account__box">
-                  <H2>{intl.formatMessage(messages.headlineDangerZone)}</H2>
-                  {!isDeleteAccountSuccessful && (
-                  <div className="account__subscription">
-                    <p>{intl.formatMessage(messages.deleteInfo)}</p>
-                    <Button
-                      label={intl.formatMessage(messages.deleteAccount)}
-                      buttonType="danger"
-                      onClick={() => deleteAccount()}
-                      loaded={!isLoadingDeleteAccount}
-                    />
-                  </div>
-                  )}
-                  {isDeleteAccountSuccessful && (
-                  <p>{intl.formatMessage(messages.deleteEmailSent)}</p>
-                  )}
-                </div>
-              </div>
             </>
           )}
         </div>

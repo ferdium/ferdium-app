@@ -83,6 +83,7 @@ export default class ServicesStore extends Store {
     this.actions.service.openDevTools.listen(this._openDevTools.bind(this));
     this.actions.service.openDevToolsForActiveService.listen(this._openDevToolsForActiveService.bind(this));
     this.actions.service.setHibernation.listen(this._setHibernation.bind(this));
+    this.actions.service.shareSettingsWithServiceProcess.listen(this._shareSettingsWithServiceProcess.bind(this));
 
     this.registerReactions([
       this._focusServiceReaction.bind(this),
@@ -112,6 +113,11 @@ export default class ServicesStore extends Store {
 
     reaction(
       () => this.stores.settings.app.darkMode,
+      () => this._shareSettingsWithServiceProcess(),
+    );
+
+    reaction(
+      () => this.stores.settings.app.adaptableDarkMode,
       () => this._shareSettingsWithServiceProcess(),
     );
 
@@ -766,7 +772,10 @@ export default class ServicesStore extends Store {
   }
 
   _shareSettingsWithServiceProcess() {
-    const settings = this.stores.settings.app;
+    const settings = {
+      ...this.stores.settings.app,
+      isDarkThemeActive: this.stores.ui.isDarkThemeActive,
+    };
     this.actions.service.sendIPCMessageToAllServices({
       channel: 'settings-update',
       args: settings,

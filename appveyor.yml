@@ -1,13 +1,9 @@
 environment:
   APPVEYOR_CACHE_SKIP_RESTORE: true
 
-version: 5.0.1.{build}
+version: 5.4.1-beta.4.{build}
 
 install:
-  - ps: $fileContent = "-----BEGIN RSA PRIVATE KEY-----`n"
-  - ps: $fileContent += $env:priv_key.Replace(' ', "`n")
-  - ps: $fileContent += "`n-----END RSA PRIVATE KEY-----`n"
-  - ps: Set-Content $env:userprofile\.ssh\id_rsa $fileContent
   - git submodule update --init --recursive
   - ps: Install-Product node 10
   - npx lerna bootstrap
@@ -17,7 +13,7 @@ cache:
 
 before_build:
   - npm run lint
-  - npm run test
+  - cmd: set NODE_ENV=production
 
 build_script:
   - npm run build
@@ -27,13 +23,3 @@ branches:
     - i18n
     - l10n_master
     - l10n_develop
-
-for:
-  - branches:
-      only:
-        - master
-        - /v\d*\.\d*\.\d*/
-        - /v\d*\.\d*\.\d*-beta\.\d*/
-    artifacts:
-      - path: out\*.exe
-      - path: out\*.yml

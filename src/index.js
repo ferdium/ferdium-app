@@ -9,9 +9,16 @@ import fs from 'fs-extra';
 import path from 'path';
 import windowStateKeeper from 'electron-window-state';
 
-if (process.platform === 'win32') {
-  app.setPath('appData', process.env.LOCALAPPDATA);
-  app.setPath('userData', path.join(process.env.LOCALAPPDATA, app.getName()));
+// Set app directory before loading user modules
+if (process.env.FERDI_APPDATA_DIR != null) {
+  app.setPath('appData', process.env.FERDI_APPDATA_DIR);
+  app.setPath('userData', path.join(app.getPath('appData')));
+} else if (process.env.PORTABLE_EXECUTABLE_DIR != null) {
+  app.setPath('appData', process.env.PORTABLE_EXECUTABLE_DIR, `${app.getName()}AppData`);
+  app.setPath('userData', path.join(app.getPath('appData'), `${app.getName()}AppData`));
+} else if (process.platform === 'win32') {
+  app.setPath('appData', process.env.APPDATA);
+  app.setPath('userData', path.join(app.getPath('appData'), app.getName()));
 }
 
 if (isDevMode) {
@@ -71,6 +78,11 @@ if (isWindows) {
 // Initialize Settings
 const settings = new Settings('app', DEFAULT_APP_SETTINGS);
 const proxySettings = new Settings('proxy');
+
+if (settings.get('sentry')) {
+  // eslint-disable-next-line global-require
+  require('./sentry');
+}
 
 // add `liftSingleInstanceLock` to settings.json to override the single instance lock
 const liftSingleInstanceLock = settings.get('liftSingleInstanceLock') || false;
@@ -134,6 +146,8 @@ const createWindow = () => {
   const mainWindowState = windowStateKeeper({
     defaultWidth: DEFAULT_WINDOW_OPTIONS.width,
     defaultHeight: DEFAULT_WINDOW_OPTIONS.height,
+    maximize: false,
+    fullScreen: false,
   });
 
   let posX = mainWindowState.x || DEFAULT_WINDOW_OPTIONS.x;
@@ -160,20 +174,24 @@ const createWindow = () => {
     height: mainWindowState.height,
     minWidth: 600,
     minHeight: 500,
+    show: false,
     titleBarStyle: isMac ? 'hidden' : '',
     frame: isLinux,
     backgroundColor,
     webPreferences: {
       nodeIntegration: true,
       webviewTag: true,
+      preload: path.join(__dirname, 'sentry.js'),
     },
   });
 
   mainWindow.webContents.on('did-finish-load', () => {
     const fns = onDidLoadFns;
     onDidLoadFns = null;
-    for (const fn of fns) { // eslint-disable-line no-unused-vars
-      fn(mainWindow);
+    if (fns) {
+      for (const fn of fns) { // eslint-disable-line no-unused-vars
+        fn(mainWindow);
+      }
     }
   });
 
@@ -289,6 +307,10 @@ const createWindow = () => {
       shell.openExternal(url);
     }
   });
+
+  if (!(settings.get('enableSystemTray') && settings.get('startMinimized'))) {
+    mainWindow.show();
+  }
 };
 
 // Allow passing command line parameters/switches to electron

@@ -1,15 +1,20 @@
 import {
-  action,
-  observable,
-  computed,
-  reaction,
+  action, observable, computed, reaction,
 } from 'mobx';
 import { theme } from '@meetfranz/theme';
+import { remote } from 'electron';
 
 import Store from './lib/Store';
+import { isMac } from '../environment';
+
+const { nativeTheme, systemPreferences } = remote;
 
 export default class UIStore extends Store {
   @observable showServicesUpdatedInfoBar = false;
+
+  @observable isOsDarkThemeActive = isMac
+    ? nativeTheme.shouldUseDarkColors
+    : false;
 
   constructor(...args) {
     super(...args);
@@ -17,7 +22,20 @@ export default class UIStore extends Store {
     // Register action handlers
     this.actions.ui.openSettings.listen(this._openSettings.bind(this));
     this.actions.ui.closeSettings.listen(this._closeSettings.bind(this));
-    this.actions.ui.toggleServiceUpdatedInfoBar.listen(this._toggleServiceUpdatedInfoBar.bind(this));
+    this.actions.ui.toggleServiceUpdatedInfoBar.listen(
+      this._toggleServiceUpdatedInfoBar.bind(this),
+    );
+
+    // Listen for theme change on MacOS
+    if (isMac) {
+      systemPreferences.subscribeNotification(
+        'AppleInterfaceThemeChangedNotification',
+        () => {
+          this.isOsDarkThemeActive = nativeTheme.shouldUseDarkColors;
+          this.actions.service.shareSettingsWithServiceProcess();
+        },
+      );
+    }
   }
 
   setup() {
@@ -31,11 +49,23 @@ export default class UIStore extends Store {
   @computed get showMessageBadgesEvenWhenMuted() {
     const settings = this.stores.settings.all;
 
-    return (settings.app.isAppMuted && settings.app.showMessageBadgeWhenMuted) || !settings.app.isAppMuted;
+    return (
+      (settings.app.isAppMuted && settings.app.showMessageBadgeWhenMuted)
+      || !settings.app.isAppMuted
+    );
   }
 
   @computed get isDarkThemeActive() {
-    return this.stores.settings.all.app.darkMode;
+    const isMacWithAdaptableInDarkMode = isMac
+      && this.stores.settings.all.app.adaptableDarkMode
+      && this.isOsDarkThemeActive;
+    const isMacWithoutAdaptableInDarkMode = isMac
+      && this.stores.settings.all.app.darkMode
+      && !this.stores.settings.all.app.adaptableDarkMode;
+    const isNotMacInDarkMode = !isMac && this.stores.settings.all.app.darkMode;
+    return !!(isMacWithAdaptableInDarkMode
+      || isMacWithoutAdaptableInDarkMode
+      || isNotMacInDarkMode);
   }
 
   @computed get theme() {

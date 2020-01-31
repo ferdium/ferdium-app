@@ -1,5 +1,5 @@
 build/
 out/
 packages/*/lib
-src/server
+src/internal-server
 recipes/
