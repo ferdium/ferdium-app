@@ -284,6 +284,7 @@
   "settings.app.form.showDisabledServices": "Tampilkan tab layanan yang dinonaktifkan",
   "settings.app.form.showMessagesBadgesWhenMuted": "Tampilkan lencana pesan belum dibaca saat pemberitahuan dinonaktifkan",
   "settings.app.form.showServiceNavigationBar": "Always show service navigation bar",
+  "settings.app.form.startMinimized": "Start minimized in tray",
   "settings.app.form.todoServer": "Todo Server",
   "settings.app.form.universalDarkMode": "Enable universal Dark Mode",
   "settings.app.headline": "Pengaturan",
