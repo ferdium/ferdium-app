@@ -39,12 +39,12 @@
     }
   },
   {
-    "id": "settings.app.form.enableSystemTray",
-    "defaultMessage": "!!!Show Ferdi in system tray",
+    "id": "settings.app.form.startMinimized",
+    "defaultMessage": "!!!Start minimized in tray",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
       "line": 41,
-      "column": 20
+      "column": 18
     },
     "end": {
       "line": 44,
@@ -52,12 +52,12 @@
     }
   },
   {
-    "id": "settings.app.form.minimizeToSystemTray",
-    "defaultMessage": "!!!Minimize Ferdi to system tray",
+    "id": "settings.app.form.enableSystemTray",
+    "defaultMessage": "!!!Show Ferdi in system tray",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
       "line": 45,
-      "column": 24
+      "column": 20
     },
     "end": {
       "line": 48,
@@ -65,8 +65,8 @@
     }
   },
   {
-    "id": "settings.app.form.privateNotifications",
-    "defaultMessage": "!!!Don't show message content in notifications",
+    "id": "settings.app.form.minimizeToSystemTray",
+    "defaultMessage": "!!!Minimize Ferdi to system tray",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
       "line": 49,
@@ -78,15 +78,28 @@
     }
   },
   {
+    "id": "settings.app.form.privateNotifications",
+    "defaultMessage": "!!!Don't show message content in notifications",
+    "file": "src/containers/settings/EditSettingsScreen.js",
+    "start": {
+      "line": 53,
+      "column": 24
+    },
+    "end": {
+      "line": 56,
+      "column": 3
+    }
+  },
+  {
     "id": "settings.app.form.showServiceNavigationBar",
     "defaultMessage": "!!!Always show service navigation bar",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
-      "line": 53,
+      "line": 57,
       "column": 28
     },
     "end": {
-      "line": 56,
+      "line": 60,
       "column": 3
     }
   },
@@ -95,11 +108,11 @@
     "defaultMessage": "!!!Enable service hibernation",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
-      "line": 57,
+      "line": 61,
       "column": 13
     },
     "end": {
-      "line": 60,
+      "line": 64,
       "column": 3
     }
   },
@@ -108,11 +121,11 @@
     "defaultMessage": "!!!Hibernation strategy",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
-      "line": 61,
+      "line": 65,
       "column": 23
     },
     "end": {
-      "line": 64,
+      "line": 68,
       "column": 3
     }
   },
@@ -121,21 +134,8 @@
     "defaultMessage": "!!!Server",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
-      "line": 65,
-      "column": 10
-    },
-    "end": {
-      "line": 68,
-      "column": 3
-    }
-  },
-  {
-    "id": "settings.app.form.todoServer",
-    "defaultMessage": "!!!Todo Server",
-    "file": "src/containers/settings/EditSettingsScreen.js",
-    "start": {
       "line": 69,
-      "column": 14
+      "column": 10
     },
     "end": {
       "line": 72,
@@ -143,8 +143,8 @@
     }
   },
   {
-    "id": "settings.app.form.enableLock",
-    "defaultMessage": "!!!Enable Password Lock",
+    "id": "settings.app.form.todoServer",
+    "defaultMessage": "!!!Todo Server",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
       "line": 73,
@@ -156,15 +156,28 @@
     }
   },
   {
+    "id": "settings.app.form.enableLock",
+    "defaultMessage": "!!!Enable Password Lock",
+    "file": "src/containers/settings/EditSettingsScreen.js",
+    "start": {
+      "line": 77,
+      "column": 14
+    },
+    "end": {
+      "line": 80,
+      "column": 3
+    }
+  },
+  {
     "id": "settings.app.form.lockPassword",
     "defaultMessage": "!!!Password",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
-      "line": 77,
+      "line": 81,
       "column": 16
     },
     "end": {
-      "line": 80,
+      "line": 84,
       "column": 3
     }
   },

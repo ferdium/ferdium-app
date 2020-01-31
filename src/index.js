@@ -142,6 +142,8 @@ const createWindow = () => {
   const mainWindowState = windowStateKeeper({
     defaultWidth: DEFAULT_WINDOW_OPTIONS.width,
     defaultHeight: DEFAULT_WINDOW_OPTIONS.height,
+    maximize: false,
+    fullScreen: false,
   });
 
   let posX = mainWindowState.x || DEFAULT_WINDOW_OPTIONS.x;
@@ -168,6 +170,7 @@ const createWindow = () => {
     height: mainWindowState.height,
     minWidth: 600,
     minHeight: 500,
+    show: false,
     titleBarStyle: isMac ? 'hidden' : '',
     frame: isLinux,
     backgroundColor,
@@ -300,6 +303,10 @@ const createWindow = () => {
       shell.openExternal(url);
     }
   });
+
+  if (!(settings.get('enableSystemTray') && settings.get('startMinimized'))) {
+    mainWindow.show();
+  }
 };
 
 // Allow passing command line parameters/switches to electron

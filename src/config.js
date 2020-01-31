@@ -47,6 +47,7 @@ export const DEFAULT_APP_SETTINGS = {
   autoLaunchInBackground: false,
   runInBackground: true,
   enableSystemTray: true,
+  startMinimized: false,
   minimizeToSystemTray: false,
   privateNotifications: false,
   showDisabledServices: true,
