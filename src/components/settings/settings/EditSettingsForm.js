@@ -254,6 +254,9 @@ export default @observer class EditSettingsForm extends Component {
             {isTrayEnabled && <Toggle field={form.$('startMinimized')} />}
             <Toggle field={form.$('privateNotifications')} />
             <Toggle field={form.$('showServiceNavigationBar')} />
+
+            <Hr />
+
             <Toggle field={form.$('sentry')} />
             <p>{intl.formatMessage(messages.sentryInfo)}</p>
 
@@ -319,6 +322,9 @@ export default @observer class EditSettingsForm extends Component {
                 />
               </p>
             )}
+
+            <Hr />
+
             {isWorkspaceEnabled && (
               <Toggle field={form.$('keepAllWorkspacesLoaded')} />
             )}
@@ -440,6 +446,9 @@ export default @observer class EditSettingsForm extends Component {
             <h2 id="apperance">{intl.formatMessage(messages.headlineAppearance)}</h2>
             <Toggle field={form.$('showDisabledServices')} />
             <Toggle field={form.$('showMessageBadgeWhenMuted')} />
+
+            <Hr />
+
             {isMac && <Toggle field={form.$('adaptableDarkMode')} />}
             {!(isMac && isAdaptableDarkModeEnabled) && <Toggle field={form.$('darkMode')} disabled={isAdaptableDarkModeEnabled} />}
             {(isDarkmodeEnabled || isAdaptableDarkModeEnabled) && (
@@ -458,6 +467,8 @@ export default @observer class EditSettingsForm extends Component {
               </>
             )}
 
+            <Hr />
+
             <Input
               placeholder="Accent Color"
               onChange={e => this.submit(e)}
@@ -468,6 +479,9 @@ export default @observer class EditSettingsForm extends Component {
             {/* Language */}
             <h2 id="language">{intl.formatMessage(messages.headlineLanguage)}</h2>
             <Select field={form.$('locale')} showLabel={false} />
+
+            <Hr />
+
             <PremiumFeatureContainer
               condition={!isSpellcheckerIncludedInCurrentPlan}
               gaEventInfo={{ category: 'User', event: 'upgrade', label: 'spellchecker' }}
