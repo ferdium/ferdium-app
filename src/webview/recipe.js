@@ -1,9 +1,16 @@
+/* eslint-disable import/first */
 import { ipcRenderer } from 'electron';
 import path from 'path';
 import { autorun, computed, observable } from 'mobx';
 import fs from 'fs-extra';
 import { loadModule } from 'cld3-asm';
 import { debounce } from 'lodash';
+
+// For some services darkreader tries to use the chrome extension message API
+// This will cause the service to fail loading
+// As the message API is not actually needed, we'll add this shim sendMessage
+// function in order for darkreader to continue working
+window.chrome.runtime.sendMessage = () => {};
 import {
   enable as enableDarkMode,
   disable as disableDarkMode,
@@ -120,8 +127,13 @@ class RecipeController {
       }
     }
 
-    console.log('Set theme to: ', this.settings.service.isDarkModeEnabled ? 'Dark' : 'Light');
-    if (this.settings.service.isDarkModeEnabled) {
+    console.log(
+      'Darkmode enabled?',
+      this.settings.service.isDarkModeEnabled,
+      'Dark theme active?',
+      this.settings.app.isDarkThemeActive,
+    );
+    if (this.settings.service.isDarkModeEnabled && this.settings.app.isDarkThemeActive !== false) {
       debug('Enable dark mode');
 
       // Check if recipe has a darkmode.css

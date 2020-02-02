@@ -39,7 +39,6 @@ import handleDeepLink from './electron/deepLinking';
 import { isPositionValid } from './electron/windowUtils';
 import { appId } from './package.json'; // eslint-disable-line import/no-unresolved
 import './electron/exception';
-import './sentry';
 
 import {
   DEFAULT_APP_SETTINGS,
@@ -79,6 +78,11 @@ if (isWindows) {
 // Initialize Settings
 const settings = new Settings('app', DEFAULT_APP_SETTINGS);
 const proxySettings = new Settings('proxy');
+
+if (settings.get('sentry')) {
+  // eslint-disable-next-line global-require
+  require('./sentry');
+}
 
 // add `liftSingleInstanceLock` to settings.json to override the single instance lock
 const liftSingleInstanceLock = settings.get('liftSingleInstanceLock') || false;
@@ -142,6 +146,8 @@ const createWindow = () => {
   const mainWindowState = windowStateKeeper({
     defaultWidth: DEFAULT_WINDOW_OPTIONS.width,
     defaultHeight: DEFAULT_WINDOW_OPTIONS.height,
+    maximize: false,
+    fullScreen: false,
   });
 
   let posX = mainWindowState.x || DEFAULT_WINDOW_OPTIONS.x;
@@ -168,6 +174,7 @@ const createWindow = () => {
     height: mainWindowState.height,
     minWidth: 600,
     minHeight: 500,
+    show: false,
     titleBarStyle: isMac ? 'hidden' : '',
     frame: isLinux,
     backgroundColor,
@@ -300,6 +307,10 @@ const createWindow = () => {
       shell.openExternal(url);
     }
   });
+
+  if (!(settings.get('enableSystemTray') && settings.get('startMinimized'))) {
+    mainWindow.show();
+  }
 };
 
 // Allow passing command line parameters/switches to electron

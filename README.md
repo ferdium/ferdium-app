@@ -92,6 +92,8 @@ If you use an AUR Helper e.g. yay, simply install it via `yay -S ferdi-bin`.
 - [x] Remove bug that would incorrectly display unread messages count on some services (more info in [7566ccd](https://github.com/getferdi/ferdi/commit/7566ccd))
 - [x] Makes all users Premium by default ([#15](https://github.com/getferdi/ferdi/issues/15))
 - [x] Using the Ferdi API instead of Franz's servers
+- [x] Upgrading to Electron 7
+- [x] Add several new services
 - [x] [Add option to change server to a custom](https://github.com/getferdi/ferdi/wiki/Custom-Server) [ferdi-server](https://github.com/getferdi/server)
 - [x] Add option to use Ferdi without an account ([#5](https://github.com/getferdi/ferdi/issues/5))
 - [x] Add "Private Notification"-Mode, that hides message content from notifications ([franz#879](https://github.com/meetfranz/franz/issues/879))
@@ -111,12 +113,14 @@ If you use an AUR Helper e.g. yay, simply install it via `yay -S ferdi-bin`.
 - [x] Add Process Manager to find services using a lot of resources
 - [x] Add "npm run prepare-code" command for development to lint and beautify code
 - [x] Add button to open darkmode.css for a service
+- [x] Allow SVGs for service custom icon
 - [x] Switch to [`electron-spellchecker`](https://github.com/electron-userland/electron-spellchecker) to improve application size
 - [x] Improve "About Ferdi" screen to better display versions
 - [x] Minifying build files to improve app size
 - [x] [Makes it possible to edit the "Franz Todo" server](https://github.com/getferdi/ferdi/wiki/Custom-Todo)
 - [x] Makes RocketChat self-hosted generally available ([#6](https://github.com/getferdi/ferdi/issues/6))
 - [x] Comes with a custom branding proper to Ferdi
+- [x] UI improvements
 
 ## Development
 
@@ -250,6 +254,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="http://lhw.ring0.de"><img src="https://avatars2.githubusercontent.com/u/351875?v=4" width="40px;" alt=""/><br /><sub><b>Lennart Weller</b></sub></a><br /><a href="#platform-lhw" title="Packaging/porting to new platform">📦</a></td>
+    <td align="center"><a href="https://github.com/jereksel"><img src="https://avatars0.githubusercontent.com/u/1307829?v=4" width="40px;" alt=""/><br /><sub><b>Andrzej Ressel</b></sub></a><br /><a href="https://github.com/getferdi/ferdi/commits?author=jereksel" title="Code">💻</a></td>
   </tr>
 </table>
 

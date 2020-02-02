@@ -47,6 +47,7 @@ export const DEFAULT_APP_SETTINGS = {
   autoLaunchInBackground: false,
   runInBackground: true,
   enableSystemTray: true,
+  startMinimized: false,
   minimizeToSystemTray: false,
   privateNotifications: false,
   showDisabledServices: true,
@@ -80,6 +81,7 @@ export const DEFAULT_APP_SETTINGS = {
   adaptableDarkMode: true,
   accentColor: '#7367f0',
   serviceRibbonWidth: 68,
+  sentry: false,
 };
 
 export const DEFAULT_FEATURES_CONFIG = {
