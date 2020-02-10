@@ -1,6 +1,6 @@
-import { computed, observable, autorun } from 'mobx';
-import path from 'path';
+import { autorun, computed, observable } from 'mobx';
 import normalizeUrl from 'normalize-url';
+import path from 'path';
 
 const debug = require('debug')('Ferdi:Service');
 
@@ -146,7 +146,7 @@ export default class Service {
     if (this.recipe.hasCustomUrl && this.customUrl) {
       let url;
       try {
-        url = normalizeUrl(this.customUrl, { stripWWW: false });
+        url = normalizeUrl(this.customUrl, { stripWWW: false, removeTrailingSlash: false });
       } catch (err) {
         console.error(`Service (${this.recipe.name}): '${this.customUrl}' is not a valid Url.`);
       }
