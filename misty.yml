@@ -2,5 +2,5 @@ code:
   cmd: npm run dev
 
 app:
-  cmd: npx electron ./build
+  cmd: npm start
   waitOn: http://localhost:8000

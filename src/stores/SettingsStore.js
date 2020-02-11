@@ -47,9 +47,11 @@ export default class SettingsStore extends Store {
 
     reaction(
       () => this.all.app.autohideMenuBar,
-      () => remote.getCurrentWindow().setAutoHideMenuBar(
-        this.all.app.autohideMenuBar,
-      ),
+      () => {
+        const currentWindow = remote.getCurrentWindow();
+        currentWindow.setMenuBarVisibility(!this.all.app.autohideMenuBar);
+        currentWindow.setAutoHideMenuBar(this.all.app.autohideMenuBar);
+      },
     );
 
     reaction(
