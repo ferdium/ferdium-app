@@ -22,16 +22,11 @@ If applicable, add screenshots to help explain your problem.
 
 **Desktop (please complete the following information):**
 
-- OS: [e.g. iOS]
-- Browser [e.g. chrome, safari]
-- Version [e.g. 22]
-
-**Smartphone (please complete the following information):**
-
-- Device: [e.g. iPhone6]
-- OS: [e.g. iOS8.1]
-- Browser [e.g. stock browser, safari]
-- Version [e.g. 22]
+- OS: [e.g. macOS, Windows 10 etc.]
+- Ferdi Version [e.g. 5.4.3]
+<!-- You can find Ferdi's version by opening File > About Ferdi or Help > About Ferdi, depending on your Operating System -->
+- Server Used: [e.g. https://api.getferdi.com]
+<!-- You can find Ferdi's server in Ferdi's settings under "Server". If you self-host or use Ferdi without an account please say so. -->
 
 **Additional context**
 Add any other context about the problem here.
