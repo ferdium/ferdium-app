@@ -22,10 +22,10 @@ ipcRenderer.on(IPC.TODOS_HOST_CHANNEL, (event, message) => {
   hostMessageListener(message);
 });
 
-if (location.href === 'https://app.franztodos.com/login/') {
+if (window.location.href === 'https://app.franztodos.com/login/') {
   // Insert info element informing about Franz accounts
   const infoElement = document.createElement('p');
-  infoElement.innerText = `You are using Franz\'s official Todo Service.
+  infoElement.innerText = `You are using Franz's official Todo Service.
 This service will only work with accounts registered with Franz - no Ferdi accounts will work here!
 If you do not have a Franz account you can change the Todo service by going into Ferdi's settings and changing the "Todo server".
 You can choose any service as this Todo server, e.g. Todoist or Apple Notes.`;
