@@ -450,7 +450,7 @@ export default @observer class EditSettingsForm extends Component {
             <Hr />
 
             {isMac && <Toggle field={form.$('adaptableDarkMode')} />}
-            {!(isMac && isAdaptableDarkModeEnabled) && <Toggle field={form.$('darkMode')} disabled={isAdaptableDarkModeEnabled} />}
+            {!(isMac && isAdaptableDarkModeEnabled) && <Toggle field={form.$('darkMode')} />}
             {(isDarkmodeEnabled || isAdaptableDarkModeEnabled) && (
               <>
                 <Toggle field={form.$('universalDarkMode')} />
