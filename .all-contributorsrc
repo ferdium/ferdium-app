@@ -287,6 +287,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "dpeukert",
+      "name": "Daniel Peukert",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/3451904?v=4",
+      "profile": "https://gitlab.com/dpeukert",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 6,
