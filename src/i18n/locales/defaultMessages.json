@@ -5052,55 +5052,68 @@
         }
       },
       {
-        "defaultMessage": "!!!Privacy policy",
+        "defaultMessage": "!!!There was an error while trying to publish the debug information. Please try again later or view the console for more information.",
         "end": {
           "column": 3,
           "line": 28
         },
         "file": "src/features/publishDebugInfo/Component.js",
+        "id": "feature.publishDebugInfo.error",
+        "start": {
+          "column": 9,
+          "line": 25
+        }
+      },
+      {
+        "defaultMessage": "!!!Privacy policy",
+        "end": {
+          "column": 3,
+          "line": 32
+        },
+        "file": "src/features/publishDebugInfo/Component.js",
         "id": "feature.publishDebugInfo.privacy",
         "start": {
           "column": 11,
-          "line": 25
+          "line": 29
         }
       },
       {
         "defaultMessage": "!!!Terms of service",
         "end": {
           "column": 3,
-          "line": 32
+          "line": 36
         },
         "file": "src/features/publishDebugInfo/Component.js",
         "id": "feature.publishDebugInfo.terms",
         "start": {
           "column": 9,
-          "line": 29
+          "line": 33
         }
       },
       {
         "defaultMessage": "!!!Accept and publish",
         "end": {
           "column": 3,
-          "line": 36
+          "line": 40
         },
         "file": "src/features/publishDebugInfo/Component.js",
         "id": "feature.publishDebugInfo.publish",
         "start": {
           "column": 11,
-          "line": 33
+          "line": 37
         }
       },
       {
         "defaultMessage": "!!!Your debug log was published and is now availible at",
         "end": {
           "column": 3,
-          "line": 40
+          "line": 44
         },
         "file": "src/features/publishDebugInfo/Component.js",
         "id": "feature.publishDebugInfo.published",
         "start": {
           "column": 13,
-          "line": 37
+          "line": 41
         }
       }
     ],

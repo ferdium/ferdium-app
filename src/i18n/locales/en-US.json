@@ -26,6 +26,7 @@
   "feature.planSelection.personal.text": "More services, no waiting - ideal for personal use.",
   "feature.planSelection.pricesBasedOnAnnualPayment": "All prices based on yearly payment",
   "feature.planSelection.pro.text": "Unlimited services and professional features for you - and your team.",
+  "feature.publishDebugInfo.error": "There was an error while trying to publish the debug information. Please try again later or view the console for more information.",
   "feature.publishDebugInfo.info": "Publishing your debug information helps us find issues and errors in Ferdi. By publishing your debug information you accept Ferdi Debugger's privacy policy and terms of service",
   "feature.publishDebugInfo.privacy": "Privacy policy",
   "feature.publishDebugInfo.publish": "Accept and publish",

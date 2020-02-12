@@ -22,6 +22,10 @@ const messages = defineMessages({
     id: 'feature.publishDebugInfo.info',
     defaultMessage: '!!!Publishing your debug information helps us find issues and errors in Ferdi. By publishing your debug information you accept Ferdi Debugger\'s privacy policy and terms of service',
   },
+  error: {
+    id: 'feature.publishDebugInfo.error',
+    defaultMessage: '!!!There was an error while trying to publish the debug information. Please try again later or view the console for more information.',
+  },
   privacy: {
     id: 'feature.publishDebugInfo.privacy',
     defaultMessage: '!!!Privacy policy',
@@ -86,6 +90,7 @@ export default @injectSheet(styles) @inject('stores') @observer class PublishDeb
 
   state = {
     log: null,
+    error: false,
     isSendingLog: false,
   }
 
@@ -114,8 +119,9 @@ export default @injectSheet(styles) @inject('stores') @observer class PublishDeb
         log: response.id,
       });
     } else {
-      // TODO: Show error message
-      this.close();
+      this.setState({
+        error: true,
+      });
     }
   }
 
@@ -128,6 +134,8 @@ export default @injectSheet(styles) @inject('stores') @observer class PublishDeb
 
     const {
       log,
+      error,
+      isSendingLog,
     } = this.state;
 
     const { intl } = this.context;
@@ -136,13 +144,13 @@ export default @injectSheet(styles) @inject('stores') @observer class PublishDeb
       <Modal
         isOpen={isModalVisible}
         shouldCloseOnOverlayClick
-        close={this.close.bind(this)}
+        close={() => this.close()}
       >
         <div className={classes.container}>
           <H1>
             {intl.formatMessage(messages.title)}
           </H1>
-          { log ? (
+          { log && (
             <>
               <p className={classes.info}>{intl.formatMessage(messages.published)}</p>
               <Input
@@ -156,7 +164,13 @@ export default @injectSheet(styles) @inject('stores') @observer class PublishDeb
                 readonly
               />
             </>
-          ) : (
+          )}
+
+          {error && (
+            <p className={classes.info}>{intl.formatMessage(messages.error)}</p>
+          )}
+
+          {!log && !error && (
             <>
               <p className={classes.info}>{intl.formatMessage(messages.info)}</p>
 
@@ -171,11 +185,11 @@ export default @injectSheet(styles) @inject('stores') @observer class PublishDeb
                 type="button"
                 label={intl.formatMessage(messages.publish)}
                 className={classes.button}
-                onClick={this.publishDebugInfo.bind(this)}
-                disabled={this.state.isSendingLog}
+                onClick={() => this.publishDebugInfo()}
+                disabled={isSendingLog}
               />
             </>
-          ) }
+          )}
         </div>
       </Modal>
     );
