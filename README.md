@@ -180,11 +180,17 @@ $ npm run rebuild
 
 ### Start development app
 
-Run these two commands **simultaneously** in different console tabs:
+Run these two commands **simultaneously** in different terminals:
 
 ```bash
 $ npm run dev
 $ npm run start
+```
+
+Optionally, you can run both commands in one terminal with [misty](https://github.com/adlk/misty) (see [misty.yml](https://github.com/getferdi/ferdi/blob/develop/misty.yml)):
+
+```bash
+$ npx misty
 ```
 
 Be aware that the development database will be reset regularly.
@@ -255,6 +261,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="http://lhw.ring0.de"><img src="https://avatars2.githubusercontent.com/u/351875?v=4" width="40px;" alt=""/><br /><sub><b>Lennart Weller</b></sub></a><br /><a href="#platform-lhw" title="Packaging/porting to new platform">📦</a></td>
     <td align="center"><a href="https://github.com/jereksel"><img src="https://avatars0.githubusercontent.com/u/1307829?v=4" width="40px;" alt=""/><br /><sub><b>Andrzej Ressel</b></sub></a><br /><a href="https://github.com/getferdi/ferdi/commits?author=jereksel" title="Code">💻</a></td>
+    <td align="center"><a href="https://gitlab.com/dpeukert"><img src="https://avatars2.githubusercontent.com/u/3451904?v=4" width="40px;" alt=""/><br /><sub><b>Daniel Peukert</b></sub></a><br /><a href="https://github.com/getferdi/ferdi/commits?author=dpeukert" title="Code">💻</a></td>
   </tr>
 </table>
 

@@ -66,8 +66,7 @@ export const DEFAULT_APP_SETTINGS = {
 
   // Ferdi specific options
   server: LIVE_API,
-  // todoServer: PRODUCTION_TODOS_FRONTEND_URL,
-  todoServer: 'https://todoist.com/app',
+  todoServer: PRODUCTION_TODOS_FRONTEND_URL,
   autohideMenuBar: false,
   lockingFeatureEnabled: false,
   locked: false,
