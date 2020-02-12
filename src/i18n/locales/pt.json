@@ -2,7 +2,7 @@
   "app.errorHandler.action": "Recarregar",
   "app.errorHandler.headline": "Alguma coisa correu mal",
   "feature.announcements.changelog.headline": "Alterações no Ferdi {version}",
-  "feature.debugger.title": "Publish debugging information",
+  "feature.debugger.title": "Publicar informações de depuração",
   "feature.delayApp.headline": "Por favor compre uma licença Ferdi Supporter para saltar a fila de espera",
   "feature.delayApp.text": "Ferdi irá continuar em {seconds} segundos.",
   "feature.delayApp.trial.action": "Sim, Quero a versão experimental do Ferdi Profissional de 14 dias",
