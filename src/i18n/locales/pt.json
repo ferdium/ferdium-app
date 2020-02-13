@@ -27,7 +27,7 @@
   "feature.planSelection.pricesBasedOnAnnualPayment": "All prices based on yearly payment",
   "feature.planSelection.pro.text": "Unlimited services and professional features for you - and your team.",
   "feature.publishDebugInfo.error": "Ocorreu um erro ao tentar publicar as informações de depuração. Por favor tente novamente mais tarde ou verifique o console para mais informações.",
-  "feature.publishDebugInfo.info": "Publicando suas informações de depuração nos permite encontrar erros no Ferdi. Para publicar essas informações é necessário aceitar os termos privacidade e serviço do Ferdi Debugger",
+  "feature.publishDebugInfo.info": "Publicar suas informações de depuração nos permite encontrar erros no Ferdi. Para publicar essas informações é necessário aceitar os termos privacidade e serviço do Ferdi Debugger",
   "feature.publishDebugInfo.privacy": "Política de privacidade",
   "feature.publishDebugInfo.publish": "Aceitar e publicar",
   "feature.publishDebugInfo.published": "Seu log de depuração foi publicado e agora está disponível em",
