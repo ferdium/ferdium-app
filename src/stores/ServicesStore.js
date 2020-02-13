@@ -766,7 +766,7 @@ export default class ServicesStore extends Store {
       const isMuted = isAppMuted || service.isMuted;
 
       if (isAttached) {
-        service.webview.setAudioMuted(isMuted);
+        service.webview.audioMuted = isMuted;
       }
     });
   }
