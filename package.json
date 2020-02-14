@@ -156,7 +156,7 @@
     "electron": "8.0.0",
     "electron-builder": "21.2.0",
     "electron-notarize": "0.2.1",
-    "electron-rebuild": "1.8.8",
+    "electron-rebuild": "1.10.0",
     "eslint": "5.10.0",
     "eslint-config-airbnb": "17.1.0",
     "eslint-loader": "^1.9.0",
