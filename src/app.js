@@ -52,7 +52,6 @@ smoothScroll.polyfill();
 
 // Basic electron Setup
 webFrame.setVisualZoomLevelLimits(1, 1);
-webFrame.setLayoutZoomLevelLimits(0, 0);
 
 window.addEventListener('load', () => {
   const serverApi = new ServerApi();
