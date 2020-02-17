@@ -76,13 +76,12 @@ You can find the installers in the [latest stable release](https://github.com/ge
 
 ### Or use AUR (Arch Linux)
 
-Ferdi has two seperate AUR packages you can use:
-- **ferdi-bin**: Uses your debian build and extracts it to Arch
-- **ferdi-git**: Uses system electron version
+Ferdi has three seperate AUR packages you can use:
+- **[ferdi](https://aur.archlinux.org/packages/ferdi/)**: Uses your system electron version to run the latest release
+- **[ferdi-bin](https://aur.archlinux.org/packages/ferdi-bin/)**: Uses the latest Fedora release and extracts it to Arch
+- **[ferdi-git](https://aur.archlinux.org/packages/ferdi-git/)**: Uses your system electron version to run the latest commit from the develop branch
 
-If you use an AUR Helper e.g. yay, simply install it via `yay -S ferdi-bin`.
-
-`ferdi-git` may not work on all systems so we advice you to use `ferdi-bin` instead.
+If you use an AUR Helper e.g. yay, simply install it via `yay -S ferdi`.
 
 ## Ferdi-specific Features
 
