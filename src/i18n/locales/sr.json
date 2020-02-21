@@ -477,7 +477,7 @@
   "tabs.item.enableService": "Omogućite usluge",
   "tabs.item.reload": "Ponovno učitavanje",
   "validation.email": "{поље} није валидно",
-  "validation.minLength": "{поље} треба да буде најмање {дужина} карактера дугачко",
+  "validation.minLength": "{field} треба да буде најмање {length} карактера дугачко",
   "validation.oneRequired": "At least one is required",
   "validation.required": "{поље} је неопходно",
   "validation.url": "{field} није валидан УРЛ",
