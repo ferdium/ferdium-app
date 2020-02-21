@@ -1,8 +1,7 @@
 import electron from 'electron';
-import path from 'path';
 import isDevMode from 'electron-is-dev';
 import ms from 'ms';
-
+import path from 'path';
 import { asarPath } from './helpers/asar-helpers';
 
 const app = process.type === 'renderer' ? electron.remote.app : electron.app;
@@ -126,11 +125,11 @@ if (process.env.FERDI_APPDATA_DIR != null) {
   app.setPath('appData', process.env.FERDI_APPDATA_DIR);
   app.setPath('userData', path.join(app.getPath('appData')));
 } else if (process.env.PORTABLE_EXECUTABLE_DIR != null) {
-  app.setPath('appData', process.env.PORTABLE_EXECUTABLE_DIR, `${app.getName()}AppData`);
-  app.setPath('userData', path.join(app.getPath('appData'), `${app.getName()}AppData`));
+  app.setPath('appData', process.env.PORTABLE_EXECUTABLE_DIR, `${app.name}AppData`);
+  app.setPath('userData', path.join(app.getPath('appData'), `${app.name}AppData`));
 } else if (process.platform === 'win32') {
   app.setPath('appData', process.env.APPDATA);
-  app.setPath('userData', path.join(app.getPath('appData'), app.getName()));
+  app.setPath('userData', path.join(app.getPath('appData'), app.name));
 }
 
 export const SETTINGS_PATH = path.join(app.getPath('userData'), 'config');
