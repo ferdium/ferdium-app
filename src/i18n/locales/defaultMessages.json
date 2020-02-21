@@ -4136,7 +4136,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Show Ferdi in system tray",
+        "defaultMessage": "!!!Always show Ferdi in system tray",
         "end": {
           "column": 3,
           "line": 48

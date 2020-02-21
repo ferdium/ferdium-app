@@ -44,7 +44,7 @@ const messages = defineMessages({
   },
   enableSystemTray: {
     id: 'settings.app.form.enableSystemTray',
-    defaultMessage: '!!!Show Ferdi in system tray',
+    defaultMessage: '!!!Always show Ferdi in system tray',
   },
   minimizeToSystemTray: {
     id: 'settings.app.form.minimizeToSystemTray',
