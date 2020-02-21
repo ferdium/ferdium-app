@@ -353,7 +353,7 @@
   "settings.service.form.customUrl": "Servidor personalizado",
   "settings.service.form.customUrlPremiumInfo": "Para adicionar serviços com domínio próprio, é necessário uma Conta Premium no Ferdi.",
   "settings.service.form.customUrlUpgradeAccount": "Atualizar a conta",
-  "settings.service.form.customUrlValidationError": "Não foi possível validar o servidor {nome}.",
+  "settings.service.form.customUrlValidationError": "Não foi possível validar o servidor {name}.",
   "settings.service.form.deleteButton": "Apagar serviço",
   "settings.service.form.editServiceHeadline": "Editar {name}",
   "settings.service.form.enableAudio": "Ativar áudio",
