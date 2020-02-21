@@ -53,7 +53,7 @@
   },
   {
     "id": "settings.app.form.enableSystemTray",
-    "defaultMessage": "!!!Show Ferdi in system tray",
+    "defaultMessage": "!!!Always show Ferdi in system tray",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
       "line": 45,

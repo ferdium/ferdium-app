@@ -252,6 +252,9 @@ export default @observer class EditSettingsForm extends Component {
             <Toggle field={form.$('runInBackground')} />
             <Toggle field={form.$('enableSystemTray')} />
             {isTrayEnabled && <Toggle field={form.$('startMinimized')} />}
+            {process.platform === 'win32' && (
+              <Toggle field={form.$('minimizeToSystemTray')} />
+            )}
             <Toggle field={form.$('privateNotifications')} />
             <Toggle field={form.$('showServiceNavigationBar')} />
 
@@ -278,10 +281,6 @@ export default @observer class EditSettingsForm extends Component {
             </p>
 
             <Hr />
-
-            {process.platform === 'win32' && (
-              <Toggle field={form.$('minimizeToSystemTray')} />
-            )}
 
             <Input
               placeholder="Server"

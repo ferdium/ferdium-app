@@ -1,5 +1,5 @@
 import {
-  app, Tray, Menu, systemPreferences, nativeTheme, nativeImage,
+  app, Menu, nativeImage, nativeTheme, systemPreferences, Tray,
 } from 'electron';
 import path from 'path';
 
@@ -37,14 +37,20 @@ export default class TrayIcon {
     ];
 
     const trayMenu = Menu.buildFromTemplate(trayMenuTemplate);
-    this.trayIcon.setContextMenu(trayMenu);
 
     this.trayIcon.on('click', () => {
       if (app.mainWindow.isMinimized()) {
         app.mainWindow.restore();
+      } else if (app.mainWindow.isVisible()) {
+        app.mainWindow.hide();
+      } else {
+        app.mainWindow.show();
+        app.mainWindow.focus();
       }
-      app.mainWindow.show();
-      app.mainWindow.focus();
+    });
+
+    this.trayIcon.on('right-click', () => {
+      this.trayIcon.popUpContextMenu(trayMenu);
     });
 
     if (process.platform === 'darwin') {
