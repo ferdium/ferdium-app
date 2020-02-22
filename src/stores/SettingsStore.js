@@ -1,16 +1,12 @@
 import { ipcRenderer, remote } from 'electron';
-import {
-  action, computed, observable, reaction,
-} from 'mobx';
+import { action, computed, observable, reaction } from 'mobx';
 import localStorage from 'mobx-localstorage';
-
-import Store from './lib/Store';
-import Request from './lib/Request';
-import { getLocale } from '../helpers/i18n-helpers';
-import { API } from '../environment';
-
 import { DEFAULT_APP_SETTINGS, FILE_SYSTEM_SETTINGS_TYPES, LOCAL_SERVER } from '../config';
+import { API } from '../environment';
+import { getLocale } from '../helpers/i18n-helpers';
 import { SPELLCHECKER_LOCALES } from '../i18n/languages';
+import Request from './lib/Request';
+import Store from './lib/Store';
 
 const debug = require('debug')('Ferdi:SettingsStore');
 
@@ -81,6 +77,19 @@ export default class SettingsStore extends Store {
       },
     );
 
+    const isLoggedIn = Boolean(localStorage.getItem('authToken'));
+    console.log(this.all.app.lockingFeatureEnabled);
+    // FIXME: sometime this is true, sometime this is false
+    // We should lock at startup once we know lockingFeatureEnabled is loaded in the settings
+    if (isLoggedIn && this.all.app.lockingFeatureEnabled) {
+      this.actions.settings.update({
+        type: 'app',
+        data: {
+          locked: true,
+        },
+      });
+    }
+
     // Inactivity lock timer
     let inactivityTimer;
     remote.getCurrentWindow().on('blur', () => {
@@ -100,28 +109,6 @@ export default class SettingsStore extends Store {
         clearTimeout(inactivityTimer);
       }
     });
-
-    // Make sure to lock app on launch if locking feature is enabled
-    setTimeout(() => {
-      const isLoggedIn = Boolean(localStorage.getItem('authToken'));
-      if (isLoggedIn && this.all.app.lockingFeatureEnabled) {
-        // Disable lock first - otherwise the lock might not get activated corrently
-        this.actions.settings.update({
-          type: 'app',
-          data: {
-            locked: false,
-          },
-        });
-        setTimeout(() => {
-          this.actions.settings.update({
-            type: 'app',
-            data: {
-              locked: true,
-            },
-          });
-        }, 0);
-      }
-    }, 1000);
   }
 
   @computed get app() {
