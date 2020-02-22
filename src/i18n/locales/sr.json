@@ -211,7 +211,7 @@
   "service.crashHandler.action": "Osvježi {name}",
   "service.crashHandler.autoReload": "Pokušaću automatski povratiti {name} u {seconds} sekundi",
   "service.crashHandler.headline": "O, ne! ",
-  "service.crashHandler.text": "{name} je izazvalo grešku. ",
+  "service.crashHandler.text": "{ime} je izazvalo grešku. ",
   "service.disabledHandler.action": "Omogući {name}",
   "service.disabledHandler.headline": "{name} je onemogućen/o",
   "service.errorHandler.action": "Osvježi {name}",
