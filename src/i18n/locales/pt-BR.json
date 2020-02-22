@@ -384,7 +384,7 @@
   "settings.service.form.tabHosted": "Hospedado",
   "settings.service.form.tabOnPremise": "Auto-hospedado ⭐️",
   "settings.service.form.team": "Equipe",
-  "settings.service.form.useHostedService": "Use o serviço {nome} hospedado.",
+  "settings.service.form.useHostedService": "Use o serviço {name} hospedado.",
   "settings.service.form.yourServices": "Seus serviços",
   "settings.services.deletedInfo": "Serviço excluído",
   "settings.services.discoverServices": "Descobrir serviços",
