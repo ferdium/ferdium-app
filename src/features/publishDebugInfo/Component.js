@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { observer, inject } from 'mobx-react';
-import { defineMessages, intlShape } from 'react-intl';
 import { H1 } from '@meetfranz/ui';
+import { inject, observer } from 'mobx-react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { defineMessages, intlShape } from 'react-intl';
 import injectSheet from 'react-jss';
-
-import Input from '../../components/ui/Input';
-import Button from '../../components/ui/Button';
-import Modal from '../../components/ui/Modal';
 import { state as ModalState } from '.';
-import AppStore from '../../stores/AppStore';
-import { DEBUG_API } from '../../config';
 import { sendAuthRequest } from '../../api/utils/auth';
+import Button from '../../components/ui/Button';
+import Input from '../../components/ui/Input';
+import Modal from '../../components/ui/Modal';
+import { DEBUG_API } from '../../config';
+import AppStore from '../../stores/AppStore';
+
 
 const messages = defineMessages({
   title: {
@@ -79,7 +79,7 @@ const styles = theme => ({
   },
 });
 
-export default @injectSheet(styles) @inject('stores') @observer class PublishDebugLogModal extends Component {
+export default @injectSheet(styles) @inject('stores', 'actions') @observer class PublishDebugLogModal extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
   };
