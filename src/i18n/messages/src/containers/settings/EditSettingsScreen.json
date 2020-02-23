@@ -91,12 +91,12 @@
     }
   },
   {
-    "id": "settings.app.form.showServiceNavigationBar",
-    "defaultMessage": "!!!Always show service navigation bar",
+    "id": "settings.app.form.navigationBarBehaviour",
+    "defaultMessage": "!!!Navigation bar behaviour",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
       "line": 57,
-      "column": 28
+      "column": 26
     },
     "end": {
       "line": 60,

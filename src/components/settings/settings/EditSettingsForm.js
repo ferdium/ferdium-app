@@ -256,7 +256,7 @@ export default @observer class EditSettingsForm extends Component {
               <Toggle field={form.$('minimizeToSystemTray')} />
             )}
             <Toggle field={form.$('privateNotifications')} />
-            <Toggle field={form.$('showServiceNavigationBar')} />
+            <Select field={form.$('navigationBarBehaviour')} />
 
             <Hr />
 

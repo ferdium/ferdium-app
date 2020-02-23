@@ -45,6 +45,12 @@ export const HIBERNATION_STRATEGIES = {
   3600: 'Extemely Slow Hibernation (1hour)',
 };
 
+export const NAVIGATION_BAR_BEHAVIOURS = {
+  custom: 'Show navigation bar on custom websites only',
+  always: 'Show navigation bar on all services',
+  never: 'Never show navigation bar',
+};
+
 export const DEFAULT_APP_SETTINGS = {
   autoLaunchInBackground: false,
   runInBackground: true,
@@ -84,6 +90,7 @@ export const DEFAULT_APP_SETTINGS = {
   accentColor: '#7367f0',
   serviceRibbonWidth: 68,
   sentry: false,
+  navigationBarBehaviour: 'custom',
 };
 
 export const DEFAULT_FEATURES_CONFIG = {

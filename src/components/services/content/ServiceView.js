@@ -135,8 +135,10 @@ export default @inject('stores', 'actions') @observer class ServiceView extends 
     } = this.props;
 
     const {
-      showServiceNavigationBar,
+      navigationBarBehaviour,
     } = stores.settings.app;
+
+    const showNavBar = navigationBarBehaviour === 'always' || (navigationBarBehaviour === 'custom' && service.recipe.id === CUSTOM_WEBSITE_ID);
 
     const webviewClasses = classnames({
       services__webview: true,
@@ -193,7 +195,7 @@ export default @inject('stores', 'actions') @observer class ServiceView extends 
           <>
             {!service.isHibernating ? (
               <>
-                {(service.recipe.id === CUSTOM_WEBSITE_ID || showServiceNavigationBar) && (
+                {showNavBar && (
                   <WebControlsScreen service={service} />
                 )}
                 <ServiceWebview
