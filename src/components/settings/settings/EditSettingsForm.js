@@ -470,6 +470,8 @@ export default @observer class EditSettingsForm extends Component {
 
             <Select field={form.$('serviceRibbonWidth')} />
 
+            <Select field={form.$('iconSize')} />
+
             <Hr />
 
             <Input
