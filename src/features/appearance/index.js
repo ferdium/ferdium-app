@@ -54,6 +54,9 @@ function generateServiceRibbonWidthStyle(width) {
     .tab-item .tab-item__icon {
       width: ${width / 2}px !important;
     }
+    .sidebar__button {
+      font-size: ${width / 3}px !important;
+    }
   `;
 }
 

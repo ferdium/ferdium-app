@@ -45,6 +45,16 @@ export const HIBERNATION_STRATEGIES = {
   3600: 'Extemely Slow Hibernation (1hour)',
 };
 
+export const SIDEBAR_WIDTH = {
+  35: 'Extemely slim sidebar',
+  45: 'Very slim sidebar',
+  55: 'Slim sidebar',
+  68: 'Normal sidebar',
+  80: 'Wide sidebar',
+  90: 'Very wide sidebar',
+  100: 'Extemely wide sidebar',
+};
+
 export const DEFAULT_APP_SETTINGS = {
   autoLaunchInBackground: false,
   runInBackground: true,

@@ -10,7 +10,7 @@ import UserStore from '../../stores/UserStore';
 import TodosStore from '../../features/todos/store';
 import Form from '../../lib/Form';
 import { APP_LOCALES, SPELLCHECKER_LOCALES } from '../../i18n/languages';
-import { DEFAULT_APP_SETTINGS, HIBERNATION_STRATEGIES } from '../../config';
+import { DEFAULT_APP_SETTINGS, HIBERNATION_STRATEGIES, SIDEBAR_WIDTH } from '../../config';
 import { config as spellcheckerConfig } from '../../features/spellchecker';
 
 import { getSelectOptions } from '../../helpers/i18n-helpers';
@@ -118,6 +118,10 @@ const messages = defineMessages({
     id: 'settings.app.form.universalDarkMode',
     defaultMessage: '!!!Enable universal Dark Mode',
   },
+  serviceRibbonWidth: {
+    id: 'settings.app.form.serviceRibbonWidth',
+    defaultMessage: '!!!Sidebar width',
+  },
   accentColor: {
     id: 'settings.app.form.accentColor',
     defaultMessage: '!!!Accent color',
@@ -201,6 +205,7 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
         darkMode: settingsData.darkMode,
         adaptableDarkMode: settingsData.adaptableDarkMode,
         universalDarkMode: settingsData.universalDarkMode,
+        serviceRibbonWidth: settingsData.serviceRibbonWidth,
         accentColor: settingsData.accentColor,
         showMessageBadgeWhenMuted: settingsData.showMessageBadgeWhenMuted,
         enableSpellchecking: settingsData.enableSpellchecking,
@@ -250,6 +255,11 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
 
     const hibernationStrategies = getSelectOptions({
       locales: HIBERNATION_STRATEGIES,
+      sort: false,
+    });
+
+    const sidebarWidth = getSelectOptions({
+      locales: SIDEBAR_WIDTH,
       sort: false,
     });
 
@@ -395,6 +405,12 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           label: intl.formatMessage(messages.universalDarkMode),
           value: settings.all.app.universalDarkMode,
           default: DEFAULT_APP_SETTINGS.universalDarkMode,
+        },
+        serviceRibbonWidth: {
+          label: intl.formatMessage(messages.serviceRibbonWidth),
+          value: settings.all.app.serviceRibbonWidth,
+          default: DEFAULT_APP_SETTINGS.serviceRibbonWidth,
+          options: sidebarWidth,
         },
         accentColor: {
           label: intl.formatMessage(messages.accentColor),
