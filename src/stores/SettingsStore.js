@@ -12,6 +12,7 @@ const debug = require('debug')('Ferdi:SettingsStore');
 
 export default class SettingsStore extends Store {
   @observable updateAppSettingsRequest = new Request(this.api.local, 'updateAppSettings');
+  startup = true;
 
   fileSystemSettingsTypes = FILE_SYSTEM_SETTINGS_TYPES;
 
@@ -26,16 +27,6 @@ export default class SettingsStore extends Store {
     // Register action handlers
     this.actions.settings.update.listen(this._update.bind(this));
     this.actions.settings.remove.listen(this._remove.bind(this));
-
-    ipcRenderer.on('appSettings', (event, resp) => {
-      debug('Get appSettings resolves', resp.type, resp.data);
-
-      Object.assign(this._fileSystemSettingsCache[resp.type], resp.data);
-    });
-
-    this.fileSystemSettingsTypes.forEach((type) => {
-      ipcRenderer.send('getAppSettings', type);
-    });
   }
 
   async setup() {
@@ -77,19 +68,6 @@ export default class SettingsStore extends Store {
       },
     );
 
-    const isLoggedIn = Boolean(localStorage.getItem('authToken'));
-    console.log(this.all.app.lockingFeatureEnabled);
-    // FIXME: sometime this is true, sometime this is false
-    // We should lock at startup once we know lockingFeatureEnabled is loaded in the settings
-    if (isLoggedIn && this.all.app.lockingFeatureEnabled) {
-      this.actions.settings.update({
-        type: 'app',
-        data: {
-          locked: true,
-        },
-      });
-    }
-
     // Inactivity lock timer
     let inactivityTimer;
     remote.getCurrentWindow().on('blur', () => {
@@ -108,6 +86,20 @@ export default class SettingsStore extends Store {
       if (inactivityTimer) {
         clearTimeout(inactivityTimer);
       }
+    });
+
+    ipcRenderer.on('appSettings', (event, resp) => {
+      // Lock on startup if enabled in settings
+      if (this.startup && resp.type === 'app' && resp.data.lockingFeatureEnabled) {
+        this.startup = false;
+        process.nextTick(() => { this.all.app.locked = true })
+      }
+      debug('Get appSettings resolves', resp.type, resp.data);
+      Object.assign(this._fileSystemSettingsCache[resp.type], resp.data);
+    });
+
+    this.fileSystemSettingsTypes.forEach((type) => {
+      ipcRenderer.send('getAppSettings', type);
     });
   }
 
