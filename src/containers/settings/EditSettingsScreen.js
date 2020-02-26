@@ -11,7 +11,7 @@ import TodosStore from '../../features/todos/store';
 import Form from '../../lib/Form';
 import { APP_LOCALES, SPELLCHECKER_LOCALES } from '../../i18n/languages';
 import {
-  DEFAULT_APP_SETTINGS, HIBERNATION_STRATEGIES, SIDEBAR_WIDTH, ICON_SIZES,
+  DEFAULT_APP_SETTINGS, HIBERNATION_STRATEGIES, SIDEBAR_WIDTH, ICON_SIZES, NAVIGATION_BAR_BEHAVIOURS,
 } from '../../config';
 import { config as spellcheckerConfig } from '../../features/spellchecker';
 
@@ -56,9 +56,9 @@ const messages = defineMessages({
     id: 'settings.app.form.privateNotifications',
     defaultMessage: '!!!Don\'t show message content in notifications',
   },
-  showServiceNavigationBar: {
-    id: 'settings.app.form.showServiceNavigationBar',
-    defaultMessage: '!!!Always show service navigation bar',
+  navigationBarBehaviour: {
+    id: 'settings.app.form.navigationBarBehaviour',
+    defaultMessage: '!!!Navigation bar behaviour',
   },
   sentry: {
     id: 'settings.app.form.sentry',
@@ -194,7 +194,7 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
         startMinimized: settingsData.startMinimized,
         minimizeToSystemTray: settingsData.minimizeToSystemTray,
         privateNotifications: settingsData.privateNotifications,
-        showServiceNavigationBar: settingsData.showServiceNavigationBar,
+        navigationBarBehaviour: settingsData.navigationBarBehaviour,
         sentry: settingsData.sentry,
         hibernate: settingsData.hibernate,
         hibernationStrategy: settingsData.hibernationStrategy,
@@ -260,6 +260,11 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
       locales: APP_LOCALES,
     });
 
+    const navigationBarBehaviours = getSelectOptions({
+      locales: NAVIGATION_BAR_BEHAVIOURS,
+      sort: false,
+    });
+
     const hibernationStrategies = getSelectOptions({
       locales: HIBERNATION_STRATEGIES,
       sort: false,
@@ -317,10 +322,11 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           value: settings.all.app.privateNotifications,
           default: DEFAULT_APP_SETTINGS.privateNotifications,
         },
-        showServiceNavigationBar: {
-          label: intl.formatMessage(messages.showServiceNavigationBar),
-          value: settings.all.app.showServiceNavigationBar,
-          default: DEFAULT_APP_SETTINGS.showServiceNavigationBar,
+        navigationBarBehaviour: {
+          label: intl.formatMessage(messages.navigationBarBehaviour),
+          value: settings.all.app.navigationBarBehaviour,
+          default: DEFAULT_APP_SETTINGS.navigationBarBehaviour,
+          options: navigationBarBehaviours,
         },
         sentry: {
           label: intl.formatMessage(messages.sentry),
