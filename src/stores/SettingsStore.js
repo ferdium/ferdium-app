@@ -92,7 +92,18 @@ export default class SettingsStore extends Store {
       // Lock on startup if enabled in settings
       if (this.startup && resp.type === 'app' && resp.data.lockingFeatureEnabled) {
         this.startup = false;
-        process.nextTick(() => { this.all.app.locked = true })
+        process.nextTick(() => {
+          // If the app was previously closed unlocked
+          // we can update the `locked` setting and rely on the reaction to lock at startup
+          if (!this.all.app.locked) {
+            this.all.app.locked = true;
+          } else {
+            // Otherwise the app previously closed in a locked state
+            // We can't rely on updating the locked setting for the reaction to be triggered
+            // So we lock manually
+            window.ferdi.stores.router.push('/auth/locked');
+          }
+        })
       }
       debug('Get appSettings resolves', resp.type, resp.data);
       Object.assign(this._fileSystemSettingsCache[resp.type], resp.data);
