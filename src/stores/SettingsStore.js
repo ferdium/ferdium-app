@@ -250,7 +250,7 @@ export default class SettingsStore extends Store {
         },
       });
     }
-    
+
     if (!this.all.migration['5.4.4-beta.2-settings']) {
       const {
         showServiceNavigationBar,
