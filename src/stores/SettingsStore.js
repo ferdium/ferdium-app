@@ -250,5 +250,25 @@ export default class SettingsStore extends Store {
         },
       });
     }
+    
+    if (!this.all.migration['5.4.4-beta.2-settings']) {
+      const {
+        showServiceNavigationBar,
+      } = this.all.app;
+
+      this.actions.settings.update({
+        type: 'app',
+        data: {
+          navigationBarBehaviour: showServiceNavigationBar ? 'custom' : 'never',
+        },
+      });
+
+      this.actions.settings.update({
+        type: 'migration',
+        data: {
+          '5.4.4-beta.2-settings': true,
+        },
+      });
+    }
   }
 }
