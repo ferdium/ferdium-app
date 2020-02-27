@@ -983,10 +983,11 @@ export default class FranzMenu {
       tpl[5].submenu = this.todosMenu();
     }
 
-    tpl[tpl.length - 1].submenu.push({
-      type: 'separator',
-    }, ...this.debugMenu());
-
+    if (!this.stores.settings.app.locked) {
+      tpl[tpl.length - 1].submenu.push({
+        type: 'separator',
+      }, ...this.debugMenu());
+    }
     this.currentTemplate = tpl;
     const menu = Menu.buildFromTemplate(tpl);
     Menu.setApplicationMenu(menu);
