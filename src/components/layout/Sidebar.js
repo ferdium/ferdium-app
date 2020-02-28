@@ -118,21 +118,12 @@ export default @inject('stores', 'actions') @observer class Sidebar extends Comp
                 type="button"
                 className="sidebar__button"
                 onClick={() => {
-                  // Disable lock first - otherwise the application might not update correctly
                   actions.settings.update({
                     type: 'app',
                     data: {
-                      locked: false,
+                      locked: true,
                     },
                   });
-                  setTimeout(() => {
-                    actions.settings.update({
-                      type: 'app',
-                      data: {
-                        locked: true,
-                      },
-                    });
-                  }, 0);
                 }}
                 data-tip={`${intl.formatMessage(messages.lockFerdi)} (${ctrlKey}+Shift+L)`}
               >
