@@ -57,8 +57,8 @@ Ferdi is a messaging browser that allows you to combine your favorite messaging 
 <em>"Keep all your messaging services in one place."</em>
 <img alt="Order your services with Ferdi Workspaces." src="./branding/screenshots/workspaces.png">
 <em>"Order your services with Ferdi Workspaces."</em>
-<img alt="Always keep your Todo list open with Ferdi Todos." src="./branding/screenshots/todos.png">
-<em>"Always keep your Todo list open with Ferdi Todos."</em>
+<img alt="Always keep your Todos list open with Ferdi Todos." src="./branding/screenshots/todos.png">
+<em>"Always keep your Todos list open with Ferdi Todos."</em>
 <img alt="Supporting all your services." src="./branding/screenshots/service-store.png">
 <em>"Supporting all your services."</em>
 </p>
@@ -76,13 +76,12 @@ You can find the installers in the [latest stable release](https://github.com/ge
 
 ### Or use AUR (Arch Linux)
 
-Ferdi has two seperate AUR packages you can use:
-- **ferdi-bin**: Uses your debian build and extracts it to Arch
-- **ferdi-git**: Uses system electron version
+Ferdi has three seperate AUR packages you can use:
+- **[ferdi](https://aur.archlinux.org/packages/ferdi/)**: Uses your system electron version to run the latest release
+- **[ferdi-bin](https://aur.archlinux.org/packages/ferdi-bin/)**: Uses the latest Fedora release and extracts it to Arch
+- **[ferdi-git](https://aur.archlinux.org/packages/ferdi-git/)**: Uses your system electron version to run the latest commit from the develop branch
 
-If you use an AUR Helper e.g. yay, simply install it via `yay -S ferdi-bin`.
-
-`ferdi-git` may not work on all systems so we advice you to use `ferdi-bin` instead.
+If you use an AUR Helper e.g. yay, simply install it via `yay -S ferdi`.
 
 ## Ferdi-specific Features
 
@@ -113,11 +112,12 @@ If you use an AUR Helper e.g. yay, simply install it via `yay -S ferdi-bin`.
 - [x] Add Process Manager to find services using a lot of resources
 - [x] Add "npm run prepare-code" command for development to lint and beautify code
 - [x] Add button to open darkmode.css for a service
+- [x] [Add `user.css` and `user.js` that allows users to inject custom code into services](https://github.com/getferdi/ferdi/wiki/Using-user.css-and-user.js) ([#83](https://github.com/getferdi/ferdi/issues/83))
 - [x] Allow SVGs for service custom icon
 - [x] Switch to [`electron-spellchecker`](https://github.com/electron-userland/electron-spellchecker) to improve application size
 - [x] Improve "About Ferdi" screen to better display versions
 - [x] Minifying build files to improve app size
-- [x] [Makes it possible to edit the "Franz Todo" server](https://github.com/getferdi/ferdi/wiki/Custom-Todo)
+- [x] [Makes it possible to edit the "Franz Todos" service](https://github.com/getferdi/ferdi/wiki/Custom-Todo) (e.g. Todoist via https://todoist.com/app)
 - [x] Makes RocketChat self-hosted generally available ([#6](https://github.com/getferdi/ferdi/issues/6))
 - [x] Comes with a custom branding proper to Ferdi
 - [x] UI improvements
@@ -180,11 +180,17 @@ $ npm run rebuild
 
 ### Start development app
 
-Run these two commands **simultaneously** in different console tabs:
+Run these two commands **simultaneously** in different terminals:
 
 ```bash
 $ npm run dev
 $ npm run start
+```
+
+Optionally, you can run both commands in one terminal with [misty](https://github.com/adlk/misty) (see [misty.yml](https://github.com/getferdi/ferdi/blob/develop/misty.yml)):
+
+```bash
+$ npx misty
 ```
 
 Be aware that the development database will be reset regularly.
@@ -255,6 +261,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="http://lhw.ring0.de"><img src="https://avatars2.githubusercontent.com/u/351875?v=4" width="40px;" alt=""/><br /><sub><b>Lennart Weller</b></sub></a><br /><a href="#platform-lhw" title="Packaging/porting to new platform">📦</a></td>
     <td align="center"><a href="https://github.com/jereksel"><img src="https://avatars0.githubusercontent.com/u/1307829?v=4" width="40px;" alt=""/><br /><sub><b>Andrzej Ressel</b></sub></a><br /><a href="https://github.com/getferdi/ferdi/commits?author=jereksel" title="Code">💻</a></td>
+    <td align="center"><a href="https://gitlab.com/dpeukert"><img src="https://avatars2.githubusercontent.com/u/3451904?v=4" width="40px;" alt=""/><br /><sub><b>Daniel Peukert</b></sub></a><br /><a href="https://github.com/getferdi/ferdi/commits?author=dpeukert" title="Code">💻</a></td>
   </tr>
 </table>
 

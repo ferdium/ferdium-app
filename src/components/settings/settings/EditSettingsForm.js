@@ -252,8 +252,11 @@ export default @observer class EditSettingsForm extends Component {
             <Toggle field={form.$('runInBackground')} />
             <Toggle field={form.$('enableSystemTray')} />
             {isTrayEnabled && <Toggle field={form.$('startMinimized')} />}
+            {process.platform === 'win32' && (
+              <Toggle field={form.$('minimizeToSystemTray')} />
+            )}
             <Toggle field={form.$('privateNotifications')} />
-            <Toggle field={form.$('showServiceNavigationBar')} />
+            <Select field={form.$('navigationBarBehaviour')} />
 
             <Hr />
 
@@ -278,10 +281,6 @@ export default @observer class EditSettingsForm extends Component {
             </p>
 
             <Hr />
-
-            {process.platform === 'win32' && (
-              <Toggle field={form.$('minimizeToSystemTray')} />
-            )}
 
             <Input
               placeholder="Server"
@@ -450,7 +449,7 @@ export default @observer class EditSettingsForm extends Component {
             <Hr />
 
             {isMac && <Toggle field={form.$('adaptableDarkMode')} />}
-            {!(isMac && isAdaptableDarkModeEnabled) && <Toggle field={form.$('darkMode')} disabled={isAdaptableDarkModeEnabled} />}
+            {!(isMac && isAdaptableDarkModeEnabled) && <Toggle field={form.$('darkMode')} />}
             {(isDarkmodeEnabled || isAdaptableDarkModeEnabled) && (
               <>
                 <Toggle field={form.$('universalDarkMode')} />
@@ -466,6 +465,12 @@ export default @observer class EditSettingsForm extends Component {
                 </p>
               </>
             )}
+
+            <Hr />
+
+            <Select field={form.$('serviceRibbonWidth')} />
+
+            <Select field={form.$('iconSize')} />
 
             <Hr />
 

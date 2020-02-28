@@ -1,8 +1,7 @@
 import electron from 'electron';
-import path from 'path';
 import isDevMode from 'electron-is-dev';
 import ms from 'ms';
-
+import path from 'path';
 import { asarPath } from './helpers/asar-helpers';
 
 const app = process.type === 'renderer' ? electron.remote.app : electron.app;
@@ -13,6 +12,9 @@ export const CHECK_INTERVAL = ms('1h'); // How often should we perform checks
 export const LOCAL_API = 'http://localhost:3000';
 export const DEV_API = 'https://dev.franzinfra.com';
 export const LIVE_API = 'https://api.getferdi.com';
+
+// URL used to submit debugger information, see https://github.com/getferdi/debugger
+export const DEBUG_API = 'https://debug.getferdi.com';
 
 export const LOCAL_WS_API = 'ws://localhost:3000';
 export const DEV_WS_API = 'wss://dev.franzinfra.com';
@@ -42,6 +44,34 @@ export const HIBERNATION_STRATEGIES = {
   1800: 'Very Slow Hibernation (30min)',
   3600: 'Extemely Slow Hibernation (1hour)',
 };
+
+export const NAVIGATION_BAR_BEHAVIOURS = {
+  custom: 'Show navigation bar on custom websites only',
+  always: 'Show navigation bar on all services',
+  never: 'Never show navigation bar',
+};
+
+export const SIDEBAR_WIDTH = {
+  35: 'Extemely slim sidebar',
+  45: 'Very slim sidebar',
+  55: 'Slim sidebar',
+  68: 'Normal sidebar',
+  80: 'Wide sidebar',
+  90: 'Very wide sidebar',
+  100: 'Extemely wide sidebar',
+};
+
+export const ICON_SIZES = {
+  0: 'Very small icons',
+  10: 'Small icons',
+  20: 'Normal icons',
+  30: 'Large icons',
+  40: 'Very large icons',
+};
+// We need a bias to push all icon sizes into positive numbers
+// otherwise the settings screen won't sort the sizes correctly.
+// The bias should always be the "Normal icons" value
+export const iconSizeBias = 20;
 
 export const DEFAULT_APP_SETTINGS = {
   autoLaunchInBackground: false,
@@ -81,7 +111,9 @@ export const DEFAULT_APP_SETTINGS = {
   adaptableDarkMode: true,
   accentColor: '#7367f0',
   serviceRibbonWidth: 68,
+  iconSize: iconSizeBias,
   sentry: false,
+  navigationBarBehaviour: 'custom',
 };
 
 export const DEFAULT_FEATURES_CONFIG = {
@@ -123,11 +155,11 @@ if (process.env.FERDI_APPDATA_DIR != null) {
   app.setPath('appData', process.env.FERDI_APPDATA_DIR);
   app.setPath('userData', path.join(app.getPath('appData')));
 } else if (process.env.PORTABLE_EXECUTABLE_DIR != null) {
-  app.setPath('appData', process.env.PORTABLE_EXECUTABLE_DIR, `${app.getName()}AppData`);
-  app.setPath('userData', path.join(app.getPath('appData'), `${app.getName()}AppData`));
+  app.setPath('appData', process.env.PORTABLE_EXECUTABLE_DIR, `${app.name}AppData`);
+  app.setPath('userData', path.join(app.getPath('appData'), `${app.name}AppData`));
 } else if (process.platform === 'win32') {
   app.setPath('appData', process.env.APPDATA);
-  app.setPath('userData', path.join(app.getPath('appData'), app.getName()));
+  app.setPath('userData', path.join(app.getPath('appData'), app.name));
 }
 
 export const SETTINGS_PATH = path.join(app.getPath('userData'), 'config');

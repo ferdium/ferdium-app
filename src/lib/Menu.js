@@ -1,15 +1,15 @@
-import { remote, shell, clipboard } from 'electron';
-import { observable, autorun } from 'mobx';
+import { clipboard, remote, shell } from 'electron';
+import { autorun, observable } from 'mobx';
 import { defineMessages } from 'react-intl';
-
-import { isMac, ctrlKey, cmdKey } from '../environment';
-import { workspaceStore } from '../features/workspaces/index';
-import { workspaceActions } from '../features/workspaces/actions';
-import { announcementActions } from '../features/announcements/actions';
+import { cmdKey, ctrlKey, isMac } from '../environment';
 import { announcementsStore } from '../features/announcements';
+import { announcementActions } from '../features/announcements/actions';
 import { todosStore } from '../features/todos';
 import { todoActions } from '../features/todos/actions';
 import { CUSTOM_WEBSITE_ID } from '../features/webControls/constants';
+import { workspaceActions } from '../features/workspaces/actions';
+import { workspaceStore } from '../features/workspaces/index';
+
 
 const { app, Menu, dialog } = remote;
 
@@ -154,6 +154,10 @@ const menuItems = defineMessages({
     id: 'menu.help.debugInfo',
     defaultMessage: '!!!Copy Debug Information',
   },
+  publishDebugInfo: {
+    id: 'menu.help.publishDebugInfo',
+    defaultMessage: '!!!Publish Debug Information',
+  },
   debugInfoCopiedHeadline: {
     id: 'menu.help.debugInfoCopiedHeadline',
     defaultMessage: '!!!Ferdi Debug Information',
@@ -296,7 +300,7 @@ function termsBase() {
   return window.ferdi.stores.settings.all.app.server !== 'https://api.franzinfra.com' ? window.ferdi.stores.settings.all.app.server : 'https://meetfranz.com';
 }
 
-const _templateFactory = intl => [
+const _templateFactory = (intl, locked) => [
   {
     label: intl.formatMessage(menuItems.edit),
     submenu: [
@@ -347,6 +351,7 @@ const _templateFactory = intl => [
   },
   {
     label: intl.formatMessage(menuItems.view),
+    visible: !locked,
     submenu: [
       {
         type: 'separator',
@@ -422,17 +427,18 @@ const _templateFactory = intl => [
   },
   {
     label: intl.formatMessage(menuItems.services),
+    visible: !locked,
     submenu: [],
   },
   {
     label: intl.formatMessage(menuItems.workspaces),
     submenu: [],
-    visible: workspaceStore.isFeatureEnabled,
+    visible: !locked && workspaceStore.isFeatureEnabled,
   },
   {
     label: intl.formatMessage(menuItems.todos),
     submenu: [],
-    visible: todosStore.isFeatureEnabled,
+    visible: !locked && todosStore.isFeatureEnabled,
   },
   {
     label: intl.formatMessage(menuItems.window),
@@ -461,7 +467,7 @@ const _templateFactory = intl => [
         click: () => {
           announcementActions.show();
         },
-        visible: window.ferdi.stores.user.isLoggedIn && announcementsStore.areNewsAvailable,
+        visible: !locked && window.ferdi.stores.user.isLoggedIn && announcementsStore.areNewsAvailable,
       },
       {
         type: 'separator',
@@ -485,7 +491,7 @@ const _templateFactory = intl => [
   },
 ];
 
-const _titleBarTemplateFactory = intl => [
+const _titleBarTemplateFactory = (intl, locked) => [
   {
     label: intl.formatMessage(menuItems.edit),
     accelerator: 'Alt+E',
@@ -553,6 +559,7 @@ const _titleBarTemplateFactory = intl => [
   {
     label: intl.formatMessage(menuItems.view),
     accelerator: 'Alt+V',
+    visible: !locked,
     submenu: [
       {
         type: 'separator',
@@ -645,18 +652,19 @@ const _titleBarTemplateFactory = intl => [
   {
     label: intl.formatMessage(menuItems.services),
     accelerator: 'Alt+S',
+    visible: !locked,
     submenu: [],
   },
   {
     label: intl.formatMessage(menuItems.workspaces),
     accelerator: 'Alt+W',
     submenu: [],
-    visible: workspaceStore.isFeatureEnabled,
+    visible: !locked && workspaceStore.isFeatureEnabled,
   },
   {
     label: intl.formatMessage(menuItems.todos),
     submenu: [],
-    visible: todosStore.isFeatureEnabled,
+    visible: !locked && todosStore.isFeatureEnabled,
   },
   {
     label: intl.formatMessage(menuItems.window),
@@ -742,86 +750,93 @@ export default class FranzMenu {
     }
 
     const { intl } = window.ferdi;
-    const tpl = isMac ? _templateFactory(intl) : _titleBarTemplateFactory(intl);
+    const tpl = isMac
+      ? _templateFactory(intl, this.stores.settings.app.locked)
+      : _titleBarTemplateFactory(intl, this.stores.settings.app.locked);
     const { actions } = this;
 
-    tpl[1].submenu.push({
-      type: 'separator',
-    }, {
-      label: intl.formatMessage(menuItems.toggleDevTools),
-      accelerator: `${cmdKey}+Alt+I`,
-      click: (menuItem, browserWindow) => {
-        browserWindow.webContents.toggleDevTools();
-      },
-    }, {
-      label: intl.formatMessage(menuItems.toggleServiceDevTools),
-      accelerator: `${cmdKey}+Shift+Alt+I`,
-      click: () => {
-        this.actions.service.openDevToolsForActiveService();
-      },
-      enabled: this.stores.user.isLoggedIn && this.stores.services.enabled.length > 0,
-    });
-
-    if (this.stores.features.features.isTodosEnabled) {
+    if (this.stores.settings.app.locked) {
       tpl[1].submenu.push({
-        label: intl.formatMessage(menuItems.toggleTodosDevTools),
-        accelerator: `${cmdKey}+Shift+Alt+O`,
-        click: () => {
-          const webview = document.querySelector('webview[partition="persist:todos"]');
-          if (webview) webview.openDevTools();
+        type: 'separator',
+      }, {
+        label: intl.formatMessage(menuItems.toggleDevTools),
+        accelerator: `${cmdKey}+Alt+I`,
+        click: (menuItem, browserWindow) => {
+          browserWindow.webContents.toggleDevTools();
         },
+      }, {
+        label: intl.formatMessage(menuItems.toggleServiceDevTools),
+        accelerator: `${cmdKey}+Shift+Alt+I`,
+        click: () => {
+          this.actions.service.openDevToolsForActiveService();
+        },
+        enabled: this.stores.user.isLoggedIn && this.stores.services.enabled.length > 0,
       });
-    }
 
-    tpl[1].submenu.unshift({
-      label: intl.formatMessage(menuItems.reloadService),
-      id: 'reloadService', // TODO: needed?
-      accelerator: `${cmdKey}+R`,
-      click: () => {
-        if (this.stores.user.isLoggedIn
-        && this.stores.services.enabled.length > 0) {
-          if (this.stores.services.active.recipe.id === CUSTOM_WEBSITE_ID) {
-            this.stores.services.active.webview.reload();
-          } else {
-            this.actions.service.reloadActive();
-          }
-        } else {
-          window.location.reload();
-        }
-      },
-    }, {
-      label: intl.formatMessage(menuItems.reloadFranz),
-      accelerator: `${cmdKey}+Shift+R`,
-      click: () => {
-        window.location.reload();
-      },
-    }, {
-      type: 'separator',
-    }, {
-      label: intl.formatMessage(menuItems.lockFerdi),
-      accelerator: 'CmdOrCtrl+Shift+L',
-      enabled: this.stores.user.isLoggedIn && this.stores.settings.app.lockingFeatureEnabled,
-      click() {
-        // Disable lock first - otherwise the application might not update correctly
-        actions.settings.update({
-          type: 'app',
-          data: {
-            locked: false,
+      if (this.stores.features.features.isTodosEnabled) {
+        tpl[1].submenu.push({
+          label: intl.formatMessage(menuItems.toggleTodosDevTools),
+          accelerator: `${cmdKey}+Shift+Alt+O`,
+          click: () => {
+            const webview = document.querySelector('webview[partition="persist:todos"]');
+            if (webview) webview.openDevTools();
           },
         });
-        setTimeout(() => {
+      }
+
+      tpl[1].submenu.unshift({
+        label: intl.formatMessage(menuItems.reloadService),
+        id: 'reloadService', // TODO: needed?
+        accelerator: `${cmdKey}+R`,
+        click: () => {
+          if (this.stores.user.isLoggedIn
+          && this.stores.services.enabled.length > 0) {
+            if (this.stores.services.active.recipe.id === CUSTOM_WEBSITE_ID) {
+              this.stores.services.active.webview.reload();
+            } else {
+              this.actions.service.reloadActive();
+            }
+          } else {
+            window.location.reload();
+          }
+        },
+      }, {
+        label: intl.formatMessage(menuItems.reloadFranz),
+        accelerator: `${cmdKey}+Shift+R`,
+        click: () => {
+          window.location.reload();
+        },
+      }, {
+        type: 'separator',
+      }, {
+        label: intl.formatMessage(menuItems.lockFerdi),
+        accelerator: 'CmdOrCtrl+Shift+L',
+        enabled: this.stores.user.isLoggedIn && this.stores.settings.app.lockingFeatureEnabled,
+        click() {
           actions.settings.update({
             type: 'app',
             data: {
               locked: true,
             },
           });
-        }, 0);
-      },
-    });
+        }
+      });
+
+      if (serviceTpl.length > 0) {
+        tpl[3].submenu = serviceTpl;
+      }
+
+      if (workspaceStore.isFeatureEnabled) {
+        tpl[4].submenu = this.workspacesMenu();
+      }
+
+      if (todosStore.isFeatureEnabled) {
+        tpl[5].submenu = this.todosMenu();
+      }
+    }
 
     tpl.unshift({
-      label: isMac ? app.getName() : intl.formatMessage(menuItems.file),
+      label: isMac ? app.name : intl.formatMessage(menuItems.file),
       accelerator: 'Alt+F',
       submenu: [
         {
@@ -838,15 +853,18 @@ export default class FranzMenu {
             this.actions.ui.openSettings({ path: 'app' });
           },
           enabled: this.stores.user.isLoggedIn,
+          visible: !this.stores.settings.app.locked,
         },
         {
           label: intl.formatMessage(menuItems.checkForUpdates),
+          visible: !this.stores.settings.app.locked,
           click: () => {
             this.actions.app.checkForUpdates();
           },
         },
         {
           type: 'separator',
+          visible: !this.stores.settings.app.locked,
         },
         {
           label: intl.formatMessage(menuItems.services),
@@ -926,6 +944,7 @@ export default class FranzMenu {
             this.actions.ui.openSettings({ path: 'app' });
           },
           enabled: this.stores.user.isLoggedIn,
+          visible: !this.stores.settings.locked,
         },
         {
           type: 'separator',
@@ -957,14 +976,14 @@ export default class FranzMenu {
       tpl[5].submenu = this.todosMenu();
     }
 
-    tpl[tpl.length - 1].submenu.push({
-      type: 'separator',
-    }, this.debugMenu());
-
+    if (!this.stores.settings.app.locked) {
+      tpl[tpl.length - 1].submenu.push({
+        type: 'separator',
+      }, ...this.debugMenu());
+    }
     this.currentTemplate = tpl;
     const menu = Menu.buildFromTemplate(tpl);
-    const lockedMenu = Menu.buildFromTemplate([]);
-    Menu.setApplicationMenu(this.stores.user.isLoggedIn && this.stores.settings.app.locked ? lockedMenu : menu);
+    Menu.setApplicationMenu(menu);
   }
 
   serviceTpl() {
@@ -1117,7 +1136,7 @@ export default class FranzMenu {
   debugMenu() {
     const { intl } = window.ferdi;
 
-    return {
+    return [{
       label: intl.formatMessage(menuItems.debugInfo),
       click: () => {
         const { debugInfo } = this.stores.app;
@@ -1133,7 +1152,12 @@ export default class FranzMenu {
           },
         });
       },
-    };
+    }, {
+      label: intl.formatMessage(menuItems.publishDebugInfo),
+      click: () => {
+        window.ferdi.features.publishDebugInfo.state.isModalVisible = true;
+      },
+    }];
   }
 
   _getServiceName(service) {

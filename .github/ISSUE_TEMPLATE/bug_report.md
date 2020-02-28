@@ -2,11 +2,17 @@
 name: Bug report
 about: Create a report to help us improve
 ---
+<!--
+Please fill our form below, this way we can analyse and fix the problem as fast as possible.
 
+Please keep in mind that any text inside "<!--" and "--\>" are comments from us and won't be
+visible in your bug report, so please don't put any text in them.
+-->
 **Describe the bug**
-A clear and concise description of what the bug is.
+<!-- Add a clear and concise description of what the bug is -->
 
 **To Reproduce**
+<!-- Explain to us how we can reproduce your bug on our computer -->
 Steps to reproduce the behavior:
 
 1. Go to '...'
@@ -15,26 +21,33 @@ Steps to reproduce the behavior:
 4. See error
 
 **Expected behavior**
-A clear and concise description of what you expected to happen.
+<!-- If applicable, add a description of what you expected to happen. -->
 
 **Screenshots**
-If applicable, add screenshots to help explain your problem.
+<!-- If applicable, add screenshots to help explain your problem. -->
+<!-- You can simply drag and drop any image file into the editor to add it to the report -->
 
-**Desktop (please complete the following information):**
+**Desktop:**
 
-- OS: [e.g. iOS]
-- Browser [e.g. chrome, safari]
-- Version [e.g. 22]
+- OS: [e.g. macOS, Windows 10 etc.]
+- Ferdi Version [e.g. 5.4.3]
+<!-- ℹ You can find Ferdi's version by opening File > About Ferdi or Help > About Ferdi, depending on your Operating System -->
+- Server Used: [e.g. https://api.getferdi.com]
+<!-- ℹ You can find Ferdi's server in Ferdi's settings under "Server". If you self-host or use Ferdi without an account please say so. -->
 
-**Smartphone (please complete the following information):**
-
-- Device: [e.g. iPhone6]
-- OS: [e.g. iOS8.1]
-- Browser [e.g. stock browser, safari]
-- Version [e.g. 22]
+<!-- 
+If you are using Ferdi >= 5.4.4-beta.2 please publish your debugging information and share them in your bug report.
+To publish a bug report, inside Ferdi's menu bar click on "Help" > "Publish debug information", accept our terms
+and copy the link given to you.
+-->
+Debug information: https://debug.getferdi.com/...
 
 **Additional context**
-Add any other context about the problem here.
+<!-- Add any other context about the problem here. -->
 
-<!-- Love Ferdi? Please consider supporting our collective:
-👉  https://opencollective.com/getferdi/donate -->
+<!-- 
+Love Ferdi? Please consider supporting our open-collective:
+👉  https://opencollective.com/getferdi/donate
+or following us on Twitter:
+👉  https://twitter.com/getferdi
+-->

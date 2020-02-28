@@ -10,7 +10,9 @@ import UserStore from '../../stores/UserStore';
 import TodosStore from '../../features/todos/store';
 import Form from '../../lib/Form';
 import { APP_LOCALES, SPELLCHECKER_LOCALES } from '../../i18n/languages';
-import { DEFAULT_APP_SETTINGS, HIBERNATION_STRATEGIES } from '../../config';
+import {
+  DEFAULT_APP_SETTINGS, HIBERNATION_STRATEGIES, SIDEBAR_WIDTH, ICON_SIZES, NAVIGATION_BAR_BEHAVIOURS,
+} from '../../config';
 import { config as spellcheckerConfig } from '../../features/spellchecker';
 
 import { getSelectOptions } from '../../helpers/i18n-helpers';
@@ -44,7 +46,7 @@ const messages = defineMessages({
   },
   enableSystemTray: {
     id: 'settings.app.form.enableSystemTray',
-    defaultMessage: '!!!Show Ferdi in system tray',
+    defaultMessage: '!!!Always show Ferdi in system tray',
   },
   minimizeToSystemTray: {
     id: 'settings.app.form.minimizeToSystemTray',
@@ -54,9 +56,9 @@ const messages = defineMessages({
     id: 'settings.app.form.privateNotifications',
     defaultMessage: '!!!Don\'t show message content in notifications',
   },
-  showServiceNavigationBar: {
-    id: 'settings.app.form.showServiceNavigationBar',
-    defaultMessage: '!!!Always show service navigation bar',
+  navigationBarBehaviour: {
+    id: 'settings.app.form.navigationBarBehaviour',
+    defaultMessage: '!!!Navigation bar behaviour',
   },
   sentry: {
     id: 'settings.app.form.sentry',
@@ -117,6 +119,14 @@ const messages = defineMessages({
   universalDarkMode: {
     id: 'settings.app.form.universalDarkMode',
     defaultMessage: '!!!Enable universal Dark Mode',
+  },
+  serviceRibbonWidth: {
+    id: 'settings.app.form.serviceRibbonWidth',
+    defaultMessage: '!!!Sidebar width',
+  },
+  iconSize: {
+    id: 'settings.app.form.iconSize',
+    defaultMessage: '!!!Service icon size',
   },
   accentColor: {
     id: 'settings.app.form.accentColor',
@@ -184,7 +194,7 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
         startMinimized: settingsData.startMinimized,
         minimizeToSystemTray: settingsData.minimizeToSystemTray,
         privateNotifications: settingsData.privateNotifications,
-        showServiceNavigationBar: settingsData.showServiceNavigationBar,
+        navigationBarBehaviour: settingsData.navigationBarBehaviour,
         sentry: settingsData.sentry,
         hibernate: settingsData.hibernate,
         hibernationStrategy: settingsData.hibernationStrategy,
@@ -201,6 +211,8 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
         darkMode: settingsData.darkMode,
         adaptableDarkMode: settingsData.adaptableDarkMode,
         universalDarkMode: settingsData.universalDarkMode,
+        serviceRibbonWidth: settingsData.serviceRibbonWidth,
+        iconSize: settingsData.iconSize,
         accentColor: settingsData.accentColor,
         showMessageBadgeWhenMuted: settingsData.showMessageBadgeWhenMuted,
         enableSpellchecking: settingsData.enableSpellchecking,
@@ -248,8 +260,23 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
       locales: APP_LOCALES,
     });
 
+    const navigationBarBehaviours = getSelectOptions({
+      locales: NAVIGATION_BAR_BEHAVIOURS,
+      sort: false,
+    });
+
     const hibernationStrategies = getSelectOptions({
       locales: HIBERNATION_STRATEGIES,
+      sort: false,
+    });
+
+    const sidebarWidth = getSelectOptions({
+      locales: SIDEBAR_WIDTH,
+      sort: false,
+    });
+
+    const iconSizes = getSelectOptions({
+      locales: ICON_SIZES,
       sort: false,
     });
 
@@ -295,10 +322,11 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           value: settings.all.app.privateNotifications,
           default: DEFAULT_APP_SETTINGS.privateNotifications,
         },
-        showServiceNavigationBar: {
-          label: intl.formatMessage(messages.showServiceNavigationBar),
-          value: settings.all.app.showServiceNavigationBar,
-          default: DEFAULT_APP_SETTINGS.showServiceNavigationBar,
+        navigationBarBehaviour: {
+          label: intl.formatMessage(messages.navigationBarBehaviour),
+          value: settings.all.app.navigationBarBehaviour,
+          default: DEFAULT_APP_SETTINGS.navigationBarBehaviour,
+          options: navigationBarBehaviours,
         },
         sentry: {
           label: intl.formatMessage(messages.sentry),
@@ -395,6 +423,18 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           label: intl.formatMessage(messages.universalDarkMode),
           value: settings.all.app.universalDarkMode,
           default: DEFAULT_APP_SETTINGS.universalDarkMode,
+        },
+        serviceRibbonWidth: {
+          label: intl.formatMessage(messages.serviceRibbonWidth),
+          value: settings.all.app.serviceRibbonWidth,
+          default: DEFAULT_APP_SETTINGS.serviceRibbonWidth,
+          options: sidebarWidth,
+        },
+        iconSize: {
+          label: intl.formatMessage(messages.iconSize),
+          value: settings.all.app.iconSize,
+          default: DEFAULT_APP_SETTINGS.iconSize,
+          options: iconSizes,
         },
         accentColor: {
           label: intl.formatMessage(messages.accentColor),

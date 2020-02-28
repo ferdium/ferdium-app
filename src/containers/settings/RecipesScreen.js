@@ -161,7 +161,8 @@ export default @inject('stores', 'actions') @observer class RecipesScreen extend
           serviceStatus={services.actionStatus}
           recipeFilter={filter}
           recipeDirectory={recipeDirectory}
-          openRecipeDirectory={() => {
+          openRecipeDirectory={async () => {
+            await fs.ensureDir(recipeDirectory);
             shell.openItem(recipeDirectory);
           }}
           openDevDocs={() => {
