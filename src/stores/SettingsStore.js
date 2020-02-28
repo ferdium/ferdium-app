@@ -1,21 +1,18 @@
 import { ipcRenderer, remote } from 'electron';
-import {
-  action, computed, observable, reaction,
-} from 'mobx';
+import { action, computed, observable, reaction } from 'mobx';
 import localStorage from 'mobx-localstorage';
-
-import Store from './lib/Store';
-import Request from './lib/Request';
-import { getLocale } from '../helpers/i18n-helpers';
-import { API } from '../environment';
-
 import { DEFAULT_APP_SETTINGS, FILE_SYSTEM_SETTINGS_TYPES, LOCAL_SERVER } from '../config';
+import { API } from '../environment';
+import { getLocale } from '../helpers/i18n-helpers';
 import { SPELLCHECKER_LOCALES } from '../i18n/languages';
+import Request from './lib/Request';
+import Store from './lib/Store';
 
 const debug = require('debug')('Ferdi:SettingsStore');
 
 export default class SettingsStore extends Store {
   @observable updateAppSettingsRequest = new Request(this.api.local, 'updateAppSettings');
+  startup = true;
 
   fileSystemSettingsTypes = FILE_SYSTEM_SETTINGS_TYPES;
 
@@ -30,16 +27,6 @@ export default class SettingsStore extends Store {
     // Register action handlers
     this.actions.settings.update.listen(this._update.bind(this));
     this.actions.settings.remove.listen(this._remove.bind(this));
-
-    ipcRenderer.on('appSettings', (event, resp) => {
-      debug('Get appSettings resolves', resp.type, resp.data);
-
-      Object.assign(this._fileSystemSettingsCache[resp.type], resp.data);
-    });
-
-    this.fileSystemSettingsTypes.forEach((type) => {
-      ipcRenderer.send('getAppSettings', type);
-    });
   }
 
   async setup() {
@@ -101,27 +88,30 @@ export default class SettingsStore extends Store {
       }
     });
 
-    // Make sure to lock app on launch if locking feature is enabled
-    setTimeout(() => {
-      const isLoggedIn = Boolean(localStorage.getItem('authToken'));
-      if (isLoggedIn && this.all.app.lockingFeatureEnabled) {
-        // Disable lock first - otherwise the lock might not get activated corrently
-        this.actions.settings.update({
-          type: 'app',
-          data: {
-            locked: false,
-          },
-        });
-        setTimeout(() => {
-          this.actions.settings.update({
-            type: 'app',
-            data: {
-              locked: true,
-            },
-          });
-        }, 0);
+    ipcRenderer.on('appSettings', (event, resp) => {
+      // Lock on startup if enabled in settings
+      if (this.startup && resp.type === 'app' && resp.data.lockingFeatureEnabled) {
+        this.startup = false;
+        process.nextTick(() => {
+          // If the app was previously closed unlocked
+          // we can update the `locked` setting and rely on the reaction to lock at startup
+          if (!this.all.app.locked) {
+            this.all.app.locked = true;
+          } else {
+            // Otherwise the app previously closed in a locked state
+            // We can't rely on updating the locked setting for the reaction to be triggered
+            // So we lock manually
+            window.ferdi.stores.router.push('/auth/locked');
+          }
+        })
       }
-    }, 1000);
+      debug('Get appSettings resolves', resp.type, resp.data);
+      Object.assign(this._fileSystemSettingsCache[resp.type], resp.data);
+    });
+
+    this.fileSystemSettingsTypes.forEach((type) => {
+      ipcRenderer.send('getAppSettings', type);
+    });
   }
 
   @computed get app() {
@@ -247,6 +237,26 @@ export default class SettingsStore extends Store {
         type: 'migration',
         data: {
           '5.0.0-beta.19-settings': true,
+        },
+      });
+    }
+
+    if (!this.all.migration['5.4.4-beta.2-settings']) {
+      const {
+        showServiceNavigationBar,
+      } = this.all.app;
+
+      this.actions.settings.update({
+        type: 'app',
+        data: {
+          navigationBarBehaviour: showServiceNavigationBar ? 'custom' : 'never',
+        },
+      });
+
+      this.actions.settings.update({
+        type: 'migration',
+        data: {
+          '5.4.4-beta.2-settings': true,
         },
       });
     }

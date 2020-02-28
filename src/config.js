@@ -45,6 +45,12 @@ export const HIBERNATION_STRATEGIES = {
   3600: 'Extemely Slow Hibernation (1hour)',
 };
 
+export const NAVIGATION_BAR_BEHAVIOURS = {
+  custom: 'Show navigation bar on custom websites only',
+  always: 'Show navigation bar on all services',
+  never: 'Never show navigation bar',
+};
+
 export const SIDEBAR_WIDTH = {
   35: 'Extemely slim sidebar',
   45: 'Very slim sidebar',
@@ -107,6 +113,7 @@ export const DEFAULT_APP_SETTINGS = {
   serviceRibbonWidth: 68,
   iconSize: iconSizeBias,
   sentry: false,
+  navigationBarBehaviour: 'custom',
 };
 
 export const DEFAULT_FEATURES_CONFIG = {

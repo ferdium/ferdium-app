@@ -1,15 +1,15 @@
-import { remote, shell, clipboard } from 'electron';
-import { observable, autorun } from 'mobx';
+import { clipboard, remote, shell } from 'electron';
+import { autorun, observable } from 'mobx';
 import { defineMessages } from 'react-intl';
-
-import { isMac, ctrlKey, cmdKey } from '../environment';
-import { workspaceStore } from '../features/workspaces/index';
-import { workspaceActions } from '../features/workspaces/actions';
-import { announcementActions } from '../features/announcements/actions';
+import { cmdKey, ctrlKey, isMac } from '../environment';
 import { announcementsStore } from '../features/announcements';
+import { announcementActions } from '../features/announcements/actions';
 import { todosStore } from '../features/todos';
 import { todoActions } from '../features/todos/actions';
 import { CUSTOM_WEBSITE_ID } from '../features/webControls/constants';
+import { workspaceActions } from '../features/workspaces/actions';
+import { workspaceStore } from '../features/workspaces/index';
+
 
 const { app, Menu, dialog } = remote;
 
@@ -811,22 +811,13 @@ export default class FranzMenu {
         accelerator: 'CmdOrCtrl+Shift+L',
         enabled: this.stores.user.isLoggedIn && this.stores.settings.app.lockingFeatureEnabled,
         click() {
-          // Disable lock first - otherwise the application might not update correctly
           actions.settings.update({
             type: 'app',
             data: {
-              locked: false,
+              locked: true,
             },
           });
-          setTimeout(() => {
-            actions.settings.update({
-              type: 'app',
-              data: {
-                locked: true,
-              },
-            });
-          }, 0);
-        },
+        }
       });
 
       if (serviceTpl.length > 0) {

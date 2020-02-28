@@ -4214,15 +4214,15 @@
         }
       },
       {
-        "defaultMessage": "!!!Always show service navigation bar",
+        "defaultMessage": "!!!Navigation bar behaviour",
         "end": {
           "column": 3,
           "line": 62
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
-        "id": "settings.app.form.showServiceNavigationBar",
+        "id": "settings.app.form.navigationBarBehaviour",
         "start": {
-          "column": 28,
+          "column": 26,
           "line": 59
         }
       },
