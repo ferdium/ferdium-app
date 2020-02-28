@@ -750,7 +750,9 @@ export default class FranzMenu {
     }
 
     const { intl } = window.ferdi;
-    const tpl = isMac ? _templateFactory(intl, this.stores.settings.app.locked) : _titleBarTemplateFactory(intl);
+    const tpl = isMac
+      ? _templateFactory(intl, this.stores.settings.app.locked)
+      : _titleBarTemplateFactory(intl, this.stores.settings.app.locked);
     const { actions } = this;
 
     if (this.stores.settings.app.locked) {
