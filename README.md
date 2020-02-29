@@ -40,7 +40,7 @@
     - [Start development app](#start-development-app)
     - [Packaging](#packaging)
     - [Release](#release)
-  - [Contributors ✨](#contributors-%e2%9c%a8)
+  - [Contributors ✨](#contributors-)
   - [Backers via OpenCollective](#backers-via-opencollective)
   - [Sponsors via OpenCollective](#sponsors-via-opencollective)
 </details>
