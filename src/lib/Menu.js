@@ -755,7 +755,7 @@ export default class FranzMenu {
       : _titleBarTemplateFactory(intl, this.stores.settings.app.locked);
     const { actions } = this;
 
-    if (this.stores.settings.app.locked) {
+    if (!this.stores.settings.app.locked) {
       tpl[1].submenu.push({
         type: 'separator',
       }, {
@@ -964,19 +964,19 @@ export default class FranzMenu {
       }, about);
     }
 
-    if (serviceTpl.length > 0) {
-      tpl[3].submenu = serviceTpl;
-    }
-
-    if (workspaceStore.isFeatureEnabled) {
-      tpl[4].submenu = this.workspacesMenu();
-    }
-
-    if (todosStore.isFeatureEnabled) {
-      tpl[5].submenu = this.todosMenu();
-    }
-
     if (!this.stores.settings.app.locked) {
+      if (serviceTpl.length > 0) {
+        tpl[3].submenu = serviceTpl;
+      }
+
+      if (workspaceStore.isFeatureEnabled) {
+        tpl[4].submenu = this.workspacesMenu();
+      }
+
+      if (todosStore.isFeatureEnabled) {
+        tpl[5].submenu = this.todosMenu();
+      }
+
       tpl[tpl.length - 1].submenu.push({
         type: 'separator',
       }, ...this.debugMenu());
