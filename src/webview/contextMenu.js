@@ -19,6 +19,19 @@ export default async function setupContextMenu(handler) {
         })
       );
     }
+
+    if (menuInfo.linkURL) {
+      menu.insert(
+        2,
+        new remote.MenuItem({
+          label: "Open Link in Ferdi",
+          click: () => {
+            window.location.href = menuInfo.linkURL;
+          }
+        })
+      );
+    }
+
     return menu;
   };
 
