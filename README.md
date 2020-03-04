@@ -189,17 +189,10 @@ $ npm run rebuild
 
 ### Start development app
 
-Run these two commands **simultaneously** in different terminals:
+We use [misty](https://github.com/adlk/misty) (see [misty.yml](https://github.com/getferdi/ferdi/blob/develop/misty.yml)) and [debug](https://github.com/visionmedia/debug):
 
 ```bash
-$ npm run dev
-$ npm run start
-```
-
-Optionally, you can run both commands in one terminal with [misty](https://github.com/adlk/misty) (see [misty.yml](https://github.com/getferdi/ferdi/blob/develop/misty.yml)):
-
-```bash
-$ npx misty
+$ DEBUG=Ferdi:* npx misty
 ```
 
 Be aware that the development database will be reset regularly.
