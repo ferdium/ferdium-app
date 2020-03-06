@@ -67,9 +67,9 @@ class RecipeWebview {
    *                          be an absolute path to the file
    */
   injectCSS(...files) {
-    files.forEach((file) => {
-      if (fs.existsSync(file)) {
-        const data = fs.readFileSync(file);
+    files.forEach(async (file) => {
+      if (await fs.exists(file)) {
+        const data = await fs.readFile(file);
         const styles = document.createElement('style');
         styles.innerHTML = data.toString();
 
