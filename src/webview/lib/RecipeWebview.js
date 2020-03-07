@@ -67,14 +67,16 @@ class RecipeWebview {
    *                          be an absolute path to the file
    */
   injectCSS(...files) {
-    files.forEach((file) => {
-      const data = fs.readFileSync(file);
-      const styles = document.createElement('style');
-      styles.innerHTML = data.toString();
+    files.forEach(async (file) => {
+      if (await fs.exists(file)) {
+        const data = await fs.readFile(file);
+        const styles = document.createElement('style');
+        styles.innerHTML = data.toString();
 
-      document.querySelector('head').appendChild(styles);
+        document.querySelector('head').appendChild(styles);
 
-      debug('Append styles', styles);
+        debug('Append styles', styles);
+      }
     });
   }
 
