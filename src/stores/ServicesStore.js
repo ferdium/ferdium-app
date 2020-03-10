@@ -699,6 +699,7 @@ export default class ServicesStore extends Store {
     const service = this.active;
     if (service) {
       this.actions.service.focusService({ serviceId: service.id });
+      document.title = `Ferdi - ${service.name}`;
     }
   }
 
