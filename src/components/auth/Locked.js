@@ -1,3 +1,4 @@
+import { remote } from 'electron';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
@@ -10,6 +11,10 @@ import Infobox from '../ui/Infobox';
 
 import { globalError as globalErrorPropType } from '../../prop-types';
 
+const {
+  systemPreferences,
+} = remote;
+
 const messages = defineMessages({
   headline: {
     id: 'locked.headline',
@@ -19,6 +24,14 @@ const messages = defineMessages({
     id: 'locked.info',
     defaultMessage: '!!!Ferdi is currently locked. Please unlock Ferdi with your password to see your messages.',
   },
+  touchId: {
+    id: 'locked.touchId',
+    defaultMessage: '!!!Unlock with Touch ID',
+  },
+  touchIdPrompt: {
+    id: 'locked.touchIdPrompt',
+    defaultMessage: '!!!unlock via Touch ID',
+  },
   passwordLabel: {
     id: 'locked.password.label',
     defaultMessage: '!!!Password',
@@ -26,6 +39,10 @@ const messages = defineMessages({
   submitButtonLabel: {
     id: 'locked.submit.label',
     defaultMessage: '!!!Unlock',
+  },
+  unlockWithPassword: {
+    id: 'locked.unlockWithPassword',
+    defaultMessage: '!!!Unlock with Password',
   },
   invalidCredentials: {
     id: 'locked.invalidCredentials',
@@ -36,7 +53,9 @@ const messages = defineMessages({
 export default @observer class Locked extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
+    unlock: PropTypes.func.isRequired,
     isSubmitting: PropTypes.bool.isRequired,
+    useTouchIdToUnlock: PropTypes.bool.isRequired,
     error: globalErrorPropType.isRequired,
   };
 
@@ -64,13 +83,25 @@ export default @observer class Locked extends Component {
     });
   }
 
+  touchIdUnlock() {
+    const { intl } = this.context;
+
+    systemPreferences.promptTouchID(intl.formatMessage(messages.touchIdPrompt)).then(() => {
+      this.props.unlock();
+    });
+  }
+
   render() {
     const { form } = this;
     const { intl } = this.context;
     const {
       isSubmitting,
       error,
+      useTouchIdToUnlock,
     } = this.props;
+
+    const touchIdEnabled = useTouchIdToUnlock && systemPreferences.canPromptTouchID();
+    const submitButtonLabel = touchIdEnabled ? intl.formatMessage(messages.unlockWithPassword) : intl.formatMessage(messages.submitButtonLabel);
 
     return (
       <div className="auth__container">
@@ -84,6 +115,19 @@ export default @observer class Locked extends Component {
           <Infobox type="warning">
             {intl.formatMessage(messages.info)}
           </Infobox>
+
+          {touchIdEnabled && (
+            <>
+              <Button
+                className="auth__button touchid__button"
+                label={intl.formatMessage(messages.touchId)}
+                onClick={() => this.touchIdUnlock()}
+                type="button"
+              />
+              <hr className="locked__or_line" />
+            </>
+          )}
+
           <Input
             field={form.$('password')}
             showPasswordToggle
@@ -96,7 +140,7 @@ export default @observer class Locked extends Component {
             <Button
               className="auth__button is-loading"
               buttonType="secondary"
-              label={`${intl.formatMessage(messages.submitButtonLabel)} ...`}
+              label={`${submitButtonLabel} ...`}
               loaded={false}
               disabled
             />
@@ -104,7 +148,7 @@ export default @observer class Locked extends Component {
             <Button
               type="submit"
               className="auth__button"
-              label={intl.formatMessage(messages.submitButtonLabel)}
+              label={submitButtonLabel}
             />
           )}
         </form>

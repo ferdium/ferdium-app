@@ -14,6 +14,10 @@ import Input from '../../ui/Input';
 import { FRANZ_TRANSLATION } from '../../../config';
 import { isMac } from '../../../environment';
 
+const {
+  systemPreferences,
+} = remote;
+
 function escapeHtml(unsafe) {
   return unsafe
     .replace(/&/g, '&amp;')
@@ -251,6 +255,7 @@ export default @observer class EditSettingsForm extends Component {
             <Toggle field={form.$('autoLaunchOnStart')} />
             <Toggle field={form.$('runInBackground')} />
             <Toggle field={form.$('enableSystemTray')} />
+            <Toggle field={form.$('reloadAfterResume')} />
             {isTrayEnabled && <Toggle field={form.$('startMinimized')} />}
             {process.platform === 'win32' && (
               <Toggle field={form.$('minimizeToSystemTray')} />
@@ -355,6 +360,10 @@ export default @observer class EditSettingsForm extends Component {
             <Toggle field={form.$('lockingFeatureEnabled')} />
             {lockingFeatureEnabled && (
               <>
+                {systemPreferences.canPromptTouchID() && (
+                  <Toggle field={form.$('useTouchIdToUnlock')} />
+                )}
+
                 <Input
                   placeholder={intl.formatMessage(messages.lockedPassword)}
                   onChange={e => this.submit(e)}

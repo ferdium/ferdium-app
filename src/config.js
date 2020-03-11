@@ -76,6 +76,7 @@ export const iconSizeBias = 20;
 export const DEFAULT_APP_SETTINGS = {
   autoLaunchInBackground: false,
   runInBackground: true,
+  reloadAfterResume: true,
   enableSystemTray: true,
   startMinimized: false,
   minimizeToSystemTray: false,
@@ -99,6 +100,7 @@ export const DEFAULT_APP_SETTINGS = {
   lockingFeatureEnabled: false,
   locked: false,
   lockedPassword: '',
+  useTouchIdToUnlock: true,
   scheduledDNDEnabled: false,
   scheduledDNDStart: '17:00',
   scheduledDNDEnd: '09:00',

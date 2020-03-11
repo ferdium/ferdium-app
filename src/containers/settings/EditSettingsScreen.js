@@ -48,6 +48,10 @@ const messages = defineMessages({
     id: 'settings.app.form.enableSystemTray',
     defaultMessage: '!!!Always show Ferdi in system tray',
   },
+  reloadAfterResume: {
+    id: 'settings.app.form.reloadAfterResume',
+    defaultMessage: '!!!Reload Ferdi after system resume',
+  },
   minimizeToSystemTray: {
     id: 'settings.app.form.minimizeToSystemTray',
     defaultMessage: '!!!Minimize Ferdi to system tray',
@@ -87,6 +91,10 @@ const messages = defineMessages({
   lockPassword: {
     id: 'settings.app.form.lockPassword',
     defaultMessage: '!!!Password',
+  },
+  useTouchIdToUnlock: {
+    id: 'settings.app.form.useTouchIdToUnlock',
+    defaultMessage: '!!!Allow using Touch ID to unlock',
   },
   inactivityLock: {
     id: 'settings.app.form.inactivityLock',
@@ -191,6 +199,7 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
       data: {
         runInBackground: settingsData.runInBackground,
         enableSystemTray: settingsData.enableSystemTray,
+        reloadAfterResume: settingsData.reloadAfterResume,
         startMinimized: settingsData.startMinimized,
         minimizeToSystemTray: settingsData.minimizeToSystemTray,
         privateNotifications: settingsData.privateNotifications,
@@ -202,6 +211,7 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
         todoServer: settingsData.todoServer,
         lockingFeatureEnabled: settingsData.lockingFeatureEnabled,
         lockedPassword: settingsData.lockedPassword,
+        useTouchIdToUnlock: settingsData.useTouchIdToUnlock,
         inactivityLock: settingsData.inactivityLock,
         scheduledDNDEnabled: settingsData.scheduledDNDEnabled,
         scheduledDNDStart: settingsData.scheduledDNDStart,
@@ -312,6 +322,11 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           value: settings.all.app.enableSystemTray,
           default: DEFAULT_APP_SETTINGS.enableSystemTray,
         },
+        reloadAfterResume: {
+          label: intl.formatMessage(messages.reloadAfterResume),
+          value: settings.all.app.reloadAfterResume,
+          default: DEFAULT_APP_SETTINGS.reloadAfterResume,
+        },
         minimizeToSystemTray: {
           label: intl.formatMessage(messages.minimizeToSystemTray),
           value: settings.all.app.minimizeToSystemTray,
@@ -364,6 +379,11 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           value: settings.all.app.lockedPassword,
           default: '',
           type: 'password',
+        },
+        useTouchIdToUnlock: {
+          label: intl.formatMessage(messages.useTouchIdToUnlock),
+          value: settings.all.app.useTouchIdToUnlock,
+          default: DEFAULT_APP_SETTINGS.useTouchIdToUnlock,
         },
         inactivityLock: {
           label: intl.formatMessage(messages.inactivityLock),
