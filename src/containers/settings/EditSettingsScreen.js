@@ -541,7 +541,6 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           isSpellcheckerIncludedInCurrentPlan={spellcheckerConfig.isIncludedInCurrentPlan}
           isTodosEnabled={todos.isFeatureActive}
           isWorkspaceEnabled={workspaces.isFeatureActive}
-          server={this.props.stores.settings.app.server}
           lockingFeatureEnabled={lockingFeatureEnabled}
           noUpdates={this.props.stores.settings.app.noUpdates}
           hibernationEnabled={this.props.stores.settings.app.hibernate}
