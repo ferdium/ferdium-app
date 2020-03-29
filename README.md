@@ -227,7 +227,7 @@ Run the following command to install all dependencies, and link sibling modules 
 $ npx lerna bootstrap
 ```
 
-If you previously ran `npm install` it sometimes is necessary to delete your `node_modules` folder before running `npx lerna bootstrap`.
+If you previously ran `npm install` it sometimes is necessary to delete your `node_modules` folder before running `npx lerna bootstrap`. If you encounter the `gyp: No Xcode or CLT version` error on macOS at this step, please have a look [here](https://medium.com/flawless-app-stories/gyp-no-xcode-or-clt-version-detected-macos-catalina-anansewaa-38b536389e8d).
 
 ### Fix native modules to match current electron node version
 
