@@ -300,7 +300,6 @@
   "settings.app.form.scheduledDNDEnd": "To",
   "settings.app.form.scheduledDNDStart": "From",
   "settings.app.form.sentry": "Send telemetry data",
-  "settings.app.form.server": "Server",
   "settings.app.form.serviceRibbonWidth": "Sidebar width",
   "settings.app.form.showDisabledServices": "Display disabled services tabs",
   "settings.app.form.showMessagesBadgesWhenMuted": "Show unread message badge when notifications are disabled",
