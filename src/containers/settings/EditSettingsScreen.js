@@ -20,7 +20,7 @@ import { getSelectOptions } from '../../helpers/i18n-helpers';
 import EditSettingsForm from '../../components/settings/settings/EditSettingsForm';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 
-import { API, TODOS_FRONTEND } from '../../environment';
+import { TODOS_FRONTEND } from '../../environment';
 
 import globalMessages from '../../i18n/globalMessages';
 import { DEFAULT_IS_FEATURE_ENABLED_BY_USER } from '../../features/todos';
@@ -75,10 +75,6 @@ const messages = defineMessages({
   hibernationStrategy: {
     id: 'settings.app.form.hibernationStrategy',
     defaultMessage: '!!!Hibernation strategy',
-  },
-  server: {
-    id: 'settings.app.form.server',
-    defaultMessage: '!!!Server',
   },
   todoServer: {
     id: 'settings.app.form.todoServer',
@@ -207,7 +203,6 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
         sentry: settingsData.sentry,
         hibernate: settingsData.hibernate,
         hibernationStrategy: settingsData.hibernationStrategy,
-        server: settingsData.server,
         todoServer: settingsData.todoServer,
         lockingFeatureEnabled: settingsData.lockingFeatureEnabled,
         lockedPassword: settingsData.lockedPassword,
@@ -358,11 +353,6 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           value: settings.all.app.hibernationStrategy,
           options: hibernationStrategies,
           default: DEFAULT_APP_SETTINGS.hibernationStrategy,
-        },
-        server: {
-          label: intl.formatMessage(messages.server),
-          value: settings.all.app.server || API,
-          default: API,
         },
         todoServer: {
           label: intl.formatMessage(messages.todoServer),
