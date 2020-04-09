@@ -158,7 +158,7 @@ export default @observer class EditSettingsForm extends Component {
     isTodosEnabled: PropTypes.bool.isRequired,
     isTodosActivated: PropTypes.bool.isRequired,
     isWorkspaceEnabled: PropTypes.bool.isRequired,
-    noUpdates: PropTypes.bool.isRequired,
+    automaticUpdates: PropTypes.bool.isRequired,
     hibernationEnabled: PropTypes.bool.isRequired,
     isDarkmodeEnabled: PropTypes.bool.isRequired,
     isAdaptableDarkModeEnabled: PropTypes.bool.isRequired,
@@ -196,7 +196,7 @@ export default @observer class EditSettingsForm extends Component {
       isSpellcheckerIncludedInCurrentPlan,
       isTodosEnabled,
       isWorkspaceEnabled,
-      noUpdates,
+      automaticUpdates,
       hibernationEnabled,
       isDarkmodeEnabled,
       openProcessManager,
@@ -503,31 +503,39 @@ export default @observer class EditSettingsForm extends Component {
 
             {/* Updates */}
             <h2 id="updates">{intl.formatMessage(messages.headlineUpdates)}</h2>
-            {updateIsReadyToInstall ? (
-              <Button
-                label={intl.formatMessage(messages.buttonInstallUpdate)}
-                onClick={installUpdate}
-              />
-            ) : (
-              <Button
-                buttonType="secondary"
-                label={intl.formatMessage(updateButtonLabelMessage)}
-                onClick={checkForUpdates}
-                disabled={noUpdates || isCheckingForUpdates || isUpdateAvailable}
-                loaded={!isCheckingForUpdates || !isUpdateAvailable}
-              />
+            <Toggle field={form.$('automaticUpdates')} />
+            {automaticUpdates && (
+              <div>
+                <Toggle field={form.$('beta')} />
+                {updateIsReadyToInstall ? (
+                  <Button
+                    label={intl.formatMessage(messages.buttonInstallUpdate)}
+                    onClick={installUpdate}
+                  />
+                ) : (
+                  <Button
+                    buttonType="secondary"
+                    label={intl.formatMessage(updateButtonLabelMessage)}
+                    onClick={checkForUpdates}
+                    disabled={!automaticUpdates || isCheckingForUpdates || isUpdateAvailable}
+                    loaded={!isCheckingForUpdates || !isUpdateAvailable}
+                  />
+                )}
+                <br />
+              </div>
             )}
-            <br />
-            <Toggle field={form.$('beta')} />
-            <Toggle field={form.$('noUpdates')} />
             {intl.formatMessage(messages.currentVersion)}
             {' '}
             {remote.app.getVersion()}
-            <br />
-            <br />
-            {noUpdateAvailable && intl.formatMessage(messages.updateStatusUpToDate)}
+            {noUpdateAvailable && (
+              <>
+                <br />
+                <br />
+                {intl.formatMessage(messages.updateStatusUpToDate)}
+              </>
+            )
+            }
             <p className="settings__message">
-
               <span className="mdi mdi-github-face" />
               <span>
 

@@ -162,9 +162,9 @@ const messages = defineMessages({
     id: 'settings.app.form.beta',
     defaultMessage: '!!!Include beta versions',
   },
-  noUpdates: {
-    id: 'settings.app.form.noUpdates',
-    defaultMessage: '!!!Disable updates',
+  automaticUpdates: {
+    id: 'settings.app.form.automaticUpdates',
+    defaultMessage: '!!!Enable updates',
   },
   enableTodos: {
     id: 'settings.app.form.enableTodos',
@@ -231,14 +231,14 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
         enableSpellchecking: settingsData.enableSpellchecking,
         spellcheckerLanguage: settingsData.spellcheckerLanguage,
         beta: settingsData.beta, // we need this info in the main process as well
-        noUpdates: settingsData.noUpdates, // we need this info in the main process as well
+        automaticUpdates: settingsData.automaticUpdates, // we need this info in the main process as well
         locale: settingsData.locale, // we need this info in the main process as well
       },
     });
 
     user.update({
       userData: {
-        noUpdates: settingsData.noUpdates,
+        automaticUpdates: settingsData.automaticUpdates,
         beta: settingsData.beta,
         locale: settingsData.locale,
       },
@@ -491,10 +491,10 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           value: user.data.beta,
           default: DEFAULT_APP_SETTINGS.beta,
         },
-        noUpdates: {
-          label: intl.formatMessage(messages.noUpdates),
-          value: settings.app.noUpdates,
-          default: DEFAULT_APP_SETTINGS.noUpdates,
+        automaticUpdates: {
+          label: intl.formatMessage(messages.automaticUpdates),
+          value: settings.app.automaticUpdates,
+          default: DEFAULT_APP_SETTINGS.automaticUpdates,
         },
       },
     };
@@ -556,7 +556,7 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           isTodosEnabled={todos.isFeatureActive}
           isWorkspaceEnabled={workspaces.isFeatureActive}
           lockingFeatureEnabled={lockingFeatureEnabled}
-          noUpdates={this.props.stores.settings.app.noUpdates}
+          automaticUpdates={this.props.stores.settings.app.automaticUpdates}
           hibernationEnabled={this.props.stores.settings.app.hibernate}
           isDarkmodeEnabled={this.props.stores.settings.app.darkMode}
           isAdaptableDarkModeEnabled={this.props.stores.settings.app.adaptableDarkMode}
