@@ -179,6 +179,10 @@ export default class AppStore extends Store {
       this.stores.router.push(url);
     });
 
+    ipcRenderer.on('muteApp', () => {
+      this._toggleMuteApp();
+    });
+
     this.locale = this._getDefaultLocale();
 
     setTimeout(() => {
