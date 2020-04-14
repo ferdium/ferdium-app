@@ -65,6 +65,18 @@ const messages = defineMessages({
     id: 'settings.service.form.enableDarkMode',
     defaultMessage: '!!!Enable Dark Mode',
   },
+  darkReaderBrightness: {
+    id: 'settings.service.form.darkReaderBrightness',
+    defaultMessage: '!!!Darkreader Brightness',
+  },
+  darkReaderContrast: {
+    id: 'settings.service.form.darkReaderContrast',
+    defaultMessage: '!!!Darkreader Contrast',
+  },
+  darkReaderSepia: {
+    id: 'settings.service.form.darkReaderSepia',
+    defaultMessage: '!!!Darkreader Sepia',
+  },
   enableProxy: {
     id: 'settings.service.form.proxy.isEnabled',
     defaultMessage: '!!!Use Proxy',
@@ -96,6 +108,14 @@ export default @inject('stores', 'actions') @observer class EditServiceScreen ex
     const { action } = this.props.router.params;
     const { recipes, services } = this.props.stores;
     const { createService, updateService } = this.props.actions.service;
+    data.darkReaderSettings = {
+      brightness: data.darkReaderBrightness,
+      contrast: data.darkReaderContrast,
+      sepia: data.darkReaderSepia,
+    };
+    delete data.darkReaderContrast;
+    delete data.darkReaderBrightness;
+    delete data.darkReaderSepia;
 
     const serviceData = data;
     serviceData.isMuted = !serviceData.isMuted;
@@ -165,6 +185,21 @@ export default @inject('stores', 'actions') @observer class EditServiceScreen ex
           label: intl.formatMessage(messages.enableDarkMode),
           value: service.isDarkModeEnabled,
           default: stores.settings.app.darkMode,
+        },
+        darkReaderBrightness: {
+          label: intl.formatMessage(messages.darkReaderBrightness),
+          value: service.darkReaderSettings ? service.darkReaderSettings.brightness : undefined,
+          default: 100,
+        },
+        darkReaderContrast: {
+          label: intl.formatMessage(messages.darkReaderContrast),
+          value: service.darkReaderSettings ? service.darkReaderSettings.contrast : undefined,
+          default: 90,
+        },
+        darkReaderSepia: {
+          label: intl.formatMessage(messages.darkReaderSepia),
+          value: service.darkReaderSettings ? service.darkReaderSettings.sepia : undefined,
+          default: 10,
         },
         spellcheckerLanguage: {
           label: intl.formatMessage(globalMessages.spellcheckerLanguage),
