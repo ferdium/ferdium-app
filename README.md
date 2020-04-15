@@ -185,7 +185,7 @@ If you use an AUR Helper e.g. yay, simply install it via `yay -S ferdi`.
 
 #### Node.js
 
-Please make sure you are running NodeJS v10 ([v10.16.3](https://nodejs.org/dist/v10.16.3/) suggested). Versions above will throw an errow when trying to install due to an [old fsevent dependency](https://github.com/fsevents/fsevents/issues/278).
+Please make sure you are running NodeJS v10 or above.
 
 #### Git
 
