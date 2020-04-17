@@ -52,7 +52,7 @@ export default class AppStore extends Store {
 
   @observable getAppCacheSizeRequest = new Request(this.api.local, 'getAppCacheSize');
 
-  @observable clearAppCacheRequest = new Request(this.api.local, 'clearAppCache');
+  @observable clearAppCacheRequest = new Request(this.api.local, 'clearCache');
 
   @observable autoLaunchOnStart = true;
 
@@ -179,6 +179,10 @@ export default class AppStore extends Store {
       this.stores.router.push(url);
     });
 
+    ipcRenderer.on('muteApp', () => {
+      this._toggleMuteApp();
+    });
+
     this.locale = this._getDefaultLocale();
 
     setTimeout(() => {
@@ -214,13 +218,16 @@ export default class AppStore extends Store {
     // macOS catalina notifications hack
     // notifications got stuck after upgrade but forcing a notification
     // via `new Notification` triggered the permission request
-    if (isMac && !localStorage.getItem(CATALINA_NOTIFICATION_HACK_KEY)) {
-      // eslint-disable-next-line no-new
-      new window.Notification('Welcome to Franz 5', {
-        body: 'Have a wonderful day & happy messaging.',
-      });
+    if (isMac) {
+      if (!localStorage.getItem(CATALINA_NOTIFICATION_HACK_KEY)) {
+        debug('Triggering macOS Catalina notification permission trigger');
+        // eslint-disable-next-line no-new
+        new window.Notification('Welcome to Franz 5', {
+          body: 'Have a wonderful day & happy messaging.',
+        });
 
-      localStorage.setItem(CATALINA_NOTIFICATION_HACK_KEY, true);
+        localStorage.setItem(CATALINA_NOTIFICATION_HACK_KEY, true);
+      }
     }
   }
 
@@ -374,8 +381,11 @@ export default class AppStore extends Store {
     const allServiceIds = await getServiceIdsFromPartitions();
     const allOrphanedServiceIds = allServiceIds.filter(id => !this.stores.services.all.find(s => id.replace('service-', '') === s.id));
 
-    await Promise.all(allOrphanedServiceIds.map(id => removeServicePartitionDirectory(id)));
-
+    try {
+      await Promise.all(allOrphanedServiceIds.map(id => removeServicePartitionDirectory(id)));
+    } catch (ex) {
+      console.log('Error while deleting service partition directory - ', ex);
+    }
     await Promise.all(this.stores.services.all.map(s => this.actions.service.clearCache({ serviceId: s.id })));
 
     await clearAppCache._promise;

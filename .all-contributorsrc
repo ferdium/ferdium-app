@@ -52,7 +52,8 @@
         "maintenance",
         "platform",
         "fundingFinding",
-        "blog"
+        "blog",
+        "translation"
       ]
     },
     {
@@ -407,7 +408,98 @@
       "avatar_url": "https://avatars3.githubusercontent.com/u/22817873?v=4",
       "profile": "http://twitter.com/noemis_exec",
       "contributions": [
+        "code",
+        "translation"
+      ]
+    },
+    {
+      "login": "gmarec",
+      "name": "gmarec",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/3405028?v=4",
+      "profile": "https://www.monke-agency.com/equipe.html",
+      "contributions": [
         "code"
+      ]
+    },
+    {
+      "login": "127oo1",
+      "name": "127oo1",
+      "avatar_url": "https://www.gravatar.com/avatar/060c722be11da16ae31902e9c98326b2",
+      "profile": "https://crowdin.com/profile/127oo1",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "ChTBoner",
+      "name": "ChTBoner",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/13273153/small/a810886febf5199cfa1c98644444dea7.jpeg",
+      "profile": "https://crowdin.com/profile/ChTBoner",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "johanengstrand",
+      "name": "Johan Engstrand",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14152801/small/fd395f120efca971ca9b34c57fd02cca.png",
+      "profile": "https://crowdin.com/profile/johanengstrand",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "mrassili",
+      "name": "Marouane R",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/25288435?v=4",
+      "profile": "https://mrassili.com",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "yourcontact",
+      "name": "Roman",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/46404814?v=4",
+      "profile": "https://github.com/yourcontact",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "mahadevans87",
+      "name": "Mahadevan Sreenivasan",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1255523?v=4",
+      "profile": "https://github.com/mahadevans87",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "JakeSteam",
+      "name": "Jake Lee",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/12380876?v=4",
+      "profile": "https://jakelee.co.uk",
+      "contributions": [
+        "content"
+      ]
+    },
+    {
+      "login": "sampathBlam",
+      "name": "Sampath Kumar Krishnan",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/17728976?v=4",
+      "profile": "https://github.com/sampathBlam",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "saruwman",
+      "name": "saruwman",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/41330038?v=4",
+      "profile": "https://github.com/saruwman",
+      "contributions": [
+        "doc"
       ]
     }
   ],
