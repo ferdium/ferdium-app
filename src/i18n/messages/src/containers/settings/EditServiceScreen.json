@@ -143,15 +143,54 @@
     }
   },
   {
+    "id": "settings.service.form.darkReaderBrightness",
+    "defaultMessage": "!!!Dark Reader Brightness",
+    "file": "src/containers/settings/EditServiceScreen.js",
+    "start": {
+      "line": 72,
+      "column": 24
+    },
+    "end": {
+      "line": 75,
+      "column": 3
+    }
+  },
+  {
+    "id": "settings.service.form.darkReaderContrast",
+    "defaultMessage": "!!!Dark Reader Contrast",
+    "file": "src/containers/settings/EditServiceScreen.js",
+    "start": {
+      "line": 76,
+      "column": 22
+    },
+    "end": {
+      "line": 79,
+      "column": 3
+    }
+  },
+  {
+    "id": "settings.service.form.darkReaderSepia",
+    "defaultMessage": "!!!Dark Reader Sepia",
+    "file": "src/containers/settings/EditServiceScreen.js",
+    "start": {
+      "line": 80,
+      "column": 19
+    },
+    "end": {
+      "line": 83,
+      "column": 3
+    }
+  },
+  {
     "id": "settings.service.form.proxy.isEnabled",
     "defaultMessage": "!!!Use Proxy",
     "file": "src/containers/settings/EditServiceScreen.js",
     "start": {
-      "line": 72,
+      "line": 84,
       "column": 15
     },
     "end": {
-      "line": 75,
+      "line": 87,
       "column": 3
     }
   },
@@ -160,11 +199,11 @@
     "defaultMessage": "!!!Proxy Host/IP",
     "file": "src/containers/settings/EditServiceScreen.js",
     "start": {
-      "line": 76,
+      "line": 88,
       "column": 13
     },
     "end": {
-      "line": 79,
+      "line": 91,
       "column": 3
     }
   },
@@ -173,11 +212,11 @@
     "defaultMessage": "!!!Port",
     "file": "src/containers/settings/EditServiceScreen.js",
     "start": {
-      "line": 80,
+      "line": 92,
       "column": 13
     },
     "end": {
-      "line": 83,
+      "line": 95,
       "column": 3
     }
   },
@@ -186,11 +225,11 @@
     "defaultMessage": "!!!User",
     "file": "src/containers/settings/EditServiceScreen.js",
     "start": {
-      "line": 84,
+      "line": 96,
       "column": 13
     },
     "end": {
-      "line": 87,
+      "line": 99,
       "column": 3
     }
   },
@@ -199,11 +238,11 @@
     "defaultMessage": "!!!Password",
     "file": "src/containers/settings/EditServiceScreen.js",
     "start": {
-      "line": 88,
+      "line": 100,
       "column": 17
     },
     "end": {
-      "line": 91,
+      "line": 103,
       "column": 3
     }
   }
