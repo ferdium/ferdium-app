@@ -101,7 +101,7 @@ const messages = defineMessages({
   },
   cacheNotCleared: {
     id: 'settings.app.cacheNotCleared',
-    defaultMessage: 'Couldn\'t clear all cache',
+    defaultMessage: '!!!Couldn\'t clear all cache',
   },
   buttonClearAllCache: {
     id: 'settings.app.buttonClearAllCache',
