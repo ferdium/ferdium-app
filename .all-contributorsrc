@@ -475,7 +475,10 @@
       "contributions": [
         "code",
         "ideas",
-        "review"
+        "review",
+        "bug",
+        "doc",
+        "userTesting"
       ]
     },
     {
@@ -495,7 +498,10 @@
       "contributions": [
         "code",
         "review",
-        "ideas"
+        "ideas",
+        "bug",
+        "doc",
+        "userTesting"
       ]
     },
     {
