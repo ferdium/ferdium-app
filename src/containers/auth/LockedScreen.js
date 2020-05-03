@@ -4,6 +4,8 @@ import { inject, observer } from 'mobx-react';
 import Locked from '../../components/auth/Locked';
 import SettingsStore from '../../stores/SettingsStore';
 
+import { hash } from '../../helpers/password-helpers';
+
 export default @inject('stores', 'actions') @observer class LockedScreen extends Component {
   state = {
     error: false,
@@ -24,7 +26,7 @@ export default @inject('stores', 'actions') @observer class LockedScreen extends
       correctPassword = '';
     }
 
-    if (String(password) === String(correctPassword)) {
+    if (hash(String(password)) === String(correctPassword)) {
       this.props.actions.settings.update({
         type: 'app',
         data: {
