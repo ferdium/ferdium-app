@@ -23,9 +23,12 @@ export default class TrayIcon {
       click() {
         if (app.mainWindow.isMinimized()) {
           app.mainWindow.restore();
+        } else if (app.mainWindow.isVisible()) {
+          app.mainWindow.hide();
+        } else {
+          app.mainWindow.show();
+          app.mainWindow.focus();
         }
-        app.mainWindow.show();
-        app.mainWindow.focus();
       },
     },
     {
