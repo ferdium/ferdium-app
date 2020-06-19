@@ -35,6 +35,7 @@ import {
 import { mainIpcHandler as basicAuthHandler } from './features/basicAuth';
 import ipcApi from './electron/ipc-api';
 import Tray from './lib/Tray';
+import DBus from './lib/DBus';
 import Settings from './electron/Settings';
 import handleDeepLink from './electron/deepLinking';
 import { isPositionValid } from './electron/windowUtils';
@@ -152,8 +153,8 @@ const createWindow = () => {
   const mainWindowState = windowStateKeeper({
     defaultWidth: DEFAULT_WINDOW_OPTIONS.width,
     defaultHeight: DEFAULT_WINDOW_OPTIONS.height,
-    maximize: false,
-    fullScreen: false,
+    maximize: true, // Automatically maximizes the window, if it was last clsoed maximized
+    fullScreen: true, // Automatically restores the window to full screen, if it was last closed full screen
   });
 
   let posX = mainWindowState.x || DEFAULT_WINDOW_OPTIONS.x;
@@ -192,6 +193,14 @@ const createWindow = () => {
     },
   });
 
+  app.on('web-contents-created', (e, contents) => {
+    if (contents.getType() === 'webview') {
+      contents.on('new-window', (event) => {
+        event.preventDefault();
+      });
+    }
+  });
+
   mainWindow.webContents.on('did-finish-load', () => {
     const fns = onDidLoadFns;
     onDidLoadFns = null;
@@ -205,6 +214,9 @@ const createWindow = () => {
   // Initialize System Tray
   const trayIcon = new Tray();
 
+  // Initialize DBus interface
+  const dbus = new DBus(trayIcon);
+
   // Initialize ipcApi
   ipcApi({
     mainWindow,
@@ -214,6 +226,9 @@ const createWindow = () => {
     },
     trayIcon,
   });
+
+  // Connect to the DBus after ipcApi took care of the System Tray
+  dbus.start();
 
   // Manage Window State
   mainWindowState.manage(mainWindow);
@@ -257,6 +272,7 @@ const createWindow = () => {
         mainWindow.hide();
       }
     } else {
+      dbus.stop();
       app.quit();
     }
   });
@@ -316,7 +332,7 @@ const createWindow = () => {
     e.preventDefault();
 
     if (isValidExternalURL(url)) {
-      shell.openExternal(url);
+        shell.openExternal(url);
     }
   });
 
@@ -395,6 +411,15 @@ ipcMain.on('feature-basic-auth-credentials', (e, { user, password }) => {
   authCallback = noop;
 });
 
+ipcMain.on('open-browser-window', (e, {disposition, url}, serviceId) => {
+  if (disposition === 'foreground-tab') {
+    let serviceSession = session.fromPartition(`persist:service-${serviceId}`)
+    let child = new BrowserWindow({ parent: mainWindow, webPreferences: {session: serviceSession}});
+    child.show();
+    child.loadURL(url);
+  }
+  debug('Received open-browser-window', disposition, url);
+});
 
 ipcMain.on('modifyRequestHeaders', (e, { modifiedRequestHeaders, serviceId }) => {
   debug('Received modifyRequestHeaders', modifiedRequestHeaders, serviceId);
