@@ -31,7 +31,7 @@ before_install:
     if [ $TRAVIS_BRANCH == "nightly"]; then
       git config --replace-all remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
       git fetch
-      git merge --no-ff origin/develop
+      git merge --no-ff --commit --no-edit origin/develop
     fi
 install:
   - cd recipes && npm install && npm run package && cd ..
