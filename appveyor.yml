@@ -2,7 +2,6 @@ version: build-{build}
 branches:
   only:
     - release
-    - nightly
 skip_tags: true
 skip_branch_with_pr: true
 
