@@ -27,6 +27,12 @@ cache: npm
 
 before_install:
   - git submodule update --init --recursive
+  - |
+    if [ $TRAVIS_BRANCH == "nightly"]; then
+      git config --replace-all remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
+      git fetch
+      git merge --no-ff origin/develop
+    fi
 install:
   - cd recipes && npm install && npm run package && cd ..
   - travis_retry npx lerna bootstrap
