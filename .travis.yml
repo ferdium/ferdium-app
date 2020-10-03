@@ -31,10 +31,10 @@ before_install:
     if [ $TRAVIS_BRANCH == "nightly" ]; then
       git remote add source https://${GH_TOKEN}@github.com/getferdi/ferdi.git > /dev/null 2>&1
       git fetch source
-      git status
       git merge --no-ff --commit --no-edit source/develop
-      git status
-      git log
+      git submodule update --remote --force
+      git add .
+      git commit -m "Update submodules"
     fi
 install:
   - cd recipes && npm install && npm run package && cd ..
