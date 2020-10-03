@@ -28,10 +28,13 @@ cache: npm
 before_install:
   - git submodule update --init --recursive
   - |
-    if [ $TRAVIS_BRANCH == "nightly"]; then
-      git config --replace-all remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
-      git fetch
-      git merge --no-ff --commit --no-edit origin/develop
+    if [ $TRAVIS_BRANCH == "nightly" ]; then
+      git remote add source https://${GH_TOKEN}@github.com/getferdi/ferdi.git > /dev/null 2>&1
+      git fetch source
+      git status
+      git merge --no-ff --commit --no-edit source/develop
+      git status
+      git log
     fi
 install:
   - cd recipes && npm install && npm run package && cd ..
