@@ -32,9 +32,14 @@ before_install:
       git remote add source https://${GH_TOKEN}@github.com/getferdi/ferdi.git > /dev/null 2>&1
       git fetch source
       git merge --no-ff --commit --no-edit source/develop
-      git submodule update --remote --force
-      git add .
-      git commit -m "Update submodules"
+      changes=$(git diff --stat HEAD origin/nightly | wc -l)
+      if [ $changes -eq 0 ]; then
+        travis_terminate 0;
+      else
+        git submodule update --remote --force
+        git add .
+        git commit -m "Update submodules"
+      fi
     fi
 install:
   - cd recipes && npm install && npm run package && cd ..
