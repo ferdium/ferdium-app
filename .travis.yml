@@ -32,8 +32,10 @@ before_install:
       git remote add source https://${GH_TOKEN}@github.com/getferdi/ferdi.git > /dev/null 2>&1
       git fetch source
       git merge --no-ff --commit --no-edit source/develop
-      changes=$(git diff --stat HEAD origin/nightly | wc -l)
-      if [ $changes -eq 0 ]; then
+      CHANGES_COUNT=$(git diff --stat HEAD origin/nightly | wc -l)
+      echo $TRAVIS_EVENT_TYPE
+      echo $changes
+      if [ $CHANGES_COUNT -eq 0 -a $TRAVIS_EVENT_TYPE == "cron" ]; then
         travis_terminate 0;
       else
         git submodule update --remote --force
