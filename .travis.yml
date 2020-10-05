@@ -40,7 +40,7 @@ before_install:
       else
         git submodule update --remote --force
         git add .
-        git diff-index --quiet HEAD || git commit -m "Update submodules"
+        git commit -m "Update submodules" || true
       fi
     fi
 install:
