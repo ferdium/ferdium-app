@@ -132,6 +132,8 @@ export const DEFAULT_APP_SETTINGS = {
   sentry: false,
   nightly: false,
   navigationBarBehaviour: 'custom',
+  useVerticalStyle: false,
+  alwaysShowWorkspaces: false,
 };
 
 export const DEFAULT_FEATURES_CONFIG = {
