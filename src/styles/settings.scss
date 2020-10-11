@@ -151,9 +151,8 @@
     flex: 1;
     flex-direction: column;
     height: auto;
-    border-radius: $theme-border-radius;
+    border-radius: 0 $theme-border-radius $theme-border-radius 0;
     overflow: hidden;
-    box-shadow: 0 20px 50px rgba($dark-theme-black, .5);
     background: #FFF;
   }
 
@@ -450,7 +449,7 @@
   flex-direction: column;
   height: auto;
   width: 240px;
-  height: calc(100% - 100px);
+  height: 100%;
   align-self: center;
   border-top-left-radius: $theme-border-radius;;
   border-bottom-left-radius: $theme-border-radius;;
@@ -463,7 +462,7 @@
     color: $theme-text-color;
     display: flex;
     flex-shrink: 0;
-    height: 50px;
+    height: 51px;
     padding: 0 20px;
     text-decoration: none;
     transition: background $theme-transition-time, color $theme-transition-time;

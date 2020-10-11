@@ -38,12 +38,9 @@ a, button {
   text-decoration: none;
 
   &.button {
-    background: none;
-    border-width: 2px;
-    border-style: solid;
-    border-color: $theme-brand-primary;
+    background: $theme-brand-primary;
+    color: #FFF;
     border-radius: 3px;
-    color: $theme-brand-primary;
     display: inline-block;
     padding: 10px 20px;
     position: relative;
@@ -52,7 +49,7 @@ a, button {
     cursor: pointer;
 
     &:hover {
-      background: darken($theme-brand-primary, 5%);
+      background: darken($theme-brand-primary, 10%);
       color: #FFF;
     }
   }

@@ -126,7 +126,7 @@ export const DEFAULT_APP_SETTINGS = {
   showServiceNavigationBar: false,
   universalDarkMode: true,
   adaptableDarkMode: true,
-  accentColor: '#7367f0',
+  accentColor: '#7266F0',
   serviceRibbonWidth: 68,
   iconSize: iconSizeBias,
   sentry: false,
@@ -156,7 +156,7 @@ export const DEFAULT_WINDOW_OPTIONS = {
   y: 0,
 };
 
-export const FRANZ_SERVICE_REQUEST = 'https://github.com/getferdi/recipes/issues/new/choose';
+export const FRANZ_SERVICE_REQUEST = 'https://github.com/getferdi/recipes/issues';
 export const FRANZ_TRANSLATION = 'https://crowdin.com/project/getferdi';
 export const FRANZ_DEV_DOCS = 'http://bit.ly/franz-dev-hub';
 
