@@ -58,6 +58,10 @@ const paths = {
     dest: 'build/styles',
     watch: 'src/styles/**/*.scss',
   },
+  verticalStyle: {
+    src: 'src/styles/vertical.scss',
+    dest: 'build/styles',
+  },
   scripts: {
     src: 'src/**/*.js',
     dest: 'build/',
@@ -164,6 +168,33 @@ export function styles() {
     .pipe(gulp.dest(paths.styles.dest));
 }
 
+export function verticalStyle() {
+  return gulp
+    .src(paths.verticalStyle.src)
+    .pipe(
+      sassVariables(
+        Object.assign(
+          {
+            $env:
+              process.env.NODE_ENV === 'development'
+                ? 'development'
+                : 'production',
+          },
+          ...styleConfig,
+        ),
+      ),
+    )
+    .pipe(
+      sass({
+        includePaths: ['./node_modules', '../node_modules'],
+      }).on('error', sass.logError),
+    )
+    .pipe((gulpIf(process.env.NODE_ENV !== 'development', csso({ // Only minify in production to speed up dev builds
+      restructure: false, // Don't restructure CSS, otherwise it will break the styles
+    }))))
+    .pipe(gulp.dest(paths.verticalStyle.dest));
+}
+
 export function scripts() {
   return gulp
     .src(paths.scripts.src, { since: gulp.lastRun(scripts) })
@@ -179,6 +210,7 @@ export function scripts() {
 export function watch() {
   gulp.watch(paths.packages.watch, mvLernaPackages);
   gulp.watch(paths.styles.watch, styles);
+  gulp.watch(paths.verticalStyle.src, verticalStyle);
 
   gulp.watch([paths.src, `${paths.scripts.src}`, `${paths.styles.src}`], mvSrc);
 
@@ -205,7 +237,7 @@ export function recipeInfo() {
 const build = gulp.series(
   clean,
   gulp.parallel(mvSrc, mvPackageJson, mvLernaPackages),
-  gulp.parallel(html, scripts, styles, recipes, recipeInfo),
+  gulp.parallel(html, scripts, styles, verticalStyle, recipes, recipeInfo),
 );
 export { build };
 

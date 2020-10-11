@@ -497,6 +497,11 @@ export default @observer class EditSettingsForm extends Component {
 
                 <Select field={form.$('serviceRibbonWidth')} />
 
+                <Toggle field={form.$('useVerticalStyle')} />
+
+                <Toggle field={form.$('alwaysShowWorkspaces')} />
+
+                <Hr />
                 <Select field={form.$('iconSize')} />
 
                 <Hr />

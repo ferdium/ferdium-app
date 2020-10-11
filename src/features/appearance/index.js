@@ -42,13 +42,25 @@ function generateAccentStyle(color) {
   return style;
 }
 
-function generateServiceRibbonWidthStyle(widthStr, iconSizeStr) {
+function generateServiceRibbonWidthStyle(widthStr, iconSizeStr, vertical) {
   const width = Number(widthStr);
   const iconSize = Number(iconSizeStr) - iconSizeBias;
 
-  return `
+  return vertical ? `
+    .tab-item {
+      width: ${width - 2}px !important;
+      height: ${width - 5 + iconSize}px !important;
+      min-height: unset;
+    }
+    .tab-item .tab-item__icon {
+      width: ${(width / 2) + iconSize}px !important;
+    }
+    .sidebar__button {
+      font-size: ${width / 3}px !important;
+    }
+  ` : `
     .sidebar {
-      width: ${width}px !important;
+      width: ${width - 1}px !important;
     }
     .tab-item {
       width: ${width - 2}px !important;
@@ -79,6 +91,48 @@ function generateShowDragAreaStyle(accentColor) {
   `;
 }
 
+function generateVerticalStyle(widthStr, alwaysShowWorkspaces) {
+  if (!document.getElementById('vertical-style')) {
+    const link = document.createElement('link');
+    link.id = 'vertical-style';
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = './styles/vertical.css';
+
+    document.head.appendChild(link);
+  }
+  const width = Number(widthStr);
+
+  return `
+  .app_service {
+    top: ${width}px !important;
+  }
+  .darwin .sidebar {
+    height: ${width + 19}px !important;
+  }
+  .darwin .sidebar .sidebar__button--workspaces.is-active {
+      height: ${width - 20}px !important;
+  }
+  ${alwaysShowWorkspaces ? `
+  .sidebar {
+    width: calc(100% - 300px) !important;
+  }
+  ` : ''}
+  `;
+}
+
+function generateOpenWorkspaceStyle() {
+  return `
+  .app .app__content {
+    width: 100%;
+    transform: translateX(0px);
+  }
+  .sidebar__button--workspaces {
+    display: none;
+  }
+  `;
+}
+
 function generateStyle(settings) {
   let style = '';
 
@@ -87,6 +141,8 @@ function generateStyle(settings) {
     serviceRibbonWidth,
     iconSize,
     showDragArea,
+    useVerticalStyle,
+    alwaysShowWorkspaces,
   } = settings;
 
   if (accentColor !== DEFAULT_APP_SETTINGS.accentColor) {
@@ -94,10 +150,19 @@ function generateStyle(settings) {
   }
   if (serviceRibbonWidth !== DEFAULT_APP_SETTINGS.serviceRibbonWidth
       || iconSize !== DEFAULT_APP_SETTINGS.iconSize) {
-    style += generateServiceRibbonWidthStyle(serviceRibbonWidth, iconSize);
+    style += generateServiceRibbonWidthStyle(serviceRibbonWidth, iconSize, useVerticalStyle);
   }
   if (showDragArea) {
     style += generateShowDragAreaStyle(accentColor);
+  }
+  if (useVerticalStyle) {
+    style += generateVerticalStyle(serviceRibbonWidth, alwaysShowWorkspaces);
+  } else if (document.getElementById('vertical-style')) {
+    const link = document.getElementById('vertical-style');
+    document.head.removeChild(link);
+  }
+  if (alwaysShowWorkspaces) {
+    style += generateOpenWorkspaceStyle();
   }
 
   return style;
@@ -111,43 +176,21 @@ export default function initAppearance(stores) {
   const { settings } = stores;
   createStyleElement();
 
-  // Update accent color
+  // Update style when settings change
   reaction(
-    () => (
-      settings.all.app.accentColor
-    ),
+    () => ([
+      settings.all.app.accentColor,
+      settings.all.app.serviceRibbonWidth,
+      settings.all.app.iconSize,
+      settings.all.app.showDragArea,
+      settings.all.app.useVerticalStyle,
+      settings.all.app.alwaysShowWorkspaces,
+    ]),
     () => {
       updateStyle(settings.all.app);
     },
     {
       fireImmediately: true,
-    },
-  );
-  // Update service ribbon width
-  reaction(
-    () => (
-      settings.all.app.serviceRibbonWidth
-    ),
-    () => {
-      updateStyle(settings.all.app);
-    },
-  );
-  // Update icon size
-  reaction(
-    () => (
-      settings.all.app.iconSize
-    ),
-    () => {
-      updateStyle(settings.all.app);
-    },
-  );
-  // Update draggable area
-  reaction(
-    () => (
-      settings.all.app.showDragArea
-    ),
-    () => {
-      updateStyle(settings.all.app);
     },
   );
 }

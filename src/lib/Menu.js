@@ -1169,17 +1169,21 @@ export default class FranzMenu {
     });
 
     // Open workspace drawer:
-    const drawerLabel = (
-      isWorkspaceDrawerOpen ? menuItems.closeWorkspaceDrawer : menuItems.openWorkspaceDrawer
-    );
+    if (!this.stores.settings.app.alwaysShowWorkspaces) {
+      const drawerLabel = (
+        isWorkspaceDrawerOpen ? menuItems.closeWorkspaceDrawer : menuItems.openWorkspaceDrawer
+      );
+      menu.push({
+        label: intl.formatMessage(drawerLabel),
+        accelerator: `${cmdKey}+D`,
+        click: () => {
+          workspaceActions.toggleWorkspaceDrawer();
+        },
+        enabled: this.stores.user.isLoggedIn,
+      });
+    }
+
     menu.push({
-      label: intl.formatMessage(drawerLabel),
-      accelerator: `${cmdKey}+D`,
-      click: () => {
-        workspaceActions.toggleWorkspaceDrawer();
-      },
-      enabled: this.stores.user.isLoggedIn,
-    }, {
       type: 'separator',
     });
 

@@ -183,3 +183,7 @@ body.win32:not(.isFullScreen) .app .app__content {
   z-index: 999999999;
   pointer-events: none;
 }
+
+a, button {
+  cursor: pointer;
+}
