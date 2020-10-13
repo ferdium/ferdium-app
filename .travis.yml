@@ -31,7 +31,7 @@ before_install:
     if [ $TRAVIS_BRANCH == "nightly" ]; then
       git remote add source https://${GH_TOKEN}@github.com/getferdi/ferdi.git > /dev/null 2>&1
       git fetch source
-      git merge --no-ff --commit --no-edit source/develop
+      git merge --no-ff --commit -m "Merge remote-tracking branch 'source/develop' into HEAD [skip ci]" source/develop
       CHANGES_COUNT=$(git diff --stat HEAD origin/nightly | wc -l)
       echo $TRAVIS_EVENT_TYPE
       echo $changes
