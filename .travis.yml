@@ -57,6 +57,8 @@ script:
     fi
   - |
     if [ $TRAVIS_BRANCH == "nightly" ]; then
+      git add .
+      git commit -m "Apply linter fixes"
       npm version prerelease --preid=nightly -m "%s and trigger AppVeyor nightly build [skip travisci]"
       echo "Building..."
       travis_retry travis_wait 100 npm run build -- --publish always -c.publish.provider=github -c.publish.owner=getferdi -c.publish.repo=nightlies
