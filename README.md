@@ -297,7 +297,7 @@ Note: please prefer [`debug()`](https://github.com/visionmedia/debug) over `cons
 $ npm run build
 ```
 
-Deliverables will be available in the `out` folder.
+Assets will be available in the `out` folder.
 
 ### Release
 
