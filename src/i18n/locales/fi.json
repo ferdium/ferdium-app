@@ -308,6 +308,7 @@
   "settings.app.form.language": "Kieli",
   "settings.app.form.lockPassword": "Salasana",
   "settings.app.form.minimizeToSystemTray": "Pienennä Ferdi ilmoitusalueelle",
+  "settings.app.form.closeToSystemTray": "Close Ferdi to system tray",
   "settings.app.form.navigationBarBehaviour": "Navigointipalkin käyttäytyminen",
   "settings.app.form.predefinedTodoServer": "Todo Palvelin",
   "settings.app.form.privateNotifications": "Älä näytä viestin sisältöä ilmoituksissa",
