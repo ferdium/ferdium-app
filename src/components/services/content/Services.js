@@ -10,6 +10,7 @@ import injectSheet from 'react-jss';
 import ServiceView from './ServiceView';
 import Appear from '../../ui/effects/Appear';
 import serverlessLogin from '../../../helpers/serverless-helpers';
+import { TODOS_RECIPE_ID } from '../../../features/todos';
 
 const messages = defineMessages({
   welcome: {
@@ -58,6 +59,7 @@ export default @injectSheet(styles) @inject('actions') @observer class Services 
     hasActivatedTrial: PropTypes.bool.isRequired,
     classes: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
+    isSpellcheckerEnabled: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
@@ -111,6 +113,7 @@ export default @injectSheet(styles) @inject('actions') @observer class Services 
       userHasCompletedSignup,
       hasActivatedTrial,
       classes,
+      isSpellcheckerEnabled,
     } = this.props;
 
     const {
@@ -168,7 +171,7 @@ export default @injectSheet(styles) @inject('actions') @observer class Services 
             </div>
           </Appear>
         )}
-        {services.map(service => (
+        {services.filter(service => service.recipe.id !== TODOS_RECIPE_ID).map(service => (
           <ServiceView
             key={service.id}
             service={service}
@@ -186,6 +189,7 @@ export default @injectSheet(styles) @inject('actions') @observer class Services 
               redirect: false,
             })}
             upgrade={() => openSettings({ path: 'user' })}
+            isSpellcheckerEnabled={isSpellcheckerEnabled}
           />
         ))}
       </div>

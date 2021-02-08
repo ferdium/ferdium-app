@@ -9,6 +9,7 @@ import isDevMode from 'electron-is-dev';
 import fs from 'fs-extra';
 import path from 'path';
 import windowStateKeeper from 'electron-window-state';
+import { enforceMacOSAppLocation } from 'electron-util';
 
 // Set app directory before loading user modules
 if (process.env.FERDI_APPDATA_DIR != null) {
@@ -39,7 +40,7 @@ import DBus from './lib/DBus';
 import Settings from './electron/Settings';
 import handleDeepLink from './electron/deepLinking';
 import { isPositionValid } from './electron/windowUtils';
-// import askFormacOSPermissions from './electron/macOSPermissions';
+import askFormacOSPermissions from './electron/macOSPermissions';
 import { appId } from './package.json'; // eslint-disable-line import/no-unresolved
 import './electron/exception';
 
@@ -60,6 +61,9 @@ if (isWindows) {
   app.allowRendererProcessReuse = false;
 }
 
+// Globally set useragent to fix user agent override in service workers
+debug('Set userAgent to ', userAgent());
+app.userAgentFallback = userAgent();
 
 // Globally set useragent to fix user agent override in service workers
 debug('Set userAgent to ', userAgent());
@@ -212,10 +216,11 @@ const createWindow = () => {
   mainWindow.webContents.on('did-finish-load', () => {
     const fns = onDidLoadFns;
     onDidLoadFns = null;
-    if (fns) {
-      for (const fn of fns) { // eslint-disable-line no-unused-vars
-        fn(mainWindow);
-      }
+
+    if (!fns) return;
+
+    for (const fn of fns) {
+      fn(mainWindow);
     }
   });
 
@@ -322,10 +327,9 @@ const createWindow = () => {
     }
   });
 
-  // Asking for permissions like this currently crashes Ferdi
-  // if (isMac) {
-  //   askFormacOSPermissions();
-  // }
+  if (isMac) {
+    askFormacOSPermissions();
+  }
 
   mainWindow.on('show', () => {
     debug('Skip taskbar: true');
@@ -372,6 +376,9 @@ app.commandLine.appendSwitch('disable-features', 'HardwareMediaKeyHandling,Media
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', () => {
+  // force app to live in /Applications
+  enforceMacOSAppLocation();
+
   // Register App URL
   app.setAsDefaultProtocolClient('ferdi');
 
@@ -480,6 +487,12 @@ app.on('activate', () => {
   } else {
     mainWindow.show();
   }
+});
+
+app.on('web-contents-created', (createdEvent, contents) => {
+  contents.on('new-window', (event, url, frameNme, disposition) => {
+    if (disposition === 'foreground-tab') event.preventDefault();
+  });
 });
 
 app.on('will-finish-launching', () => {

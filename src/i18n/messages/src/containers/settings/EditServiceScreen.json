@@ -26,12 +26,12 @@
     }
   },
   {
-    "id": "settings.service.form.disableHibernation",
-    "defaultMessage": "!!!Disable hibernation",
+    "id": "settings.service.form.enableHibernation",
+    "defaultMessage": "!!!Enable hibernation",
     "file": "src/containers/settings/EditServiceScreen.js",
     "start": {
       "line": 36,
-      "column": 22
+      "column": 21
     },
     "end": {
       "line": 39,

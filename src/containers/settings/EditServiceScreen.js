@@ -33,9 +33,9 @@ const messages = defineMessages({
     id: 'settings.service.form.enableService',
     defaultMessage: '!!!Enable service',
   },
-  disableHibernation: {
-    id: 'settings.service.form.disableHibernation',
-    defaultMessage: '!!!Disable hibernation',
+  enableHibernation: {
+    id: 'settings.service.form.enableHibernation',
+    defaultMessage: '!!!Enable hibernation',
   },
   enableNotification: {
     id: 'settings.service.form.enableNotification',
@@ -167,10 +167,10 @@ export default @inject('stores', 'actions') @observer class EditServiceScreen ex
           value: service.isEnabled,
           default: true,
         },
-        disableHibernation: {
-          label: intl.formatMessage(messages.disableHibernation),
-          value: action !== 'edit' ? false : service.disableHibernation,
-          default: false,
+        isHibernationEnabled: {
+          label: intl.formatMessage(messages.enableHibernation),
+          value: action !== 'edit' ? recipe.autoHibernate : service.isHibernationEnabled,
+          default: true,
         },
         isNotificationEnabled: {
           label: intl.formatMessage(messages.enableNotification),

@@ -4,8 +4,9 @@ import normalizeUrl from 'normalize-url';
 import path from 'path';
 
 import userAgent from '../helpers/userAgent-helpers';
+import { TODOS_RECIPE_ID, todosStore } from '../features/todos';
 
-const debug = require('debug')('Ferdi:Service');
+const debug = require('debug')('Franz:Service');
 
 export const RESTRICTION_TYPES = {
   SERVICE_LIMIT: 0,
@@ -17,7 +18,7 @@ export default class Service {
 
   recipe = '';
 
-  webview = null;
+  _webview = null;
 
   timer = null;
 
@@ -77,13 +78,15 @@ export default class Service {
 
   @observable restrictionType = null;
 
-  @observable disableHibernation = false;
+  @observable isHibernationEnabled = false;
+
+  @observable isHibernating = false;
 
   @observable lastUsed = Date.now(); // timestamp
 
-  @observable lastPoll = null;
+  @observable lastPoll = Date.now();
 
-  @observable lastPollAnswer = null;
+  @observable lastPollAnswer = Date.now();
 
   @observable lostRecipeConnection = false;
 
@@ -136,7 +139,7 @@ export default class Service {
 
     this.spellcheckerLanguage = data.spellcheckerLanguage !== undefined ? data.spellcheckerLanguage : this.spellcheckerLanguage;
 
-    this.disableHibernation = data.disableHibernation !== undefined ? data.disableHibernation : this.disableHibernation;
+    this.isHibernationEnabled = data.isHibernationEnabled !== undefined ? data.isHibernationEnabled : this.isHibernationEnabled;
 
     this.recipe = recipe;
 
@@ -175,6 +178,18 @@ export default class Service {
       url: this.url,
       hasCustomIcon: this.hasCustomIcon,
     };
+  }
+
+  get webview() {
+    if (this.recipe.id === TODOS_RECIPE_ID) {
+      return todosStore.webview;
+    }
+
+    return this._webview;
+  }
+
+  set webview(webview) {
+    this._webview = webview;
   }
 
   @computed get url() {
@@ -223,6 +238,10 @@ export default class Service {
     }
 
     return ua;
+  }
+
+  @computed get partition() {
+    return this.recipe.partition || `persist:service-${this.id}`;
   }
 
 

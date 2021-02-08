@@ -60,6 +60,7 @@ export default @inject('stores', 'actions') @observer class Sidebar extends Comp
     isAppMuted: PropTypes.bool.isRequired,
     isWorkspaceDrawerOpen: PropTypes.bool.isRequired,
     toggleWorkspaceDrawer: PropTypes.func.isRequired,
+    isTodosServiceActive: PropTypes.bool.isRequired,
   };
 
   static contextTypes = {
@@ -96,6 +97,7 @@ export default @inject('stores', 'actions') @observer class Sidebar extends Comp
       toggleWorkspaceDrawer,
       stores,
       actions,
+      isTodosServiceActive,
     } = this.props;
     const { intl } = this.context;
     const todosToggleMessage = (
@@ -140,6 +142,7 @@ export default @inject('stores', 'actions') @observer class Sidebar extends Comp
                   todoActions.toggleTodosPanel();
                   this.updateToolTip();
                 }}
+                disblaed={isTodosServiceActive}
                 className={`sidebar__button sidebar__button--todos  ${todosStore.isTodosPanelVisible ? 'is-active' : ''}`}
                 data-tip={`${intl.formatMessage(todosToggleMessage)} (${ctrlKey}+T)`}
               >

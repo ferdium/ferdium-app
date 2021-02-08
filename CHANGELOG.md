@@ -1,4 +1,4 @@
-# [5.6.0-beta.1](https://github.com/getferdi/ferdi/compare/v5.5.0...v5.6.0-beta.1) (2020-06-14)
+# [5.6.0-beta.2](https://github.com/getferdi/ferdi/compare/v5.5.0...v5.6.0-beta.2) (2020-06-14)
 
 ### Features
 - Make the notifications badge work with LauncherAPI-compliant (#736) 💖 @gabspeck

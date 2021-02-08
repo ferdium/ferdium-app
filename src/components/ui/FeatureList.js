@@ -76,7 +76,7 @@ export class FeatureList extends Component {
   static propTypes = {
     className: PropTypes.string,
     featureClassName: PropTypes.string,
-    plan: PropTypes.oneOf(Object.values(PLANS)),
+    plan: PropTypes.oneOf(Object.keys(PLANS)),
   };
 
   static defaultProps = {

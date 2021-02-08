@@ -19,7 +19,7 @@ function windows() {
 }
 
 function linux() {
-  return 'X11; Linux x86_64';
+  return 'X11; Ubuntu; Linux x86_64';
 }
 
 export default function userAgent(removeChromeVersion = false, addFerdiVersion = false) {
