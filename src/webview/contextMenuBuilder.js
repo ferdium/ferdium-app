@@ -21,19 +21,19 @@ function matchesWord(string) {
 }
 
 const contextMenuStringTable = {
-  copyMail: () => 'Copy Email Address',
-  copyLinkUrl: () => 'Copy Link',
-  openLinkUrl: () => 'Open Link',
-  copyImageUrl: () => 'Copy Image URL',
-  copyImage: () => 'Copy Image',
-  addToDictionary: () => 'Add to Dictionary',
   lookUpDefinition: ({ word }) => `Look Up "${word}"`,
-  searchGoogle: () => 'Search with Google',
   cut: () => 'Cut',
   copy: () => 'Copy',
   paste: () => 'Paste',
-  inspectElement: () => 'Inspect Element',
+  searchGoogle: () => 'Search with Google',
+  openLinkUrl: () => 'Open Link',
+  copyLinkUrl: () => 'Copy Link',
+  copyImageUrl: () => 'Copy Image Address',
+  copyImage: () => 'Copy Image',
+  addToDictionary: () => 'Add to Dictionary',
   goToHomePage: () => 'Go to Home Page',
+  copyMail: () => 'Copy Email Address',
+  inspectElement: () => 'Inspect Element',
 };
 
 /**
@@ -225,13 +225,13 @@ module.exports = class ContextMenuBuilder {
    * if so, adds suggested spellings as individual menu items.
    */
   addSpellingItems(menu, menuInfo) {
-    const target = this.getWebContents();
+    const webContents = this.getWebContents();
     // Add each spelling suggestion
     for (const suggestion of menuInfo.dictionarySuggestions) {
       menu.append(new MenuItem({
         label: suggestion,
         // eslint-disable-next-line no-loop-func
-        click: () => target.replaceMisspelling(suggestion),
+        click: () => webContents.replaceMisspelling(suggestion),
       }));
     }
 
@@ -240,7 +240,7 @@ module.exports = class ContextMenuBuilder {
       menu.append(
         new MenuItem({
           label: 'Add to dictionary',
-          click: () => target.session.addWordToSpellCheckerDictionary(menuInfo.misspelledWord),
+          click: () => webContents.session.addWordToSpellCheckerDictionary(menuInfo.misspelledWord),
         }),
       );
     }
@@ -262,11 +262,11 @@ module.exports = class ContextMenuBuilder {
     }
 
     if (process.platform === 'darwin') {
-      const target = this.getWebContents();
+      const webContents = this.getWebContents();
 
       const lookUpDefinition = new MenuItem({
         label: this.stringTable.lookUpDefinition({ word: menuInfo.selectionText.trim() }),
-        click: () => target.showDefinitionForSelection(),
+        click: () => webContents.showDefinitionForSelection(),
       });
 
       menu.append(lookUpDefinition);
@@ -316,12 +316,12 @@ module.exports = class ContextMenuBuilder {
    * Adds the Cut menu item
    */
   addCut(menu, menuInfo) {
-    const target = this.getWebContents();
+    const webContents = this.getWebContents();
     menu.append(new MenuItem({
       label: this.stringTable.cut(),
       accelerator: 'CommandOrControl+X',
       enabled: menuInfo.editFlags.canCut,
-      click: () => target.cut(),
+      click: () => webContents.cut(),
     }));
 
     return menu;
@@ -331,12 +331,12 @@ module.exports = class ContextMenuBuilder {
    * Adds the Copy menu item.
    */
   addCopy(menu, menuInfo) {
-    const target = this.getWebContents();
+    const webContents = this.getWebContents();
     menu.append(new MenuItem({
       label: this.stringTable.copy(),
       accelerator: 'CommandOrControl+C',
       enabled: menuInfo.editFlags.canCopy,
-      click: () => target.copy(),
+      click: () => webContents.copy(),
     }));
 
     return menu;
@@ -346,12 +346,12 @@ module.exports = class ContextMenuBuilder {
    * Adds the Paste menu item.
    */
   addPaste(menu, menuInfo) {
-    const target = this.getWebContents();
+    const webContents = this.getWebContents();
     menu.append(new MenuItem({
       label: this.stringTable.paste(),
       accelerator: 'CommandOrControl+V',
       enabled: menuInfo.editFlags.canPaste,
-      click: () => target.paste(),
+      click: () => webContents.paste(),
     }));
 
     return menu;
@@ -363,12 +363,12 @@ module.exports = class ContextMenuBuilder {
       && !menuInfo.linkText
       && !menuInfo.hasImageContents
     ) {
-      const target = this.getWebContents();
+      const webContents = this.getWebContents();
       menu.append(
         new MenuItem({
           label: 'Paste as plain text',
           accelerator: 'CommandOrControl+Shift+V',
-          click: () => target.pasteAndMatchStyle(),
+          click: () => webContents.pasteAndMatchStyle(),
         }),
       );
     }
@@ -386,13 +386,13 @@ module.exports = class ContextMenuBuilder {
    * Adds the "Inspect Element" menu item.
    */
   addInspectElement(menu, menuInfo, needsSeparator = true) {
-    const target = this.getWebContents();
+    const webContents = this.getWebContents();
     if (!this.debugMode) return menu;
     if (needsSeparator) this.addSeparator(menu);
 
     const inspect = new MenuItem({
       label: this.stringTable.inspectElement(),
-      click: () => target.inspectElement(menuInfo.x, menuInfo.y),
+      click: () => webContents.inspectElement(menuInfo.x, menuInfo.y),
     });
 
     menu.append(inspect);
@@ -436,7 +436,7 @@ module.exports = class ContextMenuBuilder {
       accelerator: 'CommandOrControl+Home',
       enabled: true,
       click: () => {
-        // target.loadURL(baseURL.origin);
+        // webContents.loadURL(baseURL.origin);
         window.location.href = baseURL.origin;
       },
     }));

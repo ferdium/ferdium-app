@@ -24,6 +24,7 @@ import ChangeServerScreen from './containers/auth/ChangeServerScreen';
 import SignupScreen from './containers/auth/SignupScreen';
 import ImportScreen from './containers/auth/ImportScreen';
 import PricingScreen from './containers/auth/PricingScreen';
+import SetupAssistentScreen from './containers/auth/SetupAssistantScreen';
 import InviteScreen from './containers/auth/InviteScreen';
 import AuthLayoutContainer from './containers/auth/AuthLayoutContainer';
 import SubscriptionPopupScreen from './containers/subscription/SubscriptionPopupScreen';
@@ -80,6 +81,7 @@ export default @inject('stores', 'actions') @observer class Routes extends Compo
             <Route path="/auth/signup/form" component={SignupScreen} />
             <Route path="/auth/signup/pricing" component={PricingScreen} />
             <Route path="/auth/signup/import" component={ImportScreen} />
+            <Route path="/auth/signup/setup" component={SetupAssistentScreen} />
             <Route path="/auth/signup/invite" component={InviteScreen} />
           </Route>
           <Route path="/auth/password" component={PasswordScreen} />

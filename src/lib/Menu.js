@@ -139,6 +139,10 @@ const menuItems = defineMessages({
     id: 'menu.view.lockFerdi',
     defaultMessage: '!!!Lock Ferdi',
   },
+  reloadTodos: {
+    id: 'menu.view.reloadTodos',
+    defaultMessage: '!!!Reload ToDos',
+  },
   minimize: {
     id: 'menu.window.minimize',
     defaultMessage: '!!!Minimize',
@@ -856,6 +860,8 @@ export default class FranzMenu {
         accelerator: `${cmdKey}+Shift+Alt+I`,
         click: () => {
           this.actions.service.openDevToolsForActiveService();
+          const webview = document.querySelector('#todos-panel webview');
+          if (webview) this.actions.todos.openDevTools();
         },
         enabled: this.stores.user.isLoggedIn && this.stores.services.enabled.length > 0,
       });
@@ -892,6 +898,12 @@ export default class FranzMenu {
         accelerator: `${cmdKey}+Shift+R`,
         click: () => {
           window.location.reload();
+        },
+      }, {
+        label: intl.formatMessage(menuItems.reloadTodos),
+        accelerator: `${cmdKey}+Shift+Alt+R`,
+        click: () => {
+          this.actions.todos.reload();
         },
       }, {
         type: 'separator',

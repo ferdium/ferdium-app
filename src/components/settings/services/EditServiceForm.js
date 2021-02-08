@@ -20,7 +20,6 @@ import Select from '../../ui/Select';
 import PremiumFeatureContainer from '../../ui/PremiumFeatureContainer';
 import LimitReachedInfobox from '../../../features/serviceLimit/components/LimitReachedInfobox';
 import { serviceLimitStore } from '../../../features/serviceLimit';
-
 import { isMac } from '../../../environment';
 
 const messages = defineMessages({
@@ -96,9 +95,9 @@ const messages = defineMessages({
     id: 'settings.service.form.isMutedInfo',
     defaultMessage: '!!!When disabled, all notification sounds and audio playback are muted',
   },
-  disableHibernationInfo: {
-    id: 'settings.service.form.disableHibernationInfo',
-    defaultMessage: '!!!You currently have hibernation enabled but you can disable hibernation for individual services using this option.',
+  isHibernationEnabledInfo: {
+    id: 'settings.service.form.isHibernatedEnabledInfo',
+    defaultMessage: '!!!When enabled, a service will be shut down after a period of time to save system resources.',
   },
   headlineNotifications: {
     id: 'settings.service.form.headlineNotifications',
@@ -375,9 +374,9 @@ export default @observer class EditServiceForm extends Component {
                   <Toggle field={form.$('isEnabled')} />
                   {isHibernationFeatureActive && (
                     <>
-                      <Toggle field={form.$('disableHibernation')} />
+                      <Toggle field={form.$('isHibernationEnabled')} />
                       <p className="settings__help">
-                        {intl.formatMessage(messages.disableHibernationInfo)}
+                        {intl.formatMessage(messages.isHibernationEnabledInfo)}
                       </p>
                     </>
                   )}
@@ -409,7 +408,7 @@ export default @observer class EditServiceForm extends Component {
                 gaEventInfo={{ category: 'User', event: 'upgrade', label: 'spellchecker' }}
               >
                 <div className="settings__settings-group">
-                  <Select field={form.$('spellcheckerLanguage')} multiple />
+                  <Select field={form.$('spellcheckerLanguage')} />
                 </div>
               </PremiumFeatureContainer>
             )}

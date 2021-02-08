@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { autorun, reaction } from 'mobx';
+import { autorun } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import classnames from 'classnames';
 
@@ -27,11 +27,7 @@ export default @inject('stores', 'actions') @observer class ServiceView extends 
     stores: PropTypes.shape({
       settings: PropTypes.instanceOf(SettingsStore).isRequired,
     }).isRequired,
-    actions: PropTypes.shape({
-      service: PropTypes.shape({
-        setHibernation: PropTypes.func.isRequired,
-      }).isRequired,
-    }).isRequired,
+    isSpellcheckerEnabled: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
@@ -50,12 +46,6 @@ export default @inject('stores', 'actions') @observer class ServiceView extends 
 
   forceRepaintTimeout = null;
 
-  constructor(props) {
-    super(props);
-
-    this.startHibernationTimer = this.startHibernationTimer.bind(this);
-  }
-
   componentDidMount() {
     this.autorunDisposer = autorun(() => {
       if (this.props.service.isActive) {
@@ -65,32 +55,6 @@ export default @inject('stores', 'actions') @observer class ServiceView extends 
         }, 100);
       }
     });
-
-    reaction(
-      () => this.props.service.isActive,
-      () => {
-        if (!this.props.service.isActive && this.props.stores.settings.all.app.hibernate) {
-          // Service is inactive - start hibernation countdown
-          this.startHibernationTimer();
-        } else {
-          if (this.hibernationTimer) {
-            // Service is active but we have an active hibernation timer: Clear timeout
-            clearTimeout(this.hibernationTimer);
-          }
-
-          // Service is active, wake up service from hibernation
-          this.props.actions.service.setHibernation({
-            serviceId: this.props.service.id,
-            hibernating: false,
-          });
-        }
-      },
-    );
-
-    // Start hibernation counter if we are in background
-    if (!this.props.service.isActive && this.props.stores.settings.all.app.hibernate) {
-      this.startHibernationTimer();
-    }
   }
 
   componentWillUnmount() {
@@ -110,19 +74,6 @@ export default @inject('stores', 'actions') @observer class ServiceView extends 
     });
   };
 
-  startHibernationTimer() {
-    const timerDuration = (Number(this.props.stores.settings.all.app.hibernationStrategy) || 300) * 1000;
-
-    const hibernationTimer = setTimeout(() => {
-      this.props.actions.service.setHibernation({
-        serviceId: this.props.service.id,
-        hibernating: true,
-      });
-    }, timerDuration);
-
-    this.hibernationTimer = hibernationTimer;
-  }
-
   render() {
     const {
       detachService,
@@ -132,6 +83,7 @@ export default @inject('stores', 'actions') @observer class ServiceView extends 
       edit,
       enable,
       stores,
+      isSpellcheckerEnabled,
     } = this.props;
 
     const {
@@ -193,22 +145,19 @@ export default @inject('stores', 'actions') @observer class ServiceView extends 
           </Fragment>
         ) : (
           <>
-            {(!service.isHibernating || service.disableHibernation) ? (
+            {(!service.isHibernating || service.isHibernationEnabled) ? (
               <>
                 {showNavBar && (
                   <WebControlsScreen service={service} />
                 )}
-                <ServiceWebview
-                  service={service}
-                  setWebviewReference={setWebviewReference}
-                  detachService={detachService}
-                />
-                {/* {service.lostRecipeConnection && (
-                  <ConnectionLostBanner
-                    name={service.name}
-                    reload={reload}
+                {!service.isHibernating && (
+                  <ServiceWebview
+                    service={service}
+                    setWebviewReference={setWebviewReference}
+                    detachService={detachService}
+                    isSpellcheckerEnabled={isSpellcheckerEnabled}
                   />
-                )} */}
+                )}
               </>
             ) : (
               <div>

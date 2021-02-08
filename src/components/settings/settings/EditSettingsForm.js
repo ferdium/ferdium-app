@@ -173,6 +173,8 @@ export default @observer class EditSettingsForm extends Component {
     isAdaptableDarkModeEnabled: PropTypes.bool.isRequired,
     isNightlyEnabled: PropTypes.bool.isRequired,
     openProcessManager: PropTypes.func.isRequired,
+    hasAddedTodosAsService: PropTypes.bool.isRequired,
+    isOnline: PropTypes.bool.isRequired,
   };
 
   static contextTypes = {
@@ -227,6 +229,8 @@ export default @observer class EditSettingsForm extends Component {
       openProcessManager,
       isTodosActivated,
       isNightlyEnabled,
+      hasAddedTodosAsService,
+      isOnline,
     } = this.props;
     const { intl } = this.context;
 
@@ -346,7 +350,7 @@ export default @observer class EditSettingsForm extends Component {
 
                 <Hr />
 
-                {isTodosEnabled && (
+                {isTodosEnabled && !hasAddedTodosAsService && (
                   <>
                     <Toggle field={form.$('enableTodos')} />
                     {isTodosActivated && (
@@ -535,10 +539,10 @@ export default @observer class EditSettingsForm extends Component {
                     <Toggle
                       field={form.$('enableSpellchecking')}
                     />
-                    {form.$('enableSpellchecking').value && !isMac && (
-                      <Select field={form.$('spellcheckerLanguage')} multiple />
+                    {!isMac && form.$('enableSpellchecking').value && (
+                      <Select field={form.$('spellcheckerLanguage')} />
                     )}
-                    {form.$('enableSpellchecking').value && isMac && (
+                    {isMac && form.$('enableSpellchecking').value && (
                       <p>{intl.formatMessage(messages.spellCheckerLanguageInfo)}</p>
                     )}
                   </Fragment>
@@ -625,7 +629,7 @@ export default @observer class EditSettingsForm extends Component {
                     buttonType="secondary"
                     label={intl.formatMessage(updateButtonLabelMessage)}
                     onClick={checkForUpdates}
-                    disabled={!automaticUpdates || isCheckingForUpdates || isUpdateAvailable}
+                    disabled={!automaticUpdates || isCheckingForUpdates || isUpdateAvailable || !isOnline}
                     loaded={!isCheckingForUpdates || !isUpdateAvailable}
                   />
                 )}

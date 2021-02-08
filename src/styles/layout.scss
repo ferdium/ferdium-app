@@ -39,6 +39,11 @@ html { overflow: hidden; }
         color: $theme-brand-primary;
       }
 
+      &:disabled {
+        opacity: 0.25;
+        filter: grayscale(1);
+      }
+
       .update-available { 
         align-items: center;
         background: $theme-brand-danger;

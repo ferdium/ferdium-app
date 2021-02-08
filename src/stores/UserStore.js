@@ -3,6 +3,7 @@ import moment from 'moment';
 import jwt from 'jsonwebtoken';
 import localStorage from 'mobx-localstorage';
 import ms from 'ms';
+import { remote } from 'electron';
 
 import { isDevMode } from '../environment';
 import Store from './lib/Store';
@@ -11,6 +12,9 @@ import CachedRequest from './lib/CachedRequest';
 import { sleep } from '../helpers/async-helpers';
 import { getPlan } from '../helpers/plan-helpers';
 import { PLANS } from '../config';
+import { TODOS_PARTITION_ID } from '../features/todos';
+
+const { session } = remote;
 
 const debug = require('debug')('Ferdi:UserStore');
 
@@ -27,6 +31,8 @@ export default class UserStore extends Store {
   SIGNUP_ROUTE = `${this.BASE_ROUTE}/signup`;
 
   PRICING_ROUTE = `${this.BASE_ROUTE}/signup/pricing`;
+
+  SETUP_ROUTE = `${this.BASE_ROUTE}/signup/setup`;
 
   IMPORT_ROUTE = `${this.BASE_ROUTE}/signup/import`;
 
@@ -125,6 +131,10 @@ export default class UserStore extends Store {
 
   get pricingRoute() {
     return this.PRICING_ROUTE;
+  }
+
+  get setupRoute() {
+    return this.SETUP_ROUTE;
   }
 
   get inviteRoute() {
@@ -227,7 +237,7 @@ export default class UserStore extends Store {
 
     this._setUserData(authToken);
 
-    this.stores.router.push('/');
+    this.stores.router.push(this.SETUP_ROUTE);
   }
 
   @action async _retrievePassword({ email }) {
@@ -285,6 +295,13 @@ export default class UserStore extends Store {
 
     this.getUserInfoRequest.invalidate().reset();
     this.authToken = null;
+
+    this.stores.services.allServicesRequest.invalidate().reset();
+
+    if (this.stores.todos.isTodosEnabled) {
+      const sess = session.fromPartition(TODOS_PARTITION_ID);
+      sess.clearStorageData();
+    }
   }
 
   @action async _importLegacyServices({ services }) {

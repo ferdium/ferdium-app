@@ -95,9 +95,14 @@ export default {
     serviceId: PropTypes.string.isRequired,
   },
   openDevToolsForActiveService: {},
-  setHibernation: {
+  hibernate: {
     serviceId: PropTypes.string.isRequired,
-    hibernating: PropTypes.bool.isRequired,
+  },
+  awake: {
+    serviceId: PropTypes.string.isRequired,
+  },
+  resetLastPollTimer: {
+    serviceId: PropTypes.string,
   },
   shareSettingsWithServiceProcess: {},
 };
