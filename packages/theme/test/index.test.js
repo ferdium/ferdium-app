@@ -1,4 +1,3 @@
-/*
 const expect = require('expect.js');
 
 const { colorBackground: colorBackgroundDefault } = require('../lib/themes/default');
@@ -16,4 +15,3 @@ describe('Load theme', () => {
     expect(colorBackground).to.be(colorBackgroundDark);
   });
 });
-*/
