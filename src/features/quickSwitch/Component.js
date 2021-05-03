@@ -8,6 +8,7 @@ import { defineMessages, intlShape } from 'react-intl';
 import { Input } from '@meetfranz/forms';
 import { H1 } from '@meetfranz/ui';
 
+import { compact, invoke } from 'lodash';
 import Modal from '../../components/ui/Modal';
 import { state as ModalState } from '.';
 import ServicesStore from '../../stores/ServicesStore';
@@ -97,6 +98,8 @@ export default @injectSheet(styles) @inject('stores', 'actions') @observer class
 
   ARROW_UP = 38;
 
+  SHIFT = 16;
+
   ENTER = 13;
 
   TAB = 9;
@@ -132,10 +135,10 @@ export default @injectSheet(styles) @inject('stores', 'actions') @observer class
   // Get currently shown services
   services() {
     let services = [];
-    if (this.state.search) {
+    if (this.state.search && compact(invoke(this.state.search, 'match', /^[a-z0-9]/i)).length > 0) {
       // Apply simple search algorythm to list of all services
       services = this.props.stores.services.allDisplayed;
-      services = services.filter(service => service.name.toLowerCase().includes(this.state.search.toLowerCase()));
+      services = services.filter(service => service.name.toLowerCase().search(this.state.search.toLowerCase()) !== -1);
     } else {
       // Add last used services to services array
       for (const service of this.props.stores.services.lastUsedServices) {
@@ -204,7 +207,11 @@ export default @injectSheet(styles) @inject('stores', 'actions') @observer class
           this.changeSelected(1);
           break;
         case this.TAB:
-          this.changeSelected(1);
+          if (event.shiftKey) {
+            this.changeSelected(-1);
+          } else {
+            this.changeSelected(1);
+          }
           break;
         case this.ARROW_UP:
           this.changeSelected(-1);
