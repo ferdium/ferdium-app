@@ -140,12 +140,17 @@ export default @injectSheet(styles) @inject('stores', 'actions') @observer class
       services = this.props.stores.services.allDisplayed;
       services = services.filter(service => service.name.toLowerCase().search(this.state.search.toLowerCase()) !== -1);
     } else {
+      // Add the currently active service first
+      const currentService = this.props.stores.services.active;
+      if (currentService) {
+        services.push(currentService);
+      }
+
       // Add last used services to services array
       for (const service of this.props.stores.services.lastUsedServices) {
-        if (this.props.stores.services.one(service)) {
-          services.push(
-            this.props.stores.services.one(service),
-          );
+        const tempService = this.props.stores.services.one(service);
+        if (tempService && !services.includes(tempService)) {
+          services.push(tempService);
         }
       }
 
@@ -167,6 +172,7 @@ export default @injectSheet(styles) @inject('stores', 'actions') @observer class
 
     // Reset and close modal
     this.setState({
+      selected: 0,
       search: '',
     });
     this.close();
@@ -191,7 +197,6 @@ export default @injectSheet(styles) @inject('stores', 'actions') @observer class
       if (serviceElement) {
         serviceElement.scrollIntoViewIfNeeded(false);
       }
-
 
       return {
         selected: newSelected,
