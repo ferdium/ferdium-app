@@ -847,6 +847,15 @@
         "review",
         "infra"
       ]
+    },
+    {
+      "login": "alopix",
+      "name": "Dustin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/124467?v=4",
+      "profile": "https://dustin.meecolabs.eu/",
+      "contributions": [
+        "design"
+      ]
     }
   ],
   "contributorsPerLine": 6,

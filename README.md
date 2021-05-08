@@ -14,7 +14,7 @@
 <p align="center">
 <img alt="GitHub Releases" src="https://img.shields.io/github/downloads/getferdi/ferdi/latest/total?label=Downloads&logo=iCloud&logoColor=%23FFFFFF">
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-85-default.svg?logo=github' alt='Contributors'/></a>
+<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-86-default.svg?logo=github' alt='Contributors'/></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 <a href="#backers-via-opencollective"><img alt="Open Collective backers" src="https://img.shields.io/opencollective/backers/getferdi?logo=open-collective"></a>
 <a href="#sponsors-via-opencollective"><img alt="Open Collective sponsors" src="https://img.shields.io/opencollective/sponsors/getferdi?logo=open-collective"></a>
@@ -474,6 +474,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/vraravam"><img src="https://avatars.githubusercontent.com/u/69629?v=4?s=40" width="40px;" alt=""/><br /><sub><b>Vijay Raghavan Aravamudhan</b></sub></a><br /><a href="#maintenance-vraravam" title="Maintenance">🚧</a> <a href="https://github.com/getferdi/ferdi/commits?author=vraravam" title="Documentation">📖</a> <a href="https://github.com/getferdi/ferdi/commits?author=vraravam" title="Code">💻</a> <a href="#mentoring-vraravam" title="Mentoring">🧑‍🏫</a> <a href="https://github.com/getferdi/ferdi/pulls?q=is%3Apr+reviewed-by%3Avraravam" title="Reviewed Pull Requests">👀</a> <a href="#infra-vraravam" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a></td>
+    <td align="center"><a href="https://dustin.meecolabs.eu/"><img src="https://avatars.githubusercontent.com/u/124467?v=4?s=40" width="40px;" alt=""/><br /><sub><b>Dustin</b></sub></a><br /><a href="#design-alopix" title="Design">🎨</a></td>
   </tr>
 </table>
 
