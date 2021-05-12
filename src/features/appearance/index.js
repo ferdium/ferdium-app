@@ -1,17 +1,9 @@
+import color from 'color';
 import { reaction } from 'mobx';
 import themeInfo from '../../assets/themeInfo.json';
 import { DEFAULT_APP_SETTINGS, iconSizeBias } from '../../config';
 
 const STYLE_ELEMENT_ID = 'custom-appearance-style';
-
-// Additional styles needed to make accent colors work properly
-// "[ACCENT]" will be replaced with the accent color
-const ACCENT_ADDITIONAL_STYLES = `
-.franz-form__button {
-  background: inherit !important;
-  border: 2px solid [ACCENT] !important;
-}
-`;
 
 function createStyleElement() {
   const styles = document.createElement('style');
@@ -26,18 +18,53 @@ function setAppearance(style) {
   styleElement.innerHTML = style;
 }
 
-function generateAccentStyle(color) {
+function generateAccentStyle(accentColorStr) {
   let style = '';
 
   Object.keys(themeInfo).forEach((property) => {
     style += `
       ${themeInfo[property]} {
-        ${property}: ${color};
+        ${property}: ${accentColorStr};
       }
     `;
   });
 
-  style += ACCENT_ADDITIONAL_STYLES.replace(/\[ACCENT\]/g, color);
+  let accentColor = color(DEFAULT_APP_SETTINGS.accentColor);
+  try {
+    accentColor = color(accentColorStr);
+  } catch (e) {
+    // Ignore invalid accent color.
+  }
+  const darkerColorStr = accentColor.darken(0.05).hex();
+  style += `
+    a.button:hover, button.button:hover {
+      background: ${accentColor.darken(0.1).hex()};
+    }
+
+    .franz-form__button:hover,
+    .franz-form__button.franz-form__button--inverted:hover,
+    .settings .settings__close:hover,
+    .theme__dark .franz-form__button:hover,
+    .theme__dark .franz-form__button.franz-form__button--inverted:hover,
+    .theme__dark .settings .settings__close:hover {
+      background: ${darkerColorStr};
+    }
+
+    .franz-form__button:active,
+    .theme__dark .franz-form__button:active {
+      background: ${darkerColorStr};
+    }
+
+    .theme__dark .franz-form__button.franz-form__button--inverted,
+    .franz-form__button.franz-form__button--inverted {
+      background: none;
+      border-color: ${accentColorStr};
+    }
+
+    .tab-item.is-active {
+      background: ${accentColor.lighten(0.35).hex()};
+    }
+  `;
 
   return style;
 }
@@ -60,7 +87,7 @@ function generateServiceRibbonWidthStyle(widthStr, iconSizeStr, vertical) {
     }
   ` : `
     .sidebar {
-      width: ${width - 1}px !important;
+      width: ${width - 2}px !important;
     }
     .tab-item {
       width: ${width - 2}px !important;
@@ -102,22 +129,27 @@ function generateVerticalStyle(widthStr, alwaysShowWorkspaces) {
     document.head.appendChild(link);
   }
   const width = Number(widthStr);
+  const sidebarWidthStr = `${width - 4}px`;
 
   return `
-  .app_service {
-    top: ${width}px !important;
-  }
-  .darwin .sidebar {
-    height: ${width + 19}px !important;
-  }
-  .darwin .sidebar .sidebar__button--workspaces.is-active {
-      height: ${width - 20}px !important;
-  }
-  ${alwaysShowWorkspaces ? `
   .sidebar {
+    height: ${sidebarWidthStr} !important;
+  ${alwaysShowWorkspaces ? `
     width: calc(100% - 300px) !important;
-  }
   ` : ''}
+  }
+
+  .sidebar .sidebar__button {
+    width: ${width}px;
+  }
+
+  .app .app__content {
+    padding-top: ${sidebarWidthStr} !important;
+  }
+
+  .workspaces-drawer {
+    maring-top: -${sidebarWidthStr} !important;
+  }
   `;
 }
 
@@ -145,7 +177,7 @@ function generateStyle(settings) {
     alwaysShowWorkspaces,
   } = settings;
 
-  if (accentColor !== DEFAULT_APP_SETTINGS.accentColor) {
+  if (accentColor.toLowerCase() !== DEFAULT_APP_SETTINGS.accentColor.toLowerCase()) {
     style += generateAccentStyle(accentColor);
   }
   if (serviceRibbonWidth !== DEFAULT_APP_SETTINGS.serviceRibbonWidth

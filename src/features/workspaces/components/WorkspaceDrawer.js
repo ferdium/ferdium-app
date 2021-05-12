@@ -76,7 +76,7 @@ const styles = theme => ({
   },
   workspaces: {
     height: 'auto',
-    overflowY: 'scroll',
+    overflowY: 'auto',
   },
   premiumAnnouncement: {
     padding: '20px',
@@ -142,7 +142,7 @@ class WorkspaceDrawer extends Component {
     } = workspaceStore;
     const actualWorkspace = isSwitchingWorkspace ? nextWorkspace : activeWorkspace;
     return (
-      <div className={classes.drawer}>
+      <div className={`${classes.drawer} workspaces-drawer`}>
         <H1 className={classes.headline}>
           {workspaceStore.isPremiumUpgradeRequired && (
             <span
