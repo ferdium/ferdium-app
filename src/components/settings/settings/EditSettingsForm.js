@@ -88,6 +88,10 @@ const messages = defineMessages({
     id: 'settings.app.accentColorInfo',
     defaultMessage: '!!!Write your accent color in a CSS-compatible format. (Default: {defaultAccentColor})',
   },
+  headlinePrivacy: {
+    id: 'settings.app.headlinePrivacy',
+    defaultMessage: '!!!Privacy',
+  },
   headlineAdvanced: {
     id: 'settings.app.headlineAdvanced',
     defaultMessage: '!!!Advanced',
@@ -291,6 +295,13 @@ export default @observer class EditSettingsForm extends Component {
                 {intl.formatMessage(messages.headlineAppearance)}
               </h2>
               <h2
+                id="privacy"
+                className={this.state.activeSetttingsTab === 'privacy' ? 'badge badge--primary' : 'badge'}
+                onClick={() => { this.setActiveSettingsTab('privacy'); }}
+              >
+                {intl.formatMessage(messages.headlinePrivacy)}
+              </h2>
+              <h2
                 id="language"
                 className={this.state.activeSetttingsTab === 'language' ? 'badge badge--primary' : 'badge'}
                 onClick={() => { this.setActiveSettingsTab('language'); }}
@@ -327,16 +338,7 @@ export default @observer class EditSettingsForm extends Component {
                 {isWindows && (
                   <Toggle field={form.$('closeToSystemTray')} />
                 )}
-                <Toggle field={form.$('privateNotifications')} />
-                {(isWindows || isMac) && (
-                  <Toggle field={form.$('notifyTaskBarOnMessage')} />)}
                 <Select field={form.$('navigationBarBehaviour')} />
-
-                <Hr />
-
-                <Select field={form.$('searchEngine')} />
-                <Toggle field={form.$('sentry')} />
-                <p>{intl.formatMessage(messages.sentryInfo)}</p>
 
                 <Hr />
 
@@ -394,48 +396,6 @@ export default @observer class EditSettingsForm extends Component {
                   </>
                 )}
 
-                <Hr />
-
-                <Toggle field={form.$('lockingFeatureEnabled')} />
-                {lockingFeatureEnabled && (
-                  <>
-                    {isMac && systemPreferences.canPromptTouchID() && (
-                      <Toggle field={form.$('useTouchIdToUnlock')} />
-                    )}
-
-                    <Input
-                      placeholder={intl.formatMessage(messages.lockedPassword)}
-                      onChange={e => this.submit(e)}
-                      field={form.$('lockedPassword')}
-                      type="password"
-                      scorePassword
-                      showPasswordToggle
-                    />
-                    <p>
-                      { intl.formatMessage(messages.lockedPasswordInfo) }
-                    </p>
-
-                    <Input
-                      placeholder="Lock after inactivity"
-                      onChange={e => this.submit(e)}
-                      field={form.$('inactivityLock')}
-                      autoFocus
-                    />
-                    <p>
-                      { intl.formatMessage(messages.inactivityLockInfo) }
-                    </p>
-                  </>
-                )}
-                <p
-                  className="settings__message"
-                  style={{
-                    borderTop: 0, marginTop: 0, paddingTop: 0, marginBottom: '2rem',
-                  }}
-                >
-                  <span>
-                    { intl.formatMessage(messages.lockInfo) }
-                  </span>
-                </p>
 
                 <Hr />
 
@@ -539,6 +499,64 @@ export default @observer class EditSettingsForm extends Component {
                 <p>
                   {intl.formatMessage(messages.accentColorInfo,
                     { defaultAccentColor: DEFAULT_APP_SETTINGS.accentColor })}
+                </p>
+              </div>
+            )}
+
+            {/* Privacy */}
+            { this.state.activeSetttingsTab === 'privacy' && (
+              <div>
+                <Toggle field={form.$('privateNotifications')} />
+                {(isWindows || isMac) && (
+                  <Toggle field={form.$('notifyTaskBarOnMessage')} />)}
+
+                <Hr />
+
+                <Select field={form.$('searchEngine')} />
+                <Toggle field={form.$('sentry')} />
+                <p>{intl.formatMessage(messages.sentryInfo)}</p>
+
+                <Hr />
+
+                <Toggle field={form.$('lockingFeatureEnabled')} />
+                {lockingFeatureEnabled && (
+                  <>
+                    {isMac && systemPreferences.canPromptTouchID() && (
+                      <Toggle field={form.$('useTouchIdToUnlock')} />
+                    )}
+
+                    <Input
+                      placeholder={intl.formatMessage(messages.lockedPassword)}
+                      onChange={e => this.submit(e)}
+                      field={form.$('lockedPassword')}
+                      type="password"
+                      scorePassword
+                      showPasswordToggle
+                    />
+                    <p>
+                      { intl.formatMessage(messages.lockedPasswordInfo) }
+                    </p>
+
+                    <Input
+                      placeholder="Lock after inactivity"
+                      onChange={e => this.submit(e)}
+                      field={form.$('inactivityLock')}
+                      autoFocus
+                    />
+                    <p>
+                      { intl.formatMessage(messages.inactivityLockInfo) }
+                    </p>
+                  </>
+                )}
+                <p
+                  className="settings__message"
+                  style={{
+                    borderTop: 0, marginTop: 0, paddingTop: 0, marginBottom: '2rem',
+                  }}
+                >
+                  <span>
+                    { intl.formatMessage(messages.lockInfo) }
+                  </span>
                 </p>
               </div>
             )}
