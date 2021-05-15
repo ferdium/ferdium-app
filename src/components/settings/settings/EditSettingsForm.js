@@ -334,6 +334,7 @@ export default @observer class EditSettingsForm extends Component {
 
                 <Hr />
 
+                <Select field={form.$('searchEngine')} />
                 <Toggle field={form.$('sentry')} />
                 <p>{intl.formatMessage(messages.sentryInfo)}</p>
 

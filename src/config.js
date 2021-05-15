@@ -52,6 +52,18 @@ export const NAVIGATION_BAR_BEHAVIOURS = {
   never: 'Never show navigation bar',
 };
 
+export const SEARCH_ENGINE_GOOGLE = 'google';
+export const SEARCH_ENGINE_DDG = 'duckDuckGo';
+export const SEARCH_ENGINE_NAMES = {
+  [SEARCH_ENGINE_GOOGLE]: 'Google',
+  [SEARCH_ENGINE_DDG]: 'DuckDuckGo',
+};
+
+export const SEARCH_ENGINE_URLS = {
+  [SEARCH_ENGINE_GOOGLE]: ({ searchTerm }) => `https://www.google.com/search?q=${searchTerm}`,
+  [SEARCH_ENGINE_DDG]: ({ searchTerm }) => `https://duckduckgo.com/?q=${searchTerm}`,
+};
+
 export const TODO_APPS = {
   'https://todoist.com/app': 'Todoist',
   'https://app.franztodos.com': 'Franz Todo',
@@ -135,6 +147,7 @@ export const DEFAULT_APP_SETTINGS = {
   sentry: false,
   nightly: false,
   navigationBarBehaviour: 'custom',
+  searchEngine: SEARCH_ENGINE_DDG,
   useVerticalStyle: false,
   alwaysShowWorkspaces: false,
 };
