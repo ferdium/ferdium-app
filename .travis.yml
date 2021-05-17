@@ -58,8 +58,8 @@ before_install:
     fi
 install:
   - npm cache clean -f || travis_terminate 1
-  - travis_retry npm uninstall node-gyp node-sass || travis_terminate 1
-  - travis_retry npm i -g node-gyp@8.0.0 node-sass@5.0.0 || travis_terminate 1
+  - travis_retry npm uninstall node-gyp || travis_terminate 1
+  - travis_retry npm i -g node-gyp@8.0.0 || travis_terminate 1
   - cd recipes && npm i && npm run package && cd .. || travis_terminate 1
   - travis_retry npx lerna bootstrap || travis_terminate 1
 before_script:
