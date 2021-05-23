@@ -12,11 +12,13 @@ matrix:
             - libxkbfile-dev
             - rpm
       env:
+        - USE_HARD_LINKS=false
         - ELECTRON_CACHE=$HOME/.cache/electron
         - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
     - os: osx
       osx_image: xcode12.4
       env:
+        - USE_HARD_LINKS=false
         - ELECTRON_CACHE=$HOME/.cache/electron
         - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
 
@@ -57,7 +59,7 @@ before_install:
       echo "Completed merging from develop branch and upgrading submodules"
     fi
 install:
-  - npm cache clean -f || travis_terminate 1
+  - travis_retry npm cache clean -f || travis_terminate 1
   - travis_retry npm uninstall node-gyp || travis_terminate 1
   - travis_retry npm i -g node-gyp@8.0.0 || travis_terminate 1
   - cd recipes && npm i && npm run package && cd .. || travis_terminate 1
