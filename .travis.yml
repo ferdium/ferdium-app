@@ -94,7 +94,7 @@ script:
           git push -qu source HEAD:$TRAVIS_BRANCH --no-verify >/dev/null 2>&1
         fi
         travis_retry travis_wait 100 npm run build -- --publish always -c.publish.provider=github -c.publish.owner=getferdi -c.publish.repo=nightlies || travis_terminate 1
-      elif [ $TRAVIS_PULL_REQUEST_BRANCH != "i18n" ]; then
+      elif [ "$TRAVIS_PULL_REQUEST_BRANCH" != "i18n" ]; then
         travis_retry travis_wait 100 npm run build || travis_terminate 1
       fi
     fi
