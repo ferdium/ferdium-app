@@ -85,7 +85,7 @@ script:
     else
       echo "Building for branch: $TRAVIS_BRANCH"
       if [ $TRAVIS_BRANCH == "release" ]; then
-        travis_retry travis_wait 100 npm run build -- --publish always -c.publish.provider=github -c.publish.owner=getferdi -c.publish.repo=ferdi -c.mac.identity=null || travis_terminate 1
+        travis_retry travis_wait 100 npm run build -- --publish always -c.publish.provider=github -c.publish.owner=getferdi -c.publish.repo=ferdi || travis_terminate 1
       elif [ $TRAVIS_BRANCH == "nightly" ]; then
         git commit -am "Apply linter fixes [skip ci]" --no-verify
         npm version prerelease --preid=nightly -m "%s and trigger AppVeyor nightly build [skip travisci]" || travis_terminate 1
