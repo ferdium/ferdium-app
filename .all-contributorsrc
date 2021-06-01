@@ -865,6 +865,15 @@
       "contributions": [
         "design"
       ]
+    },
+    {
+      "login": "prasann",
+      "name": "Prasanna",
+      "avatar_url": "https://avatars.githubusercontent.com/u/380340?v=4",
+      "profile": "https://prasans.info",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 6,
