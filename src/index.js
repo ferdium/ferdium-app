@@ -438,14 +438,12 @@ ipcMain.on('feature-basic-auth-credentials', (e, { user, password }) => {
   authCallback = noop;
 });
 
-ipcMain.on('open-browser-window', (e, { disposition, url, serviceId }) => {
-  if (disposition === 'foreground-tab') {
-    const serviceSession = session.fromPartition(`persist:service-${serviceId}`);
-    const child = new BrowserWindow({ parent: mainWindow, webPreferences: { session: serviceSession } });
-    child.show();
-    child.loadURL(url);
-  }
-  debug('Received open-browser-window', disposition, url);
+ipcMain.on('open-browser-window', (e, { url, serviceId }) => {
+  const serviceSession = session.fromPartition(`persist:service-${serviceId}`);
+  const child = new BrowserWindow({ parent: mainWindow, webPreferences: { session: serviceSession } });
+  child.show();
+  child.loadURL(url);
+  debug('Received open-browser-window', url);
 });
 
 ipcMain.on('modifyRequestHeaders', (e, { modifiedRequestHeaders, serviceId }) => {

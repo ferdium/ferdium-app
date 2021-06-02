@@ -291,22 +291,20 @@ export default class Service {
       if (!isValidExternalURL(event.url)) {
         return;
       }
-      if (event.disposition === 'foreground-tab') {
-        ipcRenderer.send('open-browser-window', {
-          disposition: event.disposition,
-          url: event.url,
-          serviceId: this.id,
-        });
-      } else {
+      if (event.disposition === 'foreground-tab' || event.disposition === 'background-tab') {
         openWindow({
           event,
           url,
           frameName,
           options,
         });
+      } else {
+        ipcRenderer.send('open-browser-window', {
+          url: event.url,
+          serviceId: this.id,
+        });
       }
     });
-
 
     this.webview.addEventListener('will-navigate', event => handleUserAgent(event.url, true));
 
