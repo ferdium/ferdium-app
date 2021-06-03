@@ -16,6 +16,8 @@ import {
 import { IPC } from './constants';
 import { state as delayAppState } from '../delayApp';
 
+import UserAgent from '../../models/UserAgent';
+
 const debug = require('debug')('Ferdi:feature:todos:store');
 
 export default class TodoStore extends FeatureStore {
@@ -24,6 +26,8 @@ export default class TodoStore extends FeatureStore {
   @observable isFeatureActive = false;
 
   @observable webview = null;
+
+  @observable userAgentModel = new UserAgent();
 
   isInitialized = false;
 
@@ -49,6 +53,10 @@ export default class TodoStore extends FeatureStore {
 
   @computed get settings() {
     return localStorage.getItem('todos') || {};
+  }
+
+  @computed get userAgent() {
+    return this.userAgentModel.userAgent;
   }
 
   // ========== PUBLIC API ========= //
@@ -123,7 +131,10 @@ export default class TodoStore extends FeatureStore {
 
   @action _setTodosWebview = ({ webview }) => {
     debug('_setTodosWebview', webview);
-    this.webview = webview;
+    if (this.webview !== webview) {
+      this.webview = webview;
+      this.userAgentModel.setWebviewReference(webview);
+    }
   };
 
   @action _handleHostMessage = (message) => {

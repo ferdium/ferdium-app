@@ -14,8 +14,6 @@ import Appear from '../../../components/ui/effects/Appear';
 import UpgradeButton from '../../../components/ui/UpgradeButton';
 import { TODOS_PARTITION_ID } from '..';
 
-import userAgent from '../../../helpers/userAgent-helpers';
-
 // NOTE: https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url
 function validURL(str) {
   let url;
@@ -112,6 +110,7 @@ class TodosWebview extends Component {
     resize: PropTypes.func.isRequired,
     width: PropTypes.number.isRequired,
     minWidth: PropTypes.number.isRequired,
+    userAgent: PropTypes.string.isRequired,
     isTodosIncludedInCurrentPlan: PropTypes.bool.isRequired,
     stores: PropTypes.shape({
       settings: PropTypes.instanceOf(SettingsStore).isRequired,
@@ -139,11 +138,6 @@ class TodosWebview extends Component {
     this.node.addEventListener('mousemove', this.resizePanel.bind(this));
     this.node.addEventListener('mouseup', this.stopResize.bind(this));
     this.node.addEventListener('mouseleave', this.stopResize.bind(this));
-
-    const webViewInstance = this;
-    this.webview.addEventListener('dom-ready', () => {
-      webViewInstance.webview.setUserAgent(userAgent(true));
-    });
   }
 
   startResize = (event) => {
@@ -214,6 +208,7 @@ class TodosWebview extends Component {
       classes,
       isTodosServiceActive,
       isVisible,
+      userAgent,
       isTodosIncludedInCurrentPlan,
       stores,
     } = this.props;
@@ -275,6 +270,7 @@ class TodosWebview extends Component {
             partition={TODOS_PARTITION_ID}
             preload="./features/todos/preload.js"
             ref={(webview) => { this.webview = webview ? webview.view : null; }}
+            useragent={userAgent}
             src={todoUrl}
           />
           )
