@@ -62,6 +62,8 @@
     .menu-item {
       border-radius: $theme-border-radius-small;
       margin: 4px;
+
+      .status-icon { min-width: 12px; }
     }
 
     &.selected,
