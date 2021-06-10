@@ -80,7 +80,7 @@ jobs:
             echo "No changes found - terminating the build"
             echo "::set-output name=should_run::false"
           else
-            if [ $FORCE_REBUILD != "true" ]; then
+            if [ $FORCE_REBUILD != "true" ] || [ "${{ contains(github.event.inputs.message, 'version bump')" == "true" ]; then
               echo "Bumping version number"
               npm version prerelease --preid=nightly
             fi
