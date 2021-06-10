@@ -3,4 +3,4 @@ code:
 
 app:
   cmd: npm start
-  waitOn: http://localhost:8000
+  waitOn: http://localhost:8080
