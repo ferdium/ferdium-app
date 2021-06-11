@@ -186,6 +186,7 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.FERDI_PUBLISH_TOKEN }}
+          CSC_IDENTITY_AUTO_DISCOVERY: false
           # TODO: Commented out the code signing process for now (so as to at least get unsigned nightlies available for testing)
           # APPLEID: ${{ secrets.APPLEID }}
           # APPLEID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
@@ -199,6 +200,7 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.FERDI_PUBLISH_TOKEN }}
+          CSC_IDENTITY_AUTO_DISCOVERY: false
           # TODO: Commented out the code signing process for now (so as to at least get unsigned nightlies available for testing)
           # APPLEID: ${{ secrets.APPLEID }}
           # APPLEID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
