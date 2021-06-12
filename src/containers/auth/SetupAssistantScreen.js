@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 
+import { DEFAULT_TODO_RECIPE_ID, DEFAULT_TODO_SERVICE_NAME } from '../../config';
 import { sleep } from '../../helpers/async-helpers';
 import SetupAssistant from '../../components/auth/SetupAssistant';
 import ServicesStore from '../../stores/ServicesStore';
 import RecipesStore from '../../stores/RecipesStore';
-import { TODOS_RECIPE_ID } from '../../features/todos';
 import UserStore from '../../stores/UserStore';
 
 export default @inject('stores', 'actions') @observer class SetupAssistantScreen extends Component {
@@ -82,11 +82,11 @@ export default @inject('stores', 'actions') @observer class SetupAssistantScreen
       await sleep(100);
     }
 
-    // Add Franz ToDos
+    // Add todo service
     await services._createService({
-      recipeId: TODOS_RECIPE_ID,
+      recipeId: DEFAULT_TODO_RECIPE_ID,
       serviceData: {
-        name: 'Franz ToDos',
+        name: DEFAULT_TODO_SERVICE_NAME,
       },
       redirect: false,
       skipCleanup: true,

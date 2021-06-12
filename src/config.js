@@ -62,18 +62,43 @@ export const SEARCH_ENGINE_URLS = {
   [SEARCH_ENGINE_DDG]: ({ searchTerm }) => `https://duckduckgo.com/?q=${searchTerm}`,
 };
 
-export const TODO_APPS = {
-  'https://todoist.com/app': 'Todoist',
-  'https://app.franztodos.com': 'Franz Todo',
-  'https://ticktick.com/signin': 'TickTick',
-  'https://todo.microsoft.com/?app#': 'Microsoft To Do',
-  'https://habitica.com/login': 'Habitica',
-  'https://app.nozbe.com/#login': 'Nozbe',
-  'https://www.rememberthemilk.com/login/': 'Remember The Milk',
-  'https://desktop.any.do/': 'Any.do',
-  'https://tasks.google.com/embed/?origin=https%3A%2F%2Fcalendar.google.com&fullWidth=1': 'Google Tasks',
-  isUsingCustomTodoService: 'Other service',
+export const CUSTOM_TODO_SERVICE = 'isUsingCustomTodoService';
+
+const TODO_TODOIST_URL = 'https://todoist.com/app';
+const TODO_FRANZ_TODOS_URL = 'https://app.franztodos.com';
+const TODO_TICKTICK_URL = 'https://ticktick.com/signin';
+const TODO_MSTODO_URL = 'https://todo.microsoft.com/?app#';
+const TODO_HABITICA_URL = 'https://habitica.com/login';
+const TODO_NOZBE_URL = 'https://app.nozbe.com/#login';
+const TODO_RTM_URL = 'https://www.rememberthemilk.com/login/';
+const TODO_ANYDO_URL = 'https://desktop.any.do/';
+const TODO_GOOGLETASKS_URL = 'https://tasks.google.com/embed/?origin=https%3A%2F%2Fcalendar.google.com&fullWidth=1';
+
+export const TODO_SERVICE_RECIPE_IDS = {
+  [TODO_TODOIST_URL]: 'todoist',
+  [TODO_FRANZ_TODOS_URL]: 'franz-todos',
+  [TODO_TICKTICK_URL]: 'TickTick',
+  [TODO_MSTODO_URL]: 'mstodo',
+  [TODO_HABITICA_URL]: 'habitica',
+  [TODO_ANYDO_URL]: 'anydo',
 };
+
+export const TODO_APPS = {
+  [TODO_TODOIST_URL]: 'Todoist',
+  [TODO_FRANZ_TODOS_URL]: 'Franz Todo',
+  [TODO_TICKTICK_URL]: 'TickTick',
+  [TODO_MSTODO_URL]: 'Microsoft To Do',
+  [TODO_HABITICA_URL]: 'Habitica',
+  [TODO_NOZBE_URL]: 'Nozbe',
+  [TODO_RTM_URL]: 'Remember The Milk',
+  [TODO_ANYDO_URL]: 'Any.do',
+  [TODO_GOOGLETASKS_URL]: 'Google Tasks',
+  [CUSTOM_TODO_SERVICE]: 'Other service',
+};
+
+export const DEFAULT_TODO_SERVICE = TODO_FRANZ_TODOS_URL;
+export const DEFAULT_TODO_RECIPE_ID = TODO_SERVICE_RECIPE_IDS[DEFAULT_TODO_SERVICE];
+export const DEFAULT_TODO_SERVICE_NAME = TODO_APPS[DEFAULT_TODO_SERVICE];
 
 export const SIDEBAR_WIDTH = {
   35: 'Extremely slim sidebar',
@@ -123,7 +148,7 @@ export const DEFAULT_APP_SETTINGS = {
 
   // Ferdi specific options
   server: LIVE_FERDI_API,
-  predefinedTodoServer: 'https://app.franztodos.com',
+  predefinedTodoServer: DEFAULT_TODO_SERVICE,
   autohideMenuBar: false,
   lockingFeatureEnabled: false,
   locked: false,

@@ -4,7 +4,7 @@ import { webContents } from '@electron/remote';
 import normalizeUrl from 'normalize-url';
 import path from 'path';
 
-import { TODOS_RECIPE_ID, todosStore } from '../features/todos';
+import { todosStore } from '../features/todos';
 import { isValidExternalURL } from '../helpers/url-helpers';
 import UserAgent from './UserAgent';
 
@@ -184,8 +184,12 @@ export default class Service {
     };
   }
 
+  @computed get isTodosService() {
+    return this.recipe.id === todosStore.todoRecipeId;
+  }
+
   get webview() {
-    if (this.recipe.id === TODOS_RECIPE_ID) {
+    if (this.isTodosService) {
       return todosStore.webview;
     }
 
@@ -242,7 +246,6 @@ export default class Service {
   @computed get partition() {
     return this.recipe.partition || `persist:service-${this.id}`;
   }
-
 
   initializeWebViewEvents({ handleIPCMessage, openWindow, stores }) {
     const webviewWebContents = webContents.fromId(this.webview.getWebContentsId());

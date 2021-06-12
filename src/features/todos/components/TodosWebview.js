@@ -1,46 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { observer, inject } from 'mobx-react';
+import { observer } from 'mobx-react';
 import injectSheet from 'react-jss';
 import Webview from 'react-electron-web-view';
-import { Icon } from '@meetfranz/ui';
-import { defineMessages, intlShape } from 'react-intl';
 import classnames from 'classnames';
 
-import { mdiCheckAll } from '@mdi/js';
-import SettingsStore from '../../../stores/SettingsStore';
-
-import Appear from '../../../components/ui/effects/Appear';
-import UpgradeButton from '../../../components/ui/UpgradeButton';
 import { TODOS_PARTITION_ID } from '..';
-
-// NOTE: https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url
-function validURL(str) {
-  let url;
-
-  try {
-    url = new URL(str);
-  } catch (_) {
-    return false;
-  }
-
-  return url.protocol === 'http:' || url.protocol === 'https:';
-}
-
-const messages = defineMessages({
-  premiumInfo: {
-    id: 'feature.todos.premium.info',
-    defaultMessage: '!!!Franz Todos are available to premium users now!',
-  },
-  upgradeCTA: {
-    id: 'feature.todos.premium.upgrade',
-    defaultMessage: '!!!Upgrade Account',
-  },
-  rolloutInfo: {
-    id: 'feature.todos.premium.rollout',
-    defaultMessage: '!!!Everyone else will have to wait a little longer.',
-  },
-});
 
 const styles = theme => ({
   root: {
@@ -96,10 +61,14 @@ const styles = theme => ({
     position: 'absolute',
     right: 0,
     zIndex: 0,
+    borderLeftWidth: 0,
+  },
+  hidden: {
+    borderLeftWidth: 0,
   },
 });
 
-@injectSheet(styles) @inject('stores') @observer
+@injectSheet(styles) @observer
 class TodosWebview extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -111,19 +80,13 @@ class TodosWebview extends Component {
     width: PropTypes.number.isRequired,
     minWidth: PropTypes.number.isRequired,
     userAgent: PropTypes.string.isRequired,
-    isTodosIncludedInCurrentPlan: PropTypes.bool.isRequired,
-    stores: PropTypes.shape({
-      settings: PropTypes.instanceOf(SettingsStore).isRequired,
-    }).isRequired,
+    todoUrl: PropTypes.string.isRequired,
+    isTodoUrlValid: PropTypes.bool.isRequired,
   };
 
   state = {
     isDragging: false,
     width: 300,
-  };
-
-  static contextTypes = {
-    intl: intlShape,
   };
 
   componentWillMount() {
@@ -209,8 +172,8 @@ class TodosWebview extends Component {
       isTodosServiceActive,
       isVisible,
       userAgent,
-      isTodosIncludedInCurrentPlan,
-      stores,
+      todoUrl,
+      isTodoUrlValid,
     } = this.props;
 
     const {
@@ -219,29 +182,20 @@ class TodosWebview extends Component {
       isDragging,
     } = this.state;
 
-    const { intl } = this.context;
-
-    const isUsingPredefinedTodoServer = stores.settings.all.app.predefinedTodoServer !== 'isUsingCustomTodoService';
-    const todoUrl = isUsingPredefinedTodoServer
-      ? stores.settings.all.app.predefinedTodoServer
-      : stores.settings.all.app.customTodoServer;
-    let isTodoUrlValid = true;
-    if (isUsingPredefinedTodoServer === false) {
-      isTodoUrlValid = validURL(todoUrl);
+    let displayedWidth = isVisible ? width : 0;
+    if (isTodosServiceActive) {
+      displayedWidth = null;
     }
-
-    const todosPanelStyle = {
-      width: isVisible ? width : 0,
-      borderLeftWidth: isVisible ? '1px' : 0,
-    };
 
     return (
       <div
         className={classnames({
           [classes.root]: true,
           [classes.isTodosServiceActive]: isTodosServiceActive,
+          'todos__todos-panel--expanded': isTodosServiceActive,
+          [classes.hidden]: !isVisible,
         })}
-        style={todosPanelStyle}
+        style={{ width: displayedWidth }}
         onMouseUp={() => this.stopResize()}
         ref={(node) => { this.node = node; }}
         id="todos-panel"
@@ -257,9 +211,7 @@ class TodosWebview extends Component {
             style={{ left: delta }} // This hack is required as resizing with webviews beneath behaves quite bad
           />
         )}
-        {isTodosIncludedInCurrentPlan ? (
-          isTodoUrlValid
-          && (
+        {isTodoUrlValid && (
           <Webview
             className={classes.webview}
             onDidAttach={() => {
@@ -273,20 +225,6 @@ class TodosWebview extends Component {
             useragent={userAgent}
             src={todoUrl}
           />
-          )
-        ) : (
-          <Appear>
-            <div className={classes.premiumContainer}>
-              <Icon icon={mdiCheckAll} className={classes.premiumIcon} size={4} />
-              <p>{intl.formatMessage(messages.premiumInfo)}</p>
-              <p>{intl.formatMessage(messages.rolloutInfo)}</p>
-              <UpgradeButton
-                className={classes.premiumCTA}
-                gaEventInfo={{ category: 'Todos', event: 'upgrade' }}
-                short
-              />
-            </div>
-          </Appear>
         )}
       </div>
     );

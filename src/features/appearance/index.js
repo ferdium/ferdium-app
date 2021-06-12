@@ -93,10 +93,10 @@ function generateServiceRibbonWidthStyle(widthStr, iconSizeStr, vertical) {
     }
   ` : `
     .sidebar {
-      width: ${width - 2}px !important;
+      width: ${width}px !important;
     }
     .tab-item {
-      width: ${width - 2}px !important;
+      width: ${width}px !important;
       height: ${width - 5 + iconSize}px !important;
     }
     .tab-item .tab-item__icon {
@@ -104,6 +104,9 @@ function generateServiceRibbonWidthStyle(widthStr, iconSizeStr, vertical) {
     }
     .sidebar__button {
       font-size: ${width / 3}px !important;
+    }
+    .todos__todos-panel--expanded {
+      width: calc(100% - ${300 + width}px) !important;
     }
   `;
 }
@@ -155,6 +158,10 @@ function generateVerticalStyle(widthStr, alwaysShowWorkspaces) {
 
   .workspaces-drawer {
     maring-top: -${sidebarWidthStr} !important;
+  }
+
+  .todos__todos-panel--expanded {
+    width: calc(100% - 300px) !important;
   }
   `;
 }

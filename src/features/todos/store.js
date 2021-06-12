@@ -7,6 +7,8 @@ import {
 import localStorage from 'mobx-localstorage';
 
 import { todoActions } from './actions';
+import { CUSTOM_TODO_SERVICE, TODO_SERVICE_RECIPE_IDS } from '../../config';
+import { isValidExternalURL } from '../../helpers/url-helpers';
 import { FeatureStore } from '../utils/FeatureStore';
 import { createReactions } from '../../stores/lib/Reaction';
 import { createActionBindings } from '../utils/ActionBinding';
@@ -21,6 +23,8 @@ import UserAgent from '../../models/UserAgent';
 const debug = require('debug')('Ferdi:feature:todos:store');
 
 export default class TodoStore extends FeatureStore {
+  @observable stores = null;
+
   @observable isFeatureEnabled = false;
 
   @observable isFeatureActive = false;
@@ -57,6 +61,31 @@ export default class TodoStore extends FeatureStore {
 
   @computed get userAgent() {
     return this.userAgentModel.userAgent;
+  }
+
+  @computed get isUsingPredefinedTodoServer() {
+    return this.stores && this.stores.settings.app.predefinedTodoServer !== CUSTOM_TODO_SERVICE;
+  }
+
+  @computed get todoUrl() {
+    if (!this.stores) {
+      return null;
+    }
+    return this.isUsingPredefinedTodoServer
+      ? this.stores.settings.app.predefinedTodoServer
+      : this.stores.settings.app.customTodoServer;
+  }
+
+  @computed get isTodoUrlValid() {
+    return !this.isUsingPredefinedTodoServer || isValidExternalURL(this.todoUrl);
+  }
+
+  @computed get todoRecipeId() {
+    if (this.isFeatureEnabledByUser && this.isUsingPredefinedTodoServer
+        && this.todoUrl in TODO_SERVICE_RECIPE_IDS) {
+      return TODO_SERVICE_RECIPE_IDS[this.todoUrl];
+    }
+    return null;
   }
 
   // ========== PUBLIC API ========= //

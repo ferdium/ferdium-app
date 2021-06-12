@@ -21,7 +21,6 @@ import { workspaceStore } from '../features/workspaces';
 import { serviceLimitStore } from '../features/serviceLimit';
 import { RESTRICTION_TYPES } from '../models/Service';
 import { KEEP_WS_LOADED_USID } from '../config';
-import { TODOS_RECIPE_ID } from '../features/todos';
 import { SPELLCHECKER_LOCALES } from '../i18n/languages';
 
 const debug = require('debug')('Ferdi:ServiceStore');
@@ -279,11 +278,11 @@ export default class ServicesStore extends Store {
   }
 
   @computed get isTodosServiceAdded() {
-    return this.allDisplayed.find(service => service.recipe.id === TODOS_RECIPE_ID && service.isEnabled) || null;
+    return this.allDisplayed.find(service => service.isTodosService && service.isEnabled) || false;
   }
 
   @computed get isTodosServiceActive() {
-    return this.active && this.active.recipe.id === TODOS_RECIPE_ID;
+    return this.active && this.active.isTodosService;
   }
 
   one(id) {
@@ -484,7 +483,7 @@ export default class ServicesStore extends Store {
     this._awake({ serviceId: service.id });
     service.lastUsed = Date.now();
 
-    if (this.active.recipe.id === TODOS_RECIPE_ID && !this.stores.todos.settings.isFeatureEnabledByUser) {
+    if (this.isTodosServiceActive && !this.stores.todos.settings.isFeatureEnabledByUser) {
       this.actions.todos.toggleTodosFeatureVisibility();
     }
 
@@ -718,7 +717,7 @@ export default class ServicesStore extends Store {
     service.resetMessageCount();
     service.lostRecipeConnection = false;
 
-    if (service.recipe.id === TODOS_RECIPE_ID) {
+    if (service.isTodosService) {
       return this.actions.todos.reload();
     }
 
@@ -805,7 +804,7 @@ export default class ServicesStore extends Store {
 
   @action _openDevTools({ serviceId }) {
     const service = this.one(serviceId);
-    if (service.recipe.id === TODOS_RECIPE_ID) {
+    if (service.isTodosService) {
       this.actions.todos.openDevTools();
     } else {
       service.webview.openDevTools();
