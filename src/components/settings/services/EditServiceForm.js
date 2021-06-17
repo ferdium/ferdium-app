@@ -454,6 +454,10 @@ export default @observer class EditServiceForm extends Component {
                 </div>
               </PremiumFeatureContainer>
             )}
+
+            <div className="user-agent">
+              <Input field={form.$('userAgentPref')} />
+            </div>
           </form>
 
           {action === 'edit' && (

@@ -315,6 +315,7 @@ export default class ServicesStore extends Store {
       customIcon: false,
       isDarkModeEnabled: false,
       spellcheckerLanguage: SPELLCHECKER_LOCALES[this.stores.settings.app.spellcheckerLanguage],
+      userAgentPref: '',
     }, serviceData);
 
     let data = serviceData;

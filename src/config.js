@@ -164,6 +164,7 @@ export const DEFAULT_APP_SETTINGS = {
   automaticUpdates: true,
   showServiceNavigationBar: false,
   universalDarkMode: true,
+  userAgentPref: '',
   adaptableDarkMode: true,
   accentColor: DEFAULT_ACCENT_COLOR,
   serviceRibbonWidth: 68,
