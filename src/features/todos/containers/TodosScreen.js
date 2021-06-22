@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 import FeaturesStore from '../../../stores/FeaturesStore';
 import TodosWebview from '../components/TodosWebview';
 import ErrorBoundary from '../../../components/util/ErrorBoundary';
-import { TODOS_MIN_WIDTH, todosStore } from '..';
+import { todosStore } from '..';
+import { TODOS_MIN_WIDTH } from '../../../config';
 import { todoActions } from '../actions';
 import ServicesStore from '../../../stores/ServicesStore';
 

@@ -6,7 +6,7 @@ import injectSheet from 'react-jss';
 
 import { Button } from '@meetfranz/forms';
 
-import { config } from '.';
+import { config } from './constants';
 import styles from './styles';
 import UserStore from '../../stores/UserStore';
 

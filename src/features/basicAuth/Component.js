@@ -13,7 +13,7 @@ import {
   resetState,
   sendCredentials,
   cancelLogin,
-} from '.';
+} from './store';
 import Form from './Form';
 
 import styles from './styles';

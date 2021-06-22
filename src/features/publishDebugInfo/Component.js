@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { defineMessages, intlShape } from 'react-intl';
 import injectSheet from 'react-jss';
-import { state as ModalState } from '.';
+import { state as ModalState } from './store';
 import { sendAuthRequest } from '../../api/utils/auth';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';

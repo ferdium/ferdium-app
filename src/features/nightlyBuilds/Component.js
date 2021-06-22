@@ -7,7 +7,7 @@ import { H1 } from '@meetfranz/ui';
 
 import Modal from '../../components/ui/Modal';
 import Button from '../../components/ui/Button';
-import { state as ModalState } from '.';
+import { state as ModalState } from './store';
 import SettingsStore from '../../stores/SettingsStore';
 
 const messages = defineMessages({

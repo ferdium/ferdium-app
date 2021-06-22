@@ -11,8 +11,7 @@ import Request from './lib/Request';
 import CachedRequest from './lib/CachedRequest';
 import { sleep } from '../helpers/async-helpers';
 import { getPlan } from '../helpers/plan-helpers';
-import { PLANS } from '../config';
-import { TODOS_PARTITION_ID } from '../features/todos';
+import { PLANS, TODOS_PARTITION_ID } from '../config';
 
 const debug = require('debug')('Ferdi:UserStore');
 

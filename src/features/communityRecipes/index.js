@@ -3,8 +3,6 @@ import { CommunityRecipesStore } from './store';
 
 const debug = require('debug')('Ferdi:feature:communityRecipes');
 
-export const DEFAULT_SERVICE_LIMIT = 3;
-
 export const communityRecipesStore = new CommunityRecipesStore();
 
 export default function initCommunityRecipes(stores, actions) {

@@ -1,6 +1,6 @@
 import { computed, observable } from 'mobx';
 import { FeatureStore } from '../utils/FeatureStore';
-import { DEFAULT_SERVICE_LIMIT } from '.';
+import { DEFAULT_SERVICE_LIMIT } from '../../config';
 
 const debug = require('debug')('Ferdi:feature:serviceLimit:store');
 

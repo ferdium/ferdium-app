@@ -5,7 +5,7 @@ import injectSheet from 'react-jss';
 import Webview from 'react-electron-web-view';
 import classnames from 'classnames';
 
-import { TODOS_PARTITION_ID } from '..';
+import { TODOS_PARTITION_ID } from '../../../config';
 
 const styles = theme => ({
   root: {

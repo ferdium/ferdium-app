@@ -10,7 +10,7 @@ import { H1 } from '@meetfranz/ui';
 
 import { compact, invoke } from 'lodash';
 import Modal from '../../components/ui/Modal';
-import { state as ModalState } from '.';
+import { state as ModalState } from './store';
 import ServicesStore from '../../stores/ServicesStore';
 
 const messages = defineMessages({

@@ -7,17 +7,20 @@ import {
 import localStorage from 'mobx-localstorage';
 
 import { todoActions } from './actions';
-import { CUSTOM_TODO_SERVICE, TODO_SERVICE_RECIPE_IDS } from '../../config';
+import {
+  CUSTOM_TODO_SERVICE,
+  TODO_SERVICE_RECIPE_IDS,
+  DEFAULT_TODOS_WIDTH,
+  TODOS_MIN_WIDTH,
+  DEFAULT_TODOS_VISIBLE,
+  DEFAULT_IS_FEATURE_ENABLED_BY_USER,
+} from '../../config';
 import { isValidExternalURL } from '../../helpers/url-helpers';
 import { FeatureStore } from '../utils/FeatureStore';
 import { createReactions } from '../../stores/lib/Reaction';
 import { createActionBindings } from '../utils/ActionBinding';
-import {
-  DEFAULT_TODOS_WIDTH, TODOS_MIN_WIDTH, DEFAULT_TODOS_VISIBLE, TODOS_ROUTES, DEFAULT_IS_FEATURE_ENABLED_BY_USER,
-} from '.';
-import { IPC } from './constants';
+import { IPC, TODOS_ROUTES } from './constants';
 import { state as delayAppState } from '../delayApp';
-
 import UserAgent from '../../models/UserAgent';
 
 const debug = require('debug')('Ferdi:feature:todos:store');

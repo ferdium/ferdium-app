@@ -1,6 +1,6 @@
-import { observable, reaction } from 'mobx';
+import { reaction } from 'mobx';
 import ms from 'ms';
-
+import { state as ModalState } from './store';
 import { state as delayAppState } from '../delayApp';
 import { planSelectionStore } from '../planSelection';
 
@@ -8,12 +8,7 @@ export { default as Component } from './Component';
 
 const debug = require('debug')('Ferdi:feature:shareFranz');
 
-const defaultState = {
-  isModalVisible: false,
-  lastShown: null,
-};
-
-export const state = observable(defaultState);
+const state = ModalState;
 
 export default function initialize(stores) {
   debug('Initialize shareFerdi feature');

@@ -10,7 +10,7 @@ import {
   mdiHeart, mdiEmail, mdiFacebookBox, mdiTwitter,
 } from '@mdi/js';
 import Modal from '../../components/ui/Modal';
-import { state } from '.';
+import { state } from './store';
 import ServicesStore from '../../stores/ServicesStore';
 
 const messages = defineMessages({
