@@ -12,6 +12,7 @@ export const announcementsApi = {
   },
 
   async getChangelog(version) {
+    // TODO: This doesn't seem to handle the different 'nightlies' repo that we currently use. Needs to be fixed.
     const url = `https://api.github.com/repos/${GITHUB_ORG_NAME}/${GITHUB_FERDI_REPO_NAME}/releases/tags/v${version}`;
     debug(`fetching release changelog from Github url: ${url}`);
     const request = await window.fetch(url, { method: 'GET' });
