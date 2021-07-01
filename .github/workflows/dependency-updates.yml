@@ -58,4 +58,4 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git commit -am "Update submodules, browserslist data updates and linter fixes [skip ci]" --no-verify || true
-          git push origin nightly --no-verify
+          git push origin $(git rev-parse --abbrev-ref HEAD) --no-verify
