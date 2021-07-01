@@ -60,15 +60,14 @@ jobs:
           if [ $CHANGES_COUNT -eq 0 ] && [ $MANUAL_REBUILD != "true" ]; then
             echo "No changes found - terminating the build"
             echo "::set-output name=should_run::false"
-          else
-            # changes > 0 (or) MANUAL_REBUILD=true
+          else   # changes > 0 (or) MANUAL_REBUILD=true
             if [ $MANUAL_REBUILD != "true" ] || [ "${{ contains(github.event.inputs.message, 'version bump') }}" == "true" ]; then
               echo "Bumping version number"
               npm version prerelease --preid=nightly
             fi
 
-            echo "Pushing merge, linter, submodule and version-bump commits"
-            git push origin nightly --no-verify
+            echo "Pushing merge and version-bump commits"
+            git push origin $(git rev-parse --abbrev-ref HEAD) --no-verify
           fi
 
   build_mac:
