@@ -50,8 +50,11 @@ jobs:
           echo "Updating browserslist db"
           npx browserslist@latest --update-db
 
-          echo "Running linter and tests"
+          echo "Running linter, reformatter, rebrander and tests"
           npm run lint
+          npm run reformat-files
+          npm run manage-translations
+          npm run apply-branding
           npm run test
 
           echo "Committing and pushing submodules, dependency-updates and linter changes"

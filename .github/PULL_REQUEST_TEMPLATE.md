@@ -14,5 +14,5 @@
 ### Checklist:
 <!-- Go over all the following points, and put an `x` in all the boxes that apply. -->
 - [ ] My pull request is properly named
-- [ ] The changes respect the code style of the project (`$ npm run lint`)
+- [ ] The changes respect the code style of the project (`$ npm run lint && npm run reformat-files && npm run manage-translations && npm run apply-branding`)
 - [ ] I tested/previewed my changes locally
