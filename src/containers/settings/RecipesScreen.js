@@ -18,6 +18,7 @@ import { FRANZ_DEV_DOCS, RECIPES_PATH } from '../../config';
 import { communityRecipesStore } from '../../features/communityRecipes';
 import RecipePreview from '../../models/RecipePreview';
 import AppStore from '../../stores/AppStore';
+import CUSTOM_WEBSITE_ID from '../../features/webControls/constants';
 
 export default @inject('stores', 'actions') @observer class RecipesScreen extends Component {
   static propTypes = {
@@ -138,7 +139,7 @@ export default @inject('stores', 'actions') @observer class RecipesScreen extend
       ),
     ]) : recipeFilter;
 
-    const customWebsiteRecipe = recipePreviews.all.find(service => service.id === 'franz-custom-website');
+    const customWebsiteRecipe = recipePreviews.all.find(service => service.id === CUSTOM_WEBSITE_ID);
 
     const isLoading = recipePreviews.featuredRecipePreviewsRequest.isExecuting
       || recipePreviews.allRecipePreviewsRequest.isExecuting
