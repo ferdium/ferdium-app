@@ -3,8 +3,18 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import Loader from 'react-loader';
+import { defineMessages, intlShape } from 'react-intl';
 
-export default @observer class Infobox extends Component {
+const messages = defineMessages({
+  dismiss: {
+    id: 'infobox.dismiss',
+    defaultMessage: '!!!Dismiss',
+  },
+});
+
+export default
+@observer
+class Infobox extends Component {
   static propTypes = {
     children: PropTypes.any.isRequired, // eslint-disable-line
     icon: PropTypes.string,
@@ -28,6 +38,10 @@ export default @observer class Infobox extends Component {
     onSeen: () => null,
   };
 
+  static contextTypes = {
+    intl: intlShape,
+  };
+
   state = {
     dismissed: false,
   };
@@ -49,6 +63,8 @@ export default @observer class Infobox extends Component {
       onDismiss,
     } = this.props;
 
+    const { intl } = this.context;
+
     if (this.state.dismissed) {
       return null;
     }
@@ -61,18 +77,10 @@ export default @observer class Infobox extends Component {
           'infobox--default': !type,
         })}
       >
-        {icon && (
-          <i className={`mdi mdi-${icon}`} />
-        )}
-        <div className="infobox__content">
-          {children}
-        </div>
+        {icon && <i className={`mdi mdi-${icon}`} />}
+        <div className="infobox__content">{children}</div>
         {ctaLabel && (
-          <button
-            className="infobox__cta"
-            onClick={ctaOnClick}
-            type="button"
-          >
+          <button className="infobox__cta" onClick={ctaOnClick} type="button">
             <Loader
               loaded={!ctaLoading}
               lines={10}
@@ -91,6 +99,7 @@ export default @observer class Infobox extends Component {
               if (onDismiss) onDismiss();
             }}
             className="infobox__delete mdi mdi-close"
+            aria-label={intl.formatMessage(messages.dismiss)}
           />
         )}
       </div>

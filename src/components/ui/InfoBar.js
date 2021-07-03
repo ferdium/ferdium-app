@@ -3,11 +3,21 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import Loader from 'react-loader';
+import { defineMessages, intlShape } from 'react-intl';
 
 // import { oneOrManyChildElements } from '../../prop-types';
 import Appear from './effects/Appear';
 
-export default @observer class InfoBar extends Component {
+const messages = defineMessages({
+  hide: {
+    id: 'infobar.hide',
+    defaultMessage: '!!!Hide',
+  },
+});
+
+export default
+@observer
+class InfoBar extends Component {
   static propTypes = {
     // eslint-disable-next-line
     children: PropTypes.any.isRequired,
@@ -32,6 +42,10 @@ export default @observer class InfoBar extends Component {
     onHide: () => null,
   };
 
+  static contextTypes = {
+    intl: intlShape,
+  };
+
   render() {
     const {
       children,
@@ -44,6 +58,8 @@ export default @observer class InfoBar extends Component {
       sticky,
       onHide,
     } = this.props;
+
+    const { intl } = this.context;
 
     let transitionName = 'slideUp';
     if (position === 'top') {
@@ -63,11 +79,7 @@ export default @observer class InfoBar extends Component {
         <div className="info-bar__content">
           {children}
           {ctaLabel && (
-            <button
-              type="button"
-              className="info-bar__cta"
-              onClick={onClick}
-            >
+            <button type="button" className="info-bar__cta" onClick={onClick}>
               <Loader
                 loaded={!ctaLoading}
                 lines={10}
@@ -84,6 +96,7 @@ export default @observer class InfoBar extends Component {
             type="button"
             className="info-bar__close mdi mdi-close"
             onClick={onHide}
+            aria-label={intl.formatMessage(messages.hide)}
           />
         )}
       </Appear>

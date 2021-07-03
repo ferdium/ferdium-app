@@ -567,7 +567,7 @@ export default @observer class EditSettingsForm extends Component {
                   condition={!isSpellcheckerIncludedInCurrentPlan}
                   gaEventInfo={{ category: 'User', event: 'upgrade', label: 'spellchecker' }}
                 >
-                  <Fragment>
+                  <>
                     <Toggle
                       field={form.$('enableSpellchecking')}
                     />
@@ -577,7 +577,7 @@ export default @observer class EditSettingsForm extends Component {
                     {isMac && form.$('enableSpellchecking').value && (
                       <p>{intl.formatMessage(messages.spellCheckerLanguageInfo)}</p>
                     )}
-                  </Fragment>
+                  </>
                 </PremiumFeatureContainer>
                 <a
                   href={FRANZ_TRANSLATION}
@@ -679,17 +679,14 @@ export default @observer class EditSettingsForm extends Component {
                 <br />
                 {intl.formatMessage(messages.updateStatusUpToDate)}
               </>
-              )
-              }
+              )}
               <p className="settings__message">
                 <span className="mdi mdi-github-face" />
                 <span>
 
-
                   Ferdi is based on
                   {' '}
                   <a href={`${GITHUB_FRANZ_URL}/franz`} target="_blank">Franz</a>
-
 
                   , a project published
                   under the

@@ -40,7 +40,8 @@ const messages = defineMessages({
   },
   keepLoadedInfo: {
     id: 'settings.workspace.form.keepLoadedInfo',
-    defaultMessage: '!!!*This option will be overwritten by the global "Keep all workspaces loaded" option.',
+    defaultMessage:
+      '!!!*This option will be overwritten by the global "Keep all workspaces loaded" option.',
   },
   servicesInWorkspaceHeadline: {
     id: 'settings.workspace.form.servicesInWorkspaceHeadline',
@@ -68,7 +69,8 @@ const styles = () => ({
   },
 });
 
-@injectSheet(styles) @observer
+@injectSheet(styles)
+@observer
 class EditWorkspaceForm extends Component {
   static contextTypes = {
     intl: intlShape,
@@ -86,6 +88,7 @@ class EditWorkspaceForm extends Component {
 
   form = this.prepareWorkspaceForm(this.props.workspace);
 
+  // eslint-disable-next-line react/no-deprecated
   componentWillReceiveProps(nextProps) {
     const { workspace } = this.props;
     if (workspace.id !== nextProps.workspace.id) {
@@ -164,16 +167,14 @@ class EditWorkspaceForm extends Component {
             </Link>
           </span>
           <span className="separator" />
-          <span className="settings__header-item">
-            {workspace.name}
-          </span>
+          <span className="settings__header-item">{workspace.name}</span>
         </div>
         <div className="settings__body">
           <div className={classes.nameInput}>
             <Input {...form.$('name').bind()} />
             <Toggle field={form.$('keepLoaded')} />
             <p className={`${classes.keepLoadedInfo} franz-form__label`}>
-              { intl.formatMessage(messages.keepLoadedInfo) }
+              {intl.formatMessage(messages.keepLoadedInfo)}
             </p>
           </div>
           <h2>{intl.formatMessage(messages.servicesInWorkspaceHeadline)}</h2>
@@ -187,11 +188,13 @@ class EditWorkspaceForm extends Component {
                   </span>
                   {intl.formatMessage(messages.noServicesAdded)}
                 </p>
-                <Link to="/settings/recipes" className="button">{intl.formatMessage(messages.discoverServices)}</Link>
+                <Link to="/settings/recipes" className="button">
+                  {intl.formatMessage(messages.discoverServices)}
+                </Link>
               </div>
             ) : (
-              <Fragment>
-                {services.map(s => (
+              <>
+                {services.map((s) => (
                   <WorkspaceServiceListItem
                     key={s.id}
                     service={s}
@@ -199,7 +202,7 @@ class EditWorkspaceForm extends Component {
                     onToggle={() => this.toggleService(s)}
                   />
                 ))}
-              </Fragment>
+              </>
             )}
           </div>
         </div>
