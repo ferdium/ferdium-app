@@ -1,4 +1,5 @@
 {
+  "root": true,
   "parser": "@babel/eslint-parser",
   "extends": "eslint-config-airbnb",
   "plugins": ["jest"],
