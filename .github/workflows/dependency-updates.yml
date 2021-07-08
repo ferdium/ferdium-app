@@ -52,15 +52,12 @@ jobs:
       - name: Install node dependencies recursively
         run: npx lerna bootstrap
       - name: Update submodules
-        run: git submodule update --remote -f
+        run: npm run update-submodules
       - name: Update browserslist db
         run: npx browserslist@latest --update-db
       - name: Run linter, reformatter, rebrander and tests
         run: |
-          npm run lint
-          npm run reformat-files
-          npm run manage-translations
-          npm run apply-branding
+          npm run prepare-code
           npm run test
       - name: Commit submodules, dependency-updates and linter changes
         run: |
