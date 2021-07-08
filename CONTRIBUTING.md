@@ -181,7 +181,7 @@ npm run dev
 DEBUG=Ferdi:* npm run start
 ```
 
-Optionally, you can run both commands in one terminal with [misty](https://github.com/adlk/misty) (see [misty.yml](https://github.com/getferdi/ferdi/blob/develop/misty.yml)):
+- Optionally, you can run both commands in one terminal with [misty](https://github.com/adlk/misty) (see [misty.yml](https://github.com/getferdi/ferdi/blob/develop/misty.yml)):
 
 ```bash
 DEBUG=Ferdi:* npx misty
