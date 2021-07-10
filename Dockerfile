@@ -12,7 +12,7 @@ ARG USE_SYSTEM_FPM=true
 # Note: Added to bypass the error with missing git repo information for the 'preval-build-info' module
 ARG PREVAL_BUILD_INFO_PLACEHOLDERS=true
 
-RUN sudo apt-get update \
+RUN apt-get update \
   && apt-get install rpm ruby gem \
   && gem install fpm --no-ri --no-rdoc --no-document
 
