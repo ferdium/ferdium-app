@@ -58,7 +58,7 @@ Currently, these are the combinations of system dependencies that work on an int
 
 ```bash
 node -v
-v14.16.1
+v14.17.3
 npm -v
 6.14.12
 node-gyp -v
