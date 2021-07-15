@@ -7,7 +7,6 @@ import moment from 'moment';
 import AutoLaunch from 'auto-launch';
 import ms from 'ms';
 import { URL } from 'url';
-import os from 'os';
 import path from 'path';
 import { readJsonSync } from 'fs-extra';
 
@@ -15,7 +14,7 @@ import Store from './lib/Store';
 import Request from './lib/Request';
 import { CHECK_INTERVAL } from '../config';
 import {
-  DEFAULT_APP_SETTINGS, isMac, ferdiVersion, electronVersion,
+  DEFAULT_APP_SETTINGS, isMac, ferdiVersion, electronVersion, osRelease,
 } from '../environment';
 import locales from '../i18n/translations';
 import { onVisibilityChange } from '../helpers/visibility-helper';
@@ -261,7 +260,7 @@ export default class AppStore extends Store {
     return {
       host: {
         platform: process.platform,
-        release: os.release(),
+        release: osRelease,
         screens: screen.getAllDisplays(),
       },
       ferdi: {
