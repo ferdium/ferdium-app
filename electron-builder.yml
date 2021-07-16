@@ -55,6 +55,7 @@ linux:
   target:
     - target: AppImage
     - target: deb
+      arch: [x64, arm64, armv7l]
     - target: tar.gz
     - target: rpm
     - target: freebsd
@@ -70,3 +71,4 @@ protocols:
 asarUnpack:
   - ./recipes
   - ./assets/images/taskbar
+  - ./node_modules/@meetfranz

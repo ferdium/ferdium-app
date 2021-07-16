@@ -52,13 +52,13 @@ As a basic rule, before filing issues, feature requests or anything else. Take a
 
 #### Node.js, npm, node-gyp
 
-Please make sure you are running the exact node version used by the developers/contributors as specified in the [nvmrc file](./.nvmrc).
+Please make sure you are conforming to the `engines` requirements used by the developers/contributors as specified in the [package.json file](./package.json#engines).
 
-Currently, these are the combinations of system dependencies that work on an intel-based machines for MacOS/Linux/Windows (building on an ARM-based machine is still a work-in-progress due to node-sass native dependencies)
+Currently, these are the combinations of system dependencies that work for MacOS/Linux/Windows:
 
 ```bash
 node -v
-v14.16.1
+v14.17.3
 npm -v
 6.14.12
 node-gyp -v
@@ -74,7 +74,7 @@ _Note:_ This list can likely get outdated. If so, please refer to the specific v
 #### Debian/Ubuntu
 
 ```bash
-apt install ca-certificates curl netbase wget tzdata rpm
+apt-get update -y && apt-get install --no-install-recommends -y rpm ruby gem && gem install fpm --no-ri --no-rdoc --no-document
 ```
 
 #### Fedora
@@ -181,7 +181,7 @@ npm run dev
 DEBUG=Ferdi:* npm run start
 ```
 
-Optionally, you can run both commands in one terminal with [misty](https://github.com/adlk/misty) (see [misty.yml](https://github.com/getferdi/ferdi/blob/develop/misty.yml)):
+- Optionally, you can run both commands in one terminal with [misty](https://github.com/adlk/misty) (see [misty.yml](https://github.com/getferdi/ferdi/blob/develop/misty.yml)):
 
 ```bash
 DEBUG=Ferdi:* npx misty
@@ -213,15 +213,11 @@ Assets will be available in the `out` folder.
 
 ## Release
 
-Create a new [draft release](https://github.com/getferdi/ferdi/releases/new) that targets the `release` branch, then:
-
 ```bash
-git checkout develop && git pull -r
+git checkout nightly && git pull -r
 git checkout release
-git submodule update --remote --force
-git commit -am "Update submodules"
-git merge --no-ff develop
+git merge --no-ff nightly --no-verify
 git push
 ```
 
-Once the draft release assets are uploaded (13 assets), publish the release (you will need elevated permissions in GitHub for doing this). The last commit of the `release` branch will be tagged. You can then merge `release` into `master` and back into `develop` if needed
+This will automatically trigger the build, as part of which, a new, draft release will be created [here](https://github.com/getferdi/ferdi/releases/). Once all the assets are uploaded (19 assets in total), publish the release (you will need elevated permissions in GitHub for doing this). The last commit of the `release` branch will be tagged.
