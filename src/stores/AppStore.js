@@ -180,7 +180,7 @@ export default class AppStore extends Store {
       }
     });
 
-    // Handle deep linking (franz://)
+    // Handle deep linking (ferdi://)
     ipcRenderer.on('navigateFromDeepLink', (event, data) => {
       debug('Navigate from deep link', data);
       let {
@@ -389,6 +389,7 @@ export default class AppStore extends Store {
 
   @action _checkForUpdates() {
     if (this.isOnline) {
+      debug('_checkForUpdates: sending event to autoUpdate:check');
       this.updateStatus = this.updateStatusTypes.CHECKING;
       ipcRenderer.send('autoUpdate', {
         action: 'check',
@@ -399,6 +400,7 @@ export default class AppStore extends Store {
   }
 
   @action _installUpdate() {
+    debug('_installUpdate: sending event to autoUpdate:install');
     ipcRenderer.send('autoUpdate', {
       action: 'install',
     });
