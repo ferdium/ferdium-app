@@ -26,16 +26,13 @@ export default @observer class ImageUpload extends Component {
 
   dropzoneRef = null;
 
-  imgPath = null;
-
   onDrop(acceptedFiles) {
     const { field } = this.props;
 
     acceptedFiles.forEach((file) => {
-      this.imgPath = isWindows ? file.path.replace(/\\/g, '/') : file.path;
-
+      const imgPath = isWindows ? file.path.replace(/\\/g, '/') : file.path;
       this.setState({
-        path: this.imgPath,
+        path: imgPath,
       });
 
       this.props.field.onDrop(file);
