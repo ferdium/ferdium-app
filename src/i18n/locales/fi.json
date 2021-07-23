@@ -471,7 +471,6 @@
   "workspaceDrawer.headline": "Työtilat",
   "workspaceDrawer.item.contextMenuEdit": "muokkaa",
   "workspaceDrawer.item.noServicesAddedYet": "Palveluja ei ole vielä lisätty",
-  "workspaceDrawer.proFeatureBadge": "Premium-ominaisuus",
   "workspaceDrawer.workspaceFeatureInfo": "<p>Ferdi Workspaces auttaa sinun keskittymään mikä on tärkeää juuri nyt. Määritä erilaisia palvelukokonaisuuksia ja vaihda helposti niiden välillä milloin tahansa.</p><p>Sinä päätät mitä palveluita tarvitset milloin ja missä, jotta voimme auttaa sinua pysymään työsi äärellä - tai helpottamaan poistumista aina kun haluat.</p>",
   "workspaceDrawer.workspacesSettingsTooltip": "Muokkaa työtilojen asetuksia",
   "workspaces.switchingIndicator.switchingTo": "Vaihdetaan"

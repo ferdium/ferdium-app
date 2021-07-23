@@ -471,7 +471,6 @@
   "workspaceDrawer.headline": "Munkaterületek",
   "workspaceDrawer.item.contextMenuEdit": "szerkeszt",
   "workspaceDrawer.item.noServicesAddedYet": "Még nincsenek hozzáadott szolgáltatások",
-  "workspaceDrawer.proFeatureBadge": "Prémium funkció",
   "workspaceDrawer.workspaceFeatureInfo": "<p>A Ferdi Munkaterületek lehetővé teszik, hogy összpontosíts a jelenleg fontos dolgokra. Állítsd be a különböző szolgáltatáskészleteket és könnyedén válthatsz közöttük bármikor.</p><p>Te döntöd el, hogy mely szolgáltatásokra van szükséged, mikor és hol, így segíthetünk abban, hogy a teljesítményed csúcsán maradhass, vagy ha csak akarod, egyszerűen kikapcsold a munkával kapcsolatos dolgokat.</p>",
   "workspaceDrawer.workspacesSettingsTooltip": "Munkaterület beállítások szerkesztése",
   "workspaces.switchingIndicator.switchingTo": "Váltás"

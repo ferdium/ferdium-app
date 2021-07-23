@@ -471,7 +471,6 @@
   "workspaceDrawer.headline": "مساحاتُ العمل",
   "workspaceDrawer.item.contextMenuEdit": "تعديل",
   "workspaceDrawer.item.noServicesAddedYet": "لم تضف أي خدمات بعد",
-  "workspaceDrawer.proFeatureBadge": "المزايا المدفوعة",
   "workspaceDrawer.workspaceFeatureInfo": "<p>يُمكنك فيردي من التركيز على ما هو مهم لديك الآن. أنشاء مجموعات مختلفة من الخدمات وإداراتها والتنقل بينها بسهولة في أي وقت.<p><p/>أنتَ  من يقرر أيّ الخدمات تحتاج ساعة تحتاج وأين تحتاج, لذا نستطيع مساعدتك لتبقى محافظ مع مستجدات ما تقوم به أو تستريح إن شئت.<p/>",
   "workspaceDrawer.workspacesSettingsTooltip": "تعديل إعدادات مساحات العمل",
   "workspaces.switchingIndicator.switchingTo": "التبديل إلى"

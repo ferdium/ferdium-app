@@ -471,7 +471,6 @@
   "workspaceDrawer.headline": "Pracovný priestor",
   "workspaceDrawer.item.contextMenuEdit": "Upraviť",
   "workspaceDrawer.item.noServicesAddedYet": "Zatiaľ žiadne služby",
-  "workspaceDrawer.proFeatureBadge": "Prémiová funkcia",
   "workspaceDrawer.workspaceFeatureInfo": "<p>Ferdi Workspace vám umožňujú sústrediť sa na to, čo je práve dôležité. Nastavte si rozličné skupiny služieb a jednoducho medzi nimi kedykoľvek prepínajte.</p><p>Vy rozhodujete ktoré služby, kedy a kde potrebujete, a my vám potom vieme pomôcť sústrediť sa na prácu - alebo jednoducho prepnúť z práce na čokoľvek iné. </p>",
   "workspaceDrawer.workspacesSettingsTooltip": "Upraviť nastavenia workspace",
   "workspaces.switchingIndicator.switchingTo": "Prepínanie na"

@@ -471,7 +471,6 @@
   "workspaceDrawer.headline": "Arbetsytor",
   "workspaceDrawer.item.contextMenuEdit": "redigera",
   "workspaceDrawer.item.noServicesAddedYet": "Inga tjänster har lagts till",
-  "workspaceDrawer.proFeatureBadge": "Premium-funktion",
   "workspaceDrawer.workspaceFeatureInfo": "<p>Ferdi-arbetsytor låter dig fokusera på det som är viktigt just nu. Konfigurera olika uppsättningar av tjänster och växla enkelt mellan dem när som helst.</p><p>Du bestämmer vilka tjänster du behöver när och var, så att vi kan hjälpa dig att hålla koll på läget - eller enkelt koppla bort från jobbet när du vill.</p>",
   "workspaceDrawer.workspacesSettingsTooltip": "Redigera inställningar för arbetsytor",
   "workspaces.switchingIndicator.switchingTo": "Byter till"

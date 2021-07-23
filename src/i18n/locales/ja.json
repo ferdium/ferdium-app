@@ -471,7 +471,6 @@
   "workspaceDrawer.headline": "ワークスペース",
   "workspaceDrawer.item.contextMenuEdit": "編集",
   "workspaceDrawer.item.noServicesAddedYet": "まだサービスが追加されていません",
-  "workspaceDrawer.proFeatureBadge": "Premiumの機能",
   "workspaceDrawer.workspaceFeatureInfo": "<p>Ferdiワークスペースを使用すると、すぐに重要なことに集中できます。異なるサービス群を設定し、いつでも簡単に切り替えることができます。</p><p> 必要なサービスを、必要な時に、必要な場所でご利用いただけますので、仕事に集中することも、好きな時に仕事から離れることも可能です。</p>",
   "workspaceDrawer.workspacesSettingsTooltip": "ワークスペースの設定を編集する",
   "workspaces.switchingIndicator.switchingTo": "切り替え先:"

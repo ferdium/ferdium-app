@@ -471,7 +471,6 @@
   "workspaceDrawer.headline": "작업 공간",
   "workspaceDrawer.item.contextMenuEdit": "편집",
   "workspaceDrawer.item.noServicesAddedYet": "추가된 서비스가 없습니다.",
-  "workspaceDrawer.proFeatureBadge": "프리미엄 기능",
   "workspaceDrawer.workspaceFeatureInfo": "<p>Ferdi Workspaces let you focus on what’s important right now. Set up different sets of services and easily switch between them at any time.</p><p>You decide which services you need when and where, so we can help you stay on top of your game - or easily switch off from work whenever you want.</p>",
   "workspaceDrawer.workspacesSettingsTooltip": "작업공간 설정 편집",
   "workspaces.switchingIndicator.switchingTo": "Switching to"

@@ -471,7 +471,6 @@
   "workspaceDrawer.headline": "Espacios de trabajo",
   "workspaceDrawer.item.contextMenuEdit": "editar",
   "workspaceDrawer.item.noServicesAddedYet": "Ningún servicio ha sido añadido",
-  "workspaceDrawer.proFeatureBadge": "Función Premium",
   "workspaceDrawer.workspaceFeatureInfo": "<p>Los espacios de trabajo Ferdi permiten centrarse en lo que es importante. Configure diferentes conjuntos de servicios y cambie fácilmente entre ellos en cualquier momento. </p><p>Usted decide qué servicios necesita, cuándo y dónde, para que podamos ayudarte a mantenerte al tanto - o apartarte fácilmente del trabajo cuando asi lo desees.</p>",
   "workspaceDrawer.workspacesSettingsTooltip": "Editar ajustes de áreas de trabajo",
   "workspaces.switchingIndicator.switchingTo": "Cambiando a"

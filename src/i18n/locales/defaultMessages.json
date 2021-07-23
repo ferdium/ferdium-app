@@ -5722,19 +5722,6 @@
           "column": 24,
           "line": 31
         }
-      },
-      {
-        "defaultMessage": "!!!Premium feature",
-        "end": {
-          "column": 3,
-          "line": 38
-        },
-        "file": "src/features/workspaces/components/WorkspaceDrawer.js",
-        "id": "workspaceDrawer.proFeatureBadge",
-        "start": {
-          "column": 23,
-          "line": 35
-        }
       }
     ],
     "path": "src/features/workspaces/components/WorkspaceDrawer.json"
