@@ -276,7 +276,6 @@
   "settings.app.form.enableSpellchecking": "Enable spell checking",
   "settings.app.form.enableSystemTray": "Show Ferdi in system tray",
   "settings.app.form.enableTodos": "Enable Ferdi Todos",
-  "settings.app.form.hibernate": "Enable service hibernation",
   "settings.app.form.hibernationStrategy": "Hibernation strategy",
   "settings.app.form.iconSize": "Service icon size",
   "settings.app.form.inactivityLock": "Lock after inactivity",
