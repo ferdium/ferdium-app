@@ -13,41 +13,15 @@
     }
   },
   {
-    "id": "settings.account.headlineSubscription",
-    "defaultMessage": "!!!Your Subscription",
-    "file": "src/components/settings/account/AccountDashboard.js",
-    "start": {
-      "line": 18,
-      "column": 24
-    },
-    "end": {
-      "line": 21,
-      "column": 3
-    }
-  },
-  {
     "id": "settings.account.headlineDangerZone",
     "defaultMessage": "!!Danger Zone",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 22,
+      "line": 18,
       "column": 22
     },
     "end": {
-      "line": 25,
-      "column": 3
-    }
-  },
-  {
-    "id": "settings.account.manageSubscription.label",
-    "defaultMessage": "!!!Manage your subscription",
-    "file": "src/components/settings/account/AccountDashboard.js",
-    "start": {
-      "line": 26,
-      "column": 33
-    },
-    "end": {
-      "line": 29,
+      "line": 21,
       "column": 3
     }
   },
@@ -56,11 +30,11 @@
     "defaultMessage": "!!!Edit Account",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 30,
+      "line": 22,
       "column": 21
     },
     "end": {
-      "line": 33,
+      "line": 25,
       "column": 3
     }
   },
@@ -69,24 +43,11 @@
     "defaultMessage": "!!Invoices",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 34,
+      "line": 26,
       "column": 18
     },
     "end": {
-      "line": 37,
-      "column": 3
-    }
-  },
-  {
-    "id": "settings.account.invoiceDownload",
-    "defaultMessage": "!!!Download",
-    "file": "src/components/settings/account/AccountDashboard.js",
-    "start": {
-      "line": 38,
-      "column": 19
-    },
-    "end": {
-      "line": 41,
+      "line": 29,
       "column": 3
     }
   },
@@ -95,11 +56,11 @@
     "defaultMessage": "!!!Could not load user information",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 42,
+      "line": 30,
       "column": 25
     },
     "end": {
-      "line": 45,
+      "line": 33,
       "column": 3
     }
   },
@@ -108,11 +69,11 @@
     "defaultMessage": "!!!Try again",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 46,
+      "line": 34,
       "column": 28
     },
     "end": {
-      "line": 49,
+      "line": 37,
       "column": 3
     }
   },
@@ -121,11 +82,11 @@
     "defaultMessage": "!!!Delete account",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 50,
+      "line": 38,
       "column": 17
     },
     "end": {
-      "line": 53,
+      "line": 41,
       "column": 3
     }
   },
@@ -134,11 +95,11 @@
     "defaultMessage": "!!!If you don't need your Ferdi account any longer, you can delete your account and all related data here.",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 54,
+      "line": 42,
       "column": 14
     },
     "end": {
-      "line": 58,
+      "line": 46,
       "column": 3
     }
   },
@@ -147,11 +108,11 @@
     "defaultMessage": "!!!You have received an email with a link to confirm your account deletion. Your account and data cannot be restored!",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 59,
+      "line": 47,
       "column": 19
     },
     "end": {
-      "line": 63,
+      "line": 51,
       "column": 3
     }
   },
@@ -160,11 +121,11 @@
     "defaultMessage": "!!!Your Franz License:",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 64,
+      "line": 52,
       "column": 15
     },
     "end": {
-      "line": 67,
+      "line": 55,
       "column": 3
     }
   },
@@ -173,11 +134,11 @@
     "defaultMessage": "Account is unavailable",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 68,
+      "line": 56,
       "column": 22
     },
     "end": {
-      "line": 71,
+      "line": 59,
       "column": 3
     }
   },
@@ -186,11 +147,11 @@
     "defaultMessage": "You are using Ferdi without an account. If you want to use Ferdi with an account and keep your services synchronized across installations, please select a server in the Settings tab then login.",
     "file": "src/components/settings/account/AccountDashboard.js",
     "start": {
-      "line": 72,
+      "line": 60,
       "column": 26
     },
     "end": {
-      "line": 75,
+      "line": 63,
       "column": 3
     }
   }

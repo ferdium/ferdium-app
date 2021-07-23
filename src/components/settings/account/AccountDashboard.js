@@ -15,17 +15,9 @@ const messages = defineMessages({
     id: 'settings.account.headline',
     defaultMessage: '!!!Account',
   },
-  headlineSubscription: {
-    id: 'settings.account.headlineSubscription',
-    defaultMessage: '!!!Your Subscription',
-  },
   headlineDangerZone: {
     id: 'settings.account.headlineDangerZone',
     defaultMessage: '!!Danger Zone',
-  },
-  manageSubscriptionButtonLabel: {
-    id: 'settings.account.manageSubscription.label',
-    defaultMessage: '!!!Manage your subscription',
   },
   accountEditButton: {
     id: 'settings.account.account.editButton',
@@ -34,10 +26,6 @@ const messages = defineMessages({
   invoicesButton: {
     id: 'settings.account.headlineInvoices',
     defaultMessage: '!!Invoices',
-  },
-  invoiceDownload: {
-    id: 'settings.account.invoiceDownload',
-    defaultMessage: '!!!Download',
   },
   userInfoRequestFailed: {
     id: 'settings.account.userInfoRequestFailed',

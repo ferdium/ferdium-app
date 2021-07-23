@@ -1496,76 +1496,6 @@
   {
     "descriptors": [
       {
-        "defaultMessage": "!!!You have reached your service limit.",
-        "end": {
-          "column": 3,
-          "line": 14
-        },
-        "file": "src/components/services/content/ServiceRestricted.js",
-        "id": "service.restrictedHandler.serviceLimit.headline",
-        "start": {
-          "column": 24,
-          "line": 11
-        }
-      },
-      {
-        "defaultMessage": "!!!Please upgrade your account to use more than {count} services.",
-        "end": {
-          "column": 3,
-          "line": 18
-        },
-        "file": "src/components/services/content/ServiceRestricted.js",
-        "id": "service.restrictedHandler.serviceLimit.text",
-        "start": {
-          "column": 20,
-          "line": 15
-        }
-      },
-      {
-        "defaultMessage": "!!!Franz Professional Plan required",
-        "end": {
-          "column": 3,
-          "line": 22
-        },
-        "file": "src/components/services/content/ServiceRestricted.js",
-        "id": "service.restrictedHandler.customUrl.headline",
-        "start": {
-          "column": 21,
-          "line": 19
-        }
-      },
-      {
-        "defaultMessage": "!!!Please upgrade to the Franz Professional plan to use custom urls & self hosted services.",
-        "end": {
-          "column": 3,
-          "line": 26
-        },
-        "file": "src/components/services/content/ServiceRestricted.js",
-        "id": "service.restrictedHandler.customUrl.text",
-        "start": {
-          "column": 17,
-          "line": 23
-        }
-      },
-      {
-        "defaultMessage": "!!!Upgrade Account",
-        "end": {
-          "column": 3,
-          "line": 30
-        },
-        "file": "src/components/services/content/ServiceRestricted.js",
-        "id": "service.restrictedHandler.action",
-        "start": {
-          "column": 10,
-          "line": 27
-        }
-      }
-    ],
-    "path": "src/components/services/content/ServiceRestricted.json"
-  },
-  {
-    "descriptors": [
-      {
         "defaultMessage": "!!!Welcome to Ferdi",
         "end": {
           "column": 3,
@@ -1937,185 +1867,146 @@
         }
       },
       {
-        "defaultMessage": "!!!Your Subscription",
+        "defaultMessage": "!!Danger Zone",
         "end": {
           "column": 3,
           "line": 21
         },
         "file": "src/components/settings/account/AccountDashboard.js",
-        "id": "settings.account.headlineSubscription",
-        "start": {
-          "column": 24,
-          "line": 18
-        }
-      },
-      {
-        "defaultMessage": "!!Danger Zone",
-        "end": {
-          "column": 3,
-          "line": 25
-        },
-        "file": "src/components/settings/account/AccountDashboard.js",
         "id": "settings.account.headlineDangerZone",
         "start": {
           "column": 22,
-          "line": 22
-        }
-      },
-      {
-        "defaultMessage": "!!!Manage your subscription",
-        "end": {
-          "column": 3,
-          "line": 29
-        },
-        "file": "src/components/settings/account/AccountDashboard.js",
-        "id": "settings.account.manageSubscription.label",
-        "start": {
-          "column": 33,
-          "line": 26
+          "line": 18
         }
       },
       {
         "defaultMessage": "!!!Edit Account",
         "end": {
           "column": 3,
-          "line": 33
+          "line": 25
         },
         "file": "src/components/settings/account/AccountDashboard.js",
         "id": "settings.account.account.editButton",
         "start": {
           "column": 21,
-          "line": 30
+          "line": 22
         }
       },
       {
         "defaultMessage": "!!Invoices",
         "end": {
           "column": 3,
-          "line": 37
+          "line": 29
         },
         "file": "src/components/settings/account/AccountDashboard.js",
         "id": "settings.account.headlineInvoices",
         "start": {
           "column": 18,
-          "line": 34
-        }
-      },
-      {
-        "defaultMessage": "!!!Download",
-        "end": {
-          "column": 3,
-          "line": 41
-        },
-        "file": "src/components/settings/account/AccountDashboard.js",
-        "id": "settings.account.invoiceDownload",
-        "start": {
-          "column": 19,
-          "line": 38
+          "line": 26
         }
       },
       {
         "defaultMessage": "!!!Could not load user information",
         "end": {
           "column": 3,
-          "line": 45
+          "line": 33
         },
         "file": "src/components/settings/account/AccountDashboard.js",
         "id": "settings.account.userInfoRequestFailed",
         "start": {
           "column": 25,
-          "line": 42
+          "line": 30
         }
       },
       {
         "defaultMessage": "!!!Try again",
         "end": {
           "column": 3,
-          "line": 49
+          "line": 37
         },
         "file": "src/components/settings/account/AccountDashboard.js",
         "id": "settings.account.tryReloadUserInfoRequest",
         "start": {
           "column": 28,
-          "line": 46
+          "line": 34
         }
       },
       {
         "defaultMessage": "!!!Delete account",
         "end": {
           "column": 3,
-          "line": 53
+          "line": 41
         },
         "file": "src/components/settings/account/AccountDashboard.js",
         "id": "settings.account.deleteAccount",
         "start": {
           "column": 17,
-          "line": 50
+          "line": 38
         }
       },
       {
         "defaultMessage": "!!!If you don't need your Ferdi account any longer, you can delete your account and all related data here.",
         "end": {
           "column": 3,
-          "line": 58
+          "line": 46
         },
         "file": "src/components/settings/account/AccountDashboard.js",
         "id": "settings.account.deleteInfo",
         "start": {
           "column": 14,
-          "line": 54
+          "line": 42
         }
       },
       {
         "defaultMessage": "!!!You have received an email with a link to confirm your account deletion. Your account and data cannot be restored!",
         "end": {
           "column": 3,
-          "line": 63
+          "line": 51
         },
         "file": "src/components/settings/account/AccountDashboard.js",
         "id": "settings.account.deleteEmailSent",
         "start": {
           "column": 19,
-          "line": 59
+          "line": 47
         }
       },
       {
         "defaultMessage": "!!!Your Franz License:",
         "end": {
           "column": 3,
-          "line": 67
+          "line": 55
         },
         "file": "src/components/settings/account/AccountDashboard.js",
         "id": "settings.account.yourLicense",
         "start": {
           "column": 15,
-          "line": 64
+          "line": 52
         }
       },
       {
         "defaultMessage": "Account is unavailable",
         "end": {
           "column": 3,
-          "line": 71
+          "line": 59
         },
         "file": "src/components/settings/account/AccountDashboard.js",
         "id": "settings.account.accountUnavailable",
         "start": {
           "column": 22,
-          "line": 68
+          "line": 56
         }
       },
       {
         "defaultMessage": "You are using Ferdi without an account. If you want to use Ferdi with an account and keep your services synchronized across installations, please select a server in the Settings tab then login.",
         "end": {
           "column": 3,
-          "line": 75
+          "line": 63
         },
         "file": "src/components/settings/account/AccountDashboard.js",
         "id": "settings.account.accountUnavailableInfo",
         "start": {
           "column": 26,
-          "line": 72
+          "line": 60
         }
       }
     ],
@@ -5401,50 +5292,6 @@
       }
     ],
     "path": "src/features/shareFranz/Component.json"
-  },
-  {
-    "descriptors": [
-      {
-        "defaultMessage": "!!!Franz Todos are available to premium users now!",
-        "end": {
-          "column": 3,
-          "line": 34
-        },
-        "file": "src/features/todos/components/TodosWebview.js",
-        "id": "feature.todos.premium.info",
-        "start": {
-          "column": 15,
-          "line": 31
-        }
-      },
-      {
-        "defaultMessage": "!!!Upgrade Account",
-        "end": {
-          "column": 3,
-          "line": 38
-        },
-        "file": "src/features/todos/components/TodosWebview.js",
-        "id": "feature.todos.premium.upgrade",
-        "start": {
-          "column": 14,
-          "line": 35
-        }
-      },
-      {
-        "defaultMessage": "!!!Everyone else will have to wait a little longer.",
-        "end": {
-          "column": 3,
-          "line": 42
-        },
-        "file": "src/features/todos/components/TodosWebview.js",
-        "id": "feature.todos.premium.rollout",
-        "start": {
-          "column": 15,
-          "line": 39
-        }
-      }
-    ],
-    "path": "src/features/todos/components/TodosWebview.json"
   },
   {
     "descriptors": [
