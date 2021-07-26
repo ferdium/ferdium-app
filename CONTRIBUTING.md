@@ -18,6 +18,7 @@
       - [Debian/Ubuntu](#debianubuntu)
       - [Fedora](#fedora)
       - [Windows](#windows)
+      - [Lerna](#lerna)
     - [Clone repository with submodule](#clone-repository-with-submodule)
     - [Local caching of dependencies](#local-caching-of-dependencies)
     - [Install dependencies](#install-dependencies)
@@ -91,6 +92,12 @@ Please make sure you run this command as an administrator:
 npm i -g windows-build-tools --vs2015
 ```
 
+#### Lerna
+
+```bash
+npm i -g lerna@4.0.0
+```
+
 ### Clone repository with submodule
 
 ```bash
@@ -99,7 +106,7 @@ cd ferdi
 git submodule update --init --recursive
 ```
 
-It is important you execute the last command to get the required submodules (recipes, server).
+It is important you execute the last command to get the required submodules (recipes, src/internal-server).
 
 ### Local caching of dependencies
 
