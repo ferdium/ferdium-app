@@ -59,8 +59,10 @@ jobs:
           if [ $CHANGES_COUNT -gt 0 ] || [[ $MANUAL_REBUILD == "true" && $VERSION_BUMP == "true" ]]; then
             # Do the version bump in the 'develop' branch ONLY if there were other changes coming from the 'develop' branch
             git checkout develop
-            npm version -m "%s [skip ci]" prerelease --preid=nightly
-            git push origin develop
+            TAG_NAME=$(npm version -m "%s [skip ci]" prerelease --preid=nightly)
+            git push origin develop --no-verify
+            git tag $TAG_NAME
+            git push origin --tags --no-verify
 
             git checkout nightly
           fi
