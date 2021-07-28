@@ -44,10 +44,11 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 14.17.3
-      - name: Uninstall locally and reinstall node-gyp globally
+      - name: Uninstall locally and reinstall global npm modules
         run: |
           npm uninstall node-gyp
-          npm i -g node-gyp@8.1.0
+          npm ls -g node-gyp@8.1.0 || npm i -g node-gyp@8.1.0
+          npm ls -g lerna@4.0.0 || npm i -g lerna@4.0.0
       - name: Install node dependencies recursively
         run: npx lerna bootstrap
       - name: Update submodules
