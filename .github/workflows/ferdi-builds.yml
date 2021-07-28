@@ -54,7 +54,9 @@ jobs:
           git config user.email github-actions@github.com
 
           CHANGES_COUNT=$(git diff --shortstat origin/develop | wc -l)
-          if [ $CHANGES_COUNT -gt 0 ] || [ {{ github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[version bump]') }} ]; then
+          MANUAL_REBUILD="${{ github.event_name == 'workflow_dispatch' }}"
+          VERSION_BUMP="${{ contains(github.event.inputs.message, '[version bump]') }}"
+          if [ $CHANGES_COUNT -gt 0 ] || [ $MANUAL_REBUILD == "true" && $VERSION_BUMP == "true" ]; then
             # Do the version bump in the 'develop' branch ONLY if there were other changes coming from the 'develop' branch
             git checkout develop
             npm version -m "%s [skip ci]" prerelease --preid=nightly
@@ -66,7 +68,6 @@ jobs:
           echo "Merge with fast-forward from 'origin/develop'"
           git merge --ff-only origin/develop --no-verify
 
-          MANUAL_REBUILD="${{ github.event_name == 'workflow_dispatch' }}"
           echo "Number of changes: $CHANGES_COUNT"
           if [ $CHANGES_COUNT -eq 0 ] && [ $MANUAL_REBUILD != "true" ]; then
             echo "No changes found - terminating the build"
