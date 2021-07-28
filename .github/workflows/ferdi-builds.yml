@@ -56,7 +56,7 @@ jobs:
           CHANGES_COUNT=$(git diff --shortstat origin/develop | wc -l)
           MANUAL_REBUILD="${{ github.event_name == 'workflow_dispatch' }}"
           VERSION_BUMP="${{ contains(github.event.inputs.message, '[version bump]') }}"
-          if [ $CHANGES_COUNT -gt 0 ] || [ $MANUAL_REBUILD == "true" && $VERSION_BUMP == "true" ]; then
+          if [ $CHANGES_COUNT -gt 0 ] || [[ $MANUAL_REBUILD == "true" && $VERSION_BUMP == "true" ]]; then
             # Do the version bump in the 'develop' branch ONLY if there were other changes coming from the 'develop' branch
             git checkout develop
             npm version -m "%s [skip ci]" prerelease --preid=nightly
