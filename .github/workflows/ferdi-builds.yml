@@ -61,7 +61,7 @@ jobs:
             git checkout develop
             TAG_NAME=$(npm version -m "%s [skip ci]" prerelease --preid=nightly)
             git push origin develop --no-verify
-            git tag $TAG_NAME
+            git tag -f $TAG_NAME
             git push origin --tags --no-verify
 
             git checkout nightly
