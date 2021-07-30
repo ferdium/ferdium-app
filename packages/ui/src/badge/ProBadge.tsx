@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import React, { Component } from 'react';
 import injectStyle from 'react-jss';
 
-import { Badge, Icon } from '../';
+import { Badge, Icon } from '..';
 import { Theme } from '../../../theme';
 import { IWithStyle } from '../typings/generic';
 
@@ -34,13 +34,8 @@ const styles = (theme: Theme) => ({
 
 class ProBadgeComponent extends Component<IProps> {
   render() {
-    const {
-      classes,
-      badgeClasses,
-      iconClasses,
-      inverted,
-      className,
-    } = this.props;
+    const { classes, badgeClasses, iconClasses, inverted, className } =
+      this.props;
 
     return (
       <Badge

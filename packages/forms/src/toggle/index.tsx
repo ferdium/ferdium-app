@@ -3,7 +3,7 @@ import { Property } from 'csstype';
 import React, { Component } from 'react';
 import injectStyle from 'react-jss';
 
-import { IFormField, IWithStyle, Omit } from '../typings/generic';
+import { IFormField, IWithStyle } from '../typings/generic';
 import { Theme } from '../../../theme';
 
 import { Error } from '../error';
