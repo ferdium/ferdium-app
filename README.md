@@ -1,7 +1,4 @@
 <p align="center">
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-97-default.svg?logo=github' alt='Contributors'/></a>
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
     <a href="https://getferdi.com">
       <img src="./build-helpers/images/icon.png" alt="" width="250"/>
     </a>
