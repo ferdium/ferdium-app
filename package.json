@@ -163,6 +163,7 @@
     "@typescript-eslint/parser": "4.28.5",
     "all-contributors-cli": "6.20.0",
     "babel-plugin-react-intl": "3.5.1",
+    "commitizen": "4.2.4",
     "conventional-changelog-cli": "2.1.1",
     "cross-env": "7.0.3",
     "cz-conventional-changelog": "3.3.0",
@@ -210,7 +211,16 @@
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+      "path": "./node_modules/cz-conventional-changelog",
+      "disableScopeLowerCase": false,
+      "disableSubjectLowerCase": false,
+      "maxHeaderWidth": 100,
+      "maxLineWidth": 100,
+      "defaultType": "chore",
+      "defaultScope": "",
+      "defaultSubject": "",
+      "defaultBody": "",
+      "defaultIssues": ""
     }
   },
   "browserslist": [
