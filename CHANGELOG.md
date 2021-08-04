@@ -1,3 +1,14 @@
+## [5.6.1-nightly.14](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.13...5.6.1-nightly.14) (2021-08-04)
+
+### Bug Fixes
+
+- Clear cache button should not log out of services (#1734) 💖 @mhatvan
+
+### Internal
+
+- Incorporate commitizen as a git pre-commit hook 💖 @vraravam
+- git commit comment structure are now enforced using 'commitlint' 💖 @vraravam
+
 ## [5.6.1-nightly.13](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.12...v5.6.1-nightly.13) (2021-08-04)
 
 - Changed the cron for the ferdi build to run at 12:15 am UTC. 💖 @vraravam
