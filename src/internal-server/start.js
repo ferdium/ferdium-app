@@ -20,9 +20,7 @@ const { Ignitor } = require('@adonisjs/ignitor');
 const fs = require('fs-extra');
 const os = require('os');
 const path = require('path');
-const packageJSON = require('../../package.json');
 
-process.env.FERDI_VERSION = packageJSON.version;
 process.env.ENV_PATH = path.join(__dirname, 'env.ini');
 
 module.exports = async (userPath, port) => {
