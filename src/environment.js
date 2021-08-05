@@ -17,7 +17,6 @@ import {
   DEV_WS_API,
   LOCAL_TODOS_FRONTEND_URL,
   PRODUCTION_TODOS_FRONTEND_URL,
-  LIVE_FRANZ_API,
   DEFAULT_TODO_SERVICE,
   SEARCH_ENGINE_DDG,
   iconSizeBias,
@@ -56,7 +55,8 @@ export const SETTINGS_PATH = path.join(app.getPath('userData'), 'config');
 // Replacing app.asar is not beautiful but unfortunately necessary
 export const RECIPES_PATH = asarPath(path.join(__dirname, 'recipes'));
 
-export const useLiveAPI = process.env.LIVE_API;
+export const useLiveAPI = process.env.USE_LIVE_API;
+const useLocalAPI = process.env.USE_LOCAL_API;
 
 export const isMac = is.macos;
 export const isWindows = is.windows;
@@ -75,12 +75,10 @@ let web;
 let todos;
 if (!isDevMode || (isDevMode && useLiveAPI)) {
   api = LIVE_FERDI_API;
-  // api = DEV_FRANZ_API;
   wsApi = LIVE_WS_API;
   web = LIVE_API_FERDI_WEBSITE;
-  // web = DEV_API_FRANZ_WEBSITE;
   todos = PRODUCTION_TODOS_FRONTEND_URL;
-} else if (isDevMode && process.env.LOCAL_API) {
+} else if (isDevMode && useLocalAPI) {
   api = LOCAL_API;
   wsApi = LOCAL_WS_API;
   web = LOCAL_API_WEBSITE;
@@ -151,10 +149,6 @@ export const DEFAULT_APP_SETTINGS = {
   useVerticalStyle: false,
   alwaysShowWorkspaces: false,
 };
-
-export function termsBase() {
-  return window.ferdi.stores.settings.all.app.server !== LIVE_FRANZ_API ? window.ferdi.stores.settings.all.app.server : DEV_API_FRANZ_WEBSITE;
-}
 
 export function aboutAppDetails() {
   return [

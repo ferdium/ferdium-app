@@ -6,7 +6,7 @@ import { autorun, observable } from 'mobx';
 import { defineMessages } from 'react-intl';
 import { CUSTOM_WEBSITE_RECIPE_ID, GITHUB_FERDI_URL, LIVE_API_FERDI_WEBSITE } from '../config';
 import {
-  cmdKey, isLinux, isMac, aboutAppDetails, termsBase,
+  cmdKey, isLinux, isMac, aboutAppDetails,
 } from '../environment';
 import { announcementsStore } from '../features/announcements';
 import { announcementActions } from '../features/announcements/actions';
@@ -14,6 +14,7 @@ import { todosStore } from '../features/todos';
 import { todoActions } from '../features/todos/actions';
 import { workspaceActions } from '../features/workspaces/actions';
 import { workspaceStore } from '../features/workspaces/index';
+import { termsBase } from '../api/apiBase';
 
 const menuItems = defineMessages({
   edit: {
