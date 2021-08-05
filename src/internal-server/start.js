@@ -20,6 +20,7 @@ const { Ignitor } = require('@adonisjs/ignitor');
 const fs = require('fs-extra');
 const os = require('os');
 const path = require('path');
+const { LOCAL_HOSTNAME } = require('../config');
 
 process.env.ENV_PATH = path.join(__dirname, 'env.ini');
 
@@ -40,8 +41,10 @@ module.exports = async (userPath, port) => {
     }
   }
 
+  // Note: These env vars are used by adonis as env vars
   process.env.DB_PATH = dbPath;
   process.env.USER_PATH = userPath;
+  process.env.HOST = LOCAL_HOSTNAME;
   process.env.PORT = port;
 
   new Ignitor(fold).appRoot(__dirname).fireHttpServer().catch(console.error); // eslint-disable-line no-console
