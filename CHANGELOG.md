@@ -1,4 +1,4 @@
-## [5.6.1-nightly.14](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.13...5.6.1-nightly.14) (2021-08-04)
+## [5.6.1-nightly.14](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.13...v5.6.1-nightly.14) (2021-08-04)
 
 ### Bug Fixes
 
