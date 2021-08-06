@@ -86,8 +86,6 @@
   "menu.todos": "Ülesanded",
   "menu.todos.enableTodos": "Luba ülesanded",
   "menu.view": "Vaade",
-  "menu.view.enterFullScreen": "Kuva täisekraanil",
-  "menu.view.exitFullScreen": "Välju täisekraanilt",
   "menu.view.reloadFerdi": "Laadi Ferdi uuesti",
   "menu.view.reloadService": "Laadi teenus uuesti",
   "menu.view.reloadTodos": "Laadi ülesanded uuesti",

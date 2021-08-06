@@ -126,8 +126,6 @@
   "menu.todos.enableTodos": "ToDoを有効にする",
   "menu.view": "表示",
   "menu.view.back": "戻る",
-  "menu.view.enterFullScreen": "全画面表示",
-  "menu.view.exitFullScreen": "全画面表示を終了する",
   "menu.view.forward": "次へ",
   "menu.view.lockFerdi": "Ferdiをロック",
   "menu.view.openQuickSwitch": "クイックスイッチを開く",

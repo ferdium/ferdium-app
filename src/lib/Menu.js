@@ -21,9 +21,37 @@ const menuItems = defineMessages({
     id: 'menu.edit',
     defaultMessage: '!!!Edit',
   },
-  view: {
-    id: 'menu.view',
-    defaultMessage: '!!!View',
+  undo: {
+    id: 'menu.edit.undo',
+    defaultMessage: '!!!Undo',
+  },
+  redo: {
+    id: 'menu.edit.redo',
+    defaultMessage: '!!!Redo',
+  },
+  cut: {
+    id: 'menu.edit.cut',
+    defaultMessage: '!!!Cut',
+  },
+  copy: {
+    id: 'menu.edit.copy',
+    defaultMessage: '!!!Copy',
+  },
+  paste: {
+    id: 'menu.edit.paste',
+    defaultMessage: '!!!Paste',
+  },
+  pasteAndMatchStyle: {
+    id: 'menu.edit.pasteAndMatchStyle',
+    defaultMessage: '!!!Paste And Match Style',
+  },
+  delete: {
+    id: 'menu.edit.delete',
+    defaultMessage: '!!!Delete',
+  },
+  selectAll: {
+    id: 'menu.edit.selectAll',
+    defaultMessage: '!!!Select All',
   },
   findInPage: {
     id: 'menu.edit.findInPage',
@@ -61,6 +89,22 @@ const menuItems = defineMessages({
     id: 'menu.view.forward',
     defaultMessage: '!!!Forward',
   },
+  resetZoom: {
+    id: 'menu.view.resetZoom',
+    defaultMessage: '!!!Actual Size',
+  },
+  zoomIn: {
+    id: 'menu.view.zoomIn',
+    defaultMessage: '!!!Zoom In',
+  },
+  zoomOut: {
+    id: 'menu.view.zoomOut',
+    defaultMessage: '!!!Zoom Out',
+  },
+  toggleFullScreen: {
+    id: 'menu.view.toggleFullScreen',
+    defaultMessage: '!!!Toggle Full Screen',
+  },
   toggleDarkMode: {
     id: 'menu.view.toggleDarkMode',
     defaultMessage: '!!!Toggle Dark Mode',
@@ -92,6 +136,14 @@ const menuItems = defineMessages({
   reloadTodos: {
     id: 'menu.view.reloadTodos',
     defaultMessage: '!!!Reload ToDos',
+  },
+  minimize: {
+    id: 'menu.window.minimize',
+    defaultMessage: '!!!Minimize',
+  },
+  close: {
+    id: 'menu.window.close',
+    defaultMessage: '!!!Close',
   },
   learnMore: {
     id: 'menu.help.learnMore',
@@ -141,9 +193,25 @@ const menuItems = defineMessages({
     id: 'menu.file',
     defaultMessage: '!!!File',
   },
+  view: {
+    id: 'menu.view',
+    defaultMessage: '!!!View',
+  },
   services: {
     id: 'menu.services',
     defaultMessage: '!!!Services',
+  },
+  window: {
+    id: 'menu.window',
+    defaultMessage: '!!!Window',
+  },
+  help: {
+    id: 'menu.help',
+    defaultMessage: '!!!Help',
+  },
+  about: {
+    id: 'menu.app.about',
+    defaultMessage: '!!!About Ferdi',
   },
   announcement: {
     id: 'menu.app.announcement',
@@ -157,9 +225,25 @@ const menuItems = defineMessages({
     id: 'menu.app.checkForUpdates',
     defaultMessage: '!!!Check for updates',
   },
+  hide: {
+    id: 'menu.app.hide',
+    defaultMessage: '!!!Hide',
+  },
+  hideOthers: {
+    id: 'menu.app.hideOthers',
+    defaultMessage: '!!!Hide Others',
+  },
+  unhide: {
+    id: 'menu.app.unhide',
+    defaultMessage: '!!!Unhide',
+  },
   autohideMenuBar: {
     id: 'menu.app.autohideMenuBar',
     defaultMessage: '!!!Auto-hide menu bar',
+  },
+  quit: {
+    id: 'menu.app.quit',
+    defaultMessage: '!!!Quit',
   },
   addNewService: {
     id: 'menu.services.addNewService',
@@ -233,31 +317,46 @@ const _titleBarTemplateFactory = (intl, locked) => [
     accelerator: 'Alt+E',
     submenu: [
       {
+        label: intl.formatMessage(menuItems.undo),
         role: 'undo',
       },
       {
+        label: intl.formatMessage(menuItems.redo),
         role: 'redo',
       },
       {
         type: 'separator',
       },
       {
+        label: intl.formatMessage(menuItems.cut),
+        accelerator: `${cmdKey}+X`,
         role: 'cut',
       },
       {
+        label: intl.formatMessage(menuItems.copy),
+        accelerator: `${cmdKey}+C`,
         role: 'copy',
       },
       {
+        label: intl.formatMessage(menuItems.paste),
+        accelerator: `${cmdKey}+V`,
         role: 'paste',
       },
       {
-        role: 'pasteAndMatchStyle',
+        label: intl.formatMessage(menuItems.pasteAndMatchStyle),
         accelerator: `${cmdKey}+Shift+V`, // Override the accelerator since this adds new key combo in macos
+        role: 'pasteAndMatchStyle',
+        click() {
+          getActiveWebview().pasteAndMatchStyle();
+        },
       },
       {
+        label: intl.formatMessage(menuItems.delete),
         role: 'delete',
       },
       {
+        label: intl.formatMessage(menuItems.selectAll),
+        accelerator: `${cmdKey}+A`,
         role: 'selectall',
       },
     ],
@@ -319,12 +418,16 @@ const _titleBarTemplateFactory = (intl, locked) => [
         type: 'separator',
       },
       {
+        label: intl.formatMessage(menuItems.resetZoom),
+        accelerator: `${cmdKey}+0`,
         role: 'resetZoom',
         click() {
           getActiveWebview().setZoomLevel(0);
         },
       },
       {
+        label: intl.formatMessage(menuItems.zoomIn),
+        accelerator: `${cmdKey}+plus`,
         role: 'zoomIn',
         click() {
           const activeService = getActiveWebview();
@@ -335,6 +438,8 @@ const _titleBarTemplateFactory = (intl, locked) => [
         },
       },
       {
+        label: intl.formatMessage(menuItems.zoomOut),
+        accelerator: `${cmdKey}+-`,
         role: 'zoomOut',
         click() {
           const activeService = getActiveWebview();
@@ -348,6 +453,7 @@ const _titleBarTemplateFactory = (intl, locked) => [
         type: 'separator',
       },
       {
+        label: intl.formatMessage(menuItems.toggleFullScreen),
         role: 'toggleFullScreen',
       },
       {
@@ -384,17 +490,22 @@ const _titleBarTemplateFactory = (intl, locked) => [
     visible: !locked && todosStore.isFeatureEnabled,
   },
   {
+    label: intl.formatMessage(menuItems.window),
     role: 'window',
     submenu: [
       {
+        label: intl.formatMessage(menuItems.minimize),
         role: 'minimize',
       },
       {
+        label: intl.formatMessage(menuItems.close),
         role: 'close',
       },
     ],
   },
   {
+    label: intl.formatMessage(menuItems.help),
+    accelerator: 'Alt+H',
     role: 'help',
     submenu: [
       {
@@ -599,6 +710,7 @@ export default class FranzMenu {
       accelerator: 'Alt+F',
       submenu: [
         {
+          label: intl.formatMessage(menuItems.about),
           role: 'about',
         },
         {
@@ -633,18 +745,22 @@ export default class FranzMenu {
           type: 'separator',
         },
         {
+          label: intl.formatMessage(menuItems.hide),
           role: 'hide',
         },
         {
+          label: intl.formatMessage(menuItems.hideOthers),
           role: 'hideOthers',
         },
         {
+          label: intl.formatMessage(menuItems.unhide),
           role: 'unhide',
         },
         {
           type: 'separator',
         },
         {
+          label: intl.formatMessage(menuItems.quit),
           role: 'quit',
           click() {
             app.quit();
@@ -654,6 +770,7 @@ export default class FranzMenu {
     });
 
     const about = {
+      label: intl.formatMessage(menuItems.about),
       role: 'about',
       click: () => {
         dialog.showMessageBox({
@@ -693,7 +810,7 @@ export default class FranzMenu {
       tpl[0].submenu = [
         {
           label: intl.formatMessage(menuItems.settings),
-          accelerator: 'Ctrl+P',
+          accelerator: `${cmdKey}+P`,
           click: () => {
             this.actions.ui.openSettings({ path: 'app' });
           },
@@ -704,8 +821,9 @@ export default class FranzMenu {
           type: 'separator',
         },
         {
+          label: intl.formatMessage(menuItems.quit),
           role: 'quit',
-          accelerator: 'Ctrl+Q',
+          accelerator: `${cmdKey}+Q`,
           click() {
             app.quit();
           },
