@@ -1,3 +1,14 @@
+# [v5.6.1-nightly.16](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.14...v5.6.1-nightly.16) (2021-08-06)
+
+### Bug Fixes
+
+* Change all occurrences of hard-coded ip address '127.0.0.1' to 'localhost' (#1253) 💖 @vraravam
+* Partially reverted menu-item cleanup (having only 'role' does not work in windows) (#1746) 💖 @vraravam
+
+### Internal
+
+* General code improvements 💖 @mhatvan, @vraravam
+
 ## [5.6.1-nightly.14](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.13...v5.6.1-nightly.14) (2021-08-04)
 
 ### Bug Fixes
