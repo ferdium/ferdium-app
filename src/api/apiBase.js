@@ -30,10 +30,7 @@ const apiBase = (withVersion = true) => {
     url = window.ferdi.stores.settings.all.app.server;
   }
 
-  if (withVersion) {
-    return `${url}/${API_VERSION}`;
-  }
-  return url;
+  return withVersion ? `${url}/${API_VERSION}` : url;
 };
 
 export default apiBase;

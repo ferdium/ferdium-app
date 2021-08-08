@@ -447,7 +447,7 @@ export default class ServerApi {
   }
 
   async hideNews(id) {
-    const request = await sendAuthRequest(`${apiBase(true)}/news/${id}/read`);
+    const request = await sendAuthRequest(`${apiBase()}/news/${id}/read`);
     if (!request.ok) throw request;
     debug('ServerApi::hideNews resolves', id);
   }
