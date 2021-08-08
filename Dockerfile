@@ -18,9 +18,6 @@ RUN apt-get update -y \
 
 WORKDIR /usr/src/ferdi
 
-COPY package*.json ./
-COPY lerna.json ./
-
 RUN npm i -g node-gyp@8.1.0 \
   && npm i -g lerna@4.0.0
 
