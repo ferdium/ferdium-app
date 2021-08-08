@@ -1,6 +1,6 @@
-import path from 'path';
+import { join } from 'path';
 import tar from 'tar';
-import fs from 'fs-extra';
+import { readdirSync, statSync, writeFileSync, copySync, ensureDirSync, pathExistsSync, readJsonSync, removeSync } from 'fs-extra';
 import { app, require as remoteRequire } from '@electron/remote';
 
 import ServiceModel from '../../models/Service';
@@ -13,7 +13,7 @@ import OrderModel from '../../models/Order';
 import { sleep } from '../../helpers/async-helpers';
 
 import { SERVER_NOT_LOADED } from '../../config';
-import { osArch, osPlatform, RECIPES_PATH } from '../../environment';
+import { osArch, osPlatform, asarRecipesPath, userDataRecipesPath, userDataPath } from '../../environment';
 import apiBase from '../apiBase';
 import { prepareAuthRequest, sendAuthRequest } from '../utils/auth';
 
@@ -311,11 +311,10 @@ export default class ServerApi {
   // Recipes
   async getInstalledRecipes() {
     const recipesDirectory = getRecipeDirectory();
-    const paths = fs
-      .readdirSync(recipesDirectory)
+    const paths = readdirSync(recipesDirectory)
       .filter(
         file =>
-          fs.statSync(path.join(recipesDirectory, file)).isDirectory() &&
+          statSync(join(recipesDirectory, file)).isDirectory() &&
           file !== 'temp' &&
           file !== 'dev',
       );
@@ -381,17 +380,17 @@ export default class ServerApi {
 
   async getRecipePackage(recipeId) {
     try {
-      const recipesDirectory = path.join(app.getPath('userData'), 'recipes');
-      const recipeTempDirectory = path.join(recipesDirectory, 'temp', recipeId);
-      const tempArchivePath = path.join(recipeTempDirectory, 'recipe.tar.gz');
+      const recipesDirectory = userDataRecipesPath();
+      const recipeTempDirectory = join(recipesDirectory, 'temp', recipeId);
+      const tempArchivePath = join(recipeTempDirectory, 'recipe.tar.gz');
 
-      const internalRecipeFile = path.join(RECIPES_PATH, `${recipeId}.tar.gz`);
+      const internalRecipeFile = asarRecipesPath(`${recipeId}.tar.gz`);
 
-      fs.ensureDirSync(recipeTempDirectory);
+      ensureDirSync(recipeTempDirectory);
 
       let archivePath;
 
-      if (fs.existsSync(internalRecipeFile)) {
+      if (pathExistsSync(internalRecipeFile)) {
         debug('[ServerApi::getRecipePackage] Using internal recipe file');
         archivePath = internalRecipeFile;
       } else {
@@ -403,7 +402,7 @@ export default class ServerApi {
         const res = await fetch(packageUrl);
         debug('Recipe downloaded', recipeId);
         const buffer = await res.buffer();
-        fs.writeFileSync(archivePath, buffer);
+        writeFileSync(archivePath, buffer);
       }
       debug(archivePath);
 
@@ -420,13 +419,11 @@ export default class ServerApi {
 
       await sleep(10);
 
-      const { id } = fs.readJsonSync(
-        path.join(recipeTempDirectory, 'package.json'),
-      );
-      const recipeDirectory = path.join(recipesDirectory, id);
-      fs.copySync(recipeTempDirectory, recipeDirectory);
-      fs.remove(recipeTempDirectory);
-      fs.remove(path.join(recipesDirectory, recipeId, 'recipe.tar.gz'));
+      const { id } = readJsonSync(join(recipeTempDirectory, 'package.json'));
+      const recipeDirectory = join(recipesDirectory, id);
+      copySync(recipeTempDirectory, recipeDirectory);
+      removeSync(recipeTempDirectory);
+      removeSync(join(recipesDirectory, recipeId, 'recipe.tar.gz'));
 
       return id;
     } catch (err) {
@@ -475,14 +472,10 @@ export default class ServerApi {
   }
 
   async getLegacyServices() {
-    const file = path.join(
-      app.getPath('userData'),
-      'settings',
-      'services.json',
-    );
+    const file = userDataPath('settings', 'services.json');
 
     try {
-      const config = fs.readJsonSync(file);
+      const config = readJsonSync(file);
 
       if (Object.prototype.hasOwnProperty.call(config, 'services')) {
         const services = await Promise.all(
@@ -614,11 +607,10 @@ export default class ServerApi {
   _getDevRecipes() {
     const recipesDirectory = getDevRecipeDirectory();
     try {
-      const paths = fs
-        .readdirSync(recipesDirectory)
+      const paths = readdirSync(recipesDirectory)
         .filter(
           file =>
-            fs.statSync(path.join(recipesDirectory, file)).isDirectory() &&
+            statSync(join(recipesDirectory, file)).isDirectory() &&
             file !== 'temp',
         );
 

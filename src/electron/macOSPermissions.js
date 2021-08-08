@@ -1,45 +1,43 @@
-import { app, systemPreferences, dialog } from 'electron';
-import fs from 'fs';
+import { systemPreferences, dialog } from 'electron';
+import { pathExistsSync, mkdirSync, writeFileSync } from 'fs-extra';
 import macosVersion from 'macos-version';
-import path from 'path';
+import { dirname } from 'path';
 import { askForScreenCaptureAccess } from 'node-mac-permissions';
+import { userDataPath } from '../environment';
 
 const debug = require('debug')('Ferdi:macOSPermissions');
 
-const permissionExists = macosVersion.isGreaterThanOrEqualTo('10.15');
-const filePath = path.join(
-  app.getPath('userData'),
-  '.has-app-requested-screen-capture-permissions',
-);
+const isExplicitScreenCapturePermissionReqd = macosVersion.isGreaterThanOrEqualTo('10.15');
+debug(`Should check explicitly for screen-capture permissions: ${isExplicitScreenCapturePermissionReqd}`);
 
-function hasPromptedForPermission() {
-  if (!permissionExists) {
+const filePath = userDataPath('.has-app-requested-screen-capture-permissions');
+
+function hasPromptedForScreenCapturePermission() {
+  if (!isExplicitScreenCapturePermissionReqd) {
     return false;
   }
 
-  if (filePath && fs.existsSync(filePath)) {
-    return true;
-  }
-
-  return false;
+  debug('Checking if status file exists');
+  return filePath && pathExistsSync(filePath);
 }
 
-function hasScreenCapturePermission() {
-  if (!permissionExists) {
+function hasScreenCapturePermissionAlreadyBeenGranted() {
+  if (!isExplicitScreenCapturePermissionReqd) {
     return true;
   }
 
   const screenCaptureStatus = systemPreferences.getMediaAccessStatus('screen');
+  debug(`screen-capture permissions status: ${screenCaptureStatus}`);
   return screenCaptureStatus === 'granted';
 }
 
 function createStatusFile() {
   try {
-    fs.writeFileSync(filePath, '');
+    writeFileSync(filePath, '');
   } catch (error) {
     if (error.code === 'ENOENT') {
-      fs.mkdirSync(path.dirname(filePath));
-      fs.writeFileSync(filePath, '');
+      mkdirSync(dirname(filePath));
+      writeFileSync(filePath, '');
     }
 
     throw error;
@@ -51,7 +49,13 @@ export const askFormacOSPermissions = async mainWindow => {
   systemPreferences.askForMediaAccess('camera');
   systemPreferences.askForMediaAccess('microphone');
 
-  if (!hasPromptedForPermission() && !hasScreenCapturePermission()) {
+  if (hasScreenCapturePermissionAlreadyBeenGranted()) {
+    debug('Already obtained screen-capture permissions - writing status file');
+    createStatusFile();
+    return;
+  }
+
+  if (!hasPromptedForScreenCapturePermission()) {
     debug('Checking screen capture permissions');
 
     const { response } = await dialog.showMessageBox(mainWindow, {
