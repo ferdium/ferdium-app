@@ -129,7 +129,7 @@ nightlyBuildsModal.wrappedComponent.propTypes = {
     settings: PropTypes.instanceOf(SettingsStore).isRequired,
   }).isRequired,
   actions: PropTypes.shape({
-    settings: PropTypes.object.isRequired,
+    settings: PropTypes.instanceOf(SettingsStore).isRequired,
     user: PropTypes.instanceOf(UserStore).isRequired,
     ui: PropTypes.instanceOf(UIStore).isRequired,
   }).isRequired,
