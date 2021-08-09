@@ -4,6 +4,10 @@
 
 - Use electron's API to enable/disable spell-check when the app starts up (#1743) 💖 @vraravam
 
+### Internal Changes
+
+- Upgraded `electron-builder` to `22.12.0` 💖 @vraravam
+
 # [v5.6.1-nightly.19](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.18...v5.6.1-nightly.19) (2021-08-09)
 
 ### Bug Fixes
