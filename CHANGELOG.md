@@ -1,13 +1,38 @@
+# [v5.6.1-nightly.20](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.19...v5.6.1-nightly.20) (2021-08-10)
+
+### Bug Fixes
+
+- Use electron's API to enable/disable spell-check when the app starts up (#1743) 💖 @vraravam
+
+# [v5.6.1-nightly.19](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.18...v5.6.1-nightly.19) (2021-08-09)
+
+### Bug Fixes
+
+- Fix the changelog api to handle nightly builds 💖 @vraravam
+
+### Internal Changes
+
+- Remove unused setting, add debug stmt. 💖 @vraravam
+- Fix issue with hidden db migration 💖 @vraravam
+- chore: Upgraded npm modules (minor and tiny version) 💖 @vraravam
+- Remove unnecessary copy of package config files into the Docker context 💖 @vraravam
+
+# [v5.6.1-nightly.18](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.17...v5.6.1-nightly.18) (2021-08-08)
+
+### Internal Changes
+
+[Perf] Path-references refactoring and using 'import' instead of 'require' 💖 @vraravam
+
 # [v5.6.1-nightly.16](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.14...v5.6.1-nightly.16) (2021-08-06)
 
 ### Bug Fixes
 
-* Change all occurrences of hard-coded ip address '127.0.0.1' to 'localhost' (#1253) 💖 @vraravam
-* Partially reverted menu-item cleanup (having only 'role' does not work in windows) (#1746) 💖 @vraravam
+- Change all occurrences of hard-coded ip address '127.0.0.1' to 'localhost' (#1253) 💖 @vraravam
+- Partially reverted menu-item cleanup (having only 'role' does not work in windows) (#1746) 💖 @vraravam
 
 ### Internal
 
-* General code improvements 💖 @mhatvan, @vraravam
+- General code improvements 💖 @mhatvan, @vraravam
 
 ## [5.6.1-nightly.14](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.13...v5.6.1-nightly.14) (2021-08-04)
 
