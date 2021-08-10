@@ -6,15 +6,12 @@ import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router';
 
 import Tabbar from '../services/tabs/Tabbar';
-import { ctrlKey, isMac, shiftKey } from '../../environment';
+import { ctrlKey, shiftKey, settingsShortcutKey } from '../../environment';
 import { workspaceStore } from '../../features/workspaces';
 import { todosStore } from '../../features/todos';
 import { todoActions } from '../../features/todos/actions';
 import AppStore from '../../stores/AppStore';
 import SettingsStore from '../../stores/SettingsStore';
-
-// Platform specific shortcut keys
-const settingsShortcutKey = isMac ? ',' : 'P';
 
 const messages = defineMessages({
   settings: {
@@ -216,7 +213,7 @@ export default @inject('stores', 'actions') @observer class Sidebar extends Comp
           type="button"
           onClick={() => openSettings({ path: 'app' })}
           className="sidebar__button sidebar__button--settings"
-          data-tip={`${intl.formatMessage(messages.settings)} (${ctrlKey}+${settingsShortcutKey})`}
+          data-tip={`${intl.formatMessage(messages.settings)} (${settingsShortcutKey(false)})`}
         >
           {/* TODO: Because of https://github.com/Templarian/MaterialDesign-Webfont/issues/81 bug in @mdi/font in 5.9.55, added `mdi-memory` as a fallback */}
           <i className="mdi mdi-settings mdi-memory" />

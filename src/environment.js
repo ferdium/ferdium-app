@@ -73,10 +73,16 @@ export const osArch = os.arch();
 export const osRelease = os.release();
 export const is64Bit = osArch.match(/64/);
 
+// for accelerator, show the shortform that electron/OS understands
+// for tooltip, show symbol
 export const ctrlKey = isMac ? '⌘' : 'Ctrl';
 export const cmdKey = isMac ? 'Cmd' : 'Ctrl';
+
 export const altKey = isMac ? '⌥' : 'Alt';
 export const shiftKey = isMac ? '⇧' : 'Shift';
+
+// Platform specific shortcut keys
+export const settingsShortcutKey = (isAccelerator = true) => `${isAccelerator ? cmdKey : ctrlKey}+${isMac ? ',' : 'P'}`;
 
 let api;
 let wsApi;

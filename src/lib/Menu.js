@@ -6,7 +6,7 @@ import { autorun, observable } from 'mobx';
 import { defineMessages } from 'react-intl';
 import { CUSTOM_WEBSITE_RECIPE_ID, GITHUB_FERDI_URL, LIVE_API_FERDI_WEBSITE } from '../config';
 import {
-  cmdKey, altKey, shiftKey, isLinux, isMac, aboutAppDetails,
+  cmdKey, altKey, shiftKey, settingsShortcutKey, isLinux, isMac, aboutAppDetails,
 } from '../environment';
 import { announcementsStore } from '../features/announcements';
 import { announcementActions } from '../features/announcements/actions';
@@ -727,7 +727,7 @@ export default class FranzMenu {
         },
         {
           label: intl.formatMessage(menuItems.settings),
-          accelerator: `${cmdKey}+,`,
+          accelerator: `${settingsShortcutKey()}`,
           click: () => {
             this.actions.ui.openSettings({ path: 'app' });
           },
@@ -819,7 +819,7 @@ export default class FranzMenu {
       tpl[0].submenu = [
         {
           label: intl.formatMessage(menuItems.settings),
-          accelerator: `${cmdKey}+P`,
+          accelerator: `${settingsShortcutKey()}`,
           click: () => {
             this.actions.ui.openSettings({ path: 'app' });
           },

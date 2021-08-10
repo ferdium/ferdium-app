@@ -1092,117 +1092,117 @@
         "defaultMessage": "!!!Settings",
         "end": {
           "column": 3,
-          "line": 23
+          "line": 20
         },
         "file": "src/components/layout/Sidebar.js",
         "id": "sidebar.settings",
         "start": {
           "column": 12,
-          "line": 20
+          "line": 17
         }
       },
       {
         "defaultMessage": "!!!Add new service",
         "end": {
           "column": 3,
-          "line": 27
+          "line": 24
         },
         "file": "src/components/layout/Sidebar.js",
         "id": "sidebar.addNewService",
         "start": {
           "column": 17,
-          "line": 24
+          "line": 21
         }
       },
       {
         "defaultMessage": "!!!Disable notifications & audio",
         "end": {
           "column": 3,
-          "line": 31
+          "line": 28
         },
         "file": "src/components/layout/Sidebar.js",
         "id": "sidebar.muteApp",
         "start": {
           "column": 8,
-          "line": 28
+          "line": 25
         }
       },
       {
         "defaultMessage": "!!!Enable notifications & audio",
         "end": {
           "column": 3,
-          "line": 35
+          "line": 32
         },
         "file": "src/components/layout/Sidebar.js",
         "id": "sidebar.unmuteApp",
         "start": {
           "column": 10,
-          "line": 32
+          "line": 29
         }
       },
       {
         "defaultMessage": "!!!Open workspace drawer",
         "end": {
           "column": 3,
-          "line": 39
+          "line": 36
         },
         "file": "src/components/layout/Sidebar.js",
         "id": "sidebar.openWorkspaceDrawer",
         "start": {
           "column": 23,
-          "line": 36
+          "line": 33
         }
       },
       {
         "defaultMessage": "!!!Close workspace drawer",
         "end": {
           "column": 3,
-          "line": 43
+          "line": 40
         },
         "file": "src/components/layout/Sidebar.js",
         "id": "sidebar.closeWorkspaceDrawer",
         "start": {
           "column": 24,
-          "line": 40
+          "line": 37
         }
       },
       {
         "defaultMessage": "!!!Open Franz Todos",
         "end": {
           "column": 3,
-          "line": 47
+          "line": 44
         },
         "file": "src/components/layout/Sidebar.js",
         "id": "sidebar.openTodosDrawer",
         "start": {
           "column": 19,
-          "line": 44
+          "line": 41
         }
       },
       {
         "defaultMessage": "!!!Close Franz Todos",
         "end": {
           "column": 3,
-          "line": 51
+          "line": 48
         },
         "file": "src/components/layout/Sidebar.js",
         "id": "sidebar.closeTodosDrawer",
         "start": {
           "column": 20,
-          "line": 48
+          "line": 45
         }
       },
       {
         "defaultMessage": "!!!Lock Ferdi",
         "end": {
           "column": 3,
-          "line": 55
+          "line": 52
         },
         "file": "src/components/layout/Sidebar.js",
         "id": "sidebar.lockFerdi",
         "start": {
           "column": 13,
-          "line": 52
+          "line": 49
         }
       }
     ],
