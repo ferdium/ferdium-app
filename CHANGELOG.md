@@ -9,7 +9,7 @@
 
 # [v5.6.1-nightly.21](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.19...v5.6.1-nightly.21) (2021-08-10)
 
-- Added a new menu entry (Help > Browse Server) to allow the user to quickly navigate and import/export configuration data 💖 @vraravam
+- Added a new menu entry (Import/Export Configuration Data) to allow the user to quickly navigate and import/export configuration data 💖 @vraravam
 - Upgraded 'electron' to '13.1.9'. 💖 @vraravam
 - Use symbols for key shortcuts 💖 @vraravam
 
