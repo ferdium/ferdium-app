@@ -266,7 +266,7 @@
   "settings.app.hibernateInfo": "Som standard vil Ferdi beholde alle tjenestene dine åpne og lastet i bakgrunnen slik at de er klare når du vil bruke dem. Dvalemodus for tjenester vil sette tjenestene dine i dvale etter et angitt tidsrom. Dette er nyttig for å spare minne eller sørge for at tjenestene ikke gjør datamaskinen din treg.",
   "settings.app.inactivityLockInfo": "Minutter med inaktivitet, hvorpå Ferdi burde låses automatisk. Bruk 0 for å deaktivere",
   "settings.app.languageDisclaimer": "Offisielle oversettelser er engelsk & tysk. Alle andre språk er samfunnsbaserte oversettelser.",
-  "settings.app.lockInfo": "Passordlås lar deg holde meldingene dine beskyttet.\nVed bruk av passord lås, så vil du bli bedt om å skrive inn passordet hver gang du starter Ferdi eller låser Ferdi selv ved hjelp av låsesymbolet i nedre venstre hjørne eller snarveien CMD/CTRL+Shift+L.",
+  "settings.app.lockInfo": "Passordlås lar deg holde meldingene dine beskyttet.\nVed bruk av passord lås, så vil du bli bedt om å skrive inn passordet hver gang du starter Ferdi eller låser Ferdi selv ved hjelp av låsesymbolet i nedre venstre hjørne eller snarveien {lockShortcut}.",
   "settings.app.lockedPassword": "Passord",
   "settings.app.lockedPasswordInfo": "Vennligst angi et passord du vil huske.\nHvis du mister dette passordet må du installere Ferdi på nytt.",
   "settings.app.restartRequired": "Endringer krever omstart",

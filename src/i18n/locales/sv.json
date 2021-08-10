@@ -266,7 +266,7 @@
   "settings.app.hibernateInfo": "Som standard kommer Ferdi att hålla alla dina tjänster öppna och laddade i bakgrunden så att de är redo när du vill använda dem. Viloläget kommer att stänga dina tjänster efter ett angivet belopp. Detta är användbart för att spara på arbetsminne eller se till att tjänster inte saktar ner datorn.",
   "settings.app.inactivityLockInfo": "Antal minuter av inaktivitet, varefter Ferdi låses automatiskt. Ange 0 för att inaktivera",
   "settings.app.languageDisclaimer": "Engelska och tyska är officella översättningar. Övriga språk har översatts av gemenskapen.",
-  "settings.app.lockInfo": "Lösenordslås låter dig skydda dina meddelanden.\nMed lösenordslås kommer du bli ombedd att ange ditt lösenord varje gång du startar Ferdi. Du kan också låsa Ferdi själv med hjälp av låssymbolen i det nedre vänstra hörnet eller med kortkommandot CMD/CTRL+Shift+L.",
+  "settings.app.lockInfo": "Lösenordslås låter dig skydda dina meddelanden.\nMed lösenordslås kommer du bli ombedd att ange ditt lösenord varje gång du startar Ferdi. Du kan också låsa Ferdi själv med hjälp av låssymbolen i det nedre vänstra hörnet eller med kortkommandot {lockShortcut}.",
   "settings.app.lockedPassword": "Lösenord",
   "settings.app.lockedPasswordInfo": "Se till att du anger ett lösenord du kommer att komma ihåg.\nOm du tappar bort detta lösenord måste du installera om Ferdi.",
   "settings.app.restartRequired": "Ändringar kräver omstart",

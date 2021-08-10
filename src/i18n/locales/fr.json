@@ -266,7 +266,7 @@
   "settings.app.hibernateInfo": "Par défaut, Ferdi gardera tous vos services ouverts et chargés en arrière-plan afin qu'ils soient prêts lorsque vous voulez les utiliser. Le service d'hibernation déchargera vos services après un montant spécifié. Ceci est utile pour sauver de la RAM ou garder les services de ralentir votre ordinateur.",
   "settings.app.inactivityLockInfo": "Minutes d'inactivité, après lesquelles Ferdi devrait se verrouiller automatiquement. Utilisez 0 pour désactiver",
   "settings.app.languageDisclaimer": "Les traductions officielles sont l'anglais et l'allemand. Toutes les autres langues sont des traductions faites par la communauté.",
-  "settings.app.lockInfo": "Le mot de passe de verrouillage de Ferdi vous permet de garder vos messages protégés.\nEn utilisant le mot de passe de verrouillage de Ferdi, vous allez être demandé de rentrer un mot de passe à chaque fois que vous démarré Ferdi ou verrouillé Ferdi vous même avec le symbole de cadenas en bas à gauche dans le coins ou avec le raccourcie CMD/CTRL+Shift+L.",
+  "settings.app.lockInfo": "Le mot de passe de verrouillage de Ferdi vous permet de garder vos messages protégés.\nEn utilisant le mot de passe de verrouillage de Ferdi, vous allez être demandé de rentrer un mot de passe à chaque fois que vous démarré Ferdi ou verrouillé Ferdi vous même avec le symbole de cadenas en bas à gauche dans le coins ou avec le raccourcie {lockShortcut}.",
   "settings.app.lockedPassword": "Mot de passe",
   "settings.app.lockedPasswordInfo": "S'il vous plaît soyez sûre de mettre un mot de passe que vous allez vous rappelez.\nSi vous perdez ce mot de passe vous allez devoir réinstaller Ferdi.",
   "settings.app.restartRequired": "Les modifications nécessitent un redémarrage",

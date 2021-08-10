@@ -266,7 +266,7 @@
   "settings.app.hibernateInfo": "기본적으로 Ferdi 는 모든 서비스를 열고 백그라운드에서 불러옵니다. 그래서 사용할 때 이미 준비되어 있습니다. Service Hibernation은 일정 개수 이후에 서비스를 불러오지 않습니다. 이로인해 RAM을 절약하고 컴퓨터에서 서비스가 느려지는 것을 방지해주기에 유용합니다.",
   "settings.app.inactivityLockInfo": "Minutes of inactivity, after which Ferdi should automatically lock. Use 0 to disable",
   "settings.app.languageDisclaimer": "공식 지우너 언어는 영어와 독일어이며 이외 언어들은 커뮤니티에 의해 번역되고 있습니다.",
-  "settings.app.lockInfo": "Password Lock allows you to keep your messages protected.\nUsing Password Lock, you will be prompted to enter your password everytime you start Ferdi or lock Ferdi yourself using the lock symbol in the bottom left corner or the shortcut CMD/CTRL+Shift+L.",
+  "settings.app.lockInfo": "Password Lock allows you to keep your messages protected.\nUsing Password Lock, you will be prompted to enter your password everytime you start Ferdi or lock Ferdi yourself using the lock symbol in the bottom left corner or the shortcut {lockShortcut}.",
   "settings.app.lockedPassword": "비밀번호",
   "settings.app.lockedPasswordInfo": "기억할 수 있는 비밀번호로 설정해주세요.\n만약 비밀번호를 잃어버리면 Ferdi 재설치를 해야합니다.",
   "settings.app.restartRequired": "변경사항을 적용하기 위해 재시작",

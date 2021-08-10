@@ -6,7 +6,7 @@ import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router';
 
 import Tabbar from '../services/tabs/Tabbar';
-import { ctrlKey, isMac } from '../../environment';
+import { ctrlKey, isMac, shiftKey } from '../../environment';
 import { workspaceStore } from '../../features/workspaces';
 import { todosStore } from '../../features/todos';
 import { todoActions } from '../../features/todos/actions';
@@ -151,7 +151,7 @@ export default @inject('stores', 'actions') @observer class Sidebar extends Comp
                     },
                   });
                 }}
-                data-tip={`${intl.formatMessage(messages.lockFerdi)} (${ctrlKey}+Shift+L)`}
+                data-tip={`${intl.formatMessage(messages.lockFerdi)} (${ctrlKey}+${shiftKey}+L)`}
               >
                 <i className="mdi mdi-lock" />
               </button>
@@ -190,7 +190,7 @@ export default @inject('stores', 'actions') @observer class Sidebar extends Comp
                 this.updateToolTip();
               }}
               className={`sidebar__button sidebar__button--audio ${isAppMuted ? 'is-muted' : ''}`}
-              data-tip={`${intl.formatMessage(isAppMuted ? messages.unmute : messages.mute)} (${ctrlKey}+Shift+M)`}
+              data-tip={`${intl.formatMessage(isAppMuted ? messages.unmute : messages.mute)} (${ctrlKey}+${shiftKey}+M)`}
             >
               <i className={`mdi mdi-bell${isAppMuted ? '-off' : ''}`} />
             </button>

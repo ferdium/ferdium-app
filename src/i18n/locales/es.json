@@ -266,7 +266,7 @@
   "settings.app.hibernateInfo": "Por defecto, Ferdi mantendrá todos sus servicios abiertos y cargados en segundo plano para que estén listos cuando los necesite. La hibernación del servicio desactivará los mismos tras el tiempo especificado. Esto es útil para ahorrar RAM y evitar que los servicios ralentizen su sistema.",
   "settings.app.inactivityLockInfo": "Minutos de inactividad, tras los cuales Ferdi debe bloquear automáticamente. Utilice 0 para desactivar",
   "settings.app.languageDisclaimer": "Las traducciones oficiales son en inglés y alemán. Todos los demás idiomas son traducciones basadas en la comunidad.",
-  "settings.app.lockInfo": "El bloqueo de contraseña le permite mantener los mensajes protegidos.\nSi activa el bloqueo de contraseña, se le pedirá introducirla cada vez que inicie o bloquee Ferdi usando el símbolo de la esquina inferior izquierda o bien el acceso directo CMD/CTRL+Shift+L.",
+  "settings.app.lockInfo": "El bloqueo de contraseña le permite mantener los mensajes protegidos.\nSi activa el bloqueo de contraseña, se le pedirá introducirla cada vez que inicie o bloquee Ferdi usando el símbolo de la esquina inferior izquierda o bien el acceso directo {lockShortcut}.",
   "settings.app.lockedPassword": "Contraseña",
   "settings.app.lockedPasswordInfo": "Por favor, asegúrese de recordar la contraseña que establezca.\nSi la perdiera u olvidara, tendría que reinstalar Ferdi.",
   "settings.app.restartRequired": "Los cambios requieren reiniciar",

@@ -266,7 +266,7 @@
   "settings.app.hibernateInfo": "Som standard vil Ferdi holde alle dine tjenester åbne og indlæste i baggrunden, så de er klar, når du vil bruge dem. Du kan vælge at sætte dine tjenester i dvale efter en angivet mængde tid. Dette er nyttigt til at spare hukommelse eller forhindre tjenester i at bremse din computer.",
   "settings.app.inactivityLockInfo": "Minutter af inaktivitet, hvorefter Ferdi automatisk skal låse. Brug 0 for at deaktivere",
   "settings.app.languageDisclaimer": "Officielle oversættelser er engelske og tyske. Alle andre sprog er fællesskabsstyrede oversættelser.",
-  "settings.app.lockInfo": "Adgangskode-lås giver dig mulighed for at holde dine beskeder beskyttet.\nVed brug af adgangskode-lås vil du blive bedt om at indtaste din adgangskode, hver gang du starter Ferdi eller låser Ferdi selv ved hjælp af låsesymbolet i nederste venstre hjørne eller genvejen CMD/CTRL+Shift+L.",
+  "settings.app.lockInfo": "Adgangskode-lås giver dig mulighed for at holde dine beskeder beskyttet.\nVed brug af adgangskode-lås vil du blive bedt om at indtaste din adgangskode, hver gang du starter Ferdi eller låser Ferdi selv ved hjælp af låsesymbolet i nederste venstre hjørne eller genvejen {lockShortcut}.",
   "settings.app.lockedPassword": "Adgangskode",
   "settings.app.lockedPasswordInfo": "Sørg for at angive en adgangskode, du husker.\nHvis du mister denne adgangskode, vil du blive nødt til at geninstallere Ferdi.",
   "settings.app.restartRequired": "Ændringer kræver genstart",

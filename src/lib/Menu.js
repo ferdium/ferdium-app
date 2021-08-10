@@ -6,7 +6,7 @@ import { autorun, observable } from 'mobx';
 import { defineMessages } from 'react-intl';
 import { CUSTOM_WEBSITE_RECIPE_ID, GITHUB_FERDI_URL, LIVE_API_FERDI_WEBSITE } from '../config';
 import {
-  cmdKey, isLinux, isMac, aboutAppDetails,
+  cmdKey, altKey, shiftKey, isLinux, isMac, aboutAppDetails,
 } from '../environment';
 import { announcementsStore } from '../features/announcements';
 import { announcementActions } from '../features/announcements/actions';
@@ -318,7 +318,7 @@ function getActiveWebview() {
 const _titleBarTemplateFactory = (intl, locked) => [
   {
     label: intl.formatMessage(menuItems.edit),
-    accelerator: 'Alt+E',
+    accelerator: `${altKey}+E`,
     submenu: [
       {
         label: intl.formatMessage(menuItems.undo),
@@ -348,7 +348,7 @@ const _titleBarTemplateFactory = (intl, locked) => [
       },
       {
         label: intl.formatMessage(menuItems.pasteAndMatchStyle),
-        accelerator: `${cmdKey}+Shift+V`, // Override the accelerator since this adds new key combo in macos
+        accelerator: `${cmdKey}+${shiftKey}+V`, // Override the accelerator since this adds new key combo in macos
         role: 'pasteAndMatchStyle',
         click() {
           getActiveWebview().pasteAndMatchStyle();
@@ -367,7 +367,7 @@ const _titleBarTemplateFactory = (intl, locked) => [
   },
   {
     label: intl.formatMessage(menuItems.view),
-    accelerator: 'Alt+V',
+    accelerator: `${altKey}+V`,
     visible: !locked,
     submenu: [
       {
@@ -463,7 +463,7 @@ const _titleBarTemplateFactory = (intl, locked) => [
       {
         label: intl.formatMessage(menuItems.toggleDarkMode),
         type: 'checkbox',
-        accelerator: `${cmdKey}+Shift+D`,
+        accelerator: `${cmdKey}+${shiftKey}+D`,
         checked: window.ferdi.stores.settings.app.darkMode,
         click: () => {
           window.ferdi.actions.settings.update({
@@ -478,13 +478,13 @@ const _titleBarTemplateFactory = (intl, locked) => [
   },
   {
     label: intl.formatMessage(menuItems.services),
-    accelerator: 'Alt+S',
+    accelerator: `${altKey}+S`,
     visible: !locked,
     submenu: [],
   },
   {
     label: intl.formatMessage(menuItems.workspaces),
-    accelerator: 'Alt+W',
+    accelerator: `${altKey}+W`,
     submenu: [],
     visible: !locked && workspaceStore.isFeatureEnabled,
   },
@@ -509,7 +509,7 @@ const _titleBarTemplateFactory = (intl, locked) => [
   },
   {
     label: intl.formatMessage(menuItems.help),
-    accelerator: 'Alt+H',
+    accelerator: `${altKey}+H`,
     role: 'help',
     submenu: [
       {
@@ -612,13 +612,13 @@ export default class FranzMenu {
         type: 'separator',
       }, {
         label: intl.formatMessage(menuItems.toggleDevTools),
-        accelerator: `${cmdKey}+Alt+I`,
+        accelerator: `${cmdKey}+${altKey}+I`,
         click: (menuItem, browserWindow) => {
           browserWindow.webContents.toggleDevTools();
         },
       }, {
         label: intl.formatMessage(menuItems.toggleServiceDevTools),
-        accelerator: `${cmdKey}+Shift+Alt+I`,
+        accelerator: `${cmdKey}+${shiftKey}+${altKey}+I`,
         click: () => {
           this.actions.service.openDevToolsForActiveService();
         },
@@ -628,7 +628,7 @@ export default class FranzMenu {
       if (this.stores.features.features.isTodosEnabled) {
         tpl[1].submenu.push({
           label: intl.formatMessage(menuItems.toggleTodosDevTools),
-          accelerator: `${cmdKey}+Shift+Alt+O`,
+          accelerator: `${cmdKey}+${shiftKey}+${altKey}+O`,
           click: () => {
             const webview = document.querySelector('#todos-panel webview');
             if (webview) this.actions.todos.openDevTools();
@@ -654,13 +654,13 @@ export default class FranzMenu {
         },
       }, {
         label: intl.formatMessage(menuItems.reloadFerdi),
-        accelerator: `${cmdKey}+Shift+R`,
+        accelerator: `${cmdKey}+${shiftKey}+R`,
         click: () => {
           window.location.reload();
         },
       }, {
         label: intl.formatMessage(menuItems.reloadTodos),
-        accelerator: `${cmdKey}+Shift+Alt+R`,
+        accelerator: `${cmdKey}+${shiftKey}+${altKey}+R`,
         click: () => {
           this.actions.todos.reload();
         },
@@ -668,7 +668,7 @@ export default class FranzMenu {
         type: 'separator',
       }, {
         label: intl.formatMessage(menuItems.lockFerdi),
-        accelerator: `${cmdKey}+Shift+L`,
+        accelerator: `${cmdKey}+${shiftKey}+L`,
         enabled: this.stores.user.isLoggedIn && this.stores.settings.app.lockingFeatureEnabled,
         click() {
           actions.settings.update({
@@ -696,7 +696,7 @@ export default class FranzMenu {
 
       tpl[0].submenu.unshift({
         label: intl.formatMessage(menuItems.touchId),
-        accelerator: `${cmdKey}+Shift+L`,
+        accelerator: `${cmdKey}+${shiftKey}+L`,
         visible: touchIdEnabled,
         click() {
           systemPreferences.promptTouchID(intl.formatMessage(menuItems.touchIdPrompt)).then(() => {
@@ -716,7 +716,7 @@ export default class FranzMenu {
 
     tpl.unshift({
       label: isMac ? app.name : intl.formatMessage(menuItems.file),
-      accelerator: 'Alt+F',
+      accelerator: `${altKey}+F`,
       submenu: [
         {
           label: intl.formatMessage(menuItems.about),
@@ -888,24 +888,24 @@ export default class FranzMenu {
       visible: !cmdAltShortcutsVisibile,
     }, {
       label: intl.formatMessage(menuItems.activateNextService),
-      accelerator: `${cmdKey}+alt+right`,
+      accelerator: `${cmdKey}+${altKey}+right`,
       click: () => this.actions.service.setActiveNext(),
       visible: cmdAltShortcutsVisibile,
     }, {
       label: intl.formatMessage(menuItems.activatePreviousService),
-      accelerator: `${cmdKey}+shift+tab`,
+      accelerator: `${cmdKey}+${shiftKey}+tab`,
       click: () => this.actions.service.setActivePrev(),
       visible: !cmdAltShortcutsVisibile,
     }, {
       label: intl.formatMessage(menuItems.activatePreviousService),
-      accelerator: `${cmdKey}+alt+left`,
+      accelerator: `${cmdKey}+${altKey}+left`,
       click: () => this.actions.service.setActivePrev(),
       visible: cmdAltShortcutsVisibile,
     }, {
       label: intl.formatMessage(
         settings.all.app.isAppMuted ? menuItems.unmuteApp : menuItems.muteApp,
       ).replace('&', '&&'),
-      accelerator: `${cmdKey}+shift+m`,
+      accelerator: `${cmdKey}+${shiftKey}+m`,
       click: () => this.actions.app.toggleMuteApp(),
     }, {
       type: 'separator',
@@ -930,7 +930,7 @@ export default class FranzMenu {
         type: 'separator',
       }, {
         label: intl.formatMessage(menuItems.serviceGoHome),
-        accelerator: `${cmdKey}+shift+H`,
+        accelerator: `${cmdKey}+${shiftKey}+H`,
         click: () => this.actions.service.reloadActive(),
       });
     }
@@ -946,7 +946,7 @@ export default class FranzMenu {
     // Add new workspace item:
     menu.push({
       label: intl.formatMessage(menuItems.addNewWorkspace),
-      accelerator: `${cmdKey}+Shift+N`,
+      accelerator: `${cmdKey}+${shiftKey}+N`,
       click: () => {
         workspaceActions.openWorkspaceSettings();
       },
@@ -975,7 +975,7 @@ export default class FranzMenu {
     // Default workspace
     menu.push({
       label: intl.formatMessage(menuItems.defaultWorkspace),
-      accelerator: `${cmdKey}+Alt+0`,
+      accelerator: `${cmdKey}+${altKey}+0`,
       type: 'radio',
       checked: !activeWorkspace,
       click: () => {
@@ -986,7 +986,7 @@ export default class FranzMenu {
     // Workspace items
     workspaces.forEach((workspace, i) => menu.push({
       label: workspace.name,
-      accelerator: i < 9 ? `${cmdKey}+Alt+${i + 1}` : null,
+      accelerator: i < 9 ? `${cmdKey}+${altKey}+${i + 1}` : null,
       type: 'radio',
       checked: activeWorkspace ? workspace.id === activeWorkspace.id : false,
       click: () => {

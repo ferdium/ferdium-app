@@ -266,7 +266,7 @@
   "settings.app.hibernateInfo": "Oletuksena Ferdi pitää kaikki palvelut auki ja ladattuna taustalla, joten ne ovat valmiina, kun haluat käyttää niitä. Horrostila sammuttaa palveluita tietyn jakson jälkeen. Tämä kätevä toimino säästää RAM-muistia tai estää palveluita hidastamasta tietokonetta.",
   "settings.app.inactivityLockInfo": "Minuutin käyttämättömyyden jälkeen Ferdi lukkiutuu automaattisesti. Käytä arvoa 0 poistaaksesi toiminnon käytöstä",
   "settings.app.languageDisclaimer": "Viralliset käännökset ovat englanti ja saksa. Kaikki muut kielet ovat yhteisön kääntämiä.",
-  "settings.app.lockInfo": "Salasanalukitus pitää viestisi suojattuna.\nKäyttämällä salasanalukitusta, sinua pyydetään syöttämään salasanasi joka kerta kun käynnistät Ferdin tai lukitset Ferdin lukitussymbolin avulla vasemmassa alakulmassa tai näppäinyhdistelmällä CMD/CTRL+Shift+L.",
+  "settings.app.lockInfo": "Salasanalukitus pitää viestisi suojattuna.\nKäyttämällä salasanalukitusta, sinua pyydetään syöttämään salasanasi joka kerta kun käynnistät Ferdin tai lukitset Ferdin lukitussymbolin avulla vasemmassa alakulmassa tai näppäinyhdistelmällä {lockShortcut}.",
   "settings.app.lockedPassword": "Salasana",
   "settings.app.lockedPasswordInfo": "Varmista, että luot salasanan, jonka muistat.\nJos hukkaat tämän salasanan, sinun täytyy asentaa Ferdi uudelleen.",
   "settings.app.restartRequired": "Muutokset vaativat uudelleenkäynnistyksen",

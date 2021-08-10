@@ -266,7 +266,7 @@
   "settings.app.hibernateInfo": "Standardmäßig öffnet Ferdi alle deine Dienste im Hintergrund, sodass diese bereit sind, wenn du sie verwenden möchtest. \"Service Hibernation\" wird deine Dienste nach einer bestimmten Zeitspanne schließen. Dies ist nützlich, um RAM zu sparen oder Dienste davon abzuhalten, deinen Computer zu verlangsamen.",
   "settings.app.inactivityLockInfo": "Minuten der Inaktivität, nach denen Ferdi automatisch sperren soll. Verwenden Sie 0, um dies zu deaktivieren",
   "settings.app.languageDisclaimer": "Offizielle Übersetzungen: Englisch & Deutsch. Alle anderen Sprachen sind Übersetzungen der Ferdi Community.",
-  "settings.app.lockInfo": "Die Passwort-Sperre erlaubt es dir, deine Nachrichten zu schützen.\nMit der Passwort-Sperre wirst du beim Starten von Ferdi und wenn du das Programm manuell sperrst, darum gebeten, dein Passwort einzugeben.\nDu kannst Ferdi über das Sperrsymbol in der unteren linken Ecke oder dem Shortcut CMD/CTRL+Shift+L sperren.",
+  "settings.app.lockInfo": "Die Passwort-Sperre erlaubt es dir, deine Nachrichten zu schützen.\nMit der Passwort-Sperre wirst du beim Starten von Ferdi und wenn du das Programm manuell sperrst, darum gebeten, dein Passwort einzugeben.\nDu kannst Ferdi über das Sperrsymbol in der unteren linken Ecke oder dem Shortcut {lockShortcut} sperren.",
   "settings.app.lockedPassword": "Passwort",
   "settings.app.lockedPasswordInfo": "Bitte stelle sicher, dass du ein Passwort setzt, an welches du dich erinnern kannst.\nSolltest du dieses Passwort vergessen, musst du Ferdi neu installieren.",
   "settings.app.restartRequired": "Änderungen werden erst nach einem Neustart wirksam.",

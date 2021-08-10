@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 import injectSheet from 'react-jss';
 import classnames from 'classnames';
 import { defineMessages, intlShape } from 'react-intl';
-import { ctrlKey } from '../../../environment';
+import { altKey, ctrlKey } from '../../../environment';
 
 const messages = defineMessages({
   noServicesAddedYet: {
@@ -113,7 +113,7 @@ class WorkspaceDrawerItem extends Component {
         onContextMenu={() => (
           onContextMenuEditClick && contextMenu.popup(getCurrentWindow())
         )}
-        data-tip={`${shortcutIndex <= 9 ? `(${ctrlKey}+Alt+${shortcutIndex})` : ''}`}
+        data-tip={`${shortcutIndex <= 9 ? `(${ctrlKey}+${altKey}+${shortcutIndex})` : ''}`}
       >
         <span
           className={classnames([

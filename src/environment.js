@@ -75,6 +75,8 @@ export const is64Bit = osArch.match(/64/);
 
 export const ctrlKey = isMac ? '⌘' : 'Ctrl';
 export const cmdKey = isMac ? 'Cmd' : 'Ctrl';
+export const altKey = isMac ? '⌥' : 'Alt';
+export const shiftKey = isMac ? '⇧' : 'Shift';
 
 let api;
 let wsApi;

@@ -16,7 +16,7 @@ import {
   FRANZ_TRANSLATION,
   GITHUB_FRANZ_URL,
 } from '../../../config';
-import { DEFAULT_APP_SETTINGS, isMac, isWindows } from '../../../environment';
+import { cmdKey, shiftKey, DEFAULT_APP_SETTINGS, isMac, isWindows } from '../../../environment';
 import globalMessages from '../../../i18n/globalMessages';
 
 const messages = defineMessages({
@@ -54,7 +54,7 @@ const messages = defineMessages({
   },
   lockInfo: {
     id: 'settings.app.lockInfo',
-    defaultMessage: '!!!Password Lock allows you to keep your messages protected.\nUsing Password Lock, you will be prompted to enter your password everytime you start Ferdi or lock Ferdi yourself using the lock symbol in the bottom left corner or the shortcut CMD/CTRL+Shift+L.',
+    defaultMessage: '!!!Password Lock allows you to keep your messages protected.\nUsing Password Lock, you will be prompted to enter your password everytime you start Ferdi or lock Ferdi yourself using the lock symbol in the bottom left corner or the shortcut {lockShortcut}.',
   },
   scheduledDNDTimeInfo: {
     id: 'settings.app.scheduledDNDTimeInfo',
@@ -548,7 +548,7 @@ export default @observer class EditSettingsForm extends Component {
                   }}
                 >
                   <span>
-                    { intl.formatMessage(messages.lockInfo) }
+                    { intl.formatMessage(messages.lockInfo, { lockShortcut: `${cmdKey}+${shiftKey}+L` }) }
                   </span>
                 </p>
               </div>

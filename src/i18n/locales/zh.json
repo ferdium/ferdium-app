@@ -266,7 +266,7 @@
   "settings.app.hibernateInfo": "By default, Ferdi will keep all your services open and loaded in the background so they are ready when you want to use them. Service Hibernation will unload your services after a specified amount. This is useful to save RAM or keeping services from slowing down your computer.",
   "settings.app.inactivityLockInfo": "Minutes of inactivity, after which Ferdi should automatically lock. Use 0 to disable",
   "settings.app.languageDisclaimer": "Official translations are English & German. All other languages are community based translations.",
-  "settings.app.lockInfo": "Password Lock allows you to keep your messages protected.\nUsing Password Lock, you will be prompted to enter your password everytime you start Ferdi or lock Ferdi yourself using the lock symbol in the bottom left corner or the shortcut CMD/CTRL+Shift+L.",
+  "settings.app.lockInfo": "Password Lock allows you to keep your messages protected.\nUsing Password Lock, you will be prompted to enter your password everytime you start Ferdi or lock Ferdi yourself using the lock symbol in the bottom left corner or the shortcut {lockShortcut}.",
   "settings.app.lockedPassword": "Password",
   "settings.app.lockedPasswordInfo": "Please make sure to set a password you'll remember.\nIf you loose this password, you will have to reinstall Ferdi.",
   "settings.app.restartRequired": "Changes require restart",
