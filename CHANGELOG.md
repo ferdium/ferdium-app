@@ -1,3 +1,12 @@
+# [v5.6.1-nightly.22](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.21...v5.6.1-nightly.22) (2021-08-11)
+
+- Add Ferdi snap package (#1767) 💖 @mhatvan
+- Follow OS reduced motion setting (#1757) 💖 @mhatvan
+
+### Internal
+
+- refactor: Removed duplication related to platform-specific shortcut keys 💖 @vraravam
+
 # [v5.6.1-nightly.21](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.19...v5.6.1-nightly.21) (2021-08-10)
 
 - Added a new menu entry (Help > Browse Server) to allow the user to quickly navigate and import/export configuration data 💖 @vraravam
