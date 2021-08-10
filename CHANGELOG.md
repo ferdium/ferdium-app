@@ -2,6 +2,7 @@
 
 - Added a new menu entry (Help > Browse Server) to allow the user to quickly navigate and import/export configuration data 💖 @vraravam
 - Added support to build Ferdi as a snap app (#1756) 💖 @mhatvan
+- Upgraded 'electron' to '13.1.9'. 💖 @vraravam
 
 ### Bug Fixes
 
