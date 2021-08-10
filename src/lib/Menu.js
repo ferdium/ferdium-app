@@ -6,7 +6,7 @@ import { autorun, observable } from 'mobx';
 import { defineMessages } from 'react-intl';
 import { CUSTOM_WEBSITE_RECIPE_ID, GITHUB_FERDI_URL, LIVE_API_FERDI_WEBSITE } from '../config';
 import {
-  cmdKey, altKey, shiftKey, settingsShortcutKey, isLinux, isMac, aboutAppDetails,
+  cmdKey, altKey, shiftKey, settingsShortcutKey, isLinux, isMac, aboutAppDetails, lockFerdiShortcutKey, todosToggleShortcutKey, workspaceToggleShortcutKey, addNewServiceShortcutKey, muteFerdiShortcutKey,
 } from '../environment';
 import { announcementsStore } from '../features/announcements';
 import { announcementActions } from '../features/announcements/actions';
@@ -668,7 +668,7 @@ export default class FranzMenu {
         type: 'separator',
       }, {
         label: intl.formatMessage(menuItems.lockFerdi),
-        accelerator: `${cmdKey}+${shiftKey}+L`,
+        accelerator: `${lockFerdiShortcutKey()}`,
         enabled: this.stores.user.isLoggedIn && this.stores.settings.app.lockingFeatureEnabled,
         click() {
           actions.settings.update({
@@ -696,7 +696,7 @@ export default class FranzMenu {
 
       tpl[0].submenu.unshift({
         label: intl.formatMessage(menuItems.touchId),
-        accelerator: `${cmdKey}+${shiftKey}+L`,
+        accelerator: `${lockFerdiShortcutKey()}`,
         visible: touchIdEnabled,
         click() {
           systemPreferences.promptTouchID(intl.formatMessage(menuItems.touchIdPrompt)).then(() => {
@@ -875,7 +875,7 @@ export default class FranzMenu {
 
     menu.push({
       label: intl.formatMessage(menuItems.addNewService),
-      accelerator: `${cmdKey}+N`,
+      accelerator: `${addNewServiceShortcutKey()}`,
       click: () => {
         this.actions.ui.openSettings({ path: 'recipes' });
       },
@@ -905,7 +905,7 @@ export default class FranzMenu {
       label: intl.formatMessage(
         settings.all.app.isAppMuted ? menuItems.unmuteApp : menuItems.muteApp,
       ).replace('&', '&&'),
-      accelerator: `${cmdKey}+${shiftKey}+m`,
+      accelerator: `${muteFerdiShortcutKey()}`,
       click: () => this.actions.app.toggleMuteApp(),
     }, {
       type: 'separator',
@@ -960,7 +960,7 @@ export default class FranzMenu {
       );
       menu.push({
         label: intl.formatMessage(drawerLabel),
-        accelerator: `${cmdKey}+D`,
+        accelerator: `${workspaceToggleShortcutKey()}`,
         click: () => {
           workspaceActions.toggleWorkspaceDrawer();
         },
@@ -1006,7 +1006,7 @@ export default class FranzMenu {
 
     menu.push({
       label: intl.formatMessage(drawerLabel),
-      accelerator: `${cmdKey}+T`,
+      accelerator: `${todosToggleShortcutKey()}`,
       click: () => {
         todoActions.toggleTodosPanel();
       },

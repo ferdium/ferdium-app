@@ -82,7 +82,13 @@ export const altKey = isMac ? '⌥' : 'Alt';
 export const shiftKey = isMac ? '⇧' : 'Shift';
 
 // Platform specific shortcut keys
-export const settingsShortcutKey = (isAccelerator = true) => `${isAccelerator ? cmdKey : ctrlKey}+${isMac ? ',' : 'P'}`;
+const shortcutKey = (isAccelerator) => `${isAccelerator ? cmdKey : ctrlKey}`;
+export const lockFerdiShortcutKey = (isAccelerator = true) => `${shortcutKey(isAccelerator)}+${shiftKey}+L`;
+export const todosToggleShortcutKey = (isAccelerator = true) => `${shortcutKey(isAccelerator)}+T`;
+export const workspaceToggleShortcutKey = (isAccelerator = true) => `${shortcutKey(isAccelerator)}+D`;
+export const muteFerdiShortcutKey = (isAccelerator = true) => `${shortcutKey(isAccelerator)}+${shiftKey}+M`;
+export const addNewServiceShortcutKey = (isAccelerator = true) => `${shortcutKey(isAccelerator)}+N`;
+export const settingsShortcutKey = (isAccelerator = true) => `${shortcutKey(isAccelerator)}+${isMac ? ',' : 'P'}`;
 
 let api;
 let wsApi;

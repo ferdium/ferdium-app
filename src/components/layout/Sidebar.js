@@ -6,7 +6,7 @@ import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router';
 
 import Tabbar from '../services/tabs/Tabbar';
-import { ctrlKey, shiftKey, settingsShortcutKey } from '../../environment';
+import { settingsShortcutKey, lockFerdiShortcutKey, todosToggleShortcutKey, workspaceToggleShortcutKey, addNewServiceShortcutKey, muteFerdiShortcutKey } from '../../environment';
 import { workspaceStore } from '../../features/workspaces';
 import { todosStore } from '../../features/todos';
 import { todoActions } from '../../features/todos/actions';
@@ -148,7 +148,7 @@ export default @inject('stores', 'actions') @observer class Sidebar extends Comp
                     },
                   });
                 }}
-                data-tip={`${intl.formatMessage(messages.lockFerdi)} (${ctrlKey}+${shiftKey}+L)`}
+                data-tip={`${intl.formatMessage(messages.lockFerdi)} (${lockFerdiShortcutKey(false)})`}
               >
                 <i className="mdi mdi-lock" />
               </button>
@@ -162,7 +162,7 @@ export default @inject('stores', 'actions') @observer class Sidebar extends Comp
                 }}
                 disabled={isTodosServiceActive}
                 className={`sidebar__button sidebar__button--todos ${todosStore.isTodosPanelVisible ? 'is-active' : ''}`}
-                data-tip={`${intl.formatMessage(todosToggleMessage)} (${ctrlKey}+T)`}
+                data-tip={`${intl.formatMessage(todosToggleMessage)} (${todosToggleShortcutKey(false)})`}
               >
                 <i className="mdi mdi-check-all" />
               </button>
@@ -175,7 +175,7 @@ export default @inject('stores', 'actions') @observer class Sidebar extends Comp
                   this.updateToolTip();
                 }}
                 className={`sidebar__button sidebar__button--workspaces ${isWorkspaceDrawerOpen ? 'is-active' : ''}`}
-                data-tip={`${intl.formatMessage(workspaceToggleMessage)} (${ctrlKey}+D)`}
+                data-tip={`${intl.formatMessage(workspaceToggleMessage)} (${workspaceToggleShortcutKey(false)})`}
               >
                 <i className="mdi mdi-view-grid" />
               </button>
@@ -187,7 +187,7 @@ export default @inject('stores', 'actions') @observer class Sidebar extends Comp
                 this.updateToolTip();
               }}
               className={`sidebar__button sidebar__button--audio ${isAppMuted ? 'is-muted' : ''}`}
-              data-tip={`${intl.formatMessage(isAppMuted ? messages.unmute : messages.mute)} (${ctrlKey}+${shiftKey}+M)`}
+              data-tip={`${intl.formatMessage(isAppMuted ? messages.unmute : messages.mute)} (${muteFerdiShortcutKey(false)})`}
             >
               <i className={`mdi mdi-bell${isAppMuted ? '-off' : ''}`} />
             </button>
@@ -195,7 +195,7 @@ export default @inject('stores', 'actions') @observer class Sidebar extends Comp
               type="button"
               onClick={() => openSettings({ path: 'recipes' })}
               className="sidebar__button sidebar__button--new-service"
-              data-tip={`${intl.formatMessage(messages.addNewService)} (${ctrlKey}+N)`}
+              data-tip={`${intl.formatMessage(messages.addNewService)} (${addNewServiceShortcutKey(false)})`}
             >
               <i className="mdi mdi-plus-box" />
             </button>

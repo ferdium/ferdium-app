@@ -1,5 +1,5 @@
 import { app, systemPreferences } from '@electron/remote';
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import prettyBytes from 'pretty-bytes';
@@ -16,7 +16,7 @@ import {
   FRANZ_TRANSLATION,
   GITHUB_FRANZ_URL,
 } from '../../../config';
-import { cmdKey, shiftKey, DEFAULT_APP_SETTINGS, isMac, isWindows } from '../../../environment';
+import { DEFAULT_APP_SETTINGS, isMac, isWindows, lockFerdiShortcutKey } from '../../../environment';
 import globalMessages from '../../../i18n/globalMessages';
 
 const messages = defineMessages({
@@ -548,7 +548,7 @@ export default @observer class EditSettingsForm extends Component {
                   }}
                 >
                   <span>
-                    { intl.formatMessage(messages.lockInfo, { lockShortcut: `${cmdKey}+${shiftKey}+L` }) }
+                    { intl.formatMessage(messages.lockInfo, { lockShortcut: `${lockFerdiShortcutKey(false)}` }) }
                   </span>
                 </p>
               </div>
