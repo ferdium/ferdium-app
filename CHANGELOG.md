@@ -1,3 +1,15 @@
+# [v5.6.1-nightly.23](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.22...v5.6.1-nightly.23) (2021-08-11)
+
+- Allow the user to enable/disable the Dark Model from the context menu of the sidebar 💖 @vraravam
+
+### Bug Fixes
+
+- Fix startup crash for Ferdi v5.6.1-nightly.22 💖 @vraravam
+
+### Internal
+
+- Cleanup recipes (removed legacy properties and unused variables) 💖 @vraravam
+
 # [v5.6.1-nightly.22](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.21...v5.6.1-nightly.22) (2021-08-11)
 
 - Add Ferdi snap package (#1767) 💖 @mhatvan
