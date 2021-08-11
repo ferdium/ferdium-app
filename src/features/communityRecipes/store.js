@@ -19,6 +19,7 @@ export class CommunityRecipesStore extends FeatureStore {
     if (!this.stores) return [];
 
     return this.stores.recipePreviews.dev.map((r) => {
+      // TODO: Need to figure out if this is even necessary/used
       r.isDevRecipe = !!r.author.find((a) => a.email === this.stores.user.data.email);
 
       return r;
