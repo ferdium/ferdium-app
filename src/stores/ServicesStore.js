@@ -97,6 +97,7 @@ export default class ServicesStore extends Store {
       this._toggleNotifications.bind(this),
     );
     this.actions.service.toggleAudio.listen(this._toggleAudio.bind(this));
+    this.actions.service.toggleDarkMode.listen(this._toggleDarkMode.bind(this));
     this.actions.service.openDevTools.listen(this._openDevTools.bind(this));
     this.actions.service.openDevToolsForActiveService.listen(
       this._openDevToolsForActiveService.bind(this),
@@ -911,6 +912,18 @@ export default class ServicesStore extends Store {
       serviceId,
       serviceData: {
         isMuted: !service.isMuted,
+      },
+      redirect: false,
+    });
+  }
+
+  @action _toggleDarkMode({ serviceId }) {
+    const service = this.one(serviceId);
+
+    this.actions.service.updateService({
+      serviceId,
+      serviceData: {
+        isDarkModeEnabled: !service.isDarkModeEnabled,
       },
       redirect: false,
     });

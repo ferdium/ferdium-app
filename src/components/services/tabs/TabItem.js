@@ -41,6 +41,14 @@ const messages = defineMessages({
     id: 'tabs.item.enableAudio',
     defaultMessage: '!!!Enable audio',
   },
+  enableDarkMode: {
+    id: 'tabs.item.enableDarkMode',
+    defaultMessage: '!!!Enable Dark mode',
+  },
+  disableDarkMode: {
+    id: 'tabs.item.disableDarkMode',
+    defaultMessage: '!!!Disable Dark mode',
+  },
   disableService: {
     id: 'tabs.item.disableService',
     defaultMessage: '!!!Disable Service',
@@ -118,6 +126,7 @@ class TabItem extends Component {
     reload: PropTypes.func.isRequired,
     toggleNotifications: PropTypes.func.isRequired,
     toggleAudio: PropTypes.func.isRequired,
+    toggleDarkMode: PropTypes.func.isRequired,
     openSettings: PropTypes.func.isRequired,
     deleteService: PropTypes.func.isRequired,
     disableService: PropTypes.func.isRequired,
@@ -169,6 +178,7 @@ class TabItem extends Component {
       reload,
       toggleNotifications,
       toggleAudio,
+      toggleDarkMode,
       deleteService,
       disableService,
       enableService,
@@ -214,6 +224,12 @@ class TabItem extends Component {
           ? intl.formatMessage(messages.enableAudio)
           : intl.formatMessage(messages.disableAudio),
         click: () => toggleAudio(),
+      },
+      {
+        label: service.isDarkModeEnabled
+          ? intl.formatMessage(messages.enableDarkMode)
+          : intl.formatMessage(messages.disableDarkMode),
+        click: () => toggleDarkMode(),
       },
       {
         label: intl.formatMessage(

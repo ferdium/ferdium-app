@@ -14,6 +14,7 @@ class TabBarSortableList extends Component {
     reload: PropTypes.func.isRequired,
     toggleNotifications: PropTypes.func.isRequired,
     toggleAudio: PropTypes.func.isRequired,
+    toggleDarkMode: PropTypes.func.isRequired,
     deleteService: PropTypes.func.isRequired,
     disableService: PropTypes.func.isRequired,
     enableService: PropTypes.func.isRequired,
@@ -30,6 +31,7 @@ class TabBarSortableList extends Component {
       reload,
       toggleNotifications,
       toggleAudio,
+      toggleDarkMode,
       deleteService,
       disableService,
       enableService,
@@ -54,6 +56,7 @@ class TabBarSortableList extends Component {
             reload={() => reload({ serviceId: service.id })}
             toggleNotifications={() => toggleNotifications({ serviceId: service.id })}
             toggleAudio={() => toggleAudio({ serviceId: service.id })}
+            toggleDarkMode={() => toggleDarkMode({ serviceId: service.id })}
             deleteService={() => deleteService({ serviceId: service.id })}
             disableService={() => disableService({ serviceId: service.id })}
             enableService={() => enableService({ serviceId: service.id })}

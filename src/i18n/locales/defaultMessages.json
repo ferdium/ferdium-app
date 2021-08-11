@@ -1771,81 +1771,107 @@
         }
       },
       {
-        "defaultMessage": "!!!Disable Service",
+        "defaultMessage": "!!!Enable Dark mode",
         "end": {
           "column": 3,
           "line": 47
         },
         "file": "src/components/services/tabs/TabItem.js",
-        "id": "tabs.item.disableService",
+        "id": "tabs.item.enableDarkMode",
         "start": {
           "column": 18,
           "line": 44
         }
       },
       {
-        "defaultMessage": "!!!Enable Service",
+        "defaultMessage": "!!!Disable Dark mode",
         "end": {
           "column": 3,
           "line": 51
         },
         "file": "src/components/services/tabs/TabItem.js",
-        "id": "tabs.item.enableService",
+        "id": "tabs.item.disableDarkMode",
         "start": {
-          "column": 17,
+          "column": 19,
           "line": 48
         }
       },
       {
-        "defaultMessage": "!!!Hibernate Service",
+        "defaultMessage": "!!!Disable Service",
         "end": {
           "column": 3,
           "line": 55
         },
         "file": "src/components/services/tabs/TabItem.js",
-        "id": "tabs.item.hibernateService",
+        "id": "tabs.item.disableService",
         "start": {
-          "column": 20,
+          "column": 18,
           "line": 52
         }
       },
       {
-        "defaultMessage": "!!!Wake Up Service",
+        "defaultMessage": "!!!Enable Service",
         "end": {
           "column": 3,
           "line": 59
         },
         "file": "src/components/services/tabs/TabItem.js",
-        "id": "tabs.item.wakeUpService",
+        "id": "tabs.item.enableService",
         "start": {
           "column": 17,
           "line": 56
         }
       },
       {
-        "defaultMessage": "!!!Delete Service",
+        "defaultMessage": "!!!Hibernate Service",
         "end": {
           "column": 3,
           "line": 63
         },
         "file": "src/components/services/tabs/TabItem.js",
+        "id": "tabs.item.hibernateService",
+        "start": {
+          "column": 20,
+          "line": 60
+        }
+      },
+      {
+        "defaultMessage": "!!!Wake Up Service",
+        "end": {
+          "column": 3,
+          "line": 67
+        },
+        "file": "src/components/services/tabs/TabItem.js",
+        "id": "tabs.item.wakeUpService",
+        "start": {
+          "column": 17,
+          "line": 64
+        }
+      },
+      {
+        "defaultMessage": "!!!Delete Service",
+        "end": {
+          "column": 3,
+          "line": 71
+        },
+        "file": "src/components/services/tabs/TabItem.js",
         "id": "tabs.item.deleteService",
         "start": {
           "column": 17,
-          "line": 60
+          "line": 68
         }
       },
       {
         "defaultMessage": "!!!Do you really want to delete the {serviceName} service?",
         "end": {
           "column": 3,
-          "line": 68
+          "line": 76
         },
         "file": "src/components/services/tabs/TabItem.js",
         "id": "tabs.item.confirmDeleteService",
         "start": {
           "column": 24,
-          "line": 64
+          "line": 72
         }
       }
     ],

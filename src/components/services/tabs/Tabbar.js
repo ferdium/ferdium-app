@@ -15,6 +15,7 @@ export default @observer class TabBar extends Component {
     reload: PropTypes.func.isRequired,
     toggleNotifications: PropTypes.func.isRequired,
     toggleAudio: PropTypes.func.isRequired,
+    toggleDarkMode: PropTypes.func.isRequired,
     deleteService: PropTypes.func.isRequired,
     updateService: PropTypes.func.isRequired,
     hibernateService: PropTypes.func.isRequired,
@@ -78,6 +79,7 @@ export default @observer class TabBar extends Component {
       reload,
       toggleNotifications,
       toggleAudio,
+      toggleDarkMode,
       deleteService,
       showMessageBadgeWhenMutedSetting,
       showMessageBadgesEvenWhenMuted,
@@ -94,6 +96,7 @@ export default @observer class TabBar extends Component {
           reload={reload}
           toggleNotifications={toggleNotifications}
           toggleAudio={toggleAudio}
+          toggleDarkMode={toggleDarkMode}
           deleteService={deleteService}
           disableService={(args) => this.disableService(args)}
           enableService={(args) => this.enableService(args)}

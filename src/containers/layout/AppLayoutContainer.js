@@ -54,6 +54,7 @@ export default @inject('stores', 'actions') @observer class AppLayoutContainer e
       reload,
       toggleNotifications,
       toggleAudio,
+      toggleDarkMode,
       deleteService,
       updateService,
       hibernate,
@@ -109,6 +110,7 @@ export default @inject('stores', 'actions') @observer class AppLayoutContainer e
         reload={reload}
         toggleNotifications={toggleNotifications}
         toggleAudio={toggleAudio}
+        toggleDarkMode={toggleDarkMode}
         deleteService={deleteService}
         updateService={updateService}
         hibernateService={hibernate}
