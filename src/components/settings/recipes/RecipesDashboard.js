@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 
 import { Button, Input } from '@meetfranz/forms';
 import injectSheet from 'react-jss';
-import { H3, H2, ProBadge } from '@meetfranz/ui';
+import { H3, H2 } from '@meetfranz/ui';
 import SearchInput from '../../ui/SearchInput';
 import Infobox from '../../ui/Infobox';
 import RecipeItem from './RecipeItem';
@@ -142,7 +142,6 @@ export default @injectSheet(styles) @observer class RecipesDashboard extends Com
     } = this.props;
     const { intl } = this.context;
 
-
     const communityRecipes = recipes.filter(r => !r.isDevRecipe);
     const devRecipes = recipes.filter(r => r.isDevRecipe);
 
@@ -189,7 +188,7 @@ export default @injectSheet(styles) @observer class RecipesDashboard extends Com
             >
               {intl.formatMessage(messages.customRecipes)}
             </Link>
-            <a href={FRANZ_SERVICE_REQUEST} target="_blank" className="link recipes__service-request">
+            <a href={FRANZ_SERVICE_REQUEST} target="_blank" className="link recipes__service-request" rel="noreferrer">
               {intl.formatMessage(messages.missingService)}
               {' '}
               <i className="mdi mdi-open-in-new" />

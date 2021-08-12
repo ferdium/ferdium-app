@@ -1,5 +1,5 @@
-build/
-out/
-packages/*/lib
-packages/**/*.test.*
-recipes/
+/build/
+/out/
+/packages/*/lib
+/packages/**/*.test.*
+/recipes/
