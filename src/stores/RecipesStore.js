@@ -1,13 +1,12 @@
 import { action, computed, observable } from 'mobx';
-import fs from 'fs-extra';
-import path from 'path';
+import { readJSONSync } from 'fs-extra';
 import semver from 'semver';
 
 import Store from './lib/Store';
 import CachedRequest from './lib/CachedRequest';
 import Request from './lib/Request';
 import { matchRoute } from '../helpers/routing-helpers';
-import { RECIPES_PATH } from '../environment';
+import { asarRecipesPath } from '../environment';
 
 const debug = require('debug')('Ferdi:RecipeStore');
 
@@ -54,11 +53,11 @@ export default class RecipesStore extends Store {
   }
 
   @computed get recipeIdForServices() {
-    return this.stores.services.all.map(s => s.recipe.id);
+    return this.stores.services.all.map((s) => s.recipe.id);
   }
 
   one(id) {
-    return this.all.find(recipe => recipe.id === id);
+    return this.all.find((recipe) => recipe.id === id);
   }
 
   isInstalled(id) {
@@ -78,7 +77,7 @@ export default class RecipesStore extends Store {
     const recipes = {};
 
     // Hackfix, reference this.all to fetch services
-    debug(`Check Recipe updates for ${this.all.map(recipe => recipe.id)}`);
+    debug(`Check Recipe updates for ${this.all.map((recipe) => recipe.id)}`);
 
     recipeIds.forEach((r) => {
       const recipe = this.one(r);
@@ -90,15 +89,15 @@ export default class RecipesStore extends Store {
     const remoteUpdates = await this.getRecipeUpdatesRequest.execute(recipes)._promise;
 
     // Check for local updates
-    const allJsonFile = path.join(RECIPES_PATH, 'all.json');
-    const allJson = await fs.readJSON(allJsonFile);
+    const allJsonFile = asarRecipesPath('all.json');
+    const allJson = readJSONSync(allJsonFile);
     const localUpdates = [];
 
     Object.keys(recipes).forEach((recipe) => {
       const version = recipes[recipe];
 
       // Find recipe in local recipe repository
-      const localRecipe = allJson.find(r => r.id === recipe);
+      const localRecipe = allJson.find((r) => r.id === recipe);
 
       if (localRecipe && semver.lt(version, localRecipe.version)) {
         localUpdates.push(recipe);

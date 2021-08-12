@@ -14,16 +14,7 @@ export default @inject('stores', 'actions') @observer class SignupScreen extends
   };
 
   onSignup(values) {
-    const { actions, stores } = this.props;
-
-    const { canSkipTrial, defaultTrialPlan, pricingConfig } = stores.features.anonymousFeatures;
-
-    if (!canSkipTrial) {
-      Object.assign(values, {
-        plan: defaultTrialPlan,
-        currency: pricingConfig.currencyID,
-      });
-    }
+    const { actions } = this.props;
 
     actions.user.signup(values);
   }
@@ -33,7 +24,7 @@ export default @inject('stores', 'actions') @observer class SignupScreen extends
 
     return (
       <Signup
-        onSubmit={values => this.onSignup(values)}
+        onSubmit={(values) => this.onSignup(values)}
         isSubmitting={stores.user.signupRequest.isExecuting}
         loginRoute={stores.user.loginRoute}
         changeServerRoute={stores.user.changeServerRoute}

@@ -4,6 +4,8 @@ import ms from 'ms';
 
 export const CHECK_INTERVAL = ms('1h'); // How often should we perform checks
 
+export const LOCAL_HOSTNAME = 'localhost';
+export const LOCAL_PORT = 45569;
 export const LOCAL_API = 'http://localhost:3000';
 export const DEV_FRANZ_API = 'https://dev.franzinfra.com';
 
@@ -39,6 +41,17 @@ export const HIBERNATION_STRATEGIES = {
   600: 'Slow Hibernation (10min)',
   1800: 'Very Slow Hibernation (30min)',
   3600: 'Extremely Slow Hibernation (1hour)',
+};
+
+export const WAKE_UP_STRATEGIES = {
+  0: 'Never wake up',
+  10: 'Wake up after 10sec',
+  30: 'Wake up after 30sec',
+  60: 'Wake up after 1min',
+  300: 'Wake up after 5min',
+  600: 'Wake up after 10min',
+  1800: 'Wake up after 30min',
+  3600: 'Wake up after 1hour',
 };
 
 export const NAVIGATION_BAR_BEHAVIOURS = {
@@ -120,18 +133,10 @@ export const ICON_SIZES = {
 export const iconSizeBias = 20;
 
 export const DEFAULT_FEATURES_CONFIG = {
-  isSpellcheckerIncludedInCurrentPlan: true,
-  needToWaitToProceed: false,
-  needToWaitToProceedConfig: {
-    delayOffset: ms('1h'),
-    wait: ms('10s'),
-  },
   isServiceProxyEnabled: false,
-  isServiceProxyIncludedInCurrentPlan: true,
   isAnnouncementsEnabled: true,
-  isWorkspaceIncludedInCurrentPlan: true,
   isWorkspaceEnabled: false,
-  isCommunityRecipesIncludedInCurrentPlan: true,
+  isTodosEnabled: true,
 };
 
 export const DEFAULT_WINDOW_OPTIONS = {
@@ -166,31 +171,7 @@ export const ALLOWED_PROTOCOLS = [
   'ferdi:',
 ];
 
-export const PLANS = {
-  PERSONAL: 'personal',
-  PRO: 'pro',
-  LEGACY: 'legacy',
-  FREE: 'free',
-};
-
-export const PLANS_MAPPING = {
-  'franz-personal-monthly': PLANS.PERSONAL,
-  'franz-personal-yearly': PLANS.PERSONAL,
-  'franz-pro-monthly': PLANS.PRO,
-  'franz-pro-yearly': PLANS.PRO,
-  'franz-supporter-license': PLANS.LEGACY,
-  'franz-supporter-license-x1': PLANS.LEGACY,
-  'franz-supporter-license-x2': PLANS.LEGACY,
-  'franz-supporter-license-year': PLANS.LEGACY,
-  'franz-supporter-license-year-x1': PLANS.LEGACY,
-  'franz-supporter-license-year-x2': PLANS.LEGACY,
-  'franz-supporter-license-year-2019': PLANS.LEGACY,
-  free: PLANS.FREE,
-};
-
 export const DEFAULT_SETTING_KEEP_ALL_WORKSPACES_LOADED = false;
-
-export const DEFAULT_SERVICE_LIMIT = 3;
 
 export const DEFAULT_TODOS_WIDTH = 300;
 export const TODOS_MIN_WIDTH = 200;

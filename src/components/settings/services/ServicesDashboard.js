@@ -10,7 +10,6 @@ import Loader from '../../ui/Loader';
 import FAB from '../../ui/FAB';
 import ServiceItem from './ServiceItem';
 import Appear from '../../ui/effects/Appear';
-import LimitReachedInfobox from '../../../features/serviceLimit/components/LimitReachedInfobox';
 
 const messages = defineMessages({
   headline: {
@@ -93,12 +92,11 @@ export default @observer class ServicesDashboard extends Component {
         <div className="settings__header">
           <h1>{intl.formatMessage(messages.headline)}</h1>
         </div>
-        <LimitReachedInfobox />
         <div className="settings__body">
           {(services.length !== 0 || searchNeedle) && !isLoading && (
             <SearchInput
               placeholder={intl.formatMessage(messages.searchService)}
-              onChange={needle => filterServices({ needle })}
+              onChange={(needle) => filterServices({ needle })}
               onReset={() => resetFilter()}
               autoFocus
             />
@@ -165,7 +163,7 @@ export default @observer class ServicesDashboard extends Component {
           ) : (
             <table className="service-table">
               <tbody>
-                {services.map(service => (
+                {services.map((service) => (
                   <ServiceItem
                     key={service.id}
                     service={service}

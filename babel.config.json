@@ -1,0 +1,49 @@
+{
+  "babelrcRoots": [
+    ".",
+    "packages/*"
+  ],
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "electron": 13
+        }
+      }
+    ],
+    "@babel/preset-react"
+  ],
+  "plugins": [
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy": true
+      }
+    ],
+    "@babel/proposal-export-default-from",
+    [
+      "@babel/proposal-class-properties",
+      {
+        "loose": true
+      }
+    ],
+    "@babel/proposal-throw-expressions",
+    "@babel/syntax-dynamic-import",
+    [
+      "react-intl",
+      {
+        "messagesDir": "./src/i18n/messages/",
+        "enforceDescriptions": false,
+        "extractSourceLocation": true
+      }
+    ],
+    [
+      "@babel/plugin-proposal-private-methods",
+      {
+        "loose": true
+      }
+    ]
+  ],
+  "sourceMaps": "inline"
+}

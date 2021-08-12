@@ -1,5 +1,6 @@
-import { Theme } from '@meetfranz/theme';
-import CSS from 'csstype';
+import { Property } from 'csstype';
+
+import { Theme } from '../../../theme';
 
 const prefixStyles = (theme: Theme) => ({
   background: theme.inputPrefixBackground,
@@ -13,7 +14,7 @@ export default (theme: Theme) => ({
   label: {
     '& > div': {
       marginTop: 5,
-    }
+    },
   },
   disabled: {
     opacity: theme.inputDisabledOpacity,
@@ -85,7 +86,7 @@ export default (theme: Theme) => ({
     background: theme.inputBackground,
     border: theme.inputBorder,
     borderRadius: theme.borderRadiusSmall,
-    boxSizing: 'border-box' as CSS.BoxSizingProperty,
+    boxSizing: 'border-box' as Property.BoxSizing,
     display: 'flex',
     height: theme.inputHeight,
     order: 1,

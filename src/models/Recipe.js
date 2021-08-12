@@ -1,9 +1,9 @@
-import emailParser from 'address-rfc2822';
 import semver from 'semver';
-import fs from 'fs-extra';
-import path from 'path';
+import { pathExistsSync } from 'fs-extra';
+import { join } from 'path';
 
 export default class Recipe {
+  // Note: Do NOT change these default values. If they change, then the corresponding changes in the recipes needs to be done
   id = '';
 
   name = '';
@@ -11,6 +11,8 @@ export default class Recipe {
   description = '';
 
   version = '';
+
+  aliases = [];
 
   path = '';
 
@@ -60,9 +62,8 @@ export default class Recipe {
 
     this.id = data.id || this.id;
     this.name = data.name || this.name;
-    this.rawAuthor = data.author || this.author;
-    this.description = data.description || this.description;
     this.version = data.version || this.version;
+    this.aliases = data.aliases || this.aliases;
     this.path = data.path;
 
     this.serviceURL = data.config.serviceURL || this.serviceURL;
@@ -86,18 +87,12 @@ export default class Recipe {
     this.message = data.config.message || this.message;
   }
 
+  // TODO: Need to remove this if its not used anywhere
   get author() {
-    try {
-      const addresses = emailParser.parse(this.rawAuthor);
-      return addresses.map(a => ({ email: a.address, name: a.phrase }));
-    } catch (err) {
-      console.warn(`Not a valid author for ${this.name}`);
-    }
-
     return [];
   }
 
   get hasDarkMode() {
-    return fs.pathExistsSync(path.join(this.path, 'darkmode.css'));
+    return pathExistsSync(join(this.path, 'darkmode.css'));
   }
 }

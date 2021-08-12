@@ -1,6 +1,6 @@
 import { getCurrentWebContents } from '@electron/remote';
 import { SPELLCHECKER_LOCALES } from '../i18n/languages';
-import { isMac } from '../environment';
+import { DEFAULT_APP_SETTINGS, isMac } from '../environment';
 
 const debug = require('debug')('Ferdi:spellchecker');
 
@@ -9,7 +9,7 @@ const [defaultLocale] = webContents.session.getSpellCheckerLanguages();
 debug('Spellchecker default locale is', defaultLocale);
 
 export function getSpellcheckerLocaleByFuzzyIdentifier(identifier) {
-  const locales = Object.keys(SPELLCHECKER_LOCALES).filter(key => key.toLocaleLowerCase() === identifier.toLowerCase() || key.split('-')[0] === identifier.toLowerCase());
+  const locales = Object.keys(SPELLCHECKER_LOCALES).filter((key) => key.toLocaleLowerCase() === identifier.toLowerCase() || key.split('-')[0] === identifier.toLowerCase());
 
   if (locales.length >= 1) {
     return locales[0];
@@ -33,7 +33,7 @@ export function switchDict(locale) {
     locales.push(foundLocale);
   }
 
-  locales.push(defaultLocale, 'de');
+  locales.push(defaultLocale, DEFAULT_APP_SETTINGS.fallbackLocale);
 
   webContents.session.setSpellCheckerLanguages(locales);
 }

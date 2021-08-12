@@ -1,14 +1,12 @@
 import { ipcRenderer } from 'electron';
-import { pathExistsSync, readFile } from 'fs-extra';
+import { exists, pathExistsSync, readFileSync } from 'fs-extra';
 
 const debug = require('debug')('Ferdi:Plugin:RecipeWebview');
 
 class RecipeWebview {
-  constructor() {
-    this.countCache = {
-      direct: 0,
-      indirect: 0,
-    };
+  constructor(badgeHandler, notificationsHandler) {
+    this.badgeHandler = badgeHandler;
+    this.notificationsHandler = notificationsHandler;
 
     ipcRenderer.on('poll', () => {
       this.loopFunc();
@@ -45,24 +43,7 @@ class RecipeWebview {
    *                          me directly to me eg. in a channel
    */
   setBadge(direct = 0, indirect = 0) {
-    if (this.countCache.direct === direct
-      && this.countCache.indirect === indirect) return;
-
-    // Parse number to integer
-    // This will correct errors that recipes may introduce, e.g.
-    // by sending a String instead of an integer
-    const directInt = parseInt(direct, 10);
-    const indirectInt = parseInt(indirect, 10);
-
-    const count = {
-      direct: Math.max(directInt, 0),
-      indirect: Math.max(indirectInt, 0),
-    };
-
-    ipcRenderer.sendToHost('message-counts', count);
-    Object.assign(this.countCache, count);
-
-    debug('Sending badge count to host', count);
+    this.badgeHandler.setBadge(direct, indirect);
   }
 
   /**
@@ -74,13 +55,28 @@ class RecipeWebview {
   injectCSS(...files) {
     files.forEach(async (file) => {
       if (pathExistsSync(file)) {
-        const data = await readFile(file, 'utf8');
         const styles = document.createElement('style');
-        styles.innerHTML = data;
+        styles.innerHTML = readFileSync(file, 'utf8');
 
         document.querySelector('head').appendChild(styles);
 
         debug('Append styles', styles);
+      }
+    });
+  }
+
+  injectJSUnsafe(...files) {
+    Promise.all(files.map(async (file) => {
+      if (await exists(file)) {
+        return readFileSync(file, 'utf8');
+      }
+      debug('Script not found', file);
+      return null;
+    })).then(async (scripts) => {
+      const scriptsFound = scripts.filter((script) => script !== null);
+      if (scriptsFound.length > 0) {
+        debug('Inject scripts to main world', scriptsFound);
+        ipcRenderer.sendToHost('inject-js-unsafe', ...scriptsFound);
       }
     });
   }
@@ -96,7 +92,7 @@ class RecipeWebview {
 
   onNotify(fn) {
     if (typeof fn === 'function') {
-      window.Notification.prototype.onNotify = fn;
+      this.notificationsHandler.onNotify = fn;
     }
   }
 

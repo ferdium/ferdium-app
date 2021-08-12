@@ -1,5 +1,5 @@
 import { app, systemPreferences } from '@electron/remote';
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import prettyBytes from 'pretty-bytes';
@@ -10,14 +10,13 @@ import Button from '../../ui/Button';
 import Toggle from '../../ui/Toggle';
 import ToggleRaw from '../../ui/ToggleRaw';
 import Select from '../../ui/Select';
-import PremiumFeatureContainer from '../../ui/PremiumFeatureContainer';
 import Input from '../../ui/Input';
 
 import {
   FRANZ_TRANSLATION,
   GITHUB_FRANZ_URL,
 } from '../../../config';
-import { DEFAULT_APP_SETTINGS, isMac, isWindows } from '../../../environment';
+import { DEFAULT_APP_SETTINGS, isMac, isWindows, lockFerdiShortcutKey } from '../../../environment';
 import globalMessages from '../../../i18n/globalMessages';
 
 const messages = defineMessages({
@@ -31,7 +30,7 @@ const messages = defineMessages({
   },
   sentryInfo: {
     id: 'settings.app.sentryInfo',
-    defaultMessage: '!!!Sending telemetry data allows us to find errors in Ferdi - we will not send any personal information like your message data! Changing this option requires you to restart Ferdi.',
+    defaultMessage: '!!!Sending telemetry data allows us to find errors in Ferdi - we will not send any personal information like your message data!',
   },
   hibernateInfo: {
     id: 'settings.app.hibernateInfo',
@@ -55,7 +54,7 @@ const messages = defineMessages({
   },
   lockInfo: {
     id: 'settings.app.lockInfo',
-    defaultMessage: '!!!Password Lock allows you to keep your messages protected.\nUsing Password Lock, you will be prompted to enter your password everytime you start Ferdi or lock Ferdi yourself using the lock symbol in the bottom left corner or the shortcut CMD/CTRL+Shift+L.',
+    defaultMessage: '!!!Password Lock allows you to keep your messages protected.\nUsing Password Lock, you will be prompted to enter your password everytime you start Ferdi or lock Ferdi yourself using the lock symbol in the bottom left corner or the shortcut {lockShortcut}.',
   },
   scheduledDNDTimeInfo: {
     id: 'settings.app.scheduledDNDTimeInfo',
@@ -168,12 +167,10 @@ export default @observer class EditSettingsForm extends Component {
     isClearingAllCache: PropTypes.bool.isRequired,
     onClearAllCache: PropTypes.func.isRequired,
     getCacheSize: PropTypes.func.isRequired,
-    isSpellcheckerIncludedInCurrentPlan: PropTypes.bool.isRequired,
     isTodosEnabled: PropTypes.bool.isRequired,
     isTodosActivated: PropTypes.bool.isRequired,
     isWorkspaceEnabled: PropTypes.bool.isRequired,
     automaticUpdates: PropTypes.bool.isRequired,
-    hibernationEnabled: PropTypes.bool.isRequired,
     isDarkmodeEnabled: PropTypes.bool.isRequired,
     isAdaptableDarkModeEnabled: PropTypes.bool.isRequired,
     isNightlyEnabled: PropTypes.bool.isRequired,
@@ -224,11 +221,9 @@ export default @observer class EditSettingsForm extends Component {
       isClearingAllCache,
       onClearAllCache,
       getCacheSize,
-      isSpellcheckerIncludedInCurrentPlan,
       isTodosEnabled,
       isWorkspaceEnabled,
       automaticUpdates,
-      hibernationEnabled,
       isDarkmodeEnabled,
       isTodosActivated,
       isNightlyEnabled,
@@ -271,8 +266,8 @@ export default @observer class EditSettingsForm extends Component {
         </div>
         <div className="settings__body">
           <form
-            onSubmit={e => this.submit(e)}
-            onChange={e => this.submit(e)}
+            onSubmit={(e) => this.submit(e)}
+            onChange={(e) => this.submit(e)}
             id="form"
           >
             {/* Titles */}
@@ -339,13 +334,8 @@ export default @observer class EditSettingsForm extends Component {
 
                 <Hr />
 
-                <Toggle field={form.$('hibernate')} />
-                {hibernationEnabled && (
-                  <>
-                    <Select field={form.$('hibernationStrategy')} />
-                    <Toggle field={form.$('hibernateOnStartup')} />
-                  </>
-                )}
+                <Select field={form.$('hibernationStrategy')} />
+                <Toggle field={form.$('hibernateOnStartup')} />
                 <p
                   className="settings__message"
                   style={{
@@ -357,13 +347,16 @@ export default @observer class EditSettingsForm extends Component {
                   </span>
                 </p>
 
+                <Select field={form.$('wakeUpStrategy')} />
+
                 <Hr />
 
                 {isWorkspaceEnabled && (
-                  <Toggle field={form.$('keepAllWorkspacesLoaded')} />
+                  <>
+                    <Toggle field={form.$('keepAllWorkspacesLoaded')} />
+                    <Hr />
+                  </>
                 )}
-
-                <Hr />
 
                 {isTodosEnabled && !hasAddedTodosAsService && (
                   <>
@@ -375,7 +368,7 @@ export default @observer class EditSettingsForm extends Component {
                           <div>
                             <Input
                               placeholder="Todo Server"
-                              onChange={e => this.submit(e)}
+                              onChange={(e) => this.submit(e)}
                               field={form.$('customTodoServer')}
                             />
                             <p
@@ -409,7 +402,7 @@ export default @observer class EditSettingsForm extends Component {
                       >
                         <Input
                           placeholder="17:00"
-                          onChange={e => this.submit(e)}
+                          onChange={(e) => this.submit(e)}
                           field={form.$('scheduledDNDStart')}
                           type="time"
                         />
@@ -421,7 +414,7 @@ export default @observer class EditSettingsForm extends Component {
                       >
                         <Input
                           placeholder="09:00"
-                          onChange={e => this.submit(e)}
+                          onChange={(e) => this.submit(e)}
                           field={form.$('scheduledDNDEnd')}
                           type="time"
                         />
@@ -488,7 +481,7 @@ export default @observer class EditSettingsForm extends Component {
 
                 <Input
                   placeholder="Accent Color"
-                  onChange={e => this.submit(e)}
+                  onChange={(e) => this.submit(e)}
                   field={form.$('accentColor')}
                 />
                 <p>
@@ -509,8 +502,12 @@ export default @observer class EditSettingsForm extends Component {
                 <Hr />
 
                 <Select field={form.$('searchEngine')} />
+
+                <Hr />
+
                 <Toggle field={form.$('sentry')} />
-                <p>{intl.formatMessage(messages.sentryInfo)}</p>
+                <p className="settings__help">{intl.formatMessage(messages.sentryInfo)}</p>
+                <p className="settings__help">{intl.formatMessage(messages.appRestartRequired)}</p>
 
                 <Hr />
 
@@ -523,7 +520,7 @@ export default @observer class EditSettingsForm extends Component {
 
                     <Input
                       placeholder={intl.formatMessage(messages.lockedPassword)}
-                      onChange={e => this.submit(e)}
+                      onChange={(e) => this.submit(e)}
                       field={form.$('lockedPassword')}
                       type="password"
                       scorePassword
@@ -535,7 +532,7 @@ export default @observer class EditSettingsForm extends Component {
 
                     <Input
                       placeholder="Lock after inactivity"
-                      onChange={e => this.submit(e)}
+                      onChange={(e) => this.submit(e)}
                       field={form.$('inactivityLock')}
                       autoFocus
                     />
@@ -551,7 +548,7 @@ export default @observer class EditSettingsForm extends Component {
                   }}
                 >
                   <span>
-                    { intl.formatMessage(messages.lockInfo) }
+                    { intl.formatMessage(messages.lockInfo, { lockShortcut: `${lockFerdiShortcutKey(false)}` }) }
                   </span>
                 </p>
               </div>
@@ -564,26 +561,24 @@ export default @observer class EditSettingsForm extends Component {
 
                 <Hr />
 
-                <PremiumFeatureContainer
-                  condition={!isSpellcheckerIncludedInCurrentPlan}
-                  gaEventInfo={{ category: 'User', event: 'upgrade', label: 'spellchecker' }}
-                >
-                  <>
-                    <Toggle
-                      field={form.$('enableSpellchecking')}
-                    />
-                    {!isMac && form.$('enableSpellchecking').value && (
-                      <Select field={form.$('spellcheckerLanguage')} />
-                    )}
-                    {isMac && form.$('enableSpellchecking').value && (
-                      <p>{intl.formatMessage(messages.spellCheckerLanguageInfo)}</p>
-                    )}
-                  </>
-                </PremiumFeatureContainer>
+                <Toggle
+                  field={form.$('enableSpellchecking')}
+                />
+                {!isMac && form.$('enableSpellchecking').value && (
+                  <Select field={form.$('spellcheckerLanguage')} />
+                )}
+                {isMac && form.$('enableSpellchecking').value && (
+                  <p className="settings__help">{intl.formatMessage(messages.spellCheckerLanguageInfo)}</p>
+                )}
+                <p className="settings__help">{intl.formatMessage(messages.appRestartRequired)}</p>
+
+                <Hr />
+
                 <a
                   href={FRANZ_TRANSLATION}
                   target="_blank"
                   className="link"
+                  rel="noreferrer"
                 >
                   {intl.formatMessage(messages.translationHelp)}
                   {' '}
@@ -602,7 +597,7 @@ export default @observer class EditSettingsForm extends Component {
 
                 <Input
                   placeholder="User Agent"
-                  onChange={e => this.submit(e)}
+                  onChange={(e) => this.submit(e)}
                   field={form.$('userAgentPref')}
                 />
                 <p className="settings__help">{intl.formatMessage(globalMessages.userAgentHelp)}</p>
@@ -688,12 +683,12 @@ export default @observer class EditSettingsForm extends Component {
 
                   Ferdi is based on
                   {' '}
-                  <a href={`${GITHUB_FRANZ_URL}/franz`} target="_blank">Franz</a>
+                  <a href={`${GITHUB_FRANZ_URL}/franz`} target="_blank" rel="noreferrer">Franz</a>
 
                   , a project published
                   under the
                   {' '}
-                  <a href={`${GITHUB_FRANZ_URL}/franz/blob/master/LICENSE`} target="_blank">Apache-2.0 License</a>
+                  <a href={`${GITHUB_FRANZ_URL}/franz/blob/master/LICENSE`} target="_blank" rel="noreferrer">Apache-2.0 License</a>
                 </span>
                 <br />
                 <span className="mdi mdi-information" />

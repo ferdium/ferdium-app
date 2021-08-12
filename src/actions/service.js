@@ -91,6 +91,9 @@ export default {
   toggleAudio: {
     serviceId: PropTypes.string.isRequired,
   },
+  toggleDarkMode: {
+    serviceId: PropTypes.string.isRequired,
+  },
   openDevTools: {
     serviceId: PropTypes.string.isRequired,
   },

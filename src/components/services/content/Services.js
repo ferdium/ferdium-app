@@ -30,7 +30,7 @@ const messages = defineMessages({
   },
   serverInfo: {
     id: 'services.serverInfo',
-    defaultMessage: '!!!Optionally, you can change your Ferdi server by clicking the cog in the bottom left corner.',
+    defaultMessage: '!!!Optionally, you can change your Ferdi server by clicking the cog in the bottom left corner. If you are switching over (from one of the hosted servers) to using Ferdi without an account, please be informed that you can export your data from that server and subsequently import it using the Help menu to resurrect all your workspaces and configured services!',
   },
 });
 
@@ -54,7 +54,6 @@ export default @injectSheet(styles) @inject('actions') @observer class Services 
     openSettings: PropTypes.func.isRequired,
     update: PropTypes.func.isRequired,
     userHasCompletedSignup: PropTypes.bool.isRequired,
-    hasActivatedTrial: PropTypes.bool.isRequired,
     classes: PropTypes.object.isRequired,
     actions: PropTypes.object.isRequired,
     isSpellcheckerEnabled: PropTypes.bool.isRequired,
@@ -109,7 +108,6 @@ export default @injectSheet(styles) @inject('actions') @observer class Services 
       openSettings,
       update,
       userHasCompletedSignup,
-      hasActivatedTrial,
       classes,
       isSpellcheckerEnabled,
     } = this.props;
@@ -123,7 +121,7 @@ export default @injectSheet(styles) @inject('actions') @observer class Services 
 
     return (
       <div className="services">
-        {(userHasCompletedSignup || hasActivatedTrial) && (
+        {userHasCompletedSignup && (
           <div className={classes.confettiContainer}>
             <Confetti
               width={window.width}
@@ -169,7 +167,7 @@ export default @injectSheet(styles) @inject('actions') @observer class Services 
             </div>
           </Appear>
         )}
-        {services.filter(service => !service.isTodosService).map(service => (
+        {services.filter((service) => !service.isTodosService).map((service) => (
           <ServiceView
             key={service.id}
             service={service}
@@ -186,7 +184,6 @@ export default @injectSheet(styles) @inject('actions') @observer class Services 
               },
               redirect: false,
             })}
-            upgrade={() => openSettings({ path: 'user' })}
             isSpellcheckerEnabled={isSpellcheckerEnabled}
           />
         ))}

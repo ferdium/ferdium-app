@@ -18,6 +18,8 @@
       - [Debian/Ubuntu](#debianubuntu)
       - [Fedora](#fedora)
       - [Windows](#windows)
+      - [node-gyp](#node-gyp)
+      - [Lerna](#lerna)
     - [Clone repository with submodule](#clone-repository-with-submodule)
     - [Local caching of dependencies](#local-caching-of-dependencies)
     - [Install dependencies](#install-dependencies)
@@ -60,9 +62,7 @@ Currently, these are the combinations of system dependencies that work for MacOS
 node -v
 v14.17.3
 npm -v
-6.14.12
-node-gyp -v
-v8.0.0
+6.14.13
 ```
 
 #### Git
@@ -91,6 +91,20 @@ Please make sure you run this command as an administrator:
 npm i -g windows-build-tools --vs2015
 ```
 
+#### node-gyp
+
+We need `node-gyp` to be able to compile any native dependencies
+
+```bash
+npm ls -g node-gyp@8.1.0 || npm i -g node-gyp@8.1.0
+```
+
+#### Lerna
+
+```bash
+npm ls -g lerna@4.0.0 || npm i -g lerna@4.0.0
+```
+
 ### Clone repository with submodule
 
 ```bash
@@ -99,7 +113,7 @@ cd ferdi
 git submodule update --init --recursive
 ```
 
-It is important you execute the last command to get the required submodules (recipes, server).
+It is important you execute the last command to get the required submodules (recipes).
 
 ### Local caching of dependencies
 

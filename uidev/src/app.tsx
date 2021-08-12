@@ -1,10 +1,11 @@
-import CSS from 'csstype';
+import { Property } from 'csstype';
 import { Classes } from 'jss';
 import { observer } from 'mobx-react';
 import DevTools from 'mobx-react-devtools';
 import React from 'react';
 import injectSheet from 'react-jss';
 
+import { theme, ThemeType } from '@meetfranz/theme';
 import { WithTheme } from './withTheme';
 
 import './stories/badge.stories';
@@ -20,14 +21,13 @@ import './stories/toggle.stories';
 
 import { store } from './stores';
 
-import { theme, ThemeType } from '@meetfranz/theme';
 const defaultTheme = theme(ThemeType.default);
 
 const styles = {
   '@global body': {
     margin: 0,
     fontSize: defaultTheme.uiFontSize,
-    fontFamily: '\'Open Sans\', sans-serif',
+    fontFamily: "'Open Sans', sans-serif",
   },
   container: {
     display: 'flex',
@@ -35,7 +35,7 @@ const styles = {
   },
   menu: {
     width: 300,
-    position: 'fixed' as CSS.PositionProperty,
+    position: 'fixed' as Property.Position,
     listStyleType: 'none',
     fontSize: 14,
     overflow: 'scroll',
@@ -66,7 +66,7 @@ const styles = {
     borderBottom: '1px solid #CFCFCF',
   },
   sectionLink: {
-    fontWeight: 'bold' as CSS.FontWeightProperty,
+    fontWeight: 'bold' as Property.FontWeight,
     color: '#000',
     textDecoration: 'none',
   },
@@ -76,51 +76,53 @@ const styles = {
   },
 };
 
-export const App = injectSheet(styles)(observer(({ classes }: { classes: Classes }) => (
-  <div className={classes.container}>
-    <ul className={classes.menu}>
-      {store.stories.sections.map((section, key) => (
-        <li key={key}>
-          <a href={`#section-${key}`} className={classes.sectionLink}>{
-            section.name}
-          </a>
-          <ul className={classes.storyList}>
+export const App = injectSheet(styles)(
+  observer(({ classes }: { classes: Classes }) => (
+    <div className={classes.container}>
+      <ul className={classes.menu}>
+        {store.stories.sections.map((section, key) => (
+          <li key={key}>
+            <a href={`#section-${key}`} className={classes.sectionLink}>
+              {section.name}
+            </a>
+            <ul className={classes.storyList}>
+              {section.stories.map((story, storyKey) => (
+                <li key={storyKey}>
+                  <a
+                    href={`#section-${key}-story-${storyKey}`}
+                    className={classes.storyLink}
+                  >
+                    {story.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
+      <div className={classes.stories}>
+        {store.stories.sections.map((section, key) => (
+          <div key={key}>
+            <h1 id={`section-${key}`} className={classes.sectionHeadline}>
+              {section.name}
+            </h1>
             {section.stories.map((story, storyKey) => (
-              <li key={storyKey}>
-                <a href={`#section-${key}-story-${storyKey}`} className={classes.storyLink}>
+              <div className={classes.story} key={storyKey}>
+                <h2
+                  id={`section-${key}-story-${storyKey}`}
+                  className={classes.storyHeadline}
+                >
                   {story.name}
-                </a>
-              </li>
+                </h2>
+                <WithTheme>
+                  <story.component />
+                </WithTheme>
+              </div>
             ))}
-          </ul>
-        </li>
-      ))}
-    </ul>
-    <div className={classes.stories}>
-      {store.stories.sections.map((section, key) => (
-        <div key={key}>
-          <h1
-            id={`section-${key}`}
-            className={classes.sectionHeadline}
-          >
-            {section.name}
-          </h1>
-          {section.stories.map((story, storyKey) => (
-            <div className={classes.story} key={storyKey}>
-              <h2
-                id={`section-${key}-story-${storyKey}`}
-                className={classes.storyHeadline}
-              >
-                {story.name}
-              </h2>
-              <WithTheme>
-                <story.component />
-              </WithTheme>
-            </div>
-          ))}
-        </div>
-      ))}
+          </div>
+        ))}
+      </div>
+      <DevTools />
     </div>
-    <DevTools />
-  </div>
-)));
+  )),
+);

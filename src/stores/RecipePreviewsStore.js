@@ -7,8 +7,6 @@ import Request from './lib/Request';
 export default class RecipePreviewsStore extends Store {
   @observable allRecipePreviewsRequest = new CachedRequest(this.api.recipePreviews, 'all');
 
-  @observable featuredRecipePreviewsRequest = new CachedRequest(this.api.recipePreviews, 'featured');
-
   @observable searchRecipePreviewsRequest = new Request(this.api.recipePreviews, 'search');
 
   constructor(...args) {
@@ -22,16 +20,12 @@ export default class RecipePreviewsStore extends Store {
     return this.allRecipePreviewsRequest.execute().result || [];
   }
 
-  @computed get featured() {
-    return this.featuredRecipePreviewsRequest.execute().result || [];
-  }
-
   @computed get searchResults() {
     return this.searchRecipePreviewsRequest.result || [];
   }
 
   @computed get dev() {
-    return this.stores.recipes.all.filter(r => r.local);
+    return this.stores.recipes.all.filter((r) => r.local);
   }
 
   // Actions

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react';
 import { defineMessages, intlShape } from 'react-intl';
 
-import { isDevMode, termsBase, useLiveAPI } from '../../environment';
+import { isDevMode, useLiveAPI } from '../../environment';
 import Form from '../../lib/Form';
 import { required, email, minLength } from '../../helpers/validation-helpers';
 import serverlessLogin from '../../helpers/serverless-helpers';
@@ -14,6 +14,7 @@ import Link from '../ui/Link';
 import Infobox from '../ui/Infobox';
 
 import { globalError as globalErrorPropType } from '../../prop-types';
+import { termsBase } from '../../api/apiBase';
 
 const messages = defineMessages({
   headline: {
@@ -138,7 +139,7 @@ export default @inject('actions') @observer class Signup extends Component {
     return (
       <div className="auth__scroll-container">
         <div className="auth__container auth__container--signup">
-          <form className="franz-form auth__form" onSubmit={e => this.submit(e)}>
+          <form className="franz-form auth__form" onSubmit={(e) => this.submit(e)}>
             <img
               src="./assets/images/logo.svg"
               className="auth__logo"

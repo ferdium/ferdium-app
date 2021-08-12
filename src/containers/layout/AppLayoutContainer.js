@@ -20,7 +20,6 @@ import Sidebar from '../../components/layout/Sidebar';
 import Services from '../../components/services/content/Services';
 import AppLoader from '../../components/ui/AppLoader';
 
-import { state as delayAppState } from '../../features/delayApp';
 import { workspaceActions } from '../../features/workspaces/actions';
 import WorkspaceDrawer from '../../features/workspaces/components/WorkspaceDrawer';
 import { workspaceStore } from '../../features/workspaces';
@@ -55,8 +54,11 @@ export default @inject('stores', 'actions') @observer class AppLayoutContainer e
       reload,
       toggleNotifications,
       toggleAudio,
+      toggleDarkMode,
       deleteService,
       updateService,
+      hibernate,
+      awake,
     } = this.props.actions.service;
 
     const { hide } = this.props.actions.news;
@@ -91,10 +93,9 @@ export default @inject('stores', 'actions') @observer class AppLayoutContainer e
 
     const workspacesDrawer = (
       <WorkspaceDrawer
-        getServicesForWorkspace={workspace => (
-          workspace ? workspaceStore.getWorkspaceServices(workspace).map(s => s.name) : services.all.map(s => s.name)
+        getServicesForWorkspace={(workspace) => (
+          workspace ? workspaceStore.getWorkspaceServices(workspace).map((s) => s.name) : services.all.map((s) => s.name)
         )}
-        onUpgradeAccountClick={() => openSettings({ path: 'user' })}
       />
     );
 
@@ -109,8 +110,11 @@ export default @inject('stores', 'actions') @observer class AppLayoutContainer e
         reload={reload}
         toggleNotifications={toggleNotifications}
         toggleAudio={toggleAudio}
+        toggleDarkMode={toggleDarkMode}
         deleteService={deleteService}
         updateService={updateService}
+        hibernateService={hibernate}
+        wakeUpService={awake}
         toggleMuteApp={toggleMuteApp}
         toggleWorkspaceDrawer={workspaceActions.toggleWorkspaceDrawer}
         isWorkspaceDrawerOpen={workspaceStore.isWorkspaceDrawerOpen}
@@ -131,7 +135,6 @@ export default @inject('stores', 'actions') @observer class AppLayoutContainer e
         openSettings={openSettings}
         update={updateService}
         userHasCompletedSignup={user.hasCompletedSignup}
-        hasActivatedTrial={user.hasActivatedTrial}
         isSpellcheckerEnabled={settings.app.enableSpellchecking}
       />
     );
@@ -157,8 +160,6 @@ export default @inject('stores', 'actions') @observer class AppLayoutContainer e
           areRequiredRequestsSuccessful={requests.areRequiredRequestsSuccessful}
           retryRequiredRequests={retryRequiredRequests}
           areRequiredRequestsLoading={requests.areRequiredRequestsLoading}
-          isDelayAppScreenVisible={delayAppState.isDelayAppScreenVisible}
-          hasActivatedTrial={user.hasActivatedTrial}
         >
           {React.Children.count(children) > 0 ? children : null}
         </AppLayout>

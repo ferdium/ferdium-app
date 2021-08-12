@@ -10,7 +10,7 @@ import {
   clipboard, ipcRenderer, nativeImage, shell,
 } from 'electron';
 import { Menu, MenuItem } from '@electron/remote';
-import { isMac } from '../environment';
+import { shortcutKey, isMac } from '../environment';
 
 import { SEARCH_ENGINE_NAMES, SEARCH_ENGINE_URLS } from '../config';
 
@@ -28,6 +28,7 @@ const contextMenuStringTable = {
   cut: () => 'Cut',
   copy: () => 'Copy',
   paste: () => 'Paste',
+  pasteAndMatchStyle: () => 'Paste and match style',
   searchWith: ({ searchEngine }) => `Search with ${searchEngine}`,
   openLinkUrl: () => 'Open Link',
   openLinkInFerdiUrl: () => 'Open Link in Ferdi',
@@ -61,7 +62,7 @@ module.exports = class ContextMenuBuilder {
    * @param  {function} processMenu If passed, this method will be passed the menu to change
    *                                it prior to display. Signature: (menu, info) => menu
    */
-  constructor(webContents, debugMode = false, processMenu = m => m) {
+  constructor(webContents, debugMode = false, processMenu = (m) => m) {
     this.debugMode = debugMode;
     this.processMenu = processMenu;
     this.menu = null;
@@ -261,7 +262,7 @@ module.exports = class ContextMenuBuilder {
     if (menuInfo.misspelledWord) {
       menu.append(
         new MenuItem({
-          label: 'Add to dictionary',
+          label: this.stringTable.addToDictionary(),
           click: () => webContents.session.addWordToSpellCheckerDictionary(menuInfo.misspelledWord),
         }),
       );
@@ -320,7 +321,7 @@ module.exports = class ContextMenuBuilder {
       label: this.stringTable.copyImage(),
       click: () => {
         const result = this.convertImageToBase64(menuInfo.srcURL,
-          dataURL => clipboard.writeImage(nativeImage.createFromDataURL(dataURL)));
+          (dataURL) => clipboard.writeImage(nativeImage.createFromDataURL(dataURL)));
 
         this._sendNotificationOnClipboardEvent(menuInfo.clipboardNotifications, () => `Image copied from URL: ${menuInfo.srcURL}`);
         return result;
@@ -375,7 +376,7 @@ module.exports = class ContextMenuBuilder {
     const webContents = this.getWebContents();
     menu.append(new MenuItem({
       label: this.stringTable.cut(),
-      accelerator: 'CommandOrControl+X',
+      accelerator: `${shortcutKey()}+X`,
       enabled: menuInfo.editFlags.canCut,
       click: () => webContents.cut(),
     }));
@@ -390,7 +391,7 @@ module.exports = class ContextMenuBuilder {
     const webContents = this.getWebContents();
     menu.append(new MenuItem({
       label: this.stringTable.copy(),
-      accelerator: 'CommandOrControl+C',
+      accelerator: `${shortcutKey()}+C`,
       enabled: menuInfo.editFlags.canCopy,
       click: () => webContents.copy(),
     }));
@@ -405,7 +406,7 @@ module.exports = class ContextMenuBuilder {
     const webContents = this.getWebContents();
     menu.append(new MenuItem({
       label: this.stringTable.paste(),
-      accelerator: 'CommandOrControl+V',
+      accelerator: `${shortcutKey()}+V`,
       enabled: menuInfo.editFlags.canPaste,
       click: () => webContents.paste(),
     }));
@@ -422,8 +423,8 @@ module.exports = class ContextMenuBuilder {
       const webContents = this.getWebContents();
       menu.append(
         new MenuItem({
-          label: 'Paste as plain text',
-          accelerator: 'CommandOrControl+Shift+V',
+          label: this.stringTable.pasteAndMatchStyle(),
+          accelerator: `${shortcutKey()}+Shift+V`,
           click: () => webContents.pasteAndMatchStyle(),
         }),
       );
@@ -489,7 +490,7 @@ module.exports = class ContextMenuBuilder {
     const webContents = this.getWebContents();
     menu.append(new MenuItem({
       label: this.stringTable.goBack(),
-      accelerator: 'CommandOrControl+left',
+      accelerator: `${shortcutKey()}+left`,
       enabled: webContents.canGoBack(),
       click: () => webContents.goBack(),
     }));
@@ -504,7 +505,7 @@ module.exports = class ContextMenuBuilder {
     const webContents = this.getWebContents();
     menu.append(new MenuItem({
       label: this.stringTable.goForward(),
-      accelerator: 'CommandOrControl+right',
+      accelerator: `${shortcutKey()}+right`,
       enabled: webContents.canGoForward(),
       click: () => webContents.goForward(),
     }));
@@ -535,7 +536,7 @@ module.exports = class ContextMenuBuilder {
     const baseURL = new URL(menuInfo.pageURL);
     menu.append(new MenuItem({
       label: this.stringTable.goToHomePage(),
-      accelerator: 'CommandOrControl+Home',
+      accelerator: `${shortcutKey()}+Home`,
       enabled: true,
       click: () => {
         // webContents.loadURL(baseURL.origin);

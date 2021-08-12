@@ -1,5 +1,5 @@
-build/
-out/
-packages/*/lib
-src/internal-server
-recipes/
+/build/
+/out/
+/packages/*/lib
+/packages/**/*.test.*
+/recipes/

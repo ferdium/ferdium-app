@@ -1,21 +1,31 @@
 import Icon from '@mdi/react';
-import { Theme } from '@meetfranz/theme';
 import classnames from 'classnames';
-import CSS from 'csstype';
+import { Property } from 'csstype';
 import React, { Component } from 'react';
 import injectStyle, { withTheme } from 'react-jss';
 import Loader from 'react-loader';
 
 import { IFormField, IWithStyle } from '../typings/generic';
+import { Theme } from '../../../theme';
 
-type ButtonType = 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'inverted';
+type ButtonType =
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'danger'
+  | 'warning'
+  | 'inverted';
 
 interface IProps extends IFormField, IWithStyle {
   className?: string;
   disabled?: boolean;
   id?: string;
-  type?: "button" | "reset" | "submit" | undefined;
-  onClick: (event: React.MouseEvent<HTMLButtonElement> | React.MouseEvent<HTMLAnchorElement>) => void;
+  type?: 'button' | 'reset' | 'submit' | undefined;
+  onClick: (
+    event:
+      | React.MouseEvent<HTMLButtonElement>
+      | React.MouseEvent<HTMLAnchorElement>,
+  ) => void;
   buttonType?: ButtonType;
   stretch?: boolean;
   loaded?: boolean;
@@ -25,8 +35,12 @@ interface IProps extends IFormField, IWithStyle {
   target?: string;
 }
 
-interface IState {
-  busy: boolean;
+let buttonTransition: string = 'none';
+let loaderContainerTransition: string = 'none';
+
+if (window && window.matchMedia('(prefers-reduced-motion: no-preference)')) {
+  buttonTransition = 'background .5s, opacity 0.3s';
+  loaderContainerTransition = 'all 0.3s';
 }
 
 const styles = (theme: Theme) => ({
@@ -34,16 +48,16 @@ const styles = (theme: Theme) => ({
     borderRadius: theme.borderRadiusSmall,
     border: 'none',
     display: 'inline-flex',
-    position: 'relative' as CSS.PositionProperty,
-    transition: 'background .5s, opacity 0.3s',
-    textAlign: 'center' as CSS.TextAlignProperty,
+    position: 'relative' as Property.Position,
+    transition: buttonTransition,
+    textAlign: 'center' as Property.TextAlign,
     outline: 'none',
     alignItems: 'center',
     padding: 0,
-    width: (props: IProps) => (props.stretch ? '100%' : 'auto') as CSS.WidthProperty<string>,
+    width: (props: IProps) =>
+      (props.stretch ? '100%' : 'auto') as Property.Width<string>,
     fontSize: theme.uiFontSize,
     textDecoration: 'none',
-    // height: theme.buttonHeight,
 
     '&:hover': {
       opacity: 0.8,
@@ -113,7 +127,7 @@ const styles = (theme: Theme) => ({
     opacity: theme.inputDisabledOpacity,
   },
   loader: {
-    position: 'relative' as CSS.PositionProperty,
+    position: 'relative' as Property.Position,
     width: 20,
     height: 18,
     zIndex: 9999,
@@ -122,10 +136,11 @@ const styles = (theme: Theme) => ({
     width: (props: IProps): string => (!props.busy ? '0' : '40px'),
     height: 20,
     overflow: 'hidden',
-    transition: 'all 0.3s',
-    marginLeft: (props: IProps): number => !props.busy ? 10 : 20,
-    marginRight: (props: IProps): number => !props.busy ? -10 : -20,
-    position: (props: IProps): CSS.PositionProperty => props.stretch ? 'absolute' : 'inherit',
+    transition: loaderContainerTransition,
+    marginLeft: (props: IProps): number => (!props.busy ? 10 : 20),
+    marginRight: (props: IProps): number => (!props.busy ? -10 : -20),
+    position: (props: IProps): Property.Position =>
+      props.stretch ? 'absolute' : 'inherit',
   },
   icon: {
     margin: [1, 10, 0, -5],
@@ -155,7 +170,7 @@ class ButtonComponent extends Component<IProps> {
       if (this.props.busy) {
         setTimeout(() => {
           this.setState({ busy: nextProps.busy });
-        },         300);
+        }, 300);
       } else {
         this.setState({ busy: nextProps.busy });
       }
@@ -175,19 +190,18 @@ class ButtonComponent extends Component<IProps> {
       buttonType,
       loaded,
       icon,
-      busy: busyProp,
       href,
       target,
     } = this.props;
 
-    const {
-      busy,
-    } = this.state;
+    const { busy } = this.state;
 
     let showLoader = false;
     if (loaded) {
       showLoader = !loaded;
-      console.warn('Ferdi Button prop `loaded` will be deprecated in the future. Please use `busy` instead');
+      console.warn(
+        'Ferdi Button prop `loaded` will be deprecated in the future. Please use `busy` instead',
+      );
     }
     if (busy) {
       showLoader = busy;
@@ -207,19 +221,13 @@ class ButtonComponent extends Component<IProps> {
           )}
         </div>
         <div className={classes.label}>
-          {icon && (
-            <Icon
-              path={icon}
-              size={0.8}
-              className={classes.icon}
-            />
-          )}
+          {icon && <Icon path={icon} size={0.8} className={classes.icon} />}
           {label}
         </div>
       </>
     );
 
-    let wrapperComponent = null;
+    let wrapperComponent: JSX.Element;
 
     if (!href) {
       wrapperComponent = (

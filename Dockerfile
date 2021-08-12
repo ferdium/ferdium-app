@@ -1,6 +1,6 @@
 # Note: Before running this file, you should have already cloned the git repo + submodules on the host machine. This is used when actively developing on your local machine, but you want to build for a different architecture
 
-FROM node:fermium-buster as builder
+FROM node:14.17.3-buster as builder
 
 # TODO: Need to setup a non-root user for security purposes
 
@@ -18,11 +18,8 @@ RUN apt-get update -y \
 
 WORKDIR /usr/src/ferdi
 
-COPY package*.json ./
-COPY lerna.json ./
-
-RUN npm i -g node-gyp@8.0.0 \
-  && npm config set node_gyp "$(which node-gyp)"
+RUN npm i -g node-gyp@8.1.0 \
+  && npm i -g lerna@4.0.0
 
 COPY . .
 

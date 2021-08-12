@@ -14,9 +14,12 @@ class TabBarSortableList extends Component {
     reload: PropTypes.func.isRequired,
     toggleNotifications: PropTypes.func.isRequired,
     toggleAudio: PropTypes.func.isRequired,
+    toggleDarkMode: PropTypes.func.isRequired,
     deleteService: PropTypes.func.isRequired,
     disableService: PropTypes.func.isRequired,
     enableService: PropTypes.func.isRequired,
+    hibernateService: PropTypes.func.isRequired,
+    wakeUpService: PropTypes.func.isRequired,
     showMessageBadgeWhenMutedSetting: PropTypes.bool.isRequired,
     showMessageBadgesEvenWhenMuted: PropTypes.bool.isRequired,
   }
@@ -28,9 +31,12 @@ class TabBarSortableList extends Component {
       reload,
       toggleNotifications,
       toggleAudio,
+      toggleDarkMode,
       deleteService,
       disableService,
       enableService,
+      hibernateService,
+      wakeUpService,
       openSettings,
       showMessageBadgeWhenMutedSetting,
       showMessageBadgesEvenWhenMuted,
@@ -50,23 +56,17 @@ class TabBarSortableList extends Component {
             reload={() => reload({ serviceId: service.id })}
             toggleNotifications={() => toggleNotifications({ serviceId: service.id })}
             toggleAudio={() => toggleAudio({ serviceId: service.id })}
+            toggleDarkMode={() => toggleDarkMode({ serviceId: service.id })}
             deleteService={() => deleteService({ serviceId: service.id })}
             disableService={() => disableService({ serviceId: service.id })}
             enableService={() => enableService({ serviceId: service.id })}
+            hibernateService={() => hibernateService({ serviceId: service.id })}
+            wakeUpService={() => wakeUpService({ serviceId: service.id })}
             openSettings={openSettings}
             showMessageBadgeWhenMutedSetting={showMessageBadgeWhenMutedSetting}
             showMessageBadgesEvenWhenMuted={showMessageBadgesEvenWhenMuted}
           />
         ))}
-        {/* <li>
-          <button
-            className="sidebar__add-service"
-            onClick={() => openSettings({ path: 'recipes' })}
-            data-tip={`${intl.formatMessage(messages.addNewService)} (${ctrlKey}+N)`}
-          >
-            <span className="mdi mdi-plus" />
-          </button>
-        </li> */}
       </ul>
     );
   }

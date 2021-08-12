@@ -1,6 +1,4 @@
-import {
-  Menu, dialog, app, getCurrentWindow,
-} from '@electron/remote';
+import { Menu, dialog, app, getCurrentWindow } from '@electron/remote';
 import React, { Component } from 'react';
 import { defineMessages, intlShape } from 'react-intl';
 import PropTypes from 'prop-types';
@@ -12,9 +10,11 @@ import ms from 'ms';
 
 import { observable, autorun } from 'mobx';
 import ServiceModel from '../../../models/Service';
-import { ctrlKey, cmdKey } from '../../../environment';
+import { shortcutKey } from '../../../environment';
 
-const IS_SERVICE_DEBUGGING_ENABLED = (localStorage.getItem('debug') || '').includes('Ferdi:Service');
+const IS_SERVICE_DEBUGGING_ENABLED = (
+  localStorage.getItem('debug') || ''
+).includes('Ferdi:Service');
 
 const messages = defineMessages({
   reload: {
@@ -41,6 +41,14 @@ const messages = defineMessages({
     id: 'tabs.item.enableAudio',
     defaultMessage: '!!!Enable audio',
   },
+  enableDarkMode: {
+    id: 'tabs.item.enableDarkMode',
+    defaultMessage: '!!!Enable Dark mode',
+  },
+  disableDarkMode: {
+    id: 'tabs.item.disableDarkMode',
+    defaultMessage: '!!!Disable Dark mode',
+  },
   disableService: {
     id: 'tabs.item.disableService',
     defaultMessage: '!!!Disable Service',
@@ -49,15 +57,34 @@ const messages = defineMessages({
     id: 'tabs.item.enableService',
     defaultMessage: '!!!Enable Service',
   },
+  hibernateService: {
+    id: 'tabs.item.hibernateService',
+    defaultMessage: '!!!Hibernate Service',
+  },
+  wakeUpService: {
+    id: 'tabs.item.wakeUpService',
+    defaultMessage: '!!!Wake Up Service',
+  },
   deleteService: {
     id: 'tabs.item.deleteService',
     defaultMessage: '!!!Delete Service',
   },
   confirmDeleteService: {
     id: 'tabs.item.confirmDeleteService',
-    defaultMessage: '!!!Do you really want to delete the {serviceName} service?',
+    defaultMessage:
+      '!!!Do you really want to delete the {serviceName} service?',
   },
 });
+
+let pollIndicatorTransition = 'none';
+let polledTransition = 'none';
+let pollAnsweredTransition = 'none';
+
+if (window && window.matchMedia('(prefers-reduced-motion: no-preference)')) {
+  pollIndicatorTransition = 'background 0.5s';
+  polledTransition = 'background 0.1s';
+  pollAnsweredTransition = 'background 0.1s';
+}
 
 const styles = {
   pollIndicator: {
@@ -67,7 +94,7 @@ const styles = {
     height: 10,
     borderRadius: 5,
     background: 'gray',
-    transition: 'background 0.5s',
+    transition: pollIndicatorTransition,
   },
   pollIndicatorPoll: {
     left: 2,
@@ -77,18 +104,20 @@ const styles = {
   },
   polled: {
     background: 'yellow !important',
-    transition: 'background 0.1s',
+    transition: polledTransition,
   },
   pollAnswered: {
     background: 'green !important',
-    transition: 'background 0.1s',
+    transition: pollAnsweredTransition,
   },
   stale: {
     background: 'red !important',
   },
 };
 
-@injectSheet(styles) @observer class TabItem extends Component {
+@injectSheet(styles)
+@observer
+class TabItem extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     service: PropTypes.instanceOf(ServiceModel).isRequired,
@@ -97,10 +126,13 @@ const styles = {
     reload: PropTypes.func.isRequired,
     toggleNotifications: PropTypes.func.isRequired,
     toggleAudio: PropTypes.func.isRequired,
+    toggleDarkMode: PropTypes.func.isRequired,
     openSettings: PropTypes.func.isRequired,
     deleteService: PropTypes.func.isRequired,
     disableService: PropTypes.func.isRequired,
     enableService: PropTypes.func.isRequired,
+    hibernateService: PropTypes.func.isRequired,
+    wakeUpService: PropTypes.func.isRequired,
     showMessageBadgeWhenMutedSetting: PropTypes.bool.isRequired,
     showMessageBadgesEvenWhenMuted: PropTypes.bool.isRequired,
   };
@@ -121,13 +153,17 @@ const styles = {
         if (Date.now() - service.lastPoll < ms('0.2s')) {
           this.isPolled = true;
 
-          setTimeout(() => { this.isPolled = false; }, ms('1s'));
+          setTimeout(() => {
+            this.isPolled = false;
+          }, ms('1s'));
         }
 
         if (Date.now() - service.lastPollAnswer < ms('0.2s')) {
           this.isPollAnswered = true;
 
-          setTimeout(() => { this.isPollAnswered = false; }, ms('1s'));
+          setTimeout(() => {
+            this.isPollAnswered = false;
+          }, ms('1s'));
         }
       });
     }
@@ -142,67 +178,103 @@ const styles = {
       reload,
       toggleNotifications,
       toggleAudio,
+      toggleDarkMode,
       deleteService,
       disableService,
       enableService,
+      hibernateService,
+      wakeUpService,
       openSettings,
       showMessageBadgeWhenMutedSetting,
       showMessageBadgesEvenWhenMuted,
     } = this.props;
     const { intl } = this.context;
 
-    const menuTemplate = [{
-      label: service.name || service.recipe.name,
-      enabled: false,
-    }, {
-      type: 'separator',
-    }, {
-      label: intl.formatMessage(messages.reload),
-      click: reload,
-      accelerator: `${cmdKey}+R`,
-    }, {
-      label: intl.formatMessage(messages.edit),
-      click: () => openSettings({
-        path: `services/edit/${service.id}`,
-      }),
-    }, {
-      type: 'separator',
-    }, {
-      label: service.isNotificationEnabled
-        ? intl.formatMessage(messages.disableNotifications)
-        : intl.formatMessage(messages.enableNotifications),
-      click: () => toggleNotifications(),
-    }, {
-      label: service.isMuted
-        ? intl.formatMessage(messages.enableAudio)
-        : intl.formatMessage(messages.disableAudio),
-      click: () => toggleAudio(),
-    }, {
-      label: intl.formatMessage(service.isEnabled ? messages.disableService : messages.enableService),
-      click: () => (service.isEnabled ? disableService() : enableService()),
-    }, {
-      type: 'separator',
-    }, {
-      label: intl.formatMessage(messages.deleteService),
-      click: () => {
-        const selection = dialog.showMessageBoxSync(app.mainWindow, {
-          type: 'question',
-          message: intl.formatMessage(messages.deleteService),
-          detail: intl.formatMessage(messages.confirmDeleteService, { serviceName: service.name || service.recipe.name }),
-          buttons: [
-            'Yes',
-            'No',
-          ],
-        });
-        if (selection === 0) {
-          deleteService();
-        }
+    const menuTemplate = [
+      {
+        label: service.name || service.recipe.name,
+        enabled: false,
       },
-    }];
+      {
+        type: 'separator',
+      },
+      {
+        label: intl.formatMessage(messages.reload),
+        click: reload,
+        accelerator: `${shortcutKey()}+R`,
+      },
+      {
+        label: intl.formatMessage(messages.edit),
+        click: () =>
+          openSettings({
+            path: `services/edit/${service.id}`,
+          }),
+      },
+      {
+        type: 'separator',
+      },
+      {
+        label: service.isNotificationEnabled
+          ? intl.formatMessage(messages.disableNotifications)
+          : intl.formatMessage(messages.enableNotifications),
+        click: () => toggleNotifications(),
+      },
+      {
+        label: service.isMuted
+          ? intl.formatMessage(messages.enableAudio)
+          : intl.formatMessage(messages.disableAudio),
+        click: () => toggleAudio(),
+      },
+      {
+        label: service.isDarkModeEnabled
+          ? intl.formatMessage(messages.enableDarkMode)
+          : intl.formatMessage(messages.disableDarkMode),
+        click: () => toggleDarkMode(),
+      },
+      {
+        label: intl.formatMessage(
+          service.isEnabled ? messages.disableService : messages.enableService,
+        ),
+        click: () => (service.isEnabled ? disableService() : enableService()),
+      },
+      {
+        label: intl.formatMessage(
+          service.isHibernating
+            ? messages.wakeUpService
+            : messages.hibernateService,
+        ),
+        click: () =>
+          (service.isHibernating ? wakeUpService() : hibernateService()),
+        enabled: service.canHibernate,
+      },
+      {
+        type: 'separator',
+      },
+      {
+        label: intl.formatMessage(messages.deleteService),
+        click: () => {
+          const selection = dialog.showMessageBoxSync(app.mainWindow, {
+            type: 'question',
+            message: intl.formatMessage(messages.deleteService),
+            detail: intl.formatMessage(messages.confirmDeleteService, {
+              serviceName: service.name || service.recipe.name,
+            }),
+            buttons: ['Yes', 'No'],
+          });
+          if (selection === 0) {
+            deleteService();
+          }
+        },
+      },
+    ];
     const menu = Menu.buildFromTemplate(menuTemplate);
 
     let notificationBadge = null;
-    if ((showMessageBadgeWhenMutedSetting || service.isNotificationEnabled) && showMessageBadgesEvenWhenMuted && service.isBadgeEnabled) {
+    if (
+      (showMessageBadgeWhenMutedSetting || service.isNotificationEnabled) &&
+      showMessageBadgesEvenWhenMuted &&
+      service.isBadgeEnabled
+    ) {
       notificationBadge = (
         <span>
           {service.unreadDirectMessageCount > 0 && (
@@ -210,17 +282,13 @@ const styles = {
               {service.unreadDirectMessageCount}
             </span>
           )}
-          {service.unreadIndirectMessageCount > 0
-            && service.unreadDirectMessageCount === 0
-            && service.isIndirectMessageBadgeEnabled && (
-            <span className="tab-item__message-count is-indirect">
-              •
-            </span>
+          {service.unreadIndirectMessageCount > 0 &&
+            service.unreadDirectMessageCount === 0 &&
+            service.isIndirectMessageBadgeEnabled && (
+              <span className="tab-item__message-count is-indirect">•</span>
           )}
-          {service.isHibernating && !service.isHibernationEnabled && (
-            <span className="tab-item__message-count hibernating">
-              •
-            </span>
+          {service.isHibernating && (
+            <span className="tab-item__message-count hibernating">•</span>
           )}
         </span>
       );
@@ -229,7 +297,8 @@ const styles = {
     return (
       <li
         className={classnames({
-          [classes.stale]: IS_SERVICE_DEBUGGING_ENABLED && service.lostRecipeConnection,
+          [classes.stale]:
+            IS_SERVICE_DEBUGGING_ENABLED && service.lostRecipeConnection,
           'tab-item': true,
           'is-active': service.isActive,
           'has-custom-icon': service.hasCustomIcon,
@@ -237,13 +306,11 @@ const styles = {
         })}
         onClick={clickHandler}
         onContextMenu={() => menu.popup(getCurrentWindow())}
-        data-tip={`${service.name} ${shortcutIndex <= 9 ? `(${ctrlKey}+${shortcutIndex})` : ''}`}
+        data-tip={`${service.name} ${
+          shortcutIndex <= 9 ? `(${shortcutKey(false)}+${shortcutIndex})` : ''
+        }`}
       >
-        <img
-          src={service.icon}
-          className="tab-item__icon"
-          alt=""
-        />
+        <img src={service.icon} className="tab-item__icon" alt="" />
         {notificationBadge}
         {IS_SERVICE_DEBUGGING_ENABLED && (
           <>

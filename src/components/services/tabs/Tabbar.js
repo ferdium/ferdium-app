@@ -15,8 +15,11 @@ export default @observer class TabBar extends Component {
     reload: PropTypes.func.isRequired,
     toggleNotifications: PropTypes.func.isRequired,
     toggleAudio: PropTypes.func.isRequired,
+    toggleDarkMode: PropTypes.func.isRequired,
     deleteService: PropTypes.func.isRequired,
     updateService: PropTypes.func.isRequired,
+    hibernateService: PropTypes.func.isRequired,
+    wakeUpService: PropTypes.func.isRequired,
     showMessageBadgeWhenMutedSetting: PropTypes.bool.isRequired,
     showMessageBadgesEvenWhenMuted: PropTypes.bool.isRequired,
   };
@@ -31,7 +34,7 @@ export default @observer class TabBar extends Component {
     reorder({ oldIndex, newIndex });
   };
 
-  shouldPreventSorting = event => event.target.tagName !== 'LI';
+  shouldPreventSorting = (event) => event.target.tagName !== 'LI';
 
   toggleService = ({ serviceId, isEnabled }) => {
     const { updateService } = this.props;
@@ -55,6 +58,18 @@ export default @observer class TabBar extends Component {
     this.toggleService({ serviceId, isEnabled: true });
   }
 
+  hibernateService({ serviceId }) {
+    if (serviceId) {
+      this.props.hibernateService({ serviceId });
+    }
+  }
+
+  wakeUpService({ serviceId }) {
+    if (serviceId) {
+      this.props.wakeUpService({ serviceId });
+    }
+  }
+
   render() {
     const {
       services,
@@ -64,6 +79,7 @@ export default @observer class TabBar extends Component {
       reload,
       toggleNotifications,
       toggleAudio,
+      toggleDarkMode,
       deleteService,
       showMessageBadgeWhenMutedSetting,
       showMessageBadgesEvenWhenMuted,
@@ -80,9 +96,12 @@ export default @observer class TabBar extends Component {
           reload={reload}
           toggleNotifications={toggleNotifications}
           toggleAudio={toggleAudio}
+          toggleDarkMode={toggleDarkMode}
           deleteService={deleteService}
-          disableService={args => this.disableService(args)}
-          enableService={args => this.enableService(args)}
+          disableService={(args) => this.disableService(args)}
+          enableService={(args) => this.enableService(args)}
+          hibernateService={(args) => this.hibernateService(args)}
+          wakeUpService={(args) => this.wakeUpService(args)}
           openSettings={openSettings}
           distance={20}
           axis="y"

@@ -1,11 +1,9 @@
 import { shell } from 'electron';
-import { app } from '@electron/remote';
-import fs from 'fs-extra';
+import { ensureDirSync, readJsonSync } from 'fs-extra';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { autorun } from 'mobx';
 import { inject, observer } from 'mobx-react';
-import path from 'path';
 
 import RecipePreviewsStore from '../../stores/RecipePreviewsStore';
 import RecipeStore from '../../stores/RecipesStore';
@@ -15,7 +13,7 @@ import UserStore from '../../stores/UserStore';
 import RecipesDashboard from '../../components/settings/recipes/RecipesDashboard';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 import { CUSTOM_WEBSITE_RECIPE_ID, FRANZ_DEV_DOCS } from '../../config';
-import { RECIPES_PATH } from '../../environment';
+import { asarRecipesPath, userDataRecipesPath } from '../../environment';
 import { communityRecipesStore } from '../../features/communityRecipes';
 import RecipePreview from '../../models/RecipePreview';
 import AppStore from '../../stores/AppStore';
@@ -45,18 +43,16 @@ export default @inject('stores', 'actions') @observer class RecipesScreen extend
   constructor(props) {
     super(props);
 
-    this.customRecipes = fs.readJsonSync(path.join(RECIPES_PATH, 'all.json'));
+    this.customRecipes = readJsonSync(asarRecipesPath('all.json'));
   }
 
   componentDidMount() {
     this.autorunDisposer = autorun(() => {
-      const { filter } = this.props.params;
+      const { filter } = { filter: 'all', ...this.props.params };
       const { currentFilter } = this.state;
 
       if (filter === 'all' && currentFilter !== 'all') {
         this.setState({ currentFilter: 'all' });
-      } else if (filter === 'featured' && currentFilter !== 'featured') {
-        this.setState({ currentFilter: 'featured' });
       } else if (filter === 'dev' && currentFilter !== 'dev') {
         this.setState({ currentFilter: 'dev' });
       }
@@ -82,7 +78,7 @@ export default @inject('stores', 'actions') @observer class RecipesScreen extend
     return recipes
     // Filter out duplicate recipes
       .filter((recipe, index, self) => {
-        const ids = self.map(rec => rec.id);
+        const ids = self.map((rec) => rec.id);
         return ids.indexOf(recipe.id) === index;
 
         // Sort alphabetically
@@ -95,7 +91,7 @@ export default @inject('stores', 'actions') @observer class RecipesScreen extend
 
   // Create an array of RecipePreviews from an array of recipe objects
   createPreviews(recipes) {
-    return recipes.map(recipe => new RecipePreview(recipe));
+    return recipes.map((recipe) => new RecipePreview(recipe));
   }
 
   resetSearch() {
@@ -107,7 +103,6 @@ export default @inject('stores', 'actions') @observer class RecipesScreen extend
       recipePreviews,
       recipes,
       services,
-      user,
     } = this.props.stores;
 
     const {
@@ -115,7 +110,7 @@ export default @inject('stores', 'actions') @observer class RecipesScreen extend
       service: serviceActions,
     } = this.props.actions;
 
-    const { filter } = this.props.params;
+    const { filter } = { filter: 'all', ...this.props.params };
     let recipeFilter;
 
     if (filter === 'all') {
@@ -125,8 +120,6 @@ export default @inject('stores', 'actions') @observer class RecipesScreen extend
       ]);
     } else if (filter === 'dev') {
       recipeFilter = communityRecipesStore.communityRecipes;
-    } else {
-      recipeFilter = recipePreviews.featured;
     }
 
     const allRecipes = this.state.needle ? this.prepareRecipes([
@@ -135,18 +128,17 @@ export default @inject('stores', 'actions') @observer class RecipesScreen extend
       // All search recipes from local recipes
       ...this.createPreviews(
         this.customRecipes
-          .filter(service => service.name.toLowerCase().includes(this.state.needle.toLowerCase())),
+          .filter((service) => service.name.toLowerCase().includes(this.state.needle.toLowerCase()) || (service.aliases || []).some(alias => alias.toLowerCase().includes(this.state.needle.toLowerCase()))),
       ),
     ]) : recipeFilter;
 
-    const customWebsiteRecipe = recipePreviews.all.find(service => service.id === CUSTOM_WEBSITE_RECIPE_ID);
+    const customWebsiteRecipe = recipePreviews.all.find((service) => service.id === CUSTOM_WEBSITE_RECIPE_ID);
 
-    const isLoading = recipePreviews.featuredRecipePreviewsRequest.isExecuting
-      || recipePreviews.allRecipePreviewsRequest.isExecuting
+    const isLoading = recipePreviews.allRecipePreviewsRequest.isExecuting
       || recipes.installRecipeRequest.isExecuting
       || recipePreviews.searchRecipePreviewsRequest.isExecuting;
 
-    const recipeDirectory = path.join(app.getPath('userData'), 'recipes', 'dev');
+    const recipeDirectory = userDataRecipesPath('dev');
 
     return (
       <ErrorBoundary>
@@ -155,24 +147,20 @@ export default @inject('stores', 'actions') @observer class RecipesScreen extend
           customWebsiteRecipe={customWebsiteRecipe}
           isLoading={isLoading}
           addedServiceCount={services.all.length}
-          isPremium={user.data.isPremium}
-          hasLoadedRecipes={recipePreviews.featuredRecipePreviewsRequest.wasExecuted}
           showAddServiceInterface={serviceActions.showAddServiceInterface}
-          searchRecipes={e => this.searchRecipes(e)}
+          searchRecipes={(e) => this.searchRecipes(e)}
           resetSearch={() => this.resetSearch()}
           searchNeedle={this.state.needle}
           serviceStatus={services.actionStatus}
           recipeFilter={filter}
           recipeDirectory={recipeDirectory}
           openRecipeDirectory={async () => {
-            await fs.ensureDir(recipeDirectory);
+            ensureDirSync(recipeDirectory);
             shell.openExternal(`file://${recipeDirectory}`);
           }}
           openDevDocs={() => {
             appActions.openExternalUrl({ url: FRANZ_DEV_DOCS });
           }}
-          isCommunityRecipesIncludedInCurrentPlan={communityRecipesStore.isCommunityRecipesIncludedInCurrentPlan}
-          isUserPremiumUser={user.isPremium}
         />
       </ErrorBoundary>
     );

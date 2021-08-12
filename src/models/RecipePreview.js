@@ -7,8 +7,9 @@ export default class RecipePreview {
 
   icon = '';
 
-  // TODO: check if this isn't replaced by `icons`
   featured = false;
+
+  aliases = [];
 
   constructor(data) {
     if (!data.id) {

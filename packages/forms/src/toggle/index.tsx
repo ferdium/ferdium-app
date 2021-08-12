@@ -1,10 +1,10 @@
-import { Theme } from '@meetfranz/theme';
 import classnames from 'classnames';
-import CSS from 'csstype';
+import { Property } from 'csstype';
 import React, { Component } from 'react';
 import injectStyle from 'react-jss';
 
-import { IFormField, IWithStyle, Omit } from '../typings/generic';
+import { IFormField, IWithStyle } from '../typings/generic';
+import { Theme } from '../../../theme';
 
 import { Error } from '../error';
 import { Label } from '../label';
@@ -17,12 +17,18 @@ interface IProps
   className?: string;
 }
 
+let buttonTransition: string = 'none';
+
+if (window && window.matchMedia('(prefers-reduced-motion: no-preference)')) {
+  buttonTransition = 'all .5s';
+}
+
 const styles = (theme: Theme) => ({
   toggle: {
     background: theme.toggleBackground,
     borderRadius: theme.borderRadius,
     height: theme.toggleHeight,
-    position: 'relative' as CSS.PositionProperty,
+    position: 'relative' as Property.Position,
     width: theme.toggleWidth,
   },
   button: {
@@ -33,8 +39,8 @@ const styles = (theme: Theme) => ({
     height: theme.toggleHeight - 2,
     left: 1,
     top: 1,
-    position: 'absolute' as CSS.PositionProperty,
-    transition: 'all .5s',
+    position: 'absolute' as Property.Position,
+    transition: buttonTransition,
   },
   buttonActive: {
     background: theme.toggleButtonActive,

@@ -6,15 +6,12 @@ import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router';
 
 import Tabbar from '../services/tabs/Tabbar';
-import { ctrlKey, isMac } from '../../environment';
+import { settingsShortcutKey, lockFerdiShortcutKey, todosToggleShortcutKey, workspaceToggleShortcutKey, addNewServiceShortcutKey, muteFerdiShortcutKey } from '../../environment';
 import { workspaceStore } from '../../features/workspaces';
 import { todosStore } from '../../features/todos';
 import { todoActions } from '../../features/todos/actions';
 import AppStore from '../../stores/AppStore';
 import SettingsStore from '../../stores/SettingsStore';
-
-// Platform specific shortcut keys
-const settingsShortcutKey = isMac ? ',' : 'P';
 
 const messages = defineMessages({
   settings: {
@@ -58,6 +55,19 @@ const messages = defineMessages({
 export default @inject('stores', 'actions') @observer class Sidebar extends Component {
   static propTypes = {
     openSettings: PropTypes.func.isRequired,
+    closeSettings: PropTypes.func.isRequired,
+    setActive: PropTypes.func.isRequired,
+    reorder: PropTypes.func.isRequired,
+    reload: PropTypes.func.isRequired,
+    toggleNotifications: PropTypes.func.isRequired,
+    toggleAudio: PropTypes.func.isRequired,
+    toggleDarkMode: PropTypes.func.isRequired,
+    showMessageBadgeWhenMutedSetting: PropTypes.bool.isRequired,
+    showMessageBadgesEvenWhenMuted: PropTypes.bool.isRequired,
+    deleteService: PropTypes.func.isRequired,
+    updateService: PropTypes.func.isRequired,
+    hibernateService: PropTypes.func.isRequired,
+    wakeUpService: PropTypes.func.isRequired,
     toggleMuteApp: PropTypes.func.isRequired,
     isAppMuted: PropTypes.bool.isRequired,
     isWorkspaceDrawerOpen: PropTypes.bool.isRequired,
@@ -139,7 +149,7 @@ export default @inject('stores', 'actions') @observer class Sidebar extends Comp
                     },
                   });
                 }}
-                data-tip={`${intl.formatMessage(messages.lockFerdi)} (${ctrlKey}+Shift+L)`}
+                data-tip={`${intl.formatMessage(messages.lockFerdi)} (${lockFerdiShortcutKey(false)})`}
               >
                 <i className="mdi mdi-lock" />
               </button>
@@ -152,8 +162,8 @@ export default @inject('stores', 'actions') @observer class Sidebar extends Comp
                   this.updateToolTip();
                 }}
                 disabled={isTodosServiceActive}
-                className={`sidebar__button sidebar__button--todos  ${todosStore.isTodosPanelVisible ? 'is-active' : ''}`}
-                data-tip={`${intl.formatMessage(todosToggleMessage)} (${ctrlKey}+T)`}
+                className={`sidebar__button sidebar__button--todos ${todosStore.isTodosPanelVisible ? 'is-active' : ''}`}
+                data-tip={`${intl.formatMessage(todosToggleMessage)} (${todosToggleShortcutKey(false)})`}
               >
                 <i className="mdi mdi-check-all" />
               </button>
@@ -166,7 +176,7 @@ export default @inject('stores', 'actions') @observer class Sidebar extends Comp
                   this.updateToolTip();
                 }}
                 className={`sidebar__button sidebar__button--workspaces ${isWorkspaceDrawerOpen ? 'is-active' : ''}`}
-                data-tip={`${intl.formatMessage(workspaceToggleMessage)} (${ctrlKey}+D)`}
+                data-tip={`${intl.formatMessage(workspaceToggleMessage)} (${workspaceToggleShortcutKey(false)})`}
               >
                 <i className="mdi mdi-view-grid" />
               </button>
@@ -178,7 +188,7 @@ export default @inject('stores', 'actions') @observer class Sidebar extends Comp
                 this.updateToolTip();
               }}
               className={`sidebar__button sidebar__button--audio ${isAppMuted ? 'is-muted' : ''}`}
-              data-tip={`${intl.formatMessage(isAppMuted ? messages.unmute : messages.mute)} (${ctrlKey}+Shift+M)`}
+              data-tip={`${intl.formatMessage(isAppMuted ? messages.unmute : messages.mute)} (${muteFerdiShortcutKey(false)})`}
             >
               <i className={`mdi mdi-bell${isAppMuted ? '-off' : ''}`} />
             </button>
@@ -186,7 +196,7 @@ export default @inject('stores', 'actions') @observer class Sidebar extends Comp
               type="button"
               onClick={() => openSettings({ path: 'recipes' })}
               className="sidebar__button sidebar__button--new-service"
-              data-tip={`${intl.formatMessage(messages.addNewService)} (${ctrlKey}+N)`}
+              data-tip={`${intl.formatMessage(messages.addNewService)} (${addNewServiceShortcutKey(false)})`}
             >
               <i className="mdi mdi-plus-box" />
             </button>
@@ -204,9 +214,10 @@ export default @inject('stores', 'actions') @observer class Sidebar extends Comp
           type="button"
           onClick={() => openSettings({ path: 'app' })}
           className="sidebar__button sidebar__button--settings"
-          data-tip={`${intl.formatMessage(messages.settings)} (${ctrlKey}+${settingsShortcutKey})`}
+          data-tip={`${intl.formatMessage(messages.settings)} (${settingsShortcutKey(false)})`}
         >
-          <i className="mdi mdi-settings" />
+          {/* TODO: Because of https://github.com/Templarian/MaterialDesign-Webfont/issues/81 bug in @mdi/font in 5.9.55, added `mdi-memory` as a fallback */}
+          <i className="mdi mdi-settings mdi-memory" />
           { (this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.AVAILABLE
             || this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.DOWNLOADED) && (
             <span className="update-available">
