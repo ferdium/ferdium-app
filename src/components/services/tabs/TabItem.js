@@ -10,7 +10,7 @@ import ms from 'ms';
 
 import { observable, autorun } from 'mobx';
 import ServiceModel from '../../../models/Service';
-import { ctrlKey, cmdKey } from '../../../environment';
+import { shortcutKey } from '../../../environment';
 
 const IS_SERVICE_DEBUGGING_ENABLED = (
   localStorage.getItem('debug') || ''
@@ -201,7 +201,7 @@ class TabItem extends Component {
       {
         label: intl.formatMessage(messages.reload),
         click: reload,
-        accelerator: `${cmdKey}+R`,
+        accelerator: `${shortcutKey()}+R`,
       },
       {
         label: intl.formatMessage(messages.edit),
@@ -307,7 +307,7 @@ class TabItem extends Component {
         onClick={clickHandler}
         onContextMenu={() => menu.popup(getCurrentWindow())}
         data-tip={`${service.name} ${
-          shortcutIndex <= 9 ? `(${ctrlKey}+${shortcutIndex})` : ''
+          shortcutIndex <= 9 ? `(${shortcutKey(false)}+${shortcutIndex})` : ''
         }`}
       >
         <img src={service.icon} className="tab-item__icon" alt="" />

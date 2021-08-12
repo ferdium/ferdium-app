@@ -10,7 +10,7 @@ import {
   clipboard, ipcRenderer, nativeImage, shell,
 } from 'electron';
 import { Menu, MenuItem } from '@electron/remote';
-import { cmdKey, isMac } from '../environment';
+import { shortcutKey, isMac } from '../environment';
 
 import { SEARCH_ENGINE_NAMES, SEARCH_ENGINE_URLS } from '../config';
 
@@ -376,7 +376,7 @@ module.exports = class ContextMenuBuilder {
     const webContents = this.getWebContents();
     menu.append(new MenuItem({
       label: this.stringTable.cut(),
-      accelerator: `${cmdKey}+X`,
+      accelerator: `${shortcutKey()}+X`,
       enabled: menuInfo.editFlags.canCut,
       click: () => webContents.cut(),
     }));
@@ -391,7 +391,7 @@ module.exports = class ContextMenuBuilder {
     const webContents = this.getWebContents();
     menu.append(new MenuItem({
       label: this.stringTable.copy(),
-      accelerator: `${cmdKey}+C`,
+      accelerator: `${shortcutKey()}+C`,
       enabled: menuInfo.editFlags.canCopy,
       click: () => webContents.copy(),
     }));
@@ -406,7 +406,7 @@ module.exports = class ContextMenuBuilder {
     const webContents = this.getWebContents();
     menu.append(new MenuItem({
       label: this.stringTable.paste(),
-      accelerator: `${cmdKey}+V`,
+      accelerator: `${shortcutKey()}+V`,
       enabled: menuInfo.editFlags.canPaste,
       click: () => webContents.paste(),
     }));
@@ -424,7 +424,7 @@ module.exports = class ContextMenuBuilder {
       menu.append(
         new MenuItem({
           label: this.stringTable.pasteAndMatchStyle(),
-          accelerator: `${cmdKey}+Shift+V`,
+          accelerator: `${shortcutKey()}+Shift+V`,
           click: () => webContents.pasteAndMatchStyle(),
         }),
       );
@@ -490,7 +490,7 @@ module.exports = class ContextMenuBuilder {
     const webContents = this.getWebContents();
     menu.append(new MenuItem({
       label: this.stringTable.goBack(),
-      accelerator: `${cmdKey}+left`,
+      accelerator: `${shortcutKey()}+left`,
       enabled: webContents.canGoBack(),
       click: () => webContents.goBack(),
     }));
@@ -505,7 +505,7 @@ module.exports = class ContextMenuBuilder {
     const webContents = this.getWebContents();
     menu.append(new MenuItem({
       label: this.stringTable.goForward(),
-      accelerator: `${cmdKey}+right`,
+      accelerator: `${shortcutKey()}+right`,
       enabled: webContents.canGoForward(),
       click: () => webContents.goForward(),
     }));
@@ -536,7 +536,7 @@ module.exports = class ContextMenuBuilder {
     const baseURL = new URL(menuInfo.pageURL);
     menu.append(new MenuItem({
       label: this.stringTable.goToHomePage(),
-      accelerator: `${cmdKey}+Home`,
+      accelerator: `${shortcutKey()}+Home`,
       enabled: true,
       click: () => {
         // webContents.loadURL(baseURL.origin);
