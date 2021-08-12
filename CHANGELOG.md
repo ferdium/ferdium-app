@@ -1,4 +1,17 @@
-# [v5.6.1-nightly.23](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.22...v5.6.1-nightly.23) (2021-08-11)
+# [v5.6.1-nightly.24](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.23...v5.6.1-nightly.24) (2021-08-12)
+
+- Added new recipe for Proton Calendar (getferdi/recipes#606) 💖 @cereum
+
+### Bug Fixes
+
+- Fix startup crash for Ferdi v5.6.1-nightly.23 💖 @vraravam
+- Fixed the sidebar context menu for toggling dark mode. 💖 @vraravam
+
+### Internal
+
+- Fixed issue with incorrect eslint config. 💖 @vraravam
+
+# [v5.6.1-nightly.23](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.22...v5.6.1-nightly.23) (2021-08-12)
 
 - Allow the user to enable/disable the Dark Model from the context menu of the sidebar 💖 @vraravam
 
