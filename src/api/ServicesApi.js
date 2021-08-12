@@ -8,14 +8,6 @@ export default class ServicesApi {
     return this.server.getServices();
   }
 
-  // one(customerId) {
-  //   return this.server.getCustomer(customerId);
-  // }
-  //
-  // search(needle) {
-  //   return this.server.searchCustomers(needle);
-  // }
-  //
   create(recipeId, data) {
     return this.server.createService(recipeId, data);
   }
