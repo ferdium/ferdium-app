@@ -52,7 +52,7 @@ class ServiceController {
         isNotificationEnabled: true,
         isBadgeEnabled: true,
         isMuted: false,
-        isDarkModeEnabled: false,
+        isDarkModeEnabled: '', // TODO: This should ideally be a boolean (false). But, changing it caused the sidebar toggle to not work.
         spellcheckerLanguage: '',
         order: 1,
         customRecipe: false,
@@ -79,7 +79,7 @@ class ServiceController {
         customRecipe: false,
         hasCustomIcon: false,
         isBadgeEnabled: true,
-        isDarkModeEnabled: false,
+        isDarkModeEnabled: '', // TODO: This should ideally be a boolean (false). But, changing it caused the sidebar toggle to not work.
         isEnabled: true,
         isMuted: false,
         isNotificationEnabled: true,
@@ -253,7 +253,7 @@ class ServiceController {
         customRecipe: false,
         hasCustomIcon: false,
         isBadgeEnabled: true,
-        isDarkModeEnabled: false,
+        isDarkModeEnabled: '', // TODO: This should ideally be a boolean (false). But, changing it caused the sidebar toggle to not work.
         isEnabled: true,
         isMuted: false,
         isNotificationEnabled: true,
