@@ -1,3 +1,20 @@
+# [v5.6.1-nightly.26](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.24...v5.6.1-nightly.26) (2021-08-14)
+
+- Catch up with minor changes in Franz 5.7.0
+- Add entitlements for screen-capture-permissions 💖 @vraravam
+
+### Bug Fixes
+
+- Fix app focus detection 💖 @vraravam
+- Fix beta channel release for snap 💖 @mhatvan
+
+### Internal
+
+- Use destructured 'import' 💖 @vraravam
+- Refactor to reuse already defined constants 💖 @vraravam
+- Use exported default object 💖 @vraravam
+- Replace old '@meetfranz/electron-notification-state' with 'mac… … 💖 @vraravam
+
 # [v5.6.1-nightly.24](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.23...v5.6.1-nightly.24) (2021-08-13)
 
 - Added new recipe for Proton Calendar (getferdi/recipes#606) 💖 @cereum
