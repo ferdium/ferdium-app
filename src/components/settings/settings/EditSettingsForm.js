@@ -12,11 +12,9 @@ import ToggleRaw from '../../ui/ToggleRaw';
 import Select from '../../ui/Select';
 import Input from '../../ui/Input';
 
-import {
-  FRANZ_TRANSLATION,
-  GITHUB_FRANZ_URL,
-} from '../../../config';
-import { DEFAULT_APP_SETTINGS, ferdiVersion, isMac, isWindows, lockFerdiShortcutKey, openPath, userDataPath, userDataRecipesPath } from '../../../environment';
+import { FRANZ_TRANSLATION, GITHUB_FRANZ_URL } from '../../../config';
+import { DEFAULT_APP_SETTINGS, ferdiVersion, isMac, isWindows, lockFerdiShortcutKey, userDataPath, userDataRecipesPath } from '../../../environment';
+import { openPath } from '../../../helpers/url-helpers';
 import globalMessages from '../../../i18n/globalMessages';
 
 const messages = defineMessages({
