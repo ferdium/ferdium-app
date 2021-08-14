@@ -17,7 +17,7 @@
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
     "noUnusedLocals": true,
-    "noUnusedParameters": true, // TODO: Need to switch
+    "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "preserveConstEnums": true,
