@@ -517,7 +517,7 @@ const _titleBarTemplateFactory = (intl, locked) => [
       },
       {
         label: intl.formatMessage(menuItems.changelog),
-        click() { openExternalUrl(`${GITHUB_FERDI_URL}/ferdi/blob/master/CHANGELOG.md`, true); },
+        click() { openExternalUrl(`${GITHUB_FERDI_URL}/ferdi/blob/develop/CHANGELOG.md`, true); },
       },
       {
         label: intl.formatMessage(menuItems.importExportData),
