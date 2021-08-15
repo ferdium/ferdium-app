@@ -1,3 +1,14 @@
+# [v5.6.1-nightly.27](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.26...v5.6.1-nightly.27) (2021-08-15)
+
+- Add buttons in the 'Advanced' section of preferences to allow users to quickly open the ferdi profile in their file explorer 💖 @vraravam
+- [Security] Refactored Url helpers to ensure that there's a single place for vetting and opening external urls as recommended by [this article](https://benjamin-altpeter.de/shell-openexternal-dangers/) (#1789) 💖 @vraravam
+
+### Internal
+
+- Generated '.gitignore' from gitignore.io 💖 @vraravam
+- Setting some config rules for typescript (in preparation for external contributors during hacktoberfest) 💖 @vraravam
+- Moved 'gulp'-related packages to 'devDependencies' resulting in slimming down the installation file considerably (8MB on macos) 💖 @vraravam
+
 # [v5.6.1-nightly.26](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.24...v5.6.1-nightly.26) (2021-08-14)
 
 - Catch up with minor changes in Franz 5.7.0
