@@ -6,6 +6,7 @@
 ### Bug Fixes
 
 - Fixed the 'Changelog' menu item to point to the correct branch 💖 @vraravam
+- Fixed issue with some shortcuts not working on macos (those that either used `alt` or `shift` keys) 💖 @vraravam
 
 ### Internal
 
