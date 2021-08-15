@@ -6,6 +6,8 @@
     "lib": ["es2015", "es2017", "dom"],
     "jsx": "react",
     "typeRoots": ["node_modules/@types"],
+    "moduleResolution": "node",
+    "types": ["node"],
     "sourceMap": true,
     "noImplicitAny": false,   // TODO: Need to switch
     "allowSyntheticDefaultImports": true,
@@ -21,9 +23,5 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "preserveConstEnums": true,
-    // "exclude": [
-    //   "node_modules",
-    //   "**/*.spec.ts"
-    // ]
   }
 }
