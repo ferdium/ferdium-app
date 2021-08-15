@@ -1,7 +1,7 @@
 # [v5.6.1-nightly.28](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.27...v5.6.1-nightly.28) (2021-08-16)
 
 - Moved some npm dependencies that were incorrectly classified as runtime deps. This has saved 11MB from the installed file (on macos) 💖 @vraravam
-- Removed unused npm dependencies 💖 @vraravam
+- Removed unused npm dependencies (shaved anothe 5MB from the installed file on macos) 💖 @vraravam, @mhatvan
 
 ### Bug Fixes
 
@@ -13,6 +13,7 @@
 - Completed plumbing required for conversion from javascript to typescript 💖 @vraravam
 - npm upgrades 💖 @vraravam
 - Started typescript conversion of some simple scripts 💖 @vraravam
+- Added animations step in gulp to transpile scss and copy to build 💖 @mhatvan
 
 # [v5.6.1-nightly.27](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.26...v5.6.1-nightly.27) (2021-08-15)
 
