@@ -245,7 +245,8 @@ export function processJavascripts() {
       [
         paths.javascripts.src,
       ],
-      { since: gulp.lastRun(processJavascripts) })
+      { since: gulp.lastRun(processJavascripts) },
+    )
     .pipe(
       babel({
         comments: false,
@@ -262,7 +263,8 @@ export function processTypescripts() {
       [
         paths.typescripts.src,
       ],
-      { since: gulp.lastRun(processTypescripts) })
+      { since: gulp.lastRun(processTypescripts) },
+    )
     .pipe(tsProject())
     .js
     .pipe(
