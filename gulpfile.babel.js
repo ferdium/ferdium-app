@@ -62,40 +62,36 @@ const paths = {
     watch: 'src/**/*.html',
   },
   styles: {
-    src: 'src/styles/main.scss',
+    src: [
+      'src/styles/main.scss',
+      'src/styles/vertical.scss',
+      'src/styles/animations.scss',
+    ],
     dest: 'build/styles',
     watch: 'src/styles/**/*.scss',
-  },
-  verticalStyle: {
-    src: 'src/styles/vertical.scss',
-    dest: 'build/styles',
-  },
-  animations: {
-    src: 'src/styles/animations.scss',
-    dest: 'build/styles',
   },
   javascripts: {
     src: 'src/**/*.js',
     dest: 'build/',
     watch: [
-      // 'packages/**/*.js',
       'src/**/*.js',
+      // 'packages/**/*.js',
     ],
   },
   typescripts: {
     src: 'src/**/*.ts',
     dest: 'build/',
     watch: [
-      // 'packages/**/*.ts',
       'src/**/*.ts',
+      // 'packages/**/*.ts',
     ],
   },
   packages: {
     watch: 'packages/**/*',
     // dest: 'build/',
     // watch: [
-    //   // 'packages/**/*.js',
     //   'src/**/*.js',
+    //   // 'packages/**/*.js',
     // ],
   },
 };
@@ -136,11 +132,9 @@ export function mvSrc() {
       [
         `${paths.src}/*`,
         `${paths.src}/*/**`,
-        `!${paths.javascripts.watch[1]}`,
-        `!${paths.typescripts.watch[1]}`,
+        `!${paths.javascripts.watch[0]}`,
+        `!${paths.typescripts.watch[0]}`,
         `!${paths.src}/styles/**`,
-        `!${paths.src}/**/*.js`,
-        `!${paths.src}/**/*.ts`,
       ],
       { since: gulp.lastRun(mvSrc) },
     )
@@ -212,68 +206,6 @@ export function styles() {
     .pipe(connect.reload());
 }
 
-export function verticalStyle() {
-  return gulp
-    .src(paths.verticalStyle.src)
-    .pipe(
-      sassVariables(
-        Object.assign(
-          {
-            $env: getTargetEnv,
-          },
-          ...styleConfig,
-        ),
-      ),
-    )
-    .pipe(
-      sass({
-        includePaths: ['./node_modules', '../node_modules'],
-      }).on('error', sass.logError),
-    )
-    .pipe(
-      gulpIf(
-        !isDevBuild,
-        csso({
-          // Only minify in production to speed up dev builds
-          restructure: false, // Don't restructure CSS, otherwise it will break the styles
-        }),
-      ),
-    )
-    .pipe(gulp.dest(paths.verticalStyle.dest))
-    .pipe(connect.reload());
-}
-
-export function animations() {
-  return gulp
-    .src(paths.animations.src)
-    .pipe(
-      sassVariables(
-        Object.assign(
-          {
-            $env: getTargetEnv,
-          },
-          ...styleConfig,
-        ),
-      ),
-    )
-    .pipe(
-      sass({
-        includePaths: ['./node_modules', '../node_modules'],
-      }).on('error', sass.logError),
-    )
-    .pipe(
-      gulpIf(
-        !isDevBuild,
-        csso({
-          // Only minify in production to speed up dev builds
-          restructure: false, // Don't restructure CSS, otherwise it will break the styles
-        }),
-      ),
-    )
-    .pipe(gulp.dest(paths.animations.dest))
-    .pipe(connect.reload());
-}
-
 export function processJavascripts() {
   return gulp
     .src(
@@ -315,7 +247,6 @@ export function processTypescripts() {
 export function watch() {
   gulp.watch(paths.packages.watch, mvLernaPackages);
   gulp.watch(paths.styles.watch, styles);
-  gulp.watch(paths.verticalStyle.src, verticalStyle);
 
   gulp.watch([paths.src, `${paths.javascripts.src}`, `${paths.styles.src}`], mvSrc);
 
@@ -344,7 +275,7 @@ export function recipeInfo() {
 const build = gulp.series(
   clean,
   gulp.parallel(mvSrc, mvPackageJson, mvLernaPackages, exportBuildInfo),
-  gulp.parallel(html, processJavascripts, processTypescripts, styles, verticalStyle, animations, recipes, recipeInfo),
+  gulp.parallel(html, processJavascripts, processTypescripts, styles, recipes, recipeInfo),
 );
 export { build };
 
