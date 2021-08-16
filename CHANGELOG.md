@@ -1,3 +1,14 @@
+# [v5.6.1-nightly.29](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.28...v5.6.1-nightly.29) (2021-08-17)
+
+### Bug Fixes
+
+- Fix issue with left-clicking regression that was accidentally introduced in the previous nightly 💖 @vraravam
+- Fix snap assets capturing on GitHub (#1802) 💖 @mhatvan
+
+### Internal
+
+- Replace deprecated `moment.js` with `day.js` (#1804) 💖 @mhatvan
+
 # [v5.6.1-nightly.28](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.27...v5.6.1-nightly.28) (2021-08-16)
 
 - Moved some npm dependencies that were incorrectly classified as runtime deps. This has saved 11MB from the installed file (on macos) 💖 @vraravam
