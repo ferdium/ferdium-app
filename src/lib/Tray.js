@@ -1,14 +1,8 @@
 import {
-  app,
-  Menu,
-  nativeImage,
-  nativeTheme,
-  systemPreferences,
-  Tray,
-  ipcMain,
+  app, Menu, nativeImage, nativeTheme, systemPreferences, Tray, ipcMain,
 } from 'electron';
 import { join } from 'path';
-import { isMacOSVersionGreaterThanOrEqualTo } from 'macos-version';
+import macosVersion from 'macos-version';
 import { isMac, isWindows, isLinux } from '../environment';
 
 const FILE_EXTENSION = isWindows ? 'ico' : 'png';
@@ -70,9 +64,7 @@ export default class TrayIcon {
 
     if (appSettings.type === 'app') {
       const { isAppMuted } = appSettings.data;
-      this.trayMenuTemplate[1].label = isAppMuted
-        ? 'Enable Notifications && Audio'
-        : 'Disable Notifications && Audio';
+      this.trayMenuTemplate[1].label = isAppMuted ? 'Enable Notifications && Audio' : 'Disable Notifications && Audio';
       this.trayMenu = Menu.buildFromTemplate(this.trayMenuTemplate);
       if (isLinux) {
         this.trayIcon.setContextMenu(this.trayMenu);
@@ -115,12 +107,9 @@ export default class TrayIcon {
     }
 
     if (isMac) {
-      this.themeChangeSubscriberId = systemPreferences.subscribeNotification(
-        'AppleInterfaceThemeChangedNotification',
-        () => {
-          this._refreshIcon();
-        },
-      );
+      this.themeChangeSubscriberId = systemPreferences.subscribeNotification('AppleInterfaceThemeChangedNotification', () => {
+        this._refreshIcon();
+      });
     }
   }
 
@@ -160,8 +149,7 @@ export default class TrayIcon {
   _getAssetFromIndicator(indicator) {
     if (indicator === '•') {
       return INDICATOR_TRAY_INDIRECT;
-    }
-    if (indicator !== 0) {
+    } if (indicator !== 0) {
       return INDICATOR_TRAY_UNREAD;
     }
     return INDICATOR_TRAY_PLAIN;
@@ -170,16 +158,11 @@ export default class TrayIcon {
   _refreshIcon() {
     if (!this.trayIcon) return;
 
-    this.trayIcon.setImage(
-      this._getAsset('tray', this._getAssetFromIndicator(this.indicator)),
-    );
+    this.trayIcon.setImage(this._getAsset('tray', this._getAssetFromIndicator(this.indicator)));
 
     if (isMac) {
       this.trayIcon.setPressedImage(
-        this._getAsset(
-          'tray',
-          `${this._getAssetFromIndicator(this.indicator)}-active`,
-        ),
+        this._getAsset('tray', `${this._getAssetFromIndicator(this.indicator)}-active`),
       );
     }
   }
@@ -187,24 +170,12 @@ export default class TrayIcon {
   _getAsset(type, asset) {
     let { platform } = process;
 
-    if (
-      isMac &&
-      (nativeTheme.shouldUseDarkColors ||
-        isMacOSVersionGreaterThanOrEqualTo('11'))
-    ) {
+    if (isMac && (nativeTheme.shouldUseDarkColors || macosVersion.isGreaterThanOrEqualTo('11'))) {
       platform = `${platform}-dark`;
     }
 
-    return nativeImage.createFromPath(
-      join(
-        __dirname,
-        '..',
-        'assets',
-        'images',
-        type,
-        platform,
-        `${asset}.${FILE_EXTENSION}`,
-      ),
-    );
+    return nativeImage.createFromPath(join(
+      __dirname, '..', 'assets', 'images', type, platform, `${asset}.${FILE_EXTENSION}`,
+    ));
   }
 }

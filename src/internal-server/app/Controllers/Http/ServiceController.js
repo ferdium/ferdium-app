@@ -2,7 +2,7 @@ const Service = use('App/Models/Service');
 const { validateAll } = use('Validator');
 const Env = use('Env');
 
-const { v4: uuid } = require('uuid');
+const uuid = require('uuid/v4');
 const path = require('path');
 const fs = require('fs-extra');
 const { LOCAL_HOSTNAME } = require('../../../../config');
@@ -156,7 +156,9 @@ class ServiceController {
           id,
           name: service.name,
           ...newSettings,
-          iconUrl: `http://${hostname}:${port}/v1/icon/${newSettings.iconId}`,
+          iconUrl: `http://${hostname}:${port}/v1/icon/${
+            newSettings.iconId
+          }`,
           userId: 1,
         },
         status: ['updated'],

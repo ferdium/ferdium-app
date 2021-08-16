@@ -1,25 +1,22 @@
 import { ipcRenderer } from 'electron';
-import { v1 as uuidV1 } from 'uuid';
+import uuidV1 from 'uuid/v1';
 
 const debug = require('debug')('Ferdi:Notifications');
 
 export class NotificationsHandler {
-  onNotify = data => data;
+  onNotify = (data) => data;
 
   displayNotification(title, options) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       debug('New notification', title, options);
 
       const notificationId = uuidV1();
 
-      ipcRenderer.sendToHost(
-        'notification',
-        this.onNotify({
-          title,
-          options,
-          notificationId,
-        }),
-      );
+      ipcRenderer.sendToHost('notification', this.onNotify({
+        title,
+        options,
+        notificationId,
+      }));
 
       ipcRenderer.once(`notification-onclick:${notificationId}`, () => {
         resolve();
