@@ -1,17 +1,17 @@
 // @flow
 
 export default class RecipePreview {
-  id = '';
+  id: string = '';
 
-  name = '';
+  name: string = '';
 
-  icon = '';
+  icon: string = '';
 
-  featured = false;
+  featured: boolean = false;
 
-  aliases = [];
+  aliases: string[] = [];
 
-  constructor(data) {
+  constructor(data: { id: any; }) {
     if (!data.id) {
       throw Error('RecipePreview requires Id');
     }
