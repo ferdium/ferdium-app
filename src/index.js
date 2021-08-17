@@ -342,7 +342,6 @@ const createWindow = () => {
   app.isMaximized = mainWindow.isMaximized();
 
   mainWindow.webContents.on('new-window', (e, url) => {
-    debug('Open url', url);
     e.preventDefault();
     openExternalUrl(url);
   });
