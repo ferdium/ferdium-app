@@ -101,7 +101,7 @@ window.open = (url, frameName, features) => {
 contextBridge.exposeInMainWorld('ferdi', {
   open: window.open,
   setBadge: (direct, indirect) =>
-    badgeHandler.setBadge(direct || 0, indirect || 0),
+    badgeHandler.setBadge(direct, indirect),
   displayNotification: (title, options) =>
     notificationsHandler.displayNotification(title, options),
   getDisplayMediaSelector,
