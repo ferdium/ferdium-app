@@ -39,8 +39,8 @@
     - [Or use Chocolatey (Windows only)](#or-use-chocolatey-windows-only)
     - [Or use Windows Package Manager (Windows only)](#or-use-windows-package-manager-windows-only)
     - [Or use homebrew (macOS or Linux)](#or-use-homebrew-macos-or-linux)
+    - [Or use snap (Linux only)](#or-use-snap-linux-only)
     - [Or use AUR (Arch Linux)](#or-use-aur-arch-linux)
-    - [Or use snap (Linux)](#or-use-snap-linux-only)
   - [What makes Ferdi different from Franz?](#what-makes-ferdi-different-from-franz)
     - [Removes unproductive paywalls and other other interruptions](#removes-unproductive-paywalls-and-other-other-interruptions)
     - [Adds features to increase your productivity](#adds-features-to-increase-your-productivity)
@@ -226,7 +226,7 @@ If you use an AUR Helper e.g. yay, simply install it via `yay -S ferdi`.
 
 ### Adds internal changes
 
-- [x] Upgrades to Electron 13.1.9
+- [x] Upgrades to Electron 13.2.0
 - [x] Switches to [`electron-spellchecker`](https://github.com/electron-userland/electron-spellchecker) to improve application size
 - [x] Minifies build files to improve app size
 - [x] Adds "npm run prepare-code" command for development to lint and beautify code
