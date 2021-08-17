@@ -1,3 +1,13 @@
+# [v5.6.1-nightly.30](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.29...v5.6.1-nightly.30) (2021-08-17)
+
+### Bug Fixes
+
+- Fix snap assets capturing on GitHub (#1802) 💖 @mhatvan
+
+### Internal
+
+- Minor cleanup of 'NaN' logic when loading recipe badges  💖 @vraravam
+
 # [v5.6.1-nightly.29](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.28...v5.6.1-nightly.29) (2021-08-17)
 
 ### Bug Fixes
