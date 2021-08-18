@@ -1,7 +1,7 @@
-# [v5.6.1-nightly.31](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.30...v5.6.1-nightly.31) (2021-08-18)
+# [v5.6.1-nightly.32](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.30...v5.6.1-nightly.32) (2021-08-18)
 
 - Sorted the recipes according to their service name in the 'Add new Service' screen 💖 @vraravam
-- Upgraded to [electron 13.2.0](https://github.com/electron/electron/releases/tag/v13.2.0) 💖 @vraravam
+- Upgraded to [electron 13.2.1](https://github.com/electron/electron/releases/tag/v13.2.1) 💖 @vraravam
 
 # [v5.6.1-nightly.30](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.29...v5.6.1-nightly.30) (2021-08-17)
 
