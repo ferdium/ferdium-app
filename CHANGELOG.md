@@ -1,3 +1,9 @@
+# [v5.6.1-nightly.33](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.32...v5.6.1-nightly.33) (2021-08-19)
+
+### Bug Fixes
+
+- Reverted back to `moment.js` from `day.js` due to bug #1811 💖 @vraravam
+
 # [v5.6.1-nightly.32](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.30...v5.6.1-nightly.32) (2021-08-18)
 
 - Sorted the recipes according to their service name in the 'Add new Service' screen 💖 @vraravam
