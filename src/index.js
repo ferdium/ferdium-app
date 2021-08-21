@@ -388,10 +388,10 @@ app.on('ready', () => {
   enforceMacOSAppLocation();
 
   // Register App URL
-  const protocolClient = isDevMode ? 'ferdi-dev' : 'ferdi');
-  if (!app.isDefaultProtocolClient(protocolClient) {
+  const protocolClient = isDevMode ? 'ferdi-dev' : 'ferdi';
+  if (!app.isDefaultProtocolClient(protocolClient)) {
     app.setAsDefaultProtocolClient(protocolClient);
-  } 
+  };
 
   if (isWindows) {
     app.setUserTasks([
