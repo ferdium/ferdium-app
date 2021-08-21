@@ -8,17 +8,13 @@ const webContents = getCurrentWebContents();
 const [defaultLocale] = webContents.session.getSpellCheckerLanguages();
 debug('Spellchecker default locale is', defaultLocale);
 
-export function getSpellcheckerLocaleByFuzzyIdentifier(identifier) {
+export function getSpellcheckerLocaleByFuzzyIdentifier(identifier: string) {
   const locales = Object.keys(SPELLCHECKER_LOCALES).filter((key) => key.toLocaleLowerCase() === identifier.toLowerCase() || key.split('-')[0] === identifier.toLowerCase());
 
-  if (locales.length >= 1) {
-    return locales[0];
-  }
-
-  return null;
+  return locales.length >= 1 ? locales[0] : null;
 }
 
-export function switchDict(locale) {
+export function switchDict(locale: string) {
   if (isMac) {
     debug('Ignoring dictionary changes on macOS');
     return;
@@ -26,9 +22,9 @@ export function switchDict(locale) {
 
   debug('Setting spellchecker locale to', locale);
 
-  const locales = [];
-  const foundLocale = getSpellcheckerLocaleByFuzzyIdentifier(locale);
+  const locales: string[] = [];
 
+  const foundLocale = getSpellcheckerLocaleByFuzzyIdentifier(locale);
   if (foundLocale) {
     locales.push(foundLocale);
   }

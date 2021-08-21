@@ -29,7 +29,7 @@ ipcRenderer.on('zoomReset', () => {
   ipcRenderer.sendToHost('zoomLevel', { zoom: zoomLevel });
 });
 
-ipcRenderer.on('setZoom', (e, arg) => {
+ipcRenderer.on('setZoom', (_e, arg) => {
   zoomLevel = arg;
   webFrame.setZoomLevel(zoomLevel);
 });

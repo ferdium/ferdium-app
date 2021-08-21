@@ -1,8 +1,10 @@
-const { ipcRenderer } = require('electron');
+import { ipcRenderer } from 'electron';
 
 const debug = require('debug')('Ferdi:Plugin:BadgeHandler');
 
 export class BadgeHandler {
+  countCache: { direct: number; indirect: number; };
+
   constructor() {
     this.countCache = {
       direct: 0,
@@ -10,27 +12,29 @@ export class BadgeHandler {
     };
   }
 
-  _normalizeNumber(count) {
+  _normalizeNumber(count: string | number) {
     // Parse number to integer
     // This will correct errors that recipes may introduce, e.g.
     // by sending a String instead of an integer
-    const parsedNumber = parseInt(count, 10);
+    const parsedNumber = parseInt(count.toString(), 10);
     const adjustedNumber = Number.isNaN(parsedNumber) ? 0 : parsedNumber;
     return Math.max(adjustedNumber, 0);
   }
 
-  setBadge(direct, indirect) {
+  setBadge(direct: number, indirect: number) {
     if (this.countCache.direct === direct
-        && this.countCache.indirect === indirect) return;
+        && this.countCache.indirect === indirect) {
+      return;
+    }
 
     const count = {
       direct: this._normalizeNumber(direct),
       indirect: this._normalizeNumber(indirect),
     };
 
-    ipcRenderer.sendToHost('message-counts', count);
-    Object.assign(this.countCache, count);
-
     debug('Sending badge count to host', count);
+    ipcRenderer.sendToHost('message-counts', count);
+
+    Object.assign(this.countCache, count);
   }
 }
