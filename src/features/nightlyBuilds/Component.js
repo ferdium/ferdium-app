@@ -55,7 +55,7 @@ const styles = () => ({
   },
 });
 
-export default @injectSheet(styles) @inject('stores', 'actions') @observer class nightlyBuildsModal extends Component {
+export default @injectSheet(styles) @inject('stores', 'actions') @observer class NightlyBuildsModal extends Component {
   static contextTypes = {
     intl: intlShape,
   };
@@ -124,7 +124,7 @@ export default @injectSheet(styles) @inject('stores', 'actions') @observer class
   }
 }
 
-nightlyBuildsModal.wrappedComponent.propTypes = {
+NightlyBuildsModal.wrappedComponent.propTypes = {
   stores: PropTypes.shape({
     settings: PropTypes.instanceOf(SettingsStore).isRequired,
   }).isRequired,

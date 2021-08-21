@@ -24,7 +24,7 @@
     "dev": "cross-env NODE_ENV=development gulp dev",
     "test": "jest",
     "test:watch": "jest --watch",
-    "lint": "eslint \"{src,packages,uidev}/**/*.{js,jsx,ts,tsx}\" --quiet --fix",
+    "lint": "eslint \"{src,scripts,packages,uidev}/**/*.{js,jsx,ts,tsx}\" --quiet --fix",
     "manage-translations": "node ./src/i18n/manage-translations.js",
     "prebuild": "preval-build-info-cli && gulp build",
     "build": "electron-builder",
