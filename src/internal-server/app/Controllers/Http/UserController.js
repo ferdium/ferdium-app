@@ -85,7 +85,6 @@ class UserController {
     return response.send({
       accountType: 'individual',
       beta: false,
-      donor: {},
       email: '',
       emailValidated: true,
       features: {},
@@ -121,7 +120,6 @@ class UserController {
       data: {
         accountType: 'individual',
         beta: false,
-        donor: {},
         email: '',
         emailValidated: true,
         features: {},

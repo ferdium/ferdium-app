@@ -8,13 +8,8 @@ interface IUser {
   organization: string | null;
   accountType: string | null;
   beta: boolean;
-  donor: object;
-  isDonor: boolean;
-  isMiner: boolean;
   locale: boolean;
   isSubscriptionOwner: boolean;
-  hasSubscription: boolean;
-  hadSubscription: boolean;
   team: object;
 }
 
@@ -34,23 +29,13 @@ export default class User {
 
   @observable emailIsConfirmed = true;
 
-  // TODO: Need to delete references to 'subscription' and 'donor'
+  // Note: Kept around to be able to handle the response from Franz server
   // better assume it's confirmed to avoid noise
   @observable subscription = {};
 
   @observable isSubscriptionOwner = false;
 
-  @observable hasSubscription = true;
-
-  @observable hadSubscription = false;
-
   @observable beta = false;
-
-  @observable donor = {};
-
-  @observable isDonor = false;
-
-  @observable isMiner = false;
 
   @observable locale = false;
 
@@ -68,14 +53,9 @@ export default class User {
     this.organization = data.organization || this.organization;
     this.accountType = data.accountType || this.accountType;
     this.beta = data.beta || this.beta;
-    this.donor = data.donor || this.donor;
-    this.isDonor = data.isDonor || this.isDonor;
-    this.isMiner = data.isMiner || this.isMiner;
     this.locale = data.locale || this.locale;
 
     this.isSubscriptionOwner = data.isSubscriptionOwner || this.isSubscriptionOwner;
-    this.hasSubscription = data.hasSubscription || this.hasSubscription;
-    this.hadSubscription = data.hadSubscription || this.hadSubscription;
 
     this.team = data.team || this.team;
   }
