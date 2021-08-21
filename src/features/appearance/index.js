@@ -235,8 +235,6 @@ export default function initAppearance(stores) {
     () => {
       updateStyle(settings.all.app);
     },
-    {
-      fireImmediately: true,
-    },
+    { fireImmediately: true },
   );
 }

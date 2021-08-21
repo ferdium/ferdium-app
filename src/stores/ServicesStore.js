@@ -10,10 +10,7 @@ import Request from './lib/Request';
 import CachedRequest from './lib/CachedRequest';
 import { matchRoute } from '../helpers/routing-helpers';
 import { isInTimeframe } from '../helpers/schedule-helpers';
-import {
-  getRecipeDirectory,
-  getDevRecipeDirectory,
-} from '../helpers/recipe-helpers';
+import { getRecipeDirectory, getDevRecipeDirectory } from '../helpers/recipe-helpers';
 import { workspaceStore } from '../features/workspaces';
 import { KEEP_WS_LOADED_USID } from '../config';
 import { SPELLCHECKER_LOCALES } from '../i18n/languages';
@@ -128,38 +125,66 @@ export default class ServicesStore extends Store {
   setup() {
     // Single key reactions for the sake of your CPU
     reaction(
-      () => this.stores.settings.app.enableSpellchecking,
-      () => this._shareSettingsWithServiceProcess(),
+      () => (
+        this.stores.settings.app.enableSpellchecking
+      ),
+      () => {
+        this._shareSettingsWithServiceProcess();
+      },
     );
 
     reaction(
-      () => this.stores.settings.app.spellcheckerLanguage,
-      () => this._shareSettingsWithServiceProcess(),
+      () => (
+        this.stores.settings.app.spellcheckerLanguage
+      ),
+      () => {
+        this._shareSettingsWithServiceProcess();
+      },
     );
 
     reaction(
-      () => this.stores.settings.app.darkMode,
-      () => this._shareSettingsWithServiceProcess(),
+      () => (
+        this.stores.settings.app.darkMode
+      ),
+      () => {
+        this._shareSettingsWithServiceProcess();
+      },
     );
 
     reaction(
-      () => this.stores.settings.app.adaptableDarkMode,
-      () => this._shareSettingsWithServiceProcess(),
+      () => (
+        this.stores.settings.app.adaptableDarkMode
+      ),
+      () => {
+        this._shareSettingsWithServiceProcess();
+      },
     );
 
     reaction(
-      () => this.stores.settings.app.universalDarkMode,
-      () => this._shareSettingsWithServiceProcess(),
+      () => (
+        this.stores.settings.app.universalDarkMode
+      ),
+      () => {
+        this._shareSettingsWithServiceProcess();
+      },
     );
 
     reaction(
-      () => this.stores.settings.app.searchEngine,
-      () => this._shareSettingsWithServiceProcess(),
+      () => (
+        this.stores.settings.app.searchEngine
+      ),
+      () => {
+        this._shareSettingsWithServiceProcess();
+      },
     );
 
     reaction(
-      () => this.stores.settings.app.clipboardNotifications,
-      () => this._shareSettingsWithServiceProcess(),
+      () => (
+        this.stores.settings.app.clipboardNotifications
+      ),
+      () => {
+        this._shareSettingsWithServiceProcess();
+      },
     );
   }
 

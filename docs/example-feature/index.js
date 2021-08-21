@@ -29,8 +29,6 @@ export default function initAnnouncements(stores, actions) {
         resetState(); // Reset state to default
       }
     },
-    {
-      fireImmediately: true,
-    },
+    { fireImmediately: true },
   );
 }
