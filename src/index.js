@@ -391,7 +391,7 @@ app.on('ready', () => {
   const protocolClient = isDevMode ? 'ferdi-dev' : 'ferdi';
   if (!app.isDefaultProtocolClient(protocolClient)) {
     app.setAsDefaultProtocolClient(protocolClient);
-  };
+  }
 
   if (isWindows) {
     app.setUserTasks([
