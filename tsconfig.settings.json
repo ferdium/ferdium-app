@@ -23,5 +23,6 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "preserveConstEnums": true,
+    "strictNullChecks": true,
   }
 }
