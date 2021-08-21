@@ -1,3 +1,9 @@
+# [v5.6.1-nightly.34](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.33...v5.6.1-nightly.34) (2021-08-21)
+
+### Bug Fixes
+
+- Check if default app protocol is different before overriding it (#1818) 💖 @ayxos, @vraravam
+
 # [v5.6.1-nightly.33](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.32...v5.6.1-nightly.33) (2021-08-19)
 
 ### Bug Fixes
