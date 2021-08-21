@@ -19,7 +19,7 @@ import ts from 'gulp-typescript';
 import * as buildInfo from 'preval-build-info';
 import config from './package.json';
 
-import * as rawStyleConfig from './src/theme/default/legacy';
+import * as rawStyleConfig from './scripts/theme/default/legacy';
 
 dotenv.config();
 
