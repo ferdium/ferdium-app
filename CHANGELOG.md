@@ -7,6 +7,7 @@
 ### Internal
 
 - [Perf] Removed double nested looping while deactivating service (#1824) 💖 @vraravam
+- Upgraded `electron-builder` to `22.12.1` which will allow converion from `npm` to `pnpm` 💖 @mhatvan
 
 # [v5.6.1-nightly.35](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.34...v5.6.1-nightly.35) (2021-08-22)
 
