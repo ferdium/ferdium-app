@@ -1,3 +1,11 @@
+# [v5.6.1-nightly.37](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.36...v5.6.1-nightly.37) (2021-08-24)
+
+- Upgraded to [electron 13.2.2](https://github.com/electron/electron/releases/tag/v13.2.2) 💖 @vraravam
+
+### Bug Fixes
+
+- Fixing bug where the service-defaults are not merged when creating a service 💖 @vraravam
+
 # [v5.6.1-nightly.36](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.35...v5.6.1-nightly.36) (2021-08-23)
 
 ### Bug Fixes
