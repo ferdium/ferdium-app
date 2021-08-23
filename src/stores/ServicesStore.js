@@ -401,21 +401,19 @@ export default class ServicesStore extends Store {
     // set default values for serviceData
     // eslint-disable-next-line prefer-object-spread
     // TODO: How is this different from the defaults of the recipe in 'src/models/Recipe' file?
-    serviceData = Object.assign(
-      {
-        isEnabled: true,
-        isHibernationEnabled: false,
-        isNotificationEnabled: true,
-        isBadgeEnabled: true,
-        isMuted: false,
-        customIcon: false,
-        isDarkModeEnabled: false,
-        spellcheckerLanguage:
+    serviceData = {
+      isEnabled: true,
+      isHibernationEnabled: false,
+      isNotificationEnabled: true,
+      isBadgeEnabled: true,
+      isMuted: false,
+      customIcon: false,
+      isDarkModeEnabled: false,
+      spellcheckerLanguage:
           SPELLCHECKER_LOCALES[this.stores.settings.app.spellcheckerLanguage],
-        userAgentPref: '',
-      },
-      serviceData,
-    );
+      userAgentPref: '',
+      ...serviceData,
+    };
 
     const data = skipCleanup ? serviceData : this._cleanUpTeamIdAndCustomUrl(recipeId, serviceData);
 
