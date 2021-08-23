@@ -6,6 +6,7 @@ const uuid = require('uuid/v4');
 const path = require('path');
 const fs = require('fs-extra');
 const { LOCAL_HOSTNAME, DEFAULT_SERVICE_ORDER } = require('../../../../config');
+const { API_VERSION } = require('../../../../environment');
 
 const hostname = LOCAL_HOSTNAME;
 const port = Env.get('PORT');
@@ -88,7 +89,7 @@ class ServiceController {
         workspaces: [],
         ...JSON.parse(service.settings),
         iconUrl: settings.iconId
-          ? `http://${hostname}:${port}/v1/icon/${settings.iconId}`
+          ? `http://${hostname}:${port}/${API_VERSION}/icon/${settings.iconId}`
           : null,
         id: service.serviceId,
         name: service.name,
@@ -156,7 +157,7 @@ class ServiceController {
           id,
           name: service.name,
           ...newSettings,
-          iconUrl: `http://${hostname}:${port}/v1/icon/${
+          iconUrl: `http://${hostname}:${port}/${API_VERSION}/icon/${
             newSettings.iconId
           }`,
           userId: 1,
@@ -196,7 +197,7 @@ class ServiceController {
         id,
         name: service.name,
         ...settings,
-        iconUrl: `${Env.get('APP_URL')}/v1/icon/${settings.iconId}`,
+        iconUrl: `${Env.get('APP_URL')}/${API_VERSION}/icon/${settings.iconId}`,
         userId: 1,
       },
       status: ['updated'],
@@ -262,7 +263,7 @@ class ServiceController {
         workspaces: [],
         ...JSON.parse(service.settings),
         iconUrl: settings.iconId
-          ? `http://${hostname}:${port}/v1/icon/${settings.iconId}`
+          ? `http://${hostname}:${port}/${API_VERSION}/icon/${settings.iconId}`
           : null,
         id: service.serviceId,
         name: service.name,

@@ -8,8 +8,9 @@ const Env = use('Env');
 const fetch = require('node-fetch');
 const debug = require('debug')('Ferdi:internalServer:RecipeController');
 const { LIVE_FERDI_API } = require('../../../../config');
+const { API_VERSION } = require('../../../../environment');
 
-const RECIPES_URL = `${LIVE_FERDI_API}/v1/recipes`;
+const RECIPES_URL = `${LIVE_FERDI_API}/${API_VERSION}/recipes`;
 
 class RecipeController {
   // List official and custom recipes

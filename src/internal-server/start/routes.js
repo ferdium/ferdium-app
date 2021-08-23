@@ -8,6 +8,7 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route');
 
+const { API_VERSION } = require('../../environment');
 // Run latest database migration
 const migrate = require('./migrate');
 
@@ -67,11 +68,11 @@ Route.group(() => {
   Route.get('services', 'StaticController.emptyArray');
   Route.get('news', 'StaticController.emptyArray');
   Route.get('announcements/:version', 'StaticController.announcement');
-}).prefix('v1').middleware(OnlyAllowFerdi);
+}).prefix(API_VERSION).middleware(OnlyAllowFerdi);
 
 Route.group(() => {
   Route.get('icon/:id', 'ServiceController.icon');
-}).prefix('v1');
+}).prefix(API_VERSION);
 
 // Franz account import
 Route.post('import', 'UserController.import');
