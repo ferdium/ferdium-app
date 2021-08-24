@@ -1,3 +1,13 @@
+# [v5.6.1-nightly.38](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.37...v5.6.1-nightly.38) (2021-08-25)
+
+- Added `Google News` service 💖 @niutech
+
+### Bug Fixes
+
+### Internal
+
+- Fixing bug where the service-defaults are not merged when creating a service 💖 @vraravam
+
 # [v5.6.1-beta.2](https://github.com/getferdi/ferdi/compare/v5.6.1-beta.1...v5.6.1-beta.2) (2021-08-24)
 
 Please note that this is the same code as the `v5.6.1-nightly.37` tag.
