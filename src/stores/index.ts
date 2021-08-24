@@ -34,9 +34,12 @@ export default (api, actions, router) => {
     communityRecipes: communityRecipesStore,
     todos: todosStore,
   });
+
   // Initialize all stores
   Object.keys(stores).forEach((name) => {
-    if (stores[name] && stores[name].initialize) stores[name].initialize();
+    if (stores[name] && stores[name].initialize) {
+      stores[name].initialize();
+    }
   });
   return stores;
 };

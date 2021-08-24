@@ -1,4 +1,4 @@
-/* legacy config, injected into sass */
+/* legacy config, injected into sass at build time */
 export const themeBrandPrimary = '#7266F0';
 export const themeBrandSuccess = '#5cb85c';
 export const themeBrandInfo = '#5bc0de';

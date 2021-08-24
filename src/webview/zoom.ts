@@ -1,6 +1,4 @@
-import electron from 'electron';
-
-const { ipcRenderer, webFrame } = electron;
+import { ipcRenderer, webFrame } from 'electron';
 
 const maxZoomLevel = 9;
 const minZoomLevel = -8;
@@ -31,7 +29,7 @@ ipcRenderer.on('zoomReset', () => {
   ipcRenderer.sendToHost('zoomLevel', { zoom: zoomLevel });
 });
 
-ipcRenderer.on('setZoom', (e, arg) => {
+ipcRenderer.on('setZoom', (_e, arg) => {
   zoomLevel = arg;
   webFrame.setZoomLevel(zoomLevel);
 });

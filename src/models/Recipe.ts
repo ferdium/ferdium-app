@@ -2,47 +2,71 @@ import semver from 'semver';
 import { pathExistsSync } from 'fs-extra';
 import { join } from 'path';
 
+interface IRecipe {
+  id: string;
+  name: string;
+  version: string;
+  aliases?: string[];
+  path: string;
+  config: {
+    serviceURL?: string;
+    hasDirectMessages?: boolean;
+    hasIndirectMessages?: boolean;
+    hasNotificationSound?: boolean;
+    hasTeamId?: boolean;
+    hasCustomUrl?: boolean;
+    hasHostedOption?: boolean;
+    urlInputPrefix?: string;
+    urlInputSuffix?: string;
+    disablewebsecurity?: boolean;
+    autoHibernate?: boolean;
+    partition?: string;
+    message?: string;
+  };
+}
+
 export default class Recipe {
   // Note: Do NOT change these default values. If they change, then the corresponding changes in the recipes needs to be done
-  id = '';
+  id: string = '';
 
-  name = '';
+  name: string = '';
 
   description = '';
 
-  version = '';
+  version: string = '';
 
-  aliases = [];
+  aliases: string[] = [];
 
-  path = '';
+  path: string = '';
 
-  serviceURL = '';
+  serviceURL: string = '';
 
-  hasDirectMessages = true;
+  hasDirectMessages: boolean = true;
 
-  hasIndirectMessages = false;
+  hasIndirectMessages: boolean = false;
 
-  hasNotificationSound = false;
+  hasNotificationSound: boolean = false;
 
-  hasTeamId = false;
+  hasTeamId: boolean = false;
 
-  hasCustomUrl = false;
+  hasCustomUrl: boolean = false;
 
-  hasHostedOption = false;
+  hasHostedOption: boolean = false;
 
-  urlInputPrefix = '';
+  urlInputPrefix: string = '';
 
-  urlInputSuffix = '';
+  urlInputSuffix: string = '';
 
-  message = '';
+  message: string = '';
 
-  disablewebsecurity = false;
+  disablewebsecurity: boolean = false;
 
-  autoHibernate = false;
+  autoHibernate: boolean = false;
 
-  partition = '';
+  partition: string = '';
 
-  constructor(data) {
+  // TODO: Need to reconcile which of these are optional/mandatory
+  constructor(data: IRecipe) {
     if (!data) {
       throw Error('Recipe config not valid');
     }
@@ -52,12 +76,8 @@ export default class Recipe {
       throw Error(`Recipe '${data.name}' requires Id`);
     }
 
-    try {
-      if (!semver.valid(data.version)) {
-        throw Error(`Version ${data.version} of recipe '${data.name}' is not a valid semver version`);
-      }
-    } catch (e) {
-      console.warn(e.message);
+    if (!semver.valid(data.version)) {
+      throw Error(`Version ${data.version} of recipe '${data.name}' is not a valid semver version`);
     }
 
     this.id = data.id || this.id;
@@ -88,11 +108,11 @@ export default class Recipe {
   }
 
   // TODO: Need to remove this if its not used anywhere
-  get author() {
+  get author(): string[] {
     return [];
   }
 
-  get hasDarkMode() {
+  get hasDarkMode(): boolean {
     return pathExistsSync(join(this.path, 'darkmode.css'));
   }
 }

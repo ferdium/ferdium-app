@@ -7,9 +7,9 @@ const debug = require('debug')('Ferdi:DarkMode');
 
 const chars = [...'abcdefghijklmnopqrstuvwxyz'];
 
-const ID = [...Array(20)].map(() => chars[Math.random() * chars.length | 0]).join``;
+const ID = [...Array(20)].map(() => chars[Math.random() * chars.length | 0]).join('');
 
-export function injectDarkModeStyle(recipePath) {
+export function injectDarkModeStyle(recipePath: string) {
   const darkModeStyle = join(recipePath, 'darkmode.css');
   if (pathExistsSync(darkModeStyle)) {
     const data = readFileSync(darkModeStyle);
@@ -17,7 +17,7 @@ export function injectDarkModeStyle(recipePath) {
     styles.id = ID;
     styles.innerHTML = data.toString();
 
-    document.querySelector('head').appendChild(styles);
+    document.querySelector('head')?.appendChild(styles);
 
     debug('Injected Dark Mode style with ID', ID);
   }

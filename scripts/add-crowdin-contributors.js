@@ -48,7 +48,7 @@ console.clear();
 console.log(JSON.stringify(members));
 
  * 3. Paste the output of the script (JSON Array) below to set 'list' to that value
- * 4. Execute this script using 'node src/scripts/add-crowdin-contributors.js'
+ * 4. Execute this script using 'node scripts/add-crowdin-contributors.js'
  * 5. Regenerate the README table using the CLI ('all-contributors generate')
  * Please check if the generated data is ok and no data is lost.
 */

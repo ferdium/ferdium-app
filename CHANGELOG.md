@@ -1,3 +1,120 @@
+# [v5.6.1-nightly.37](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.36...v5.6.1-nightly.37) (2021-08-24)
+
+- Upgraded to [electron 13.2.2](https://github.com/electron/electron/releases/tag/v13.2.2) 💖 @vraravam
+
+### Bug Fixes
+
+- Fixing bug where the service-defaults are not merged when creating a service 💖 @vraravam
+
+# [v5.6.1-nightly.36](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.35...v5.6.1-nightly.36) (2021-08-23)
+
+### Bug Fixes
+
+- Audio toggle is now decoupled from notification toggle (#1691) 💖 @vraravam
+
+### Internal
+
+- [Perf] Removed double nested looping while deactivating service (#1824) 💖 @vraravam
+- Upgraded `electron-builder` to `22.12.1` which will allow converion from `npm` to `pnpm` 💖 @mhatvan
+
+# [v5.6.1-nightly.35](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.34...v5.6.1-nightly.35) (2021-08-22)
+
+- Remove checks that refers to paid subscription since Ferdi is always free 💖 @vraravam
+- Remove 'shareFranz' feature since its always turned off for Ferdi 💖 @vraravam
+
+### Bug Fixes
+
+- Incorrect position while adding a new service when there were pre-existing services (#1820) 💖 @vraravam
+
+### Internal
+
+- Typescript conversion 💖 @vraravam
+- Set stricter rules for typescript conversion 💖 @vraravam
+- Move build-time js files out of 'src' and into 'scripts' 💖 @vraravam
+
+# [v5.6.1-nightly.34](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.33...v5.6.1-nightly.34) (2021-08-21)
+
+### Bug Fixes
+
+- Check if default app protocol is different before overriding it (#1818) 💖 @ayxos, @vraravam
+
+# [v5.6.1-nightly.33](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.32...v5.6.1-nightly.33) (2021-08-19)
+
+### Bug Fixes
+
+- Reverted back to `moment.js` from `day.js` due to bug #1811 💖 @vraravam
+
+# [v5.6.1-nightly.32](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.30...v5.6.1-nightly.32) (2021-08-18)
+
+- Sorted the recipes according to their service name in the 'Add new Service' screen 💖 @vraravam
+- Upgraded to [electron 13.2.1](https://github.com/electron/electron/releases/tag/v13.2.1) 💖 @vraravam
+
+# [v5.6.1-nightly.30](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.29...v5.6.1-nightly.30) (2021-08-17)
+
+### Bug Fixes
+
+- Fix snap assets capturing on GitHub (#1802) 💖 @mhatvan
+
+### Internal
+
+- Minor cleanup of 'NaN' logic when loading recipe badges 💖 @vraravam
+
+# [v5.6.1-nightly.29](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.28...v5.6.1-nightly.29) (2021-08-17)
+
+### Bug Fixes
+
+- Fix issue with left-clicking regression that was accidentally introduced in the previous nightly 💖 @vraravam
+- Fix snap assets capturing on GitHub (#1802) 💖 @mhatvan
+
+### Internal
+
+- Replace deprecated `moment.js` with `day.js` (#1804) 💖 @mhatvan
+
+# [v5.6.1-nightly.28](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.27...v5.6.1-nightly.28) (2021-08-16)
+
+- Moved some npm dependencies that were incorrectly classified as runtime deps. This has saved 11MB from the installed file (on macos) 💖 @vraravam
+- Removed unused npm dependencies (shaved anothe 5MB from the installed file on macos) 💖 @vraravam, @mhatvan
+
+### Bug Fixes
+
+- Fixed the 'Changelog' menu item to point to the correct branch 💖 @vraravam
+- Fixed issue with some shortcuts not working on macos (those that either used `alt` or `shift` keys) 💖 @vraravam
+
+### Internal
+
+- Completed plumbing required for conversion from javascript to typescript 💖 @vraravam
+- npm upgrades 💖 @vraravam
+- Started typescript conversion of some simple scripts 💖 @vraravam
+- Added animations step in gulp to transpile scss and copy to build 💖 @mhatvan
+
+# [v5.6.1-nightly.27](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.26...v5.6.1-nightly.27) (2021-08-15)
+
+- Add buttons in the 'Advanced' section of preferences to allow users to quickly open the ferdi profile in their file explorer 💖 @vraravam
+- [Security] Refactored Url helpers to ensure that there's a single place for vetting and opening external urls as recommended by [this article](https://benjamin-altpeter.de/shell-openexternal-dangers/) (#1789) 💖 @vraravam
+
+### Internal
+
+- Generated '.gitignore' from gitignore.io 💖 @vraravam
+- Setting some config rules for typescript (in preparation for external contributors during hacktoberfest) 💖 @vraravam
+- Moved 'gulp'-related packages to 'devDependencies' resulting in slimming down the installation file considerably (8MB on macos) 💖 @vraravam
+
+# [v5.6.1-nightly.26](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.24...v5.6.1-nightly.26) (2021-08-14)
+
+- Catch up with minor changes in Franz 5.7.0
+- Add entitlements for screen-capture-permissions 💖 @vraravam
+
+### Bug Fixes
+
+- Fix app focus detection 💖 @vraravam
+- Fix beta channel release for snap 💖 @mhatvan
+
+### Internal
+
+- Use destructured 'import' 💖 @vraravam
+- Refactor to reuse already defined constants 💖 @vraravam
+- Use exported default object 💖 @vraravam
+- Replace old '@meetfranz/electron-notification-state' with 'mac… … 💖 @vraravam
+
 # [v5.6.1-nightly.24](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.23...v5.6.1-nightly.24) (2021-08-13)
 
 - Added new recipe for Proton Calendar (getferdi/recipes#606) 💖 @cereum

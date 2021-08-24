@@ -1,19 +1,18 @@
 import { join } from 'path';
 import tar from 'tar';
 import { readdirSync, statSync, writeFileSync, copySync, ensureDirSync, pathExistsSync, readJsonSync, removeSync } from 'fs-extra';
-import { app, require as remoteRequire } from '@electron/remote';
+import { require as remoteRequire } from '@electron/remote';
 
 import ServiceModel from '../../models/Service';
 import RecipePreviewModel from '../../models/RecipePreview';
 import RecipeModel from '../../models/Recipe';
 import NewsModel from '../../models/News';
 import UserModel from '../../models/User';
-import OrderModel from '../../models/Order';
 
 import { sleep } from '../../helpers/async-helpers';
 
 import { SERVER_NOT_LOADED } from '../../config';
-import { osArch, osPlatform, asarRecipesPath, userDataRecipesPath, userDataPath } from '../../environment';
+import { osArch, osPlatform, asarRecipesPath, userDataRecipesPath, userDataPath, ferdiVersion } from '../../environment';
 import apiBase from '../apiBase';
 import { prepareAuthRequest, sendAuthRequest } from '../utils/auth';
 
@@ -435,9 +434,7 @@ export default class ServerApi {
 
   // News
   async getLatestNews() {
-    const url = `${apiBase(
-      true,
-    )}/news?platform=${osPlatform}&arch=${osArch}&version=${app.getVersion()}`;
+    const url = `${apiBase(true)}/news?platform=${osPlatform}&arch=${osArch}&version=${ferdiVersion}`;
     const request = await sendAuthRequest(url);
     if (!request.ok) throw request;
     const data = await request.json();
@@ -589,19 +586,6 @@ export default class ServerApi {
         }
       })
       .filter(newsItem => newsItem !== null);
-  }
-
-  _mapOrderModels(orders) {
-    return orders
-      .map(orderItem => {
-        try {
-          return new OrderModel(orderItem);
-        } catch (e) {
-          console.error(e);
-          return null;
-        }
-      })
-      .filter(orderItem => orderItem !== null);
   }
 
   _getDevRecipes() {

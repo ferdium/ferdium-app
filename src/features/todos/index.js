@@ -13,7 +13,9 @@ export default function initTodos(stores, actions) {
 
   // Toggle todos feature
   reaction(
-    () => features.features.isTodosEnabled,
+    () => (
+      features.features.isTodosEnabled
+    ),
     (isEnabled) => {
       if (isEnabled) {
         debug('Initializing `todos` feature');
@@ -23,8 +25,6 @@ export default function initTodos(stores, actions) {
         todosStore.stop();
       }
     },
-    {
-      fireImmediately: true,
-    },
+    { fireImmediately: true },
   );
 }

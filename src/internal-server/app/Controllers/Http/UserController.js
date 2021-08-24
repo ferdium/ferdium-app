@@ -9,18 +9,16 @@ const btoa = require('btoa');
 const fetch = require('node-fetch');
 const uuid = require('uuid/v4');
 const crypto = require('crypto');
-const { DEFAULT_APP_SETTINGS } = require('../../../../environment');
+const { DEFAULT_APP_SETTINGS, API_VERSION } = require('../../../../environment');
+const { default: userAgent } = require('../../../../helpers/userAgent-helpers');
 
 const apiRequest = (url, route, method, auth) => new Promise((resolve, reject) => {
-  const base = `${url}/v1/`;
-  const user = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Ferdi/5.3.0-beta.1 Chrome/69.0.3497.128 Electron/4.2.4 Safari/537.36';
-
   try {
-    fetch(base + route, {
+    fetch(`${url}/${API_VERSION}/${route}`, {
       method,
       headers: {
         Authorization: `Bearer ${auth}`,
-        'User-Agent': user,
+        'User-Agent': userAgent(),
       },
     })
       .then(data => data.json())
@@ -29,6 +27,8 @@ const apiRequest = (url, route, method, auth) => new Promise((resolve, reject) =
     reject();
   }
 });
+
+const LOGIN_SUCCESS_TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJGZXJkaSBJbnRlcm5hbCBTZXJ2ZXIiLCJpYXQiOjE1NzEwNDAyMTUsImV4cCI6MjUzMzk1NDE3ODQ0LCJhdWQiOiJnZXRmZXJkaS5jb20iLCJzdWIiOiJmZXJkaUBsb2NhbGhvc3QiLCJ1c2VySWQiOiIxIn0.9_TWFGp6HROv8Yg82Rt6i1-95jqWym40a-HmgrdMC6M';
 
 class UserController {
   // Register a new user
@@ -52,7 +52,7 @@ class UserController {
 
     return response.send({
       message: 'Successfully created account',
-      token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJGZXJkaSBJbnRlcm5hbCBTZXJ2ZXIiLCJpYXQiOjE1NzEwNDAyMTUsImV4cCI6MjUzMzk1NDE3ODQ0LCJhdWQiOiJnZXRmZXJkaS5jb20iLCJzdWIiOiJmZXJkaUBsb2NhbGhvc3QiLCJ1c2VySWQiOiIxIn0.9_TWFGp6HROv8Yg82Rt6i1-95jqWym40a-HmgrdMC6M',
+      token: LOGIN_SUCCESS_TOKEN,
     });
   }
 
@@ -70,7 +70,7 @@ class UserController {
 
     return response.send({
       message: 'Successfully logged in',
-      token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJGZXJkaSBJbnRlcm5hbCBTZXJ2ZXIiLCJpYXQiOjE1NzEwNDAyMTUsImV4cCI6MjUzMzk1NDE3ODQ0LCJhdWQiOiJnZXRmZXJkaS5jb20iLCJzdWIiOiJmZXJkaUBsb2NhbGhvc3QiLCJ1c2VySWQiOiIxIn0.9_TWFGp6HROv8Yg82Rt6i1-95jqWym40a-HmgrdMC6M',
+      token: LOGIN_SUCCESS_TOKEN,
     });
   }
 
@@ -85,7 +85,6 @@ class UserController {
     return response.send({
       accountType: 'individual',
       beta: false,
-      donor: {},
       email: '',
       emailValidated: true,
       features: {},
@@ -121,7 +120,6 @@ class UserController {
       data: {
         accountType: 'individual',
         beta: false,
-        donor: {},
         email: '',
         emailValidated: true,
         features: {},
@@ -170,19 +168,16 @@ class UserController {
 
     const hashedPassword = crypto.createHash('sha256').update(password).digest('base64');
 
-    const base = `${server}/v1/`;
-    const userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Ferdi/5.3.0-beta.1 Chrome/69.0.3497.128 Electron/4.2.4 Safari/537.36';
-
     // Try to get an authentication token
     let token;
     try {
       const basicToken = btoa(`${email}:${hashedPassword}`);
 
-      const rawResponse = await fetch(`${base}auth/login`, {
+      const rawResponse = await fetch(`${server}/${API_VERSION}/auth/login`, {
         method: 'POST',
         headers: {
           Authorization: `Basic ${basicToken}`,
-          'User-Agent': userAgent,
+          'User-Agent': userAgent(),
         },
       });
       const content = await rawResponse.json();

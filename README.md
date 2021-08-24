@@ -39,6 +39,7 @@
     - [Or use Chocolatey (Windows only)](#or-use-chocolatey-windows-only)
     - [Or use Windows Package Manager (Windows only)](#or-use-windows-package-manager-windows-only)
     - [Or use homebrew (macOS or Linux)](#or-use-homebrew-macos-or-linux)
+    - [Or use snap (Linux only)](#or-use-snap-linux-only)
     - [Or use AUR (Arch Linux)](#or-use-aur-arch-linux)
   - [What makes Ferdi different from Franz?](#what-makes-ferdi-different-from-franz)
     - [Removes unproductive paywalls and other other interruptions](#removes-unproductive-paywalls-and-other-other-interruptions)
@@ -55,7 +56,7 @@
   - [Backers via OpenCollective](#backers-via-opencollective)
   - [Sponsors via OpenCollective](#sponsors-via-opencollective)
   - [Other Sponsors](#other-sponsors)
-</details>
+  </details>
 
 ## What is Ferdi?
 
@@ -117,6 +118,14 @@ You can download Ferdi for Windows, Mac and Linux on [Ferdi's download page](htt
 `$ brew install --cask ferdi`
 
 (Don't know homebrew? [brew.sh](https://brew.sh/))
+
+### Or use snap (Linux only)
+
+`$ snap install ferdi`
+
+You can find published releases as `stable`, `beta` and `nightly` channels on [snapcraft.io](https://snapcraft.io/ferdi).
+
+(Don't know snap? [snapcraft.io](https://snapcraft.io/))
 
 ### Or use AUR (Arch Linux)
 
@@ -217,7 +226,7 @@ If you use an AUR Helper e.g. yay, simply install it via `yay -S ferdi`.
 
 ### Adds internal changes
 
-- [x] Upgrades to Electron 13.1.9
+- [x] Upgrades to Electron 13.2.2
 - [x] Switches to [`electron-spellchecker`](https://github.com/electron-userland/electron-spellchecker) to improve application size
 - [x] Minifies build files to improve app size
 - [x] Adds "npm run prepare-code" command for development to lint and beautify code
@@ -262,6 +271,7 @@ Since we (the contributors to Ferdi) also eat our own dog food, we use Ferdi as 
 ## Contributors ✨
 
 Thanks goes to these awesome people:
+
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->

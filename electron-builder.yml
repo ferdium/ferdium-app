@@ -61,10 +61,6 @@ linux:
     - target: freebsd
     - target: snap
 
-snap:
-  publish:
-    provider: "snapStore"
-
 nsis:
   perMachine: false
   oneClick: true

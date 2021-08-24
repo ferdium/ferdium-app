@@ -33,6 +33,7 @@ export const CDN_URL = 'https://cdn.franzinfra.com';
 
 export const KEEP_WS_LOADED_USID = '0a0aa000-0a0a-49a0-a000-a0a0a0a0a0a0';
 
+// TODO: Need to convert many of these to i18n
 export const HIBERNATION_STRATEGIES = {
   10: 'Extremely Fast Hibernation (10sec)',
   30: 'Very Fast Hibernation (30sec)',
@@ -180,3 +181,5 @@ export const DEFAULT_IS_FEATURE_ENABLED_BY_USER = true;
 export const TODOS_PARTITION_ID = 'persist:todos';
 
 export const CUSTOM_WEBSITE_RECIPE_ID = 'franz-custom-website';
+
+export const DEFAULT_SERVICE_ORDER = 99; // something high enough that it gets added to the end of the already-added services on the left sidebar

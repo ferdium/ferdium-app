@@ -24,8 +24,6 @@ export default function initAnnouncements(stores, actions) {
         announcementsStore.stop();
       }
     },
-    {
-      fireImmediately: true,
-    },
+    { fireImmediately: true },
   );
 }

@@ -13,7 +13,6 @@ import workspaces from '../features/workspaces';
 import quickSwitch from '../features/quickSwitch';
 import nightlyBuilds from '../features/nightlyBuilds';
 import publishDebugInfo from '../features/publishDebugInfo';
-import shareFranz from '../features/shareFranz';
 import announcements from '../features/announcements';
 import settingsWS from '../features/settingsWS';
 import communityRecipes from '../features/communityRecipes';
@@ -73,7 +72,6 @@ export default class FeaturesStore extends Store {
     quickSwitch(this.stores, this.actions);
     nightlyBuilds(this.stores, this.actions);
     publishDebugInfo(this.stores, this.actions);
-    shareFranz(this.stores, this.actions);
     announcements(this.stores, this.actions);
     settingsWS(this.stores, this.actions);
     communityRecipes(this.stores, this.actions);

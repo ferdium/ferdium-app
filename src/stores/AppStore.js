@@ -1,4 +1,4 @@
-import { ipcRenderer, shell } from 'electron';
+import { ipcRenderer } from 'electron';
 import {
   app,
   screen,
@@ -24,16 +24,16 @@ import {
   electronVersion,
   osRelease,
   userDataPath,
+  ferdiLocale,
 } from '../environment';
 import locales from '../i18n/translations';
-import { onVisibilityChange } from '../helpers/visibility-helper';
 import { getLocale } from '../helpers/i18n-helpers';
 
 import {
   getServiceIdsFromPartitions,
   removeServicePartitionDirectory,
 } from '../helpers/service-helpers';
-import { isValidExternalURL } from '../helpers/url-helpers';
+import { openExternalUrl } from '../helpers/url-helpers';
 import { sleep } from '../helpers/async-helpers';
 
 const debug = require('debug')('Ferdi:AppStore');
@@ -220,10 +220,9 @@ export default class AppStore extends Store {
 
     this.isSystemDarkModeEnabled = nativeTheme.shouldUseDarkColors;
 
-    onVisibilityChange((isVisible) => {
-      this.isFocused = isVisible;
-
-      debug('Window is visible/focused', isVisible);
+    ipcRenderer.on('isWindowFocused', (event, isFocused) => {
+      debug('Setting is focused to', isFocused);
+      this.isFocused = isFocused;
     });
 
     powerMonitor.on('suspend', () => {
@@ -389,13 +388,9 @@ export default class AppStore extends Store {
     }
   }
 
+  // Ideally(?) this should be merged with the 'shell-helpers' functionality
   @action _openExternalUrl({ url }) {
-    const parsedUrl = new URL(url);
-    debug('open external url', parsedUrl);
-
-    if (isValidExternalURL(url)) {
-      shell.openExternal(url);
-    }
+    openExternalUrl(new URL(url));
   }
 
   @action _checkForUpdates() {
@@ -509,7 +504,7 @@ export default class AppStore extends Store {
 
   _getDefaultLocale() {
     return getLocale({
-      locale: app.getLocale(),
+      locale: ferdiLocale,
       locales,
       defaultLocale,
       fallbackLocale: DEFAULT_APP_SETTINGS.fallbackLocale,

@@ -1,4 +1,4 @@
-import { app, systemPreferences } from '@electron/remote';
+import { systemPreferences } from '@electron/remote';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
@@ -12,11 +12,9 @@ import ToggleRaw from '../../ui/ToggleRaw';
 import Select from '../../ui/Select';
 import Input from '../../ui/Input';
 
-import {
-  FRANZ_TRANSLATION,
-  GITHUB_FRANZ_URL,
-} from '../../../config';
-import { DEFAULT_APP_SETTINGS, isMac, isWindows, lockFerdiShortcutKey } from '../../../environment';
+import { FRANZ_TRANSLATION, GITHUB_FRANZ_URL } from '../../../config';
+import { DEFAULT_APP_SETTINGS, ferdiVersion, isMac, isWindows, lockFerdiShortcutKey, userDataPath, userDataRecipesPath } from '../../../environment';
+import { openPath } from '../../../helpers/url-helpers';
 import globalMessages from '../../../i18n/globalMessages';
 
 const messages = defineMessages({
@@ -115,6 +113,18 @@ const messages = defineMessages({
   buttonClearAllCache: {
     id: 'settings.app.buttonClearAllCache',
     defaultMessage: '!!!Clear cache',
+  },
+  subheadlineFerdiProfile: {
+    id: 'settings.app.subheadlineFerdiProfile',
+    defaultMessage: '!!!Ferdi Profile',
+  },
+  buttonOpenFerdiProfileFolder: {
+    id: 'settings.app.buttonOpenFerdiProfileFolder',
+    defaultMessage: '!!!Open Profile folder',
+  },
+  buttonOpenFerdiServiceRecipesFolder: {
+    id: 'settings.app.buttonOpenFerdiServiceRecipesFolder',
+    defaultMessage: '!!!Open Service Recipes folder',
   },
   buttonSearchForUpdate: {
     id: 'settings.app.buttonSearchForUpdate',
@@ -258,6 +268,9 @@ export default @observer class EditSettingsForm extends Component {
         notCleared = false;
       }
     }
+
+    const profileFolder = userDataPath();
+    const recipeFolder = userDataRecipesPath();
 
     return (
       <div className="settings__main">
@@ -631,6 +644,30 @@ export default @observer class EditSettingsForm extends Component {
                     />
                   </p>
                 </div>
+
+                <Hr />
+
+                <div className="settings__settings-group">
+                  <h3>
+                    {intl.formatMessage(messages.subheadlineFerdiProfile)}
+                  </h3>
+                  <p>
+                    <div className="settings__open-settings-file-container">
+                      <Button
+                        buttonType="secondary"
+                        label={intl.formatMessage(messages.buttonOpenFerdiProfileFolder)}
+                        className="settings__open-settings-file-button"
+                        onClick={() => openPath(profileFolder)}
+                      />
+                      <Button
+                        buttonType="secondary"
+                        label={intl.formatMessage(messages.buttonOpenFerdiServiceRecipesFolder)}
+                        className="settings__open-settings-file-button"
+                        onClick={() => openPath(recipeFolder)}
+                      />
+                    </div>
+                  </p>
+                </div>
               </div>
             )}
 
@@ -669,7 +706,7 @@ export default @observer class EditSettingsForm extends Component {
               )}
               {intl.formatMessage(messages.currentVersion)}
               {' '}
-              {app.getVersion()}
+              {ferdiVersion}
               {noUpdateAvailable && (
               <>
                 <br />

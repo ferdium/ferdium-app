@@ -7,13 +7,14 @@ import { join } from 'path';
 import { todosStore } from '../features/todos';
 import { isValidExternalURL } from '../helpers/url-helpers';
 import UserAgent from './UserAgent';
+import { DEFAULT_SERVICE_ORDER } from '../config';
 
 const debug = require('debug')('Ferdi:Service');
 
 export default class Service {
   id = '';
 
-  recipe = '';
+  recipe = null;
 
   _webview = null;
 
@@ -31,7 +32,7 @@ export default class Service {
 
   @observable unreadIndirectMessageCount = 0;
 
-  @observable order = 99;
+  @observable order = DEFAULT_SERVICE_ORDER;
 
   @observable isEnabled = true;
 
@@ -93,13 +94,11 @@ export default class Service {
 
   constructor(data, recipe) {
     if (!data) {
-      console.error('Service config not valid');
-      return null;
+      throw Error('Service config not valid');
     }
 
     if (!recipe) {
-      console.error('Service recipe not valid');
-      return null;
+      throw Error('Service recipe not valid');
     }
 
     this.userAgentModel = new UserAgent(recipe.overrideUserAgent);
