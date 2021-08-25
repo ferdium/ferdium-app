@@ -1,3 +1,9 @@
+# [v5.6.1-nightly.39](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.38...v5.6.1-nightly.39) (2021-08-26)
+
+### Internal
+
+- Upgraded `electron-builder` to `22.13.0` 💖 @vraravam
+
 # [v5.6.1-nightly.38](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.37...v5.6.1-nightly.38) (2021-08-25)
 
 - Added `Google News` service 💖 @niutech
