@@ -5,6 +5,7 @@
 - Fix reordering of services in vertical style layout (#1833) 💖 @vraravam
 - Fix address bar not updating (#1836) 💖 @mhatvan
 - Fix screensharing in discord (getferdi/recipes#625) 💖 @oda-alexandre
+- Per popular demand, reworded `Use Vertical style` to `Use Horizontal style` 💖 @vraravam
 
 ### Internal
 
