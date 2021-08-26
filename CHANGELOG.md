@@ -1,4 +1,4 @@
-# [v5.6.1-nightly.39](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.38...v5.6.1-nightly.39) (2021-08-26)
+# [v5.6.1-nightly.40](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.38...v5.6.1-nightly.40) (2021-08-26)
 
 ### Bug Fixes
 
