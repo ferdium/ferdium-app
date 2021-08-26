@@ -4679,7 +4679,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Use vertical style",
+        "defaultMessage": "!!!Use horizontal style",
         "end": {
           "column": 3,
           "line": 167

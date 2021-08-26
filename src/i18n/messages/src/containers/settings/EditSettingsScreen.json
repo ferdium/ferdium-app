@@ -430,7 +430,7 @@
   },
   {
     "id": "settings.app.form.useVerticalStyle",
-    "defaultMessage": "!!!Use vertical style",
+    "defaultMessage": "!!!Use horizontal style",
     "file": "src/containers/settings/EditSettingsScreen.js",
     "start": {
       "line": 164,

@@ -163,7 +163,7 @@ const messages = defineMessages({
   },
   useVerticalStyle: {
     id: 'settings.app.form.useVerticalStyle',
-    defaultMessage: '!!!Use vertical style',
+    defaultMessage: '!!!Use horizontal style',
   },
   alwaysShowWorkspaces: {
     id: 'settings.app.form.alwaysShowWorkspaces',
