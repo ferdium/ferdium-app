@@ -567,7 +567,6 @@ export default class AppStore extends Store {
     debug('Checking if Do Not Disturb Mode is on');
     const dnd = await ipcRenderer.invoke('get-dnd');
     debug('Do not disturb mode is', dnd);
-    // ipcRenderer.on('autoUpdate', (event, data) => {
     if (
       dnd !== this.stores.settings.all.app.isAppMuted
       && !this.isSystemMuteOverridden
