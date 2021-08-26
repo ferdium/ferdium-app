@@ -1,8 +1,10 @@
-# [v5.6.1-nightly.40](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.38...v5.6.1-nightly.40) (2021-08-26)
+# [v5.6.1-nightly.40](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.38...v5.6.1-nightly.40) (2021-08-27)
 
 ### Bug Fixes
 
 - Fix reordering of services in vertical style layout (#1833) 💖 @vraravam
+- Fix address bar not updating (#1836) 💖 @mhatvan
+- Fix screensharing in discord (getferdi/recipes#625) 💖 @oda-alexandre
 
 ### Internal
 
