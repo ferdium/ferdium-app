@@ -6,7 +6,7 @@
 
 ### Internal
 
-- Upgraded `electron-builder` to `22.13.0` 💖 @vraravam
+- Set the `channel` for the auto-update (check if this fixes the in-app updater) 💖 @vraravam
 
 # [v5.6.1-nightly.38](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.37...v5.6.1-nightly.38) (2021-08-25)
 
