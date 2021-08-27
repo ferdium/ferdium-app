@@ -21,9 +21,9 @@ export class BadgeHandler {
     return Math.max(adjustedNumber, 0);
   }
 
-  setBadge(direct: number, indirect: number) {
-    if (this.countCache.direct === direct
-        && this.countCache.indirect === indirect) {
+  setBadge(direct: string | number, indirect: string | number) {
+    if (this.countCache.direct.toString() === direct.toString()
+        && this.countCache.indirect.toString() === indirect.toString()) {
       return;
     }
 
