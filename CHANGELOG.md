@@ -1,5 +1,7 @@
 # [v5.6.1-nightly.41](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.40...v5.6.1-nightly.41) (2021-08-28)
 
+- Services: Add 'tinder' service (getferdi/recipes#641) 💖 @oda-alexandre
+
 ### Internal
 
 - Upgraded 'nodejs' to '14.17.5' 💖 @vraravam
