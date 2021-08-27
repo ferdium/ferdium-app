@@ -1,3 +1,13 @@
+# [v5.6.1-nightly.41](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.40...v5.6.1-nightly.41) (2021-08-28)
+
+### Internal
+
+- Upgraded 'nodejs' to '14.17.5' 💖 @vraravam
+- Remove Franz brand 💖 @vantezzen
+- Switch from `misty` to `concurrently` (#1846) 💖 @vantezzen
+- Services: Normalized all service recipes to be es6 compliant 💖 @vraravam
+- Services: Change entry point in the 'facebookpages' service (getferdi/recipes#640) 💖 @oda-alexandre, @vraravam
+
 # [v5.6.1-nightly.40](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.38...v5.6.1-nightly.40) (2021-08-27)
 
 ### Bug Fixes
