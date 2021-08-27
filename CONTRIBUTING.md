@@ -38,7 +38,7 @@
 
 ## Code of Conduct
 
-This project and everyone participating in it is governed by the [Ferdi Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [stefan@adlk.io](mailto:stefan@adlk.io).
+This project and everyone participating in it is governed by the [Ferdi Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [hello@getferdi.com](mailto:hello@getferdi.com).
 
 ## What should I know before I get started?
 
@@ -195,10 +195,10 @@ npm run dev
 DEBUG=Ferdi:* npm run start
 ```
 
-- Optionally, you can run both commands in one terminal with [misty](https://github.com/adlk/misty) (see [misty.yml](https://github.com/getferdi/ferdi/blob/develop/misty.yml)):
+- Optionally, you can run both commands in one terminal with [concurrently](https://www.npmjs.com/package/concurrently):
 
 ```bash
-DEBUG=Ferdi:* npx misty
+DEBUG=Ferdi:* npm run start:all-dev
 ```
 
 Note: please prefer [`debug()`](https://github.com/visionmedia/debug) over `console.log()`.
