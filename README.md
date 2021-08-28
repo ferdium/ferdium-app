@@ -65,7 +65,7 @@ Ferdi is a desktop app that helps you organize how you use your favourite apps b
 ## Features
 
 - [x] Ferdi puts all your web apps into one place
-- [x] Native support for 180+ services
+- [x] Native support for 189 services
 - [x] Workspaces to keep your personal and work life separated
 - [x] Support for multiple accounts on any service
 - [x] Dark Mode support for all of your services

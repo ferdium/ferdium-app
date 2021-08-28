@@ -1,6 +1,7 @@
 # [v5.6.1-nightly.42](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.41...v5.6.1-nightly.42) (2021-08-29)
 
 - Upgraded to [electron 13.2.3](https://github.com/electron/electron/releases/tag/v13.2.3) 💖 @vraravam
+- New services: amazon web services (getferdi/recipes#643), binance (getferdi/recipes#645), ovh-cloud (getferdi/recipes#650), scribens (getferdi/recipes#651), docker hub (getferdi/recipes#644), bitwarden (getferdi/recipes#647), google translate (getferdi/recipes#642) 💖 @oda-alexandre, @vraravam
 
 # [v5.6.1-nightly.41](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.40...v5.6.1-nightly.41) (2021-08-28)
 
