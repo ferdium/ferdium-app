@@ -1,3 +1,7 @@
+# [v5.6.1-nightly.42](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.41...v5.6.1-nightly.42) (2021-08-29)
+
+- Upgraded to [electron 13.2.3](https://github.com/electron/electron/releases/tag/v13.2.3) 💖 @vraravam
+
 # [v5.6.1-nightly.41](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.40...v5.6.1-nightly.41) (2021-08-28)
 
 - Services: Add 'tinder' service (getferdi/recipes#641) 💖 @oda-alexandre
