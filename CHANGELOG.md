@@ -1,3 +1,7 @@
+# [v5.6.1-nightly.43](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.42...v5.6.1-nightly.43) (2021-08-30)
+
+- Services: Remove duplicated recipes for `Outlook Web App` and `Enterprise OWA` (getferdi/recipes#523 getferdi/recipes#1808) 💖 @vraravam
+
 # [v5.6.1-nightly.42](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.41...v5.6.1-nightly.42) (2021-08-29)
 
 - Upgraded to [electron 13.2.3](https://github.com/electron/electron/releases/tag/v13.2.3) 💖 @vraravam
