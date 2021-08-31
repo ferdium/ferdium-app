@@ -1,3 +1,11 @@
+# [v5.6.1-nightly.45](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.43...v5.6.1-nightly.45) (2021-09-01)
+
+- Services: Add `odoo` and `wakatime` 💖 @oda-alexandre
+
+### Internal
+
+- Use `Ferdi.safeParseInt` to ensure that parsing for unread count is done consistently in all recipes 💖 @vraravam
+
 # [v5.6.1-nightly.43](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.42...v5.6.1-nightly.43) (2021-08-30)
 
 - Services: Remove duplicated recipes for `Outlook Web App` and `Enterprise OWA` (getferdi/recipes#523 getferdi/recipes#1808) 💖 @vraravam

@@ -12,11 +12,16 @@ export class BadgeHandler {
     };
   }
 
-  _normalizeNumber(count: string | number) {
+  // TODO: Need to extract this into a utility class and reuse outside of the recipes
+  safeParseInt(text: string | number | undefined | null) {
+    if (text === undefined || text === null) {
+      return 0;
+    }
+
     // Parse number to integer
     // This will correct errors that recipes may introduce, e.g.
     // by sending a String instead of an integer
-    const parsedNumber = parseInt(count.toString(), 10);
+    const parsedNumber = parseInt(text.toString(), 10);
     const adjustedNumber = Number.isNaN(parsedNumber) ? 0 : parsedNumber;
     return Math.max(adjustedNumber, 0);
   }
@@ -28,8 +33,8 @@ export class BadgeHandler {
     }
 
     const count = {
-      direct: this._normalizeNumber(direct),
-      indirect: this._normalizeNumber(indirect),
+      direct: this.safeParseInt(direct),
+      indirect: this.safeParseInt(indirect),
     };
 
     debug('Sending badge count to host', count);
