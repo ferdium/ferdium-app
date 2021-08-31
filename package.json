@@ -167,7 +167,7 @@
     "cross-env": "7.0.3",
     "cz-conventional-changelog": "3.3.0",
     "dotenv": "10.0.0",
-    "electron": "13.2.3",
+    "electron": "13.3.0",
     "electron-builder": "22.12.1",
     "electron-notarize": "1.1.0",
     "eslint": "7.32.0",
