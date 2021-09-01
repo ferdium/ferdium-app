@@ -65,7 +65,7 @@ Ferdi is a desktop app that helps you organize how you use your favourite apps b
 ## Features
 
 - [x] Ferdi puts all your web apps into one place
-- [x] Native support for 100+ services
+- [x] Native support for 189 services
 - [x] Workspaces to keep your personal and work life separated
 - [x] Support for multiple accounts on any service
 - [x] Dark Mode support for all of your services
@@ -77,7 +77,7 @@ Ferdi is a desktop app that helps you organize how you use your favourite apps b
 
 ...and best of all:
 
-- [x] Its completely free! There are no restrictions on features, no paywalls
+- [x] Its completely free! There are no restrictions on features, no paywalls, no ads
 
 ## What does Ferdi look like?
 
@@ -226,7 +226,7 @@ If you use an AUR Helper e.g. yay, simply install it via `yay -S ferdi`.
 
 ### Adds internal changes
 
-- [x] Upgrades to Electron 13.2.2
+- [x] Upgrades to Electron 13.3.0
 - [x] Switches to [`electron-spellchecker`](https://github.com/electron-userland/electron-spellchecker) to improve application size
 - [x] Minifies build files to improve app size
 - [x] Adds "npm run prepare-code" command for development to lint and beautify code

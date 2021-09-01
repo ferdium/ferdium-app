@@ -102,6 +102,8 @@ contextBridge.exposeInMainWorld('ferdi', {
   open: window.open,
   setBadge: (direct, indirect) =>
     badgeHandler.setBadge(direct, indirect),
+  safeParseInt: (text) =>
+    badgeHandler.safeParseInt(text),
   displayNotification: (title, options) =>
     notificationsHandler.displayNotification(title, options),
   getDisplayMediaSelector,

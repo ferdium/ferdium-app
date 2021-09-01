@@ -130,10 +130,10 @@ jobs:
         with:
           key: ${{ runner.os }}-${{ env.cache-name }}
           path: ${{ env.ELECTRON_BUILDER_CACHE }}
-      - name: Use Node.js 14.17.3
+      - name: Use Node.js 14.17.5
         uses: actions/setup-node@v2
         with:
-          node-version: 14.17.3
+          node-version: 14.17.5
       - name: Upgrade Xcode version on the macOS 10.15 default runners provided by GH Actions
         run: |
           sudo rm -Rf /Library/Developer/CommandLineTools/SDKs/*
@@ -228,10 +228,10 @@ jobs:
         with:
           key: ${{ runner.os }}-${{ env.cache-name }}
           path: ${{ env.ELECTRON_BUILDER_CACHE }}
-      - name: Use Node.js 14.17.3
+      - name: Use Node.js 14.17.5
         uses: actions/setup-node@v2
         with:
-          node-version: 14.17.3
+          node-version: 14.17.5
       - name: Uninstall locally and reinstall global npm modules
         run: |
           npm uninstall node-gyp
@@ -343,10 +343,10 @@ jobs:
         with:
           key: ${{ runner.os }}-${{ env.cache-name }}
           path: ${{ env.ELECTRON_BUILDER_CACHE }}
-      - name: Use Node.js 14.17.3
+      - name: Use Node.js 14.17.5
         uses: actions/setup-node@v2
         with:
-          node-version: 14.17.3
+          node-version: 14.17.5
       - name: Uninstall locally and reinstall global npm modules
         run: |
           npm uninstall node-gyp

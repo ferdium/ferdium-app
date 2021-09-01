@@ -1,3 +1,135 @@
+# [v5.6.1-beta.3](https://github.com/getferdi/ferdi/compare/v5.6.1-beta.2...v5.6.1-beta.3) (2021-09-01)
+
+Please note that this is the same code as the `v5.6.1-nightly.46` tag.
+The cumulative changes since the previous beta release are:
+
+- Upgrade to [electron 13.3.0](https://github.com/electron/electron/releases/tag/v13.3.0) 💖 @vraravam
+- New services: Add `odoo`, `tinder` and `wakatime` 💖 @oda-alexandre
+- New services: Add `Google News` service 💖 @niutech
+- New services: Add `amazon web services` (getferdi/recipes#643), `binance` (getferdi/recipes#645), `ovh-cloud` (getferdi/recipes#650), `scribens` (getferdi/recipes#651), `docker hub` (getferdi/recipes#644), `bitwarden` (getferdi/recipes#647), `google translate` (getferdi/recipes#642) 💖 @oda-alexandre, @vraravam
+- Services: Remove duplicated recipes for `Outlook Web App` and `Enterprise OWA` (getferdi/recipes#523, getferdi/recipes#1808) 💖 @vraravam
+
+### Bug Fixes
+
+- Workspaces are now working. When the active workspace gets deleted, the default workspace gets auto-selected. 💖 @sad270, @vraravam
+- Fix reordering of services in vertical style layout (#1833) 💖 @vraravam
+- Fix address bar not updating (#1836) 💖 @mhatvan
+- Fix screensharing in discord (getferdi/recipes#625) 💖 @oda-alexandre
+- Per popular demand, reworded `Use Vertical style` to `Use Horizontal style` 💖 @vraravam
+
+### Internal
+
+- Use `Ferdi.safeParseInt` to ensure that parsing for unread count is done consistently in all recipes 💖 @vraravam
+- Upgraded `nodejs` to `14.17.5` 💖 @vraravam
+- Remove some leftover Franz branding 💖 @vantezzen
+- Switch from `misty` to `concurrently` (#1846) 💖 @vantezzen
+- Services: Normalized all service recipes to be `es6` compliant 💖 @vraravam
+- Services: Change entry point in the `facebookpages` service (getferdi/recipes#640) 💖 @oda-alexandre, @vraravam
+- Set the `channel` for the auto-update (check if this fixes the in-app updater) 💖 @vraravam
+- Fixing bug where the service-defaults are not merged when creating a service 💖 @vraravam
+
+# [v5.6.1-nightly.46](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.45...v5.6.1-nightly.46) (2021-09-01)
+
+### Bug Fixes
+
+- Workspaces are now working. When the active workspace gets deleted, the default workspace gets auto-selected. 💖 @sad270, @vraravam
+
+# [v5.6.1-nightly.45](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.43...v5.6.1-nightly.45) (2021-09-01)
+
+- Upgrade to [electron 13.3.0](https://github.com/electron/electron/releases/tag/v13.3.0) 💖 @vraravam
+- Services: Add `odoo` and `wakatime` 💖 @oda-alexandre
+
+### Internal
+
+- Use `Ferdi.safeParseInt` to ensure that parsing for unread count is done consistently in all recipes 💖 @vraravam
+
+# [v5.6.1-nightly.43](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.42...v5.6.1-nightly.43) (2021-08-30)
+
+- Services: Remove duplicated recipes for `Outlook Web App` and `Enterprise OWA` (getferdi/recipes#523 getferdi/recipes#1808) 💖 @vraravam
+
+# [v5.6.1-nightly.42](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.41...v5.6.1-nightly.42) (2021-08-29)
+
+- Upgraded to [electron 13.2.3](https://github.com/electron/electron/releases/tag/v13.2.3) 💖 @vraravam
+- New services: amazon web services (getferdi/recipes#643), binance (getferdi/recipes#645), ovh-cloud (getferdi/recipes#650), scribens (getferdi/recipes#651), docker hub (getferdi/recipes#644), bitwarden (getferdi/recipes#647), google translate (getferdi/recipes#642) 💖 @oda-alexandre, @vraravam
+
+# [v5.6.1-nightly.41](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.40...v5.6.1-nightly.41) (2021-08-28)
+
+- Services: Add 'tinder' service (getferdi/recipes#641) 💖 @oda-alexandre
+
+### Internal
+
+- Upgraded 'nodejs' to '14.17.5' 💖 @vraravam
+- Remove some leftover Franz branding 💖 @vantezzen
+- Switch from `misty` to `concurrently` (#1846) 💖 @vantezzen
+- Services: Normalized all service recipes to be es6 compliant 💖 @vraravam
+- Services: Change entry point in the 'facebookpages' service (getferdi/recipes#640) 💖 @oda-alexandre, @vraravam
+
+# [v5.6.1-nightly.40](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.38...v5.6.1-nightly.40) (2021-08-27)
+
+### Bug Fixes
+
+- Fix reordering of services in vertical style layout (#1833) 💖 @vraravam
+- Fix address bar not updating (#1836) 💖 @mhatvan
+- Fix screensharing in discord (getferdi/recipes#625) 💖 @oda-alexandre
+- Per popular demand, reworded `Use Vertical style` to `Use Horizontal style` 💖 @vraravam
+
+### Internal
+
+- Set the `channel` for the auto-update (check if this fixes the in-app updater) 💖 @vraravam
+
+# [v5.6.1-nightly.38](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.37...v5.6.1-nightly.38) (2021-08-25)
+
+- Added `Google News` service 💖 @niutech
+
+### Bug Fixes
+
+### Internal
+
+- Fixing bug where the service-defaults are not merged when creating a service 💖 @vraravam
+
+# [v5.6.1-beta.2](https://github.com/getferdi/ferdi/compare/v5.6.1-beta.1...v5.6.1-beta.2) (2021-08-24)
+
+Please note that this is the same code as the `v5.6.1-nightly.37` tag.
+The cumulative changes since the previous beta release are:
+
+- Upgraded to [electron 13.2.2](https://github.com/electron/electron/releases/tag/v13.2.2) 💖 @vraravam
+- Remove checks that refers to paid subscription since Ferdi is always free 💖 @vraravam
+- Remove 'shareFranz' feature since its always turned off for Ferdi 💖 @vraravam
+- Sorted the recipes according to their service name in the 'Add new Service' screen 💖 @vraravam
+- Moved some npm dependencies that were incorrectly classified as runtime deps. This has saved approx 16MB from the installed file (on macos) 💖 @vraravam, @mhatvan
+- Add buttons in the 'Advanced' section of preferences to allow users to quickly open the ferdi profile in their file explorer 💖 @vraravam
+- [Security] Refactored Url helpers to ensure that theres a single place for vetting and opening external urls as recommended by [this article](https://benjamin-altpeter.de/shell-openexternal-dangers/) (#1789) 💖 @vraravam
+- Catch up with minor changes in Franz 5.7.0
+- Add entitlements for screen-capture-permissions 💖 @vraravam
+
+### Bug Fixes
+
+- Fixed bug where the service-defaults were not merged when creating a service 💖 @vraravam
+- Audio toggle is now decoupled from notification toggle (#1691) 💖 @vraravam
+- Incorrect position while adding a new service when there were pre-existing services (#1820) 💖 @vraravam
+- Fixed issue with some shortcuts not working on macos (those that either used `alt` or `shift` keys) 💖 @vraravam
+- Fix app focus detection 💖 @vraravam
+- Fix beta channel release for snap 💖 @mhatvan
+
+### Internal
+
+- [Perf] Removed double nested looping while deactivating service (#1824) 💖 @vraravam
+- Upgraded `electron-builder` to `22.12.1` which will allow converion from `npm` to `pnpm` 💖 @mhatvan
+- Typescript conversion 💖 @vraravam
+- Set stricter rules for typescript conversion 💖 @vraravam
+- Move build-time js files out of 'src' and into 'scripts' 💖 @vraravam
+- Check if default app protocol is different before overriding it (#1818) 💖 @ayxos, @vraravam
+- Minor cleanup of 'NaN' logic when loading recipe badges 💖 @vraravam
+- Completed plumbing required for conversion from javascript to typescript 💖 @vraravam
+- npm upgrades 💖 @vraravam
+- Started typescript conversion of some simple scripts 💖 @vraravam
+- Added animations step in gulp to transpile scss and copy to build 💖 @mhatvan
+- Generated '.gitignore' from gitignore.io 💖 @vraravam
+- Setting some config rules for typescript (in preparation for external contributors during hacktoberfest) 💖 @vraravam
+- Moved 'gulp'-related packages to 'devDependencies' resulting in slimming down the installation file considerably (8MB on macos) 💖 @vraravam
+- Use destructured 'import' 💖 @vraravam
+- Replace old '@meetfranz/electron-notification-state' with 'macos-notification-state' 💖 @vraravam
+
 # [v5.6.1-nightly.37](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.36...v5.6.1-nightly.37) (2021-08-24)
 
 - Upgraded to [electron 13.2.2](https://github.com/electron/electron/releases/tag/v13.2.2) 💖 @vraravam
@@ -113,7 +245,7 @@
 - Use destructured 'import' 💖 @vraravam
 - Refactor to reuse already defined constants 💖 @vraravam
 - Use exported default object 💖 @vraravam
-- Replace old '@meetfranz/electron-notification-state' with 'mac… … 💖 @vraravam
+- Replace old '@meetfranz/electron-notification-state' with 'macos-notification-state' 💖 @vraravam
 
 # [v5.6.1-nightly.24](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.23...v5.6.1-nightly.24) (2021-08-13)
 
