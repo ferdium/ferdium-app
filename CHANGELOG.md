@@ -1,3 +1,33 @@
+# [v5.6.1-beta.3](https://github.com/getferdi/ferdi/compare/v5.6.1-beta.2...v5.6.1-beta.3) (2021-09-01)
+
+Please note that this is the same code as the `v5.6.1-nightly.46` tag.
+The cumulative changes since the previous beta release are:
+
+- Upgrade to [electron 13.3.0](https://github.com/electron/electron/releases/tag/v13.3.0) 💖 @vraravam
+- New services: Add `odoo`, `tinder` and `wakatime` 💖 @oda-alexandre
+- New services: Add `Google News` service 💖 @niutech
+- New services: Add `amazon web services` (getferdi/recipes#643), `binance` (getferdi/recipes#645), `ovh-cloud` (getferdi/recipes#650), `scribens` (getferdi/recipes#651), `docker hub` (getferdi/recipes#644), `bitwarden` (getferdi/recipes#647), `google translate` (getferdi/recipes#642) 💖 @oda-alexandre, @vraravam
+- Services: Remove duplicated recipes for `Outlook Web App` and `Enterprise OWA` (getferdi/recipes#523, getferdi/recipes#1808) 💖 @vraravam
+
+### Bug Fixes
+
+- Workspaces are now working. When the active workspace gets deleted, the default workspace gets auto-selected. 💖 @sad270, @vraravam
+- Fix reordering of services in vertical style layout (#1833) 💖 @vraravam
+- Fix address bar not updating (#1836) 💖 @mhatvan
+- Fix screensharing in discord (getferdi/recipes#625) 💖 @oda-alexandre
+- Per popular demand, reworded `Use Vertical style` to `Use Horizontal style` 💖 @vraravam
+
+### Internal
+
+- Use `Ferdi.safeParseInt` to ensure that parsing for unread count is done consistently in all recipes 💖 @vraravam
+- Upgraded `nodejs` to `14.17.5` 💖 @vraravam
+- Remove some leftover Franz branding 💖 @vantezzen
+- Switch from `misty` to `concurrently` (#1846) 💖 @vantezzen
+- Services: Normalized all service recipes to be `es6` compliant 💖 @vraravam
+- Services: Change entry point in the `facebookpages` service (getferdi/recipes#640) 💖 @oda-alexandre, @vraravam
+- Set the `channel` for the auto-update (check if this fixes the in-app updater) 💖 @vraravam
+- Fixing bug where the service-defaults are not merged when creating a service 💖 @vraravam
+
 # [v5.6.1-nightly.46](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.45...v5.6.1-nightly.46) (2021-09-01)
 
 ### Bug Fixes
@@ -29,7 +59,7 @@
 ### Internal
 
 - Upgraded 'nodejs' to '14.17.5' 💖 @vraravam
-- Remove Franz brand 💖 @vantezzen
+- Remove some leftover Franz branding 💖 @vantezzen
 - Switch from `misty` to `concurrently` (#1846) 💖 @vantezzen
 - Services: Normalized all service recipes to be es6 compliant 💖 @vraravam
 - Services: Change entry point in the 'facebookpages' service (getferdi/recipes#640) 💖 @oda-alexandre, @vraravam
