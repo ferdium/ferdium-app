@@ -1,3 +1,9 @@
+# [v5.6.1-nightly.48](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.46...v5.6.1-nightly.48) (2021-09-03)
+
+### Internal
+
+- Upgraded `nodejs` to `14.17.6` 💖 @vraravam
+
 # [v5.6.1-beta.3](https://github.com/getferdi/ferdi/compare/v5.6.1-beta.2...v5.6.1-beta.3) (2021-09-01)
 
 Please note that this is the same code as the `v5.6.1-nightly.46` tag.
@@ -58,7 +64,7 @@ The cumulative changes since the previous beta release are:
 
 ### Internal
 
-- Upgraded 'nodejs' to '14.17.5' 💖 @vraravam
+- Upgraded `nodejs` to `14.17.4` 💖 @vraravam
 - Remove some leftover Franz branding 💖 @vantezzen
 - Switch from `misty` to `concurrently` (#1846) 💖 @vantezzen
 - Services: Normalized all service recipes to be es6 compliant 💖 @vraravam
@@ -433,15 +439,15 @@ The cumulative changes since the previous beta release are:
 
 # [5.6.0-beta.8](https://github.com/getferdi/ferdi/compare/v5.6.0-beta.7...v5.6.0-beta.8) (2021-07-16)
 
-- Upgraded electron to '13.1.7' 💖 @vraravam
+- Upgraded `electron` to `13.1.7` 💖 @vraravam
 - Turned on other h/w architectures (arm64, armv7l) for linux builds. (#1633) 💖 @vraravam
 - chore: run security audit on node modules 💖 @mhatvan
-- Upgraded nodejs to '14.17.3' 💖 @vraravam
+- Upgraded `nodejs` to `14.17.3` 💖 @vraravam
 - Use 'useragent-generator' to generate the user-agent string 💖 @vraravam
 
 # [5.6.0-beta.7](https://github.com/getferdi/ferdi/compare/v5.6.0-beta.6...v5.6.0-beta.7) (2021-07-07)
 
-- Upgraded electron to '13.1.5'. 💖 @vraravam
+- Upgraded `electron` to `13.1.5`. 💖 @vraravam
 - Adjust link opening behavior 💖 @stnkl
 - Fix color adjustments in Settings screen 💖 @kris7t
 - Expose Chrome version to todos webview (fix #1211) (#1478) 💖 @kris7t
