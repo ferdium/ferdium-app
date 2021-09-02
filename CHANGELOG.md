@@ -1,5 +1,7 @@
 # [v5.6.1-nightly.48](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.46...v5.6.1-nightly.48) (2021-09-03)
 
+- Service: Add ability to use self-hosted option for `youtrack` service (fixes getferdi/recipes#671)
+
 ### Internal
 
 - Upgraded `nodejs` to `14.17.6` 💖 @vraravam
