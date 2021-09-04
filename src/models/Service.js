@@ -106,13 +106,12 @@ export default class Service {
 
     this.userAgentModel = new UserAgent(recipe.overrideUserAgent);
 
-    // TODO: Should these also follow the 'ifUndefined*' style?
-    this.id = data.id || this.id;
-    this.name = data.name || this.name;
-    this.team = data.team || this.team;
-    this.customUrl = data.customUrl || this.customUrl;
-    // this.customIconUrl = data.customIconUrl || this.customIconUrl;
-    this.iconUrl = data.iconUrl || this.iconUrl;
+    this.id = ifUndefinedString(data.id, this.id);
+    this.name = ifUndefinedString(data.name, this.name);
+    this.team = ifUndefinedString(data.team, this.team);
+    this.customUrl = ifUndefinedString(data.customUrl, this.customUrl);
+    // this.customIconUrl = ifUndefinedString(data.customIconUrl, this.customIconUrl);
+    this.iconUrl = ifUndefinedString(data.iconUrl, this.iconUrl);
 
     this.order = ifUndefinedNumber(data.order, this.order);
     this.isEnabled = ifUndefinedBoolean(data.isEnabled, this.isEnabled);

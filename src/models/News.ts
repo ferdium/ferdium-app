@@ -19,6 +19,10 @@ export default class News {
   sticky: boolean = false;
 
   constructor(data: INews) {
+    if (!data) {
+      throw Error('News config not valid');
+    }
+
     if (!data.id) {
       throw Error('News requires Id');
     }
