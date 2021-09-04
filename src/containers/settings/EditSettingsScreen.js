@@ -239,78 +239,79 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
     });
 
     app.launchOnStartup({
-      enable: settingsData.autoLaunchOnStart,
-      openInBackground: settingsData.autoLaunchInBackground,
+      enable: Boolean(settingsData.autoLaunchOnStart),
+      openInBackground: Boolean(settingsData.autoLaunchInBackground),
     });
 
     debug(`Updating settings store with data: ${settingsData}`);
 
     settings.update({
       type: 'app',
+      // TODO: The conversions might not be necessary once we convert to typescript
       data: {
-        runInBackground: settingsData.runInBackground,
-        enableSystemTray: settingsData.enableSystemTray,
-        reloadAfterResume: settingsData.reloadAfterResume,
-        startMinimized: settingsData.startMinimized,
-        minimizeToSystemTray: settingsData.minimizeToSystemTray,
-        closeToSystemTray: settingsData.closeToSystemTray,
-        privateNotifications: settingsData.privateNotifications,
-        clipboardNotifications: settingsData.clipboardNotifications,
-        notifyTaskBarOnMessage: settingsData.notifyTaskBarOnMessage,
+        runInBackground: Boolean(settingsData.runInBackground),
+        enableSystemTray: Boolean(settingsData.enableSystemTray),
+        reloadAfterResume: Boolean(settingsData.reloadAfterResume),
+        startMinimized: Boolean(settingsData.startMinimized),
+        minimizeToSystemTray: Boolean(settingsData.minimizeToSystemTray),
+        closeToSystemTray: Boolean(settingsData.closeToSystemTray),
+        privateNotifications: Boolean(settingsData.privateNotifications),
+        clipboardNotifications: Boolean(settingsData.clipboardNotifications),
+        notifyTaskBarOnMessage: Boolean(settingsData.notifyTaskBarOnMessage),
         navigationBarBehaviour: settingsData.navigationBarBehaviour,
         searchEngine: settingsData.searchEngine,
-        sentry: settingsData.sentry,
-        hibernateOnStartup: settingsData.hibernateOnStartup,
-        hibernationStrategy: settingsData.hibernationStrategy,
-        wakeUpStrategy: settingsData.wakeUpStrategy,
+        sentry: Boolean(settingsData.sentry),
+        hibernateOnStartup: Boolean(settingsData.hibernateOnStartup),
+        hibernationStrategy: Number(settingsData.hibernationStrategy),
+        wakeUpStrategy: Number(settingsData.wakeUpStrategy),
         predefinedTodoServer: settingsData.predefinedTodoServer,
         customTodoServer: settingsData.customTodoServer,
-        lockingFeatureEnabled: settingsData.lockingFeatureEnabled,
+        lockingFeatureEnabled: Boolean(settingsData.lockingFeatureEnabled),
         lockedPassword: hash(String(settingsData.lockedPassword)),
-        useTouchIdToUnlock: settingsData.useTouchIdToUnlock,
-        inactivityLock: settingsData.inactivityLock,
-        scheduledDNDEnabled: settingsData.scheduledDNDEnabled,
+        useTouchIdToUnlock: Boolean(settingsData.useTouchIdToUnlock),
+        inactivityLock: Number(settingsData.inactivityLock),
+        scheduledDNDEnabled: Boolean(settingsData.scheduledDNDEnabled),
         scheduledDNDStart: settingsData.scheduledDNDStart,
         scheduledDNDEnd: settingsData.scheduledDNDEnd,
-        enableGPUAcceleration: settingsData.enableGPUAcceleration,
-        showDisabledServices: settingsData.showDisabledServices,
-        darkMode: settingsData.darkMode,
-        adaptableDarkMode: settingsData.adaptableDarkMode,
-        universalDarkMode: settingsData.universalDarkMode,
-        serviceRibbonWidth: settingsData.serviceRibbonWidth,
-        iconSize: settingsData.iconSize,
-        useVerticalStyle: settingsData.useVerticalStyle,
-        alwaysShowWorkspaces: settingsData.alwaysShowWorkspaces,
+        enableGPUAcceleration: Boolean(settingsData.enableGPUAcceleration),
+        showDisabledServices: Boolean(settingsData.showDisabledServices),
+        darkMode: Boolean(settingsData.darkMode),
+        adaptableDarkMode: Boolean(settingsData.adaptableDarkMode),
+        universalDarkMode: Boolean(settingsData.universalDarkMode),
+        serviceRibbonWidth: Number(settingsData.serviceRibbonWidth),
+        iconSize: Number(settingsData.iconSize),
+        useVerticalStyle: Boolean(settingsData.useVerticalStyle),
+        alwaysShowWorkspaces: Boolean(settingsData.alwaysShowWorkspaces),
         accentColor: settingsData.accentColor,
-        showMessageBadgeWhenMuted: settingsData.showMessageBadgeWhenMuted,
-        showDragArea: settingsData.showDragArea,
-        enableSpellchecking: settingsData.enableSpellchecking,
+        showMessageBadgeWhenMuted: Boolean(settingsData.showMessageBadgeWhenMuted),
+        showDragArea: Boolean(settingsData.showDragArea),
+        enableSpellchecking: Boolean(settingsData.enableSpellchecking),
         spellcheckerLanguage: settingsData.spellcheckerLanguage,
         userAgentPref: settingsData.userAgentPref,
-        beta: settingsData.beta, // we need this info in the main process as well
-        automaticUpdates: settingsData.automaticUpdates, // we need this info in the main process as well
+        beta: Boolean(settingsData.beta), // we need this info in the main process as well
+        automaticUpdates: Boolean(settingsData.automaticUpdates), // we need this info in the main process as well
         locale: settingsData.locale, // we need this info in the main process as well
       },
     });
 
     user.update({
       userData: {
-        automaticUpdates: settingsData.automaticUpdates,
-        beta: settingsData.beta,
+        automaticUpdates: Boolean(settingsData.automaticUpdates),
+        beta: Boolean(settingsData.beta),
         locale: settingsData.locale,
       },
     });
 
     if (workspaces.isFeatureActive) {
       const { keepAllWorkspacesLoaded } = workspaces.settings;
-      if (keepAllWorkspacesLoaded !== settingsData.keepAllWorkspacesLoaded) {
+      if (Boolean(keepAllWorkspacesLoaded) !== Boolean(settingsData.keepAllWorkspacesLoaded)) {
         workspaceActions.toggleKeepAllWorkspacesLoadedSetting();
       }
     }
 
     if (todos.isFeatureActive) {
       const { isFeatureEnabledByUser } = todos.settings;
-      if (isFeatureEnabledByUser !== settingsData.enableTodos) {
+      if (Boolean(isFeatureEnabledByUser) !== Boolean(settingsData.enableTodos)) {
         todosActions.toggleTodosFeatureVisibility();
       }
     }
