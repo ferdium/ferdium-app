@@ -1,5 +1,9 @@
 # [v5.6.1-nightly.50](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.48...v5.6.1-nightly.50) (2021-09-05)
 
+### Bug Fixes
+
+- Ferdi locking with lock feature disabled (#1866). Set & run the inactivity timeout only if lock feature is enabled, and use same condition between lock screen and locked menu 💖 @sad270
+
 ### Internal
 
 - Ensure stored settings conform to type-safety 💖 @vraravam
