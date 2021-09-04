@@ -1,3 +1,12 @@
+# [v5.6.1-nightly.50](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.48...v5.6.1-nightly.50) (2021-09-05)
+
+### Internal
+
+- Ensure stored settings conform to type-safety 💖 @vraravam
+- Use namespaces when pulling docker base images since this is reqd for… 💖 @vraravam
+- Remove `What's New` functionality since that is superceded by the `Changelog` (#1864) 💖 @mhatvan
+- Refactoring to have consistent usage (prep for ts conversion) (#1821) 💖 @vraravam
+
 # [v5.6.1-nightly.48](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.46...v5.6.1-nightly.48) (2021-09-03)
 
 - Service: Add ability to use self-hosted option for `youtrack` service (fixes getferdi/recipes#671)
