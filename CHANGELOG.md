@@ -6,10 +6,12 @@
 
 ### Internal
 
+- Fix 'stores.app.accentColor is marked as required' console error (#1859) 💖 @sad270, @vraravam
 - Ensure stored settings conform to type-safety 💖 @vraravam
-- Use namespaces when pulling docker base images since this is reqd for… 💖 @vraravam
+- Use namespaces when pulling docker base images since this is reqd for podman 💖 @vraravam
 - Remove `What's New` functionality since that is superceded by the `Changelog` (#1864) 💖 @mhatvan
 - Refactoring to have consistent usage (prep for ts conversion) (#1821) 💖 @vraravam
+- Improve contribution documentation (#1865) 💖 @sad270, @vraravam
 
 # [v5.6.1-nightly.48](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.46...v5.6.1-nightly.48) (2021-09-03)
 
