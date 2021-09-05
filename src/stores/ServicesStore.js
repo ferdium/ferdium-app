@@ -920,7 +920,6 @@ export default class ServicesStore extends Store {
 
   @action _toggleNotifications({ serviceId }) {
     const service = this.one(serviceId);
-    service.isNotificationEnabled = !service.isNotificationEnabled;
 
     this.actions.service.updateService({
       serviceId,
@@ -933,7 +932,6 @@ export default class ServicesStore extends Store {
 
   @action _toggleAudio({ serviceId }) {
     const service = this.one(serviceId);
-    service.isMuted = !service.isMuted;
 
     this.actions.service.updateService({
       serviceId,
@@ -946,7 +944,6 @@ export default class ServicesStore extends Store {
 
   @action _toggleDarkMode({ serviceId }) {
     const service = this.one(serviceId);
-    service.isDarkModeEnabled = !service.isDarkModeEnabled;
 
     this.actions.service.updateService({
       serviceId,
