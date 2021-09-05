@@ -28,6 +28,8 @@ import { workspaceStore } from '../features/workspaces/index';
 import apiBase, { termsBase } from '../api/apiBase';
 import { openExternalUrl } from '../helpers/url-helpers';
 
+const debug = require('debug')('Ferdi:Menu');
+
 const menuItems = defineMessages({
   edit: {
     id: 'menu.edit',
@@ -320,8 +322,8 @@ const menuItems = defineMessages({
   },
 });
 
-function getActiveWebview() {
-  return window.ferdi.stores.services.active.webview;
+function getActiveService() {
+  return window.ferdi.stores.services.active;
 }
 
 const _titleBarTemplateFactory = (intl, locked) => [
@@ -360,7 +362,7 @@ const _titleBarTemplateFactory = (intl, locked) => [
         accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+V`, // Override the accelerator since this adds new key combo in macos
         role: 'pasteAndMatchStyle',
         click() {
-          getActiveWebview().pasteAndMatchStyle();
+          getActiveService().webview.pasteAndMatchStyle();
         },
       },
       {
@@ -396,18 +398,20 @@ const _titleBarTemplateFactory = (intl, locked) => [
         label: intl.formatMessage(menuItems.findInPage),
         accelerator: `${cmdOrCtrlShortcutKey()}+F`,
         click() {
+          const service = getActiveService();
           // Check if there is a service active
-          if (!window.ferdi.stores.services.active) return;
+          if (service) {
+            // Focus webview so find in page popup gets focused
+            service.webview.focus();
 
-          // Focus webview so find in page popup gets focused
-          window.ferdi.stores.services.active.webview.focus();
-
-          const currentService = window.ferdi.stores.services.active.id;
-          window.ferdi.actions.service.sendIPCMessage({
-            serviceId: currentService,
-            channel: 'find-in-page',
-            args: {},
-          });
+            window.ferdi.actions.service.sendIPCMessage({
+              serviceId: service.id,
+              channel: 'find-in-page',
+              args: {},
+            });
+          } else {
+            debug('No service is active');
+          }
         },
       },
       {
@@ -417,14 +421,14 @@ const _titleBarTemplateFactory = (intl, locked) => [
         label: intl.formatMessage(menuItems.back),
         accelerator: `${cmdOrCtrlShortcutKey()}+Left`,
         click() {
-          getActiveWebview().goBack();
+          getActiveService().webview.goBack();
         },
       },
       {
         label: intl.formatMessage(menuItems.forward),
         accelerator: `${cmdOrCtrlShortcutKey()}+Right`,
         click() {
-          getActiveWebview().goForward();
+          getActiveService().webview.goForward();
         },
       },
       {
@@ -435,7 +439,7 @@ const _titleBarTemplateFactory = (intl, locked) => [
         accelerator: `${cmdOrCtrlShortcutKey()}+0`,
         role: 'resetZoom',
         click() {
-          getActiveWebview().setZoomLevel(0);
+          this.actions.service.zoomResetForActiveService();
         },
       },
       {
@@ -443,11 +447,7 @@ const _titleBarTemplateFactory = (intl, locked) => [
         accelerator: `${cmdOrCtrlShortcutKey()}+plus`,
         role: 'zoomIn',
         click() {
-          const activeService = getActiveWebview();
-          const level = activeService.getZoomLevel();
-
-          // level 9 =~ +300% and setZoomLevel wouldnt zoom in further
-          if (level < 9) activeService.setZoomLevel(level + 1);
+          this.actions.service.zoomInForActiveService();
         },
       },
       {
@@ -455,11 +455,7 @@ const _titleBarTemplateFactory = (intl, locked) => [
         accelerator: `${cmdOrCtrlShortcutKey()}+-`,
         role: 'zoomOut',
         click() {
-          const activeService = getActiveWebview();
-          const level = activeService.getZoomLevel();
-
-          // level -9 =~ -50% and setZoomLevel wouldnt zoom out further
-          if (level > -9) activeService.setZoomLevel(level - 1);
+          this.actions.service.zoomOutForActiveService();
         },
       },
       {

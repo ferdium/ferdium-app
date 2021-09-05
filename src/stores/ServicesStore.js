@@ -99,6 +99,9 @@ export default class ServicesStore extends Store {
     this.actions.service.openDevToolsForActiveService.listen(
       this._openDevToolsForActiveService.bind(this),
     );
+    this.actions.service.zoomInForActiveService.listen(this._zoomInForActiveService.bind(this));
+    this.actions.service.zoomOutForActiveService.listen(this._zoomOutForActiveService.bind(this));
+    this.actions.service.zoomResetForActiveService.listen(this._zoomResetForActiveService.bind(this));
     this.actions.service.hibernate.listen(this._hibernate.bind(this));
     this.actions.service.awake.listen(this._awake.bind(this));
     this.actions.service.resetLastPollTimer.listen(
@@ -603,8 +606,12 @@ export default class ServicesStore extends Store {
   }
 
   @action _blurActive() {
-    if (!this.active) return;
-    this.active.isActive = false;
+    const service = this.active;
+    if (service) {
+      service.isActive = false;
+    } else {
+      debug('No service is active');
+    }
   }
 
   @action _setActiveNext() {
@@ -678,6 +685,8 @@ export default class ServicesStore extends Store {
       const service = this.active;
       if (service) {
         this._focusService({ serviceId: service.id });
+      } else {
+        debug('No service is active');
       }
     } else {
       this.allServicesRequest.invalidate();
@@ -846,12 +855,13 @@ export default class ServicesStore extends Store {
   }
 
   @action _reloadActive() {
-    if (this.active) {
-      const service = this.one(this.active.id);
-
+    const service = this.active;
+    if (service) {
       this._reload({
         serviceId: service.id,
       });
+    } else {
+      debug('No service is active');
     }
   }
 
@@ -958,9 +968,45 @@ export default class ServicesStore extends Store {
 
   @action _openDevToolsForActiveService() {
     const service = this.active;
-
     if (service) {
       this._openDevTools({ serviceId: service.id });
+    } else {
+      debug('No service is active');
+    }
+  }
+
+  @action _zoomInForActiveService() {
+    const service = this.active;
+    if (service) {
+      debug(`active service : ${service.id}`);
+      const level = service.webview.getZoomLevel();
+      // level 9 =~ +300% and setZoomLevel wouldnt zoom in further
+      if (level < 9) {
+        service.webview.setZoomLevel(level + 1);
+      }
+    } else {
+      debug('No service is active');
+    }
+  }
+
+  @action _zoomOutForActiveService() {
+    const service = this.active;
+    if (service) {
+      debug(`active service : ${service.id}`);
+      const level = service.webview.getZoomLevel();
+      // level -9 =~ -50% and setZoomLevel wouldnt zoom out further
+      if (level > -9) {
+        service.webview.setZoomLevel(level - 1);
+      }
+    } else {
+      debug('No service is active');
+    }
+  }
+
+  @action _zoomResetForActiveService() {
+    const service = this.active;
+    if (service) {
+      service.webview.setZoomLevel(0);
     } else {
       debug('No service is active');
     }
@@ -1018,12 +1064,13 @@ export default class ServicesStore extends Store {
     if (service) {
       this.actions.service.focusService({ serviceId: service.id });
       document.title = `Ferdi - ${service.name}`;
+    } else {
+      debug('No service is active');
     }
   }
 
   _saveActiveService() {
     const service = this.active;
-
     if (service) {
       this.actions.settings.update({
         type: 'service',
@@ -1031,6 +1078,8 @@ export default class ServicesStore extends Store {
           activeService: service.id,
         },
       });
+    } else {
+      debug('No service is active');
     }
   }
 

@@ -98,6 +98,9 @@ export default {
     serviceId: PropTypes.string.isRequired,
   },
   openDevToolsForActiveService: {},
+  zoomInForActiveService: {},
+  zoomOutForActiveService: {},
+  zoomResetForActiveService: {},
   hibernate: {
     serviceId: PropTypes.string.isRequired,
   },
