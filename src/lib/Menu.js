@@ -323,7 +323,8 @@ const menuItems = defineMessages({
 });
 
 function getActiveService() {
-  return window.ferdi.stores.services.active;
+  // TODO: How is this different from `this.actions.service.active` which is in the ServicesStore class?
+  return this.stores.services.active;
 }
 
 const _titleBarTemplateFactory = (intl, locked) => [
@@ -656,18 +657,14 @@ export default class FranzMenu {
       tpl[1].submenu.unshift(
         {
           label: intl.formatMessage(menuItems.reloadService),
-          id: 'reloadService', // TODO: needed?
           accelerator: `${cmdOrCtrlShortcutKey()}+R`,
           click: () => {
             if (
               this.stores.user.isLoggedIn &&
               this.stores.services.enabled.length > 0
             ) {
-              if (
-                this.stores.services.active.recipe.id ===
-                CUSTOM_WEBSITE_RECIPE_ID
-              ) {
-                this.stores.services.active.webview.reload();
+              if (getActiveService().recipe.id === CUSTOM_WEBSITE_RECIPE_ID) {
+                getActiveService().webview.reload();
               } else {
                 this.actions.service.reloadActive();
               }
