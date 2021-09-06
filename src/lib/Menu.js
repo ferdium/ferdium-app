@@ -28,8 +28,6 @@ import { workspaceStore } from '../features/workspaces/index';
 import apiBase, { termsBase } from '../api/apiBase';
 import { openExternalUrl } from '../helpers/url-helpers';
 
-const debug = require('debug')('Ferdi:Menu');
-
 const menuItems = defineMessages({
   edit: {
     id: 'menu.edit',
@@ -323,8 +321,7 @@ const menuItems = defineMessages({
 });
 
 function getActiveService() {
-  // TODO: How is this different from `this.actions.service.active` which is in the ServicesStore class?
-  return this.stores.services.active;
+  return window.ferdi.stores.services.active;
 }
 
 const _titleBarTemplateFactory = (intl, locked) => [
@@ -407,8 +404,6 @@ const _titleBarTemplateFactory = (intl, locked) => [
               channel: 'find-in-page',
               args: {},
             });
-          } else {
-            debug('No service is active');
           }
         },
       },
@@ -436,21 +431,29 @@ const _titleBarTemplateFactory = (intl, locked) => [
         label: intl.formatMessage(menuItems.resetZoom),
         accelerator: `${cmdOrCtrlShortcutKey()}+0`,
         click() {
-          this.actions.service.zoomResetForActiveService();
+          getActiveService().webview.setZoomLevel(0);
         },
       },
       {
         label: intl.formatMessage(menuItems.zoomIn),
         accelerator: `${cmdOrCtrlShortcutKey()}+plus`,
         click() {
-          this.actions.service.zoomInForActiveService();
+          const activeService = getActiveService().webview;
+          const level = activeService.getZoomLevel();
+
+          // level 9 =~ +300% and setZoomLevel wouldnt zoom in further
+          if (level < 9) activeService.setZoomLevel(level + 1);
         },
       },
       {
         label: intl.formatMessage(menuItems.zoomOut),
         accelerator: `${cmdOrCtrlShortcutKey()}+-`,
         click() {
-          this.actions.service.zoomOutForActiveService();
+          const activeService = getActiveService().webview;
+          const level = activeService.getZoomLevel();
+
+          // level -9 =~ -50% and setZoomLevel wouldnt zoom out further
+          if (level > -9) activeService.setZoomLevel(level - 1);
         },
       },
       {

@@ -99,9 +99,6 @@ export default class ServicesStore extends Store {
     this.actions.service.openDevToolsForActiveService.listen(
       this._openDevToolsForActiveService.bind(this),
     );
-    this.actions.service.zoomInForActiveService.listen(this._zoomInForActiveService.bind(this));
-    this.actions.service.zoomOutForActiveService.listen(this._zoomOutForActiveService.bind(this));
-    this.actions.service.zoomResetForActiveService.listen(this._zoomResetForActiveService.bind(this));
     this.actions.service.hibernate.listen(this._hibernate.bind(this));
     this.actions.service.awake.listen(this._awake.bind(this));
     this.actions.service.resetLastPollTimer.listen(
@@ -965,45 +962,9 @@ export default class ServicesStore extends Store {
 
   @action _openDevToolsForActiveService() {
     const service = this.active;
+
     if (service) {
       this._openDevTools({ serviceId: service.id });
-    } else {
-      debug('No service is active');
-    }
-  }
-
-  @action _zoomInForActiveService() {
-    const service = this.active;
-    if (service) {
-      debug(`active service : ${service.id}`);
-      const level = service.webview.getZoomLevel();
-      // level 9 =~ +300% and setZoomLevel wouldnt zoom in further
-      if (level < 9) {
-        service.webview.setZoomLevel(level + 1);
-      }
-    } else {
-      debug('No service is active');
-    }
-  }
-
-  @action _zoomOutForActiveService() {
-    const service = this.active;
-    if (service) {
-      debug(`active service : ${service.id}`);
-      const level = service.webview.getZoomLevel();
-      // level -9 =~ -50% and setZoomLevel wouldnt zoom out further
-      if (level > -9) {
-        service.webview.setZoomLevel(level - 1);
-      }
-    } else {
-      debug('No service is active');
-    }
-  }
-
-  @action _zoomResetForActiveService() {
-    const service = this.active;
-    if (service) {
-      service.webview.setZoomLevel(0);
     } else {
       debug('No service is active');
     }
