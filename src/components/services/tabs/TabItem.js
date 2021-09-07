@@ -22,10 +22,6 @@ const messages = defineMessages({
     id: 'tabs.item.reload',
     defaultMessage: '!!!Reload',
   },
-  edit: {
-    id: 'tabs.item.edit',
-    defaultMessage: '!!!Edit',
-  },
   disableNotifications: {
     id: 'tabs.item.disableNotifications',
     defaultMessage: '!!!Disable notifications',
@@ -205,7 +201,7 @@ class TabItem extends Component {
         accelerator: `${cmdOrCtrlShortcutKey()}+R`,
       },
       {
-        label: intl.formatMessage(messages.edit),
+        label: intl.formatMessage(globalMessages.edit),
         click: () =>
           openSettings({
             path: `services/edit/${service.id}`,

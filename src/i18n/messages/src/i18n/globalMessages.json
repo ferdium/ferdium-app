@@ -206,5 +206,31 @@
       "line": 68,
       "column": 3
     }
+  },
+  {
+    "id": "global.settings",
+    "defaultMessage": "!!!Settings",
+    "file": "src/i18n/globalMessages.js",
+    "start": {
+      "line": 69,
+      "column": 12
+    },
+    "end": {
+      "line": 72,
+      "column": 3
+    }
+  },
+  {
+    "id": "global.edit",
+    "defaultMessage": "!!!Edit",
+    "file": "src/i18n/globalMessages.js",
+    "start": {
+      "line": 73,
+      "column": 8
+    },
+    "end": {
+      "line": 76,
+      "column": 3
+    }
   }
 ]

@@ -66,4 +66,12 @@ export default defineMessages({
     defaultMessage:
       '!!!Do you really want to quit Ferdi?',
   },
+  settings: {
+    id: 'global.settings',
+    defaultMessage: '!!!Settings',
+  },
+  edit: {
+    id: 'global.edit',
+    defaultMessage: '!!!Edit',
+  },
 });

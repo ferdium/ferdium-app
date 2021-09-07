@@ -231,10 +231,6 @@ const menuItems = defineMessages({
     id: 'menu.app.about',
     defaultMessage: '!!!About Ferdi',
   },
-  settings: {
-    id: 'menu.app.settings',
-    defaultMessage: '!!!Settings',
-  },
   checkForUpdates: {
     id: 'menu.app.checkForUpdates',
     defaultMessage: '!!!Check for updates',
@@ -772,7 +768,7 @@ export default class FranzMenu {
           type: 'separator',
         },
         {
-          label: intl.formatMessage(menuItems.settings),
+          label: intl.formatMessage(globalMessages.settings),
           accelerator: `${settingsShortcutKey()}`,
           click: () => {
             this.actions.ui.openSettings({ path: 'app' });
