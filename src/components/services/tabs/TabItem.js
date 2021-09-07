@@ -11,6 +11,7 @@ import ms from 'ms';
 import { observable, autorun } from 'mobx';
 import ServiceModel from '../../../models/Service';
 import { cmdOrCtrlShortcutKey } from '../../../environment';
+import globalMessages from '../../../i18n/globalMessages';
 
 const IS_SERVICE_DEBUGGING_ENABLED = (
   localStorage.getItem('debug') || ''
@@ -259,7 +260,7 @@ class TabItem extends Component {
             detail: intl.formatMessage(messages.confirmDeleteService, {
               serviceName: service.name || service.recipe.name,
             }),
-            buttons: ['Yes', 'No'],
+            buttons: [intl.formatMessage(globalMessages.yes), intl.formatMessage(globalMessages.no)],
           });
           if (selection === 0) {
             deleteService();

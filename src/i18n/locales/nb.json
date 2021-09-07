@@ -1,6 +1,7 @@
 {
   "global.api.unhealthy": "Kan ikke koble til Ferdi' tjenester",
   "global.notConnectedToTheInternet": "Du er ikke koblet til internett.",
+  "global.submit": "Send inn",
   "welcome.signupButton": "Opprett en gratis konto",
   "welcome.loginButton": "Logg inn til din konto",
   "welcome.slogan": "Teksting som funker for deg",
@@ -15,7 +16,6 @@
   "login.link.password": "Reset passord",
   "password.headline": "Reset passord",
   "password.email.label": "Email adresse",
-  "password.submit.label": "Send inn",
   "password.noUser": "Ingen bruker med den emailen finnes",
   "password.successInfo": "Vennligst sjekk din email",
   "password.link.signup": "Opprett en gratis konto",

@@ -49,78 +49,65 @@
         "defaultMessage": "!!!Change server",
         "end": {
           "column": 3,
-          "line": 17
+          "line": 18
         },
         "file": "src/components/auth/ChangeServer.js",
         "id": "changeserver.headline",
         "start": {
           "column": 12,
-          "line": 14
+          "line": 15
         }
       },
       {
         "defaultMessage": "!!!Server",
         "end": {
           "column": 3,
-          "line": 21
+          "line": 22
         },
         "file": "src/components/auth/ChangeServer.js",
         "id": "changeserver.label",
         "start": {
           "column": 9,
-          "line": 18
+          "line": 19
         }
       },
       {
         "defaultMessage": "!!!Extra settings offered by Ferdi will not be saved",
         "end": {
           "column": 3,
-          "line": 25
+          "line": 26
         },
         "file": "src/components/auth/ChangeServer.js",
         "id": "changeserver.warning",
         "start": {
           "column": 11,
-          "line": 22
+          "line": 23
         }
       },
       {
         "defaultMessage": "!!!Custom server",
         "end": {
           "column": 3,
-          "line": 29
+          "line": 30
         },
         "file": "src/components/auth/ChangeServer.js",
         "id": "changeserver.customServerLabel",
         "start": {
           "column": 21,
-          "line": 26
+          "line": 27
         }
       },
       {
         "defaultMessage": "!!!Enter a valid URL",
         "end": {
           "column": 3,
-          "line": 33
+          "line": 34
         },
         "file": "src/components/auth/ChangeServer.js",
         "id": "changeserver.urlError",
         "start": {
           "column": 12,
-          "line": 30
-        }
-      },
-      {
-        "defaultMessage": "!!!Submit",
-        "end": {
-          "column": 3,
-          "line": 37
-        },
-        "file": "src/components/auth/ChangeServer.js",
-        "id": "changeserver.submit",
-        "start": {
-          "column": 10,
-          "line": 34
+          "line": 31
         }
       }
     ],
@@ -568,91 +555,78 @@
         "defaultMessage": "!!!Forgot password",
         "end": {
           "column": 3,
-          "line": 17
+          "line": 18
         },
         "file": "src/components/auth/Password.js",
         "id": "password.headline",
         "start": {
           "column": 12,
-          "line": 14
+          "line": 15
         }
       },
       {
         "defaultMessage": "!!!Email address",
         "end": {
           "column": 3,
-          "line": 21
+          "line": 22
         },
         "file": "src/components/auth/Password.js",
         "id": "password.email.label",
         "start": {
           "column": 14,
-          "line": 18
-        }
-      },
-      {
-        "defaultMessage": "!!!Submit",
-        "end": {
-          "column": 3,
-          "line": 25
-        },
-        "file": "src/components/auth/Password.js",
-        "id": "password.submit.label",
-        "start": {
-          "column": 21,
-          "line": 22
+          "line": 19
         }
       },
       {
         "defaultMessage": "!!!Your new password was sent to your email address",
         "end": {
           "column": 3,
-          "line": 29
+          "line": 26
         },
         "file": "src/components/auth/Password.js",
         "id": "password.successInfo",
         "start": {
           "column": 15,
-          "line": 26
+          "line": 23
         }
       },
       {
         "defaultMessage": "!!!No user affiliated with that email address",
         "end": {
           "column": 3,
-          "line": 33
+          "line": 30
         },
         "file": "src/components/auth/Password.js",
         "id": "password.noUser",
         "start": {
           "column": 10,
-          "line": 30
+          "line": 27
         }
       },
       {
         "defaultMessage": "!!!Create a free account",
         "end": {
           "column": 3,
-          "line": 37
+          "line": 34
         },
         "file": "src/components/auth/Password.js",
         "id": "password.link.signup",
         "start": {
           "column": 14,
-          "line": 34
+          "line": 31
         }
       },
       {
         "defaultMessage": "!!!Sign in to your account",
         "end": {
           "column": 3,
-          "line": 41
+          "line": 38
         },
         "file": "src/components/auth/Password.js",
         "id": "password.link.login",
         "start": {
           "column": 13,
-          "line": 38
+          "line": 35
         }
       }
     ],
@@ -760,52 +734,52 @@
         "defaultMessage": "!!!Let's get started",
         "end": {
           "column": 3,
-          "line": 22
+          "line": 23
         },
         "file": "src/components/auth/SetupAssistant.js",
         "id": "setupAssistant.headline",
         "start": {
           "column": 12,
-          "line": 19
+          "line": 20
         }
       },
       {
         "defaultMessage": "!!!Choose from our most used services and get back on top of your messaging now.",
         "end": {
           "column": 3,
-          "line": 27
+          "line": 28
         },
         "file": "src/components/auth/SetupAssistant.js",
         "id": "setupAssistant.subheadline",
         "start": {
           "column": 15,
-          "line": 23
+          "line": 24
         }
       },
       {
         "defaultMessage": "!!!Let's go",
         "end": {
           "column": 3,
-          "line": 31
+          "line": 32
         },
         "file": "src/components/auth/SetupAssistant.js",
         "id": "setupAssistant.submit.label",
         "start": {
           "column": 21,
-          "line": 28
+          "line": 29
         }
       },
       {
         "defaultMessage": "!!!Invitations sent successfully",
         "end": {
           "column": 3,
-          "line": 35
+          "line": 36
         },
         "file": "src/components/auth/SetupAssistant.js",
         "id": "invite.successInfo",
         "start": {
           "column": 21,
-          "line": 32
+          "line": 33
         }
       }
     ],
@@ -1696,182 +1670,182 @@
         "defaultMessage": "!!!Reload",
         "end": {
           "column": 3,
-          "line": 23
+          "line": 24
         },
         "file": "src/components/services/tabs/TabItem.js",
         "id": "tabs.item.reload",
         "start": {
           "column": 10,
-          "line": 20
+          "line": 21
         }
       },
       {
         "defaultMessage": "!!!Edit",
         "end": {
           "column": 3,
-          "line": 27
+          "line": 28
         },
         "file": "src/components/services/tabs/TabItem.js",
         "id": "tabs.item.edit",
         "start": {
           "column": 8,
-          "line": 24
+          "line": 25
         }
       },
       {
         "defaultMessage": "!!!Disable notifications",
         "end": {
           "column": 3,
-          "line": 31
+          "line": 32
         },
         "file": "src/components/services/tabs/TabItem.js",
         "id": "tabs.item.disableNotifications",
         "start": {
           "column": 24,
-          "line": 28
+          "line": 29
         }
       },
       {
         "defaultMessage": "!!!Enable notifications",
         "end": {
           "column": 3,
-          "line": 35
+          "line": 36
         },
         "file": "src/components/services/tabs/TabItem.js",
         "id": "tabs.item.enableNotification",
         "start": {
           "column": 23,
-          "line": 32
+          "line": 33
         }
       },
       {
         "defaultMessage": "!!!Disable audio",
         "end": {
           "column": 3,
-          "line": 39
+          "line": 40
         },
         "file": "src/components/services/tabs/TabItem.js",
         "id": "tabs.item.disableAudio",
         "start": {
           "column": 16,
-          "line": 36
+          "line": 37
         }
       },
       {
         "defaultMessage": "!!!Enable audio",
         "end": {
           "column": 3,
-          "line": 43
+          "line": 44
         },
         "file": "src/components/services/tabs/TabItem.js",
         "id": "tabs.item.enableAudio",
         "start": {
           "column": 15,
-          "line": 40
+          "line": 41
         }
       },
       {
         "defaultMessage": "!!!Enable Dark mode",
         "end": {
           "column": 3,
-          "line": 47
+          "line": 48
         },
         "file": "src/components/services/tabs/TabItem.js",
         "id": "tabs.item.enableDarkMode",
         "start": {
           "column": 18,
-          "line": 44
+          "line": 45
         }
       },
       {
         "defaultMessage": "!!!Disable Dark mode",
         "end": {
           "column": 3,
-          "line": 51
+          "line": 52
         },
         "file": "src/components/services/tabs/TabItem.js",
         "id": "tabs.item.disableDarkMode",
         "start": {
           "column": 19,
-          "line": 48
+          "line": 49
         }
       },
       {
         "defaultMessage": "!!!Disable Service",
         "end": {
           "column": 3,
-          "line": 55
+          "line": 56
         },
         "file": "src/components/services/tabs/TabItem.js",
         "id": "tabs.item.disableService",
         "start": {
           "column": 18,
-          "line": 52
+          "line": 53
         }
       },
       {
         "defaultMessage": "!!!Enable Service",
         "end": {
           "column": 3,
-          "line": 59
+          "line": 60
         },
         "file": "src/components/services/tabs/TabItem.js",
         "id": "tabs.item.enableService",
         "start": {
           "column": 17,
-          "line": 56
+          "line": 57
         }
       },
       {
         "defaultMessage": "!!!Hibernate Service",
         "end": {
           "column": 3,
-          "line": 63
+          "line": 64
         },
         "file": "src/components/services/tabs/TabItem.js",
         "id": "tabs.item.hibernateService",
         "start": {
           "column": 20,
-          "line": 60
+          "line": 61
         }
       },
       {
         "defaultMessage": "!!!Wake Up Service",
         "end": {
           "column": 3,
-          "line": 67
+          "line": 68
         },
         "file": "src/components/services/tabs/TabItem.js",
         "id": "tabs.item.wakeUpService",
         "start": {
           "column": 17,
-          "line": 64
+          "line": 65
         }
       },
       {
         "defaultMessage": "!!!Delete Service",
         "end": {
           "column": 3,
-          "line": 71
+          "line": 72
         },
         "file": "src/components/services/tabs/TabItem.js",
         "id": "tabs.item.deleteService",
         "start": {
           "column": 17,
-          "line": 68
+          "line": 69
         }
       },
       {
         "defaultMessage": "!!!Do you really want to delete the {serviceName} service?",
         "end": {
           "column": 3,
-          "line": 76
+          "line": 77
         },
         "file": "src/components/services/tabs/TabItem.js",
         "id": "tabs.item.confirmDeleteService",
         "start": {
           "column": 24,
-          "line": 72
+          "line": 73
         }
       }
     ],
@@ -4962,6 +4936,24 @@
   {
     "descriptors": [
       {
+        "defaultMessage": "!!!Sign In",
+        "end": {
+          "column": 3,
+          "line": 27
+        },
+        "file": "src/features/basicAuth/Component.js",
+        "id": "feature.basicAuth.signIn",
+        "start": {
+          "column": 10,
+          "line": 24
+        }
+      }
+    ],
+    "path": "src/features/basicAuth/Component.json"
+  },
+  {
+    "descriptors": [
+      {
         "defaultMessage": "!!!Publish debugging information",
         "end": {
           "column": 3,
@@ -4983,52 +4975,39 @@
         "defaultMessage": "!!!Nightly Builds",
         "end": {
           "column": 3,
-          "line": 19
+          "line": 20
         },
         "file": "src/features/nightlyBuilds/Component.js",
         "id": "feature.nightlyBuilds.title",
         "start": {
           "column": 9,
-          "line": 16
+          "line": 17
         }
       },
       {
         "defaultMessage": "!!!Nightly builds are highly experimental versions of Ferdi that may contain unpolished or uncompleted features. These nightly builds are mainly used by developers to test their newly developed features and how they will perform in the final build. If you don't know what you are doing, we suggest not activating nightly builds.",
         "end": {
           "column": 3,
-          "line": 23
+          "line": 24
         },
         "file": "src/features/nightlyBuilds/Component.js",
         "id": "feature.nightlyBuilds.info",
         "start": {
           "column": 8,
-          "line": 20
+          "line": 21
         }
       },
       {
         "defaultMessage": "!!!Activate",
         "end": {
           "column": 3,
-          "line": 27
+          "line": 28
         },
         "file": "src/features/nightlyBuilds/Component.js",
         "id": "feature.nightlyBuilds.activate",
         "start": {
           "column": 12,
-          "line": 24
-        }
-      },
-      {
-        "defaultMessage": "!!!Cancel",
-        "end": {
-          "column": 3,
-          "line": 31
-        },
-        "file": "src/features/nightlyBuilds/Component.js",
-        "id": "feature.nightlyBuilds.cancel",
-        "start": {
-          "column": 10,
-          "line": 28
+          "line": 25
         }
       }
     ],
@@ -5869,6 +5848,84 @@
         "start": {
           "column": 17,
           "line": 32
+        }
+      },
+      {
+        "defaultMessage": "!!!Yes",
+        "end": {
+          "column": 3,
+          "line": 39
+        },
+        "file": "src/i18n/globalMessages.js",
+        "id": "global.yes",
+        "start": {
+          "column": 7,
+          "line": 36
+        }
+      },
+      {
+        "defaultMessage": "!!!No",
+        "end": {
+          "column": 3,
+          "line": 43
+        },
+        "file": "src/i18n/globalMessages.js",
+        "id": "global.no",
+        "start": {
+          "column": 6,
+          "line": 40
+        }
+      },
+      {
+        "defaultMessage": "!!!Ok",
+        "end": {
+          "column": 3,
+          "line": 47
+        },
+        "file": "src/i18n/globalMessages.js",
+        "id": "global.ok",
+        "start": {
+          "column": 6,
+          "line": 44
+        }
+      },
+      {
+        "defaultMessage": "!!!Cancel",
+        "end": {
+          "column": 3,
+          "line": 51
+        },
+        "file": "src/i18n/globalMessages.js",
+        "id": "global.cancel",
+        "start": {
+          "column": 10,
+          "line": 48
+        }
+      },
+      {
+        "defaultMessage": "!!!Save",
+        "end": {
+          "column": 3,
+          "line": 55
+        },
+        "file": "src/i18n/globalMessages.js",
+        "id": "global.save",
+        "start": {
+          "column": 8,
+          "line": 52
+        }
+      },
+      {
+        "defaultMessage": "!!!Submit",
+        "end": {
+          "column": 3,
+          "line": 59
+        },
+        "file": "src/i18n/globalMessages.js",
+        "id": "global.submit",
+        "start": {
+          "column": 10,
+          "line": 56
         }
       }
     ],

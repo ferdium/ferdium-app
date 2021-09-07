@@ -322,7 +322,7 @@ class RecipeController {
       );
       const darkModeExists = pathExistsSync(darkModeStyle);
 
-      debug('darkmode.css exists? ', darkModeExists ? 'Yes' : 'No');
+      debug('darkmode.css exists? ', darkModeExists);
 
       // Check if recipe has a custom dark mode handler
       if (this.recipe && this.recipe.darkModeHandler) {

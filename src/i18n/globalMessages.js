@@ -33,4 +33,28 @@ export default defineMessages({
     id: 'global.userAgentHelp',
     defaultMessage: "!!!Use 'https://whatmyuseragent.com/' (to discover) or 'https://developers.whatismybrowser.com/useragents/explore/' (to choose) your desired user agent and copy-paste it here.",
   },
+  yes: {
+    id: 'global.yes',
+    defaultMessage: '!!!Yes',
+  },
+  no: {
+    id: 'global.no',
+    defaultMessage: '!!!No',
+  },
+  ok: {
+    id: 'global.ok',
+    defaultMessage: '!!!Ok',
+  },
+  cancel: {
+    id: 'global.cancel',
+    defaultMessage: '!!!Cancel',
+  },
+  save: {
+    id: 'global.save',
+    defaultMessage: '!!!Save',
+  },
+  submit: {
+    id: 'global.submit',
+    defaultMessage: '!!!Submit',
+  },
 });
