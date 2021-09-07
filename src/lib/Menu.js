@@ -824,7 +824,6 @@ export default class FranzMenu {
 
     const about = {
       label: intl.formatMessage(menuItems.about),
-      role: 'about',
       click: () => {
         dialog.showMessageBox({
           type: 'info',
