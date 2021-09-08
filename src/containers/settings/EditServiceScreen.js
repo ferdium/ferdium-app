@@ -18,6 +18,8 @@ import ErrorBoundary from '../../components/util/ErrorBoundary';
 import { required, url, oneRequired } from '../../helpers/validation-helpers';
 import { getSelectOptions } from '../../helpers/i18n-helpers';
 
+import { config as proxyFeature } from '../../features/serviceProxy';
+
 import { SPELLCHECKER_LOCALES } from '../../i18n/languages';
 
 import globalMessages from '../../i18n/globalMessages';
@@ -129,7 +131,7 @@ export default @inject('stores', 'actions') @observer class EditServiceScreen ex
     }
   }
 
-  prepareForm(recipe, service) {
+  prepareForm(recipe, service, proxy) {
     const {
       intl,
     } = this.context;
@@ -273,42 +275,44 @@ export default @inject('stores', 'actions') @observer class EditServiceScreen ex
       });
     }
 
-    const serviceProxyConfig = stores.settings.proxy[service.id] || {};
+    if (proxy.isEnabled) {
+      const serviceProxyConfig = stores.settings.proxy[service.id] || {};
 
-    Object.assign(config.fields, {
-      proxy: {
-        name: 'proxy',
-        label: 'proxy',
-        fields: {
-          isEnabled: {
-            label: intl.formatMessage(messages.enableProxy),
-            value: serviceProxyConfig.isEnabled,
-            default: false,
-          },
-          host: {
-            label: intl.formatMessage(messages.proxyHost),
-            value: serviceProxyConfig.host,
-            default: '',
-          },
-          port: {
-            label: intl.formatMessage(messages.proxyPort),
-            value: serviceProxyConfig.port,
-            default: '',
-          },
-          user: {
-            label: intl.formatMessage(messages.proxyUser),
-            value: serviceProxyConfig.user,
-            default: '',
-          },
-          password: {
-            label: intl.formatMessage(messages.proxyPassword),
-            value: serviceProxyConfig.password,
-            default: '',
-            type: 'password',
+      Object.assign(config.fields, {
+        proxy: {
+          name: 'proxy',
+          label: 'proxy',
+          fields: {
+            isEnabled: {
+              label: intl.formatMessage(messages.enableProxy),
+              value: serviceProxyConfig.isEnabled,
+              default: false,
+            },
+            host: {
+              label: intl.formatMessage(messages.proxyHost),
+              value: serviceProxyConfig.host,
+              default: '',
+            },
+            port: {
+              label: intl.formatMessage(messages.proxyPort),
+              value: serviceProxyConfig.port,
+              default: '',
+            },
+            user: {
+              label: intl.formatMessage(messages.proxyUser),
+              value: serviceProxyConfig.user,
+              default: '',
+            },
+            password: {
+              label: intl.formatMessage(messages.proxyPassword),
+              value: serviceProxyConfig.password,
+              default: '',
+              type: 'password',
+            },
           },
         },
-      },
-    });
+      });
+    }
 
     return new Form(config);
   }
@@ -377,7 +381,7 @@ export default @inject('stores', 'actions') @observer class EditServiceScreen ex
       );
     }
 
-    const form = this.prepareForm(recipe, service);
+    const form = this.prepareForm(recipe, service, proxyFeature);
 
     return (
       <ErrorBoundary>
@@ -393,6 +397,7 @@ export default @inject('stores', 'actions') @observer class EditServiceScreen ex
           onSubmit={(d) => this.onSubmit(d)}
           onDelete={() => this.deleteService()}
           openRecipeFile={(file) => this.openRecipeFile(file)}
+          isProxyFeatureEnabled={proxyFeature.isEnabled}
         />
       </ErrorBoundary>
     );

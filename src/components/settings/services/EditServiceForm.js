@@ -144,6 +144,7 @@ export default @observer class EditServiceForm extends Component {
     openRecipeFile: PropTypes.func.isRequired,
     isSaving: PropTypes.bool.isRequired,
     isDeleting: PropTypes.bool.isRequired,
+    isProxyFeatureEnabled: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
@@ -205,6 +206,7 @@ export default @observer class EditServiceForm extends Component {
       isDeleting,
       onDelete,
       openRecipeFile,
+      isProxyFeatureEnabled,
     } = this.props;
     const { intl } = this.context;
 
@@ -368,40 +370,42 @@ export default @observer class EditServiceForm extends Component {
               </div>
             )}
 
-            <div className="settings__settings-group">
-              <h3>
-                {intl.formatMessage(messages.headlineProxy)}
-                <span className="badge badge--success">beta</span>
-              </h3>
-              <Toggle field={form.$('proxy.isEnabled')} />
-              {form.$('proxy.isEnabled').value && (
-                <>
-                  <div className="grid">
-                    <div className="grid__row">
-                      <Input field={form.$('proxy.host')} className="proxyHost" />
-                      <Input field={form.$('proxy.port')} />
+            {isProxyFeatureEnabled && (
+              <div className="settings__settings-group">
+                <h3>
+                  {intl.formatMessage(messages.headlineProxy)}
+                  <span className="badge badge--success">beta</span>
+                </h3>
+                <Toggle field={form.$('proxy.isEnabled')} />
+                {form.$('proxy.isEnabled').value && (
+                  <>
+                    <div className="grid">
+                      <div className="grid__row">
+                        <Input field={form.$('proxy.host')} className="proxyHost" />
+                        <Input field={form.$('proxy.port')} />
+                      </div>
                     </div>
-                  </div>
-                  <div className="grid">
-                    <div className="grid__row">
-                      <Input field={form.$('proxy.user')} />
-                      <Input
-                        field={form.$('proxy.password')}
-                        showPasswordToggle
-                      />
+                    <div className="grid">
+                      <div className="grid__row">
+                        <Input field={form.$('proxy.user')} />
+                        <Input
+                          field={form.$('proxy.password')}
+                          showPasswordToggle
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <p>
-                    <span className="mdi mdi-information" />
-                    {intl.formatMessage(messages.proxyRestartInfo)}
-                  </p>
-                  <p>
-                    <span className="mdi mdi-information" />
-                    {intl.formatMessage(messages.proxyInfo)}
-                  </p>
-                </>
-              )}
-            </div>
+                    <p>
+                      <span className="mdi mdi-information" />
+                      {intl.formatMessage(messages.proxyRestartInfo)}
+                    </p>
+                    <p>
+                      <span className="mdi mdi-information" />
+                      {intl.formatMessage(messages.proxyInfo)}
+                    </p>
+                  </>
+                )}
+              </div>
+            )}
 
             <div className="user-agent">
               <Input field={form.$('userAgentPref')} />
