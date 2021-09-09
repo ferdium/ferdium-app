@@ -7,10 +7,6 @@
 
 # [v5.6.1-nightly.54](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.53...v5.6.1-nightly.54) (2021-09-09)
 
-### Bug fixes
-
-- Fix U2F devices not recognised in snapcraft image (#1892) 💖 @mhatvan
-
 ### Internal
 
 - Ability for service recipe to expose known certificate hosts (#1890) 💖 @vraravam
