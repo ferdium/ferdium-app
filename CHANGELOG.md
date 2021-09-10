@@ -1,17 +1,45 @@
-# [v5.6.1-nightly.56](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.55...v5.6.1-nightly.56) (2021-09-11)
+# [v5.6.1-beta.4](https://github.com/getferdi/ferdi/compare/v5.6.1-beta.3...v5.6.1-beta.4) (2021-09-10)
 
-- Turned off the certificate whitelisting in ms-teams since that can cause an MITM attack. 💖 @vraravam, @kris7t
+- Add a confirmation dialog and a preference while quitting Ferdi (#1879) 💖 @vraravam
+- Turn off the certificate-whitelisting in ms-teams since that can cause an MITM attack. 💖 @vraravam, @kris7t
+
+### Bug Fixes
+
+- Fix sidebar dimension when used in horizontal style (#1896) 💖 @CSY54
+- Partially revert the certificate-whitelisting for outlook since it caused crashes 💖 @vraravam
+- Fix macOS black screen when closing to systray in fullscreen mode (#1878) 💖 @sad270
+- Fix issue while importing exported `ferdi.data` file while switching from one laptop to another when it had workspaces (#1874) 💖 @vraravam
+- Fix for 'Support' link not working (404 error) (#1806) 💖 @kytwb
+- Fix zoom actions executed on another services (#1867) 💖 @sad270
+- Fix sidebar context menu not synced when toggling via the context menu (#1871) 💖 @sad270
+- Ferdi locking with lock feature disabled (#1866). Set & run the inactivity timeout only if lock feature is enabled, and use same condition between lock screen and locked menu 💖 @sad270
 
 ### Internal
 
-- 'recipes' (using 'pnpm') will coexist with 'ferdi' (using 'npm') (#1905) 💖 @mhatvan, @vraravam
+- Build tooling: 'recipes' (using 'pnpm') will coexist with 'ferdi' (using 'npm') (#1905) 💖 @mhatvan, @vraravam
+- Ability for service recipe to expose known certificate hosts (#1890) 💖 @vraravam
+- Remove dependency of recipes requiring `electron` and `electron/remote` modules (#1869 & getferdi/recipes#674) 💖 @vraravam
+- Fix 'stores.app.accentColor is marked as required' console error (#1859) 💖 @sad270, @vraravam
+- Ensure stored settings conform to type-safety 💖 @vraravam
+- Use namespaces when pulling docker base images since this is reqd for podman 💖 @vraravam
+- Remove `What's New` functionality since that is superceded by the `Changelog` (#1864) 💖 @mhatvan
+- Refactoring to have consistent usage (prep for ts conversion) (#1821) 💖 @vraravam
+- Improve contribution documentation (#1865) 💖 @sad270, @vraravam
+
+# [v5.6.1-nightly.56](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.55...v5.6.1-nightly.56) (2021-09-11)
+
+- Turn off the certificate whitelisting in ms-teams since that can cause an MITM attack. 💖 @vraravam, @kris7t
+
+### Internal
+
+- Build tooling: 'recipes' (using 'pnpm') will coexist with 'ferdi' (using 'npm') (#1905) 💖 @mhatvan, @vraravam
 
 # [v5.6.1-nightly.55](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.54...v5.6.1-nightly.55) (2021-09-10)
 
 ### Bug fixes
 
 - Fix sidebar dimension when used in horizontal style (#1896) 💖 @CSY54
-- Partially reverted the cookie-handling for outlook since it caused crashes 💖 @vraravam
+- Partially reverted the certificate-whitelisting for outlook since it caused crashes 💖 @vraravam
 
 # [v5.6.1-nightly.54](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.53...v5.6.1-nightly.54) (2021-09-09)
 
