@@ -132,13 +132,13 @@
     "ws": "7.4.6"
   },
   "devDependencies": {
-    "@adlk/misty": "0.2.0",
     "@babel/cli": "7.14.8",
     "@babel/core": "7.15.0",
     "@babel/eslint-parser": "7.15.0",
     "@babel/plugin-proposal-class-properties": "7.14.5",
     "@babel/plugin-proposal-decorators": "7.14.5",
     "@babel/plugin-proposal-export-default-from": "7.14.5",
+    "@babel/plugin-proposal-private-methods": "7.14.5",
     "@babel/plugin-proposal-throw-expressions": "7.14.5",
     "@babel/plugin-syntax-dynamic-import": "7.8.3",
     "@babel/preset-env": "7.15.0",
