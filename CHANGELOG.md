@@ -1,4 +1,7 @@
-# [v5.6.1-beta.4](https://github.com/getferdi/ferdi/compare/v5.6.1-beta.3...v5.6.1-beta.4) (2021-09-10)
+# [v5.6.1-beta.4](https://github.com/getferdi/ferdi/compare/v5.6.1-beta.3...v5.6.1-beta.4) (2021-09-11)
+
+Please note that this is the same code as the `v5.6.1-nightly.56` tag.
+The cumulative changes since the previous beta release are:
 
 - Add a confirmation dialog and a preference while quitting Ferdi (#1879) 💖 @vraravam
 - Turn off the certificate-whitelisting in ms-teams since that can cause an MITM attack. 💖 @vraravam, @kris7t
