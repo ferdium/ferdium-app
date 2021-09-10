@@ -1,5 +1,7 @@
 # [v5.6.1-nightly.56](https://github.com/getferdi/ferdi/compare/v5.6.1-nightly.55...v5.6.1-nightly.56) (2021-09-11)
 
+- Turned off the certificate whitelisting in ms-teams since that can cause an MITM attack. 💖 @vraravam, @kris7t
+
 ### Internal
 
 - 'recipes' (using 'pnpm') will coexist with 'ferdi' (using 'npm') (#1905) 💖 @mhatvan, @vraravam
