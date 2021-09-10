@@ -33,7 +33,10 @@
       - [Javascript Coding style-checker](#javascript-coding-style-checker)
   - [Packaging](#packaging)
   - [Release](#release)
-
+  - [Update](#update)
+    - [Update the code](#update-the-code)
+    - [Update Node.js and npm](#update-nodejs-and-npm)
+    - [Update dependences](#update-dependences)
 <!-- /TOC -->
 
 ## Code of Conduct
