@@ -1,3 +1,99 @@
+# [v5.6.1](https://github.com/getferdi/ferdi/compare/v5.6.0...v5.6.1) (2021-09-11)
+
+### Features
+
+- Add a confirmation dialog and a preference while quitting Ferdi (#1879) 💖 @vraravam
+- Services now support aliases!!!! (#1774) 💖 @vraravam
+- Turn off the certificate-whitelisting in ms-teams since that can cause an MITM attack. 💖 @vraravam, @kris7t
+- Remove 'shareFranz' feature since its always turned off for Ferdi 💖 @vraravam
+- Sort the recipes according to their service name in the 'Add new Service' screen 💖 @vraravam
+- Add buttons in the 'Advanced' section of preferences to allow users to quickly open the ferdi profile in their file explorer 💖 @vraravam
+- [Security] Refactored Url helpers to ensure that theres a single place for vetting and opening external urls as recommended by [this article](https://benjamin-altpeter.de/shell-openexternal-dangers/) (#1789) 💖 @vraravam
+- Catch up with minor changes in Franz 5.7.0
+- Add entitlements for screen-capture-permissions on macos 💖 @vraravam
+- Ferdi is now present in the [snapstore](https://snapcraft.io/ferdi) 💖 @mhatvan
+- Quicker way to toggle dark mode from the sidebar context menu 💖 @vraravam
+- Follow OS reduced motion setting (#1757) 💖 @mhatvan, @vraravam
+- Add new Help menu item to allow easy import/export of config files 💖 @vraravam
+- Remove 'Most Popular' services since it alludes to user-tracking (#1718) 💖 @vraravam
+- Add a 'wakeUpStrategy' that the user can control to wake up a previously hibernated service (#1680) 💖 @vraravam
+
+### Minor changes
+
+- Upgrade `nodejs` to `14.17.5` 💖 @vraravam
+- Set default fallback locale for spell-checker to be 'en-US' 💖 @vraravam
+- 'Clear cache' button should not log out of services 💖 @mhatvan, @vraravam
+- Move some npm dependencies that were incorrectly classified as runtime deps, thus saving approx 16MB from the installed file (measured on macos) 💖 @vraravam, @mhatvan
+- Remove `What's New` functionality since that is superceded by the `Changelog` (#1864) 💖 @mhatvan
+- Improve contribution documentation (#1865) 💖 @sad270, @vraravam
+
+### Under the hood
+
+- Upgrade to [electron 13.3.0](https://github.com/electron/electron/releases/tag/v13.3.0) 💖 @vraravam
+- Upgrade `electron-builder` to `22.12.1` which will allow converion from `npm` to `pnpm` 💖 @mhatvan
+- Remove references to 'premium' validation checks and paid subscriptions (making them permanently on) since Ferdi is free to all users forever 💖 @vraravam
+- Build tooling: 'recipes' (using 'pnpm') will coexist with 'ferdi' (using 'npm') (#1905) 💖 @mhatvan, @vraravam
+- Use symbols for key shortcuts consistently 💖 @vraravam
+- Add ability for service recipe to expose known certificate hosts (#1890) 💖 @vraravam
+- Remove dependency of recipes requiring `electron` and `electron/remote` modules (#1869 & getferdi/recipes#674) 💖 @vraravam
+- Fix 'stores.app.accentColor is marked as required' console error (#1859) 💖 @sad270, @vraravam
+- Ensure stored settings conform to type-safety 💖 @vraravam
+- Use namespaces when pulling docker base images since this is reqd for podman 💖 @vraravam
+- Refactoring to have consistent usage (prep for ts conversion) (#1821) 💖 @vraravam
+- Use `Ferdi.safeParseInt` to ensure that parsing for unread count is done consistently in all recipes 💖 @vraravam
+- Remove some leftover Franz branding 💖 @vantezzen
+- Switch from `misty` to `concurrently` (#1846) 💖 @vantezzen
+- Services: Normalize all service recipes to be `es6` compliant 💖 @vraravam
+- Services: Change entry point in the `facebookpages` service (getferdi/recipes#640) 💖 @oda-alexandre, @vraravam
+- Set the `channel` for the auto-update (check if this fixes the in-app updater) 💖 @vraravam
+- Start conversion to typescript with stricter rules 💖 @vraravam
+- Move build-time js files out of 'src' and into 'scripts' 💖 @vraravam
+- Move 'gulp'-related packages to 'devDependencies' resulting in slimming down the installation file considerably (8MB on macos) 💖 @vraravam
+- Minor cleanup of 'NaN' logic when loading recipe badges 💖 @vraravam
+- Completed plumbing required for conversion from javascript to typescript 💖 @vraravam
+- Added animations step in gulp to transpile scss and copy to build 💖 @mhatvan
+- Generate '.gitignore' from gitignore.io 💖 @vraravam
+- Replace old '@meetfranz/electron-notification-state' with 'macos-notification-state' 💖 @vraravam
+- Enable service contextIsolation 💖 @kris7t, @vraravam
+- Use `import` instead of `require` resulting in slight memory performance improvements 💖 @vraravam
+- Move `internal-server` into a sub-folder as opposed to a git submodule for ease of maintenance 💖 @vraravam
+- Migrate from tslint to @typescript-eslint (#1706) 💖 @mhatvan
+
+### Services
+
+- New services: Add `Proton Calendar` (getferdi/recipes#606) 💖 @cereum
+- New services: Add `odoo`, `tinder` and `wakatime` 💖 @oda-alexandre
+- New services: Add `Google News` service 💖 @niutech
+- New services: Add `amazon web services` (getferdi/recipes#643), `binance` (getferdi/recipes#645), `ovh-cloud` (getferdi/recipes#650), `scribens` (getferdi/recipes#651), `docker hub` (getferdi/recipes#644), `bitwarden` (getferdi/recipes#647), `google translate` (getferdi/recipes#642) 💖 @oda-alexandre, @vraravam
+- Services: Remove duplicated recipes for `Outlook Web App` and `Enterprise OWA` (getferdi/recipes#523, getferdi/recipes#1808) 💖 @vraravam
+- Darkmode support for: `Facebook Messenger`, `Facebook Workplace Chat` (Facebook at work), `Slack`, `Google Calendar`, `Whatsapp`, `LinkedIn`, `Telegram`, `Instagram` 💖 @vraravam
+
+### Bug Fixes
+
+- Check if default app protocol is different before overriding it (#1818) 💖 @ayxos, @vraravam
+- Fix sidebar dimension when used in horizontal style (#1896) 💖 @CSY54
+- Partially revert the certificate-whitelisting for outlook since it caused crashes 💖 @vraravam
+- Fix macOS black screen when closing to systray in fullscreen mode (#1878) 💖 @sad270
+- Fix issue while importing exported `ferdi.data` file while switching from one laptop to another when it had workspaces (#1874) 💖 @vraravam
+- Fix for 'Support' link not working (404 error) (#1806) 💖 @kytwb
+- Fix zoom actions executed on another services (#1867) 💖 @sad270
+- Fix sidebar context menu not synced when toggling via the context menu (#1871) 💖 @sad270
+- Ferdi locking with lock feature disabled (#1866). Set & run the inactivity timeout only if lock feature is enabled, and use same condition between lock screen and locked menu 💖 @sad270
+- When the active workspace gets deleted, the default workspace gets auto-selected. 💖 @sad270, @vraravam
+- Fix reordering of services in vertical style layout (#1833) 💖 @vraravam
+- Fix address bar not updating (#1836) 💖 @mhatvan
+- Fix screensharing in discord (getferdi/recipes#625) 💖 @oda-alexandre
+- Per popular demand, reworded `Use Vertical style` to `Use Horizontal style` 💖 @vraravam
+- Fix bug where the service-defaults were not merged when creating a service 💖 @vraravam
+- Audio toggle is now decoupled from notification toggle (#1691) 💖 @vraravam
+- Incorrect position while adding a new service when there were pre-existing services (#1820) 💖 @vraravam
+- Fix issue with some shortcuts not working on macos (those that either used `alt` or `shift` keys) 💖 @vraravam
+- Fix app focus detection 💖 @vraravam
+- Fix error while importing ferdi configuration without workspaces (#1776) 💖 @vraravam
+- Use electron's API to enable/disable spell-check when the app starts up 💖 @vraravam
+- Explicitly use env var to specify hostname for adonis for the internal-server. This fixes issue for some users where they have an alias for the `localhost` 💖 @vraravam
+- Prevent pasting twice (#1644) 💖 @stnkl, @vraravam
+
 # [v5.6.1-beta.4](https://github.com/getferdi/ferdi/compare/v5.6.1-beta.3...v5.6.1-beta.4) (2021-09-11)
 
 Please note that this is the same code as the `v5.6.1-nightly.56` tag.

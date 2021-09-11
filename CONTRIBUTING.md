@@ -237,6 +237,10 @@ Assets will be available in the `out` folder.
 git checkout nightly && git pull -r
 git checkout release
 git merge --no-ff nightly --no-verify
+# <manually resolve conflicts>
+# <manually bump version with 'beta' name (if beta) in `package.json` and `package-lock.json`>
+# <create commit>
+# <create tag>
 git push
 ```
 
