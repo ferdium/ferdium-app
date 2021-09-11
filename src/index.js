@@ -280,6 +280,11 @@ const createWindow = () => {
           debug('Skip taskbar: true');
           mainWindow.setSkipTaskbar(true);
         }
+      } else if (isMac && mainWindow.isFullScreen()) {
+        debug('Window: leaveFullScreen and hide');
+        mainWindow.once('show', () => mainWindow.setFullScreen(true));
+        mainWindow.once('leave-full-screen', () => mainWindow.hide());
+        mainWindow.setFullScreen(false);
       } else {
         debug('Window: hide');
         mainWindow.hide();
@@ -465,7 +470,7 @@ ipcMain.on('open-browser-window', (e, { url, serviceId }) => {
 ipcMain.on(
   'modifyRequestHeaders',
   (e, { modifiedRequestHeaders, serviceId }) => {
-    debug('Received modifyRequestHeaders', modifiedRequestHeaders, serviceId);
+    debug(`Received modifyRequestHeaders ${modifiedRequestHeaders} for serviceId ${serviceId}`);
     modifiedRequestHeaders.forEach(headerFilterSet => {
       const { headers, requestFilters } = headerFilterSet;
       session
@@ -480,6 +485,24 @@ ipcMain.on(
           callback({ requestHeaders: details.requestHeaders });
         });
     });
+  },
+);
+
+ipcMain.on(
+  'knownCertificateHosts',
+  (e, { knownHosts, serviceId }) => {
+    debug(`Received knownCertificateHosts ${knownHosts} for serviceId ${serviceId}`);
+    session
+      .fromPartition(`persist:service-${serviceId}`)
+      .setCertificateVerifyProc((request, callback) => {
+        // To know more about these callbacks: https://www.electronjs.org/docs/api/session#sessetcertificateverifyprocproc
+        const { hostname } = request;
+        if (knownHosts.find(item => item.includes(hostname)).length > 0) {
+          callback(0);
+        } else {
+          callback(-2);
+        }
+      });
   },
 );
 

@@ -33,6 +33,10 @@
       - [Javascript Coding style-checker](#javascript-coding-style-checker)
   - [Packaging](#packaging)
   - [Release](#release)
+  - [Update](#update)
+    - [Update the code](#update-the-code)
+    - [Update Node.js and npm](#update-nodejs-and-npm)
+    - [Update dependences](#update-dependences)
 
 <!-- /TOC -->
 
@@ -60,10 +64,12 @@ Currently, these are the combinations of system dependencies that work for MacOS
 
 ```bash
 node -v
-v14.17.5
+v14.17.6
 npm -v
 6.14.13
 ```
+
+_Note:_ You can choose any package manager to manage multiple versions of `node` and `npm`. For eg, [nvm](https://github.com/nvm-sh/nvm) or [asdf](https://github.com/asdf-vm/asdf).
 
 #### Git
 
@@ -132,12 +138,12 @@ Run the following command to install all dependencies, and link sibling modules 
 npx lerna bootstrap
 ```
 
-If you previously ran `npm install`, it sometimes is necessary to delete your `node_modules` folder before running `npx lerna bootstrap`. If you encounter the `gyp: No Xcode or CLT version` error on macOS at this step, please have a look [here](https://medium.com/flawless-app-stories/gyp-no-xcode-or-clt-version-detected-macos-catalina-anansewaa-38b536389e8d).
+If you previously ran `npm install`, it is sometimes necessary to delete your `node_modules` folder before running `npx lerna bootstrap`. If you encounter the `gyp: No Xcode or CLT version` error on macOS at this step, please have a look [here](https://medium.com/flawless-app-stories/gyp-no-xcode-or-clt-version-detected-macos-catalina-anansewaa-38b536389e8d).
 
 ### Fix native modules to match current electron node version
 
 ```bash
-npm run rebuild
+npm run build
 ```
 
 ### Package recipe repository
@@ -145,7 +151,7 @@ npm run rebuild
 Ferdi requires its recipes to be packaged before it can use it. When running Ferdi as a development instance, you'll need to package the local recipes before you can create any services inside Ferdi.
 
 ```bash
-cd recipes && npm i && npm run package
+cd recipes && pnpm i && pnpm run package
 ```
 
 ### Using Docker to build a linux-targetted packaged app
@@ -235,3 +241,21 @@ git push
 ```
 
 This will automatically trigger the build, as part of which, a new, draft release will be created [here](https://github.com/getferdi/ferdi/releases/). Once all the assets are uploaded (19 assets in total), publish the release (you will need elevated permissions in GitHub for doing this). The last commit of the `release` branch will be tagged.
+
+## Update
+
+### Update the code
+
+```bash
+git pull
+```
+
+### Update Node.js and npm
+
+If node.js and/or npm version have changed, don't forget to update them by running the appropriate command of your chosen package manager.
+
+### Update dependences
+
+```bash
+npx lerna bootstrap
+```

@@ -603,8 +603,12 @@ export default class ServicesStore extends Store {
   }
 
   @action _blurActive() {
-    if (!this.active) return;
-    this.active.isActive = false;
+    const service = this.active;
+    if (service) {
+      service.isActive = false;
+    } else {
+      debug('No service is active');
+    }
   }
 
   @action _setActiveNext() {
@@ -678,6 +682,8 @@ export default class ServicesStore extends Store {
       const service = this.active;
       if (service) {
         this._focusService({ serviceId: service.id });
+      } else {
+        debug('No service is active');
       }
     } else {
       this.allServicesRequest.invalidate();
@@ -846,12 +852,13 @@ export default class ServicesStore extends Store {
   }
 
   @action _reloadActive() {
-    if (this.active) {
-      const service = this.one(this.active.id);
-
+    const service = this.active;
+    if (service) {
       this._reload({
         serviceId: service.id,
       });
+    } else {
+      debug('No service is active');
     }
   }
 
@@ -910,7 +917,6 @@ export default class ServicesStore extends Store {
 
   @action _toggleNotifications({ serviceId }) {
     const service = this.one(serviceId);
-    service.isNotificationEnabled = !service.isNotificationEnabled;
 
     this.actions.service.updateService({
       serviceId,
@@ -923,7 +929,6 @@ export default class ServicesStore extends Store {
 
   @action _toggleAudio({ serviceId }) {
     const service = this.one(serviceId);
-    service.isMuted = !service.isMuted;
 
     this.actions.service.updateService({
       serviceId,
@@ -936,7 +941,6 @@ export default class ServicesStore extends Store {
 
   @action _toggleDarkMode({ serviceId }) {
     const service = this.one(serviceId);
-    service.isDarkModeEnabled = !service.isDarkModeEnabled;
 
     this.actions.service.updateService({
       serviceId,
@@ -1018,12 +1022,13 @@ export default class ServicesStore extends Store {
     if (service) {
       this.actions.service.focusService({ serviceId: service.id });
       document.title = `Ferdi - ${service.name}`;
+    } else {
+      debug('No service is active');
     }
   }
 
   _saveActiveService() {
     const service = this.active;
-
     if (service) {
       this.actions.settings.update({
         type: 'service',
@@ -1031,6 +1036,8 @@ export default class ServicesStore extends Store {
           activeService: service.id,
         },
       });
+    } else {
+      debug('No service is active');
     }
   }
 

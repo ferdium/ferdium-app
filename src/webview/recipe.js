@@ -1,5 +1,6 @@
 /* eslint-disable import/first */
-import { contextBridge, ipcRenderer } from 'electron';
+import { contextBridge, desktopCapturer, ipcRenderer } from 'electron';
+import { BrowserWindow, getCurrentWebContents } from '@electron/remote';
 import { join } from 'path';
 import { autorun, computed, observable } from 'mobx';
 import { pathExistsSync, readFileSync } from 'fs-extra';
@@ -22,6 +23,7 @@ import RecipeWebview from './lib/RecipeWebview';
 import Userscript from './lib/Userscript';
 
 import { BadgeHandler } from './badge';
+import { SessionHandler } from './sessionHandler';
 import contextMenu from './contextMenu';
 import {
   injectDarkModeStyle,
@@ -48,6 +50,8 @@ import { DEFAULT_APP_SETTINGS } from '../environment';
 const debug = require('debug')('Ferdi:Plugin');
 
 const badgeHandler = new BadgeHandler();
+
+const sessionHandler = new SessionHandler();
 
 const notificationsHandler = new NotificationsHandler();
 
@@ -106,7 +110,16 @@ contextBridge.exposeInMainWorld('ferdi', {
     badgeHandler.safeParseInt(text),
   displayNotification: (title, options) =>
     notificationsHandler.displayNotification(title, options),
+  clearStorageData: (storageLocations) =>
+    sessionHandler.clearStorageData(storageLocations),
+  releaseServiceWorkers: () =>
+    sessionHandler.releaseServiceWorkers(),
   getDisplayMediaSelector,
+  getCurrentWebContents,
+  BrowserWindow,
+  ipcRenderer,
+  // TODO: When the discord recipe is changed to use the screenshare.js, this can be removed
+  desktopCapturer,
 });
 
 ipcRenderer.sendToHost(
@@ -316,7 +329,7 @@ class RecipeController {
       );
       const darkModeExists = pathExistsSync(darkModeStyle);
 
-      debug('darkmode.css exists? ', darkModeExists ? 'Yes' : 'No');
+      debug('darkmode.css exists? ', darkModeExists);
 
       // Check if recipe has a custom dark mode handler
       if (this.recipe && this.recipe.darkModeHandler) {
