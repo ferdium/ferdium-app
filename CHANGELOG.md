@@ -33,6 +33,7 @@
 ### Bug fixes
 
 - fix broken menu due to referencing old intl value 💖 @mhatvan
+- fix broken system tray menu (app wasn't quitting) by reverting previous fix 💖 @vraravam
 
 # [v5.6.2-nightly.1](https://github.com/getferdi/ferdi/compare/v5.6.1...v5.6.2-nightly.1) (2021-09-12)
 
