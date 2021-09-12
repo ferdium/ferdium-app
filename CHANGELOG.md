@@ -3,6 +3,7 @@
 ### Bug fixes
 
 - Fix unread count in Office365 not working for non-English locales (getferdi/recipes#679) 💖 @vraravam
+- Fix unread count in WhatsApp for non-English locales (getferdi/recipes#680) 💖 @bpwned
 
 # [v5.6.1](https://github.com/getferdi/ferdi/compare/v5.6.0...v5.6.1) (2021-09-11)
 
