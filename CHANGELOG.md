@@ -1,3 +1,35 @@
+# [v5.6.2-nightly.2](https://github.com/getferdi/ferdi/compare/v5.6.2-nightly.1...v5.6.2-nightly.2) (2021-09-13)
+
+### Services
+
+- We now have native support for 212 recipes! 💖 @vraravam
+  * 'clockwise' (#692)
+  * 'coinbase' (#697)
+  * 'devRant' (#706)
+  * 'dialpad' (#695)
+  * 'dingtalk' (fixes #416) (#686)
+  * 'drive' (#698)
+  * 'flock' (#688)
+  * 'freshdesk' (#700)
+  * 'hey' (#701)
+  * 'mewe' (fixes #484) (#684)
+  * 'misskey' (#693)
+  * 'plek' (#699)
+  * 'producthunt' (#687)
+  * 'ritetag' (#702)
+  * 'scrumpy' (#689)
+  * 'slowly' (fixes #297) (#690)
+  * 'sococo' (#704)
+  * 'stackoverflow' (#707)
+  * 'teamweek' (#694)
+  * 'tixio' (#691)
+  * 'udemy' (fixes #464) (#696)
+  * 'weekplan' (#705)
+  * 'whereby' (#683)
+  * 'yandex-mail' (fixes #421) (#685)
+- Add indirect count for 'teamleader' recipe. (#703) 💖 @vraravam
+- Merged 'github_enterprise' recipe into 'github' with the extra bits. 💖 @vraravam
+
 # [v5.6.2-nightly.1](https://github.com/getferdi/ferdi/compare/v5.6.1...v5.6.2-nightly.1) (2021-09-12)
 
 ### Bug fixes
