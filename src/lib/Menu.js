@@ -1,5 +1,5 @@
 import { clipboard } from 'electron';
-import { app, Menu, dialog, systemPreferences } from '@electron/remote';
+import { app, Menu, systemPreferences } from '@electron/remote';
 import { autorun, observable } from 'mobx';
 import { defineMessages } from 'react-intl';
 import {
@@ -14,7 +14,6 @@ import {
   settingsShortcutKey,
   isLinux,
   isMac,
-  aboutAppDetails,
   lockFerdiShortcutKey,
   todosToggleShortcutKey,
   workspaceToggleShortcutKey,
@@ -592,23 +591,6 @@ export default class FranzMenu {
     const tpl = _titleBarTemplateFactory(intl, this.stores.settings.app.locked);
     const { actions } = this;
 
-    // TODO: Extract this into a reusable component and remove the duplications
-    const quitApp = () => {
-      const yesButtonIndex = 0;
-      let selection = yesButtonIndex;
-      if (window.ferdi.stores.settings.app.confirmOnQuit) {
-        selection = dialog.showMessageBoxSync(app.mainWindow, {
-          type: 'question',
-          message: intl.formatMessage(globalMessages.quit),
-          detail: intl.formatMessage(globalMessages.quitConfirmation),
-          buttons: [intl.formatMessage(globalMessages.yes), intl.formatMessage(globalMessages.no)],
-        });
-      }
-      if (selection === yesButtonIndex) {
-        app.quit();
-      }
-    };
-
     if (!isMac) {
       tpl[1].submenu.push({
         label: intl.formatMessage(menuItems.autohideMenuBar),
@@ -813,7 +795,9 @@ export default class FranzMenu {
         {
           label: intl.formatMessage(globalMessages.quit),
           accelerator: `${cmdOrCtrlShortcutKey()}+Q`,
-          click: quitApp,
+          click() {
+            app.quit();
+          },
         },
       ],
     });
@@ -821,12 +805,7 @@ export default class FranzMenu {
     const about = {
       label: intl.formatMessage(menuItems.about),
       click: () => {
-        dialog.showMessageBox({
-          type: 'info',
-          title: 'Franz Ferdinand',
-          message: 'Ferdi',
-          detail: aboutAppDetails(),
-        });
+        app.showAboutPanel();
       },
     };
 
@@ -857,7 +836,7 @@ export default class FranzMenu {
     } else {
       tpl[0].submenu = [
         {
-          label: intl.formatMessage(menuItems.settings),
+          label: intl.formatMessage(globalMessages.settings),
           accelerator: `${settingsShortcutKey()}`,
           click: () => {
             this.actions.ui.openSettings({ path: 'app' });
@@ -871,7 +850,9 @@ export default class FranzMenu {
         {
           label: intl.formatMessage(globalMessages.quit),
           accelerator: `${cmdOrCtrlShortcutKey()}+Q`,
-          click: quitApp,
+          click() {
+            app.quit();
+          },
         },
       ];
 

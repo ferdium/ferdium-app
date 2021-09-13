@@ -1,5 +1,5 @@
 import {
-  app, Menu, nativeImage, nativeTheme, systemPreferences, Tray, ipcMain, dialog,
+  app, Menu, nativeImage, nativeTheme, systemPreferences, Tray, ipcMain,
 } from 'electron';
 import { join } from 'path';
 import macosVersion from 'macos-version';
@@ -10,6 +10,7 @@ const INDICATOR_TRAY_PLAIN = 'tray';
 const INDICATOR_TRAY_UNREAD = 'tray-unread';
 const INDICATOR_TRAY_INDIRECT = 'tray-indirect';
 
+// TODO: Need to support i18n for a lot of the hard-coded strings in this file
 export default class TrayIcon {
   trayIcon = null;
 
@@ -43,7 +44,9 @@ export default class TrayIcon {
     },
     {
       label: 'Quit Ferdi',
-      click: this.quitApp,
+      click() {
+        app.quit();
+      },
     },
   ];
 
@@ -176,22 +179,4 @@ export default class TrayIcon {
       __dirname, '..', 'assets', 'images', type, platform, `${asset}.${FILE_EXTENSION}`,
     ));
   }
-
-  // TODO: Extract this into a reusable component and remove the duplications
-  quitApp = () => {
-    const yesButtonIndex = 0;
-    let selection = yesButtonIndex;
-    if (window.ferdi.stores.settings.app.confirmOnQuit) {
-      selection = dialog.showMessageBoxSync(app.mainWindow, {
-        // TODO: Externalize strings
-        type: 'question',
-        message: 'Quit',
-        detail: 'Do you really want to quit Ferdi?',
-        buttons: ['Yes', 'No'],
-      });
-    }
-    if (selection === yesButtonIndex) {
-      app.quit();
-    }
-  };
 }

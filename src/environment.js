@@ -5,7 +5,6 @@ import { is, api as electronApi } from 'electron-util';
 
 import { DEFAULT_ACCENT_COLOR } from '@meetfranz/theme';
 
-import osName from 'os-name';
 import {
   LIVE_FERDI_API,
   DEV_FRANZ_API,
@@ -24,7 +23,6 @@ import {
 } from './config';
 
 import { asarPath } from './helpers/asar-helpers';
-import * as buildInfo from './buildInfo.json'; // eslint-disable-line import/no-unresolved
 
 export const { app } = electronApi;
 export const ferdiVersion = app.getVersion();
@@ -171,18 +169,5 @@ export const DEFAULT_APP_SETTINGS = {
   searchEngine: SEARCH_ENGINE_DDG,
   useVerticalStyle: false,
   alwaysShowWorkspaces: false,
+  liftSingleInstanceLock: false,
 };
-
-export function aboutAppDetails() {
-  return [
-    `Version: ${ferdiVersion}`,
-    `Electron: ${electronVersion}`,
-    `Chrome: ${chromeVersion}`,
-    `Node.js: ${nodeVersion}`,
-    `Platform: ${osName()}`,
-    `Arch: ${process.arch}`,
-    `Build date: ${new Date(Number(buildInfo.timestamp))}`,
-    `Git SHA: ${buildInfo.gitHashShort}`,
-    `Git branch: ${buildInfo.gitBranch}`,
-  ].join('\n');
-}
