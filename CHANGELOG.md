@@ -1,4 +1,6 @@
-# [v5.6.2-beta.1](https://github.com/getferdi/ferdi/compare/v5.6.1...v5.6.2-beta.1) (2021-09-13)
+# [v5.6.2](https://github.com/getferdi/ferdi/compare/v5.6.1...v5.6.2) (2021-09-13)
+
+This is a hotfix for the 5.6.1 release, along with a couple of changes that were made over the weekend
 
 ### Services
 
