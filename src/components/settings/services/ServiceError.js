@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import { Link } from 'react-router';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 
 import Infobox from '../../ui/Infobox';
 import Button from '../../ui/Button';
@@ -9,29 +9,26 @@ import Button from '../../ui/Button';
 const messages = defineMessages({
   headline: {
     id: 'settings.service.error.headline',
-    defaultMessage: '!!!Error',
+    defaultMessage: 'Error',
   },
   goBack: {
     id: 'settings.service.error.goBack',
-    defaultMessage: '!!!Back to services',
+    defaultMessage: 'Back to services',
   },
   availableServices: {
     id: 'settings.service.form.availableServices',
-    defaultMessage: '!!!Available services',
+    defaultMessage: 'Available services',
   },
   errorMessage: {
     id: 'settings.service.error.message',
-    defaultMessage: '!!!Could not load service recipe.',
+    defaultMessage: 'Could not load service recipe.',
   },
 });
 
-export default @observer class ServiceError extends Component {
-  static contextTypes = {
-    intl: intlShape,
-  };
-
+@observer
+class ServiceError extends Component {
   render() {
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     return (
       <div className="settings__main">
@@ -47,10 +44,7 @@ export default @observer class ServiceError extends Component {
           </span>
         </div>
         <div className="settings__body">
-          <Infobox
-            type="danger"
-            icon="alert"
-          >
+          <Infobox type="danger" icon="alert">
             {intl.formatMessage(messages.errorMessage)}
           </Infobox>
         </div>
@@ -65,3 +59,5 @@ export default @observer class ServiceError extends Component {
     );
   }
 }
+
+export default injectIntl(ServiceError);

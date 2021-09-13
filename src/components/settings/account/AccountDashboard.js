@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 import ReactTooltip from 'react-tooltip';
 import { H1, H2 } from '@meetfranz/ui';
 
@@ -13,7 +13,7 @@ import { LOCAL_SERVER, LIVE_FRANZ_API } from '../../../config';
 const messages = defineMessages({
   headline: {
     id: 'settings.account.headline',
-    defaultMessage: '!!!Account',
+    defaultMessage: 'Account',
   },
   headlineDangerZone: {
     id: 'settings.account.headlineDangerZone',
@@ -21,7 +21,7 @@ const messages = defineMessages({
   },
   accountEditButton: {
     id: 'settings.account.account.editButton',
-    defaultMessage: '!!!Edit Account',
+    defaultMessage: 'Edit Account',
   },
   invoicesButton: {
     id: 'settings.account.headlineInvoices',
@@ -29,29 +29,29 @@ const messages = defineMessages({
   },
   userInfoRequestFailed: {
     id: 'settings.account.userInfoRequestFailed',
-    defaultMessage: '!!!Could not load user information',
+    defaultMessage: 'Could not load user information',
   },
   tryReloadUserInfoRequest: {
     id: 'settings.account.tryReloadUserInfoRequest',
-    defaultMessage: '!!!Try again',
+    defaultMessage: 'Try again',
   },
   deleteAccount: {
     id: 'settings.account.deleteAccount',
-    defaultMessage: '!!!Delete account',
+    defaultMessage: 'Delete account',
   },
   deleteInfo: {
     id: 'settings.account.deleteInfo',
     defaultMessage:
-      "!!!If you don't need your Ferdi account any longer, you can delete your account and all related data here.",
+      "If you don't need your Ferdi account any longer, you can delete your account and all related data here.",
   },
   deleteEmailSent: {
     id: 'settings.account.deleteEmailSent',
     defaultMessage:
-      '!!!You have received an email with a link to confirm your account deletion. Your account and data cannot be restored!',
+      'You have received an email with a link to confirm your account deletion. Your account and data cannot be restored!',
   },
   yourLicense: {
     id: 'settings.account.yourLicense',
-    defaultMessage: '!!!Your Franz License:',
+    defaultMessage: 'Your Franz License:',
   },
   accountUnavailable: {
     id: 'settings.account.accountUnavailable',
@@ -59,7 +59,8 @@ const messages = defineMessages({
   },
   accountUnavailableInfo: {
     id: 'settings.account.accountUnavailableInfo',
-    defaultMessage: 'You are using Ferdi without an account. If you want to use Ferdi with an account and keep your services synchronized across installations, please select a server in the Settings tab then login.',
+    defaultMessage:
+      'You are using Ferdi without an account. If you want to use Ferdi with an account and keep your services synchronized across installations, please select a server in the Settings tab then login.',
   },
 });
 
@@ -78,10 +79,6 @@ class AccountDashboard extends Component {
     server: PropTypes.string.isRequired,
   };
 
-  static contextTypes = {
-    intl: intlShape,
-  };
-
   render() {
     const {
       user,
@@ -95,7 +92,7 @@ class AccountDashboard extends Component {
       openInvoices,
       server,
     } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     const isUsingWithoutAccount = server === LOCAL_SERVER;
     const isUsingFranzServer = server === LIVE_FRANZ_API;
@@ -182,9 +179,7 @@ class AccountDashboard extends Component {
                         <div className="account">
                           <div className="account__box">
                             <H2>{intl.formatMessage(messages.yourLicense)}</H2>
-                            <p>
-                              Franz
-                            </p>
+                            <p>Franz</p>
                             <div className="manage-user-links">
                               <Button
                                 label={intl.formatMessage(
@@ -203,7 +198,9 @@ class AccountDashboard extends Component {
                   {isUsingFranzServer && (
                     <div className="account franz-form">
                       <div className="account__box">
-                        <H2>{intl.formatMessage(messages.headlineDangerZone)}</H2>
+                        <H2>
+                          {intl.formatMessage(messages.headlineDangerZone)}
+                        </H2>
                         {!isDeleteAccountSuccessful && (
                           <div className="account__subscription">
                             <p>{intl.formatMessage(messages.deleteInfo)}</p>
@@ -232,4 +229,4 @@ class AccountDashboard extends Component {
   }
 }
 
-export default AccountDashboard;
+export default injectIntl(AccountDashboard);

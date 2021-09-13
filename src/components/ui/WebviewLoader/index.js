@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import injectSheet from 'react-jss';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 
 import FullscreenLoader from '../FullscreenLoader';
 import styles from './styles';
@@ -10,23 +10,21 @@ import styles from './styles';
 const messages = defineMessages({
   loading: {
     id: 'service.webviewLoader.loading',
-    defaultMessage: '!!!Loading {service}',
+    defaultMessage: 'Loading {service}',
   },
 });
 
-export default @injectSheet(styles) @observer class WebviewLoader extends Component {
+@injectSheet(styles)
+@observer
+class WebviewLoader extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
     classes: PropTypes.object.isRequired,
   };
 
-  static contextTypes = {
-    intl: intlShape,
-  };
-
   render() {
     const { classes, name } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
     return (
       <FullscreenLoader
         className={classes.component}
@@ -35,3 +33,5 @@ export default @injectSheet(styles) @observer class WebviewLoader extends Compon
     );
   }
 }
+
+export default injectIntl(WebviewLoader);

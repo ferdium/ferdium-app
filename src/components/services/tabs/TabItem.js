@@ -1,6 +1,6 @@
 import { Menu, dialog, app, getCurrentWindow } from '@electron/remote';
 import React, { Component } from 'react';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
@@ -20,56 +20,55 @@ const IS_SERVICE_DEBUGGING_ENABLED = (
 const messages = defineMessages({
   reload: {
     id: 'tabs.item.reload',
-    defaultMessage: '!!!Reload',
+    defaultMessage: 'Reload',
   },
   disableNotifications: {
     id: 'tabs.item.disableNotifications',
-    defaultMessage: '!!!Disable notifications',
+    defaultMessage: 'Disable notifications',
   },
   enableNotifications: {
     id: 'tabs.item.enableNotification',
-    defaultMessage: '!!!Enable notifications',
+    defaultMessage: 'Enable notifications',
   },
   disableAudio: {
     id: 'tabs.item.disableAudio',
-    defaultMessage: '!!!Disable audio',
+    defaultMessage: 'Disable audio',
   },
   enableAudio: {
     id: 'tabs.item.enableAudio',
-    defaultMessage: '!!!Enable audio',
+    defaultMessage: 'Enable audio',
   },
   enableDarkMode: {
     id: 'tabs.item.enableDarkMode',
-    defaultMessage: '!!!Enable Dark mode',
+    defaultMessage: 'Enable Dark mode',
   },
   disableDarkMode: {
     id: 'tabs.item.disableDarkMode',
-    defaultMessage: '!!!Disable Dark mode',
+    defaultMessage: 'Disable Dark mode',
   },
   disableService: {
     id: 'tabs.item.disableService',
-    defaultMessage: '!!!Disable Service',
+    defaultMessage: 'Disable Service',
   },
   enableService: {
     id: 'tabs.item.enableService',
-    defaultMessage: '!!!Enable Service',
+    defaultMessage: 'Enable Service',
   },
   hibernateService: {
     id: 'tabs.item.hibernateService',
-    defaultMessage: '!!!Hibernate Service',
+    defaultMessage: 'Hibernate Service',
   },
   wakeUpService: {
     id: 'tabs.item.wakeUpService',
-    defaultMessage: '!!!Wake Up Service',
+    defaultMessage: 'Wake Up Service',
   },
   deleteService: {
     id: 'tabs.item.deleteService',
-    defaultMessage: '!!!Delete Service',
+    defaultMessage: 'Delete Service',
   },
   confirmDeleteService: {
     id: 'tabs.item.confirmDeleteService',
-    defaultMessage:
-      '!!!Do you really want to delete the {serviceName} service?',
+    defaultMessage: 'Do you really want to delete the {serviceName} service?',
   },
 });
 
@@ -134,10 +133,6 @@ class TabItem extends Component {
     showMessageBadgesEvenWhenMuted: PropTypes.bool.isRequired,
   };
 
-  static contextTypes = {
-    intl: intlShape,
-  };
-
   @observable isPolled = false;
 
   @observable isPollAnswered = false;
@@ -185,7 +180,7 @@ class TabItem extends Component {
       showMessageBadgeWhenMutedSetting,
       showMessageBadgesEvenWhenMuted,
     } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     const menuTemplate = [
       {
@@ -256,7 +251,10 @@ class TabItem extends Component {
             detail: intl.formatMessage(messages.confirmDeleteService, {
               serviceName: service.name || service.recipe.name,
             }),
-            buttons: [intl.formatMessage(globalMessages.yes), intl.formatMessage(globalMessages.no)],
+            buttons: [
+              intl.formatMessage(globalMessages.yes),
+              intl.formatMessage(globalMessages.no),
+            ],
           });
           if (selection === 0) {
             deleteService();
@@ -304,7 +302,9 @@ class TabItem extends Component {
         onClick={clickHandler}
         onContextMenu={() => menu.popup(getCurrentWindow())}
         data-tip={`${service.name} ${
-          shortcutIndex <= 9 ? `(${cmdOrCtrlShortcutKey(false)}+${shortcutIndex})` : ''
+          shortcutIndex <= 9
+            ? `(${cmdOrCtrlShortcutKey(false)}+${shortcutIndex})`
+            : ''
         }`}
       >
         <img src={service.icon} className="tab-item__icon" alt="" />
@@ -332,4 +332,4 @@ class TabItem extends Component {
   }
 }
 
-export default SortableElement(TabItem);
+export default injectIntl(SortableElement(TabItem));

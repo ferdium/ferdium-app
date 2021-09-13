@@ -1,53 +1,53 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 
 import { FeatureItem } from './FeatureItem';
 
 const messages = defineMessages({
   availableRecipes: {
     id: 'pricing.features.recipes',
-    defaultMessage: '!!!Choose from more than 70 Services', // TODO: Make this dynamic
+    defaultMessage: 'Choose from more than 70 Services', // TODO: Make this dynamic
   },
   accountSync: {
     id: 'pricing.features.accountSync',
-    defaultMessage: '!!!Account Synchronisation',
+    defaultMessage: 'Account Synchronisation',
   },
   desktopNotifications: {
     id: 'pricing.features.desktopNotifications',
-    defaultMessage: '!!!Desktop Notifications',
+    defaultMessage: 'Desktop Notifications',
   },
   unlimitedServices: {
     id: 'pricing.features.unlimitedServices',
-    defaultMessage: '!!!Add unlimited services',
+    defaultMessage: 'Add unlimited services',
   },
   spellchecker: {
     id: 'pricing.features.spellchecker',
-    defaultMessage: '!!!Spellchecker support',
+    defaultMessage: 'Spellchecker support',
   },
   workspaces: {
     id: 'pricing.features.workspaces',
-    defaultMessage: '!!!Workspaces',
+    defaultMessage: 'Workspaces',
   },
   customWebsites: {
     id: 'pricing.features.customWebsites',
-    defaultMessage: '!!!Add Custom Websites',
+    defaultMessage: 'Add Custom Websites',
   },
   onPremise: {
     id: 'pricing.features.onPremise',
-    defaultMessage: '!!!On-premise & other Hosted Services',
+    defaultMessage: 'On-premise & other Hosted Services',
   },
   thirdPartyServices: {
     id: 'pricing.features.thirdPartyServices',
-    defaultMessage: '!!!Install 3rd party services',
+    defaultMessage: 'Install 3rd party services',
   },
   serviceProxies: {
     id: 'pricing.features.serviceProxies',
-    defaultMessage: '!!!Service Proxies',
+    defaultMessage: 'Service Proxies',
   },
   teamManagement: {
     id: 'pricing.features.teamManagement',
-    defaultMessage: '!!!Team Management',
+    defaultMessage: 'Team Management',
   },
 });
 
@@ -60,18 +60,11 @@ export class FeatureList extends Component {
   static defaultProps = {
     className: '',
     featureClassName: '',
-  }
-
-  static contextTypes = {
-    intl: intlShape,
   };
 
   render() {
-    const {
-      className,
-      featureClassName,
-    } = this.props;
-    const { intl } = this.context;
+    const { className, featureClassName } = this.props;
+    const { intl } = this.props;
 
     const features = [
       messages.availableRecipes,
@@ -92,10 +85,15 @@ export class FeatureList extends Component {
 
     return (
       <ul className={className}>
-        {features.map((feature) => <FeatureItem name={intl.formatMessage(feature)} className={featureClassName} />)}
+        {features.map(feature => (
+          <FeatureItem
+            name={intl.formatMessage(feature)}
+            className={featureClassName}
+          />
+        ))}
       </ul>
     );
   }
 }
 
-export default FeatureList;
+export default injectIntl(FeatureList);

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 
 import InfoBar from './ui/InfoBar';
 import { GITHUB_FERDI_URL } from '../config';
@@ -9,15 +9,15 @@ import { openExternalUrl } from '../helpers/url-helpers';
 const messages = defineMessages({
   updateAvailable: {
     id: 'infobar.updateAvailable',
-    defaultMessage: '!!!A new update for Ferdi is available.',
+    defaultMessage: 'A new update for Ferdi is available.',
   },
   changelog: {
     id: 'infobar.buttonChangelog',
-    defaultMessage: '!!!Changelog',
+    defaultMessage: 'Changelog',
   },
   buttonInstallUpdate: {
     id: 'infobar.buttonInstallUpdate',
-    defaultMessage: '!!!Restart & install update',
+    defaultMessage: 'Restart & install update',
   },
 });
 
@@ -27,12 +27,8 @@ class AppUpdateInfoBar extends Component {
     onHide: PropTypes.func.isRequired,
   };
 
-  static contextTypes = {
-    intl: intlShape,
-  };
-
   render() {
-    const { intl } = this.context;
+    const { intl } = this.props;
     const { onInstallUpdate, onHide } = this.props;
 
     return (
@@ -61,4 +57,4 @@ class AppUpdateInfoBar extends Component {
   }
 }
 
-export default AppUpdateInfoBar;
+export default injectIntl(AppUpdateInfoBar);

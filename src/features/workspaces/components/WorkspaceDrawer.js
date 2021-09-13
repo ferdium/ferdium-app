@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import injectSheet from 'react-jss';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 import { H1, Icon } from '@meetfranz/ui';
 import ReactTooltip from 'react-tooltip';
 
@@ -14,27 +14,27 @@ import { workspaceStore } from '../index';
 const messages = defineMessages({
   headline: {
     id: 'workspaceDrawer.headline',
-    defaultMessage: '!!!Workspaces',
+    defaultMessage: 'Workspaces',
   },
   allServices: {
     id: 'workspaceDrawer.allServices',
-    defaultMessage: '!!!All services',
+    defaultMessage: 'All services',
   },
   workspacesSettingsTooltip: {
     id: 'workspaceDrawer.workspacesSettingsTooltip',
-    defaultMessage: '!!!Workspaces settings',
+    defaultMessage: 'Workspaces settings',
   },
   workspaceFeatureInfo: {
     id: 'workspaceDrawer.workspaceFeatureInfo',
-    defaultMessage: '!!!Info about workspace feature',
+    defaultMessage: 'Info about workspace feature',
   },
   addNewWorkspaceLabel: {
     id: 'workspaceDrawer.addNewWorkspaceLabel',
-    defaultMessage: '!!!add new workspace',
+    defaultMessage: 'add new workspace',
   },
 });
 
-const styles = (theme) => ({
+const styles = theme => ({
   drawer: {
     background: theme.workspaces.drawer.background,
     width: `${theme.workspaces.drawer.width}px`,
@@ -85,15 +85,12 @@ const styles = (theme) => ({
   },
 });
 
-@injectSheet(styles) @observer
+@injectSheet(styles)
+@observer
 class WorkspaceDrawer extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     getServicesForWorkspace: PropTypes.func.isRequired,
-  };
-
-  static contextTypes = {
-    intl: intlShape,
   };
 
   componentDidMount() {
@@ -101,18 +98,13 @@ class WorkspaceDrawer extends Component {
   }
 
   render() {
-    const {
-      classes,
-      getServicesForWorkspace,
-    } = this.props;
-    const { intl } = this.context;
-    const {
-      activeWorkspace,
-      isSwitchingWorkspace,
-      nextWorkspace,
-      workspaces,
-    } = workspaceStore;
-    const actualWorkspace = isSwitchingWorkspace ? nextWorkspace : activeWorkspace;
+    const { classes, getServicesForWorkspace } = this.props;
+    const { intl } = this.props;
+    const { activeWorkspace, isSwitchingWorkspace, nextWorkspace, workspaces } =
+      workspaceStore;
+    const actualWorkspace = isSwitchingWorkspace
+      ? nextWorkspace
+      : activeWorkspace;
     return (
       <div className={`${classes.drawer} workspaces-drawer`}>
         <H1 className={classes.headline}>
@@ -122,7 +114,9 @@ class WorkspaceDrawer extends Component {
             onClick={() => {
               workspaceActions.openWorkspaceSettings();
             }}
-            data-tip={`${intl.formatMessage(messages.workspacesSettingsTooltip)}`}
+            data-tip={`${intl.formatMessage(
+              messages.workspacesSettingsTooltip,
+            )}`}
           >
             <Icon
               icon={mdiSettings}
@@ -152,7 +146,9 @@ class WorkspaceDrawer extends Component {
                 workspaceActions.activate({ workspace });
                 workspaceActions.toggleWorkspaceDrawer();
               }}
-              onContextMenuEditClick={() => workspaceActions.edit({ workspace })}
+              onContextMenuEditClick={() =>
+                workspaceActions.edit({ workspace })
+              }
               services={getServicesForWorkspace(workspace)}
               shortcutIndex={index + 1}
             />
@@ -168,9 +164,7 @@ class WorkspaceDrawer extends Component {
               size={1}
               className={classes.workspacesSettingsButtonIcon}
             />
-            <span>
-              {intl.formatMessage(messages.addNewWorkspaceLabel)}
-            </span>
+            <span>{intl.formatMessage(messages.addNewWorkspaceLabel)}</span>
           </div>
         </div>
         <ReactTooltip place="right" type="dark" effect="solid" />
@@ -179,4 +173,4 @@ class WorkspaceDrawer extends Component {
   }
 }
 
-export default WorkspaceDrawer;
+export default injectIntl(WorkspaceDrawer);
