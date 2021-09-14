@@ -288,7 +288,7 @@ const menuItems = defineMessages({
   },
   defaultWorkspace: {
     id: 'menu.workspaces.defaultWorkspace',
-    defaultMessage: 'Default',
+    defaultMessage: 'All services',
   },
   todos: {
     id: 'menu.todos',
