@@ -21,7 +21,7 @@ const messages = defineMessages({
   },
   accountEditButton: {
     id: 'settings.account.account.editButton',
-    defaultMessage: 'Edit Account',
+    defaultMessage: 'Edit account',
   },
   invoicesButton: {
     id: 'settings.account.headlineInvoices',
