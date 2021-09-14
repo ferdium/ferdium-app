@@ -26,16 +26,16 @@ export class BadgeHandler {
     return Math.max(adjustedNumber, 0);
   }
 
-  setBadge(direct: string | number, indirect: string | number) {
-    if (this.countCache.direct.toString() === direct.toString()
-        && this.countCache.indirect.toString() === indirect.toString()) {
-      return;
-    }
-
+  setBadge(direct: string | number | undefined | null, indirect: string | number | undefined | null) {
     const count = {
       direct: this.safeParseInt(direct),
       indirect: this.safeParseInt(indirect),
     };
+
+    if (this.countCache.direct.toString() === count.direct.toString()
+        && this.countCache.indirect.toString() === count.indirect.toString()) {
+      return;
+    }
 
     debug('Sending badge count to host', count);
     ipcRenderer.sendToHost('message-counts', count);

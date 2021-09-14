@@ -35,12 +35,12 @@ class RecipeWebview {
   /**
    * Set the unread message badge
    *
-   * @param {int} direct      Set the count of direct messages
-   *                          eg. Slack direct mentions, or a
-   *                          message to @channel
-   * @param {int} indirect    Set a badge that defines there are
-   *                          new messages but they do not involve
-   *                          me directly to me eg. in a channel
+   * @param {string | number | undefined | null} direct      Set the count of direct messages
+   *                                                         eg. Slack direct mentions, or a
+   *                                                         message to @channel
+   * @param {string | number | undefined | null} indirect    Set a badge that defines there are
+   *                                                         new messages but they do not involve
+   *                                                         me directly to me eg. in a channel
    */
   setBadge(direct = 0, indirect = 0) {
     this.badgeHandler.setBadge(direct, indirect);
