@@ -3,6 +3,8 @@
 ### Under the hood
 
 - Defensive programming to avoid javascript error for unread badges 💖 @vraravam
+- Progressing towards converting the whole code base from JS to TS (#1930) (#1934) 💖 @mhatvan
+- Translation updates and fixes 💖 @vraravam @mhatvan
 
 # [v5.6.3-nightly.2](https://github.com/getferdi/ferdi/compare/v5.6.2...v5.6.3-nightly.2) (2021-09-14)
 
