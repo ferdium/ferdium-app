@@ -1,5 +1,5 @@
 import { clipboard } from 'electron';
-import { app, Menu, systemPreferences } from '@electron/remote';
+import { app, Menu, dialog, systemPreferences } from '@electron/remote';
 import { autorun, observable } from 'mobx';
 import { defineMessages } from 'react-intl';
 import {
@@ -14,6 +14,7 @@ import {
   settingsShortcutKey,
   isLinux,
   isMac,
+  aboutAppDetails,
   lockFerdiShortcutKey,
   todosToggleShortcutKey,
   workspaceToggleShortcutKey,
@@ -804,7 +805,12 @@ class FranzMenu {
     const about = {
       label: intl.formatMessage(menuItems.about),
       click: () => {
-        app.showAboutPanel();
+        dialog.showMessageBox({
+          type: 'info',
+          title: 'Franz Ferdinand',
+          message: 'Ferdi',
+          detail: aboutAppDetails(),
+        });
       },
     };
 
