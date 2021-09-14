@@ -1,4 +1,4 @@
-# [v5.6.3-nightly.1](https://github.com/getferdi/ferdi/compare/v5.6.3-nightly.0...v5.6.3-nightly.1) (2021-09-14)
+# [v5.6.3-nightly.2](https://github.com/getferdi/ferdi/compare/v5.6.3-nightly.0...v5.6.3-nightly.2) (2021-09-14)
 
 ### Features
 
