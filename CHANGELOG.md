@@ -1,5 +1,9 @@
 # [v5.6.3-nightly.1](https://github.com/getferdi/ferdi/compare/v5.6.3-nightly.0...v5.6.3-nightly.1) (2021-09-14)
 
+### Features
+
+- Upgrade to [electron 13.4.0](https://github.com/electron/electron/releases/tag/v13.4.0) 💖 @vraravam
+
 ### Bug fixes
 
 - Revert "refactor: reuse method from the core electron framework for the `About` box (fixes #1928, #1929) 💖 @vraravam
