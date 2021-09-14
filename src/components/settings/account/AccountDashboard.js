@@ -51,7 +51,7 @@ const messages = defineMessages({
   },
   yourLicense: {
     id: 'settings.account.yourLicense',
-    defaultMessage: 'Your Franz License:',
+    defaultMessage: 'Your Ferdi License:',
   },
   accountUnavailable: {
     id: 'settings.account.accountUnavailable',

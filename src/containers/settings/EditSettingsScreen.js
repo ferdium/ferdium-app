@@ -214,7 +214,7 @@ const messages = defineMessages({
   },
   enableTodos: {
     id: 'settings.app.form.enableTodos',
-    defaultMessage: 'Enable Franz Todos',
+    defaultMessage: 'Enable Ferdi Todos',
   },
   keepAllWorkspacesLoaded: {
     id: 'settings.app.form.keepAllWorkspacesLoaded',
