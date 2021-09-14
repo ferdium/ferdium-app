@@ -1,5 +1,3 @@
-// @flow
-
 interface IRecipePreview {
   id: string;
   name: string;
@@ -21,11 +19,11 @@ export default class RecipePreview {
 
   constructor(data: IRecipePreview) {
     if (!data) {
-      throw Error('RecipePreview config not valid');
+      throw new Error('RecipePreview config not valid');
     }
 
     if (!data.id) {
-      throw Error(`RecipePreview '${data.name}' requires Id`);
+      throw new Error(`RecipePreview '${data.name}' requires Id`);
     }
 
     Object.assign(this, data);

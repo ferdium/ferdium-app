@@ -1,5 +1,6 @@
 export const createActionsFromDefinitions = (actionDefinitions, validate) => {
   const actions = {};
+  // eslint-disable-next-line unicorn/no-array-for-each
   Object.keys(actionDefinitions).forEach(actionName => {
     const action = (params = {}) => {
       const schema = actionDefinitions[actionName];
@@ -14,6 +15,7 @@ export const createActionsFromDefinitions = (actionDefinitions, validate) => {
       listeners.splice(listeners.indexOf(listener), 1);
     };
     action.notify = params =>
+      // eslint-disable-next-line unicorn/no-array-for-each
       action.listeners.forEach(listener => listener(params));
   });
   return actions;
@@ -21,6 +23,7 @@ export const createActionsFromDefinitions = (actionDefinitions, validate) => {
 
 export default (definitions, validate) => {
   const newActions = {};
+  // eslint-disable-next-line unicorn/no-array-for-each
   Object.keys(definitions).forEach(scopeName => {
     newActions[scopeName] = createActionsFromDefinitions(
       definitions[scopeName],
