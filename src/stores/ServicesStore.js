@@ -163,6 +163,13 @@ export default class ServicesStore extends Store {
     );
 
     reaction(
+      () => this.stores.settings.app.splitMode,
+      () => {
+        this._shareSettingsWithServiceProcess();
+      },
+    );
+
+    reaction(
       () => this.stores.settings.app.searchEngine,
       () => {
         this._shareSettingsWithServiceProcess();
@@ -667,12 +674,21 @@ export default class ServicesStore extends Store {
     }
   }
 
-  @action _focusActiveService() {
+  @action _focusActiveService(focusEvent = null) {
     if (this.stores.user.isLoggedIn) {
       // TODO: add checks to not focus service when router path is /settings or /auth
       const service = this.active;
       if (service) {
         this._focusService({ serviceId: service.id });
+        if (this.stores.settings.app.splitMode && !focusEvent) {
+          setTimeout(() => {
+            document.querySelector('.services__webview-wrapper.is-active').scrollIntoView({
+              behavior: 'smooth',
+              block: 'end',
+              inline: 'nearest',
+            });
+          }, 10);
+        }
       } else {
         debug('No service is active');
       }

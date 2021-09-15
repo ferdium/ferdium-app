@@ -51,6 +51,13 @@ export default class UIStore extends Store {
       },
       { fireImmediately: true },
     );
+    reaction(
+      () => this.isSplitModeActive,
+      () => {
+        this._setupModeInDOM();
+      },
+      { fireImmediately: true },
+    );
   }
 
   @computed get showMessageBadgesEvenWhenMuted() {
@@ -75,6 +82,10 @@ export default class UIStore extends Store {
       isWithoutAdaptableInDarkMode ||
       isInDarkMode
     );
+  }
+
+  @computed get isSplitModeActive() {
+    return this.stores.settings.app.splitMode;
   }
 
   @computed get theme() {
@@ -112,6 +123,16 @@ export default class UIStore extends Store {
       body?.classList.remove('theme__dark');
     } else {
       body?.classList.add('theme__dark');
+    }
+  }
+
+  _setupModeInDOM() {
+    const body = document.querySelector('body');
+
+    if (!this.isSplitModeActive) {
+      body?.classList.remove('mode__split');
+    } else {
+      body?.classList.add('mode__split');
     }
   }
 }

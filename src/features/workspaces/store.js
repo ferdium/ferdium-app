@@ -190,6 +190,12 @@ export default class WorkspacesStore extends FeatureStore {
     setTimeout(() => {
       this.isSwitchingWorkspace = false;
       this.nextWorkspace = null;
+      if (this.stores.settings.app.splitMode) {
+        const serviceNames = new Set(this.getWorkspaceServices(workspace).map(service => service.name));
+        for (const wrapper of document.querySelectorAll('.services__webview-wrapper')) {
+          wrapper.style.display = serviceNames.has(wrapper.dataset.name) ? '' : 'none';
+        }
+      }
     }, 1000);
   };
 
@@ -205,6 +211,11 @@ export default class WorkspacesStore extends FeatureStore {
     // Indicate that we are done switching to the default workspace
     setTimeout(() => {
       this.isSwitchingWorkspace = false;
+      if (this.stores.settings.app.splitMode) {
+        for (const wrapper of document.querySelectorAll('.services__webview-wrapper')) {
+          wrapper.style.display = '';
+        }
+      }
     }, 1000);
   };
 

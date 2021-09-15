@@ -537,6 +537,10 @@ class EditSettingsForm extends Component {
 
                 <Hr />
 
+                <Toggle field={form.$('splitMode')} />
+
+                <Hr />
+
                 <Select field={form.$('serviceRibbonWidth')} />
 
                 <Toggle field={form.$('useVerticalStyle')} />

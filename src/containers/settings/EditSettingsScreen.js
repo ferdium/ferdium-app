@@ -164,6 +164,10 @@ const messages = defineMessages({
     id: 'settings.app.form.universalDarkMode',
     defaultMessage: 'Enable universal Dark Mode',
   },
+  splitMode: {
+    id: 'settings.app.form.splitMode',
+    defaultMessage: 'Enable Split View Mode',
+  },
   serviceRibbonWidth: {
     id: 'settings.app.form.serviceRibbonWidth',
     defaultMessage: 'Sidebar width',
@@ -288,6 +292,7 @@ class EditSettingsScreen extends Component {
         darkMode: Boolean(settingsData.darkMode),
         adaptableDarkMode: Boolean(settingsData.adaptableDarkMode),
         universalDarkMode: Boolean(settingsData.universalDarkMode),
+        splitMode: Boolean(settingsData.splitMode),
         serviceRibbonWidth: Number(settingsData.serviceRibbonWidth),
         iconSize: Number(settingsData.iconSize),
         useVerticalStyle: Boolean(settingsData.useVerticalStyle),
@@ -579,6 +584,11 @@ class EditSettingsScreen extends Component {
           label: intl.formatMessage(messages.universalDarkMode),
           value: settings.all.app.universalDarkMode,
           default: DEFAULT_APP_SETTINGS.universalDarkMode,
+        },
+        splitMode: {
+          label: intl.formatMessage(messages.splitMode),
+          value: settings.all.app.splitMode,
+          default: DEFAULT_APP_SETTINGS.splitMode,
         },
         serviceRibbonWidth: {
           label: intl.formatMessage(messages.serviceRibbonWidth),
