@@ -1,3 +1,13 @@
+# [v5.6.3-nightly.4](https://github.com/getferdi/ferdi/compare/v5.6.3-nightly.3...v5.6.3-nightly.4) (2021-09-16)
+
+### Features
+
+- Ferdi now support Split View Mode (#1926) 💖 @niutech
+
+### Bug fixes
+
+- Fix images opening in browser instead of in Discord (getferdi/recipes#712) 💖 @briankendall
+
 # [v5.6.3-nightly.3](https://github.com/getferdi/ferdi/compare/v5.6.3-nightly.2...v5.6.3-nightly.3) (2021-09-15)
 
 ### Under the hood
