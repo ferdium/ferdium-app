@@ -27,8 +27,6 @@ function darkenAbsolute(originalColor, absoluteChange) {
 }
 
 function generateAccentStyle(accentColorStr) {
-  let style = '';
-
   let accentColor = color(DEFAULT_APP_SETTINGS.accentColor);
   try {
     accentColor = color(accentColorStr);
@@ -36,7 +34,47 @@ function generateAccentStyle(accentColorStr) {
     // Ignore invalid accent color.
   }
   const darkerColorStr = darkenAbsolute(accentColor, 5).hex();
-  style += `
+  return `
+    .theme__dark .app .sidebar .sidebar__button.is-muted,
+    .theme__dark .app .sidebar .sidebar__button.is-active,
+    .sidebar .sidebar__button.is-muted, .sidebar .sidebar__button.is-active,
+    .tab-item.is-active, .settings .account .invoices .invoices__action button,
+    .settings-navigation .settings-navigation__link.is-active .badge,
+    a.link,
+    button.link
+    .auth .welcome .button:hover
+    .auth .welcome .button__inverted
+    .franz-form .franz-form__radio.is-selected
+    .theme__dark .franz-form__button.franz-form__button--inverted
+    .franz-form__button.franz-form__button--inverted {
+      color: ${accentColorStr};
+    }
+
+    .theme__dark .app .sidebar .sidebar__button.is-muted
+    .theme__dark .app .sidebar .sidebar__button.is-active
+    .sidebar .sidebar__button.is-muted
+    .sidebar .sidebar__button.is-active
+    .tab-item.is-active
+    .settings .account .invoices .invoices__action button
+    .settings-navigation .settings-navigation__link.is-active .badge
+    a.link
+    button.link
+    .auth .welcome .button:hover
+    .auth .welcome .button__inverted
+    .franz-form .franz-form__radio.is-selected
+    .theme__dark .franz-form__button.franz-form__button--inverted
+    .franz-form__button.franz-form__button--inverted {
+      background: ${accentColorStr};
+    }
+
+    .settings .settings__header .separator {
+      border-right-color: ${accentColorStr};
+    }
+
+    .franz-form .franz-form__radio.is-selected {
+      border-color: ${accentColorStr};
+    }
+
     a.button:hover, button.button:hover {
       background: ${darkenAbsolute(accentColor, 10).hex()};
     }
@@ -65,8 +103,6 @@ function generateAccentStyle(accentColorStr) {
       background: ${accentColor.lighten(0.35).hex()};
     }
   `;
-
-  return style;
 }
 
 function generateServiceRibbonWidthStyle(widthStr, iconSizeStr, vertical) {
