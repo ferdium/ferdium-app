@@ -1,3 +1,9 @@
+# [v5.6.3-nightly.7](https://github.com/getferdi/ferdi/compare/v5.6.3-nightly.4...v5.6.3-nightly.7) (2021-09-19)
+
+### Under the hood
+
+- Progressing towards converting the whole code base from JS to TS (#1959) 💖 @mhatvan
+
 # [v5.6.3-nightly.4](https://github.com/getferdi/ferdi/compare/v5.6.3-nightly.3...v5.6.3-nightly.4) (2021-09-16)
 
 ### Features
