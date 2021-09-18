@@ -1,12 +1,14 @@
 import { ipcRenderer } from 'electron';
+import { BrowserWindow, desktopCapturer, getCurrentWebContents } from '@electron/remote';
 import { pathExistsSync, readFileSync, existsSync } from 'fs-extra';
 
 const debug = require('debug')('Ferdi:Plugin:RecipeWebview');
 
 class RecipeWebview {
-  constructor(badgeHandler, notificationsHandler) {
+  constructor(badgeHandler, notificationsHandler, sessionHandler) {
     this.badgeHandler = badgeHandler;
     this.notificationsHandler = notificationsHandler;
+    this.sessionHandler = sessionHandler;
 
     ipcRenderer.on('poll', () => {
       this.loopFunc();
@@ -22,6 +24,26 @@ class RecipeWebview {
   loopFunc = () => null;
 
   darkModeHandler = false;
+
+  // TODO Remove this once we implement a proper wrapper.
+  get ipcRenderer() {
+    return ipcRenderer;
+  }
+
+  // TODO Remove this once we implement a proper wrapper.
+  get desktopCapturer() {
+    return desktopCapturer;
+  }
+
+  // TODO Remove this once we implement a proper wrapper.
+  get BrowserWindow() {
+    return BrowserWindow;
+  }
+
+  // TODO Remove this once we implement a proper wrapper.
+  get getCurrentWebContents() {
+    return getCurrentWebContents;
+  }
 
   /**
    * Initialize the loop
@@ -112,6 +134,14 @@ class RecipeWebview {
     if (typeof fn === 'function') {
       fn();
     }
+  }
+
+  clearStorageData(storageLocations) {
+    this.sessionHandler.clearStorageData(storageLocations);
+  }
+
+  releaseServiceWorkers() {
+    this.sessionHandler.releaseServiceWorkers();
   }
 }
 
