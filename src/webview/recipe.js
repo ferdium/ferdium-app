@@ -100,7 +100,7 @@ window.open = (url, frameName, features) => {
   }
 };
 
-// We can't override APIs here, so we first expose functions via window.ferdi,
+// We can't override APIs here, so we first expose functions via 'window.ferdi',
 // then overwrite the corresponding field of the window object by injected JS.
 contextBridge.exposeInMainWorld('ferdi', {
   open: window.open,
@@ -108,7 +108,6 @@ contextBridge.exposeInMainWorld('ferdi', {
   safeParseInt: text => badgeHandler.safeParseInt(text),
   displayNotification: (title, options) =>
     notificationsHandler.displayNotification(title, options),
-  releaseServiceWorkers: () => sessionHandler.releaseServiceWorkers(),
   getDisplayMediaSelector,
 });
 
@@ -275,8 +274,8 @@ class RecipeController {
     }
 
     if (this.settings.app.enableSpellchecking) {
-      debug('Setting spellchecker language to', this.spellcheckerLanguage);
       let { spellcheckerLanguage } = this;
+      debug(`Setting spellchecker language to ${spellcheckerLanguage}`);
       if (spellcheckerLanguage.includes('automatic')) {
         this.automaticLanguageDetection();
         debug(
@@ -285,7 +284,7 @@ class RecipeController {
         );
         spellcheckerLanguage = this.settings.app.locale;
       }
-      switchDict(spellcheckerLanguage);
+      switchDict(spellcheckerLanguage, this.settings.service.id);
     } else {
       debug('Disable spellchecker');
     }
@@ -440,7 +439,7 @@ class RecipeController {
           spellcheckerLocale,
         );
         if (spellcheckerLocale) {
-          switchDict(spellcheckerLocale);
+          switchDict(spellcheckerLocale, this.settings.service.id);
         }
       }, 225),
     );
