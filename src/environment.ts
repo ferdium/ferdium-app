@@ -38,15 +38,11 @@ export const ferdiLocale = app.getLocale();
 // Set app directory before loading user modules
 if (process.env.FERDI_APPDATA_DIR != null) {
   app.setPath('appData', process.env.FERDI_APPDATA_DIR);
-  app.setPath('userData', join(app.getPath('appData')));
+  app.setPath('userData', app.getPath('appData'));
 } else if (process.env.PORTABLE_EXECUTABLE_DIR != null) {
-  app.setPath(
-    'appData',
-    process.env.PORTABLE_EXECUTABLE_DIR,
-    `${app.name}AppData`,
-  );
+  app.setPath('appData', join(process.env.PORTABLE_EXECUTABLE_DIR, `${app.name}AppData`));
   app.setPath('userData', join(app.getPath('appData'), `${app.name}AppData`));
-} else if (is.windows) {
+} else if (is.windows && process.env.APPDATA != null) {
   app.setPath('appData', process.env.APPDATA);
   app.setPath('userData', join(app.getPath('appData'), app.name));
 }
