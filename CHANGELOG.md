@@ -1,3 +1,12 @@
+
+# [v5.6.3-nightly.10](https://github.com/getferdi/ferdi/compare/v5.6.3-nightly.9...v5.6.3-nightly.10) (2021-09-22)
+
+### Services
+
+- Added `stackoverflow-chat` Recipe (getferdi/recipes#718) 💖 @vraravam
+- Allow self-hosted option for kimai-cloud service 💖 @vraravam
+- Remove call to 'clearStorageData' so that MS Teams can remember login creds across Ferdi restarts 💖 @vraravam
+
 # [v5.6.3-nightly.9](https://github.com/getferdi/ferdi/compare/v5.6.3-nightly.8...v5.6.3-nightly.9) (2021-09-21)
 
 ### Bug fixes
