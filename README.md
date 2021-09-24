@@ -19,7 +19,8 @@
 <a href="#backers-via-opencollective"><img alt="Open Collective backers" src="https://img.shields.io/opencollective/backers/getferdi?logo=open-collective"></a>
 <a href="#sponsors-via-opencollective"><img alt="Open Collective sponsors" src="https://img.shields.io/opencollective/sponsors/getferdi?logo=open-collective"></a>
 <a href="https://github.com/getferdi/ferdi/actions/workflows/ferdi-builds.yml"><img alt="Build Status" src="https://github.com/getferdi/ferdi/actions/workflows/ferdi-builds.yml/badge.svg?branch=develop&event=push"></a>
-<a href="https://gitter.im/getferdi/community?utm_source=share-link&utm_medium=link&utm_campaign=share-link"><img alt="Gitter Chat Room" src="https://img.shields.io/gitter/room/getferdi/community"></a>
+<a href="https://gitter.im/getferdi/community"><img alt="Gitter Chat Room" src="https://img.shields.io/gitter/room/getferdi/community"></a>
+<a href="https://chat.stackoverflow.com/rooms/237341/ferdi"><img alt="Stackoverflow Chat Room" src="https://img.shields.io/badge/stackoverflow--chat-ferdi-blue"></a>
 </p>
 
 🤴🏽 Hard-fork of [Franz](https://github.com/meetfranz/franz), adding awesome features and removing unwanted ones.
