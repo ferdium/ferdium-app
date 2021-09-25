@@ -30,8 +30,21 @@ interface IRecipe {
   };
 }
 
+// Note: Do NOT change these default values. If they change, then the corresponding changes in the recipes needs to be done
+// TODO: Need to reconcile other properties
+const DEFAULT_RECIPE_SETTINGS = {
+  hasDirectMessages: true,
+  hasIndirectMessages: false,
+  hasNotificationSound: false,
+  hasTeamId: false,
+  hasCustomUrl: false,
+  hasHostedOption: false,
+  allowFavoritesDelineationInUnreadCount: false,
+  disablewebsecurity: false,
+  autoHibernate: false,
+};
+
 export default class Recipe {
-  // Note: Do NOT change these default values. If they change, then the corresponding changes in the recipes needs to be done
   id: string = '';
 
   name: string = '';
@@ -42,21 +55,19 @@ export default class Recipe {
 
   aliases: string[] = [];
 
-  path: string = '';
-
   serviceURL: string = '';
 
-  hasDirectMessages: boolean = true;
+  hasDirectMessages: boolean = DEFAULT_RECIPE_SETTINGS.hasDirectMessages;
 
-  hasIndirectMessages: boolean = false;
+  hasIndirectMessages: boolean = DEFAULT_RECIPE_SETTINGS.hasIndirectMessages;
 
-  hasNotificationSound: boolean = false;
+  hasNotificationSound: boolean = DEFAULT_RECIPE_SETTINGS.hasNotificationSound;
 
-  hasTeamId: boolean = false;
+  hasTeamId: boolean = DEFAULT_RECIPE_SETTINGS.hasTeamId;
 
-  hasCustomUrl: boolean = false;
+  hasCustomUrl: boolean = DEFAULT_RECIPE_SETTINGS.hasCustomUrl;
 
-  hasHostedOption: boolean = false;
+  hasHostedOption: boolean = DEFAULT_RECIPE_SETTINGS.hasHostedOption;
 
   urlInputPrefix: string = '';
 
@@ -64,11 +75,14 @@ export default class Recipe {
 
   message: string = '';
 
-  allowFavoritesDelineationInUnreadCount: boolean = false;
+  allowFavoritesDelineationInUnreadCount: boolean = DEFAULT_RECIPE_SETTINGS.allowFavoritesDelineationInUnreadCount;
 
-  disablewebsecurity: boolean = false;
+  disablewebsecurity: boolean = DEFAULT_RECIPE_SETTINGS.disablewebsecurity;
 
-  autoHibernate: boolean = false;
+  // TODO: Is this even used?
+  autoHibernate: boolean = DEFAULT_RECIPE_SETTINGS.autoHibernate;
+
+  path: string = '';
 
   partition: string = '';
 
@@ -87,32 +101,28 @@ export default class Recipe {
       throw new Error(`Version ${data.version} of recipe '${data.name}' is not a valid semver version`);
     }
 
-    this.id = data.id || this.id;
+    // from the recipe
+    this.id = ifUndefinedString(data.id, this.id);
     this.name = ifUndefinedString(data.name, this.name);
     this.version = ifUndefinedString(data.version, this.version);
     this.aliases = data.aliases || this.aliases;
-    this.path = data.path;
-
     this.serviceURL = ifUndefinedString(data.config.serviceURL, this.serviceURL);
-
     this.hasDirectMessages = ifUndefinedBoolean(data.config.hasDirectMessages, this.hasDirectMessages);
     this.hasIndirectMessages = ifUndefinedBoolean(data.config.hasIndirectMessages, this.hasIndirectMessages);
     this.hasNotificationSound = ifUndefinedBoolean(data.config.hasNotificationSound, this.hasNotificationSound);
     this.hasTeamId = ifUndefinedBoolean(data.config.hasTeamId, this.hasTeamId);
     this.hasCustomUrl = ifUndefinedBoolean(data.config.hasCustomUrl, this.hasCustomUrl);
     this.hasHostedOption = ifUndefinedBoolean(data.config.hasHostedOption, this.hasHostedOption);
-
     this.urlInputPrefix = ifUndefinedString(data.config.urlInputPrefix, this.urlInputPrefix);
     this.urlInputSuffix = ifUndefinedString(data.config.urlInputSuffix, this.urlInputSuffix);
-
-    this.disablewebsecurity = data.config.disablewebsecurity || this.disablewebsecurity;
-
-    this.autoHibernate = data.config.autoHibernate || this.autoHibernate;
-
-    this.partition = ifUndefinedString(data.config.partition, this.partition);
-
+    this.disablewebsecurity = ifUndefinedBoolean(data.config.disablewebsecurity, this.disablewebsecurity);
+    this.autoHibernate = ifUndefinedBoolean(data.config.autoHibernate, this.autoHibernate);
     this.message = ifUndefinedString(data.config.message, this.message);
     this.allowFavoritesDelineationInUnreadCount = ifUndefinedBoolean(data.config.allowFavoritesDelineationInUnreadCount, this.allowFavoritesDelineationInUnreadCount);
+
+    // computed
+    this.path = data.path;
+    this.partition = ifUndefinedString(data.config.partition, this.partition);
   }
 
   // TODO: Need to remove this if its not used anywhere
