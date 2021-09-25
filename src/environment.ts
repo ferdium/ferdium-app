@@ -170,7 +170,6 @@ export const DEFAULT_APP_SETTINGS = {
   wakeUpStrategy: '300', // seconds
   inactivityLock: 0,
   automaticUpdates: true,
-  showServiceNavigationBar: false,
   universalDarkMode: true,
   userAgentPref: '',
   adaptableDarkMode: true,
