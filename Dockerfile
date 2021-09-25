@@ -17,13 +17,16 @@ RUN apt-get update -y \
 WORKDIR /usr/src/ferdi
 
 RUN npm i -g pnpm@6.14.7 \
-  && npm i -g node-gyp@8.1.0 \
-  && npm i -g lerna@4.0.0
+  && npm ls -g node-gyp@8.1.0 || npm i -g node-gyp@8.1.0 \
+  && npm ls -g lerna@4.0.0 || npm i -g lerna@4.0.0
+
+COPY package*.json .
+COPY lerna.json .
+
+RUN npm i \
+  && npx lerna bootstrap
 
 COPY . .
-
-# Note: Ideally this needs to be done before the COPY step - BUT moving this here resolves the issue with `preval-build-info-cli` not being found
-RUN npx lerna bootstrap
 
 WORKDIR /usr/src/ferdi/recipes
 
