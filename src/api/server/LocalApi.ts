@@ -31,7 +31,7 @@ export default class LocalApi {
   async getAppCacheSize() {
     const partitionsDir = getServicePartitionsDirectory();
     return new Promise((resolve, reject) => {
-      du(partitionsDir, (err: Error | null, size?: number | undefined) => {
+      du(partitionsDir, {}, (err: Error | null, size?: number | undefined) => {
         if (err) reject(err);
 
         debug('LocalApi::getAppCacheSize resolves', size);

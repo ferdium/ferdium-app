@@ -25,6 +25,8 @@ import {
 import { openPath } from '../../../helpers/url-helpers';
 import globalMessages from '../../../i18n/globalMessages';
 
+const debug = require('debug')('Ferdi:EditSettingsForm');
+
 const messages = defineMessages({
   headlineGeneral: {
     id: 'settings.app.headlineGeneral',
@@ -268,8 +270,10 @@ class EditSettingsForm extends Component {
     let notCleared;
     if (this.state.activeSetttingsTab === 'advanced') {
       const cacheSizeBytes = getCacheSize();
+      debug('cacheSizeBytes:', cacheSizeBytes);
       if (typeof cacheSizeBytes === 'number') {
         cacheSize = prettyBytes(cacheSizeBytes);
+        debug('cacheSize:', cacheSize);
         notCleared =
           this.state.clearCacheButtonClicked &&
           isClearingAllCache === false &&
