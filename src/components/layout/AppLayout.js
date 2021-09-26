@@ -88,6 +88,7 @@ class AppLayout extends Component {
 
   state = {
     shouldShowAppUpdateInfoBar: true,
+    shouldShowServicesUpdatedInfoBar: true,
   };
 
   static defaultProps = {
@@ -175,12 +176,14 @@ class AppLayout extends Component {
                   {intl.formatMessage(messages.authRequestFailed)}
                 </InfoBar>
               )}
-              {showServicesUpdatedInfoBar && (
+              {showServicesUpdatedInfoBar && this.state.shouldShowServicesUpdatedInfoBar && (
                 <InfoBar
                   type="primary"
                   ctaLabel={intl.formatMessage(messages.buttonReloadServices)}
                   onClick={reloadServicesAfterUpdate}
-                  sticky
+                  onHide={() => {
+                    this.setState({ shouldShowServicesUpdatedInfoBar: false });
+                  }}
                 >
                   <span className="mdi mdi-power-plug" />
                   {intl.formatMessage(messages.servicesUpdated)}
