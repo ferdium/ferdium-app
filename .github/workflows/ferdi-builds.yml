@@ -57,12 +57,17 @@ jobs:
           MANUAL_REBUILD="${{ github.event_name == 'workflow_dispatch' }}"
           VERSION_BUMP="${{ contains(github.event.inputs.message, '[version bump]') }}"
           if [ $CHANGES_COUNT -gt 0 ] || [[ $MANUAL_REBUILD == "true" && $VERSION_BUMP == "true" ]]; then
-            # Do the version bump in the 'develop' branch ONLY if there were other changes coming from the 'develop' branch
+            # Do the version bump in the 'develop' branch ONLY if
+            #   there were other changes coming from the 'develop' branch (or)
+            #   this is a manual trigger with the key-phrase
             git checkout develop
             TAG_NAME=$(npm version -m "%s [skip ci]" prerelease --preid=nightly)
             git push origin develop --no-verify
             git tag -f $TAG_NAME
             git push origin --tags --no-verify
+            # Also tag the submodule so as to help identify which changes went into which nightly release
+            git -C recipes tag -f $TAG_NAME
+            git -C recipes push origin --tags --no-verify
 
             git checkout nightly
           fi
