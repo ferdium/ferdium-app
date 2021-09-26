@@ -133,6 +133,10 @@ class RecipeWebview {
   releaseServiceWorkers() {
     this.sessionHandler.releaseServiceWorkers();
   }
+
+  setAvatarImage(avatarUrl) {
+    ipcRenderer.sendToHost('avatar', avatarUrl);
+  }
 }
 
 export default RecipeWebview;
