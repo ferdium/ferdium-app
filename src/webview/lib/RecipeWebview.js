@@ -126,8 +126,8 @@ class RecipeWebview {
     }
   }
 
-  clearStorageData(storageLocations) {
-    this.sessionHandler.clearStorageData(storageLocations);
+  clearStorageData(serviceId, targetsToClear) {
+    ipcRenderer.send('clear-storage-data', { serviceId, targetsToClear });
   }
 
   releaseServiceWorkers() {
