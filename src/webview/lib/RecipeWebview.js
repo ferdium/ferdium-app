@@ -137,6 +137,10 @@ class RecipeWebview {
   setAvatarImage(avatarUrl) {
     ipcRenderer.sendToHost('avatar', avatarUrl);
   }
+
+  openNewWindow(url) {
+    ipcRenderer.sendToHost('new-window', url);
+  }
 }
 
 export default RecipeWebview;
