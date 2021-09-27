@@ -1,4 +1,4 @@
-import { Menu, getCurrentWindow } from '@electron/remote';
+import { Menu } from '@electron/remote';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
@@ -119,7 +119,7 @@ class WorkspaceDrawerItem extends Component {
         ])}
         onClick={onClick}
         onContextMenu={() =>
-          onContextMenuEditClick && contextMenu.popup(getCurrentWindow())
+          onContextMenuEditClick && contextMenu.popup()
         }
         data-tip={`${
           shortcutIndex <= 9

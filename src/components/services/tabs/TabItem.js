@@ -1,4 +1,4 @@
-import { Menu, dialog, app, getCurrentWindow } from '@electron/remote';
+import { Menu, dialog, app } from '@electron/remote';
 import React, { Component } from 'react';
 import { defineMessages, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
@@ -300,7 +300,7 @@ class TabItem extends Component {
           'is-disabled': !service.isEnabled,
         })}
         onClick={clickHandler}
-        onContextMenu={() => menu.popup(getCurrentWindow())}
+        onContextMenu={() => menu.popup()}
         data-tip={`${service.name} ${
           shortcutIndex <= 9
             ? `(${cmdOrCtrlShortcutKey(false)}+${shortcutIndex})`

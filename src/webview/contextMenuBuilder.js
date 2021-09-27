@@ -98,7 +98,7 @@ module.exports = class ContextMenuBuilder {
   async showPopupMenu(contextInfo) {
     const menu = await this.buildMenuForElement(contextInfo);
     if (!menu) return;
-    menu.popup({});
+    menu.popup();
   }
 
   /**
