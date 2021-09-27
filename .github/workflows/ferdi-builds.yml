@@ -46,6 +46,7 @@ jobs:
           ref: nightly
           submodules: recursive
           fetch-depth: 0 # Note: Needed to be able to pull the 'develop' branch as well for merging
+          # ssh-key: ${{ secrets.FERDI_PUBLISH_TOKEN }}
       - id: should_run
         name: Check whether there are any commits since this run was last triggered and push them and/or set the output
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
@@ -66,8 +67,9 @@ jobs:
             git tag -f $TAG_NAME
             git push origin --tags --no-verify
             # Also tag the submodule so as to help identify which changes went into which nightly release
-            git -C recipes tag -f $TAG_NAME
-            git -C recipes push origin --tags --no-verify
+            # TODO: Not working due to cross-repo access issues by the github-action bot
+            # git -C recipes tag -f $TAG_NAME
+            # git -C recipes push origin --tags --no-verify
 
             git checkout nightly
           fi
