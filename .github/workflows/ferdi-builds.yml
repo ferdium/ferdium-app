@@ -171,7 +171,7 @@ jobs:
         shell: bash
       - name: Build Ferdi with publish for 'nightly' branch
         if: ${{ env.GIT_BRANCH_NAME == 'nightly' }}
-        run: npm run build -- --publish always -c.publish.provider=github -c.publish.owner=${{ github.repository_owner }} -c.publish.repo=nightlies
+        run: npm run build -- --publish always -c.publish.provider=github -c.publish.owner=${{ github.repository_owner }}
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.FERDI_PUBLISH_TOKEN }}
@@ -285,7 +285,7 @@ jobs:
         run: |
           sudo snap install snapcraft --classic
           echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
-          npm run build -- --publish always -c.publish.provider=github -c.publish.owner=${{ github.repository_owner }} -c.publish.repo=nightlies -c.snap.publish.provider=snapStore -c.snap.publish.repo=nightlies -c.snap.publish.channels=edge
+          npm run build -- --publish always -c.publish.provider=github -c.publish.owner=${{ github.repository_owner }} -c.snap.publish.provider=snapStore -c.snap.publish.repo=nightlies -c.snap.publish.channels=edge
           snapcraft logout
         shell: bash
       - name: Build Ferdi with publish for 'release' beta branch
@@ -404,7 +404,7 @@ jobs:
         shell: bash
       - name: Build Ferdi with publish for 'nightly' branch
         if: ${{ env.GIT_BRANCH_NAME == 'nightly' }}
-        run: npm run build -- --publish always -c.publish.provider=github -c.publish.owner=${{ github.repository_owner }} -c.publish.repo=nightlies
+        run: npm run build -- --publish always -c.publish.provider=github -c.publish.owner=${{ github.repository_owner }}
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.FERDI_PUBLISH_TOKEN }}

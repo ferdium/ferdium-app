@@ -158,10 +158,6 @@ export const FRANZ_SERVICE_REQUEST = `${GITHUB_FERDI_URL}/recipes/issues`;
 export const FRANZ_TRANSLATION = 'https://crowdin.com/project/getferdi';
 export const FRANZ_DEV_DOCS = 'http://bit.ly/franz-dev-hub';
 
-export const GITHUB_ORG_NAME = 'getferdi';
-export const GITHUB_FERDI_REPO_NAME = 'ferdi';
-export const GITHUB_NIGHTLIES_REPO_NAME = 'nightlies';
-
 export const FILE_SYSTEM_SETTINGS_TYPES = ['app', 'proxy'];
 
 export const LOCAL_SERVER = 'You are using Ferdi without a server';

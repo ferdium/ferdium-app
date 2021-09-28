@@ -1,6 +1,5 @@
 import { app, ipcMain, BrowserWindow } from 'electron';
 import { autoUpdater } from 'electron-updater';
-import { GITHUB_NIGHTLIES_REPO_NAME, GITHUB_ORG_NAME } from '../../config';
 import { isMac, isWindows } from '../../environment';
 
 const debug = require('debug')('Ferdi:ipcApi:autoUpdate');
@@ -26,11 +25,6 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
               params.settings.app.get('nightly'),
             );
             autoUpdater.channel = 'alpha';
-            autoUpdater.setFeedURL({
-              provider: 'github',
-              owner: GITHUB_ORG_NAME,
-              repo: GITHUB_NIGHTLIES_REPO_NAME,
-            });
           }
 
           if (args.action === 'check') {

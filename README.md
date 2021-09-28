@@ -245,7 +245,7 @@ We welcome all contributors. Please read the [contributing guidelines](CONTRIBUT
 
 ## Nightly releases
 
-Nightly releases are automatically triggered every day ([details](https://github.com/getferdi/ferdi/pull/990)) and available in [getferdi/nightlies](https://github.com/getferdi/nightlies/releases). Maintainers still need to manually publish the draft releases as pre-releases for now.
+Nightly releases are automatically triggered every day ([details](https://github.com/getferdi/ferdi/pull/990)) and available in [getferdi/ferdi](https://github.com/getferdi/ferdi/releases). Maintainers still need to verify and manually publish the draft releases as pre-releases for now.
 
 ## Troubleshooting recipes (self-help)
 
