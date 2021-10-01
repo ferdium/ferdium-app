@@ -137,6 +137,40 @@ class TabItem extends Component {
 
   @observable isPollAnswered = false;
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      showShortcutIndex: false,
+    };
+  }
+
+  handleShowShortcutIndex = () => {
+    this.setState({ showShortcutIndex: true });
+  };
+
+  checkForLongPress = () => {
+    let longpressDelay = null;
+    const longpressDelayDuration = 1000;
+
+    document.addEventListener(
+      'keydown',
+      e => {
+        if (e.ctrlKey || e.metaKey) {
+          longpressDelay = setTimeout(
+            this.handleShowShortcutIndex,
+            longpressDelayDuration,
+          );
+        }
+      },
+      { capture: true },
+    );
+
+    document.addEventListener('keyup', () => {
+      clearTimeout(longpressDelay);
+      this.setState({ showShortcutIndex: false });
+    });
+  };
+
   componentDidMount() {
     const { service } = this.props;
 
@@ -159,6 +193,8 @@ class TabItem extends Component {
         }
       });
     }
+
+    this.checkForLongPress();
   }
 
   render() {
@@ -235,8 +271,9 @@ class TabItem extends Component {
             ? messages.wakeUpService
             : messages.hibernateService,
         ),
+        // eslint-disable-next-line no-confusing-arrow
         click: () =>
-          (service.isHibernating ? wakeUpService() : hibernateService()),
+          service.isHibernating ? wakeUpService() : hibernateService(),
         enabled: service.canHibernate,
       },
       {
@@ -281,7 +318,7 @@ class TabItem extends Component {
             service.unreadDirectMessageCount === 0 &&
             service.isIndirectMessageBadgeEnabled && (
               <span className="tab-item__message-count is-indirect">•</span>
-          )}
+            )}
           {service.isHibernating && (
             <span className="tab-item__message-count hibernating">•</span>
           )}
@@ -326,6 +363,9 @@ class TabItem extends Component {
               })}
             />
           </>
+        )}
+        {shortcutIndex && this.state.showShortcutIndex && (
+          <span className="tab-item__shortcut-index">{shortcutIndex}</span>
         )}
       </li>
     );
