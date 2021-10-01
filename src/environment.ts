@@ -193,7 +193,7 @@ export function aboutAppDetails() {
     `Chrome: ${chromeVersion}`,
     `Node.js: ${nodeVersion}`,
     `Platform: ${osName()}`,
-    `Arch: ${process.arch}`,
+    `Arch: ${osArch}`,
     `Build date: ${new Date(Number(buildInfo.timestamp))}`,
     `Git SHA: ${buildInfo.gitHashShort}`,
     `Git branch: ${buildInfo.gitBranch}`,
