@@ -23,8 +23,6 @@ import {
   iconSizeBias,
 } from './config';
 
-import { asarPath } from './helpers/asar-helpers';
-
 // @ts-expect-error Cannot find module './buildInfo.json' or its corresponding type declarations.
 import * as buildInfo from './buildInfo.json';
 
@@ -62,11 +60,6 @@ export function userDataPath(...segments: string[]) {
 
 export function userDataRecipesPath(...segments: any[]) {
   return userDataPath('recipes', ...[segments].flat());
-}
-
-// Replacing app.asar is not beautiful but unfortunately necessary
-export function asarRecipesPath(...segments: any[]) {
-  return join(asarPath(join(__dirname, 'recipes')), ...[segments].flat());
 }
 
 export const useLiveAPI = process.env.USE_LIVE_API;

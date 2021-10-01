@@ -25,11 +25,11 @@ import { SERVER_NOT_LOADED } from '../../config';
 import {
   osArch,
   osPlatform,
-  asarRecipesPath,
   userDataRecipesPath,
   userDataPath,
   ferdiVersion,
 } from '../../environment';
+import { asarRecipesPath } from '../../helpers/asar-helpers';
 import apiBase from '../apiBase';
 import { prepareAuthRequest, sendAuthRequest } from '../utils/auth';
 

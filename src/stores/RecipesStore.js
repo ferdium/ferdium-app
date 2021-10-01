@@ -6,7 +6,7 @@ import Store from './lib/Store';
 import CachedRequest from './lib/CachedRequest';
 import Request from './lib/Request';
 import { matchRoute } from '../helpers/routing-helpers';
-import { asarRecipesPath } from '../environment';
+import { asarRecipesPath } from '../helpers/asar-helpers';
 
 const debug = require('debug')('Ferdi:RecipeStore');
 
