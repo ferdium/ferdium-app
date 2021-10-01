@@ -1,7 +1,7 @@
 import os from 'os';
 import { join } from 'path';
 
-import { is, api as electronApi } from 'electron-util';
+import { api as electronApi } from 'electron-util';
 
 import { DEFAULT_ACCENT_COLOR } from '@meetfranz/theme';
 
@@ -28,6 +28,10 @@ import { asarPath } from './helpers/asar-helpers';
 // @ts-expect-error Cannot find module './buildInfo.json' or its corresponding type declarations.
 import * as buildInfo from './buildInfo.json';
 
+export const isMac = process.platform === 'darwin';
+export const isWindows = process.platform === 'win32';
+export const isLinux = process.platform === 'linux';
+
 export const { app } = electronApi;
 export const ferdiVersion = app.getVersion();
 export const electronVersion = process.versions.electron;
@@ -42,12 +46,12 @@ if (process.env.FERDI_APPDATA_DIR != null) {
 } else if (process.env.PORTABLE_EXECUTABLE_DIR != null) {
   app.setPath('appData', join(process.env.PORTABLE_EXECUTABLE_DIR, `${app.name}AppData`));
   app.setPath('userData', join(app.getPath('appData'), `${app.name}AppData`));
-} else if (is.windows && process.env.APPDATA != null) {
+} else if (isWindows && process.env.APPDATA != null) {
   app.setPath('appData', process.env.APPDATA);
   app.setPath('userData', join(app.getPath('appData'), app.name));
 }
 
-export const isDevMode = is.development;
+export const isDevMode = !app.isPackaged;
 if (isDevMode) {
   app.setPath('userData', join(app.getPath('appData'), `${app.name}Dev`));
 }
@@ -68,9 +72,6 @@ export function asarRecipesPath(...segments: any[]) {
 export const useLiveAPI = process.env.USE_LIVE_API;
 const useLocalAPI = process.env.USE_LOCAL_API;
 
-export const isMac = is.macos;
-export const isWindows = is.windows;
-export const isLinux = is.linux;
 export const osPlatform = os.platform();
 export const osArch = os.arch();
 export const osRelease = os.release();
