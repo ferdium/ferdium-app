@@ -185,7 +185,6 @@ function generateVerticalStyle(widthStr, alwaysShowWorkspaces) {
 
   return `
   .sidebar {
-    height: ${sidebarWidth + verticalStyleOffset + 1}px !important;
   ${
     alwaysShowWorkspaces
       ? `
@@ -197,10 +196,6 @@ function generateVerticalStyle(widthStr, alwaysShowWorkspaces) {
 
   .sidebar .sidebar__button {
     width: ${width}px;
-  }
-
-  .app .app__content {
-    padding-top: ${sidebarWidth + verticalStyleOffset + 1}px !important;
   }
 
   .workspaces-drawer {
