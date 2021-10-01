@@ -433,8 +433,7 @@ const _titleBarTemplateFactory = (intl, locked) => [
           const activeService = getActiveService().webview;
           const level = activeService.getZoomLevel();
 
-          // level 9 =~ +300% and setZoomLevel wouldnt zoom in further
-          if (level < 9) activeService.setZoomLevel(level + 1);
+          activeService.setZoomLevel(level + 0.5);
         },
       },
       {
@@ -444,8 +443,7 @@ const _titleBarTemplateFactory = (intl, locked) => [
           const activeService = getActiveService().webview;
           const level = activeService.getZoomLevel();
 
-          // level -9 =~ -50% and setZoomLevel wouldnt zoom out further
-          if (level > -9) activeService.setZoomLevel(level - 1);
+          activeService.setZoomLevel(level - 0.5);
         },
       },
       {
