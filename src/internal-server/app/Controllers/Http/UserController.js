@@ -7,7 +7,7 @@ const btoa = require('btoa');
 const fetch = require('node-fetch');
 const { v4: uuid } = require('uuid');
 const crypto = require('crypto');
-const { DEFAULT_APP_SETTINGS } = require('../../../../environment');
+const { DEFAULT_APP_SETTINGS } = require('../../../../config');
 const { API_VERSION } = require('../../../../environment-remote');
 const { default: userAgent } = require('../../../../helpers/userAgent-helpers');
 

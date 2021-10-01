@@ -10,6 +10,7 @@ import TodosStore from '../../features/todos/store';
 import Form from '../../lib/Form';
 import { APP_LOCALES, SPELLCHECKER_LOCALES } from '../../i18n/languages';
 import {
+  DEFAULT_APP_SETTINGS,
   HIBERNATION_STRATEGIES,
   SIDEBAR_WIDTH,
   ICON_SIZES,
@@ -20,7 +21,7 @@ import {
   DEFAULT_IS_FEATURE_ENABLED_BY_USER,
   WAKE_UP_STRATEGIES,
 } from '../../config';
-import { DEFAULT_APP_SETTINGS, isMac } from '../../environment';
+import { isMac } from '../../environment';
 
 import { getSelectOptions } from '../../helpers/i18n-helpers';
 import { hash } from '../../helpers/password-helpers';

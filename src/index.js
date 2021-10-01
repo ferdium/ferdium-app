@@ -10,10 +10,9 @@ import ms from 'ms';
 
 require('@electron/remote/main').initialize();
 
-import { DEFAULT_WINDOW_OPTIONS } from './config';
+import { DEFAULT_APP_SETTINGS, DEFAULT_WINDOW_OPTIONS } from './config';
 
 import {
-  DEFAULT_APP_SETTINGS,
   isMac,
   isWindows,
   isLinux,

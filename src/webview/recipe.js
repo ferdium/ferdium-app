@@ -45,7 +45,7 @@ import {
   getSpellcheckerLocaleByFuzzyIdentifier,
 } from './spellchecker';
 
-import { DEFAULT_APP_SETTINGS } from '../environment';
+import { DEFAULT_APP_SETTINGS } from '../config';
 
 const debug = require('debug')('Ferdi:Plugin');
 

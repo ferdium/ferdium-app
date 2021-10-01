@@ -16,9 +16,8 @@ import { readJsonSync } from 'fs-extra';
 
 import Store from './lib/Store';
 import Request from './lib/Request';
-import { CHECK_INTERVAL } from '../config';
+import { CHECK_INTERVAL, DEFAULT_APP_SETTINGS } from '../config';
 import {
-  DEFAULT_APP_SETTINGS,
   isMac,
   electronVersion,
   osRelease,

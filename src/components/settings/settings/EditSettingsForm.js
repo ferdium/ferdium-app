@@ -12,9 +12,8 @@ import ToggleRaw from '../../ui/ToggleRaw';
 import Select from '../../ui/Select';
 import Input from '../../ui/Input';
 
-import { FRANZ_TRANSLATION, GITHUB_FRANZ_URL } from '../../../config';
+import { DEFAULT_APP_SETTINGS, FRANZ_TRANSLATION, GITHUB_FRANZ_URL } from '../../../config';
 import {
-  DEFAULT_APP_SETTINGS,
   isMac,
   isWindows,
   lockFerdiShortcutKey,

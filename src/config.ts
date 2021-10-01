@@ -2,6 +2,8 @@
 
 import ms from 'ms';
 
+import { DEFAULT_ACCENT_COLOR } from '@meetfranz/theme';
+
 export const CHECK_INTERVAL = ms('1h'); // How often should we perform checks
 
 export const LOCAL_HOSTNAME = 'localhost';
@@ -176,3 +178,59 @@ export const TODOS_PARTITION_ID = 'persist:todos';
 export const CUSTOM_WEBSITE_RECIPE_ID = 'franz-custom-website';
 
 export const DEFAULT_SERVICE_ORDER = 99; // something high enough that it gets added to the end of the already-added services on the left sidebar
+
+export const DEFAULT_APP_SETTINGS = {
+  autoLaunchInBackground: false,
+  runInBackground: true,
+  reloadAfterResume: true,
+  enableSystemTray: true,
+  startMinimized: false,
+  confirmOnQuit: false,
+  minimizeToSystemTray: false,
+  closeToSystemTray: false,
+  privateNotifications: false,
+  clipboardNotifications: true,
+  notifyTaskBarOnMessage: false,
+  showDisabledServices: true,
+  showMessageBadgeWhenMuted: true,
+  showDragArea: false,
+  enableSpellchecking: true,
+  spellcheckerLanguage: 'en-us',
+  darkMode: false,
+  splitMode: false,
+  locale: '',
+  fallbackLocale: 'en-US',
+  beta: false,
+  isAppMuted: false,
+  enableGPUAcceleration: true,
+
+  // Ferdi specific options
+  server: LIVE_FERDI_API,
+  predefinedTodoServer: DEFAULT_TODO_SERVICE,
+  autohideMenuBar: false,
+  lockingFeatureEnabled: false,
+  locked: false,
+  lockedPassword: '',
+  useTouchIdToUnlock: true,
+  scheduledDNDEnabled: false,
+  scheduledDNDStart: '17:00',
+  scheduledDNDEnd: '09:00',
+  hibernateOnStartup: true,
+  hibernationStrategy: '300', // seconds
+  wakeUpStrategy: '300', // seconds
+  inactivityLock: 0,
+  automaticUpdates: true,
+  universalDarkMode: true,
+  userAgentPref: '',
+  adaptableDarkMode: true,
+  accentColor: DEFAULT_ACCENT_COLOR,
+  serviceRibbonWidth: 68,
+  iconSize: iconSizeBias,
+  sentry: false,
+  nightly: false,
+  navigationBarBehaviour: 'custom',
+  searchEngine: SEARCH_ENGINE_DDG,
+  useVerticalStyle: false,
+  alwaysShowWorkspaces: false,
+  liftSingleInstanceLock: false,
+};
