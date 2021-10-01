@@ -17,7 +17,7 @@ import {
 import { workspaceStore } from '../features/workspaces';
 import { KEEP_WS_LOADED_USID } from '../config';
 import { SPELLCHECKER_LOCALES } from '../i18n/languages';
-import { ferdiVersion } from '../environment';
+import { ferdiVersion } from '../environment-remote';
 
 const debug = require('debug')('Ferdi:ServiceStore');
 

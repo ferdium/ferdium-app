@@ -1,5 +1,5 @@
 import localStorage from 'mobx-localstorage';
-import { ferdiLocale, ferdiVersion } from '../../environment';
+import { ferdiLocale, ferdiVersion } from '../../environment-remote';
 
 export const prepareAuthRequest = (
   // eslint-disable-next-line unicorn/no-object-as-default-parameter

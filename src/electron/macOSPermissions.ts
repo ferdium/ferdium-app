@@ -3,7 +3,7 @@ import { pathExistsSync, mkdirSync, writeFileSync } from 'fs-extra';
 import macosVersion from 'macos-version';
 import { dirname } from 'path';
 import { askForScreenCaptureAccess } from 'node-mac-permissions';
-import { userDataPath } from '../environment';
+import { userDataPath } from '../environment-remote';
 
 const debug = require('debug')('Ferdi:macOSPermissions');
 

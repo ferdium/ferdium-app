@@ -6,7 +6,7 @@ const Env = use('Env');
 const fetch = require('node-fetch');
 const debug = require('debug')('Ferdi:internalServer:RecipeController');
 const { LIVE_FERDI_API } = require('../../../../config');
-const { API_VERSION } = require('../../../../environment');
+const { API_VERSION } = require('../../../../environment-remote');
 
 const RECIPES_URL = `${LIVE_FERDI_API}/${API_VERSION}/recipes`;
 

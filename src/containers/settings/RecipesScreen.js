@@ -12,7 +12,7 @@ import UserStore from '../../stores/UserStore';
 import RecipesDashboard from '../../components/settings/recipes/RecipesDashboard';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 import { CUSTOM_WEBSITE_RECIPE_ID, FRANZ_DEV_DOCS } from '../../config';
-import { userDataRecipesPath } from '../../environment';
+import { userDataRecipesPath } from '../../environment-remote';
 import { asarRecipesPath } from '../../helpers/asar-helpers';
 import { communityRecipesStore } from '../../features/communityRecipes';
 import RecipePreview from '../../models/RecipePreview';

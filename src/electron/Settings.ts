@@ -1,6 +1,6 @@
 import { observable, toJS } from 'mobx';
 import { pathExistsSync, outputJsonSync, readJsonSync } from 'fs-extra';
-import { userDataPath } from '../environment';
+import { userDataPath } from '../environment-remote';
 
 const debug = require('debug')('Ferdi:Settings');
 

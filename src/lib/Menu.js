@@ -14,13 +14,13 @@ import {
   settingsShortcutKey,
   isLinux,
   isMac,
-  aboutAppDetails,
   lockFerdiShortcutKey,
   todosToggleShortcutKey,
   workspaceToggleShortcutKey,
   addNewServiceShortcutKey,
   muteFerdiShortcutKey,
 } from '../environment';
+import { aboutAppDetails } from '../environment-remote';
 import { todosStore } from '../features/todos';
 import { todoActions } from '../features/todos/actions';
 import { workspaceActions } from '../features/workspaces/actions';

@@ -20,12 +20,14 @@ import { CHECK_INTERVAL } from '../config';
 import {
   DEFAULT_APP_SETTINGS,
   isMac,
-  ferdiVersion,
   electronVersion,
   osRelease,
+} from '../environment';
+import {
+  ferdiVersion,
   userDataPath,
   ferdiLocale,
-} from '../environment';
+} from '../environment-remote';
 import locales from '../i18n/translations';
 import { getLocale } from '../helpers/i18n-helpers';
 

@@ -1,7 +1,7 @@
 /**
  * Get API base URL from store
  */
-import { API_VERSION } from '../environment';
+import { API_VERSION } from '../environment-remote';
 import {
   DEV_API_FRANZ_WEBSITE,
   LIVE_FRANZ_API,

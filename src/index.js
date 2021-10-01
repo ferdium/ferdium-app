@@ -14,14 +14,16 @@ import { DEFAULT_WINDOW_OPTIONS } from './config';
 
 import {
   DEFAULT_APP_SETTINGS,
-  isDevMode,
   isMac,
   isWindows,
   isLinux,
+} from './environment';
+import {
+  isDevMode,
   aboutAppDetails,
   userDataRecipesPath,
   userDataPath,
-} from './environment';
+} from './environment-remote';
 import { ifUndefinedBoolean } from './jsUtils';
 
 import { mainIpcHandler as basicAuthHandler } from './features/basicAuth';

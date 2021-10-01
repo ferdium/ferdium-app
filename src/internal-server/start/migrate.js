@@ -1,4 +1,4 @@
-const { ferdiVersion } = require('../../environment');
+const { ferdiVersion } = require('../../environment-remote');
 
 /**
  * Migrate server database to work with current Ferdi version

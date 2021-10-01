@@ -1,5 +1,5 @@
 import { readdirSync, removeSync } from 'fs-extra';
-import { userDataPath } from '../environment';
+import { userDataPath } from '../environment-remote';
 
 export function getServicePartitionsDirectory(...segments) {
   return userDataPath('Partitions', ...[segments].flat());

@@ -4,7 +4,7 @@ import ms from 'ms';
 
 import { FeatureStore } from '../utils/FeatureStore';
 import { createReactions } from '../../stores/lib/Reaction';
-import { WS_API } from '../../environment';
+import { WS_API } from '../../environment-remote';
 
 const debug = require('debug')('Ferdi:feature:settingsWS:store');
 

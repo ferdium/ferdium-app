@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
 import { parse } from 'path';
-import { userDataRecipesPath } from '../environment';
+import { userDataRecipesPath } from '../environment-remote';
 
 export function getRecipeDirectory(id: string = ''): string {
   return userDataRecipesPath(id);

@@ -22,13 +22,8 @@ import UserModel from '../../models/User';
 import { sleep } from '../../helpers/async-helpers';
 
 import { SERVER_NOT_LOADED } from '../../config';
-import {
-  osArch,
-  osPlatform,
-  userDataRecipesPath,
-  userDataPath,
-  ferdiVersion,
-} from '../../environment';
+import { osArch, osPlatform } from '../../environment';
+import { userDataRecipesPath, userDataPath, ferdiVersion } from '../../environment-remote';
 import { asarRecipesPath } from '../../helpers/asar-helpers';
 import apiBase from '../apiBase';
 import { prepareAuthRequest, sendAuthRequest } from '../utils/auth';

@@ -15,13 +15,11 @@ import Input from '../../ui/Input';
 import { FRANZ_TRANSLATION, GITHUB_FRANZ_URL } from '../../../config';
 import {
   DEFAULT_APP_SETTINGS,
-  ferdiVersion,
   isMac,
   isWindows,
   lockFerdiShortcutKey,
-  userDataPath,
-  userDataRecipesPath,
 } from '../../../environment';
+import { ferdiVersion, userDataPath, userDataRecipesPath } from '../../../environment-remote';
 import { openPath } from '../../../helpers/url-helpers';
 import globalMessages from '../../../i18n/globalMessages';
 

@@ -1,7 +1,7 @@
 import { ipcMain, BrowserWindow } from 'electron';
 import net from 'net';
 import { LOCAL_HOSTNAME, LOCAL_PORT } from '../../config';
-import { userDataPath } from '../../environment';
+import { userDataPath } from '../../environment-remote';
 import { server } from '../../internal-server/start';
 
 const portInUse = (port: number): Promise<boolean> =>

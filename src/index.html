@@ -26,7 +26,7 @@
         );
 
       require('./sentry');
-      const { isDevMode } = require('./environment');
+      const { isDevMode } = require('./environment-remote');
       if (isDevMode) {
         const debugging = require('debug');
         debugging.enable(process.env.DEBUG);

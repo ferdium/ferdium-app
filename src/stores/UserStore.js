@@ -5,7 +5,7 @@ import localStorage from 'mobx-localstorage';
 import { ipcRenderer } from 'electron';
 
 import { TODOS_PARTITION_ID } from '../config';
-import { isDevMode } from '../environment';
+import { isDevMode } from '../environment-remote';
 import Store from './lib/Store';
 import Request from './lib/Request';
 import CachedRequest from './lib/CachedRequest';
