@@ -79,7 +79,7 @@ const paths = {
     ],
   },
   typescripts: {
-    src: 'src/**/*.ts',
+    src: ['src/**/*.ts', 'src/**/*.tsx'],
     dest: 'build/',
     watch: [
       'src/**/*.ts',
@@ -227,7 +227,7 @@ export function processJavascripts() {
 
 export function processTypescripts() {
   return gulp
-    .src([paths.typescripts.src], { since: gulp.lastRun(processTypescripts) })
+    .src(paths.typescripts.src, { since: gulp.lastRun(processTypescripts) })
     .pipe(tsProject())
     .js.pipe(
       babel({

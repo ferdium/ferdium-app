@@ -1,5 +1,7 @@
 export default class AppApi {
-  constructor(server) {
+  server: any;
+
+  constructor(server: any) {
     this.server = server;
   }
 

@@ -8,7 +8,8 @@ import normalizeUrl from 'normalize-url';
 import Form from '../../../lib/Form';
 import Recipe from '../../../models/Recipe';
 import Service from '../../../models/Service';
-import Tabs, { TabItem } from '../../ui/Tabs';
+import Tabs from '../../ui/Tabs/Tabs';
+import { TabItem } from '../../ui/Tabs/TabItem';
 import Input from '../../ui/Input';
 import Toggle from '../../ui/Toggle';
 import Slider from '../../ui/Slider';
@@ -262,11 +263,11 @@ class EditServiceForm extends Component {
           <span className="settings__header-item">
             {action === 'add'
               ? intl.formatMessage(messages.addServiceHeadline, {
-                name: recipe.name,
-              })
+                  name: recipe.name,
+                })
               : intl.formatMessage(messages.editServiceHeadline, {
-                name: service.name !== '' ? service.name : recipe.name,
-              })}
+                  name: service.name !== '' ? service.name : recipe.name,
+                })}
           </span>
         </div>
         <div className="settings__body">
@@ -342,11 +343,9 @@ class EditServiceForm extends Component {
                           {intl.formatMessage(messages.indirectMessageInfo)}
                         </p>
                       </>
-                  )}
+                    )}
                   {recipe.allowFavoritesDelineationInUnreadCount && (
-                    <Toggle
-                      field={form.$('onlyShowFavoritesInUnreadCount')}
-                    />
+                    <Toggle field={form.$('onlyShowFavoritesInUnreadCount')} />
                   )}
                 </div>
 

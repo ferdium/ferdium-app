@@ -5,15 +5,16 @@ const debug = require('debug')('Ferdi:feature:settingsWS');
 
 export const settingsStore = new SettingsWSStore();
 
-export default function initSettingsWebSocket(stores, actions) {
+export default function initSettingsWebSocket(
+  stores: { features: any },
+  actions: any,
+) {
   const { features } = stores;
 
   // Toggle SettingsWebSocket feature
   reaction(
-    () => (
-      features.features.isSettingsWSEnabled
-    ),
-    (isEnabled) => {
+    () => features.features.isSettingsWSEnabled,
+    isEnabled => {
       if (isEnabled) {
         debug('Initializing `settingsWS` feature');
         settingsStore.start(stores, actions);

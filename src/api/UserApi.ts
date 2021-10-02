@@ -1,12 +1,17 @@
+import { BinaryLike } from 'crypto';
 import { hash } from '../helpers/password-helpers';
 
 export default class UserApi {
-  constructor(server, local) {
+  server: any;
+
+  local: any;
+
+  constructor(server: any, local: any) {
     this.server = server;
     this.local = local;
   }
 
-  login(email, password) {
+  login(email: string, password: BinaryLike) {
     return this.server.login(email, hash(password));
   }
 
@@ -14,18 +19,18 @@ export default class UserApi {
     return this;
   }
 
-  signup(data) {
+  signup(data: { password: BinaryLike }) {
     Object.assign(data, {
       password: hash(data.password),
     });
     return this.server.signup(data);
   }
 
-  password(email) {
+  password(email: string) {
     return this.server.retrievePassword(email);
   }
 
-  invite(data) {
+  invite(data: any) {
     return this.server.inviteUser(data);
   }
 
@@ -33,7 +38,7 @@ export default class UserApi {
     return this.server.userInfo();
   }
 
-  updateInfo(data) {
+  updateInfo(data: { oldPassword: string; newPassword: string }) {
     const userData = data;
     if (userData.oldPassword && userData.newPassword) {
       userData.oldPassword = hash(userData.oldPassword);

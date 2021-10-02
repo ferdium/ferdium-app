@@ -1,5 +1,7 @@
 export default class RecipePreviewsApi {
-  constructor(server) {
+  server: any;
+
+  constructor(server: any) {
     this.server = server;
   }
 
@@ -11,7 +13,7 @@ export default class RecipePreviewsApi {
     return this.server.getFeaturedRecipePreviews();
   }
 
-  search(needle) {
+  search(needle: string) {
     return this.server.searchRecipePreviews(needle);
   }
 }

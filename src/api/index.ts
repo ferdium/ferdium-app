@@ -7,12 +7,12 @@ import LocalApi from './LocalApi';
 import NewsApi from './NewsApi';
 import FeaturesApi from './FeaturesApi';
 
-export default (server, local) => ({
-  app: new AppApi(server, local),
+export default (server: any, local: any) => ({
+  app: new AppApi(server),
   services: new ServicesApi(server, local),
-  recipePreviews: new RecipePreviewsApi(server, local),
-  recipes: new RecipesApi(server, local),
-  features: new FeaturesApi(server, local),
+  recipePreviews: new RecipePreviewsApi(server),
+  recipes: new RecipesApi(server),
+  features: new FeaturesApi(server),
   user: new UserApi(server, local),
   local: new LocalApi(server, local),
   news: new NewsApi(server, local),

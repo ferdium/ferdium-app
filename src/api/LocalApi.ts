@@ -1,14 +1,18 @@
 export default class LocalApi {
-  constructor(server, local) {
+  server: any;
+
+  local: any;
+
+  constructor(server: any, local: any) {
     this.server = server;
     this.local = local;
   }
 
-  getAppSettings(type) {
+  getAppSettings(type: any) {
     return this.local.getAppSettings(type);
   }
 
-  updateAppSettings(type, data) {
+  updateAppSettings(type: any, data: any) {
     return this.local.updateAppSettings(type, data);
   }
 

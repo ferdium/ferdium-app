@@ -1,5 +1,7 @@
 export default class RecipesApi {
-  constructor(server) {
+  server: any;
+
+  constructor(server: any) {
     this.server = server;
   }
 
@@ -7,11 +9,11 @@ export default class RecipesApi {
     return this.server.getInstalledRecipes();
   }
 
-  install(recipeId) {
+  install(recipeId: string) {
     return this.server.getRecipePackage(recipeId);
   }
 
-  update(recipes) {
+  update(recipes: any) {
     return this.server.getRecipeUpdates(recipes);
   }
 }

@@ -1,5 +1,9 @@
 export default class NewsApi {
-  constructor(server, local) {
+  server: any;
+
+  local: any;
+
+  constructor(server: any, local: any) {
     this.server = server;
     this.local = local;
   }
@@ -8,7 +12,7 @@ export default class NewsApi {
     return this.server.getLatestNews();
   }
 
-  hide(id) {
+  hide(id: any) {
     return this.server.hideNews(id);
   }
 }

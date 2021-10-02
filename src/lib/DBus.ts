@@ -1,10 +1,12 @@
-import { sessionBus } from 'dbus-next';
+import { MessageBus, sessionBus } from 'dbus-next';
 import { isLinux } from '../environment';
 
 export default class DBus {
-  bus = null;
+  bus: MessageBus | null = null;
 
-  constructor(trayIcon) {
+  trayIcon: any;
+
+  constructor(trayIcon: any) {
     this.trayIcon = trayIcon;
   }
 
@@ -19,15 +21,23 @@ export default class DBus {
     }
 
     // HACK Hook onto the MessageBus to track StatusNotifierWatchers
-    this.bus._addMatch("type='signal',sender='org.freedesktop.DBus',interface='org.freedesktop.DBus',path='/org/freedesktop/DBus',member='NameOwnerChanged'");
+    // @ts-expect-error Property '_addMatch' does not exist on type 'MessageBus'.
+    this.bus._addMatch(
+      "type='signal',sender='org.freedesktop.DBus',interface='org.freedesktop.DBus',path='/org/freedesktop/DBus',member='NameOwnerChanged'",
+    );
     const mangled = JSON.stringify({
       path: '/org/freedesktop/DBus',
       interface: 'org.freedesktop.DBus',
       member: 'NameOwnerChanged',
     });
-    this.bus._signals.on(mangled, (msg) => {
+    // @ts-expect-error Property '_signals' does not exist on type 'MessageBus'.
+    this.bus._signals.on(mangled, (msg: { body: [any, any, any] }) => {
       const [name, oldOwner, newOwner] = msg.body;
-      if (name === 'org.kde.StatusNotifierWatcher' && oldOwner !== newOwner && newOwner !== '') {
+      if (
+        name === 'org.kde.StatusNotifierWatcher' &&
+        oldOwner !== newOwner &&
+        newOwner !== ''
+      ) {
         // Leave ample time for the StatusNotifierWatcher to be initialized
         setTimeout(() => {
           this.trayIcon.recreateIfVisible();

@@ -15,6 +15,7 @@ export const prepareAuthRequest = (
       'X-Franz-platform': process.platform,
       'X-Franz-Timezone-Offset': new Date().getTimezoneOffset(),
       'X-Franz-System-Locale': ferdiLocale,
+      // @ts-expect-error Property 'headers' does not exist on type '{ method: string; }'.
       ...options.headers,
     },
   });
@@ -28,5 +29,10 @@ export const prepareAuthRequest = (
   return request;
 };
 
-export const sendAuthRequest = (url, options, auth) =>
+export const sendAuthRequest = (
+  url: RequestInfo,
+  options: { method: string } | undefined,
+  auth?: boolean,
+) =>
+  // @ts-expect-error Argument of type '{ method: string; } & { mode: string; headers: any; }' is not assignable to parameter of type 'RequestInit | undefined'.
   window.fetch(url, prepareAuthRequest(options, auth));
