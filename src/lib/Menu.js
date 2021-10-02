@@ -404,14 +404,14 @@ const _titleBarTemplateFactory = (intl, locked) => [
       },
       {
         label: intl.formatMessage(menuItems.back),
-        accelerator: `${cmdOrCtrlShortcutKey()}+Left`,
+        accelerator: `${!isMac ? altKey() : cmdOrCtrlShortcutKey()}+Left`,
         click() {
           getActiveService().webview.goBack();
         },
       },
       {
         label: intl.formatMessage(menuItems.forward),
-        accelerator: `${cmdOrCtrlShortcutKey()}+Right`,
+        accelerator: `${!isMac ? altKey() : cmdOrCtrlShortcutKey()}+Right`,
         click() {
           getActiveService().webview.goForward();
         },
