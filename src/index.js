@@ -5,10 +5,11 @@ import { app, BrowserWindow, ipcMain, session, dialog } from 'electron';
 import { emptyDirSync, ensureFileSync } from 'fs-extra';
 import { join } from 'path';
 import windowStateKeeper from 'electron-window-state';
-import { enforceMacOSAppLocation } from 'electron-util';
 import ms from 'ms';
+import { initializeRemote } from './electron-util';
+import { enforceMacOSAppLocation } from './enforce-macos-app-location';
 
-require('@electron/remote/main').initialize();
+initializeRemote();
 
 import { DEFAULT_APP_SETTINGS, DEFAULT_WINDOW_OPTIONS } from './config';
 

@@ -1,6 +1,6 @@
 import { join } from 'path';
 import osName from 'os-name';
-import { api as electronApi } from 'electron-util';
+import { api as electronApi } from './electron-util';
 import {
   LIVE_FERDI_API,
   DEV_FRANZ_API,
