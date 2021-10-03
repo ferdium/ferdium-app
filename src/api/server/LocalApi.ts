@@ -7,7 +7,7 @@ const debug = require('debug')('Ferdi:LocalApi');
 
 export default class LocalApi {
   // Settings
-  getAppSettings(type: any) {
+  getAppSettings(type: string) {
     return new Promise(resolve => {
       ipcRenderer.once('appSettings', (_event, resp) => {
         debug('LocalApi::getAppSettings resolves', resp.type, resp.data);
@@ -18,7 +18,7 @@ export default class LocalApi {
     });
   }
 
-  async updateAppSettings(type: any, data: any) {
+  async updateAppSettings(type: string, data: any) {
     debug('LocalApi::updateAppSettings resolves', type, data);
     ipcRenderer.send('updateAppSettings', {
       type,

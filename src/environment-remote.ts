@@ -44,7 +44,7 @@ export function userDataPath(...segments: string[]) {
   return join(app.getPath('userData'), ...[segments].flat());
 }
 
-export function userDataRecipesPath(...segments: any[]) {
+export function userDataRecipesPath(...segments: string[]) {
   return userDataPath('recipes', ...[segments].flat());
 }
 

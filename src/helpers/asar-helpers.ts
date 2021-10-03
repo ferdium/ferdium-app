@@ -5,6 +5,6 @@ export function asarPath(dir: string = '') {
 }
 
 // Replacing app.asar is not beautiful but unfortunately necessary
-export function asarRecipesPath(...segments: any[]) {
+export function asarRecipesPath(...segments: string[]) {
   return join(asarPath(join(__dirname, '..', 'recipes')), ...[segments].flat());
 }

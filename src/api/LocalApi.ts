@@ -8,11 +8,11 @@ export default class LocalApi {
     this.local = local;
   }
 
-  getAppSettings(type: any) {
+  getAppSettings(type: string) {
     return this.local.getAppSettings(type);
   }
 
-  updateAppSettings(type: any, data: any) {
+  updateAppSettings(type: string, data: any) {
     return this.local.updateAppSettings(type, data);
   }
 
