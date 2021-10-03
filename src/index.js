@@ -1,6 +1,6 @@
 /* eslint-disable import/first */
 
-import { app, BrowserWindow, ipcMain, session, dialog } from 'electron';
+import { app, BrowserWindow, globalShortcut, ipcMain, session, dialog } from 'electron';
 
 import { emptyDirSync, ensureFileSync } from 'fs-extra';
 import { join } from 'path';
@@ -17,6 +17,7 @@ import {
   isMac,
   isWindows,
   isLinux,
+  altKey,
 } from './environment';
 import {
   isDevMode,
@@ -360,6 +361,13 @@ const createWindow = () => {
   } else {
     mainWindow.show();
   }
+
+  app.whenReady().then(() => {
+    // Toggle the window on 'Alt+X'
+    globalShortcut.register(`${altKey()}+X`, () => {
+      trayIcon.trayMenuTemplate[0].click();
+    });
+  });
 };
 
 // Allow passing command line parameters/switches to electron
