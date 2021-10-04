@@ -630,7 +630,7 @@ class FranzMenu {
         },
       );
 
-      if (this.stores.features.features.isTodosEnabled) {
+      if (this.stores.todos.isFeatureEnabledByUser) {
         tpl[1].submenu.push({
           label: intl.formatMessage(menuItems.toggleTodosDevTools),
           accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+${altKey()}+O`,
