@@ -43,11 +43,6 @@ import userAgent from './helpers/userAgent-helpers';
 
 const debug = require('debug')('Ferdi:App');
 
-// From Electron 9 onwards, app.allowRendererProcessReuse = true by default. This causes the app to crash on Windows due to the
-// Electron Windows Notification API crashing. Setting this to false fixes the issue until the electron team fixes the notification bug
-// More Info - https://github.com/electron/electron/issues/18397
-app.allowRendererProcessReuse = false;
-
 // Globally set useragent to fix user agent override in service workers
 debug('Set userAgent to ', userAgent());
 app.userAgentFallback = userAgent();
@@ -411,30 +406,35 @@ app.on('ready', () => {
   }
 
   if (isWindows) {
-    app.setUserTasks([
-      {
-        program: process.execPath,
-        arguments: `${isDevMode ? `${__dirname} ` : ''}--reset-window`,
-        iconPath: asarPath(
+    const extraArgs = isDevMode ? `${__dirname} ` : '';
+    const iconPath = asarPath(
           join(
             isDevMode ? `${__dirname}../src/` : __dirname,
             'assets/images/taskbar/win32/display.ico',
           ),
-        ),
+        );
+    app.setUserTasks([
+      {
+        program: process.execPath,
+        arguments: `${extraArgs}--reset-window`,
+        iconPath,
         iconIndex: 0,
         title: 'Move Ferdi to Current Display',
         description: 'Restore the position and size of Ferdi',
       },
       {
         program: process.execPath,
-        arguments: `${isDevMode ? `${__dirname} ` : ''}--quit`,
+        arguments: `${extraArgs}--quit`,
+        iconPath,
         iconIndex: 0,
-        iconPath: null,
         title: 'Quit Ferdi',
         description: null,
       },
     ]);
   }
+
+  // eslint-disable-next-line global-require
+  require('electron-react-titlebar/main').initialize();
 
   createWindow();
 });
