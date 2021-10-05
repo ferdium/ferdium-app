@@ -6,7 +6,7 @@ import { defineMessages, injectIntl } from 'react-intl';
 import { H1, Icon } from '@meetfranz/ui';
 import ReactTooltip from 'react-tooltip';
 
-import { mdiPlusBox, mdiSettings } from '@mdi/js';
+import { mdiPlusBox, mdiCog } from '@mdi/js';
 import WorkspaceDrawerItem from './WorkspaceDrawerItem';
 import { workspaceActions } from '../actions';
 import { workspaceStore } from '../index';
@@ -26,7 +26,8 @@ const messages = defineMessages({
   },
   workspaceFeatureInfo: {
     id: 'workspaceDrawer.workspaceFeatureInfo',
-    defaultMessage: '<p>Ferdi Workspaces let you focus on what’s important right now. Set up different sets of services and easily switch between them at any time.</p><p>You decide which services you need when and where, so we can help you stay on top of your game - or easily switch off from work whenever you want.</p>',
+    defaultMessage:
+      '<p>Ferdi Workspaces let you focus on what’s important right now. Set up different sets of services and easily switch between them at any time.</p><p>You decide which services you need when and where, so we can help you stay on top of your game - or easily switch off from work whenever you want.</p>',
   },
   addNewWorkspaceLabel: {
     id: 'workspaceDrawer.addNewWorkspaceLabel',
@@ -119,7 +120,7 @@ class WorkspaceDrawer extends Component {
             )}`}
           >
             <Icon
-              icon={mdiSettings}
+              icon={mdiCog}
               size={1.5}
               className={classes.workspacesSettingsButtonIcon}
             />
