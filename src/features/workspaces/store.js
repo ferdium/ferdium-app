@@ -190,6 +190,12 @@ export default class WorkspacesStore extends FeatureStore {
     setTimeout(() => {
       this.isSwitchingWorkspace = false;
       this.nextWorkspace = null;
+      if (this.stores.settings.app.splitMode) {
+        const serviceNames = new Set(this.getWorkspaceServices(workspace).map(service => service.name));
+        for (const wrapper of document.querySelectorAll('.services__webview-wrapper')) {
+          wrapper.style.display = serviceNames.has(wrapper.dataset.name) ? '' : 'none';
+        }
+      }
     }, 1000);
   };
 
@@ -205,6 +211,11 @@ export default class WorkspacesStore extends FeatureStore {
     // Indicate that we are done switching to the default workspace
     setTimeout(() => {
       this.isSwitchingWorkspace = false;
+      if (this.stores.settings.app.splitMode) {
+        for (const wrapper of document.querySelectorAll('.services__webview-wrapper')) {
+          wrapper.style.display = '';
+        }
+      }
     }, 1000);
   };
 
@@ -302,8 +313,8 @@ export default class WorkspacesStore extends FeatureStore {
     const { allServicesRequest } = services;
     const servicesHaveBeenLoaded = allServicesRequest.wasExecuted && !allServicesRequest.isError;
     // Loop through all workspaces and remove invalid service ids (locally)
-    this.workspaces.forEach((workspace) => {
-      workspace.services.forEach((serviceId) => {
+    for (const workspace of this.workspaces) {
+      for (const serviceId of workspace.services) {
         if (
           servicesHaveBeenLoaded
           && !services.one(serviceId)
@@ -311,7 +322,7 @@ export default class WorkspacesStore extends FeatureStore {
         ) {
           workspace.services.remove(serviceId);
         }
-      });
-    });
+      }
+    }
   };
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer, PropTypes as MobxPropTypes, inject } from 'mobx-react';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 import injectSheet from 'react-jss';
 import { Infobox } from '@meetfranz/ui';
 
@@ -16,35 +16,35 @@ import UIStore from '../../../stores/UIStore';
 const messages = defineMessages({
   headline: {
     id: 'settings.workspaces.headline',
-    defaultMessage: '!!!Your workspaces',
+    defaultMessage: 'Your workspaces',
   },
   noServicesAdded: {
     id: 'settings.workspaces.noWorkspacesAdded',
-    defaultMessage: "!!!You haven't created any workspaces yet.",
+    defaultMessage: "You haven't created any workspaces yet.",
   },
   workspacesRequestFailed: {
     id: 'settings.workspaces.workspacesRequestFailed',
-    defaultMessage: '!!!Could not load your workspaces',
+    defaultMessage: 'Could not load your workspaces',
   },
   tryReloadWorkspaces: {
     id: 'settings.workspaces.tryReloadWorkspaces',
-    defaultMessage: '!!!Try again',
+    defaultMessage: 'Try again',
   },
   updatedInfo: {
     id: 'settings.workspaces.updatedInfo',
-    defaultMessage: '!!!Your changes have been saved',
+    defaultMessage: 'Your changes have been saved',
   },
   deletedInfo: {
     id: 'settings.workspaces.deletedInfo',
-    defaultMessage: '!!!Workspace has been deleted',
+    defaultMessage: 'Workspace has been deleted',
   },
   workspaceFeatureInfo: {
     id: 'settings.workspaces.workspaceFeatureInfo',
-    defaultMessage: '!!!Info about workspace feature',
+    defaultMessage: 'Ferdi Workspaces let you focus on what’s important right now. Set up different sets of services and easily switch between them at any time. You decide which services you need when and where, so we can help you stay on top of your game - or easily switch off from work whenever you want.',
   },
   workspaceFeatureHeadline: {
     id: 'settings.workspaces.workspaceFeatureHeadline',
-    defaultMessage: '!!!Less is More: Introducing Ferdi Workspaces',
+    defaultMessage: 'Less is More: Introducing Ferdi Workspaces',
   },
 });
 
@@ -83,10 +83,6 @@ class WorkspacesDashboard extends Component {
     workspaces: MobxPropTypes.arrayOrObservableArray.isRequired,
   };
 
-  static contextTypes = {
-    intl: intlShape,
-  };
-
   render() {
     const {
       classes,
@@ -99,7 +95,7 @@ class WorkspacesDashboard extends Component {
       workspaces,
     } = this.props;
 
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     return (
       <div className="settings__main">
@@ -193,7 +189,7 @@ class WorkspacesDashboard extends Component {
   }
 }
 
-export default WorkspacesDashboard;
+export default injectIntl(WorkspacesDashboard);
 
 WorkspacesDashboard.wrappedComponent.propTypes = {
   stores: PropTypes.shape({

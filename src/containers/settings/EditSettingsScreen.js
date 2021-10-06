@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 
 import AppStore from '../../stores/AppStore';
 import SettingsStore from '../../stores/SettingsStore';
@@ -10,10 +10,18 @@ import TodosStore from '../../features/todos/store';
 import Form from '../../lib/Form';
 import { APP_LOCALES, SPELLCHECKER_LOCALES } from '../../i18n/languages';
 import {
-  HIBERNATION_STRATEGIES, SIDEBAR_WIDTH, ICON_SIZES, NAVIGATION_BAR_BEHAVIOURS, SEARCH_ENGINE_NAMES, TODO_APPS,
-  DEFAULT_SETTING_KEEP_ALL_WORKSPACES_LOADED, DEFAULT_IS_FEATURE_ENABLED_BY_USER, WAKE_UP_STRATEGIES,
+  DEFAULT_APP_SETTINGS,
+  HIBERNATION_STRATEGIES,
+  SIDEBAR_WIDTH,
+  ICON_SIZES,
+  NAVIGATION_BAR_BEHAVIOURS,
+  SEARCH_ENGINE_NAMES,
+  TODO_APPS,
+  DEFAULT_SETTING_KEEP_ALL_WORKSPACES_LOADED,
+  DEFAULT_IS_FEATURE_ENABLED_BY_USER,
+  WAKE_UP_STRATEGIES,
 } from '../../config';
-import { DEFAULT_APP_SETTINGS, isMac } from '../../environment';
+import { isMac } from '../../environment';
 
 import { getSelectOptions } from '../../helpers/i18n-helpers';
 import { hash } from '../../helpers/password-helpers';
@@ -31,195 +39,197 @@ const debug = require('debug')('Ferdi:EditSettingsScreen');
 const messages = defineMessages({
   autoLaunchOnStart: {
     id: 'settings.app.form.autoLaunchOnStart',
-    defaultMessage: '!!!Launch Ferdi on start',
+    defaultMessage: 'Launch Ferdi on start',
   },
   autoLaunchInBackground: {
     id: 'settings.app.form.autoLaunchInBackground',
-    defaultMessage: '!!!Open in background',
+    defaultMessage: 'Open in background',
   },
   runInBackground: {
     id: 'settings.app.form.runInBackground',
-    defaultMessage: '!!!Keep Ferdi in background when closing the window',
+    defaultMessage: 'Keep Ferdi in background when closing the window',
   },
   startMinimized: {
     id: 'settings.app.form.startMinimized',
-    defaultMessage: '!!!Start minimized',
+    defaultMessage: 'Start minimized',
   },
   confirmOnQuit: {
     id: 'settings.app.form.confirmOnQuit',
-    defaultMessage: '!!!Confirm when quitting Ferdi',
+    defaultMessage: 'Confirm when quitting Ferdi',
   },
   enableSystemTray: {
     id: 'settings.app.form.enableSystemTray',
-    defaultMessage: '!!!Always show Ferdi in System Tray',
+    defaultMessage: 'Always show Ferdi in System Tray',
   },
   enableMenuBar: {
     id: 'settings.app.form.enableMenuBar',
-    defaultMessage: '!!!Always show Ferdi in Menu Bar',
+    defaultMessage: 'Always show Ferdi in Menu Bar',
   },
   reloadAfterResume: {
     id: 'settings.app.form.reloadAfterResume',
-    defaultMessage: '!!!Reload Ferdi after system resume',
+    defaultMessage: 'Reload Ferdi after system resume',
   },
   minimizeToSystemTray: {
     id: 'settings.app.form.minimizeToSystemTray',
-    defaultMessage: '!!!Minimize Ferdi to system tray',
+    defaultMessage: 'Minimize Ferdi to system tray',
   },
   closeToSystemTray: {
     id: 'settings.app.form.closeToSystemTray',
-    defaultMessage: '!!!Close Ferdi to system tray',
+    defaultMessage: 'Close Ferdi to system tray',
   },
   privateNotifications: {
     id: 'settings.app.form.privateNotifications',
-    defaultMessage: '!!!Don\'t show message content in notifications',
+    defaultMessage: "Don't show message content in notifications",
   },
   clipboardNotifications: {
     id: 'settings.app.form.clipboardNotifications',
-    defaultMessage: '!!!Don\'t show notifications for clipboard events',
+    defaultMessage: "Don't show notifications for clipboard events",
   },
   notifyTaskBarOnMessage: {
     id: 'settings.app.form.notifyTaskBarOnMessage',
-    defaultMessage: '!!!Notify TaskBar/Dock on new message',
+    defaultMessage: 'Notify TaskBar/Dock on new message',
   },
   navigationBarBehaviour: {
     id: 'settings.app.form.navigationBarBehaviour',
-    defaultMessage: '!!!Navigation bar behaviour',
+    defaultMessage: 'Navigation bar behaviour',
   },
   searchEngine: {
     id: 'settings.app.form.searchEngine',
-    defaultMessage: '!!!Search engine',
+    defaultMessage: 'Search engine',
   },
   sentry: {
     id: 'settings.app.form.sentry',
-    defaultMessage: '!!!Send telemetry data',
+    defaultMessage: 'Send telemetry data',
   },
   hibernateOnStartup: {
     id: 'settings.app.form.hibernateOnStartup',
-    defaultMessage: '!!!Keep services in hibernation on startup',
+    defaultMessage: 'Keep services in hibernation on startup',
   },
   hibernationStrategy: {
     id: 'settings.app.form.hibernationStrategy',
-    defaultMessage: '!!!Hibernation strategy',
+    defaultMessage: 'Hibernation strategy',
   },
   wakeUpStrategy: {
     id: 'settings.app.form.wakeUpStrategy',
-    defaultMessage: '!!!Wake up strategy',
+    defaultMessage: 'Wake up strategy',
   },
   predefinedTodoServer: {
     id: 'settings.app.form.predefinedTodoServer',
-    defaultMessage: '!!!Todo Server',
+    defaultMessage: 'Todo Server',
   },
   customTodoServer: {
     id: 'settings.app.form.customTodoServer',
-    defaultMessage: '!!!Custom TodoServer',
+    defaultMessage: 'Custom Todo Server',
   },
   enableLock: {
     id: 'settings.app.form.enableLock',
-    defaultMessage: '!!!Enable Password Lock',
+    defaultMessage: 'Enable Password Lock',
   },
   lockPassword: {
     id: 'settings.app.form.lockPassword',
-    defaultMessage: '!!!Password',
+    defaultMessage: 'Password',
   },
   useTouchIdToUnlock: {
     id: 'settings.app.form.useTouchIdToUnlock',
-    defaultMessage: '!!!Allow using Touch ID to unlock',
+    defaultMessage: 'Allow using TouchID to unlock Ferdi',
   },
   inactivityLock: {
     id: 'settings.app.form.inactivityLock',
-    defaultMessage: '!!!Lock after inactivity',
+    defaultMessage: 'Lock after inactivity',
   },
   scheduledDNDEnabled: {
     id: 'settings.app.form.scheduledDNDEnabled',
-    defaultMessage: '!!!Enable scheduled Do-not-Disturb',
+    defaultMessage: 'Enable scheduled Do-not-Disturb',
   },
   scheduledDNDStart: {
     id: 'settings.app.form.scheduledDNDStart',
-    defaultMessage: '!!!From',
+    defaultMessage: 'From',
   },
   scheduledDNDEnd: {
     id: 'settings.app.form.scheduledDNDEnd',
-    defaultMessage: '!!!To',
+    defaultMessage: 'To',
   },
   language: {
     id: 'settings.app.form.language',
-    defaultMessage: '!!!Language',
+    defaultMessage: 'Language',
   },
   darkMode: {
     id: 'settings.app.form.darkMode',
-    defaultMessage: '!!!Dark Mode',
+    defaultMessage: 'Enable Dark Mode',
   },
   adaptableDarkMode: {
     id: 'settings.app.form.adaptableDarkMode',
-    defaultMessage: '!!!Synchronize dark mode with my OS\'s dark mode setting',
+    defaultMessage: "Synchronize dark mode with my OS's dark mode setting",
   },
   universalDarkMode: {
     id: 'settings.app.form.universalDarkMode',
-    defaultMessage: '!!!Enable universal Dark Mode',
+    defaultMessage: 'Enable universal Dark Mode',
+  },
+  splitMode: {
+    id: 'settings.app.form.splitMode',
+    defaultMessage: 'Enable Split View Mode',
   },
   serviceRibbonWidth: {
     id: 'settings.app.form.serviceRibbonWidth',
-    defaultMessage: '!!!Sidebar width',
+    defaultMessage: 'Sidebar width',
   },
   iconSize: {
     id: 'settings.app.form.iconSize',
-    defaultMessage: '!!!Service icon size',
+    defaultMessage: 'Service icon size',
   },
   useVerticalStyle: {
     id: 'settings.app.form.useVerticalStyle',
-    defaultMessage: '!!!Use horizontal style',
+    defaultMessage: 'Use horizontal style',
   },
   alwaysShowWorkspaces: {
     id: 'settings.app.form.alwaysShowWorkspaces',
-    defaultMessage: '!!!Always show workspace drawer',
+    defaultMessage: 'Always show workspace drawer',
   },
   accentColor: {
     id: 'settings.app.form.accentColor',
-    defaultMessage: '!!!Accent color',
+    defaultMessage: 'Accent color',
   },
   showDisabledServices: {
     id: 'settings.app.form.showDisabledServices',
-    defaultMessage: '!!!Display disabled services tabs',
+    defaultMessage: 'Display disabled services tabs',
   },
   showMessageBadgeWhenMuted: {
     id: 'settings.app.form.showMessagesBadgesWhenMuted',
-    defaultMessage: '!!!Show unread message badge when notifications are disabled',
+    defaultMessage: 'Show unread message badge when notifications are disabled',
   },
   showDragArea: {
     id: 'settings.app.form.showDragArea',
-    defaultMessage: '!!!Show draggable area on window',
+    defaultMessage: 'Show draggable area on window',
   },
   enableSpellchecking: {
     id: 'settings.app.form.enableSpellchecking',
-    defaultMessage: '!!!Enable spell checking',
+    defaultMessage: 'Enable spell checking',
   },
   enableGPUAcceleration: {
     id: 'settings.app.form.enableGPUAcceleration',
-    defaultMessage: '!!!Enable GPU Acceleration',
+    defaultMessage: 'Enable GPU Acceleration',
   },
   beta: {
     id: 'settings.app.form.beta',
-    defaultMessage: '!!!Include beta versions',
+    defaultMessage: 'Include beta versions',
   },
   automaticUpdates: {
     id: 'settings.app.form.automaticUpdates',
-    defaultMessage: '!!!Enable updates',
+    defaultMessage: 'Enable updates',
   },
   enableTodos: {
     id: 'settings.app.form.enableTodos',
-    defaultMessage: '!!!Enable Franz Todos',
+    defaultMessage: 'Enable Ferdi Todos',
   },
   keepAllWorkspacesLoaded: {
     id: 'settings.app.form.keepAllWorkspacesLoaded',
-    defaultMessage: '!!!Keep all workspaces loaded',
+    defaultMessage: 'Keep all workspaces loaded',
   },
 });
 
-export default @inject('stores', 'actions') @observer class EditSettingsScreen extends Component {
-  static contextTypes = {
-    intl: intlShape,
-  };
-
+@inject('stores', 'actions')
+@observer
+class EditSettingsScreen extends Component {
   constructor(props) {
     super(props);
 
@@ -283,12 +293,15 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
         darkMode: Boolean(settingsData.darkMode),
         adaptableDarkMode: Boolean(settingsData.adaptableDarkMode),
         universalDarkMode: Boolean(settingsData.universalDarkMode),
+        splitMode: Boolean(settingsData.splitMode),
         serviceRibbonWidth: Number(settingsData.serviceRibbonWidth),
         iconSize: Number(settingsData.iconSize),
         useVerticalStyle: Boolean(settingsData.useVerticalStyle),
         alwaysShowWorkspaces: Boolean(settingsData.alwaysShowWorkspaces),
         accentColor: settingsData.accentColor,
-        showMessageBadgeWhenMuted: Boolean(settingsData.showMessageBadgeWhenMuted),
+        showMessageBadgeWhenMuted: Boolean(
+          settingsData.showMessageBadgeWhenMuted,
+        ),
         showDragArea: Boolean(settingsData.showDragArea),
         enableSpellchecking: Boolean(settingsData.enableSpellchecking),
         spellcheckerLanguage: settingsData.spellcheckerLanguage,
@@ -309,24 +322,27 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
 
     if (workspaces.isFeatureActive) {
       const { keepAllWorkspacesLoaded } = workspaces.settings;
-      if (Boolean(keepAllWorkspacesLoaded) !== Boolean(settingsData.keepAllWorkspacesLoaded)) {
+      if (
+        Boolean(keepAllWorkspacesLoaded) !==
+        Boolean(settingsData.keepAllWorkspacesLoaded)
+      ) {
         workspaceActions.toggleKeepAllWorkspacesLoadedSetting();
       }
     }
 
     if (todos.isFeatureActive) {
       const { isFeatureEnabledByUser } = todos.settings;
-      if (Boolean(isFeatureEnabledByUser) !== Boolean(settingsData.enableTodos)) {
+      if (
+        Boolean(isFeatureEnabledByUser) !== Boolean(settingsData.enableTodos)
+      ) {
         todosActions.toggleTodosFeatureVisibility();
       }
     }
   }
 
   prepareForm() {
-    const {
-      app, settings, user, todos, workspaces,
-    } = this.props.stores;
-    const { intl } = this.context;
+    const { app, settings, user, todos, workspaces } = this.props.stores;
+    const { intl } = this.props;
     const { lockedPassword } = this.state;
 
     const locales = getSelectOptions({
@@ -370,7 +386,9 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
 
     const spellcheckingLanguages = getSelectOptions({
       locales: SPELLCHECKER_LOCALES,
-      automaticDetectionText: this.context.intl.formatMessage(globalMessages.spellcheckerAutomaticDetection),
+      automaticDetectionText: intl.formatMessage(
+        globalMessages.spellcheckerAutomaticDetection,
+      ),
     });
 
     const config = {
@@ -401,7 +419,9 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           default: DEFAULT_APP_SETTINGS.confirmOnQuit,
         },
         enableSystemTray: {
-          label: intl.formatMessage(isMac ? messages.enableMenuBar : messages.enableSystemTray),
+          label: intl.formatMessage(
+            isMac ? messages.enableMenuBar : messages.enableSystemTray,
+          ),
           value: settings.all.app.enableSystemTray,
           default: DEFAULT_APP_SETTINGS.enableSystemTray,
         },
@@ -566,6 +586,11 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           value: settings.all.app.universalDarkMode,
           default: DEFAULT_APP_SETTINGS.universalDarkMode,
         },
+        splitMode: {
+          label: intl.formatMessage(messages.splitMode),
+          value: settings.all.app.splitMode,
+          default: DEFAULT_APP_SETTINGS.splitMode,
+        },
         serviceRibbonWidth: {
           label: intl.formatMessage(messages.serviceRibbonWidth),
           value: settings.all.app.serviceRibbonWidth,
@@ -637,23 +662,15 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
   }
 
   render() {
-    const {
-      app,
-      todos,
-      workspaces,
-      services,
-    } = this.props.stores;
+    const { app, todos, workspaces, services } = this.props.stores;
     const {
       updateStatus,
       updateStatusTypes,
       isClearingAllCache,
       lockingFeatureEnabled,
     } = app;
-    const {
-      checkForUpdates,
-      installUpdate,
-      clearAllCache,
-    } = this.props.actions.app;
+    const { checkForUpdates, installUpdate, clearAllCache } =
+      this.props.actions.app;
     const form = this.prepareForm();
 
     return (
@@ -666,7 +683,7 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           isUpdateAvailable={updateStatus === updateStatusTypes.AVAILABLE}
           noUpdateAvailable={updateStatus === updateStatusTypes.NOT_AVAILABLE}
           updateIsReadyToInstall={updateStatus === updateStatusTypes.DOWNLOADED}
-          onSubmit={(d) => this.onSubmit(d)}
+          onSubmit={d => this.onSubmit(d)}
           getCacheSize={() => app.cacheSize}
           isClearingAllCache={isClearingAllCache}
           onClearAllCache={clearAllCache}
@@ -675,9 +692,13 @@ export default @inject('stores', 'actions') @observer class EditSettingsScreen e
           lockingFeatureEnabled={lockingFeatureEnabled}
           automaticUpdates={this.props.stores.settings.app.automaticUpdates}
           isDarkmodeEnabled={this.props.stores.settings.app.darkMode}
-          isAdaptableDarkModeEnabled={this.props.stores.settings.app.adaptableDarkMode}
+          isAdaptableDarkModeEnabled={
+            this.props.stores.settings.app.adaptableDarkMode
+          }
           isTodosActivated={this.props.stores.todos.isFeatureEnabledByUser}
-          isUsingCustomTodoService={this.props.stores.todos.isUsingCustomTodoService}
+          isUsingCustomTodoService={
+            this.props.stores.todos.isUsingCustomTodoService
+          }
           isNightlyEnabled={this.props.stores.settings.app.nightly}
           hasAddedTodosAsService={services.isTodosServiceAdded}
           isOnline={app.isOnline}
@@ -704,3 +725,5 @@ EditSettingsScreen.wrappedComponent.propTypes = {
     workspaces: PropTypes.instanceOf(WorkspacesStore).isRequired,
   }).isRequired,
 };
+
+export default injectIntl(EditSettingsScreen);

@@ -1,31 +1,30 @@
 /* eslint-disable import/first */
 
-import { app, BrowserWindow, ipcMain, session, dialog } from 'electron';
+import { app, BrowserWindow, globalShortcut, ipcMain, session, dialog } from 'electron';
 
 import { emptyDirSync, ensureFileSync } from 'fs-extra';
 import { join } from 'path';
 import windowStateKeeper from 'electron-window-state';
-import { enforceMacOSAppLocation } from 'electron-util';
 import ms from 'ms';
+import { initializeRemote } from './electron-util';
+import { enforceMacOSAppLocation } from './enforce-macos-app-location';
 
-require('@electron/remote/main').initialize();
+initializeRemote();
 
-import osName from 'os-name';
-import { DEFAULT_WINDOW_OPTIONS } from './config';
+import { DEFAULT_APP_SETTINGS, DEFAULT_WINDOW_OPTIONS } from './config';
 
 import {
-  DEFAULT_APP_SETTINGS,
-  isDevMode,
   isMac,
   isWindows,
   isLinux,
+  altKey,
+} from './environment';
+import {
+  isDevMode,
+  aboutAppDetails,
   userDataRecipesPath,
   userDataPath,
-  ferdiVersion,
-  electronVersion,
-  chromeVersion,
-  nodeVersion,
-} from './environment';
+} from './environment-remote';
 import { ifUndefinedBoolean } from './jsUtils';
 
 import { mainIpcHandler as basicAuthHandler } from './features/basicAuth';
@@ -41,14 +40,8 @@ import './electron/exception';
 import { asarPath } from './helpers/asar-helpers';
 import { openExternalUrl } from './helpers/url-helpers';
 import userAgent from './helpers/userAgent-helpers';
-import * as buildInfo from './buildInfo.json'; // eslint-disable-line import/no-unresolved
 
 const debug = require('debug')('Ferdi:App');
-
-// From Electron 9 onwards, app.allowRendererProcessReuse = true by default. This causes the app to crash on Windows due to the
-// Electron Windows Notification API crashing. Setting this to false fixes the issue until the electron team fixes the notification bug
-// More Info - https://github.com/electron/electron/issues/18397
-app.allowRendererProcessReuse = false;
 
 // Globally set useragent to fix user agent override in service workers
 debug('Set userAgent to ', userAgent());
@@ -83,14 +76,18 @@ if (isWindows) {
 const settings = new Settings('app', DEFAULT_APP_SETTINGS);
 const proxySettings = new Settings('proxy');
 
-const retrieveSettingValue = (key, defaultValue = true) => ifUndefinedBoolean(settings.get(key), defaultValue);
+const retrieveSettingValue = (key, defaultValue = true) =>
+  ifUndefinedBoolean(settings.get(key), defaultValue);
 
 if (retrieveSettingValue('sentry')) {
   // eslint-disable-next-line global-require
   require('./sentry');
 }
 
-const liftSingleInstanceLock = retrieveSettingValue('liftSingleInstanceLock', false);
+const liftSingleInstanceLock = retrieveSettingValue(
+  'liftSingleInstanceLock',
+  false,
+);
 
 // Force single window
 const gotTheLock = liftSingleInstanceLock
@@ -148,7 +145,7 @@ if (!gotTheLock) {
 // https://github.com/electron/electron/issues/9046
 if (
   isLinux &&
-  ['Pantheon', 'Unity:Unity7'].indexOf(process.env.XDG_CURRENT_DESKTOP) !== -1
+  ['Pantheon', 'Unity:Unity7'].includes(process.env.XDG_CURRENT_DESKTOP)
 ) {
   process.env.XDG_CURRENT_DESKTOP = 'Unity';
 }
@@ -160,17 +157,7 @@ if (!retrieveSettingValue('enableGPUAcceleration', false)) {
 }
 
 app.setAboutPanelOptions({
-  applicationVersion: [
-    `Version: ${ferdiVersion}`,
-    `Electron: ${electronVersion}`,
-    `Chrome: ${chromeVersion}`,
-    `Node.js: ${nodeVersion}`,
-    `Platform: ${osName()}`,
-    `Arch: ${process.arch}`,
-    `Build date: ${new Date(Number(buildInfo.timestamp))}`,
-    `Git SHA: ${buildInfo.gitHashShort}`,
-    `Git branch: ${buildInfo.gitBranch}`,
-  ].join('\n'),
+  applicationVersion: aboutAppDetails(),
   version: '',
 });
 
@@ -205,11 +192,11 @@ const createWindow = () => {
     minWidth: 600,
     minHeight: 500,
     show: false,
-    titleBarStyle: isMac ? 'hidden' : '',
+    titleBarStyle: isMac ? 'hidden' : 'default',
     frame: isLinux,
-    spellcheck: retrieveSettingValue('enableSpellchecking'),
     backgroundColor,
     webPreferences: {
+      spellcheck: retrieveSettingValue('enableSpellchecking'),
       nodeIntegration: true,
       contextIsolation: false,
       webviewTag: true,
@@ -283,10 +270,7 @@ const createWindow = () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    if (
-      !willQuitApp &&
-      retrieveSettingValue('runInBackground')
-    ) {
+    if (!willQuitApp && retrieveSettingValue('runInBackground')) {
       e.preventDefault();
       if (isWindows) {
         debug('Window: minimize');
@@ -372,6 +356,13 @@ const createWindow = () => {
   } else {
     mainWindow.show();
   }
+
+  app.whenReady().then(() => {
+    // Toggle the window on 'Alt+X'
+    globalShortcut.register(`${altKey()}+X`, () => {
+      trayIcon.trayMenuTemplate[0].click();
+    });
+  });
 };
 
 // Allow passing command line parameters/switches to electron
@@ -415,30 +406,35 @@ app.on('ready', () => {
   }
 
   if (isWindows) {
-    app.setUserTasks([
-      {
-        program: process.execPath,
-        arguments: `${isDevMode ? `${__dirname} ` : ''}--reset-window`,
-        iconPath: asarPath(
+    const extraArgs = isDevMode ? `${__dirname} ` : '';
+    const iconPath = asarPath(
           join(
             isDevMode ? `${__dirname}../src/` : __dirname,
             'assets/images/taskbar/win32/display.ico',
           ),
-        ),
+        );
+    app.setUserTasks([
+      {
+        program: process.execPath,
+        arguments: `${extraArgs}--reset-window`,
+        iconPath,
         iconIndex: 0,
         title: 'Move Ferdi to Current Display',
         description: 'Restore the position and size of Ferdi',
       },
       {
         program: process.execPath,
-        arguments: `${isDevMode ? `${__dirname} ` : ''}--quit`,
+        arguments: `${extraArgs}--quit`,
+        iconPath,
         iconIndex: 0,
-        iconPath: null,
         title: 'Quit Ferdi',
         description: null,
       },
     ]);
   }
+
+  // eslint-disable-next-line global-require
+  require('electron-react-titlebar/main').initialize();
 
   createWindow();
 });
@@ -486,8 +482,10 @@ ipcMain.on('open-browser-window', (e, { url, serviceId }) => {
 ipcMain.on(
   'modifyRequestHeaders',
   (e, { modifiedRequestHeaders, serviceId }) => {
-    debug(`Received modifyRequestHeaders ${modifiedRequestHeaders} for serviceId ${serviceId}`);
-    modifiedRequestHeaders.forEach(headerFilterSet => {
+    debug(
+      `Received modifyRequestHeaders ${modifiedRequestHeaders} for serviceId ${serviceId}`,
+    );
+    for (const headerFilterSet of modifiedRequestHeaders) {
       const { headers, requestFilters } = headerFilterSet;
       session
         .fromPartition(`persist:service-${serviceId}`)
@@ -500,27 +498,26 @@ ipcMain.on(
           }
           callback({ requestHeaders: details.requestHeaders });
         });
-    });
+    }
   },
 );
 
-ipcMain.on(
-  'knownCertificateHosts',
-  (e, { knownHosts, serviceId }) => {
-    debug(`Received knownCertificateHosts ${knownHosts} for serviceId ${serviceId}`);
-    session
-      .fromPartition(`persist:service-${serviceId}`)
-      .setCertificateVerifyProc((request, callback) => {
-        // To know more about these callbacks: https://www.electronjs.org/docs/api/session#sessetcertificateverifyprocproc
-        const { hostname } = request;
-        if (knownHosts.find(item => item.includes(hostname)).length > 0) {
-          callback(0);
-        } else {
-          callback(-2);
-        }
-      });
-  },
-);
+ipcMain.on('knownCertificateHosts', (e, { knownHosts, serviceId }) => {
+  debug(
+    `Received knownCertificateHosts ${knownHosts} for serviceId ${serviceId}`,
+  );
+  session
+    .fromPartition(`persist:service-${serviceId}`)
+    .setCertificateVerifyProc((request, callback) => {
+      // To know more about these callbacks: https://www.electronjs.org/docs/api/session#sessetcertificateverifyprocproc
+      const { hostname } = request;
+      if (knownHosts.find(item => item.includes(hostname)).length > 0) {
+        callback(0);
+      } else {
+        callback(-2);
+      }
+    });
+});
 
 ipcMain.on('feature-basic-auth-cancel', () => {
   debug('Cancel basic auth');
@@ -563,6 +560,20 @@ ipcMain.on('stop-find-in-page', (e, action) => {
   e.returnValue = null;
 });
 
+ipcMain.on('set-spellchecker-locales', (e, { locale, serviceId }) => {
+  if (serviceId === undefined) {
+    return;
+  }
+
+  const serviceSession = session.fromPartition(`persist:service-${serviceId}`);
+  const [defaultLocale] = serviceSession.getSpellCheckerLanguages();
+  debug(`Spellchecker default locale is: ${defaultLocale}`);
+
+  const locales = [locale, defaultLocale, DEFAULT_APP_SETTINGS.fallbackLocale];
+  debug(`Setting spellchecker locales to: ${locales}`);
+  serviceSession.setSpellCheckerLanguages(locales);
+});
+
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
   // On OS X it is common for applications and their menu bar
@@ -575,7 +586,7 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.on('before-quit', (event) => {
+app.on('before-quit', event => {
   const yesButtonIndex = 0;
   let selection = yesButtonIndex;
   if (retrieveSettingValue('confirmOnQuit')) {
@@ -583,10 +594,7 @@ app.on('before-quit', (event) => {
       type: 'question',
       message: 'Quit',
       detail: 'Do you really want to quit Ferdi?',
-      buttons: [
-        'Yes',
-        'No',
-      ],
+      buttons: ['Yes', 'No'],
     });
   }
   if (selection === yesButtonIndex) {

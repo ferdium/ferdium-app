@@ -1,5 +1,6 @@
+/* eslint-disable global-require */
 import { parse } from 'path';
-import { userDataRecipesPath } from '../environment';
+import { userDataRecipesPath } from '../environment-remote';
 
 export function getRecipeDirectory(id: string = ''): string {
   return userDataRecipesPath(id);
@@ -15,20 +16,17 @@ export function loadRecipeConfig(recipeId: string) {
     // Delete module from cache
     delete require.cache[require.resolve(configPath)];
 
-    // eslint-disable-next-line
-    let config = require(configPath);
+    // eslint-disable-next-line import/no-dynamic-require
+    const config = require(configPath);
 
     const moduleConfigPath = require.resolve(configPath);
     config.path = parse(moduleConfigPath).dir;
 
     return config;
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error(error);
     return null;
   }
 }
 
-module.paths.unshift(
-  getDevRecipeDirectory(),
-  getRecipeDirectory(),
-);
+module.paths.unshift(getDevRecipeDirectory(), getRecipeDirectory());

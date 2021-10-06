@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 import { Link } from 'react-router';
 import { Input, Button } from '@meetfranz/forms';
 import injectSheet from 'react-jss';
@@ -20,40 +20,40 @@ import Toggle from '../../../components/ui/Toggle';
 const messages = defineMessages({
   buttonDelete: {
     id: 'settings.workspace.form.buttonDelete',
-    defaultMessage: '!!!Delete workspace',
+    defaultMessage: 'Delete workspace',
   },
   buttonSave: {
     id: 'settings.workspace.form.buttonSave',
-    defaultMessage: '!!!Save workspace',
+    defaultMessage: 'Save workspace',
   },
   name: {
     id: 'settings.workspace.form.name',
-    defaultMessage: '!!!Name',
+    defaultMessage: 'Name',
   },
   yourWorkspaces: {
     id: 'settings.workspace.form.yourWorkspaces',
-    defaultMessage: '!!!Your workspaces',
+    defaultMessage: 'Your workspaces',
   },
   keepLoaded: {
     id: 'settings.workspace.form.keepLoaded',
-    defaultMessage: '!!!Keep this workspace loaded*',
+    defaultMessage: 'Keep this workspace loaded*',
   },
   keepLoadedInfo: {
     id: 'settings.workspace.form.keepLoadedInfo',
     defaultMessage:
-      '!!!*This option will be overwritten by the global "Keep all workspaces loaded" option.',
+      '*This option will be overwritten by the global "Keep all workspaces loaded" option.',
   },
   servicesInWorkspaceHeadline: {
     id: 'settings.workspace.form.servicesInWorkspaceHeadline',
-    defaultMessage: '!!!Services in this Workspace',
+    defaultMessage: 'Services in this Workspace',
   },
   noServicesAdded: {
     id: 'settings.services.noServicesAdded',
-    defaultMessage: '!!!Start by adding a service.',
+    defaultMessage: 'Start by adding a service.',
   },
   discoverServices: {
     id: 'settings.services.discoverServices',
-    defaultMessage: '!!!Discover services',
+    defaultMessage: 'Discover services',
   },
 });
 
@@ -72,10 +72,6 @@ const styles = () => ({
 @injectSheet(styles)
 @observer
 class EditWorkspaceForm extends Component {
-  static contextTypes = {
-    intl: intlShape,
-  };
-
   static propTypes = {
     classes: PropTypes.object.isRequired,
     onDelete: PropTypes.func.isRequired,
@@ -97,7 +93,7 @@ class EditWorkspaceForm extends Component {
   }
 
   prepareWorkspaceForm(workspace) {
-    const { intl } = this.context;
+    const { intl } = this.props;
     return new Form({
       fields: {
         name: {
@@ -112,7 +108,7 @@ class EditWorkspaceForm extends Component {
           default: false,
         },
         services: {
-          value: workspace.services.slice(),
+          value: [...workspace.services],
         },
       },
     });
@@ -120,7 +116,7 @@ class EditWorkspaceForm extends Component {
 
   save(form) {
     form.submit({
-      onSuccess: async (f) => {
+      onSuccess: async f => {
         const { onSave } = this.props;
         const values = f.values();
         onSave(values);
@@ -146,7 +142,7 @@ class EditWorkspaceForm extends Component {
   }
 
   render() {
-    const { intl } = this.context;
+    const { intl } = this.props;
     const {
       classes,
       workspace,
@@ -194,7 +190,7 @@ class EditWorkspaceForm extends Component {
               </div>
             ) : (
               <>
-                {services.map((s) => (
+                {services.map(s => (
                   <WorkspaceServiceListItem
                     key={s.id}
                     service={s}
@@ -233,4 +229,4 @@ class EditWorkspaceForm extends Component {
   }
 }
 
-export default EditWorkspaceForm;
+export default injectIntl(EditWorkspaceForm);

@@ -1,6 +1,6 @@
-import { Menu, dialog, app, getCurrentWindow } from '@electron/remote';
+import { Menu, dialog, app } from '@electron/remote';
 import React, { Component } from 'react';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
@@ -20,56 +20,55 @@ const IS_SERVICE_DEBUGGING_ENABLED = (
 const messages = defineMessages({
   reload: {
     id: 'tabs.item.reload',
-    defaultMessage: '!!!Reload',
+    defaultMessage: 'Reload',
   },
   disableNotifications: {
     id: 'tabs.item.disableNotifications',
-    defaultMessage: '!!!Disable notifications',
+    defaultMessage: 'Disable notifications',
   },
   enableNotifications: {
     id: 'tabs.item.enableNotification',
-    defaultMessage: '!!!Enable notifications',
+    defaultMessage: 'Enable notifications',
   },
   disableAudio: {
     id: 'tabs.item.disableAudio',
-    defaultMessage: '!!!Disable audio',
+    defaultMessage: 'Disable audio',
   },
   enableAudio: {
     id: 'tabs.item.enableAudio',
-    defaultMessage: '!!!Enable audio',
+    defaultMessage: 'Enable audio',
   },
   enableDarkMode: {
     id: 'tabs.item.enableDarkMode',
-    defaultMessage: '!!!Enable Dark mode',
+    defaultMessage: 'Enable Dark mode',
   },
   disableDarkMode: {
     id: 'tabs.item.disableDarkMode',
-    defaultMessage: '!!!Disable Dark mode',
+    defaultMessage: 'Disable Dark mode',
   },
   disableService: {
     id: 'tabs.item.disableService',
-    defaultMessage: '!!!Disable Service',
+    defaultMessage: 'Disable service',
   },
   enableService: {
     id: 'tabs.item.enableService',
-    defaultMessage: '!!!Enable Service',
+    defaultMessage: 'Enable service',
   },
   hibernateService: {
     id: 'tabs.item.hibernateService',
-    defaultMessage: '!!!Hibernate Service',
+    defaultMessage: 'Hibernate service',
   },
   wakeUpService: {
     id: 'tabs.item.wakeUpService',
-    defaultMessage: '!!!Wake Up Service',
+    defaultMessage: 'Wake up service',
   },
   deleteService: {
     id: 'tabs.item.deleteService',
-    defaultMessage: '!!!Delete Service',
+    defaultMessage: 'Delete service',
   },
   confirmDeleteService: {
     id: 'tabs.item.confirmDeleteService',
-    defaultMessage:
-      '!!!Do you really want to delete the {serviceName} service?',
+    defaultMessage: 'Do you really want to delete the {serviceName} service?',
   },
 });
 
@@ -134,13 +133,43 @@ class TabItem extends Component {
     showMessageBadgesEvenWhenMuted: PropTypes.bool.isRequired,
   };
 
-  static contextTypes = {
-    intl: intlShape,
-  };
-
   @observable isPolled = false;
 
   @observable isPollAnswered = false;
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      showShortcutIndex: false,
+    };
+  }
+
+  handleShowShortcutIndex = () => {
+    this.setState({ showShortcutIndex: true });
+  };
+
+  checkForLongPress = () => {
+    let longpressDelay = null;
+    const longpressDelayDuration = 1000;
+
+    document.addEventListener(
+      'keydown',
+      e => {
+        if (e.ctrlKey || e.metaKey) {
+          longpressDelay = setTimeout(
+            this.handleShowShortcutIndex,
+            longpressDelayDuration,
+          );
+        }
+      },
+      { capture: true },
+    );
+
+    document.addEventListener('keyup', () => {
+      clearTimeout(longpressDelay);
+      this.setState({ showShortcutIndex: false });
+    });
+  };
 
   componentDidMount() {
     const { service } = this.props;
@@ -164,6 +193,8 @@ class TabItem extends Component {
         }
       });
     }
+
+    this.checkForLongPress();
   }
 
   render() {
@@ -185,7 +216,7 @@ class TabItem extends Component {
       showMessageBadgeWhenMutedSetting,
       showMessageBadgesEvenWhenMuted,
     } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     const menuTemplate = [
       {
@@ -240,8 +271,9 @@ class TabItem extends Component {
             ? messages.wakeUpService
             : messages.hibernateService,
         ),
+        // eslint-disable-next-line no-confusing-arrow
         click: () =>
-          (service.isHibernating ? wakeUpService() : hibernateService()),
+          service.isHibernating ? wakeUpService() : hibernateService(),
         enabled: service.canHibernate,
       },
       {
@@ -256,7 +288,10 @@ class TabItem extends Component {
             detail: intl.formatMessage(messages.confirmDeleteService, {
               serviceName: service.name || service.recipe.name,
             }),
-            buttons: [intl.formatMessage(globalMessages.yes), intl.formatMessage(globalMessages.no)],
+            buttons: [
+              intl.formatMessage(globalMessages.yes),
+              intl.formatMessage(globalMessages.no),
+            ],
           });
           if (selection === 0) {
             deleteService();
@@ -283,7 +318,7 @@ class TabItem extends Component {
             service.unreadDirectMessageCount === 0 &&
             service.isIndirectMessageBadgeEnabled && (
               <span className="tab-item__message-count is-indirect">•</span>
-          )}
+            )}
           {service.isHibernating && (
             <span className="tab-item__message-count hibernating">•</span>
           )}
@@ -302,9 +337,11 @@ class TabItem extends Component {
           'is-disabled': !service.isEnabled,
         })}
         onClick={clickHandler}
-        onContextMenu={() => menu.popup(getCurrentWindow())}
+        onContextMenu={() => menu.popup()}
         data-tip={`${service.name} ${
-          shortcutIndex <= 9 ? `(${cmdOrCtrlShortcutKey(false)}+${shortcutIndex})` : ''
+          shortcutIndex <= 9
+            ? `(${cmdOrCtrlShortcutKey(false)}+${shortcutIndex})`
+            : ''
         }`}
       >
         <img src={service.icon} className="tab-item__icon" alt="" />
@@ -327,9 +364,12 @@ class TabItem extends Component {
             />
           </>
         )}
+        {shortcutIndex && this.state.showShortcutIndex && (
+          <span className="tab-item__shortcut-index">{shortcutIndex}</span>
+        )}
       </li>
     );
   }
 }
 
-export default SortableElement(TabItem);
+export default injectIntl(SortableElement(TabItem));

@@ -1,3 +1,83 @@
+# [v5.6.3-nightly.12](https://github.com/getferdi/ferdi/compare/v5.6.3-nightly.10...v5.6.3-nightly.12) (2021-09-24)
+
+### Services
+
+- Update 'skype' and 'discord' to properly relinquish window object for image overlay 💖 @vraravam
+- Allow services to delineate favorites vs non-favorites in unread counts (eg Outlook) (getferdi/recipes#721) 💖 @vraravam
+
+# [v5.6.3-nightly.10](https://github.com/getferdi/ferdi/compare/v5.6.3-nightly.9...v5.6.3-nightly.10) (2021-09-22)
+
+### Services
+
+- Added `stackoverflow-chat` Recipe (getferdi/recipes#718) 💖 @vraravam
+- Allow self-hosted option for kimai-cloud service 💖 @vraravam
+- Remove call to 'clearStorageData' so that MS Teams can remember login creds across Ferdi restarts 💖 @vraravam
+
+# [v5.6.3-nightly.9](https://github.com/getferdi/ferdi/compare/v5.6.3-nightly.8...v5.6.3-nightly.9) (2021-09-21)
+
+### Bug fixes
+
+- Remove extra validation for `serviceUrl` for github since the url doesn't seem to be valid any more. (getferdi/recipes#715) 💖 @vraravam
+
+### Under the hood
+
+- Removed more references to `@electron/remote` from the codebase (#1968) 💖 @kris7t, @vraravam
+
+# [v5.6.3-nightly.8](https://github.com/getferdi/ferdi/compare/v5.6.3-nightly.7...v5.6.3-nightly.8) (2021-09-20)
+
+### Under the hood
+
+- Removed more references to `@electron/remote` from the codebase (#1967) 💖 #kris7t, @vraravam
+
+# [v5.6.3-nightly.7](https://github.com/getferdi/ferdi/compare/v5.6.3-nightly.4...v5.6.3-nightly.7) (2021-09-19)
+
+### Services
+
+- Added Pipefy Recipe (#711) 💖 @TanZng
+
+### Bug fixes
+
+- Fix images opening in browser instead of in Discord (#712) 💖 @briankendall
+- Fix accent color customization (#1963) (#1965) 💖 @kris7t
+
+### Under the hood
+
+- Progressing towards converting the whole code base from JS to TS (#1959) 💖 @mhatvan
+- Improved context isolation for sandboxing services (#1964) 💖 @kris7t
+
+# [v5.6.3-nightly.4](https://github.com/getferdi/ferdi/compare/v5.6.3-nightly.3...v5.6.3-nightly.4) (2021-09-16)
+
+### Features
+
+- Ferdi now support Split View Mode (#1926) 💖 @niutech
+
+### Bug fixes
+
+- Fix images opening in browser instead of in Discord (getferdi/recipes#712) 💖 @briankendall
+
+# [v5.6.3-nightly.3](https://github.com/getferdi/ferdi/compare/v5.6.3-nightly.2...v5.6.3-nightly.3) (2021-09-15)
+
+### Under the hood
+
+- Defensive programming to avoid javascript error for unread badges 💖 @vraravam
+- Progressing towards converting the whole code base from JS to TS (#1930) (#1934) 💖 @mhatvan
+- Translation updates and fixes 💖 @vraravam @mhatvan
+
+# [v5.6.3-nightly.2](https://github.com/getferdi/ferdi/compare/v5.6.2...v5.6.3-nightly.2) (2021-09-14)
+
+### Features
+
+- Upgrade to [electron 13.4.0](https://github.com/electron/electron/releases/tag/v13.4.0) 💖 @vraravam
+
+### Bug fixes
+
+- Revert "refactor: reuse method from the core electron framework for the `About` box (fixes #1928, #1929) 💖 @vraravam
+
+### Under the hood
+
+- chore: upgrade intl dependencies (#1920) 💖 @mhatvan
+- chore: update various defaultMessages (#1925) 💖 @mhatvan
+
 # [v5.6.2](https://github.com/getferdi/ferdi/compare/v5.6.1...v5.6.2) (2021-09-13)
 
 This is a hotfix for the 5.6.1 release, along with a couple of changes that were made over the weekend

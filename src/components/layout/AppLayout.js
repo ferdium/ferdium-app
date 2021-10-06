@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
-import { defineMessages, intlShape } from 'react-intl';
-import { TitleBar } from 'electron-react-titlebar';
+import { defineMessages, injectIntl } from 'react-intl';
+import { TitleBar } from 'electron-react-titlebar/renderer';
 import injectSheet from 'react-jss';
 
 import InfoBar from '../ui/InfoBar';
@@ -27,20 +27,20 @@ function createMarkup(HTMLString) {
 const messages = defineMessages({
   servicesUpdated: {
     id: 'infobar.servicesUpdated',
-    defaultMessage: '!!!Your services have been updated.',
+    defaultMessage: 'Your services have been updated.',
   },
   buttonReloadServices: {
     id: 'infobar.buttonReloadServices',
-    defaultMessage: '!!!Reload services',
+    defaultMessage: 'Reload services',
   },
   requiredRequestsFailed: {
     id: 'infobar.requiredRequestsFailed',
-    defaultMessage: '!!!Could not load services and user information',
+    defaultMessage: 'Could not load services and user information',
   },
   authRequestFailed: {
     id: 'infobar.authRequestFailed',
     defaultMessage:
-      '!!!There were errors while trying to perform an authenticated request. Please try logging out and back in if this error persists.',
+      'There were errors while trying to perform an authenticated request. Please try logging out and back in if this error persists.',
   },
 });
 
@@ -88,14 +88,11 @@ class AppLayout extends Component {
 
   state = {
     shouldShowAppUpdateInfoBar: true,
+    shouldShowServicesUpdatedInfoBar: true,
   };
 
   static defaultProps = {
     children: [],
-  };
-
-  static contextTypes = {
-    intl: intlShape,
   };
 
   render() {
@@ -119,7 +116,7 @@ class AppLayout extends Component {
       areRequiredRequestsLoading,
     } = this.props;
 
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     return (
       <ErrorBoundary>
@@ -179,12 +176,14 @@ class AppLayout extends Component {
                   {intl.formatMessage(messages.authRequestFailed)}
                 </InfoBar>
               )}
-              {showServicesUpdatedInfoBar && (
+              {showServicesUpdatedInfoBar && this.state.shouldShowServicesUpdatedInfoBar && (
                 <InfoBar
                   type="primary"
                   ctaLabel={intl.formatMessage(messages.buttonReloadServices)}
                   onClick={reloadServicesAfterUpdate}
-                  sticky
+                  onHide={() => {
+                    this.setState({ shouldShowServicesUpdatedInfoBar: false });
+                  }}
                 >
                   <span className="mdi mdi-power-plug" />
                   {intl.formatMessage(messages.servicesUpdated)}
@@ -213,4 +212,4 @@ class AppLayout extends Component {
   }
 }
 
-export default AppLayout;
+export default injectIntl(AppLayout);

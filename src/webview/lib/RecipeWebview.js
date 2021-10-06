@@ -1,12 +1,14 @@
 import { ipcRenderer } from 'electron';
-import { exists, pathExistsSync, readFileSync } from 'fs-extra';
+import { BrowserWindow } from '@electron/remote';
+import { pathExistsSync, readFileSync, existsSync } from 'fs-extra';
 
 const debug = require('debug')('Ferdi:Plugin:RecipeWebview');
 
 class RecipeWebview {
-  constructor(badgeHandler, notificationsHandler) {
+  constructor(badgeHandler, notificationsHandler, sessionHandler) {
     this.badgeHandler = badgeHandler;
     this.notificationsHandler = notificationsHandler;
+    this.sessionHandler = sessionHandler;
 
     ipcRenderer.on('poll', () => {
       this.loopFunc();
@@ -23,6 +25,16 @@ class RecipeWebview {
 
   darkModeHandler = false;
 
+  // TODO Remove this once we implement a proper wrapper.
+  get ipcRenderer() {
+    return ipcRenderer;
+  }
+
+  // TODO Remove this once we implement a proper wrapper.
+  get BrowserWindow() {
+    return BrowserWindow;
+  }
+
   /**
    * Initialize the loop
    *
@@ -35,12 +47,12 @@ class RecipeWebview {
   /**
    * Set the unread message badge
    *
-   * @param {int} direct      Set the count of direct messages
-   *                          eg. Slack direct mentions, or a
-   *                          message to @channel
-   * @param {int} indirect    Set a badge that defines there are
-   *                          new messages but they do not involve
-   *                          me directly to me eg. in a channel
+   * @param {string | number | undefined | null} direct      Set the count of direct messages
+   *                                                         eg. Slack direct mentions, or a
+   *                                                         message to @channel
+   * @param {string | number | undefined | null} indirect    Set a badge that defines there are
+   *                                                         new messages but they do not involve
+   *                                                         me directly to me eg. in a channel
    */
   setBadge(direct = 0, indirect = 0) {
     this.badgeHandler.setBadge(direct, indirect);
@@ -62,12 +74,13 @@ class RecipeWebview {
    *                          be an absolute path to the file
    */
   injectCSS(...files) {
-    files.forEach(async (file) => {
+    // eslint-disable-next-line unicorn/no-array-for-each
+    files.forEach(file => {
       if (pathExistsSync(file)) {
         const styles = document.createElement('style');
         styles.innerHTML = readFileSync(file, 'utf8');
 
-        document.querySelector('head').appendChild(styles);
+        document.querySelector('head').append(styles);
 
         debug('Append styles', styles);
       }
@@ -75,14 +88,16 @@ class RecipeWebview {
   }
 
   injectJSUnsafe(...files) {
-    Promise.all(files.map(async (file) => {
-      if (await exists(file)) {
-        return readFileSync(file, 'utf8');
-      }
-      debug('Script not found', file);
-      return null;
-    })).then(async (scripts) => {
-      const scriptsFound = scripts.filter((script) => script !== null);
+    Promise.all(
+      files.map(file => {
+        if (existsSync(file)) {
+          return readFileSync(file, 'utf8');
+        }
+        debug('Script not found', file);
+        return null;
+      }),
+    ).then(scripts => {
+      const scriptsFound = scripts.filter(script => script !== null);
       if (scriptsFound.length > 0) {
         debug('Inject scripts to main world', scriptsFound);
         ipcRenderer.sendToHost('inject-js-unsafe', ...scriptsFound);
@@ -109,6 +124,22 @@ class RecipeWebview {
     if (typeof fn === 'function') {
       fn();
     }
+  }
+
+  clearStorageData(serviceId, targetsToClear) {
+    ipcRenderer.send('clear-storage-data', { serviceId, targetsToClear });
+  }
+
+  releaseServiceWorkers() {
+    this.sessionHandler.releaseServiceWorkers();
+  }
+
+  setAvatarImage(avatarUrl) {
+    ipcRenderer.sendToHost('avatar', avatarUrl);
+  }
+
+  openNewWindow(url) {
+    ipcRenderer.sendToHost('new-window', url);
   }
 }
 

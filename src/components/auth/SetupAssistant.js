@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 import injectSheet from 'react-jss';
 import classnames from 'classnames';
 
@@ -19,20 +19,20 @@ const SLACK_ID = 'slack';
 const messages = defineMessages({
   headline: {
     id: 'setupAssistant.headline',
-    defaultMessage: "!!!Let's get started",
+    defaultMessage: "Let's get started",
   },
   subHeadline: {
     id: 'setupAssistant.subheadline',
     defaultMessage:
-      '!!!Choose from our most used services and get back on top of your messaging now.',
+      'Choose from our most used services and get back on top of your messaging now.',
   },
   submitButtonLabel: {
     id: 'setupAssistant.submit.label',
-    defaultMessage: "!!!Let's go",
+    defaultMessage: "Let's go",
   },
   inviteSuccessInfo: {
     id: 'invite.successInfo',
-    defaultMessage: '!!!Invitations sent successfully',
+    defaultMessage: 'Invitations sent successfully',
   },
 });
 
@@ -145,10 +145,6 @@ class SetupAssistant extends Component {
     isInviteSuccessful: false,
   };
 
-  static contextTypes = {
-    intl: intlShape,
-  };
-
   state = {
     services: [
       {
@@ -189,7 +185,7 @@ class SetupAssistant extends Component {
   }
 
   render() {
-    const { intl } = this.context;
+    const { intl } = this.props;
     const {
       classes,
       isInviteSuccessful,
@@ -330,4 +326,4 @@ class SetupAssistant extends Component {
   }
 }
 
-export default SetupAssistant;
+export default injectIntl(SetupAssistant);

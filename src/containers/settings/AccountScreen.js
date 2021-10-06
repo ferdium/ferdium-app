@@ -10,9 +10,8 @@ import SettingsStore from '../../stores/SettingsStore';
 import AccountDashboard from '../../components/settings/account/AccountDashboard';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 import { LIVE_FRANZ_API } from '../../config';
-import { WEBSITE } from '../../environment';
+import { WEBSITE } from '../../environment-remote';
 
-export default
 @inject('stores', 'actions')
 @observer
 class AccountScreen extends Component {
@@ -33,14 +32,12 @@ class AccountScreen extends Component {
 
     const api = stores.settings.all.app.server;
 
-    let url;
-    if (api === LIVE_FRANZ_API) {
-      url = stores.user.getAuthURL(
-        `${WEBSITE}${route}?utm_source=app&utm_medium=account_dashboard`,
-      );
-    } else {
-      url = `${api}${route}`;
-    }
+    const url =
+      api === LIVE_FRANZ_API
+        ? stores.user.getAuthURL(
+            `${WEBSITE}${route}?utm_source=app&utm_medium=account_dashboard`,
+          )
+        : `${api}${route}`;
 
     actions.app.openExternalUrl({ url });
   }
@@ -58,16 +55,16 @@ class AccountScreen extends Component {
           user={user.data}
           isLoading={isLoadingUserInfo}
           userInfoRequestFailed={
-            user.getUserInfoRequest.wasExecuted
-            && user.getUserInfoRequest.isError
+            user.getUserInfoRequest.wasExecuted &&
+            user.getUserInfoRequest.isError
           }
           retryUserInfoRequest={() => this.reloadData()}
           onCloseSubscriptionWindow={() => this.onCloseWindow()}
           deleteAccount={userActions.delete}
           isLoadingDeleteAccount={user.deleteAccountRequest.isExecuting}
           isDeleteAccountSuccessful={
-            user.deleteAccountRequest.wasExecuted
-            && !user.deleteAccountRequest.isError
+            user.deleteAccountRequest.wasExecuted &&
+            !user.deleteAccountRequest.isError
           }
           openEditAccount={() => this.handleWebsiteLink('/user/profile')}
           openInvoices={() => this.handleWebsiteLink('/user/invoices')}
@@ -89,3 +86,5 @@ AccountScreen.wrappedComponent.propTypes = {
     user: PropTypes.instanceOf(UserStore).isRequired,
   }).isRequired,
 };
+
+export default AccountScreen;

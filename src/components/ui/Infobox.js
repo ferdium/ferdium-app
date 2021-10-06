@@ -3,20 +3,20 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import Loader from 'react-loader';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 
 const messages = defineMessages({
   dismiss: {
     id: 'infobox.dismiss',
-    defaultMessage: '!!!Dismiss',
+    defaultMessage: 'Dismiss',
   },
 });
 
-export default
 @observer
 class Infobox extends Component {
   static propTypes = {
-    children: PropTypes.any.isRequired, // eslint-disable-line
+    // eslint-disable-next-line react/forbid-prop-types
+    children: PropTypes.any.isRequired,
     icon: PropTypes.string,
     type: PropTypes.string,
     ctaOnClick: PropTypes.func,
@@ -36,10 +36,6 @@ class Infobox extends Component {
     ctaLoading: false,
     onDismiss: () => null,
     onSeen: () => null,
-  };
-
-  static contextTypes = {
-    intl: intlShape,
   };
 
   state = {
@@ -63,7 +59,7 @@ class Infobox extends Component {
       onDismiss,
     } = this.props;
 
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     if (this.state.dismissed) {
       return null;
@@ -106,3 +102,5 @@ class Infobox extends Component {
     );
   }
 }
+
+export default injectIntl(Infobox);

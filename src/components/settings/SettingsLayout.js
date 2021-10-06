@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 
 import ErrorBoundary from '../util/ErrorBoundary';
 import { oneOrManyChildElements } from '../../prop-types';
@@ -10,21 +10,16 @@ import Appear from '../ui/effects/Appear';
 const messages = defineMessages({
   closeSettings: {
     id: 'settings.app.closeSettings',
-    defaultMessage: '!!!Close settings',
+    defaultMessage: 'Close settings',
   },
 });
 
-export default
 @observer
 class SettingsLayout extends Component {
   static propTypes = {
     navigation: PropTypes.element.isRequired,
     children: oneOrManyChildElements.isRequired,
     closeSettings: PropTypes.func.isRequired,
-  };
-
-  static contextTypes = {
-    intl: intlShape,
   };
 
   componentDidMount() {
@@ -34,6 +29,7 @@ class SettingsLayout extends Component {
   componentWillUnmount() {
     document.removeEventListener(
       'keydown',
+      // eslint-disable-next-line unicorn/no-invalid-remove-event-listener
       this.handleKeyDown.bind(this),
       false,
     );
@@ -49,7 +45,7 @@ class SettingsLayout extends Component {
   render() {
     const { navigation, children, closeSettings } = this.props;
 
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     return (
       <Appear transitionName="fadeIn-fast">
@@ -77,3 +73,5 @@ class SettingsLayout extends Component {
     );
   }
 }
+
+export default injectIntl(SettingsLayout);

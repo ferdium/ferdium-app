@@ -1,20 +1,20 @@
-import { Menu, getCurrentWindow } from '@electron/remote';
+import { Menu } from '@electron/remote';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import injectSheet from 'react-jss';
 import classnames from 'classnames';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 import { altKey, cmdOrCtrlShortcutKey } from '../../../environment';
 
 const messages = defineMessages({
   noServicesAddedYet: {
     id: 'workspaceDrawer.item.noServicesAddedYet',
-    defaultMessage: '!!!No services added yet',
+    defaultMessage: 'No services added yet',
   },
   contextMenuEdit: {
     id: 'workspaceDrawer.item.contextMenuEdit',
-    defaultMessage: '!!!edit',
+    defaultMessage: 'edit',
   },
 });
 
@@ -82,10 +82,6 @@ class WorkspaceDrawerItem extends Component {
     onContextMenuEditClick: null,
   };
 
-  static contextTypes = {
-    intl: intlShape,
-  };
-
   render() {
     const {
       classes,
@@ -96,7 +92,8 @@ class WorkspaceDrawerItem extends Component {
       services,
       shortcutIndex,
     } = this.props;
-    const { intl } = this.context;
+
+    const { intl } = this.props;
 
     const contextMenuTemplate = [
       {
@@ -122,10 +119,14 @@ class WorkspaceDrawerItem extends Component {
         ])}
         onClick={onClick}
         onContextMenu={() =>
-          onContextMenuEditClick && contextMenu.popup(getCurrentWindow())
+          onContextMenuEditClick && contextMenu.popup()
         }
         data-tip={`${
-          shortcutIndex <= 9 ? `(${cmdOrCtrlShortcutKey(false)}+${altKey(false)}+${shortcutIndex})` : ''
+          shortcutIndex <= 9
+            ? `(${cmdOrCtrlShortcutKey(false)}+${altKey(
+              false,
+            )}+${shortcutIndex})`
+            : ''
         }`}
       >
         <span
@@ -142,7 +143,7 @@ class WorkspaceDrawerItem extends Component {
             isActive ? classes.activeServices : null,
           ])}
         >
-          {services.length
+          {services.length > 0
             ? services.join(', ')
             : intl.formatMessage(messages.noServicesAddedYet)}
         </span>
@@ -151,4 +152,4 @@ class WorkspaceDrawerItem extends Component {
   }
 }
 
-export default WorkspaceDrawerItem;
+export default injectIntl(WorkspaceDrawerItem);

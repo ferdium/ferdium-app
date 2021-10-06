@@ -120,6 +120,19 @@
     }
   }
 
+  .tab-item__shortcut-index {
+    align-items: center;
+    background: $theme-gray-light;
+    bottom: 8px;
+    color: #fff;
+    display: flex;
+    font-size: 11px;
+    min-height: 17px;
+    padding: 0px 5px;
+    position: absolute;
+    left: 8px;
+  }
+
   &.is-reordering {
     z-index: 99999;
   }

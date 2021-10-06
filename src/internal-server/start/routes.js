@@ -8,7 +8,7 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route');
 
-const { API_VERSION } = require('../../environment');
+const { API_VERSION } = require('../../environment-remote');
 // Run latest database migration
 const migrate = require('./migrate');
 

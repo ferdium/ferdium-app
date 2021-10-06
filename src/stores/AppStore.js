@@ -16,16 +16,17 @@ import { readJsonSync } from 'fs-extra';
 
 import Store from './lib/Store';
 import Request from './lib/Request';
-import { CHECK_INTERVAL } from '../config';
+import { CHECK_INTERVAL, DEFAULT_APP_SETTINGS } from '../config';
 import {
-  DEFAULT_APP_SETTINGS,
   isMac,
-  ferdiVersion,
   electronVersion,
   osRelease,
+} from '../environment';
+import {
+  ferdiVersion,
   userDataPath,
   ferdiLocale,
-} from '../environment';
+} from '../environment-remote';
 import locales from '../i18n/translations';
 import { getLocale } from '../helpers/i18n-helpers';
 
@@ -251,16 +252,14 @@ export default class AppStore extends Store {
     // macOS catalina notifications hack
     // notifications got stuck after upgrade but forcing a notification
     // via `new Notification` triggered the permission request
-    if (isMac) {
-      if (!localStorage.getItem(CATALINA_NOTIFICATION_HACK_KEY)) {
-        debug('Triggering macOS Catalina notification permission trigger');
-        // eslint-disable-next-line no-new
-        new window.Notification('Welcome to Ferdi 5', {
-          body: 'Have a wonderful day & happy messaging.',
-        });
+    if (isMac && !localStorage.getItem(CATALINA_NOTIFICATION_HACK_KEY)) {
+      debug('Triggering macOS Catalina notification permission trigger');
+      // eslint-disable-next-line no-new
+      new window.Notification('Welcome to Ferdi 5', {
+        body: 'Have a wonderful day & happy messaging.',
+      });
 
-        localStorage.setItem(CATALINA_NOTIFICATION_HACK_KEY, true);
-      }
+      localStorage.setItem(CATALINA_NOTIFICATION_HACK_KEY, 'true');
     }
   }
 
@@ -325,7 +324,7 @@ export default class AppStore extends Store {
 
     debug('New notification', title, options);
 
-    notification.onclick = () => {
+    notification.addEventListener('click', () => {
       if (serviceId) {
         this.actions.service.sendIPCMessage({
           channel: `notification-onclick:${notificationId}`,
@@ -346,7 +345,7 @@ export default class AppStore extends Store {
 
         debug('Notification click handler');
       }
-    };
+    });
   }
 
   @action _setBadge({ unreadDirectMessageCount, unreadIndirectMessageCount }) {
@@ -360,7 +359,7 @@ export default class AppStore extends Store {
     ) {
       indicator = 0;
     } else {
-      indicator = parseInt(indicator, 10);
+      indicator = Number.parseInt(indicator, 10);
     }
 
     ipcRenderer.send('updateAppIndicator', {
@@ -379,8 +378,8 @@ export default class AppStore extends Store {
         debug('disabling launch on startup');
         autoLauncher.disable();
       }
-    } catch (err) {
-      console.warn(err);
+    } catch (error) {
+      console.warn(error);
     }
   }
 
@@ -438,7 +437,7 @@ export default class AppStore extends Store {
     const allServiceIds = await getServiceIdsFromPartitions();
     const allOrphanedServiceIds = allServiceIds.filter(
       id =>
-        !this.stores.services.all.find(
+        !this.stores.services.all.some(
           s => id.replace('service-', '') === s.id,
         ),
     );
@@ -447,8 +446,8 @@ export default class AppStore extends Store {
       await Promise.all(
         allOrphanedServiceIds.map(id => removeServicePartitionDirectory(id)),
       );
-    } catch (ex) {
-      console.log('Error while deleting service partition directory - ', ex);
+    } catch (error) {
+      console.log('Error while deleting service partition directory -', error);
     }
     await Promise.all(
       this.stores.services.all.map(s =>

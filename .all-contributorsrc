@@ -974,7 +974,8 @@
       "profile": "https://www.ekino.com",
       "contributions": [
         "code",
-        "bug"
+        "bug",
+        "userTesting"
       ]
     },
     {
@@ -984,6 +985,15 @@
       "profile": "https://github.com/Tsakatac",
       "contributions": [
         "bug"
+      ]
+    },
+    {
+      "login": "niutech",
+      "name": "niu tech",
+      "avatar_url": "https://avatars.githubusercontent.com/u/384997?v=4",
+      "profile": "http://niute.ch",
+      "contributions": [
+        "code"
       ]
     }
   ],

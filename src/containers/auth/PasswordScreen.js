@@ -4,7 +4,9 @@ import { inject, observer } from 'mobx-react';
 import Password from '../../components/auth/Password';
 import UserStore from '../../stores/UserStore';
 
-export default @inject('stores', 'actions') @observer class PasswordScreen extends Component {
+@inject('stores', 'actions')
+@observer
+class PasswordScreen extends Component {
   render() {
     const { actions, stores } = this.props;
 
@@ -28,3 +30,5 @@ PasswordScreen.wrappedComponent.propTypes = {
     user: PropTypes.instanceOf(UserStore).isRequired,
   }).isRequired,
 };
+
+export default PasswordScreen;
