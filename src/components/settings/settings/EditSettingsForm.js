@@ -673,6 +673,7 @@ class EditSettingsForm extends Component {
             {this.state.activeSetttingsTab === 'advanced' && (
               <div>
                 <Toggle field={form.$('enableGPUAcceleration')} />
+                <Toggle field={form.$('enableGlobalHideShortcut')} />
                 <p className="settings__help indented__help">
                   {intl.formatMessage(messages.appRestartRequired)}
                 </p>

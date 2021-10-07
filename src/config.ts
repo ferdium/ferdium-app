@@ -202,6 +202,7 @@ export const DEFAULT_APP_SETTINGS = {
   beta: false,
   isAppMuted: false,
   enableGPUAcceleration: true,
+  enableGlobalHideShortcut: false,
 
   // Ferdi specific options
   server: LIVE_FERDI_API,

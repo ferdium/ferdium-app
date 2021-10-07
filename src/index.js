@@ -76,10 +76,10 @@ if (isWindows) {
 const settings = new Settings('app', DEFAULT_APP_SETTINGS);
 const proxySettings = new Settings('proxy');
 
-const retrieveSettingValue = (key, defaultValue = true) =>
+const retrieveSettingValue = (key, defaultValue) =>
   ifUndefinedBoolean(settings.get(key), defaultValue);
 
-if (retrieveSettingValue('sentry')) {
+if (retrieveSettingValue('sentry', DEFAULT_APP_SETTINGS.sentry)) {
   // eslint-disable-next-line global-require
   require('./sentry');
 }
@@ -196,7 +196,7 @@ const createWindow = () => {
     frame: isLinux,
     backgroundColor,
     webPreferences: {
-      spellcheck: retrieveSettingValue('enableSpellchecking'),
+      spellcheck: retrieveSettingValue('enableSpellchecking', DEFAULT_APP_SETTINGS.enableSpellchecking),
       nodeIntegration: true,
       contextIsolation: false,
       webviewTag: true,
@@ -270,13 +270,13 @@ const createWindow = () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    if (!willQuitApp && retrieveSettingValue('runInBackground')) {
+    if (!willQuitApp && retrieveSettingValue('runInBackground', DEFAULT_APP_SETTINGS.runInBackground)) {
       e.preventDefault();
       if (isWindows) {
         debug('Window: minimize');
         mainWindow.minimize();
 
-        if (retrieveSettingValue('closeToSystemTray')) {
+        if (retrieveSettingValue('closeToSystemTray', DEFAULT_APP_SETTINGS.closeToSystemTray)) {
           debug('Skip taskbar: true');
           mainWindow.setSkipTaskbar(true);
         }
@@ -300,7 +300,7 @@ const createWindow = () => {
   mainWindow.on('minimize', () => {
     app.wasMaximized = app.isMaximized;
 
-    if (retrieveSettingValue('minimizeToSystemTray')) {
+    if (retrieveSettingValue('minimizeToSystemTray', DEFAULT_APP_SETTINGS.minimizeToSystemTray)) {
       debug('Skip taskbar: true');
       mainWindow.setSkipTaskbar(true);
       trayIcon.show();
@@ -326,7 +326,7 @@ const createWindow = () => {
       mainWindow.maximize();
     }
 
-    if (!retrieveSettingValue('enableSystemTray')) {
+    if (!retrieveSettingValue('enableSystemTray', DEFAULT_APP_SETTINGS.enableSystemTray)) {
       debug('Tray: hiding tray icon');
       trayIcon.hide();
     }
@@ -351,17 +351,19 @@ const createWindow = () => {
     openExternalUrl(url);
   });
 
-  if (retrieveSettingValue('startMinimized', false)) {
+  if (retrieveSettingValue('startMinimized', DEFAULT_APP_SETTINGS.startMinimized)) {
     mainWindow.hide();
   } else {
     mainWindow.show();
   }
 
   app.whenReady().then(() => {
-    // Toggle the window on 'Alt+X'
-    globalShortcut.register(`${altKey()}+X`, () => {
-      trayIcon.trayMenuTemplate[0].click();
-    });
+    if (retrieveSettingValue('enableGlobalHideShortcut', DEFAULT_APP_SETTINGS.enableGlobalHideShortcut)) {
+      // Toggle the window on 'Alt+X'
+      globalShortcut.register(`${altKey()}+X`, () => {
+        trayIcon.trayMenuTemplate[0].click();
+      });
+    }
   });
 };
 
@@ -578,7 +580,7 @@ ipcMain.on('set-spellchecker-locales', (e, { locale, serviceId }) => {
 app.on('window-all-closed', () => {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
-  if (retrieveSettingValue('runInBackground')) {
+  if (retrieveSettingValue('runInBackground', DEFAULT_APP_SETTINGS.runInBackground)) {
     debug('Window: all windows closed, quit app');
     app.quit();
   } else {
@@ -589,7 +591,7 @@ app.on('window-all-closed', () => {
 app.on('before-quit', event => {
   const yesButtonIndex = 0;
   let selection = yesButtonIndex;
-  if (retrieveSettingValue('confirmOnQuit')) {
+  if (retrieveSettingValue('confirmOnQuit', DEFAULT_APP_SETTINGS.confirmOnQuit)) {
     selection = dialog.showMessageBoxSync(app.mainWindow, {
       type: 'question',
       message: 'Quit',

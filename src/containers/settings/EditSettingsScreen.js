@@ -209,6 +209,10 @@ const messages = defineMessages({
     id: 'settings.app.form.enableGPUAcceleration',
     defaultMessage: 'Enable GPU Acceleration',
   },
+  enableGlobalHideShortcut: {
+    id: 'settings.app.form.enableGlobalHideShortcut',
+    defaultMessage: 'Enable Global shortcut to hide Ferdi',
+  },
   beta: {
     id: 'settings.app.form.beta',
     defaultMessage: 'Include beta versions',
@@ -289,6 +293,7 @@ class EditSettingsScreen extends Component {
         scheduledDNDStart: settingsData.scheduledDNDStart,
         scheduledDNDEnd: settingsData.scheduledDNDEnd,
         enableGPUAcceleration: Boolean(settingsData.enableGPUAcceleration),
+        enableGlobalHideShortcut: Boolean(settingsData.enableGlobalHideShortcut),
         showDisabledServices: Boolean(settingsData.showDisabledServices),
         darkMode: Boolean(settingsData.darkMode),
         adaptableDarkMode: Boolean(settingsData.adaptableDarkMode),
@@ -622,6 +627,11 @@ class EditSettingsScreen extends Component {
           label: intl.formatMessage(messages.enableGPUAcceleration),
           value: settings.all.app.enableGPUAcceleration,
           default: DEFAULT_APP_SETTINGS.enableGPUAcceleration,
+        },
+        enableGlobalHideShortcut: {
+          label: intl.formatMessage(messages.enableGlobalHideShortcut),
+          value: settings.all.app.enableGlobalHideShortcut,
+          default: DEFAULT_APP_SETTINGS.enableGlobalHideShortcut,
         },
         locale: {
           label: intl.formatMessage(messages.language),
