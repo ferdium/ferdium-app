@@ -888,6 +888,7 @@ export default class ServicesStore extends Store {
       return this.actions.todos.reload();
     }
 
+    if (!service.webview) return;
     return service.webview.loadURL(service.url);
   }
 
@@ -995,7 +996,7 @@ export default class ServicesStore extends Store {
     const service = this.one(serviceId);
     if (service.isTodosService) {
       this.actions.todos.openDevTools();
-    } else {
+    } else if (service.webview) {
       service.webview.openDevTools();
     }
   }
@@ -1147,7 +1148,7 @@ export default class ServicesStore extends Store {
       const { isAttached } = service;
       const isMuted = isAppMuted || service.isMuted;
 
-      if (isAttached) {
+      if (isAttached && service.webview) {
         service.webview.audioMuted = isMuted;
       }
     }
