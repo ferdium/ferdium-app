@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import { Property } from 'csstype';
-import React, { Component } from 'react';
+import { Component, InputHTMLAttributes } from 'react';
 import injectStyle from 'react-jss';
 
 import { IFormField, IWithStyle } from '../typings/generic';
@@ -11,7 +11,7 @@ import { Label } from '../label';
 import { Wrapper } from '../wrapper';
 
 interface IProps
-  extends React.InputHTMLAttributes<HTMLInputElement>,
+  extends InputHTMLAttributes<HTMLInputElement>,
     IFormField,
     IWithStyle {
   className?: string;

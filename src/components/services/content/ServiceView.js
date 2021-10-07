@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { autorun } from 'mobx';
 import { observer, inject } from 'mobx-react';

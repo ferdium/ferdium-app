@@ -1,7 +1,7 @@
 import Icon from '@mdi/react';
 import classnames from 'classnames';
 import { Property } from 'csstype';
-import React, { Component } from 'react';
+import { Component, MouseEvent } from 'react';
 import injectStyle, { withTheme } from 'react-jss';
 import Loader from 'react-loader';
 
@@ -22,9 +22,7 @@ interface IProps extends IFormField, IWithStyle {
   id?: string;
   type?: 'button' | 'reset' | 'submit' | undefined;
   onClick: (
-    event:
-      | React.MouseEvent<HTMLButtonElement>
-      | React.MouseEvent<HTMLAnchorElement>,
+    event: MouseEvent<HTMLButtonElement> | MouseEvent<HTMLAnchorElement>,
   ) => void;
   buttonType?: ButtonType;
   stretch?: boolean;

@@ -1,10 +1,10 @@
 import classnames from 'classnames';
-import React, { Component } from 'react';
+import { Component, ReactNode } from 'react';
 import injectStyle from 'react-jss';
 import { IWithStyle } from '../typings/generic';
 
 interface IProps extends IWithStyle {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
   identifier: string;
   noMargin?: boolean;

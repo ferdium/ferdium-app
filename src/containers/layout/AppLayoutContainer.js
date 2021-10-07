@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Children, Component } from 'react';
 import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import { ThemeProvider } from 'react-jss';
@@ -168,7 +168,7 @@ class AppLayoutContainer extends Component {
           retryRequiredRequests={retryRequiredRequests}
           areRequiredRequestsLoading={requests.areRequiredRequestsLoading}
         >
-          {React.Children.count(children) > 0 ? children : null}
+          {Children.count(children) > 0 ? children : null}
         </AppLayout>
       </ThemeProvider>
     );

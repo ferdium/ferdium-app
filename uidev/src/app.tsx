@@ -1,7 +1,6 @@
 import { Property } from 'csstype';
 import { Classes } from 'jss';
 import { observer } from 'mobx-react';
-import React from 'react';
 import injectSheet from 'react-jss';
 
 import { theme, ThemeType } from '@meetfranz/theme';

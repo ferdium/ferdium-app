@@ -5,7 +5,7 @@ import {
 } from '@mdi/js';
 import Icon from '@mdi/react';
 import classnames from 'classnames';
-import React, { Component, createRef } from 'react';
+import { ChangeEvent, Component, createRef } from 'react';
 import injectStyle from 'react-jss';
 
 import { IFormField, IWithStyle } from '../typings/generic';
@@ -33,7 +33,7 @@ interface IProps extends IFormField, IWithStyle {
   name: string;
   options: IOptions;
   value: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   showSearch: boolean;
   data: IData;
 }

@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { Component, createRef } from 'react';
+import { Component, createRef, TextareaHTMLAttributes } from 'react';
 import injectSheet from 'react-jss';
 
 import { IFormField, IWithStyle } from '../typings/generic';
@@ -15,7 +15,7 @@ interface IData {
 }
 
 interface IProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement>,
+  extends TextareaHTMLAttributes<HTMLTextAreaElement>,
     IFormField,
     IWithStyle {
   focus?: boolean;

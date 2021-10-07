@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { defineMessages, injectIntl } from 'react-intl';
 import { BrowserWindow } from '@electron/remote';
 import InfoBar from '../../ui/InfoBar';

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { createRef, Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import injectSheet from 'react-jss';
@@ -121,7 +121,7 @@ class WebControls extends Component {
     }
   }
 
-  inputRef = React.createRef();
+  inputRef = createRef();
 
   state = {
     inputUrl: '',

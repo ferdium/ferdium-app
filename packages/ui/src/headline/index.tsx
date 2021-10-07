@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { Component } from 'react';
+import { Component, createElement, ReactNode } from 'react';
 import injectStyle from 'react-jss';
 
 import { Theme } from '../../../theme';
@@ -8,7 +8,7 @@ import { IWithStyle, Omit } from '../typings/generic';
 interface IProps extends IWithStyle {
   level?: number;
   className?: string;
-  children: string | React.ReactNode;
+  children: string | ReactNode;
   id?: string;
 }
 
@@ -39,7 +39,7 @@ class HeadlineComponent extends Component<IProps> {
   render() {
     const { classes, level, className, children, id } = this.props;
 
-    return React.createElement(
+    return createElement(
       `h${level}`,
       {
         id,

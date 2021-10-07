@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Badge, ProBadge } from '@meetfranz/ui';
 import { storiesOf } from '../stores/stories';
 

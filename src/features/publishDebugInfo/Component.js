@@ -1,7 +1,7 @@
 import { H1 } from '@meetfranz/ui';
 import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { defineMessages, injectIntl } from 'react-intl';
 import injectSheet from 'react-jss';
 import { state as ModalState } from './store';

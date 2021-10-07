@@ -1,5 +1,5 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import { Input } from '@meetfranz/forms';
 import { v4 as uuid } from 'uuid';

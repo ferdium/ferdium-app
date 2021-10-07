@@ -1,6 +1,5 @@
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import React from 'react';
 import { v4 as uuid } from 'uuid';
 
 import { Toggle } from '@meetfranz/forms';

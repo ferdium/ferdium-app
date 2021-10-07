@@ -1,6 +1,6 @@
 import { theme, Theme, ThemeType } from '@meetfranz/theme';
 import { Classes } from 'jss';
-import React from 'react';
+import * as React from 'react';
 import injectSheet, { ThemeProvider } from 'react-jss';
 
 const defaultTheme = {

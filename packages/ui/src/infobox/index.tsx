@@ -1,6 +1,6 @@
 import { mdiClose } from '@mdi/js';
 import classnames from 'classnames';
-import React, { Component } from 'react';
+import { Component, ReactNode } from 'react';
 import injectStyle from 'react-jss';
 
 import { Icon } from '..';
@@ -16,7 +16,7 @@ interface IProps extends IWithStyle {
   ctaOnClick?: () => void;
   ctaLabel?: string;
   ctaLoading?: boolean;
-  children: React.ReactNode;
+  children: ReactNode;
   className: string;
 }
 

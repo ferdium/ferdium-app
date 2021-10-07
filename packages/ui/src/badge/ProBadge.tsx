@@ -1,6 +1,6 @@
 import { mdiStar } from '@mdi/js';
 import classnames from 'classnames';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import injectStyle from 'react-jss';
 
 import { Badge, Icon } from '..';

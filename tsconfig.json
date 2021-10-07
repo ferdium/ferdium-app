@@ -7,7 +7,7 @@
     "target": "esnext",
     "lib": ["esnext", "dom"],
     "module": "CommonJS",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "typeRoots": ["@types", "node_modules/@types"],
     "moduleResolution": "node",
     "types": ["node", "mocha"],

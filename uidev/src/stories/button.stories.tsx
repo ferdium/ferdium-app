@@ -1,7 +1,7 @@
 import { mdiInformation } from '@mdi/js';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import React from 'react';
+import * as React from 'react';
 import injectSheet from 'react-jss';
 
 import { Button, Input } from '@meetfranz/forms';

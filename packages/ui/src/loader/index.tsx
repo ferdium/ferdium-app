@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import injectStyle, { withTheme } from 'react-jss';
 import ReactLoader from 'react-loader';
 

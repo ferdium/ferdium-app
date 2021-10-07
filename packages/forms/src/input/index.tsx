@@ -1,7 +1,7 @@
 import { mdiEye, mdiEyeOff } from '@mdi/js';
 import Icon from '@mdi/react';
 import classnames from 'classnames';
-import React, { Component, createRef } from 'react';
+import { Component, createRef, InputHTMLAttributes } from 'react';
 import injectSheet from 'react-jss';
 
 import { IFormField, IWithStyle } from '../typings/generic';
@@ -18,7 +18,7 @@ interface IData {
 }
 
 interface IProps
-  extends React.InputHTMLAttributes<HTMLInputElement>,
+  extends InputHTMLAttributes<HTMLInputElement>,
     IFormField,
     IWithStyle {
   focus?: boolean;

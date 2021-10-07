@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import injectSheet, { withTheme } from 'react-jss';
 import classnames from 'classnames';

@@ -1,5 +1,5 @@
 import { readJsonSync } from 'fs-extra';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { autorun } from 'mobx';
 import { inject, observer } from 'mobx-react';

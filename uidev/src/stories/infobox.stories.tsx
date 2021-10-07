@@ -1,7 +1,7 @@
 import { mdiEarth } from '@mdi/js';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
-import React from 'react';
+import * as React from 'react';
 
 import { Infobox } from '@meetfranz/ui';
 import { storiesOf } from '../stores/stories';

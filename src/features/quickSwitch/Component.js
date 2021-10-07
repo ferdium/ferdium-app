@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react';
+import { Component, createRef } from 'react';
 import { getCurrentWindow } from '@electron/remote';
 import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react';

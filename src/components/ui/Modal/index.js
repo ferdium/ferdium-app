@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import ReactModal from 'react-modal';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';

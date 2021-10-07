@@ -1,5 +1,5 @@
 import { Menu, dialog, app } from '@electron/remote';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { defineMessages, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
