@@ -1,52 +1,44 @@
-export function getLocale({
-  locale, locales, defaultLocale, fallbackLocale,
-}) {
-  let localeStr = locale;
-  if (locales[locale] === undefined) {
+export function getLocale({ locale, locales, fallbackLocale }) {
+  if (!locale) {
+    return fallbackLocale;
+  }
+
+  if (!locales[locale]) {
     let localeFuzzy: string | undefined;
     for (const localStr of Object.keys(locales)) {
-      if (locales && Object.hasOwnProperty.call(locales, localStr) && locale.slice(0, 2) === localStr.slice(0, 2)) {
-          localeFuzzy = localStr;
-        }
+      if (locale.slice(0, 2) === localStr.slice(0, 2)) {
+        localeFuzzy = localStr;
+      }
     }
 
-    if (localeFuzzy !== undefined) {
-      localeStr = localeFuzzy;
+    if (localeFuzzy) {
+      return localeFuzzy;
     }
   }
 
-  if (locales[localeStr] === undefined) {
-    localeStr = defaultLocale;
-  }
-
-  if (!localeStr) {
-    localeStr = fallbackLocale;
-  }
-
-  return localeStr;
+  return locale;
 }
 
 export function getSelectOptions({
-  locales, resetToDefaultText = '', automaticDetectionText = '', sort = true,
+  locales,
+  resetToDefaultText = '',
+  automaticDetectionText = '',
+  sort = true,
 }) {
   const options: object[] = [];
 
   if (resetToDefaultText) {
-    options.push(
-      {
-        value: '',
-        label: resetToDefaultText,
-      },
-    );
+    options.push({
+      value: '',
+      label: resetToDefaultText,
+    });
   }
 
   if (automaticDetectionText) {
-    options.push(
-      {
-        value: 'automatic',
-        label: automaticDetectionText,
-      },
-    );
+    options.push({
+      value: 'automatic',
+      label: automaticDetectionText,
+    });
   }
 
   options.push({

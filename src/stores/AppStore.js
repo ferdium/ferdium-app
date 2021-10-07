@@ -17,16 +17,8 @@ import { readJsonSync } from 'fs-extra';
 import Store from './lib/Store';
 import Request from './lib/Request';
 import { CHECK_INTERVAL, DEFAULT_APP_SETTINGS } from '../config';
-import {
-  isMac,
-  electronVersion,
-  osRelease,
-} from '../environment';
-import {
-  ferdiVersion,
-  userDataPath,
-  ferdiLocale,
-} from '../environment-remote';
+import { isMac, electronVersion, osRelease } from '../environment';
+import { ferdiVersion, userDataPath, ferdiLocale } from '../environment-remote';
 import locales from '../i18n/translations';
 import { getLocale } from '../helpers/i18n-helpers';
 
@@ -40,8 +32,6 @@ import { sleep } from '../helpers/async-helpers';
 const debug = require('debug')('Ferdi:AppStore');
 
 const mainWindow = getCurrentWindow();
-
-const defaultLocale = DEFAULT_APP_SETTINGS.locale;
 
 const executablePath = isMac ? remoteProcess.execPath : process.execPath;
 const autoLauncher = new AutoLaunch({
@@ -80,9 +70,9 @@ export default class AppStore extends Store {
 
   @observable timeOfflineStart;
 
-  @observable updateStatus = null;
+  @observable updateStatus = '';
 
-  @observable locale = defaultLocale;
+  @observable locale = ferdiLocale;
 
   @observable isSystemMuteOverridden = false;
 
@@ -408,7 +398,7 @@ export default class AppStore extends Store {
   }
 
   @action _resetUpdateStatus() {
-    this.updateStatus = null;
+    this.updateStatus = '';
   }
 
   @action _healthCheck() {
@@ -480,23 +470,13 @@ export default class AppStore extends Store {
   }
 
   _setLocale() {
-    let locale;
-    if (this.stores.user.isLoggedIn) {
-      locale = this.stores.user.data.locale;
-    }
-
-    if (
-      locale &&
-      Object.prototype.hasOwnProperty.call(locales, locale) &&
-      locale !== this.locale
-    ) {
-      this.locale = locale;
-    } else if (!locale) {
+    if (this.stores.user.isLoggedIn && this.stores.user.data.locale) {
+      this.locale = this.stores.user.data.locale;
+    } else if (!this.locale) {
       this.locale = this._getDefaultLocale();
     }
 
     moment.locale(this.locale);
-
     debug(`Set locale to "${this.locale}"`);
   }
 
@@ -504,7 +484,6 @@ export default class AppStore extends Store {
     return getLocale({
       locale: ferdiLocale,
       locales,
-      defaultLocale,
       fallbackLocale: DEFAULT_APP_SETTINGS.fallbackLocale,
     });
   }
@@ -523,10 +502,12 @@ export default class AppStore extends Store {
   _handleFullScreen() {
     const body = document.querySelector('body');
 
-    if (this.isFullScreen) {
-      body.classList.add('isFullScreen');
-    } else {
-      body.classList.remove('isFullScreen');
+    if (body) {
+      if (this.isFullScreen) {
+        body.classList.add('isFullScreen');
+      } else {
+        body.classList.remove('isFullScreen');
+      }
     }
   }
 

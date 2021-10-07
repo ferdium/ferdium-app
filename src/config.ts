@@ -198,7 +198,6 @@ export const DEFAULT_APP_SETTINGS = {
   spellcheckerLanguage: 'en-us',
   darkMode: false,
   splitMode: false,
-  locale: '',
   fallbackLocale: 'en-US',
   beta: false,
   isAppMuted: false,
