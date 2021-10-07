@@ -210,6 +210,7 @@
   "settings.app.form.customTodoServer": "Custom Todo Server",
   "settings.app.form.darkMode": "Dark Mode aanzetten",
   "settings.app.form.enableGPUAcceleration": "GPU Acceleratie Activeren",
+  "settings.app.form.enableGlobalHideShortcut": "Enable Global shortcut to hide Ferdi",
   "settings.app.form.enableLock": "Enable Password Lock",
   "settings.app.form.enableMenuBar": "Always show Ferdi in Menu Bar",
   "settings.app.form.enableSpellchecking": "Spellingcontrole inschakelen",

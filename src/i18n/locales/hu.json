@@ -210,6 +210,7 @@
   "settings.app.form.customTodoServer": "Custom Todo Server",
   "settings.app.form.darkMode": "Sötét mód engedélyezése",
   "settings.app.form.enableGPUAcceleration": "Hardveres gyorsítás engedélyezése",
+  "settings.app.form.enableGlobalHideShortcut": "Enable Global shortcut to hide Ferdi",
   "settings.app.form.enableLock": "Jelszavas zár engedélyezése",
   "settings.app.form.enableMenuBar": "Always show Ferdi in Menu Bar",
   "settings.app.form.enableSpellchecking": "Helyesírás-ellenőrzés engedélyezése",

@@ -210,6 +210,7 @@
   "settings.app.form.customTodoServer": "Server Todo personalizzato",
   "settings.app.form.darkMode": "Attiva la modalità scura.",
   "settings.app.form.enableGPUAcceleration": "Attiva Accelerazione GPU",
+  "settings.app.form.enableGlobalHideShortcut": "Enable Global shortcut to hide Ferdi",
   "settings.app.form.enableLock": "Abilita blocco con password",
   "settings.app.form.enableMenuBar": "Mostra sempre Ferdi nella barra dei menù",
   "settings.app.form.enableSpellchecking": "Attiva controllo ortografico",

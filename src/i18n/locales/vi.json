@@ -210,6 +210,7 @@
   "settings.app.form.customTodoServer": "Custom Todo Server",
   "settings.app.form.darkMode": "Cho phép chế độ nền tối",
   "settings.app.form.enableGPUAcceleration": "Bật Tăng tốc GPU",
+  "settings.app.form.enableGlobalHideShortcut": "Enable Global shortcut to hide Ferdi",
   "settings.app.form.enableLock": "Cho phép khóa bằng mật khẩu",
   "settings.app.form.enableMenuBar": "Luôn hiển thị Ferdi trong Menu Bar",
   "settings.app.form.enableSpellchecking": "Kích hoạt tính năng kiểm tra chính tả",

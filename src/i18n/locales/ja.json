@@ -210,6 +210,7 @@
   "settings.app.form.customTodoServer": "カスタムToDoサーバー",
   "settings.app.form.darkMode": "ダークモードを有効にする",
   "settings.app.form.enableGPUAcceleration": "GPUアクセラレーションを有効にする",
+  "settings.app.form.enableGlobalHideShortcut": "Enable Global shortcut to hide Ferdi",
   "settings.app.form.enableLock": "パスワードロックを有効にする",
   "settings.app.form.enableMenuBar": "Ferdi内にメニューバーを常時表示する",
   "settings.app.form.enableSpellchecking": "スペルチェックを有効にする",
