@@ -6,7 +6,7 @@
     "strict": true,
     "target": "esnext",
     "lib": ["esnext", "dom"],
-    "module": "commonjs",
+    "module": "CommonJS",
     "jsx": "react",
     "typeRoots": ["@types", "node_modules/@types"],
     "moduleResolution": "node",
@@ -14,6 +14,7 @@
     "sourceMap": true,
     "skipLibCheck": true,
     "noImplicitAny": false, // TODO: Need to switch
+    "pretty": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "composite": true,
@@ -28,6 +29,7 @@
     "noImplicitThis": true,
     "preserveConstEnums": true,
     "strictNullChecks": true,
+    "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true
   }
