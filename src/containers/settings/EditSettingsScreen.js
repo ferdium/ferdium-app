@@ -177,6 +177,10 @@ const messages = defineMessages({
     id: 'settings.app.form.iconSize',
     defaultMessage: 'Service icon size',
   },
+  enableLongPressServiceHint: {
+    id: 'settings.app.form.enableLongPressServiceHint',
+    defaultMessage: 'Enable service shortcut hint on long press',
+  },
   useVerticalStyle: {
     id: 'settings.app.form.useVerticalStyle',
     defaultMessage: 'Use horizontal style',
@@ -301,6 +305,7 @@ class EditSettingsScreen extends Component {
         splitMode: Boolean(settingsData.splitMode),
         serviceRibbonWidth: Number(settingsData.serviceRibbonWidth),
         iconSize: Number(settingsData.iconSize),
+        enableLongPressServiceHint: Boolean(settingsData.enableLongPressServiceHint),
         useVerticalStyle: Boolean(settingsData.useVerticalStyle),
         alwaysShowWorkspaces: Boolean(settingsData.alwaysShowWorkspaces),
         accentColor: settingsData.accentColor,
@@ -607,6 +612,11 @@ class EditSettingsScreen extends Component {
           value: settings.all.app.iconSize,
           default: DEFAULT_APP_SETTINGS.iconSize,
           options: iconSizes,
+        },
+        enableLongPressServiceHint: {
+          label: intl.formatMessage(messages.enableLongPressServiceHint),
+          value: settings.all.app.enableLongPressServiceHint,
+          default: DEFAULT_APP_SETTINGS.enableLongPressServiceHint,
         },
         useVerticalStyle: {
           label: intl.formatMessage(messages.useVerticalStyle),

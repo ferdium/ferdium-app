@@ -550,6 +550,7 @@ class EditSettingsForm extends Component {
 
                 <Hr />
                 <Select field={form.$('iconSize')} />
+                <Toggle field={form.$('enableLongPressServiceHint')} />
 
                 <Hr />
 

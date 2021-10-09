@@ -180,6 +180,7 @@ export const CUSTOM_WEBSITE_RECIPE_ID = 'franz-custom-website';
 export const DEFAULT_SERVICE_ORDER = 99; // something high enough that it gets added to the end of the already-added services on the left sidebar
 
 export const DEFAULT_APP_SETTINGS = {
+  autoLaunchOnStart: false,
   autoLaunchInBackground: false,
   runInBackground: true,
   reloadAfterResume: true,
@@ -233,4 +234,5 @@ export const DEFAULT_APP_SETTINGS = {
   useVerticalStyle: false,
   alwaysShowWorkspaces: false,
   liftSingleInstanceLock: false,
+  enableLongPressServiceHint: false,
 };
