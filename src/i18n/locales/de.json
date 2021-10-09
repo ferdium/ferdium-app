@@ -212,6 +212,7 @@
   "settings.app.form.enableGPUAcceleration": "Hardwarebeschleunigung aktivieren",
   "settings.app.form.enableGlobalHideShortcut": "Enable Global shortcut to hide Ferdi",
   "settings.app.form.enableLock": "Passwort-Sperre aktivieren",
+  "settings.app.form.enableLongPressServiceHint": "Enable service shortcut hint on long press",
   "settings.app.form.enableMenuBar": "Ferdi immer in der Menüleiste anzeigen",
   "settings.app.form.enableSpellchecking": "Rechtschreibprüfung aktivieren",
   "settings.app.form.enableSystemTray": "Always show Ferdi in System Tray",

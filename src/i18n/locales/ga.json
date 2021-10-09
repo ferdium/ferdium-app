@@ -212,6 +212,7 @@
   "settings.app.form.enableGPUAcceleration": "Cumasaigh luasghéarú APG",
   "settings.app.form.enableGlobalHideShortcut": "Enable Global shortcut to hide Ferdi",
   "settings.app.form.enableLock": "Enable Password Lock",
+  "settings.app.form.enableLongPressServiceHint": "Enable service shortcut hint on long press",
   "settings.app.form.enableMenuBar": "Always show Ferdi in Menu Bar",
   "settings.app.form.enableSpellchecking": "Cumasaigh seiceáil litrithe",
   "settings.app.form.enableSystemTray": "Always show Ferdi in System Tray",

@@ -212,6 +212,7 @@
   "settings.app.form.enableGPUAcceleration": "Bật Tăng tốc GPU",
   "settings.app.form.enableGlobalHideShortcut": "Enable Global shortcut to hide Ferdi",
   "settings.app.form.enableLock": "Cho phép khóa bằng mật khẩu",
+  "settings.app.form.enableLongPressServiceHint": "Enable service shortcut hint on long press",
   "settings.app.form.enableMenuBar": "Luôn hiển thị Ferdi trong Menu Bar",
   "settings.app.form.enableSpellchecking": "Kích hoạt tính năng kiểm tra chính tả",
   "settings.app.form.enableSystemTray": "Always show Ferdi in System Tray",

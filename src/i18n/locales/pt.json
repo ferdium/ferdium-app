@@ -212,6 +212,7 @@
   "settings.app.form.enableGPUAcceleration": "Ativar Aceleração de GPU",
   "settings.app.form.enableGlobalHideShortcut": "Enable Global shortcut to hide Ferdi",
   "settings.app.form.enableLock": "Ativar palavra-passe",
+  "settings.app.form.enableLongPressServiceHint": "Enable service shortcut hint on long press",
   "settings.app.form.enableMenuBar": "Always show Ferdi in Menu Bar",
   "settings.app.form.enableSpellchecking": "Ativar correção ortográfica",
   "settings.app.form.enableSystemTray": "Always show Ferdi in System Tray",

@@ -212,6 +212,7 @@
   "settings.app.form.enableGPUAcceleration": "Schakel videokaart-acceleratie in ",
   "settings.app.form.enableGlobalHideShortcut": "Enable Global shortcut to hide Ferdi",
   "settings.app.form.enableLock": "Wachtwoordvergrendeling inschakelen",
+  "settings.app.form.enableLongPressServiceHint": "Enable service shortcut hint on long press",
   "settings.app.form.enableMenuBar": "Altijd Ferdi weergeven in de menubalk",
   "settings.app.form.enableSpellchecking": "Zet spellingcontrole aan",
   "settings.app.form.enableSystemTray": "Laat Ferdi altijd in systeembalk zien",

@@ -212,6 +212,7 @@
   "settings.app.form.enableGPUAcceleration": "Ota Gpu-kiihdytys käyttöön",
   "settings.app.form.enableGlobalHideShortcut": "Enable Global shortcut to hide Ferdi",
   "settings.app.form.enableLock": "Ota Salasanan lukitus käyttöön",
+  "settings.app.form.enableLongPressServiceHint": "Enable service shortcut hint on long press",
   "settings.app.form.enableMenuBar": "Always show Ferdi in Menu Bar",
   "settings.app.form.enableSpellchecking": "Ota oikoluku käyttöön",
   "settings.app.form.enableSystemTray": "Always show Ferdi in System Tray",

@@ -212,6 +212,7 @@
   "settings.app.form.enableGPUAcceleration": "GPUアクセラレーションを有効にする",
   "settings.app.form.enableGlobalHideShortcut": "Enable Global shortcut to hide Ferdi",
   "settings.app.form.enableLock": "パスワードロックを有効にする",
+  "settings.app.form.enableLongPressServiceHint": "Enable service shortcut hint on long press",
   "settings.app.form.enableMenuBar": "Ferdi内にメニューバーを常時表示する",
   "settings.app.form.enableSpellchecking": "スペルチェックを有効にする",
   "settings.app.form.enableSystemTray": "Ferdiを常時システムトレイに表示する",
