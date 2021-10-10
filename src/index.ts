@@ -1,6 +1,13 @@
 /* eslint-disable import/first */
 
-import { app, BrowserWindow, globalShortcut, ipcMain, session, dialog } from 'electron';
+import {
+  app,
+  BrowserWindow,
+  globalShortcut,
+  ipcMain,
+  session,
+  dialog,
+} from 'electron';
 
 import { emptyDirSync, ensureFileSync } from 'fs-extra';
 import { join } from 'path';
@@ -13,12 +20,7 @@ initializeRemote();
 
 import { DEFAULT_APP_SETTINGS, DEFAULT_WINDOW_OPTIONS } from './config';
 
-import {
-  isMac,
-  isWindows,
-  isLinux,
-  altKey,
-} from './environment';
+import { isMac, isWindows, isLinux, altKey } from './environment';
 import {
   isDevMode,
   aboutAppDetails,
@@ -34,7 +36,8 @@ import DBus from './lib/DBus';
 import Settings from './electron/Settings';
 import handleDeepLink from './electron/deepLinking';
 import { isPositionValid } from './electron/windowUtils';
-import { appId } from './package.json'; // eslint-disable-line import/no-unresolved
+// @ts-expect-error Cannot find module './package.json' or its corresponding type declarations.
+import { appId } from './package.json';
 import './electron/exception';
 
 import { asarPath } from './helpers/asar-helpers';
@@ -49,13 +52,18 @@ app.userAgentFallback = userAgent();
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow;
+let mainWindow: BrowserWindow | undefined;
 let willQuitApp = false;
 
 // Register methods to be called once the window has been loaded.
-let onDidLoadFns = [];
+let onDidLoadFns: any[] | null = [];
 
-function onDidLoad(fn) {
+function onDidLoad(fn: {
+  (window: BrowserWindow): void;
+  (window: BrowserWindow): void;
+  (window: BrowserWindow): void;
+  (arg0: BrowserWindow): void;
+}) {
   if (onDidLoadFns) {
     onDidLoadFns.push(fn);
   } else if (mainWindow) {
@@ -76,7 +84,7 @@ if (isWindows) {
 const settings = new Settings('app', DEFAULT_APP_SETTINGS);
 const proxySettings = new Settings('proxy');
 
-const retrieveSettingValue = (key, defaultValue) =>
+const retrieveSettingValue = (key: string, defaultValue: boolean) =>
   ifUndefinedBoolean(settings.get(key), defaultValue);
 
 if (retrieveSettingValue('sentry', DEFAULT_APP_SETTINGS.sentry)) {
@@ -96,7 +104,7 @@ const gotTheLock = liftSingleInstanceLock
 if (!gotTheLock) {
   app.quit();
 } else {
-  app.on('second-instance', (event, argv) => {
+  app.on('second-instance', (_event, argv) => {
     // Someone tried to run a second instance, we should focus our window.
     if (mainWindow) {
       if (!mainWindow.isVisible()) {
@@ -108,7 +116,7 @@ if (!gotTheLock) {
       mainWindow.focus();
 
       if (isWindows) {
-        onDidLoad(window => {
+        onDidLoad((window: BrowserWindow) => {
           // Keep only command line / deep linked arguments
           const url = argv.slice(1);
           if (url) {
@@ -145,6 +153,7 @@ if (!gotTheLock) {
 // https://github.com/electron/electron/issues/9046
 if (
   isLinux &&
+  process.env.XDG_CURRENT_DESKTOP &&
   ['Pantheon', 'Unity:Unity7'].includes(process.env.XDG_CURRENT_DESKTOP)
 ) {
   process.env.XDG_CURRENT_DESKTOP = 'Unity';
@@ -196,16 +205,20 @@ const createWindow = () => {
     frame: isLinux,
     backgroundColor,
     webPreferences: {
-      spellcheck: retrieveSettingValue('enableSpellchecking', DEFAULT_APP_SETTINGS.enableSpellchecking),
+      spellcheck: retrieveSettingValue(
+        'enableSpellchecking',
+        DEFAULT_APP_SETTINGS.enableSpellchecking,
+      ),
       nodeIntegration: true,
       contextIsolation: false,
       webviewTag: true,
       preload: join(__dirname, 'sentry.js'),
+      // @ts-expect-error Object literal may only specify known properties, and 'enableRemoteModule' does not exist in type 'WebPreferences'.
       enableRemoteModule: true,
     },
   });
 
-  app.on('web-contents-created', (e, contents) => {
+  app.on('web-contents-created', (_e, contents) => {
     if (contents.getType() === 'webview') {
       contents.on('new-window', event => {
         event.preventDefault();
@@ -225,7 +238,7 @@ const createWindow = () => {
   });
 
   // Initialize System Tray
-  const trayIcon = new Tray();
+  const trayIcon: Tray = new Tray();
 
   // Initialize DBus interface
   const dbus = new DBus(trayIcon);
@@ -256,7 +269,7 @@ const createWindow = () => {
 
   // Windows deep linking handling on app launch
   if (isWindows) {
-    onDidLoad(window => {
+    onDidLoad((window: BrowserWindow) => {
       const url = process.argv.slice(1);
       if (url) {
         handleDeepLink(window, url.toString());
@@ -270,24 +283,35 @@ const createWindow = () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    if (!willQuitApp && retrieveSettingValue('runInBackground', DEFAULT_APP_SETTINGS.runInBackground)) {
+    if (
+      !willQuitApp &&
+      retrieveSettingValue(
+        'runInBackground',
+        DEFAULT_APP_SETTINGS.runInBackground,
+      )
+    ) {
       e.preventDefault();
       if (isWindows) {
         debug('Window: minimize');
-        mainWindow.minimize();
+        mainWindow?.minimize();
 
-        if (retrieveSettingValue('closeToSystemTray', DEFAULT_APP_SETTINGS.closeToSystemTray)) {
+        if (
+          retrieveSettingValue(
+            'closeToSystemTray',
+            DEFAULT_APP_SETTINGS.closeToSystemTray,
+          )
+        ) {
           debug('Skip taskbar: true');
-          mainWindow.setSkipTaskbar(true);
+          mainWindow?.setSkipTaskbar(true);
         }
-      } else if (isMac && mainWindow.isFullScreen()) {
+      } else if (isMac && mainWindow?.isFullScreen()) {
         debug('Window: leaveFullScreen and hide');
-        mainWindow.once('show', () => mainWindow.setFullScreen(true));
-        mainWindow.once('leave-full-screen', () => mainWindow.hide());
+        mainWindow.once('show', () => mainWindow?.setFullScreen(true));
+        mainWindow.once('leave-full-screen', () => mainWindow?.hide());
         mainWindow.setFullScreen(false);
       } else {
         debug('Window: hide');
-        mainWindow.hide();
+        mainWindow?.hide();
       }
     } else {
       dbus.stop();
@@ -298,35 +322,49 @@ const createWindow = () => {
   // For Windows we need to store a flag to properly restore the window
   // if the window was maximized before minimizing it so system tray
   mainWindow.on('minimize', () => {
+    // @ts-expect-error Property 'wasMaximized' does not exist on type 'App'.
     app.wasMaximized = app.isMaximized;
 
-    if (retrieveSettingValue('minimizeToSystemTray', DEFAULT_APP_SETTINGS.minimizeToSystemTray)) {
+    if (
+      retrieveSettingValue(
+        'minimizeToSystemTray',
+        DEFAULT_APP_SETTINGS.minimizeToSystemTray,
+      )
+    ) {
       debug('Skip taskbar: true');
-      mainWindow.setSkipTaskbar(true);
+      mainWindow?.setSkipTaskbar(true);
       trayIcon.show();
     }
   });
 
   mainWindow.on('maximize', () => {
     debug('Window: maximize');
+    // @ts-expect-error Property 'isMaximized' does not exist on type 'App'.
     app.isMaximized = true;
   });
 
   mainWindow.on('unmaximize', () => {
     debug('Window: unmaximize');
+    // @ts-expect-error Property 'isMaximized' does not exist on type 'App'.
     app.isMaximized = false;
   });
 
   mainWindow.on('restore', () => {
     debug('Window: restore');
-    mainWindow.setSkipTaskbar(false);
+    mainWindow?.setSkipTaskbar(false);
 
+    // @ts-expect-error Property 'wasMaximized' does not exist on type 'App'.
     if (app.wasMaximized) {
       debug('Window: was maximized before, maximize window');
-      mainWindow.maximize();
+      mainWindow?.maximize();
     }
 
-    if (!retrieveSettingValue('enableSystemTray', DEFAULT_APP_SETTINGS.enableSystemTray)) {
+    if (
+      !retrieveSettingValue(
+        'enableSystemTray',
+        DEFAULT_APP_SETTINGS.enableSystemTray,
+      )
+    ) {
       debug('Tray: hiding tray icon');
       trayIcon.hide();
     }
@@ -340,10 +378,10 @@ const createWindow = () => {
 
   mainWindow.on('show', () => {
     debug('Skip taskbar: true');
-    mainWindow.setSkipTaskbar(false);
+    mainWindow?.setSkipTaskbar(false);
   });
 
-  app.mainWindow = mainWindow;
+  // @ts-expect-error Property 'isMaximized' does not exist on type 'App'.
   app.isMaximized = mainWindow.isMaximized();
 
   mainWindow.webContents.on('new-window', (e, url) => {
@@ -351,14 +389,21 @@ const createWindow = () => {
     openExternalUrl(url);
   });
 
-  if (retrieveSettingValue('startMinimized', DEFAULT_APP_SETTINGS.startMinimized)) {
+  if (
+    retrieveSettingValue('startMinimized', DEFAULT_APP_SETTINGS.startMinimized)
+  ) {
     mainWindow.hide();
   } else {
     mainWindow.show();
   }
 
   app.whenReady().then(() => {
-    if (retrieveSettingValue('enableGlobalHideShortcut', DEFAULT_APP_SETTINGS.enableGlobalHideShortcut)) {
+    if (
+      retrieveSettingValue(
+        'enableGlobalHideShortcut',
+        DEFAULT_APP_SETTINGS.enableGlobalHideShortcut,
+      )
+    ) {
       // Toggle the window on 'Alt+X'
       globalShortcut.register(`${altKey()}+X`, () => {
         trayIcon.trayMenuTemplate[0].click();
@@ -410,11 +455,11 @@ app.on('ready', () => {
   if (isWindows) {
     const extraArgs = isDevMode ? `${__dirname} ` : '';
     const iconPath = asarPath(
-          join(
-            isDevMode ? `${__dirname}../src/` : __dirname,
-            'assets/images/taskbar/win32/display.ico',
-          ),
-        );
+      join(
+        isDevMode ? `${__dirname}../src/` : __dirname,
+        'assets/images/taskbar/win32/display.ico',
+      ),
+    );
     app.setUserTasks([
       {
         program: process.execPath,
@@ -430,7 +475,7 @@ app.on('ready', () => {
         iconPath,
         iconIndex: 0,
         title: 'Quit Ferdi',
-        description: null,
+        description: '',
       },
     ]);
   }
@@ -446,7 +491,8 @@ app.on('ready', () => {
 const noop = () => null;
 let authCallback = noop;
 
-app.on('login', (event, webContents, request, authInfo, callback) => {
+app.on('login', (event, _webContents, _request, authInfo, callback) => {
+  // @ts-expect-error Type '(username?: string | undefined, password?: string | undefined) => void' is not assignable to type '() => null'.
   authCallback = callback;
   debug('browser login event', authInfo);
   event.preventDefault();
@@ -458,14 +504,15 @@ app.on('login', (event, webContents, request, authInfo, callback) => {
 });
 
 // TODO: evaluate if we need to store the authCallback for every service
-ipcMain.on('feature-basic-auth-credentials', (e, { user, password }) => {
+ipcMain.on('feature-basic-auth-credentials', (_e, { user, password }) => {
   debug('Received basic auth credentials', user, '********');
 
+  // @ts-expect-error Expected 0 arguments, but got 2.
   authCallback(user, password);
   authCallback = noop;
 });
 
-ipcMain.on('open-browser-window', (e, { url, serviceId }) => {
+ipcMain.on('open-browser-window', (_e, { url, serviceId }) => {
   const serviceSession = session.fromPartition(`persist:service-${serviceId}`);
   const child = new BrowserWindow({
     parent: mainWindow,
@@ -483,7 +530,7 @@ ipcMain.on('open-browser-window', (e, { url, serviceId }) => {
 
 ipcMain.on(
   'modifyRequestHeaders',
-  (e, { modifiedRequestHeaders, serviceId }) => {
+  (_e, { modifiedRequestHeaders, serviceId }) => {
     debug(
       `Received modifyRequestHeaders ${modifiedRequestHeaders} for serviceId ${serviceId}`,
     );
@@ -504,7 +551,7 @@ ipcMain.on(
   },
 );
 
-ipcMain.on('knownCertificateHosts', (e, { knownHosts, serviceId }) => {
+ipcMain.on('knownCertificateHosts', (_e, { knownHosts, serviceId }) => {
   debug(
     `Received knownCertificateHosts ${knownHosts} for serviceId ${serviceId}`,
   );
@@ -513,7 +560,10 @@ ipcMain.on('knownCertificateHosts', (e, { knownHosts, serviceId }) => {
     .setCertificateVerifyProc((request, callback) => {
       // To know more about these callbacks: https://www.electronjs.org/docs/api/session#sessetcertificateverifyprocproc
       const { hostname } = request;
-      if (knownHosts.find(item => item.includes(hostname)).length > 0) {
+      if (
+        knownHosts.find((item: string | string[]) => item.includes(hostname))
+          .length > 0
+      ) {
         callback(0);
       } else {
         callback(-2);
@@ -524,6 +574,7 @@ ipcMain.on('knownCertificateHosts', (e, { knownHosts, serviceId }) => {
 ipcMain.on('feature-basic-auth-cancel', () => {
   debug('Cancel basic auth');
 
+  // @ts-expect-error Expected 0 arguments, but got 2.
   authCallback(null);
   authCallback = noop;
 });
@@ -532,7 +583,7 @@ ipcMain.on('feature-basic-auth-cancel', () => {
 
 ipcMain.on('find-in-page', (e, text, options) => {
   const { sender: webContents } = e;
-  if (webContents !== mainWindow.webContents && typeof text === 'string') {
+  if (webContents !== mainWindow?.webContents && typeof text === 'string') {
     const sanitizedOptions = {};
     for (const option of ['forward', 'findNext', 'matchCase']) {
       if (option in options) {
@@ -549,7 +600,7 @@ ipcMain.on('find-in-page', (e, text, options) => {
 
 ipcMain.on('stop-find-in-page', (e, action) => {
   const { sender: webContents } = e;
-  if (webContents !== mainWindow.webContents) {
+  if (webContents !== mainWindow?.webContents) {
     const validActions = [
       'clearSelection',
       'keepSelection',
@@ -562,7 +613,7 @@ ipcMain.on('stop-find-in-page', (e, action) => {
   e.returnValue = null;
 });
 
-ipcMain.on('set-spellchecker-locales', (e, { locale, serviceId }) => {
+ipcMain.on('set-spellchecker-locales', (_e, { locale, serviceId }) => {
   if (serviceId === undefined) {
     return;
   }
@@ -580,7 +631,12 @@ ipcMain.on('set-spellchecker-locales', (e, { locale, serviceId }) => {
 app.on('window-all-closed', () => {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
-  if (retrieveSettingValue('runInBackground', DEFAULT_APP_SETTINGS.runInBackground)) {
+  if (
+    retrieveSettingValue(
+      'runInBackground',
+      DEFAULT_APP_SETTINGS.runInBackground,
+    )
+  ) {
     debug('Window: all windows closed, quit app');
     app.quit();
   } else {
@@ -591,8 +647,10 @@ app.on('window-all-closed', () => {
 app.on('before-quit', event => {
   const yesButtonIndex = 0;
   let selection = yesButtonIndex;
-  if (retrieveSettingValue('confirmOnQuit', DEFAULT_APP_SETTINGS.confirmOnQuit)) {
-    selection = dialog.showMessageBoxSync(app.mainWindow, {
+  if (
+    retrieveSettingValue('confirmOnQuit', DEFAULT_APP_SETTINGS.confirmOnQuit)
+  ) {
+    selection = dialog.showMessageBoxSync(mainWindow!, {
       type: 'question',
       message: 'Quit',
       detail: 'Do you really want to quit Ferdi?',
@@ -612,12 +670,12 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
   } else {
-    mainWindow.show();
+    mainWindow?.show();
   }
 });
 
-app.on('web-contents-created', (createdEvent, contents) => {
-  contents.on('new-window', (event, url, frameNme, disposition) => {
+app.on('web-contents-created', (_createdEvent, contents) => {
+  contents.on('new-window', (event, _url, _frameNme, disposition) => {
     if (disposition === 'foreground-tab') event.preventDefault();
   });
 });
@@ -627,7 +685,7 @@ app.on('will-finish-launching', () => {
   app.on('open-url', (event, url) => {
     event.preventDefault();
 
-    onDidLoad(window => {
+    onDidLoad((window: BrowserWindow) => {
       debug('open-url event', url);
       handleDeepLink(window, url);
     });
