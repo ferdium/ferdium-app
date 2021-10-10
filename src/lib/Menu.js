@@ -20,7 +20,7 @@ import {
   addNewServiceShortcutKey,
   muteFerdiShortcutKey,
 } from '../environment';
-import { aboutAppDetails } from '../environment-remote';
+import { aboutAppDetails, ferdiVersion } from '../environment-remote';
 import { todosStore } from '../features/todos';
 import { todoActions } from '../features/todos/actions';
 import { workspaceActions } from '../features/workspaces/actions';
@@ -515,7 +515,7 @@ const _titleBarTemplateFactory = (intl, locked) => [
         label: intl.formatMessage(menuItems.changelog),
         click() {
           openExternalUrl(
-            `${GITHUB_FERDI_URL}/ferdi/blob/develop/CHANGELOG.md`,
+            `${GITHUB_FERDI_URL}/ferdi/releases/tag/v${ferdiVersion}`,
             true,
           );
         },
