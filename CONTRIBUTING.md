@@ -13,7 +13,7 @@
   - [How Can I Contribute?](#how-can-i-contribute)
   - [Setting up your Development machine](#setting-up-your-development-machine)
     - [Install System-level dependencies](#install-system-level-dependencies)
-      - [Node.js, npm, node-gyp](#nodejs-npm-node-gyp)
+      - [Node.js, npm, pnpm](#nodejs-npm-pnpm)
       - [Git](#git)
       - [Debian/Ubuntu](#debianubuntu)
       - [Fedora](#fedora)
@@ -56,7 +56,7 @@ As a basic rule, before filing issues, feature requests or anything else. Take a
 
 ### Install System-level dependencies
 
-#### Node.js, npm, node-gyp
+#### Node.js, npm, pnpm
 
 Please make sure you are conforming to the `engines` requirements used by the developers/contributors as specified in the [package.json file](./package.json#engines).
 
@@ -104,7 +104,7 @@ npm i -g windows-build-tools --vs2015
 We need `node-gyp` to be able to compile any native dependencies
 
 ```bash
-npm ls -g node-gyp@8.1.0 || npm i -g node-gyp@8.1.0
+npm ls -g node-gyp@8.2.0 || npm i -g node-gyp@8.2.0
 ```
 
 #### Lerna
