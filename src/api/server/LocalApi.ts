@@ -1,5 +1,6 @@
+import { ExecException } from 'child_process';
 import { ipcRenderer } from 'electron';
-import du from 'du';
+import fastFolderSize from 'fast-folder-size';
 
 import { getServicePartitionsDirectory } from '../../helpers/service-helpers';
 
@@ -29,13 +30,19 @@ export default class LocalApi {
   // Services
   async getAppCacheSize() {
     const partitionsDir = getServicePartitionsDirectory();
-    return new Promise((resolve, reject) => {
-      du(partitionsDir, {}, (err: Error | null, size?: number | undefined) => {
-        if (err) reject(err);
 
-        debug('LocalApi::getAppCacheSize resolves', size);
-        resolve(size);
-      });
+    return new Promise((resolve, reject) => {
+      fastFolderSize(
+        partitionsDir,
+        (err: ExecException | null, bytes: number | undefined) => {
+          if (err) {
+            reject(err);
+          }
+
+          debug('LocalApi::getAppCacheSize resolves', bytes);
+          resolve(bytes);
+        },
+      );
     });
   }
 
