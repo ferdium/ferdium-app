@@ -448,8 +448,8 @@ app.on('ready', () => {
 
   // Register App URL
   const protocolClient = isDevMode ? 'ferdi-dev' : 'ferdi';
-  if (!app.isDefaultProtocolClient(protocolClient)) {
-    app.setAsDefaultProtocolClient(protocolClient);
+  if (!app.isDefaultProtocolClient(protocolClient, process.execPath)) {
+    app.setAsDefaultProtocolClient(protocolClient, process.execPath);
   }
 
   if (isWindows) {
