@@ -7,7 +7,6 @@ import recipePreview from './recipePreview';
 import ui from './ui';
 import app from './app';
 import user from './user';
-import news from './news';
 import settings from './settings';
 import requests from './requests';
 import workspaces from '../features/workspaces/actions';
@@ -20,7 +19,6 @@ const actions = {
   ui,
   app,
   user,
-  news,
   settings,
   requests,
 };

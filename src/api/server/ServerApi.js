@@ -16,14 +16,12 @@ import fetch from 'electron-fetch';
 import ServiceModel from '../../models/Service';
 import RecipePreviewModel from '../../models/RecipePreview';
 import RecipeModel from '../../models/Recipe';
-import NewsModel from '../../models/News';
 import UserModel from '../../models/User';
 
 import { sleep } from '../../helpers/async-helpers';
 
 import { SERVER_NOT_LOADED } from '../../config';
-import { osArch, osPlatform } from '../../environment';
-import { userDataRecipesPath, userDataPath, ferdiVersion } from '../../environment-remote';
+import { userDataRecipesPath, userDataPath } from '../../environment-remote';
 import { asarRecipesPath } from '../../helpers/asar-helpers';
 import apiBase from '../apiBase';
 import { prepareAuthRequest, sendAuthRequest } from '../utils/auth';
@@ -442,25 +440,6 @@ export default class ServerApi {
     }
   }
 
-  // News
-  async getLatestNews() {
-    const url = `${apiBase(
-      true,
-    )}/news?platform=${osPlatform}&arch=${osArch}&version=${ferdiVersion}`;
-    const request = await sendAuthRequest(url);
-    if (!request.ok) throw request;
-    const data = await request.json();
-    const news = this._mapNewsModels(data);
-    debug('ServerApi::getLatestNews resolves', news);
-    return news;
-  }
-
-  async hideNews(id) {
-    const request = await sendAuthRequest(`${apiBase()}/news/${id}/read`);
-    if (!request.ok) throw request;
-    debug('ServerApi::hideNews resolves', id);
-  }
-
   // Health Check
   async healthCheck() {
     if (apiBase() === SERVER_NOT_LOADED) {
@@ -585,19 +564,6 @@ export default class ServerApi {
         }
       })
       .filter(recipe => recipe !== null);
-  }
-
-  _mapNewsModels(news) {
-    return news
-      .map(newsItem => {
-        try {
-          return new NewsModel(newsItem);
-        } catch (error) {
-          console.error(error);
-          return null;
-        }
-      })
-      .filter(newsItem => newsItem !== null);
   }
 
   _getDevRecipes() {

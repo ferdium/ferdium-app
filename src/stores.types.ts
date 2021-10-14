@@ -3,7 +3,6 @@ export interface FerdiStores {
   communityRecipes: CommunityRecipesStore;
   features: FeaturesStore;
   globalError: GlobalErrorStore;
-  news: NewsStore;
   recipePreviews: RecipePreviewsStore;
   recipes: RecipeStore;
   requests: RequestsStore;
@@ -21,7 +20,6 @@ interface Stores {
   communityRecipes: CommunityRecipesStore;
   features: FeaturesStore;
   globalError: GlobalErrorStore;
-  news: NewsStore;
   recipePreviews: RecipePreviewsStore;
   recipes: RecipeStore;
   requests: RequestsStore;
@@ -36,7 +34,6 @@ interface Stores {
 
 interface Actions {
   app: AppStore;
-  news: NewsStore;
   recipePreviews: RecipePreviewsStore;
   recipes: RecipeStore;
   requests: RequestsStore;
@@ -52,7 +49,6 @@ interface Api {
   app: AppStore;
   features: FeaturesStore;
   local: {};
-  news: NewsStore;
   recipePreviews: RecipePreviewsStore;
   recipes: RecipeStore;
   services: ServicesStore;
@@ -128,18 +124,6 @@ interface GlobalErrorStore {
   _reactions: [];
   _status: () => void;
   actionStatus: () => void;
-}
-
-interface NewsStore {
-  actions: Actions;
-  api: Api;
-  hideNewsRequest: () => void;
-  latestNewsRequest: () => void;
-  stores: Stores;
-  _reactions: [];
-  _status: () => void;
-  actionStatus: () => void;
-  latest: () => void;
 }
 
 interface RecipePreviewsStore {

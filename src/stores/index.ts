@@ -6,7 +6,6 @@ import ServicesStore from './ServicesStore';
 import RecipesStore from './RecipesStore';
 import RecipePreviewsStore from './RecipePreviewsStore';
 import UIStore from './UIStore';
-import NewsStore from './NewsStore';
 import RequestStore from './RequestStore';
 import GlobalErrorStore from './GlobalErrorStore';
 import { workspaceStore } from '../features/workspaces';
@@ -25,7 +24,6 @@ export default (api, actions, router) => {
     recipes: new RecipesStore(stores, api, actions),
     recipePreviews: new RecipePreviewsStore(stores, api, actions),
     ui: new UIStore(stores, api, actions),
-    news: new NewsStore(stores, api, actions),
     requests: new RequestStore(stores, api, actions),
     globalError: new GlobalErrorStore(stores, api, actions),
     workspaces: workspaceStore,

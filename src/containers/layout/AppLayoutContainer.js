@@ -8,7 +8,6 @@ import RecipesStore from '../../stores/RecipesStore';
 import ServicesStore from '../../stores/ServicesStore';
 import FeaturesStore from '../../stores/FeaturesStore';
 import UIStore from '../../stores/UIStore';
-import NewsStore from '../../stores/NewsStore';
 import SettingsStore from '../../stores/SettingsStore';
 import UserStore from '../../stores/UserStore';
 import RequestStore from '../../stores/RequestStore';
@@ -38,7 +37,6 @@ class AppLayoutContainer extends Component {
       features,
       services,
       ui,
-      news,
       settings,
       globalError,
       requests,
@@ -62,8 +60,6 @@ class AppLayoutContainer extends Component {
       hibernate,
       awake,
     } = this.props.actions.service;
-
-    const { hide } = this.props.actions.news;
 
     const { retryRequiredRequests } = this.props.actions.requests;
 
@@ -95,10 +91,11 @@ class AppLayoutContainer extends Component {
 
     const workspacesDrawer = (
       <WorkspaceDrawer
+        // eslint-disable-next-line no-confusing-arrow
         getServicesForWorkspace={workspace =>
-          (workspace
+          workspace
             ? workspaceStore.getWorkspaceServices(workspace).map(s => s.name)
-            : services.all.map(s => s.name))
+            : services.all.map(s => s.name)
         }
       />
     );
@@ -158,8 +155,6 @@ class AppLayoutContainer extends Component {
           sidebar={sidebar}
           workspacesDrawer={workspacesDrawer}
           services={servicesContainer}
-          news={news.latest}
-          removeNewsItem={hide}
           reloadServicesAfterUpdate={() => window.location.reload()}
           installAppUpdate={installUpdate}
           globalError={globalError.error}
@@ -182,7 +177,6 @@ AppLayoutContainer.wrappedComponent.propTypes = {
     recipes: PropTypes.instanceOf(RecipesStore).isRequired,
     app: PropTypes.instanceOf(AppStore).isRequired,
     ui: PropTypes.instanceOf(UIStore).isRequired,
-    news: PropTypes.instanceOf(NewsStore).isRequired,
     settings: PropTypes.instanceOf(SettingsStore).isRequired,
     user: PropTypes.instanceOf(UserStore).isRequired,
     requests: PropTypes.instanceOf(RequestStore).isRequired,
@@ -191,7 +185,6 @@ AppLayoutContainer.wrappedComponent.propTypes = {
   }).isRequired,
   actions: PropTypes.shape({
     service: PropTypes.instanceOf(ServicesStore).isRequired,
-    news: PropTypes.instanceOf(NewsStore).isRequired,
     ui: PropTypes.instanceOf(UIStore).isRequired,
     app: PropTypes.instanceOf(AppStore).isRequired,
     requests: PropTypes.instanceOf(RequestStore).isRequired,

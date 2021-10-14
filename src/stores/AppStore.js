@@ -153,9 +153,6 @@ export default class AppStore extends Store {
       this.stores.features.featuresRequest.invalidate({
         immediately: true,
       });
-      this.stores.news.latestNewsRequest.invalidate({
-        immediately: true,
-      });
     }, ms('60m'));
 
     // Check for updates once every 4 hours

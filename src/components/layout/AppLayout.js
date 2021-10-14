@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
-import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
+import { observer } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import { TitleBar } from 'electron-react-titlebar/renderer';
 import injectSheet from 'react-jss';
@@ -19,10 +19,6 @@ import WorkspaceSwitchingIndicator from '../../features/workspaces/components/Wo
 import { workspaceStore } from '../../features/workspaces';
 import AppUpdateInfoBar from '../AppUpdateInfoBar';
 import Todos from '../../features/todos/containers/TodosScreen';
-
-function createMarkup(HTMLString) {
-  return { __html: HTMLString };
-}
 
 const messages = defineMessages({
   servicesUpdated: {
@@ -73,11 +69,9 @@ class AppLayout extends Component {
     workspacesDrawer: PropTypes.element.isRequired,
     services: PropTypes.element.isRequired,
     children: PropTypes.element,
-    news: MobxPropTypes.arrayOrObservableArray.isRequired,
     showServicesUpdatedInfoBar: PropTypes.bool.isRequired,
     appUpdateIsDownloaded: PropTypes.bool.isRequired,
     authRequestFailed: PropTypes.bool.isRequired,
-    removeNewsItem: PropTypes.func.isRequired,
     reloadServicesAfterUpdate: PropTypes.func.isRequired,
     installAppUpdate: PropTypes.func.isRequired,
     showRequiredRequestsError: PropTypes.bool.isRequired,
@@ -103,11 +97,9 @@ class AppLayout extends Component {
       sidebar,
       services,
       children,
-      news,
       showServicesUpdatedInfoBar,
       appUpdateIsDownloaded,
       authRequestFailed,
-      removeNewsItem,
       reloadServicesAfterUpdate,
       installAppUpdate,
       showRequiredRequestsError,
@@ -132,26 +124,6 @@ class AppLayout extends Component {
             {sidebar}
             <div className="app__service">
               <WorkspaceSwitchingIndicator />
-              {news.length > 0 &&
-                news.map(item => (
-                  <InfoBar
-                    key={item.id}
-                    position="top"
-                    type={item.type}
-                    sticky={item.sticky}
-                    onHide={() => removeNewsItem({ newsId: item.id })}
-                  >
-                    <span
-                      dangerouslySetInnerHTML={createMarkup(item.message)}
-                      onClick={event => {
-                        const { target } = event;
-                        if (target && target.hasAttribute('data-is-news-cta')) {
-                          removeNewsItem({ newsId: item.id });
-                        }
-                      }}
-                    />
-                  </InfoBar>
-                ))}
               {!areRequiredRequestsSuccessful && showRequiredRequestsError && (
                 <InfoBar
                   type="danger"
@@ -176,19 +148,22 @@ class AppLayout extends Component {
                   {intl.formatMessage(messages.authRequestFailed)}
                 </InfoBar>
               )}
-              {showServicesUpdatedInfoBar && this.state.shouldShowServicesUpdatedInfoBar && (
-                <InfoBar
-                  type="primary"
-                  ctaLabel={intl.formatMessage(messages.buttonReloadServices)}
-                  onClick={reloadServicesAfterUpdate}
-                  onHide={() => {
-                    this.setState({ shouldShowServicesUpdatedInfoBar: false });
-                  }}
-                >
-                  <span className="mdi mdi-power-plug" />
-                  {intl.formatMessage(messages.servicesUpdated)}
-                </InfoBar>
-              )}
+              {showServicesUpdatedInfoBar &&
+                this.state.shouldShowServicesUpdatedInfoBar && (
+                  <InfoBar
+                    type="primary"
+                    ctaLabel={intl.formatMessage(messages.buttonReloadServices)}
+                    onClick={reloadServicesAfterUpdate}
+                    onHide={() => {
+                      this.setState({
+                        shouldShowServicesUpdatedInfoBar: false,
+                      });
+                    }}
+                  >
+                    <span className="mdi mdi-power-plug" />
+                    {intl.formatMessage(messages.servicesUpdated)}
+                  </InfoBar>
+                )}
               {appUpdateIsDownloaded && this.state.shouldShowAppUpdateInfoBar && (
                 <AppUpdateInfoBar
                   onInstallUpdate={installAppUpdate}
