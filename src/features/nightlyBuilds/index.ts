@@ -14,26 +14,26 @@ export default function initialize() {
   }
 
   function toggleFeature() {
-    if (window.ferdi.stores.settings.app.nightly) {
-      window.ferdi.actions.settings.update({
+    if (window['ferdi'].stores.settings.app.nightly) {
+      window['ferdi'].actions.settings.update({
         type: 'app',
         data: {
           nightly: false,
         },
       });
-      window.ferdi.actions.user.update({
+      window['ferdi'].actions.user.update({
         userData: {
           nightly: false,
         },
       });
     } else {
       // We need to close the settings, otherwise the modal will be drawn under the settings window
-      window.ferdi.actions.ui.closeSettings();
+      window['ferdi'].actions.ui.closeSettings();
       showModal();
     }
   }
 
-  window.ferdi.features.nightlyBuilds = {
+  window['ferdi'].features.nightlyBuilds = {
     state,
     showModal,
     toggleFeature,

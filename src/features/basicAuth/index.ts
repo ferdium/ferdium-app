@@ -1,4 +1,4 @@
-import { ipcRenderer } from 'electron';
+import { AuthInfo, BrowserWindow, ipcRenderer } from 'electron';
 
 import BasicAuthComponent from './Component';
 
@@ -11,7 +11,7 @@ const state = ModalState;
 export default function initialize() {
   debug('Initialize basicAuth feature');
 
-  window.ferdi.features.basicAuth = {
+  window['ferdi'].features.basicAuth = {
     state,
   };
 
@@ -23,7 +23,7 @@ export default function initialize() {
   });
 }
 
-export function mainIpcHandler(mainWindow, authInfo) {
+export function mainIpcHandler(mainWindow: BrowserWindow, authInfo: AuthInfo) {
   debug('Sending basic auth call', authInfo);
 
   mainWindow.webContents.send('feature:basic-auth-request', {

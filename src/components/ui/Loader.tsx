@@ -1,31 +1,22 @@
-import { Component } from 'react';
+import { Component, ReactChildren } from 'react';
 import { observer, inject } from 'mobx-react';
-import PropTypes from 'prop-types';
 import Loader from 'react-loader';
 
-import { oneOrManyChildElements } from '../../prop-types';
+import { FerdiStores } from '../../stores.types';
+
+type Props = {
+  children: ReactChildren;
+  loaded: boolean;
+  className: string;
+  color: string;
+  stores: FerdiStores;
+};
 
 @inject('stores')
 @observer
-class LoaderComponent extends Component {
-  static propTypes = {
-    children: oneOrManyChildElements,
-    loaded: PropTypes.bool,
-    className: PropTypes.string,
-    color: PropTypes.string,
-    stores: PropTypes.shape({
-      settings: PropTypes.shape({
-        app: PropTypes.shape({
-          accentColor: PropTypes.string.isRequired,
-        }).isRequired,
-      }).isRequired,
-    }).isRequired,
-  };
-
+class LoaderComponent extends Component<Props> {
   static defaultProps = {
-    children: null,
     loaded: false,
-    className: '',
     color: 'ACCENT',
   };
 
@@ -40,7 +31,6 @@ class LoaderComponent extends Component {
     return (
       <Loader
         loaded={loaded}
-        // lines={10}
         width={4}
         scale={0.6}
         color={color}

@@ -499,7 +499,7 @@ app.on('login', (event, _webContents, _request, authInfo, callback) => {
 
   if (!authInfo.isProxy && authInfo.scheme === 'basic') {
     debug('basic auth handler', authInfo);
-    basicAuthHandler(mainWindow, authInfo);
+    basicAuthHandler(mainWindow!, authInfo);
   }
 });
 

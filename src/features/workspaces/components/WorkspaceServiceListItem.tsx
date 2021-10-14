@@ -1,14 +1,12 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import injectSheet from 'react-jss';
 import classnames from 'classnames';
 import { Toggle } from '@meetfranz/forms';
 
-import Service from '../../../models/Service';
 import ServiceIcon from '../../../components/ui/ServiceIcon';
 
-const styles = (theme) => ({
+const styles = theme => ({
   listItem: {
     height: theme.workspaces.settings.listItems.height,
     borderBottom: `1px solid ${theme.workspaces.settings.listItems.borderColor}`,
@@ -31,29 +29,22 @@ const styles = (theme) => ({
   },
 });
 
-@injectSheet(styles) @observer
-class WorkspaceServiceListItem extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    isInWorkspace: PropTypes.bool.isRequired,
-    onToggle: PropTypes.func.isRequired,
-    service: PropTypes.instanceOf(Service).isRequired,
-  };
+type Props = {
+  classes: any;
+  isInWorkspace: boolean;
+  onToggle: () => void;
+  service: any;
+};
 
+@injectSheet(styles)
+@observer
+class WorkspaceServiceListItem extends Component<Props> {
   render() {
-    const {
-      classes,
-      isInWorkspace,
-      onToggle,
-      service,
-    } = this.props;
+    const { classes, isInWorkspace, onToggle, service } = this.props;
 
     return (
       <div className={classes.listItem}>
-        <ServiceIcon
-          className={classes.serviceIcon}
-          service={service}
-        />
+        <ServiceIcon className={classes.serviceIcon} service={service} />
         <span
           className={classnames([
             classes.label,

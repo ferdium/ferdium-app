@@ -1,23 +1,21 @@
-import { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import { Component } from 'react';
 import { observer } from 'mobx-react';
 import { Field } from 'mobx-react-form';
 import classnames from 'classnames';
-import Dropzone from 'react-dropzone';
+import Dropzone, { DropzoneRef } from 'react-dropzone';
 import { isWindows } from '../../environment';
 
-@observer
-class ImageUpload extends Component {
-  static propTypes = {
-    field: PropTypes.instanceOf(Field).isRequired,
-    className: PropTypes.string,
-    multiple: PropTypes.bool,
-    textDelete: PropTypes.string.isRequired,
-    textUpload: PropTypes.string.isRequired,
-  };
+type Props = {
+  field: typeof Field;
+  className: string;
+  multiple: boolean;
+  textDelete: string;
+  textUpload: string;
+};
 
+@observer
+class ImageUpload extends Component<Props> {
   static defaultProps = {
-    className: null,
     multiple: false,
   };
 
@@ -25,7 +23,7 @@ class ImageUpload extends Component {
     path: null,
   };
 
-  dropzoneRef = null;
+  dropzoneRef: DropzoneRef | null = null;
 
   onDrop(acceptedFiles) {
     const { field } = this.props;

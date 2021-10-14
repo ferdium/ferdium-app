@@ -1,26 +1,26 @@
 import { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import PropTypes from 'prop-types';
 
 import ErrorBoundary from '../../../components/util/ErrorBoundary';
 import EditWorkspaceForm from '../components/EditWorkspaceForm';
-import ServicesStore from '../../../stores/ServicesStore';
 import Workspace from '../models/Workspace';
 import { workspaceStore } from '../index';
 import { deleteWorkspaceRequest, updateWorkspaceRequest } from '../api';
-import WorkspacesStore from '../store';
+import { ServicesStore, WorkspacesStore } from '../../../stores.types';
 
-@inject('stores', 'actions') @observer
-class EditWorkspaceScreen extends Component {
-  static propTypes = {
-    actions: PropTypes.shape({
-      workspaces: PropTypes.instanceOf(WorkspacesStore),
-    }).isRequired,
-    stores: PropTypes.shape({
-      services: PropTypes.instanceOf(ServicesStore).isRequired,
-    }).isRequired,
+type Props = {
+  actions: {
+    workspaces: WorkspacesStore;
   };
+  stores: {
+    services: ServicesStore;
+  };
+};
 
+@inject('stores', 'actions')
+@observer
+class EditWorkspaceScreen extends Component<Props> {
+  // @ts-expect-error Not all code paths return a value.
   onDelete = () => {
     const { workspaceBeingEdited } = workspaceStore;
     const { actions } = this.props;
@@ -28,12 +28,14 @@ class EditWorkspaceScreen extends Component {
     actions.workspaces.delete({ workspace: workspaceBeingEdited });
   };
 
-  onSave = (values) => {
+  onSave = values => {
     const { workspaceBeingEdited } = workspaceStore;
     const { actions } = this.props;
-    const workspace = new Workspace(
-      ({ saving: true, ...workspaceBeingEdited, ...values }),
-    );
+    const workspace = new Workspace({
+      saving: true,
+      ...workspaceBeingEdited,
+      ...values,
+    });
     actions.workspaces.update({ workspace });
   };
 

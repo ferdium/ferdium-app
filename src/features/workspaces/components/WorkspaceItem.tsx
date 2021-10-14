@@ -16,9 +16,15 @@ const styles = theme => ({
   columnName: {},
 });
 
+type Props = {
+  classes: any;
+  workspace: any;
+  onItemClick: (workspace) => void;
+};
+
 @injectSheet(styles)
 @observer
-class WorkspaceItem extends Component {
+class WorkspaceItem extends Component<Props> {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     workspace: PropTypes.instanceOf(Workspace).isRequired,

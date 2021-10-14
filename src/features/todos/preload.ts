@@ -14,7 +14,7 @@ let hostMessageListener = ({ action }) => {
   }
 };
 
-window.ferdi = {
+window['ferdi'] = {
   onInitialize(ipcHostMessageListener) {
     hostMessageListener = ipcHostMessageListener;
     ipcRenderer.sendToHost(IPC.TODOS_CLIENT_CHANNEL, {

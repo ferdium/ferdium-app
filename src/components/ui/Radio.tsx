@@ -1,20 +1,18 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { Field } from 'mobx-react-form';
 import classnames from 'classnames';
 
-@observer
-class Radio extends Component {
-  static propTypes = {
-    field: PropTypes.instanceOf(Field).isRequired,
-    className: PropTypes.string,
-    focus: PropTypes.bool,
-    showLabel: PropTypes.bool,
-  };
+type Props = {
+  field: typeof Field;
+  className: string;
+  focus: boolean;
+  showLabel: boolean;
+};
 
+@observer
+class Radio extends Component<Props> {
   static defaultProps = {
-    className: null,
     focus: false,
     showLabel: true,
   };
@@ -28,6 +26,7 @@ class Radio extends Component {
   }
 
   focus() {
+    // @ts-expect-error Object is possibly 'null'.
     this.inputElement.focus();
   }
 

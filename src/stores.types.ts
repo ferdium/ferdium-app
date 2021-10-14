@@ -182,7 +182,7 @@ interface RouterStore {
   replace: () => void;
 }
 
-interface ServicesStore {
+export interface ServicesStore {
   actions: Actions;
   api: Api;
   clearCacheRequest: () => void;
@@ -334,8 +334,13 @@ interface UserStore {
   team: () => void;
 }
 
-interface WorkspacesStore {
+export interface WorkspacesStore {
   activeWorkspace: () => void;
+  delete: ({ workspace }) => void;
+  update: ({ workspace }) => void;
+  create: ({ workspace }) => void;
+  edit: ({ workspace }) => void;
+  saving: boolean;
   filterServicesByActiveWorkspace: () => void;
   isFeatureActive: () => void;
   isFeatureEnabled: () => void;
