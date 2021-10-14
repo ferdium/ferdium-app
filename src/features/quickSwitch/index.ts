@@ -12,7 +12,7 @@ export default function initialize() {
     state.isModalVisible = true;
   }
 
-  window.ferdi.features.quickSwitch = {
+  window['ferdi'].features.quickSwitch = {
     state,
     showModal,
   };

@@ -1,9 +1,9 @@
-import path from 'path';
-import fs from 'fs-extra';
+import { join } from 'path';
+import { ensureDirSync } from 'fs-extra';
 import { server } from './start';
 
-const dummyUserFolder = path.join(__dirname, 'user_data');
+const dummyUserFolder = join(__dirname, 'user_data');
 
-fs.ensureDirSync(dummyUserFolder);
+ensureDirSync(dummyUserFolder);
 
 server(dummyUserFolder, 45_568);

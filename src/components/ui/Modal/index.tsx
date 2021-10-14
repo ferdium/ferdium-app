@@ -1,6 +1,5 @@
-import { Component } from 'react';
+import { Component, ReactChildren } from 'react';
 import ReactModal from 'react-modal';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import injectCSS from 'react-jss';
 import { Icon } from '@meetfranz/ui';
@@ -8,21 +7,19 @@ import { Icon } from '@meetfranz/ui';
 import { mdiClose } from '@mdi/js';
 import styles from './styles';
 
-// ReactModal.setAppElement('#root');
+type Props = {
+  children: ReactChildren;
+  className: string;
+  classes: any;
+  isOpen: boolean;
+  portal: string;
+  close: () => void;
+  shouldCloseOnOverlayClick: boolean;
+  showClose: boolean;
+};
 
 @injectCSS(styles)
-class Modal extends Component {
-  static propTypes = {
-    children: PropTypes.node.isRequired,
-    className: PropTypes.string,
-    classes: PropTypes.object.isRequired,
-    isOpen: PropTypes.bool.isRequired,
-    portal: PropTypes.string,
-    close: PropTypes.func.isRequired,
-    shouldCloseOnOverlayClick: PropTypes.bool,
-    showClose: PropTypes.bool,
-  };
-
+class Modal extends Component<Props> {
   static defaultProps = {
     className: null,
     portal: 'modal-portal',

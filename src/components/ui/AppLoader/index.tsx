@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
 import injectSheet, { withTheme } from 'react-jss';
 import classnames from 'classnames';
 
@@ -19,15 +18,15 @@ const textList = shuffleArray([
   'Fixing bugs',
 ]);
 
+type Props = {
+  classes: typeof styles;
+  theme: any;
+  texts: string[];
+};
+
 @injectSheet(styles)
 @withTheme
-class AppLoader extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired,
-    texts: PropTypes.array,
-  };
-
+class AppLoader extends Component<Props> {
   static defaultProps = {
     texts: textList,
   };
@@ -36,18 +35,20 @@ class AppLoader extends Component {
     step: 0,
   };
 
-  interval = null;
+  interval: NodeJS.Timeout | null = null;
 
   componentDidMount() {
     this.interval = setInterval(() => {
-      this.setState(prevState => ({
+      this.setState((prevState: { step: number }) => ({
         step: prevState.step === textList.length - 1 ? 0 : prevState.step + 1,
       }));
     }, 2500);
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval);
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
   }
 
   render() {

@@ -13,11 +13,13 @@
     "types": ["node", "mocha"],
     "sourceMap": true,
     "skipLibCheck": true,
-    "noImplicitAny": false, // TODO: Need to switch
+    // TODO: Need to switch
+    "noImplicitAny": false,
     "pretty": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "composite": true,
+    // TODO: Change this config option to false once ms v3 is released and adopted
     "esModuleInterop": true,
     "importHelpers": true,
     "removeComments": true,
