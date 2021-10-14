@@ -3,11 +3,15 @@ import { FindInPage as ElectronFindInPage } from 'electron-find';
 
 // Shim to expose webContents functionality to electron-find without @electron/remote
 const webContentsShim = {
-  findInPage: (text, options = {}) => ipcRenderer.sendSync('find-in-page', text, options),
-  stopFindInPage: (action) => {
+  findInPage: (text: string, options = {}) =>
+    ipcRenderer.sendSync('find-in-page', text, options),
+  stopFindInPage: (action: any) => {
     ipcRenderer.sendSync('stop-find-in-page', action);
   },
-  on: (eventName, listener) => {
+  on: (
+    eventName: string,
+    listener: (arg0: { sender: undefined }, arg1: any) => void,
+  ): void => {
     if (eventName === 'found-in-page') {
       ipcRenderer.on('found-in-page', (_, result) => {
         listener({ sender: this }, result);

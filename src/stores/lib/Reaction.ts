@@ -20,12 +20,10 @@ export default class Reaction {
 
   stop() {
     if (this.isRunning) {
-      this.dispose();
+      this.dispose?.();
       this.isRunning = false;
     }
   }
 }
 
-export const createReactions = (reactions) => (
-  reactions.map((r) => new Reaction(r))
-);
+export const createReactions = reactions => reactions.map(r => new Reaction(r));

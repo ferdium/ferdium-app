@@ -5,9 +5,10 @@ import { v1 as uuidV1 } from 'uuid';
 const debug = require('debug')('Ferdi:Notifications');
 
 export class NotificationsHandler {
-  onNotify = data => data;
+  onNotify = (data: { title: string; options: any; notificationId: string }) =>
+    data;
 
-  displayNotification(title, options) {
+  displayNotification(title: string, options: any) {
     return new Promise(resolve => {
       debug('New notification', title, options);
 
@@ -23,7 +24,7 @@ export class NotificationsHandler {
       );
 
       ipcRenderer.once(`notification-onclick:${notificationId}`, () => {
-        resolve();
+        resolve(true);
       });
     });
   }
