@@ -157,9 +157,8 @@ jobs:
         run: |
           npm uninstall node-gyp
           npm ls -g node-gyp@8.2.0 || npm i -g node-gyp@8.2.0
-          npm ls -g lerna@4.0.0 || npm i -g lerna@4.0.0
-      - name: Install node dependencies recursively
-        run: npx lerna bootstrap
+      - name: Install node dependencies
+        run: npm i
       - name: Package recipes
         run: pnpm i && pnpm run package
         working-directory: ./recipes
@@ -261,9 +260,8 @@ jobs:
         run: |
           npm uninstall node-gyp
           npm ls -g node-gyp@8.2.0 || npm i -g node-gyp@8.2.0
-          npm ls -g lerna@4.0.0 || npm i -g lerna@4.0.0
-      - name: Install node dependencies recursively
-        run: npx lerna bootstrap
+      - name: Install node dependencies
+        run: npm i
       - name: Figure out used package.json version
         run: echo "PACKAGE_VERSION=$(node -p 'require("./package.json").version')" >> $GITHUB_ENV
         shell: bash
@@ -386,10 +384,9 @@ jobs:
         run: |
           npm uninstall node-gyp
           npm ls -g node-gyp@8.2.0 || npm i -g node-gyp@8.2.0
-          npm ls -g lerna@4.0.0 || npm i -g lerna@4.0.0
         shell: bash
-      - name: Install node dependencies recursively
-        run: npx lerna bootstrap
+      - name: Install node dependencies
+        run: npm i
         shell: bash
       - name: Package recipes
         run: pnpm i && pnpm run package

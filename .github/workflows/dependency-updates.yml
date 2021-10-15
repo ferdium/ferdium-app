@@ -60,9 +60,8 @@ jobs:
         run: |
           npm uninstall node-gyp
           npm ls -g node-gyp@8.2.0 || npm i -g node-gyp@8.2.0
-          npm ls -g lerna@4.0.0 || npm i -g lerna@4.0.0
-      - name: Install node dependencies recursively
-        run: npx lerna bootstrap
+      - name: Install node dependencies
+        run: npm i
       - name: Update submodules
         run: npm run update-submodules
       - name: Update browserslist db

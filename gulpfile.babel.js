@@ -135,12 +135,6 @@ export function mvPackageJson() {
   return gulp.src(['./package.json']).pipe(gulp.dest(paths.dest));
 }
 
-export function mvPostinstallScript() {
-  return gulp
-    .src(['./scripts/postinstall.ts'])
-    .pipe(gulp.dest(`${paths.dest}/scripts`));
-}
-
 export function exportBuildInfo() {
   const buildInfoData = {
     timestamp: buildInfo.timestamp,
@@ -258,7 +252,6 @@ const build = gulp.series(
   gulp.parallel(
     mvSrc,
     mvPackageJson,
-    mvPostinstallScript,
     exportBuildInfo,
   ),
   gulp.parallel(

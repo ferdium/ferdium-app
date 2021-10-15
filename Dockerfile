@@ -17,14 +17,11 @@ RUN apt-get update -y \
 WORKDIR /usr/src/ferdi
 
 RUN npm i -g pnpm@6.16.0 \
-  && npm ls -g node-gyp@8.2.0 || npm i -g node-gyp@8.2.0 \
-  && npm ls -g lerna@4.0.0 || npm i -g lerna@4.0.0
+  && npm ls -g node-gyp@8.2.0 || npm i -g node-gyp@8.2.0
 
 COPY package*.json .
-COPY lerna.json .
 
-RUN npm i \
-  && npx lerna bootstrap
+RUN npm i
 
 COPY . .
 

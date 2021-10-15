@@ -1,9 +1,0 @@
-{
-  "npmClient": "npm",
-  "version": "independent",
-  "ignoreChanges": [
-    "**/*.md",
-    "**/.eslintrc.{js,json,yaml,yml}",
-    "**/package-lock.json"
-  ]
-}

@@ -13,7 +13,6 @@
 **/*.md
 **/*.tsbuildinfo
 **/build
-**/lerna-debug.log
 **/node_modules
 **/npm-debug.log*
 **/.pnpm-debug.log

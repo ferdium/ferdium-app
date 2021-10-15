@@ -19,7 +19,6 @@
       - [Fedora](#fedora)
       - [Windows](#windows)
       - [node-gyp](#node-gyp)
-      - [Lerna](#lerna)
     - [Clone repository with submodule](#clone-repository-with-submodule)
     - [Local caching of dependencies](#local-caching-of-dependencies)
     - [Install dependencies](#install-dependencies)
@@ -33,10 +32,7 @@
       - [Javascript Coding style-checker](#javascript-coding-style-checker)
   - [Packaging](#packaging)
   - [Release](#release)
-  - [Update](#update)
-    - [Update the code](#update-the-code)
-    - [Update Node.js and npm](#update-nodejs-and-npm)
-    - [Update dependences](#update-dependences)
+    - [Updating the code after a hiatus](#updating-the-code-after-a-hiatus)
 
 <!-- /TOC -->
 
@@ -107,12 +103,6 @@ We need `node-gyp` to be able to compile any native dependencies
 npm ls -g node-gyp@8.2.0 || npm i -g node-gyp@8.2.0
 ```
 
-#### Lerna
-
-```bash
-npm ls -g lerna@4.0.0 || npm i -g lerna@4.0.0
-```
-
 ### Clone repository with submodule
 
 ```bash
@@ -137,10 +127,10 @@ export ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
 Run the following command to install all dependencies, and link sibling modules with Ferdi.
 
 ```bash
-npx lerna bootstrap
+npm i
 ```
 
-If you previously ran `npm install`, it is sometimes necessary to delete your `node_modules` folder before running `npx lerna bootstrap`. If you encounter the `gyp: No Xcode or CLT version` error on macOS at this step, please have a look [here](https://medium.com/flawless-app-stories/gyp-no-xcode-or-clt-version-detected-macos-catalina-anansewaa-38b536389e8d).
+If you encounter the `gyp: No Xcode or CLT version` error on macOS at this step, please have a look [here](https://medium.com/flawless-app-stories/gyp-no-xcode-or-clt-version-detected-macos-catalina-anansewaa-38b536389e8d).
 
 ### Fix native modules to match current electron node version
 
@@ -223,7 +213,7 @@ Note: please prefer [`debug()`](https://github.com/visionmedia/debug) over `cons
 
 #### Javascript Coding style-checker
 
-- Please use `es-lint` and the defined rules to maintain a consistent style
+- Please use `prettier` and the defined rules to maintain a consistent style
 
 ## Packaging
 
@@ -248,20 +238,6 @@ git push
 
 This will automatically trigger the build, as part of which, a new, draft release will be created [here](https://github.com/getferdi/ferdi/releases/). Once all the assets are uploaded (19 assets in total), publish the release (you will need elevated permissions in GitHub for doing this). The last commit of the `release` branch will be tagged.
 
-## Update
+### Updating the code after a hiatus
 
-### Update the code
-
-```bash
-git pull
-```
-
-### Update Node.js and npm
-
-If node.js and/or npm version have changed, don't forget to update them by running the appropriate command of your chosen package manager.
-
-### Update dependences
-
-```bash
-npx lerna bootstrap
-```
+Since we are making a lot of changes that involve restructuring the code as well as taking a hard look at the dependencies (including node versions), please remember to update them by running the appropriate command of your chosen package manager.
