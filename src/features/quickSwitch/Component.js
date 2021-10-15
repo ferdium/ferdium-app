@@ -5,9 +5,9 @@ import { observer, inject } from 'mobx-react';
 import { reaction } from 'mobx';
 import injectSheet from 'react-jss';
 import { defineMessages, injectIntl } from 'react-intl';
-import { Input } from '@meetfranz/forms';
 import { compact, invoke } from 'lodash';
 
+import { Input } from '../../components/ui/input/index';
 import { H1 } from '../../components/ui/headline';
 import Modal from '../../components/ui/Modal';
 import { state as ModalState } from './store';

@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import { Link } from 'react-router';
-import { Input } from '@meetfranz/forms';
 
+import { Input } from '../../ui/input/index';
 import Form from '../../../lib/Form';
-// import Input from '../../ui/Input';
 import Button from '../../ui/Button';
 import Radio from '../../ui/Radio';
 import Infobox from '../../ui/Infobox';

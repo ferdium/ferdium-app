@@ -5,7 +5,8 @@ import { defineMessages, injectIntl } from 'react-intl';
 import injectSheet from 'react-jss';
 import classnames from 'classnames';
 
-import { Input, Button } from '@meetfranz/forms';
+import { Input } from '../ui/input/index';
+import { Button } from '../ui/button/index';
 import { Badge } from '../ui/badge';
 import Modal from '../ui/Modal';
 import Infobox from '../ui/Infobox';

@@ -2,6 +2,14 @@ import { Classes } from 'jss';
 
 import { Theme } from '@meetfranz/theme';
 
+export interface IFormField {
+  showLabel?: boolean;
+  label?: string;
+  error?: string;
+  required?: boolean;
+  noMargin?: boolean;
+}
+
 export interface IWithStyle {
   classes: Classes;
   theme: Theme;

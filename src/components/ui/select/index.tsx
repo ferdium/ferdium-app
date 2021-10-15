@@ -8,8 +8,9 @@ import classnames from 'classnames';
 import { ChangeEvent, Component, createRef } from 'react';
 import injectStyle from 'react-jss';
 
+import { Theme } from '@meetfranz/theme';
+
 import { IFormField, IWithStyle } from '../typings/generic';
-import { Theme } from '../../../theme';
 
 import { Error } from '../error';
 import { Label } from '../label';

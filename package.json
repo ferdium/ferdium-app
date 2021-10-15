@@ -64,7 +64,7 @@
     "@electron/remote": "1.2.1",
     "@mdi/font": "6.2.95",
     "@mdi/js": "6.2.95",
-    "@meetfranz/forms": "file:packages/forms",
+    "@mdi/react": "1.5.0",
     "@meetfranz/theme": "file:packages/theme",
     "@sentry/electron": "2.5.3",
     "auto-launch": "5.0.5",

@@ -2,8 +2,8 @@ import { Component } from 'react';
 import { observer } from 'mobx-react';
 import injectSheet from 'react-jss';
 import classnames from 'classnames';
-import { Toggle } from '@meetfranz/forms';
 
+import { Toggle } from '../../../components/ui/toggle/index';
 import ServiceIcon from '../../../components/ui/ServiceIcon';
 
 const styles = theme => ({

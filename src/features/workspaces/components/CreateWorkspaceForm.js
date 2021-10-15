@@ -2,8 +2,10 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
-import { Input, Button } from '@meetfranz/forms';
 import injectSheet from 'react-jss';
+
+import { Input } from '../../../components/ui/input/index';
+import { Button } from '../../../components/ui/button/index';
 import Form from '../../../lib/Form';
 import { required } from '../../../helpers/validation-helpers';
 import { workspaceStore } from '../index';

@@ -1,11 +1,12 @@
-import { Component, Fragment } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import { Link } from 'react-router';
-import { Input, Button } from '@meetfranz/forms';
 import injectSheet from 'react-jss';
 
+import { Input } from '../../../components/ui/input/index';
+import { Button } from '../../../components/ui/button/index';
 import Workspace from '../models/Workspace';
 import Service from '../../../models/Service';
 import Form from '../../../lib/Form';

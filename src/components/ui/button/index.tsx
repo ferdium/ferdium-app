@@ -4,9 +4,9 @@ import { Property } from 'csstype';
 import { Component, MouseEvent } from 'react';
 import injectStyle, { withTheme } from 'react-jss';
 import Loader from 'react-loader';
+import { Theme } from '@meetfranz/theme';
 
 import { IFormField, IWithStyle } from '../typings/generic';
-import { Theme } from '../../../theme';
 
 type ButtonType =
   | 'primary'
