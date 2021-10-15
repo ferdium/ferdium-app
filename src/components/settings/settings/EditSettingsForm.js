@@ -12,13 +12,17 @@ import ToggleRaw from '../../ui/ToggleRaw';
 import Select from '../../ui/Select';
 import Input from '../../ui/Input';
 
-import { DEFAULT_APP_SETTINGS, FRANZ_TRANSLATION, GITHUB_FRANZ_URL } from '../../../config';
 import {
-  isMac,
-  isWindows,
-  lockFerdiShortcutKey,
-} from '../../../environment';
-import { ferdiVersion, userDataPath, userDataRecipesPath } from '../../../environment-remote';
+  DEFAULT_APP_SETTINGS,
+  FRANZ_TRANSLATION,
+  GITHUB_FRANZ_URL,
+} from '../../../config';
+import { isMac, isWindows, lockFerdiShortcutKey } from '../../../environment';
+import {
+  ferdiVersion,
+  userDataPath,
+  userDataRecipesPath,
+} from '../../../environment-remote';
 import { openPath } from '../../../helpers/url-helpers';
 import globalMessages from '../../../i18n/globalMessages';
 

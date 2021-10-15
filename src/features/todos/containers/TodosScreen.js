@@ -10,24 +10,31 @@ import { TODOS_MIN_WIDTH } from '../../../config';
 import { todoActions } from '../actions';
 import ServicesStore from '../../../stores/ServicesStore';
 
-@inject('stores', 'actions') @observer
+@inject('stores', 'actions')
+@observer
 class TodosScreen extends Component {
   render() {
-    if (!todosStore || !todosStore.isFeatureActive || todosStore.isTodosPanelForceHidden) {
+    if (
+      !todosStore ||
+      !todosStore.isFeatureActive ||
+      todosStore.isTodosPanelForceHidden
+    ) {
       return null;
     }
 
     return (
       <ErrorBoundary>
         <TodosWebview
-          isTodosServiceActive={this.props.stores.services.isTodosServiceActive || false}
+          isTodosServiceActive={
+            this.props.stores.services.isTodosServiceActive || false
+          }
           isVisible={todosStore.isTodosPanelVisible}
           togglePanel={todoActions.toggleTodosPanel}
           handleClientMessage={todoActions.handleClientMessage}
-          setTodosWebview={(webview) => todoActions.setTodosWebview({ webview })}
+          setTodosWebview={webview => todoActions.setTodosWebview({ webview })}
           width={todosStore.width}
           minWidth={TODOS_MIN_WIDTH}
-          resize={(width) => todoActions.resize({ width })}
+          resize={width => todoActions.resize({ width })}
           userAgent={todosStore.userAgent}
           todoUrl={todosStore.todoUrl}
           isTodoUrlValid={todosStore.isTodoUrlValid}

@@ -58,9 +58,7 @@ module.exports = {
   |
   */
   raw: {
-    types: [
-      'text/*',
-    ],
+    types: ['text/*'],
   },
 
   /*
@@ -72,9 +70,7 @@ module.exports = {
   |
   */
   form: {
-    types: [
-      'application/x-www-form-urlencoded',
-    ],
+    types: ['application/x-www-form-urlencoded'],
   },
 
   /*
@@ -86,9 +82,7 @@ module.exports = {
   |
   */
   files: {
-    types: [
-      'multipart/form-data',
-    ],
+    types: ['multipart/form-data'],
 
     /*
     |--------------------------------------------------------------------------

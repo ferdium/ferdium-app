@@ -297,7 +297,9 @@ class EditSettingsScreen extends Component {
         scheduledDNDStart: settingsData.scheduledDNDStart,
         scheduledDNDEnd: settingsData.scheduledDNDEnd,
         enableGPUAcceleration: Boolean(settingsData.enableGPUAcceleration),
-        enableGlobalHideShortcut: Boolean(settingsData.enableGlobalHideShortcut),
+        enableGlobalHideShortcut: Boolean(
+          settingsData.enableGlobalHideShortcut,
+        ),
         showDisabledServices: Boolean(settingsData.showDisabledServices),
         darkMode: Boolean(settingsData.darkMode),
         adaptableDarkMode: Boolean(settingsData.adaptableDarkMode),
@@ -305,7 +307,9 @@ class EditSettingsScreen extends Component {
         splitMode: Boolean(settingsData.splitMode),
         serviceRibbonWidth: Number(settingsData.serviceRibbonWidth),
         iconSize: Number(settingsData.iconSize),
-        enableLongPressServiceHint: Boolean(settingsData.enableLongPressServiceHint),
+        enableLongPressServiceHint: Boolean(
+          settingsData.enableLongPressServiceHint,
+        ),
         useVerticalStyle: Boolean(settingsData.useVerticalStyle),
         alwaysShowWorkspaces: Boolean(settingsData.alwaysShowWorkspaces),
         accentColor: settingsData.accentColor,

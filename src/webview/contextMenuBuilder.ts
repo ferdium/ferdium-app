@@ -6,7 +6,7 @@
  *
  * Source: https://github.com/electron-userland/electron-spellchecker/blob/master/src/context-menu-builder.js
  */
-// eslint-disable-next-line no-unused-vars
+
 import { clipboard, ipcRenderer, nativeImage, WebContents } from 'electron';
 import { Menu, MenuItem } from '@electron/remote';
 import { cmdOrCtrlShortcutKey, isMac } from '../environment';
@@ -311,7 +311,7 @@ export class ContextMenuBuilder {
       menu.append(
         new MenuItem({
           label: suggestion,
-          // eslint-disable-next-line no-loop-func
+
           click: () => webContents.replaceMisspelling(suggestion),
         }),
       );

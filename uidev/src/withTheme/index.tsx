@@ -28,14 +28,22 @@ const styles = (theme: Theme) => ({
   },
 });
 
-const Container = injectSheet(styles)(({ name, classes, story }: { name: string, classes: Classes, story: React.ReactNode }) => (
-  <article>
-    <h1 className={classes.title}>{name}</h1>
-    <div className={classes.container}>
-      {story}
-    </div>
-  </article>
-));
+const Container = injectSheet(styles)(
+  ({
+    name,
+    classes,
+    story,
+  }: {
+    name: string;
+    classes: Classes;
+    story: React.ReactNode;
+  }) => (
+    <article>
+      <h1 className={classes.title}>{name}</h1>
+      <div className={classes.container}>{story}</div>
+    </article>
+  ),
+);
 
 export const WithTheme = ({ children }: { children: React.ReactChild }) => (
   <>
@@ -43,6 +51,6 @@ export const WithTheme = ({ children }: { children: React.ReactChild }) => (
       <ThemeProvider key={key} theme={theme.variables}>
         <Container story={children} name={theme.name} />
       </ThemeProvider>
-        ))}
+    ))}
   </>
-  );
+);

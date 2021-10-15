@@ -3,7 +3,7 @@ const Schema = use('Schema');
 
 class WorkspaceSchema extends Schema {
   up() {
-    this.create('workspaces', (table) => {
+    this.create('workspaces', table => {
       table.increments();
       table.string('workspaceId', 80).notNullable().unique();
       table.string('name', 80).notNullable();

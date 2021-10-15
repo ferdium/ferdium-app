@@ -6,7 +6,11 @@ const debug = require('debug')('Ferdi:ipcApi:sessionStorage');
 
 function deduceSession(serviceId: string | undefined | null): Session {
   if (serviceId) {
-    return session.fromPartition(serviceId === TODOS_PARTITION_ID ? TODOS_PARTITION_ID : `persist:service-${serviceId}`);
+    return session.fromPartition(
+      serviceId === TODOS_PARTITION_ID
+        ? TODOS_PARTITION_ID
+        : `persist:service-${serviceId}`,
+    );
   }
   return session.defaultSession;
 }

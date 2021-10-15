@@ -14,30 +14,37 @@ interface IStoreArgs {
   className?: string;
 }
 
-const createStore = (args?: IStoreArgs) => observable({ type: 'primary',
+const createStore = (args?: IStoreArgs) =>
+  observable({
+    type: 'primary',
     ctaOnClick: () => {
       alert('on click handler');
     },
-...args });
+    ...args,
+  });
 
-const WithStoreInfobox = observer(({ store, children }: { store: any, children: string | React.ReactNode }) => (
-  <>
-    <Infobox
-      icon={store.icon}
-      ctaLabel={store.ctaLabel}
-      type={store.type}
-      ctaOnClick={store.ctaOnClick}
-      dismissable={store.dismissable}
-      className={store.className}
-    >
-      {children}
-    </Infobox>
-  </>
-));
+const WithStoreInfobox = observer(
+  ({ store, children }: { store: any; children: string | React.ReactNode }) => (
+    <>
+      <Infobox
+        icon={store.icon}
+        ctaLabel={store.ctaLabel}
+        type={store.type}
+        ctaOnClick={store.ctaOnClick}
+        dismissable={store.dismissable}
+        className={store.className}
+      >
+        {children}
+      </Infobox>
+    </>
+  ),
+);
 
 storiesOf('Infobox')
   .add('Basic', () => (
-    <WithStoreInfobox store={createStore()}>Welcome to the world of tomorrow</WithStoreInfobox>
+    <WithStoreInfobox store={createStore()}>
+      Welcome to the world of tomorrow
+    </WithStoreInfobox>
   ))
   .add('Icon + Dismissable', () => (
     <WithStoreInfobox
@@ -66,7 +73,10 @@ storiesOf('Infobox')
         ctaLabel: 'Ok, hi!',
       })}
     >
-      Ferdi is your messaging app / former Emperor of Austria and combines chat & messaging services into one application. Ferdi currently supports Slack, WhatsApp, WeChat, HipChat, Facebook Messenger, Telegram, Google Hangouts,GroupMe, Skype and many more.
+      Ferdi is your messaging app / former Emperor of Austria and combines chat
+      & messaging services into one application. Ferdi currently supports Slack,
+      WhatsApp, WeChat, HipChat, Facebook Messenger, Telegram, Google
+      Hangouts,GroupMe, Skype and many more.
     </WithStoreInfobox>
   ))
   .add('Secondary', () => (
@@ -125,9 +135,10 @@ storiesOf('Infobox')
     </WithStoreInfobox>
   ))
   .add('With className', () => (
-    <WithStoreInfobox store={createStore({
-      className: 'franz-is-awesome',
-    })}
+    <WithStoreInfobox
+      store={createStore({
+        className: 'franz-is-awesome',
+      })}
     >
       Welcome to the world of tomorrow
     </WithStoreInfobox>

@@ -171,7 +171,6 @@ class UserController {
         return response.status(401).send(errorMessage);
       }
 
-      // eslint-disable-next-line prefer-destructuring
       token = content.token;
     } catch (error) {
       return response.status(401).send({
@@ -300,7 +299,7 @@ class UserController {
     } while (
       (await Workspace.query().where('workspaceId', newWorkspaceId).fetch())
         .rows.length > 0
-    ); // eslint-disable-line no-await-in-loop
+    );
 
     if (
       workspace.services &&
@@ -340,7 +339,7 @@ class UserController {
     } while (
       (await Service.query().where('serviceId', newServiceId).fetch()).rows
         .length > 0
-    ); // eslint-disable-line no-await-in-loop
+    );
 
     // store the old serviceId as the key for future lookup
     serviceIdTranslation[service.serviceId] = newServiceId;

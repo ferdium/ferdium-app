@@ -9,8 +9,8 @@ module.exports = {
     sourceType: 'module',
     project: './tsconfig.json',
   },
-  extends: ['eslint-config-airbnb', 'plugin:unicorn/recommended'],
-  plugins: ['jest'],
+  extends: ['airbnb', 'plugin:unicorn/recommended', 'prettier'],
+  plugins: ['jest', 'prettier'],
   settings: {
     react: {
       pragma: 'React', // Pragma to use, default to "React"
@@ -18,14 +18,8 @@ module.exports = {
     },
   },
   globals: {
-    window: true,
-    document: true,
-    FormData: true,
-    localStorage: true,
-    navigator: true,
-    Element: true,
+    // TODO: can be removed once adonisj migration is done
     use: true,
-    FileReader: true,
   },
   env: {
     browser: true,
@@ -36,9 +30,9 @@ module.exports = {
   overrides: [
     {
       files: ['**/*.ts', '**/*.tsx'],
-      extends: ['airbnb-typescript', 'plugin:unicorn/recommended'],
+      extends: ['airbnb-typescript', 'plugin:unicorn/recommended', 'prettier'],
       parser: '@typescript-eslint/parser',
-      plugins: ['@typescript-eslint'],
+      plugins: ['@typescript-eslint', 'jest', 'prettier'],
       rules: {
         // eslint
         'arrow-parens': 0,
@@ -121,6 +115,8 @@ module.exports = {
           },
         ],
         'unicorn/consistent-destructuring': 0,
+        // eslint-plugin-prettier
+        'prettier/prettier': 1,
       },
     },
   ],
@@ -188,5 +184,7 @@ module.exports = {
       },
     ],
     'unicorn/consistent-destructuring': 0,
+    // eslint-plugin-prettier
+    'prettier/prettier': 1,
   },
 };

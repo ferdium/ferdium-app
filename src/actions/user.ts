@@ -25,8 +25,10 @@ export default {
     userData: PropTypes.object.isRequired,
   },
   resetStatus: {},
-  importLegacyServices: PropTypes.arrayOf(PropTypes.shape({
-    recipe: PropTypes.string.isRequired,
-  })).isRequired,
+  importLegacyServices: PropTypes.arrayOf(
+    PropTypes.shape({
+      recipe: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
   delete: {},
 };

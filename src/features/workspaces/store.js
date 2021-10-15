@@ -124,7 +124,7 @@ export default class WorkspacesStore extends FeatureStore {
     this.isFeatureActive = false;
   }
 
-  filterServicesByActiveWorkspace = (services) => {
+  filterServicesByActiveWorkspace = services => {
     const { activeWorkspace, isFeatureActive } = this;
     if (isFeatureActive && activeWorkspace) {
       return this.getWorkspaceServices(activeWorkspace);
@@ -134,14 +134,14 @@ export default class WorkspacesStore extends FeatureStore {
 
   getWorkspaceServices(workspace) {
     const { services } = this.stores;
-    return workspace.services.map((id) => services.one(id)).filter((s) => !!s);
+    return workspace.services.map(id => services.one(id)).filter(s => !!s);
   }
 
   // ========== PRIVATE METHODS ========= //
 
-  _getWorkspaceById = (id) => this.workspaces.find((w) => w.id === id);
+  _getWorkspaceById = id => this.workspaces.find(w => w.id === id);
 
-  _updateSettings = (changes) => {
+  _updateSettings = changes => {
     localStorage.setItem('workspaces', {
       ...this.settings,
       ...changes,
@@ -191,9 +191,15 @@ export default class WorkspacesStore extends FeatureStore {
       this.isSwitchingWorkspace = false;
       this.nextWorkspace = null;
       if (this.stores.settings.app.splitMode) {
-        const serviceNames = new Set(this.getWorkspaceServices(workspace).map(service => service.name));
-        for (const wrapper of document.querySelectorAll('.services__webview-wrapper')) {
-          wrapper.style.display = serviceNames.has(wrapper.dataset.name) ? '' : 'none';
+        const serviceNames = new Set(
+          this.getWorkspaceServices(workspace).map(service => service.name),
+        );
+        for (const wrapper of document.querySelectorAll(
+          '.services__webview-wrapper',
+        )) {
+          wrapper.style.display = serviceNames.has(wrapper.dataset.name)
+            ? ''
+            : 'none';
         }
       }
     }, 1000);
@@ -212,7 +218,9 @@ export default class WorkspacesStore extends FeatureStore {
     setTimeout(() => {
       this.isSwitchingWorkspace = false;
       if (this.stores.settings.app.splitMode) {
-        for (const wrapper of document.querySelectorAll('.services__webview-wrapper')) {
+        for (const wrapper of document.querySelectorAll(
+          '.services__webview-wrapper',
+        )) {
           wrapper.style.display = '';
         }
       }
@@ -262,7 +270,8 @@ export default class WorkspacesStore extends FeatureStore {
       const activeService = this.stores.services.active;
       const workspaceServices = this.getWorkspaceServices(this.activeWorkspace);
       if (workspaceServices.length <= 0) return;
-      const isActiveServiceInWorkspace = workspaceServices.includes(activeService);
+      const isActiveServiceInWorkspace =
+        workspaceServices.includes(activeService);
       if (!isActiveServiceInWorkspace) {
         this.actions.service.setActive({
           serviceId: workspaceServices[0].id,
@@ -288,8 +297,10 @@ export default class WorkspacesStore extends FeatureStore {
     const isWorkspaceSettingsRoute = router.location.pathname.includes(
       WORKSPACES_ROUTES.ROOT,
     );
-    const isSwitchingToSettingsRoute = !this.isSettingsRouteActive && isWorkspaceSettingsRoute;
-    const isLeavingSettingsRoute = !isWorkspaceSettingsRoute && this.isSettingsRouteActive;
+    const isSwitchingToSettingsRoute =
+      !this.isSettingsRouteActive && isWorkspaceSettingsRoute;
+    const isLeavingSettingsRoute =
+      !isWorkspaceSettingsRoute && this.isSettingsRouteActive;
 
     if (isSwitchingToSettingsRoute) {
       this.isSettingsRouteActive = true;
@@ -300,8 +311,8 @@ export default class WorkspacesStore extends FeatureStore {
     } else if (isLeavingSettingsRoute) {
       this.isSettingsRouteActive = false;
       if (
-        !this._wasDrawerOpenBeforeSettingsRoute
-        && this.isWorkspaceDrawerOpen
+        !this._wasDrawerOpenBeforeSettingsRoute &&
+        this.isWorkspaceDrawerOpen
       ) {
         workspaceActions.toggleWorkspaceDrawer();
       }
@@ -311,14 +322,15 @@ export default class WorkspacesStore extends FeatureStore {
   _cleanupInvalidServiceReferences = () => {
     const { services } = this.stores;
     const { allServicesRequest } = services;
-    const servicesHaveBeenLoaded = allServicesRequest.wasExecuted && !allServicesRequest.isError;
+    const servicesHaveBeenLoaded =
+      allServicesRequest.wasExecuted && !allServicesRequest.isError;
     // Loop through all workspaces and remove invalid service ids (locally)
     for (const workspace of this.workspaces) {
       for (const serviceId of workspace.services) {
         if (
-          servicesHaveBeenLoaded
-          && !services.one(serviceId)
-          && serviceId !== KEEP_WS_LOADED_USID
+          servicesHaveBeenLoaded &&
+          !services.one(serviceId) &&
+          serviceId !== KEEP_WS_LOADED_USID
         ) {
           workspace.services.remove(serviceId);
         }

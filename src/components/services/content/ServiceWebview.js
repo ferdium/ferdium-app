@@ -24,12 +24,10 @@ class ServiceWebview extends Component {
     super(props);
 
     reaction(
-      () => (
-        this.webview
-      ),
+      () => this.webview,
       () => {
         if (this.webview && this.webview.view) {
-          this.webview.view.addEventListener('console-message', (e) => {
+          this.webview.view.addEventListener('console-message', e => {
             debug('Service logged a message:', e.message);
           });
         }
@@ -55,20 +53,26 @@ class ServiceWebview extends Component {
   };
 
   render() {
-    const {
-      service,
-      setWebviewReference,
-      isSpellcheckerEnabled,
-    } = this.props;
+    const { service, setWebviewReference, isSpellcheckerEnabled } = this.props;
 
-    const preloadScript = join(__dirname, '..', '..', '..', 'webview', 'recipe.js');
+    const preloadScript = join(
+      __dirname,
+      '..',
+      '..',
+      '..',
+      'webview',
+      'recipe.js',
+    );
 
     return (
       <ElectronWebView
-        ref={(webview) => {
+        ref={webview => {
           this.webview = webview;
           if (webview && webview.view) {
-            webview.view.addEventListener('did-stop-loading', this.refocusWebview);
+            webview.view.addEventListener(
+              'did-stop-loading',
+              this.refocusWebview,
+            );
           }
         }}
         autosize
@@ -83,10 +87,14 @@ class ServiceWebview extends Component {
         }}
         onUpdateTargetUrl={this.updateTargetUrl}
         useragent={service.userAgent}
-        disablewebsecurity={service.recipe.disablewebsecurity ? true : undefined}
+        disablewebsecurity={
+          service.recipe.disablewebsecurity ? true : undefined
+        }
         allowpopups
         nodeintegration
-        webpreferences={`spellcheck=${isSpellcheckerEnabled ? 1 : 0}, contextIsolation=1, enableRemoteModule=1`}
+        webpreferences={`spellcheck=${
+          isSpellcheckerEnabled ? 1 : 0
+        }, contextIsolation=1, enableRemoteModule=1`}
       />
     );
   }

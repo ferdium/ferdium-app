@@ -118,14 +118,12 @@ class WorkspaceDrawerItem extends Component {
           isActive ? classes.isActiveItem : null,
         ])}
         onClick={onClick}
-        onContextMenu={() =>
-          onContextMenuEditClick && contextMenu.popup()
-        }
+        onContextMenu={() => onContextMenuEditClick && contextMenu.popup()}
         data-tip={`${
           shortcutIndex <= 9
             ? `(${cmdOrCtrlShortcutKey(false)}+${altKey(
-              false,
-            )}+${shortcutIndex})`
+                false,
+              )}+${shortcutIndex})`
             : ''
         }`}
       >

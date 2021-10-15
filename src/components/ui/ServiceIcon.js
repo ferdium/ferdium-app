@@ -6,7 +6,7 @@ import classnames from 'classnames';
 
 import ServiceModel from '../../models/Service';
 
-const styles = (theme) => ({
+const styles = theme => ({
   root: {
     height: 'auto',
   },
@@ -24,7 +24,8 @@ const styles = (theme) => ({
   },
 });
 
-@injectSheet(styles) @observer
+@injectSheet(styles)
+@observer
 class ServiceIcon extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -37,19 +38,10 @@ class ServiceIcon extends Component {
   };
 
   render() {
-    const {
-      classes,
-      className,
-      service,
-    } = this.props;
+    const { classes, className, service } = this.props;
 
     return (
-      <div
-        className={classnames([
-          classes.root,
-          className,
-        ])}
-      >
+      <div className={classnames([classes.root, className])}>
         <img
           src={service.icon}
           className={classnames([

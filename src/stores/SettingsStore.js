@@ -2,7 +2,11 @@ import { ipcRenderer } from 'electron';
 import { getCurrentWindow } from '@electron/remote';
 import { action, computed, observable, reaction } from 'mobx';
 import localStorage from 'mobx-localstorage';
-import { DEFAULT_APP_SETTINGS, FILE_SYSTEM_SETTINGS_TYPES, LOCAL_SERVER } from '../config';
+import {
+  DEFAULT_APP_SETTINGS,
+  FILE_SYSTEM_SETTINGS_TYPES,
+  LOCAL_SERVER,
+} from '../config';
 import { hash } from '../helpers/password-helpers';
 import Request from './lib/Request';
 import Store from './lib/Store';

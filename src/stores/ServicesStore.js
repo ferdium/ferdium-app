@@ -394,7 +394,7 @@ export default class ServicesStore extends Store {
     }
 
     // set default values for serviceData
-    // eslint-disable-next-line prefer-object-spread
+
     // TODO: How is this different from the defaults of the recipe in 'src/models/Recipe' file?
     serviceData = {
       isEnabled: true,

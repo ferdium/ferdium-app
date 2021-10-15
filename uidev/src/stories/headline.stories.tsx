@@ -38,12 +38,11 @@ import { storiesOf } from '../stores/stories';
 //   </>
 // ));
 
-storiesOf('Typo')
-  .add('Headlines', () => (
-    <>
-      <H1>Welcome to the world of tomorrow</H1>
-      <H2>Welcome to the world of tomorrow</H2>
-      <H3>Welcome to the world of tomorrow</H3>
-      <H4>Welcome to the world of tomorrow</H4>
-    </>
-  ));
+storiesOf('Typo').add('Headlines', () => (
+  <>
+    <H1>Welcome to the world of tomorrow</H1>
+    <H2>Welcome to the world of tomorrow</H2>
+    <H3>Welcome to the world of tomorrow</H3>
+    <H4>Welcome to the world of tomorrow</H4>
+  </>
+));

@@ -56,7 +56,6 @@ class RecipeController {
       let remoteResults = [];
       // eslint-disable-next-line eqeqeq
       if (Env.get('CONNECT_WITH_FRANZ') == 'true') {
-        // eslint-disable-line eqeqeq
         remoteResults = JSON.parse(
           await (
             await fetch(
@@ -112,7 +111,6 @@ class RecipeController {
     }
     // eslint-disable-next-line eqeqeq
     if (Env.get('CONNECT_WITH_FRANZ') == 'true') {
-      // eslint-disable-line eqeqeq
       return response.redirect(`${RECIPES_URL}/download/${service}`);
     }
     return response.status(400).send({

@@ -28,7 +28,8 @@ export default class Store {
   }
 
   registerReactions(reactions) {
-    for (const reaction of reactions) this._reactions.push(new Reaction(reaction));
+    for (const reaction of reactions)
+      this._reactions.push(new Reaction(reaction));
   }
 
   setup() {}

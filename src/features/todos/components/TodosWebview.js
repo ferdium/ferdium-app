@@ -7,14 +7,15 @@ import classnames from 'classnames';
 
 import { TODOS_PARTITION_ID } from '../../../config';
 
-const styles = (theme) => ({
+const styles = theme => ({
   root: {
     background: theme.colorBackground,
     position: 'relative',
     borderLeft: [1, 'solid', theme.todos.todosLayer.borderLeftColor],
     zIndex: 300,
 
-    transform: ({ isVisible, width, isTodosServiceActive }) => `translateX(${isVisible || isTodosServiceActive ? 0 : width}px)`,
+    transform: ({ isVisible, width, isTodosServiceActive }) =>
+      `translateX(${isVisible || isTodosServiceActive ? 0 : width}px)`,
 
     '& webview': {
       height: '100%',
@@ -79,7 +80,7 @@ class TodosWebview extends Component {
     this.node.addEventListener('mouseleave', this.stopResize.bind(this));
   }
 
-  startResize = (event) => {
+  startResize = event => {
     this.setState({
       isDragging: true,
       initialPos: event.clientX,
@@ -126,7 +127,7 @@ class TodosWebview extends Component {
   startListeningToIpcMessages() {
     const { handleClientMessage } = this.props;
     if (!this.webview) return;
-    this.webview.addEventListener('ipc-message', (e) => {
+    this.webview.addEventListener('ipc-message', e => {
       // console.log(e);
       handleClientMessage({ channel: e.channel, message: e.args[0] });
     });
@@ -159,7 +160,7 @@ class TodosWebview extends Component {
         })}
         style={{ width: displayedWidth }}
         onMouseUp={() => this.stopResize()}
-        ref={(node) => {
+        ref={node => {
           this.node = node;
         }}
         id="todos-panel"
@@ -170,7 +171,7 @@ class TodosWebview extends Component {
             left: delta,
             ...(isDragging ? { width: 600, marginLeft: -200 } : {}),
           }} // This hack is required as resizing with webviews beneath behaves quite bad
-          onMouseDown={(e) => this.startResize(e)}
+          onMouseDown={e => this.startResize(e)}
         />
         {isDragging && (
           <div
@@ -188,7 +189,7 @@ class TodosWebview extends Component {
             }}
             partition={TODOS_PARTITION_ID}
             preload="./features/todos/preload.js"
-            ref={(webview) => {
+            ref={webview => {
               this.webview = webview ? webview.view : null;
             }}
             useragent={userAgent}

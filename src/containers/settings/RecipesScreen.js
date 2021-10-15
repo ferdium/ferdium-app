@@ -130,21 +130,21 @@ class RecipesScreen extends Component {
 
     const allRecipes = this.state.needle
       ? this.prepareRecipes([
-        // All search recipes from server
-        ...recipePreviews.searchResults,
-        // All search recipes from local recipes
-        ...this.createPreviews(
-          this.customRecipes.filter(
-            service =>
-              service.name
-                .toLowerCase()
-                .includes(this.state.needle.toLowerCase()) ||
+          // All search recipes from server
+          ...recipePreviews.searchResults,
+          // All search recipes from local recipes
+          ...this.createPreviews(
+            this.customRecipes.filter(
+              service =>
+                service.name
+                  .toLowerCase()
+                  .includes(this.state.needle.toLowerCase()) ||
                 (service.aliases || []).some(alias =>
                   alias.toLowerCase().includes(this.state.needle.toLowerCase()),
                 ),
+            ),
           ),
-        ),
-      ]).sort(this._sortByName)
+        ]).sort(this._sortByName)
       : recipeFilter;
 
     const customWebsiteRecipe = recipePreviews.all.find(
