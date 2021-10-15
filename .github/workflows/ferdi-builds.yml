@@ -120,17 +120,17 @@ jobs:
           cache-name: cache-node-modules
         with:
           path: ${{ env.NPM_CACHE }}
-          key: ${{ runner.os }}-14.17-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-14.18-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-14.17-build-${{ env.cache-name }}-
-            ${{ runner.os }}-14.17-build-
+            ${{ runner.os }}-14.18-build-${{ env.cache-name }}-
+            ${{ runner.os }}-14.18-build-
       - name: Cache pnpm modules
         uses: actions/cache@v2
         env:
           cache-name: cache-pnpm-store
         with:
           path: ${{ env.PNPM_CACHE }}
-          key: ${{ runner.os }}-14.17-build-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-14.18-build-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
       - name: Cache electron modules
         uses: actions/cache@v2
         env:
@@ -145,10 +145,10 @@ jobs:
         with:
           key: ${{ runner.os }}-${{ env.cache-name }}
           path: ${{ env.ELECTRON_BUILDER_CACHE }}
-      - name: Use Node.js 14.17.6
+      - name: Use Node.js 14.18.1
         uses: actions/setup-node@v2
         with:
-          node-version: 14.17.6
+          node-version: 14.18.1
       - name: Install pnpm
         uses: pnpm/action-setup@v2.0.1
         with:
@@ -223,17 +223,17 @@ jobs:
           cache-name: cache-node-modules
         with:
           path: ${{ env.NPM_CACHE }}
-          key: ${{ runner.os }}-14.17-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-14.18-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-14.17-build-${{ env.cache-name }}-
-            ${{ runner.os }}-14.17-build-
+            ${{ runner.os }}-14.18-build-${{ env.cache-name }}-
+            ${{ runner.os }}-14.18-build-
       - name: Cache pnpm modules
         uses: actions/cache@v2
         env:
           cache-name: cache-pnpm-store
         with:
           path: ${{ env.PNPM_CACHE }}
-          key: ${{ runner.os }}-14.17-build-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-14.18-build-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
       - name: Cache electron modules
         uses: actions/cache@v2
         env:
@@ -248,10 +248,10 @@ jobs:
         with:
           key: ${{ runner.os }}-${{ env.cache-name }}
           path: ${{ env.ELECTRON_BUILDER_CACHE }}
-      - name: Use Node.js 14.17.6
+      - name: Use Node.js 14.18.1
         uses: actions/setup-node@v2
         with:
-          node-version: 14.17.6
+          node-version: 14.18.1
       - name: Install pnpm
         uses: pnpm/action-setup@v2.0.1
         with:
@@ -347,17 +347,17 @@ jobs:
           cache-name: cache-node-modules
         with:
           path: ${{ env.NPM_CACHE }}
-          key: ${{ runner.os }}-14.17-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-14.18-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-14.17-build-${{ env.cache-name }}-
-            ${{ runner.os }}-14.17-build-
+            ${{ runner.os }}-14.18-build-${{ env.cache-name }}-
+            ${{ runner.os }}-14.18-build-
       - name: Cache pnpm modules
         uses: actions/cache@v2
         env:
           cache-name: cache-pnpm-store
         with:
           path: ${{ env.PNPM_CACHE }}
-          key: ${{ runner.os }}-14.17-build-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-14.18-build-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
       - name: Cache electron modules
         uses: actions/cache@v2
         env:
@@ -372,10 +372,10 @@ jobs:
         with:
           key: ${{ runner.os }}-${{ env.cache-name }}
           path: ${{ env.ELECTRON_BUILDER_CACHE }}
-      - name: Use Node.js 14.17.6
+      - name: Use Node.js 14.18.1
         uses: actions/setup-node@v2
         with:
-          node-version: 14.17.6
+          node-version: 14.18.1
       - name: Install pnpm
         uses: pnpm/action-setup@v2.0.1
         with:

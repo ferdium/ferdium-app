@@ -11,7 +11,7 @@
   "repository": "https://github.com/getferdi/ferdi.git",
   "private": true,
   "engines": {
-    "node": "^14.17",
+    "node": "^14.18",
     "npm": "^6.14",
     "node-gyp": "^8.2"
   },
@@ -141,7 +141,7 @@
     "@types/mime-types": "2.1.1",
     "@types/mocha": "9.0.0",
     "@types/ms": "0.7.31",
-    "@types/node": "14.17.6",
+    "@types/node": "14.17.27",
     "@types/react": "17.0.27",
     "@types/react-dom": "17.0.9",
     "@types/route-parser": "0.1.3",
