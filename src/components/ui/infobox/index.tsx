@@ -3,8 +3,8 @@ import classnames from 'classnames';
 import { Component, ReactNode } from 'react';
 import injectStyle from 'react-jss';
 
-import { Icon } from '..';
-import { Theme } from '../../../theme';
+import { Theme } from '@meetfranz/theme';
+import { Icon } from '../icon';
 import { IWithStyle } from '../typings/generic';
 
 interface IProps extends IWithStyle {

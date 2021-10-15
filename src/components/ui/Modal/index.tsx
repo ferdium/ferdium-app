@@ -2,9 +2,9 @@ import { Component, ReactChildren } from 'react';
 import ReactModal from 'react-modal';
 import classnames from 'classnames';
 import injectCSS from 'react-jss';
-import { Icon } from '@meetfranz/ui';
-
 import { mdiClose } from '@mdi/js';
+
+import { Icon } from '../icon';
 import styles from './styles';
 
 type Props = {

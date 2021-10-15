@@ -1,10 +1,11 @@
-import { H1 } from '@meetfranz/ui';
 import { inject, observer } from 'mobx-react';
 import PropTypes from 'prop-types';
 import { Component } from 'react';
 import { defineMessages, injectIntl } from 'react-intl';
 import injectSheet from 'react-jss';
 import { state as ModalState } from './store';
+
+import { H1 } from '../../components/ui/headline';
 import { sendAuthRequest } from '../../api/utils/auth';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';

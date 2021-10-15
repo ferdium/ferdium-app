@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react';
 import injectSheet from 'react-jss';
 import { defineMessages, injectIntl } from 'react-intl';
-import { H1 } from '@meetfranz/ui';
+import { H1 } from '../../components/ui/headline';
 
 import Modal from '../../components/ui/Modal';
 import Button from '../../components/ui/Button';

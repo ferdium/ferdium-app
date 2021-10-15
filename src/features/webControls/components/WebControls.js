@@ -2,7 +2,6 @@ import { createRef, Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import injectSheet from 'react-jss';
-import { Icon } from '@meetfranz/ui';
 import { defineMessages, injectIntl } from 'react-intl';
 
 import {
@@ -12,6 +11,8 @@ import {
   mdiHomeOutline,
   mdiEarth,
 } from '@mdi/js';
+
+import { Icon } from '../../../components/ui/icon';
 
 const messages = defineMessages({
   goHome: {

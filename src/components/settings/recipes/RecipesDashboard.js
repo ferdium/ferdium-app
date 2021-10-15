@@ -6,7 +6,8 @@ import { Link } from 'react-router';
 
 import { Button, Input } from '@meetfranz/forms';
 import injectSheet from 'react-jss';
-import { H3, H2 } from '@meetfranz/ui';
+
+import { H3, H2 } from '../../ui/headline';
 import SearchInput from '../../ui/SearchInput';
 import Infobox from '../../ui/Infobox';
 import RecipeItem from './RecipeItem';

@@ -3,8 +3,9 @@ import classnames from 'classnames';
 import { Component } from 'react';
 import injectStyle from 'react-jss';
 
-import { Badge, Icon } from '..';
-import { Theme } from '../../../theme';
+import { Theme } from '@meetfranz/theme';
+import { Icon } from '../icon';
+import { Badge } from './index';
 import { IWithStyle } from '../typings/generic';
 
 interface IProps extends IWithStyle {

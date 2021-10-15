@@ -1,6 +1,6 @@
 import { Classes } from 'jss';
 
-import { Theme } from '../../../theme';
+import { Theme } from '@meetfranz/theme';
 
 export interface IWithStyle {
   classes: Classes;
