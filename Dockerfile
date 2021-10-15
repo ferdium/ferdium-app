@@ -16,7 +16,7 @@ RUN apt-get update -y \
 
 WORKDIR /usr/src/ferdi
 
-RUN npm i -g pnpm@6.16.0 \
+RUN npm i -g pnpm@6.17.1 \
   && npm ls -g node-gyp@8.2.0 || npm i -g node-gyp@8.2.0
 
 COPY package*.json .
