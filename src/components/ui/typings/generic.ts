@@ -1,6 +1,6 @@
 import { Classes } from 'jss';
 
-import { Theme } from '@meetfranz/theme';
+import { Theme } from '../../../themes';
 
 export interface IFormField {
   showLabel?: boolean;

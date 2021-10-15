@@ -1,7 +1,7 @@
-import { ThemeType } from '@meetfranz/theme';
 import { computed, action, observable } from 'mobx';
 import localStorage from 'mobx-localstorage';
 
+import { ThemeType } from '../../themes';
 import { todoActions } from './actions';
 import {
   CUSTOM_TODO_SERVICE,

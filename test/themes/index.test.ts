@@ -1,8 +1,8 @@
 import expect from 'expect.js';
 
-import makeDefaultThemeConfig from '../src/themes/default';
-import makeDarkThemeConfig from '../src/themes/dark';
-import { theme, ThemeType } from '../src';
+import makeDefaultThemeConfig from '../../src/themes/default';
+import makeDarkThemeConfig from '../../src/themes/dark';
+import { theme, ThemeType } from '../../src/themes';
 
 describe('Load theme', () => {
   it('Should load default theme', () => {

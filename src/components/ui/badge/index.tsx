@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import { Component, ReactNode } from 'react';
 import injectStyle from 'react-jss';
 
-import { Theme } from '@meetfranz/theme';
+import { Theme } from '../../../themes';
 import { IWithStyle } from '../typings/generic';
 
 interface IProps extends IWithStyle {

@@ -4,8 +4,8 @@ import { Property } from 'csstype';
 import { Component, MouseEvent } from 'react';
 import injectStyle, { withTheme } from 'react-jss';
 import Loader from 'react-loader';
-import { Theme } from '@meetfranz/theme';
 
+import { Theme } from '../../../themes';
 import { IFormField, IWithStyle } from '../typings/generic';
 
 type ButtonType =

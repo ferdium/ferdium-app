@@ -27,6 +27,4 @@ npm-debug.log.*
 
 /build/
 /out/
-/packages/*/lib
-/packages/**/*.test.*
 /recipes/

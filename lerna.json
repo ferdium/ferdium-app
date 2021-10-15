@@ -1,9 +1,4 @@
 {
-  "packages": [
-    "packages/theme",
-    "packages/forms",
-    "packages/ui"
-  ],
   "npmClient": "npm",
   "version": "independent",
   "ignoreChanges": [

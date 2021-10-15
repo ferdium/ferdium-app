@@ -1,4 +1,4 @@
-import { Theme } from '@meetfranz/theme';
+import { Theme } from '../../../themes';
 
 export default (theme: Theme) => ({
   message: {

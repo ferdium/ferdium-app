@@ -2,7 +2,7 @@
 
 import ms from 'ms';
 
-import { DEFAULT_ACCENT_COLOR } from '@meetfranz/theme';
+export const DEFAULT_ACCENT_COLOR = '#7266F0';
 
 export const CHECK_INTERVAL = ms('1h'); // How often should we perform checks
 

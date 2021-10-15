@@ -1,6 +1,6 @@
 import { Property } from 'csstype';
 
-import { Theme } from '@meetfranz/theme';
+import { Theme } from '../../../themes';
 
 const prefixStyles = (theme: Theme) => ({
   background: theme.inputPrefixBackground,
