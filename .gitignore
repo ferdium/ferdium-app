@@ -330,7 +330,6 @@ build
 .tmp
 .stage
 lerna-debug.log
-uidev/lib
 server*.log
 
 # These entries have been merged from the git submodule repo 'internal-server'
