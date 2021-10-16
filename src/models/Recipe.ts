@@ -1,7 +1,7 @@
 import semver from 'semver';
 import { pathExistsSync } from 'fs-extra';
 import { join } from 'path';
-import { DEFAULT_SERVICE_SETTINGS } from 'src/config';
+import { DEFAULT_SERVICE_SETTINGS } from '../config';
 import { ifUndefinedString, ifUndefinedBoolean } from '../jsUtils';
 
 interface IRecipe {
