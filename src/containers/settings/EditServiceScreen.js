@@ -23,7 +23,7 @@ import { config as proxyFeature } from '../../features/serviceProxy';
 import { SPELLCHECKER_LOCALES } from '../../i18n/languages';
 
 import globalMessages from '../../i18n/globalMessages';
-import { DEFAULT_APP_SETTINGS } from '../../config';
+import { DEFAULT_APP_SETTINGS, DEFAULT_SERVICE_SETTINGS } from '../../config';
 
 const messages = defineMessages({
   name: {
@@ -176,7 +176,7 @@ class EditServiceScreen extends Component {
         isEnabled: {
           label: intl.formatMessage(messages.enableService),
           value: service.isEnabled,
-          default: true,
+          default: DEFAULT_SERVICE_SETTINGS.isEnabled,
         },
         isHibernationEnabled: {
           label: intl.formatMessage(messages.enableHibernation),
@@ -184,27 +184,27 @@ class EditServiceScreen extends Component {
             action !== 'edit'
               ? recipe.autoHibernate
               : service.isHibernationEnabled,
-          default: true,
+          default: DEFAULT_SERVICE_SETTINGS.isHibernationEnabled,
         },
         isWakeUpEnabled: {
           label: intl.formatMessage(messages.enableWakeUp),
           value: service.isWakeUpEnabled,
-          default: true,
+          default: DEFAULT_SERVICE_SETTINGS.isWakeUpEnabled,
         },
         isNotificationEnabled: {
           label: intl.formatMessage(messages.enableNotification),
           value: service.isNotificationEnabled,
-          default: true,
+          default: DEFAULT_SERVICE_SETTINGS.isNotificationEnabled,
         },
         isBadgeEnabled: {
           label: intl.formatMessage(messages.enableBadge),
           value: service.isBadgeEnabled,
-          default: true,
+          default: DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
         },
         isMuted: {
           label: intl.formatMessage(messages.enableAudio),
           value: !service.isMuted,
-          default: true,
+          default: DEFAULT_SERVICE_SETTINGS.isMuted,
         },
         customIcon: {
           label: intl.formatMessage(messages.icon),
@@ -298,7 +298,7 @@ class EditServiceScreen extends Component {
         isIndirectMessageBadgeEnabled: {
           label: intl.formatMessage(messages.indirectMessages),
           value: service.isIndirectMessageBadgeEnabled,
-          default: true,
+          default: DEFAULT_SERVICE_SETTINGS.hasIndirectMessages,
         },
       });
     }
