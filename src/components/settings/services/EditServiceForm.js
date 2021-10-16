@@ -356,6 +356,7 @@ class EditServiceForm extends Component {
                   <p className="settings__help indented__help">
                     {intl.formatMessage(messages.isHibernationEnabledInfo)}
                   </p>
+                  <Toggle field={form.$('isWakeUpEnabled')} />
                   <Toggle field={form.$('isDarkModeEnabled')} />
                   {form.$('isDarkModeEnabled').value && (
                     <>

@@ -81,6 +81,8 @@ export default class Service {
 
   @observable isHibernationEnabled = false;
 
+  @observable isWakeUpEnabled = true;
+
   @observable isHibernationRequested = false;
 
   @observable onlyShowFavoritesInUnreadCount = false;
@@ -162,6 +164,10 @@ export default class Service {
     this.isHibernationEnabled = ifUndefinedBoolean(
       data.isHibernationEnabled,
       this.isHibernationEnabled,
+    );
+    this.isWakeUpEnabled = ifUndefinedBoolean(
+      data.isWakeUpEnabled,
+      this.isWakeUpEnabled,
     );
 
     // Check if "Hibernate on Startup" is enabled and hibernate all services except active one

@@ -37,6 +37,10 @@ const messages = defineMessages({
     id: 'settings.service.form.enableHibernation',
     defaultMessage: 'Enable hibernation',
   },
+  enableWakeUp: {
+    id: 'settings.service.form.enableWakeUp',
+    defaultMessage: 'Enable wake up',
+  },
   enableNotification: {
     id: 'settings.service.form.enableNotification',
     defaultMessage: 'Enable notifications',
@@ -179,6 +183,11 @@ class EditServiceScreen extends Component {
             action !== 'edit'
               ? recipe.autoHibernate
               : service.isHibernationEnabled,
+          default: true,
+        },
+        isWakeUpEnabled: {
+          label: intl.formatMessage(messages.enableWakeUp),
+          value: service.isWakeUpEnabled,
           default: true,
         },
         isNotificationEnabled: {

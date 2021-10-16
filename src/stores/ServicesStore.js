@@ -224,6 +224,7 @@ export default class ServicesStore extends Store {
         }
 
         if (
+          service.isWakeUpEnabled &&
           service.lastHibernated &&
           Number(this.stores.settings.all.app.wakeUpStrategy) > 0 &&
           Date.now() - service.lastHibernated >
@@ -399,6 +400,7 @@ export default class ServicesStore extends Store {
     serviceData = {
       isEnabled: true,
       isHibernationEnabled: false,
+      isWakeUpEnabled: true,
       isNotificationEnabled: true,
       isBadgeEnabled: true,
       isMuted: false,
