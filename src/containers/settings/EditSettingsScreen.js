@@ -517,7 +517,7 @@ class EditSettingsScreen extends Component {
         lockingFeatureEnabled: {
           label: intl.formatMessage(messages.enableLock),
           value: settings.all.app.lockingFeatureEnabled || false,
-          default: false,
+          default: DEFAULT_APP_SETTINGS.lockingFeatureEnabled,
         },
         lockedPassword: {
           label: intl.formatMessage(messages.lockPassword),
@@ -539,7 +539,7 @@ class EditSettingsScreen extends Component {
         scheduledDNDEnabled: {
           label: intl.formatMessage(messages.scheduledDNDEnabled),
           value: settings.all.app.scheduledDNDEnabled || false,
-          default: false,
+          default: DEFAULT_APP_SETTINGS.scheduledDNDEnabled,
         },
         scheduledDNDStart: {
           label: intl.formatMessage(messages.scheduledDNDStart),

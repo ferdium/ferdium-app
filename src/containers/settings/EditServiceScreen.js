@@ -23,6 +23,7 @@ import { config as proxyFeature } from '../../features/serviceProxy';
 import { SPELLCHECKER_LOCALES } from '../../i18n/languages';
 
 import globalMessages from '../../i18n/globalMessages';
+import { DEFAULT_APP_SETTINGS } from '../../config';
 
 const messages = defineMessages({
   name: {
@@ -307,7 +308,7 @@ class EditServiceScreen extends Component {
         onlyShowFavoritesInUnreadCount: {
           label: intl.formatMessage(messages.onlyShowFavoritesInUnreadCount),
           value: service.onlyShowFavoritesInUnreadCount,
-          default: false,
+          default: DEFAULT_APP_SETTINGS.onlyShowFavoritesInUnreadCount,
         },
       });
     }
@@ -323,7 +324,7 @@ class EditServiceScreen extends Component {
             isEnabled: {
               label: intl.formatMessage(messages.enableProxy),
               value: serviceProxyConfig.isEnabled,
-              default: false,
+              default: DEFAULT_APP_SETTINGS.proxyFeatureEnabled,
             },
             host: {
               label: intl.formatMessage(messages.proxyHost),

@@ -1,6 +1,7 @@
 import semver from 'semver';
 import { pathExistsSync } from 'fs-extra';
 import { join } from 'path';
+import { DEFAULT_SERVICE_SETTINGS } from 'src/config';
 import { ifUndefinedString, ifUndefinedBoolean } from '../jsUtils';
 
 interface IRecipe {
@@ -27,20 +28,6 @@ interface IRecipe {
   };
 }
 
-// Note: Do NOT change these default values. If they change, then the corresponding changes in the recipes needs to be done
-// TODO: Need to reconcile other properties
-const DEFAULT_RECIPE_SETTINGS = {
-  hasDirectMessages: true,
-  hasIndirectMessages: false,
-  hasNotificationSound: false,
-  hasTeamId: false,
-  hasCustomUrl: false,
-  hasHostedOption: false,
-  allowFavoritesDelineationInUnreadCount: false,
-  disablewebsecurity: false,
-  autoHibernate: false,
-};
-
 export default class Recipe {
   id: string = '';
 
@@ -54,17 +41,17 @@ export default class Recipe {
 
   serviceURL: string = '';
 
-  hasDirectMessages: boolean = DEFAULT_RECIPE_SETTINGS.hasDirectMessages;
+  hasDirectMessages: boolean = DEFAULT_SERVICE_SETTINGS.hasDirectMessages;
 
-  hasIndirectMessages: boolean = DEFAULT_RECIPE_SETTINGS.hasIndirectMessages;
+  hasIndirectMessages: boolean = DEFAULT_SERVICE_SETTINGS.hasIndirectMessages;
 
-  hasNotificationSound: boolean = DEFAULT_RECIPE_SETTINGS.hasNotificationSound;
+  hasNotificationSound: boolean = DEFAULT_SERVICE_SETTINGS.hasNotificationSound;
 
-  hasTeamId: boolean = DEFAULT_RECIPE_SETTINGS.hasTeamId;
+  hasTeamId: boolean = DEFAULT_SERVICE_SETTINGS.hasTeamId;
 
-  hasCustomUrl: boolean = DEFAULT_RECIPE_SETTINGS.hasCustomUrl;
+  hasCustomUrl: boolean = DEFAULT_SERVICE_SETTINGS.hasCustomUrl;
 
-  hasHostedOption: boolean = DEFAULT_RECIPE_SETTINGS.hasHostedOption;
+  hasHostedOption: boolean = DEFAULT_SERVICE_SETTINGS.hasHostedOption;
 
   urlInputPrefix: string = '';
 
@@ -73,12 +60,12 @@ export default class Recipe {
   message: string = '';
 
   allowFavoritesDelineationInUnreadCount: boolean =
-    DEFAULT_RECIPE_SETTINGS.allowFavoritesDelineationInUnreadCount;
+    DEFAULT_SERVICE_SETTINGS.allowFavoritesDelineationInUnreadCount;
 
-  disablewebsecurity: boolean = DEFAULT_RECIPE_SETTINGS.disablewebsecurity;
+  disablewebsecurity: boolean = DEFAULT_SERVICE_SETTINGS.disablewebsecurity;
 
   // TODO: Is this even used?
-  autoHibernate: boolean = DEFAULT_RECIPE_SETTINGS.autoHibernate;
+  autoHibernate: boolean = DEFAULT_SERVICE_SETTINGS.autoHibernate;
 
   path: string = '';
 
