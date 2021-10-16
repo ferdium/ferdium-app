@@ -309,6 +309,7 @@
   "settings.service.form.enableBadge": "Mostra les insígnies als missatges no llegits.",
   "settings.service.form.enableDarkMode": "Activar el Mode Fosc",
   "settings.service.form.enableHibernation": "Enable hibernation",
+  "settings.service.form.enableWakeUp": "Enable wake up",
   "settings.service.form.enableNotification": "Activa les notificacions",
   "settings.service.form.enableService": "Activa el servei",
   "settings.service.form.headlineBadges": "Insígnies de missatges no llegits",

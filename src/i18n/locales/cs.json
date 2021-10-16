@@ -309,6 +309,7 @@
   "settings.service.form.enableBadge": "Ukázat odznaky nepřečtených zpráv",
   "settings.service.form.enableDarkMode": "Povolit Tmavý vzhled",
   "settings.service.form.enableHibernation": "Enable hibernation",
+  "settings.service.form.enableWakeUp": "Enable wake up",
   "settings.service.form.enableNotification": "Povolit upozornění",
   "settings.service.form.enableService": "Povolit službu",
   "settings.service.form.headlineBadges": "Odznaky nepřečtených zpráv",

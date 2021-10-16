@@ -309,6 +309,7 @@
   "settings.service.form.enableBadge": "Mostra l'etichetta dei messaggi non letti",
   "settings.service.form.enableDarkMode": "Attiva la modalità scura.",
   "settings.service.form.enableHibernation": "Abilita ibernazione",
+  "settings.service.form.enableWakeUp": "Enable wake up",
   "settings.service.form.enableNotification": "Attiva le notifiche",
   "settings.service.form.enableService": "Attiva il servizio",
   "settings.service.form.headlineBadges": "Etichetta dei messaggi non letti",

@@ -309,6 +309,7 @@
   "settings.service.form.enableBadge": "Pokaż znacznik nieprzeczytanych wiadomości",
   "settings.service.form.enableDarkMode": "Włącz Ciemny motyw",
   "settings.service.form.enableHibernation": "Włącz hibernację",
+  "settings.service.form.enableWakeUp": "Enable wake up",
   "settings.service.form.enableNotification": "Aktywuj powiadomienia",
   "settings.service.form.enableService": "Aktywuj usługę",
   "settings.service.form.headlineBadges": "Znaczniki nieprzeczytanych wiadomości",

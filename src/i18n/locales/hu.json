@@ -309,6 +309,7 @@
   "settings.service.form.enableBadge": "Mutasd az olvasatlan jelzéseket",
   "settings.service.form.enableDarkMode": "Sötét mód engedélyezése",
   "settings.service.form.enableHibernation": "Enable hibernation",
+  "settings.service.form.enableWakeUp": "Enable wake up",
   "settings.service.form.enableNotification": "Értesítések engedélyezése",
   "settings.service.form.enableService": "Szolgáltatás engedélyezése",
   "settings.service.form.headlineBadges": "Olvasatlan üzenet jelzések",

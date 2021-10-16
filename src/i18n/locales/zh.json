@@ -309,6 +309,7 @@
   "settings.service.form.enableBadge": "Show unread message badges",
   "settings.service.form.enableDarkMode": "开启深色主题",
   "settings.service.form.enableHibernation": "启用休眠",
+  "settings.service.form.enableWakeUp": "Enable wake up",
   "settings.service.form.enableNotification": "开启通知",
   "settings.service.form.enableService": "启用服务",
   "settings.service.form.headlineBadges": "Unread message badges",

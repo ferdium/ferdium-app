@@ -309,6 +309,7 @@
   "settings.service.form.enableBadge": "Vis uleste meldingsetiketter",
   "settings.service.form.enableDarkMode": "Aktiver mørkt tema",
   "settings.service.form.enableHibernation": "Enable hibernation",
+  "settings.service.form.enableWakeUp": "Enable wake up",
   "settings.service.form.enableNotification": "Aktiver varsler",
   "settings.service.form.enableService": "Aktivere tjenesten",
   "settings.service.form.headlineBadges": "Uleste meldingsetiketter",

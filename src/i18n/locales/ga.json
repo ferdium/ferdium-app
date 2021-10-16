@@ -309,6 +309,7 @@
   "settings.service.form.enableBadge": "Taispeáin comhartha do theachtaireachtaí neamhléite",
   "settings.service.form.enableDarkMode": "Enable Dark Mode",
   "settings.service.form.enableHibernation": "Enable hibernation",
+  "settings.service.form.enableWakeUp": "Enable wake up",
   "settings.service.form.enableNotification": "Cumasaigh fógraí",
   "settings.service.form.enableService": "Cumasaigh seirbhís",
   "settings.service.form.headlineBadges": "Comhartha do theachtaireachtaí neamhléite",

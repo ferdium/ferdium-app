@@ -309,6 +309,7 @@
   "settings.service.form.enableBadge": "הצג חיווי על הודעות שלא נקראו",
   "settings.service.form.enableDarkMode": "אפשר מצב לילה",
   "settings.service.form.enableHibernation": "Enable hibernation",
+  "settings.service.form.enableWakeUp": "Enable wake up",
   "settings.service.form.enableNotification": "אפשר התראות",
   "settings.service.form.enableService": "אפשר שירות",
   "settings.service.form.headlineBadges": "חיווי על הודעות שלא נקראו",

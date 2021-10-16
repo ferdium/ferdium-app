@@ -309,6 +309,7 @@
   "settings.service.form.enableBadge": "Toon badges met ongelezen berichten",
   "settings.service.form.enableDarkMode": "Dark mode aanzetten",
   "settings.service.form.enableHibernation": "Enable hibernation",
+  "settings.service.form.enableWakeUp": "Enable wake up",
   "settings.service.form.enableNotification": "Meldingen inschakelen",
   "settings.service.form.enableService": "Service inschakelen",
   "settings.service.form.headlineBadges": "Ongelezen berichten badges",

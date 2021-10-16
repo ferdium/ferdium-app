@@ -309,6 +309,7 @@
   "settings.service.form.enableBadge": "Visa olästa meddelandemärken",
   "settings.service.form.enableDarkMode": "Aktivera mörkt läge",
   "settings.service.form.enableHibernation": "Enable hibernation",
+  "settings.service.form.enableWakeUp": "Enable wake up",
   "settings.service.form.enableNotification": "Aktivera aviseringar",
   "settings.service.form.enableService": "Aktivera tjänst",
   "settings.service.form.headlineBadges": "Olästa meddelandemärken",

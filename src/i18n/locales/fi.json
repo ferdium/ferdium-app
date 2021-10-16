@@ -309,6 +309,7 @@
   "settings.service.form.enableBadge": "Näytä lukemattomat viestit",
   "settings.service.form.enableDarkMode": "Ota tumma tila käyttöön",
   "settings.service.form.enableHibernation": "Enable hibernation",
+  "settings.service.form.enableWakeUp": "Enable wake up",
   "settings.service.form.enableNotification": "Ota ilmoitukset käyttöön",
   "settings.service.form.enableService": "Ota palvelu käyttöön",
   "settings.service.form.headlineBadges": "Lukemattomat viestit",

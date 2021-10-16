@@ -309,6 +309,7 @@
   "settings.service.form.enableBadge": "Εμφάνιση εικονιδίων μη αναγνωσμένου μηνύματος",
   "settings.service.form.enableDarkMode": "Enable Dark Mode",
   "settings.service.form.enableHibernation": "Enable hibernation",
+  "settings.service.form.enableWakeUp": "Enable wake up",
   "settings.service.form.enableNotification": "Ενεργοποίηση ειδοποιήσεων",
   "settings.service.form.enableService": "Ενεργοποίηση υπηρεσίας",
   "settings.service.form.headlineBadges": "Εικονίδια μη αναγνωσμένου μηνύματος",

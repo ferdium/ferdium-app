@@ -309,6 +309,7 @@
   "settings.service.form.enableBadge": "Vis ulæste beskedbadges",
   "settings.service.form.enableDarkMode": "Aktiver mørk tilstand",
   "settings.service.form.enableHibernation": "Enable hibernation",
+  "settings.service.form.enableWakeUp": "Enable wake up",
   "settings.service.form.enableNotification": "Aktiver notifikationer",
   "settings.service.form.enableService": "Aktiverede tjenester",
   "settings.service.form.headlineBadges": "Ulæste beskedbadges",

@@ -309,6 +309,7 @@
   "settings.service.form.enableBadge": "Показывать иконку непрочитанных сообщений",
   "settings.service.form.enableDarkMode": "Включить Тёмный режим",
   "settings.service.form.enableHibernation": "Enable hibernation",
+  "settings.service.form.enableWakeUp": "Enable wake up",
   "settings.service.form.enableNotification": "Включить уведомления",
   "settings.service.form.enableService": "Включить сервис",
   "settings.service.form.headlineBadges": "Значки непрочитанных сообщений",

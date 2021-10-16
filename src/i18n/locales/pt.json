@@ -309,6 +309,7 @@
   "settings.service.form.enableBadge": "Mostrar aviso de mensagens não lidas",
   "settings.service.form.enableDarkMode": "Ativar modo noturno",
   "settings.service.form.enableHibernation": "Enable hibernation",
+  "settings.service.form.enableWakeUp": "Enable wake up",
   "settings.service.form.enableNotification": "Ativar notificações",
   "settings.service.form.enableService": "Ativar serviço",
   "settings.service.form.headlineBadges": "Notificações de Mensagens não lidas",

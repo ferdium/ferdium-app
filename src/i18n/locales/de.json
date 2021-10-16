@@ -309,6 +309,7 @@
   "settings.service.form.enableBadge": "Nachrichten-Badge anzeigen",
   "settings.service.form.enableDarkMode": "Dark Mode aktivieren",
   "settings.service.form.enableHibernation": "Ruhezustand aktivieren",
+  "settings.service.form.enableWakeUp": "Enable wake up",
   "settings.service.form.enableNotification": "Benachrichtigungen aktivieren",
   "settings.service.form.enableService": "Dienst aktivieren",
   "settings.service.form.headlineBadges": "Nachrichten-Badge",
