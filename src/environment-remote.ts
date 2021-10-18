@@ -14,7 +14,13 @@ import {
   LOCAL_TODOS_FRONTEND_URL,
   PRODUCTION_TODOS_FRONTEND_URL,
 } from './config';
-import { chromeVersion, electronVersion, isWindows, nodeVersion, osArch } from './environment';
+import {
+  chromeVersion,
+  electronVersion,
+  isWindows,
+  nodeVersion,
+  osArch,
+} from './environment';
 
 // @ts-expect-error Cannot find module './buildInfo.json' or its corresponding type declarations.
 import * as buildInfo from './buildInfo.json';
@@ -28,14 +34,20 @@ if (process.env.FERDI_APPDATA_DIR != null) {
   app.setPath('appData', process.env.FERDI_APPDATA_DIR);
   app.setPath('userData', app.getPath('appData'));
 } else if (process.env.PORTABLE_EXECUTABLE_DIR != null) {
-  app.setPath('appData', join(process.env.PORTABLE_EXECUTABLE_DIR, `${app.name}AppData`));
+  app.setPath(
+    'appData',
+    join(process.env.PORTABLE_EXECUTABLE_DIR, `${app.name}AppData`),
+  );
   app.setPath('userData', join(app.getPath('appData'), `${app.name}AppData`));
 } else if (isWindows && process.env.APPDATA != null) {
   app.setPath('appData', process.env.APPDATA);
   app.setPath('userData', join(app.getPath('appData'), app.name));
 }
 
-export const isDevMode = process.env.ELECTRON_IS_DEV !== undefined ? Number.parseInt(process.env.ELECTRON_IS_DEV, 10) === 1 : !app.isPackaged;
+export const isDevMode =
+  process.env.ELECTRON_IS_DEV !== undefined
+    ? Number.parseInt(process.env.ELECTRON_IS_DEV, 10) === 1
+    : !app.isPackaged;
 if (isDevMode) {
   app.setPath('userData', join(app.getPath('appData'), `${app.name}Dev`));
 }

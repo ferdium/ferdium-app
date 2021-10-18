@@ -15,7 +15,7 @@ import {
   getDevRecipeDirectory,
 } from '../helpers/recipe-helpers';
 import { workspaceStore } from '../features/workspaces';
-import { KEEP_WS_LOADED_USID } from '../config';
+import { DEFAULT_SERVICE_SETTINGS, KEEP_WS_LOADED_USID } from '../config';
 import { SPELLCHECKER_LOCALES } from '../i18n/languages';
 import { ferdiVersion } from '../environment-remote';
 
@@ -224,6 +224,7 @@ export default class ServicesStore extends Store {
         }
 
         if (
+          service.isWakeUpEnabled &&
           service.lastHibernated &&
           Number(this.stores.settings.all.app.wakeUpStrategy) > 0 &&
           Date.now() - service.lastHibernated >
@@ -394,16 +395,15 @@ export default class ServicesStore extends Store {
     }
 
     // set default values for serviceData
-    // eslint-disable-next-line prefer-object-spread
-    // TODO: How is this different from the defaults of the recipe in 'src/models/Recipe' file?
     serviceData = {
-      isEnabled: true,
-      isHibernationEnabled: false,
-      isNotificationEnabled: true,
-      isBadgeEnabled: true,
-      isMuted: false,
-      customIcon: false,
-      isDarkModeEnabled: false,
+      isEnabled: DEFAULT_SERVICE_SETTINGS.isEnabled,
+      isHibernationEnabled: DEFAULT_SERVICE_SETTINGS.isHibernationEnabled,
+      isWakeUpEnabled: DEFAULT_SERVICE_SETTINGS.isWakeUpEnabled,
+      isNotificationEnabled: DEFAULT_SERVICE_SETTINGS.isNotificationEnabled,
+      isBadgeEnabled: DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
+      isMuted: DEFAULT_SERVICE_SETTINGS.isMuted,
+      customIcon: DEFAULT_SERVICE_SETTINGS.customIcon,
+      isDarkModeEnabled: DEFAULT_SERVICE_SETTINGS.isDarkModeEnabled,
       spellcheckerLanguage:
         SPELLCHECKER_LOCALES[this.stores.settings.app.spellcheckerLanguage],
       userAgentPref: '',
@@ -888,6 +888,7 @@ export default class ServicesStore extends Store {
       return this.actions.todos.reload();
     }
 
+    if (!service.webview) return;
     return service.webview.loadURL(service.url);
   }
 
@@ -995,7 +996,7 @@ export default class ServicesStore extends Store {
     const service = this.one(serviceId);
     if (service.isTodosService) {
       this.actions.todos.openDevTools();
-    } else {
+    } else if (service.webview) {
       service.webview.openDevTools();
     }
   }
@@ -1147,7 +1148,7 @@ export default class ServicesStore extends Store {
       const { isAttached } = service;
       const isMuted = isAppMuted || service.isMuted;
 
-      if (isAttached) {
+      if (isAttached && service.webview) {
         service.webview.audioMuted = isMuted;
       }
     }

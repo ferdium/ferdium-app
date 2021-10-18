@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import injectSheet from 'react-jss';
 import classnames from 'classnames';
-import { Loader } from '@meetfranz/ui';
 import { defineMessages, injectIntl } from 'react-intl';
 
+import { Loader } from '../../../components/ui/loader/index';
 import { workspaceStore } from '../index';
 
 const messages = defineMessages({

@@ -3,7 +3,7 @@ const Schema = use('Schema');
 
 class ServiceSchema extends Schema {
   up() {
-    this.create('services', (table) => {
+    this.create('services', table => {
       table.increments();
       table.string('serviceId', 80).notNullable();
       table.string('name', 80).notNullable();

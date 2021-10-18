@@ -9,8 +9,8 @@ module.exports = {
     sourceType: 'module',
     project: './tsconfig.json',
   },
-  extends: ['eslint-config-airbnb', 'plugin:unicorn/recommended'],
-  plugins: ['jest'],
+  extends: ['airbnb', 'plugin:unicorn/recommended', 'prettier'],
+  plugins: ['jest', 'prettier'],
   settings: {
     react: {
       pragma: 'React', // Pragma to use, default to "React"
@@ -18,14 +18,8 @@ module.exports = {
     },
   },
   globals: {
-    window: true,
-    document: true,
-    FormData: true,
-    localStorage: true,
-    navigator: true,
-    Element: true,
+    // TODO: can be removed once adonisj migration is done
     use: true,
-    FileReader: true,
   },
   env: {
     browser: true,
@@ -36,9 +30,9 @@ module.exports = {
   overrides: [
     {
       files: ['**/*.ts', '**/*.tsx'],
-      extends: ['airbnb-typescript', 'plugin:unicorn/recommended'],
+      extends: ['airbnb-typescript', 'plugin:unicorn/recommended', 'prettier'],
       parser: '@typescript-eslint/parser',
-      plugins: ['@typescript-eslint'],
+      plugins: ['@typescript-eslint', 'jest', 'prettier'],
       rules: {
         // eslint
         'arrow-parens': 0,
@@ -60,6 +54,10 @@ module.exports = {
         'object-curly-newline': 0,
         'operator-linebreak': 0,
         // @typescript-eslint
+        // TODO: Turn this rule on again after gulp -> webpack migration
+        // gulp-typescript doesn't consider custom index.d.ts in @types
+        // This is necessary as workaround for window.ferdi vs window['ferdi']
+        '@typescript-eslint/dot-notation': 0,
         '@typescript-eslint/indent': 0,
         '@typescript-eslint/no-shadow': 0,
         '@typescript-eslint/no-unused-expressions': 0,
@@ -74,6 +72,7 @@ module.exports = {
         'react/button-has-type': 0,
         'react/forbid-prop-types': 0,
         'react/jsx-curly-newline': 0,
+        'react/react-in-jsx-scope': 0,
         'react/jsx-no-bind': 0,
         'react/jsx-no-target-blank': 0,
         'react/jsx-props-no-spreading': 0,
@@ -116,6 +115,8 @@ module.exports = {
           },
         ],
         'unicorn/consistent-destructuring': 0,
+        // eslint-plugin-prettier
+        'prettier/prettier': 1,
       },
     },
   ],
@@ -151,6 +152,7 @@ module.exports = {
     'react/forbid-prop-types': 1,
     'react/destructuring-assignment': 0,
     'react/jsx-curly-newline': 0,
+    'react/react-in-jsx-scope': 0,
     'react/jsx-filename-extension': 1,
     'react/jsx-one-expression-per-line': 0,
     'react/jsx-no-bind': 1,
@@ -182,5 +184,7 @@ module.exports = {
       },
     ],
     'unicorn/consistent-destructuring': 0,
+    // eslint-plugin-prettier
+    'prettier/prettier': 1,
   },
 };

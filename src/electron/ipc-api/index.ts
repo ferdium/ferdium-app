@@ -12,7 +12,7 @@ import focusState from './focusState';
 export default (params: {
   mainWindow: BrowserWindow;
   settings: any;
-  tray: Tray;
+  trayIcon: Tray;
 }) => {
   settings(params);
   sessionStorage();

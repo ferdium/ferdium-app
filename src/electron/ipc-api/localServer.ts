@@ -1,12 +1,12 @@
 import { ipcMain, BrowserWindow } from 'electron';
-import net from 'net';
+import { createServer } from 'net';
 import { LOCAL_HOSTNAME, LOCAL_PORT } from '../../config';
 import { userDataPath } from '../../environment-remote';
 import { server } from '../../internal-server/start';
 
 const portInUse = (port: number): Promise<boolean> =>
   new Promise(resolve => {
-    const server = net.createServer(socket => {
+    const server = createServer(socket => {
       socket.write('Echo server\r\n');
       socket.pipe(socket);
     });

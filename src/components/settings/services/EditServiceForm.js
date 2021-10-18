@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { Link } from 'react-router';
@@ -356,6 +356,7 @@ class EditServiceForm extends Component {
                   <p className="settings__help indented__help">
                     {intl.formatMessage(messages.isHibernationEnabledInfo)}
                   </p>
+                  <Toggle field={form.$('isWakeUpEnabled')} />
                   <Toggle field={form.$('isDarkModeEnabled')} />
                   {form.$('isDarkModeEnabled').value && (
                     <>

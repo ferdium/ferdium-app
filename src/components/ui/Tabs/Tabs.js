@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Children, Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
@@ -36,7 +36,7 @@ class Tab extends Component {
     return (
       <div className="content-tabs">
         <div className="content-tabs__tabs">
-          {React.Children.map(children, (child, i) => (
+          {Children.map(children, (child, i) => (
             <button
               key="{i}"
               className={classnames({
@@ -51,7 +51,7 @@ class Tab extends Component {
           ))}
         </div>
         <div className="content-tabs__content">
-          {React.Children.map(children, (child, i) => (
+          {Children.map(children, (child, i) => (
             <div
               key="{i}"
               className={classnames({

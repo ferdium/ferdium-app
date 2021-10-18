@@ -4,8 +4,6 @@ directories:
 
 appId: "com.kytwb.ferdi"
 
-compression: maximum
-
 mac:
   hardenedRuntime: true
   gatekeeperAssess: false
@@ -71,5 +69,5 @@ protocols:
 
 asarUnpack:
   - ./recipes
+  - ./assets/fonts
   - ./assets/images/taskbar
-  - ./node_modules/@meetfranz

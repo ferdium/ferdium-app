@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
+import { createRef, Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import injectSheet from 'react-jss';
-import { Icon } from '@meetfranz/ui';
 import { defineMessages, injectIntl } from 'react-intl';
 
 import { mdiAlert } from '@mdi/js';
 import { LIVE_API_FERDI_WEBSITE } from '../../../config';
-// import { Button } from '@meetfranz/forms';
+import { Icon } from '../../ui/icon';
 
 const messages = defineMessages({
   text: {
@@ -78,7 +77,7 @@ class ConnectionLostBanner extends Component {
     reload: PropTypes.func.isRequired,
   };
 
-  inputRef = React.createRef();
+  inputRef = createRef();
 
   render() {
     const { classes, name, reload } = this.props;

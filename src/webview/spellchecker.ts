@@ -5,7 +5,11 @@ import { isMac } from '../environment';
 const debug = require('debug')('Ferdi:spellchecker');
 
 export function getSpellcheckerLocaleByFuzzyIdentifier(identifier: string) {
-  const locales = Object.keys(SPELLCHECKER_LOCALES).filter((key) => key.toLocaleLowerCase() === identifier.toLowerCase() || key.split('-')[0] === identifier.toLowerCase());
+  const locales = Object.keys(SPELLCHECKER_LOCALES).filter(
+    key =>
+      key.toLocaleLowerCase() === identifier.toLowerCase() ||
+      key.split('-')[0] === identifier.toLowerCase(),
+  );
 
   return locales.length > 0 ? locales[0] : null;
 }

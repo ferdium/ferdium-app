@@ -27,7 +27,7 @@ class WorkspaceController {
     } while (
       (await Workspace.query().where('workspaceId', workspaceId).fetch()).rows
         .length > 0
-    ); // eslint-disable-line no-await-in-loop
+    );
 
     const order = (await Workspace.all()).rows.length;
     const { name } = data;

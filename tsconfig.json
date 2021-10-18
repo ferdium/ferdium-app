@@ -6,17 +6,20 @@
     "strict": true,
     "target": "esnext",
     "lib": ["esnext", "dom"],
-    "module": "commonjs",
-    "jsx": "react",
+    "module": "CommonJS",
+    "jsx": "react-jsx",
     "typeRoots": ["@types", "node_modules/@types"],
     "moduleResolution": "node",
     "types": ["node", "mocha"],
     "sourceMap": true,
     "skipLibCheck": true,
-    "noImplicitAny": false, // TODO: Need to switch
+    // TODO: Need to switch
+    "noImplicitAny": false,
+    "pretty": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "composite": true,
+    // TODO: Change this config option to false once ms v3 is released and adopted
     "esModuleInterop": true,
     "importHelpers": true,
     "removeComments": true,
@@ -28,6 +31,7 @@
     "noImplicitThis": true,
     "preserveConstEnums": true,
     "strictNullChecks": true,
+    "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true
   }

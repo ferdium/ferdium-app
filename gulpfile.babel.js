@@ -75,7 +75,6 @@ const paths = {
     dest: 'build/',
     watch: [
       'src/**/*.js',
-      // 'packages/**/*.js',
     ],
   },
   typescripts: {
@@ -83,16 +82,7 @@ const paths = {
     dest: 'build/',
     watch: [
       'src/**/*.ts',
-      // 'packages/**/*.ts',
     ],
-  },
-  packages: {
-    watch: 'packages/**/*',
-    // dest: 'build/',
-    // watch: [
-    //   'src/**/*.js',
-    //   // 'packages/**/*.js',
-    // ],
   },
 };
 
@@ -143,16 +133,6 @@ export function mvSrc() {
 
 export function mvPackageJson() {
   return gulp.src(['./package.json']).pipe(gulp.dest(paths.dest));
-}
-
-export function mvLernaPackages() {
-  return gulp.src(['packages/**']).pipe(gulp.dest(`${paths.dest}/packages`));
-}
-
-export function mvPostinstallScript() {
-  return gulp
-    .src(['./scripts/postinstall.ts'])
-    .pipe(gulp.dest(`${paths.dest}/scripts`));
 }
 
 export function exportBuildInfo() {
@@ -240,7 +220,6 @@ export function processTypescripts() {
 }
 
 export function watch() {
-  gulp.watch(paths.packages.watch, mvLernaPackages);
   gulp.watch(paths.styles.watch, styles);
 
   gulp.watch([paths.src], mvSrc);
@@ -273,8 +252,6 @@ const build = gulp.series(
   gulp.parallel(
     mvSrc,
     mvPackageJson,
-    mvLernaPackages,
-    mvPostinstallScript,
     exportBuildInfo,
   ),
   gulp.parallel(

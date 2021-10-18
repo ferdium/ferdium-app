@@ -1,5 +1,3 @@
-const { notarize } = require('electron-notarize');
-
 exports.default = async function notarizing(context) {
   const { electronPlatformName, appOutDir } = context;
   if (electronPlatformName !== 'darwin' || process.env.SKIP_NOTARIZATION === 'true' || (process.env.GIT_BRANCH_NAME !== 'release' && process.env.GIT_BRANCH_NAME !== 'nightly')) {
@@ -7,6 +5,9 @@ exports.default = async function notarizing(context) {
   }
 
   const appName = context.packager.appInfo.productFilename;
+
+  // @ts-ignore global-require
+  const { notarize } = require('electron-notarize');
 
   await notarize({
     appBundleId: 'com.kytwb.ferdi',

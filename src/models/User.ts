@@ -59,7 +59,8 @@ export default class User {
     this.beta = data.beta || this.beta;
     this.locale = data.locale || this.locale;
 
-    this.isSubscriptionOwner = data.isSubscriptionOwner || this.isSubscriptionOwner;
+    this.isSubscriptionOwner =
+      data.isSubscriptionOwner || this.isSubscriptionOwner;
 
     this.team = data.team || this.team;
   }

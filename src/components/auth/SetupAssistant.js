@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import injectSheet from 'react-jss';
 import classnames from 'classnames';
 
-import { Input, Button } from '@meetfranz/forms';
-import { Badge } from '@meetfranz/ui';
+import { Input } from '../ui/input/index';
+import { Button } from '../ui/button/index';
+import { Badge } from '../ui/badge';
 import Modal from '../ui/Modal';
 import Infobox from '../ui/Infobox';
 import Appear from '../ui/effects/Appear';

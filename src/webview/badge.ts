@@ -3,7 +3,7 @@ import { ipcRenderer } from 'electron';
 const debug = require('debug')('Ferdi:Plugin:BadgeHandler');
 
 export class BadgeHandler {
-  countCache: { direct: number; indirect: number; };
+  countCache: { direct: number; indirect: number };
 
   constructor() {
     this.countCache = {
@@ -26,14 +26,19 @@ export class BadgeHandler {
     return Math.max(adjustedNumber, 0);
   }
 
-  setBadge(direct: string | number | undefined | null, indirect: string | number | undefined | null) {
+  setBadge(
+    direct: string | number | undefined | null,
+    indirect: string | number | undefined | null,
+  ) {
     const count = {
       direct: this.safeParseInt(direct),
       indirect: this.safeParseInt(indirect),
     };
 
-    if (this.countCache.direct.toString() === count.direct.toString()
-        && this.countCache.indirect.toString() === count.indirect.toString()) {
+    if (
+      this.countCache.direct.toString() === count.direct.toString() &&
+      this.countCache.indirect.toString() === count.indirect.toString()
+    ) {
       return;
     }
 

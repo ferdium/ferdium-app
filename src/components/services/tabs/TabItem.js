@@ -1,17 +1,18 @@
 import { Menu, dialog, app } from '@electron/remote';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { defineMessages, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import classnames from 'classnames';
 import { SortableElement } from 'react-sortable-hoc';
 import injectSheet from 'react-jss';
 import ms from 'ms';
 
-import { observable, autorun } from 'mobx';
+import { observable, autorun, reaction } from 'mobx';
 import ServiceModel from '../../../models/Service';
 import { cmdOrCtrlShortcutKey } from '../../../environment';
 import globalMessages from '../../../i18n/globalMessages';
+import SettingsStore from '../../../stores/SettingsStore';
 
 const IS_SERVICE_DEBUGGING_ENABLED = (
   localStorage.getItem('debug') || ''
@@ -112,6 +113,7 @@ const styles = {
 };
 
 @injectSheet(styles)
+@inject('stores')
 @observer
 class TabItem extends Component {
   static propTypes = {
@@ -131,6 +133,9 @@ class TabItem extends Component {
     wakeUpService: PropTypes.func.isRequired,
     showMessageBadgeWhenMutedSetting: PropTypes.bool.isRequired,
     showMessageBadgesEvenWhenMuted: PropTypes.bool.isRequired,
+    stores: PropTypes.shape({
+      settings: PropTypes.instanceOf(SettingsStore).isRequired,
+    }).isRequired,
   };
 
   @observable isPolled = false;
@@ -142,37 +147,37 @@ class TabItem extends Component {
     this.state = {
       showShortcutIndex: false,
     };
+
+    reaction(
+      () => this.props.stores.settings.app.enableLongPressServiceHint,
+      () => {
+        this.checkForLongPress(
+          this.props.stores.settings.app.enableLongPressServiceHint,
+        );
+      },
+    );
   }
 
-  handleShowShortcutIndex = () => {
-    this.setState({ showShortcutIndex: true });
+  handleShortcutIndex = (event, showShortcutIndex = true) => {
+    if (event.key === 'Shift') {
+      this.setState({ showShortcutIndex });
+    }
   };
 
-  checkForLongPress = () => {
-    let longpressDelay = null;
-    const longpressDelayDuration = 1000;
+  checkForLongPress = enableLongPressServiceHint => {
+    if (enableLongPressServiceHint) {
+      document.addEventListener('keydown', e => {
+        this.handleShortcutIndex(e);
+      });
 
-    document.addEventListener(
-      'keydown',
-      e => {
-        if (e.ctrlKey || e.metaKey) {
-          longpressDelay = setTimeout(
-            this.handleShowShortcutIndex,
-            longpressDelayDuration,
-          );
-        }
-      },
-      { capture: true },
-    );
-
-    document.addEventListener('keyup', () => {
-      clearTimeout(longpressDelay);
-      this.setState({ showShortcutIndex: false });
-    });
+      document.addEventListener('keyup', e => {
+        this.handleShortcutIndex(e, false);
+      });
+    }
   };
 
   componentDidMount() {
-    const { service } = this.props;
+    const { service, stores } = this.props;
 
     if (IS_SERVICE_DEBUGGING_ENABLED) {
       autorun(() => {
@@ -194,7 +199,7 @@ class TabItem extends Component {
       });
     }
 
-    this.checkForLongPress();
+    this.checkForLongPress(stores.settings.app.enableLongPressServiceHint);
   }
 
   render() {
@@ -364,7 +369,7 @@ class TabItem extends Component {
             />
           </>
         )}
-        {shortcutIndex && this.state.showShortcutIndex && (
+        {shortcutIndex <= 9 && this.state.showShortcutIndex && (
           <span className="tab-item__shortcut-index">{shortcutIndex}</span>
         )}
       </li>

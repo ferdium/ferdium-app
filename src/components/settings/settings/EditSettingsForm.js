@@ -1,5 +1,5 @@
 import { systemPreferences } from '@electron/remote';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import prettyBytes from 'pretty-bytes';
@@ -12,13 +12,17 @@ import ToggleRaw from '../../ui/ToggleRaw';
 import Select from '../../ui/Select';
 import Input from '../../ui/Input';
 
-import { DEFAULT_APP_SETTINGS, FRANZ_TRANSLATION, GITHUB_FRANZ_URL } from '../../../config';
 import {
-  isMac,
-  isWindows,
-  lockFerdiShortcutKey,
-} from '../../../environment';
-import { ferdiVersion, userDataPath, userDataRecipesPath } from '../../../environment-remote';
+  DEFAULT_APP_SETTINGS,
+  FRANZ_TRANSLATION,
+  GITHUB_FRANZ_URL,
+} from '../../../config';
+import { isMac, isWindows, lockFerdiShortcutKey } from '../../../environment';
+import {
+  ferdiVersion,
+  userDataPath,
+  userDataRecipesPath,
+} from '../../../environment-remote';
 import { openPath } from '../../../helpers/url-helpers';
 import globalMessages from '../../../i18n/globalMessages';
 
@@ -550,6 +554,7 @@ class EditSettingsForm extends Component {
 
                 <Hr />
                 <Select field={form.$('iconSize')} />
+                <Toggle field={form.$('enableLongPressServiceHint')} />
 
                 <Hr />
 
@@ -673,6 +678,7 @@ class EditSettingsForm extends Component {
             {this.state.activeSetttingsTab === 'advanced' && (
               <div>
                 <Toggle field={form.$('enableGPUAcceleration')} />
+                <Toggle field={form.$('enableGlobalHideShortcut')} />
                 <p className="settings__help indented__help">
                   {intl.formatMessage(messages.appRestartRequired)}
                 </p>

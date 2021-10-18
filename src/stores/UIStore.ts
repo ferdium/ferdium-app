@@ -1,7 +1,7 @@
 import { action, observable, computed, reaction } from 'mobx';
-import { theme, ThemeType } from '@meetfranz/theme';
 import { nativeTheme, systemPreferences } from '@electron/remote';
 
+import { theme, ThemeType } from '../themes';
 import Store from './lib/Store';
 import { isMac, isWindows } from '../environment';
 

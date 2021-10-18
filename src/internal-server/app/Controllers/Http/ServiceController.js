@@ -36,7 +36,7 @@ class ServiceController {
     } while (
       (await Service.query().where('serviceId', serviceId).fetch()).rows
         .length > 0
-    ); // eslint-disable-line no-await-in-loop
+    );
 
     await Service.create({
       serviceId,

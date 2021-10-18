@@ -1,6 +1,5 @@
 import { webFrame } from 'electron';
 
-import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'mobx-react';
 import { syncHistoryWithStore, RouterStore } from 'mobx-react-router';

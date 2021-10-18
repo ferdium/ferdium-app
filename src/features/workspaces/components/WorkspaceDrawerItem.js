@@ -1,5 +1,5 @@
 import { Menu } from '@electron/remote';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import injectSheet from 'react-jss';
@@ -118,14 +118,12 @@ class WorkspaceDrawerItem extends Component {
           isActive ? classes.isActiveItem : null,
         ])}
         onClick={onClick}
-        onContextMenu={() =>
-          onContextMenuEditClick && contextMenu.popup()
-        }
+        onContextMenu={() => onContextMenuEditClick && contextMenu.popup()}
         data-tip={`${
           shortcutIndex <= 9
             ? `(${cmdOrCtrlShortcutKey(false)}+${altKey(
-              false,
-            )}+${shortcutIndex})`
+                false,
+              )}+${shortcutIndex})`
             : ''
         }`}
       >

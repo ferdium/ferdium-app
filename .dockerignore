@@ -13,7 +13,6 @@
 **/*.md
 **/*.tsbuildinfo
 **/build
-**/lerna-debug.log
 **/node_modules
 **/npm-debug.log*
 **/.pnpm-debug.log
@@ -24,7 +23,6 @@ flow-typed
 out
 recipes/archives
 tmp-out/
-uidev/lib
 docs/
 src/internal-server/database/tmp/
 src/internal-server/database/development.sqlite

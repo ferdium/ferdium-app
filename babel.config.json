@@ -1,15 +1,14 @@
 {
-  "babelrcRoots": [".", "packages/*"],
   "presets": [
     [
       "@babel/preset-env",
       {
         "targets": {
-          "electron": 13
+          "electron": 15
         }
       }
     ],
-    "@babel/preset-react"
+    ["@babel/preset-react", { "runtime": "automatic" }]
   ],
   "plugins": [
     [
@@ -18,26 +17,17 @@
         "legacy": true
       }
     ],
-    "@babel/proposal-export-default-from",
     [
       "@babel/proposal-class-properties",
       {
         "loose": true
       }
     ],
-    "@babel/proposal-throw-expressions",
-    "@babel/syntax-dynamic-import",
     [
       "formatjs",
       {
         "idInterpolationPattern": "[sha512:contenthash:base64:6]",
         "ast": true
-      }
-    ],
-    [
-      "@babel/plugin-proposal-private-methods",
-      {
-        "loose": true
       }
     ]
   ],

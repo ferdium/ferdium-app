@@ -24,6 +24,5 @@ export default class ActionBinding {
   }
 }
 
-export const createActionBindings = (actions) => (
-  actions.map((a) => new ActionBinding(a))
-);
+export const createActionBindings = actions =>
+  actions.map(a => new ActionBinding(a));

@@ -17,27 +17,27 @@
 
 import fold from '@adonisjs/fold';
 import { Ignitor } from '@adonisjs/ignitor';
-import fs from 'fs-extra';
-import path from 'path';
+import { existsSync, readFile, statSync, chmodSync, writeFile } from 'fs-extra';
+import { join } from 'path';
 import { LOCAL_HOSTNAME } from '../config';
 import { isWindows } from '../environment';
 
-process.env.ENV_PATH = path.join(__dirname, 'env.ini');
+process.env.ENV_PATH = join(__dirname, 'env.ini');
 
 export const server = async (userPath: string, port: number) => {
-  const dbPath = path.join(userPath, 'server.sqlite');
-  const dbTemplatePath = path.join(__dirname, 'database', 'template.sqlite');
+  const dbPath = join(userPath, 'server.sqlite');
+  const dbTemplatePath = join(__dirname, 'database', 'template.sqlite');
 
-  if (!fs.existsSync(dbPath)) {
+  if (!existsSync(dbPath)) {
     // Manually copy file
     // We can't use copyFile here as it will cause the file to be readonly on Windows
-    const dbTemplate = await fs.readFile(dbTemplatePath);
-    await fs.writeFile(dbPath, dbTemplate);
+    const dbTemplate = await readFile(dbTemplatePath);
+    await writeFile(dbPath, dbTemplate);
 
     // Change permissions to ensure to file is not read-only
     if (isWindows) {
       // eslint-disable-next-line no-bitwise
-      fs.chmodSync(dbPath, fs.statSync(dbPath).mode | 146);
+      chmodSync(dbPath, statSync(dbPath).mode | 146);
     }
   }
 

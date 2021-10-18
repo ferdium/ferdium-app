@@ -1,6 +1,4 @@
-const isDev = process.env.NODE_ENV === 'development';
-
-if (isDev) {
+if (process.env.NODE_ENV === 'development') {
   // eslint-disable-next-line global-require
   require('husky').install();
 }

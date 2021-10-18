@@ -1,14 +1,14 @@
-import React, { Component, createRef } from 'react';
+import { Component, createRef } from 'react';
 import { getCurrentWindow } from '@electron/remote';
 import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react';
 import { reaction } from 'mobx';
 import injectSheet from 'react-jss';
 import { defineMessages, injectIntl } from 'react-intl';
-import { Input } from '@meetfranz/forms';
-import { H1 } from '@meetfranz/ui';
-
 import { compact, invoke } from 'lodash';
+
+import { Input } from '../../components/ui/input/index';
+import { H1 } from '../../components/ui/headline';
 import Modal from '../../components/ui/Modal';
 import { state as ModalState } from './store';
 import ServicesStore from '../../stores/ServicesStore';

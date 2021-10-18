@@ -1,7 +1,7 @@
-import crypto from 'crypto';
+import { createHash, BinaryLike } from 'crypto';
 
-export function hash(password: crypto.BinaryLike) {
-  return crypto.createHash('sha256').update(password).digest('base64');
+export function hash(password: BinaryLike) {
+  return createHash('sha256').update(password).digest('base64');
 }
 
 export function scorePassword(password: string) {

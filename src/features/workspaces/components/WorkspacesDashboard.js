@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer, PropTypes as MobxPropTypes, inject } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import injectSheet from 'react-jss';
-import { Infobox } from '@meetfranz/ui';
 
 import { mdiCheckboxMarkedCircleOutline } from '@mdi/js';
+
+import { Infobox } from '../../../components/ui/infobox/index';
 import Loader from '../../../components/ui/Loader';
 import WorkspaceItem from './WorkspaceItem';
 import CreateWorkspaceForm from './CreateWorkspaceForm';
@@ -40,7 +41,8 @@ const messages = defineMessages({
   },
   workspaceFeatureInfo: {
     id: 'settings.workspaces.workspaceFeatureInfo',
-    defaultMessage: 'Ferdi Workspaces let you focus on what’s important right now. Set up different sets of services and easily switch between them at any time. You decide which services you need when and where, so we can help you stay on top of your game - or easily switch off from work whenever you want.',
+    defaultMessage:
+      'Ferdi Workspaces let you focus on what’s important right now. Set up different sets of services and easily switch between them at any time. You decide which services you need when and where, so we can help you stay on top of your game - or easily switch off from work whenever you want.',
   },
   workspaceFeatureHeadline: {
     id: 'settings.workspaces.workspaceFeatureHeadline',

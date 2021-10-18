@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
@@ -177,6 +177,10 @@ const messages = defineMessages({
     id: 'settings.app.form.iconSize',
     defaultMessage: 'Service icon size',
   },
+  enableLongPressServiceHint: {
+    id: 'settings.app.form.enableLongPressServiceHint',
+    defaultMessage: 'Enable service shortcut hint on long press',
+  },
   useVerticalStyle: {
     id: 'settings.app.form.useVerticalStyle',
     defaultMessage: 'Use horizontal style',
@@ -208,6 +212,10 @@ const messages = defineMessages({
   enableGPUAcceleration: {
     id: 'settings.app.form.enableGPUAcceleration',
     defaultMessage: 'Enable GPU Acceleration',
+  },
+  enableGlobalHideShortcut: {
+    id: 'settings.app.form.enableGlobalHideShortcut',
+    defaultMessage: 'Enable Global shortcut to hide Ferdi',
   },
   beta: {
     id: 'settings.app.form.beta',
@@ -289,6 +297,9 @@ class EditSettingsScreen extends Component {
         scheduledDNDStart: settingsData.scheduledDNDStart,
         scheduledDNDEnd: settingsData.scheduledDNDEnd,
         enableGPUAcceleration: Boolean(settingsData.enableGPUAcceleration),
+        enableGlobalHideShortcut: Boolean(
+          settingsData.enableGlobalHideShortcut,
+        ),
         showDisabledServices: Boolean(settingsData.showDisabledServices),
         darkMode: Boolean(settingsData.darkMode),
         adaptableDarkMode: Boolean(settingsData.adaptableDarkMode),
@@ -296,6 +307,9 @@ class EditSettingsScreen extends Component {
         splitMode: Boolean(settingsData.splitMode),
         serviceRibbonWidth: Number(settingsData.serviceRibbonWidth),
         iconSize: Number(settingsData.iconSize),
+        enableLongPressServiceHint: Boolean(
+          settingsData.enableLongPressServiceHint,
+        ),
         useVerticalStyle: Boolean(settingsData.useVerticalStyle),
         alwaysShowWorkspaces: Boolean(settingsData.alwaysShowWorkspaces),
         accentColor: settingsData.accentColor,
@@ -503,7 +517,7 @@ class EditSettingsScreen extends Component {
         lockingFeatureEnabled: {
           label: intl.formatMessage(messages.enableLock),
           value: settings.all.app.lockingFeatureEnabled || false,
-          default: false,
+          default: DEFAULT_APP_SETTINGS.lockingFeatureEnabled,
         },
         lockedPassword: {
           label: intl.formatMessage(messages.lockPassword),
@@ -525,7 +539,7 @@ class EditSettingsScreen extends Component {
         scheduledDNDEnabled: {
           label: intl.formatMessage(messages.scheduledDNDEnabled),
           value: settings.all.app.scheduledDNDEnabled || false,
-          default: false,
+          default: DEFAULT_APP_SETTINGS.scheduledDNDEnabled,
         },
         scheduledDNDStart: {
           label: intl.formatMessage(messages.scheduledDNDStart),
@@ -603,6 +617,11 @@ class EditSettingsScreen extends Component {
           default: DEFAULT_APP_SETTINGS.iconSize,
           options: iconSizes,
         },
+        enableLongPressServiceHint: {
+          label: intl.formatMessage(messages.enableLongPressServiceHint),
+          value: settings.all.app.enableLongPressServiceHint,
+          default: DEFAULT_APP_SETTINGS.enableLongPressServiceHint,
+        },
         useVerticalStyle: {
           label: intl.formatMessage(messages.useVerticalStyle),
           value: settings.all.app.useVerticalStyle,
@@ -622,6 +641,11 @@ class EditSettingsScreen extends Component {
           label: intl.formatMessage(messages.enableGPUAcceleration),
           value: settings.all.app.enableGPUAcceleration,
           default: DEFAULT_APP_SETTINGS.enableGPUAcceleration,
+        },
+        enableGlobalHideShortcut: {
+          label: intl.formatMessage(messages.enableGlobalHideShortcut),
+          value: settings.all.app.enableGlobalHideShortcut,
+          default: DEFAULT_APP_SETTINGS.enableGlobalHideShortcut,
         },
         locale: {
           label: intl.formatMessage(messages.language),

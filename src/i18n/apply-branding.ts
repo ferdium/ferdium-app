@@ -1,8 +1,8 @@
 /**
  * Apply Ferdi branding to i18n translations
  */
-import fs from 'fs-extra';
-import path from 'path';
+import { readdirSync, readJson, writeJson } from 'fs-extra';
+import { join } from 'path';
 
 console.log('Applying Ferdi branding to translations...');
 
@@ -31,13 +31,13 @@ const replace = {
   '!!!': '',
 };
 
-const locales = path.join(__dirname, 'locales');
-const files = fs.readdirSync(locales);
+const locales = join(__dirname, 'locales');
+const files = readdirSync(locales);
 
 const replaceFind = Object.keys(replace);
 const replaceReplaceWith = Object.values(replace);
 
-const replaceStr = (str, find, replaceWith) => {
+const replaceStr = (str: string, find: any[], replaceWith: string[]) => {
   for (const [i, element] of find.entries()) {
     str = str.replace(new RegExp(element, 'gi'), replaceWith[i]);
   }
@@ -49,8 +49,8 @@ files.forEach(async file => {
   if (ignoreFiles.has(file)) return;
 
   // Read locale data
-  const filePath = path.join(locales, file);
-  const locale = await fs.readJson(filePath);
+  const filePath = join(locales, file);
+  const locale = await readJson(filePath);
 
   // Replace branding
   for (const key in locale) {
@@ -59,7 +59,7 @@ files.forEach(async file => {
     }
   }
 
-  await fs.writeJson(filePath, locale, {
+  await writeJson(filePath, locale, {
     spaces: 2,
     EOL: '\n',
   });

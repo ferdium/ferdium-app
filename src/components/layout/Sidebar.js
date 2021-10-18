@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
 import { defineMessages, injectIntl } from 'react-intl';
@@ -177,7 +177,7 @@ class Sidebar extends Component {
               >
                 <i className="mdi mdi-check-all" />
               </button>
-              ) : null}
+            ) : null}
             {workspaceStore.isFeatureEnabled ? (
               <button
                 type="button"
@@ -243,7 +243,7 @@ class Sidebar extends Component {
             this.props.stores.app.updateStatusTypes.AVAILABLE ||
             this.props.stores.app.updateStatus ===
               this.props.stores.app.updateStatusTypes.DOWNLOADED) && (
-              <span className="update-available">•</span>
+            <span className="update-available">•</span>
           )}
         </button>
         {this.state.tooltipEnabled && (

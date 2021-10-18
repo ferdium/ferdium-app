@@ -1,12 +1,14 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import { Link } from 'react-router';
 
-import { Button, Input } from '@meetfranz/forms';
 import injectSheet from 'react-jss';
-import { H3, H2 } from '@meetfranz/ui';
+
+import { Button } from '../../ui/button/index';
+import { Input } from '../../ui/input/index';
+import { H3, H2 } from '../../ui/headline';
 import SearchInput from '../../ui/SearchInput';
 import Infobox from '../../ui/Infobox';
 import RecipeItem from './RecipeItem';

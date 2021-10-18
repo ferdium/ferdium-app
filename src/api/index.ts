@@ -4,7 +4,6 @@ import RecipePreviewsApi from './RecipePreviewsApi';
 import RecipesApi from './RecipesApi';
 import UserApi from './UserApi';
 import LocalApi from './LocalApi';
-import NewsApi from './NewsApi';
 import FeaturesApi from './FeaturesApi';
 
 export default (server: any, local: any) => ({
@@ -15,5 +14,4 @@ export default (server: any, local: any) => ({
   features: new FeaturesApi(server),
   user: new UserApi(server, local),
   local: new LocalApi(server, local),
-  news: new NewsApi(server, local),
 });

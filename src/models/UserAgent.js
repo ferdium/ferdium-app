@@ -63,8 +63,12 @@ export default class UserAgent {
   }
 
   @computed get userAgent() {
-    return this.serviceUserAgentPref
-      || (this.chromelessUserAgent ? this.userAgentWithoutChromeVersion : this.defaultUserAgent);
+    return (
+      this.serviceUserAgentPref ||
+      (this.chromelessUserAgent
+        ? this.userAgentWithoutChromeVersion
+        : this.defaultUserAgent)
+    );
   }
 
   @action setWebviewReference(webview) {

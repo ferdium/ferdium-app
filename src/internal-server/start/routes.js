@@ -66,7 +66,6 @@ Route.group(() => {
   // Static responses
   Route.get('features/:mode?', 'StaticController.features');
   Route.get('services', 'StaticController.emptyArray');
-  Route.get('news', 'StaticController.emptyArray');
 })
   .prefix(API_VERSION)
   .middleware(OnlyAllowFerdi);

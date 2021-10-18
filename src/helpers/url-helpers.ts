@@ -29,7 +29,10 @@ export async function openPath(folderName: string) {
 }
 
 // TODO: Need to verify and fix/remove the skipping logic. Ideally, we should never skip this check
-export function openExternalUrl(url: string | URL, skipValidityCheck: boolean = false) {
+export function openExternalUrl(
+  url: string | URL,
+  skipValidityCheck: boolean = false,
+) {
   debug('Open url:', url, 'with skipValidityCheck:', skipValidityCheck);
   if (skipValidityCheck || isValidExternalURL(url)) {
     shell.openExternal(url.toString());

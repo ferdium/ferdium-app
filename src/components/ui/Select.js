@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { createRef, Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { Field } from 'mobx-react-form';
@@ -24,7 +24,7 @@ class Select extends Component {
   constructor(props) {
     super(props);
 
-    this.element = React.createRef();
+    this.element = createRef();
   }
 
   multipleChange() {

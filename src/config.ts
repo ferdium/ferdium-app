@@ -2,7 +2,7 @@
 
 import ms from 'ms';
 
-import { DEFAULT_ACCENT_COLOR } from '@meetfranz/theme';
+export const DEFAULT_ACCENT_COLOR = '#7266F0';
 
 export const CHECK_INTERVAL = ms('1h'); // How often should we perform checks
 
@@ -180,6 +180,7 @@ export const CUSTOM_WEBSITE_RECIPE_ID = 'franz-custom-website';
 export const DEFAULT_SERVICE_ORDER = 99; // something high enough that it gets added to the end of the already-added services on the left sidebar
 
 export const DEFAULT_APP_SETTINGS = {
+  autoLaunchOnStart: false,
   autoLaunchInBackground: false,
   runInBackground: true,
   reloadAfterResume: true,
@@ -198,11 +199,11 @@ export const DEFAULT_APP_SETTINGS = {
   spellcheckerLanguage: 'en-us',
   darkMode: false,
   splitMode: false,
-  locale: '',
   fallbackLocale: 'en-US',
   beta: false,
   isAppMuted: false,
   enableGPUAcceleration: true,
+  enableGlobalHideShortcut: false,
 
   // Ferdi specific options
   server: LIVE_FERDI_API,
@@ -233,4 +234,28 @@ export const DEFAULT_APP_SETTINGS = {
   useVerticalStyle: false,
   alwaysShowWorkspaces: false,
   liftSingleInstanceLock: false,
+  enableLongPressServiceHint: false,
+  proxyFeatureEnabled: false,
+  onlyShowFavoritesInUnreadCount: false
+};
+
+export const DEFAULT_SERVICE_SETTINGS = {
+  isEnabled: true,
+  isHibernationEnabled: false,
+  isWakeUpEnabled: true,
+  isNotificationEnabled: true,
+  isBadgeEnabled: true,
+  isMuted: false,
+  customIcon: false,
+  isDarkModeEnabled: false,
+  // Note: Do NOT change these default values. If they change, then the corresponding changes in the recipes needs to be done
+  hasDirectMessages: true,
+  hasIndirectMessages: false,
+  hasNotificationSound: false,
+  hasTeamId: false,
+  hasCustomUrl: false,
+  hasHostedOption: false,
+  allowFavoritesDelineationInUnreadCount: false,
+  disablewebsecurity: false,
+  autoHibernate: false,
 };

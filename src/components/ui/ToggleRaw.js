@@ -1,7 +1,7 @@
 /**
  * "Raw" Toggle - for usage without a MobX Form element
  */
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';

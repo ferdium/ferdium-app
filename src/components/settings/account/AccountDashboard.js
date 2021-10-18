@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import ReactTooltip from 'react-tooltip';
-import { H1, H2 } from '@meetfranz/ui';
+import { H1, H2 } from '../../ui/headline';
 
 import Loader from '../../ui/Loader';
 import Button from '../../ui/Button';

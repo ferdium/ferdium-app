@@ -273,13 +273,11 @@ export default class UserStore extends Store {
 
     // Install recipes
     for (const recipe of recipes) {
-      // eslint-disable-line no-unused-vars
       // eslint-disable-next-line no-await-in-loop
       await this.stores.recipes._install({ recipeId: recipe });
     }
 
     for (const service of services) {
-      // eslint-disable-line no-unused-vars
       this.actions.service.createFromLegacyService({
         data: service,
       });
