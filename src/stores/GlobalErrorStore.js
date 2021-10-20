@@ -64,7 +64,7 @@ export default class GlobalErrorStore extends Store {
           this.response = {};
         }
         if (this.error.status === 401) {
-          window.ferdi.stores.app.authRequestFailed = true;
+          window['ferdi'].stores.app.authRequestFailed = true;
           // this.actions.user.logout({ serverLogout: true });
         }
       }
@@ -78,10 +78,10 @@ export default class GlobalErrorStore extends Store {
         },
         error: this.error,
         response: this.response,
-        server: window.ferdi.stores.settings.app.server,
+        server: window['ferdi'].stores.settings.app.server,
       });
     } else {
-      window.ferdi.stores.app.authRequestFailed = false;
+      window['ferdi'].stores.app.authRequestFailed = false;
     }
   });
 }

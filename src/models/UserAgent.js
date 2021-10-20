@@ -37,7 +37,7 @@ export default class UserAgent {
     if (typeof this.getUserAgent === 'function') {
       return this.getUserAgent();
     }
-    const globalPref = window.ferdi.stores.settings.all.app.userAgentPref;
+    const globalPref = window['ferdi'].stores.settings.all.app.userAgentPref;
     if (typeof globalPref === 'string') {
       const trimmed = globalPref.trim();
       if (trimmed !== '') {

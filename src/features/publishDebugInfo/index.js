@@ -12,7 +12,7 @@ export default function initialize() {
     state.isModalVisible = true;
   }
 
-  window.ferdi.features.publishDebugInfo = {
+  window['ferdi'].features.publishDebugInfo = {
     state,
     showModal,
   };

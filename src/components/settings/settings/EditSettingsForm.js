@@ -265,7 +265,7 @@ class EditSettingsForm extends Component {
     }
 
     const { lockingFeatureEnabled, scheduledDNDEnabled } =
-      window.ferdi.stores.settings.all.app;
+      window['ferdi'].stores.settings.all.app;
 
     let cacheSize;
     let notCleared;
@@ -768,7 +768,7 @@ class EditSettingsForm extends Component {
                         name: 'Nightly builds',
                       }}
                       onChange={
-                        window.ferdi.features.nightlyBuilds.toggleFeature
+                        window['ferdi'].features.nightlyBuilds.toggleFeature
                       }
                     />
                     {updateIsReadyToInstall ? (

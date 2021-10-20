@@ -313,7 +313,7 @@ const menuItems = defineMessages({
 });
 
 function getActiveService() {
-  return window.ferdi.stores.services.active;
+  return window['ferdi'].stores.services.active;
 }
 
 const _titleBarTemplateFactory = (intl, locked) => [
@@ -375,7 +375,7 @@ const _titleBarTemplateFactory = (intl, locked) => [
         label: intl.formatMessage(menuItems.openQuickSwitch),
         accelerator: `${cmdOrCtrlShortcutKey()}+S`,
         click() {
-          window.ferdi.features.quickSwitch.state.isModalVisible = true;
+          window['ferdi'].features.quickSwitch.state.isModalVisible = true;
         },
       },
       {
@@ -391,7 +391,7 @@ const _titleBarTemplateFactory = (intl, locked) => [
             // Focus webview so find in page popup gets focused
             service.webview.focus();
 
-            window.ferdi.actions.service.sendIPCMessage({
+            window['ferdi'].actions.service.sendIPCMessage({
               serviceId: service.id,
               channel: 'find-in-page',
               args: {},
@@ -457,12 +457,12 @@ const _titleBarTemplateFactory = (intl, locked) => [
         label: intl.formatMessage(menuItems.toggleDarkMode),
         type: 'checkbox',
         accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+D`,
-        checked: window.ferdi.stores.settings.app.darkMode,
+        checked: window['ferdi'].stores.settings.app.darkMode,
         click: () => {
-          window.ferdi.actions.settings.update({
+          window['ferdi'].actions.settings.update({
             type: 'app',
             data: {
-              darkMode: !window.ferdi.stores.settings.app.darkMode,
+              darkMode: !window['ferdi'].stores.settings.app.darkMode,
             },
           });
         },
@@ -579,13 +579,13 @@ class FranzMenu {
     // need to clone object so we don't modify computed (cached) object
     const serviceTpl = Object.assign([], this.serviceTpl());
 
-    // Don't initialize when window.ferdi is undefined
-    if (window.ferdi === undefined) {
+    // Don't initialize when window['ferdi'] is undefined
+    if (window['ferdi'] === undefined) {
       console.log('skipping menu init');
       return;
     }
 
-    const { intl } = window.ferdi;
+    const { intl } = window['ferdi'];
     const tpl = _titleBarTemplateFactory(intl, this.stores.settings.app.locked);
     const { actions } = this;
 
@@ -593,13 +593,13 @@ class FranzMenu {
       tpl[1].submenu.push({
         label: intl.formatMessage(menuItems.autohideMenuBar),
         type: 'checkbox',
-        checked: window.ferdi.stores.settings.app.autohideMenuBar,
+        checked: window['ferdi'].stores.settings.app.autohideMenuBar,
         click: () => {
-          window.ferdi.actions.settings.update({
+          window['ferdi'].actions.settings.update({
             type: 'app',
             data: {
               autohideMenuBar:
-                !window.ferdi.stores.settings.app.autohideMenuBar,
+                !window['ferdi'].stores.settings.app.autohideMenuBar,
             },
           });
         },
@@ -893,7 +893,7 @@ class FranzMenu {
   }
 
   serviceTpl() {
-    const { intl } = window.ferdi;
+    const { intl } = window['ferdi'];
     const { user, services, settings } = this.stores;
     if (!user.isLoggedIn) return [];
     const menu = [];
@@ -988,7 +988,7 @@ class FranzMenu {
   workspacesMenu() {
     const { workspaces, activeWorkspace, isWorkspaceDrawerOpen } =
       workspaceStore;
-    const { intl } = window.ferdi;
+    const { intl } = window['ferdi'];
     const menu = [];
 
     // Add new workspace item:
@@ -1050,7 +1050,7 @@ class FranzMenu {
 
   todosMenu() {
     const { isTodosPanelVisible, isFeatureEnabledByUser } = this.stores.todos;
-    const { intl } = window.ferdi;
+    const { intl } = window['ferdi'];
     const menu = [];
 
     const drawerLabel = isTodosPanelVisible
@@ -1084,7 +1084,7 @@ class FranzMenu {
   }
 
   debugMenu() {
-    const { intl } = window.ferdi;
+    const { intl } = window['ferdi'];
 
     return [
       {
@@ -1107,7 +1107,7 @@ class FranzMenu {
       {
         label: intl.formatMessage(menuItems.publishDebugInfo),
         click: () => {
-          window.ferdi.features.publishDebugInfo.state.isModalVisible = true;
+          window['ferdi'].features.publishDebugInfo.state.isModalVisible = true;
         },
       },
     ];

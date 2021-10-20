@@ -12,7 +12,7 @@ import AppStore from './stores/AppStore';
 @observer
 class I18N extends Component {
   componentDidUpdate() {
-    window.ferdi.menu.rebuild();
+    window['ferdi'].menu.rebuild();
   }
 
   render() {
@@ -22,7 +22,7 @@ class I18N extends Component {
       <IntlProvider
         {...{ locale, key: locale, messages: translations[locale] }}
         ref={intlProvider => {
-          window.ferdi.intl = intlProvider ? intlProvider.state.intl : null;
+          window['ferdi'].intl = intlProvider ? intlProvider.state.intl : null;
         }}
       >
         {children}

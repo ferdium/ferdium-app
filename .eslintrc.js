@@ -127,6 +127,9 @@ module.exports = {
     'consistent-return': 1,
     'implicit-arrow-linebreak': 0,
     indent: 0,
+    // TODO: Turn this rule on once the js to ts conversions are over
+    // This is necessary as workaround for window.ferdi vs window['ferdi']
+    'dot-notation': 0,
     'function-paren-newline': 0,
     'linebreak-style': 0,
     'max-len': 0,
