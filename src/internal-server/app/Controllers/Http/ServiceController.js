@@ -6,7 +6,7 @@ const { v4: uuid } = require('uuid');
 const path = require('path');
 const fs = require('fs-extra');
 const { LOCAL_HOSTNAME, DEFAULT_SERVICE_ORDER } = require('../../../../config');
-const { API_VERSION } = require('../../../../environment');
+const { API_VERSION } = require('../../../../environment-remote');
 
 const hostname = LOCAL_HOSTNAME;
 const port = Env.get('PORT');
