@@ -196,7 +196,7 @@ DEBUG=Ferdi:* npm run start
 - Optionally, you can run both commands in one terminal with [concurrently](https://www.npmjs.com/package/concurrently):
 
 ```bash
-DEBUG=Ferdi:* npm run start:all-dev
+DEBUG_COLORS=1 DEBUG=Ferdi:* npm run start:all-dev
 ```
 
 Note: please prefer [`debug()`](https://github.com/visionmedia/debug) over `console.log()`.
