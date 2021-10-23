@@ -192,7 +192,7 @@
     "prettier": "2.4.1",
     "preval-build-info": "1.0.3",
     "rimraf": "3.0.2",
-    "sass": "1.37.5",
+    "sass": "1.43.3",
     "simple-git": "2.47.0",
     "terser": "4.8.0",
     "ts-loader": "5.4.5",
