@@ -39,6 +39,10 @@ export default {
     serviceId: PropTypes.string.isRequired,
     count: PropTypes.object.isRequired,
   },
+  setDialogTitle: {
+    serviceId: PropTypes.string.isRequired,
+    dialogTitle: PropTypes.string.isRequired,
+  },
   setWebviewReference: {
     serviceId: PropTypes.string.isRequired,
     webview: PropTypes.object.isRequired,

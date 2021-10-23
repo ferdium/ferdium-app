@@ -60,6 +60,16 @@ export default class Userscript {
   }
 
   /**
+   * Set active dialog title to the app title
+   * @param {*} title Dialog title
+   */
+  setDialogTitle(title) {
+    if (this.recipe && this.recipe.setDialogTitle) {
+      this.recipe.setDialogTitle(title);
+    }
+  }
+
+  /**
    * Inject CSS files into the current page
    *
    * @param  {...string} files

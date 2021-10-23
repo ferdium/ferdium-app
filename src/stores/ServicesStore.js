@@ -82,6 +82,7 @@ export default class ServicesStore extends Store {
     this.actions.service.setUnreadMessageCount.listen(
       this._setUnreadMessageCount.bind(this),
     );
+    this.actions.service.setDialogTitle.listen(this._setDialogTitle.bind(this));
     this.actions.service.openWindow.listen(this._openWindow.bind(this));
     this.actions.service.filter.listen(this._filter.bind(this));
     this.actions.service.resetFilter.listen(this._resetFilter.bind(this));
@@ -646,6 +647,12 @@ export default class ServicesStore extends Store {
     service.unreadIndirectMessageCount = count.indirect;
   }
 
+  @action _setDialogTitle({ serviceId, dialogTitle }) {
+    const service = this.one(serviceId);
+
+    service.dialogTitle = dialogTitle;
+  }
+
   @action _setWebviewReference({ serviceId, webview }) {
     const service = this.one(serviceId);
 
@@ -737,6 +744,16 @@ export default class ServicesStore extends Store {
             direct: args[0].direct,
             indirect: args[0].indirect,
           },
+        });
+
+        break;
+      }
+      case 'active-dialog-title': {
+        debug(`Received active dialog title from '${serviceId}'`, args[0]);
+
+        this.actions.service.setDialogTitle({
+          serviceId,
+          dialogTitle: args[0],
         });
 
         break;
@@ -1063,7 +1080,9 @@ export default class ServicesStore extends Store {
     const service = this.active;
     if (service) {
       this.actions.service.focusService({ serviceId: service.id });
-      document.title = `Ferdi - ${service.name}`;
+      document.title = `Ferdi - ${service.name} ${
+        service.dialogTitle ? ` - ${service.dialogTitle}` : ''
+      }`;
     } else {
       debug('No service is active');
     }

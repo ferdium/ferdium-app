@@ -37,6 +37,8 @@ export default class Service {
 
   @observable unreadIndirectMessageCount = 0;
 
+  @observable dialogTitle = '';
+
   @observable order = DEFAULT_SERVICE_ORDER;
 
   @observable isEnabled = true;
