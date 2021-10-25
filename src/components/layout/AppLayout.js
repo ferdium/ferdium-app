@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import { TitleBar } from 'electron-react-titlebar/renderer';
 import injectSheet from 'react-jss';
+import { ipcRenderer } from 'electron';
 
 import InfoBar from '../ui/InfoBar';
 import { Component as BasicAuth } from '../../features/basicAuth';
@@ -14,7 +15,7 @@ import ErrorBoundary from '../util/ErrorBoundary';
 
 // import globalMessages from '../../i18n/globalMessages';
 
-import { isWindows } from '../../environment';
+import { isWindows, isMac } from '../../environment';
 import WorkspaceSwitchingIndicator from '../../features/workspaces/components/WorkspaceSwitchingIndicator';
 import { workspaceStore } from '../../features/workspaces';
 import AppUpdateInfoBar from '../AppUpdateInfoBar';
@@ -57,7 +58,19 @@ const styles = theme => ({
         : `translateX(-${theme.workspaces.drawer.width}px)`;
     },
   },
+  titleBar: {
+    display: 'block',
+    zIndex: 1,
+    width: '100%',
+    height: '23px',
+    position: 'absolute',
+    top: 0,
+  },
 });
+
+const toggleFullScreen = () => {
+  ipcRenderer.send('window.toolbar-double-clicked');
+};
 
 @injectSheet(styles)
 @observer
@@ -117,6 +130,12 @@ class AppLayout extends Component {
             <TitleBar
               menu={window['ferdi'].menu.template}
               icon="assets/images/logo.svg"
+            />
+          )}
+          {isMac && !isFullScreen && (
+            <span
+              onDoubleClick={toggleFullScreen}
+              className={classes.titleBar}
             />
           )}
           <div className={`app__content ${classes.appContent}`}>
