@@ -331,6 +331,13 @@ class TabItem extends Component {
       );
     }
 
+    let errorBadge = null;
+    if ( service.isError ) {
+      errorBadge=(
+        <i className = " mdi mdi-exclamation tab-item__error-icon"/>
+      )
+    }
+
     return (
       <li
         className={classnames({
@@ -349,8 +356,10 @@ class TabItem extends Component {
             : ''
         }`}
       >
+      
         <img src={service.icon} className="tab-item__icon" alt="" />
         {notificationBadge}
+        {errorBadge}
         {IS_SERVICE_DEBUGGING_ENABLED && (
           <>
             <div

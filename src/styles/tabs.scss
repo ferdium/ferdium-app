@@ -136,4 +136,13 @@
   &.is-reordering {
     z-index: 99999;
   }
+
+  .tab-item__error-icon{
+    font-size: 1.9em;
+    color: red;
+    position: absolute;
+    top: 6px;
+    right: 0px;
+    transform: scaleX(1.5);
+  }
 }
