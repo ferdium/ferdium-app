@@ -241,6 +241,7 @@
   "settings.app.form.showDisabledServices": "Deaktivierte Services-Tabs anzeigen",
   "settings.app.form.showDragArea": "Zeige ziehbare Fläche im Fenster",
   "settings.app.form.showMessagesBadgesWhenMuted": "Ungelesene Nachrichten zeigen, wenn die Benachrichtigungen deaktiviert sind",
+  "settings.app.form.showServiceName": "Display service name under the icon",
   "settings.app.form.splitMode": "Enable Split View Mode",
   "settings.app.form.startMinimized": "Minimiert starten",
   "settings.app.form.universalDarkMode": "Universellen Dark Mode aktivieren",
