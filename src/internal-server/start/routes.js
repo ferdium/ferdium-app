@@ -55,17 +55,12 @@ Route.group(() => {
   Route.get('recipes', 'RecipeController.list');
   Route.get('recipes/download/:recipe', 'RecipeController.download');
   Route.get('recipes/search', 'RecipeController.search');
-  Route.get('recipes/update', 'StaticController.emptyArray');
 
   // Workspaces
   Route.put('workspace/:id', 'WorkspaceController.edit');
   Route.delete('workspace/:id', 'WorkspaceController.delete');
   Route.post('workspace', 'WorkspaceController.create');
   Route.get('workspace', 'WorkspaceController.list');
-
-  // Static responses
-  Route.get('features/:mode?', 'StaticController.features');
-  Route.get('services', 'StaticController.emptyArray');
 })
   .prefix(API_VERSION)
   .middleware(OnlyAllowFerdi);

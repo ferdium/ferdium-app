@@ -8,7 +8,6 @@ import UserStore from '../../stores/UserStore';
 import RecipesStore from '../../stores/RecipesStore';
 import ServicesStore from '../../stores/ServicesStore';
 import SettingsStore from '../../stores/SettingsStore';
-import FeaturesStore from '../../stores/FeaturesStore';
 import Form from '../../lib/Form';
 
 import ServiceError from '../../components/settings/services/ServiceError';
@@ -445,7 +444,6 @@ EditServiceScreen.wrappedComponent.propTypes = {
     recipes: PropTypes.instanceOf(RecipesStore).isRequired,
     services: PropTypes.instanceOf(ServicesStore).isRequired,
     settings: PropTypes.instanceOf(SettingsStore).isRequired,
-    features: PropTypes.instanceOf(FeaturesStore).isRequired,
   }).isRequired,
   router: PropTypes.instanceOf(RouterStore).isRequired,
   actions: PropTypes.shape({

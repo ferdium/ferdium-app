@@ -194,9 +194,7 @@ class EditSettingsForm extends Component {
     isClearingAllCache: PropTypes.bool.isRequired,
     onClearAllCache: PropTypes.func.isRequired,
     getCacheSize: PropTypes.func.isRequired,
-    isTodosEnabled: PropTypes.bool.isRequired,
     isTodosActivated: PropTypes.bool.isRequired,
-    isWorkspaceEnabled: PropTypes.bool.isRequired,
     automaticUpdates: PropTypes.bool.isRequired,
     isDarkmodeEnabled: PropTypes.bool.isRequired,
     isAdaptableDarkModeEnabled: PropTypes.bool.isRequired,
@@ -244,8 +242,6 @@ class EditSettingsForm extends Component {
       isClearingAllCache,
       onClearAllCache,
       getCacheSize,
-      isTodosEnabled,
-      isWorkspaceEnabled,
       automaticUpdates,
       isDarkmodeEnabled,
       isTodosActivated,
@@ -414,14 +410,12 @@ class EditSettingsForm extends Component {
 
                 <Hr />
 
-                {isWorkspaceEnabled && (
-                  <>
-                    <Toggle field={form.$('keepAllWorkspacesLoaded')} />
-                    <Hr />
-                  </>
-                )}
+                <>
+                  <Toggle field={form.$('keepAllWorkspacesLoaded')} />
+                  <Hr />
+                </>
 
-                {isTodosEnabled && !hasAddedTodosAsService && (
+                {!hasAddedTodosAsService && (
                   <>
                     <Toggle field={form.$('enableTodos')} />
                     {isTodosActivated && (

@@ -23,8 +23,6 @@ const debug = require('debug')('Ferdi:feature:todos:store');
 export default class TodoStore extends FeatureStore {
   @observable stores = null;
 
-  @observable isFeatureEnabled = false;
-
   @observable isFeatureActive = false;
 
   @observable webview = null;
@@ -123,7 +121,6 @@ export default class TodoStore extends FeatureStore {
     // REACTIONS
 
     this._allReactions = createReactions([
-      this._setFeatureEnabledReaction,
       this._updateTodosConfig,
       this._firstLaunchReaction,
       this._routeCheckReaction,
@@ -261,12 +258,6 @@ export default class TodoStore extends FeatureStore {
   };
 
   // Reactions
-
-  _setFeatureEnabledReaction = () => {
-    const { isTodosEnabled } = this.stores.features.features;
-
-    this.isFeatureEnabled = isTodosEnabled;
-  };
 
   _updateTodosConfig = () => {
     // Resend the config if any part changes in Franz:

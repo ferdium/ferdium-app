@@ -339,14 +339,12 @@ class EditSettingsScreen extends Component {
       },
     });
 
-    if (workspaces.isFeatureActive) {
-      const { keepAllWorkspacesLoaded } = workspaces.settings;
-      if (
-        Boolean(keepAllWorkspacesLoaded) !==
-        Boolean(settingsData.keepAllWorkspacesLoaded)
-      ) {
-        workspaceActions.toggleKeepAllWorkspacesLoadedSetting();
-      }
+    const { keepAllWorkspacesLoaded } = workspaces.settings;
+    if (
+      Boolean(keepAllWorkspacesLoaded) !==
+      Boolean(settingsData.keepAllWorkspacesLoaded)
+    ) {
+      workspaceActions.toggleKeepAllWorkspacesLoadedSetting();
     }
 
     if (todos.isFeatureActive) {
@@ -696,7 +694,7 @@ class EditSettingsScreen extends Component {
   }
 
   render() {
-    const { app, todos, workspaces, services } = this.props.stores;
+    const { app, services } = this.props.stores;
     const {
       updateStatus,
       updateStatusTypes,
@@ -721,8 +719,6 @@ class EditSettingsScreen extends Component {
           getCacheSize={() => app.cacheSize}
           isClearingAllCache={isClearingAllCache}
           onClearAllCache={clearAllCache}
-          isTodosEnabled={todos.isFeatureActive}
-          isWorkspaceEnabled={workspaces.isFeatureActive}
           lockingFeatureEnabled={lockingFeatureEnabled}
           automaticUpdates={this.props.stores.settings.app.automaticUpdates}
           isDarkmodeEnabled={this.props.stores.settings.app.darkMode}

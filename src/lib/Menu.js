@@ -21,7 +21,6 @@ import {
   muteFerdiShortcutKey,
 } from '../environment';
 import { aboutAppDetails, ferdiVersion } from '../environment-remote';
-import { todosStore } from '../features/todos';
 import { todoActions } from '../features/todos/actions';
 import { workspaceActions } from '../features/workspaces/actions';
 import { workspaceStore } from '../features/workspaces/index';
@@ -479,12 +478,12 @@ const _titleBarTemplateFactory = (intl, locked) => [
     label: intl.formatMessage(menuItems.workspaces),
     accelerator: `${altKey()}+W`,
     submenu: [],
-    visible: !locked && workspaceStore.isFeatureEnabled,
+    visible: !locked,
   },
   {
     label: intl.formatMessage(menuItems.todos),
     submenu: [],
-    visible: !locked && todosStore.isFeatureEnabled,
+    visible: !locked,
   },
   {
     label: intl.formatMessage(menuItems.window),
@@ -698,13 +697,9 @@ class FranzMenu {
         tpl[2].submenu = serviceTpl;
       }
 
-      if (workspaceStore.isFeatureEnabled) {
-        tpl[3].submenu = this.workspacesMenu();
-      }
+      tpl[3].submenu = this.workspacesMenu();
 
-      if (todosStore.isFeatureEnabled) {
-        tpl[4].submenu = this.todosMenu();
-      }
+      tpl[4].submenu = this.todosMenu();
     } else {
       const touchIdEnabled = isMac
         ? this.stores.settings.app.useTouchIdToUnlock &&
@@ -872,13 +867,9 @@ class FranzMenu {
         tpl[3].submenu = serviceTpl;
       }
 
-      if (workspaceStore.isFeatureEnabled) {
-        tpl[4].submenu = this.workspacesMenu();
-      }
+      tpl[4].submenu = this.workspacesMenu();
 
-      if (todosStore.isFeatureEnabled) {
-        tpl[5].submenu = this.todosMenu();
-      }
+      tpl[5].submenu = this.todosMenu();
 
       tpl[tpl.length - 1].submenu.push(
         {
