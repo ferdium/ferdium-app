@@ -197,6 +197,10 @@ const messages = defineMessages({
     id: 'settings.app.form.showDisabledServices',
     defaultMessage: 'Display disabled services tabs',
   },
+  showServiceName: {
+    id: 'settings.app.form.showServiceName',
+    defaultMessage: 'Display service name under the icon',
+  },
   showMessageBadgeWhenMuted: {
     id: 'settings.app.form.showMessagesBadgesWhenMuted',
     defaultMessage: 'Show unread message badge when notifications are disabled',
@@ -301,6 +305,7 @@ class EditSettingsScreen extends Component {
           settingsData.enableGlobalHideShortcut,
         ),
         showDisabledServices: Boolean(settingsData.showDisabledServices),
+        showServiceName: Boolean(settingsData.showServiceName),
         darkMode: Boolean(settingsData.darkMode),
         adaptableDarkMode: Boolean(settingsData.adaptableDarkMode),
         universalDarkMode: Boolean(settingsData.universalDarkMode),
@@ -557,6 +562,11 @@ class EditSettingsScreen extends Component {
           label: intl.formatMessage(messages.showDisabledServices),
           value: settings.all.app.showDisabledServices,
           default: DEFAULT_APP_SETTINGS.showDisabledServices,
+        },
+        showServiceName: {
+          label: intl.formatMessage(messages.showServiceName),
+          value: settings.all.app.showServiceName,
+          default: DEFAULT_APP_SETTINGS.showServiceName,
         },
         showMessageBadgeWhenMuted: {
           label: intl.formatMessage(messages.showMessageBadgeWhenMuted),

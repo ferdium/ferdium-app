@@ -122,6 +122,9 @@ class AppLayoutContainer extends Component {
         showMessageBadgeWhenMutedSetting={
           settings.all.app.showMessageBadgeWhenMuted
         }
+        showServiceNameSetting={
+          settings.all.app.showServiceName
+        }
         showMessageBadgesEvenWhenMuted={ui.showMessageBadgesEvenWhenMuted}
         isTodosServiceActive={services.isTodosServiceActive || false}
       />

@@ -21,6 +21,7 @@ class TabBarSortableList extends Component {
     hibernateService: PropTypes.func.isRequired,
     wakeUpService: PropTypes.func.isRequired,
     showMessageBadgeWhenMutedSetting: PropTypes.bool.isRequired,
+    showServiceNameSetting: PropTypes.bool.isRequired,
     showMessageBadgesEvenWhenMuted: PropTypes.bool.isRequired,
   };
 
@@ -39,6 +40,7 @@ class TabBarSortableList extends Component {
       wakeUpService,
       openSettings,
       showMessageBadgeWhenMutedSetting,
+      showServiceNameSetting,
       showMessageBadgesEvenWhenMuted,
     } = this.props;
 
@@ -65,6 +67,7 @@ class TabBarSortableList extends Component {
             openSettings={openSettings}
             showMessageBadgeWhenMutedSetting={showMessageBadgeWhenMutedSetting}
             showMessageBadgesEvenWhenMuted={showMessageBadgesEvenWhenMuted}
+            showServiceNameSetting={showServiceNameSetting}
           />
         ))}
       </ul>

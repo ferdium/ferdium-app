@@ -69,6 +69,7 @@ class Sidebar extends Component {
     toggleAudio: PropTypes.func.isRequired,
     toggleDarkMode: PropTypes.func.isRequired,
     showMessageBadgeWhenMutedSetting: PropTypes.bool.isRequired,
+    showServiceNameSetting: PropTypes.bool.isRequired,
     showMessageBadgesEvenWhenMuted: PropTypes.bool.isRequired,
     deleteService: PropTypes.func.isRequired,
     updateService: PropTypes.func.isRequired,

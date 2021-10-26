@@ -132,6 +132,7 @@ class TabItem extends Component {
     hibernateService: PropTypes.func.isRequired,
     wakeUpService: PropTypes.func.isRequired,
     showMessageBadgeWhenMutedSetting: PropTypes.bool.isRequired,
+    showServiceNameSetting: PropTypes.bool.isRequired,
     showMessageBadgesEvenWhenMuted: PropTypes.bool.isRequired,
     stores: PropTypes.shape({
       settings: PropTypes.instanceOf(SettingsStore).isRequired,
@@ -219,6 +220,7 @@ class TabItem extends Component {
       wakeUpService,
       openSettings,
       showMessageBadgeWhenMutedSetting,
+      showServiceNameSetting,
       showMessageBadgesEvenWhenMuted,
     } = this.props;
     const { intl } = this.props;
@@ -347,6 +349,7 @@ class TabItem extends Component {
           'is-active': service.isActive,
           'has-custom-icon': service.hasCustomIcon,
           'is-disabled': !service.isEnabled,
+          'is-label-enabled': showServiceNameSetting,
         })}
         onClick={clickHandler}
         onContextMenu={() => menu.popup()}
@@ -356,8 +359,12 @@ class TabItem extends Component {
             : ''
         }`}
       >
-      
-        <img src={service.icon} className="tab-item__icon" alt="" />
+
+        {showServiceNameSetting? <div>
+          <img src={service.icon} className="tab-item__icon" alt="" />
+          <span className="tab-item__label">{service.name}</span>
+        </div> : <img src={service.icon} className="tab-item__icon" alt="" />}
+
         {notificationBadge}
         {errorBadge}
         {IS_SERVICE_DEBUGGING_ENABLED && (

@@ -1,6 +1,8 @@
 @import './config.scss';
 
 .theme__dark .tab-item {
+  color: $dark-theme-text-color;
+
   &.is-active {
     background: $dark-theme-gray;
 
@@ -52,6 +54,22 @@
     .tab-item__icon {
       margin-left: -4px;
     }
+  }
+
+  &.is-label-enabled{
+    height: min-content;
+    overflow: hidden;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .tab-item__label {
+    display: block;
+    margin-top: 6px;
+    font-size: 11px;
+    padding-left: 4px;
+    padding-right: 4px;
+    line-height: 13px;
   }
 
   &.is-disabled .tab-item__icon {

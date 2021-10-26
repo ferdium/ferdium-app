@@ -511,6 +511,7 @@ class EditSettingsForm extends Component {
             {this.state.activeSetttingsTab === 'appearance' && (
               <div>
                 <Toggle field={form.$('showDisabledServices')} />
+                <Toggle field={form.$('showServiceName')} />
                 <Toggle field={form.$('showMessageBadgeWhenMuted')} />
 
                 {isMac && <Toggle field={form.$('showDragArea')} />}

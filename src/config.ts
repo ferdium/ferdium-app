@@ -193,6 +193,7 @@ export const DEFAULT_APP_SETTINGS = {
   clipboardNotifications: true,
   notifyTaskBarOnMessage: false,
   showDisabledServices: true,
+  showServiceName: false,
   showMessageBadgeWhenMuted: true,
   showDragArea: false,
   enableSpellchecking: true,
