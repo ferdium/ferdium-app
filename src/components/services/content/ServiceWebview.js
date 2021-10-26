@@ -30,9 +30,14 @@ class ServiceWebview extends Component {
           this.webview.view.addEventListener('console-message', e => {
             debug('Service logged a message:', e.message);
           });
+          this.webview.view.addEventListener('did-navigate', () => {
+            document.title = `Ferdi - ${this.props.service.name} ${this.props.service.dialogTitle
+              ? ` - ${this.props.service.dialogTitle}`
+              : ''
+              } ${`- ${this.props.service._webview.getTitle()}`}`;
+          })
         }
-      },
-    );
+      })
   }
 
   componentWillUnmount() {
@@ -47,6 +52,12 @@ class ServiceWebview extends Component {
     if (this.props.service.isActive) {
       webview.view.blur();
       webview.view.focus();
+      window.setTimeout(() => {
+        document.title = `Ferdi - ${this.props.service.name} ${this.props.service.dialogTitle
+          ? ` - ${this.props.service.dialogTitle}`
+          : ''
+          } ${`- ${this.props.service._webview.getTitle()}`}`;
+      }, 100);
     } else {
       debug('Refocus not required - Not active service');
     }
@@ -92,9 +103,8 @@ class ServiceWebview extends Component {
         }
         allowpopups
         nodeintegration
-        webpreferences={`spellcheck=${
-          isSpellcheckerEnabled ? 1 : 0
-        }, contextIsolation=1, enableRemoteModule=1`}
+        webpreferences={`spellcheck=${isSpellcheckerEnabled ? 1 : 0
+          }, contextIsolation=1, enableRemoteModule=1`}
       />
     );
   }

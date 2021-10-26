@@ -690,6 +690,9 @@ export default class ServicesStore extends Store {
       // TODO: add checks to not focus service when router path is /settings or /auth
       const service = this.active;
       if (service) {
+        document.title = `Ferdi - ${service.name} ${
+          service.dialogTitle ? ` - ${service.dialogTitle}` : ''
+        } ${service._webview ? `- ${service._webview.getTitle()}` : ''}`;
         this._focusService({ serviceId: service.id });
         if (this.stores.settings.app.splitMode && !focusEvent) {
           setTimeout(() => {
@@ -1082,7 +1085,7 @@ export default class ServicesStore extends Store {
       this.actions.service.focusService({ serviceId: service.id });
       document.title = `Ferdi - ${service.name} ${
         service.dialogTitle ? ` - ${service.dialogTitle}` : ''
-      }`;
+      } ${service._webview ? `- ${service._webview.getTitle()}` : ''}`;
     } else {
       debug('No service is active');
     }
