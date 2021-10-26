@@ -267,7 +267,7 @@ class EditServiceScreen extends Component {
       Object.assign(config.fields, {
         customUrl: {
           label: intl.formatMessage(messages.customUrl),
-          placeholder: 'https://',
+          placeholder: "'http://' or 'https://' or 'file:///'",
           value: service.customUrl || recipe.serviceURL,
           validators: [required, url],
         },
