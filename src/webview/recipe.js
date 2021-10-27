@@ -23,6 +23,7 @@ import RecipeWebview from './lib/RecipeWebview';
 import Userscript from './lib/Userscript';
 
 import { BadgeHandler } from './badge';
+import { DialogTitleHandler } from './dialogTitle';
 import { SessionHandler } from './sessionHandler';
 import contextMenu from './contextMenu';
 import {
@@ -50,6 +51,8 @@ import { DEFAULT_APP_SETTINGS } from '../config';
 const debug = require('debug')('Ferdi:Plugin');
 
 const badgeHandler = new BadgeHandler();
+
+const dialogTitleHandler = new DialogTitleHandler();
 
 const sessionHandler = new SessionHandler();
 
@@ -106,6 +109,7 @@ contextBridge.exposeInMainWorld('ferdi', {
   open: window.open,
   setBadge: (direct, indirect) => badgeHandler.setBadge(direct, indirect),
   safeParseInt: text => badgeHandler.safeParseInt(text),
+  setDialogTitle: title => dialogTitleHandler.setDialogTitle(title),
   displayNotification: (title, options) =>
     notificationsHandler.displayNotification(title, options),
   getDisplayMediaSelector,
@@ -200,6 +204,7 @@ class RecipeController {
     try {
       this.recipe = new RecipeWebview(
         badgeHandler,
+        dialogTitleHandler,
         notificationsHandler,
         sessionHandler,
       );

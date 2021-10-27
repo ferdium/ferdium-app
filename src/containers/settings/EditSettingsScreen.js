@@ -197,6 +197,10 @@ const messages = defineMessages({
     id: 'settings.app.form.showDisabledServices',
     defaultMessage: 'Display disabled services tabs',
   },
+  showServiceName: {
+    id: 'settings.app.form.showServiceName',
+    defaultMessage: 'Display service name under the icon',
+  },
   showMessageBadgeWhenMuted: {
     id: 'settings.app.form.showMessagesBadgesWhenMuted',
     defaultMessage: 'Show unread message badge when notifications are disabled',
@@ -301,6 +305,7 @@ class EditSettingsScreen extends Component {
           settingsData.enableGlobalHideShortcut,
         ),
         showDisabledServices: Boolean(settingsData.showDisabledServices),
+        showServiceName: Boolean(settingsData.showServiceName),
         darkMode: Boolean(settingsData.darkMode),
         adaptableDarkMode: Boolean(settingsData.adaptableDarkMode),
         universalDarkMode: Boolean(settingsData.universalDarkMode),
@@ -334,14 +339,12 @@ class EditSettingsScreen extends Component {
       },
     });
 
-    if (workspaces.isFeatureActive) {
-      const { keepAllWorkspacesLoaded } = workspaces.settings;
-      if (
-        Boolean(keepAllWorkspacesLoaded) !==
-        Boolean(settingsData.keepAllWorkspacesLoaded)
-      ) {
-        workspaceActions.toggleKeepAllWorkspacesLoadedSetting();
-      }
+    const { keepAllWorkspacesLoaded } = workspaces.settings;
+    if (
+      Boolean(keepAllWorkspacesLoaded) !==
+      Boolean(settingsData.keepAllWorkspacesLoaded)
+    ) {
+      workspaceActions.toggleKeepAllWorkspacesLoadedSetting();
     }
 
     if (todos.isFeatureActive) {
@@ -558,6 +561,11 @@ class EditSettingsScreen extends Component {
           value: settings.all.app.showDisabledServices,
           default: DEFAULT_APP_SETTINGS.showDisabledServices,
         },
+        showServiceName: {
+          label: intl.formatMessage(messages.showServiceName),
+          value: settings.all.app.showServiceName,
+          default: DEFAULT_APP_SETTINGS.showServiceName,
+        },
         showMessageBadgeWhenMuted: {
           label: intl.formatMessage(messages.showMessageBadgeWhenMuted),
           value: settings.all.app.showMessageBadgeWhenMuted,
@@ -686,7 +694,7 @@ class EditSettingsScreen extends Component {
   }
 
   render() {
-    const { app, todos, workspaces, services } = this.props.stores;
+    const { app, services } = this.props.stores;
     const {
       updateStatus,
       updateStatusTypes,
@@ -711,8 +719,6 @@ class EditSettingsScreen extends Component {
           getCacheSize={() => app.cacheSize}
           isClearingAllCache={isClearingAllCache}
           onClearAllCache={clearAllCache}
-          isTodosEnabled={todos.isFeatureActive}
-          isWorkspaceEnabled={workspaces.isFeatureActive}
           lockingFeatureEnabled={lockingFeatureEnabled}
           automaticUpdates={this.props.stores.settings.app.automaticUpdates}
           isDarkmodeEnabled={this.props.stores.settings.app.darkMode}

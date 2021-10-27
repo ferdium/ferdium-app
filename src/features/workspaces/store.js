@@ -18,8 +18,6 @@ import { KEEP_WS_LOADED_USID } from '../../config';
 const debug = require('debug')('Ferdi:feature:workspaces:store');
 
 export default class WorkspacesStore extends FeatureStore {
-  @observable isFeatureEnabled = true;
-
   @observable isFeatureActive = false;
 
   @observable activeWorkspace = null;
@@ -97,7 +95,6 @@ export default class WorkspacesStore extends FeatureStore {
 
     this._allReactions = createReactions([
       this._openDrawerWithSettingsReaction,
-      this._setFeatureEnabledReaction,
       this._cleanupInvalidServiceReferences,
       this._setActiveServiceOnWorkspaceSwitchReaction,
       this._activateLastUsedWorkspaceReaction,
@@ -250,11 +247,6 @@ export default class WorkspacesStore extends FeatureStore {
   };
 
   // Reactions
-
-  _setFeatureEnabledReaction = () => {
-    const { isWorkspaceEnabled } = this.stores.features.features;
-    this.isFeatureEnabled = isWorkspaceEnabled;
-  };
 
   _setWorkspaceBeingEditedReaction = () => {
     const { pathname } = this.stores.router.location;

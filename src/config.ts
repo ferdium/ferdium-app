@@ -140,13 +140,6 @@ export const ICON_SIZES = {
 // The bias should always be the "Normal icons" value
 export const iconSizeBias = 20;
 
-export const DEFAULT_FEATURES_CONFIG = {
-  isServiceProxyEnabled: true,
-  isWorkspaceEnabled: true,
-  isTodosEnabled: true,
-  isSettingsWSEnabled: false,
-};
-
 export const DEFAULT_WINDOW_OPTIONS = {
   width: 800,
   height: 600,
@@ -193,6 +186,7 @@ export const DEFAULT_APP_SETTINGS = {
   clipboardNotifications: true,
   notifyTaskBarOnMessage: false,
   showDisabledServices: true,
+  showServiceName: false,
   showMessageBadgeWhenMuted: true,
   showDragArea: false,
   enableSpellchecking: true,
@@ -236,7 +230,7 @@ export const DEFAULT_APP_SETTINGS = {
   liftSingleInstanceLock: false,
   enableLongPressServiceHint: false,
   proxyFeatureEnabled: false,
-  onlyShowFavoritesInUnreadCount: false
+  onlyShowFavoritesInUnreadCount: false,
 };
 
 export const DEFAULT_SERVICE_SETTINGS = {

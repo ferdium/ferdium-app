@@ -1,5 +1,6 @@
 import { defineMessages } from 'react-intl';
 import isEmail from 'validator/lib/isEmail';
+import { isValidExternalURL, isValidFileUrl } from './url-helpers';
 
 const messages = defineMessages({
   required: {
@@ -47,17 +48,17 @@ export function email({ field }) {
 
 export function url({ field }) {
   const value = field.value.trim();
-  let isValid = false;
+  let isValid = true;
 
-  isValid =
-    value !== ''
-      ? Boolean(
-          // eslint-disable-next-line unicorn/better-regex
-          /(^|[\s.:;?\-\]<(])(https?:\/\/[-\w;/?:@&=+$|_.!~*|'()[\]%#,☺]+[\w/#](\(\))?)(?=$|[\s',|().:;?\-[\]>)])/i.test(
-            value,
-          ),
-        )
-      : true;
+  if (value !== '') {
+    if (value.startsWith('http')) {
+      isValid = isValidExternalURL(value);
+    } else if (value.startsWith('file')) {
+      isValid = isValidFileUrl(value);
+    } else {
+      isValid = false;
+    }
+  }
 
   return [
     isValid,

@@ -627,6 +627,10 @@ ipcMain.on('set-spellchecker-locales', (_e, { locale, serviceId }) => {
   serviceSession.setSpellCheckerLanguages(locales);
 });
 
+ipcMain.on('window.toolbar-double-clicked', () => {
+  mainWindow?.isMaximized() ? mainWindow.unmaximize() : mainWindow?.maximize();
+});
+
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
   // On OS X it is common for applications and their menu bar

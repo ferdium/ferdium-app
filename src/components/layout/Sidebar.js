@@ -14,7 +14,6 @@ import {
   addNewServiceShortcutKey,
   muteFerdiShortcutKey,
 } from '../../environment';
-import { workspaceStore } from '../../features/workspaces';
 import { todosStore } from '../../features/todos';
 import { todoActions } from '../../features/todos/actions';
 import AppStore from '../../stores/AppStore';
@@ -69,6 +68,7 @@ class Sidebar extends Component {
     toggleAudio: PropTypes.func.isRequired,
     toggleDarkMode: PropTypes.func.isRequired,
     showMessageBadgeWhenMutedSetting: PropTypes.bool.isRequired,
+    showServiceNameSetting: PropTypes.bool.isRequired,
     showMessageBadgesEvenWhenMuted: PropTypes.bool.isRequired,
     deleteService: PropTypes.func.isRequired,
     updateService: PropTypes.func.isRequired,
@@ -159,8 +159,7 @@ class Sidebar extends Component {
                 <i className="mdi mdi-lock" />
               </button>
             ) : null}
-            {todosStore.isFeatureEnabled &&
-            todosStore.isFeatureEnabledByUser ? (
+            {todosStore.isFeatureEnabledByUser ? (
               <button
                 type="button"
                 onClick={() => {
@@ -178,23 +177,21 @@ class Sidebar extends Component {
                 <i className="mdi mdi-check-all" />
               </button>
             ) : null}
-            {workspaceStore.isFeatureEnabled ? (
-              <button
-                type="button"
-                onClick={() => {
-                  toggleWorkspaceDrawer();
-                  this.updateToolTip();
-                }}
-                className={`sidebar__button sidebar__button--workspaces ${
-                  isWorkspaceDrawerOpen ? 'is-active' : ''
-                }`}
-                data-tip={`${intl.formatMessage(
-                  workspaceToggleMessage,
-                )} (${workspaceToggleShortcutKey(false)})`}
-              >
-                <i className="mdi mdi-view-grid" />
-              </button>
-            ) : null}
+            <button
+              type="button"
+              onClick={() => {
+                toggleWorkspaceDrawer();
+                this.updateToolTip();
+              }}
+              className={`sidebar__button sidebar__button--workspaces ${
+                isWorkspaceDrawerOpen ? 'is-active' : ''
+              }`}
+              data-tip={`${intl.formatMessage(
+                workspaceToggleMessage,
+              )} (${workspaceToggleShortcutKey(false)})`}
+            >
+              <i className="mdi mdi-view-grid" />
+            </button>
             <button
               type="button"
               onClick={() => {

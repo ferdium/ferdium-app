@@ -3,15 +3,6 @@ import { ipcRenderer } from 'electron';
 const debug = require('debug')('Ferdi:Plugin:BadgeHandler');
 
 export class BadgeHandler {
-  countCache: { direct: number; indirect: number };
-
-  constructor() {
-    this.countCache = {
-      direct: 0,
-      indirect: 0,
-    };
-  }
-
   // TODO: Need to extract this into a utility class and reuse outside of the recipes
   safeParseInt(text: string | number | undefined | null) {
     if (text === undefined || text === null) {
@@ -35,16 +26,7 @@ export class BadgeHandler {
       indirect: this.safeParseInt(indirect),
     };
 
-    if (
-      this.countCache.direct.toString() === count.direct.toString() &&
-      this.countCache.indirect.toString() === count.indirect.toString()
-    ) {
-      return;
-    }
-
-    debug('Sending badge count to host', count);
+    debug('Sending badge count to host: %j', count);
     ipcRenderer.sendToHost('message-counts', count);
-
-    Object.assign(this.countCache, count);
   }
 }

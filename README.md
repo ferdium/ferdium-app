@@ -14,7 +14,7 @@
 <p align="center">
 <img alt="GitHub Releases" src="https://img.shields.io/github/downloads/getferdi/ferdi/latest/total?label=Downloads&logo=iCloud&logoColor=%23FFFFFF">
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-100-default.svg?logo=github' alt='Contributors'/></a>
+<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-110-default.svg?logo=github' alt='Contributors'/></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 <a href="#backers-via-opencollective"><img alt="Open Collective backers" src="https://img.shields.io/opencollective/backers/getferdi?logo=open-collective"></a>
 <a href="#sponsors-via-opencollective"><img alt="Open Collective sponsors" src="https://img.shields.io/opencollective/sponsors/getferdi?logo=open-collective"></a>
@@ -227,7 +227,7 @@ If you use an AUR Helper, e.g. yay, install it via `yay -S ferdi`.
 
 ### Adds internal changes
 
-- [x] Upgrades to Electron 15.2.0
+- [x] Upgrades to Electron 15.3.0
 - [x] Switches to [`electron-spellchecker`](https://github.com/electron-userland/electron-spellchecker) to improve application size
 - [x] Minifies build files to improve app size
 - [x] Adds "npm run prepare-code" command for development to lint and beautify code
@@ -390,6 +390,16 @@ Thanks goes to these awesome people:
     <td align="center"><a href='https://www.ekino.com' title='Sadetdin EYILI: code, bug, userTesting'><img src='https://avatars.githubusercontent.com/u/5607440?v=4' alt='sad270' style='border-radius:42px;width:42px;height:42px;'/></a></td>
     <td align="center"><a href='https://github.com/Tsakatac' title='Tsakatac: bug'><img src='https://avatars.githubusercontent.com/u/89021195?v=4' alt='Tsakatac' style='border-radius:42px;width:42px;height:42px;'/></a></td>
     <td align="center"><a href='http://niute.ch' title='niu tech: code'><img src='https://avatars.githubusercontent.com/u/384997?v=4' alt='niutech' style='border-radius:42px;width:42px;height:42px;'/></a></td>
+    <td align="center"><a href='https://github.com/Suvarna221B' title='Suvarna Sivadas: code'><img src='https://avatars.githubusercontent.com/u/31803071?v=4' alt='Suvarna221B' style='border-radius:42px;width:42px;height:42px;'/></a></td>
+    <td align="center"><a href='https://github.com/johan-mathew' title='Johan Mathew: code'><img src='https://avatars.githubusercontent.com/u/31700508?v=4' alt='johan-mathew' style='border-radius:42px;width:42px;height:42px;'/></a></td>
+    <td align="center"><a href='https://github.com/AjeshKumarS' title='Ajesh Kumar S: code'><img src='https://avatars.githubusercontent.com/u/31558237?v=4' alt='AjeshKumarS' style='border-radius:42px;width:42px;height:42px;'/></a></td>
+    <td align="center"><a href='https://github.com/sreelekhaMarasig' title='Ajesh Kumar S: code'><img src='https://avatars.githubusercontent.com/u/93112178?v=4' alt='sreelekhaMarasig' style='border-radius:42px;width:42px;height:42px;'/></a></td>
+    <td align="center"><a href='https://github.com/MadhuriBandanadam' title='Madhuri: code'><img src='https://avatars.githubusercontent.com/u/63137999?v=4' alt='MadhuriBandanadam' style='border-radius:42px;width:42px;height:42px;'/></a></td>
+    <td align="center"><a href='https://github.com/abinmn' title='Abin Mn: code'><img src='https://avatars.githubusercontent.com/u/29946484?v=4' alt='abinmn' style='border-radius:42px;width:42px;height:42px;'/></a></td>
+    <td align="center"><a href='https://github.com/AnjithPaul' title='Anjith Paul: code'><img src='https://avatars.githubusercontent.com/u/65152866?v=4' alt='AnjithPaul' style='border-radius:42px;width:42px;height:42px;'/></a></td>
+    <td align="center"><a href='https://github.com/Vishnu017' title='Vishnu017: code'><img src='https://avatars.githubusercontent.com/u/39431453?v=4' alt='Vishnu017' style='border-radius:42px;width:42px;height:42px;'/></a></td>
+    <td align="center"><a href='https://github.com/rachelcynthia' title='Rachel Cynthia V: code'><img src='https://avatars.githubusercontent.com/u/46859572?v=4' alt='rachelcynthia' style='border-radius:42px;width:42px;height:42px;'/></a></td>
+    <td align="center"><a href='https://github.com/Chandrika-Priya' title='Chandrika Priya Bogadi: code'><img src='https://avatars.githubusercontent.com/u/46720139?v=4' alt='Chandrika-Priya' style='border-radius:42px;width:42px;height:42px;'/></a></td>
   </tr>
 </table>
 

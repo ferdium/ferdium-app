@@ -64,7 +64,7 @@ v14.18.1
 npm -v
 6.14.13
 pnpm -v
-6.17.1
+6.19.0
 ```
 
 _Note:_ You can choose any package manager to manage multiple versions of `node` and `npm`. For eg, [nvm](https://github.com/nvm-sh/nvm) or [asdf](https://github.com/asdf-vm/asdf).
@@ -196,7 +196,7 @@ DEBUG=Ferdi:* npm run start
 - Optionally, you can run both commands in one terminal with [concurrently](https://www.npmjs.com/package/concurrently):
 
 ```bash
-DEBUG=Ferdi:* npm run start:all-dev
+DEBUG_COLORS=1 DEBUG=Ferdi:* npm run start:all-dev
 ```
 
 Note: please prefer [`debug()`](https://github.com/visionmedia/debug) over `console.log()`.

@@ -241,6 +241,7 @@
   "settings.app.form.showDisabledServices": "显示禁用的服务标签",
   "settings.app.form.showDragArea": "在窗口上显示可拖动区域",
   "settings.app.form.showMessagesBadgesWhenMuted": "禁用通知时显示未读消息徽章",
+  "settings.app.form.showServiceName": "Display service name under the icon",
   "settings.app.form.splitMode": "启用分割视图模式",
   "settings.app.form.startMinimized": "启动时最小化",
   "settings.app.form.universalDarkMode": "Enable universal Dark Mode",

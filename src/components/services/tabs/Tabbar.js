@@ -23,6 +23,7 @@ class TabBar extends Component {
     wakeUpService: PropTypes.func.isRequired,
     useVerticalStyle: PropTypes.bool.isRequired,
     showMessageBadgeWhenMutedSetting: PropTypes.bool.isRequired,
+    showServiceNameSetting: PropTypes.bool.isRequired,
     showMessageBadgesEvenWhenMuted: PropTypes.bool.isRequired,
   };
 
@@ -82,6 +83,7 @@ class TabBar extends Component {
       deleteService,
       useVerticalStyle,
       showMessageBadgeWhenMutedSetting,
+      showServiceNameSetting,
       showMessageBadgesEvenWhenMuted,
     } = this.props;
 
@@ -110,6 +112,7 @@ class TabBar extends Component {
           lockAxis={axis}
           helperClass="is-reordering"
           showMessageBadgeWhenMutedSetting={showMessageBadgeWhenMutedSetting}
+          showServiceNameSetting={showServiceNameSetting}
           showMessageBadgesEvenWhenMuted={showMessageBadgesEvenWhenMuted}
         />
       </div>

@@ -9,12 +9,9 @@ import workspaces from '../features/workspaces';
 import quickSwitch from '../features/quickSwitch';
 import nightlyBuilds from '../features/nightlyBuilds';
 import publishDebugInfo from '../features/publishDebugInfo';
-import settingsWS from '../features/settingsWS';
 import communityRecipes from '../features/communityRecipes';
 import todos from '../features/todos';
 import appearance from '../features/appearance';
-
-import { DEFAULT_FEATURES_CONFIG } from '../config';
 
 export default class FeaturesStore extends Store {
   @observable defaultFeaturesRequest = new CachedRequest(
@@ -27,7 +24,7 @@ export default class FeaturesStore extends Store {
     'features',
   );
 
-  @observable features = { ...DEFAULT_FEATURES_CONFIG };
+  @observable features = { };
 
   async setup() {
     this.registerReactions([
@@ -41,12 +38,12 @@ export default class FeaturesStore extends Store {
 
   @computed get anonymousFeatures() {
     return (
-      this.defaultFeaturesRequest.execute().result || DEFAULT_FEATURES_CONFIG
+      this.defaultFeaturesRequest.execute().result || {}
     );
   }
 
   _updateFeatures = () => {
-    const features = { ...DEFAULT_FEATURES_CONFIG };
+    const features = { };
     if (this.stores.user.isLoggedIn) {
       let requestResult = {};
       try {
@@ -77,7 +74,6 @@ export default class FeaturesStore extends Store {
     quickSwitch();
     nightlyBuilds();
     publishDebugInfo();
-    settingsWS(this.stores, this.actions);
     communityRecipes(this.stores, this.actions);
     todos(this.stores, this.actions);
     appearance(this.stores);

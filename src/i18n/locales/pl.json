@@ -241,6 +241,7 @@
   "settings.app.form.showDisabledServices": "Wyświetlaj karty wyłączonych usług",
   "settings.app.form.showDragArea": "Show draggable area on window",
   "settings.app.form.showMessagesBadgesWhenMuted": "Pokaż licznik nieprzeczytanych wiadomości gdy powiadomienia są wyłączone",
+  "settings.app.form.showServiceName": "Display service name under the icon",
   "settings.app.form.splitMode": "Enable Split View Mode",
   "settings.app.form.startMinimized": "Uruchom zminimalizowany",
   "settings.app.form.universalDarkMode": "Włącz uniwersalny tryb ciemny",

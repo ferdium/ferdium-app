@@ -55,7 +55,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2.0.1
         with:
-          version: 6.17.1
+          version: 6.19.0
       - name: Uninstall locally and reinstall global npm modules
         run: |
           npm uninstall node-gyp

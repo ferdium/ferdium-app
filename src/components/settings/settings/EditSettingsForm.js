@@ -194,9 +194,7 @@ class EditSettingsForm extends Component {
     isClearingAllCache: PropTypes.bool.isRequired,
     onClearAllCache: PropTypes.func.isRequired,
     getCacheSize: PropTypes.func.isRequired,
-    isTodosEnabled: PropTypes.bool.isRequired,
     isTodosActivated: PropTypes.bool.isRequired,
-    isWorkspaceEnabled: PropTypes.bool.isRequired,
     automaticUpdates: PropTypes.bool.isRequired,
     isDarkmodeEnabled: PropTypes.bool.isRequired,
     isAdaptableDarkModeEnabled: PropTypes.bool.isRequired,
@@ -244,8 +242,6 @@ class EditSettingsForm extends Component {
       isClearingAllCache,
       onClearAllCache,
       getCacheSize,
-      isTodosEnabled,
-      isWorkspaceEnabled,
       automaticUpdates,
       isDarkmodeEnabled,
       isTodosActivated,
@@ -265,7 +261,7 @@ class EditSettingsForm extends Component {
     }
 
     const { lockingFeatureEnabled, scheduledDNDEnabled } =
-      window.ferdi.stores.settings.all.app;
+      window['ferdi'].stores.settings.all.app;
 
     let cacheSize;
     let notCleared;
@@ -414,14 +410,12 @@ class EditSettingsForm extends Component {
 
                 <Hr />
 
-                {isWorkspaceEnabled && (
-                  <>
-                    <Toggle field={form.$('keepAllWorkspacesLoaded')} />
-                    <Hr />
-                  </>
-                )}
+                <>
+                  <Toggle field={form.$('keepAllWorkspacesLoaded')} />
+                  <Hr />
+                </>
 
-                {isTodosEnabled && !hasAddedTodosAsService && (
+                {!hasAddedTodosAsService && (
                   <>
                     <Toggle field={form.$('enableTodos')} />
                     {isTodosActivated && (
@@ -511,6 +505,7 @@ class EditSettingsForm extends Component {
             {this.state.activeSetttingsTab === 'appearance' && (
               <div>
                 <Toggle field={form.$('showDisabledServices')} />
+                <Toggle field={form.$('showServiceName')} />
                 <Toggle field={form.$('showMessageBadgeWhenMuted')} />
 
                 {isMac && <Toggle field={form.$('showDragArea')} />}
@@ -768,7 +763,7 @@ class EditSettingsForm extends Component {
                         name: 'Nightly builds',
                       }}
                       onChange={
-                        window.ferdi.features.nightlyBuilds.toggleFeature
+                        window['ferdi'].features.nightlyBuilds.toggleFeature
                       }
                     />
                     {updateIsReadyToInstall ? (

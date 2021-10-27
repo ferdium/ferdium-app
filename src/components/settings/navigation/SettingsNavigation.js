@@ -6,7 +6,6 @@ import { RouterStore } from 'mobx-react-router';
 
 import { LOCAL_SERVER, LIVE_FERDI_API, LIVE_FRANZ_API } from '../../../config';
 import Link from '../../ui/Link';
-import { workspaceStore } from '../../../features/workspaces';
 import UIStore from '../../../stores/UIStore';
 import SettingsStore from '../../../stores/SettingsStore';
 import UserStore from '../../../stores/UserStore';
@@ -117,17 +116,15 @@ class SettingsNavigation extends Component {
           {intl.formatMessage(messages.yourServices)}{' '}
           <span className="badge">{serviceCount}</span>
         </Link>
-        {workspaceStore.isFeatureEnabled ? (
-          <Link
-            to="/settings/workspaces"
-            className="settings-navigation__link"
-            activeClassName="is-active"
-            disabled={!isLoggedIn}
-          >
-            {intl.formatMessage(messages.yourWorkspaces)}{' '}
-            <span className="badge">{workspaceCount}</span>
-          </Link>
-        ) : null}
+        <Link
+          to="/settings/workspaces"
+          className="settings-navigation__link"
+          activeClassName="is-active"
+          disabled={!isLoggedIn}
+        >
+          {intl.formatMessage(messages.yourWorkspaces)}{' '}
+          <span className="badge">{workspaceCount}</span>
+        </Link>
         {!isUsingWithoutAccount && (
           <Link
             to="/settings/user"

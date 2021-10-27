@@ -5,8 +5,14 @@ import { pathExistsSync, readFileSync, existsSync } from 'fs-extra';
 const debug = require('debug')('Ferdi:Plugin:RecipeWebview');
 
 class RecipeWebview {
-  constructor(badgeHandler, notificationsHandler, sessionHandler) {
+  constructor(
+    badgeHandler,
+    dialogTitleHandler,
+    notificationsHandler,
+    sessionHandler,
+  ) {
     this.badgeHandler = badgeHandler;
+    this.dialogTitleHandler = dialogTitleHandler;
     this.notificationsHandler = notificationsHandler;
     this.sessionHandler = sessionHandler;
 
@@ -56,6 +62,17 @@ class RecipeWebview {
    */
   setBadge(direct = 0, indirect = 0) {
     this.badgeHandler.setBadge(direct, indirect);
+  }
+
+  /**
+   * Set the active dialog title to the app title
+   *
+   * @param {string | undefined | null} title                Set the active dialog title
+   *                                                         to the app title
+   *                                                         eg. WhatsApp contact name
+   */
+  setDialogTitle(title) {
+    this.dialogTitleHandler.setDialogTitle(title);
   }
 
   /**
@@ -127,7 +144,10 @@ class RecipeWebview {
   }
 
   clearStorageData(serviceId, targetsToClear) {
-    ipcRenderer.send('clear-storage-data', { serviceId, targetsToClear });
+    ipcRenderer.send('clear-storage-data', {
+      serviceId,
+      targetsToClear,
+    });
   }
 
   releaseServiceWorkers() {
