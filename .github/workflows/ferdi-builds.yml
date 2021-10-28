@@ -153,10 +153,6 @@ jobs:
         uses: pnpm/action-setup@v2.0.1
         with:
           version: 6.19.0
-      - name: Uninstall locally and reinstall global npm modules
-        run: |
-          npm uninstall node-gyp
-          npm ls -g node-gyp@8.3.0 || npm i -g node-gyp@8.3.0
       - name: Install node dependencies
         run: npm i
       - name: Package recipes
@@ -256,10 +252,6 @@ jobs:
         uses: pnpm/action-setup@v2.0.1
         with:
           version: 6.19.0
-      - name: Uninstall locally and reinstall global npm modules
-        run: |
-          npm uninstall node-gyp
-          npm ls -g node-gyp@8.3.0 || npm i -g node-gyp@8.3.0
       - name: Install node dependencies
         run: npm i
       - name: Figure out used package.json version
@@ -380,11 +372,6 @@ jobs:
         uses: pnpm/action-setup@v2.0.1
         with:
           version: 6.19.0
-      - name: Uninstall locally and reinstall global npm modules
-        run: |
-          npm uninstall node-gyp
-          npm ls -g node-gyp@8.3.0 || npm i -g node-gyp@8.3.0
-        shell: bash
       - name: Install node dependencies
         run: npm i
         shell: bash

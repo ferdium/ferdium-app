@@ -95,14 +95,6 @@ Please make sure you run this command as an administrator:
 npm i -g windows-build-tools --vs2015
 ```
 
-#### node-gyp
-
-We need `node-gyp` to be able to compile any native dependencies
-
-```bash
-npm ls -g node-gyp@8.3.0 || npm i -g node-gyp@8.3.0
-```
-
 ### Clone repository with submodule
 
 ```bash

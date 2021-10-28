@@ -12,8 +12,7 @@
   "private": true,
   "engines": {
     "node": "^14.18",
-    "npm": "^6.14",
-    "node-gyp": "^8.2"
+    "npm": "^6.14"
   },
   "engine-strict": true,
   "scripts": {
@@ -188,6 +187,7 @@
     "jest": "27.3.1",
     "kebab-case": "1.0.1",
     "mocha": "9.1.3",
+    "node-gyp": "8.3.0",
     "prettier": "2.4.1",
     "preval-build-info": "1.0.3",
     "rimraf": "3.0.2",
