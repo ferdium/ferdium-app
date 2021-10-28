@@ -156,7 +156,7 @@ jobs:
       - name: Uninstall locally and reinstall global npm modules
         run: |
           npm uninstall node-gyp
-          npm ls -g node-gyp@8.2.0 || npm i -g node-gyp@8.2.0
+          npm ls -g node-gyp@8.3.0 || npm i -g node-gyp@8.3.0
       - name: Install node dependencies
         run: npm i
       - name: Package recipes
@@ -259,7 +259,7 @@ jobs:
       - name: Uninstall locally and reinstall global npm modules
         run: |
           npm uninstall node-gyp
-          npm ls -g node-gyp@8.2.0 || npm i -g node-gyp@8.2.0
+          npm ls -g node-gyp@8.3.0 || npm i -g node-gyp@8.3.0
       - name: Install node dependencies
         run: npm i
       - name: Figure out used package.json version
@@ -383,7 +383,7 @@ jobs:
       - name: Uninstall locally and reinstall global npm modules
         run: |
           npm uninstall node-gyp
-          npm ls -g node-gyp@8.2.0 || npm i -g node-gyp@8.2.0
+          npm ls -g node-gyp@8.3.0 || npm i -g node-gyp@8.3.0
         shell: bash
       - name: Install node dependencies
         run: npm i

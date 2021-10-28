@@ -100,7 +100,7 @@ npm i -g windows-build-tools --vs2015
 We need `node-gyp` to be able to compile any native dependencies
 
 ```bash
-npm ls -g node-gyp@8.2.0 || npm i -g node-gyp@8.2.0
+npm ls -g node-gyp@8.3.0 || npm i -g node-gyp@8.3.0
 ```
 
 ### Clone repository with submodule
