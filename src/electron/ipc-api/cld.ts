@@ -5,6 +5,9 @@ const debug = require('debug')('Ferdi:ipcApi:cld');
 
 export default async () => {
   ipcMain.handle('detect-language', async (_event, { sample }) => {
+    if (!cld) {
+      return null;
+    }
     try {
       const result = await cld.detect(sample);
       debug('Checking language', 'probability', result.languages);
@@ -18,6 +21,7 @@ export default async () => {
       }
     } catch (error) {
       console.error(error);
+      return null;
     }
   });
 };

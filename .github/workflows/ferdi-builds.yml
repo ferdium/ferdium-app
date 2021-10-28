@@ -90,7 +90,7 @@ jobs:
     name: 'macos ${{ github.event.inputs.message }}'
     needs: check_updates
     if: ${{ (needs.check_updates.outputs.should_run != 'false') && (github.event_name != 'workflow_dispatch' || (github.event_name == 'workflow_dispatch' && (contains(github.event.inputs.message, '[macOS]') || (!contains(github.event.inputs.message, '[macOS]') && !contains(github.event.inputs.message, '[Linux]') && !contains(github.event.inputs.message, '[Windows]'))))) }}
-    runs-on: macos-11
+    runs-on: macos-latest
     steps:
       - name: Set env vars
         run: |
@@ -120,17 +120,17 @@ jobs:
           cache-name: cache-node-modules
         with:
           path: ${{ env.NPM_CACHE }}
-          key: ${{ runner.os }}-14.18-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-16.13-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-14.18-build-${{ env.cache-name }}-
-            ${{ runner.os }}-14.18-build-
+            ${{ runner.os }}-16.13-build-${{ env.cache-name }}-
+            ${{ runner.os }}-16.13-build-
       - name: Cache pnpm modules
         uses: actions/cache@v2
         env:
           cache-name: cache-pnpm-store
         with:
           path: ${{ env.PNPM_CACHE }}
-          key: ${{ runner.os }}-14.18-build-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-16.13-build-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
       - name: Cache electron modules
         uses: actions/cache@v2
         env:
@@ -145,10 +145,10 @@ jobs:
         with:
           key: ${{ runner.os }}-${{ env.cache-name }}
           path: ${{ env.ELECTRON_BUILDER_CACHE }}
-      - name: Use Node.js 14.18.1
+      - name: Use Node.js 16.13.0
         uses: actions/setup-node@v2
         with:
-          node-version: 14.18.1
+          node-version: 16.13.0
       - name: Install pnpm
         uses: pnpm/action-setup@v2.0.1
         with:
@@ -219,17 +219,17 @@ jobs:
           cache-name: cache-node-modules
         with:
           path: ${{ env.NPM_CACHE }}
-          key: ${{ runner.os }}-14.18-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-16.13-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-14.18-build-${{ env.cache-name }}-
-            ${{ runner.os }}-14.18-build-
+            ${{ runner.os }}-16.13-build-${{ env.cache-name }}-
+            ${{ runner.os }}-16.13-build-
       - name: Cache pnpm modules
         uses: actions/cache@v2
         env:
           cache-name: cache-pnpm-store
         with:
           path: ${{ env.PNPM_CACHE }}
-          key: ${{ runner.os }}-14.18-build-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-16.13-build-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
       - name: Cache electron modules
         uses: actions/cache@v2
         env:
@@ -244,10 +244,10 @@ jobs:
         with:
           key: ${{ runner.os }}-${{ env.cache-name }}
           path: ${{ env.ELECTRON_BUILDER_CACHE }}
-      - name: Use Node.js 14.18.1
+      - name: Use Node.js 16.13.0
         uses: actions/setup-node@v2
         with:
-          node-version: 14.18.1
+          node-version: 16.13.0
       - name: Install pnpm
         uses: pnpm/action-setup@v2.0.1
         with:
@@ -307,7 +307,7 @@ jobs:
     name: 'windows ${{ github.event.inputs.message }}'
     needs: check_updates
     if: ${{ (needs.check_updates.outputs.should_run != 'false') && (github.event_name != 'workflow_dispatch' || (github.event_name == 'workflow_dispatch' && (contains(github.event.inputs.message, '[Windows]') || (!contains(github.event.inputs.message, '[macOS]') && !contains(github.event.inputs.message, '[Linux]') && !contains(github.event.inputs.message, '[Windows]'))))) }}
-    runs-on: windows-2019
+    runs-on: windows-latest
     steps:
       - name: Set env vars
         run: |
@@ -339,17 +339,17 @@ jobs:
           cache-name: cache-node-modules
         with:
           path: ${{ env.NPM_CACHE }}
-          key: ${{ runner.os }}-14.18-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-16.13-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-14.18-build-${{ env.cache-name }}-
-            ${{ runner.os }}-14.18-build-
+            ${{ runner.os }}-16.13-build-${{ env.cache-name }}-
+            ${{ runner.os }}-16.13-build-
       - name: Cache pnpm modules
         uses: actions/cache@v2
         env:
           cache-name: cache-pnpm-store
         with:
           path: ${{ env.PNPM_CACHE }}
-          key: ${{ runner.os }}-14.18-build-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-16.13-build-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
       - name: Cache electron modules
         uses: actions/cache@v2
         env:
@@ -364,10 +364,10 @@ jobs:
         with:
           key: ${{ runner.os }}-${{ env.cache-name }}
           path: ${{ env.ELECTRON_BUILDER_CACHE }}
-      - name: Use Node.js 14.18.1
+      - name: Use Node.js 16.13.0
         uses: actions/setup-node@v2
         with:
-          node-version: 14.18.1
+          node-version: 16.13.0
       - name: Install pnpm
         uses: pnpm/action-setup@v2.0.1
         with:

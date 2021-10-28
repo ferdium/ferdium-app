@@ -18,7 +18,6 @@
       - [Debian/Ubuntu](#debianubuntu)
       - [Fedora](#fedora)
       - [Windows](#windows)
-      - [node-gyp](#node-gyp)
     - [Clone repository with submodule](#clone-repository-with-submodule)
     - [Local caching of dependencies](#local-caching-of-dependencies)
     - [Install dependencies](#install-dependencies)
@@ -60,9 +59,9 @@ Currently, these are the combinations of system dependencies that work for MacOS
 
 ```bash
 node -v
-v14.18.1
+v16.13.0
 npm -v
-6.14.13
+8.1.1
 pnpm -v
 6.19.0
 ```

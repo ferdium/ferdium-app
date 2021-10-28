@@ -436,6 +436,9 @@ class RecipeController {
         const locale = await ipcRenderer.invoke('detect-language', {
           sample: value,
         });
+        if (!locale) {
+          return;
+        }
 
         const spellcheckerLocale =
           getSpellcheckerLocaleByFuzzyIdentifier(locale);
