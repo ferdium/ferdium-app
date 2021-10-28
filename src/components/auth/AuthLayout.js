@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import { TitleBar } from 'electron-react-titlebar/renderer';
 
 import { injectIntl } from 'react-intl';
+import { mdiFlash } from '@mdi/js';
 import Link from '../ui/Link';
 import InfoBar from '../ui/InfoBar';
 
@@ -16,6 +17,7 @@ import globalMessages from '../../i18n/globalMessages';
 import { isWindows } from '../../environment';
 import AppUpdateInfoBar from '../AppUpdateInfoBar';
 import { GITHUB_FERDI_URL } from '../../config';
+import { Icon } from '../ui/icon';
 
 @observer
 class AuthLayout extends Component {
@@ -61,7 +63,7 @@ class AuthLayout extends Component {
         <div className="auth">
           {!isOnline && (
             <InfoBar type="warning">
-              <span className="mdi mdi-flash" />
+              <Icon icon={mdiFlash} />
               {intl.formatMessage(globalMessages.notConnectedToTheInternet)}
             </InfoBar>
           )}
@@ -81,7 +83,7 @@ class AuthLayout extends Component {
               sticky
               onClick={retryHealthCheck}
             >
-              <span className="mdi mdi-flash" />
+              <Icon icon={mdiFlash} />
               {intl.formatMessage(globalMessages.APIUnhealthy)}
             </InfoBar>
           )}

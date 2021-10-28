@@ -6,6 +6,7 @@ import { Link } from 'react-router';
 
 import injectSheet from 'react-jss';
 
+import { mdiOpenInNew } from '@mdi/js';
 import { Button } from '../../ui/button/index';
 import { Input } from '../../ui/input/index';
 import { H3, H2 } from '../../ui/headline';
@@ -16,6 +17,7 @@ import Loader from '../../ui/Loader';
 import Appear from '../../ui/effects/Appear';
 import { FRANZ_SERVICE_REQUEST } from '../../../config';
 import RecipePreview from '../../../models/RecipePreview';
+import { Icon } from '../../ui/icon';
 
 const messages = defineMessages({
   headline: {
@@ -197,7 +199,7 @@ class RecipesDashboard extends Component {
               rel="noreferrer"
             >
               {intl.formatMessage(messages.missingService)}{' '}
-              <i className="mdi mdi-open-in-new" />
+              <Icon icon={mdiOpenInNew} />
             </a>
           </div>
           {/* )} */}

@@ -4,6 +4,16 @@ import ReactTooltip from 'react-tooltip';
 import { defineMessages, injectIntl } from 'react-intl';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router';
+import {
+  mdiCheckAll,
+  mdiViewGrid,
+  mdiPlusBox,
+  mdiLoginVariant,
+  mdiCog,
+  mdiBellOff,
+  mdiBell,
+  mdiLock,
+} from '@mdi/js';
 
 import Tabbar from '../services/tabs/Tabbar';
 import {
@@ -19,6 +29,7 @@ import { todoActions } from '../../features/todos/actions';
 import AppStore from '../../stores/AppStore';
 import SettingsStore from '../../stores/SettingsStore';
 import globalMessages from '../../i18n/globalMessages';
+import { Icon } from '../ui/icon';
 
 const messages = defineMessages({
   addNewService: {
@@ -156,7 +167,7 @@ class Sidebar extends Component {
                   messages.lockFerdi,
                 )} (${lockFerdiShortcutKey(false)})`}
               >
-                <i className="mdi mdi-lock" />
+                <Icon icon={mdiLock} size={1.5} />
               </button>
             ) : null}
             {todosStore.isFeatureEnabledByUser ? (
@@ -174,7 +185,7 @@ class Sidebar extends Component {
                   todosToggleMessage,
                 )} (${todosToggleShortcutKey(false)})`}
               >
-                <i className="mdi mdi-check-all" />
+                <Icon icon={mdiCheckAll} size={1.5} />
               </button>
             ) : null}
             <button
@@ -190,7 +201,7 @@ class Sidebar extends Component {
                 workspaceToggleMessage,
               )} (${workspaceToggleShortcutKey(false)})`}
             >
-              <i className="mdi mdi-view-grid" />
+              <Icon icon={mdiViewGrid} size={1.5} />
             </button>
             <button
               type="button"
@@ -205,7 +216,7 @@ class Sidebar extends Component {
                 isAppMuted ? messages.unmute : messages.mute,
               )} (${muteFerdiShortcutKey(false)})`}
             >
-              <i className={`mdi mdi-bell${isAppMuted ? '-off' : ''}`} />
+              <Icon icon={isAppMuted ? mdiBellOff : mdiBell} size={1.5} />
             </button>
             <button
               type="button"
@@ -215,7 +226,7 @@ class Sidebar extends Component {
                 messages.addNewService,
               )} (${addNewServiceShortcutKey(false)})`}
             >
-              <i className="mdi mdi-plus-box" />
+              <Icon icon={mdiPlusBox} size={1.5} />
             </button>
           </>
         ) : (
@@ -224,7 +235,7 @@ class Sidebar extends Component {
             className="sidebar__button sidebar__button--new-service"
             data-tip="Login"
           >
-            <i className="mdi mdi-login-variant" />
+            <Icon icon={mdiLoginVariant} size={1.5} />
           </Link>
         )}
         <button
@@ -235,7 +246,7 @@ class Sidebar extends Component {
             globalMessages.settings,
           )} (${settingsShortcutKey(false)})`}
         >
-          <i className="mdi mdi-cog" />
+          <Icon icon={mdiCog} size={1.5} />
           {(this.props.stores.app.updateStatus ===
             this.props.stores.app.updateStatusTypes.AVAILABLE ||
             this.props.stores.app.updateStatus ===

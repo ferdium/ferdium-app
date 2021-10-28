@@ -5,7 +5,9 @@ import classnames from 'classnames';
 import Loader from 'react-loader';
 import { defineMessages, injectIntl } from 'react-intl';
 
+import { mdiClose } from '@mdi/js';
 import Appear from './effects/Appear';
+import { Icon } from './icon';
 
 const messages = defineMessages({
   hide: {
@@ -88,10 +90,12 @@ class InfoBar extends Component {
         {!sticky && (
           <button
             type="button"
-            className="info-bar__close mdi mdi-close"
+            className="info-bar__close"
             onClick={onHide}
             aria-label={intl.formatMessage(messages.hide)}
-          />
+          >
+            <Icon icon={mdiClose} />
+          </button>
         )}
       </Appear>
     );

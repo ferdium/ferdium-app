@@ -3,7 +3,9 @@ import { observer } from 'mobx-react';
 import { Field } from 'mobx-react-form';
 import classnames from 'classnames';
 import Dropzone, { DropzoneRef } from 'react-dropzone';
+import { mdiDelete, mdiFileImage } from '@mdi/js';
 import { isWindows } from '../../environment';
+import { Icon } from './icon';
 
 type Props = {
   field: typeof Field;
@@ -75,7 +77,7 @@ class ImageUpload extends Component<Props> {
                     }
                   }}
                 >
-                  <i className="mdi mdi-delete" />
+                  <Icon icon={mdiDelete} />
                   <p>{textDelete}</p>
                 </button>
                 <div className="image-upload__action-background" />
@@ -92,7 +94,7 @@ class ImageUpload extends Component<Props> {
             >
               {({ getRootProps, getInputProps }) => (
                 <div {...getRootProps()} className={cssClasses}>
-                  <i className="mdi mdi-file-image" />
+                  <Icon icon={mdiFileImage} />
                   <p>{textUpload}</p>
                   <input {...getInputProps()} />
                 </div>

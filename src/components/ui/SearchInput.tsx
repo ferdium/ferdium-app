@@ -2,6 +2,8 @@ import { ChangeEvent, Component } from 'react';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import { debounce } from 'lodash';
+import { mdiCloseCircleOutline, mdiMagnify } from '@mdi/js';
+import { Icon } from './icon';
 
 type Props = {
   value: string;
@@ -88,7 +90,8 @@ class SearchInput extends Component<Props> {
 
     return (
       <div className={classnames([className, 'search-input'])}>
-        <label htmlFor={name} className="mdi mdi-magnify">
+        <label htmlFor={name}>
+          <Icon icon={mdiMagnify} />
           <input
             name={name}
             id={name}
@@ -103,10 +106,9 @@ class SearchInput extends Component<Props> {
           />
         </label>
         {value.length > 0 && (
-          <span
-            className="mdi mdi-close-circle-outline"
-            onClick={() => this.reset()}
-          />
+          <span onClick={() => this.reset()}>
+            <Icon icon={mdiCloseCircleOutline} />
+          </span>
         )}
       </div>
     );

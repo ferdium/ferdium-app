@@ -1,8 +1,10 @@
 import { defineMessages, useIntl } from 'react-intl';
 
+import { mdiInformation } from '@mdi/js';
 import InfoBar from './ui/InfoBar';
 import { GITHUB_FERDI_URL } from '../config';
 import { openExternalUrl } from '../helpers/url-helpers';
+import { Icon } from './ui/icon';
 
 const messages = defineMessages({
   updateAvailable: {
@@ -34,7 +36,7 @@ const AppUpdateInfoBar = ({ onInstallUpdate, onHide }: Props) => {
       onClick={onInstallUpdate}
       onHide={onHide}
     >
-      <span className="mdi mdi-information" />
+      <Icon icon={mdiInformation} />
       {intl.formatMessage(messages.updateAvailable)}{' '}
       <button
         className="info-bar__inline-button"

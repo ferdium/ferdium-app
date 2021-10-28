@@ -5,6 +5,7 @@ import { observer } from 'mobx-react';
 import prettyBytes from 'pretty-bytes';
 import { defineMessages, injectIntl } from 'react-intl';
 
+import { mdiGithub, mdiInformation, mdiOpenInNew } from '@mdi/js';
 import Form from '../../../lib/Form';
 import Button from '../../ui/Button';
 import Toggle from '../../ui/Toggle';
@@ -25,6 +26,7 @@ import {
 } from '../../../environment-remote';
 import { openPath } from '../../../helpers/url-helpers';
 import globalMessages from '../../../i18n/globalMessages';
+import { Icon } from '../../ui/icon';
 
 const debug = require('debug')('Ferdi:EditSettingsForm');
 
@@ -664,7 +666,7 @@ class EditSettingsForm extends Component {
                   rel="noreferrer"
                 >
                   {intl.formatMessage(messages.translationHelp)}{' '}
-                  <i className="mdi mdi-open-in-new" />
+                  <Icon icon={mdiOpenInNew} />
                 </a>
               </div>
             )}
@@ -797,7 +799,7 @@ class EditSettingsForm extends Component {
                   </>
                 )}
                 <p className="settings__message">
-                  <span className="mdi mdi-github-face" />
+                  <Icon icon={mdiGithub} />
                   <span>
                     Ferdi is based on{' '}
                     <a
@@ -817,7 +819,7 @@ class EditSettingsForm extends Component {
                     </a>
                   </span>
                   <br />
-                  <span className="mdi mdi-information" />
+                  <Icon icon={mdiInformation} />
                   {intl.formatMessage(messages.languageDisclaimer)}
                 </p>
               </div>

@@ -9,10 +9,12 @@ import injectSheet from 'react-jss';
 import ms from 'ms';
 
 import { observable, autorun, reaction } from 'mobx';
+import { mdiExclamation } from '@mdi/js';
 import ServiceModel from '../../../models/Service';
 import { cmdOrCtrlShortcutKey } from '../../../environment';
 import globalMessages from '../../../i18n/globalMessages';
 import SettingsStore from '../../../stores/SettingsStore';
+import { Icon } from '../../ui/icon';
 
 const IS_SERVICE_DEBUGGING_ENABLED = (
   localStorage.getItem('debug') || ''
@@ -334,10 +336,10 @@ class TabItem extends Component {
     }
 
     let errorBadge = null;
-    if ( service.isError ) {
-      errorBadge=(
-        <i className = " mdi mdi-exclamation tab-item__error-icon"/>
-      )
+    if (service.isError) {
+      errorBadge = (
+        <Icon icon={mdiExclamation} className="tab-item__error-icon" />
+      );
     }
 
     return (
@@ -359,11 +361,14 @@ class TabItem extends Component {
             : ''
         }`}
       >
-
-        {showServiceNameSetting? <div>
+        {showServiceNameSetting ? (
+          <div>
+            <img src={service.icon} className="tab-item__icon" alt="" />
+            <span className="tab-item__label">{service.name}</span>
+          </div>
+        ) : (
           <img src={service.icon} className="tab-item__icon" alt="" />
-          <span className="tab-item__label">{service.name}</span>
-        </div> : <img src={service.icon} className="tab-item__icon" alt="" />}
+        )}
 
         {notificationBadge}
         {errorBadge}
