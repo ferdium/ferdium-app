@@ -16,6 +16,7 @@ export function theme(
     : makeDefaultThemeConfig(brandColor);
 }
 
-const defaultThemeConfigWithDefaultAccentColor = makeDefaultThemeConfig(themeBrandPrimary);
+const defaultThemeConfigWithDefaultAccentColor =
+  makeDefaultThemeConfig(themeBrandPrimary);
 
 export type Theme = typeof defaultThemeConfigWithDefaultAccentColor;

@@ -24,7 +24,7 @@ export default class FeaturesStore extends Store {
     'features',
   );
 
-  @observable features = { };
+  @observable features = {};
 
   async setup() {
     this.registerReactions([
@@ -37,13 +37,11 @@ export default class FeaturesStore extends Store {
   }
 
   @computed get anonymousFeatures() {
-    return (
-      this.defaultFeaturesRequest.execute().result || {}
-    );
+    return this.defaultFeaturesRequest.execute().result || {};
   }
 
   _updateFeatures = () => {
-    const features = { };
+    const features = {};
     if (this.stores.user.isLoggedIn) {
       let requestResult = {};
       try {
