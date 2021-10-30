@@ -1,4 +1,5 @@
 import { ipcMain } from 'electron';
+// @ts-ignore
 import cld from 'cld';
 
 const debug = require('debug')('Ferdi:ipcApi:cld');
