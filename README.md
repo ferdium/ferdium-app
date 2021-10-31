@@ -14,7 +14,7 @@
 <p align="center">
 <img alt="GitHub Releases" src="https://img.shields.io/github/downloads/getferdi/ferdi/latest/total?label=Downloads&logo=iCloud&logoColor=%23FFFFFF">
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-111-default.svg?logo=github' alt='Contributors'/></a>
+<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-112-default.svg?logo=github' alt='Contributors'/></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 <a href="#backers-via-opencollective"><img alt="Open Collective backers" src="https://img.shields.io/opencollective/backers/getferdi?logo=open-collective"></a>
 <a href="#sponsors-via-opencollective"><img alt="Open Collective sponsors" src="https://img.shields.io/opencollective/sponsors/getferdi?logo=open-collective"></a>
@@ -401,6 +401,7 @@ Thanks goes to these awesome people:
     <td align="center"><a href='https://github.com/rachelcynthia' title='Rachel Cynthia V: code'><img src='https://avatars.githubusercontent.com/u/46859572?v=4' alt='rachelcynthia' style='border-radius:42px;width:42px;height:42px;'/></a></td>
     <td align="center"><a href='https://github.com/Chandrika-Priya' title='Chandrika Priya Bogadi: code'><img src='https://avatars.githubusercontent.com/u/46720139?v=4' alt='Chandrika-Priya' style='border-radius:42px;width:42px;height:42px;'/></a></td>
     <td align="center"><a href='https://github.com/Dee-Bajaj' title='Deepti: code'><img src='https://avatars.githubusercontent.com/u/66486870?v=4' alt='Dee-Bajaj' style='border-radius:42px;width:42px;height:42px;'/></a></td>
+    <td align="center"><a href='https://github.com/DarsiSreelekha' title='DarsiSreelekha: code'><img src='https://avatars.githubusercontent.com/u/89741061?v=4' alt='DarsiSreelekha' style='border-radius:42px;width:42px;height:42px;'/></a></td>
   </tr>
 </table>
 
