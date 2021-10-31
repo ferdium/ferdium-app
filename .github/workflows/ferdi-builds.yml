@@ -63,6 +63,9 @@ jobs:
             #   this is a manual trigger with the key-phrase
             git checkout develop
             TAG_NAME=$(npm version -m "%s [skip ci]" prerelease --preid=nightly)
+            # TODO: With the new lockfile version, this is needed (probably a bug)
+            npm i
+            git commit --all --amend --no-edit --no-verify
             git push origin develop --no-verify
             git tag -f $TAG_NAME
             git push origin --tags --no-verify
