@@ -1,6 +1,8 @@
 @import './config.scss';
 
-$sidebar-width: 64px;
+$sidebar-width: 75px;
+$sidebar-bias: 22px;
+$tabitem-bias: 30px;
 
 .sidebar {
   width: 100vw;
@@ -10,6 +12,7 @@ $sidebar-width: 64px;
   top: 0;
   right: 0;
   padding-bottom: 0px;
+  overflow: hidden !important;
 
   &::after {
     top: -10px;
@@ -30,16 +33,31 @@ $sidebar-width: 64px;
     .tab-item {
       
       &.is-active {
-        border-left-width: 0px;
+        border-left-width: 0px !important;
         border-top-width: 4px;
         border-top-style: solid;
-        padding-left: 4px;
+        overflow: hidden;
+        height: $sidebar-width + 4;
       }
 
       &:not(.is-active) {
         padding-top: 4px;
       }
+
+      &.is-label-enabled{
+        min-width: 70px;
+        max-width: 140px;
+        height: $sidebar-width + 10;
+        width: max-content !important;
+        overflow: hidden;
+        padding-left: 4px;
+        padding-right: 4px;
+        padding-top: 8px;
+      }
     }
+  }
+  div{
+    overflow: hidden !important;
   }
 
   .sidebar__button--workspaces.is-active {
@@ -51,7 +69,7 @@ $sidebar-width: 64px;
 }
 
 .app .app__content {
-  padding-top: $sidebar-width;
+  padding-top: $sidebar-width + $sidebar-bias;
 }
 
 .workspaces-drawer {
@@ -86,9 +104,12 @@ $sidebar-width: 64px;
 }
 
 .darwin .sidebar {
-  height: $sidebar-width + 22px;
+  height: $sidebar-width + $sidebar-bias;
 
   .sidebar__button--workspaces.is-active {
-    height: $sidebar-width - 22px;
+    height: $sidebar-width - $sidebar-bias;
+  }
+  .tab-item .is-label-enabled{
+    height: $sidebar-width + $tabitem-bias;
   }
 }

@@ -114,22 +114,91 @@ function generateAccentStyle(accentColorStr) {
   `;
 }
 
-function generateServiceRibbonWidthStyle(widthStr, iconSizeStr, vertical) {
+function generateServiceRibbonWidthStyle(widthStr, iconSizeStr, vertical, isLabelEnabled) {
   const width = Number(widthStr);
   const iconSize = Number(iconSizeStr) - iconSizeBias;
+  let fontSize = 11;
+  let tabItemHeightBias = -5;
+  let sidebarSizeBias = 22;
+  const tabItemWidthBias = 2;
+
+  switch(width){
+    case (35): 
+      fontSize = 9;
+      tabItemHeightBias = 25;
+      sidebarSizeBias = 48;
+      break;
+    case (45):
+        fontSize = 10;
+        tabItemHeightBias = 21;
+        sidebarSizeBias = 44;
+        break;
+    case (55):
+      fontSize = 11;
+      tabItemHeightBias = 13;
+      sidebarSizeBias = 37;
+      break;
+    case (80):
+      fontSize = 11;
+      tabItemHeightBias = 3;
+      sidebarSizeBias = 27;
+      break;
+    case (90):
+      fontSize = 12;
+      tabItemHeightBias = 0;
+      sidebarSizeBias = 25;
+      break;
+    case (100):
+      fontSize = 13;
+      tabItemHeightBias = 2;
+      sidebarSizeBias = 25;
+      break;
+    default:
+      fontSize = 11;
+      tabItemHeightBias = 13;
+      sidebarSizeBias = 37;
+  }
+
+  if(!isLabelEnabled){
+    sidebarSizeBias = 22;
+    tabItemHeightBias = -5;
+  }
 
   return vertical
     ? `
+    .sidebar {
+      height: ${width}px !important;
+      overflow: hidden !important;
+    }
     .tab-item {
-      width: ${width - 2}px !important;
-      height: ${width - 5 + iconSize}px !important;
+      width: ${width - tabItemWidthBias}px !important;
+      height: ${width + iconSize + tabItemHeightBias}px !important;
       min-height: unset;
+      overflow: hidden !important;
     }
     .tab-item .tab-item__icon {
       width: ${width / 2 + iconSize}px !important;
     }
     .sidebar__button {
       font-size: ${width / 3}px !important;
+    }
+    .app .app__content {
+      padding-top: ${width + sidebarSizeBias}px !important;
+    }
+    .workspaces-drawer {
+      margin-top: -${width}px !important;
+    }
+    .darwin .sidebar {
+      height: ${width + sidebarSizeBias}px !important;
+    }
+    .darwin .sidebar .sidebar__button--workspaces.is-active {
+      height: ${width - sidebarSizeBias}px !important;
+    }
+    .tab-item .tab-item__label{
+      font-size: ${fontSize}px !important;
+    }
+    .tab-item div{
+      overflow: hidden !important;
     }
   `
     : `
@@ -138,7 +207,7 @@ function generateServiceRibbonWidthStyle(widthStr, iconSizeStr, vertical) {
     }
     .tab-item {
       width: ${width}px !important;
-      height: ${width - 5 + iconSize}px !important;
+      height: min-content !important;
     }
     .tab-item .tab-item__icon {
       width: ${width / 2 + iconSize}px !important;
@@ -229,6 +298,7 @@ function generateStyle(settings) {
     showDragArea,
     useVerticalStyle,
     alwaysShowWorkspaces,
+    showServiceName,
   } = settings;
 
   if (
@@ -244,6 +314,7 @@ function generateStyle(settings) {
       serviceRibbonWidth,
       iconSize,
       useVerticalStyle,
+      showServiceName
     );
   }
   if (showDragArea) {
@@ -281,6 +352,7 @@ export default function initAppearance(stores) {
       settings.all.app.showDragArea,
       settings.all.app.useVerticalStyle,
       settings.all.app.alwaysShowWorkspaces,
+      settings.all.app.showServiceName,
     ],
     () => {
       updateStyle(settings.all.app);
