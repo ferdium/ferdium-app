@@ -11,7 +11,7 @@ import ms from 'ms';
 import { observable, autorun, reaction } from 'mobx';
 import { mdiExclamation } from '@mdi/js';
 import ServiceModel from '../../../models/Service';
-import { cmdOrCtrlShortcutKey } from '../../../environment';
+import { cmdOrCtrlShortcutKey, shiftKey, altKey } from '../../../environment';
 import globalMessages from '../../../i18n/globalMessages';
 import SettingsStore from '../../../stores/SettingsStore';
 import { Icon } from '../../ui/icon';
@@ -255,24 +255,28 @@ class TabItem extends Component {
           ? intl.formatMessage(messages.disableNotifications)
           : intl.formatMessage(messages.enableNotifications),
         click: () => toggleNotifications(),
+        accelerator: `${cmdOrCtrlShortcutKey()}+${altKey()}+N`,
       },
       {
         label: service.isMuted
           ? intl.formatMessage(messages.enableAudio)
           : intl.formatMessage(messages.disableAudio),
         click: () => toggleAudio(),
+        accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+A`,
       },
       {
         label: service.isDarkModeEnabled
           ? intl.formatMessage(messages.disableDarkMode)
           : intl.formatMessage(messages.enableDarkMode),
         click: () => toggleDarkMode(),
+        accelerator: `${shiftKey()}+${altKey()}+D`,
       },
       {
         label: intl.formatMessage(
           service.isEnabled ? messages.disableService : messages.enableService,
         ),
         click: () => (service.isEnabled ? disableService() : enableService()),
+       accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+S`,
       },
       {
         label: intl.formatMessage(
