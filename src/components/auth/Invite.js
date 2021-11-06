@@ -125,8 +125,8 @@ class Invite extends Component {
       .some(emailValue => emailValue.trim() !== '');
 
     const sendButtonClassName = classnames({
-      auth__button: true,
-      'invite__embed--button': embed,
+      'auth__button': true,
+      'invite__embed--button': embed
     });
 
     const renderForm = (

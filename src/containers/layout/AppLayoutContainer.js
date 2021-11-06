@@ -190,6 +190,7 @@ AppLayoutContainer.wrappedComponent.propTypes = {
     app: PropTypes.instanceOf(AppStore).isRequired,
     requests: PropTypes.instanceOf(RequestStore).isRequired,
   }).isRequired,
+  // eslint-disable-next-line react/require-default-props
   children: oneOrManyChildElements,
 };
 
