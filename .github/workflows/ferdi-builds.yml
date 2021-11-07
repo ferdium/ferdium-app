@@ -120,23 +120,6 @@ jobs:
       - name: Extract Git branch name from the currently checked out branch (not from the branch where this run was kicked off)
         run: echo "GIT_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
         shell: bash
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ${{ env.NPM_CACHE }}
-          key: ${{ runner.os }}-16.13-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-16.13-build-${{ env.cache-name }}-
-            ${{ runner.os }}-16.13-build-
-      - name: Cache pnpm modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-pnpm-store
-        with:
-          path: ${{ env.PNPM_CACHE }}
-          key: ${{ runner.os }}-16.13-build-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
       - name: Cache electron modules
         uses: actions/cache@v2
         env:
@@ -219,23 +202,6 @@ jobs:
       - name: Extract Git branch name from the currently checked out branch (not from the branch where this run was kicked off)
         run: echo "GIT_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
         shell: bash
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ${{ env.NPM_CACHE }}
-          key: ${{ runner.os }}-16.13-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-16.13-build-${{ env.cache-name }}-
-            ${{ runner.os }}-16.13-build-
-      - name: Cache pnpm modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-pnpm-store
-        with:
-          path: ${{ env.PNPM_CACHE }}
-          key: ${{ runner.os }}-16.13-build-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
       - name: Cache electron modules
         uses: actions/cache@v2
         env:
@@ -339,23 +305,6 @@ jobs:
       - name: Extract Git branch name from the currently checked out branch (not from the branch where this run was kicked off)
         run: echo "GIT_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
         shell: bash
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ${{ env.NPM_CACHE }}
-          key: ${{ runner.os }}-16.13-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-16.13-build-${{ env.cache-name }}-
-            ${{ runner.os }}-16.13-build-
-      - name: Cache pnpm modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-pnpm-store
-        with:
-          path: ${{ env.PNPM_CACHE }}
-          key: ${{ runner.os }}-16.13-build-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
       - name: Cache electron modules
         uses: actions/cache@v2
         env:
