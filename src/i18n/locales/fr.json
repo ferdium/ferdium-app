@@ -241,7 +241,7 @@
   "settings.app.form.showDisabledServices": "Afficher les onglets des services désactivés",
   "settings.app.form.showDragArea": "Afficher les zones de glisser-déposer dans la fenêtre",
   "settings.app.form.showMessagesBadgesWhenMuted": "Afficher les badges de messages non lus quand les notifications sont désactivées",
-  "settings.app.form.showServiceName": "Display service name under the icon",
+  "settings.app.form.showServiceName": "Afficher le nom du service sous l'icône",
   "settings.app.form.splitMode": "Activer le Mode Vue Divisée",
   "settings.app.form.startMinimized": "Démarrage minimisé",
   "settings.app.form.universalDarkMode": "Activer le mode sombre universel",

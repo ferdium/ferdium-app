@@ -122,9 +122,7 @@ class AppLayoutContainer extends Component {
         showMessageBadgeWhenMutedSetting={
           settings.all.app.showMessageBadgeWhenMuted
         }
-        showServiceNameSetting={
-          settings.all.app.showServiceName
-        }
+        showServiceNameSetting={settings.all.app.showServiceName}
         showMessageBadgesEvenWhenMuted={ui.showMessageBadgesEvenWhenMuted}
         isTodosServiceActive={services.isTodosServiceActive || false}
       />
@@ -192,6 +190,7 @@ AppLayoutContainer.wrappedComponent.propTypes = {
     app: PropTypes.instanceOf(AppStore).isRequired,
     requests: PropTypes.instanceOf(RequestStore).isRequired,
   }).isRequired,
+  // eslint-disable-next-line react/require-default-props
   children: oneOrManyChildElements,
 };
 

@@ -164,7 +164,6 @@ class WorkspaceDrawer extends Component {
           >
             <Icon
               icon={mdiPlusBox}
-              size={1}
               className={classes.workspacesSettingsButtonIcon}
             />
             <span>{intl.formatMessage(messages.addNewWorkspaceLabel)}</span>

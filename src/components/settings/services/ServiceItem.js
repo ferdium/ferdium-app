@@ -5,7 +5,9 @@ import ReactTooltip from 'react-tooltip';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
 
+import { mdiBellOff, mdiMessageBulletedOff, mdiPower } from '@mdi/js';
 import ServiceModel from '../../../models/Service';
+import { Icon } from '../../ui/icon';
 
 const messages = defineMessages({
   tooltipIsDisabled: {
@@ -59,24 +61,24 @@ class ServiceItem extends Component {
         </td>
         <td className="service-table__column-info" onClick={goToServiceForm}>
           {service.isMuted && (
-            <span
-              className="mdi mdi-bell-off"
+            <Icon
+              icon={mdiBellOff}
               data-tip={intl.formatMessage(messages.tooltipIsMuted)}
             />
           )}
         </td>
         <td className="service-table__column-info" onClick={goToServiceForm}>
           {!service.isEnabled && (
-            <span
-              className="mdi mdi-power"
+            <Icon
+              icon={mdiPower}
               data-tip={intl.formatMessage(messages.tooltipIsDisabled)}
             />
           )}
         </td>
         <td className="service-table__column-info" onClick={goToServiceForm}>
           {!service.isNotificationEnabled && (
-            <span
-              className="mdi mdi-message-bulleted-off"
+            <Icon
+              icon={mdiMessageBulletedOff}
               data-tip={intl.formatMessage(
                 messages.tooltipNotificationsDisabled,
               )}

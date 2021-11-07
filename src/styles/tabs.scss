@@ -54,6 +54,9 @@
     .tab-item__icon {
       margin-left: -4px;
     }
+    .tab-item__label {
+      margin-left: -4px;
+    }
   }
 
   &.is-label-enabled{
@@ -91,7 +94,7 @@
     align-items: center;
     background: $theme-brand-danger;
     border-radius: 20px;
-    bottom: 8px;
+    top: 8px;
     color: #fff;
     display: flex;
     font-size: 11px;

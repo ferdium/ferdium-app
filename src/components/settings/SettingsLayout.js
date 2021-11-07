@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 
+import { mdiClose } from '@mdi/js';
 import ErrorBoundary from '../util/ErrorBoundary';
 import { oneOrManyChildElements } from '../../prop-types';
 import Appear from '../ui/effects/Appear';
+import { Icon } from '../ui/icon';
 
 const messages = defineMessages({
   closeSettings: {
@@ -62,10 +64,12 @@ class SettingsLayout extends Component {
               {children}
               <button
                 type="button"
-                className="settings__close mdi mdi-close"
+                className="settings__close"
                 onClick={closeSettings}
                 aria-label={intl.formatMessage(messages.closeSettings)}
-              />
+              >
+                <Icon icon={mdiClose} size={1.35} />
+              </button>
             </div>
           </ErrorBoundary>
         </div>

@@ -6,6 +6,7 @@ import { TitleBar } from 'electron-react-titlebar/renderer';
 import injectSheet from 'react-jss';
 import { ipcRenderer } from 'electron';
 
+import { mdiFlash, mdiPowerPlug } from '@mdi/js';
 import InfoBar from '../ui/InfoBar';
 import { Component as BasicAuth } from '../../features/basicAuth';
 import { Component as QuickSwitch } from '../../features/quickSwitch';
@@ -20,6 +21,7 @@ import WorkspaceSwitchingIndicator from '../../features/workspaces/components/Wo
 import { workspaceStore } from '../../features/workspaces';
 import AppUpdateInfoBar from '../AppUpdateInfoBar';
 import Todos from '../../features/todos/containers/TodosScreen';
+import { Icon } from '../ui/icon';
 
 const messages = defineMessages({
   servicesUpdated: {
@@ -151,7 +153,7 @@ class AppLayout extends Component {
                   sticky
                   onClick={retryRequiredRequests}
                 >
-                  <span className="mdi mdi-flash" />
+                  <Icon icon={mdiFlash} />
                   {intl.formatMessage(messages.requiredRequestsFailed)}
                 </InfoBar>
               )}
@@ -163,7 +165,7 @@ class AppLayout extends Component {
                   sticky
                   onClick={retryRequiredRequests}
                 >
-                  <span className="mdi mdi-flash" />
+                  <Icon icon={mdiFlash} />
                   {intl.formatMessage(messages.authRequestFailed)}
                 </InfoBar>
               )}
@@ -179,7 +181,7 @@ class AppLayout extends Component {
                       });
                     }}
                   >
-                    <span className="mdi mdi-power-plug" />
+                    <Icon icon={mdiPowerPlug} />
                     {intl.formatMessage(messages.servicesUpdated)}
                   </InfoBar>
                 )}

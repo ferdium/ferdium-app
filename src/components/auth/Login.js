@@ -173,7 +173,9 @@ class Login extends Component {
                 <p className="error-message center">
                   {intl.formatMessage(messages.customServerQuestion)}{' '}
                   <Link
-                    to={`${window['ferdi'].stores.settings.all.app.server.replace(
+                    to={`${window[
+                      'ferdi'
+                    ].stores.settings.all.app.server.replace(
                       API_VERSION,
                       '',
                     )}/import`}

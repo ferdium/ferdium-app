@@ -47,6 +47,11 @@ jobs:
           submodules: recursive
           fetch-depth: 0 # Note: Needed to be able to pull the 'develop' branch as well for merging
           # ssh-key: ${{ secrets.FERDI_PUBLISH_TOKEN }}
+      - name: Use Node.js 16.13.0
+        uses: actions/setup-node@v2
+        if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
+        with:
+          node-version: 16.13.0
       - id: should_run
         name: Check whether there are any commits since this run was last triggered and push them and/or set the output
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
@@ -63,6 +68,7 @@ jobs:
             #   this is a manual trigger with the key-phrase
             git checkout develop
             TAG_NAME=$(npm version -m "%s [skip ci]" prerelease --preid=nightly)
+            git commit --all --amend --no-edit --no-verify
             git push origin develop --no-verify
             git tag -f $TAG_NAME
             git push origin --tags --no-verify
@@ -90,7 +96,7 @@ jobs:
     name: 'macos ${{ github.event.inputs.message }}'
     needs: check_updates
     if: ${{ (needs.check_updates.outputs.should_run != 'false') && (github.event_name != 'workflow_dispatch' || (github.event_name == 'workflow_dispatch' && (contains(github.event.inputs.message, '[macOS]') || (!contains(github.event.inputs.message, '[macOS]') && !contains(github.event.inputs.message, '[Linux]') && !contains(github.event.inputs.message, '[Windows]'))))) }}
-    runs-on: macos-11
+    runs-on: macos-latest
     steps:
       - name: Set env vars
         run: |
@@ -114,23 +120,6 @@ jobs:
       - name: Extract Git branch name from the currently checked out branch (not from the branch where this run was kicked off)
         run: echo "GIT_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
         shell: bash
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ${{ env.NPM_CACHE }}
-          key: ${{ runner.os }}-14.18-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-14.18-build-${{ env.cache-name }}-
-            ${{ runner.os }}-14.18-build-
-      - name: Cache pnpm modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-pnpm-store
-        with:
-          path: ${{ env.PNPM_CACHE }}
-          key: ${{ runner.os }}-14.18-build-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
       - name: Cache electron modules
         uses: actions/cache@v2
         env:
@@ -145,18 +134,14 @@ jobs:
         with:
           key: ${{ runner.os }}-${{ env.cache-name }}
           path: ${{ env.ELECTRON_BUILDER_CACHE }}
-      - name: Use Node.js 14.18.1
+      - name: Use Node.js 16.13.0
         uses: actions/setup-node@v2
         with:
-          node-version: 14.18.1
+          node-version: 16.13.0
       - name: Install pnpm
         uses: pnpm/action-setup@v2.0.1
         with:
           version: 6.19.0
-      - name: Uninstall locally and reinstall global npm modules
-        run: |
-          npm uninstall node-gyp
-          npm ls -g node-gyp@8.2.0 || npm i -g node-gyp@8.2.0
       - name: Install node dependencies
         run: npm i
       - name: Package recipes
@@ -217,23 +202,6 @@ jobs:
       - name: Extract Git branch name from the currently checked out branch (not from the branch where this run was kicked off)
         run: echo "GIT_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
         shell: bash
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ${{ env.NPM_CACHE }}
-          key: ${{ runner.os }}-14.18-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-14.18-build-${{ env.cache-name }}-
-            ${{ runner.os }}-14.18-build-
-      - name: Cache pnpm modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-pnpm-store
-        with:
-          path: ${{ env.PNPM_CACHE }}
-          key: ${{ runner.os }}-14.18-build-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
       - name: Cache electron modules
         uses: actions/cache@v2
         env:
@@ -248,18 +216,14 @@ jobs:
         with:
           key: ${{ runner.os }}-${{ env.cache-name }}
           path: ${{ env.ELECTRON_BUILDER_CACHE }}
-      - name: Use Node.js 14.18.1
+      - name: Use Node.js 16.13.0
         uses: actions/setup-node@v2
         with:
-          node-version: 14.18.1
+          node-version: 16.13.0
       - name: Install pnpm
         uses: pnpm/action-setup@v2.0.1
         with:
           version: 6.19.0
-      - name: Uninstall locally and reinstall global npm modules
-        run: |
-          npm uninstall node-gyp
-          npm ls -g node-gyp@8.2.0 || npm i -g node-gyp@8.2.0
       - name: Install node dependencies
         run: npm i
       - name: Figure out used package.json version
@@ -315,7 +279,7 @@ jobs:
     name: 'windows ${{ github.event.inputs.message }}'
     needs: check_updates
     if: ${{ (needs.check_updates.outputs.should_run != 'false') && (github.event_name != 'workflow_dispatch' || (github.event_name == 'workflow_dispatch' && (contains(github.event.inputs.message, '[Windows]') || (!contains(github.event.inputs.message, '[macOS]') && !contains(github.event.inputs.message, '[Linux]') && !contains(github.event.inputs.message, '[Windows]'))))) }}
-    runs-on: windows-2019
+    runs-on: windows-latest
     steps:
       - name: Set env vars
         run: |
@@ -341,23 +305,6 @@ jobs:
       - name: Extract Git branch name from the currently checked out branch (not from the branch where this run was kicked off)
         run: echo "GIT_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
         shell: bash
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ${{ env.NPM_CACHE }}
-          key: ${{ runner.os }}-14.18-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-14.18-build-${{ env.cache-name }}-
-            ${{ runner.os }}-14.18-build-
-      - name: Cache pnpm modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-pnpm-store
-        with:
-          path: ${{ env.PNPM_CACHE }}
-          key: ${{ runner.os }}-14.18-build-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
       - name: Cache electron modules
         uses: actions/cache@v2
         env:
@@ -372,19 +319,14 @@ jobs:
         with:
           key: ${{ runner.os }}-${{ env.cache-name }}
           path: ${{ env.ELECTRON_BUILDER_CACHE }}
-      - name: Use Node.js 14.18.1
+      - name: Use Node.js 16.13.0
         uses: actions/setup-node@v2
         with:
-          node-version: 14.18.1
+          node-version: 16.13.0
       - name: Install pnpm
         uses: pnpm/action-setup@v2.0.1
         with:
           version: 6.19.0
-      - name: Uninstall locally and reinstall global npm modules
-        run: |
-          npm uninstall node-gyp
-          npm ls -g node-gyp@8.2.0 || npm i -g node-gyp@8.2.0
-        shell: bash
       - name: Install node dependencies
         run: npm i
         shell: bash

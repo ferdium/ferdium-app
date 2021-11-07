@@ -1,6 +1,8 @@
 import { defineMessages, useIntl } from 'react-intl';
 import { BrowserWindow } from '@electron/remote';
+import { mdiOpenInNew } from '@mdi/js';
 import InfoBar from '../../ui/InfoBar';
+import { Icon } from '../../ui/icon';
 
 const messages = defineMessages({
   headline: {
@@ -159,7 +161,7 @@ const SupportFerdiDashboard = () => {
             >
               {' '}
               {intl.formatMessage(messages.textListContributorsHere)}
-              <i className="mdi mdi-open-in-new" />
+              <Icon icon={mdiOpenInNew} />
             </a>
             <br />
             <br />
@@ -175,7 +177,7 @@ const SupportFerdiDashboard = () => {
             >
               {' '}
               {intl.formatMessage(messages.textSupportWelcomeHere)}
-              <i className="mdi mdi-open-in-new" />
+              <Icon icon={mdiOpenInNew} />
             </a>
           </p>
           <p>
@@ -188,7 +190,7 @@ const SupportFerdiDashboard = () => {
             >
               {' '}
               {intl.formatMessage(messages.textOpenCollective)}
-              <i className="mdi mdi-open-in-new" />
+              <Icon icon={mdiOpenInNew} />
             </a>
           </p>
           <p>
@@ -201,7 +203,7 @@ const SupportFerdiDashboard = () => {
             >
               {' '}
               {intl.formatMessage(messages.textOpenCollective)}
-              <i className="mdi mdi-open-in-new" />
+              <Icon icon={mdiOpenInNew} />
             </a>{' '}
             {intl.formatMessage(messages.textDonationAnd)}
             <a
@@ -212,7 +214,7 @@ const SupportFerdiDashboard = () => {
             >
               {' '}
               {intl.formatMessage(messages.textGitHubSponsors)}
-              <i className="mdi mdi-open-in-new" />
+              <Icon icon={mdiOpenInNew} />
             </a>
           </p>
         </div>

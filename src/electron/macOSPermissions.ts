@@ -2,6 +2,7 @@ import { systemPreferences, BrowserWindow, dialog } from 'electron';
 import { pathExistsSync, mkdirSync, writeFileSync } from 'fs-extra';
 import macosVersion from 'macos-version';
 import { dirname } from 'path';
+// @ts-ignore
 import { askForScreenCaptureAccess } from 'node-mac-permissions';
 import { userDataPath } from '../environment-remote';
 

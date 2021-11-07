@@ -31,35 +31,14 @@ jobs:
         run: |
           echo "GIT_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
         shell: bash
-      - name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ${{ env.NPM_CACHE }}
-          key: ${{ runner.os }}-14.18-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-14.18-build-${{ env.cache-name }}-
-            ${{ runner.os }}-14.18-build-
-      - name: Cache pnpm modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-pnpm-store
-        with:
-          path: ${{ env.PNPM_CACHE }}
-          key: ${{ runner.os }}-14.18-build-${{ env.cache-name }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-      - name: Use Node.js 14.18.1
+      - name: Use Node.js 16.13.0
         uses: actions/setup-node@v2
         with:
-          node-version: 14.18.1
+          node-version: 16.13.0
       - name: Install pnpm
         uses: pnpm/action-setup@v2.0.1
         with:
           version: 6.19.0
-      - name: Uninstall locally and reinstall global npm modules
-        run: |
-          npm uninstall node-gyp
-          npm ls -g node-gyp@8.2.0 || npm i -g node-gyp@8.2.0
       - name: Install node dependencies
         run: npm i
       - name: Update submodules

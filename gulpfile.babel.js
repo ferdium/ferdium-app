@@ -4,8 +4,7 @@ import babel from 'gulp-babel';
 import dartSass from 'sass';
 import gulpSass from 'gulp-sass';
 import csso from 'gulp-csso';
-import terser from 'terser';
-import composer from 'gulp-uglify/composer';
+import terser from 'gulp-terser';
 import htmlMin from 'gulp-htmlmin';
 import connect from 'gulp-connect';
 import { exec } from 'child_process';
@@ -24,7 +23,6 @@ import * as rawStyleConfig from './scripts/theme/default/legacy';
 dotenv.config();
 
 const sass = gulpSass(dartSass);
-const uglify = composer(terser, console);
 
 const isDevBuild = process.env.NODE_ENV === 'development';
 
@@ -200,7 +198,7 @@ export function processJavascripts() {
         comments: false,
       }),
     )
-    .pipe(gulpIf(!isDevBuild, uglify())) // Only uglify in production to speed up dev builds
+    .pipe(gulpIf(!isDevBuild, terser())) // Only uglify in production to speed up dev builds
     .pipe(gulp.dest(paths.javascripts.dest))
     .pipe(connect.reload());
 }
@@ -214,7 +212,7 @@ export function processTypescripts() {
         comments: false,
       }),
     )
-    .pipe(gulpIf(!isDevBuild, uglify())) // Only uglify in production to speed up dev builds
+    .pipe(gulpIf(!isDevBuild, terser())) // Only uglify in production to speed up dev builds
     .pipe(gulp.dest(paths.typescripts.dest))
     .pipe(connect.reload());
 }

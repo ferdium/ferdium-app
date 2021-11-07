@@ -178,7 +178,7 @@ class InputComponent extends Component<IProps, IState> {
                 }
                 tabIndex={-1}
               >
-                <Icon path={!showPassword ? mdiEye : mdiEyeOff} size={1} />
+                <Icon path={!showPassword ? mdiEye : mdiEyeOff} />
               </button>
             )}
           </div>

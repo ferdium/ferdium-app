@@ -4,6 +4,13 @@ import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import Loader from 'react-loader';
 import { defineMessages, injectIntl } from 'react-intl';
+import { mdiAlert, mdiCheckboxMarkedCircleOutline, mdiClose } from '@mdi/js';
+import { Icon } from '../ui/icon';
+
+const icons = {
+  'checkbox-marked-circle-outline': mdiCheckboxMarkedCircleOutline,
+  alert: mdiAlert,
+};
 
 const messages = defineMessages({
   dismiss: {
@@ -73,7 +80,7 @@ class Infobox extends Component {
           'infobox--default': !type,
         })}
       >
-        {icon && <i className={`mdi mdi-${icon}`} />}
+        {icon && <Icon icon={icons[icon]} />}
         <div className="infobox__content">{children}</div>
         {ctaLabel && (
           <button className="infobox__cta" onClick={ctaOnClick} type="button">
@@ -94,9 +101,11 @@ class Infobox extends Component {
               this.setState({ dismissed: true });
               if (onDismiss) onDismiss();
             }}
-            className="infobox__delete mdi mdi-close"
+            className="infobox__delete"
             aria-label={intl.formatMessage(messages.dismiss)}
-          />
+          >
+            <Icon icon={mdiClose} />
+          </button>
         )}
       </div>
     );

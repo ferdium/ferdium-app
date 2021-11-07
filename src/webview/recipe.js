@@ -27,6 +27,7 @@ import { DialogTitleHandler } from './dialogTitle';
 import { SessionHandler } from './sessionHandler';
 import contextMenu from './contextMenu';
 import {
+  darkModeStyleExists,
   injectDarkModeStyle,
   isDarkModeStyleInjected,
   removeDarkModeStyle,
@@ -320,15 +321,6 @@ class RecipeController {
     ) {
       debug('Enable dark mode');
 
-      // Check if recipe has a darkmode.css
-      const darkModeStyle = join(
-        this.settings.service.recipe.path,
-        'darkmode.css',
-      );
-      const darkModeExists = pathExistsSync(darkModeStyle);
-
-      debug('darkmode.css exists? ', darkModeExists);
-
       // Check if recipe has a custom dark mode handler
       if (this.recipe && this.recipe.darkModeHandler) {
         debug('Using custom dark mode handler');
@@ -341,8 +333,8 @@ class RecipeController {
         }
 
         this.recipe.darkModeHandler(true, handlerConfig);
-      } else if (darkModeExists) {
-        debug('Injecting darkmode.css');
+      } else if (darkModeStyleExists(this.settings.service.recipe.path)) {
+        debug('Injecting darkmode from recipe');
         injectDarkModeStyle(this.settings.service.recipe.path);
 
         // Make sure universal dark mode is disabled
@@ -379,7 +371,7 @@ class RecipeController {
 
         this.recipe.darkModeHandler(false, handlerConfig);
       } else if (isDarkModeStyleInjected()) {
-        debug('Removing injected darkmode.css');
+        debug('Removing injected darkmode from recipe');
         removeDarkModeStyle();
       } else {
         debug('Removing Dark Reader');
@@ -436,6 +428,9 @@ class RecipeController {
         const locale = await ipcRenderer.invoke('detect-language', {
           sample: value,
         });
+        if (!locale) {
+          return;
+        }
 
         const spellcheckerLocale =
           getSpellcheckerLocaleByFuzzyIdentifier(locale);

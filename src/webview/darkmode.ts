@@ -9,10 +9,17 @@ const ID = [...Array.from({ length: 20 })]
   .map(() => chars[Math.trunc(Math.random() * chars.length)])
   .join('');
 
+function darkModeFilePath(recipePath: string) {
+  return join(recipePath, 'darkmode.css');
+}
+
+export function darkModeStyleExists(recipePath: string) {
+  return pathExistsSync(darkModeFilePath(recipePath));
+}
+
 export function injectDarkModeStyle(recipePath: string) {
-  const darkModeStyle = join(recipePath, 'darkmode.css');
-  if (pathExistsSync(darkModeStyle)) {
-    const data = readFileSync(darkModeStyle);
+  if (darkModeStyleExists(recipePath)) {
+    const data = readFileSync(darkModeFilePath(recipePath));
     const styles = document.createElement('style');
     styles.id = ID;
     styles.innerHTML = data.toString();
