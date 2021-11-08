@@ -32,6 +32,9 @@ export default class TrayIcon {
     {
       label: 'Show Ferdi',
       click() {
+        if (!app.mainWindow) {
+          return;
+        }
         if (app.mainWindow.isMinimized()) {
           app.mainWindow.restore();
         } else if (app.mainWindow.isVisible()) {
@@ -45,6 +48,9 @@ export default class TrayIcon {
     {
       label: 'Disable Notifications & Audio',
       click() {
+        if (!app.mainWindow) {
+          return;
+        }
         app.mainWindow.webContents.send('muteApp');
       },
     },
@@ -99,6 +105,9 @@ export default class TrayIcon {
     }
 
     this.trayIcon.on('click', () => {
+      if (!app.mainWindow) {
+        return;
+      }
       if (app.mainWindow.isMinimized()) {
         app.mainWindow.restore();
       } else if (app.mainWindow.isVisible()) {
