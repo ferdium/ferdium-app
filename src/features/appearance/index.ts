@@ -123,7 +123,7 @@ function generateServiceRibbonWidthStyle(widthStr, iconSizeStr, vertical, isLabe
   const tabItemWidthBias = 2;
 
   switch(width){
-    case (35): 
+    case (35):
       fontSize = 9;
       tabItemHeightBias = 25;
       sidebarSizeBias = 48;
@@ -171,8 +171,8 @@ function generateServiceRibbonWidthStyle(widthStr, iconSizeStr, vertical, isLabe
       overflow: hidden !important;
     }
     .tab-item {
-      width: ${width - tabItemWidthBias}px !important;
-      height: ${width + iconSize + tabItemHeightBias}px !important;
+      height: ${width - tabItemWidthBias}px !important;
+      width: ${width + iconSize + tabItemHeightBias}px !important;
       min-height: unset;
       overflow: hidden !important;
     }
