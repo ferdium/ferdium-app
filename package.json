@@ -66,6 +66,7 @@
     "auto-launch": "^5.0.5",
     "btoa": "^1.2.1",
     "classnames": "^2.3.1",
+    "cld": "^2.7.1",
     "color": "^4.0.1",
     "csstype": "^3.0.9",
     "darkreader": "^4.9.39",
@@ -203,7 +204,6 @@
     "webpack-dev-server": "^3.11.2"
   },
   "optionalDependencies": {
-    "cld": "^2.7.0",
     "node-mac-permissions": "^2.2.0"
   },
   "config": {
