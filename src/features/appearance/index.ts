@@ -164,6 +164,9 @@ function generateServiceRibbonWidthStyle(widthStr, iconSizeStr, vertical, isLabe
     tabItemHeightBias = -5;
   }
 
+  // Due to the lowest values for SIDEBAR_WIDTH and ICON_SIZES, this can be computed to a negative value
+  const minimumAdjustedIconSize = Math.max(width / 2 + iconSize, 2);
+
   return vertical
     ? `
     .sidebar {
@@ -177,7 +180,7 @@ function generateServiceRibbonWidthStyle(widthStr, iconSizeStr, vertical, isLabe
       overflow: hidden !important;
     }
     .tab-item .tab-item__icon {
-      width: ${width / 2 + iconSize}px !important;
+      width: ${minimumAdjustedIconSize}px !important;
     }
     .sidebar__button {
       font-size: ${width / 3}px !important;
@@ -210,7 +213,7 @@ function generateServiceRibbonWidthStyle(widthStr, iconSizeStr, vertical, isLabe
       height: min-content !important;
     }
     .tab-item .tab-item__icon {
-      width: ${width / 2 + iconSize}px !important;
+      width: ${minimumAdjustedIconSize}px !important;
     }
     .sidebar__button {
       font-size: ${width / 3}px !important;
