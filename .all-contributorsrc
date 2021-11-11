@@ -10,7 +10,7 @@
   "commit": true,
   "commitConvention": "none",
   "badgeTemplate": "<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-<%= contributors.length %>-default.svg?logo=github' alt='Contributors'/></a>",
-  "contributorTemplate": "<a href='<%= contributor.profile %>' title='<%= contributor.name %>: <%= contributor.contributions.join(', ') %>'><img src='<%= contributor.avatar_url %>' alt='<%= contributor.login %>' style='border-radius:<%= options.imageSize %>px;width:<%= options.imageSize %>px;height:<%= options.imageSize %>px;'/></a>",
+  "contributorTemplate": "<a href='<%= contributor.profile %>' title='<%= contributor.name %>: <%= contributor.contributions.join(', ') %>'><img src='<%= contributor.avatar_url %>' alt='<%= contributor.login %>' style='width:<%= options.imageSize %>px;'/></a>",
   "contributors": [
     {
       "login": "vantezzen",
