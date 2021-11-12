@@ -172,6 +172,9 @@ export const CUSTOM_WEBSITE_RECIPE_ID = 'franz-custom-website';
 
 export const DEFAULT_SERVICE_ORDER = 99; // something high enough that it gets added to the end of the already-added services on the left sidebar
 
+export const SPLIT_COLUMNS_MIN = 1;
+export const SPLIT_COLUMNS_MAX = 5;
+
 export const DEFAULT_APP_SETTINGS = {
   autoLaunchOnStart: false,
   autoLaunchInBackground: false,
@@ -193,6 +196,7 @@ export const DEFAULT_APP_SETTINGS = {
   spellcheckerLanguage: 'en-us',
   darkMode: false,
   splitMode: false,
+  splitColumns: 3,
   fallbackLocale: 'en-US',
   beta: false,
   isAppMuted: false,

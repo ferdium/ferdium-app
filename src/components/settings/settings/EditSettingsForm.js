@@ -17,6 +17,8 @@ import {
   DEFAULT_APP_SETTINGS,
   FRANZ_TRANSLATION,
   GITHUB_FRANZ_URL,
+  SPLIT_COLUMNS_MAX,
+  SPLIT_COLUMNS_MIN,
 } from '../../../config';
 import { isMac, isWindows, lockFerdiShortcutKey } from '../../../environment';
 import {
@@ -178,6 +180,10 @@ const messages = defineMessages({
     defaultMessage:
       'Official translations are English & German. All other languages are community based translations.',
   },
+  numberOfColumns: {
+    id: 'settings.app.form.splitColumns',
+    defaultMessage: 'Number of columns',
+  },
 });
 
 const Hr = () => <hr style={{ marginBottom: 20 }} />;
@@ -200,6 +206,7 @@ class EditSettingsForm extends Component {
     automaticUpdates: PropTypes.bool.isRequired,
     isDarkmodeEnabled: PropTypes.bool.isRequired,
     isAdaptableDarkModeEnabled: PropTypes.bool.isRequired,
+    isSplitModeEnabled: PropTypes.bool.isRequired,
     isNightlyEnabled: PropTypes.bool.isRequired,
     hasAddedTodosAsService: PropTypes.bool.isRequired,
     isOnline: PropTypes.bool.isRequired,
@@ -246,6 +253,7 @@ class EditSettingsForm extends Component {
       getCacheSize,
       automaticUpdates,
       isDarkmodeEnabled,
+      isSplitModeEnabled,
       isTodosActivated,
       isNightlyEnabled,
       hasAddedTodosAsService,
@@ -538,6 +546,16 @@ class EditSettingsForm extends Component {
                 <Hr />
 
                 <Toggle field={form.$('splitMode')} />
+                {isSplitModeEnabled && (
+                  <Input
+                    type="number"
+                    min={SPLIT_COLUMNS_MIN}
+                    max={SPLIT_COLUMNS_MAX}
+                    placeholder={intl.formatMessage(messages.numberOfColumns)}
+                    onChange={e => this.submit(e)}
+                    field={form.$('splitColumns')}
+                  />
+                )}
 
                 <Hr />
 

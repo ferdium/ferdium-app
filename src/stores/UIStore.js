@@ -54,6 +54,13 @@ export default class UIStore extends Store {
       },
       { fireImmediately: true },
     );
+    reaction(
+      () => this.splitColumnsNo,
+      () => {
+        this._setupColumnsInDOM();
+      },
+      { fireImmediately: true },
+    );
   }
 
   @computed get showMessageBadgesEvenWhenMuted() {
@@ -82,6 +89,10 @@ export default class UIStore extends Store {
 
   @computed get isSplitModeActive() {
     return this.stores.settings.app.splitMode;
+  }
+
+  @computed get splitColumnsNo() {
+    return this.stores.settings.app.splitColumns;
   }
 
   @computed get theme() {
@@ -113,22 +124,23 @@ export default class UIStore extends Store {
 
   // Reactions
   _setupThemeInDOM() {
-    const body = document.querySelector('body');
-
     if (!this.isDarkThemeActive) {
-      body?.classList.remove('theme__dark');
+      document.body.classList.remove('theme__dark');
     } else {
-      body?.classList.add('theme__dark');
+      document.body.classList.add('theme__dark');
     }
   }
 
   _setupModeInDOM() {
-    const body = document.querySelector('body');
-
     if (!this.isSplitModeActive) {
-      body?.classList.remove('mode__split');
+      document.body.classList.remove('mode__split');
     } else {
-      body?.classList.add('mode__split');
+      document.body.classList.add('mode__split');
+      document.body.dataset.columns = this.splitColumnsNo;
     }
+  }
+
+  _setupColumnsInDOM() {
+    document.body.dataset.columns = this.splitColumnsNo;
   }
 }

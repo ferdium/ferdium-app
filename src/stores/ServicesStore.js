@@ -171,6 +171,13 @@ export default class ServicesStore extends Store {
     );
 
     reaction(
+      () => this.stores.settings.app.splitColumns,
+      () => {
+        this._shareSettingsWithServiceProcess();
+      },
+    );
+
+    reaction(
       () => this.stores.settings.app.searchEngine,
       () => {
         this._shareSettingsWithServiceProcess();

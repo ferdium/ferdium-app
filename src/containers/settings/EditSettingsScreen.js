@@ -169,6 +169,10 @@ const messages = defineMessages({
     id: 'settings.app.form.splitMode',
     defaultMessage: 'Enable Split View Mode',
   },
+  splitColumns: {
+    id: 'settings.app.form.splitColumns',
+    defaultMessage: 'Number of columns',
+  },
   serviceRibbonWidth: {
     id: 'settings.app.form.serviceRibbonWidth',
     defaultMessage: 'Sidebar width',
@@ -310,6 +314,7 @@ class EditSettingsScreen extends Component {
         adaptableDarkMode: Boolean(settingsData.adaptableDarkMode),
         universalDarkMode: Boolean(settingsData.universalDarkMode),
         splitMode: Boolean(settingsData.splitMode),
+        splitColumns: Number(settingsData.splitColumns),
         serviceRibbonWidth: Number(settingsData.serviceRibbonWidth),
         iconSize: Number(settingsData.iconSize),
         enableLongPressServiceHint: Boolean(
@@ -613,6 +618,11 @@ class EditSettingsScreen extends Component {
           value: settings.all.app.splitMode,
           default: DEFAULT_APP_SETTINGS.splitMode,
         },
+        splitColumns: {
+          label: intl.formatMessage(messages.splitColumns),
+          value: settings.all.app.splitColumns,
+          default: DEFAULT_APP_SETTINGS.splitColumns,
+        },
         serviceRibbonWidth: {
           label: intl.formatMessage(messages.serviceRibbonWidth),
           value: settings.all.app.serviceRibbonWidth,
@@ -725,6 +735,7 @@ class EditSettingsScreen extends Component {
           isAdaptableDarkModeEnabled={
             this.props.stores.settings.app.adaptableDarkMode
           }
+          isSplitModeEnabled={this.props.stores.settings.app.splitMode}
           isTodosActivated={this.props.stores.todos.isFeatureEnabledByUser}
           isUsingCustomTodoService={
             this.props.stores.todos.isUsingCustomTodoService
