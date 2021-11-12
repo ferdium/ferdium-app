@@ -14,10 +14,9 @@
 <p align="center">
 <img alt="GitHub Releases" src="https://img.shields.io/github/downloads/getferdi/ferdi/latest/total?label=Downloads&logo=iCloud&logoColor=%23FFFFFF">
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-112-default.svg?logo=github' alt='Contributors'/></a>
+<a href='https://github.com/getferdi/ferdi/blob/develop/.all-contributorsrc'><img src='https://img.shields.io/badge/contributors-112-default.svg?logo=github' alt='Contributors'/></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 <a href="#backers-via-opencollective"><img alt="Open Collective backers" src="https://img.shields.io/opencollective/backers/getferdi?logo=open-collective"></a>
-<a href="#sponsors-via-opencollective"><img alt="Open Collective sponsors" src="https://img.shields.io/opencollective/sponsors/getferdi?logo=open-collective"></a>
 <a href="https://github.com/getferdi/ferdi/actions/workflows/ferdi-builds.yml"><img alt="Build Status" src="https://github.com/getferdi/ferdi/actions/workflows/ferdi-builds.yml/badge.svg?branch=develop&event=push"></a>
 <a href="https://gitter.im/getferdi/community"><img alt="Gitter Chat Room" src="https://img.shields.io/gitter/room/getferdi/community"></a>
 </p>
@@ -53,9 +52,8 @@
   - [Nightly releases](#nightly-releases)
   - [Troubleshooting recipes (self-help)](#troubleshooting-recipes-self-help)
   - [Contributors ✨](#contributors-)
-  - [Backers via OpenCollective](#backers-via-opencollective)
-  - [Sponsors via OpenCollective](#sponsors-via-opencollective)
-  - [Other Sponsors](#other-sponsors)
+  - [Backers via OpenCollective](#backers-via-open-collective)
+  - [Sponsors](#sponsors)
   </details>
 
 ## What is Ferdi?
@@ -272,164 +270,25 @@ Since we (the contributors to Ferdi) also eat our own dog food, we use Ferdi as 
 
 Thanks goes to these awesome people:
 
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tr>
-    <td align="center"><a href='https://vantezzen.io' title='Bennett: code, design, doc, ideas, translation, example, bug, content, infra, userTesting, question, projectManagement, review'><img src='https://avatars2.githubusercontent.com/u/10333196?v=4' alt='vantezzen' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://twitter.com/kytwb' title='Amine Mouafik: code, design, doc, ideas, bug, content, infra, userTesting, question, projectManagement, review, maintenance, platform, fundingFinding, blog, translation'><img src='https://avatars0.githubusercontent.com/u/412895?v=4' alt='kytwb' style='width:42px;'/></a></td>
-    <td align="center"><a href='http://www.adlk.io' title='Stefan Malzner: code, content, design, doc, ideas, infra, projectManagement, test, translation'><img src='https://avatars1.githubusercontent.com/u/3265004?v=4' alt='adlk' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/Makazzz' title='Makazzz: bug, code, translation, content, doc, platform'><img src='https://avatars2.githubusercontent.com/u/49844464?v=4' alt='Makazzz' style='width:42px;'/></a></td>
-    <td align="center"><a href='http://seriesgt.com' title='ZeroCool: code, ideas'><img src='https://avatars3.githubusercontent.com/u/5977640?v=4' alt='ZeroCool940711' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/rseitbekov' title='rseitbekov: code'><img src='https://avatars2.githubusercontent.com/u/35684439?v=4' alt='rseitbekov' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://djangogigs.com/developers/peter-bittner/' title='Peter Bittner: ideas, bug'><img src='https://avatars2.githubusercontent.com/u/665072?v=4' alt='bittner' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/justus-saul' title='Justus Saul: bug, ideas'><img src='https://avatars1.githubusercontent.com/u/5861826?v=4' alt='justus-saul' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/igreil' title='igreil: ideas'><img src='https://avatars0.githubusercontent.com/u/17239151?v=4' alt='igreil' style='width:42px;'/></a></td>
-    <td align="center"><a href='http://marcolopes.eu' title='Marco Lopes: ideas'><img src='https://avatars1.githubusercontent.com/u/431889?v=4' alt='marcolopes' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/dayzlun' title='dayzlun: bug'><img src='https://avatars3.githubusercontent.com/u/17259690?v=4' alt='dayzlun' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://twitter.com/tobigue_' title='Tobias Günther: ideas'><img src='https://avatars2.githubusercontent.com/u/1560152?v=4' alt='tobigue' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/AGCaesar' title='AGCaesar: platform'><img src='https://avatars3.githubusercontent.com/u/7844066?v=4' alt='AGCaesar' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/xthursdayx' title='xthursdayx: code, doc, infra, platform'><img src='https://avatars0.githubusercontent.com/u/18044308?v=4' alt='xthursdayx' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/Gaboris' title='Gaboris: question, bug'><img src='https://avatars2.githubusercontent.com/u/9462372?v=4' alt='Gaboris' style='width:42px;'/></a></td>
-    <td align="center"><a href='http://www.cu3ed.com/' title='Ce: bug'><img src='https://avatars1.githubusercontent.com/u/61343?v=4' alt='incace' style='width:42px;'/></a></td>
-  </tr>
-  <tr>
-    <td align="center"><a href='http://pztrn.name/' title='Stanislav N.: bug'><img src='https://avatars1.githubusercontent.com/u/869402?v=4' alt='pztrn' style='width:42px;'/></a></td>
-    <td align="center"><a href='http://www.patrickcurl.com' title='Patrick Curl: ideas'><img src='https://avatars1.githubusercontent.com/u/1470061?v=4' alt='patrickcurl' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/Stanzilla' title='Benjamin Staneck: design'><img src='https://avatars3.githubusercontent.com/u/75278?v=4' alt='Stanzilla' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/ammarmalhas' title='ammarmalhas: bug, security'><img src='https://avatars1.githubusercontent.com/u/57057209?v=4' alt='ammarmalhas' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/steliyan' title='Steliyan Stoyanov: code, ideas'><img src='https://avatars1.githubusercontent.com/u/1850292?v=4' alt='steliyan' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/brorbw' title='Bror Winther: doc'><img src='https://avatars2.githubusercontent.com/u/5909562?v=4' alt='brorbw' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://fwdekker.com/' title='Felix W. Dekker: doc'><img src='https://avatars0.githubusercontent.com/u/13442533?v=4' alt='FWDekker' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/Sauceee' title='Sauceee: design'><img src='https://avatars2.githubusercontent.com/u/17987941?v=4' alt='Sauceee' style='width:42px;'/></a></td>
-    <td align="center"><a href='http://lhw.ring0.de' title='Lennart Weller: platform'><img src='https://avatars2.githubusercontent.com/u/351875?v=4' alt='lhw' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/jereksel' title='Andrzej Ressel: code'><img src='https://avatars0.githubusercontent.com/u/1307829?v=4' alt='jereksel' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://gitlab.com/dpeukert' title='Daniel Peukert: code'><img src='https://avatars2.githubusercontent.com/u/3451904?v=4' alt='dpeukert' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/Ali_Shiple' title='Ali M. Shiple: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/12895436/small/00917d09ca1b4b6d8e0ef36af07ecf6b.jpg' alt='Ali_Shiple' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/elviseras' title='elviseras: translation'><img src='https://www.gravatar.com/avatar/25c2cf0d8cb4a4141e71c3b8a2e9324f' alt='elviseras' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/J370' title='J370: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14141203/small/7b12b5db419d8796450221c2eaaf6003.png' alt='J370' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/keunes' title='Koen: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/13018172/small/829115c606347b10218f34c637a2100c.png' alt='keunes' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/leandrogehlen' title='Leandro Gehlen: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14099621/small/1d9503523839c310dbce0af3c226e894.jpeg' alt='leandrogehlen' style='width:42px;'/></a></td>
-  </tr>
-  <tr>
-    <td align="center"><a href='https://crowdin.com/profile/Matthieu42' title='Matthieu42: translation'><img src='https://www.gravatar.com/avatar/735217ccccf11ba97573deee517ddb19' alt='Matthieu42' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/nicky18013' title='Nikita Bibanaev: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/13468928/small/2b31e7ac19645d950a79b33ffd5721b8.png' alt='nicky18013' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/Tatjana1998' title='Tatjana1998: translation'><img src='https://www.gravatar.com/avatar/ade202a04fcbb2c177e4f1d9936af29e' alt='Tatjana1998' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/seayko' title='tinect: translation'><img src='https://www.gravatar.com/avatar/65e2aef738ddf828f822d8463fd04918' alt='seayko' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/Pusnow' title='Wonsup Yoon: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/13514833/small/65f0b45587cc7e34f2827830cd324b16.jpeg' alt='Pusnow' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/zutt' title='zutt: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/13320003/small/50fdf9f8c7e54a446925bd79696ea625.JPG' alt='zutt' style='width:42px;'/></a></td>
-    <td align="center"><a href='http://twitter.com/noemis_exec' title='n0emis: code, translation'><img src='https://avatars3.githubusercontent.com/u/22817873?v=4' alt='n0emis' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://www.monke-agency.com/equipe.html' title='gmarec: code'><img src='https://avatars2.githubusercontent.com/u/3405028?v=4' alt='gmarec' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/127oo1' title='127oo1: translation'><img src='https://www.gravatar.com/avatar/060c722be11da16ae31902e9c98326b2' alt='127oo1' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/ChTBoner' title='ChTBoner: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/13273153/small/a810886febf5199cfa1c98644444dea7.jpeg' alt='ChTBoner' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/johanengstrand' title='Johan Engstrand: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14152801/small/fd395f120efca971ca9b34c57fd02cca.png' alt='johanengstrand' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://mrassili.com' title='Marouane R: code'><img src='https://avatars0.githubusercontent.com/u/25288435?v=4' alt='mrassili' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/yourcontact' title='Roman: code, ideas'><img src='https://avatars2.githubusercontent.com/u/46404814?v=4' alt='yourcontact' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/mahadevans87' title='Mahadevan Sreenivasan: code, ideas, review, bug, doc, userTesting'><img src='https://avatars1.githubusercontent.com/u/1255523?v=4' alt='mahadevans87' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://jakelee.co.uk' title='Jake Lee: content'><img src='https://avatars2.githubusercontent.com/u/12380876?v=4' alt='JakeSteam' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/sampathBlam' title='Sampath Kumar Krishnan: code, review, ideas, bug, doc, userTesting'><img src='https://avatars1.githubusercontent.com/u/17728976?v=4' alt='sampathBlam' style='width:42px;'/></a></td>
-  </tr>
-  <tr>
-    <td align="center"><a href='https://github.com/saruwman' title='saruwman: doc, code'><img src='https://avatars2.githubusercontent.com/u/41330038?v=4' alt='saruwman' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/dorukkarinca' title='dorukkarinca: bug'><img src='https://avatars0.githubusercontent.com/u/9303867?v=4' alt='dorukkarinca' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://www.linkedin.com/in/gautamsi' title='Gautam Singh: code'><img src='https://avatars2.githubusercontent.com/u/5769869?v=4' alt='gautamsi' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://feikojoosten.com' title='Feiko Joosten: code'><img src='https://avatars0.githubusercontent.com/u/10920052?v=4' alt='FeikoJoosten' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/2bdelghafour' title='2bdelghafour: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14219410/small/31ff20f60d352fb46e314f3c180a77b0.jpeg' alt='2bdelghafour' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/abdoutanta' title='Abderrahim Tantaoui: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14213908/small/5b2fc8166f8a0a2b7313fbf49ee5b6b6.jpeg' alt='abdoutanta' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/AndiLeni' title='AndiLeni: translation'><img src='https://www.gravatar.com/avatar/4bd0da860de38afa735425ce2d4e10b5' alt='AndiLeni' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/brunofalmada' title='Bruno Almada: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14200540/small/f6f1addceeeabc02488f9b08520a902f.jpeg' alt='brunofalmada' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/Catarino' title='Catarino Gonçalo: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14208802/small/07287eb2de671257ca3d6bb4ba1cca67.jpeg' alt='Catarino' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/Alzemand' title='Edilson Alzemand Sigmaringa Junior: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14184269/small/f5e68247f01988ae7951a282f0fd4d06.jpeg' alt='Alzemand' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/MAT-OUT' title='MAT-OUT: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14201550/small/68dd2402bf2879bc3ca312d627710400.png' alt='MAT-OUT' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/mazzo98' title='mazzo98: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/12864917/small/69799b5fd7be2f67282715d5cdfd4ae1.png' alt='mazzo98' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/paprika-naught-tiffin-flyspeck' title='paprika-naught-tiffin-flyspeck: translation'><img src='https://www.gravatar.com/avatar/8671ebe7a7164dfa7624fbdbff69ed96' alt='paprika-naught-tiffin-flyspeck' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/patrickvalle' title='Patrick Valle: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14217484/small/8b73f313ee79fe33625e819cdac86551.jpg' alt='patrickvalle' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/peq42' title='peq42_: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14155811/small/b62a94dde7ec29948ec6a6af9fd24b1d.png' alt='peq42' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/karlinhos' title='Pumbinha: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14161139/small/96450eb44c22b3141ab4401e547109b8.png' alt='karlinhos' style='width:42px;'/></a></td>
-  </tr>
-  <tr>
-    <td align="center"><a href='https://crowdin.com/profile/dies' title='Serhiy Dmytryshyn: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/1/small/e84bcdf6c084ffd52527931f988fb410.png' alt='dies' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/SMile61' title='SMile61: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14177585/small/1bb4f6ba39bff3df8f579e61460ce016.png' alt='SMile61' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/tinect' title='tinect: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/12521988/small/56c2041645746af9e51dd28782b828c3.jpeg' alt='tinect' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/gega7' title='gega7: bug'><img src='https://avatars0.githubusercontent.com/u/20799911?v=4' alt='gega7' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/tristanplouz' title='tristanplouz: code, ideas'><img src='https://avatars2.githubusercontent.com/u/6893466?v=4' alt='tristanplouz' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/dannyqiu' title='Danny Qiu: code, bug'><img src='https://avatars1.githubusercontent.com/u/1170755?v=4' alt='dannyqiu' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/belyazidi56' title='Youssef Belyazidi: code'><img src='https://avatars3.githubusercontent.com/u/35711540?v=4' alt='belyazidi56' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/gabspeck' title='Gabriel Speckhahn: platform'><img src='https://avatars2.githubusercontent.com/u/749488?v=4' alt='gabspeck' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/dandelionadia' title='Nadiia Ridko: code'><img src='https://avatars0.githubusercontent.com/u/33199975?v=4' alt='dandelionadia' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://hohner.dev' title='Jan Hohner: userTesting'><img src='https://avatars0.githubusercontent.com/u/649895?v=4' alt='janhohner' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://marussy.com' title='Kristóf Marussy: code, maintenance, review'><img src='https://avatars1.githubusercontent.com/u/38888?v=4' alt='kris7t' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://cl.linkedin.com/in/juanvalentinmoraruiz' title='Juan Mora: code'><img src='https://avatars0.githubusercontent.com/u/4575267?v=4' alt='raicerk' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://tofran.com' title='Francisco Marques: code'><img src='https://avatars2.githubusercontent.com/u/5692603?v=4' alt='tofran' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://digitalcoyote.github.io/NuGetDefense/' title='Curtis Carter: platform'><img src='https://avatars3.githubusercontent.com/u/16868093?v=4' alt='digitalcoyote' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/kawarimidoll' title='カワリミ人形: doc'><img src='https://avatars0.githubusercontent.com/u/8146876?v=4' alt='kawarimidoll' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://immortal-pc.info/' title='1mm0rt41PC: code'><img src='https://avatars0.githubusercontent.com/u/5358076?v=4' alt='1mm0rt41PC' style='width:42px;'/></a></td>
-  </tr>
-  <tr>
-    <td align="center"><a href='http://code-addict.pl' title='Michał Kostewicz: code'><img src='https://avatars.githubusercontent.com/u/6313392?v=4' alt='k0staa' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://www.linkedin.com/in/yogainformatika/' title='Yoga Setiawan: code, platform'><img src='https://avatars.githubusercontent.com/u/1139881?v=4' alt='arioki1' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/MosheGross' title='Moshe Gross: code'><img src='https://avatars.githubusercontent.com/u/77084755?v=4' alt='MosheGross' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/stnkl' title='Stephan Rumswinkel: code, bug'><img src='https://avatars.githubusercontent.com/u/17520641?v=4' alt='stnkl' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/vraravam' title='Vijay Raghavan Aravamudhan: maintenance, doc, code, mentoring, review, infra, ideas, bug, content, userTesting, projectManagement'><img src='https://avatars.githubusercontent.com/u/69629?v=4' alt='vraravam' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://dustin.meecolabs.eu/' title='Dustin: design'><img src='https://avatars.githubusercontent.com/u/124467?v=4' alt='alopix' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/jakobsudau' title='Jakob Felix Julius Sudau: design'><img src='https://avatars.githubusercontent.com/u/721715?v=4' alt='jakobsudau' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://prasans.info' title='Prasanna: code'><img src='https://avatars.githubusercontent.com/u/380340?v=4' alt='prasann' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/markandan' title='Markandan R: code'><img src='https://avatars.githubusercontent.com/u/7975763?v=4' alt='markandan' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://markushatvan.com' title='Markus Hatvan: code, ideas, design, review, infra'><img src='https://avatars.githubusercontent.com/u/16797721?v=4' alt='mhatvan' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://sergiu.dev/' title='Sergiu Ghitea: code'><img src='https://avatars.githubusercontent.com/u/28300158?v=4' alt='sergiughf' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/ArviTheMan' title='ArviTheMan: doc'><img src='https://avatars.githubusercontent.com/u/73516201?v=4' alt='ArviTheMan' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://bandism.net/' title='Ikko Ashimine: code'><img src='https://avatars.githubusercontent.com/u/22633385?v=4' alt='eltociear' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/madsmtm' title='Mads Marquart: translation'><img src='https://avatars.githubusercontent.com/u/10577181?v=4' alt='madsmtm' style='width:42px;'/></a></td>
-    <td align="center"><a href='http://mateusz.loskot.net/' title='Mateusz Łoskot: doc'><img src='https://avatars.githubusercontent.com/u/80741?v=4' alt='mloskot' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/skoshy' title='Stefan K: doc'><img src='https://avatars.githubusercontent.com/u/369825?v=4' alt='skoshy' style='width:42px;'/></a></td>
-  </tr>
-  <tr>
-    <td align="center"><a href='https://github.com/graves501' title='graves501: doc'><img src='https://avatars.githubusercontent.com/u/11211125?v=4' alt='graves501' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://www.ekino.com' title='Sadetdin EYILI: code, bug, userTesting'><img src='https://avatars.githubusercontent.com/u/5607440?v=4' alt='sad270' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/Tsakatac' title='Tsakatac: bug'><img src='https://avatars.githubusercontent.com/u/89021195?v=4' alt='Tsakatac' style='width:42px;'/></a></td>
-    <td align="center"><a href='http://niute.ch' title='niu tech: code'><img src='https://avatars.githubusercontent.com/u/384997?v=4' alt='niutech' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/Suvarna221B' title='Suvarna Sivadas: code'><img src='https://avatars.githubusercontent.com/u/31803071?v=4' alt='Suvarna221B' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/johan-mathew' title='Johan Mathew: code'><img src='https://avatars.githubusercontent.com/u/31700508?v=4' alt='johan-mathew' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/AjeshKumarS' title='Ajesh Kumar S: code'><img src='https://avatars.githubusercontent.com/u/31558237?v=4' alt='AjeshKumarS' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/sreelekhaMarasig' title='Ajesh Kumar S: code'><img src='https://avatars.githubusercontent.com/u/93112178?v=4' alt='sreelekhaMarasig' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/MadhuriBandanadam' title='Madhuri: code'><img src='https://avatars.githubusercontent.com/u/63137999?v=4' alt='MadhuriBandanadam' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/abinmn' title='Abin Mn: code'><img src='https://avatars.githubusercontent.com/u/29946484?v=4' alt='abinmn' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/AnjithPaul' title='Anjith Paul: code'><img src='https://avatars.githubusercontent.com/u/65152866?v=4' alt='AnjithPaul' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/Vishnu017' title='Vishnu017: code'><img src='https://avatars.githubusercontent.com/u/39431453?v=4' alt='Vishnu017' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/rachelcynthia' title='Rachel Cynthia V: code'><img src='https://avatars.githubusercontent.com/u/46859572?v=4' alt='rachelcynthia' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/Chandrika-Priya' title='Chandrika Priya Bogadi: code'><img src='https://avatars.githubusercontent.com/u/46720139?v=4' alt='Chandrika-Priya' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/Dee-Bajaj' title='Deepti: code'><img src='https://avatars.githubusercontent.com/u/66486870?v=4' alt='Dee-Bajaj' style='width:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/DarsiSreelekha' title='DarsiSreelekha: code'><img src='https://avatars.githubusercontent.com/u/89741061?v=4' alt='DarsiSreelekha' style='width:42px;'/></a></td>
-  </tr>
-</table>
-
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
+<a href="https://github.com/getferdi/ferdi/contributors" target="_blank"><img src="https://opencollective.com/getferdi/contributors.svg?width=890&button=off"></a>
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
 
-## Backers via OpenCollective
+## Backers via Open Collective
 
-<a href="https://opencollective.com/getferdi#section-contribute" target="_blank"><img src="https://opencollective.com/getferdi/backers.svg?width=890"></a>
+<a href="https://opencollective.com/getferdi#section-contribute" target="_blank"><img src="https://opencollective.com/getferdi/backers.svg?width=890&button=off"></a>
 
 Mention to the individuals backing us via [GitHub Sponsors](https://github.com/sponsors/getferdi) as well.
 
-## Sponsors via OpenCollective
-
-<a href="https://opencollective.com/getferdi#section-contribute" target="_blank"><img src="https://opencollective.com/getferdi/sponsors.svg?width=890"></a>
-
-## Other Sponsors
+## Sponsors
 
 <p>
   <a href="https://www.digitalocean.com/">
-    <img src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_horizontal_blue.svg" width="201px">
+    <img src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_horizontal_blue.svg" height="32px">
   </a>
 </p>
 <p>
   <a href="https://www.parallels.com/">
-    <img src="https://user-images.githubusercontent.com/412895/87706297-3025e380-c797-11ea-94c4-bf8414b0b5ab.png" height="32px">
+    <img src="https://user-images.githubusercontent.com/412895/141497533-f5e4a0b2-6ffa-4642-aa39-c117f7705780.png" height="32px">
   </a>
 </p>
