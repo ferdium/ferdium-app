@@ -204,7 +204,7 @@
     "webpack-dev-server": "^3.11.2"
   },
   "optionalDependencies": {
-    "node-mac-permissions": "^2.2.0"
+    "node-mac-permissions": "git@github.com:vraravam/node-mac-permissions.git#5a3dcf67c506a423873f9d00f8f39b43d23aaa41"
   },
   "config": {
     "commitizen": {
