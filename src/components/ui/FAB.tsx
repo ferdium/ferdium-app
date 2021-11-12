@@ -23,8 +23,6 @@ class Button extends Component<Props> {
     htmlForm: '',
   };
 
-  element = null;
-
   render() {
     const { className, disabled, onClick, type, children, htmlForm } =
       this.props;

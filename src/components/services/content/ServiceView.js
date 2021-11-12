@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 import { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { autorun } from 'mobx';
@@ -64,17 +65,6 @@ class ServiceView extends Component {
     clearTimeout(this.forceRepaintTimeout);
     clearTimeout(this.hibernationTimer);
   }
-
-  updateTargetUrl = event => {
-    let visible = true;
-    if (event.url === '' || event.url === '#') {
-      visible = false;
-    }
-    this.setState({
-      targetUrl: event.url,
-      statusBarVisible: visible,
-    });
-  };
 
   render() {
     const {

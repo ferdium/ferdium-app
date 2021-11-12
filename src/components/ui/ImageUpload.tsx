@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { observer } from 'mobx-react';
 import { Field } from 'mobx-react-form';
 import classnames from 'classnames';
-import Dropzone, { DropzoneRef } from 'react-dropzone';
+import Dropzone from 'react-dropzone';
 import { mdiDelete, mdiFileImage } from '@mdi/js';
 import { isWindows } from '../../environment';
 import { Icon } from './icon';
@@ -24,8 +24,6 @@ class ImageUpload extends Component<Props> {
   state = {
     path: null,
   };
-
-  dropzoneRef: DropzoneRef | null = null;
 
   onDrop(acceptedFiles) {
     const { field } = this.props;
@@ -85,9 +83,6 @@ class ImageUpload extends Component<Props> {
             </>
           ) : (
             <Dropzone
-              ref={node => {
-                this.dropzoneRef = node;
-              }}
               onDrop={this.onDrop.bind(this)}
               multiple={multiple}
               accept="image/jpeg, image/png, image/svg+xml"

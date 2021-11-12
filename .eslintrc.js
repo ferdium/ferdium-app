@@ -82,6 +82,7 @@ module.exports = {
         'react/sort-comp': 0,
         'react/state-in-constructor': 0,
         'react/static-property-placement': 0,
+        'react/function-component-definition': 0,
         //  eslint-plugin-jsx-a11y
         'jsx-a11y/click-events-have-key-events': 1,
         'jsx-a11y/mouse-events-have-key-events': 1,
@@ -165,6 +166,7 @@ module.exports = {
     'react/static-property-placement': 0,
     'react/state-in-constructor': 1,
     'react/sort-comp': 0,
+    'react/function-component-definition': 0,
     //  eslint-plugin-jsx-a11y
     'jsx-a11y/click-events-have-key-events': 1,
     'jsx-a11y/no-static-element-interactions': 1,

@@ -1,7 +1,6 @@
-import { DEFAULT_ACCENT_COLOR } from '../../config';
-
 /* legacy config, injected into sass */
-export const themeBrandPrimary = DEFAULT_ACCENT_COLOR;
+export { DEFAULT_ACCENT_COLOR as themeBrandPrimary } from '../../config';
+
 export const themeBrandSuccess = '#5cb85c';
 export const themeBrandInfo = '#5bc0de';
 export const themeBrandWarning = '#FF9F00';

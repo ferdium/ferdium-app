@@ -1,3 +1,4 @@
+/* eslint-disable import/no-import-module-exports */
 /* eslint-disable global-require */
 import { APP_LOCALES } from './languages';
 

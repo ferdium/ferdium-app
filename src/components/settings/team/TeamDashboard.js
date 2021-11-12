@@ -136,40 +136,34 @@ class TeamDashboard extends Component {
               </Infobox>
             )}
 
-            {!userInfoRequestFailed && (
+            {!userInfoRequestFailed && !isLoading && (
               <>
-                {!isLoading && (
-                  <>
-                    <>
-                      <h1
-                        className={classnames({
-                          [classes.headline]: true,
-                          [classes.headlineWithSpacing]: true,
-                        })}
-                      >
-                        {intl.formatMessage(messages.contentHeadline)}
-                      </h1>
-                      <div className={classes.container}>
-                        <div className={classes.content}>
-                          <p>{intl.formatMessage(messages.intro)}</p>
-                          <p>{intl.formatMessage(messages.copy)}</p>
-                        </div>
-                        <img
-                          className={classes.image}
-                          src="https://cdn.franzinfra.com/announcements/assets/teams.png"
-                          alt="Ferdi for Teams"
-                        />
-                      </div>
-                      <div className={classes.buttonContainer}>
-                        <Button
-                          label={intl.formatMessage(messages.manageButton)}
-                          onClick={openTeamManagement}
-                          className={classes.cta}
-                        />
-                      </div>
-                    </>
-                  </>
-                )}
+                <h1
+                  className={classnames({
+                    [classes.headline]: true,
+                    [classes.headlineWithSpacing]: true,
+                  })}
+                >
+                  {intl.formatMessage(messages.contentHeadline)}
+                </h1>
+                <div className={classes.container}>
+                  <div className={classes.content}>
+                    <p>{intl.formatMessage(messages.intro)}</p>
+                    <p>{intl.formatMessage(messages.copy)}</p>
+                  </div>
+                  <img
+                    className={classes.image}
+                    src="https://cdn.franzinfra.com/announcements/assets/teams.png"
+                    alt="Ferdi for Teams"
+                  />
+                </div>
+                <div className={classes.buttonContainer}>
+                  <Button
+                    label={intl.formatMessage(messages.manageButton)}
+                    onClick={openTeamManagement}
+                    className={classes.cta}
+                  />
+                </div>
               </>
             )}
           </div>

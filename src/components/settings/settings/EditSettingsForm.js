@@ -412,10 +412,8 @@ class EditSettingsForm extends Component {
 
                 <Hr />
 
-                <>
-                  <Toggle field={form.$('keepAllWorkspacesLoaded')} />
-                  <Hr />
-                </>
+                <Toggle field={form.$('keepAllWorkspacesLoaded')} />
+                <Hr />
 
                 {!hasAddedTodosAsService && (
                   <>

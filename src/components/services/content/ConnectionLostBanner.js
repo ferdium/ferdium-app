@@ -1,4 +1,4 @@
-import { createRef, Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import injectSheet from 'react-jss';
@@ -76,8 +76,6 @@ class ConnectionLostBanner extends Component {
     name: PropTypes.string.isRequired,
     reload: PropTypes.func.isRequired,
   };
-
-  inputRef = createRef();
 
   render() {
     const { classes, name, reload } = this.props;

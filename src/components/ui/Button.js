@@ -35,8 +35,6 @@ class Button extends Component {
     htmlForm: '',
   };
 
-  element = null;
-
   render() {
     const {
       label,

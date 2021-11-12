@@ -105,8 +105,6 @@ class Login extends Component {
     this.props.intl,
   );
 
-  emailField = null;
-
   submit(e) {
     e.preventDefault();
     this.form.submit({
@@ -155,13 +153,7 @@ class Login extends Component {
               {intl.formatMessage(messages.serverLogout)}
             </p>
           )}
-          <Input
-            field={form.$('email')}
-            ref={element => {
-              this.emailField = element;
-            }}
-            focus
-          />
+          <Input field={form.$('email')} focus />
           <Input field={form.$('password')} showPasswordToggle />
           {error.code === 'invalid-credentials' && (
             <>

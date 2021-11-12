@@ -23,10 +23,6 @@ class ServiceDisabled extends Component {
     enable: PropTypes.func.isRequired,
   };
 
-  countdownInterval = null;
-
-  countdownIntervalTimeout = 1000;
-
   render() {
     const { name, enable } = this.props;
     const { intl } = this.props;

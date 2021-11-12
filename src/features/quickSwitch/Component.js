@@ -99,8 +99,6 @@ class QuickSwitchModal extends Component {
 
   ARROW_UP = 38;
 
-  SHIFT = 16;
-
   ENTER = 13;
 
   TAB = 9;
