@@ -6,10 +6,6 @@ import Store from './lib/Store';
 import { isMac, isWindows } from '../environment';
 
 export default class UIStore extends Store {
-  actions: any;
-
-  stores: any;
-
   @observable showServicesUpdatedInfoBar = false;
 
   @observable isOsDarkThemeActive = nativeTheme.shouldUseDarkColors;
