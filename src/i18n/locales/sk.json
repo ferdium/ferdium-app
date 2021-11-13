@@ -242,6 +242,7 @@
   "settings.app.form.showDragArea": "Zobraziť oblasť, za ktorú možno ťahať v okne",
   "settings.app.form.showMessagesBadgesWhenMuted": "Zobraziť symbol pre neprečítané správy, keď sú vypnuté upozornenia",
   "settings.app.form.showServiceName": "Zobraziť názov služby pod ikonou",
+  "settings.app.form.splitColumns": "Number of columns",
   "settings.app.form.splitMode": "Povoliť režim Split View",
   "settings.app.form.startMinimized": "Spúšťať minimalizované",
   "settings.app.form.universalDarkMode": "Použiť univerzálny tmavý režim",

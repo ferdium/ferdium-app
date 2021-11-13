@@ -242,6 +242,7 @@
   "settings.app.form.showDragArea": "Sleepbaar gebied in venster tonen",
   "settings.app.form.showMessagesBadgesWhenMuted": "Toon badge met ongelezen berichten wanneer meldingen zijn uitgeschakeld",
   "settings.app.form.showServiceName": "Servicenaam onder pictogram weergeven",
+  "settings.app.form.splitColumns": "Number of columns",
   "settings.app.form.splitMode": "Gesplitste weergave inschakelen",
   "settings.app.form.startMinimized": "Geminimaliseerd starten",
   "settings.app.form.universalDarkMode": "Universele donkere modus inschakelen",

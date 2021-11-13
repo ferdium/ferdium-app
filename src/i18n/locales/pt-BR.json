@@ -242,6 +242,7 @@
   "settings.app.form.showDragArea": "Mostrar área arrastável na janela",
   "settings.app.form.showMessagesBadgesWhenMuted": "Apresentar emblema com o número de mensagens não lidas quando as notificações estão desativadas",
   "settings.app.form.showServiceName": "Exibir o nome do serviço abaixo do ícone",
+  "settings.app.form.splitColumns": "Number of columns",
   "settings.app.form.splitMode": "Ativar modo de visualização dividida",
   "settings.app.form.startMinimized": "Iniciar minimizado",
   "settings.app.form.universalDarkMode": "Habilitar modo noturno universal",

@@ -242,6 +242,7 @@
   "settings.app.form.showDragArea": "Show draggable area on window",
   "settings.app.form.showMessagesBadgesWhenMuted": "Покажи беџ за непрочитане поруке када су обавештења онемогућена",
   "settings.app.form.showServiceName": "Display service name under the icon",
+  "settings.app.form.splitColumns": "Number of columns",
   "settings.app.form.splitMode": "Enable Split View Mode",
   "settings.app.form.startMinimized": "Start minimized",
   "settings.app.form.universalDarkMode": "Enable universal Dark Mode",

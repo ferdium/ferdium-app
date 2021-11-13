@@ -242,6 +242,7 @@
   "settings.app.form.showDragArea": "Show draggable area on window",
   "settings.app.form.showMessagesBadgesWhenMuted": "Mutassa az 'olvasatlan üzenet' jelzést, amikor az értesítések le vannak tiltva",
   "settings.app.form.showServiceName": "Display service name under the icon",
+  "settings.app.form.splitColumns": "Number of columns",
   "settings.app.form.splitMode": "Enable Split View Mode",
   "settings.app.form.startMinimized": "Indítás minimalizálva",
   "settings.app.form.universalDarkMode": "Enable universal Dark Mode",

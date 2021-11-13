@@ -242,6 +242,7 @@
   "settings.app.form.showDragArea": "Mostra area trascinabile nella finestra",
   "settings.app.form.showMessagesBadgesWhenMuted": "Mostra l'etichetta dei messaggi non letti quando le notifiche sono disattivate",
   "settings.app.form.showServiceName": "Mostra il nome del servizio sotto all'icona",
+  "settings.app.form.splitColumns": "Number of columns",
   "settings.app.form.splitMode": "Abilità la modalità split view",
   "settings.app.form.startMinimized": "Avvio ridotto a icona",
   "settings.app.form.universalDarkMode": "Abilita la modalità scura universale",

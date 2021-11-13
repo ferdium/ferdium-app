@@ -242,6 +242,7 @@
   "settings.app.form.showDragArea": "Show draggable area on window",
   "settings.app.form.showMessagesBadgesWhenMuted": "Показувати значок непрочитаних повідомлень коли сповіщення вимкнені",
   "settings.app.form.showServiceName": "Display service name under the icon",
+  "settings.app.form.splitColumns": "Number of columns",
   "settings.app.form.splitMode": "Enable Split View Mode",
   "settings.app.form.startMinimized": "Запускати згорнутим",
   "settings.app.form.universalDarkMode": "Увімкнути універсальний темний режим",
