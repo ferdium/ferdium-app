@@ -1103,6 +1103,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "klaegera",
+      "name": "Adrian Klaeger",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34807567?v=4",
+      "profile": "https://github.com/klaegera",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 16,
