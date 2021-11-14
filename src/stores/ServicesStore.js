@@ -587,7 +587,10 @@ export default class ServicesStore extends Store {
     const service = this.one(serviceId);
 
     for (const s of this.all) {
-      s.isActive = false;
+      if (s.isActive) {
+        s.lastUsed = Date.now();
+        s.isActive = false;
+      }
     }
     service.isActive = true;
     this._awake({ serviceId: service.id });
@@ -624,12 +627,7 @@ export default class ServicesStore extends Store {
       this.allDisplayed.length,
     );
 
-    for (const s of this.all) {
-      s.isActive = false;
-    }
-    this.allDisplayed[nextIndex].isActive = true;
-
-    this._focusActiveService();
+    this._setActive({ serviceId: this.allDisplayed[nextIndex].id });
   }
 
   @action _setActivePrev() {
@@ -639,12 +637,7 @@ export default class ServicesStore extends Store {
       this.allDisplayed.length,
     );
 
-    for (const s of this.all) {
-      s.isActive = false;
-    }
-    this.allDisplayed[prevIndex].isActive = true;
-
-    this._focusActiveService();
+    this._setActive({ serviceId: this.allDisplayed[prevIndex].id });
   }
 
   @action _setUnreadMessageCount({ serviceId, count }) {
