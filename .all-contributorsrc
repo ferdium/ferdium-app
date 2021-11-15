@@ -1114,6 +1114,16 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "martinbernat",
+      "name": "martinbernat",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6809891?v=4",
+      "profile": "https://github.com/martinbernat",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 16,
