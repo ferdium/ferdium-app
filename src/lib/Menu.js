@@ -1,5 +1,5 @@
 import { clipboard } from 'electron';
-import { app, Menu, dialog, systemPreferences } from '@electron/remote';
+import { app, Menu, dialog, systemPreferences, getCurrentWindow } from '@electron/remote';
 import { autorun, observable } from 'mobx';
 import { defineMessages } from 'react-intl';
 import {
@@ -950,8 +950,8 @@ class FranzMenu {
         click: () => {
           this.actions.service.setActive({ serviceId: service.id });
 
-          if (isMac && i === 0) {
-            app.mainWindow.restore();
+          if (isMac && i === 0) { // feat(Mac): Open Window with Cmd+1
+            getCurrentWindow().restore();
           }
         },
       });

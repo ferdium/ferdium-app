@@ -322,10 +322,11 @@ export default class AppStore extends Store {
         this.actions.service.setActive({
           serviceId,
         });
-        if (!app.mainWindow.isVisible()) {
+
+        if (!mainWindow.isVisible()) {
           mainWindow.show();
         }
-        if (app.mainWindow.isMinimized()) {
+        if (mainWindow.isMinimized()) {
           mainWindow.restore();
         }
         mainWindow.focus();
