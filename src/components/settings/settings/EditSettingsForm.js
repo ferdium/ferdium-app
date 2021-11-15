@@ -551,7 +551,7 @@ class EditSettingsForm extends Component {
                     type="number"
                     min={SPLIT_COLUMNS_MIN}
                     max={SPLIT_COLUMNS_MAX}
-                    placeholder={intl.formatMessage(messages.numberOfColumns)}
+                    placeholder={`${SPLIT_COLUMNS_MIN}-${SPLIT_COLUMNS_MAX}`}
                     onChange={e => this.submit(e)}
                     field={form.$('splitColumns')}
                   />

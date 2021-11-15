@@ -20,6 +20,8 @@ import {
   DEFAULT_SETTING_KEEP_ALL_WORKSPACES_LOADED,
   DEFAULT_IS_FEATURE_ENABLED_BY_USER,
   WAKE_UP_STRATEGIES,
+  SPLIT_COLUMNS_MIN,
+  SPLIT_COLUMNS_MAX,
 } from '../../config';
 import { isMac } from '../../environment';
 
@@ -619,7 +621,7 @@ class EditSettingsScreen extends Component {
           default: DEFAULT_APP_SETTINGS.splitMode,
         },
         splitColumns: {
-          label: intl.formatMessage(messages.splitColumns),
+          label: `${intl.formatMessage(messages.splitColumns)} (${SPLIT_COLUMNS_MIN}-${SPLIT_COLUMNS_MAX})`,
           value: settings.all.app.splitColumns,
           default: DEFAULT_APP_SETTINGS.splitColumns,
         },
