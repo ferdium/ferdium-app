@@ -182,6 +182,7 @@ class EditServiceForm extends Component {
           this.setState({ isValidatingCustomUrl: true });
           try {
             values.customUrl = normalizeUrl(values.customUrl, {
+              stripAuthentication: false,
               stripWWW: false,
               removeTrailingSlash: false,
             });
