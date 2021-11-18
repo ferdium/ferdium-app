@@ -31,11 +31,13 @@ class ServiceWebview extends Component {
             debug('Service logged a message:', e.message);
           });
           this.webview.view.addEventListener('did-navigate', () => {
-            document.title = `Ferdi - ${this.props.service.name} ${
-              this.props.service.dialogTitle
-                ? ` - ${this.props.service.dialogTitle}`
-                : ''
-            } ${`- ${this.props.service._webview.getTitle()}`}`;
+            if (this.props.service._webview) {
+              document.title = `Ferdi - ${this.props.service.name} ${
+                this.props.service.dialogTitle
+                  ? ` - ${this.props.service.dialogTitle}`
+                  : ''
+              } ${`- ${this.props.service._webview.getTitle()}`}`;
+            }
           });
         }
       },

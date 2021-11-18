@@ -5,6 +5,14 @@ import { pathExistsSync, readFileSync, existsSync } from 'fs-extra';
 const debug = require('debug')('Ferdi:Plugin:RecipeWebview');
 
 class RecipeWebview {
+  badgeHandler: any;
+
+  dialogTitleHandler: any;
+
+  notificationsHandler: any;
+
+  sessionHandler: any;
+
   constructor(
     badgeHandler,
     dialogTitleHandler,
@@ -97,9 +105,12 @@ class RecipeWebview {
         const styles = document.createElement('style');
         styles.innerHTML = readFileSync(file, 'utf8');
 
-        document.querySelector('head').append(styles);
+        const head = document.querySelector('head');
 
-        debug('Append styles', styles);
+        if (head) {
+          head.append(styles);
+          debug('Append styles', styles);
+        }
       }
     });
   }

@@ -1,16 +1,24 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, ReactNode } from 'react';
 import { inject, observer } from 'mobx-react';
 import { IntlProvider } from 'react-intl';
 
-import { oneOrManyChildElements } from './prop-types';
-import translations from './i18n/translations';
+import { generatedTranslations } from './i18n/translations';
 import UserStore from './stores/UserStore';
 import AppStore from './stores/AppStore';
 
+const translations = generatedTranslations();
+
+type Props = {
+  stores: {
+    app: typeof AppStore;
+    user: typeof UserStore;
+  };
+  children: ReactNode;
+};
+
 @inject('stores')
 @observer
-class I18N extends Component {
+class I18N extends Component<Props> {
   componentDidUpdate() {
     window['ferdi'].menu.rebuild();
   }
@@ -30,13 +38,5 @@ class I18N extends Component {
     );
   }
 }
-
-I18N.wrappedComponent.propTypes = {
-  stores: PropTypes.shape({
-    app: PropTypes.instanceOf(AppStore).isRequired,
-    user: PropTypes.instanceOf(UserStore).isRequired,
-  }).isRequired,
-  children: oneOrManyChildElements.isRequired,
-};
 
 export default I18N;

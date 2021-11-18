@@ -26,7 +26,7 @@ export class CommunityRecipesStore extends FeatureStore {
       (recipePreview: { isDevRecipe: boolean; author: any[] }) => {
         // TODO: Need to figure out if this is even necessary/used
         recipePreview.isDevRecipe = !!recipePreview.author.some(
-          (author: { email: any }) =>
+          (author: { email: string }) =>
             author.email === this.stores.user.data.email,
         );
 

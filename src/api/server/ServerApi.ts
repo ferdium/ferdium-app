@@ -11,6 +11,7 @@ import {
   pathExistsSync,
   readJsonSync,
   removeSync,
+  PathOrFileDescriptor,
 } from 'fs-extra';
 import fetch from 'electron-fetch';
 
@@ -40,12 +41,12 @@ const debug = require('debug')('Ferdi:ServerApi');
 module.paths.unshift(getDevRecipeDirectory(), getRecipeDirectory());
 
 export default class ServerApi {
-  recipePreviews = [];
+  recipePreviews: any[] = [];
 
-  recipes = [];
+  recipes: any[] = [];
 
   // User
-  async login(email, passwordHash) {
+  async login(email: string, passwordHash: string) {
     const request = await sendAuthRequest(
       `${apiBase()}/auth/login`,
       {
@@ -57,7 +58,7 @@ export default class ServerApi {
       false,
     );
     if (!request.ok) {
-      throw request;
+      throw new Error(request.statusText);
     }
     const u = await request.json();
 
@@ -65,7 +66,7 @@ export default class ServerApi {
     return u.token;
   }
 
-  async signup(data) {
+  async signup(data: any) {
     const request = await sendAuthRequest(
       `${apiBase()}/auth/signup`,
       {
@@ -75,7 +76,7 @@ export default class ServerApi {
       false,
     );
     if (!request.ok) {
-      throw request;
+      throw new Error(request.statusText);
     }
     const u = await request.json();
 
@@ -83,20 +84,20 @@ export default class ServerApi {
     return u.token;
   }
 
-  async inviteUser(data) {
+  async inviteUser(data: any) {
     const request = await sendAuthRequest(`${apiBase()}/invite`, {
       method: 'POST',
       body: JSON.stringify(data),
     });
     if (!request.ok) {
-      throw request;
+      throw new Error(request.statusText);
     }
 
     debug('ServerApi::inviteUser');
     return true;
   }
 
-  async retrievePassword(email) {
+  async retrievePassword(email: string) {
     const request = await sendAuthRequest(
       `${apiBase()}/auth/password`,
       {
@@ -108,7 +109,7 @@ export default class ServerApi {
       false,
     );
     if (!request.ok) {
-      throw request;
+      throw new Error(request.statusText);
     }
     const r = await request.json();
 
@@ -123,7 +124,7 @@ export default class ServerApi {
 
     const request = await sendAuthRequest(`${apiBase()}/me`);
     if (!request.ok) {
-      throw request;
+      throw new Error(request.statusText);
     }
     const data = await request.json();
 
@@ -133,13 +134,13 @@ export default class ServerApi {
     return user;
   }
 
-  async updateUserInfo(data) {
+  async updateUserInfo(data: any) {
     const request = await sendAuthRequest(`${apiBase()}/me`, {
       method: 'PUT',
       body: JSON.stringify(data),
     });
     if (!request.ok) {
-      throw request;
+      throw new Error(request.statusText);
     }
     const updatedData = await request.json();
 
@@ -155,7 +156,7 @@ export default class ServerApi {
       method: 'DELETE',
     });
     if (!request.ok) {
-      throw request;
+      throw new Error(request.statusText);
     }
     const data = await request.json();
 
@@ -171,7 +172,7 @@ export default class ServerApi {
 
     const request = await sendAuthRequest(`${apiBase()}/me/services`);
     if (!request.ok) {
-      throw request;
+      throw new Error(request.statusText);
     }
     const data = await request.json();
 
@@ -181,13 +182,13 @@ export default class ServerApi {
     return filteredServices;
   }
 
-  async createService(recipeId, data) {
+  async createService(recipeId: string, data: { iconFile: any }) {
     const request = await sendAuthRequest(`${apiBase()}/service`, {
       method: 'POST',
       body: JSON.stringify({ recipeId, ...data }),
     });
     if (!request.ok) {
-      throw request;
+      throw new Error(request.statusText);
     }
     const serviceData = await request.json();
 
@@ -208,7 +209,7 @@ export default class ServerApi {
     return service;
   }
 
-  async updateService(serviceId, rawData) {
+  async updateService(serviceId: string, rawData: any) {
     const data = rawData;
 
     if (data.iconFile) {
@@ -221,7 +222,7 @@ export default class ServerApi {
     });
 
     if (!request.ok) {
-      throw request;
+      throw new Error(request.statusText);
     }
 
     const serviceData = await request.json();
@@ -234,12 +235,13 @@ export default class ServerApi {
     return service;
   }
 
-  async uploadServiceIcon(serviceId, icon) {
+  async uploadServiceIcon(serviceId: string, icon: string | Blob) {
     const formData = new FormData();
     formData.append('icon', icon);
 
     const requestData = prepareAuthRequest({
       method: 'PUT',
+      // @ts-expect-error Argument of type '{ method: string; body: FormData; }' is not assignable to parameter of type '{ method: string; }'.
       body: formData,
     });
 
@@ -247,11 +249,12 @@ export default class ServerApi {
 
     const request = await window.fetch(
       `${apiBase()}/service/${serviceId}`,
+      // @ts-expect-error Argument of type '{ method: string; } & { mode: string; headers: any; }' is not assignable to parameter of type 'RequestInit | undefined'.
       requestData,
     );
 
     if (!request.ok) {
-      throw request;
+      throw new Error(request.statusText);
     }
 
     const serviceData = await request.json();
@@ -259,25 +262,25 @@ export default class ServerApi {
     return serviceData.data;
   }
 
-  async reorderService(data) {
+  async reorderService(data: any) {
     const request = await sendAuthRequest(`${apiBase()}/service/reorder`, {
       method: 'PUT',
       body: JSON.stringify(data),
     });
     if (!request.ok) {
-      throw request;
+      throw new Error(request.statusText);
     }
     const serviceData = await request.json();
     debug('ServerApi::reorderService resolves', serviceData);
     return serviceData;
   }
 
-  async deleteService(id) {
+  async deleteService(id: string) {
     const request = await sendAuthRequest(`${apiBase()}/service/${id}`, {
       method: 'DELETE',
     });
     if (!request.ok) {
-      throw request;
+      throw new Error(request.statusText);
     }
     const data = await request.json();
 
@@ -291,7 +294,7 @@ export default class ServerApi {
   async getDefaultFeatures() {
     const request = await sendAuthRequest(`${apiBase()}/features/default`);
     if (!request.ok) {
-      throw request;
+      throw new Error(request.statusText);
     }
     const data = await request.json();
 
@@ -307,7 +310,7 @@ export default class ServerApi {
 
     const request = await sendAuthRequest(`${apiBase()}/features`);
     if (!request.ok) {
-      throw request;
+      throw new Error(request.statusText);
     }
     const data = await request.json();
 
@@ -341,13 +344,13 @@ export default class ServerApi {
     return this.recipes;
   }
 
-  async getRecipeUpdates(recipeVersions) {
+  async getRecipeUpdates(recipeVersions: any) {
     const request = await sendAuthRequest(`${apiBase()}/recipes/update`, {
       method: 'POST',
       body: JSON.stringify(recipeVersions),
     });
     if (!request.ok) {
-      throw request;
+      throw new Error(request.statusText);
     }
     const recipes = await request.json();
     debug('ServerApi::getRecipeUpdates resolves', recipes);
@@ -357,7 +360,7 @@ export default class ServerApi {
   // Recipes Previews
   async getRecipePreviews() {
     const request = await sendAuthRequest(`${apiBase()}/recipes`);
-    if (!request.ok) throw request;
+    if (!request.ok) throw new Error(request.statusText);
     const data = await request.json();
     const recipePreviews = this._mapRecipePreviewModel(data);
     debug('ServerApi::getRecipes resolves', recipePreviews);
@@ -367,7 +370,7 @@ export default class ServerApi {
   async getFeaturedRecipePreviews() {
     // TODO: If we are hitting the internal-server, we need to return an empty list, else we can hit the remote server and get the data
     const request = await sendAuthRequest(`${apiBase()}/recipes/popular`);
-    if (!request.ok) throw request;
+    if (!request.ok) throw new Error(request.statusText);
 
     const data = await request.json();
     const recipePreviews = this._mapRecipePreviewModel(data);
@@ -375,10 +378,10 @@ export default class ServerApi {
     return recipePreviews;
   }
 
-  async searchRecipePreviews(needle) {
+  async searchRecipePreviews(needle: string) {
     const url = `${apiBase()}/recipes/search?needle=${needle}`;
     const request = await sendAuthRequest(url);
-    if (!request.ok) throw request;
+    if (!request.ok) throw new Error(request.statusText);
 
     const data = await request.json();
     const recipePreviews = this._mapRecipePreviewModel(data);
@@ -386,7 +389,7 @@ export default class ServerApi {
     return recipePreviews;
   }
 
-  async getRecipePackage(recipeId) {
+  async getRecipePackage(recipeId: string) {
     try {
       const recipesDirectory = userDataRecipesPath();
       const recipeTempDirectory = join(recipesDirectory, 'temp', recipeId);
@@ -396,7 +399,7 @@ export default class ServerApi {
 
       ensureDirSync(recipeTempDirectory);
 
-      let archivePath;
+      let archivePath: PathOrFileDescriptor;
 
       if (pathExistsSync(internalRecipeFile)) {
         debug('[ServerApi::getRecipePackage] Using internal recipe file');
@@ -416,6 +419,7 @@ export default class ServerApi {
 
       await sleep(10);
 
+      // @ts-expect-error No overload matches this call.
       await tar.x({
         file: archivePath,
         cwd: recipeTempDirectory,
@@ -455,7 +459,7 @@ export default class ServerApi {
       false,
     );
     if (!request.ok) {
-      throw request;
+      throw new Error(request.statusText);
     }
     debug('ServerApi::healthCheck resolves');
   }
@@ -468,7 +472,7 @@ export default class ServerApi {
 
       if (Object.prototype.hasOwnProperty.call(config, 'services')) {
         const services = await Promise.all(
-          config.services.map(async s => {
+          config.services.map(async (s: { service: any }) => {
             const service = s;
             const request = await sendAuthRequest(
               `${apiBase()}/recipes/${s.service}`,
@@ -476,6 +480,7 @@ export default class ServerApi {
 
             if (request.status === 200) {
               const data = await request.json();
+              // @ts-expect-error Property 'recipe' does not exist on type '{ service: any; }'.
               service.recipe = new RecipePreviewModel(data);
             }
 
@@ -494,18 +499,18 @@ export default class ServerApi {
   }
 
   // Helper
-  async _mapServiceModels(services) {
-    const recipes = services.map(s => s.recipeId);
+  async _mapServiceModels(services: any[]) {
+    const recipes = services.map((s: { recipeId: string }) => s.recipeId);
     await this._bulkRecipeCheck(recipes);
     /* eslint-disable no-return-await */
     return Promise.all(
-      services.map(async service => await this._prepareServiceModel(service)),
+      services.map(async (service: any) => this._prepareServiceModel(service)),
     );
     /* eslint-enable no-return-await */
   }
 
-  async _prepareServiceModel(service) {
-    let recipe;
+  async _prepareServiceModel(service: { recipeId: string }) {
+    let recipe: undefined;
     try {
       recipe = this.recipes.find(r => r.id === service.recipeId);
 
@@ -521,14 +526,15 @@ export default class ServerApi {
     }
   }
 
-  async _bulkRecipeCheck(unfilteredRecipes) {
+  async _bulkRecipeCheck(unfilteredRecipes: any[]) {
     // Filter recipe duplicates as we don't need to download 3 Slack recipes
     const recipes = unfilteredRecipes.filter(
-      (elem, pos, arr) => arr.indexOf(elem) === pos,
+      (elem: any, pos: number, arr: string | any[]) =>
+        arr.indexOf(elem) === pos,
     );
 
     return Promise.all(
-      recipes.map(async recipeId => {
+      recipes.map(async (recipeId: string) => {
         let recipe = this.recipes.find(r => r.id === recipeId);
 
         if (!recipe) {
@@ -554,7 +560,7 @@ export default class ServerApi {
     ).catch(error => console.error("Can't load recipe", error));
   }
 
-  _mapRecipePreviewModel(recipes) {
+  _mapRecipePreviewModel(recipes: any[]) {
     return recipes
       .map(recipe => {
         try {

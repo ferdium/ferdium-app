@@ -31,7 +31,7 @@ export const prepareAuthRequest = (
 
 export const sendAuthRequest = (
   url: RequestInfo,
-  options: { method: string } | undefined,
+  options?: { method: string; headers?: any; body?: any },
   auth?: boolean,
 ) =>
   // @ts-expect-error Argument of type '{ method: string; } & { mode: string; headers: any; }' is not assignable to parameter of type 'RequestInit | undefined'.

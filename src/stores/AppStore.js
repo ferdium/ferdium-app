@@ -19,7 +19,7 @@ import Request from './lib/Request';
 import { CHECK_INTERVAL, DEFAULT_APP_SETTINGS } from '../config';
 import { isMac, electronVersion, osRelease } from '../environment';
 import { ferdiVersion, userDataPath, ferdiLocale } from '../environment-remote';
-import locales from '../i18n/translations';
+import { generatedTranslations } from '../i18n/translations';
 import { getLocale } from '../helpers/i18n-helpers';
 
 import {
@@ -41,6 +41,8 @@ const autoLauncher = new AutoLaunch({
 
 const CATALINA_NOTIFICATION_HACK_KEY =
   '_temp_askedForCatalinaNotificationPermissions';
+
+const locales = generatedTranslations();
 
 export default class AppStore extends Store {
   updateStatusTypes = {

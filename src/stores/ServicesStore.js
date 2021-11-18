@@ -655,20 +655,20 @@ export default class ServicesStore extends Store {
 
   @action _setWebviewReference({ serviceId, webview }) {
     const service = this.one(serviceId);
+    if (service) {
+      service.webview = webview;
 
-    service.webview = webview;
-
-    if (!service.isAttached) {
-      debug('Webview is not attached, initializing');
-      service.initializeWebViewEvents({
-        handleIPCMessage: this.actions.service.handleIPCMessage,
-        openWindow: this.actions.service.openWindow,
-        stores: this.stores,
-      });
-      service.initializeWebViewListener();
+      if (!service.isAttached) {
+        debug('Webview is not attached, initializing');
+        service.initializeWebViewEvents({
+          handleIPCMessage: this.actions.service.handleIPCMessage,
+          openWindow: this.actions.service.openWindow,
+          stores: this.stores,
+        });
+        service.initializeWebViewListener();
+      }
+      service.isAttached = true;
     }
-
-    service.isAttached = true;
   }
 
   @action _detachService({ service }) {
@@ -690,20 +690,22 @@ export default class ServicesStore extends Store {
       // TODO: add checks to not focus service when router path is /settings or /auth
       const service = this.active;
       if (service) {
-        document.title = `Ferdi - ${service.name} ${
-          service.dialogTitle ? ` - ${service.dialogTitle}` : ''
-        } ${service._webview ? `- ${service._webview.getTitle()}` : ''}`;
-        this._focusService({ serviceId: service.id });
-        if (this.stores.settings.app.splitMode && !focusEvent) {
-          setTimeout(() => {
-            document
-              .querySelector('.services__webview-wrapper.is-active')
-              .scrollIntoView({
-                behavior: 'smooth',
-                block: 'end',
-                inline: 'nearest',
-              });
-          }, 10);
+        if (service._webview) {
+          document.title = `Ferdi - ${service.name} ${
+            service.dialogTitle ? ` - ${service.dialogTitle}` : ''
+          } ${service._webview ? `- ${service._webview.getTitle()}` : ''}`;
+          this._focusService({ serviceId: service.id });
+          if (this.stores.settings.app.splitMode && !focusEvent) {
+            setTimeout(() => {
+              document
+                .querySelector('.services__webview-wrapper.is-active')
+                .scrollIntoView({
+                  behavior: 'smooth',
+                  block: 'end',
+                  inline: 'nearest',
+                });
+            }, 10);
+          }
         }
       } else {
         debug('No service is active');
