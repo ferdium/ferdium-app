@@ -1,18 +1,18 @@
 name: Bug Report
 description: Report an Ferdi bug
 title: "[Bug]: "
-labels: "bug :beetle:"
+labels: ["bug :beetle:"]
 body:
 - type: markdown
   attributes:
-  value: |
-  1. Please remember that if you are logging a bug for some service that has *stopped working*, please log the bug [here](https://github.com/getferdi/recipes/issues)
-  2. If you are requesting support for a new service in Ferdi, please log it [here](https://github.com/getferdi/recipes/pulls)
-  3. Please remember to read the [self-help documentation](https://github.com/getferdi/ferdi#troubleshooting-recipes-self-help) - in case it helps you unblock yourself for issues related to old recipes.
-  4. Please fill our form below, this way we can analyse and fix the problem as fast as possible.
-  5. Please consider supporting Ferdi!
-    👉  https://github.com/sponsors/getferdi
-    👉  https://opencollective.com/getferdi/donate
+    value: |
+      1. Please remember that if you are logging a bug for some service that has *stopped working*, please log the bug [here](https://github.com/getferdi/recipes/issues)
+      2. If you are requesting support for a new service in Ferdi, please log it [here](https://github.com/getferdi/recipes/pulls)
+      3. Please remember to read the [self-help documentation](https://github.com/getferdi/ferdi#troubleshooting-recipes-self-help) - in case it helps you unblock yourself for issues related to old recipes.
+      4. Please fill our form below, this way we can analyse and fix the problem as fast as possible.
+      5. Please consider supporting Ferdi!
+        👉  https://github.com/sponsors/getferdi
+        👉  https://opencollective.com/getferdi/donate
 - type: checkboxes
   attributes:
     label: Preflight Checklist
@@ -28,7 +28,7 @@ body:
   attributes:
     label: Ferdi Version
     description: What version of Ferdi are you using?
-    placeholder: 5.5.0
+    placeholder: 5.6.3
   validations:
     required: true
 - type: dropdown
@@ -73,7 +73,7 @@ body:
   attributes:
     label: Last Known working version of Ferdi
     description: What is the last version of Ferdi this worked in, if applicable?
-    placeholder: 5.5.0
+    placeholder: 5.6.3
 - type: input
   attributes:
     label: Git SHA and/or build date
