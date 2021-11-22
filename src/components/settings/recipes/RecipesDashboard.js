@@ -51,7 +51,7 @@ const messages = defineMessages({
   },
   customRecipeIntro: {
     id: 'settings.recipes.customService.intro',
-    defaultMessage: 'To add a custom service, copy the service recipe to:',
+    defaultMessage: 'To add a custom service, copy the service recipe folder inside:',
   },
   openFolder: {
     id: 'settings.recipes.customService.openFolder',
