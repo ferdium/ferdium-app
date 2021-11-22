@@ -516,6 +516,7 @@ ipcMain.on('open-browser-window', (_e, { url, serviceId }) => {
   const serviceSession = session.fromPartition(`persist:service-${serviceId}`);
   const child = new BrowserWindow({
     parent: mainWindow,
+    fullscreenable: false,
     webPreferences: {
       session: serviceSession,
       // TODO: Aren't these needed here?
