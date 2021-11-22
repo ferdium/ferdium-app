@@ -241,7 +241,7 @@
   "settings.app.form.showDisabledServices": "Mostrar pestañas de servicios desactivados",
   "settings.app.form.showDragArea": "Mostrar área arrastrable en la ventana",
   "settings.app.form.showMessagesBadgesWhenMuted": "Mostrar la insignia de mensajes sin leer cuando las notificaciones están desactivadas",
-  "settings.app.form.showServiceName": "Display service name under the icon",
+  "settings.app.form.showServiceName": "Mostrar el nombre del servicio debajo del icono",
   "settings.app.form.splitColumns": "Number of columns",
   "settings.app.form.splitMode": "Activar el modo de vista separada",
   "settings.app.form.startMinimized": "Iniciar minimizado",

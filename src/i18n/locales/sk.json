@@ -168,7 +168,7 @@
   "services.login": "Prosím prihláste sa do Ferdi.",
   "services.serverInfo": "Server Ferdi môžete zmeniť kliknutím na ozubené koliesko v ľavom dolnom rohu. Ak prechádzate (z jedného z hostovaných serverov) na používanie Ferdi bez účtu, upozorňujeme vás, že môžete exportovať svoje údaje z tohto servera a následne ich importovať pomocou ponuky Pomocník, aby ste obnovili všetky svoje pracovné priestory a nakonfigurované služby!",
   "services.serverless": "Používať Ferdi bez účtu",
-  "services.welcome": "Vítajte v aplikácii Ferdi",
+  "services.welcome": "Vitajte v aplikácii Ferdi",
   "settings.account.account.editButton": "Upraviť účet",
   "settings.account.accountUnavailable": "Účet je nedostupný",
   "settings.account.accountUnavailableInfo": "Používate Ferdi bez účtu. Ak chcete používať Ferdi s účtom a udržiavať tak vaše služby synchronizované medzi zariadeniami, zvoľte prosím server na záložke Nastavenia > Prihlásiť sa.",
