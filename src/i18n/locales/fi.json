@@ -287,7 +287,7 @@
   "settings.recipes.customService.headline.communityRecipes": "Yhteisön Kolmannen osapuolen Ohjeet",
   "settings.recipes.customService.headline.customRecipes": "Kolmannen osapuolen ohjeet",
   "settings.recipes.customService.headline.devRecipes": "Ohjeet palvelun kehittämiseen",
-  "settings.recipes.customService.intro": "To add a custom service, copy the service recipe to:",
+  "settings.recipes.customService.intro": "To add a custom service, copy the service recipe folder inside:",
   "settings.recipes.customService.openDevDocs": "Ohjelmoijan dokumentaatio",
   "settings.recipes.customService.openFolder": "Open folder",
   "settings.recipes.headline": "Käytettävissä olevat palvelut",

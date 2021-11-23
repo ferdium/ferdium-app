@@ -287,7 +287,7 @@
   "settings.recipes.customService.headline.communityRecipes": "Công thức của cộng đồng bên thứ 3",
   "settings.recipes.customService.headline.customRecipes": "Công thức của tùy chỉnh bên thứ 3",
   "settings.recipes.customService.headline.devRecipes": "Công thức dịch vụ phát triển của bạn",
-  "settings.recipes.customService.intro": "To add a custom service, copy the service recipe to:",
+  "settings.recipes.customService.intro": "To add a custom service, copy the service recipe folder inside:",
   "settings.recipes.customService.openDevDocs": "Tài liệu dành cho nhà phát triển",
   "settings.recipes.customService.openFolder": "Open folder",
   "settings.recipes.headline": "Các dịch vụ có sẵn",

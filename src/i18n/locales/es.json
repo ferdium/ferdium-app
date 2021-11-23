@@ -287,7 +287,7 @@
   "settings.recipes.customService.headline.communityRecipes": "Recetas de terceros comunitarios",
   "settings.recipes.customService.headline.customRecipes": "Recetas de terceros comunitarios",
   "settings.recipes.customService.headline.devRecipes": "Sus recetas de Servicio de Desarrollo",
-  "settings.recipes.customService.intro": "Para añadir un servicio personalizado, copie la receta de servicio a:",
+  "settings.recipes.customService.intro": "To add a custom service, copy the service recipe folder inside:",
   "settings.recipes.customService.openDevDocs": "Documentación para desarrolladores",
   "settings.recipes.customService.openFolder": "Abrir carpeta",
   "settings.recipes.headline": "Servicios disponibles",
