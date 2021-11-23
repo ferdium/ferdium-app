@@ -30,7 +30,7 @@ export default class TrayIcon {
   visible = false;
 
   isAppMuted = false;
-  
+
   mainWindow = null;
 
   trayMenuTemplate = (tray) => [
@@ -65,7 +65,7 @@ export default class TrayIcon {
 
     this.mainWindow = BrowserWindow.getAllWindows()[0];
 
-    // listen to window events to be able to set correct string 
+    // listen to window events to be able to set correct string
     // to tray menu ('Hide Ferdi' / 'Show Ferdi')
     this.mainWindow.on('hide', () => {
       this._updateTrayMenu(null);
@@ -143,7 +143,13 @@ export default class TrayIcon {
     if (mainWindow.isMinimized()) {
       mainWindow.restore();
     } else if (mainWindow.isVisible() && mainWindow.isFocused()) {
-      mainWindow.hide();
+      if (isMac && mainWindow.isFullScreen()) {
+        mainWindow.once('show', () => mainWindow?.setFullScreen(true));
+        mainWindow.once('leave-full-screen', () => mainWindow?.hide());
+        mainWindow.setFullScreen(false);
+      } else {
+        mainWindow.hide();
+      }
     } else {
       mainWindow.show();
       mainWindow.focus();
