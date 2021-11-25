@@ -1,6 +1,6 @@
 {
   "app.errorHandler.action": "Ladda om",
-  "app.errorHandler.headline": "Någonting gick fel.",
+  "app.errorHandler.headline": "Något gick fel.",
   "changeserver.customServerLabel": "Anpassad server",
   "changeserver.headline": "Byt server",
   "changeserver.label": "Server",
@@ -69,7 +69,7 @@
   "locked.touchIdPrompt": "lås upp med Touch ID",
   "locked.unlockWithPassword": "Lås upp med lösenord",
   "login.changeServer": "Byt server",
-  "login.customServerQuestion": "Using a custom Ferdi server?",
+  "login.customServerQuestion": "Använder du ett Franz-konto för att logga in?",
   "login.customServerSuggestion": "Try importing your Franz account",
   "login.email.label": "E-postadress",
   "login.headline": "Logga in",
