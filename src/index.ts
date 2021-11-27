@@ -406,7 +406,7 @@ const createWindow = () => {
     ) {
       // Toggle the window on 'Alt+X'
       globalShortcut.register(`${altKey()}+X`, () => {
-        trayIcon.trayMenuTemplate[0].click();
+        trayIcon._toggleWindow();
       });
     }
   });
