@@ -155,7 +155,7 @@
     "cz-conventional-changelog": "^3.3.0",
     "dotenv": "^10.0.0",
     "electron": "15.3.3",
-    "electron-builder": "22.14.6",
+    "electron-builder": "22.14.10",
     "electron-notarize": "^1.1.1",
     "eslint": "^8.2.0",
     "eslint-config-airbnb": "^19.0.0",
