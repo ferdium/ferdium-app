@@ -276,7 +276,7 @@ class TabItem extends Component {
           service.isEnabled ? messages.disableService : messages.enableService,
         ),
         click: () => (service.isEnabled ? disableService() : enableService()),
-       accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+S`,
+        accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+S`,
       },
       {
         label: intl.formatMessage(

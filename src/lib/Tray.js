@@ -33,15 +33,20 @@ export default class TrayIcon {
 
   mainWindow = null;
 
-  trayMenuTemplate = (tray) => [
+  trayMenuTemplate = tray => [
     {
-      label: (tray.mainWindow.isVisible() && tray.mainWindow.isFocused()) ? 'Hide Ferdi' : 'Show Ferdi',
+      label:
+        tray.mainWindow.isVisible() && tray.mainWindow.isFocused()
+          ? 'Hide Ferdi'
+          : 'Show Ferdi',
       click() {
         tray._toggleWindow();
       },
     },
     {
-      label: tray.isAppMuted ? 'Enable Notifications && Audio' : 'Disable Notifications && Audio',
+      label: tray.isAppMuted
+        ? 'Enable Notifications && Audio'
+        : 'Disable Notifications && Audio',
       click() {
         if (!tray.mainWindow) return;
         tray.mainWindow.webContents.send('muteApp');

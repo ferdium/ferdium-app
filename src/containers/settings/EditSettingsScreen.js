@@ -621,7 +621,9 @@ class EditSettingsScreen extends Component {
           default: DEFAULT_APP_SETTINGS.splitMode,
         },
         splitColumns: {
-          label: `${intl.formatMessage(messages.splitColumns)} (${SPLIT_COLUMNS_MIN}-${SPLIT_COLUMNS_MAX})`,
+          label: `${intl.formatMessage(
+            messages.splitColumns,
+          )} (${SPLIT_COLUMNS_MIN}-${SPLIT_COLUMNS_MAX})`,
           value: settings.all.app.splitColumns,
           default: DEFAULT_APP_SETTINGS.splitColumns,
         },

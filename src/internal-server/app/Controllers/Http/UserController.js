@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop, unicorn/no-await-expression-member */
 const User = use('App/Models/User');
 const Service = use('App/Models/Service');
 const Workspace = use('App/Models/Workspace');
@@ -230,8 +231,10 @@ class UserController {
     auth,
     response,
   }) {
-    const services = (await Service.all()).toJSON();
-    const workspaces = (await Workspace.all()).toJSON();
+    const allServices = await Service.all();
+    const services = allServices.toJSON();
+    const allWorkspaces = await Workspace.all();
+    const workspaces = allWorkspaces.toJSON();
 
     const exportData = {
       username: 'Ferdi',
