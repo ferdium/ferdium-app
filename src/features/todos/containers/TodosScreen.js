@@ -10,8 +10,6 @@ import { TODOS_MIN_WIDTH } from '../../../config';
 import { todoActions } from '../actions';
 import ServicesStore from '../../../stores/ServicesStore';
 
-@inject('stores', 'actions')
-@observer
 class TodosScreen extends Component {
   render() {
     if (
@@ -44,9 +42,9 @@ class TodosScreen extends Component {
   }
 }
 
-export default TodosScreen;
+export default inject('stores', 'actions')(observer(TodosScreen));
 
-TodosScreen.wrappedComponent.propTypes = {
+TodosScreen.propTypes = {
   stores: PropTypes.shape({
     features: PropTypes.instanceOf(FeaturesStore).isRequired,
     services: PropTypes.instanceOf(ServicesStore).isRequired,

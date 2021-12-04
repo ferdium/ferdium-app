@@ -75,8 +75,6 @@ const messages = defineMessages({
   },
 });
 
-@inject('actions')
-@observer
 class Signup extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
@@ -217,4 +215,4 @@ class Signup extends Component {
   }
 }
 
-export default injectIntl(Signup);
+export default injectIntl(inject('actions')(observer(Signup)));

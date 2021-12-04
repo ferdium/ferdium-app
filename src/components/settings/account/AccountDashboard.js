@@ -64,7 +64,6 @@ const messages = defineMessages({
   },
 });
 
-@observer
 class AccountDashboard extends Component {
   static propTypes = {
     user: MobxPropTypes.observableObject.isRequired,
@@ -229,4 +228,4 @@ class AccountDashboard extends Component {
   }
 }
 
-export default injectIntl(AccountDashboard);
+export default injectIntl(observer(AccountDashboard));

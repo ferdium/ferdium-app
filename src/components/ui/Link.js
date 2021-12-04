@@ -9,8 +9,6 @@ import { matchRoute } from '../../helpers/routing-helpers';
 import { openExternalUrl } from '../../helpers/url-helpers';
 
 // TODO: create container component for this component
-@inject('stores')
-@observer
 class Link extends Component {
   onClick(e) {
     if (this.props.disabled) {
@@ -60,7 +58,7 @@ class Link extends Component {
   }
 }
 
-Link.wrappedComponent.propTypes = {
+Link.propTypes = {
   stores: PropTypes.shape({
     router: PropTypes.instanceOf(RouterStore).isRequired,
   }).isRequired,
@@ -75,7 +73,7 @@ Link.wrappedComponent.propTypes = {
   disabled: PropTypes.bool,
 };
 
-Link.wrappedComponent.defaultProps = {
+Link.defaultProps = {
   className: '',
   activeClassName: '',
   strictFilter: false,
@@ -84,4 +82,4 @@ Link.wrappedComponent.defaultProps = {
   style: {},
 };
 
-export default Link;
+export default inject('stores')(observer(Link));

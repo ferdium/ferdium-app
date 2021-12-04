@@ -4,7 +4,6 @@ import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 
 import TabBarSortableList from './TabBarSortableList';
 
-@observer
 class TabBar extends Component {
   static propTypes = {
     services: MobxPropTypes.arrayOrObservableArray.isRequired,
@@ -120,4 +119,4 @@ class TabBar extends Component {
   }
 }
 
-export default TabBar;
+export default observer(TabBar);

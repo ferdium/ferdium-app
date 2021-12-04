@@ -17,8 +17,6 @@ type Props = {
   };
 };
 
-@inject('stores', 'actions')
-@observer
 class EditWorkspaceScreen extends Component<Props> {
   // @ts-expect-error Not all code paths return a value.
   onDelete = () => {
@@ -58,4 +56,4 @@ class EditWorkspaceScreen extends Component<Props> {
   }
 }
 
-export default EditWorkspaceScreen;
+export default inject('stores', 'actions')(observer(EditWorkspaceScreen));

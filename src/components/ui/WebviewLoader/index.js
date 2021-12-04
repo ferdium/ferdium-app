@@ -14,8 +14,6 @@ const messages = defineMessages({
   },
 });
 
-@injectSheet(styles)
-@observer
 class WebviewLoader extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
@@ -34,4 +32,6 @@ class WebviewLoader extends Component {
   }
 }
 
-export default injectIntl(WebviewLoader);
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(observer(WebviewLoader)),
+);

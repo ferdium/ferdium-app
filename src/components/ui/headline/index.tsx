@@ -1,11 +1,11 @@
 import classnames from 'classnames';
 import { Component, createElement, ReactNode } from 'react';
-import injectStyle from 'react-jss';
+import injectStyle, { WithStylesProps } from 'react-jss';
 
 import { Theme } from '../../../themes';
-import { IWithStyle, Omit } from '../typings/generic';
+import { Omit } from '../typings/generic';
 
-interface IProps extends IWithStyle {
+interface IProps extends WithStylesProps<typeof styles> {
   level?: number;
   className?: string;
   children: string | ReactNode;
@@ -55,9 +55,9 @@ class HeadlineComponent extends Component<IProps> {
   }
 }
 
-const Headline = injectStyle(styles)(HeadlineComponent);
+const Headline = injectStyle(styles, { injectTheme: true })(HeadlineComponent);
 
-const createH = (level: number) => (props: Omit<IProps, 'classes' | 'theme'>) =>
+const createH = (level: number) => (props: Omit<IProps, 'classes'>) =>
   (
     <Headline level={level} {...props}>
       {props.children}

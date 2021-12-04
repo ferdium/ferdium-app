@@ -16,8 +16,6 @@ type Props = {
   children: ReactNode;
 };
 
-@inject('stores')
-@observer
 class I18N extends Component<Props> {
   componentDidUpdate() {
     window['ferdi'].menu.rebuild();
@@ -39,4 +37,4 @@ class I18N extends Component<Props> {
   }
 }
 
-export default I18N;
+export default inject('stores')(observer(I18N));

@@ -6,8 +6,6 @@ import Invite from '../../components/auth/Invite';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 import UserStore from '../../stores/UserStore';
 
-@inject('stores', 'actions')
-@observer
 class InviteScreen extends Component {
   componentWillUnmount() {
     this.props.stores.user.inviteRequest.reset();
@@ -32,7 +30,7 @@ class InviteScreen extends Component {
   }
 }
 
-InviteScreen.wrappedComponent.propTypes = {
+InviteScreen.propTypes = {
   actions: PropTypes.shape({
     user: PropTypes.instanceOf(UserStore).isRequired,
   }).isRequired,
@@ -41,4 +39,4 @@ InviteScreen.wrappedComponent.propTypes = {
   }).isRequired,
 };
 
-export default InviteScreen;
+export default inject('stores', 'actions')(observer(InviteScreen));

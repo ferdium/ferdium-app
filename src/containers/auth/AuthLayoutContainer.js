@@ -14,8 +14,6 @@ import AppLoader from '../../components/ui/AppLoader';
 import { oneOrManyChildElements } from '../../prop-types';
 import FeaturesStore from '../../stores/FeaturesStore';
 
-@inject('stores', 'actions')
-@observer
 class AuthLayoutContainer extends Component {
   static propTypes = {
     children: oneOrManyChildElements.isRequired,
@@ -71,7 +69,7 @@ class AuthLayoutContainer extends Component {
   }
 }
 
-AuthLayoutContainer.wrappedComponent.propTypes = {
+AuthLayoutContainer.propTypes = {
   stores: PropTypes.shape({
     app: PropTypes.instanceOf(AppStore).isRequired,
     features: PropTypes.instanceOf(FeaturesStore).isRequired,
@@ -85,4 +83,4 @@ AuthLayoutContainer.wrappedComponent.propTypes = {
   }).isRequired,
 };
 
-export default AuthLayoutContainer;
+export default inject('stores', 'actions')(observer(AuthLayoutContainer));

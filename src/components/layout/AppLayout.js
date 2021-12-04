@@ -74,8 +74,6 @@ const toggleFullScreen = () => {
   ipcRenderer.send('window.toolbar-double-clicked');
 };
 
-@injectSheet(styles)
-@observer
 class AppLayout extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -208,4 +206,6 @@ class AppLayout extends Component {
   }
 }
 
-export default injectIntl(AppLayout);
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(observer(AppLayout)),
+);

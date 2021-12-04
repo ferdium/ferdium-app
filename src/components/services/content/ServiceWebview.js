@@ -9,7 +9,6 @@ import ServiceModel from '../../../models/Service';
 
 const debug = require('debug')('Ferdi:Services');
 
-@observer
 class ServiceWebview extends Component {
   static propTypes = {
     service: PropTypes.instanceOf(ServiceModel).isRequired,
@@ -116,4 +115,4 @@ class ServiceWebview extends Component {
   }
 }
 
-export default ServiceWebview;
+export default observer(ServiceWebview);

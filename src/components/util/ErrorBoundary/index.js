@@ -18,7 +18,6 @@ const messages = defineMessages({
   },
 });
 
-@injectSheet(styles)
 class ErrorBoundary extends Component {
   state = {
     hasError: false,
@@ -56,4 +55,6 @@ class ErrorBoundary extends Component {
   }
 }
 
-export default injectIntl(ErrorBoundary);
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(ErrorBoundary),
+);

@@ -5,8 +5,6 @@ import { RouterStore } from 'mobx-react-router';
 import ChangeServer from '../../components/auth/ChangeServer';
 import SettingsStore from '../../stores/SettingsStore';
 
-@inject('stores', 'actions')
-@observer
 class ChangeServerScreen extends Component {
   constructor(props) {
     super(props);
@@ -34,7 +32,7 @@ class ChangeServerScreen extends Component {
   }
 }
 
-ChangeServerScreen.wrappedComponent.propTypes = {
+ChangeServerScreen.propTypes = {
   actions: PropTypes.shape({
     settings: PropTypes.instanceOf(SettingsStore).isRequired,
   }).isRequired,
@@ -44,4 +42,4 @@ ChangeServerScreen.wrappedComponent.propTypes = {
   }).isRequired,
 };
 
-export default ChangeServerScreen;
+export default inject('stores', 'actions')(observer(ChangeServerScreen));

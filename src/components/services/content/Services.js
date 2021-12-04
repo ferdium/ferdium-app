@@ -44,9 +44,6 @@ const styles = {
   },
 };
 
-@injectSheet(styles)
-@inject('actions')
-@observer
 class Services extends Component {
   static propTypes = {
     services: MobxPropTypes.arrayOrObservableArray,
@@ -197,4 +194,8 @@ class Services extends Component {
   }
 }
 
-export default injectIntl(Services);
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(
+    inject('actions')(observer(Services)),
+  ),
+);

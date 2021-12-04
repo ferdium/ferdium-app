@@ -51,7 +51,6 @@ const messages = defineMessages({
   },
 });
 
-@observer
 class ServicesDashboard extends Component {
   static propTypes = {
     services: MobxPropTypes.arrayOrObservableArray.isRequired,
@@ -188,4 +187,4 @@ class ServicesDashboard extends Component {
   }
 }
 
-export default injectIntl(ServicesDashboard);
+export default injectIntl(observer(ServicesDashboard));

@@ -10,8 +10,6 @@ import TeamDashboard from '../../components/settings/team/TeamDashboard';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 import { DEV_API_FRANZ_WEBSITE } from '../../config';
 
-@inject('stores', 'actions')
-@observer
 class TeamScreen extends Component {
   handleWebsiteLink(route) {
     const { actions, stores } = this.props;
@@ -44,7 +42,7 @@ class TeamScreen extends Component {
   }
 }
 
-TeamScreen.wrappedComponent.propTypes = {
+TeamScreen.propTypes = {
   stores: PropTypes.shape({
     user: PropTypes.instanceOf(UserStore).isRequired,
     app: PropTypes.instanceOf(AppStore).isRequired,
@@ -56,4 +54,4 @@ TeamScreen.wrappedComponent.propTypes = {
   }).isRequired,
 };
 
-export default TeamScreen;
+export default inject('stores', 'actions')(observer(TeamScreen));

@@ -36,8 +36,6 @@ type Props = {
   service: any;
 };
 
-@injectSheet(styles)
-@observer
 class WorkspaceServiceListItem extends Component<Props> {
   render() {
     const { classes, isInWorkspace, onToggle, service } = this.props;
@@ -63,4 +61,6 @@ class WorkspaceServiceListItem extends Component<Props> {
   }
 }
 
-export default WorkspaceServiceListItem;
+export default injectSheet(styles, { injectTheme: true })(
+  observer(WorkspaceServiceListItem),
+);

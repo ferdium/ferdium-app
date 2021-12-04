@@ -188,7 +188,6 @@ const messages = defineMessages({
 
 const Hr = () => <hr style={{ marginBottom: 20 }} />;
 
-@observer
 class EditSettingsForm extends Component {
   static propTypes = {
     checkForUpdates: PropTypes.func.isRequired,
@@ -847,4 +846,4 @@ class EditSettingsForm extends Component {
   }
 }
 
-export default injectIntl(EditSettingsForm);
+export default injectIntl(observer(EditSettingsForm));

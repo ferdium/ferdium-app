@@ -5,8 +5,6 @@ import { RouterStore } from 'mobx-react-router';
 import Import from '../../components/auth/Import';
 import UserStore from '../../stores/UserStore';
 
-@inject('stores', 'actions')
-@observer
 class ImportScreen extends Component {
   render() {
     const { actions, stores } = this.props;
@@ -26,7 +24,7 @@ class ImportScreen extends Component {
   }
 }
 
-ImportScreen.wrappedComponent.propTypes = {
+ImportScreen.propTypes = {
   actions: PropTypes.shape({
     user: PropTypes.instanceOf(UserStore).isRequired,
   }).isRequired,
@@ -36,4 +34,4 @@ ImportScreen.wrappedComponent.propTypes = {
   }).isRequired,
 };
 
-export default ImportScreen;
+export default inject('stores', 'actions')(observer(ImportScreen));

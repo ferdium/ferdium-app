@@ -6,10 +6,10 @@ import {
 import Icon from '@mdi/react';
 import classnames from 'classnames';
 import { ChangeEvent, Component, createRef } from 'react';
-import injectStyle from 'react-jss';
+import injectStyle, { WithStylesProps } from 'react-jss';
 
 import { Theme } from '../../../themes';
-import { IFormField, IWithStyle } from '../typings/generic';
+import { IFormField } from '../typings/generic';
 
 import { Error } from '../error';
 import { Label } from '../label';
@@ -23,7 +23,7 @@ interface IData {
   [index: string]: string;
 }
 
-interface IProps extends IFormField, IWithStyle {
+interface IProps extends IFormField, WithStylesProps<typeof styles> {
   actionText: string;
   className?: string;
   inputClassName?: string;
@@ -146,6 +146,7 @@ const styles = (theme: Theme) => ({
   disabled: {
     opacity: theme.selectDisabledOpacity,
   },
+  input: {},
 });
 
 class SelectComponent extends Component<IProps> {
@@ -457,4 +458,6 @@ class SelectComponent extends Component<IProps> {
   }
 }
 
-export const Select = injectStyle(styles)(SelectComponent);
+export const Select = injectStyle(styles, { injectTheme: true })(
+  SelectComponent,
+);

@@ -16,8 +16,6 @@ const URL_EVENTS = [
   'did-navigate-in-page',
 ];
 
-@inject('stores', 'actions')
-@observer
 class WebControlsScreen extends Component {
   @observable url = '';
 
@@ -125,9 +123,9 @@ class WebControlsScreen extends Component {
   }
 }
 
-export default WebControlsScreen;
+export default inject('stores', 'actions')(observer(WebControlsScreen));
 
-WebControlsScreen.wrappedComponent.propTypes = {
+WebControlsScreen.propTypes = {
   service: PropTypes.instanceOf(Service).isRequired,
   stores: PropTypes.shape({
     services: PropTypes.instanceOf(ServicesStore).isRequired,

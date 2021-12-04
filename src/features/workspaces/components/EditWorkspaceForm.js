@@ -58,7 +58,7 @@ const messages = defineMessages({
   },
 });
 
-const styles = () => ({
+const styles = {
   nameInput: {
     height: 'auto',
   },
@@ -68,10 +68,8 @@ const styles = () => ({
   keepLoadedInfo: {
     marginBottom: '2rem !important',
   },
-});
+};
 
-@injectSheet(styles)
-@observer
 class EditWorkspaceForm extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -230,4 +228,6 @@ class EditWorkspaceForm extends Component {
   }
 }
 
-export default injectIntl(EditWorkspaceForm);
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(observer(EditWorkspaceForm)),
+);

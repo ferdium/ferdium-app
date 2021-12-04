@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
 
-@observer
 class ToggleRaw extends Component {
   static propTypes = {
     onChange: PropTypes.func.isRequired,
@@ -74,4 +73,4 @@ class ToggleRaw extends Component {
   }
 }
 
-export default ToggleRaw;
+export default observer(ToggleRaw);

@@ -21,7 +21,7 @@ const messages = defineMessages({
   },
 });
 
-const styles = () => ({
+const styles = {
   form: {
     display: 'flex',
   },
@@ -32,10 +32,8 @@ const styles = () => ({
   submitButton: {
     height: 'inherit',
   },
-});
+};
 
-@injectSheet(styles)
-@observer
 class CreateWorkspaceForm extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -94,4 +92,6 @@ class CreateWorkspaceForm extends Component {
   }
 }
 
-export default injectIntl(CreateWorkspaceForm);
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(observer(CreateWorkspaceForm)),
+);

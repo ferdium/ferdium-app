@@ -5,7 +5,6 @@ import classnames from 'classnames';
 
 import { oneOrManyChildElements } from '../../../prop-types';
 
-@observer
 class Tab extends Component {
   constructor(props) {
     super(props);
@@ -69,4 +68,4 @@ class Tab extends Component {
   }
 }
 
-export default Tab;
+export default observer(Tab);

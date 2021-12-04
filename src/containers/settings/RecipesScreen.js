@@ -19,8 +19,6 @@ import RecipePreview from '../../models/RecipePreview';
 import AppStore from '../../stores/AppStore';
 import { openPath } from '../../helpers/url-helpers';
 
-@inject('stores', 'actions')
-@observer
 class RecipesScreen extends Component {
   static propTypes = {
     params: PropTypes.shape({
@@ -182,7 +180,7 @@ class RecipesScreen extends Component {
   }
 }
 
-RecipesScreen.wrappedComponent.propTypes = {
+RecipesScreen.propTypes = {
   stores: PropTypes.shape({
     recipePreviews: PropTypes.instanceOf(RecipePreviewsStore).isRequired,
     recipes: PropTypes.instanceOf(RecipeStore).isRequired,
@@ -198,4 +196,4 @@ RecipesScreen.wrappedComponent.propTypes = {
   }).isRequired,
 };
 
-export default RecipesScreen;
+export default inject('stores', 'actions')(observer(RecipesScreen));

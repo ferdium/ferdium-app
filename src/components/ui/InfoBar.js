@@ -16,7 +16,6 @@ const messages = defineMessages({
   },
 });
 
-@observer
 class InfoBar extends Component {
   static propTypes = {
     // eslint-disable-next-line react/forbid-prop-types
@@ -102,4 +101,4 @@ class InfoBar extends Component {
   }
 }
 
-export default injectIntl(InfoBar);
+export default injectIntl(observer(InfoBar));

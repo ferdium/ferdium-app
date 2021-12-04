@@ -85,14 +85,7 @@ const styles = theme => ({
   },
 });
 
-@injectSheet(styles)
-@inject('stores', 'actions')
-@observer
 class PublishDebugLogModal extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-  };
-
   state = {
     log: null,
     error: false,
@@ -221,13 +214,18 @@ class PublishDebugLogModal extends Component {
   }
 }
 
-PublishDebugLogModal.wrappedComponent.propTypes = {
+PublishDebugLogModal.propTypes = {
   stores: PropTypes.shape({
     app: PropTypes.instanceOf(AppStore).isRequired,
   }).isRequired,
   actions: PropTypes.shape({
     service: PropTypes.instanceOf(ServicesStore).isRequired,
   }).isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
-export default injectIntl(PublishDebugLogModal);
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(
+    inject('stores', 'actions')(observer(PublishDebugLogModal)),
+  ),
+);

@@ -66,8 +66,6 @@ const messages = defineMessages({
   },
 });
 
-@inject('stores', 'actions')
-@observer
 class Sidebar extends Component {
   static propTypes = {
     openSettings: PropTypes.func.isRequired,
@@ -262,4 +260,4 @@ class Sidebar extends Component {
   }
 }
 
-export default injectIntl(Sidebar);
+export default injectIntl(inject('stores', 'actions')(observer(Sidebar)));

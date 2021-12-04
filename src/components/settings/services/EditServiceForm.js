@@ -134,7 +134,6 @@ const messages = defineMessages({
   },
 });
 
-@observer
 class EditServiceForm extends Component {
   static propTypes = {
     recipe: PropTypes.instanceOf(Recipe).isRequired,
@@ -500,4 +499,4 @@ class EditServiceForm extends Component {
   }
 }
 
-export default injectIntl(EditServiceForm);
+export default injectIntl(observer(EditServiceForm));

@@ -16,8 +16,6 @@ import SettingsStore from '../../../stores/SettingsStore';
 import WebControlsScreen from '../../../features/webControls/containers/WebControlsScreen';
 import { CUSTOM_WEBSITE_RECIPE_ID } from '../../../config';
 
-@inject('stores', 'actions')
-@observer
 class ServiceView extends Component {
   static propTypes = {
     service: PropTypes.instanceOf(ServiceModel).isRequired,
@@ -163,4 +161,4 @@ class ServiceView extends Component {
   }
 }
 
-export default ServiceView;
+export default inject('stores', 'actions')(observer(ServiceView));

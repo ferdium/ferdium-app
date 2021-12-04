@@ -16,7 +16,6 @@ const messages = defineMessages({
   },
 });
 
-@observer
 class ServiceDisabled extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
@@ -40,4 +39,4 @@ class ServiceDisabled extends Component {
   }
 }
 
-export default injectIntl(ServiceDisabled);
+export default injectIntl(observer(ServiceDisabled));

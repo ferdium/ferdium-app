@@ -88,8 +88,6 @@ const styles = theme => ({
   },
 });
 
-@injectSheet(styles)
-@observer
 class WorkspaceDrawer extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -175,4 +173,6 @@ class WorkspaceDrawer extends Component {
   }
 }
 
-export default injectIntl(WorkspaceDrawer);
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(observer(WorkspaceDrawer)),
+);

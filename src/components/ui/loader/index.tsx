@@ -1,25 +1,25 @@
 import classnames from 'classnames';
 import { Component } from 'react';
-import injectStyle, { withTheme } from 'react-jss';
+import injectStyle, { WithStylesProps } from 'react-jss';
 import ReactLoader from 'react-loader';
 
-import { IWithStyle } from '../typings/generic';
-
-interface IProps extends IWithStyle {
+interface IProps extends WithStylesProps<typeof styles> {
   className?: string;
   color?: string;
 }
 
-const styles = () => ({
+const styles = theme => ({
   container: {
     position: 'relative',
     height: 60,
   },
+  loader: {},
+  color: theme.colorText,
 });
 
 class LoaderComponent extends Component<IProps> {
   render() {
-    const { classes, className, color, theme } = this.props;
+    const { classes, className, color } = this.props;
 
     return (
       <div
@@ -33,7 +33,7 @@ class LoaderComponent extends Component<IProps> {
           loaded={false}
           width={4}
           scale={0.75}
-          color={color || theme.colorText}
+          color={color || classes.color}
           parentClassName={classes.loader}
         />
       </div>
@@ -41,4 +41,6 @@ class LoaderComponent extends Component<IProps> {
   }
 }
 
-export const Loader = injectStyle(styles)(withTheme(LoaderComponent));
+export const Loader = injectStyle(styles, { injectTheme: true })(
+  LoaderComponent,
+);

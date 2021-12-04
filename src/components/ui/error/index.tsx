@@ -17,4 +17,4 @@ class ErrorComponent extends Component<IProps> {
   }
 }
 
-export const Error = injectSheet(styles)(ErrorComponent);
+export const Error = injectSheet(styles, { injectTheme: true })(ErrorComponent);

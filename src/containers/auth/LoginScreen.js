@@ -6,8 +6,6 @@ import UserStore from '../../stores/UserStore';
 
 import { globalError as globalErrorPropType } from '../../prop-types';
 
-@inject('stores', 'actions')
-@observer
 class LoginScreen extends Component {
   static propTypes = {
     error: globalErrorPropType.isRequired,
@@ -32,7 +30,7 @@ class LoginScreen extends Component {
   }
 }
 
-LoginScreen.wrappedComponent.propTypes = {
+LoginScreen.propTypes = {
   actions: PropTypes.shape({
     user: PropTypes.instanceOf(UserStore).isRequired,
   }).isRequired,
@@ -41,4 +39,4 @@ LoginScreen.wrappedComponent.propTypes = {
   }).isRequired,
 };
 
-export default LoginScreen;
+export default inject('stores', 'actions')(observer(LoginScreen));

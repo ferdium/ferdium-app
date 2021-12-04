@@ -38,7 +38,6 @@ const messages = defineMessages({
   },
 });
 
-@observer
 class Password extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
@@ -119,4 +118,4 @@ class Password extends Component {
   }
 }
 
-export default injectIntl(Password);
+export default injectIntl(observer(Password));

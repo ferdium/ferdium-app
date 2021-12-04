@@ -24,8 +24,6 @@ const styles = theme => ({
   },
 });
 
-@injectSheet(styles)
-@observer
 class ServiceIcon extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -56,4 +54,6 @@ class ServiceIcon extends Component {
   }
 }
 
-export default ServiceIcon;
+export default injectSheet(styles, { injectTheme: true })(
+  observer(ServiceIcon),
+);

@@ -5,7 +5,6 @@ import { SortableContainer } from 'react-sortable-hoc';
 
 import TabItem from './TabItem';
 
-@observer
 class TabBarSortableList extends Component {
   static propTypes = {
     services: MobxPropTypes.arrayOrObservableArray.isRequired,
@@ -75,4 +74,4 @@ class TabBarSortableList extends Component {
   }
 }
 
-export default SortableContainer(TabBarSortableList);
+export default SortableContainer(observer(TabBarSortableList));

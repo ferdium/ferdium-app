@@ -90,8 +90,6 @@ const styles = {
   },
 };
 
-@injectSheet(styles)
-@observer
 class TeamDashboard extends Component {
   static propTypes = {
     isLoading: PropTypes.bool.isRequired,
@@ -197,4 +195,6 @@ class TeamDashboard extends Component {
   }
 }
 
-export default injectIntl(TeamDashboard);
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(observer(TeamDashboard)),
+);

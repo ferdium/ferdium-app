@@ -49,7 +49,7 @@ const messages = defineMessages({
   },
 });
 
-const styles = () => ({
+const styles = {
   table: {
     width: '100%',
     '& td': {
@@ -67,11 +67,8 @@ const styles = () => ({
     margin: [-8, 0, 0, 20],
     alignSelf: 'center',
   },
-});
+};
 
-@inject('stores')
-@injectSheet(styles)
-@observer
 class WorkspacesDashboard extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -190,9 +187,13 @@ class WorkspacesDashboard extends Component {
   }
 }
 
-export default injectIntl(WorkspacesDashboard);
+export default injectIntl(
+  inject('stores')(
+    injectSheet(styles, { injectTheme: true })(observer(WorkspacesDashboard)),
+  ),
+);
 
-WorkspacesDashboard.wrappedComponent.propTypes = {
+WorkspacesDashboard.propTypes = {
   stores: PropTypes.shape({
     ui: PropTypes.instanceOf(UIStore).isRequired,
   }).isRequired,

@@ -24,7 +24,6 @@ const messages = defineMessages({
   },
 });
 
-@observer
 class ServiceItem extends Component {
   static propTypes = {
     service: PropTypes.instanceOf(ServiceModel).isRequired,
@@ -91,4 +90,4 @@ class ServiceItem extends Component {
   }
 }
 
-export default injectIntl(ServiceItem);
+export default injectIntl(observer(ServiceItem));

@@ -81,9 +81,6 @@ const styles = theme => ({
   },
 });
 
-@injectSheet(styles)
-@inject('stores', 'actions')
-@observer
 class QuickSwitchModal extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -349,13 +346,18 @@ class QuickSwitchModal extends Component {
   }
 }
 
-QuickSwitchModal.wrappedComponent.propTypes = {
+QuickSwitchModal.propTypes = {
   stores: PropTypes.shape({
     services: PropTypes.instanceOf(ServicesStore).isRequired,
   }).isRequired,
   actions: PropTypes.shape({
     service: PropTypes.instanceOf(ServicesStore).isRequired,
   }).isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
-export default injectIntl(QuickSwitchModal);
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(
+    inject('stores', 'actions')(observer(QuickSwitchModal)),
+  ),
+);

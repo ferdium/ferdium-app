@@ -22,8 +22,6 @@ const messages = defineMessages({
   },
 });
 
-@injectSheet(styles)
-@observer
 class BasicAuthModal extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -97,4 +95,6 @@ class BasicAuthModal extends Component {
     );
   }
 }
-export default injectIntl(BasicAuthModal);
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(observer(BasicAuthModal)),
+);

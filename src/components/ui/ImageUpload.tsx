@@ -15,7 +15,6 @@ type Props = {
   textUpload: string;
 };
 
-@observer
 class ImageUpload extends Component<Props> {
   static defaultProps = {
     multiple: false,
@@ -102,4 +101,4 @@ class ImageUpload extends Component<Props> {
   }
 }
 
-export default ImageUpload;
+export default observer(ImageUpload);

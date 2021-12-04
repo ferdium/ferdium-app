@@ -799,8 +799,6 @@ export default class ServicesStore extends Store {
             options.icon = '/assets/img/notification-badge.gif';
           }
 
-          console.log(title, options);
-
           this.actions.app.notify({
             notificationId: args[0].notificationId,
             title,

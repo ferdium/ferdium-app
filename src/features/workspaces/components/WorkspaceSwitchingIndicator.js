@@ -53,8 +53,6 @@ const styles = theme => ({
   },
 });
 
-@injectSheet(styles)
-@observer
 class WorkspaceSwitchingIndicator extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -85,4 +83,8 @@ class WorkspaceSwitchingIndicator extends Component {
   }
 }
 
-export default injectIntl(WorkspaceSwitchingIndicator);
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(
+    observer(WorkspaceSwitchingIndicator),
+  ),
+);

@@ -114,9 +114,6 @@ const styles = {
   },
 };
 
-@injectSheet(styles)
-@inject('stores')
-@observer
 class TabItem extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -402,4 +399,10 @@ class TabItem extends Component {
   }
 }
 
-export default injectIntl(SortableElement(TabItem));
+export default injectIntl(
+  SortableElement(
+    injectSheet(styles, { injectTheme: true })(
+      inject('stores')(observer(TabItem)),
+    ),
+  ),
+);

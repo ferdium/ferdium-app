@@ -68,8 +68,6 @@ const styles = theme => ({
   },
 });
 
-@injectSheet(styles)
-@observer
 class ConnectionLostBanner extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -103,4 +101,4 @@ class ConnectionLostBanner extends Component {
   }
 }
 
-export default injectIntl(ConnectionLostBanner);
+export default injectIntl(injectSheet(styles)(observer(ConnectionLostBanner)));

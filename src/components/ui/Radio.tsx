@@ -10,7 +10,6 @@ type Props = {
   showLabel: boolean;
 };
 
-@observer
 class Radio extends Component<Props> {
   static defaultProps = {
     focus: false,
@@ -74,4 +73,4 @@ class Radio extends Component<Props> {
   }
 }
 
-export default Radio;
+export default observer(Radio);

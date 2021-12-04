@@ -245,8 +245,6 @@ const messages = defineMessages({
   },
 });
 
-@inject('stores', 'actions')
-@observer
 class EditSettingsScreen extends Component {
   constructor(props) {
     super(props);
@@ -753,7 +751,7 @@ class EditSettingsScreen extends Component {
   }
 }
 
-EditSettingsScreen.wrappedComponent.propTypes = {
+EditSettingsScreen.propTypes = {
   stores: PropTypes.shape({
     app: PropTypes.instanceOf(AppStore).isRequired,
     user: PropTypes.instanceOf(UserStore).isRequired,
@@ -771,4 +769,6 @@ EditSettingsScreen.wrappedComponent.propTypes = {
   }).isRequired,
 };
 
-export default injectIntl(EditSettingsScreen);
+export default injectIntl(
+  inject('stores', 'actions')(observer(EditSettingsScreen)),
+);

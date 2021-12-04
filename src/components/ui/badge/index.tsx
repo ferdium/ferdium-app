@@ -1,11 +1,10 @@
 import classnames from 'classnames';
 import { Component, ReactNode } from 'react';
-import injectStyle from 'react-jss';
+import injectStyle, { WithStylesProps } from 'react-jss';
 
 import { Theme } from '../../../themes';
-import { IWithStyle } from '../typings/generic';
 
-interface IProps extends IWithStyle {
+interface IProps extends WithStylesProps<typeof styles> {
   type: string;
   className?: string;
   children: ReactNode;
@@ -68,4 +67,4 @@ class BadgeComponent extends Component<IProps> {
   }
 }
 
-export const Badge = injectStyle(styles)(BadgeComponent);
+export const Badge = injectStyle(styles, { injectTheme: true })(BadgeComponent);

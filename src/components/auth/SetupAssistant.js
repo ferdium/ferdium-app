@@ -131,8 +131,6 @@ const styles = theme => ({
   },
 });
 
-@injectSheet(styles)
-@observer
 class SetupAssistant extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -327,4 +325,6 @@ class SetupAssistant extends Component {
   }
 }
 
-export default injectIntl(SetupAssistant);
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(observer(SetupAssistant)),
+);

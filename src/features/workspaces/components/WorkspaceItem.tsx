@@ -22,8 +22,6 @@ type Props = {
   onItemClick: (workspace) => void;
 };
 
-@injectSheet(styles)
-@observer
 class WorkspaceItem extends Component<Props> {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -42,4 +40,6 @@ class WorkspaceItem extends Component<Props> {
   }
 }
 
-export default WorkspaceItem;
+export default injectSheet(styles, { injectTheme: true })(
+  observer(WorkspaceItem),
+);

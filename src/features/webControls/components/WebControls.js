@@ -94,8 +94,6 @@ const styles = theme => ({
   },
 });
 
-@injectSheet(styles)
-@observer
 class WebControls extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -238,4 +236,6 @@ class WebControls extends Component {
   }
 }
 
-export default injectIntl(WebControls);
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(observer(WebControls)),
+);

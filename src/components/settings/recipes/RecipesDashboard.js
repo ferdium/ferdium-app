@@ -105,8 +105,6 @@ const styles = {
   },
 };
 
-@injectSheet(styles)
-@observer
 class RecipesDashboard extends Component {
   static propTypes = {
     recipes: MobxPropTypes.arrayOrObservableArray.isRequired,
@@ -247,16 +245,18 @@ class RecipesDashboard extends Component {
                       {intl.formatMessage(messages.nothingFound)}
                     </p>
 
-                    <RecipeItem
-                      key={customWebsiteRecipe.id}
-                      recipe={customWebsiteRecipe}
-                      onClick={() =>
-                        isLoggedIn &&
-                        showAddServiceInterface({
-                          recipeId: customWebsiteRecipe.id,
-                        })
-                      }
-                    />
+                    {customWebsiteRecipe && customWebsiteRecipe.id && (
+                      <RecipeItem
+                        key={customWebsiteRecipe.id}
+                        recipe={customWebsiteRecipe}
+                        onClick={() =>
+                          isLoggedIn &&
+                          showAddServiceInterface({
+                            recipeId: customWebsiteRecipe.id,
+                          })
+                        }
+                      />
+                    )}
                   </div>
                 )}
                 {communityRecipes.map(recipe => (
@@ -295,4 +295,6 @@ class RecipesDashboard extends Component {
   }
 }
 
-export default injectIntl(RecipesDashboard);
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(observer(RecipesDashboard)),
+);

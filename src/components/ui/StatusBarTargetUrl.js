@@ -5,7 +5,6 @@ import classnames from 'classnames';
 
 import Appear from './effects/Appear';
 
-@observer
 class StatusBarTargetUrl extends Component {
   static propTypes = {
     className: PropTypes.string,
@@ -33,4 +32,4 @@ class StatusBarTargetUrl extends Component {
   }
 }
 
-export default StatusBarTargetUrl;
+export default observer(StatusBarTargetUrl);

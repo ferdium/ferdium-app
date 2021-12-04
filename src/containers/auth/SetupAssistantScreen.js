@@ -14,8 +14,6 @@ import ServicesStore from '../../stores/ServicesStore';
 import RecipesStore from '../../stores/RecipesStore';
 import UserStore from '../../stores/UserStore';
 
-@inject('stores', 'actions')
-@observer
 class SetupAssistantScreen extends Component {
   constructor(props) {
     super(props);
@@ -120,7 +118,7 @@ class SetupAssistantScreen extends Component {
   }
 }
 
-SetupAssistantScreen.wrappedComponent.propTypes = {
+SetupAssistantScreen.propTypes = {
   stores: PropTypes.shape({
     services: PropTypes.instanceOf(ServicesStore),
     router: PropTypes.instanceOf(RouterStore).isRequired,
@@ -134,4 +132,4 @@ SetupAssistantScreen.wrappedComponent.propTypes = {
   }).isRequired,
 };
 
-export default SetupAssistantScreen;
+export default inject('stores', 'actions')(observer(SetupAssistantScreen));

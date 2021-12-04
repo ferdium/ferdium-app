@@ -5,7 +5,9 @@ import { Field } from 'mobx-react-form';
 import classnames from 'classnames';
 import { defineMessages, injectIntl } from 'react-intl';
 
+import { mdiEye, mdiEyeOff } from '@mdi/js';
 import { scorePassword as scorePasswordFunc } from '../../helpers/password-helpers';
+import { Icon } from './icon';
 
 const messages = defineMessages({
   passwordToggle: {
@@ -14,7 +16,6 @@ const messages = defineMessages({
   },
 });
 
-@observer
 class Input extends Component {
   static propTypes = {
     field: PropTypes.instanceOf(Field).isRequired,
@@ -115,9 +116,6 @@ class Input extends Component {
               type="button"
               className={classnames({
                 'franz-form__input-modifier': true,
-                mdi: true,
-                'mdi-eye': !this.state.showPassword,
-                'mdi-eye-off': this.state.showPassword,
               })}
               onClick={() =>
                 this.setState(prevState => ({
@@ -126,7 +124,9 @@ class Input extends Component {
               }
               tabIndex={-1}
               aria-label={intl.formatMessage(messages.passwordToggle)}
-            />
+            >
+              <Icon icon={this.state.showPassword ? mdiEye : mdiEyeOff} />
+            </button>
           )}
           {scorePassword && (
             <div className="franz-form__password-score">
@@ -152,4 +152,4 @@ class Input extends Component {
   }
 }
 
-export default injectIntl(Input);
+export default injectIntl(observer(Input));

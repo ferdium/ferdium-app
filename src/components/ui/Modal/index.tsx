@@ -18,7 +18,6 @@ type Props = {
   showClose: boolean;
 };
 
-@injectCSS(styles)
 class Modal extends Component<Props> {
   static defaultProps = {
     className: null,
@@ -64,4 +63,4 @@ class Modal extends Component<Props> {
   }
 }
 
-export default Modal;
+export default injectCSS(styles)(Modal);

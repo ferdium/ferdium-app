@@ -24,8 +24,6 @@ import WorkspaceDrawer from '../../features/workspaces/components/WorkspaceDrawe
 import { workspaceStore } from '../../features/workspaces';
 import WorkspacesStore from '../../features/workspaces/store';
 
-@inject('stores', 'actions')
-@observer
 class AppLayoutContainer extends Component {
   static defaultProps = {
     children: null,
@@ -171,7 +169,7 @@ class AppLayoutContainer extends Component {
   }
 }
 
-AppLayoutContainer.wrappedComponent.propTypes = {
+AppLayoutContainer.propTypes = {
   stores: PropTypes.shape({
     services: PropTypes.instanceOf(ServicesStore).isRequired,
     features: PropTypes.instanceOf(FeaturesStore).isRequired,
@@ -194,4 +192,4 @@ AppLayoutContainer.wrappedComponent.propTypes = {
   children: oneOrManyChildElements,
 };
 
-export default AppLayoutContainer;
+export default inject('stores', 'actions')(observer(AppLayoutContainer));

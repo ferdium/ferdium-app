@@ -22,8 +22,6 @@ const messages = defineMessages({
   },
 });
 
-@inject('actions')
-@observer
 class Login extends Component {
   static propTypes = {
     loginRoute: PropTypes.string.isRequired,
@@ -93,4 +91,4 @@ class Login extends Component {
   }
 }
 
-export default injectIntl(Login);
+export default injectIntl(inject('actions')(observer(Login)));

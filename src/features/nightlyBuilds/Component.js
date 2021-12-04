@@ -29,7 +29,7 @@ const messages = defineMessages({
   },
 });
 
-const styles = () => ({
+const styles = {
   info: {
     paddingTop: 20,
     paddingBottom: 20,
@@ -51,11 +51,8 @@ const styles = () => ({
     background: '#c45a5a !important',
     color: '#ffffff !important',
   },
-});
+};
 
-@injectSheet(styles)
-@inject('stores', 'actions')
-@observer
 class NightlyBuildsModal extends Component {
   close() {
     ModalState.isModalVisible = false;
@@ -119,7 +116,7 @@ class NightlyBuildsModal extends Component {
   }
 }
 
-NightlyBuildsModal.wrappedComponent.propTypes = {
+NightlyBuildsModal.propTypes = {
   stores: PropTypes.shape({
     settings: PropTypes.instanceOf(SettingsStore).isRequired,
   }).isRequired,
@@ -131,4 +128,8 @@ NightlyBuildsModal.wrappedComponent.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default injectIntl(NightlyBuildsModal);
+export default injectIntl(
+  injectSheet(styles)(
+    inject('stores', 'actions')(observer(NightlyBuildsModal)),
+  ),
+);

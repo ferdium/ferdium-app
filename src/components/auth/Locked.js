@@ -48,7 +48,6 @@ const messages = defineMessages({
   },
 });
 
-@observer
 class Locked extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
@@ -149,4 +148,4 @@ class Locked extends Component {
   }
 }
 
-export default injectIntl(Locked);
+export default injectIntl(observer(Locked));

@@ -36,8 +36,6 @@ type Props = {
   history: any;
 };
 
-@inject('stores', 'actions')
-@observer
 class Routes extends Component<Props> {
   render() {
     const { locked } = this.props.stores.settings.app;
@@ -94,4 +92,4 @@ class Routes extends Component<Props> {
   }
 }
 
-export default Routes;
+export default inject('stores', 'actions')(observer(Routes));

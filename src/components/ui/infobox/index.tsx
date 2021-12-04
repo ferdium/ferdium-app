@@ -1,13 +1,12 @@
 import { mdiClose } from '@mdi/js';
 import classnames from 'classnames';
 import { Component, ReactNode } from 'react';
-import injectStyle from 'react-jss';
+import injectStyle, { WithStylesProps } from 'react-jss';
 
 import { Theme } from '../../../themes';
 import { Icon } from '../icon';
-import { IWithStyle } from '../typings/generic';
 
-interface IProps extends IWithStyle {
+interface IProps extends WithStylesProps<typeof styles> {
   icon?: string;
   type?: string;
   dismissable?: boolean;
@@ -202,4 +201,6 @@ class InfoboxComponent extends Component<IProps, IState> {
   }
 }
 
-export const Infobox = injectStyle(styles)(InfoboxComponent);
+export const Infobox = injectStyle(styles, { injectTheme: true })(
+  InfoboxComponent,
+);

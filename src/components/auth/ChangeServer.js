@@ -34,7 +34,6 @@ const messages = defineMessages({
   },
 });
 
-@observer
 class ChangeServer extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
@@ -131,4 +130,4 @@ class ChangeServer extends Component {
   }
 }
 
-export default injectIntl(ChangeServer);
+export default injectIntl(observer(ChangeServer));
