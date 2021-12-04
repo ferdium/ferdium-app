@@ -35,7 +35,7 @@
     "contributors": "all-contributors",
     "reformat-files": "./node_modules/.bin/prettier --ignore-path .eslintignore --write --require-pragma \"**/*.{js,jsx,scss}\"",
     "apply-branding": "ts-node ./src/i18n/apply-branding.ts",
-    "update-submodules": "git submodule update --remote --force",
+    "update-submodules": "git submodule update --init --recursive --remote --rebase --force",
     "prepare-code": "npm run lint:fix && npm run reformat-files && npm run manage-translations && npm run apply-branding",
     "link-readme": "ts-node scripts/link-readme.ts",
     "minify-images": "./scripts/minify-images.sh",

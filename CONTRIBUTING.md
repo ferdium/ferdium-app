@@ -99,7 +99,7 @@ npm i -g windows-build-tools --vs2015
 ```bash
 git clone https://github.com/getferdi/ferdi.git
 cd ferdi
-git submodule update --init --recursive
+git submodule update --init --recursive --remote --rebase --force
 ```
 
 It is important you execute the last command to get the required submodules (recipes).
