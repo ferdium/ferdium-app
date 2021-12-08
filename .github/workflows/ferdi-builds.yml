@@ -141,7 +141,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2.0.1
         with:
-          version: 6.19.0
+          version: 6.23.6
       - name: Install node dependencies
         run: npm i
       - name: Package recipes
@@ -223,7 +223,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2.0.1
         with:
-          version: 6.19.0
+          version: 6.23.6
       - name: Install node dependencies
         run: npm i
       - name: Figure out used package.json version
@@ -326,7 +326,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v2.0.1
         with:
-          version: 6.19.0
+          version: 6.23.6
       - name: Install node dependencies
         run: npm i
         shell: bash

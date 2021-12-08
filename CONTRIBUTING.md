@@ -63,7 +63,7 @@ v16.13.0
 npm -v
 8.1.1
 pnpm -v
-6.19.0
+6.23.6
 ```
 
 _Note:_ You can choose any package manager to manage multiple versions of `node` and `npm`. For eg, [nvm](https://github.com/nvm-sh/nvm) or [asdf](https://github.com/asdf-vm/asdf).
