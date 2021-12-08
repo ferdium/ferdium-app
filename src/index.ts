@@ -213,6 +213,7 @@ const createWindow = () => {
       contextIsolation: false,
       webviewTag: true,
       preload: join(__dirname, 'sentry.js'),
+      nativeWindowOpen: true,
       // @ts-expect-error Object literal may only specify known properties, and 'enableRemoteModule' does not exist in type 'WebPreferences'.
       enableRemoteModule: true,
     },
@@ -519,9 +520,7 @@ ipcMain.on('open-browser-window', (_e, { url, serviceId }) => {
     fullscreenable: false,
     webPreferences: {
       session: serviceSession,
-      // TODO: Aren't these needed here?
-      // contextIsolation: false,
-      // enableRemoteModule: true,
+      nativeWindowOpen: true,
     },
   });
   child.show();
