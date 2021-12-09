@@ -46,18 +46,23 @@ jobs:
           rm -rf ./recipes
           npm run update-submodules
           git add .
+          echo "GIT_DIRTY=$(git status -s | wc -l)" >> $GITHUB_ENV
       - name: Update browserslist db
         run: |
           npx browserslist@latest --update-db
           git add .
+          echo "GIT_DIRTY=$(git status -s | wc -l)" >> $GITHUB_ENV
       - name: Run linter, reformatter, rebrander and tests
+        if: ${{ env.GIT_DIRTY != '0' }}
         run: |
           npm run prepare-code
           npm run test
       - name: Commit submodules, dependency-updates and linter changes
+        if: ${{ env.GIT_DIRTY != '0' }}
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          [[ -n $(git status -s) ]] && git commit -am "Update submodules, browserslist data updates and linter fixes [skip ci]" --no-verify
+          git commit -am "Update submodules, browserslist data updates and linter fixes [skip ci]" --no-verify || true
       - name: Push all changes
+        if: ${{ env.GIT_DIRTY != '0' }}
         run: git push origin ${{ env.GIT_BRANCH_NAME }} --no-verify
