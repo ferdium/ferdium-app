@@ -42,9 +42,13 @@ jobs:
       - name: Install node dependencies
         run: npm i
       - name: Update submodules
-        run: npm run update-submodules
+        run: |
+          npm run update-submodules
+          git add .
       - name: Update browserslist db
-        run: npx browserslist@latest --update-db
+        run: |
+          npx browserslist@latest --update-db
+          git add .
       - name: Run linter, reformatter, rebrander and tests
         run: |
           npm run prepare-code
@@ -53,6 +57,6 @@ jobs:
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git commit -am "Update submodules, browserslist data updates and linter fixes [skip ci]" --no-verify || true
+          [[ -n $(git status -s) ]] && git commit -am "Update submodules, browserslist data updates and linter fixes [skip ci]" --no-verify
       - name: Push all changes
         run: git push origin ${{ env.GIT_BRANCH_NAME }} --no-verify
