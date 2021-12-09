@@ -43,6 +43,7 @@ jobs:
         run: npm i
       - name: Update submodules
         run: |
+          rm -rf ./recipes
           npm run update-submodules
           git add .
       - name: Update browserslist db
