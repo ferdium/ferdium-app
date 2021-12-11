@@ -4,10 +4,6 @@ import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 
 import { RouterStore } from 'mobx-react-router';
-import {
-  DEFAULT_TODO_RECIPE_ID,
-  DEFAULT_TODO_SERVICE_NAME,
-} from '../../config';
 import { sleep } from '../../helpers/async-helpers';
 import SetupAssistant from '../../components/auth/SetupAssistant';
 import ServicesStore from '../../stores/ServicesStore';
@@ -63,9 +59,7 @@ class SetupAssistantScreen extends Component {
   };
 
   async setupServices(serviceConfig) {
-    const {
-      stores: { services },
-    } = this.props;
+    const { stores: { services, router } } = this.props;
 
     this.setState({
       isSettingUpServices: true,
@@ -91,19 +85,13 @@ class SetupAssistantScreen extends Component {
       await sleep(100);
     }
 
-    // Add todo service
-    await services._createService({
-      recipeId: DEFAULT_TODO_RECIPE_ID,
-      serviceData: {
-        name: DEFAULT_TODO_SERVICE_NAME,
-      },
-      redirect: false,
-      skipCleanup: true,
-    });
-
     this.setState({
       isSettingUpServices: false,
     });
+
+    await sleep(100);
+
+    router.push("/");
   }
 
   render() {
