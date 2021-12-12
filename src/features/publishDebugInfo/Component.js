@@ -155,6 +155,8 @@ class PublishDebugLogModal extends Component {
       <Modal
         isOpen={isModalVisible}
         shouldCloseOnOverlayClick
+        className={`${classes.modal} publish-debug`}
+        classes={{close: 'close'}}
         close={() => this.close()}
       >
         <div className={classes.container}>

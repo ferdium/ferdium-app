@@ -11,3 +11,9 @@
     background: $theme-brand-primary;
   }
 }
+
+.theme__dark .publish-debug {
+  .close {
+    color: $dark-theme-gray-lightest;
+  }
+}
