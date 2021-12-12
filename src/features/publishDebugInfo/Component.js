@@ -95,6 +95,11 @@ class PublishDebugLogModal extends Component {
   // Close this modal
   close() {
     ModalState.isModalVisible = false;
+    this.setState({
+      log: null,
+      error: false,
+      isSendingLog: false
+    });
   }
 
   async publishDebugInfo() {
