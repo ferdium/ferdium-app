@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { observer, PropTypes as MobxPropTypes, inject } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import serverlessLogin from '../../helpers/serverless-helpers';
+import { shuffleArray } from '../../helpers/array-helpers';
 
 import Link from '../ui/Link';
 
@@ -37,8 +38,10 @@ class Login extends Component {
 
   render() {
     const { intl } = this.props;
-    const { loginRoute, signupRoute, changeServerRoute, recipes } = this.props;
-
+    const { loginRoute, signupRoute, changeServerRoute } = this.props;
+    let { recipes } = this.props;
+    recipes = shuffleArray(recipes);
+    recipes.length = 8 * 3;
     return (
       <div className="welcome">
         <div className="welcome__content">
