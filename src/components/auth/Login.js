@@ -135,12 +135,6 @@ class Login extends Component {
         <form className="franz-form auth__form" onSubmit={e => this.submit(e)}>
           <img src="./assets/images/logo.svg" className="auth__logo" alt="" />
           <h1>{intl.formatMessage(messages.headline)}</h1>
-          {isDevMode && !useLiveAPI && (
-            <Infobox type="warning">
-              In Dev Mode your data is not persistent. Please use the live app
-              for accessing the production API.
-            </Infobox>
-          )}
           {isTokenExpired && (
             <p className="error-message center">
               {intl.formatMessage(messages.tokenExpired)}

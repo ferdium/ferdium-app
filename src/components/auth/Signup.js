@@ -142,12 +142,6 @@ class Signup extends Component {
           >
             <img src="./assets/images/logo.svg" className="auth__logo" alt="" />
             <h1>{intl.formatMessage(messages.headline)}</h1>
-            {isDevMode && !useLiveAPI && (
-              <Infobox type="warning">
-                In Dev Mode your data is not persistent. Please use the live app
-                for accesing the production API.
-              </Infobox>
-            )}
             <div className="grid__row">
               <Input field={form.$('firstname')} focus />
               <Input field={form.$('lastname')} />
