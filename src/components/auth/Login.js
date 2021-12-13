@@ -5,14 +5,13 @@ import { observer, inject } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 
 import { LIVE_FRANZ_API } from '../../config';
-import { API_VERSION, isDevMode, useLiveAPI } from '../../environment-remote';
+import { API_VERSION } from '../../environment-remote';
 import Form from '../../lib/Form';
 import { required, email } from '../../helpers/validation-helpers';
 import serverlessLogin from '../../helpers/serverless-helpers';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import Link from '../ui/Link';
-import Infobox from '../ui/Infobox';
 
 import { globalError as globalErrorPropType } from '../../prop-types';
 
