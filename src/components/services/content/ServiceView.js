@@ -109,6 +109,7 @@ class ServiceView extends Component {
             {service.isEnabled &&
               service.isLoading &&
               service.isFirstLoad &&
+              !service.isHibernating &&
               !service.isServiceAccessRestricted && (
                 <WebviewLoader loaded={false} name={service.name} />
               )}
@@ -145,12 +146,12 @@ class ServiceView extends Component {
                 />
               </>
             ) : (
-              <div>
-                <span role="img" aria-label="Sleeping Emoji">
+              <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
+                <span role="img" aria-label="Sleeping Emoji" style={{fontSize: 42}}>
                   😴
-                </span>{' '}
-                This service is currently hibernating. If this page doesn&#x27;t
-                close soon, please try reloading Ferdi.
+                </span><br/><br/>
+                This service is currently hibernating.<br/>
+                Try switching services or reloading Ferdi.
               </div>
             )}
           </>
