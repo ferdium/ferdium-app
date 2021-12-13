@@ -41,7 +41,7 @@ class Login extends Component {
     const { loginRoute, signupRoute, changeServerRoute } = this.props;
     let { recipes } = this.props;
     recipes = shuffleArray(recipes);
-    recipes.length = 8 * 3;
+    recipes.length = 8 * 2;
     return (
       <div className="welcome">
         <div className="welcome__content">
