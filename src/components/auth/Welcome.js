@@ -62,14 +62,6 @@ class Login extends Component {
           <Link to={loginRoute} className="button">
             {intl.formatMessage(messages.loginButton)}
           </Link>
-          <br />
-          <br />
-          <a className="button" onClick={this.useLocalServer.bind(this)}>
-            {intl.formatMessage(messages.serverless)}
-          </a>
-          <br />
-          <br />
-
           <Link to={changeServerRoute}>
             <span
               style={{
@@ -81,6 +73,13 @@ class Login extends Component {
               Change server
             </span>
           </Link>
+          <br />
+          <br />
+          <hr />
+          <br />
+          <a className="button" onClick={this.useLocalServer.bind(this)}>
+            {intl.formatMessage(messages.serverless)}
+          </a>
         </div>
         <div className="welcome__featured-services">
           {recipes.map(recipe => (
