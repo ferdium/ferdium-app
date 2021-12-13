@@ -29,14 +29,21 @@ const messages = defineMessages({
   },
 });
 
-const styles = {
+const styles = theme => ({
+  modal: {
+    width: '80%',
+    maxWidth: 600,
+    background: theme.styleTypes.primary.contrast,
+    color: theme.styleTypes.primary.accent,
+    paddingTop: 30,
+  },
   info: {
-    paddingTop: 20,
     paddingBottom: 20,
   },
   headline: {
     fontSize: 20,
     marginBottom: 20,
+    marginTop: -27,
   },
   buttonContainer: {
     display: 'flex',
@@ -51,7 +58,7 @@ const styles = {
     background: '#c45a5a !important',
     color: '#ffffff !important',
   },
-};
+});
 
 class NightlyBuildsModal extends Component {
   close() {
@@ -88,6 +95,7 @@ class NightlyBuildsModal extends Component {
     return (
       <Modal
         isOpen={isModalVisible}
+        className={`${classes.modal} nightly-builds`}
         shouldCloseOnOverlayClick
         close={this.close.bind(this)}
       >

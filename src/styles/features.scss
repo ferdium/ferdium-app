@@ -12,8 +12,6 @@
   }
 }
 
-.theme__dark .publish-debug {
-  .close {
-    color: $dark-theme-gray-lightest;
-  }
+.theme__dark .publish-debug, .theme__dark .nightly-builds {
+  background: $dark-theme-gray-darkest;
 }
