@@ -23,7 +23,7 @@ $tabitem-bias: 30px;
   }
 
   div:first-of-type {
-    overflow-x: scroll;
+    overflow-x: scroll!important;
     width: 100%;
   }
 
@@ -31,7 +31,7 @@ $tabitem-bias: 30px;
     flex-direction: row;
 
     .tab-item {
-      
+
       &.is-active {
         border-left-width: 0px !important;
         border-top-width: 4px;
