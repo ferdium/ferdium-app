@@ -23,7 +23,6 @@ class LoginScreen extends Component {
         }
         signupRoute={stores.user.signupRoute}
         passwordRoute={stores.user.passwordRoute}
-        changeServerRoute={stores.user.changeServerRoute}
         error={error}
       />
     );

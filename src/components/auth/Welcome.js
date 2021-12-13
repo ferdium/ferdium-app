@@ -17,6 +17,10 @@ const messages = defineMessages({
     id: 'welcome.loginButton',
     defaultMessage: 'Login to your account',
   },
+  changeServer: {
+    id: 'login.changeServer',
+    defaultMessage: 'Change server'
+  },
   serverless: {
     id: 'services.serverless',
     defaultMessage: 'Use Ferdi without an Account',
@@ -70,7 +74,7 @@ class Login extends Component {
                 cursor: 'pointer',
               }}
             >
-              Change server
+              {intl.formatMessage(messages.changeServer)}
             </span>
           </Link>
           <br />

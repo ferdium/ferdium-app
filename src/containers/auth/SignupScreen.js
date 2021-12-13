@@ -27,7 +27,6 @@ class SignupScreen extends Component {
         onSubmit={values => this.onSignup(values)}
         isSubmitting={stores.user.signupRequest.isExecuting}
         loginRoute={stores.user.loginRoute}
-        changeServerRoute={stores.user.changeServerRoute}
         error={error}
       />
     );

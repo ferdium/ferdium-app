@@ -6,7 +6,6 @@ import { defineMessages, injectIntl } from 'react-intl';
 
 import Form from '../../lib/Form';
 import { required, email, minLength } from '../../helpers/validation-helpers';
-import serverlessLogin from '../../helpers/serverless-helpers';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import Link from '../ui/Link';
@@ -59,14 +58,6 @@ const messages = defineMessages({
     id: 'signup.link.login',
     defaultMessage: 'Already have an account, sign in?',
   },
-  changeServer: {
-    id: 'login.changeServer',
-    defaultMessage: 'Change server',
-  },
-  serverless: {
-    id: 'services.serverless',
-    defaultMessage: 'Use Ferdi without an Account',
-  },
   emailDuplicate: {
     id: 'signup.emailDuplicate',
     defaultMessage: 'A user with that email address already exists',
@@ -78,9 +69,7 @@ class Signup extends Component {
     onSubmit: PropTypes.func.isRequired,
     isSubmitting: PropTypes.bool.isRequired,
     loginRoute: PropTypes.string.isRequired,
-    changeServerRoute: PropTypes.string.isRequired,
     error: globalErrorPropType.isRequired,
-    actions: PropTypes.object.isRequired,
   };
 
   form = new Form(
@@ -122,14 +111,10 @@ class Signup extends Component {
     });
   }
 
-  useLocalServer() {
-    serverlessLogin(this.props.actions);
-  }
-
   render() {
     const { form } = this;
     const { intl } = this.props;
-    const { isSubmitting, loginRoute, error, changeServerRoute } = this.props;
+    const { isSubmitting, loginRoute, error } = this.props;
 
     return (
       <div className="auth__scroll-container">
@@ -138,7 +123,7 @@ class Signup extends Component {
             className="franz-form auth__form"
             onSubmit={e => this.submit(e)}
           >
-            <img src="./assets/images/logo.svg" className="auth__logo" alt="" />
+            <Link to='/auth/welcome'><img src="./assets/images/logo.svg" className="auth__logo" alt="" /></Link>
             <h1>{intl.formatMessage(messages.headline)}</h1>
             <div className="grid__row">
               <Input field={form.$('firstname')} focus />
@@ -191,12 +176,6 @@ class Signup extends Component {
             </p>
           </form>
           <div className="auth__links">
-            <Link to={changeServerRoute}>
-              {intl.formatMessage(messages.changeServer)}
-            </Link>
-            <a onClick={this.useLocalServer.bind(this)}>
-              {intl.formatMessage(messages.serverless)}
-            </a>
             <Link to={loginRoute}>
               {intl.formatMessage(messages.loginLink)}
             </Link>
