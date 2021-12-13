@@ -12,6 +12,17 @@
   }
 }
 
+.quick-switch {
+  .service {
+    background: $theme-gray-lighter;
+    border: inherit;
+  }
+
+  .active {
+    background: $theme-brand-primary;
+  }
+}
+
 .theme__dark .publish-debug, .theme__dark .nightly-builds {
   background: $dark-theme-gray-darkest;
 }

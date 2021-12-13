@@ -51,9 +51,6 @@ const styles = theme => ({
   service: {
     background: theme.styleTypes.primary.contrast,
     color: theme.colorText,
-    borderColor: theme.styleTypes.primary.accent,
-    borderStyle: 'solid',
-    borderWidth: 1,
     borderRadius: 6,
     padding: '3px 25px',
     marginBottom: 10,
@@ -63,8 +60,6 @@ const styles = theme => ({
       marginBottom: 0,
     },
     '&:hover': {
-      background: theme.styleTypes.primary.accent,
-      color: theme.styleTypes.primary.contrast,
       cursor: 'pointer',
     },
   },
