@@ -5,6 +5,7 @@ import { defineMessages, injectIntl } from 'react-intl';
 import { Link } from 'react-router';
 import injectSheet from 'react-jss';
 
+import { Infobox } from '../../../components/ui/infobox/index';
 import { Input } from '../../../components/ui/input/index';
 import { Button } from '../../../components/ui/button/index';
 import Workspace from '../models/Workspace';
@@ -92,7 +93,8 @@ class EditWorkspaceForm extends Component {
   }
 
   prepareWorkspaceForm(workspace) {
-    const { intl } = this.props;
+    const { intl, updateWorkspaceRequest } = this.props;
+    updateWorkspaceRequest.reset();
     return new Form({
       fields: {
         name: {
@@ -165,6 +167,14 @@ class EditWorkspaceForm extends Component {
           <span className="settings__header-item">{workspace.name}</span>
         </div>
         <div className="settings__body">
+          {updateWorkspaceRequest.error && (
+            <Infobox
+              icon="alert"
+              type="danger"
+            >
+              Error while saving workspace
+            </Infobox>
+          )}
           <div className={classes.nameInput}>
             <Input {...form.$('name').bind()} />
             <Toggle field={form.$('keepLoaded')} />
