@@ -57,7 +57,6 @@ const styles = (theme: Theme) => ({
     position: 'relative',
     overflow: 'hidden',
     height: 'auto',
-    marginBottom: 30,
   },
   infobox: {
     alignItems: 'center',
@@ -68,6 +67,7 @@ const styles = (theme: Theme) => ({
     top: 0,
     transition: infoBoxTransition,
     opacity: 1,
+    marginBottom: 30,
   },
   dismissing: {
     // position: 'absolute',
