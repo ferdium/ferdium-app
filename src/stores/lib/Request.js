@@ -136,6 +136,7 @@ export default class Request {
   }
 
   reset = () => {
+    this.error = null;
     this.result = null;
     this.isExecuting = false;
     this.isError = false;
