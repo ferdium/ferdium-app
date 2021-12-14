@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 import prettyBytes from 'pretty-bytes';
 import { defineMessages, injectIntl } from 'react-intl';
 
-import { mdiGithub, mdiInformation, mdiOpenInNew } from '@mdi/js';
+import { mdiGithub, mdiOpenInNew } from '@mdi/js';
 import Form from '../../../lib/Form';
 import Button from '../../ui/Button';
 import Toggle from '../../ui/Toggle';
@@ -174,11 +174,6 @@ const messages = defineMessages({
   appRestartRequired: {
     id: 'settings.app.restartRequired',
     defaultMessage: 'Changes require restart',
-  },
-  languageDisclaimer: {
-    id: 'settings.app.languageDisclaimer',
-    defaultMessage:
-      'Official translations are English & German. All other languages are community based translations.',
   },
   numberOfColumns: {
     id: 'settings.app.form.splitColumns',
@@ -815,27 +810,22 @@ class EditSettingsForm extends Component {
                 )}
                 <p className="settings__message">
                   <Icon icon={mdiGithub} />
-                  <span>
-                    Ferdi is based on{' '}
-                    <a
-                      href={`${GITHUB_FRANZ_URL}/franz`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Franz
-                    </a>
-                    , a project published under the{' '}
-                    <a
-                      href={`${GITHUB_FRANZ_URL}/franz/blob/master/LICENSE`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Apache-2.0 License
-                    </a>
-                  </span>
-                  <br />
-                  <Icon icon={mdiInformation} />
-                  {intl.formatMessage(messages.languageDisclaimer)}
+                  Ferdi is based on{' '}
+                  <a
+                    href={`${GITHUB_FRANZ_URL}/franz`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Franz
+                  </a>
+                  , a project published under the{' '}
+                  <a
+                    href={`${GITHUB_FRANZ_URL}/franz/blob/master/LICENSE`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Apache-2.0 License
+                  </a>
                 </p>
               </div>
             )}
