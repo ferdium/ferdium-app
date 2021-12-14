@@ -248,14 +248,6 @@ class RecipesDashboard extends Component {
               </div>
               {recipes.length === 0 && recipeFilter !== 'dev' && (
                 <div className="align-middle settings__empty-state">
-                  <span className="emoji">
-                    <img src="./assets/images/emoji/dontknow.png" alt="" />
-                  </span>
-
-                  <p className="settings__empty-state-text">
-                    {intl.formatMessage(messages.nothingFound)}
-                  </p>
-
                   {customWebsiteRecipe && customWebsiteRecipe.id && (
                     <RecipeItem
                       key={customWebsiteRecipe.id}
@@ -268,6 +260,9 @@ class RecipesDashboard extends Component {
                       }
                     />
                   )}
+                  <p className="settings__empty-state-text">
+                    {intl.formatMessage(messages.nothingFound)}
+                  </p>
                 </div>
               )}
               {recipeFilter === 'dev' && devRecipes.length > 0 && (
