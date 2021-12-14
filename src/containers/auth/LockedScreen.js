@@ -59,15 +59,13 @@ class LockedScreen extends Component {
     return (
       <div className="auth">
         <div className="auth__layout">
-          <div className="auth__container">
-            <Locked
-              onSubmit={this.onSubmit}
-              unlock={this.unlock}
-              useTouchIdToUnlock={useTouchIdToUnlock}
-              isSubmitting={stores.user.loginRequest.isExecuting}
-              error={this.state.error || {}}
-            />
-          </div>
+          <Locked
+            onSubmit={this.onSubmit}
+            unlock={this.unlock}
+            useTouchIdToUnlock={useTouchIdToUnlock}
+            isSubmitting={stores.user.loginRequest.isExecuting}
+            error={this.state.error || {}}
+          />
         </div>
       </div>
     );
