@@ -138,7 +138,7 @@ class QuickSwitchModal extends Component {
           service.name.toLowerCase().search(this.state.search.toLowerCase()) !==
           -1,
       );
-    } else {
+    } else if (this.props.stores.services.allDisplayed.length > 0) {
       // Add the currently active service first
       const currentService = this.props.stores.services.active;
       if (currentService) {
