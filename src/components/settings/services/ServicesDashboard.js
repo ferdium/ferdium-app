@@ -27,7 +27,7 @@ const messages = defineMessages({
   noServiceFound: {
     id: 'settings.services.nothingFound',
     defaultMessage:
-      'Sorry, but no service matched your search term - but you can still probably add it using the "Custom Website" option. Please note that the website might show more services that have been added to Ferdi since the version that you are currently on. To get those new services, please consider upgrading to a newer version of Ferdi.',
+      'Sorry, but no service matched your search term.',
   },
   discoverServices: {
     id: 'settings.services.discoverServices',
