@@ -56,7 +56,6 @@ function generateAccentStyle(accentColorStr) {
     .settings-navigation .settings-navigation__link.is-active,
     a.button,
     button.button,
-    .auth,
     .info-bar,
     .info-bar.info-bar--primary,
     .infobox.infobox--primary,

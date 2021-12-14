@@ -69,9 +69,7 @@ class Login extends Component {
           <Link to={changeServerRoute}>
             <span
               style={{
-                textAlign: 'center',
-                width: '100%',
-                cursor: 'pointer',
+                color: '#fff'
               }}
             >
               {intl.formatMessage(messages.changeServer)}
