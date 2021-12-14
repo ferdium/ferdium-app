@@ -34,7 +34,6 @@ const styles = theme => ({
     width: '80%',
     maxWidth: 600,
     background: theme.styleTypes.primary.contrast,
-    color: theme.styleTypes.primary.accent,
     paddingTop: 30,
   },
   info: {
