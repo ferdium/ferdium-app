@@ -116,6 +116,7 @@ class EditWorkspaceForm extends Component {
   }
 
   save(form) {
+    this.props.updateWorkspaceRequest.reset();
     form.submit({
       onSuccess: async f => {
         const { onSave } = this.props;
