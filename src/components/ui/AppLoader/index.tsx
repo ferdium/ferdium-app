@@ -55,7 +55,6 @@ class AppLoader extends Component<Props> {
 
     return (
       <FullscreenLoader
-        title="Ferdi"
         className={classes.component}
         spinnerColor={theme.colorAppLoaderSpinner}
       >
