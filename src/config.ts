@@ -86,7 +86,7 @@ const TODO_TICKTICK_URL = 'https://ticktick.com/signin';
 const TODO_MSTODO_URL = 'https://todo.microsoft.com/?app#';
 const TODO_HABITICA_URL = 'https://habitica.com/login';
 const TODO_NOZBE_URL = 'https://app.nozbe.com/#login';
-const TODO_RTM_URL = 'https://www.rememberthemilk.com/login/';
+const TODO_RTM_URL = 'https://www.rememberthemilk.com/';
 const TODO_ANYDO_URL = 'https://desktop.any.do/';
 const TODO_GOOGLETASKS_URL =
   'https://tasks.google.com/embed/?origin=https%3A%2F%2Fcalendar.google.com&fullWidth=1';
