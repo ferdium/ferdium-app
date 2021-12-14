@@ -12,10 +12,6 @@ import Appear from '../../ui/effects/Appear';
 import serverlessLogin from '../../../helpers/serverless-helpers';
 
 const messages = defineMessages({
-  welcome: {
-    id: 'services.welcome',
-    defaultMessage: 'Welcome to Ferdi',
-  },
   getStarted: {
     id: 'services.getStarted',
     defaultMessage: 'Get started',
@@ -129,11 +125,10 @@ class Services extends Component {
           <Appear timeout={1500} transitionName="slideUp">
             <div className="services__no-service">
               <img
-                src="./assets/images/logo.svg"
+                src="./assets/images/logo-beard-only.svg"
                 alt="Logo"
                 style={{ maxHeight: '50vh' }}
               />
-              <h1>{intl.formatMessage(messages.welcome)}</h1>
               {!isLoggedIn && (
                 <>
                   <p>{intl.formatMessage(messages.login)}</p>
