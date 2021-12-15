@@ -236,6 +236,7 @@ class TabItem extends Component {
         label: intl.formatMessage(messages.reload),
         click: reload,
         accelerator: `${cmdOrCtrlShortcutKey()}+R`,
+        enabled: service.isEnabled,
       },
       {
         label: intl.formatMessage(globalMessages.edit),
@@ -253,6 +254,7 @@ class TabItem extends Component {
           : intl.formatMessage(messages.enableNotifications),
         click: () => toggleNotifications(),
         accelerator: `${cmdOrCtrlShortcutKey()}+${altKey()}+N`,
+        enabled: service.isEnabled,
       },
       {
         label: service.isMuted
@@ -260,6 +262,7 @@ class TabItem extends Component {
           : intl.formatMessage(messages.disableAudio),
         click: () => toggleAudio(),
         accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+A`,
+        enabled: service.isEnabled,
       },
       {
         label: service.isDarkModeEnabled
@@ -267,6 +270,7 @@ class TabItem extends Component {
           : intl.formatMessage(messages.enableDarkMode),
         click: () => toggleDarkMode(),
         accelerator: `${shiftKey()}+${altKey()}+D`,
+        enabled: service.isEnabled,
       },
       {
         label: intl.formatMessage(
