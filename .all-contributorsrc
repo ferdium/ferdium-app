@@ -1124,6 +1124,15 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "dedotombo",
+      "name": "dedotombo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/42537874?v=4",
+      "profile": "https://github.com/dedotombo",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 16,
