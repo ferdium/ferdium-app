@@ -31,6 +31,7 @@
       - [Javascript Coding style-checker](#javascript-coding-style-checker)
   - [Packaging](#packaging)
   - [Release](#release)
+    - [Nightly releases](#nightly-releases)
     - [Updating the code after a hiatus](#updating-the-code-after-a-hiatus)
 
 <!-- /TOC -->
@@ -228,6 +229,10 @@ git push
 ```
 
 This will automatically trigger the build, as part of which, a new, draft release will be created [here](https://github.com/getferdi/ferdi/releases/). Once all the assets are uploaded (19 assets in total), publish the release (you will need elevated permissions in GitHub for doing this). The last commit of the `release` branch will be tagged.
+
+### Nightly releases
+
+Nightly releases are automatically triggered every day ([details](https://github.com/getferdi/ferdi/pull/990)) and available in [getferdi/ferdi](https://github.com/getferdi/ferdi/releases). Maintainers still need to verify and manually publish the draft releases as pre-releases for now.
 
 ### Updating the code after a hiatus
 
