@@ -10,7 +10,7 @@
 # 'WIN_CSC_LINK' (The HTTPS link or local path to certificate - for code signing of windows artifacts)
 # 'WIN_CSC_KEY_PASSWORD' (The password to decrypt the certificate given in CSC_LINK - for code signing of windows artifacts)
 
-name: Ferdi Builds
+name: Builds
 
 on:
   # Push to any tracked branches
