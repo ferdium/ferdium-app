@@ -80,7 +80,7 @@ class CreateWorkspaceForm extends Component {
           focus={workspaceStore.isUserAllowedToUseFeature}
         />
         <Button
-          className={classes.submitButton}
+          className={`${classes.submitButton} franz-form__button`}
           type="submit"
           label={intl.formatMessage(messages.submitButton)}
           onClick={this.submitForm.bind(this, form)}
