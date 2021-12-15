@@ -210,7 +210,7 @@ export default (brandPrimary: string) => {
           hoverColor: legacyStyles.themeGrayLight,
         },
         listItem: {
-          hoverBackground: color(drawerBg).darken(0.01).hex(),
+          hoverBackground: color(drawerBg).darken(0.05).hex(),
           activeBackground: legacyStyles.themeGrayLightest,
           border: color(drawerBg).darken(0.05).hex(),
           name: {

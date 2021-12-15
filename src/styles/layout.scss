@@ -35,7 +35,6 @@ html {
 
     .sidebar__button {
       color: $dark-theme-gray-lighter;
-      font-size: 22px;
 
       &:hover,
       &:active {
@@ -51,33 +50,33 @@ html {
         opacity: 0.25;
         filter: grayscale(1);
       }
-
-      .update-available {
-        align-items: center;
-        background: $theme-brand-danger;
-        border-radius: 20px;
-        bottom: 5px;
-        color: #fff;
-        display: flex;
-        justify-content: center;
-        padding: 0px 5px;
-        position: absolute;
-        right: 16px;
-        padding-top: 0;
-        font-size: 0px;
-        min-height: 15px;
-        min-width: 15px;
-
-        animation-name: pulse-danger;
-        animation-duration: 0.75s;
-        animation-iteration-count: 6;
-      }
     }
   }
 
   .app-loader .app-loader__title {
     color: $dark-theme-gray-lightest;
   }
+}
+
+.app .sidebar .sidebar__button .update-available {
+  align-items: center;
+  background: $theme-brand-danger;
+  border-radius: 20px;
+  bottom: 5px;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  padding: 0px 5px;
+  position: absolute;
+  right: 16px;
+  padding-top: 0;
+  font-size: 0px;
+  min-height: 15px;
+  min-width: 15px;
+
+  animation-name: pulse-danger;
+  animation-duration: 0.75s;
+  animation-iteration-count: 6;
 }
 
 body.win32:not(.isFullScreen) .app .app__content {

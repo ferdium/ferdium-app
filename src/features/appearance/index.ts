@@ -38,7 +38,6 @@ function generateAccentStyle(accentColorStr) {
     .theme__dark .app .sidebar .sidebar__button.is-active,
     .sidebar .sidebar__button.is-muted,
     .sidebar .sidebar__button.is-active,
-    .tab-item.is-active,
     .settings .account .invoices .invoices__action button,
     .settings-navigation .settings-navigation__link.is-active .badge,
     a.link,
@@ -78,7 +77,7 @@ function generateAccentStyle(accentColorStr) {
       border-right-color: ${accentColorStr};
     }
 
-    .franz-form .franz-form__radio.is-selected {
+    .franz-form .franz-form__radio.is-selected, .tab-item.is-active {
       border-color: ${accentColorStr};
     }
 
@@ -107,7 +106,7 @@ function generateAccentStyle(accentColorStr) {
     }
 
     .tab-item.is-active {
-      background: ${accentColor.lighten(0.35).hex()};
+      background: ${accentColor.lightness(90).hex()};
     }
   `;
 }
