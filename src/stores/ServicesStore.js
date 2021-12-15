@@ -1036,10 +1036,6 @@ export default class ServicesStore extends Store {
     if (!service.canHibernate) {
       return;
     }
-    if (service.isActive) {
-      debug(`Skipping service hibernation for ${service.name}`);
-      return;
-    }
 
     debug(`Hibernate ${service.name}`);
 
