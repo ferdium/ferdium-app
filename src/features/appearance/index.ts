@@ -60,7 +60,6 @@ function generateAccentStyle(accentColorStr) {
     .info-bar.info-bar--primary,
     .infobox.infobox--primary,
     .theme__dark .badge.badge--primary,
-    .theme__dark,
     .badge.badge--primary,
     .content-tabs .content-tabs__tabs .content-tabs__item.is-active,
     #electron-app-title-bar .toolbar-dropdown:not(.open) > .toolbar-button > button:hover,
@@ -255,7 +254,6 @@ function generateVerticalStyle(widthStr, alwaysShowWorkspaces) {
     document.head.append(link);
   }
   const width = Number(widthStr);
-  const sidebarWidth = width - 4;
   const verticalStyleOffset = 23;
 
   return `
@@ -274,7 +272,7 @@ function generateVerticalStyle(widthStr, alwaysShowWorkspaces) {
   }
 
   .workspaces-drawer {
-    margin-top: -${sidebarWidth - verticalStyleOffset - 1}px !important;
+    margin-top: -${0 - verticalStyleOffset - 1}px !important;
   }
 
   .todos__todos-panel--expanded {

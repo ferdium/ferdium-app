@@ -17,6 +17,8 @@ html {
 }
 
 .theme__dark .app {
+  background: #272727;
+
   .sidebar {
     background: $dark-theme-gray-darker;
     color: $theme-text-color;
@@ -87,6 +89,7 @@ body.win32:not(.isFullScreen) .app .app__content {
 }
 
 .app {
+  background: #fff;
   .app__content {
     display: flex;
     width: calc(100% + 300px);
