@@ -6,12 +6,14 @@ import * as legacyStyles from '../legacy';
 
 export default (brandPrimary: string) => {
   const defaultStyles = makeDefaultThemeConfig(brandPrimary);
+  /*
   let brandPrimaryColor = color(legacyStyles.themeBrandPrimary);
   try {
     brandPrimaryColor = color(defaultStyles.brandPrimary);
   } catch {
     // Ignore invalid color and fall back to default.
   }
+  */
 
   const colorBackground = legacyStyles.darkThemeGrayDarkest;
   const colorText = legacyStyles.darkThemeTextColor;
