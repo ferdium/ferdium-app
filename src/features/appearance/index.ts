@@ -253,6 +253,7 @@ function generateVerticalStyle(widthStr, alwaysShowWorkspaces) {
     document.head.append(link);
   }
   const width = Number(widthStr);
+  const sidebarWidth = width - 4;
   const verticalStyleOffset = 23;
 
   return `
@@ -271,7 +272,7 @@ function generateVerticalStyle(widthStr, alwaysShowWorkspaces) {
   }
 
   .workspaces-drawer {
-    margin-top: -${0 - verticalStyleOffset - 1}px !important;
+    margin-top: -${sidebarWidth - verticalStyleOffset - 1}px !important;
   }
 
   .todos__todos-panel--expanded {
