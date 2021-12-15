@@ -11,73 +11,22 @@
 
 # Ferdi
 
-<p align="center">
-<img alt="GitHub Releases" src="https://img.shields.io/github/downloads/getferdi/ferdi/latest/total?label=Downloads&logo=iCloud&logoColor=%23FFFFFF">
+<p>
+<a href="https://github.com/getferdi/ferdi/actions/workflows/builds.yml"><img alt="Build Status" src="https://github.com/getferdi/ferdi/actions/workflows/builds.yml/badge.svg?branch=develop&event=push"></a>
+<a title="Crowdin" target="_blank" href="https://crowdin.com/project/getferdi"><img src="https://badges.crowdin.net/getferdi/localized.svg"></a>
+<img alt="GitHub Releases" src="https://img.shields.io/github/downloads/getferdi/ferdi/latest/total?label=downloads">
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 <a href='#contributors-'><img src='https://img.shields.io/badge/contributors-115-default.svg?logo=github' alt='Contributors'/></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 <a href="#backers-via-opencollective"><img alt="Open Collective backers" src="https://img.shields.io/opencollective/backers/getferdi?logo=open-collective"></a>
-<a href="https://github.com/getferdi/ferdi/actions/workflows/ferdi-builds.yml"><img alt="Build Status" src="https://github.com/getferdi/ferdi/actions/workflows/ferdi-builds.yml/badge.svg?branch=develop&event=push"></a>
 <a href="https://gitter.im/getferdi/community"><img alt="Gitter Chat Room" src="https://img.shields.io/gitter/room/getferdi/community"></a>
 </p>
 
-🤴🏽 Hard-fork of [Franz](https://github.com/meetfranz/franz), adding awesome features and removing unwanted ones.
-
-## Table of contents
-
-<details>
-<summary>Toggle navigation</summary>
-
-- [Ferdi](#ferdi)
-  - [Table of contents](#table-of-contents)
-  - [What is Ferdi?](#what-is-ferdi)
-  - [Features](#features)
-  - [What does Ferdi look like?](#what-does-ferdi-look-like)
-  - [How to get and start using Ferdi](#how-to-get-and-start-using-ferdi)
-    - [Download Ferdi](#download-ferdi)
-    - [Or use Chocolatey (Windows only)](#or-use-chocolatey-windows-only)
-    - [Or use Windows Package Manager (Windows only)](#or-use-windows-package-manager-windows-only)
-    - [Or use homebrew (macOS or Linux)](#or-use-homebrew-macos-or-linux)
-    - [Or use snap (Linux only)](#or-use-snap-linux-only)
-    - [Or use AUR (Arch Linux)](#or-use-aur-arch-linux)
-  - [What makes Ferdi different from Franz?](#what-makes-ferdi-different-from-franz)
-    - [Removes unproductive paywalls and other other interruptions](#removes-unproductive-paywalls-and-other-other-interruptions)
-    - [Adds features to increase your productivity](#adds-features-to-increase-your-productivity)
-    - [Adds features to improve your privacy](#adds-features-to-improve-your-privacy)
-    - [Adds features to improve your experience using Ferdi](#adds-features-to-improve-your-experience-using-ferdi)
-    - [Fixes bugs](#fixes-bugs)
-    - [Adds new platforms](#adds-new-platforms)
-    - [Adds internal changes](#adds-internal-changes)
-  - [Contributing to Ferdi's development](#contributing-to-ferdis-development)
-  - [Nightly releases](#nightly-releases)
-  - [Troubleshooting recipes (self-help)](#troubleshooting-recipes-self-help)
-  - [Contributors ✨](#contributors-)
-  - [Backers via Open Collective](#backers-via-open-collective)
-  - [Sponsors](#sponsors)
-  </details>
-
-## What is Ferdi?
+> 🤴🏽 Hard-fork of [Franz](https://github.com/meetfranz/franz), adding awesome features and removing unwanted ones.
 
 Ferdi is a desktop app that helps you organize how you use your favourite apps by combining them into one application. It is based on Franz - a software already used by thousands of people - with the difference that Ferdi gives you many additional features and doesn't restrict its usage! Furthermore, Ferdi is compatible with your existing Franz account, so you can continue right where you left off. Please find out more about Ferdi and its features on [getferdi.com](https://getferdi.com).
 
-## Features
-
-- [x] Ferdi puts all your web apps into one place
-- [x] Native support for 219 services
-- [x] Workspaces to keep your personal and work life separated
-- [x] Support for multiple accounts on any service
-- [x] Dark Mode support for all of your services
-- [x] Optional cloud sync to keep your services synchronized between devices
-- [x] Better control over when you get which notifications
-- [x] Cross-platform so you can view your services on all your computers
-- [x] Full proxy support to work in every network environment
-- [x] Ferdi speaks your language: Support for 20+ languages
-
-...and best of all:
-
-- [x] Its completely free! There are no restrictions on features, no paywalls, no ads
-
-## What does Ferdi look like?
+## Screenshots
 
 <details>
 <summary>Toggle screenshots</summary>
@@ -93,49 +42,18 @@ Ferdi is a desktop app that helps you organize how you use your favourite apps b
 </p>
 </details>
 
-## How to get and start using Ferdi
+## Download
 
-### Download Ferdi
+👉 [getferdi.com/download](https://getferdi.com/download/)
 
-You can download Ferdi for Windows, Mac and Linux on [Ferdi's download page](https://getferdi.com/download) or you can find all variants in the [latest stable release](https://github.com/getferdi/ferdi/releases/latest) assets and [all the other releases here](https://github.com/getferdi/ferdi/releases).
-
-### Or use Chocolatey (Windows only)
-
-`$ choco install ferdi`
-
-(Don't know Chocolatey? [chocolatey.org](https://chocolatey.org/))
-
-### Or use Windows Package Manager (Windows only)
-
-`$ winget install --id AmineMouafik.Ferdi`
-
-(Don't know winget? [winget-cli](https://github.com/microsoft/winget-cli/))
-
-### Or use homebrew (macOS or Linux)
-
-`$ brew install --cask ferdi`
-
-(Don't know homebrew? [brew.sh](https://brew.sh/))
-
-### Or use snap (Linux only)
-
-`$ snap install ferdi`
-
-You can find published releases as `stable`, `beta` and `nightly` channels on [snapcraft.io](https://snapcraft.io/ferdi).
-
-(Don't know snap? [snapcraft.io](https://snapcraft.io/))
-
-### Or use AUR (Arch Linux)
-
-Ferdi has three separate AUR packages you can use:
-
-- **[ferdi](https://aur.archlinux.org/packages/ferdi/)**: Uses your system electron version to run the latest release - this version will work best on most systems.
-- **[ferdi-bin](https://aur.archlinux.org/packages/ferdi-bin/)**: Uses the latest Fedora release and extracts it to Arch. Use this version if you are having trouble with the `ferdi` package.
-- **[ferdi-git](https://aur.archlinux.org/packages/ferdi-git/)**: Uses your system electron version to run the latest commit from the develop branch and may be unstable but may also give you features that are not yet available in other versions. Please only use `ferdi-git` if you accept these risks.
-
-If you use an AUR Helper, e.g. yay, install it via `yay -S ferdi`.
+Assets made available via [GitHub releases](https://github.com/getferdi/ferdi/releases/latest).
 
 ## What makes Ferdi different from Franz?
+
+_Find answers to other frequently asked questions on [getferdi.com/faq](https://getferdi.com/faq/)._
+
+<details>
+<summary>Toggle answer</summary>
 
 ### Removes unproductive paywalls and other other interruptions
 
@@ -234,21 +152,16 @@ If you use an AUR Helper, e.g. yay, install it via `yay -S ferdi`.
 - [x] Adds retry commands to flaky build steps ([#498](https://github.com/getferdi/ferdi/issues/498))
 - [x] Runs utility scripts pre-commit instead of pre-push ([#515](https://github.com/getferdi/ferdi/issues/515))
 
-> Thanks to all our [contributors](#contributors-) who helped realize all these amazing features! 💖
+</details>
 
-## Contributing to Ferdi's development
+## Troubleshooting [recipes](https://github.com/getferdi/recipes)
 
-We welcome all contributors. Please read the [contributing guidelines](CONTRIBUTING.md) to setup your development machine and proceed.
+<details>
+<summary>Toggle answer</summary>
 
-## Nightly releases
+One of the issues being raised by the users of Ferdi is that certain service-functionalities do not work. As good example of this is either the unread count (badge) stops working for specific services or the gmail logins don't work anymore. (These are just 2 of the most common problems reported).
 
-Nightly releases are automatically triggered every day ([details](https://github.com/getferdi/ferdi/pull/990)) and available in [getferdi/ferdi](https://github.com/getferdi/ferdi/releases). Maintainers still need to verify and manually publish the draft releases as pre-releases for now.
-
-## Troubleshooting recipes (self-help)
-
-One of the issues being raised by the awesome users of Ferdi is that certain service-functionalities do not work. As good example of this is either the unread count (badge) stops working for specific services or the gmail logins don't work anymore. (These are just 2 of the most common problems reported).
-
-Since we (the contributors to Ferdi) also eat our own dog food, we use Ferdi as our day-to-day communication app - and most likely have faced the same/similar issue. As a first step before filing an issue, we request you to follow these simple steps to see if the issue gets fixed. These recipes will get automatically upgraded when you upgrade to the newer versions of Ferdi, but to get new recipes **between** Ferdi releases, this documentation is quite useful.
+Since we (the contributors to Ferdi) also eat our own food, we use Ferdi as our day-to-day communication app - and most likely have faced the same/similar issue. As a first step before filing an issue, we request you to follow these simple steps to see if the issue gets fixed. These recipes will get automatically upgraded when you upgrade to the newer versions of Ferdi, but to get new recipes **between** Ferdi releases, this documentation is quite useful.
 
 - Make sure you are on the latest version of Ferdi. As of this writing, since the nightly CI packaging process is broken, we request you to download the latest nightly from the link in [Nightly releases](#nightly-releases) section.
 - Stop Ferdi
@@ -266,29 +179,35 @@ Since we (the contributors to Ferdi) also eat our own dog food, we use Ferdi as 
 - If this process did not fix the issue, please log a detailed bug report [here](https://github.com/getferdi/recipes/issues)
 - _Note:_ An automated process to perform these steps is being ideated and tracked [here](https://github.com/getferdi/ferdi/issues/1302)
 
+</details>
+
+## Contributing
+
+Please read the [contributing guidelines](CONTRIBUTING.md) to setup your development machine and proceed.
+
 ## Contributors ✨
 
-Thanks goes to these awesome people:
+Special thanks goes to these awesome people:
 
-<a href="https://github.com/getferdi/ferdi/contributors" target="_blank"><img src="https://opencollective.com/getferdi/contributors.svg?width=890&button=off"></a>
+<a href="https://github.com/getferdi/ferdi/blob/develop/.all-contributorsrc" target="_blank"><img src="https://opencollective.com/getferdi/contributors.svg?avatarHeight=42&width=890&button=off"></a>
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
 
-## Backers via Open Collective
+### Backers via Open Collective
 
-<a href="https://opencollective.com/getferdi#section-contribute" target="_blank"><img src="https://opencollective.com/getferdi/backers.svg?width=890&button=off"></a>
+<a href="https://opencollective.com/getferdi#section-contribute" target="_blank"><img src="https://opencollective.com/getferdi/backers.svg?avatarHeight=42&width=890"></a>
 
 Mention to the individuals backing us via [GitHub Sponsors](https://github.com/sponsors/getferdi) as well.
 
-## Sponsors
+### Sponsors
 
 <p>
   <a href="https://www.digitalocean.com/">
-    <img src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_horizontal_blue.svg" height="32px">
+    <img src="https://getferdi.com/wp-content/uploads/sites/4/2021/09/digitalocean-logo-vector-1-1.svg" height="32px">
   </a>
 </p>
 <p>
   <a href="https://www.parallels.com/">
-    <img src="https://user-images.githubusercontent.com/412895/141497533-f5e4a0b2-6ffa-4642-aa39-c117f7705780.png" height="32px">
+    <img src="https://getferdi.com/wp-content/uploads/sites/4/2021/12/Parallels_logo.svg" height="30px">
   </a>
 </p>
