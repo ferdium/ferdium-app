@@ -288,7 +288,7 @@ class TabItem extends Component {
         // eslint-disable-next-line no-confusing-arrow
         click: () =>
           service.isHibernating ? wakeUpService() : hibernateService(),
-        enabled: service.canHibernate,
+        enabled: service.isEnabled && service.canHibernate,
       },
       {
         type: 'separator',
