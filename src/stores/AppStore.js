@@ -1,46 +1,48 @@
-import { remote, ipcRenderer, shell } from 'electron';
+import { ipcRenderer } from 'electron';
 import {
-  action, computed, observable,
-} from 'mobx';
+  app,
+  screen,
+  powerMonitor,
+  nativeTheme,
+  getCurrentWindow,
+  process as remoteProcess,
+} from '@electron/remote';
+import { action, computed, observable } from 'mobx';
 import moment from 'moment';
-import { getDoNotDisturb } from '@meetfranz/electron-notification-state';
 import AutoLaunch from 'auto-launch';
-import prettyBytes from 'pretty-bytes';
 import ms from 'ms';
 import { URL } from 'url';
-import os from 'os';
-import path from 'path';
 import { readJsonSync } from 'fs-extra';
 
 import Store from './lib/Store';
 import Request from './lib/Request';
 import { CHECK_INTERVAL, DEFAULT_APP_SETTINGS } from '../config';
-import { isMac } from '../environment';
-import locales from '../i18n/translations';
-import { onVisibilityChange } from '../helpers/visibility-helper';
+import { isMac, electronVersion, osRelease } from '../environment';
+import { ferdiVersion, userDataPath, ferdiLocale } from '../environment-remote';
+import { generatedTranslations } from '../i18n/translations';
 import { getLocale } from '../helpers/i18n-helpers';
 
-import { getServiceIdsFromPartitions, removeServicePartitionDirectory } from '../helpers/service-helpers.js';
-import { isValidExternalURL } from '../helpers/url-helpers';
+import {
+  getServiceIdsFromPartitions,
+  removeServicePartitionDirectory,
+} from '../helpers/service-helpers';
+import { openExternalUrl } from '../helpers/url-helpers';
 import { sleep } from '../helpers/async-helpers';
 
 const debug = require('debug')('Ferdi:AppStore');
 
-const {
-  app, nativeTheme, screen, powerMonitor,
-} = remote;
+const mainWindow = getCurrentWindow();
 
-const mainWindow = remote.getCurrentWindow();
-
-const defaultLocale = DEFAULT_APP_SETTINGS.locale;
-
-const executablePath = isMac ? remote.process.execPath : process.execPath;
+const executablePath = isMac ? remoteProcess.execPath : process.execPath;
 const autoLauncher = new AutoLaunch({
   name: 'Ferdi',
   path: executablePath,
 });
 
-const CATALINA_NOTIFICATION_HACK_KEY = '_temp_askedForCatalinaNotificationPermissions';
+const CATALINA_NOTIFICATION_HACK_KEY =
+  '_temp_askedForCatalinaNotificationPermissions';
+
+const locales = generatedTranslations();
 
 export default class AppStore extends Store {
   updateStatusTypes = {
@@ -53,7 +55,10 @@ export default class AppStore extends Store {
 
   @observable healthCheckRequest = new Request(this.api.app, 'health');
 
-  @observable getAppCacheSizeRequest = new Request(this.api.local, 'getAppCacheSize');
+  @observable getAppCacheSizeRequest = new Request(
+    this.api.local,
+    'getAppCacheSize',
+  );
 
   @observable clearAppCacheRequest = new Request(this.api.local, 'clearCache');
 
@@ -63,13 +68,13 @@ export default class AppStore extends Store {
 
   @observable authRequestFailed = false;
 
-  @observable timeSuspensionStart;
+  @observable timeSuspensionStart = moment();
 
   @observable timeOfflineStart;
 
-  @observable updateStatus = null;
+  @observable updateStatus = '';
 
-  @observable locale = defaultLocale;
+  @observable locale = ferdiLocale;
 
   @observable isSystemMuteOverridden = false;
 
@@ -80,8 +85,6 @@ export default class AppStore extends Store {
   @observable isFullScreen = mainWindow.isFullScreen();
 
   @observable isFocused = true;
-
-  @observable nextAppReleaseVersion = null;
 
   dictionaries = [];
 
@@ -97,7 +100,9 @@ export default class AppStore extends Store {
     this.actions.app.openExternalUrl.listen(this._openExternalUrl.bind(this));
     this.actions.app.checkForUpdates.listen(this._checkForUpdates.bind(this));
     this.actions.app.installUpdate.listen(this._installUpdate.bind(this));
-    this.actions.app.resetUpdateStatus.listen(this._resetUpdateStatus.bind(this));
+    this.actions.app.resetUpdateStatus.listen(
+      this._resetUpdateStatus.bind(this),
+    );
     this.actions.app.healthCheck.listen(this._healthCheck.bind(this));
     this.actions.app.muteApp.listen(this._muteApp.bind(this));
     this.actions.app.toggleMuteApp.listen(this._toggleMuteApp.bind(this));
@@ -118,12 +123,19 @@ export default class AppStore extends Store {
     window.addEventListener('focus', this.actions.service.focusActiveService);
 
     // Online/Offline handling
-    window.addEventListener('online', () => { this.isOnline = true; });
-    window.addEventListener('offline', () => { this.isOnline = false; });
+    window.addEventListener('online', () => {
+      this.isOnline = true;
+    });
+    window.addEventListener('offline', () => {
+      this.isOnline = false;
+    });
 
-    mainWindow.on('enter-full-screen', () => { this.isFullScreen = true; });
-    mainWindow.on('leave-full-screen', () => { this.isFullScreen = false; });
-
+    mainWindow.on('enter-full-screen', () => {
+      this.isFullScreen = true;
+    });
+    mainWindow.on('leave-full-screen', () => {
+      this.isFullScreen = false;
+    });
 
     this.isOnline = navigator.onLine;
 
@@ -137,10 +149,13 @@ export default class AppStore extends Store {
     setInterval(() => this._systemDND(), ms('5s'));
 
     this.fetchDataInterval = setInterval(() => {
-      this.stores.user.getUserInfoRequest.invalidate({ immediately: true });
-      this.stores.features.featuresRequest.invalidate({ immediately: true });
-      this.stores.news.latestNewsRequest.invalidate({ immediately: true });
-    }, ms('10m'));
+      this.stores.user.getUserInfoRequest.invalidate({
+        immediately: true,
+      });
+      this.stores.features.featuresRequest.invalidate({
+        immediately: true,
+      });
+    }, ms('60m'));
 
     // Check for updates once every 4 hours
     setInterval(() => this._checkForUpdates(), CHECK_INTERVAL);
@@ -149,7 +164,6 @@ export default class AppStore extends Store {
     ipcRenderer.on('autoUpdate', (event, data) => {
       if (data.available) {
         this.updateStatus = this.updateStatusTypes.AVAILABLE;
-        this.nextAppReleaseVersion = data.version;
         if (isMac) {
           app.dock.bounce();
         }
@@ -171,7 +185,7 @@ export default class AppStore extends Store {
       }
     });
 
-    // Handle deep linking (franz://)
+    // Handle deep linking (ferdi://)
     ipcRenderer.on('navigateFromDeepLink', (event, data) => {
       debug('Navigate from deep link', data);
       let { url } = data;
@@ -194,10 +208,9 @@ export default class AppStore extends Store {
 
     this.isSystemDarkModeEnabled = nativeTheme.shouldUseDarkColors;
 
-    onVisibilityChange((isVisible) => {
-      this.isFocused = isVisible;
-
-      debug('Window is visible/focused', isVisible);
+    ipcRenderer.on('isWindowFocused', (event, isFocused) => {
+      debug('Setting is focused to', isFocused);
+      this.isFocused = isFocused;
     });
 
     powerMonitor.on('suspend', () => {
@@ -207,13 +220,20 @@ export default class AppStore extends Store {
     });
 
     powerMonitor.on('resume', () => {
-      debug('System resumed, last suspended on', this.timeSuspensionStart.toString());
+      debug('System resumed, last suspended on', this.timeSuspensionStart);
+      this.actions.service.resetLastPollTimer();
 
-      if (this.timeSuspensionStart.add(10, 'm').isBefore(moment()) && this.stores.settings.app.get('reloadAfterResume')) {
+      if (
+        this.timeSuspensionStart.add(10, 'm').isBefore(moment()) &&
+        this.stores.settings.app.get('reloadAfterResume')
+      ) {
         debug('Reloading services, user info and features');
 
-        setTimeout(() => {
-          window.location.reload();
+        setInterval(() => {
+          debug('Reload app interval is starting');
+          if (this.isOnline) {
+            window.location.reload();
+          }
         }, ms('2s'));
       }
     });
@@ -221,21 +241,19 @@ export default class AppStore extends Store {
     // macOS catalina notifications hack
     // notifications got stuck after upgrade but forcing a notification
     // via `new Notification` triggered the permission request
-    if (isMac) {
-      if (!localStorage.getItem(CATALINA_NOTIFICATION_HACK_KEY)) {
-        debug('Triggering macOS Catalina notification permission trigger');
-        // eslint-disable-next-line no-new
-        new window.Notification('Welcome to Ferdi 5', {
-          body: 'Have a wonderful day & happy messaging.',
-        });
+    if (isMac && !localStorage.getItem(CATALINA_NOTIFICATION_HACK_KEY)) {
+      debug('Triggering macOS Catalina notification permission trigger');
+      // eslint-disable-next-line no-new
+      new window.Notification('Welcome to Ferdi 5', {
+        body: 'Have a wonderful day & happy messaging.',
+      });
 
-        localStorage.setItem(CATALINA_NOTIFICATION_HACK_KEY, true);
-      }
+      localStorage.setItem(CATALINA_NOTIFICATION_HACK_KEY, 'true');
     }
   }
 
   @computed get cacheSize() {
-    return prettyBytes(this.getAppCacheSizeRequest.execute().result || 0);
+    return this.getAppCacheSizeRequest.execute().result;
   }
 
   @computed get debugInfo() {
@@ -245,14 +263,20 @@ export default class AppStore extends Store {
     return {
       host: {
         platform: process.platform,
-        release: os.release(),
+        release: osRelease,
         screens: screen.getAllDisplays(),
       },
       ferdi: {
-        version: app.getVersion(),
-        electron: process.versions.electron,
-        installedRecipes: this.stores.recipes.all.map(recipe => ({ id: recipe.id, version: recipe.version })),
-        devRecipes: this.stores.recipePreviews.dev.map(recipe => ({ id: recipe.id, version: recipe.version })),
+        version: ferdiVersion,
+        electron: electronVersion,
+        installedRecipes: this.stores.recipes.all.map(recipe => ({
+          id: recipe.id,
+          version: recipe.version,
+        })),
+        devRecipes: this.stores.recipePreviews.dev.map(recipe => ({
+          id: recipe.id,
+          version: recipe.version,
+        })),
         services: this.stores.services.all.map(service => ({
           id: service.id,
           recipe: service.recipe.id,
@@ -264,8 +288,11 @@ export default class AppStore extends Store {
           isDarkModeEnabled: service.isDarkModeEnabled,
         })),
         messages: this.stores.globalError.messages,
-        workspaces: this.stores.workspaces.workspaces.map(workspace => ({ id: workspace.id, services: workspace.services })),
-        windowSettings: readJsonSync(path.join(app.getPath('userData'), 'window-state.json')),
+        workspaces: this.stores.workspaces.workspaces.map(workspace => ({
+          id: workspace.id,
+          services: workspace.services,
+        })),
+        windowSettings: readJsonSync(userDataPath('window-state.json')),
         settings,
         features: this.stores.features.features,
         user: this.stores.user.data.id,
@@ -274,9 +301,7 @@ export default class AppStore extends Store {
   }
 
   // Actions
-  @action _notify({
-    title, options, notificationId, serviceId = null,
-  }) {
+  @action _notify({ title, options, notificationId, serviceId = null }) {
     if (this.stores.settings.all.app.isAppMuted) return;
 
     // TODO: is there a simple way to use blobs for notifications without storing them on disk?
@@ -288,24 +313,29 @@ export default class AppStore extends Store {
 
     debug('New notification', title, options);
 
-    notification.onclick = (e) => {
+    notification.addEventListener('click', () => {
       if (serviceId) {
         this.actions.service.sendIPCMessage({
           channel: `notification-onclick:${notificationId}`,
-          args: e,
+          args: {},
           serviceId,
         });
 
-        this.actions.service.setActive({ serviceId });
-        mainWindow.show();
-        if (app.mainWindow.isMinimized()) {
+        this.actions.service.setActive({
+          serviceId,
+        });
+
+        if (!mainWindow.isVisible()) {
+          mainWindow.show();
+        }
+        if (mainWindow.isMinimized()) {
           mainWindow.restore();
         }
         mainWindow.focus();
 
         debug('Notification click handler');
       }
-    };
+    });
   }
 
   @action _setBadge({ unreadDirectMessageCount, unreadIndirectMessageCount }) {
@@ -313,13 +343,18 @@ export default class AppStore extends Store {
 
     if (indicator === 0 && unreadIndirectMessageCount !== 0) {
       indicator = '•';
-    } else if (unreadDirectMessageCount === 0 && unreadIndirectMessageCount === 0) {
+    } else if (
+      unreadDirectMessageCount === 0 &&
+      unreadIndirectMessageCount === 0
+    ) {
       indicator = 0;
     } else {
-      indicator = parseInt(indicator, 10);
+      indicator = Number.parseInt(indicator, 10);
     }
 
-    ipcRenderer.send('updateAppIndicator', { indicator });
+    ipcRenderer.send('updateAppIndicator', {
+      indicator,
+    });
   }
 
   @action _launchOnStartup({ enable }) {
@@ -333,33 +368,37 @@ export default class AppStore extends Store {
         debug('disabling launch on startup');
         autoLauncher.disable();
       }
-    } catch (err) {
-      console.warn(err);
+    } catch (error) {
+      console.warn(error);
     }
   }
 
+  // Ideally(?) this should be merged with the 'shell-helpers' functionality
   @action _openExternalUrl({ url }) {
-    const parsedUrl = new URL(url);
-    debug('open external url', parsedUrl);
-
-    if (isValidExternalURL(url)) {
-      shell.openExternal(url);
-    }
+    openExternalUrl(new URL(url));
   }
 
   @action _checkForUpdates() {
-    this.updateStatus = this.updateStatusTypes.CHECKING;
-    ipcRenderer.send('autoUpdate', { action: 'check' });
+    if (this.isOnline) {
+      debug('_checkForUpdates: sending event to autoUpdate:check');
+      this.updateStatus = this.updateStatusTypes.CHECKING;
+      ipcRenderer.send('autoUpdate', {
+        action: 'check',
+      });
 
-    this.actions.recipe.update();
+      this.actions.recipe.update();
+    }
   }
 
   @action _installUpdate() {
-    ipcRenderer.send('autoUpdate', { action: 'install' });
+    debug('_installUpdate: sending event to autoUpdate:install');
+    ipcRenderer.send('autoUpdate', {
+      action: 'install',
+    });
   }
 
   @action _resetUpdateStatus() {
-    this.updateStatus = null;
+    this.updateStatus = '';
   }
 
   @action _healthCheck() {
@@ -377,21 +416,36 @@ export default class AppStore extends Store {
   }
 
   @action _toggleMuteApp() {
-    this._muteApp({ isMuted: !this.stores.settings.all.app.isAppMuted });
+    this._muteApp({
+      isMuted: !this.stores.settings.all.app.isAppMuted,
+    });
   }
 
   @action async _clearAllCache() {
     this.isClearingAllCache = true;
     const clearAppCache = this.clearAppCacheRequest.execute();
     const allServiceIds = await getServiceIdsFromPartitions();
-    const allOrphanedServiceIds = allServiceIds.filter(id => !this.stores.services.all.find(s => id.replace('service-', '') === s.id));
+    const allOrphanedServiceIds = allServiceIds.filter(
+      id =>
+        !this.stores.services.all.some(
+          s => id.replace('service-', '') === s.id,
+        ),
+    );
 
     try {
-      await Promise.all(allOrphanedServiceIds.map(id => removeServicePartitionDirectory(id)));
-    } catch (ex) {
-      console.log('Error while deleting service partition directory - ', ex);
+      await Promise.all(
+        allOrphanedServiceIds.map(id => removeServicePartitionDirectory(id)),
+      );
+    } catch (error) {
+      console.log('Error while deleting service partition directory -', error);
     }
-    await Promise.all(this.stores.services.all.map(s => this.actions.service.clearCache({ serviceId: s.id })));
+    await Promise.all(
+      this.stores.services.all.map(s =>
+        this.actions.service.clearCache({
+          serviceId: s.id,
+        }),
+      ),
+    );
 
     await clearAppCache._promise;
 
@@ -416,28 +470,20 @@ export default class AppStore extends Store {
   }
 
   _setLocale() {
-    let locale;
-    if (this.stores.user.isLoggedIn) {
-      locale = this.stores.user.data.locale;
-    }
-
-
-    if (locale && Object.prototype.hasOwnProperty.call(locales, locale) && locale !== this.locale) {
-      this.locale = locale;
-    } else if (!locale) {
+    if (this.stores.user.isLoggedIn && this.stores.user.data.locale) {
+      this.locale = this.stores.user.data.locale;
+    } else if (!this.locale) {
       this.locale = this._getDefaultLocale();
     }
 
     moment.locale(this.locale);
-
     debug(`Set locale to "${this.locale}"`);
   }
 
   _getDefaultLocale() {
     return getLocale({
-      locale: app.getLocale(),
+      locale: ferdiLocale,
       locales,
-      defaultLocale,
       fallbackLocale: DEFAULT_APP_SETTINGS.fallbackLocale,
     });
   }
@@ -446,17 +492,22 @@ export default class AppStore extends Store {
     const { showMessageBadgesEvenWhenMuted } = this.stores.ui;
 
     if (!showMessageBadgesEvenWhenMuted) {
-      this.actions.app.setBadge({ unreadDirectMessageCount: 0, unreadIndirectMessageCount: 0 });
+      this.actions.app.setBadge({
+        unreadDirectMessageCount: 0,
+        unreadIndirectMessageCount: 0,
+      });
     }
   }
 
   _handleFullScreen() {
     const body = document.querySelector('body');
 
-    if (this.isFullScreen) {
-      body.classList.add('isFullScreen');
-    } else {
-      body.classList.remove('isFullScreen');
+    if (body) {
+      if (this.isFullScreen) {
+        body.classList.add('isFullScreen');
+      } else {
+        body.classList.remove('isFullScreen');
+      }
     }
   }
 
@@ -491,9 +542,14 @@ export default class AppStore extends Store {
     return autoLauncher.isEnabled() || false;
   }
 
-  _systemDND() {
-    const dnd = getDoNotDisturb();
-    if (dnd !== this.stores.settings.all.app.isAppMuted && !this.isSystemMuteOverridden) {
+  async _systemDND() {
+    debug('Checking if Do Not Disturb Mode is on');
+    const dnd = await ipcRenderer.invoke('get-dnd');
+    debug('Do not disturb mode is', dnd);
+    if (
+      dnd !== this.stores.settings.all.app.isAppMuted &&
+      !this.isSystemMuteOverridden
+    ) {
       this.actions.app.muteApp({
         isMuted: dnd,
         overrideSystemMute: false,

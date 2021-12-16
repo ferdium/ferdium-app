@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { defineMessages, intlShape } from 'react-intl';
-import { Input, Button } from '@meetfranz/forms';
+import { defineMessages, injectIntl } from 'react-intl';
 import injectSheet from 'react-jss';
+
+import { Input } from '../../../components/ui/input/index';
+import { Button } from '../../../components/ui/button/index';
 import Form from '../../../lib/Form';
 import { required } from '../../../helpers/validation-helpers';
 import { workspaceStore } from '../index';
@@ -11,15 +13,15 @@ import { workspaceStore } from '../index';
 const messages = defineMessages({
   submitButton: {
     id: 'settings.workspace.add.form.submitButton',
-    defaultMessage: '!!!Create workspace',
+    defaultMessage: 'Create workspace',
   },
   name: {
     id: 'settings.workspace.add.form.name',
-    defaultMessage: '!!!Name',
+    defaultMessage: 'Name',
   },
 });
 
-const styles = () => ({
+const styles = {
   form: {
     display: 'flex',
   },
@@ -30,14 +32,9 @@ const styles = () => ({
   submitButton: {
     height: 'inherit',
   },
-});
+};
 
-@injectSheet(styles) @observer
 class CreateWorkspaceForm extends Component {
-  static contextTypes = {
-    intl: intlShape,
-  };
-
   static propTypes = {
     classes: PropTypes.object.isRequired,
     isSubmitting: PropTypes.bool.isRequired,
@@ -45,7 +42,7 @@ class CreateWorkspaceForm extends Component {
   };
 
   form = (() => {
-    const { intl } = this.context;
+    const { intl } = this.props;
     return new Form({
       fields: {
         name: {
@@ -61,7 +58,7 @@ class CreateWorkspaceForm extends Component {
   submitForm() {
     const { form } = this;
     form.submit({
-      onSuccess: async (f) => {
+      onSuccess: async f => {
         const { onSubmit } = this.props;
         const values = f.values();
         onSubmit(values);
@@ -70,7 +67,7 @@ class CreateWorkspaceForm extends Component {
   }
 
   render() {
-    const { intl } = this.context;
+    const { intl } = this.props;
     const { classes, isSubmitting } = this.props;
     const { form } = this;
     return (
@@ -83,7 +80,7 @@ class CreateWorkspaceForm extends Component {
           focus={workspaceStore.isUserAllowedToUseFeature}
         />
         <Button
-          className={classes.submitButton}
+          className={`${classes.submitButton} franz-form__button`}
           type="submit"
           label={intl.formatMessage(messages.submitButton)}
           onClick={this.submitForm.bind(this, form)}
@@ -95,4 +92,6 @@ class CreateWorkspaceForm extends Component {
   }
 }
 
-export default CreateWorkspaceForm;
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(observer(CreateWorkspaceForm)),
+);

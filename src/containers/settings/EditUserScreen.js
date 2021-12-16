@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 
 import UserStore from '../../stores/UserStore';
 import Form from '../../lib/Form';
@@ -13,47 +13,43 @@ import { required, email, minLength } from '../../helpers/validation-helpers';
 const messages = defineMessages({
   firstname: {
     id: 'settings.user.form.firstname',
-    defaultMessage: '!!!Firstname',
+    defaultMessage: 'First Name',
   },
   lastname: {
     id: 'settings.user.form.lastname',
-    defaultMessage: '!!!Lastname',
+    defaultMessage: 'Last Name',
   },
   email: {
     id: 'settings.user.form.email',
-    defaultMessage: '!!!Email',
+    defaultMessage: 'Email',
   },
   accountTypeLabel: {
     id: 'settings.user.form.accountType.label',
-    defaultMessage: '!!!Account type',
+    defaultMessage: 'Account type',
   },
   accountTypeIndividual: {
     id: 'settings.user.form.accountType.individual',
-    defaultMessage: '!!!Individual',
+    defaultMessage: 'Individual',
   },
   accountTypeNonProfit: {
     id: 'settings.user.form.accountType.non-profit',
-    defaultMessage: '!!!Non-Profit',
+    defaultMessage: 'Non-Profit',
   },
   accountTypeCompany: {
     id: 'settings.user.form.accountType.company',
-    defaultMessage: '!!!Company',
+    defaultMessage: 'Company',
   },
   currentPassword: {
     id: 'settings.user.form.currentPassword',
-    defaultMessage: '!!!Current password',
+    defaultMessage: 'Current password',
   },
   newPassword: {
     id: 'settings.user.form.newPassword',
-    defaultMessage: '!!!New password',
+    defaultMessage: 'New password',
   },
 });
 
-export default @inject('stores', 'actions') @observer class EditUserScreen extends Component {
-  static contextTypes = {
-    intl: intlShape,
-  };
-
+class EditUserScreen extends Component {
   componentWillUnmount() {
     this.props.actions.user.resetStatus();
   }
@@ -67,7 +63,7 @@ export default @inject('stores', 'actions') @observer class EditUserScreen exten
   }
 
   prepareForm(user) {
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     const config = {
       fields: {
@@ -93,16 +89,20 @@ export default @inject('stores', 'actions') @observer class EditUserScreen exten
           value: user.accountType,
           validators: [required],
           label: intl.formatMessage(messages.accountTypeLabel),
-          options: [{
-            value: 'individual',
-            label: intl.formatMessage(messages.accountTypeIndividual),
-          }, {
-            value: 'non-profit',
-            label: intl.formatMessage(messages.accountTypeNonProfit),
-          }, {
-            value: 'company',
-            label: intl.formatMessage(messages.accountTypeCompany),
-          }],
+          options: [
+            {
+              value: 'individual',
+              label: intl.formatMessage(messages.accountTypeIndividual),
+            },
+            {
+              value: 'non-profit',
+              label: intl.formatMessage(messages.accountTypeNonProfit),
+            },
+            {
+              value: 'company',
+              label: intl.formatMessage(messages.accountTypeCompany),
+            },
+          ],
         },
         organization: {
           label: intl.formatMessage(messages.accountTypeCompany),
@@ -129,7 +129,7 @@ export default @inject('stores', 'actions') @observer class EditUserScreen exten
     const { user } = this.props.stores;
 
     if (user.getUserInfoRequest.isExecuting) {
-      return (<div>Loading...</div>);
+      return <div>Loading...</div>;
     }
 
     const form = this.prepareForm(user.data);
@@ -148,14 +148,15 @@ export default @inject('stores', 'actions') @observer class EditUserScreen exten
   }
 }
 
-EditUserScreen.wrappedComponent.propTypes = {
+EditUserScreen.propTypes = {
   stores: PropTypes.shape({
     user: PropTypes.instanceOf(UserStore).isRequired,
   }).isRequired,
   actions: PropTypes.shape({
-    user: PropTypes.shape({
-      update: PropTypes.func.isRequired,
-      resetStatus: PropTypes.func.isRequired,
-    }).isRequired,
+    user: PropTypes.instanceOf(UserStore).isRequired,
   }).isRequired,
 };
+
+export default injectIntl(
+  inject('stores', 'actions')(observer(EditUserScreen)),
+);

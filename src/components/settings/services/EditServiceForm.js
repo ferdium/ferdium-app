@@ -1,15 +1,16 @@
-import React, { Component, Fragment } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { Link } from 'react-router';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 import normalizeUrl from 'normalize-url';
 
+import { mdiInformation } from '@mdi/js';
 import Form from '../../../lib/Form';
-import User from '../../../models/User';
 import Recipe from '../../../models/Recipe';
 import Service from '../../../models/Service';
-import Tabs, { TabItem } from '../../ui/Tabs';
+import Tabs from '../../ui/Tabs/Tabs';
+import { TabItem } from '../../ui/Tabs/TabItem';
 import Input from '../../ui/Input';
 import Toggle from '../../ui/Toggle';
 import Slider from '../../ui/Slider';
@@ -17,126 +18,123 @@ import Button from '../../ui/Button';
 import ImageUpload from '../../ui/ImageUpload';
 import Select from '../../ui/Select';
 
-import PremiumFeatureContainer from '../../ui/PremiumFeatureContainer';
-import LimitReachedInfobox from '../../../features/serviceLimit/components/LimitReachedInfobox';
-import { serviceLimitStore } from '../../../features/serviceLimit';
+import { isMac } from '../../../environment';
+import globalMessages from '../../../i18n/globalMessages';
+import { Icon } from '../../ui/icon';
 
 const messages = defineMessages({
   saveService: {
     id: 'settings.service.form.saveButton',
-    defaultMessage: '!!!Save service',
+    defaultMessage: 'Save service',
   },
   deleteService: {
     id: 'settings.service.form.deleteButton',
-    defaultMessage: '!!!Delete Service',
+    defaultMessage: 'Delete service',
   },
   openDarkmodeCss: {
     id: 'settings.service.form.openDarkmodeCss',
-    defaultMessage: '!!!Open darkmode.css',
+    defaultMessage: 'Open darkmode.css',
   },
   openUserCss: {
     id: 'settings.service.form.openUserCss',
-    defaultMessage: '!!!Open user.css',
+    defaultMessage: 'Open user.css',
   },
   openUserJs: {
     id: 'settings.service.form.openUserJs',
-    defaultMessage: '!!!Open user.js',
+    defaultMessage: 'Open user.js',
   },
   recipeFileInfo: {
     id: 'settings.service.form.recipeFileInfo',
-    defaultMessage: '!!!Your user files will be inserted into the webpage so you can customize services in any way you like. User files are only stored locally and are not transferred to other computers using the same account.',
+    defaultMessage:
+      'Your user files will be inserted into the webpage so you can customize services in any way you like. User files are only stored locally and are not transferred to other computers using the same account.',
   },
   availableServices: {
     id: 'settings.service.form.availableServices',
-    defaultMessage: '!!!Available services',
+    defaultMessage: 'Available services',
   },
   yourServices: {
     id: 'settings.service.form.yourServices',
-    defaultMessage: '!!!Your services',
+    defaultMessage: 'Your services',
   },
   addServiceHeadline: {
     id: 'settings.service.form.addServiceHeadline',
-    defaultMessage: '!!!Add {name}',
+    defaultMessage: 'Add {name}',
   },
   editServiceHeadline: {
     id: 'settings.service.form.editServiceHeadline',
-    defaultMessage: '!!!Edit {name}',
+    defaultMessage: 'Edit {name}',
   },
   tabHosted: {
     id: 'settings.service.form.tabHosted',
-    defaultMessage: '!!!Hosted',
+    defaultMessage: 'Hosted',
   },
   tabOnPremise: {
     id: 'settings.service.form.tabOnPremise',
-    defaultMessage: '!!!Self hosted ⭐️',
+    defaultMessage: 'Self hosted ⭐️',
   },
   useHostedService: {
     id: 'settings.service.form.useHostedService',
-    defaultMessage: '!!!Use the hosted {name} service.',
+    defaultMessage: 'Use the hosted {name} service.',
   },
   customUrlValidationError: {
     id: 'settings.service.form.customUrlValidationError',
-    defaultMessage: '!!!Could not validate custom {name} server.',
-  },
-  customUrlPremiumInfo: {
-    id: 'settings.service.form.customUrlPremiumInfo',
-    defaultMessage: '!!!To add self hosted services, you need a Ferdi Premium Supporter Account.',
-  },
-  customUrlUpgradeAccount: {
-    id: 'settings.service.form.customUrlUpgradeAccount',
-    defaultMessage: '!!!Upgrade your account',
+    defaultMessage: 'Could not validate custom {name} server.',
   },
   indirectMessageInfo: {
     id: 'settings.service.form.indirectMessageInfo',
-    defaultMessage: '!!!You will be notified about all new messages in a channel, not just @username, @channel, @here, ...',
+    defaultMessage:
+      'You will be notified about all new messages in a channel, not just @username, @channel, @here, ...',
   },
   isMutedInfo: {
     id: 'settings.service.form.isMutedInfo',
-    defaultMessage: '!!!When disabled, all notification sounds and audio playback are muted',
+    defaultMessage:
+      'When disabled, all notification sounds and audio playback are muted',
   },
-  disableHibernationInfo: {
-    id: 'settings.service.form.disableHibernationInfo',
-    defaultMessage: '!!!You currently have hibernation enabled but you can disable hibernation for individual services using this option.',
+  isHibernationEnabledInfo: {
+    id: 'settings.service.form.isHibernatedEnabledInfo',
+    defaultMessage:
+      'When enabled, a service will be shut down after a period of time to save system resources.',
   },
   headlineNotifications: {
     id: 'settings.service.form.headlineNotifications',
-    defaultMessage: '!!!Notifications',
+    defaultMessage: 'Notifications',
   },
   headlineBadges: {
     id: 'settings.service.form.headlineBadges',
-    defaultMessage: '!!!Unread message badges',
+    defaultMessage: 'Unread message badges',
   },
   headlineGeneral: {
     id: 'settings.service.form.headlineGeneral',
-    defaultMessage: '!!!General',
+    defaultMessage: 'General',
   },
   headlineDarkReaderSettings: {
     id: 'settings.service.form.headlineDarkReaderSettings',
-    defaultMessage: '!!!Dark Reader Settings',
+    defaultMessage: 'Dark Reader Settings',
   },
   iconDelete: {
     id: 'settings.service.form.iconDelete',
-    defaultMessage: '!!!Delete',
+    defaultMessage: 'Delete',
   },
   iconUpload: {
     id: 'settings.service.form.iconUpload',
-    defaultMessage: '!!!Drop your image, or click here',
+    defaultMessage: 'Drop your image, or click here',
   },
   headlineProxy: {
     id: 'settings.service.form.proxy.headline',
-    defaultMessage: '!!!HTTP/HTTPS Proxy Settings',
+    defaultMessage: 'HTTP/HTTPS Proxy Settings',
   },
   proxyRestartInfo: {
     id: 'settings.service.form.proxy.restartInfo',
-    defaultMessage: '!!!Please restart Ferdi after changing proxy Settings.',
+    defaultMessage: 'Please restart Ferdi after changing proxy Settings.',
   },
   proxyInfo: {
     id: 'settings.service.form.proxy.info',
-    defaultMessage: '!!!Proxy settings will not be synchronized with the Ferdi servers.',
+    defaultMessage:
+      'Proxy settings will not be synchronized with the Ferdi servers.',
   },
 });
 
-export default @observer class EditServiceForm extends Component {
+class EditServiceForm extends Component {
   static propTypes = {
     recipe: PropTypes.instanceOf(Recipe).isRequired,
     service(props, propName) {
@@ -147,7 +145,6 @@ export default @observer class EditServiceForm extends Component {
 
       return null;
     },
-    user: PropTypes.instanceOf(User).isRequired,
     action: PropTypes.string.isRequired,
     form: PropTypes.instanceOf(Form).isRequired,
     onSubmit: PropTypes.func.isRequired,
@@ -156,29 +153,22 @@ export default @observer class EditServiceForm extends Component {
     isSaving: PropTypes.bool.isRequired,
     isDeleting: PropTypes.bool.isRequired,
     isProxyFeatureEnabled: PropTypes.bool.isRequired,
-    isServiceProxyIncludedInCurrentPlan: PropTypes.bool.isRequired,
-    isSpellcheckerIncludedInCurrentPlan: PropTypes.bool.isRequired,
-    isHibernationFeatureActive: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
     service: {},
   };
 
-  static contextTypes = {
-    intl: intlShape,
-  };
-
   state = {
     isValidatingCustomUrl: false,
-  }
+  };
 
   submit(e) {
     const { recipe } = this.props;
 
     e.preventDefault();
     this.props.form.submit({
-      onSuccess: async (form) => {
+      onSuccess: async form => {
         const values = form.values();
         let isValid = true;
 
@@ -190,10 +180,14 @@ export default @observer class EditServiceForm extends Component {
         if (recipe.validateUrl && values.customUrl) {
           this.setState({ isValidatingCustomUrl: true });
           try {
-            values.customUrl = normalizeUrl(values.customUrl, { stripWWW: false, removeTrailingSlash: false });
+            values.customUrl = normalizeUrl(values.customUrl, {
+              stripAuthentication: false,
+              stripWWW: false,
+              removeTrailingSlash: false,
+            });
             isValid = await recipe.validateUrl(values.customUrl);
-          } catch (err) {
-            console.warn('ValidateURL', err);
+          } catch (error) {
+            console.warn('ValidateURL', error);
             isValid = false;
           }
         }
@@ -215,18 +209,14 @@ export default @observer class EditServiceForm extends Component {
       recipe,
       service,
       action,
-      user,
       form,
       isSaving,
       isDeleting,
       onDelete,
       openRecipeFile,
       isProxyFeatureEnabled,
-      isServiceProxyIncludedInCurrentPlan,
-      isSpellcheckerIncludedInCurrentPlan,
-      isHibernationFeatureActive,
     } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     const { isValidatingCustomUrl } = this.state;
 
@@ -254,7 +244,8 @@ export default @observer class EditServiceForm extends Component {
       activeTabIndex = 2;
     }
 
-    const requiresUserInput = !recipe.hasHostedOption && (recipe.hasTeamId || recipe.hasCustomUrl);
+    const requiresUserInput =
+      !recipe.hasHostedOption && (recipe.hasTeamId || recipe.hasCustomUrl);
 
     return (
       <div className="settings__main">
@@ -272,30 +263,27 @@ export default @observer class EditServiceForm extends Component {
           </span>
           <span className="separator" />
           <span className="settings__header-item">
-            {action === 'add' ? (
-              intl.formatMessage(messages.addServiceHeadline, {
-                name: recipe.name,
-              })
-            ) : (
-              intl.formatMessage(messages.editServiceHeadline, {
-                name: service.name !== '' ? service.name : recipe.name,
-              })
-            )}
+            {action === 'add'
+              ? intl.formatMessage(messages.addServiceHeadline, {
+                  name: recipe.name,
+                })
+              : intl.formatMessage(messages.editServiceHeadline, {
+                  name: service.name !== '' ? service.name : recipe.name,
+                })}
           </span>
         </div>
-        <LimitReachedInfobox />
         <div className="settings__body">
           <form onSubmit={e => this.submit(e)} id="form">
             <div className="service-name">
               <Input field={form.$('name')} focus />
             </div>
             {(recipe.hasTeamId || recipe.hasCustomUrl) && (
-              <Tabs
-                active={activeTabIndex}
-              >
+              <Tabs active={activeTabIndex}>
                 {recipe.hasHostedOption && (
                   <TabItem title={recipe.name}>
-                    {intl.formatMessage(messages.useHostedService, { name: recipe.name })}
+                    {intl.formatMessage(messages.useHostedService, {
+                      name: recipe.name,
+                    })}
                   </TabItem>
                 )}
                 {recipe.hasTeamId && (
@@ -309,24 +297,13 @@ export default @observer class EditServiceForm extends Component {
                 )}
                 {recipe.hasCustomUrl && (
                   <TabItem title={intl.formatMessage(messages.tabOnPremise)}>
-                    {user.isPremium || recipe.author.find(a => a.email === user.email) ? (
-                      <Fragment>
-                        <Input field={form.$('customUrl')} />
-                        {form.error === 'url-validation-error' && (
-                          <p className="franz-form__error">
-                            {intl.formatMessage(messages.customUrlValidationError, { name: recipe.name })}
-                          </p>
-                        )}
-                      </Fragment>
-                    ) : (
-                      <div className="center premium-info">
-                        <p>{intl.formatMessage(messages.customUrlPremiumInfo)}</p>
-                        <p>
-                          <Link to="/settings/user" className="button">
-                            {intl.formatMessage(messages.customUrlUpgradeAccount)}
-                          </Link>
-                        </p>
-                      </div>
+                    <Input field={form.$('customUrl')} />
+                    {form.error === 'url-validation-error' && (
+                      <p className="franz-form__error">
+                        {intl.formatMessage(messages.customUrlValidationError, {
+                          name: recipe.name,
+                        })}
+                      </p>
                     )}
                   </TabItem>
                 )}
@@ -340,7 +317,7 @@ export default @observer class EditServiceForm extends Component {
                   marginTop: 0,
                 }}
               >
-                <span className="mdi mdi-information" />
+                <Icon icon={mdiInformation} />
                 {recipe.message}
               </p>
             )}
@@ -350,7 +327,7 @@ export default @observer class EditServiceForm extends Component {
                   <h3>{intl.formatMessage(messages.headlineNotifications)}</h3>
                   <Toggle field={form.$('isNotificationEnabled')} />
                   <Toggle field={form.$('isMuted')} />
-                  <p className="settings__help">
+                  <p className="settings__help indented__help">
                     {intl.formatMessage(messages.isMutedInfo)}
                   </p>
                 </div>
@@ -358,38 +335,43 @@ export default @observer class EditServiceForm extends Component {
                 <div className="settings__settings-group">
                   <h3>{intl.formatMessage(messages.headlineBadges)}</h3>
                   <Toggle field={form.$('isBadgeEnabled')} />
-                  {recipe.hasIndirectMessages && form.$('isBadgeEnabled').value && (
-                    <Fragment>
-                      <Toggle field={form.$('isIndirectMessageBadgeEnabled')} />
-                      <p className="settings__help">
-                        {intl.formatMessage(messages.indirectMessageInfo)}
-                      </p>
-                    </Fragment>
+                  {recipe.hasIndirectMessages &&
+                    form.$('isBadgeEnabled').value && (
+                      <>
+                        <Toggle
+                          field={form.$('isIndirectMessageBadgeEnabled')}
+                        />
+                        <p className="settings__help indented__help">
+                          {intl.formatMessage(messages.indirectMessageInfo)}
+                        </p>
+                      </>
+                    )}
+                  {recipe.allowFavoritesDelineationInUnreadCount && (
+                    <Toggle field={form.$('onlyShowFavoritesInUnreadCount')} />
                   )}
                 </div>
 
                 <div className="settings__settings-group">
                   <h3>{intl.formatMessage(messages.headlineGeneral)}</h3>
                   <Toggle field={form.$('isEnabled')} />
-                  {isHibernationFeatureActive && (
+                  <Toggle field={form.$('isHibernationEnabled')} />
+                  <p className="settings__help indented__help">
+                    {intl.formatMessage(messages.isHibernationEnabledInfo)}
+                  </p>
+                  <Toggle field={form.$('isWakeUpEnabled')} />
+                  <Toggle field={form.$('isDarkModeEnabled')} />
+                  {form.$('isDarkModeEnabled').value && (
                     <>
-                      <Toggle field={form.$('disableHibernation')} />
-                      <p className="settings__help">
-                        {intl.formatMessage(messages.disableHibernationInfo)}
-                      </p>
+                      <h3>
+                        {intl.formatMessage(
+                          messages.headlineDarkReaderSettings,
+                        )}
+                      </h3>
+                      <Slider field={form.$('darkReaderBrightness')} />
+                      <Slider field={form.$('darkReaderContrast')} />
+                      <Slider field={form.$('darkReaderSepia')} />
                     </>
                   )}
-                  <Toggle field={form.$('isDarkModeEnabled')} />
-                  {form.$('isDarkModeEnabled').value
-                    && (
-                      <>
-                        <h3>{intl.formatMessage(messages.headlineDarkReaderSettings)}</h3>
-                        <Slider field={form.$('darkReaderBrightness')} />
-                        <Slider field={form.$('darkReaderContrast')} />
-                        <Slider field={form.$('darkReaderSepia')} />
-                      </>
-                    )
-                  }
                 </div>
               </div>
               <div className="service-icon">
@@ -401,56 +383,58 @@ export default @observer class EditServiceForm extends Component {
               </div>
             </div>
 
-            <PremiumFeatureContainer
-              condition={!isSpellcheckerIncludedInCurrentPlan}
-              gaEventInfo={{ category: 'User', event: 'upgrade', label: 'spellchecker' }}
-            >
+            {!isMac && (
               <div className="settings__settings-group">
                 <Select field={form.$('spellcheckerLanguage')} />
               </div>
-            </PremiumFeatureContainer>
+            )}
 
             {isProxyFeatureEnabled && (
-              <PremiumFeatureContainer
-                condition={!isServiceProxyIncludedInCurrentPlan}
-                gaEventInfo={{ category: 'User', event: 'upgrade', label: 'proxy' }}
-              >
-                <div className="settings__settings-group">
-                  <h3>
-                    {intl.formatMessage(messages.headlineProxy)}
-                    <span className="badge badge--success">beta</span>
-                  </h3>
-                  <Toggle field={form.$('proxy.isEnabled')} />
-                  {form.$('proxy.isEnabled').value && (
-                    <Fragment>
-                      <div className="grid">
-                        <div className="grid__row">
-                          <Input field={form.$('proxy.host')} className="proxyHost" />
-                          <Input field={form.$('proxy.port')} />
-                        </div>
+              <div className="settings__settings-group">
+                <h3>
+                  {intl.formatMessage(messages.headlineProxy)}
+                  <span className="badge badge--success">beta</span>
+                </h3>
+                <Toggle field={form.$('proxy.isEnabled')} />
+                {form.$('proxy.isEnabled').value && (
+                  <>
+                    <div className="grid">
+                      <div className="grid__row">
+                        <Input
+                          field={form.$('proxy.host')}
+                          className="proxyHost"
+                        />
+                        <Input field={form.$('proxy.port')} />
                       </div>
-                      <div className="grid">
-                        <div className="grid__row">
-                          <Input field={form.$('proxy.user')} />
-                          <Input
-                            field={form.$('proxy.password')}
-                            showPasswordToggle
-                          />
-                        </div>
+                    </div>
+                    <div className="grid">
+                      <div className="grid__row">
+                        <Input field={form.$('proxy.user')} />
+                        <Input
+                          field={form.$('proxy.password')}
+                          showPasswordToggle
+                        />
                       </div>
-                      <p>
-                        <span className="mdi mdi-information" />
-                        {intl.formatMessage(messages.proxyRestartInfo)}
-                      </p>
-                      <p>
-                        <span className="mdi mdi-information" />
-                        {intl.formatMessage(messages.proxyInfo)}
-                      </p>
-                    </Fragment>
-                  )}
-                </div>
-              </PremiumFeatureContainer>
+                    </div>
+                    <p>
+                      <Icon icon={mdiInformation} />
+                      {intl.formatMessage(messages.proxyRestartInfo)}
+                    </p>
+                    <p>
+                      <Icon icon={mdiInformation} />
+                      {intl.formatMessage(messages.proxyInfo)}
+                    </p>
+                  </>
+                )}
+              </div>
             )}
+
+            <div className="user-agent">
+              <Input field={form.$('userAgentPref')} />
+              <p className="settings__help">
+                {intl.formatMessage(globalMessages.userAgentHelp)}
+              </p>
+            </div>
           </form>
 
           {action === 'edit' && (
@@ -475,12 +459,16 @@ export default @observer class EditServiceForm extends Component {
                   onClick={() => openRecipeFile('user.js')}
                 />
               </div>
-              <p style={{ marginTop: 10 }}>
-                <span className="mdi mdi-information" />
+              <p style={{ marginTop: 10, marginBottom: 10 }}>
+                <Icon icon={mdiInformation} />
                 {intl.formatMessage(messages.recipeFileInfo)}
               </p>
             </>
           )}
+          <span style={{ fontStyle: 'italic', fontSize: '80%' }}>
+            Recipe version:
+            {recipe.version}
+          </span>
         </div>
         <div className="settings__controls">
           {/* Delete Button */}
@@ -500,7 +488,9 @@ export default @observer class EditServiceForm extends Component {
               type="submit"
               label={intl.formatMessage(messages.saveService)}
               htmlForm="form"
-              disabled={action !== 'edit' && ((form.isPristine && requiresUserInput) || serviceLimitStore.userHasReachedServiceLimit)}
+              disabled={
+                action !== 'edit' && form.isPristine && requiresUserInput
+              }
             />
           )}
         </div>
@@ -508,3 +498,5 @@ export default @observer class EditServiceForm extends Component {
     );
   }
 }
+
+export default injectIntl(observer(EditServiceForm));

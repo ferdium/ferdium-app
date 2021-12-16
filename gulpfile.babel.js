@@ -1,36 +1,40 @@
-/* eslint max-len: 0 */
 import gulp from 'gulp';
 import gulpIf from 'gulp-if';
 import babel from 'gulp-babel';
-import sass from 'gulp-sass';
+import dartSass from 'sass';
+import gulpSass from 'gulp-sass';
 import csso from 'gulp-csso';
-import terser from 'terser';
-import composer from 'gulp-uglify/composer';
+import terser from 'gulp-terser';
 import htmlMin from 'gulp-htmlmin';
-import server from 'gulp-server-livereload';
+import connect from 'gulp-connect';
 import { exec } from 'child_process';
 import dotenv from 'dotenv';
 import sassVariables from 'gulp-sass-variables';
-import { moveSync, removeSync } from 'fs-extra';
+import { removeSync, outputJson } from 'fs-extra';
 import kebabCase from 'kebab-case';
 import hexRgb from 'hex-rgb';
-import path from 'path';
+import ts from 'gulp-typescript';
 
+import * as buildInfo from 'preval-build-info';
 import config from './package.json';
 
-import * as rawStyleConfig from './src/theme/default/legacy.js';
+import * as rawStyleConfig from './scripts/theme/default/legacy';
 
 dotenv.config();
 
-const uglify = composer(terser, console);
+const sass = gulpSass(dartSass);
 
-const styleConfig = Object.keys(rawStyleConfig).map((key) => {
-  const isHex = /^#[0-9A-F]{6}$/i.test(rawStyleConfig[key]);
+const isDevBuild = process.env.NODE_ENV === 'development';
+
+const getTargetEnv = isDevBuild ? 'development' : 'production';
+
+const tsProject = ts.createProject('tsconfig.json');
+
+const styleConfig = Object.keys(rawStyleConfig).map(key => {
+  const isHex = /^#[\da-f]{6}$/i.test(rawStyleConfig[key]);
   return {
     [`$raw_${kebabCase(key)}`]: isHex
-      ? hexRgb(rawStyleConfig[key], { format: 'array' })
-        .splice(0, 3)
-        .join(',')
+      ? hexRgb(rawStyleConfig[key], { format: 'array' }).splice(0, 3).join(',')
       : rawStyleConfig[key],
   };
 });
@@ -39,7 +43,9 @@ const paths = {
   src: 'src',
   dest: 'build',
   tmp: '.tmp',
+  dist: 'out',
   package: `out/${config.version}`,
+  buildInfoDestFile: 'build/buildInfo.json',
   recipes: {
     src: 'recipes/archives/*.tar.gz',
     dest: 'build/recipes/',
@@ -54,28 +60,31 @@ const paths = {
     watch: 'src/**/*.html',
   },
   styles: {
-    src: 'src/styles/main.scss',
+    src: [
+      'src/styles/main.scss',
+      'src/styles/vertical.scss',
+      'src/styles/animations.scss',
+    ],
     dest: 'build/styles',
     watch: 'src/styles/**/*.scss',
   },
-  scripts: {
+  javascripts: {
     src: 'src/**/*.js',
     dest: 'build/',
     watch: [
-      // 'packages/**/*.js',
       'src/**/*.js',
     ],
   },
-  packages: {
-    watch: 'packages/**/*',
-    // dest: 'build/',
-    // watch: [
-    //   // 'packages/**/*.js',
-    //   'src/**/*.js',
-    // ],
+  typescripts: {
+    src: ['src/**/*.ts', 'src/**/*.tsx'],
+    dest: 'build/',
+    watch: [
+      'src/**/*.ts',
+    ],
   },
 };
 
+// eslint-disable-next-line no-unused-vars
 function _shell(cmd, cb) {
   console.log('executing', cmd);
   exec(
@@ -96,9 +105,10 @@ function _shell(cmd, cb) {
   );
 }
 
-const clean = (done) => {
+const clean = done => {
   removeSync(paths.tmp);
   removeSync(paths.dest);
+  removeSync(paths.dist);
 
   done();
 };
@@ -110,9 +120,9 @@ export function mvSrc() {
       [
         `${paths.src}/*`,
         `${paths.src}/*/**`,
-        `!${paths.scripts.watch[1]}`,
+        `!${paths.javascripts.watch[0]}`,
+        `!${paths.typescripts.watch[0]}`,
         `!${paths.src}/styles/**`,
-        `!${paths.src}/**/*.js`,
       ],
       { since: gulp.lastRun(mvSrc) },
     )
@@ -123,18 +133,30 @@ export function mvPackageJson() {
   return gulp.src(['./package.json']).pipe(gulp.dest(paths.dest));
 }
 
-export function mvLernaPackages() {
-  return gulp.src(['packages/**']).pipe(gulp.dest(`${paths.dest}/packages`));
+export function exportBuildInfo() {
+  const buildInfoData = {
+    timestamp: buildInfo.timestamp,
+    gitHashShort: buildInfo.gitHashShort,
+    gitBranch: buildInfo.gitBranch,
+  };
+  return outputJson(paths.buildInfoDestFile, buildInfoData);
 }
 
 export function html() {
   return gulp
     .src(paths.html.src, { since: gulp.lastRun(html) })
-    .pipe(gulpIf(process.env.NODE_ENV !== 'development', htmlMin({ // Only minify in production to speed up dev builds
-      collapseWhitespace: true,
-      removeComments: true
-    })))
-    .pipe(gulp.dest(paths.html.dest));
+    .pipe(
+      gulpIf(
+        !isDevBuild,
+        htmlMin({
+          // Only minify in production to speed up dev builds
+          collapseWhitespace: true,
+          removeComments: true,
+        }),
+      ),
+    )
+    .pipe(gulp.dest(paths.html.dest))
+    .pipe(connect.reload());
 }
 
 export function styles() {
@@ -144,10 +166,7 @@ export function styles() {
       sassVariables(
         Object.assign(
           {
-            $env:
-              process.env.NODE_ENV === 'development'
-                ? 'development'
-                : 'production',
+            $env: getTargetEnv,
           },
           ...styleConfig,
         ),
@@ -158,54 +177,89 @@ export function styles() {
         includePaths: ['./node_modules', '../node_modules'],
       }).on('error', sass.logError),
     )
-    .pipe((gulpIf(process.env.NODE_ENV !== 'development', csso({ // Only minify in production to speed up dev builds
-      restructure: false, // Don't restructure CSS, otherwise it will break the styles
-    }))))
-    .pipe(gulp.dest(paths.styles.dest));
+    .pipe(
+      gulpIf(
+        !isDevBuild,
+        csso({
+          // Only minify in production to speed up dev builds
+          restructure: false, // Don't restructure CSS, otherwise it will break the styles
+        }),
+      ),
+    )
+    .pipe(gulp.dest(paths.styles.dest))
+    .pipe(connect.reload());
 }
 
-export function scripts() {
+export function processJavascripts() {
   return gulp
-    .src(paths.scripts.src, { since: gulp.lastRun(scripts) })
+    .src([paths.javascripts.src], { since: gulp.lastRun(processJavascripts) })
     .pipe(
       babel({
         comments: false,
       }),
     )
-    .pipe(gulpIf(process.env.NODE_ENV !== 'development', uglify())) // Only uglify in production to speed up dev builds
-    .pipe(gulp.dest(paths.scripts.dest));
+    .pipe(gulpIf(!isDevBuild, terser())) // Only uglify in production to speed up dev builds
+    .pipe(gulp.dest(paths.javascripts.dest))
+    .pipe(connect.reload());
+}
+
+export function processTypescripts() {
+  return gulp
+    .src(paths.typescripts.src, { since: gulp.lastRun(processTypescripts) })
+    .pipe(tsProject())
+    .js.pipe(
+      babel({
+        comments: false,
+      }),
+    )
+    .pipe(gulpIf(!isDevBuild, terser())) // Only uglify in production to speed up dev builds
+    .pipe(gulp.dest(paths.typescripts.dest))
+    .pipe(connect.reload());
 }
 
 export function watch() {
-  gulp.watch(paths.packages.watch, mvLernaPackages);
   gulp.watch(paths.styles.watch, styles);
 
-  gulp.watch([paths.src, `${paths.scripts.src}`, `${paths.styles.src}`], mvSrc);
+  gulp.watch([paths.src], mvSrc);
 
-  gulp.watch(paths.scripts.watch, scripts);
+  gulp.watch(paths.javascripts.watch, processJavascripts);
+  gulp.watch(paths.typescripts.watch, processTypescripts);
 }
 
 export function webserver() {
-  gulp.src([paths.dest]).pipe(
-    server({
-      livereload: true,
-    }),
-  );
+  connect.server({
+    root: paths.dest,
+    livereload: true,
+  });
 }
 
 export function recipes() {
-  return gulp.src(paths.recipes.src, { since: gulp.lastRun(recipes) })
+  return gulp
+    .src(paths.recipes.src, { since: gulp.lastRun(recipes) })
     .pipe(gulp.dest(paths.recipes.dest));
 }
+
 export function recipeInfo() {
-  return gulp.src(paths.recipeInfo.src, { since: gulp.lastRun(recipeInfo) })
+  return gulp
+    .src(paths.recipeInfo.src, { since: gulp.lastRun(recipeInfo) })
     .pipe(gulp.dest(paths.recipeInfo.dest));
 }
 
 const build = gulp.series(
   clean,
-  gulp.parallel(mvSrc, mvPackageJson, mvLernaPackages),
-  gulp.parallel(html, scripts, styles, recipes, recipeInfo),
+  gulp.parallel(
+    mvSrc,
+    mvPackageJson,
+    exportBuildInfo,
+  ),
+  gulp.parallel(
+    html,
+    processJavascripts,
+    processTypescripts,
+    styles,
+    recipes,
+    recipeInfo,
+  ),
 );
 export { build };
 

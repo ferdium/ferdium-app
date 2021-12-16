@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from 'react';
+import { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 import { Link } from 'react-router';
 import classnames from 'classnames';
 
@@ -15,35 +15,35 @@ import Button from '../ui/Button';
 const messages = defineMessages({
   settingsHeadline: {
     id: 'settings.invite.headline',
-    defaultMessage: '!!!Invite Friends',
+    defaultMessage: 'Invite Friends',
   },
   headline: {
     id: 'invite.headline.friends',
-    defaultMessage: '!!!Invite 3 of your friends or colleagues',
+    defaultMessage: 'Invite 3 of your friends or colleagues',
   },
   nameLabel: {
     id: 'invite.name.label',
-    defaultMessage: '!!!Name',
+    defaultMessage: 'Name',
   },
   emailLabel: {
     id: 'invite.email.label',
-    defaultMessage: '!!!Email address',
+    defaultMessage: 'Email address',
   },
   submitButtonLabel: {
     id: 'invite.submit.label',
-    defaultMessage: '!!!Send invites',
+    defaultMessage: 'Send invites',
   },
   skipButtonLabel: {
     id: 'invite.skip.label',
-    defaultMessage: '!!!I want to do this later',
+    defaultMessage: 'I want to do this later',
   },
   inviteSuccessInfo: {
     id: 'invite.successInfo',
-    defaultMessage: '!!!Invitations sent successfully',
+    defaultMessage: 'Invitations sent successfully',
   },
 });
 
-export default @observer class Invite extends Component {
+class Invite extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
     embed: PropTypes.bool,
@@ -57,55 +57,56 @@ export default @observer class Invite extends Component {
     isLoadingInvite: false,
   };
 
-  static contextTypes = {
-    intl: intlShape,
-  };
-
   state = { showSuccessInfo: false };
 
-  componentWillMount() {
-    const handlers = {
-      onChange: () => {
-        this.setState({ showSuccessInfo: false });
-      },
-    };
-
-    this.form = new Form({
-      fields: {
-        invite: [...Array(3).fill({
-          fields: {
-            name: {
-              label: this.context.intl.formatMessage(messages.nameLabel),
-              placeholder: this.context.intl.formatMessage(messages.nameLabel),
-              handlers,
-              // related: ['invite.0.email'], // path accepted but does not work
-            },
-            email: {
-              label: this.context.intl.formatMessage(messages.emailLabel),
-              placeholder: this.context.intl.formatMessage(messages.emailLabel),
-              handlers,
-              validators: [email],
-            },
-          },
-        })],
-      },
-    }, this.context.intl);
-  }
-
   componentDidMount() {
-    document.querySelector('input:first-child').focus();
+    this.form = new Form(
+      {
+        fields: {
+          invite: [
+            ...Array.from({ length: 3 }).fill({
+              fields: {
+                name: {
+                  label: this.props.intl.formatMessage(messages.nameLabel),
+                  placeholder: this.props.intl.formatMessage(
+                    messages.nameLabel,
+                  ),
+                  onChange: () => {
+                    this.setState({ showSuccessInfo: false });
+                  },
+                  // related: ['invite.0.email'], // path accepted but does not work
+                },
+                email: {
+                  label: this.props.intl.formatMessage(messages.emailLabel),
+                  placeholder: this.props.intl.formatMessage(
+                    messages.emailLabel,
+                  ),
+                  onChange: () => {
+                    this.setState({ showSuccessInfo: false });
+                  },
+                  validators: [email],
+                },
+              },
+            }),
+          ],
+        },
+      },
+      this.props.intl,
+    );
+
+    document.querySelector('input:first-child')?.focus();
   }
 
   submit(e) {
     e.preventDefault();
 
-    this.form.submit({
-      onSuccess: (form) => {
+    this.form?.submit({
+      onSuccess: form => {
         this.props.onSubmit({ invites: form.values().invite });
 
-        this.form.clear();
+        this.form?.clear();
         // this.form.$('invite.0.name').focus(); // path accepted but does not focus ;(
-        document.querySelector('input:first-child').focus();
+        document.querySelector('input:first-child')?.focus();
         this.setState({ showSuccessInfo: true });
       },
       onError: () => {},
@@ -114,10 +115,11 @@ export default @observer class Invite extends Component {
 
   render() {
     const { form } = this;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const { embed, isInviteSuccessful, isLoadingInvite } = this.props;
 
-    const atLeastOneEmailAddress = form.$('invite')
+    const atLeastOneEmailAddress = form
+      .$('invite')
       .map(invite => invite.$('email').value)
       .some(emailValue => emailValue.trim() !== '');
 
@@ -127,7 +129,7 @@ export default @observer class Invite extends Component {
     });
 
     const renderForm = (
-      <Fragment>
+      <>
         {this.state.showSuccessInfo && isInviteSuccessful && (
           <Appear>
             <Infobox
@@ -142,11 +144,7 @@ export default @observer class Invite extends Component {
 
         <form className="franz-form auth__form" onSubmit={e => this.submit(e)}>
           {!embed && (
-            <img
-              src="./assets/images/logo.svg"
-              className="auth__logo"
-              alt=""
-            />
+            <img src="./assets/images/logo.svg" className="auth__logo" alt="" />
           )}
           <h1 className={embed && 'invite__embed'}>
             {intl.formatMessage(messages.headline)}
@@ -175,18 +173,28 @@ export default @observer class Invite extends Component {
             </Link>
           )}
         </form>
-      </Fragment>
+      </>
     );
 
     return (
-      <div className={!embed ? 'auth__container auth__container--signup' : 'settings__main'}>
+      <div
+        className={
+          !embed ? 'auth__container auth__container--signup' : 'settings__main'
+        }
+      >
         {embed && (
           <div className="settings__header">
-            <h1>{this.context.intl.formatMessage(messages.settingsHeadline)}</h1>
+            <h1>{this.props.intl.formatMessage(messages.settingsHeadline)}</h1>
           </div>
         )}
-        {!embed ? <div>{renderForm}</div> : <div className="settings__body invite__form">{renderForm}</div>}
+        {!embed ? (
+          <div>{renderForm}</div>
+        ) : (
+          <div className="settings__body invite__form">{renderForm}</div>
+        )}
       </div>
     );
   }
 }
+
+export default injectIntl(observer(Invite));

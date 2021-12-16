@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import injectSheet from 'react-jss';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 
 import Button from '../../ui/Button';
 
@@ -10,26 +10,22 @@ import styles from './styles';
 const messages = defineMessages({
   headline: {
     id: 'app.errorHandler.headline',
-    defaultMessage: '!!!Something went wrong.',
+    defaultMessage: 'Something went wrong.',
   },
   action: {
     id: 'app.errorHandler.action',
-    defaultMessage: '!!!Reload',
+    defaultMessage: 'Reload',
   },
 });
 
-export default @injectSheet(styles) class ErrorBoundary extends Component {
+class ErrorBoundary extends Component {
   state = {
     hasError: false,
-  }
+  };
 
   static propTypes = {
     classes: PropTypes.object.isRequired,
     children: PropTypes.node.isRequired,
-  }
-
-  static contextTypes = {
-    intl: intlShape,
   };
 
   componentDidCatch() {
@@ -38,7 +34,7 @@ export default @injectSheet(styles) class ErrorBoundary extends Component {
 
   render() {
     const { classes } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     if (this.state.hasError) {
       return (
@@ -58,3 +54,7 @@ export default @injectSheet(styles) class ErrorBoundary extends Component {
     return this.props.children;
   }
 }
+
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(ErrorBoundary),
+);

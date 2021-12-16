@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 import { Link } from 'react-router';
-import { Input } from '@meetfranz/forms';
 
+import { Input } from '../../ui/input/index';
 import Form from '../../../lib/Form';
-// import Input from '../../ui/Input';
 import Button from '../../ui/Button';
 import Radio from '../../ui/Radio';
 import Infobox from '../../ui/Infobox';
@@ -14,31 +13,31 @@ import Infobox from '../../ui/Infobox';
 const messages = defineMessages({
   headline: {
     id: 'settings.account.headline',
-    defaultMessage: '!!!Account',
+    defaultMessage: 'Account',
   },
   headlineProfile: {
     id: 'settings.account.headlineProfile',
-    defaultMessage: '!!!Update Profile',
+    defaultMessage: 'Update profile',
   },
   headlineAccount: {
     id: 'settings.account.headlineAccount',
-    defaultMessage: '!!!Account Information',
+    defaultMessage: 'Account information',
   },
   headlinePassword: {
     id: 'settings.account.headlinePassword',
-    defaultMessage: '!!!Change Password',
+    defaultMessage: 'Change password',
   },
   successInfo: {
     id: 'settings.account.successInfo',
-    defaultMessage: '!!!Your changes have been saved',
+    defaultMessage: 'Your changes have been saved',
   },
   buttonSave: {
     id: 'settings.account.buttonSave',
-    defaultMessage: '!!!Update profile',
+    defaultMessage: 'Update profile',
   },
 });
 
-export default @observer class EditUserForm extends Component {
+class EditUserForm extends Component {
   static propTypes = {
     status: MobxPropTypes.observableArray.isRequired,
     form: PropTypes.instanceOf(Form).isRequired,
@@ -46,14 +45,10 @@ export default @observer class EditUserForm extends Component {
     isSaving: PropTypes.bool.isRequired,
   };
 
-  static contextTypes = {
-    intl: intlShape,
-  };
-
   submit(e) {
     e.preventDefault();
     this.props.form.submit({
-      onSuccess: (form) => {
+      onSuccess: form => {
         const values = form.values();
         this.props.onSubmit(values);
       },
@@ -68,7 +63,7 @@ export default @observer class EditUserForm extends Component {
       form,
       isSaving,
     } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     return (
       <div className="settings__main">
@@ -86,10 +81,7 @@ export default @observer class EditUserForm extends Component {
         <div className="settings__body">
           <form onSubmit={e => this.submit(e)} id="form">
             {status.length > 0 && status.includes('data-updated') && (
-              <Infobox
-                type="success"
-                icon="checkbox-marked-circle-outline"
-              >
+              <Infobox type="success" icon="checkbox-marked-circle-outline">
                 {intl.formatMessage(messages.successInfo)}
               </Infobox>
             )}
@@ -104,10 +96,7 @@ export default @observer class EditUserForm extends Component {
               <Input field={form.$('organization')} />
             )}
             <h2>{intl.formatMessage(messages.headlinePassword)}</h2>
-            <Input
-              {...form.$('oldPassword').bind()}
-              showPasswordToggle
-            />
+            <Input {...form.$('oldPassword').bind()} showPasswordToggle />
             <Input
               {...form.$('newPassword').bind()}
               showPasswordToggle
@@ -137,3 +126,5 @@ export default @observer class EditUserForm extends Component {
     );
   }
 }
+
+export default injectIntl(observer(EditUserForm));

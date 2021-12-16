@@ -1,57 +1,48 @@
-import { remote } from 'electron';
-import React, { Component } from 'react';
+import { systemPreferences } from '@electron/remote';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 
 import Form from '../../lib/Form';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
-import Infobox from '../ui/Infobox';
 import { isMac } from '../../environment';
 
 import { globalError as globalErrorPropType } from '../../prop-types';
 
-const {
-  systemPreferences,
-} = remote;
-
 const messages = defineMessages({
   headline: {
     id: 'locked.headline',
-    defaultMessage: '!!!Locked',
-  },
-  info: {
-    id: 'locked.info',
-    defaultMessage: '!!!Ferdi is currently locked. Please unlock Ferdi with your password to see your messages.',
+    defaultMessage: 'Locked',
   },
   touchId: {
     id: 'locked.touchId',
-    defaultMessage: '!!!Unlock with Touch ID',
+    defaultMessage: 'Unlock with Touch ID',
   },
   touchIdPrompt: {
     id: 'locked.touchIdPrompt',
-    defaultMessage: '!!!unlock via Touch ID',
+    defaultMessage: 'unlock via Touch ID',
   },
   passwordLabel: {
     id: 'locked.password.label',
-    defaultMessage: '!!!Password',
+    defaultMessage: 'Password',
   },
   submitButtonLabel: {
     id: 'locked.submit.label',
-    defaultMessage: '!!!Unlock',
+    defaultMessage: 'Unlock',
   },
   unlockWithPassword: {
     id: 'locked.unlockWithPassword',
-    defaultMessage: '!!!Unlock with Password',
+    defaultMessage: 'Unlock with Password',
   },
   invalidCredentials: {
     id: 'locked.invalidCredentials',
-    defaultMessage: '!!!Password invalid',
+    defaultMessage: 'Password invalid',
   },
 });
 
-export default @observer class Locked extends Component {
+class Locked extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
     unlock: PropTypes.func.isRequired,
@@ -60,62 +51,56 @@ export default @observer class Locked extends Component {
     error: globalErrorPropType.isRequired,
   };
 
-  static contextTypes = {
-    intl: intlShape,
-  };
-
-  form = new Form({
-    fields: {
-      password: {
-        label: this.context.intl.formatMessage(messages.passwordLabel),
-        value: '',
-        type: 'password',
+  form = new Form(
+    {
+      fields: {
+        password: {
+          label: this.props.intl.formatMessage(messages.passwordLabel),
+          value: '',
+          type: 'password',
+        },
       },
     },
-  }, this.context.intl);
+    this.props.intl,
+  );
 
   submit(e) {
     e.preventDefault();
     this.form.submit({
-      onSuccess: (form) => {
+      onSuccess: form => {
         this.props.onSubmit(form.values());
       },
-      onError: () => { },
+      onError: () => {},
     });
   }
 
   touchIdUnlock() {
-    const { intl } = this.context;
+    const { intl } = this.props;
 
-    systemPreferences.promptTouchID(intl.formatMessage(messages.touchIdPrompt)).then(() => {
-      this.props.unlock();
-    });
+    systemPreferences
+      .promptTouchID(intl.formatMessage(messages.touchIdPrompt))
+      .then(() => {
+        this.props.unlock();
+      });
   }
 
   render() {
     const { form } = this;
-    const { intl } = this.context;
-    const {
-      isSubmitting,
-      error,
-      useTouchIdToUnlock,
-    } = this.props;
+    const { intl } = this.props;
+    const { isSubmitting, error, useTouchIdToUnlock } = this.props;
 
-    const touchIdEnabled = isMac ? (useTouchIdToUnlock && systemPreferences.canPromptTouchID()) : false;
-    const submitButtonLabel = touchIdEnabled ? intl.formatMessage(messages.unlockWithPassword) : intl.formatMessage(messages.submitButtonLabel);
+    const touchIdEnabled = isMac
+      ? useTouchIdToUnlock && systemPreferences.canPromptTouchID()
+      : false;
+    const submitButtonLabel = touchIdEnabled
+      ? intl.formatMessage(messages.unlockWithPassword)
+      : intl.formatMessage(messages.submitButtonLabel);
 
     return (
       <div className="auth__container">
         <form className="franz-form auth__form" onSubmit={e => this.submit(e)}>
-          <img
-            src="./assets/images/logo.svg"
-            className="auth__logo"
-            alt=""
-          />
+          <img src="./assets/images/logo.svg" className="auth__logo" alt="" />
           <h1>{intl.formatMessage(messages.headline)}</h1>
-          <Infobox type="warning">
-            {intl.formatMessage(messages.info)}
-          </Infobox>
 
           {touchIdEnabled && (
             <>
@@ -129,13 +114,11 @@ export default @observer class Locked extends Component {
             </>
           )}
 
-          <Input
-            field={form.$('password')}
-            showPasswordToggle
-            focus
-          />
+          <Input field={form.$('password')} showPasswordToggle focus />
           {error.code === 'invalid-credentials' && (
-            <p className="error-message center">{intl.formatMessage(messages.invalidCredentials)}</p>
+            <p className="error-message center">
+              {intl.formatMessage(messages.invalidCredentials)}
+            </p>
           )}
           {isSubmitting ? (
             <Button
@@ -157,3 +140,5 @@ export default @observer class Locked extends Component {
     );
   }
 }
+
+export default injectIntl(observer(Locked));

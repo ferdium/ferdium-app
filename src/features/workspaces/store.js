@@ -1,8 +1,4 @@
-import {
-  computed,
-  observable,
-  action,
-} from 'mobx';
+import { computed, observable, action } from 'mobx';
 import localStorage from 'mobx-localstorage';
 import { matchRoute } from '../../helpers/routing-helpers';
 import { workspaceActions } from './actions';
@@ -13,7 +9,7 @@ import {
   getUserWorkspacesRequest,
   updateWorkspaceRequest,
 } from './api';
-import { WORKSPACES_ROUTES } from './index';
+import { WORKSPACES_ROUTES } from './constants';
 import { createReactions } from '../../stores/lib/Reaction';
 import { createActionBindings } from '../utils/ActionBinding';
 
@@ -22,13 +18,7 @@ import { KEEP_WS_LOADED_USID } from '../../config';
 const debug = require('debug')('Ferdi:feature:workspaces:store');
 
 export default class WorkspacesStore extends FeatureStore {
-  @observable isFeatureEnabled = true;
-
   @observable isFeatureActive = false;
-
-  @observable isPremiumFeature = false;
-
-  @observable isPremiumUpgradeRequired = false;
 
   @observable activeWorkspace = null;
 
@@ -62,7 +52,6 @@ export default class WorkspacesStore extends FeatureStore {
 
   @computed get isUserAllowedToUseFeature() {
     return true;
-    // return !this.isPremiumUpgradeRequired;
   }
 
   @computed get isAnyWorkspaceActive() {
@@ -73,15 +62,7 @@ export default class WorkspacesStore extends FeatureStore {
 
   _wasDrawerOpenBeforeSettingsRoute = null;
 
-  _freeUserActions = [];
-
-  _premiumUserActions = [];
-
   _allActions = [];
-
-  _freeUserReactions = [];
-
-  _premiumUserReactions = [];
 
   _allReactions = [];
 
@@ -94,38 +75,31 @@ export default class WorkspacesStore extends FeatureStore {
 
     // ACTIONS
 
-    this._freeUserActions = createActionBindings([
+    this._allActions = createActionBindings([
       [workspaceActions.toggleWorkspaceDrawer, this._toggleWorkspaceDrawer],
       [workspaceActions.openWorkspaceSettings, this._openWorkspaceSettings],
-    ]);
-    this._premiumUserActions = createActionBindings([
       [workspaceActions.edit, this._edit],
       [workspaceActions.create, this._create],
       [workspaceActions.delete, this._delete],
       [workspaceActions.update, this._update],
       [workspaceActions.activate, this._setActiveWorkspace],
       [workspaceActions.deactivate, this._deactivateActiveWorkspace],
-      [workspaceActions.toggleKeepAllWorkspacesLoadedSetting, this._toggleKeepAllWorkspacesLoadedSetting],
+      [
+        workspaceActions.toggleKeepAllWorkspacesLoadedSetting,
+        this._toggleKeepAllWorkspacesLoadedSetting,
+      ],
     ]);
-    this._allActions = this._freeUserActions.concat(this._premiumUserActions);
     this._registerActions(this._allActions);
 
     // REACTIONS
 
-    this._freeUserReactions = createReactions([
-      this._disablePremiumFeatures,
+    this._allReactions = createReactions([
       this._openDrawerWithSettingsReaction,
-      this._setFeatureEnabledReaction,
-      this._setIsPremiumFeatureReaction,
       this._cleanupInvalidServiceReferences,
-    ]);
-    this._premiumUserReactions = createReactions([
       this._setActiveServiceOnWorkspaceSwitchReaction,
       this._activateLastUsedWorkspaceReaction,
       this._setWorkspaceBeingEditedReaction,
     ]);
-    this._allReactions = this._freeUserReactions.concat(this._premiumUserReactions);
-
     this._registerReactions(this._allReactions);
 
     getUserWorkspacesRequest.execute();
@@ -147,7 +121,7 @@ export default class WorkspacesStore extends FeatureStore {
     this.isFeatureActive = false;
   }
 
-  filterServicesByActiveWorkspace = (services) => {
+  filterServicesByActiveWorkspace = services => {
     const { activeWorkspace, isFeatureActive } = this;
     if (isFeatureActive && activeWorkspace) {
       return this.getWorkspaceServices(activeWorkspace);
@@ -164,7 +138,7 @@ export default class WorkspacesStore extends FeatureStore {
 
   _getWorkspaceById = id => this.workspaces.find(w => w.id === id);
 
-  _updateSettings = (changes) => {
+  _updateSettings = changes => {
     localStorage.setItem('workspaces', {
       ...this.settings,
       ...changes,
@@ -178,35 +152,26 @@ export default class WorkspacesStore extends FeatureStore {
   };
 
   @action _create = async ({ name }) => {
-    try {
-      const workspace = await createWorkspaceRequest.execute(name);
-      await getUserWorkspacesRequest.result.push(workspace);
-      this._edit({ workspace });
-    } catch (error) {
-      throw error;
-    }
+    const workspace = await createWorkspaceRequest.execute(name);
+    await getUserWorkspacesRequest.result.push(workspace);
+    this._edit({ workspace });
   };
 
   @action _delete = async ({ workspace }) => {
-    try {
-      await deleteWorkspaceRequest.execute(workspace);
-      await getUserWorkspacesRequest.result.remove(workspace);
-      this.stores.router.push('/settings/workspaces');
-    } catch (error) {
-      throw error;
+    await deleteWorkspaceRequest.execute(workspace);
+    await getUserWorkspacesRequest.result.remove(workspace);
+    this.stores.router.push('/settings/workspaces');
+    if (this.activeWorkspace === workspace) {
+      this._deactivateActiveWorkspace();
     }
   };
 
   @action _update = async ({ workspace }) => {
-    try {
-      await updateWorkspaceRequest.execute(workspace);
-      // Path local result optimistically
-      const localWorkspace = this._getWorkspaceById(workspace.id);
-      Object.assign(localWorkspace, workspace);
-      this.stores.router.push('/settings/workspaces');
-    } catch (error) {
-      throw error;
-    }
+    await updateWorkspaceRequest.execute(workspace);
+    // Path local result optimistically
+    const localWorkspace = this._getWorkspaceById(workspace.id);
+    Object.assign(localWorkspace, workspace);
+    this.stores.router.push('/settings/workspaces');
   };
 
   @action _setActiveWorkspace = ({ workspace }) => {
@@ -222,7 +187,19 @@ export default class WorkspacesStore extends FeatureStore {
     setTimeout(() => {
       this.isSwitchingWorkspace = false;
       this.nextWorkspace = null;
-    }, 1000);
+      if (this.stores.settings.app.splitMode) {
+        const serviceNames = new Set(
+          this.getWorkspaceServices(workspace).map(service => service.name),
+        );
+        for (const wrapper of document.querySelectorAll(
+          '.services__webview-wrapper',
+        )) {
+          wrapper.style.display = serviceNames.has(wrapper.dataset.name)
+            ? ''
+            : 'none';
+        }
+      }
+    }, 500);
   };
 
   @action _deactivateActiveWorkspace = () => {
@@ -235,7 +212,16 @@ export default class WorkspacesStore extends FeatureStore {
       this.activeWorkspace = null;
     }, 100);
     // Indicate that we are done switching to the default workspace
-    setTimeout(() => { this.isSwitchingWorkspace = false; }, 1000);
+    setTimeout(() => {
+      this.isSwitchingWorkspace = false;
+      if (this.stores.settings.app.splitMode) {
+        for (const wrapper of document.querySelectorAll(
+          '.services__webview-wrapper',
+        )) {
+          wrapper.style.display = '';
+        }
+      }
+    }, 500);
   };
 
   @action _toggleWorkspaceDrawer = () => {
@@ -255,22 +241,12 @@ export default class WorkspacesStore extends FeatureStore {
   };
 
   _toggleKeepAllWorkspacesLoadedSetting = async () => {
-    this._updateSettings({ keepAllWorkspacesLoaded: !this.settings.keepAllWorkspacesLoaded });
+    this._updateSettings({
+      keepAllWorkspacesLoaded: !this.settings.keepAllWorkspacesLoaded,
+    });
   };
 
   // Reactions
-
-  _setFeatureEnabledReaction = () => {
-    const { isWorkspaceEnabled } = this.stores.features.features;
-    this.isFeatureEnabled = isWorkspaceEnabled;
-  };
-
-  _setIsPremiumFeatureReaction = () => {
-    // const { features } = this.stores;
-    // const { isWorkspaceIncludedInCurrentPlan } = features.features;
-    // this.isPremiumFeature = !isWorkspaceIncludedInCurrentPlan;
-    // this.isPremiumUpgradeRequired = !isWorkspaceIncludedInCurrentPlan;
-  };
 
   _setWorkspaceBeingEditedReaction = () => {
     const { pathname } = this.stores.router.location;
@@ -286,7 +262,8 @@ export default class WorkspacesStore extends FeatureStore {
       const activeService = this.stores.services.active;
       const workspaceServices = this.getWorkspaceServices(this.activeWorkspace);
       if (workspaceServices.length <= 0) return;
-      const isActiveServiceInWorkspace = workspaceServices.includes(activeService);
+      const isActiveServiceInWorkspace =
+        workspaceServices.includes(activeService);
       if (!isActiveServiceInWorkspace) {
         this.actions.service.setActive({
           serviceId: workspaceServices[0].id,
@@ -309,9 +286,13 @@ export default class WorkspacesStore extends FeatureStore {
 
   _openDrawerWithSettingsReaction = () => {
     const { router } = this.stores;
-    const isWorkspaceSettingsRoute = router.location.pathname.includes(WORKSPACES_ROUTES.ROOT);
-    const isSwitchingToSettingsRoute = !this.isSettingsRouteActive && isWorkspaceSettingsRoute;
-    const isLeavingSettingsRoute = !isWorkspaceSettingsRoute && this.isSettingsRouteActive;
+    const isWorkspaceSettingsRoute = router.location.pathname.includes(
+      WORKSPACES_ROUTES.ROOT,
+    );
+    const isSwitchingToSettingsRoute =
+      !this.isSettingsRouteActive && isWorkspaceSettingsRoute;
+    const isLeavingSettingsRoute =
+      !isWorkspaceSettingsRoute && this.isSettingsRouteActive;
 
     if (isSwitchingToSettingsRoute) {
       this.isSettingsRouteActive = true;
@@ -321,7 +302,10 @@ export default class WorkspacesStore extends FeatureStore {
       }
     } else if (isLeavingSettingsRoute) {
       this.isSettingsRouteActive = false;
-      if (!this._wasDrawerOpenBeforeSettingsRoute && this.isWorkspaceDrawerOpen) {
+      if (
+        !this._wasDrawerOpenBeforeSettingsRoute &&
+        this.isWorkspaceDrawerOpen
+      ) {
         workspaceActions.toggleWorkspaceDrawer();
       }
     }
@@ -330,26 +314,19 @@ export default class WorkspacesStore extends FeatureStore {
   _cleanupInvalidServiceReferences = () => {
     const { services } = this.stores;
     const { allServicesRequest } = services;
-    const servicesHaveBeenLoaded = allServicesRequest.wasExecuted && !allServicesRequest.isError;
+    const servicesHaveBeenLoaded =
+      allServicesRequest.wasExecuted && !allServicesRequest.isError;
     // Loop through all workspaces and remove invalid service ids (locally)
-    this.workspaces.forEach((workspace) => {
-      workspace.services.forEach((serviceId) => {
-        if (servicesHaveBeenLoaded && !services.one(serviceId) && serviceId !== KEEP_WS_LOADED_USID) {
+    for (const workspace of this.workspaces) {
+      for (const serviceId of workspace.services) {
+        if (
+          servicesHaveBeenLoaded &&
+          !services.one(serviceId) &&
+          serviceId !== KEEP_WS_LOADED_USID
+        ) {
           workspace.services.remove(serviceId);
         }
-      });
-    });
-  };
-
-  _disablePremiumFeatures = () => {
-    if (!this.isUserAllowedToUseFeature) {
-      debug('_disablePremiumFeatures');
-      this._stopActions(this._premiumUserActions);
-      this._stopReactions(this._premiumUserReactions);
-      this.reset();
-    } else {
-      this._startActions(this._premiumUserActions);
-      this._startReactions(this._premiumUserReactions);
+      }
     }
-  }
+  };
 }

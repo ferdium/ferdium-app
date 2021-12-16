@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react';
@@ -9,24 +9,24 @@ import Layout from '../../components/settings/SettingsLayout';
 import Navigation from '../../components/settings/navigation/SettingsNavigation';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 import { workspaceStore } from '../../features/workspaces';
+import UIStore from '../../stores/UIStore';
 
-export default @inject('stores', 'actions') @observer class SettingsContainer extends Component {
+class SettingsContainer extends Component {
   portalRoot = document.querySelector('#portalContainer');
 
   el = document.createElement('div');
 
   componentDidMount() {
-    this.portalRoot.appendChild(this.el);
+    this.portalRoot.append(this.el);
   }
 
   componentWillUnmount() {
-    this.portalRoot.removeChild(this.el);
+    this.el.remove();
   }
 
   render() {
     const { children, stores } = this.props;
     const { closeSettings } = this.props.actions.ui;
-
 
     const navigation = (
       <Navigation
@@ -36,29 +36,24 @@ export default @inject('stores', 'actions') @observer class SettingsContainer ex
     );
 
     return ReactDOM.createPortal(
-      (
-        <ErrorBoundary>
-          <Layout
-            navigation={navigation}
-            closeSettings={closeSettings}
-          >
-            {children}
-          </Layout>
-        </ErrorBoundary>
-      ),
+      <ErrorBoundary>
+        <Layout navigation={navigation} closeSettings={closeSettings}>
+          {children}
+        </Layout>
+      </ErrorBoundary>,
       this.el,
     );
   }
 }
 
-SettingsContainer.wrappedComponent.propTypes = {
+SettingsContainer.propTypes = {
   children: PropTypes.element.isRequired,
   stores: PropTypes.shape({
     services: PropTypes.instanceOf(ServicesStore).isRequired,
   }).isRequired,
   actions: PropTypes.shape({
-    ui: PropTypes.shape({
-      closeSettings: PropTypes.func.isRequired,
-    }),
+    ui: PropTypes.instanceOf(UIStore).isRequired,
   }).isRequired,
 };
+
+export default inject('stores', 'actions')(observer(SettingsContainer));

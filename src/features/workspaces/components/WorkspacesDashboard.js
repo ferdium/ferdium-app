@@ -1,57 +1,55 @@
-import React, { Component, Fragment } from 'react';
+/* eslint-disable react/jsx-no-useless-fragment */
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer, PropTypes as MobxPropTypes, inject } from 'mobx-react';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 import injectSheet from 'react-jss';
-import { Infobox, Badge } from '@meetfranz/ui';
 
-import { mdiCheckboxMarkedCircleOutline } from '@mdi/js';
+import { Infobox } from '../../../components/ui/infobox/index';
 import Loader from '../../../components/ui/Loader';
 import WorkspaceItem from './WorkspaceItem';
 import CreateWorkspaceForm from './CreateWorkspaceForm';
 import Request from '../../../stores/lib/Request';
 import Appear from '../../../components/ui/effects/Appear';
-import { workspaceStore } from '../index';
 import UIStore from '../../../stores/UIStore';
-import globalMessages from '../../../i18n/globalMessages';
-import UpgradeButton from '../../../components/ui/UpgradeButton';
 
 const messages = defineMessages({
   headline: {
     id: 'settings.workspaces.headline',
-    defaultMessage: '!!!Your workspaces',
+    defaultMessage: 'Your workspaces',
   },
   noServicesAdded: {
     id: 'settings.workspaces.noWorkspacesAdded',
-    defaultMessage: '!!!You haven\'t added any workspaces yet.',
+    defaultMessage: "You haven't created any workspaces yet.",
   },
   workspacesRequestFailed: {
     id: 'settings.workspaces.workspacesRequestFailed',
-    defaultMessage: '!!!Could not load your workspaces',
+    defaultMessage: 'Could not load your workspaces',
   },
   tryReloadWorkspaces: {
     id: 'settings.workspaces.tryReloadWorkspaces',
-    defaultMessage: '!!!Try again',
+    defaultMessage: 'Try again',
   },
   updatedInfo: {
     id: 'settings.workspaces.updatedInfo',
-    defaultMessage: '!!!Your changes have been saved',
+    defaultMessage: 'Your changes have been saved',
   },
   deletedInfo: {
     id: 'settings.workspaces.deletedInfo',
-    defaultMessage: '!!!Workspace has been deleted',
+    defaultMessage: 'Workspace has been deleted',
   },
   workspaceFeatureInfo: {
     id: 'settings.workspaces.workspaceFeatureInfo',
-    defaultMessage: '!!!Info about workspace feature',
+    defaultMessage:
+      'Ferdi Workspaces let you focus on what’s important right now. Set up different sets of services and easily switch between them at any time. You decide which services you need when and where, so we can help you stay on top of your game - or easily switch off from work whenever you want.',
   },
   workspaceFeatureHeadline: {
     id: 'settings.workspaces.workspaceFeatureHeadline',
-    defaultMessage: '!!!Less is More: Introducing Ferdi Workspaces',
+    defaultMessage: 'Less is More: Introducing Ferdi Workspaces',
   },
 });
 
-const styles = () => ({
+const styles = {
   table: {
     width: '100%',
     '& td': {
@@ -64,29 +62,13 @@ const styles = () => ({
   appear: {
     height: 'auto',
   },
-  premiumAnnouncement: {
-    height: 'auto',
-  },
-  premiumAnnouncementContainer: {
-    display: 'flex',
-  },
-  announcementHeadline: {
-    marginBottom: 0,
-  },
   teaserImage: {
     width: 250,
     margin: [-8, 0, 0, 20],
     alignSelf: 'center',
   },
-  upgradeCTA: {
-    margin: [40, 'auto'],
-  },
-  proRequired: {
-    margin: [10, 0, 40],
-  },
-});
+};
 
-@inject('stores') @injectSheet(styles) @observer
 class WorkspacesDashboard extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -97,10 +79,6 @@ class WorkspacesDashboard extends Component {
     onCreateWorkspaceSubmit: PropTypes.func.isRequired,
     onWorkspaceClick: PropTypes.func.isRequired,
     workspaces: MobxPropTypes.arrayOrObservableArray.isRequired,
-  };
-
-  static contextTypes = {
-    intl: intlShape,
   };
 
   render() {
@@ -115,7 +93,7 @@ class WorkspacesDashboard extends Component {
       workspaces,
     } = this.props;
 
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     return (
       <div className="settings__main">
@@ -123,13 +101,12 @@ class WorkspacesDashboard extends Component {
           <h1>{intl.formatMessage(messages.headline)}</h1>
         </div>
         <div className="settings__body">
-
           {/* ===== Workspace updated info ===== */}
           {updateWorkspaceRequest.wasExecuted && updateWorkspaceRequest.result && (
             <Appear className={classes.appear}>
               <Infobox
                 type="success"
-                icon={mdiCheckboxMarkedCircleOutline}
+                icon="checkbox-marked-circle-outline"
                 dismissable
                 onUnmount={updateWorkspaceRequest.reset}
               >
@@ -143,7 +120,7 @@ class WorkspacesDashboard extends Component {
             <Appear className={classes.appear}>
               <Infobox
                 type="success"
-                icon={mdiCheckboxMarkedCircleOutline}
+                icon="checkbox-marked-circle-outline"
                 dismissable
                 onUnmount={deleteWorkspaceRequest.reset}
               >
@@ -152,79 +129,55 @@ class WorkspacesDashboard extends Component {
             </Appear>
           )}
 
-          {workspaceStore.isPremiumUpgradeRequired && (
-            <div className={classes.premiumAnnouncement}>
-
-              <h1 className={classes.announcementHeadline}>{intl.formatMessage(messages.workspaceFeatureHeadline)}</h1>
-              <Badge className={classes.proRequired}>{intl.formatMessage(globalMessages.proRequired)}</Badge>
-              <div className={classes.premiumAnnouncementContainer}>
-                <div className={classes.premiumAnnouncementContent}>
-                  <p>{intl.formatMessage(messages.workspaceFeatureInfo)}</p>
-                  <UpgradeButton
-                    className={classes.upgradeCTA}
-                    gaEventInfo={{ category: 'Workspaces', event: 'upgrade' }}
-                    short
-                    requiresPro
-                  />
-                </div>
-                <img src={`https://cdn.franzinfra.com/announcements/assets/workspaces_${this.props.stores.ui.isDarkThemeActive ? 'dark' : 'light'}.png`} className={classes.teaserImage} alt="" />
-              </div>
-            </div>
-          )}
-
-          {!workspaceStore.isPremiumUpgradeRequired && (
+          {/* ===== Create workspace form ===== */}
+          <div className={classes.createForm}>
+            <CreateWorkspaceForm
+              isSubmitting={createWorkspaceRequest.isExecuting}
+              onSubmit={onCreateWorkspaceSubmit}
+            />
+          </div>
+          {getUserWorkspacesRequest.isExecuting ? (
+            <Loader />
+          ) : (
             <>
-              {/* ===== Create workspace form ===== */}
-              <div className={classes.createForm}>
-                <CreateWorkspaceForm
-                  isSubmitting={createWorkspaceRequest.isExecuting}
-                  onSubmit={onCreateWorkspaceSubmit}
-                />
-              </div>
-              {getUserWorkspacesRequest.isExecuting ? (
-                <Loader />
+              {/* ===== Workspace could not be loaded error ===== */}
+              {getUserWorkspacesRequest.error ? (
+                <Infobox
+                  icon="alert"
+                  type="danger"
+                  ctaLabel={intl.formatMessage(messages.tryReloadWorkspaces)}
+                  ctaLoading={getUserWorkspacesRequest.isExecuting}
+                  ctaOnClick={getUserWorkspacesRequest.retry}
+                >
+                  {intl.formatMessage(messages.workspacesRequestFailed)}
+                </Infobox>
               ) : (
-                <Fragment>
-                  {/* ===== Workspace could not be loaded error ===== */}
-                  {getUserWorkspacesRequest.error ? (
-                    <Infobox
-                      icon="alert"
-                      type="danger"
-                      ctaLabel={intl.formatMessage(messages.tryReloadWorkspaces)}
-                      ctaLoading={getUserWorkspacesRequest.isExecuting}
-                      ctaOnClick={getUserWorkspacesRequest.retry}
-                    >
-                      {intl.formatMessage(messages.workspacesRequestFailed)}
-                    </Infobox>
+                <>
+                  {workspaces.length === 0 ? (
+                    <div className="align-middle settings__empty-state">
+                      {/* ===== Workspaces empty state ===== */}
+                      <p className="settings__empty-text">
+                        <span className="emoji">
+                          <img src="./assets/images/emoji/sad.png" alt="" />
+                        </span>
+                        {intl.formatMessage(messages.noServicesAdded)}
+                      </p>
+                    </div>
                   ) : (
-                    <Fragment>
-                      {workspaces.length === 0 ? (
-                        <div className="align-middle settings__empty-state">
-                          {/* ===== Workspaces empty state ===== */}
-                          <p className="settings__empty-text">
-                            <span className="emoji">
-                              <img src="./assets/images/emoji/sad.png" alt="" />
-                            </span>
-                            {intl.formatMessage(messages.noServicesAdded)}
-                          </p>
-                        </div>
-                      ) : (
-                        <table className={classes.table}>
-                          {/* ===== Workspaces list ===== */}
-                          <tbody>
-                            {workspaces.map(workspace => (
-                              <WorkspaceItem
-                                key={workspace.id}
-                                workspace={workspace}
-                                onItemClick={w => onWorkspaceClick(w)}
-                              />
-                            ))}
-                          </tbody>
-                        </table>
-                      )}
-                    </Fragment>
+                    <table className={classes.table}>
+                      {/* ===== Workspaces list ===== */}
+                      <tbody>
+                        {workspaces.map(workspace => (
+                          <WorkspaceItem
+                            key={workspace.id}
+                            workspace={workspace}
+                            onItemClick={w => onWorkspaceClick(w)}
+                          />
+                        ))}
+                      </tbody>
+                    </table>
                   )}
-                </Fragment>
+                </>
               )}
             </>
           )}
@@ -234,9 +187,13 @@ class WorkspacesDashboard extends Component {
   }
 }
 
-export default WorkspacesDashboard;
+export default injectIntl(
+  inject('stores')(
+    injectSheet(styles, { injectTheme: true })(observer(WorkspacesDashboard)),
+  ),
+);
 
-WorkspacesDashboard.wrappedComponent.propTypes = {
+WorkspacesDashboard.propTypes = {
   stores: PropTypes.shape({
     ui: PropTypes.instanceOf(UIStore).isRequired,
   }).isRequired,

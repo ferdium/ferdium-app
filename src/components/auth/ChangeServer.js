@@ -1,72 +1,78 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 import Form from '../../lib/Form';
 import Input from '../ui/Input';
 import Select from '../ui/Select';
 import Button from '../ui/Button';
+import Link from '../ui/Link';
 import Infobox from '../ui/Infobox';
 import { url, required } from '../../helpers/validation-helpers';
+import { LIVE_FERDI_API, LIVE_FRANZ_API } from '../../config';
+import globalMessages from '../../i18n/globalMessages';
 
 const messages = defineMessages({
   headline: {
     id: 'changeserver.headline',
-    defaultMessage: '!!!Change server',
+    defaultMessage: 'Change server',
   },
   label: {
     id: 'changeserver.label',
-    defaultMessage: '!!!Server',
+    defaultMessage: 'Server',
   },
   warning: {
     id: 'changeserver.warning',
-    defaultMessage: '!!!Extra settings offered by Ferdi will not be saved',
+    defaultMessage: 'Extra settings offered by Ferdi will not be saved',
   },
   customServerLabel: {
     id: 'changeserver.customServerLabel',
-    defaultMessage: '!!!Custom server',
+    defaultMessage: 'Custom server',
   },
   urlError: {
     id: 'changeserver.urlError',
-    defaultMessage: '!!!Enter a valid URL',
+    defaultMessage: 'Enter a valid URL',
   },
-  submit: {
-    id: 'changeserver.submit',
-    defaultMessage: '!!!Submit',
-  },
-
 });
 
-export default @observer class ChangeServer extends Component {
+class ChangeServer extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
     server: PropTypes.string.isRequired,
   };
 
-  static contextTypes = {
-    intl: intlShape,
-  };
+  ferdiServer = LIVE_FERDI_API;
 
-  ferdiServer='https://api.getferdi.com';
+  franzServer = LIVE_FRANZ_API;
 
-  franzServer='https://api.franzinfra.com';
+  defaultServers = [this.franzServer, this.ferdiServer];
 
-  defaultServers=[this.franzServer, this.ferdiServer];
-
-  form = new Form({
-    fields: {
-      server: {
-        label: this.context.intl.formatMessage(messages.label),
-        value: this.props.server,
-        options: [{ value: this.ferdiServer, label: 'Ferdi' }, { value: this.franzServer, label: 'Franz' }, { value: this.defaultServers.includes(this.props.server) ? '' : this.props.server, label: 'Custom' }],
-      },
-      customServer: {
-        label: this.context.intl.formatMessage(messages.customServerLabel),
-        value: '',
-        validators: [url, required],
+  form = new Form(
+    {
+      fields: {
+        server: {
+          label: this.props.intl.formatMessage(messages.label),
+          value: this.props.server,
+          options: [
+            { value: this.ferdiServer, label: 'Ferdi' },
+            { value: this.franzServer, label: 'Franz' },
+            {
+              value: this.defaultServers.includes(this.props.server)
+                ? ''
+                : this.props.server,
+              label: 'Custom',
+            },
+          ],
+        },
+        customServer: {
+          label: this.props.intl.formatMessage(messages.customServerLabel),
+          value: '',
+          validators: [url, required],
+        },
       },
     },
-  }, this.context.intl);
+    this.props.intl,
+  );
 
   componentDidMount() {
     if (this.defaultServers.includes(this.props.server)) {
@@ -80,13 +86,13 @@ export default @observer class ChangeServer extends Component {
   submit(e) {
     e.preventDefault();
     this.form.submit({
-      onSuccess: (form) => {
+      onSuccess: form => {
         if (!this.defaultServers.includes(form.values().server)) {
           form.$('server').onChange(form.values().customServer);
         }
         this.props.onSubmit(form.values());
       },
-      onError: (form) => {
+      onError: form => {
         if (this.defaultServers.includes(form.values().server)) {
           this.props.onSubmit(form.values());
         }
@@ -96,20 +102,19 @@ export default @observer class ChangeServer extends Component {
 
   render() {
     const { form } = this;
-    const { intl } = this.context;
+    const { intl } = this.props;
     return (
       <div className="auth__container">
         <form className="franz-form auth__form" onSubmit={e => this.submit(e)}>
+          <Link to='/auth/welcome'><img src="./assets/images/logo.svg" className="auth__logo" alt="" /></Link>
           <h1>{intl.formatMessage(messages.headline)}</h1>
-          {form.$('server').value === this.franzServer
-          && (
+          {form.$('server').value === this.franzServer && (
             <Infobox type="warning">
               {intl.formatMessage(messages.warning)}
             </Infobox>
           )}
           <Select field={form.$('server')} />
-          {!this.defaultServers.includes(form.$('server').value)
-          && (
+          {!this.defaultServers.includes(form.$('server').value) && (
             <Input
               placeholder="Custom Server"
               onChange={e => this.submit(e)}
@@ -119,10 +124,12 @@ export default @observer class ChangeServer extends Component {
           <Button
             type="submit"
             className="auth__button"
-            label={intl.formatMessage(messages.submit)}
+            label={intl.formatMessage(globalMessages.submit)}
           />
         </form>
       </div>
     );
   }
 }
+
+export default injectIntl(observer(ChangeServer));

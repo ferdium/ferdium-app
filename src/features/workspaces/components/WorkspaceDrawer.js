@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import injectSheet from 'react-jss';
-import { defineMessages, FormattedHTMLMessage, intlShape } from 'react-intl';
-import { H1, Icon, ProBadge } from '@meetfranz/ui';
-import { Button } from '@meetfranz/forms/lib';
+import { defineMessages, injectIntl } from 'react-intl';
 import ReactTooltip from 'react-tooltip';
 
-import { mdiPlusBox, mdiSettings, mdiStar } from '@mdi/js';
+import { mdiPlusBox, mdiCog } from '@mdi/js';
+
+import { H1 } from '../../../components/ui/headline';
+import { Icon } from '../../../components/ui/icon';
 import WorkspaceDrawerItem from './WorkspaceDrawerItem';
 import { workspaceActions } from '../actions';
 import { workspaceStore } from '../index';
@@ -15,35 +16,24 @@ import { workspaceStore } from '../index';
 const messages = defineMessages({
   headline: {
     id: 'workspaceDrawer.headline',
-    defaultMessage: '!!!Workspaces',
+    defaultMessage: 'Workspaces',
   },
   allServices: {
     id: 'workspaceDrawer.allServices',
-    defaultMessage: '!!!All services',
+    defaultMessage: 'All services',
   },
   workspacesSettingsTooltip: {
     id: 'workspaceDrawer.workspacesSettingsTooltip',
-    defaultMessage: '!!!Workspaces settings',
+    defaultMessage: 'Edit workspaces settings',
   },
   workspaceFeatureInfo: {
     id: 'workspaceDrawer.workspaceFeatureInfo',
-    defaultMessage: '!!!Info about workspace feature',
-  },
-  premiumCtaButtonLabel: {
-    id: 'workspaceDrawer.premiumCtaButtonLabel',
-    defaultMessage: '!!!Create your first workspace',
-  },
-  reactivatePremiumAccount: {
-    id: 'workspaceDrawer.reactivatePremiumAccountLabel',
-    defaultMessage: '!!!Reactivate premium account',
+    defaultMessage:
+      '<p>Ferdi Workspaces let you focus on what’s important right now. Set up different sets of services and easily switch between them at any time.</p><p>You decide which services you need when and where, so we can help you stay on top of your game - or easily switch off from work whenever you want.</p>',
   },
   addNewWorkspaceLabel: {
     id: 'workspaceDrawer.addNewWorkspaceLabel',
-    defaultMessage: '!!!add new workspace',
-  },
-  premiumFeatureBadge: {
-    id: 'workspaceDrawer.proFeatureBadge',
-    defaultMessage: '!!!Premium feature',
+    defaultMessage: 'Add new workspace',
   },
 });
 
@@ -60,9 +50,6 @@ const styles = theme => ({
     marginBottom: '25px',
     marginLeft: theme.workspaces.drawer.padding,
   },
-  headlineProBadge: {
-    marginRight: 15,
-  },
   workspacesSettingsButton: {
     float: 'right',
     marginRight: theme.workspaces.drawer.padding,
@@ -76,17 +63,7 @@ const styles = theme => ({
   },
   workspaces: {
     height: 'auto',
-    overflowY: 'scroll',
-  },
-  premiumAnnouncement: {
-    padding: '20px',
-    paddingTop: '0',
-    height: 'auto',
-  },
-  premiumCtaButton: {
-    marginTop: '20px',
-    width: '100%',
-    color: 'white !important',
+    overflowY: 'auto',
   },
   addNewWorkspaceLabel: {
     height: 'auto',
@@ -111,16 +88,10 @@ const styles = theme => ({
   },
 });
 
-@injectSheet(styles) @observer
 class WorkspaceDrawer extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     getServicesForWorkspace: PropTypes.func.isRequired,
-    onUpgradeAccountClick: PropTypes.func.isRequired,
-  };
-
-  static contextTypes = {
-    intl: intlShape,
   };
 
   componentDidMount() {
@@ -128,118 +99,80 @@ class WorkspaceDrawer extends Component {
   }
 
   render() {
-    const {
-      classes,
-      getServicesForWorkspace,
-      onUpgradeAccountClick,
-    } = this.props;
-    const { intl } = this.context;
-    const {
-      activeWorkspace,
-      isSwitchingWorkspace,
-      nextWorkspace,
-      workspaces,
-    } = workspaceStore;
-    const actualWorkspace = isSwitchingWorkspace ? nextWorkspace : activeWorkspace;
+    const { classes, getServicesForWorkspace } = this.props;
+    const { intl } = this.props;
+    const { activeWorkspace, isSwitchingWorkspace, nextWorkspace, workspaces } =
+      workspaceStore;
+    const actualWorkspace = isSwitchingWorkspace
+      ? nextWorkspace
+      : activeWorkspace;
     return (
-      <div className={classes.drawer}>
+      <div className={`${classes.drawer} workspaces-drawer`}>
         <H1 className={classes.headline}>
-          {workspaceStore.isPremiumUpgradeRequired && (
-            <span
-              className={classes.headlineProBadge}
-              data-tip={`${intl.formatMessage(messages.premiumFeatureBadge)}`}
-            >
-              <ProBadge />
-            </span>
-          )}
           {intl.formatMessage(messages.headline)}
           <span
             className={classes.workspacesSettingsButton}
             onClick={() => {
               workspaceActions.openWorkspaceSettings();
             }}
-            data-tip={`${intl.formatMessage(messages.workspacesSettingsTooltip)}`}
+            data-tip={`${intl.formatMessage(
+              messages.workspacesSettingsTooltip,
+            )}`}
           >
             <Icon
-              icon={mdiSettings}
+              icon={mdiCog}
               size={1.5}
               className={classes.workspacesSettingsButtonIcon}
             />
           </span>
         </H1>
-        {workspaceStore.isPremiumUpgradeRequired ? (
-          <div className={classes.premiumAnnouncement}>
-            <FormattedHTMLMessage {...messages.workspaceFeatureInfo} />
-            {workspaceStore.userHasWorkspaces ? (
-              <Button
-                className={classes.premiumCtaButton}
-                buttonType="primary"
-                label={intl.formatMessage(messages.reactivatePremiumAccount)}
-                icon={mdiStar}
-                onClick={() => {
-                  onUpgradeAccountClick();
-                }}
-              />
-            ) : (
-              <Button
-                className={classes.premiumCtaButton}
-                buttonType="primary"
-                label={intl.formatMessage(messages.premiumCtaButtonLabel)}
-                icon={mdiPlusBox}
-                onClick={() => {
-                  workspaceActions.openWorkspaceSettings();
-                }}
-              />
-            )}
-          </div>
-        ) : (
-          <div className={classes.workspaces}>
+        <div className={classes.workspaces}>
+          <WorkspaceDrawerItem
+            name={intl.formatMessage(messages.allServices)}
+            onClick={() => {
+              workspaceActions.deactivate();
+              workspaceActions.toggleWorkspaceDrawer();
+            }}
+            services={getServicesForWorkspace(null)}
+            isActive={actualWorkspace == null}
+            shortcutIndex={0}
+          />
+          {workspaces.map((workspace, index) => (
             <WorkspaceDrawerItem
-              name={intl.formatMessage(messages.allServices)}
+              key={workspace.id}
+              name={workspace.name}
+              isActive={actualWorkspace === workspace}
               onClick={() => {
-                workspaceActions.deactivate();
+                if (actualWorkspace === workspace) return;
+                workspaceActions.activate({ workspace });
                 workspaceActions.toggleWorkspaceDrawer();
               }}
-              services={getServicesForWorkspace(null)}
-              isActive={actualWorkspace == null}
-              shortcutIndex={0}
+              onContextMenuEditClick={() =>
+                workspaceActions.edit({ workspace })
+              }
+              services={getServicesForWorkspace(workspace)}
+              shortcutIndex={index + 1}
             />
-            {workspaces.map((workspace, index) => (
-              <WorkspaceDrawerItem
-                key={workspace.id}
-                name={workspace.name}
-                isActive={actualWorkspace === workspace}
-                onClick={() => {
-                  if (actualWorkspace === workspace) return;
-                  workspaceActions.activate({ workspace });
-                  workspaceActions.toggleWorkspaceDrawer();
-                }}
-                onContextMenuEditClick={() => workspaceActions.edit({ workspace })}
-                services={getServicesForWorkspace(workspace)}
-                shortcutIndex={index + 1}
-              />
-            ))}
-            <div
-              className={classes.addNewWorkspaceLabel}
-              onClick={() => {
-                workspaceActions.openWorkspaceSettings();
-              }}
-            >
-              <Icon
-                icon={mdiPlusBox}
-                size={1}
-                className={classes.workspacesSettingsButtonIcon}
-              />
-              <span>
-                {intl.formatMessage(messages.addNewWorkspaceLabel)}
-              </span>
-            </div>
+          ))}
+          <div
+            className={classes.addNewWorkspaceLabel}
+            onClick={() => {
+              workspaceActions.openWorkspaceSettings();
+            }}
+          >
+            <Icon
+              icon={mdiPlusBox}
+              className={classes.workspacesSettingsButtonIcon}
+            />
+            <span>{intl.formatMessage(messages.addNewWorkspaceLabel)}</span>
           </div>
-        )}
+        </div>
         <ReactTooltip place="right" type="dark" effect="solid" />
       </div>
     );
   }
 }
 
-export default WorkspaceDrawer;
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(observer(WorkspaceDrawer)),
+);

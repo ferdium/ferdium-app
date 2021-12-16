@@ -1,0 +1,359 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+# Note: This workflow requires some secrets setup, and set on this repo with the names:
+# 'FERDI_PUBLISH_TOKEN' (A GitHub Personal Access Token with appropriate permissions - for publishing the built artifacts)
+# 'APPLEID' (The username of your Apple developer account - for notarizing the mac artifacts)
+# 'APPLEID_PASSWORD' (An app-specific password - for notarizing the mac artifacts)
+# 'CSC_LINK' (The HTTPS link or local path to certificate - for code signing of mac artifacts)
+# 'CSC_KEY_PASSWORD' (The password to decrypt the certificate given in CSC_LINK - for code signing of mac artifacts)
+# 'WIN_CSC_LINK' (The HTTPS link or local path to certificate - for code signing of windows artifacts)
+# 'WIN_CSC_KEY_PASSWORD' (The password to decrypt the certificate given in CSC_LINK - for code signing of windows artifacts)
+
+name: Builds
+
+on:
+  # Push to any tracked branches
+  push:
+    branches: [develop, release, nightly]
+  # PRs only on develop branch
+  pull_request:
+    branches: [develop]
+  # Manual trigger from the UI
+  workflow_dispatch:
+    inputs:
+      message:
+        description: 'Message for build'
+        required: true
+  schedule:
+    - cron: '15 0 * * *' # every night at 12:15 am (to allow for dependency builds to complete)
+
+env:
+  USE_HARD_LINKS: false
+  # DEBUG: electron-builder
+
+jobs:
+  check_updates:
+    runs-on: ubuntu-latest
+    name: 'Check latest commit: ${{ github.event.inputs.message }}'
+    outputs:
+      should_run: ${{ steps.should_run.outputs.should_run }}
+    steps:
+      - name: Checkout code along with submodules for the 'nightly' branch if the trigger event is 'scheduled'
+        uses: actions/checkout@v2
+        if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
+        with:
+          ref: nightly
+          submodules: recursive
+          fetch-depth: 0 # Note: Needed to be able to pull the 'develop' branch as well for merging
+          # ssh-key: ${{ secrets.FERDI_PUBLISH_TOKEN }}
+      - name: Use Node.js 16.13.0
+        uses: actions/setup-node@v2
+        if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
+        with:
+          node-version: 16.13.0
+      - id: should_run
+        name: Check whether there are any commits since this run was last triggered and push them and/or set the output
+        if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+
+          CHANGES_COUNT=$(git diff --shortstat origin/develop | wc -l)
+          MANUAL_REBUILD="${{ github.event_name == 'workflow_dispatch' }}"
+          VERSION_BUMP="${{ contains(github.event.inputs.message, '[version bump]') }}"
+          if [ $CHANGES_COUNT -gt 0 ] || [[ $MANUAL_REBUILD == "true" && $VERSION_BUMP == "true" ]]; then
+            # Do the version bump in the 'develop' branch ONLY if
+            #   there were other changes coming from the 'develop' branch (or)
+            #   this is a manual trigger with the key-phrase
+            git checkout develop
+            TAG_NAME=$(npm version -m "%s [skip ci]" prerelease --preid=nightly)
+            git commit --all --amend --no-edit --no-verify
+            git push origin develop --no-verify
+            git tag -f $TAG_NAME
+            git push origin --tags --no-verify
+            # Also tag the submodule so as to help identify which changes went into which nightly release
+            # TODO: Not working due to cross-repo access issues by the github-action bot
+            # git -C recipes tag -f $TAG_NAME
+            # git -C recipes push origin --tags --no-verify
+
+            git checkout nightly
+          fi
+
+          echo "Merge with fast-forward from 'origin/develop'"
+          git merge --ff-only origin/develop --no-verify
+
+          echo "Number of changes: $CHANGES_COUNT"
+          if [ $CHANGES_COUNT -eq 0 ] && [ $MANUAL_REBUILD != "true" ]; then
+            echo "No changes found - terminating the build"
+            echo "::set-output name=should_run::false"
+          else   # changes > 0 (or) MANUAL_REBUILD=true
+            echo "Pushing rebased commits"
+            git push origin $(git rev-parse --abbrev-ref HEAD) --no-verify
+          fi
+
+  build_mac:
+    name: 'macos ${{ github.event.inputs.message }}'
+    needs: check_updates
+    if: ${{ (needs.check_updates.outputs.should_run != 'false') && (github.event_name != 'workflow_dispatch' || (github.event_name == 'workflow_dispatch' && (contains(github.event.inputs.message, '[macOS]') || (!contains(github.event.inputs.message, '[macOS]') && !contains(github.event.inputs.message, '[Linux]') && !contains(github.event.inputs.message, '[Windows]'))))) }}
+    runs-on: macos-latest
+    steps:
+      - name: Set env vars
+        run: |
+          echo "NPM_CACHE=$HOME/.npm" >> $GITHUB_ENV
+          echo "PNPM_CACHE=$HOME/.pnpm-store" >> $GITHUB_ENV
+          echo "ELECTRON_CACHE=$HOME/.cache/electron" >> $GITHUB_ENV
+          echo "ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder" >> $GITHUB_ENV
+          echo "MANUAL_REBUILD_ON_NIGHTLY=${{ github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]') }}" >> $GITHUB_ENV
+          echo "SKIP_NOTARIZATION=${{ !contains(github.repository_owner, 'getferdi') }}" >> $GITHUB_ENV
+      - name: Checkout code along with submodules for the 'nightly' branch if the trigger event is 'scheduled' or this is a forced rebuild on the nightly branch
+        uses: actions/checkout@v2
+        if: ${{ github.event_name == 'schedule' || env.MANUAL_REBUILD_ON_NIGHTLY == 'true' }}
+        with:
+          submodules: recursive
+          ref: nightly
+      - name: Checkout code along with submodules for any branch if the trigger event is NOT 'scheduled' and this is NOT a forced rebuild on the nightly branch
+        uses: actions/checkout@v2
+        if: ${{ github.event_name != 'schedule' && env.MANUAL_REBUILD_ON_NIGHTLY != 'true' }}
+        with:
+          submodules: recursive
+      - name: Extract Git branch name from the currently checked out branch (not from the branch where this run was kicked off)
+        run: echo "GIT_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+        shell: bash
+      - name: Cache electron modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-electron-modules
+        with:
+          key: ${{ runner.os }}-${{ env.cache-name }}
+          path: ${{ env.ELECTRON_CACHE }}
+      - name: Cache electron-builder modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-electron-builder-modules
+        with:
+          key: ${{ runner.os }}-${{ env.cache-name }}
+          path: ${{ env.ELECTRON_BUILDER_CACHE }}
+      - name: Use Node.js 16.13.0
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.13.0
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.23.6
+      - name: Install node dependencies
+        run: npm i
+      - name: Package recipes
+        run: pnpm i && pnpm run package
+        working-directory: ./recipes
+      - name: Run linter and tests
+        run: npm run lint && npm run test
+      - name: Build Ferdi without publish for any branch not 'nightly' and not 'release'
+        if: ${{ env.GIT_BRANCH_NAME != 'nightly' && env.GIT_BRANCH_NAME != 'release' }}
+        run: npm run build -- --publish never
+        shell: bash
+      - name: Build Ferdi with publish for 'nightly' branch
+        if: ${{ env.GIT_BRANCH_NAME == 'nightly' }}
+        run: npm run build -- --publish always -c.publish.provider=github -c.publish.owner=${{ github.repository_owner }}
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.FERDI_PUBLISH_TOKEN }}
+          APPLEID: ${{ secrets.APPLEID }}
+          APPLEID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
+          CSC_LINK: ${{ secrets.CSC_LINK }}
+          CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
+      - name: Build Ferdi with publish for 'release' branch
+        if: ${{ env.GIT_BRANCH_NAME == 'release' }}
+        run: npm run build -- --publish always -c.publish.provider=github -c.publish.owner=${{ github.repository_owner }} -c.publish.repo=ferdi
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.FERDI_PUBLISH_TOKEN }}
+          APPLEID: ${{ secrets.APPLEID }}
+          APPLEID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
+          CSC_LINK: ${{ secrets.CSC_LINK }}
+          CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
+
+  build_linux:
+    name: 'ubuntu ${{ github.event.inputs.message }}'
+    needs: check_updates
+    if: ${{ (needs.check_updates.outputs.should_run != 'false') && (github.event_name != 'workflow_dispatch' || (github.event_name == 'workflow_dispatch' && (contains(github.event.inputs.message, '[Linux]') || (!contains(github.event.inputs.message, '[macOS]') && !contains(github.event.inputs.message, '[Linux]') && !contains(github.event.inputs.message, '[Windows]'))))) }}
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Set env vars
+        run: |
+          echo "NPM_CACHE=$HOME/.npm" >> $GITHUB_ENV
+          echo "PNPM_CACHE=$HOME/.pnpm-store" >> $GITHUB_ENV
+          echo "ELECTRON_CACHE=$HOME/.cache/electron" >> $GITHUB_ENV
+          echo "ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder" >> $GITHUB_ENV
+          echo "MANUAL_REBUILD_ON_NIGHTLY=${{ github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]') }}" >> $GITHUB_ENV
+          echo "SKIP_NOTARIZATION=${{ !contains(github.repository_owner, 'getferdi') }}" >> $GITHUB_ENV
+      - name: Checkout code along with submodules for the 'nightly' branch if the trigger event is 'scheduled' or this is a forced rebuild on the nightly branch
+        uses: actions/checkout@v2
+        if: ${{ github.event_name == 'schedule' || env.MANUAL_REBUILD_ON_NIGHTLY == 'true' }}
+        with:
+          submodules: recursive
+          ref: nightly
+      - name: Checkout code along with submodules for any branch if the trigger event is NOT 'scheduled' and this is NOT a forced rebuild on the nightly branch
+        uses: actions/checkout@v2
+        if: ${{ github.event_name != 'schedule' && env.MANUAL_REBUILD_ON_NIGHTLY != 'true' }}
+        with:
+          submodules: recursive
+      - name: Extract Git branch name from the currently checked out branch (not from the branch where this run was kicked off)
+        run: echo "GIT_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+        shell: bash
+      - name: Cache electron modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-electron-modules
+        with:
+          key: ${{ runner.os }}-${{ env.cache-name }}
+          path: ${{ env.ELECTRON_CACHE }}
+      - name: Cache electron-builder modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-electron-builder-modules
+        with:
+          key: ${{ runner.os }}-${{ env.cache-name }}
+          path: ${{ env.ELECTRON_BUILDER_CACHE }}
+      - name: Use Node.js 16.13.0
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.13.0
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.23.6
+      - name: Install node dependencies
+        run: npm i
+      - name: Figure out used package.json version
+        run: echo "PACKAGE_VERSION=$(node -p 'require("./package.json").version')" >> $GITHUB_ENV
+        shell: bash
+      - name: Package recipes
+        run: pnpm i && pnpm run package
+        working-directory: ./recipes
+      - name: Run linter and tests
+        run: npm run lint && npm run test
+      - name: Build Ferdi without publish for any branch not 'nightly' and not 'release'
+        if: ${{ env.GIT_BRANCH_NAME != 'nightly' && env.GIT_BRANCH_NAME != 'release' }}
+        run: npm run build -- --publish never
+        shell: bash
+      - name: Build Ferdi with publish for 'nightly' branch
+        if: ${{ env.GIT_BRANCH_NAME == 'nightly' }}
+        env:
+          GH_TOKEN: ${{ secrets.FERDI_PUBLISH_TOKEN }}
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+          SNAPCRAFT_LOGIN: ${{ secrets.SNAPCRAFT_LOGIN }}
+        run: |
+          sudo snap install snapcraft --classic
+          echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
+          npm run build -- --publish always -c.publish.provider=github -c.publish.owner=${{ github.repository_owner }} -c.snap.publish.provider=snapStore -c.snap.publish.repo=nightlies -c.snap.publish.channels=edge
+          snapcraft logout
+        shell: bash
+      - name: Build Ferdi with publish for 'release' beta branch
+        if: ${{ env.GIT_BRANCH_NAME == 'release' && contains(env.PACKAGE_VERSION, 'beta') }}
+        env:
+          GH_TOKEN: ${{ secrets.FERDI_PUBLISH_TOKEN }}
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+          SNAPCRAFT_LOGIN: ${{ secrets.SNAPCRAFT_LOGIN }}
+        run: |
+          sudo snap install snapcraft --classic
+          echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
+          npm run build -- --publish always -c.publish.provider=github -c.publish.owner=${{ github.repository_owner }} -c.publish.repo=ferdi -c.snap.publish.provider=snapStore -c.snap.publish.repo=ferdi -c.snap.publish.channels=beta
+          snapcraft logout
+        shell: bash
+      - name: Build Ferdi with publish for 'release' stable branch
+        if: ${{ env.GIT_BRANCH_NAME == 'release' && !contains(env.PACKAGE_VERSION, 'beta') }}
+        env:
+          GH_TOKEN: ${{ secrets.FERDI_PUBLISH_TOKEN }}
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+          SNAPCRAFT_LOGIN: ${{ secrets.SNAPCRAFT_LOGIN }}
+        run: |
+          sudo snap install snapcraft --classic
+          echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
+          npm run build -- --publish always -c.publish.provider=github -c.publish.owner=${{ github.repository_owner }} -c.publish.repo=ferdi -c.snap.publish.provider=snapStore -c.snap.publish.repo=ferdi -c.snap.publish.channels=stable
+          snapcraft logout
+        shell: bash
+
+  build_windows:
+    name: 'windows ${{ github.event.inputs.message }}'
+    needs: check_updates
+    if: ${{ (needs.check_updates.outputs.should_run != 'false') && (github.event_name != 'workflow_dispatch' || (github.event_name == 'workflow_dispatch' && (contains(github.event.inputs.message, '[Windows]') || (!contains(github.event.inputs.message, '[macOS]') && !contains(github.event.inputs.message, '[Linux]') && !contains(github.event.inputs.message, '[Windows]'))))) }}
+    runs-on: windows-latest
+    steps:
+      - name: Set env vars
+        run: |
+          echo "HOME=$USERPROFILE" >> $GITHUB_ENV
+          echo "NPM_CACHE=$USERPROFILE\.npm" >> $GITHUB_ENV
+          echo "PNPM_CACHE=$USERPROFILE\.pnpm-store" >> $GITHUB_ENV
+          echo "ELECTRON_CACHE=$USERPROFILE\.cache\electron" >> $GITHUB_ENV
+          echo "ELECTRON_BUILDER_CACHE=$USERPROFILE\.cache\electron-builder" >> $GITHUB_ENV
+          echo "MANUAL_REBUILD_ON_NIGHTLY=${{ github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]') }}" >> $GITHUB_ENV
+          echo "SKIP_NOTARIZATION=${{ !contains(github.repository_owner, 'getferdi') }}" >> $GITHUB_ENV
+        shell: bash
+      - name: Checkout code along with submodules for the 'nightly' branch if the trigger event is 'scheduled' or this is a forced rebuild on the nightly branch
+        uses: actions/checkout@v2
+        if: ${{ github.event_name == 'schedule' || env.MANUAL_REBUILD_ON_NIGHTLY == 'true' }}
+        with:
+          submodules: recursive
+          ref: nightly
+      - name: Checkout code along with submodules for any branch if the trigger event is NOT 'scheduled' and this is NOT a forced rebuild on the nightly branch
+        uses: actions/checkout@v2
+        if: ${{ github.event_name != 'schedule' && env.MANUAL_REBUILD_ON_NIGHTLY != 'true' }}
+        with:
+          submodules: recursive
+      - name: Extract Git branch name from the currently checked out branch (not from the branch where this run was kicked off)
+        run: echo "GIT_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
+        shell: bash
+      - name: Cache electron modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-electron-modules
+        with:
+          key: ${{ runner.os }}-${{ env.cache-name }}
+          path: ${{ env.ELECTRON_CACHE }}
+      - name: Cache electron-builder modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-electron-builder-modules
+        with:
+          key: ${{ runner.os }}-${{ env.cache-name }}
+          path: ${{ env.ELECTRON_BUILDER_CACHE }}
+      - name: Use Node.js 16.13.0
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.13.0
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.23.6
+      - name: Install node dependencies
+        run: npm i
+        shell: bash
+      - name: Package recipes
+        run: pnpm i && pnpm run package
+        working-directory: ./recipes
+        shell: bash
+      - name: Run linter and tests
+        run: npm run lint && npm run test
+        shell: bash
+      - name: Build Ferdi without publish for any branch not 'nightly' and not 'release'
+        if: ${{ env.GIT_BRANCH_NAME != 'nightly' && env.GIT_BRANCH_NAME != 'release' }}
+        run: npm run build -- --publish never
+        shell: bash
+      - name: Build Ferdi with publish for 'nightly' branch
+        if: ${{ env.GIT_BRANCH_NAME == 'nightly' }}
+        run: npm run build -- --publish always -c.publish.provider=github -c.publish.owner=${{ github.repository_owner }}
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.FERDI_PUBLISH_TOKEN }}
+          WIN_CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
+          WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
+      - name: Build Ferdi with publish for 'release' branch
+        if: ${{ env.GIT_BRANCH_NAME == 'release' }}
+        run: npm run build -- --publish always -c.publish.provider=github -c.publish.owner=${{ github.repository_owner }} -c.publish.repo=ferdi
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.FERDI_PUBLISH_TOKEN }}
+          WIN_CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
+          WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}

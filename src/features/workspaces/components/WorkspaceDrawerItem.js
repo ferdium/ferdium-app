@@ -1,31 +1,35 @@
-import { remote } from 'electron';
-import React, { Component } from 'react';
+import { Menu } from '@electron/remote';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import injectSheet from 'react-jss';
 import classnames from 'classnames';
-import { defineMessages, intlShape } from 'react-intl';
-import { ctrlKey } from '../../../environment';
-
-const { Menu } = remote;
+import { defineMessages, injectIntl } from 'react-intl';
+import { altKey, cmdOrCtrlShortcutKey } from '../../../environment';
 
 const messages = defineMessages({
   noServicesAddedYet: {
     id: 'workspaceDrawer.item.noServicesAddedYet',
-    defaultMessage: '!!!No services added yet',
+    defaultMessage: 'No services added yet',
   },
   contextMenuEdit: {
     id: 'workspaceDrawer.item.contextMenuEdit',
-    defaultMessage: '!!!edit',
+    defaultMessage: 'edit',
   },
 });
+
+let itemTransition = 'none';
+
+if (window && window.matchMedia('(prefers-reduced-motion: no-preference)')) {
+  itemTransition = 'background-color 300ms ease-out';
+}
 
 const styles = theme => ({
   item: {
     height: '67px',
     padding: `15px ${theme.workspaces.drawer.padding}px`,
     borderBottom: `1px solid ${theme.workspaces.drawer.listItem.border}`,
-    transition: 'background-color 300ms ease-out',
+    transition: itemTransition,
     '&:first-child': {
       borderTop: `1px solid ${theme.workspaces.drawer.listItem.border}`,
     },
@@ -61,7 +65,6 @@ const styles = theme => ({
   },
 });
 
-@injectSheet(styles) @observer
 class WorkspaceDrawerItem extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -77,10 +80,6 @@ class WorkspaceDrawerItem extends Component {
     onContextMenuEditClick: null,
   };
 
-  static contextTypes = {
-    intl: intlShape,
-  };
-
   render() {
     const {
       classes,
@@ -91,17 +90,22 @@ class WorkspaceDrawerItem extends Component {
       services,
       shortcutIndex,
     } = this.props;
-    const { intl } = this.context;
 
-    const contextMenuTemplate = [{
-      label: name,
-      enabled: false,
-    }, {
-      type: 'separator',
-    }, {
-      label: intl.formatMessage(messages.contextMenuEdit),
-      click: onContextMenuEditClick,
-    }];
+    const { intl } = this.props;
+
+    const contextMenuTemplate = [
+      {
+        label: name,
+        enabled: false,
+      },
+      {
+        type: 'separator',
+      },
+      {
+        label: intl.formatMessage(messages.contextMenuEdit),
+        click: onContextMenuEditClick,
+      },
+    ];
 
     const contextMenu = Menu.buildFromTemplate(contextMenuTemplate);
 
@@ -112,10 +116,14 @@ class WorkspaceDrawerItem extends Component {
           isActive ? classes.isActiveItem : null,
         ])}
         onClick={onClick}
-        onContextMenu={() => (
-          onContextMenuEditClick && contextMenu.popup(remote.getCurrentWindow())
-        )}
-        data-tip={`${shortcutIndex <= 9 ? `(${ctrlKey}+Alt+${shortcutIndex})` : ''}`}
+        onContextMenu={() => onContextMenuEditClick && contextMenu.popup()}
+        data-tip={`${
+          shortcutIndex <= 9
+            ? `(${cmdOrCtrlShortcutKey(false)}+${altKey(
+                false,
+              )}+${shortcutIndex})`
+            : ''
+        }`}
       >
         <span
           className={classnames([
@@ -131,11 +139,15 @@ class WorkspaceDrawerItem extends Component {
             isActive ? classes.activeServices : null,
           ])}
         >
-          {services.length ? services.join(', ') : intl.formatMessage(messages.noServicesAddedYet)}
+          {services.length > 0
+            ? services.join(', ')
+            : intl.formatMessage(messages.noServicesAddedYet)}
         </span>
       </div>
     );
   }
 }
 
-export default WorkspaceDrawerItem;
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(observer(WorkspaceDrawerItem)),
+);

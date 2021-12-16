@@ -1,15 +1,16 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import Locked from '../../components/auth/Locked';
 import SettingsStore from '../../stores/SettingsStore';
 
 import { hash } from '../../helpers/password-helpers';
+import UserStore from '../../stores/UserStore';
 
-export default @inject('stores', 'actions') @observer class LockedScreen extends Component {
+class LockedScreen extends Component {
   state = {
     error: false,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -58,28 +59,27 @@ export default @inject('stores', 'actions') @observer class LockedScreen extends
     return (
       <div className="auth">
         <div className="auth__layout">
-          <div className="auth__container">
-            <Locked
-              onSubmit={this.onSubmit}
-              unlock={this.unlock}
-              useTouchIdToUnlock={useTouchIdToUnlock}
-              isSubmitting={stores.user.loginRequest.isExecuting}
-              error={this.state.error || {}}
-            />
-          </div>
+          <Locked
+            onSubmit={this.onSubmit}
+            unlock={this.unlock}
+            useTouchIdToUnlock={useTouchIdToUnlock}
+            isSubmitting={stores.user.loginRequest.isExecuting}
+            error={this.state.error || {}}
+          />
         </div>
       </div>
     );
   }
 }
 
-LockedScreen.wrappedComponent.propTypes = {
+LockedScreen.propTypes = {
   actions: PropTypes.shape({
-    settings: PropTypes.shape({
-      update: PropTypes.func.isRequired,
-    }).isRequired,
+    settings: PropTypes.instanceOf(SettingsStore).isRequired,
   }).isRequired,
   stores: PropTypes.shape({
     settings: PropTypes.instanceOf(SettingsStore).isRequired,
+    user: PropTypes.instanceOf(UserStore).isRequired,
   }).isRequired,
 };
+
+export default inject('stores', 'actions')(observer(LockedScreen));

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import injectSheet from 'react-jss';
@@ -24,7 +24,6 @@ const styles = theme => ({
   },
 });
 
-@injectSheet(styles) @observer
 class ServiceIcon extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -37,19 +36,10 @@ class ServiceIcon extends Component {
   };
 
   render() {
-    const {
-      classes,
-      className,
-      service,
-    } = this.props;
+    const { classes, className, service } = this.props;
 
     return (
-      <div
-        className={classnames([
-          classes.root,
-          className,
-        ])}
-      >
+      <div className={classnames([classes.root, className])}>
         <img
           src={service.icon}
           className={classnames([
@@ -64,4 +54,6 @@ class ServiceIcon extends Component {
   }
 }
 
-export default ServiceIcon;
+export default injectSheet(styles, { injectTheme: true })(
+  observer(ServiceIcon),
+);

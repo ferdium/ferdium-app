@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import { RouterStore } from 'mobx-react-router';
@@ -10,7 +10,7 @@ import ServiceStore from '../../stores/ServicesStore';
 import ServicesDashboard from '../../components/settings/services/ServicesDashboard';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 
-export default @inject('stores', 'actions') @observer class ServicesScreen extends Component {
+class ServicesScreen extends Component {
   componentWillUnmount() {
     this.props.actions.service.resetFilter();
     this.props.actions.service.resetStatus();
@@ -23,11 +23,7 @@ export default @inject('stores', 'actions') @observer class ServicesScreen exten
 
   render() {
     const { user, services, router } = this.props.stores;
-    const {
-      toggleService,
-      filter,
-      resetFilter,
-    } = this.props.actions.service;
+    const { toggleService, filter, resetFilter } = this.props.actions.service;
     const isLoading = services.allServicesRequest.isExecuting;
 
     let allServices = services.all;
@@ -47,7 +43,10 @@ export default @inject('stores', 'actions') @observer class ServicesScreen exten
           filterServices={filter}
           resetFilter={resetFilter}
           goTo={router.push}
-          servicesRequestFailed={services.allServicesRequest.wasExecuted && services.allServicesRequest.isError}
+          servicesRequestFailed={
+            services.allServicesRequest.wasExecuted &&
+            services.allServicesRequest.isError
+          }
           retryServicesRequest={() => services.allServicesRequest.reload()}
           searchNeedle={services.filterNeedle}
         />
@@ -56,20 +55,15 @@ export default @inject('stores', 'actions') @observer class ServicesScreen exten
   }
 }
 
-ServicesScreen.wrappedComponent.propTypes = {
+ServicesScreen.propTypes = {
   stores: PropTypes.shape({
     user: PropTypes.instanceOf(UserStore).isRequired,
     services: PropTypes.instanceOf(ServiceStore).isRequired,
     router: PropTypes.instanceOf(RouterStore).isRequired,
   }).isRequired,
   actions: PropTypes.shape({
-    service: PropTypes.shape({
-      showAddServiceInterface: PropTypes.func.isRequired,
-      deleteService: PropTypes.func.isRequired,
-      toggleService: PropTypes.func.isRequired,
-      filter: PropTypes.func.isRequired,
-      resetFilter: PropTypes.func.isRequired,
-      resetStatus: PropTypes.func.isRequired,
-    }).isRequired,
+    service: PropTypes.instanceOf(ServiceStore).isRequired,
   }).isRequired,
 };
+
+export default inject('stores', 'actions')(observer(ServicesScreen));

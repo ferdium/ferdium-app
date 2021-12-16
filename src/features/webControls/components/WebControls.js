@@ -1,36 +1,47 @@
-import React, { Component } from 'react';
+import { createRef, Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import injectSheet from 'react-jss';
-import { Icon } from '@meetfranz/ui';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 
 import {
-  mdiReload, mdiArrowRight, mdiArrowLeft, mdiHomeOutline, mdiEarth,
+  mdiReload,
+  mdiArrowRight,
+  mdiArrowLeft,
+  mdiHomeOutline,
+  mdiEarth,
 } from '@mdi/js';
+
+import { Icon } from '../../../components/ui/icon';
 
 const messages = defineMessages({
   goHome: {
     id: 'webControls.goHome',
-    defaultMessage: '!!!Home',
+    defaultMessage: 'Home',
   },
   openInBrowser: {
     id: 'webControls.openInBrowser',
-    defaultMessage: '!!!Open in Browser',
+    defaultMessage: 'Open in Browser',
   },
   back: {
     id: 'webControls.back',
-    defaultMessage: '!!!Back',
+    defaultMessage: 'Back',
   },
   forward: {
     id: 'webControls.forward',
-    defaultMessage: '!!!Forward',
+    defaultMessage: 'Forward',
   },
   reload: {
     id: 'webControls.reload',
-    defaultMessage: '!!!Reload',
+    defaultMessage: 'Reload',
   },
 });
+
+let buttonTransition = 'none';
+
+if (window && window.matchMedia('(prefers-reduced-motion: no-preference)')) {
+  buttonTransition = 'opacity 0.25s';
+}
 
 const styles = theme => ({
   root: {
@@ -51,7 +62,7 @@ const styles = theme => ({
   button: {
     width: 30,
     height: 50,
-    transition: 'opacity 0.25s',
+    transition: buttonTransition,
 
     '&:hover': {
       opacity: 0.8,
@@ -65,6 +76,7 @@ const styles = theme => ({
     width: '20px !important',
     height: 20,
     marginTop: 5,
+    color: theme.colorText,
   },
   input: {
     marginBottom: 0,
@@ -82,7 +94,6 @@ const styles = theme => ({
   },
 });
 
-@injectSheet(styles) @observer
 class WebControls extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -95,10 +106,6 @@ class WebControls extends Component {
     openInBrowser: PropTypes.func.isRequired,
     url: PropTypes.string.isRequired,
     navigate: PropTypes.func.isRequired,
-  }
-
-  static contextTypes = {
-    intl: intlShape,
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -113,12 +120,12 @@ class WebControls extends Component {
     }
   }
 
-  inputRef = React.createRef();
+  inputRef = createRef();
 
   state = {
     inputUrl: '',
     editUrl: false,
-  }
+  };
 
   render() {
     const {
@@ -134,12 +141,9 @@ class WebControls extends Component {
       navigate,
     } = this.props;
 
-    const {
-      inputUrl,
-      editUrl,
-    } = this.state;
+    const { inputUrl, editUrl } = this.state;
 
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     return (
       <div className={classes.root}>
@@ -150,10 +154,7 @@ class WebControls extends Component {
           data-tip={intl.formatMessage(messages.goHome)}
           data-place="bottom"
         >
-          <Icon
-            icon={mdiHomeOutline}
-            className={classes.icon}
-          />
+          <Icon icon={mdiHomeOutline} className={classes.icon} />
         </button>
         <button
           onClick={goBack}
@@ -163,10 +164,7 @@ class WebControls extends Component {
           data-tip={intl.formatMessage(messages.back)}
           data-place="bottom"
         >
-          <Icon
-            icon={mdiArrowLeft}
-            className={classes.icon}
-          />
+          <Icon icon={mdiArrowLeft} className={classes.icon} />
         </button>
         <button
           onClick={goForward}
@@ -176,10 +174,7 @@ class WebControls extends Component {
           data-tip={intl.formatMessage(messages.forward)}
           data-place="bottom"
         >
-          <Icon
-            icon={mdiArrowRight}
-            className={classes.icon}
-          />
+          <Icon icon={mdiArrowRight} className={classes.icon} />
         </button>
         <button
           onClick={reload}
@@ -188,25 +183,29 @@ class WebControls extends Component {
           data-tip={intl.formatMessage(messages.reload)}
           data-place="bottom"
         >
-          <Icon
-            icon={mdiReload}
-            className={classes.icon}
-          />
+          <Icon icon={mdiReload} className={classes.icon} />
         </button>
         <input
           value={editUrl ? inputUrl : url}
           className={classes.input}
-          onChange={event => this.setState({
-            inputUrl: event.target.value,
-          })}
-          onFocus={(event) => {
-            console.log('on focus event');
+          onChange={event =>
+            this.setState({
+              inputUrl: event.target.value,
+            })
+          }
+          onFocus={event => {
             event.target.select();
             this.setState({
               editUrl: true,
             });
           }}
-          onKeyDown={(event) => {
+          onBlur={event => {
+            event.target.blur();
+            this.setState({
+              editUrl: false,
+            });
+          }}
+          onKeyDown={event => {
             if (event.key === 'Enter') {
               this.setState({
                 editUrl: false,
@@ -218,7 +217,7 @@ class WebControls extends Component {
                 editUrl: false,
                 inputUrl: url,
               });
-              event.target.blur();
+              this.inputRef.current.blur();
             }
           }}
           ref={this.inputRef}
@@ -230,14 +229,13 @@ class WebControls extends Component {
           data-tip={intl.formatMessage(messages.openInBrowser)}
           data-place="bottom"
         >
-          <Icon
-            icon={mdiEarth}
-            className={classes.icon}
-          />
+          <Icon icon={mdiEarth} className={classes.icon} />
         </button>
       </div>
     );
   }
 }
 
-export default WebControls;
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(observer(WebControls)),
+);

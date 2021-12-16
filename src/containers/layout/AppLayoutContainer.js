@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Children, Component } from 'react';
 import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import { ThemeProvider } from 'react-jss';
@@ -8,7 +8,6 @@ import RecipesStore from '../../stores/RecipesStore';
 import ServicesStore from '../../stores/ServicesStore';
 import FeaturesStore from '../../stores/FeaturesStore';
 import UIStore from '../../stores/UIStore';
-import NewsStore from '../../stores/NewsStore';
 import SettingsStore from '../../stores/SettingsStore';
 import UserStore from '../../stores/UserStore';
 import RequestStore from '../../stores/RequestStore';
@@ -20,13 +19,12 @@ import Sidebar from '../../components/layout/Sidebar';
 import Services from '../../components/services/content/Services';
 import AppLoader from '../../components/ui/AppLoader';
 
-import { state as delayAppState } from '../../features/delayApp';
 import { workspaceActions } from '../../features/workspaces/actions';
 import WorkspaceDrawer from '../../features/workspaces/components/WorkspaceDrawer';
 import { workspaceStore } from '../../features/workspaces';
 import WorkspacesStore from '../../features/workspaces/store';
 
-export default @inject('stores', 'actions') @observer class AppLayoutContainer extends Component {
+class AppLayoutContainer extends Component {
   static defaultProps = {
     children: null,
   };
@@ -37,7 +35,6 @@ export default @inject('stores', 'actions') @observer class AppLayoutContainer e
       features,
       services,
       ui,
-      news,
       settings,
       globalError,
       requests,
@@ -55,33 +52,34 @@ export default @inject('stores', 'actions') @observer class AppLayoutContainer e
       reload,
       toggleNotifications,
       toggleAudio,
+      toggleDarkMode,
       deleteService,
       updateService,
+      hibernate,
+      awake,
     } = this.props.actions.service;
-
-    const { hide } = this.props.actions.news;
 
     const { retryRequiredRequests } = this.props.actions.requests;
 
-    const {
-      installUpdate,
-      toggleMuteApp,
-    } = this.props.actions.app;
+    const { installUpdate, toggleMuteApp } = this.props.actions.app;
 
-    const {
-      openSettings,
-      closeSettings,
-    } = this.props.actions.ui;
+    const { openSettings, closeSettings } = this.props.actions.ui;
 
     const { children } = this.props;
 
-    const isLoadingFeatures = features.featuresRequest.isExecuting
-      && !features.featuresRequest.wasExecuted;
+    const isLoadingFeatures =
+      features.featuresRequest.isExecuting &&
+      !features.featuresRequest.wasExecuted;
 
-    const isLoadingServices = services.allServicesRequest.isExecuting
-      && services.allServicesRequest.isExecutingFirstTime;
+    const isLoadingServices =
+      services.allServicesRequest.isExecuting &&
+      services.allServicesRequest.isExecutingFirstTime;
 
-    if (isLoadingFeatures || isLoadingServices || workspaces.isLoadingWorkspaces) {
+    if (
+      isLoadingFeatures ||
+      isLoadingServices ||
+      workspaces.isLoadingWorkspaces
+    ) {
       return (
         <ThemeProvider theme={ui.theme}>
           <AppLoader />
@@ -91,10 +89,12 @@ export default @inject('stores', 'actions') @observer class AppLayoutContainer e
 
     const workspacesDrawer = (
       <WorkspaceDrawer
-        getServicesForWorkspace={workspace => (
-          workspace ? workspaceStore.getWorkspaceServices(workspace).map(s => s.name) : services.all.map(s => s.name)
-        )}
-        onUpgradeAccountClick={() => openSettings({ path: 'user' })}
+        // eslint-disable-next-line no-confusing-arrow
+        getServicesForWorkspace={workspace =>
+          workspace
+            ? workspaceStore.getWorkspaceServices(workspace).map(s => s.name)
+            : services.all.map(s => s.name)
+        }
       />
     );
 
@@ -109,13 +109,20 @@ export default @inject('stores', 'actions') @observer class AppLayoutContainer e
         reload={reload}
         toggleNotifications={toggleNotifications}
         toggleAudio={toggleAudio}
+        toggleDarkMode={toggleDarkMode}
         deleteService={deleteService}
         updateService={updateService}
+        hibernateService={hibernate}
+        wakeUpService={awake}
         toggleMuteApp={toggleMuteApp}
         toggleWorkspaceDrawer={workspaceActions.toggleWorkspaceDrawer}
         isWorkspaceDrawerOpen={workspaceStore.isWorkspaceDrawerOpen}
-        showMessageBadgeWhenMutedSetting={settings.all.app.showMessageBadgeWhenMuted}
+        showMessageBadgeWhenMutedSetting={
+          settings.all.app.showMessageBadgeWhenMuted
+        }
+        showServiceNameSetting={settings.all.app.showServiceName}
         showMessageBadgesEvenWhenMuted={ui.showMessageBadgesEvenWhenMuted}
+        isTodosServiceActive={services.isTodosServiceActive || false}
       />
     );
 
@@ -130,7 +137,7 @@ export default @inject('stores', 'actions') @observer class AppLayoutContainer e
         openSettings={openSettings}
         update={updateService}
         userHasCompletedSignup={user.hasCompletedSignup}
-        hasActivatedTrial={user.hasActivatedTrial}
+        isSpellcheckerEnabled={settings.app.enableSpellchecking}
       />
     );
 
@@ -140,14 +147,13 @@ export default @inject('stores', 'actions') @observer class AppLayoutContainer e
           isFullScreen={app.isFullScreen}
           isOnline={app.isOnline}
           showServicesUpdatedInfoBar={ui.showServicesUpdatedInfoBar}
-          appUpdateIsDownloaded={app.updateStatus === app.updateStatusTypes.DOWNLOADED}
-          nextAppReleaseVersion={app.nextAppReleaseVersion}
+          appUpdateIsDownloaded={
+            app.updateStatus === app.updateStatusTypes.DOWNLOADED
+          }
           authRequestFailed={app.authRequestFailed}
           sidebar={sidebar}
           workspacesDrawer={workspacesDrawer}
           services={servicesContainer}
-          news={news.latest}
-          removeNewsItem={hide}
           reloadServicesAfterUpdate={() => window.location.reload()}
           installAppUpdate={installUpdate}
           globalError={globalError.error}
@@ -155,24 +161,21 @@ export default @inject('stores', 'actions') @observer class AppLayoutContainer e
           areRequiredRequestsSuccessful={requests.areRequiredRequestsSuccessful}
           retryRequiredRequests={retryRequiredRequests}
           areRequiredRequestsLoading={requests.areRequiredRequestsLoading}
-          isDelayAppScreenVisible={delayAppState.isDelayAppScreenVisible}
-          hasActivatedTrial={user.hasActivatedTrial}
         >
-          {React.Children.count(children) > 0 ? children : null}
+          {Children.count(children) > 0 ? children : null}
         </AppLayout>
       </ThemeProvider>
     );
   }
 }
 
-AppLayoutContainer.wrappedComponent.propTypes = {
+AppLayoutContainer.propTypes = {
   stores: PropTypes.shape({
     services: PropTypes.instanceOf(ServicesStore).isRequired,
     features: PropTypes.instanceOf(FeaturesStore).isRequired,
     recipes: PropTypes.instanceOf(RecipesStore).isRequired,
     app: PropTypes.instanceOf(AppStore).isRequired,
     ui: PropTypes.instanceOf(UIStore).isRequired,
-    news: PropTypes.instanceOf(NewsStore).isRequired,
     settings: PropTypes.instanceOf(SettingsStore).isRequired,
     user: PropTypes.instanceOf(UserStore).isRequired,
     requests: PropTypes.instanceOf(RequestStore).isRequired,
@@ -180,34 +183,13 @@ AppLayoutContainer.wrappedComponent.propTypes = {
     workspaces: PropTypes.instanceOf(WorkspacesStore).isRequired,
   }).isRequired,
   actions: PropTypes.shape({
-    service: PropTypes.shape({
-      setActive: PropTypes.func.isRequired,
-      reload: PropTypes.func.isRequired,
-      toggleNotifications: PropTypes.func.isRequired,
-      toggleAudio: PropTypes.func.isRequired,
-      handleIPCMessage: PropTypes.func.isRequired,
-      setWebviewReference: PropTypes.func.isRequired,
-      detachService: PropTypes.func.isRequired,
-      openWindow: PropTypes.func.isRequired,
-      reloadUpdatedServices: PropTypes.func.isRequired,
-      updateService: PropTypes.func.isRequired,
-      deleteService: PropTypes.func.isRequired,
-      reorder: PropTypes.func.isRequired,
-    }).isRequired,
-    news: PropTypes.shape({
-      hide: PropTypes.func.isRequired,
-    }).isRequired,
-    ui: PropTypes.shape({
-      openSettings: PropTypes.func.isRequired,
-      closeSettings: PropTypes.func.isRequired,
-    }).isRequired,
-    app: PropTypes.shape({
-      installUpdate: PropTypes.func.isRequired,
-      toggleMuteApp: PropTypes.func.isRequired,
-    }).isRequired,
-    requests: PropTypes.shape({
-      retryRequiredRequests: PropTypes.func.isRequired,
-    }).isRequired,
+    service: PropTypes.instanceOf(ServicesStore).isRequired,
+    ui: PropTypes.instanceOf(UIStore).isRequired,
+    app: PropTypes.instanceOf(AppStore).isRequired,
+    requests: PropTypes.instanceOf(RequestStore).isRequired,
   }).isRequired,
+  // eslint-disable-next-line react/require-default-props
   children: oneOrManyChildElements,
 };
+
+export default inject('stores', 'actions')(observer(AppLayoutContainer));

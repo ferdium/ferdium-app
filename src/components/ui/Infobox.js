@@ -1,12 +1,28 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import Loader from 'react-loader';
+import { defineMessages, injectIntl } from 'react-intl';
+import { mdiAlert, mdiCheckboxMarkedCircleOutline, mdiClose } from '@mdi/js';
+import { Icon } from '../ui/icon';
 
-export default @observer class Infobox extends Component {
+const icons = {
+  'checkbox-marked-circle-outline': mdiCheckboxMarkedCircleOutline,
+  alert: mdiAlert,
+};
+
+const messages = defineMessages({
+  dismiss: {
+    id: 'infobox.dismiss',
+    defaultMessage: 'Dismiss',
+  },
+});
+
+class Infobox extends Component {
   static propTypes = {
-    children: PropTypes.any.isRequired, // eslint-disable-line
+    // eslint-disable-next-line react/forbid-prop-types
+    children: PropTypes.any.isRequired,
     icon: PropTypes.string,
     type: PropTypes.string,
     ctaOnClick: PropTypes.func,
@@ -49,6 +65,8 @@ export default @observer class Infobox extends Component {
       onDismiss,
     } = this.props;
 
+    const { intl } = this.props;
+
     if (this.state.dismissed) {
       return null;
     }
@@ -61,18 +79,10 @@ export default @observer class Infobox extends Component {
           'infobox--default': !type,
         })}
       >
-        {icon && (
-          <i className={`mdi mdi-${icon}`} />
-        )}
-        <div className="infobox__content">
-          {children}
-        </div>
+        {icon && <Icon icon={icons[icon]} />}
+        <div className="infobox__content">{children}</div>
         {ctaLabel && (
-          <button
-            className="infobox__cta"
-            onClick={ctaOnClick}
-            type="button"
-          >
+          <button className="infobox__cta" onClick={ctaOnClick} type="button">
             <Loader
               loaded={!ctaLoading}
               lines={10}
@@ -90,10 +100,15 @@ export default @observer class Infobox extends Component {
               this.setState({ dismissed: true });
               if (onDismiss) onDismiss();
             }}
-            className="infobox__delete mdi mdi-close"
-          />
+            className="infobox__delete"
+            aria-label={intl.formatMessage(messages.dismiss)}
+          >
+            <Icon icon={mdiClose} />
+          </button>
         )}
       </div>
     );
   }
 }
+
+export default injectIntl(observer(Infobox));

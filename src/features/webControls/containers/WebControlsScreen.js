@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import PropTypes from 'prop-types';
 
@@ -6,6 +6,8 @@ import { autorun, observable } from 'mobx';
 import WebControls from '../components/WebControls';
 import ServicesStore from '../../../stores/ServicesStore';
 import Service from '../../../models/Service';
+import { SEARCH_ENGINE_URLS } from '../../../config';
+import AppStore from '../../../stores/AppStore';
 
 const URL_EVENTS = [
   'load-commit',
@@ -14,7 +16,6 @@ const URL_EVENTS = [
   'did-navigate-in-page',
 ];
 
-@inject('stores', 'actions') @observer
 class WebControlsScreen extends Component {
   @observable url = '';
 
@@ -34,15 +35,15 @@ class WebControlsScreen extends Component {
         this.webview = service.webview;
         this.url = this.webview.getURL();
 
-        URL_EVENTS.forEach((event) => {
-          this.webview.addEventListener(event, (e) => {
+        for (const event of URL_EVENTS) {
+          this.webview.addEventListener(event, e => {
             if (!e.isMainFrame) return;
 
             this.url = e.url;
             this.canGoBack = this.webview.canGoBack();
             this.canGoForward = this.webview.canGoForward();
           });
-        });
+        }
       }
     });
   }
@@ -81,13 +82,16 @@ class WebControlsScreen extends Component {
 
     try {
       url = new URL(url).toString();
-    } catch (err) {
-      // eslint-disable-next-line no-useless-escape
-      if (url.match(/^((?!-))(xn--)?[a-z0-9][a-z0-9-_]{0,61}[a-z0-9]{0,1}\.(xn--)?([a-z0-9\-]{1,61}|[a-z0-9-]{1,30}\.[a-z]{2,})$/)) {
-        url = `http://${url}`;
-      } else {
-        url = `https://www.google.com/search?query=${url}`;
-      }
+    } catch {
+      url =
+        // eslint-disable-next-line no-useless-escape
+        /^((?!-))(xn--)?[\da-z][\d_a-z-]{0,61}[\da-z]{0,1}\.(xn--)?([\da-z\-]{1,61}|[\da-z-]{1,30}\.[a-z]{2,})$/.test(
+          url,
+        )
+          ? `http://${url}`
+          : SEARCH_ENGINE_URLS[this.settings.app.searchEngine]({
+              searchTerm: url,
+            });
     }
 
     this.webview.loadURL(url);
@@ -119,19 +123,15 @@ class WebControlsScreen extends Component {
   }
 }
 
-export default WebControlsScreen;
+export default inject('stores', 'actions')(observer(WebControlsScreen));
 
-WebControlsScreen.wrappedComponent.propTypes = {
+WebControlsScreen.propTypes = {
   service: PropTypes.instanceOf(Service).isRequired,
   stores: PropTypes.shape({
     services: PropTypes.instanceOf(ServicesStore).isRequired,
   }).isRequired,
   actions: PropTypes.shape({
-    app: PropTypes.shape({
-      openExternalUrl: PropTypes.func.isRequired,
-    }).isRequired,
-    service: PropTypes.shape({
-      reloadActive: PropTypes.func.isRequired,
-    }).isRequired,
+    app: PropTypes.instanceOf(AppStore).isRequired,
+    service: PropTypes.instanceOf(ServicesStore).isRequired,
   }).isRequired,
 };

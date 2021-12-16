@@ -1,76 +1,67 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 
-import { isDevMode, useLiveAPI } from '../../environment';
+import { LIVE_FRANZ_API } from '../../config';
+import { API_VERSION } from '../../environment-remote';
 import Form from '../../lib/Form';
 import { required, email } from '../../helpers/validation-helpers';
-import serverlessLogin from '../../helpers/serverless-helpers';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import Link from '../ui/Link';
-import Infobox from '../ui/Infobox';
 
 import { globalError as globalErrorPropType } from '../../prop-types';
 
 const messages = defineMessages({
   headline: {
     id: 'login.headline',
-    defaultMessage: '!!!Sign in',
+    defaultMessage: 'Sign in',
   },
   emailLabel: {
     id: 'login.email.label',
-    defaultMessage: '!!!Email address',
+    defaultMessage: 'Email address',
   },
   passwordLabel: {
     id: 'login.password.label',
-    defaultMessage: '!!!Password',
+    defaultMessage: 'Password',
   },
   submitButtonLabel: {
     id: 'login.submit.label',
-    defaultMessage: '!!!Sign in',
+    defaultMessage: 'Sign in',
   },
   invalidCredentials: {
     id: 'login.invalidCredentials',
-    defaultMessage: '!!!Email or password not valid',
+    defaultMessage: 'Email or password not valid',
   },
   customServerQuestion: {
     id: 'login.customServerQuestion',
-    defaultMessage: '!!!Using a Franz account to log in?',
+    defaultMessage: 'Using a Franz account to log in?',
   },
   customServerSuggestion: {
     id: 'login.customServerSuggestion',
-    defaultMessage: '!!!Try importing your Franz account into Ferdi',
+    defaultMessage: 'Try importing your Franz account into Ferdi',
   },
   tokenExpired: {
     id: 'login.tokenExpired',
-    defaultMessage: '!!!Your session expired, please login again.',
+    defaultMessage: 'Your session expired, please login again.',
   },
   serverLogout: {
     id: 'login.serverLogout',
-    defaultMessage: '!!!Your session expired, please login again.',
+    defaultMessage: 'Your session expired, please login again.',
   },
   signupLink: {
     id: 'login.link.signup',
-    defaultMessage: '!!!Create a free account',
-  },
-  changeServer: {
-    id: 'login.changeServer',
-    defaultMessage: '!!!Change server',
-  },
-  serverless: {
-    id: 'services.serverless',
-    defaultMessage: '!!!Use Ferdi without an Account',
+    defaultMessage: 'Create a free account',
   },
   passwordLink: {
     id: 'login.link.password',
-    defaultMessage: '!!!Forgot password',
+    defaultMessage: 'Reset password',
   },
 });
 
-export default @inject('actions') @observer class Login extends Component {
+class Login extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
     isSubmitting: PropTypes.bool.isRequired,
@@ -78,98 +69,83 @@ export default @inject('actions') @observer class Login extends Component {
     isServerLogout: PropTypes.bool.isRequired,
     signupRoute: PropTypes.string.isRequired,
     passwordRoute: PropTypes.string.isRequired,
-    changeServerRoute: PropTypes.string.isRequired,
     error: globalErrorPropType.isRequired,
-    actions: PropTypes.object.isRequired,
   };
 
-  static contextTypes = {
-    intl: intlShape,
-  };
-
-  form = new Form({
-    fields: {
-      email: {
-        label: this.context.intl.formatMessage(messages.emailLabel),
-        value: '',
-        validators: [required, email],
-      },
-      password: {
-        label: this.context.intl.formatMessage(messages.passwordLabel),
-        value: '',
-        validators: [required],
-        type: 'password',
+  form = new Form(
+    {
+      fields: {
+        email: {
+          label: this.props.intl.formatMessage(messages.emailLabel),
+          value: '',
+          validators: [required, email],
+        },
+        password: {
+          label: this.props.intl.formatMessage(messages.passwordLabel),
+          value: '',
+          validators: [required],
+          type: 'password',
+        },
       },
     },
-  }, this.context.intl);
-
-  emailField = null;
+    this.props.intl,
+  );
 
   submit(e) {
     e.preventDefault();
     this.form.submit({
-      onSuccess: (form) => {
+      onSuccess: form => {
         this.props.onSubmit(form.values());
       },
-      onError: () => { },
+      onError: () => {},
     });
-  }
-
-  useLocalServer() {
-    serverlessLogin(this.props.actions);
   }
 
   render() {
     const { form } = this;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const {
       isSubmitting,
       isTokenExpired,
       isServerLogout,
       signupRoute,
       passwordRoute,
-      changeServerRoute,
       error,
     } = this.props;
 
     return (
       <div className="auth__container">
         <form className="franz-form auth__form" onSubmit={e => this.submit(e)}>
-          <img
-            src="./assets/images/logo.svg"
-            className="auth__logo"
-            alt=""
-          />
+          <Link to='/auth/welcome'><img src="./assets/images/logo.svg" className="auth__logo" alt="" /></Link>
           <h1>{intl.formatMessage(messages.headline)}</h1>
-          {isDevMode && !useLiveAPI && (
-            <Infobox type="warning">
-              In Dev Mode your data is not persistent. Please use the live app for accesing the production API.
-            </Infobox>
-          )}
           {isTokenExpired && (
-            <p className="error-message center">{intl.formatMessage(messages.tokenExpired)}</p>
+            <p className="error-message center">
+              {intl.formatMessage(messages.tokenExpired)}
+            </p>
           )}
           {isServerLogout && (
-            <p className="error-message center">{intl.formatMessage(messages.serverLogout)}</p>
+            <p className="error-message center">
+              {intl.formatMessage(messages.serverLogout)}
+            </p>
           )}
-          <Input
-            field={form.$('email')}
-            ref={(element) => { this.emailField = element; }}
-            focus
-          />
-          <Input
-            field={form.$('password')}
-            showPasswordToggle
-          />
+          <Input field={form.$('email')} focus />
+          <Input field={form.$('password')} showPasswordToggle />
           {error.code === 'invalid-credentials' && (
             <>
-              <p className="error-message center">{intl.formatMessage(messages.invalidCredentials)}</p>
-              { window.ferdi.stores.settings.all.app.server !== 'https://api.franzinfra.com' && (
+              <p className="error-message center">
+                {intl.formatMessage(messages.invalidCredentials)}
+              </p>
+              {window['ferdi'].stores.settings.all.app.server !==
+                LIVE_FRANZ_API && (
                 <p className="error-message center">
-                    {intl.formatMessage(messages.customServerQuestion)}
-                  {' '}
+                  {intl.formatMessage(messages.customServerQuestion)}{' '}
                   <Link
-                    to={`${window.ferdi.stores.settings.all.app.server.replace('v1', '')}/import`}
+                    to={`${window[
+                      'ferdi'
+                    ].stores.settings.all.app.server.replace(
+                      API_VERSION,
+                      '',
+                    )}/import`}
                     target="_blank"
                     style={{ cursor: 'pointer', textDecoration: 'underline' }}
                   >
@@ -196,12 +172,16 @@ export default @inject('actions') @observer class Login extends Component {
           )}
         </form>
         <div className="auth__links">
-          <Link to={changeServerRoute}>{intl.formatMessage(messages.changeServer)}</Link>
-          <a onClick={this.useLocalServer.bind(this)}>{intl.formatMessage(messages.serverless)}</a>
-          <Link to={signupRoute}>{intl.formatMessage(messages.signupLink)}</Link>
-          <Link to={passwordRoute}>{intl.formatMessage(messages.passwordLink)}</Link>
+          <Link to={signupRoute}>
+            {intl.formatMessage(messages.signupLink)}
+          </Link>
+          <Link to={passwordRoute}>
+            {intl.formatMessage(messages.passwordLink)}
+          </Link>
         </div>
       </div>
     );
   }
 }
+
+export default injectIntl(inject('actions')(observer(Login)));

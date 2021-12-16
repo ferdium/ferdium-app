@@ -1,26 +1,32 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import injectSheet from 'react-jss';
 import classnames from 'classnames';
-import { Loader } from '@meetfranz/ui';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 
+import { Loader } from '../../../components/ui/loader/index';
 import { workspaceStore } from '../index';
 
 const messages = defineMessages({
   switchingTo: {
     id: 'workspaces.switchingIndicator.switchingTo',
-    defaultMessage: '!!!Switching to',
+    defaultMessage: 'Switching to',
   },
 });
+
+let wrapperTransition = 'none';
+
+if (window && window.matchMedia('(prefers-reduced-motion: no-preference)')) {
+  wrapperTransition = 'width 0.5s ease';
+}
 
 const styles = theme => ({
   wrapper: {
     display: 'flex',
     alignItems: 'flex-start',
     position: 'absolute',
-    transition: 'width 0.5s ease',
+    transition: wrapperTransition,
     width: `calc(100% - ${theme.workspaces.drawer.width}px)`,
     marginTop: '20px',
   },
@@ -47,29 +53,22 @@ const styles = theme => ({
   },
 });
 
-@injectSheet(styles) @observer
 class WorkspaceSwitchingIndicator extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
   };
 
-  static contextTypes = {
-    intl: intlShape,
-  };
-
   render() {
     const { classes, theme } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
     const { isSwitchingWorkspace, nextWorkspace } = workspaceStore;
     if (!isSwitchingWorkspace) return null;
-    const nextWorkspaceName = nextWorkspace ? nextWorkspace.name : 'All services';
+    const nextWorkspaceName = nextWorkspace
+      ? nextWorkspace.name
+      : 'All services';
     return (
-      <div
-        className={classnames([
-          classes.wrapper,
-        ])}
-      >
+      <div className={classnames([classes.wrapper])}>
         <div className={classes.component}>
           <Loader
             className={classes.spinner}
@@ -84,4 +83,8 @@ class WorkspaceSwitchingIndicator extends Component {
   }
 }
 
-export default WorkspaceSwitchingIndicator;
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(
+    observer(WorkspaceSwitchingIndicator),
+  ),
+);

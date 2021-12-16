@@ -4,8 +4,6 @@ directories:
 
 appId: "com.kytwb.ferdi"
 
-compression: maximum
-
 mac:
   hardenedRuntime: true
   gatekeeperAssess: false
@@ -14,11 +12,14 @@ mac:
   darkModeSupport: true
   entitlements: "./build-helpers/entitlements.mas.plist"
   entitlementsInherit: "./build-helpers/entitlements.mas.inherit.plist"
+  target:
+    - target: dmg
+      arch: [x64, arm64]
+    - target: zip
+      arch: [x64, arm64]
   extendInfo:
-    NSMicrophoneUsageDescription: "This app requires camera access for video messaging services."
-    NSCameraUsageDescription: "This app requires microphone access for audio messaging services."
-
-afterSign: ./build-helpers/notarize.js
+    NSCameraUsageDescription: "This app requires camera access for video chats"
+    NSMicrophoneUsageDescription: "This app requires microphone access for voice chats"
 
 dmg:
   background: ./build-helpers/images/dmgInstaller.tiff
@@ -30,26 +31,33 @@ dmg:
       { x: 122, y: 240, type: file },
     ]
 
+afterSign: ./build-helpers/notarize.js
+
 win:
   icon: ./build-helpers/images/icon.ico
   target:
     - target: nsis
       arch: [x64, ia32]
+    - target: msi
+      arch: [x64, ia32]
     - target: portable
       arch: [x64, ia32]
-  publisherName: 'Amine Mouafik'
+  publisherName: "Amine Mouafik"
 
 linux:
   icon: ./build-helpers/images/icons
   category: Network;InstantMessaging;
   executableName: ferdi
-  synopsis: "Messaging app for WhatsApp, Slack, Telegram, HipChat, Hangouts and many many more."
-  description: "Ferdi is your messaging app / former Emperor of Austria and combines chat & messaging services into one application. Ferdi currently supports Slack, WhatsApp, WeChat, HipChat, Facebook Messenger, Telegram, Google Hangouts, GroupMe, Skype and many more. You can download Ferdi for free for Mac & Windows."
+  synopsis: "Messaging app for WhatsApp, Slack, Telegram, Gmail, Hangouts and many many more."
+  description: "Ferdi is your messaging app / former Emperor of Austria and combines chat & messaging services into one application. Ferdi currently supports Slack, WhatsApp, Gmail, Facebook Messenger, Telegram, Google Hangouts, GroupMe, Skype and many more. You can download Ferdi for free for Mac & Windows."
   target:
     - target: AppImage
     - target: deb
+      arch: [x64, arm64, armv7l]
     - target: tar.gz
     - target: rpm
+    - target: freebsd
+    - target: snap
 
 nsis:
   perMachine: false
@@ -61,5 +69,5 @@ protocols:
 
 asarUnpack:
   - ./recipes
-  - ./node_modules/mac-screen-capture-permissions
+  - ./assets/fonts
   - ./assets/images/taskbar

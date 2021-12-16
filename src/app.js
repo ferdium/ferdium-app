@@ -1,15 +1,9 @@
 import { webFrame } from 'electron';
 
-import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'mobx-react';
 import { syncHistoryWithStore, RouterStore } from 'mobx-react-router';
-import {
-  hashHistory,
-} from 'react-router';
-
-import '@babel/polyfill';
-import smoothScroll from 'smoothscroll-polyfill';
+import { hashHistory } from 'react-router';
 
 import ServerApi from './api/server/ServerApi';
 import LocalApi from './api/server/LocalApi';
@@ -21,9 +15,6 @@ import TouchBarFactory from './lib/TouchBar';
 
 import I18N from './I18n';
 import Routes from './routes';
-
-// Add Polyfills
-smoothScroll.polyfill();
 
 // Basic electron Setup
 webFrame.setVisualZoomLevelLimits(1, 1);
@@ -37,7 +28,7 @@ window.addEventListener('load', () => {
   const menu = new MenuFactory(stores, actions);
   const touchBar = new TouchBarFactory(stores, actions);
 
-  window.ferdi = {
+  window['ferdi'] = {
     stores,
     actions,
     api,
@@ -52,10 +43,10 @@ window.addEventListener('load', () => {
           </I18N>
         </Provider>
       );
-      render(preparedApp, document.getElementById('root'));
+      render(preparedApp, document.querySelector('#root'));
     },
   };
-  window.ferdi.render();
+  window['ferdi'].render();
 });
 
 // Prevent drag and drop into window from redirecting

@@ -1,151 +1,189 @@
-import { remote } from 'electron';
-import React, { Component, Fragment } from 'react';
+import { systemPreferences } from '@electron/remote';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { defineMessages, intlShape } from 'react-intl';
+import prettyBytes from 'pretty-bytes';
+import { defineMessages, injectIntl } from 'react-intl';
 
+import { mdiGithub, mdiOpenInNew } from '@mdi/js';
 import Form from '../../../lib/Form';
 import Button from '../../ui/Button';
 import Toggle from '../../ui/Toggle';
+import ToggleRaw from '../../ui/ToggleRaw';
 import Select from '../../ui/Select';
-import PremiumFeatureContainer from '../../ui/PremiumFeatureContainer';
 import Input from '../../ui/Input';
 
-import { FRANZ_TRANSLATION } from '../../../config';
-import { isMac, isWindows } from '../../../environment';
+import {
+  DEFAULT_APP_SETTINGS,
+  FRANZ_TRANSLATION,
+  GITHUB_FRANZ_URL,
+  SPLIT_COLUMNS_MAX,
+  SPLIT_COLUMNS_MIN,
+} from '../../../config';
+import { isMac, isWindows, lockFerdiShortcutKey } from '../../../environment';
+import {
+  ferdiVersion,
+  userDataPath,
+  userDataRecipesPath,
+} from '../../../environment-remote';
+import { openPath } from '../../../helpers/url-helpers';
+import globalMessages from '../../../i18n/globalMessages';
+import { Icon } from '../../ui/icon';
 
-const {
-  systemPreferences,
-} = remote;
+const debug = require('debug')('Ferdi:EditSettingsForm');
 
 const messages = defineMessages({
-  headline: {
-    id: 'settings.app.headline',
-    defaultMessage: '!!!Settings',
-  },
   headlineGeneral: {
     id: 'settings.app.headlineGeneral',
-    defaultMessage: '!!!General',
+    defaultMessage: 'General',
   },
   sentryInfo: {
     id: 'settings.app.sentryInfo',
-    defaultMessage: '!!!Sending telemetry data allows us to find errors in Ferdi - we will not send any personal information like your message data! Changing this option requires you to restart Ferdi.',
+    defaultMessage:
+      'Sending telemetry data allows us to find errors in Ferdi - we will not send any personal information like your message data!',
   },
   hibernateInfo: {
     id: 'settings.app.hibernateInfo',
-    defaultMessage: '!!!By default, Ferdi will keep all your services open and loaded in the background so they are ready when you want to use them. Service Hibernation will unload your services after a specified amount. This is useful to save RAM or keeping services from slowing down your computer.',
+    defaultMessage:
+      'By default, Ferdi will keep all your services open and loaded in the background so they are ready when you want to use them. Service Hibernation will unload your services after a specified amount. This is useful to save RAM or keeping services from slowing down your computer.',
   },
   inactivityLockInfo: {
     id: 'settings.app.inactivityLockInfo',
-    defaultMessage: '!!!Minutes of inactivity, after which Ferdi should automatically lock. Use 0 to disable',
+    defaultMessage:
+      'Minutes of inactivity, after which Ferdi should automatically lock. Use 0 to disable',
   },
   todoServerInfo: {
     id: 'settings.app.todoServerInfo',
-    defaultMessage: '!!!This server will be used for the "Franz Todo" feature. (default: https://app.franztodos.com)',
+    defaultMessage: 'This server will be used for the "Ferdi Todo" feature.',
   },
   lockedPassword: {
     id: 'settings.app.lockedPassword',
-    defaultMessage: '!!!Password',
+    defaultMessage: 'Password',
   },
   lockedPasswordInfo: {
     id: 'settings.app.lockedPasswordInfo',
-    defaultMessage: '!!!Please make sure to set a password you\'ll remember.\nIf you loose this password, you will have to reinstall Ferdi.',
+    defaultMessage:
+      "Please make sure to set a password you'll remember.\nIf you loose this password, you will have to reinstall Ferdi.",
   },
   lockInfo: {
     id: 'settings.app.lockInfo',
-    defaultMessage: '!!!Password Lock allows you to keep your messages protected.\nUsing Password Lock, you will be prompted to enter your password everytime you start Ferdi or lock Ferdi yourself using the lock symbol in the bottom left corner or the shortcut CMD/CTRL+Shift+L.',
+    defaultMessage:
+      'Password Lock allows you to keep your messages protected.\nUsing Password Lock, you will be prompted to enter your password everytime you start Ferdi or lock Ferdi yourself using the lock symbol in the bottom left corner or the shortcut {lockShortcut}.',
   },
   scheduledDNDTimeInfo: {
     id: 'settings.app.scheduledDNDTimeInfo',
-    defaultMessage: '!!!Times in 24-Hour-Format. End time can be before start time (e.g. start 17:00, end 09:00) to enable Do-not-Disturb overnight.',
+    defaultMessage:
+      'Times in 24-Hour-Format. End time can be before start time (e.g. start 17:00, end 09:00) to enable Do-not-Disturb overnight.',
   },
   scheduledDNDInfo: {
     id: 'settings.app.scheduledDNDInfo',
-    defaultMessage: '!!!Scheduled Do-not-Disturb allows you to define a period of time in which you do not want to get Notifications from Ferdi.',
+    defaultMessage:
+      'Scheduled Do-not-Disturb allows you to define a period of time in which you do not want to get Notifications from Ferdi.',
   },
   headlineLanguage: {
     id: 'settings.app.headlineLanguage',
-    defaultMessage: '!!!Language',
+    defaultMessage: 'Language',
   },
   headlineUpdates: {
     id: 'settings.app.headlineUpdates',
-    defaultMessage: '!!!Updates',
+    defaultMessage: 'Updates',
   },
   headlineAppearance: {
     id: 'settings.app.headlineAppearance',
-    defaultMessage: '!!!Appearance',
+    defaultMessage: 'Appearance',
   },
   universalDarkModeInfo: {
     id: 'settings.app.universalDarkModeInfo',
-    defaultMessage: '!!!Universal Dark Mode tries to dynamically generate dark mode styles for services that are otherwise not currently supported.',
+    defaultMessage:
+      'Universal Dark Mode tries to dynamically generate dark mode styles for services that are otherwise not currently supported.',
   },
   accentColorInfo: {
     id: 'settings.app.accentColorInfo',
-    defaultMessage: '!!!Write your accent color in a CSS-compatible format. (Default: #7367f0)',
+    defaultMessage:
+      'Write your accent color in a CSS-compatible format. (Default: {defaultAccentColor})',
+  },
+  headlinePrivacy: {
+    id: 'settings.app.headlinePrivacy',
+    defaultMessage: 'Privacy',
   },
   headlineAdvanced: {
     id: 'settings.app.headlineAdvanced',
-    defaultMessage: '!!!Advanced',
+    defaultMessage: 'Advanced',
   },
   translationHelp: {
     id: 'settings.app.translationHelp',
-    defaultMessage: '!!!Help us to translate Ferdi into your language.',
+    defaultMessage: 'Help us to translate Ferdi into your language.',
+  },
+  spellCheckerLanguageInfo: {
+    id: 'settings.app.spellCheckerLanguageInfo',
+    defaultMessage:
+      "Ferdi uses your Mac's build-in spellchecker to check for typos. If you want to change the languages the spellchecker checks for, you can do so in your Mac's System Preferences.",
   },
   subheadlineCache: {
     id: 'settings.app.subheadlineCache',
-    defaultMessage: '!!!Cache',
+    defaultMessage: 'Cache',
   },
   cacheInfo: {
     id: 'settings.app.cacheInfo',
-    defaultMessage: '!!!Ferdi cache is currently using {size} of disk space.',
+    defaultMessage: 'Ferdi cache is currently using {size} of disk space.',
   },
   cacheNotCleared: {
     id: 'settings.app.cacheNotCleared',
-    defaultMessage: '!!!Couldn\'t clear all cache',
+    defaultMessage: "Couldn't clear all cache",
   },
   buttonClearAllCache: {
     id: 'settings.app.buttonClearAllCache',
-    defaultMessage: '!!!Clear cache',
+    defaultMessage: 'Clear cache',
+  },
+  subheadlineFerdiProfile: {
+    id: 'settings.app.subheadlineFerdiProfile',
+    defaultMessage: 'Ferdi Profile',
+  },
+  buttonOpenFerdiProfileFolder: {
+    id: 'settings.app.buttonOpenFerdiProfileFolder',
+    defaultMessage: 'Open Profile folder',
+  },
+  buttonOpenFerdiServiceRecipesFolder: {
+    id: 'settings.app.buttonOpenFerdiServiceRecipesFolder',
+    defaultMessage: 'Open Service Recipes folder',
   },
   buttonSearchForUpdate: {
     id: 'settings.app.buttonSearchForUpdate',
-    defaultMessage: '!!!Check for updates',
+    defaultMessage: 'Check for updates',
   },
   buttonInstallUpdate: {
     id: 'settings.app.buttonInstallUpdate',
-    defaultMessage: '!!!Restart & install update',
+    defaultMessage: 'Restart & install update',
   },
   updateStatusSearching: {
     id: 'settings.app.updateStatusSearching',
-    defaultMessage: '!!!Is searching for update',
+    defaultMessage: 'Is searching for update',
   },
   updateStatusAvailable: {
     id: 'settings.app.updateStatusAvailable',
-    defaultMessage: '!!!Update available, downloading...',
+    defaultMessage: 'Update available, downloading...',
   },
   updateStatusUpToDate: {
     id: 'settings.app.updateStatusUpToDate',
-    defaultMessage: '!!!You are using the latest version of Ferdi',
+    defaultMessage: 'You are using the latest version of Ferdi',
   },
   currentVersion: {
     id: 'settings.app.currentVersion',
-    defaultMessage: '!!!Current version:',
+    defaultMessage: 'Current version:',
   },
-  enableGPUAccelerationInfo: {
+  appRestartRequired: {
     id: 'settings.app.restartRequired',
-    defaultMessage: '!!!Changes require restart',
+    defaultMessage: 'Changes require restart',
   },
-  languageDisclaimer: {
-    id: 'settings.app.languageDisclaimer',
-    defaultMessage: '!!!Official translations are English & German. All other languages are community based translations.',
+  numberOfColumns: {
+    id: 'settings.app.form.splitColumns',
+    defaultMessage: 'Number of columns',
   },
 });
 
-const Hr = () => (
-  <hr style={{ marginBottom: 20 }} />
-);
+const Hr = () => <hr style={{ marginBottom: 20 }} />;
 
-export default @observer class EditSettingsForm extends Component {
+class EditSettingsForm extends Component {
   static propTypes = {
     checkForUpdates: PropTypes.func.isRequired,
     installUpdate: PropTypes.func.isRequired,
@@ -157,26 +195,21 @@ export default @observer class EditSettingsForm extends Component {
     updateIsReadyToInstall: PropTypes.bool.isRequired,
     isClearingAllCache: PropTypes.bool.isRequired,
     onClearAllCache: PropTypes.func.isRequired,
-    cacheSize: PropTypes.string.isRequired,
-    isSpellcheckerIncludedInCurrentPlan: PropTypes.bool.isRequired,
-    isTodosEnabled: PropTypes.bool.isRequired,
+    getCacheSize: PropTypes.func.isRequired,
     isTodosActivated: PropTypes.bool.isRequired,
-    isWorkspaceEnabled: PropTypes.bool.isRequired,
     automaticUpdates: PropTypes.bool.isRequired,
-    hibernationEnabled: PropTypes.bool.isRequired,
     isDarkmodeEnabled: PropTypes.bool.isRequired,
     isAdaptableDarkModeEnabled: PropTypes.bool.isRequired,
-    openProcessManager: PropTypes.func.isRequired,
-  };
-
-  static contextTypes = {
-    intl: intlShape,
+    isSplitModeEnabled: PropTypes.bool.isRequired,
+    isNightlyEnabled: PropTypes.bool.isRequired,
+    hasAddedTodosAsService: PropTypes.bool.isRequired,
+    isOnline: PropTypes.bool.isRequired,
   };
 
   state = {
     activeSetttingsTab: 'general',
     clearCacheButtonClicked: false,
-  }
+  };
 
   setActiveSettingsTab(tab) {
     this.setState({
@@ -184,14 +217,14 @@ export default @observer class EditSettingsForm extends Component {
     });
   }
 
-  onClearCacheClicked=() => {
+  onClearCacheClicked = () => {
     this.setState({ clearCacheButtonClicked: true });
-  }
+  };
 
   submit(e) {
     e.preventDefault();
     this.props.form.submit({
-      onSuccess: (form) => {
+      onSuccess: form => {
         const values = form.values();
         this.props.onSubmit(values);
       },
@@ -211,17 +244,16 @@ export default @observer class EditSettingsForm extends Component {
       updateIsReadyToInstall,
       isClearingAllCache,
       onClearAllCache,
-      cacheSize,
-      isSpellcheckerIncludedInCurrentPlan,
-      isTodosEnabled,
-      isWorkspaceEnabled,
+      getCacheSize,
       automaticUpdates,
-      hibernationEnabled,
       isDarkmodeEnabled,
-      openProcessManager,
+      isSplitModeEnabled,
       isTodosActivated,
+      isNightlyEnabled,
+      hasAddedTodosAsService,
+      isOnline,
     } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
     let updateButtonLabelMessage = messages.buttonSearchForUpdate;
     if (isCheckingForUpdates) {
@@ -232,15 +264,34 @@ export default @observer class EditSettingsForm extends Component {
       updateButtonLabelMessage = messages.buttonSearchForUpdate;
     }
 
-    const {
-      lockingFeatureEnabled,
-      scheduledDNDEnabled,
-    } = window.ferdi.stores.settings.all.app;
-    const notCleared = this.state.clearCacheButtonClicked && isClearingAllCache === false && cacheSize !== 0;
+    const { lockingFeatureEnabled, scheduledDNDEnabled } =
+      window['ferdi'].stores.settings.all.app;
+
+    let cacheSize;
+    let notCleared;
+    if (this.state.activeSetttingsTab === 'advanced') {
+      const cacheSizeBytes = getCacheSize();
+      debug('cacheSizeBytes:', cacheSizeBytes);
+      if (typeof cacheSizeBytes === 'number') {
+        cacheSize = prettyBytes(cacheSizeBytes);
+        debug('cacheSize:', cacheSize);
+        notCleared =
+          this.state.clearCacheButtonClicked &&
+          isClearingAllCache === false &&
+          cacheSizeBytes !== 0;
+      } else {
+        cacheSize = '…';
+        notCleared = false;
+      }
+    }
+
+    const profileFolder = userDataPath();
+    const recipeFolder = userDataRecipesPath();
+
     return (
       <div className="settings__main">
         <div className="settings__header">
-          <h1>{intl.formatMessage(messages.headline)}</h1>
+          <h1>{intl.formatMessage(globalMessages.settings)}</h1>
         </div>
         <div className="settings__body">
           <form
@@ -252,95 +303,128 @@ export default @observer class EditSettingsForm extends Component {
             <div className="recipes__navigation">
               <h2
                 id="general"
-                className={this.state.activeSetttingsTab === 'general' ? 'badge badge--primary' : 'badge'}
-                onClick={() => { this.setActiveSettingsTab('general'); }}
+                className={
+                  this.state.activeSetttingsTab === 'general'
+                    ? 'badge badge--primary'
+                    : 'badge'
+                }
+                onClick={() => {
+                  this.setActiveSettingsTab('general');
+                }}
               >
                 {intl.formatMessage(messages.headlineGeneral)}
               </h2>
               <h2
                 id="appearance"
-                className={this.state.activeSetttingsTab === 'appearance' ? 'badge badge--primary' : 'badge'}
-                onClick={() => { this.setActiveSettingsTab('appearance'); }}
+                className={
+                  this.state.activeSetttingsTab === 'appearance'
+                    ? 'badge badge--primary'
+                    : 'badge'
+                }
+                onClick={() => {
+                  this.setActiveSettingsTab('appearance');
+                }}
               >
                 {intl.formatMessage(messages.headlineAppearance)}
               </h2>
               <h2
+                id="privacy"
+                className={
+                  this.state.activeSetttingsTab === 'privacy'
+                    ? 'badge badge--primary'
+                    : 'badge'
+                }
+                onClick={() => {
+                  this.setActiveSettingsTab('privacy');
+                }}
+              >
+                {intl.formatMessage(messages.headlinePrivacy)}
+              </h2>
+              <h2
                 id="language"
-                className={this.state.activeSetttingsTab === 'language' ? 'badge badge--primary' : 'badge'}
-                onClick={() => { this.setActiveSettingsTab('language'); }}
+                className={
+                  this.state.activeSetttingsTab === 'language'
+                    ? 'badge badge--primary'
+                    : 'badge'
+                }
+                onClick={() => {
+                  this.setActiveSettingsTab('language');
+                }}
               >
                 {intl.formatMessage(messages.headlineLanguage)}
               </h2>
               <h2
                 id="advanced"
-                className={this.state.activeSetttingsTab === 'advanced' ? 'badge badge--primary' : 'badge'}
-                onClick={() => { this.setActiveSettingsTab('advanced'); }}
+                className={
+                  this.state.activeSetttingsTab === 'advanced'
+                    ? 'badge badge--primary'
+                    : 'badge'
+                }
+                onClick={() => {
+                  this.setActiveSettingsTab('advanced');
+                }}
               >
                 {intl.formatMessage(messages.headlineAdvanced)}
               </h2>
               <h2
                 id="updates"
-                className={this.state.activeSetttingsTab === 'updates' ? 'badge badge--primary' : 'badge'}
-                onClick={() => { this.setActiveSettingsTab('updates'); }}
+                className={
+                  this.state.activeSetttingsTab === 'updates'
+                    ? 'badge badge--primary'
+                    : 'badge'
+                }
+                onClick={() => {
+                  this.setActiveSettingsTab('updates');
+                }}
               >
                 {intl.formatMessage(messages.headlineUpdates)}
               </h2>
             </div>
 
             {/* General */}
-            { this.state.activeSetttingsTab === 'general' && (
+            {this.state.activeSetttingsTab === 'general' && (
               <div>
                 <Toggle field={form.$('autoLaunchOnStart')} />
                 <Toggle field={form.$('runInBackground')} />
+                <Toggle field={form.$('confirmOnQuit')} />
                 <Toggle field={form.$('enableSystemTray')} />
                 <Toggle field={form.$('reloadAfterResume')} />
                 <Toggle field={form.$('startMinimized')} />
-                {process.platform === 'win32' && (
-                  <Toggle field={form.$('minimizeToSystemTray')} />
-                )}
-                <Toggle field={form.$('privateNotifications')} />
+                {isWindows && <Toggle field={form.$('minimizeToSystemTray')} />}
+                {isWindows && <Toggle field={form.$('closeToSystemTray')} />}
                 <Select field={form.$('navigationBarBehaviour')} />
 
                 <Hr />
 
-                <Toggle field={form.$('sentry')} />
-                <p>{intl.formatMessage(messages.sentryInfo)}</p>
-
-                <Hr />
-
-                <Toggle field={form.$('hibernate')} />
-                {hibernationEnabled && (
-                  <>
-                    <Select field={form.$('hibernationStrategy')} />
-                    <Toggle field={form.$('hibernateOnStartup')} />
-                  </>
-                )}
+                <Select field={form.$('hibernationStrategy')} />
+                <Toggle field={form.$('hibernateOnStartup')} />
                 <p
                   className="settings__message"
                   style={{
-                    borderTop: 0, marginTop: 0, paddingTop: 0, marginBottom: '2rem',
+                    borderTop: 0,
+                    marginTop: 0,
+                    paddingTop: 0,
+                    marginBottom: '2rem',
                   }}
                 >
-                  <span>
-                    { intl.formatMessage(messages.hibernateInfo) }
-                  </span>
+                  <span>{intl.formatMessage(messages.hibernateInfo)}</span>
                 </p>
 
-                <Hr />
-
-                {isWorkspaceEnabled && (
-                  <Toggle field={form.$('keepAllWorkspacesLoaded')} />
-                )}
+                <Select field={form.$('wakeUpStrategy')} />
 
                 <Hr />
 
-                {isTodosEnabled && (
+                <Toggle field={form.$('keepAllWorkspacesLoaded')} />
+                <Hr />
+
+                {!hasAddedTodosAsService && (
                   <>
                     <Toggle field={form.$('enableTodos')} />
                     {isTodosActivated && (
                       <div>
                         <Select field={form.$('predefinedTodoServer')} />
-                        {form.$('predefinedTodoServer').value === 'isUsingCustomTodoService' && (
+                        {form.$('predefinedTodoServer').value ===
+                          'isUsingCustomTodoService' && (
                           <div>
                             <Input
                               placeholder="Todo Server"
@@ -350,17 +434,172 @@ export default @observer class EditSettingsForm extends Component {
                             <p
                               className="settings__message"
                               style={{
-                                borderTop: 0, marginTop: 0, paddingTop: 0, marginBottom: '2rem',
+                                borderTop: 0,
+                                marginTop: 0,
+                                paddingTop: 0,
+                                marginBottom: '2rem',
                               }}
                             >
-                              { intl.formatMessage(messages.todoServerInfo) }
+                              {intl.formatMessage(messages.todoServerInfo)}
                             </p>
                           </div>
                         )}
                       </div>
                     )}
+                    <Hr />
                   </>
                 )}
+
+                <Toggle field={form.$('scheduledDNDEnabled')} />
+                {scheduledDNDEnabled && (
+                  <>
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <div
+                        style={{
+                          padding: '0 1rem',
+                          width: '100%',
+                        }}
+                      >
+                        <Input
+                          placeholder="17:00"
+                          onChange={e => this.submit(e)}
+                          field={form.$('scheduledDNDStart')}
+                          type="time"
+                        />
+                      </div>
+                      <div
+                        style={{
+                          padding: '0 1rem',
+                          width: '100%',
+                        }}
+                      >
+                        <Input
+                          placeholder="09:00"
+                          onChange={e => this.submit(e)}
+                          field={form.$('scheduledDNDEnd')}
+                          type="time"
+                        />
+                      </div>
+                    </div>
+                    <p>{intl.formatMessage(messages.scheduledDNDTimeInfo)}</p>
+                  </>
+                )}
+                <p
+                  className="settings__message"
+                  style={{
+                    borderTop: 0,
+                    marginTop: 0,
+                    paddingTop: 0,
+                    marginBottom: '2rem',
+                  }}
+                >
+                  <span>{intl.formatMessage(messages.scheduledDNDInfo)}</span>
+                </p>
+              </div>
+            )}
+
+            {/* Appearance */}
+            {this.state.activeSetttingsTab === 'appearance' && (
+              <div>
+                <Toggle field={form.$('showDisabledServices')} />
+                <Toggle field={form.$('showServiceName')} />
+                <Toggle field={form.$('showMessageBadgeWhenMuted')} />
+
+                {isMac && <Toggle field={form.$('showDragArea')} />}
+
+                <Hr />
+
+                <Toggle field={form.$('adaptableDarkMode')} />
+                {!isAdaptableDarkModeEnabled && (
+                  <Toggle field={form.$('darkMode')} />
+                )}
+                {(isDarkmodeEnabled || isAdaptableDarkModeEnabled) && (
+                  <>
+                    <Toggle field={form.$('universalDarkMode')} />
+                    <p
+                      className="settings__message"
+                      style={{
+                        borderTop: 0,
+                        marginTop: 0,
+                        paddingTop: 0,
+                        marginBottom: '2rem',
+                      }}
+                    >
+                      <span>
+                        {intl.formatMessage(messages.universalDarkModeInfo)}
+                      </span>
+                    </p>
+                  </>
+                )}
+
+                <Hr />
+
+                <Toggle field={form.$('splitMode')} />
+                {isSplitModeEnabled && (
+                  <Input
+                    type="number"
+                    min={SPLIT_COLUMNS_MIN}
+                    max={SPLIT_COLUMNS_MAX}
+                    placeholder={`${SPLIT_COLUMNS_MIN}-${SPLIT_COLUMNS_MAX}`}
+                    onChange={e => this.submit(e)}
+                    field={form.$('splitColumns')}
+                  />
+                )}
+
+                <Hr />
+
+                <Select field={form.$('serviceRibbonWidth')} />
+
+                <Toggle field={form.$('useVerticalStyle')} />
+
+                <Toggle field={form.$('alwaysShowWorkspaces')} />
+
+                <Hr />
+                <Select field={form.$('iconSize')} />
+                <Toggle field={form.$('enableLongPressServiceHint')} />
+
+                <Hr />
+
+                <Input
+                  placeholder="Accent Color"
+                  onChange={e => this.submit(e)}
+                  field={form.$('accentColor')}
+                />
+                <p>
+                  {intl.formatMessage(messages.accentColorInfo, {
+                    defaultAccentColor: DEFAULT_APP_SETTINGS.accentColor,
+                  })}
+                </p>
+              </div>
+            )}
+
+            {/* Privacy */}
+            {this.state.activeSetttingsTab === 'privacy' && (
+              <div>
+                <Toggle field={form.$('privateNotifications')} />
+                <Toggle field={form.$('clipboardNotifications')} />
+                {(isWindows || isMac) && (
+                  <Toggle field={form.$('notifyTaskBarOnMessage')} />
+                )}
+
+                <Hr />
+
+                <Select field={form.$('searchEngine')} />
+
+                <Hr />
+
+                <Toggle field={form.$('sentry')} />
+                <p className="settings__help">
+                  {intl.formatMessage(messages.sentryInfo)}
+                </p>
+                <p className="settings__help">
+                  {intl.formatMessage(messages.appRestartRequired)}
+                </p>
 
                 <Hr />
 
@@ -379,9 +618,7 @@ export default @observer class EditSettingsForm extends Component {
                       scorePassword
                       showPasswordToggle
                     />
-                    <p>
-                      { intl.formatMessage(messages.lockedPasswordInfo) }
-                    </p>
+                    <p>{intl.formatMessage(messages.lockedPasswordInfo)}</p>
 
                     <Input
                       placeholder="Lock after inactivity"
@@ -389,251 +626,208 @@ export default @observer class EditSettingsForm extends Component {
                       field={form.$('inactivityLock')}
                       autoFocus
                     />
-                    <p>
-                      { intl.formatMessage(messages.inactivityLockInfo) }
-                    </p>
+                    <p>{intl.formatMessage(messages.inactivityLockInfo)}</p>
                   </>
                 )}
                 <p
                   className="settings__message"
                   style={{
-                    borderTop: 0, marginTop: 0, paddingTop: 0, marginBottom: '2rem',
+                    borderTop: 0,
+                    marginTop: 0,
+                    paddingTop: 0,
+                    marginBottom: '2rem',
                   }}
                 >
                   <span>
-                    { intl.formatMessage(messages.lockInfo) }
+                    {intl.formatMessage(messages.lockInfo, {
+                      lockShortcut: `${lockFerdiShortcutKey(false)}`,
+                    })}
                   </span>
                 </p>
-
-                <Hr />
-
-                <Toggle field={form.$('scheduledDNDEnabled')} />
-                {scheduledDNDEnabled && (
-                  <>
-                    <div style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                    }}
-                    >
-                      <div style={{
-                        padding: '0 1rem',
-                        width: '100%',
-                      }}
-                      >
-                        <Input
-                          placeholder="17:00"
-                          onChange={e => this.submit(e)}
-                          field={form.$('scheduledDNDStart')}
-                          type="time"
-                        />
-                      </div>
-                      <div style={{
-                        padding: '0 1rem',
-                        width: '100%',
-                      }}
-                      >
-                        <Input
-                          placeholder="09:00"
-                          onChange={e => this.submit(e)}
-                          field={form.$('scheduledDNDEnd')}
-                          type="time"
-                        />
-                      </div>
-                    </div>
-                    <p>
-                      { intl.formatMessage(messages.scheduledDNDTimeInfo) }
-                    </p>
-                  </>
-                )}
-                <p
-                  className="settings__message"
-                  style={{
-                    borderTop: 0, marginTop: 0, paddingTop: 0, marginBottom: '2rem',
-                  }}
-                >
-                  <span>
-                    { intl.formatMessage(messages.scheduledDNDInfo) }
-                  </span>
-                </p>
-              </div>
-            )}
-
-            {/* Appearance */}
-            { this.state.activeSetttingsTab === 'appearance' && (
-              <div>
-                <Toggle field={form.$('showDisabledServices')} />
-                <Toggle field={form.$('showMessageBadgeWhenMuted')} />
-
-                {isMac && <Toggle field={form.$('showDragArea')} />}
-
-                <Hr />
-
-                {(isMac || isWindows) && <Toggle field={form.$('adaptableDarkMode')} />}
-                {!((isMac || isWindows) && isAdaptableDarkModeEnabled) && <Toggle field={form.$('darkMode')} />}
-                {(isDarkmodeEnabled || isAdaptableDarkModeEnabled) && (
-                <>
-                  <Toggle field={form.$('universalDarkMode')} />
-                  <p
-                    className="settings__message"
-                    style={{
-                      borderTop: 0, marginTop: 0, paddingTop: 0, marginBottom: '2rem',
-                    }}
-                  >
-                    <span>
-                      { intl.formatMessage(messages.universalDarkModeInfo) }
-                    </span>
-                  </p>
-                </>
-                )}
-
-                <Hr />
-
-                <Select field={form.$('serviceRibbonWidth')} />
-
-                <Select field={form.$('iconSize')} />
-
-                <Hr />
-
-                <Input
-                  placeholder="Accent Color"
-                  onChange={e => this.submit(e)}
-                  field={form.$('accentColor')}
-                />
-                <p>{intl.formatMessage(messages.accentColorInfo)}</p>
               </div>
             )}
 
             {/* Language */}
-            { this.state.activeSetttingsTab === 'language' && (
+            {this.state.activeSetttingsTab === 'language' && (
               <div>
                 <Select field={form.$('locale')} showLabel={false} />
 
                 <Hr />
 
-                <PremiumFeatureContainer
-                  condition={!isSpellcheckerIncludedInCurrentPlan}
-                  gaEventInfo={{ category: 'User', event: 'upgrade', label: 'spellchecker' }}
-                >
-                  <Fragment>
-                    <Toggle
-                      field={form.$('enableSpellchecking')}
-                    />
-                    {form.$('enableSpellchecking').value && (
-                    <Select field={form.$('spellcheckerLanguage')} />
-                    )}
-                  </Fragment>
-                </PremiumFeatureContainer>
+                <Toggle field={form.$('enableSpellchecking')} />
+                {!isMac && form.$('enableSpellchecking').value && (
+                  <Select field={form.$('spellcheckerLanguage')} />
+                )}
+                {isMac && form.$('enableSpellchecking').value && (
+                  <p className="settings__help">
+                    {intl.formatMessage(messages.spellCheckerLanguageInfo)}
+                  </p>
+                )}
+                <p className="settings__help">
+                  {intl.formatMessage(messages.appRestartRequired)}
+                </p>
+
+                <Hr />
+
                 <a
                   href={FRANZ_TRANSLATION}
                   target="_blank"
                   className="link"
+                  rel="noreferrer"
                 >
-                  {intl.formatMessage(messages.translationHelp)}
-                  {' '}
-                  <i className="mdi mdi-open-in-new" />
+                  {intl.formatMessage(messages.translationHelp)}{' '}
+                  <Icon icon={mdiOpenInNew} />
                 </a>
               </div>
             )}
 
             {/* Advanced */}
-            { this.state.activeSetttingsTab === 'advanced' && (
+            {this.state.activeSetttingsTab === 'advanced' && (
               <div>
                 <Toggle field={form.$('enableGPUAcceleration')} />
-                <p className="settings__help">{intl.formatMessage(messages.enableGPUAccelerationInfo)}</p>
+                <Toggle field={form.$('enableGlobalHideShortcut')} />
+                <p className="settings__help indented__help">
+                  {intl.formatMessage(messages.appRestartRequired)}
+                </p>
+
+                <Hr />
+
+                <Input
+                  placeholder="User Agent"
+                  onChange={e => this.submit(e)}
+                  field={form.$('userAgentPref')}
+                />
+                <p className="settings__help">
+                  {intl.formatMessage(globalMessages.userAgentHelp)}
+                </p>
+                <p className="settings__help">
+                  {intl.formatMessage(messages.appRestartRequired)}
+                </p>
+
+                <Hr />
+
                 <div className="settings__settings-group">
-                  <h3>
-                    {intl.formatMessage(messages.subheadlineCache)}
-                  </h3>
+                  <h3>{intl.formatMessage(messages.subheadlineCache)}</h3>
                   <p>
                     {intl.formatMessage(messages.cacheInfo, {
                       size: cacheSize,
                     })}
                   </p>
-                  {
-                    notCleared && (
-                      <p>
-                        {intl.formatMessage(messages.cacheNotCleared)}
-                      </p>
-                    )
-                  }
+                  {notCleared && (
+                    <p>{intl.formatMessage(messages.cacheNotCleared)}</p>
+                  )}
                   <p>
                     <Button
                       buttonType="secondary"
                       label={intl.formatMessage(messages.buttonClearAllCache)}
-                      onClick={() => { onClearAllCache(); this.onClearCacheClicked(); }}
+                      onClick={() => {
+                        onClearAllCache();
+                        this.onClearCacheClicked();
+                      }}
                       disabled={isClearingAllCache}
                       loaded={!isClearingAllCache}
                     />
                   </p>
-                  <div style={{
-                    marginTop: 20,
-                  }}
-                  >
-                    <Button
-                      buttonType="secondary"
-                      label="Open Process Manager"
-                      onClick={openProcessManager}
-                    />
-                  </div>
+                </div>
+
+                <Hr />
+
+                <div className="settings__settings-group">
+                  <h3>
+                    {intl.formatMessage(messages.subheadlineFerdiProfile)}
+                  </h3>
+                  <p>
+                    <div className="settings__open-settings-file-container">
+                      <Button
+                        buttonType="secondary"
+                        label={intl.formatMessage(
+                          messages.buttonOpenFerdiProfileFolder,
+                        )}
+                        className="settings__open-settings-file-button"
+                        onClick={() => openPath(profileFolder)}
+                      />
+                      <Button
+                        buttonType="secondary"
+                        label={intl.formatMessage(
+                          messages.buttonOpenFerdiServiceRecipesFolder,
+                        )}
+                        className="settings__open-settings-file-button"
+                        onClick={() => openPath(recipeFolder)}
+                      />
+                    </div>
+                  </p>
                 </div>
               </div>
             )}
 
             {/* Updates */}
-            { this.state.activeSetttingsTab === 'updates' && (
-            <div>
-              <Toggle field={form.$('automaticUpdates')} />
-              {automaticUpdates && (
+            {this.state.activeSetttingsTab === 'updates' && (
               <div>
-                <Toggle field={form.$('beta')} />
-                {updateIsReadyToInstall ? (
-                  <Button
-                    label={intl.formatMessage(messages.buttonInstallUpdate)}
-                    onClick={installUpdate}
-                  />
-                ) : (
-                  <Button
-                    buttonType="secondary"
-                    label={intl.formatMessage(updateButtonLabelMessage)}
-                    onClick={checkForUpdates}
-                    disabled={!automaticUpdates || isCheckingForUpdates || isUpdateAvailable}
-                    loaded={!isCheckingForUpdates || !isUpdateAvailable}
-                  />
+                <Toggle field={form.$('automaticUpdates')} />
+                {automaticUpdates && (
+                  <div>
+                    <Toggle field={form.$('beta')} />
+                    <ToggleRaw
+                      field={{
+                        value: isNightlyEnabled,
+                        id: 'nightly',
+                        label: 'Include nightly versions',
+                        name: 'Nightly builds',
+                      }}
+                      onChange={
+                        window['ferdi'].features.nightlyBuilds.toggleFeature
+                      }
+                    />
+                    {updateIsReadyToInstall ? (
+                      <Button
+                        label={intl.formatMessage(messages.buttonInstallUpdate)}
+                        onClick={installUpdate}
+                      />
+                    ) : (
+                      <Button
+                        buttonType="secondary"
+                        label={intl.formatMessage(updateButtonLabelMessage)}
+                        onClick={checkForUpdates}
+                        disabled={
+                          !automaticUpdates ||
+                          isCheckingForUpdates ||
+                          isUpdateAvailable ||
+                          !isOnline
+                        }
+                        loaded={!isCheckingForUpdates || !isUpdateAvailable}
+                      />
+                    )}
+                    <br />
+                  </div>
                 )}
-                <br />
+                {intl.formatMessage(messages.currentVersion)} {ferdiVersion}
+                {noUpdateAvailable && (
+                  <>
+                    <br />
+                    <br />
+                    {intl.formatMessage(messages.updateStatusUpToDate)}
+                  </>
+                )}
+                <p className="settings__message">
+                  <Icon icon={mdiGithub} />
+                  Ferdi is based on{' '}
+                  <a
+                    href={`${GITHUB_FRANZ_URL}/franz`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Franz
+                  </a>
+                  , a project published under the{' '}
+                  <a
+                    href={`${GITHUB_FRANZ_URL}/franz/blob/master/LICENSE`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Apache-2.0 License
+                  </a>
+                </p>
               </div>
-              )}
-              {intl.formatMessage(messages.currentVersion)}
-              {' '}
-              {remote.app.getVersion()}
-              {noUpdateAvailable && (
-              <>
-                <br />
-                <br />
-                {intl.formatMessage(messages.updateStatusUpToDate)}
-              </>
-              )
-              }
-              <p className="settings__message">
-                <span className="mdi mdi-github-face" />
-                <span>
-
-
-                Ferdi is based on
-                  {' '}
-                  <a href="https://github.com/meetfranz/franz" target="_blank">Franz</a>
-
-
-                , a project published
-                under the
-                  {' '}
-                  <a href="https://github.com/meetfranz/franz/blob/master/LICENSE" target="_blank">Apache-2.0 License</a>
-                </span>
-                <br />
-                <span className="mdi mdi-information" />
-                {intl.formatMessage(messages.languageDisclaimer)}
-              </p>
-            </div>
             )}
           </form>
         </div>
@@ -641,3 +835,5 @@ export default @observer class EditSettingsForm extends Component {
     );
   }
 }
+
+export default injectIntl(observer(EditSettingsForm));

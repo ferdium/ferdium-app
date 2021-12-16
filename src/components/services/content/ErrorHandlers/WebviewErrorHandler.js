@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 import injectSheet from 'react-jss';
 
 import Button from '../../../ui/Button';
@@ -11,27 +11,27 @@ import styles from './styles';
 const messages = defineMessages({
   headline: {
     id: 'service.errorHandler.headline',
-    defaultMessage: '!!!Oh no!',
+    defaultMessage: 'Oh no!',
   },
   text: {
     id: 'service.errorHandler.text',
-    defaultMessage: '!!!{name} has failed to load.',
+    defaultMessage: '{name} has failed to load.',
   },
   action: {
     id: 'service.errorHandler.action',
-    defaultMessage: '!!!Reload {name}',
+    defaultMessage: 'Reload {name}',
   },
   editAction: {
     id: 'service.errorHandler.editAction',
-    defaultMessage: '!!!Edit {name}',
+    defaultMessage: 'Edit {name}',
   },
   errorMessage: {
     id: 'service.errorHandler.message',
-    defaultMessage: '!!!Error:',
+    defaultMessage: 'Error',
   },
 });
 
-export default @injectSheet(styles) @observer class WebviewErrorHandler extends Component {
+class WebviewErrorHandler extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
     reload: PropTypes.func.isRequired,
@@ -40,30 +40,16 @@ export default @injectSheet(styles) @observer class WebviewErrorHandler extends 
     classes: PropTypes.object.isRequired,
   };
 
-  static contextTypes = {
-    intl: intlShape,
-  };
-
   render() {
-    const {
-      name,
-      reload,
-      edit,
-      errorMessage,
-      classes,
-    } = this.props;
-    const { intl } = this.context;
+    const { name, reload, edit, errorMessage, classes } = this.props;
+    const { intl } = this.props;
 
     return (
       <div className={classes.component}>
         <h1>{intl.formatMessage(messages.headline)}</h1>
         <p>{intl.formatMessage(messages.text, { name })}</p>
         <p>
-          <strong>
-            {intl.formatMessage(messages.errorMessage)}
-:
-          </strong>
-          {' '}
+          <strong>{intl.formatMessage(messages.errorMessage)}:</strong>{' '}
           {errorMessage}
         </p>
         <div className={classes.buttonContainer}>
@@ -82,3 +68,7 @@ export default @injectSheet(styles) @observer class WebviewErrorHandler extends 
     );
   }
 }
+
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(observer(WebviewErrorHandler)),
+);

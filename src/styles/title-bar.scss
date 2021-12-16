@@ -4,15 +4,15 @@
   background: $dark-theme-gray-darker;
 
   .toolbar-dropdown {
-    &.open > .toolbar-button > button { 
+    &.open > .toolbar-button > button {
       background: $dark-theme-gray-light;
       color: $dark-theme-gray-lightest;
     }
 
     &:not(.open) {
       .menu-item .menu-label { opacity: 1; }
-      > .toolbar-button > button:hover { 
-        background: $dark-theme-gray-darkest; 
+      > .toolbar-button > button:hover {
+        background: $dark-theme-gray-darkest;
       }
     }
   }
@@ -22,13 +22,13 @@
 
     .menu-pane {
       background: $dark-theme-gray-light;
-  
+
       .menu-item {
         .accelerator {
           color: lighten($dark-theme-gray-light, 20%);
         }
       }
-  
+
       hr {
         border-color: $dark-theme-gray-lighter;
       }
@@ -62,6 +62,8 @@
     .menu-item {
       border-radius: $theme-border-radius-small;
       margin: 4px;
+
+      .status-icon { min-width: 12px; }
     }
 
     &.selected,
@@ -76,5 +78,9 @@
     border-bottom-left-radius: $theme-border-radius-small;
     border-bottom-right-radius: $theme-border-radius-small;
     box-shadow: 0 0 10px rgba(black, .5);
+
+    &.menu-endblock {
+      border-left-width: 0px;
+    }
   }
 }

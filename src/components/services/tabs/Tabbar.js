@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 
 import TabBarSortableList from './TabBarSortableList';
 
-export default @observer class TabBar extends Component {
+class TabBar extends Component {
   static propTypes = {
     services: MobxPropTypes.arrayOrObservableArray.isRequired,
     setActive: PropTypes.func.isRequired,
@@ -15,17 +15,19 @@ export default @observer class TabBar extends Component {
     reload: PropTypes.func.isRequired,
     toggleNotifications: PropTypes.func.isRequired,
     toggleAudio: PropTypes.func.isRequired,
+    toggleDarkMode: PropTypes.func.isRequired,
     deleteService: PropTypes.func.isRequired,
     updateService: PropTypes.func.isRequired,
+    hibernateService: PropTypes.func.isRequired,
+    wakeUpService: PropTypes.func.isRequired,
+    useVerticalStyle: PropTypes.bool.isRequired,
     showMessageBadgeWhenMutedSetting: PropTypes.bool.isRequired,
+    showServiceNameSetting: PropTypes.bool.isRequired,
     showMessageBadgesEvenWhenMuted: PropTypes.bool.isRequired,
   };
 
   onSortEnd = ({ oldIndex, newIndex }) => {
-    const {
-      enableToolTip,
-      reorder,
-    } = this.props;
+    const { enableToolTip, reorder } = this.props;
 
     enableToolTip();
     reorder({ oldIndex, newIndex });
@@ -55,6 +57,18 @@ export default @observer class TabBar extends Component {
     this.toggleService({ serviceId, isEnabled: true });
   }
 
+  hibernateService({ serviceId }) {
+    if (serviceId) {
+      this.props.hibernateService({ serviceId });
+    }
+  }
+
+  wakeUpService({ serviceId }) {
+    if (serviceId) {
+      this.props.wakeUpService({ serviceId });
+    }
+  }
+
   render() {
     const {
       services,
@@ -64,10 +78,15 @@ export default @observer class TabBar extends Component {
       reload,
       toggleNotifications,
       toggleAudio,
+      toggleDarkMode,
       deleteService,
+      useVerticalStyle,
       showMessageBadgeWhenMutedSetting,
+      showServiceNameSetting,
       showMessageBadgesEvenWhenMuted,
     } = this.props;
+
+    const axis = useVerticalStyle ? 'x' : 'y';
 
     return (
       <div>
@@ -80,18 +99,24 @@ export default @observer class TabBar extends Component {
           reload={reload}
           toggleNotifications={toggleNotifications}
           toggleAudio={toggleAudio}
+          toggleDarkMode={toggleDarkMode}
           deleteService={deleteService}
           disableService={args => this.disableService(args)}
           enableService={args => this.enableService(args)}
+          hibernateService={args => this.hibernateService(args)}
+          wakeUpService={args => this.wakeUpService(args)}
           openSettings={openSettings}
           distance={20}
-          axis="y"
-          lockAxis="y"
+          axis={axis}
+          lockAxis={axis}
           helperClass="is-reordering"
           showMessageBadgeWhenMutedSetting={showMessageBadgeWhenMutedSetting}
+          showServiceNameSetting={showServiceNameSetting}
           showMessageBadgesEvenWhenMuted={showMessageBadgesEvenWhenMuted}
         />
       </div>
     );
   }
 }
+
+export default observer(TabBar);

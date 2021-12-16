@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { inject } from 'mobx-react';
 import PropTypes from 'prop-types';
 
 import SupportFerdi from '../../components/settings/supportFerdi/SupportFerdiDashboard';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
+import AppStore from '../../stores/AppStore';
 
-export default @inject('actions') class SupportScreen extends Component {
+class SupportScreen extends Component {
   constructor(props) {
     super(props);
 
@@ -19,18 +20,16 @@ export default @inject('actions') class SupportScreen extends Component {
   render() {
     return (
       <ErrorBoundary>
-        <SupportFerdi
-          openLink={this.openLink}
-        />
+        <SupportFerdi openLink={this.openLink} />
       </ErrorBoundary>
     );
   }
 }
 
-SupportScreen.wrappedComponent.propTypes = {
+SupportScreen.propTypes = {
   actions: PropTypes.shape({
-    app: PropTypes.shape({
-      openExternalUrl: PropTypes.func.isRequired,
-    }).isRequired,
+    app: PropTypes.instanceOf(AppStore).isRequired,
   }).isRequired,
 };
+
+export default inject('actions')(SupportScreen);

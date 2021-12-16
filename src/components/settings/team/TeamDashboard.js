@@ -1,50 +1,47 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 import ReactTooltip from 'react-tooltip';
 import injectSheet from 'react-jss';
 import classnames from 'classnames';
 
-import { Badge } from '@meetfranz/ui';
 import Loader from '../../ui/Loader';
 import Button from '../../ui/Button';
 import Infobox from '../../ui/Infobox';
-import globalMessages from '../../../i18n/globalMessages';
-import UpgradeButton from '../../ui/UpgradeButton';
+import { LIVE_FRANZ_API } from '../../../config';
 
 const messages = defineMessages({
   headline: {
     id: 'settings.team.headline',
-    defaultMessage: '!!!Team',
+    defaultMessage: 'Team',
   },
   contentHeadline: {
     id: 'settings.team.contentHeadline',
-    defaultMessage: '!!!Franz Team Management',
+    defaultMessage: 'Franz Team Management',
   },
   intro: {
     id: 'settings.team.intro',
-    defaultMessage: '!!!Your are currently using Franz Servers, which is why you have access to Team Management.',
+    defaultMessage:
+      'You are currently using Franz Servers, which is why you have access to Team Management.',
   },
   copy: {
     id: 'settings.team.copy',
-    defaultMessage: '!!!Franz\'s Team Management allows you to manage Franz Subscriptions for multiple users. Please keep in mind that having a Franz Premium subscription will give you no advantages in using Ferdi: The only reason you still have access to Team Management is so you can manage your legacy Franz Teams and so that you don\'t loose any functionality in managing your account.',
+    defaultMessage:
+      "Franz's Team Management allows you to manage Franz Subscriptions for multiple users. Please keep in mind that having a Franz Premium subscription will give you no advantages in using Ferdi: The only reason you still have access to Team Management is so you can manage your legacy Franz Teams and so that you don't loose any functionality in managing your account.",
   },
   manageButton: {
     id: 'settings.team.manageAction',
-    defaultMessage: '!!!Manage your Team on meetfranz.com',
-  },
-  upgradeButton: {
-    id: 'settings.team.upgradeAction',
-    defaultMessage: '!!!Upgrade your Account',
+    defaultMessage: 'Manage your Team on meetfranz.com',
   },
   teamsUnavailable: {
     id: 'settings.team.teamsUnavailable',
-    defaultMessage: '!!!Teams are unavailable',
+    defaultMessage: 'Teams are unavailable',
   },
   teamsUnavailableInfo: {
     id: 'settings.team.teamsUnavailableInfo',
-    defaultMessage: '!!!Teams are currently only available when using the Franz Server and after paying for Franz Professional. Please change your server to https://api.franzinfra.com to use teams.',
+    defaultMessage:
+      'Teams are currently only available when using the Franz Server and after paying for Franz Professional. Please change your server to https://api.franzinfra.com to use teams.',
   },
 });
 
@@ -87,30 +84,20 @@ const styles = {
   headlineWithSpacing: {
     marginBottom: 'inherit',
   },
-  proRequired: {
-    margin: [10, 0, 40],
-    height: 'auto',
-  },
   buttonContainer: {
     display: 'flex',
     height: 'auto',
   },
 };
 
-
-export default @injectSheet(styles) @observer class TeamDashboard extends Component {
+class TeamDashboard extends Component {
   static propTypes = {
     isLoading: PropTypes.bool.isRequired,
     userInfoRequestFailed: PropTypes.bool.isRequired,
     retryUserInfoRequest: PropTypes.func.isRequired,
     openTeamManagement: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired,
-    isProUser: PropTypes.bool.isRequired,
     server: PropTypes.string.isRequired,
-  };
-
-  static contextTypes = {
-    intl: intlShape,
   };
 
   render() {
@@ -119,13 +106,12 @@ export default @injectSheet(styles) @observer class TeamDashboard extends Compon
       userInfoRequestFailed,
       retryUserInfoRequest,
       openTeamManagement,
-      isProUser,
       classes,
       server,
     } = this.props;
-    const { intl } = this.context;
+    const { intl } = this.props;
 
-    if (server === 'https://api.franzinfra.com') {
+    if (server === LIVE_FRANZ_API) {
       return (
         <div className="settings__main">
           <div className="settings__header">
@@ -134,9 +120,7 @@ export default @injectSheet(styles) @observer class TeamDashboard extends Compon
             </span>
           </div>
           <div className="settings__body">
-            {isLoading && (
-              <Loader />
-            )}
+            {isLoading && <Loader />}
 
             {!isLoading && userInfoRequestFailed && (
               <Infobox
@@ -150,48 +134,34 @@ export default @injectSheet(styles) @observer class TeamDashboard extends Compon
               </Infobox>
             )}
 
-            {!userInfoRequestFailed && (
+            {!userInfoRequestFailed && !isLoading && (
               <>
-                {!isLoading && (
-                  <>
-                    <>
-                      <h1 className={classnames({
-                        [classes.headline]: true,
-                        [classes.headlineWithSpacing]: isProUser,
-                      })}
-                      >
-                        {intl.formatMessage(messages.contentHeadline)}
-
-                      </h1>
-                      {!isProUser && (
-                        <Badge className={classes.proRequired}>{intl.formatMessage(globalMessages.proRequired)}</Badge>
-                      )}
-                      <div className={classes.container}>
-                        <div className={classes.content}>
-                          <p>{intl.formatMessage(messages.intro)}</p>
-                          <p>{intl.formatMessage(messages.copy)}</p>
-                        </div>
-                        <img className={classes.image} src="https://cdn.franzinfra.com/announcements/assets/teams.png" alt="Franz for Teams" />
-                      </div>
-                      <div className={classes.buttonContainer}>
-                        {!isProUser ? (
-                          <UpgradeButton
-                            className={classes.cta}
-                            gaEventInfo={{ category: 'Todos', event: 'upgrade' }}
-                            requiresPro
-                            short
-                          />
-                        ) : (
-                          <Button
-                            label={intl.formatMessage(messages.manageButton)}
-                            onClick={openTeamManagement}
-                            className={classes.cta}
-                          />
-                        )}
-                      </div>
-                    </>
-                  </>
-                )}
+                <h1
+                  className={classnames({
+                    [classes.headline]: true,
+                    [classes.headlineWithSpacing]: true,
+                  })}
+                >
+                  {intl.formatMessage(messages.contentHeadline)}
+                </h1>
+                <div className={classes.container}>
+                  <div className={classes.content}>
+                    <p>{intl.formatMessage(messages.intro)}</p>
+                    <p>{intl.formatMessage(messages.copy)}</p>
+                  </div>
+                  <img
+                    className={classes.image}
+                    src="https://cdn.franzinfra.com/announcements/assets/teams.png"
+                    alt="Ferdi for Teams"
+                  />
+                </div>
+                <div className={classes.buttonContainer}>
+                  <Button
+                    label={intl.formatMessage(messages.manageButton)}
+                    onClick={openTeamManagement}
+                    className={classes.cta}
+                  />
+                </div>
               </>
             )}
           </div>
@@ -213,7 +183,8 @@ export default @injectSheet(styles) @observer class TeamDashboard extends Compon
           <p
             className="settings__message"
             style={{
-              borderTop: 0, marginTop: 0,
+              borderTop: 0,
+              marginTop: 0,
             }}
           >
             {intl.formatMessage(messages.teamsUnavailableInfo)}
@@ -223,3 +194,7 @@ export default @injectSheet(styles) @observer class TeamDashboard extends Compon
     );
   }
 }
+
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(observer(TeamDashboard)),
+);

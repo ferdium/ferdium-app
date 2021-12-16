@@ -5,9 +5,12 @@ import { createActionsFromDefinitions } from '../../actions/lib/actions';
 import { createActionBindings } from './ActionBinding';
 import { createReactions } from '../../stores/lib/Reaction';
 
-const actions = createActionsFromDefinitions({
-  countUp: {},
-}, PropTypes.checkPropTypes);
+const actions = createActionsFromDefinitions(
+  {
+    countUp: {},
+  },
+  PropTypes.checkPropTypes,
+);
 
 class TestFeatureStore extends FeatureStore {
   @observable count = 0;
@@ -15,12 +18,10 @@ class TestFeatureStore extends FeatureStore {
   reactionInvokedCount = 0;
 
   start() {
-    this._registerActions(createActionBindings([
-      [actions.countUp, this._countUp],
-    ]));
-    this._registerReactions(createReactions([
-      this._countReaction,
-    ]));
+    this._registerActions(
+      createActionBindings([[actions.countUp, this._countUp]]),
+    );
+    this._registerReactions(createReactions([this._countReaction]));
   }
 
   _countUp = () => {
@@ -29,7 +30,7 @@ class TestFeatureStore extends FeatureStore {
 
   _countReaction = () => {
     this.reactionInvokedCount += 1;
-  }
+  };
 }
 
 describe('FeatureStore', () => {

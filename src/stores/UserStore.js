@@ -2,15 +2,13 @@ import { observable, computed, action } from 'mobx';
 import moment from 'moment';
 import jwt from 'jsonwebtoken';
 import localStorage from 'mobx-localstorage';
-import ms from 'ms';
+import { ipcRenderer } from 'electron';
 
-import { isDevMode } from '../environment';
+import { TODOS_PARTITION_ID } from '../config';
+import { isDevMode } from '../environment-remote';
 import Store from './lib/Store';
 import Request from './lib/Request';
 import CachedRequest from './lib/CachedRequest';
-import { sleep } from '../helpers/async-helpers';
-import { getPlan } from '../helpers/plan-helpers';
-import { PLANS } from '../config';
 
 const debug = require('debug')('Ferdi:UserStore');
 
@@ -26,7 +24,7 @@ export default class UserStore extends Store {
 
   SIGNUP_ROUTE = `${this.BASE_ROUTE}/signup`;
 
-  PRICING_ROUTE = `${this.BASE_ROUTE}/signup/pricing`;
+  SETUP_ROUTE = `${this.BASE_ROUTE}/signup/setup`;
 
   IMPORT_ROUTE = `${this.BASE_ROUTE}/signup/import`;
 
@@ -42,15 +40,16 @@ export default class UserStore extends Store {
 
   @observable passwordRequest = new Request(this.api.user, 'password');
 
-  @observable activateTrialRequest = new Request(this.api.user, 'activateTrial');
-
   @observable inviteRequest = new Request(this.api.user, 'invite');
 
   @observable getUserInfoRequest = new CachedRequest(this.api.user, 'getInfo');
 
   @observable updateUserInfoRequest = new Request(this.api.user, 'updateInfo');
 
-  @observable getLegacyServicesRequest = new CachedRequest(this.api.user, 'getLegacyServices');
+  @observable getLegacyServicesRequest = new CachedRequest(
+    this.api.user,
+    'getLegacyServices',
+  );
 
   @observable deleteAccountRequest = new CachedRequest(this.api.user, 'delete');
 
@@ -67,8 +66,6 @@ export default class UserStore extends Store {
   @observable accountType;
 
   @observable hasCompletedSignup = false;
-
-  @observable hasActivatedTrial = false;
 
   @observable userData = {};
 
@@ -87,21 +84,23 @@ export default class UserStore extends Store {
 
     // Register action handlers
     this.actions.user.login.listen(this._login.bind(this));
-    this.actions.user.retrievePassword.listen(this._retrievePassword.bind(this));
+    this.actions.user.retrievePassword.listen(
+      this._retrievePassword.bind(this),
+    );
     this.actions.user.logout.listen(this._logout.bind(this));
     this.actions.user.signup.listen(this._signup.bind(this));
-    this.actions.user.activateTrial.listen(this._activateTrial.bind(this));
     this.actions.user.invite.listen(this._invite.bind(this));
     this.actions.user.update.listen(this._update.bind(this));
     this.actions.user.resetStatus.listen(this._resetStatus.bind(this));
-    this.actions.user.importLegacyServices.listen(this._importLegacyServices.bind(this));
+    this.actions.user.importLegacyServices.listen(
+      this._importLegacyServices.bind(this),
+    );
     this.actions.user.delete.listen(this._delete.bind(this));
 
     // Reactions
     this.registerReactions([
-      this._requireAuthenticatedUser,
+      this._requireAuthenticatedUser.bind(this),
       this._getUserData.bind(this),
-      this._resetTrialActivationState.bind(this),
     ]);
   }
 
@@ -123,8 +122,8 @@ export default class UserStore extends Store {
     return this.SIGNUP_ROUTE;
   }
 
-  get pricingRoute() {
-    return this.PRICING_ROUTE;
+  get setupRoute() {
+    return this.SETUP_ROUTE;
   }
 
   get inviteRoute() {
@@ -165,31 +164,6 @@ export default class UserStore extends Store {
     return this.data.team || null;
   }
 
-  @computed get isPremium() {
-    return true;
-  }
-
-  @computed get isPremiumOverride() {
-    return ((!this.team || !this.team.plan) && this.isPremium) || (this.team && this.team.state === 'expired' && this.isPremium);
-  }
-
-  @computed get isPersonal() {
-    if (!this.team || !this.team.plan) return false;
-    const plan = getPlan(this.team.plan);
-
-    return plan === PLANS.PERSONAL;
-  }
-
-  @computed get isPro() {
-    return true;
-    // if (this.isPremiumOverride) return true;
-
-    // if (!this.team || (!this.team.plan || this.team.state === 'expired')) return false;
-    // const plan = getPlan(this.team.plan);
-
-    // return plan === PLANS.PRO || plan === PLANS.LEGACY;
-  }
-
   @computed get legacyServices() {
     return this.getLegacyServicesRequest.execute() || {};
   }
@@ -209,7 +183,14 @@ export default class UserStore extends Store {
   }
 
   @action async _signup({
-    firstname, lastname, email, password, accountType, company, plan, currency,
+    firstname,
+    lastname,
+    email,
+    password,
+    accountType,
+    company,
+    plan,
+    currency,
   }) {
     const authToken = await this.signupRequest.execute({
       firstname,
@@ -227,7 +208,7 @@ export default class UserStore extends Store {
 
     this._setUserData(authToken);
 
-    this.stores.router.push('/');
+    this.stores.router.push(this.SETUP_ROUTE);
   }
 
   @action async _retrievePassword({ email }) {
@@ -235,21 +216,6 @@ export default class UserStore extends Store {
 
     await request._promise;
     this.actionStatus = request.result.status || [];
-  }
-
-  @action async _activateTrial({ planId }) {
-    debug('activate trial', planId);
-
-    this.activateTrialRequest.execute({
-      plan: planId,
-    });
-
-    await this.activateTrialRequest._promise;
-
-    this.hasActivatedTrial = true;
-
-    this.stores.features.featuresRequest.invalidate({ immediately: true });
-    this.stores.user.getUserInfoRequest.invalidate({ immediately: true });
   }
 
   @action async _invite({ invites }) {
@@ -268,7 +234,8 @@ export default class UserStore extends Store {
   @action async _update({ userData }) {
     if (!this.isLoggedIn) return;
 
-    const response = await this.updateUserInfoRequest.execute(userData)._promise;
+    const response = await this.updateUserInfoRequest.execute(userData)
+      ._promise;
 
     this.getUserInfoRequest.patch(() => response.data);
     this.actionStatus = response.status || [];
@@ -285,25 +252,37 @@ export default class UserStore extends Store {
 
     this.getUserInfoRequest.invalidate().reset();
     this.authToken = null;
+
+    this.stores.services.allServicesRequest.invalidate().reset();
+
+    if (this.stores.todos.isTodosEnabled) {
+      ipcRenderer.send('clear-storage-data', { sessionId: TODOS_PARTITION_ID });
+    }
   }
 
   @action async _importLegacyServices({ services }) {
     this.isImportLegacyServicesExecuting = true;
 
     // Reduces recipe duplicates
-    const recipes = services.filter((obj, pos, arr) => arr.map(mapObj => mapObj.recipe.id).indexOf(obj.recipe.id) === pos).map(s => s.recipe.id);
+    const recipes = services
+      .filter(
+        (obj, pos, arr) =>
+          arr.map(mapObj => mapObj.recipe.id).indexOf(obj.recipe.id) === pos,
+      )
+      .map(s => s.recipe.id);
 
     // Install recipes
-    for (const recipe of recipes) { // eslint-disable-line no-unused-vars
-      // eslint-disable-next-line
+    for (const recipe of recipes) {
+      // eslint-disable-next-line no-await-in-loop
       await this.stores.recipes._install({ recipeId: recipe });
     }
 
-    for (const service of services) { // eslint-disable-line no-unused-vars
+    for (const service of services) {
       this.actions.service.createFromLegacyService({
         data: service,
       });
-      await this.stores.services.createServiceRequest._promise; // eslint-disable-line
+      // eslint-disable-next-line no-await-in-loop
+      await this.stores.services.createServiceRequest._promise;
     }
 
     this.isImportLegacyServicesExecuting = false;
@@ -321,9 +300,8 @@ export default class UserStore extends Store {
     }
 
     const { router } = this.stores;
-    const currentRoute = router.location.pathname;
-    if (!this.isLoggedIn
-      && currentRoute.includes('token=')) {
+    const currentRoute = window.location.hash;
+    if (!this.isLoggedIn && currentRoute.includes('token=')) {
       router.push(this.WELCOME_ROUTE);
       const token = currentRoute.split('=')[1];
 
@@ -334,20 +312,18 @@ export default class UserStore extends Store {
           this._tokenLogin(token);
         }, 1000);
       }
-    } else if (!this.isLoggedIn
-      && !currentRoute.includes(this.BASE_ROUTE)) {
+    } else if (!this.isLoggedIn && !currentRoute.includes(this.BASE_ROUTE)) {
       router.push(this.WELCOME_ROUTE);
-    } else if (this.isLoggedIn
-      && currentRoute === this.LOGOUT_ROUTE) {
+    } else if (this.isLoggedIn && currentRoute === this.LOGOUT_ROUTE) {
       this.actions.user.logout();
       router.push(this.LOGIN_ROUTE);
-    } else if (this.isLoggedIn
-      && currentRoute.includes(this.BASE_ROUTE)
-      && (this.hasCompletedSignup
-        || this.hasCompletedSignup === null)) {
-      if (!isDevMode) {
-        this.stores.router.push('/');
-      }
+    } else if (
+      this.isLoggedIn &&
+      currentRoute.includes(this.BASE_ROUTE) &&
+      (this.hasCompletedSignup || this.hasCompletedSignup === null) &&
+      !isDevMode
+    ) {
+      this.stores.router.push('/');
     }
   };
 
@@ -357,7 +333,7 @@ export default class UserStore extends Store {
       let data;
       try {
         data = await this.getUserInfoRequest.execute()._promise;
-      } catch (e) {
+      } catch {
         return false;
       }
 
@@ -372,25 +348,17 @@ export default class UserStore extends Store {
     }
   }
 
-  async _resetTrialActivationState() {
-    if (this.hasActivatedTrial) {
-      await sleep(ms('12s'));
-
-      this.hasActivatedTrial = false;
-    }
-  }
-
   // Helpers
   _parseToken(authToken) {
     try {
       const decoded = jwt.decode(authToken);
 
-      return ({
+      return {
         id: decoded.userId,
         tokenExpiry: moment.unix(decoded.exp).toISOString(),
         authToken,
-      });
-    } catch (err) {
+      };
+    } catch {
       this._logout();
       return false;
     }
@@ -421,7 +389,7 @@ export default class UserStore extends Store {
   async _migrateUserLocale() {
     try {
       await this.getUserInfoRequest._promise;
-    } catch (e) {
+    } catch {
       return false;
     }
 

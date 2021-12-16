@@ -1,5 +1,4 @@
-import { shell } from 'electron';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import { RouterStore } from 'mobx-react-router';
@@ -7,15 +6,18 @@ import classnames from 'classnames';
 
 import { oneOrManyChildElements } from '../../prop-types';
 import { matchRoute } from '../../helpers/routing-helpers';
+import { openExternalUrl } from '../../helpers/url-helpers';
 
 // TODO: create container component for this component
-export default @inject('stores') @observer class Link extends Component {
+class Link extends Component {
   onClick(e) {
-    if (this.props.disabled) e.preventDefault();
-    else if (this.props.target === '_blank') {
+    if (this.props.disabled) {
       e.preventDefault();
-      shell.openExternal(this.props.to);
+    } else if (this.props.target === '_blank') {
+      e.preventDefault();
+      openExternalUrl(this.props.to, true);
     }
+    // Note: if neither of the above, then let the other onClick handlers process it
   }
 
   render() {
@@ -56,14 +58,12 @@ export default @inject('stores') @observer class Link extends Component {
   }
 }
 
-Link.wrappedComponent.propTypes = {
+Link.propTypes = {
   stores: PropTypes.shape({
     router: PropTypes.instanceOf(RouterStore).isRequired,
   }).isRequired,
-  children: PropTypes.oneOfType([
-    oneOrManyChildElements,
-    PropTypes.string,
-  ]).isRequired,
+  children: PropTypes.oneOfType([oneOrManyChildElements, PropTypes.string])
+    .isRequired,
   to: PropTypes.string.isRequired,
   className: PropTypes.string,
   activeClassName: PropTypes.string,
@@ -73,7 +73,7 @@ Link.wrappedComponent.propTypes = {
   disabled: PropTypes.bool,
 };
 
-Link.wrappedComponent.defaultProps = {
+Link.defaultProps = {
   className: '',
   activeClassName: '',
   strictFilter: false,
@@ -81,3 +81,5 @@ Link.wrappedComponent.defaultProps = {
   target: '',
   style: {},
 };
+
+export default inject('stores')(observer(Link));

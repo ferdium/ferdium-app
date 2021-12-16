@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
 
 import Appear from './effects/Appear';
 
-export default @observer class StatusBarTargetUrl extends Component {
+class StatusBarTargetUrl extends Component {
   static propTypes = {
     className: PropTypes.string,
     text: PropTypes.string,
@@ -17,10 +17,7 @@ export default @observer class StatusBarTargetUrl extends Component {
   };
 
   render() {
-    const {
-      className,
-      text,
-    } = this.props;
+    const { className, text } = this.props;
 
     return (
       <Appear
@@ -29,10 +26,10 @@ export default @observer class StatusBarTargetUrl extends Component {
           [`${className}`]: true,
         })}
       >
-        <div className="status-bar-target-url__content">
-          {text}
-        </div>
+        <div className="status-bar-target-url__content">{text}</div>
       </Appear>
     );
   }
 }
+
+export default observer(StatusBarTargetUrl);

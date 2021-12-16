@@ -1,20 +1,23 @@
-import { ipcRenderer, remote } from 'electron';
-import {
-  action, computed, observable, reaction,
-} from 'mobx';
+import { ipcRenderer } from 'electron';
+import { getCurrentWindow } from '@electron/remote';
+import { action, computed, observable, reaction } from 'mobx';
 import localStorage from 'mobx-localstorage';
-import { DEFAULT_APP_SETTINGS, FILE_SYSTEM_SETTINGS_TYPES, LOCAL_SERVER } from '../config';
-import { API } from '../environment';
-import { getLocale } from '../helpers/i18n-helpers';
+import {
+  DEFAULT_APP_SETTINGS,
+  FILE_SYSTEM_SETTINGS_TYPES,
+  LOCAL_SERVER,
+} from '../config';
 import { hash } from '../helpers/password-helpers';
-import { SPELLCHECKER_LOCALES } from '../i18n/languages';
 import Request from './lib/Request';
 import Store from './lib/Store';
 
 const debug = require('debug')('Ferdi:SettingsStore');
 
 export default class SettingsStore extends Store {
-  @observable updateAppSettingsRequest = new Request(this.api.local, 'updateAppSettings');
+  @observable updateAppSettingsRequest = new Request(
+    this.api.local,
+    'updateAppSettings',
+  );
 
   startup = true;
 
@@ -39,7 +42,7 @@ export default class SettingsStore extends Store {
     reaction(
       () => this.all.app.autohideMenuBar,
       () => {
-        const currentWindow = remote.getCurrentWindow();
+        const currentWindow = getCurrentWindow();
         currentWindow.setMenuBarVisibility(!this.all.app.autohideMenuBar);
         currentWindow.autoHideMenuBar = this.all.app.autohideMenuBar;
       },
@@ -47,20 +50,21 @@ export default class SettingsStore extends Store {
 
     reaction(
       () => this.all.app.server,
-      (server) => {
+      server => {
         if (server === LOCAL_SERVER) {
           ipcRenderer.send('startLocalServer');
         }
       },
-      {
-        fireImmediately: true,
-      },
+      { fireImmediately: true },
     );
 
     // Inactivity lock timer
     let inactivityTimer;
-    remote.getCurrentWindow().on('blur', () => {
-      if (this.all.app.inactivityLock !== 0) {
+    getCurrentWindow().on('blur', () => {
+      if (
+        this.all.app.lockingFeatureEnabled &&
+        this.all.app.inactivityLock !== 0
+      ) {
         inactivityTimer = setTimeout(() => {
           this.actions.settings.update({
             type: 'app',
@@ -71,7 +75,7 @@ export default class SettingsStore extends Store {
         }, this.all.app.inactivityLock * 1000 * 60);
       }
     });
-    remote.getCurrentWindow().on('focus', () => {
+    getCurrentWindow().on('focus', () => {
       if (inactivityTimer) {
         clearTimeout(inactivityTimer);
       }
@@ -79,7 +83,11 @@ export default class SettingsStore extends Store {
 
     ipcRenderer.on('appSettings', (event, resp) => {
       // Lock on startup if enabled in settings
-      if (this.startup && resp.type === 'app' && resp.data.lockingFeatureEnabled) {
+      if (
+        this.startup &&
+        resp.type === 'app' &&
+        resp.data.lockingFeatureEnabled
+      ) {
         this.startup = false;
         process.nextTick(() => {
           if (!this.all.app.locked) {
@@ -92,9 +100,9 @@ export default class SettingsStore extends Store {
       ipcRenderer.send('initialAppSettings', resp);
     });
 
-    this.fileSystemSettingsTypes.forEach((type) => {
+    for (const type of this.fileSystemSettingsTypes) {
       ipcRenderer.send('getAppSettings', type);
-    });
+    }
   }
 
   @computed get app() {
@@ -106,15 +114,19 @@ export default class SettingsStore extends Store {
   }
 
   @computed get service() {
-    return localStorage.getItem('service') || {
-      activeService: '',
-    };
+    return (
+      localStorage.getItem('service') || {
+        activeService: '',
+      }
+    );
   }
 
   @computed get stats() {
-    return localStorage.getItem('stats') || {
-      activeService: '',
-    };
+    return (
+      localStorage.getItem('stats') || {
+        activeService: '',
+      }
+    );
   }
 
   @computed get migration() {
@@ -161,127 +173,24 @@ export default class SettingsStore extends Store {
     }
   }
 
+  _ensureMigrationAndMarkDone(migrationName, callback) {
+    if (!this.all.migration[migrationName]) {
+      callback();
+
+      const data = {};
+      data[migrationName] = true;
+      this.actions.settings.update({
+        type: 'migration',
+        data,
+      });
+    }
+  }
+
   // Helper
   async _migrate() {
     const legacySettings = localStorage.getItem('app') || {};
 
-    if (!this.all.migration['5.0.0-beta.17-settings']) {
-      this.actions.settings.update({
-        type: 'app',
-        data: {
-          autoLaunchInBackground: legacySettings.autoLaunchInBackground,
-          runInBackground: legacySettings.runInBackground,
-          enableSystemTray: legacySettings.enableSystemTray,
-          minimizeToSystemTray: legacySettings.minimizeToSystemTray,
-          server: API,
-          isAppMuted: legacySettings.isAppMuted,
-          enableGPUAcceleration: legacySettings.enableGPUAcceleration,
-          showMessageBadgeWhenMuted: legacySettings.showMessageBadgeWhenMuted,
-          showDisabledServices: legacySettings.showDisabledServices,
-          enableSpellchecking: legacySettings.enableSpellchecking,
-        },
-      });
-
-      this.actions.settings.update({
-        type: 'service',
-        data: {
-          activeService: legacySettings.activeService,
-        },
-      });
-
-      this.actions.settings.update({
-        type: 'migration',
-        data: {
-          '5.0.0-beta.17-settings': true,
-        },
-      });
-
-      localStorage.removeItem('app');
-
-      debug('Migrated settings to split stores');
-    }
-
-    if (!this.all.migration['5.0.0-beta.19-settings']) {
-      const spellcheckerLanguage = getLocale({
-        locale: this.stores.settings.app.locale,
-        locales: SPELLCHECKER_LOCALES,
-        defaultLocale: DEFAULT_APP_SETTINGS.spellcheckerLanguage,
-        fallbackLocale: DEFAULT_APP_SETTINGS.spellcheckerLanguage,
-      });
-
-      this.actions.settings.update({
-        type: 'app',
-        data: {
-          spellcheckerLanguage,
-        },
-      });
-
-      this.actions.settings.update({
-        type: 'migration',
-        data: {
-          '5.0.0-beta.19-settings': true,
-        },
-      });
-    }
-
-    if (!this.all.migration['5.4.4-beta.2-settings']) {
-      const {
-        showServiceNavigationBar,
-      } = this.all.app;
-
-      this.actions.settings.update({
-        type: 'app',
-        data: {
-          navigationBarBehaviour: showServiceNavigationBar ? 'custom' : 'never',
-        },
-      });
-
-      this.actions.settings.update({
-        type: 'migration',
-        data: {
-          '5.4.4-beta.2-settings': true,
-        },
-      });
-    }
-
-    if (!this.all.migration['5.4.4-beta.4-settings']) {
-      this.actions.settings.update({
-        type: 'app',
-        data: {
-          todoServer: 'isUsingCustomTodoService',
-          customTodoServer: legacySettings.todoServer,
-        },
-      });
-
-      this.actions.settings.update({
-        type: 'migration',
-        data: {
-          '5.4.4-beta.4-settings': true,
-        },
-      });
-
-      debug('Migrated old todo setting to new custom todo setting');
-    }
-
-    if (!this.all.migration['5.4.4-beta.4-settings']) {
-      this.actions.settings.update({
-        type: 'app',
-        data: {
-          automaticUpdates: !(legacySettings.noUpdates),
-        },
-      });
-
-      this.actions.settings.update({
-        type: 'migration',
-        data: {
-          '5.4.4-beta.4-settings': true,
-        },
-      });
-
-      debug('Migrated updates settings');
-    }
-
-    if (!this.all.migration['password-hashing']) {
+    this._ensureMigrationAndMarkDone('password-hashing', () => {
       if (this.stores.settings.app.lockedPassword !== '') {
         this.actions.settings.update({
           type: 'app',
@@ -291,14 +200,25 @@ export default class SettingsStore extends Store {
         });
       }
 
+      debug('Migrated updates settings');
+    });
+
+    this._ensureMigrationAndMarkDone('5.6.0-beta.6-settings', () => {
       this.actions.settings.update({
-        type: 'migration',
+        type: 'app',
         data: {
-          'password-hashing': true,
+          searchEngine: DEFAULT_APP_SETTINGS.searchEngine,
         },
       });
+    });
 
-      debug('Migrated updates settings');
-    }
+    this._ensureMigrationAndMarkDone('user-agent-settings', () => {
+      this.actions.settings.update({
+        type: 'app',
+        data: {
+          userAgentPref: DEFAULT_APP_SETTINGS.userAgentPref,
+        },
+      });
+    });
   }
 }

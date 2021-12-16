@@ -1,11 +1,13 @@
-import React, { Component, Fragment } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { defineMessages, intlShape } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 import { Link } from 'react-router';
-import { Input, Button } from '@meetfranz/forms';
 import injectSheet from 'react-jss';
 
+import { Infobox } from '../../../components/ui/infobox/index';
+import { Input } from '../../../components/ui/input/index';
+import { Button } from '../../../components/ui/button/index';
 import Workspace from '../models/Workspace';
 import Service from '../../../models/Service';
 import Form from '../../../lib/Form';
@@ -20,43 +22,44 @@ import Toggle from '../../../components/ui/Toggle';
 const messages = defineMessages({
   buttonDelete: {
     id: 'settings.workspace.form.buttonDelete',
-    defaultMessage: '!!!Delete workspace',
+    defaultMessage: 'Delete workspace',
   },
   buttonSave: {
     id: 'settings.workspace.form.buttonSave',
-    defaultMessage: '!!!Save workspace',
+    defaultMessage: 'Save workspace',
   },
   name: {
     id: 'settings.workspace.form.name',
-    defaultMessage: '!!!Name',
+    defaultMessage: 'Name',
   },
   yourWorkspaces: {
     id: 'settings.workspace.form.yourWorkspaces',
-    defaultMessage: '!!!Your workspaces',
+    defaultMessage: 'Your workspaces',
   },
   keepLoaded: {
     id: 'settings.workspace.form.keepLoaded',
-    defaultMessage: '!!!Keep this workspace loaded*',
+    defaultMessage: 'Keep this workspace loaded*',
   },
   keepLoadedInfo: {
     id: 'settings.workspace.form.keepLoadedInfo',
-    defaultMessage: '!!!*This option will be overwritten by the global "Keep all workspaces loaded" option.',
+    defaultMessage:
+      '*This option will be overwritten by the global "Keep all workspaces loaded" option.',
   },
   servicesInWorkspaceHeadline: {
     id: 'settings.workspace.form.servicesInWorkspaceHeadline',
-    defaultMessage: '!!!Services in this Workspace',
+    defaultMessage: 'Services in this Workspace',
   },
   noServicesAdded: {
     id: 'settings.services.noServicesAdded',
-    defaultMessage: '!!!You haven\'t added any services yet.',
+    defaultMessage: 'Start by adding a service.',
   },
   discoverServices: {
     id: 'settings.services.discoverServices',
-    defaultMessage: '!!!Discover services',
+    defaultMessage: 'Discover services',
   },
 });
 
-const styles = () => ({
+const styles = {
   nameInput: {
     height: 'auto',
   },
@@ -66,14 +69,9 @@ const styles = () => ({
   keepLoadedInfo: {
     marginBottom: '2rem !important',
   },
-});
+};
 
-@injectSheet(styles) @observer
 class EditWorkspaceForm extends Component {
-  static contextTypes = {
-    intl: intlShape,
-  };
-
   static propTypes = {
     classes: PropTypes.object.isRequired,
     onDelete: PropTypes.func.isRequired,
@@ -86,6 +84,7 @@ class EditWorkspaceForm extends Component {
 
   form = this.prepareWorkspaceForm(this.props.workspace);
 
+  // eslint-disable-next-line react/no-deprecated
   componentWillReceiveProps(nextProps) {
     const { workspace } = this.props;
     if (workspace.id !== nextProps.workspace.id) {
@@ -94,7 +93,8 @@ class EditWorkspaceForm extends Component {
   }
 
   prepareWorkspaceForm(workspace) {
-    const { intl } = this.context;
+    const { intl, updateWorkspaceRequest } = this.props;
+    updateWorkspaceRequest.reset();
     return new Form({
       fields: {
         name: {
@@ -109,15 +109,16 @@ class EditWorkspaceForm extends Component {
           default: false,
         },
         services: {
-          value: workspace.services.slice(),
+          value: [...workspace.services],
         },
       },
     });
   }
 
   save(form) {
+    this.props.updateWorkspaceRequest.reset();
     form.submit({
-      onSuccess: async (f) => {
+      onSuccess: async f => {
         const { onSave } = this.props;
         const values = f.values();
         onSave(values);
@@ -143,7 +144,7 @@ class EditWorkspaceForm extends Component {
   }
 
   render() {
-    const { intl } = this.context;
+    const { intl } = this.props;
     const {
       classes,
       workspace,
@@ -164,16 +165,22 @@ class EditWorkspaceForm extends Component {
             </Link>
           </span>
           <span className="separator" />
-          <span className="settings__header-item">
-            {workspace.name}
-          </span>
+          <span className="settings__header-item">{workspace.name}</span>
         </div>
         <div className="settings__body">
+          {updateWorkspaceRequest.error && (
+            <Infobox
+              icon="alert"
+              type="danger"
+            >
+              Error while saving workspace
+            </Infobox>
+          )}
           <div className={classes.nameInput}>
             <Input {...form.$('name').bind()} />
             <Toggle field={form.$('keepLoaded')} />
-            <p className={classes.keepLoadedInfo}>
-              { intl.formatMessage(messages.keepLoadedInfo) }
+            <p className={`${classes.keepLoadedInfo} franz-form__label`}>
+              {intl.formatMessage(messages.keepLoadedInfo)}
             </p>
           </div>
           <h2>{intl.formatMessage(messages.servicesInWorkspaceHeadline)}</h2>
@@ -187,10 +194,12 @@ class EditWorkspaceForm extends Component {
                   </span>
                   {intl.formatMessage(messages.noServicesAdded)}
                 </p>
-                <Link to="/settings/recipes" className="button">{intl.formatMessage(messages.discoverServices)}</Link>
+                <Link to="/settings/recipes" className="button">
+                  {intl.formatMessage(messages.discoverServices)}
+                </Link>
               </div>
             ) : (
-              <Fragment>
+              <>
                 {services.map(s => (
                   <WorkspaceServiceListItem
                     key={s.id}
@@ -199,7 +208,7 @@ class EditWorkspaceForm extends Component {
                     onToggle={() => this.toggleService(s)}
                   />
                 ))}
-              </Fragment>
+              </>
             )}
           </div>
         </div>
@@ -221,6 +230,7 @@ class EditWorkspaceForm extends Component {
             busy={isSaving}
             buttonType={isSaving ? 'secondary' : 'primary'}
             onClick={this.save.bind(this, form)}
+            // TODO: Need to disable if no services have been added to this workspace
             disabled={isSaving}
           />
         </div>
@@ -229,4 +239,6 @@ class EditWorkspaceForm extends Component {
   }
 }
 
-export default EditWorkspaceForm;
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(observer(EditWorkspaceForm)),
+);

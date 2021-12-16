@@ -1,18 +1,23 @@
 import {
-  app, Menu, nativeImage, nativeTheme, systemPreferences, Tray, ipcMain,
+  app,
+  Menu,
+  nativeImage,
+  nativeTheme,
+  systemPreferences,
+  Tray,
+  ipcMain,
+  BrowserWindow,
 } from 'electron';
-import path from 'path';
-import {
-  isMac,
-  isWindows,
-  isLinux,
-} from '../environment';
+import { join } from 'path';
+import macosVersion from 'macos-version';
+import { isMac, isWindows, isLinux } from '../environment';
 
-const FILE_EXTENSION = process.platform === 'win32' ? 'ico' : 'png';
+const FILE_EXTENSION = isWindows ? 'ico' : 'png';
 const INDICATOR_TRAY_PLAIN = 'tray';
 const INDICATOR_TRAY_UNREAD = 'tray-unread';
 const INDICATOR_TRAY_INDIRECT = 'tray-indirect';
 
+// TODO: Need to support i18n for a lot of the hard-coded strings in this file
 export default class TrayIcon {
   trayIcon = null;
 
@@ -24,24 +29,27 @@ export default class TrayIcon {
 
   visible = false;
 
-  trayMenuTemplate = [
+  isAppMuted = false;
+
+  mainWindow = null;
+
+  trayMenuTemplate = tray => [
     {
-      label: 'Show Ferdi',
+      label:
+        tray.mainWindow.isVisible() && tray.mainWindow.isFocused()
+          ? 'Hide Ferdi'
+          : 'Show Ferdi',
       click() {
-        if (app.mainWindow.isMinimized()) {
-          app.mainWindow.restore();
-        } else if (app.mainWindow.isVisible()) {
-          app.mainWindow.hide();
-        } else {
-          app.mainWindow.show();
-          app.mainWindow.focus();
-        }
+        tray._toggleWindow();
       },
     },
     {
-      label: 'Disable Notifications & Audio',
+      label: tray.isAppMuted
+        ? 'Enable Notifications && Audio'
+        : 'Disable Notifications && Audio',
       click() {
-        app.mainWindow.webContents.send('muteApp');
+        if (!tray.mainWindow) return;
+        tray.mainWindow.webContents.send('muteApp');
       },
     },
     {
@@ -56,22 +64,44 @@ export default class TrayIcon {
     ipcMain.on('initialAppSettings', (event, appSettings) => {
       this._updateTrayMenu(appSettings);
     });
-
     ipcMain.on('updateAppSettings', (event, appSettings) => {
       this._updateTrayMenu(appSettings);
+    });
+
+    this.mainWindow = BrowserWindow.getAllWindows()[0];
+
+    // listen to window events to be able to set correct string
+    // to tray menu ('Hide Ferdi' / 'Show Ferdi')
+    this.mainWindow.on('hide', () => {
+      this._updateTrayMenu(null);
+    });
+    this.mainWindow.on('restore', () => {
+      this._updateTrayMenu(null);
+    });
+    this.mainWindow.on('minimize', () => {
+      this._updateTrayMenu(null);
+    });
+    this.mainWindow.on('show', () => {
+      this._updateTrayMenu(null);
+    });
+    this.mainWindow.on('focus', () => {
+      this._updateTrayMenu(null);
+    });
+    this.mainWindow.on('blur', () => {
+      this._updateTrayMenu(null);
     });
   }
 
   _updateTrayMenu(appSettings) {
     if (!this.trayIcon) return;
 
-    if (appSettings.type === 'app') {
-      const { isAppMuted } = appSettings.data;
-      this.trayMenuTemplate[1].label = isAppMuted ? 'Enable Notifications && Audio' : 'Disable Notifications && Audio';
-      this.trayMenu = Menu.buildFromTemplate(this.trayMenuTemplate);
-      if (isLinux) {
-        this.trayIcon.setContextMenu(this.trayMenu);
-      }
+    if (appSettings && appSettings.type === 'app') {
+      this.isAppMuted = appSettings.data.isAppMuted; // save current state after a change
+    }
+
+    this.trayMenu = Menu.buildFromTemplate(this.trayMenuTemplate(this));
+    if (isLinux) {
+      this.trayIcon.setContextMenu(this.trayMenu);
     }
   }
 
@@ -84,23 +114,15 @@ export default class TrayIcon {
     if (this.trayIcon) return;
 
     this.trayIcon = new Tray(this._getAsset('tray', INDICATOR_TRAY_PLAIN));
-
     this.trayIcon.setToolTip('Ferdi');
 
-    this.trayMenu = Menu.buildFromTemplate(this.trayMenuTemplate);
+    this.trayMenu = Menu.buildFromTemplate(this.trayMenuTemplate(this));
     if (isLinux) {
       this.trayIcon.setContextMenu(this.trayMenu);
     }
 
     this.trayIcon.on('click', () => {
-      if (app.mainWindow.isMinimized()) {
-        app.mainWindow.restore();
-      } else if (app.mainWindow.isVisible()) {
-        app.mainWindow.hide();
-      } else {
-        app.mainWindow.show();
-        app.mainWindow.focus();
-      }
+      this._toggleWindow();
     });
 
     if (isMac || isWindows) {
@@ -109,10 +131,33 @@ export default class TrayIcon {
       });
     }
 
-    if (process.platform === 'darwin') {
-      this.themeChangeSubscriberId = systemPreferences.subscribeNotification('AppleInterfaceThemeChangedNotification', () => {
-        this._refreshIcon();
-      });
+    if (isMac) {
+      this.themeChangeSubscriberId = systemPreferences.subscribeNotification(
+        'AppleInterfaceThemeChangedNotification',
+        () => {
+          this._refreshIcon();
+        },
+      );
+    }
+  }
+
+  _toggleWindow() {
+    const mainWindow = BrowserWindow.getAllWindows()[0];
+    if (!mainWindow) return;
+
+    if (mainWindow.isMinimized()) {
+      mainWindow.restore();
+    } else if (mainWindow.isVisible() && mainWindow.isFocused()) {
+      if (isMac && mainWindow.isFullScreen()) {
+        mainWindow.once('show', () => mainWindow?.setFullScreen(true));
+        mainWindow.once('leave-full-screen', () => mainWindow?.hide());
+        mainWindow.setFullScreen(false);
+      } else {
+        mainWindow.hide();
+      }
+    } else {
+      mainWindow.show();
+      mainWindow.focus();
     }
   }
 
@@ -127,7 +172,7 @@ export default class TrayIcon {
     this.trayIcon.destroy();
     this.trayIcon = null;
 
-    if (process.platform === 'darwin' && this.themeChangeSubscriberId) {
+    if (isMac && this.themeChangeSubscriberId) {
       systemPreferences.unsubscribeNotification(this.themeChangeSubscriberId);
       this.themeChangeSubscriberId = null;
     }
@@ -152,7 +197,8 @@ export default class TrayIcon {
   _getAssetFromIndicator(indicator) {
     if (indicator === '•') {
       return INDICATOR_TRAY_INDIRECT;
-    } if (indicator !== 0) {
+    }
+    if (indicator !== 0) {
       return INDICATOR_TRAY_UNREAD;
     }
     return INDICATOR_TRAY_PLAIN;
@@ -161,11 +207,16 @@ export default class TrayIcon {
   _refreshIcon() {
     if (!this.trayIcon) return;
 
-    this.trayIcon.setImage(this._getAsset('tray', this._getAssetFromIndicator(this.indicator)));
+    this.trayIcon.setImage(
+      this._getAsset('tray', this._getAssetFromIndicator(this.indicator)),
+    );
 
-    if (process.platform === 'darwin') {
+    if (isMac) {
       this.trayIcon.setPressedImage(
-        this._getAsset('tray', `${this._getAssetFromIndicator(this.indicator)}-active`),
+        this._getAsset(
+          'tray',
+          `${this._getAssetFromIndicator(this.indicator)}-active`,
+        ),
       );
     }
   }
@@ -173,12 +224,24 @@ export default class TrayIcon {
   _getAsset(type, asset) {
     let { platform } = process;
 
-    if (platform === 'darwin' && nativeTheme.shouldUseDarkColors) {
+    if (
+      isMac &&
+      (nativeTheme.shouldUseDarkColors ||
+        macosVersion.isGreaterThanOrEqualTo('11'))
+    ) {
       platform = `${platform}-dark`;
     }
 
-    return nativeImage.createFromPath(path.join(
-      __dirname, '..', 'assets', 'images', type, platform, `${asset}.${FILE_EXTENSION}`,
-    ));
+    return nativeImage.createFromPath(
+      join(
+        __dirname,
+        '..',
+        'assets',
+        'images',
+        type,
+        platform,
+        `${asset}.${FILE_EXTENSION}`,
+      ),
+    );
   }
 }

@@ -1,10 +1,8 @@
-import { remote, shell } from 'electron';
-import fs from 'fs-extra';
-import React, { Component } from 'react';
+import { readJsonSync } from 'fs-extra';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { autorun } from 'mobx';
 import { inject, observer } from 'mobx-react';
-import path from 'path';
 
 import RecipePreviewsStore from '../../stores/RecipePreviewsStore';
 import RecipeStore from '../../stores/RecipesStore';
@@ -13,13 +11,15 @@ import UserStore from '../../stores/UserStore';
 
 import RecipesDashboard from '../../components/settings/recipes/RecipesDashboard';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
-import { FRANZ_DEV_DOCS, RECIPES_PATH } from '../../config';
+import { CUSTOM_WEBSITE_RECIPE_ID, FRANZ_DEV_DOCS } from '../../config';
+import { userDataRecipesPath } from '../../environment-remote';
+import { asarRecipesPath } from '../../helpers/asar-helpers';
 import { communityRecipesStore } from '../../features/communityRecipes';
 import RecipePreview from '../../models/RecipePreview';
+import AppStore from '../../stores/AppStore';
+import { openPath } from '../../helpers/url-helpers';
 
-const { app } = remote;
-
-export default @inject('stores', 'actions') @observer class RecipesScreen extends Component {
+class RecipesScreen extends Component {
   static propTypes = {
     params: PropTypes.shape({
       filter: PropTypes.string,
@@ -44,18 +44,16 @@ export default @inject('stores', 'actions') @observer class RecipesScreen extend
   constructor(props) {
     super(props);
 
-    this.customRecipes = fs.readJsonSync(path.join(RECIPES_PATH, 'all.json'));
+    this.customRecipes = readJsonSync(asarRecipesPath('all.json'));
   }
 
   componentDidMount() {
     this.autorunDisposer = autorun(() => {
-      const { filter } = this.props.params;
+      const { filter } = { filter: 'all', ...this.props.params };
       const { currentFilter } = this.state;
 
       if (filter === 'all' && currentFilter !== 'all') {
         this.setState({ currentFilter: 'all' });
-      } else if (filter === 'featured' && currentFilter !== 'featured') {
-        this.setState({ currentFilter: 'featured' });
       } else if (filter === 'dev' && currentFilter !== 'dev') {
         this.setState({ currentFilter: 'dev' });
       }
@@ -77,20 +75,28 @@ export default @inject('stores', 'actions') @observer class RecipesScreen extend
     }
   }
 
+  _sortByName(recipe1, recipe2) {
+    if (recipe1.name.toLowerCase() < recipe2.name.toLowerCase()) {
+      return -1;
+    }
+    if (recipe1.name.toLowerCase() > recipe2.name.toLowerCase()) {
+      return 1;
+    }
+    return 0;
+  }
 
   prepareRecipes(recipes) {
-    return recipes
-    // Filter out duplicate recipes
-      .filter((recipe, index, self) => {
-        const ids = self.map(rec => rec.id);
-        return ids.indexOf(recipe.id) === index;
+    return (
+      recipes
+        // Filter out duplicate recipes
+        .filter((recipe, index, self) => {
+          const ids = self.map(rec => rec.id);
+          return ids.indexOf(recipe.id) === index;
 
-        // Sort alphabetically
-      }).sort((a, b) => {
-        if (a.id < b.id) { return -1; }
-        if (a.id > b.id) { return 1; }
-        return 0;
-      });
+          // Sort alphabetically
+        })
+        .sort(this._sortByName)
+    );
   }
 
   // Create an array of RecipePreviews from an array of recipe objects
@@ -103,19 +109,11 @@ export default @inject('stores', 'actions') @observer class RecipesScreen extend
   }
 
   render() {
-    const {
-      recipePreviews,
-      recipes,
-      services,
-      user,
-    } = this.props.stores;
+    const { recipePreviews, recipes, services } = this.props.stores;
 
-    const {
-      app: appActions,
-      service: serviceActions,
-    } = this.props.actions;
+    const { app: appActions, service: serviceActions } = this.props.actions;
 
-    const { filter } = this.props.params;
+    const { filter } = { filter: 'all', ...this.props.params };
     let recipeFilter;
 
     if (filter === 'all') {
@@ -125,35 +123,46 @@ export default @inject('stores', 'actions') @observer class RecipesScreen extend
       ]);
     } else if (filter === 'dev') {
       recipeFilter = communityRecipesStore.communityRecipes;
-    } else {
-      recipeFilter = recipePreviews.featured;
     }
+    recipeFilter = recipeFilter.sort(this._sortByName);
 
-    const allRecipes = this.state.needle ? this.prepareRecipes([
-      // All search recipes from server
-      ...recipePreviews.searchResults,
-      // All search recipes from local recipes
-      ...this.createPreviews(
-        this.customRecipes
-          .filter(service => service.name.toLowerCase().includes(this.state.needle.toLowerCase())),
-      ),
-    ]) : recipeFilter;
+    const allRecipes = this.state.needle
+      ? this.prepareRecipes([
+          // All search recipes from server
+          ...recipePreviews.searchResults,
+          // All search recipes from local recipes
+          ...this.createPreviews(
+            this.customRecipes.filter(
+              service =>
+                service.name
+                  .toLowerCase()
+                  .includes(this.state.needle.toLowerCase()) ||
+                (service.aliases || []).some(alias =>
+                  alias.toLowerCase().includes(this.state.needle.toLowerCase()),
+                ),
+            ),
+          ),
+        ]).sort(this._sortByName)
+      : recipeFilter;
 
-    const isLoading = recipePreviews.featuredRecipePreviewsRequest.isExecuting
-      || recipePreviews.allRecipePreviewsRequest.isExecuting
-      || recipes.installRecipeRequest.isExecuting
-      || recipePreviews.searchRecipePreviewsRequest.isExecuting;
+    const customWebsiteRecipe = recipePreviews.all.find(
+      service => service.id === CUSTOM_WEBSITE_RECIPE_ID,
+    );
 
-    const recipeDirectory = path.join(app.getPath('userData'), 'recipes', 'dev');
+    const isLoading =
+      recipePreviews.allRecipePreviewsRequest.isExecuting ||
+      recipes.installRecipeRequest.isExecuting ||
+      recipePreviews.searchRecipePreviewsRequest.isExecuting;
+
+    const recipeDirectory = userDataRecipesPath('dev');
 
     return (
       <ErrorBoundary>
         <RecipesDashboard
           recipes={allRecipes}
+          customWebsiteRecipe={customWebsiteRecipe}
           isLoading={isLoading}
           addedServiceCount={services.all.length}
-          isPremium={user.data.isPremium}
-          hasLoadedRecipes={recipePreviews.featuredRecipePreviewsRequest.wasExecuted}
           showAddServiceInterface={serviceActions.showAddServiceInterface}
           searchRecipes={e => this.searchRecipes(e)}
           resetSearch={() => this.resetSearch()}
@@ -161,22 +170,17 @@ export default @inject('stores', 'actions') @observer class RecipesScreen extend
           serviceStatus={services.actionStatus}
           recipeFilter={filter}
           recipeDirectory={recipeDirectory}
-          openRecipeDirectory={async () => {
-            await fs.ensureDir(recipeDirectory);
-            shell.openItem(recipeDirectory);
-          }}
-          openDevDocs={() => {
-            appActions.openExternalUrl({ url: FRANZ_DEV_DOCS });
-          }}
-          isCommunityRecipesIncludedInCurrentPlan={communityRecipesStore.isCommunityRecipesIncludedInCurrentPlan}
-          isUserPremiumUser={user.isPremium}
+          openRecipeDirectory={() => openPath(recipeDirectory)}
+          openDevDocs={() =>
+            appActions.openExternalUrl({ url: FRANZ_DEV_DOCS })
+          }
         />
       </ErrorBoundary>
     );
   }
 }
 
-RecipesScreen.wrappedComponent.propTypes = {
+RecipesScreen.propTypes = {
   stores: PropTypes.shape({
     recipePreviews: PropTypes.instanceOf(RecipePreviewsStore).isRequired,
     recipes: PropTypes.instanceOf(RecipeStore).isRequired,
@@ -184,14 +188,12 @@ RecipesScreen.wrappedComponent.propTypes = {
     user: PropTypes.instanceOf(UserStore).isRequired,
   }).isRequired,
   actions: PropTypes.shape({
-    app: PropTypes.shape({
-      openExternalUrl: PropTypes.func.isRequired,
-    }).isRequired,
-    service: PropTypes.shape({
-      showAddServiceInterface: PropTypes.func.isRequired,
-    }).isRequired,
+    app: PropTypes.instanceOf(AppStore).isRequired,
+    service: PropTypes.instanceOf(ServiceStore).isRequired,
     recipePreview: PropTypes.shape({
       search: PropTypes.func.isRequired,
     }).isRequired,
   }).isRequired,
 };
+
+export default inject('stores', 'actions')(observer(RecipesScreen));

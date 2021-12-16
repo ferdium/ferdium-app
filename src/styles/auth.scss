@@ -19,6 +19,10 @@
     a { color: $dark-theme-text-color; }
   }
 
+  .welcome__featured-services {
+    background: $dark-theme-gray-dark;
+  }
+
   .legal {
     color: $dark-theme-text-color;
 
@@ -36,7 +40,7 @@
 }
 
 .auth {
-  background: $theme-brand-gradient;
+  background: $dark-theme-gray-darkest;
   display: flex;
   justify-content: center;
 
@@ -50,7 +54,6 @@
   .auth__container {
     background: #FFF;
     border-radius: $theme-border-radius;
-    box-shadow: 0 0 50px rgba(black, .2);
     height: auto;
     margin: 40px auto 0;
     position: relative;
@@ -131,7 +134,7 @@
     img { width: 65px; }
   }
 
-  .auth__letter { margin-bottom: 30px; }
+  .auth__letter { margin-bottom: 30px; text-align: left; }
   .scroll-container { z-index: 10; }
   .info-bar { position: absolute; }
 

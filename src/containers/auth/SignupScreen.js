@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 
@@ -8,22 +8,13 @@ import FeaturesStore from '../../stores/FeaturesStore';
 
 import { globalError as globalErrorPropType } from '../../prop-types';
 
-export default @inject('stores', 'actions') @observer class SignupScreen extends Component {
+class SignupScreen extends Component {
   static propTypes = {
     error: globalErrorPropType.isRequired,
   };
 
   onSignup(values) {
-    const { actions, stores } = this.props;
-
-    const { canSkipTrial, defaultTrialPlan, pricingConfig } = stores.features.anonymousFeatures;
-
-    if (!canSkipTrial) {
-      Object.assign(values, {
-        plan: defaultTrialPlan,
-        currency: pricingConfig.currencyID,
-      });
-    }
+    const { actions } = this.props;
 
     actions.user.signup(values);
   }
@@ -36,21 +27,20 @@ export default @inject('stores', 'actions') @observer class SignupScreen extends
         onSubmit={values => this.onSignup(values)}
         isSubmitting={stores.user.signupRequest.isExecuting}
         loginRoute={stores.user.loginRoute}
-        changeServerRoute={stores.user.changeServerRoute}
         error={error}
       />
     );
   }
 }
 
-SignupScreen.wrappedComponent.propTypes = {
+SignupScreen.propTypes = {
   actions: PropTypes.shape({
-    user: PropTypes.shape({
-      signup: PropTypes.func.isRequired,
-    }).isRequired,
+    user: PropTypes.instanceOf(UserStore).isRequired,
   }).isRequired,
   stores: PropTypes.shape({
     user: PropTypes.instanceOf(UserStore).isRequired,
     features: PropTypes.instanceOf(FeaturesStore).isRequired,
   }).isRequired,
 };
+
+export default inject('stores', 'actions')(observer(SignupScreen));

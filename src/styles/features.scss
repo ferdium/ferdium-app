@@ -1,0 +1,28 @@
+.theme__dark .quick-switch {
+  background: $dark-theme-gray-darkest;
+
+  .service {
+    background: $dark-theme-gray-dark;
+    color: $dark-theme-gray-lightest;
+    border: inherit;
+  }
+
+  .active {
+    background: $theme-brand-primary;
+  }
+}
+
+.quick-switch {
+  .service {
+    background: $theme-gray-lighter;
+    border: inherit;
+  }
+
+  .active {
+    background: $theme-brand-primary;
+  }
+}
+
+.theme__dark .publish-debug, .theme__dark .nightly-builds {
+  background: $dark-theme-gray-darkest;
+}

@@ -1,9 +1,3 @@
-$mdi-font-path: '../node_modules/mdi/fonts';
-@if $env == development {
-  $mdi-font-path: '../../node_modules/mdi/fonts';
-}
-
-@import './node_modules/mdi/scss/materialdesignicons.scss';
 @import './node_modules/electron-react-titlebar/assets/style';
 
 // modules
@@ -22,15 +16,12 @@ $mdi-font-path: '../node_modules/mdi/fonts';
 @import './tooltip.scss';
 @import './info-bar.scss';
 @import './status-bar-target-url.scss';
-@import './animations.scss';
 @import './infobox.scss';
 @import './badge.scss';
-@import './subscription.scss';
-@import './subscription-popup.scss';
 @import './content-tabs.scss';
 @import './invite.scss';
 @import './title-bar.scss';
-@import './quick-switch.scss';
+@import './features.scss';
 
 // form
 @import './input.scss';

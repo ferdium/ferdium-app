@@ -5,11 +5,15 @@ import CachedRequest from './lib/CachedRequest';
 import Request from './lib/Request';
 
 export default class RecipePreviewsStore extends Store {
-  @observable allRecipePreviewsRequest = new CachedRequest(this.api.recipePreviews, 'all');
+  @observable allRecipePreviewsRequest = new CachedRequest(
+    this.api.recipePreviews,
+    'all',
+  );
 
-  @observable featuredRecipePreviewsRequest = new CachedRequest(this.api.recipePreviews, 'featured');
-
-  @observable searchRecipePreviewsRequest = new Request(this.api.recipePreviews, 'search');
+  @observable searchRecipePreviewsRequest = new Request(
+    this.api.recipePreviews,
+    'search',
+  );
 
   constructor(...args) {
     super(...args);
@@ -20,10 +24,6 @@ export default class RecipePreviewsStore extends Store {
 
   @computed get all() {
     return this.allRecipePreviewsRequest.execute().result || [];
-  }
-
-  @computed get featured() {
-    return this.featuredRecipePreviewsRequest.execute().result || [];
   }
 
   @computed get searchResults() {

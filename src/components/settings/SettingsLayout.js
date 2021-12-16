@@ -1,38 +1,52 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
+import { defineMessages, injectIntl } from 'react-intl';
 
+import { mdiClose } from '@mdi/js';
 import ErrorBoundary from '../util/ErrorBoundary';
 import { oneOrManyChildElements } from '../../prop-types';
 import Appear from '../ui/effects/Appear';
+import { Icon } from '../ui/icon';
 
-export default @observer class SettingsLayout extends Component {
+const messages = defineMessages({
+  closeSettings: {
+    id: 'settings.app.closeSettings',
+    defaultMessage: 'Close settings',
+  },
+});
+
+class SettingsLayout extends Component {
   static propTypes = {
     navigation: PropTypes.element.isRequired,
     children: oneOrManyChildElements.isRequired,
     closeSettings: PropTypes.func.isRequired,
   };
 
-  componentWillMount() {
+  componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown.bind(this), false);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleKeyDown.bind(this), false);
+    document.removeEventListener(
+      'keydown',
+      // eslint-disable-next-line unicorn/no-invalid-remove-event-listener
+      this.handleKeyDown.bind(this),
+      false,
+    );
   }
 
   handleKeyDown(e) {
-    if (e.keyCode === 27) { // escape key
+    if (e.keyCode === 27) {
+      // escape key
       this.props.closeSettings();
     }
   }
 
   render() {
-    const {
-      navigation,
-      children,
-      closeSettings,
-    } = this.props;
+    const { navigation, children, closeSettings } = this.props;
+
+    const { intl } = this.props;
 
     return (
       <Appear transitionName="fadeIn-fast">
@@ -42,15 +56,19 @@ export default @observer class SettingsLayout extends Component {
               type="button"
               className="settings-wrapper__action"
               onClick={closeSettings}
+              aria-label={intl.formatMessage(messages.closeSettings)}
             />
             <div className="settings franz-form">
               {navigation}
               {children}
               <button
                 type="button"
-                className="settings__close mdi mdi-close"
+                className="settings__close"
                 onClick={closeSettings}
-              />
+                aria-label={intl.formatMessage(messages.closeSettings)}
+              >
+                <Icon icon={mdiClose} size={1.35} />
+              </button>
             </div>
           </ErrorBoundary>
         </div>
@@ -58,3 +76,5 @@ export default @observer class SettingsLayout extends Component {
     );
   }
 }
+
+export default injectIntl(observer(SettingsLayout));

@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react';
 import Loader from 'react-loader';
 import classnames from 'classnames';
 
-export default @inject('stores') @observer class Button extends Component {
+class Button extends Component {
   static propTypes = {
     className: PropTypes.string,
     label: PropTypes.string.isRequired,
@@ -26,14 +26,12 @@ export default @inject('stores') @observer class Button extends Component {
   static defaultProps = {
     className: null,
     disabled: false,
-    onClick: () => { },
+    onClick: () => {},
     type: 'button',
     buttonType: '',
     loaded: true,
     htmlForm: '',
   };
-
-  element = null;
 
   render() {
     const {
@@ -76,7 +74,11 @@ export default @inject('stores') @observer class Button extends Component {
           loaded={loaded}
           lines={10}
           scale={0.4}
-          color={buttonType !== 'secondary' ? '#FFF' : this.props.stores.settings.app.accentColor}
+          color={
+            buttonType !== 'secondary'
+              ? '#FFF'
+              : this.props.stores.settings.app.accentColor
+          }
           component="span"
         />
         {label}
@@ -85,3 +87,5 @@ export default @inject('stores') @observer class Button extends Component {
     );
   }
 }
+
+export default inject('stores')(observer(Button));

@@ -1,11 +1,16 @@
-import React, { Component } from 'react';
+import { Children, Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
 
 import { oneOrManyChildElements } from '../../../prop-types';
 
-export default @observer class Tab extends Component {
+class Tab extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { active: this.props.active };
+  }
+
   static propTypes = {
     children: oneOrManyChildElements.isRequired,
     active: PropTypes.number,
@@ -14,10 +19,6 @@ export default @observer class Tab extends Component {
   static defaultProps = {
     active: 0,
   };
-
-  componentWillMount() {
-    this.setState({ active: this.props.active });
-  }
 
   switchTab(index) {
     this.setState({ active: index });
@@ -34,9 +35,9 @@ export default @observer class Tab extends Component {
     return (
       <div className="content-tabs">
         <div className="content-tabs__tabs">
-          {React.Children.map(children, (child, i) => (
+          {Children.map(children, (child, i) => (
             <button
-              key={i}
+              key="{i}"
               className={classnames({
                 'content-tabs__item': true,
                 'is-active': this.state.active === i,
@@ -49,9 +50,9 @@ export default @observer class Tab extends Component {
           ))}
         </div>
         <div className="content-tabs__content">
-          {React.Children.map(children, (child, i) => (
+          {Children.map(children, (child, i) => (
             <div
-              key={i}
+              key="{i}"
               className={classnames({
                 'content-tabs__item': true,
                 'is-active': this.state.active === i,
@@ -66,3 +67,5 @@ export default @observer class Tab extends Component {
     );
   }
 }
+
+export default observer(Tab);

@@ -1,23 +1,27 @@
 import { autorun, computed, observable } from 'mobx';
 import { ipcRenderer } from 'electron';
+import { webContents } from '@electron/remote';
 import normalizeUrl from 'normalize-url';
-import path from 'path';
+import { join } from 'path';
 
-import userAgent from '../helpers/userAgent-helpers';
+import { todosStore } from '../features/todos';
+import { isValidExternalURL } from '../helpers/url-helpers';
+import UserAgent from './UserAgent';
+import { DEFAULT_SERVICE_ORDER } from '../config';
+import {
+  ifUndefinedString,
+  ifUndefinedBoolean,
+  ifUndefinedNumber,
+} from '../jsUtils';
 
 const debug = require('debug')('Ferdi:Service');
-
-export const RESTRICTION_TYPES = {
-  SERVICE_LIMIT: 0,
-  CUSTOM_URL: 1,
-};
 
 export default class Service {
   id = '';
 
-  recipe = '';
+  recipe = null;
 
-  webview = null;
+  _webview = null;
 
   timer = null;
 
@@ -33,13 +37,13 @@ export default class Service {
 
   @observable unreadIndirectMessageCount = 0;
 
-  @observable order = 99;
+  @observable dialogTitle = '';
+
+  @observable order = DEFAULT_SERVICE_ORDER;
 
   @observable isEnabled = true;
 
   @observable isMuted = false;
-
-  @observable isHibernating = false;
 
   @observable team = '';
 
@@ -77,78 +81,105 @@ export default class Service {
 
   @observable restrictionType = null;
 
-  @observable disableHibernation = false;
+  @observable isHibernationEnabled = false;
+
+  @observable isWakeUpEnabled = true;
+
+  @observable isHibernationRequested = false;
+
+  @observable onlyShowFavoritesInUnreadCount = false;
 
   @observable lastUsed = Date.now(); // timestamp
 
-  @observable lastPoll = null;
+  @observable lastHibernated = null; // timestamp
 
-  @observable lastPollAnswer = null;
+  @observable lastPoll = Date.now();
+
+  @observable lastPollAnswer = Date.now();
 
   @observable lostRecipeConnection = false;
 
   @observable lostRecipeReloadAttempt = 0;
 
-  @observable chromelessUserAgent = false;
+  @observable userAgentModel = null;
 
   constructor(data, recipe) {
     if (!data) {
-      console.error('Service config not valid');
-      return null;
+      throw new Error('Service config not valid');
     }
 
     if (!recipe) {
-      console.error('Service recipe not valid');
-      return null;
+      throw new Error('Service recipe not valid');
     }
-
-    this.id = data.id || this.id;
-    this.name = data.name || this.name;
-    this.team = data.team || this.team;
-    this.customUrl = data.customUrl || this.customUrl;
-    // this.customIconUrl = data.customIconUrl || this.customIconUrl;
-    this.iconUrl = data.iconUrl || this.iconUrl;
-
-    this.order = data.order !== undefined
-      ? data.order : this.order;
-
-    this.isEnabled = data.isEnabled !== undefined
-      ? data.isEnabled : this.isEnabled;
-
-    this.isNotificationEnabled = data.isNotificationEnabled !== undefined
-      ? data.isNotificationEnabled : this.isNotificationEnabled;
-
-    this.isBadgeEnabled = data.isBadgeEnabled !== undefined
-      ? data.isBadgeEnabled : this.isBadgeEnabled;
-
-    this.isIndirectMessageBadgeEnabled = data.isIndirectMessageBadgeEnabled !== undefined
-      ? data.isIndirectMessageBadgeEnabled : this.isIndirectMessageBadgeEnabled;
-
-    this.isMuted = data.isMuted !== undefined ? data.isMuted : this.isMuted;
-
-    this.isDarkModeEnabled = data.isDarkModeEnabled !== undefined ? data.isDarkModeEnabled : this.isDarkModeEnabled;
-
-    this.darkReaderSettings = data.darkReaderSettings !== undefined ? data.darkReaderSettings : this.darkReaderSettings;
-
-    this.hasCustomUploadedIcon = data.hasCustomIcon !== undefined ? data.hasCustomIcon : this.hasCustomUploadedIcon;
-
-    this.proxy = data.proxy !== undefined ? data.proxy : this.proxy;
-
-    this.spellcheckerLanguage = data.spellcheckerLanguage !== undefined ? data.spellcheckerLanguage : this.spellcheckerLanguage;
-
-    this.disableHibernation = data.disableHibernation !== undefined ? data.disableHibernation : this.disableHibernation;
 
     this.recipe = recipe;
 
+    this.userAgentModel = new UserAgent(recipe.overrideUserAgent);
+
+    this.id = ifUndefinedString(data.id, this.id);
+    this.name = ifUndefinedString(data.name, this.name);
+    this.team = ifUndefinedString(data.team, this.team);
+    this.customUrl = ifUndefinedString(data.customUrl, this.customUrl);
+    // this.customIconUrl = ifUndefinedString(data.customIconUrl, this.customIconUrl);
+    this.iconUrl = ifUndefinedString(data.iconUrl, this.iconUrl);
+
+    this.order = ifUndefinedNumber(data.order, this.order);
+    this.isEnabled = ifUndefinedBoolean(data.isEnabled, this.isEnabled);
+    this.isNotificationEnabled = ifUndefinedBoolean(
+      data.isNotificationEnabled,
+      this.isNotificationEnabled,
+    );
+    this.isBadgeEnabled = ifUndefinedBoolean(
+      data.isBadgeEnabled,
+      this.isBadgeEnabled,
+    );
+    this.isIndirectMessageBadgeEnabled = ifUndefinedBoolean(
+      data.isIndirectMessageBadgeEnabled,
+      this.isIndirectMessageBadgeEnabled,
+    );
+    this.isMuted = ifUndefinedBoolean(data.isMuted, this.isMuted);
+    this.isDarkModeEnabled = ifUndefinedBoolean(
+      data.isDarkModeEnabled,
+      this.isDarkModeEnabled,
+    );
+    this.darkReaderSettings = ifUndefinedString(
+      data.darkReaderSettings,
+      this.darkReaderSettings,
+    );
+    this.hasCustomUploadedIcon = ifUndefinedBoolean(
+      data.hasCustomIcon,
+      this.hasCustomUploadedIcon,
+    );
+    this.onlyShowFavoritesInUnreadCount = ifUndefinedBoolean(
+      data.onlyShowFavoritesInUnreadCount,
+      this.onlyShowFavoritesInUnreadCount,
+    );
+    this.proxy = ifUndefinedString(data.proxy, this.proxy);
+    this.spellcheckerLanguage = ifUndefinedString(
+      data.spellcheckerLanguage,
+      this.spellcheckerLanguage,
+    );
+    this.userAgentPref = ifUndefinedString(
+      data.userAgentPref,
+      this.userAgentPref,
+    );
+    this.isHibernationEnabled = ifUndefinedBoolean(
+      data.isHibernationEnabled,
+      this.isHibernationEnabled,
+    );
+    this.isWakeUpEnabled = ifUndefinedBoolean(
+      data.isWakeUpEnabled,
+      this.isWakeUpEnabled,
+    );
+
     // Check if "Hibernate on Startup" is enabled and hibernate all services except active one
-    const {
-      hibernate,
-      hibernateOnStartup,
-    } = window.ferdi.stores.settings.app;
+    const { hibernateOnStartup } = window['ferdi'].stores.settings.app;
     // The service store is probably not loaded yet so we need to use localStorage data to get active service
-    const isActive = window.localStorage.service && JSON.parse(window.localStorage.service).activeService === this.id;
-    if (hibernate && hibernateOnStartup && !isActive) {
-      this.isHibernating = true;
+    const isActive =
+      window.localStorage.service &&
+      JSON.parse(window.localStorage.service).activeService === this.id;
+    if (hibernateOnStartup && !isActive) {
+      this.isHibernationRequested = true;
     }
 
     autorun(() => {
@@ -174,16 +205,47 @@ export default class Service {
       team: this.team,
       url: this.url,
       hasCustomIcon: this.hasCustomIcon,
+      onlyShowFavoritesInUnreadCount: this.onlyShowFavoritesInUnreadCount,
     };
+  }
+
+  @computed get isTodosService() {
+    return this.recipe.id === todosStore.todoRecipeId;
+  }
+
+  @computed get canHibernate() {
+    return this.isHibernationEnabled;
+  }
+
+  @computed get isHibernating() {
+    return this.canHibernate && this.isHibernationRequested;
+  }
+
+  get webview() {
+    if (this.isTodosService) {
+      return todosStore.webview;
+    }
+
+    return this._webview;
+  }
+
+  set webview(webview) {
+    this._webview = webview;
   }
 
   @computed get url() {
     if (this.recipe.hasCustomUrl && this.customUrl) {
       let url;
       try {
-        url = normalizeUrl(this.customUrl, { stripWWW: false, removeTrailingSlash: false });
-      } catch (err) {
-        console.error(`Service (${this.recipe.name}): '${this.customUrl}' is not a valid Url.`);
+        url = normalizeUrl(this.customUrl, {
+          stripAuthentication: false,
+          stripWWW: false,
+          removeTrailingSlash: false,
+        });
+      } catch {
+        console.error(
+          `Service (${this.recipe.name}): '${this.customUrl}' is not a valid Url.`,
+        );
       }
 
       if (typeof this.recipe.buildUrl === 'function') {
@@ -205,31 +267,41 @@ export default class Service {
       return this.iconUrl;
     }
 
-    return path.join(this.recipe.path, 'icon.svg');
+    return join(this.recipe.path, 'icon.svg');
   }
 
   @computed get hasCustomIcon() {
     return Boolean(this.iconUrl);
   }
 
-  @computed get iconPNG() {
-    return path.join(this.recipe.path, 'icon.png');
-  }
-
   @computed get userAgent() {
-    let ua = userAgent(this.chromelessUserAgent);
-    if (typeof this.recipe.overrideUserAgent === 'function') {
-      ua = this.recipe.overrideUserAgent();
-    }
-
-    return ua;
+    return this.userAgentModel.userAgent;
   }
 
+  @computed get userAgentPref() {
+    return this.userAgentModel.userAgentPref;
+  }
+
+  set userAgentPref(pref) {
+    this.userAgentModel.userAgentPref = pref;
+  }
+
+  @computed get defaultUserAgent() {
+    return this.userAgentModel.defaultUserAgent;
+  }
+
+  @computed get partition() {
+    return this.recipe.partition || `persist:service-${this.id}`;
+  }
 
   initializeWebViewEvents({ handleIPCMessage, openWindow, stores }) {
-    const webContents = this.webview.getWebContents();
+    const webviewWebContents = webContents.fromId(
+      this.webview.getWebContentsId(),
+    );
 
-    // If the recipe has implemented modifyRequestHeaders,
+    this.userAgentModel.setWebviewReference(this.webview);
+
+    // If the recipe has implemented 'modifyRequestHeaders',
     // Send those headers to ipcMain so that it can be set in session
     if (typeof this.recipe.modifyRequestHeaders === 'function') {
       const modifiedRequestHeaders = this.recipe.modifyRequestHeaders();
@@ -242,47 +314,63 @@ export default class Service {
       debug(this.name, 'modifyRequestHeaders is not defined in the recipe');
     }
 
-    const handleUserAgent = (url, forwardingHack = false) => {
-      if (url.startsWith('https://accounts.google.com')) {
-        if (!this.chromelessUserAgent) {
-          debug('Setting user agent to chromeless for url', url);
-          this.webview.setUserAgent(userAgent(true));
-          if (forwardingHack) {
-            this.webview.loadURL(url);
-          }
-          this.chromelessUserAgent = true;
-        }
-      } else if (this.chromelessUserAgent) {
-        debug('Setting user agent to contain chrome');
-        this.webview.setUserAgent(this.userAgent);
-        this.chromelessUserAgent = false;
-      }
-    };
+    // if the recipe has implemented 'knownCertificateHosts'
+    if (typeof this.recipe.knownCertificateHosts === 'function') {
+      const knownHosts = this.recipe.knownCertificateHosts();
+      debug(this.name, 'knownCertificateHosts', knownHosts);
+      ipcRenderer.send('knownCertificateHosts', {
+        knownHosts,
+        serviceId: this.id,
+      });
+    } else {
+      debug(this.name, 'knownCertificateHosts is not defined in the recipe');
+    }
 
-    this.webview.addEventListener('ipc-message', e => handleIPCMessage({
-      serviceId: this.id,
-      channel: e.channel,
-      args: e.args,
-    }));
-
-    this.webview.addEventListener('new-window', (event, url, frameName, options) => {
-      debug('new-window', event, url, frameName, options);
-      if (event.disposition === 'foreground-tab') {
-        ipcRenderer.send('open-browser-window', event, this.id);
+    this.webview.addEventListener('ipc-message', async e => {
+      if (e.channel === 'inject-js-unsafe') {
+        await Promise.all(
+          e.args.map(script =>
+            this.webview.executeJavaScript(
+              `"use strict"; (() => { ${script} })();`,
+            ),
+          ),
+        );
       } else {
-        openWindow({
-          event,
-          url,
-          frameName,
-          options,
+        handleIPCMessage({
+          serviceId: this.id,
+          channel: e.channel,
+          args: e.args,
         });
       }
     });
 
+    this.webview.addEventListener(
+      'new-window',
+      (event, url, frameName, options) => {
+        debug('new-window', event, url, frameName, options);
+        if (!isValidExternalURL(event.url)) {
+          return;
+        }
+        if (
+          event.disposition === 'foreground-tab' ||
+          event.disposition === 'background-tab'
+        ) {
+          openWindow({
+            event,
+            url,
+            frameName,
+            options,
+          });
+        } else {
+          ipcRenderer.send('open-browser-window', {
+            url: event.url,
+            serviceId: this.id,
+          });
+        }
+      },
+    );
 
-    this.webview.addEventListener('will-navigate', event => handleUserAgent(event.url, true));
-
-    this.webview.addEventListener('did-start-loading', (event) => {
+    this.webview.addEventListener('did-start-loading', event => {
       debug('Did start load', this.name, event);
 
       this.hasCrashed = false;
@@ -299,14 +387,15 @@ export default class Service {
     };
 
     this.webview.addEventListener('did-frame-finish-load', didLoad.bind(this));
-    this.webview.addEventListener('did-navigate', (event) => {
-      handleUserAgent(event.url);
-      didLoad();
-    });
+    this.webview.addEventListener('did-navigate', didLoad.bind(this));
 
-    this.webview.addEventListener('did-fail-load', (event) => {
+    this.webview.addEventListener('did-fail-load', event => {
       debug('Service failed to load', this.name, event);
-      if (event.isMainFrame && event.errorCode !== -21 && event.errorCode !== -3) {
+      if (
+        event.isMainFrame &&
+        event.errorCode !== -21 &&
+        event.errorCode !== -3
+      ) {
         this.isError = true;
         this.errorMessage = event.errorDescription;
         this.isLoading = false;
@@ -318,14 +407,19 @@ export default class Service {
       this.hasCrashed = true;
     });
 
-    webContents.on('login', (event, request, authInfo, callback) => {
+    this.webview.addEventListener('found-in-page', ({ result }) => {
+      debug('Found in page', result);
+      this.webview.send('found-in-page', result);
+    });
+
+    webviewWebContents.on('login', (event, request, authInfo, callback) => {
       // const authCallback = callback;
       debug('browser login event', authInfo);
       event.preventDefault();
 
       if (authInfo.isProxy && authInfo.scheme === 'basic') {
         debug('Sending service echo ping');
-        webContents.send('get-service-id');
+        webviewWebContents.send('get-service-id');
 
         debug('Received service id', this.id);
 
@@ -343,12 +437,12 @@ export default class Service {
 
   initializeWebViewListener() {
     if (this.webview && this.recipe.events) {
-      Object.keys(this.recipe.events).forEach((eventName) => {
+      for (const eventName of Object.keys(this.recipe.events)) {
         const eventHandler = this.recipe[this.recipe.events[eventName]];
         if (typeof eventHandler === 'function') {
           this.webview.addEventListener(eventName, eventHandler);
         }
-      });
+      }
     }
   }
 
