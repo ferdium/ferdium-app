@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import { Router, Route, IndexRedirect } from 'react-router';
 
@@ -30,9 +29,14 @@ import { WORKSPACES_ROUTES } from './features/workspaces/constants';
 
 import SettingsStore from './stores/SettingsStore';
 
-@inject('stores', 'actions')
-@observer
-class Routes extends Component {
+type Props = {
+  stores: {
+    settings: typeof SettingsStore;
+  };
+  history: any;
+};
+
+class Routes extends Component<Props> {
   render() {
     const { locked } = this.props.stores.settings.app;
 
@@ -88,11 +92,4 @@ class Routes extends Component {
   }
 }
 
-Routes.wrappedComponent.propTypes = {
-  stores: PropTypes.shape({
-    settings: PropTypes.instanceOf(SettingsStore).isRequired,
-  }).isRequired,
-  history: PropTypes.any.isRequired,
-};
-
-export default Routes;
+export default inject('stores', 'actions')(observer(Routes));

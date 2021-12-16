@@ -34,7 +34,6 @@ const styles = theme => ({
     width: '80%',
     maxWidth: 600,
     background: theme.styleTypes.primary.contrast,
-    color: theme.styleTypes.primary.accent,
     paddingTop: 30,
   },
   headline: {
@@ -51,9 +50,6 @@ const styles = theme => ({
   service: {
     background: theme.styleTypes.primary.contrast,
     color: theme.colorText,
-    borderColor: theme.styleTypes.primary.accent,
-    borderStyle: 'solid',
-    borderWidth: 1,
     borderRadius: 6,
     padding: '3px 25px',
     marginBottom: 10,
@@ -63,13 +59,11 @@ const styles = theme => ({
       marginBottom: 0,
     },
     '&:hover': {
-      background: theme.styleTypes.primary.accent,
-      color: theme.styleTypes.primary.contrast,
       cursor: 'pointer',
     },
   },
   activeService: {
-    background: theme.styleTypes.primary.accent,
+    background: `${theme.styleTypes.primary.accent} !important`,
     color: theme.styleTypes.primary.contrast,
     cursor: 'pointer',
   },
@@ -81,9 +75,6 @@ const styles = theme => ({
   },
 });
 
-@injectSheet(styles)
-@inject('stores', 'actions')
-@observer
 class QuickSwitchModal extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -98,8 +89,6 @@ class QuickSwitchModal extends Component {
   ARROW_DOWN = 40;
 
   ARROW_UP = 38;
-
-  SHIFT = 16;
 
   ENTER = 13;
 
@@ -149,7 +138,7 @@ class QuickSwitchModal extends Component {
           service.name.toLowerCase().search(this.state.search.toLowerCase()) !==
           -1,
       );
-    } else {
+    } else if (this.props.stores.services.allDisplayed.length > 0) {
       // Add the currently active service first
       const currentService = this.props.stores.services.active;
       if (currentService) {
@@ -351,13 +340,18 @@ class QuickSwitchModal extends Component {
   }
 }
 
-QuickSwitchModal.wrappedComponent.propTypes = {
+QuickSwitchModal.propTypes = {
   stores: PropTypes.shape({
     services: PropTypes.instanceOf(ServicesStore).isRequired,
   }).isRequired,
   actions: PropTypes.shape({
     service: PropTypes.instanceOf(ServicesStore).isRequired,
   }).isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
-export default injectIntl(QuickSwitchModal);
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(
+    inject('stores', 'actions')(observer(QuickSwitchModal)),
+  ),
+);

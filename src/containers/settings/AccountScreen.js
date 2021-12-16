@@ -12,8 +12,6 @@ import ErrorBoundary from '../../components/util/ErrorBoundary';
 import { LIVE_FRANZ_API } from '../../config';
 import { WEBSITE } from '../../environment-remote';
 
-@inject('stores', 'actions')
-@observer
 class AccountScreen extends Component {
   onCloseWindow() {
     const { user, features } = this.props.stores;
@@ -74,7 +72,7 @@ class AccountScreen extends Component {
   }
 }
 
-AccountScreen.wrappedComponent.propTypes = {
+AccountScreen.propTypes = {
   stores: PropTypes.shape({
     user: PropTypes.instanceOf(UserStore).isRequired,
     features: PropTypes.instanceOf(FeaturesStore).isRequired,
@@ -87,4 +85,4 @@ AccountScreen.wrappedComponent.propTypes = {
   }).isRequired,
 };
 
-export default AccountScreen;
+export default inject('stores', 'actions')(observer(AccountScreen));

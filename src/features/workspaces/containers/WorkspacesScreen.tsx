@@ -17,8 +17,6 @@ type Props = {
   };
 };
 
-@inject('stores', 'actions')
-@observer
 class WorkspacesScreen extends Component<Props> {
   render() {
     const { actions } = this.props;
@@ -38,4 +36,4 @@ class WorkspacesScreen extends Component<Props> {
   }
 }
 
-export default WorkspacesScreen;
+export default inject('stores', 'actions')(observer(WorkspacesScreen));

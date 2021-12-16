@@ -38,7 +38,6 @@ function generateAccentStyle(accentColorStr) {
     .theme__dark .app .sidebar .sidebar__button.is-active,
     .sidebar .sidebar__button.is-muted,
     .sidebar .sidebar__button.is-active,
-    .tab-item.is-active,
     .settings .account .invoices .invoices__action button,
     .settings-navigation .settings-navigation__link.is-active .badge,
     a.link,
@@ -56,12 +55,10 @@ function generateAccentStyle(accentColorStr) {
     .settings-navigation .settings-navigation__link.is-active,
     a.button,
     button.button,
-    .auth,
     .info-bar,
     .info-bar.info-bar--primary,
     .infobox.infobox--primary,
     .theme__dark .badge.badge--primary,
-    .theme__dark,
     .badge.badge--primary,
     .content-tabs .content-tabs__tabs .content-tabs__item.is-active,
     #electron-app-title-bar .toolbar-dropdown:not(.open) > .toolbar-button > button:hover,
@@ -80,7 +77,7 @@ function generateAccentStyle(accentColorStr) {
       border-right-color: ${accentColorStr};
     }
 
-    .franz-form .franz-form__radio.is-selected {
+    .franz-form .franz-form__radio.is-selected, .tab-item.is-active {
       border-color: ${accentColorStr};
     }
 
@@ -109,12 +106,17 @@ function generateAccentStyle(accentColorStr) {
     }
 
     .tab-item.is-active {
-      background: ${accentColor.lighten(0.35).hex()};
+      background: ${accentColor.lightness(90).hex()};
     }
   `;
 }
 
-function generateServiceRibbonWidthStyle(widthStr, iconSizeStr, vertical, isLabelEnabled) {
+function generateServiceRibbonWidthStyle(
+  widthStr,
+  iconSizeStr,
+  vertical,
+  isLabelEnabled,
+) {
   const width = Number(widthStr);
   const iconSize = Number(iconSizeStr) - iconSizeBias;
   let fontSize = 11;
@@ -122,33 +124,33 @@ function generateServiceRibbonWidthStyle(widthStr, iconSizeStr, vertical, isLabe
   let sidebarSizeBias = 22;
   const tabItemWidthBias = 2;
 
-  switch(width){
-    case (35): 
+  switch (width) {
+    case 35:
       fontSize = 9;
       tabItemHeightBias = 25;
       sidebarSizeBias = 48;
       break;
-    case (45):
-        fontSize = 10;
-        tabItemHeightBias = 21;
-        sidebarSizeBias = 44;
-        break;
-    case (55):
+    case 45:
+      fontSize = 10;
+      tabItemHeightBias = 21;
+      sidebarSizeBias = 44;
+      break;
+    case 55:
       fontSize = 11;
       tabItemHeightBias = 13;
       sidebarSizeBias = 37;
       break;
-    case (80):
+    case 80:
       fontSize = 11;
       tabItemHeightBias = 3;
       sidebarSizeBias = 27;
       break;
-    case (90):
+    case 90:
       fontSize = 12;
       tabItemHeightBias = 0;
       sidebarSizeBias = 25;
       break;
-    case (100):
+    case 100:
       fontSize = 13;
       tabItemHeightBias = 2;
       sidebarSizeBias = 25;
@@ -159,10 +161,13 @@ function generateServiceRibbonWidthStyle(widthStr, iconSizeStr, vertical, isLabe
       sidebarSizeBias = 37;
   }
 
-  if(!isLabelEnabled){
+  if (!isLabelEnabled) {
     sidebarSizeBias = 22;
     tabItemHeightBias = -5;
   }
+
+  // Due to the lowest values for SIDEBAR_WIDTH and ICON_SIZES, this can be computed to a negative value
+  const minimumAdjustedIconSize = Math.max(width / 2 + iconSize, 2);
 
   return vertical
     ? `
@@ -171,13 +176,13 @@ function generateServiceRibbonWidthStyle(widthStr, iconSizeStr, vertical, isLabe
       overflow: hidden !important;
     }
     .tab-item {
-      width: ${width - tabItemWidthBias}px !important;
-      height: ${width + iconSize + tabItemHeightBias}px !important;
+      height: ${width - tabItemWidthBias}px !important;
+      width: ${width + iconSize + tabItemHeightBias}px !important;
       min-height: unset;
       overflow: hidden !important;
     }
     .tab-item .tab-item__icon {
-      width: ${width / 2 + iconSize}px !important;
+      width: ${minimumAdjustedIconSize}px !important;
     }
     .sidebar__button {
       font-size: ${width / 3}px !important;
@@ -210,7 +215,7 @@ function generateServiceRibbonWidthStyle(widthStr, iconSizeStr, vertical, isLabe
       height: min-content !important;
     }
     .tab-item .tab-item__icon {
-      width: ${width / 2 + iconSize}px !important;
+      width: ${minimumAdjustedIconSize}px !important;
     }
     .sidebar__button {
       font-size: ${width / 3}px !important;
@@ -314,7 +319,7 @@ function generateStyle(settings) {
       serviceRibbonWidth,
       iconSize,
       useVerticalStyle,
-      showServiceName
+      showServiceName,
     );
   }
   if (showDragArea) {

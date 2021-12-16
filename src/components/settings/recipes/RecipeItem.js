@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 
 import RecipePreviewModel from '../../../models/RecipePreview';
 
-@observer
 class RecipeItem extends Component {
   static propTypes = {
     recipe: PropTypes.instanceOf(RecipePreviewModel).isRequired,
@@ -31,4 +30,4 @@ class RecipeItem extends Component {
   }
 }
 
-export default RecipeItem;
+export default observer(RecipeItem);

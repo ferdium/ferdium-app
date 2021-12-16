@@ -28,7 +28,6 @@ const messages = defineMessages({
   },
 });
 
-@observer
 class Import extends Component {
   static propTypes = {
     services: MobxPropTypes.arrayOrObservableArray.isRequired,
@@ -166,4 +165,4 @@ class Import extends Component {
   }
 }
 
-export default injectIntl(Import);
+export default injectIntl(observer(Import));

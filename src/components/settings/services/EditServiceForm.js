@@ -134,7 +134,6 @@ const messages = defineMessages({
   },
 });
 
-@observer
 class EditServiceForm extends Component {
   static propTypes = {
     recipe: PropTypes.instanceOf(Recipe).isRequired,
@@ -182,6 +181,7 @@ class EditServiceForm extends Component {
           this.setState({ isValidatingCustomUrl: true });
           try {
             values.customUrl = normalizeUrl(values.customUrl, {
+              stripAuthentication: false,
               stripWWW: false,
               removeTrailingSlash: false,
             });
@@ -499,4 +499,4 @@ class EditServiceForm extends Component {
   }
 }
 
-export default injectIntl(EditServiceForm);
+export default injectIntl(observer(EditServiceForm));

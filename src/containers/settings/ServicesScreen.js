@@ -10,8 +10,6 @@ import ServiceStore from '../../stores/ServicesStore';
 import ServicesDashboard from '../../components/settings/services/ServicesDashboard';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 
-@inject('stores', 'actions')
-@observer
 class ServicesScreen extends Component {
   componentWillUnmount() {
     this.props.actions.service.resetFilter();
@@ -57,7 +55,7 @@ class ServicesScreen extends Component {
   }
 }
 
-ServicesScreen.wrappedComponent.propTypes = {
+ServicesScreen.propTypes = {
   stores: PropTypes.shape({
     user: PropTypes.instanceOf(UserStore).isRequired,
     services: PropTypes.instanceOf(ServiceStore).isRequired,
@@ -68,4 +66,4 @@ ServicesScreen.wrappedComponent.propTypes = {
   }).isRequired,
 };
 
-export default ServicesScreen;
+export default inject('stores', 'actions')(observer(ServicesScreen));

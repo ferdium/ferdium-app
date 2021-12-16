@@ -12,10 +12,6 @@ import Appear from '../../ui/effects/Appear';
 import serverlessLogin from '../../../helpers/serverless-helpers';
 
 const messages = defineMessages({
-  welcome: {
-    id: 'services.welcome',
-    defaultMessage: 'Welcome to Ferdi',
-  },
   getStarted: {
     id: 'services.getStarted',
     defaultMessage: 'Get started',
@@ -44,9 +40,6 @@ const styles = {
   },
 };
 
-@injectSheet(styles)
-@inject('actions')
-@observer
 class Services extends Component {
   static propTypes = {
     services: MobxPropTypes.arrayOrObservableArray,
@@ -132,11 +125,10 @@ class Services extends Component {
           <Appear timeout={1500} transitionName="slideUp">
             <div className="services__no-service">
               <img
-                src="./assets/images/logo.svg"
+                src="./assets/images/logo-beard-only.svg"
                 alt="Logo"
                 style={{ maxHeight: '50vh' }}
               />
-              <h1>{intl.formatMessage(messages.welcome)}</h1>
               {!isLoggedIn && (
                 <>
                   <p>{intl.formatMessage(messages.login)}</p>
@@ -197,4 +189,8 @@ class Services extends Component {
   }
 }
 
-export default injectIntl(Services);
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(
+    inject('actions')(observer(Services)),
+  ),
+);

@@ -19,6 +19,10 @@
     a { color: $dark-theme-text-color; }
   }
 
+  .welcome__featured-services {
+    background: $dark-theme-gray-dark;
+  }
+
   .legal {
     color: $dark-theme-text-color;
 
@@ -36,7 +40,7 @@
 }
 
 .auth {
-  background: $theme-brand-gradient;
+  background: $dark-theme-gray-darkest;
   display: flex;
   justify-content: center;
 

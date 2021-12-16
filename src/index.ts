@@ -213,6 +213,7 @@ const createWindow = () => {
       contextIsolation: false,
       webviewTag: true,
       preload: join(__dirname, 'sentry.js'),
+      nativeWindowOpen: true,
       // @ts-expect-error Object literal may only specify known properties, and 'enableRemoteModule' does not exist in type 'WebPreferences'.
       enableRemoteModule: true,
     },
@@ -406,7 +407,7 @@ const createWindow = () => {
     ) {
       // Toggle the window on 'Alt+X'
       globalShortcut.register(`${altKey()}+X`, () => {
-        trayIcon.trayMenuTemplate[0].click();
+        trayIcon._toggleWindow();
       });
     }
   });
@@ -516,11 +517,10 @@ ipcMain.on('open-browser-window', (_e, { url, serviceId }) => {
   const serviceSession = session.fromPartition(`persist:service-${serviceId}`);
   const child = new BrowserWindow({
     parent: mainWindow,
+    fullscreenable: false,
     webPreferences: {
       session: serviceSession,
-      // TODO: Aren't these needed here?
-      // contextIsolation: false,
-      // enableRemoteModule: true,
+      nativeWindowOpen: true,
     },
   });
   child.show();

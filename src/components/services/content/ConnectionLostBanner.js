@@ -1,4 +1,4 @@
-import { createRef, Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import injectSheet from 'react-jss';
@@ -68,16 +68,12 @@ const styles = theme => ({
   },
 });
 
-@injectSheet(styles)
-@observer
 class ConnectionLostBanner extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     name: PropTypes.string.isRequired,
     reload: PropTypes.func.isRequired,
   };
-
-  inputRef = createRef();
 
   render() {
     const { classes, name, reload } = this.props;
@@ -105,4 +101,4 @@ class ConnectionLostBanner extends Component {
   }
 }
 
-export default injectIntl(ConnectionLostBanner);
+export default injectIntl(injectSheet(styles)(observer(ConnectionLostBanner)));

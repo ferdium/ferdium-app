@@ -7,7 +7,6 @@ import { defineMessages, injectIntl } from 'react-intl';
 import Form from '../../lib/Form';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
-import Infobox from '../ui/Infobox';
 import { isMac } from '../../environment';
 
 import { globalError as globalErrorPropType } from '../../prop-types';
@@ -16,11 +15,6 @@ const messages = defineMessages({
   headline: {
     id: 'locked.headline',
     defaultMessage: 'Locked',
-  },
-  info: {
-    id: 'locked.info',
-    defaultMessage:
-      'Ferdi is currently locked. Please unlock Ferdi with your password to see your messages.',
   },
   touchId: {
     id: 'locked.touchId',
@@ -48,7 +42,6 @@ const messages = defineMessages({
   },
 });
 
-@observer
 class Locked extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
@@ -108,7 +101,6 @@ class Locked extends Component {
         <form className="franz-form auth__form" onSubmit={e => this.submit(e)}>
           <img src="./assets/images/logo.svg" className="auth__logo" alt="" />
           <h1>{intl.formatMessage(messages.headline)}</h1>
-          <Infobox type="warning">{intl.formatMessage(messages.info)}</Infobox>
 
           {touchIdEnabled && (
             <>
@@ -149,4 +141,4 @@ class Locked extends Component {
   }
 }
 
-export default injectIntl(Locked);
+export default injectIntl(observer(Locked));

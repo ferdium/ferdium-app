@@ -97,6 +97,7 @@ export default class Request {
 
   reload() {
     const args = this._currentApiCall ? this._currentApiCall.args : [];
+    this.error = null;
     return this.execute(...args);
   }
 
@@ -135,6 +136,7 @@ export default class Request {
   }
 
   reset = () => {
+    this.error = null;
     this.result = null;
     this.isExecuting = false;
     this.isError = false;

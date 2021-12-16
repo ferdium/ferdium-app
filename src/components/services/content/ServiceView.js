@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 import { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { autorun } from 'mobx';
@@ -15,8 +16,6 @@ import SettingsStore from '../../../stores/SettingsStore';
 import WebControlsScreen from '../../../features/webControls/containers/WebControlsScreen';
 import { CUSTOM_WEBSITE_RECIPE_ID } from '../../../config';
 
-@inject('stores', 'actions')
-@observer
 class ServiceView extends Component {
   static propTypes = {
     service: PropTypes.instanceOf(ServiceModel).isRequired,
@@ -65,17 +64,6 @@ class ServiceView extends Component {
     clearTimeout(this.hibernationTimer);
   }
 
-  updateTargetUrl = event => {
-    let visible = true;
-    if (event.url === '' || event.url === '#') {
-      visible = false;
-    }
-    this.setState({
-      targetUrl: event.url,
-      statusBarVisible: visible,
-    });
-  };
-
   render() {
     const {
       detachService,
@@ -121,6 +109,7 @@ class ServiceView extends Component {
             {service.isEnabled &&
               service.isLoading &&
               service.isFirstLoad &&
+              !service.isHibernating &&
               !service.isServiceAccessRestricted && (
                 <WebviewLoader loaded={false} name={service.name} />
               )}
@@ -157,12 +146,12 @@ class ServiceView extends Component {
                 />
               </>
             ) : (
-              <div>
-                <span role="img" aria-label="Sleeping Emoji">
+              <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
+                <span role="img" aria-label="Sleeping Emoji" style={{fontSize: 42}}>
                   😴
-                </span>{' '}
-                This service is currently hibernating. If this page doesn&#x27;t
-                close soon, please try reloading Ferdi.
+                </span><br/><br/>
+                This service is currently hibernating.<br/>
+                Try switching services or reloading Ferdi.
               </div>
             )}
           </>
@@ -173,4 +162,4 @@ class ServiceView extends Component {
   }
 }
 
-export default ServiceView;
+export default inject('stores', 'actions')(observer(ServiceView));

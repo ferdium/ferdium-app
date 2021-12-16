@@ -9,7 +9,7 @@ import { Input } from '../ui/input/index';
 import { Button } from '../ui/button/index';
 import { Badge } from '../ui/badge';
 import Modal from '../ui/Modal';
-import Infobox from '../ui/Infobox';
+import * as Infobox from '../ui/Infobox';
 import Appear from '../ui/effects/Appear';
 import globalMessages from '../../i18n/globalMessages';
 
@@ -131,8 +131,6 @@ const styles = theme => ({
   },
 });
 
-@injectSheet(styles)
-@observer
 class SetupAssistant extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -327,4 +325,6 @@ class SetupAssistant extends Component {
   }
 }
 
-export default injectIntl(SetupAssistant);
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(observer(SetupAssistant)),
+);

@@ -6,6 +6,7 @@ import Form from '../../lib/Form';
 import Input from '../ui/Input';
 import Select from '../ui/Select';
 import Button from '../ui/Button';
+import Link from '../ui/Link';
 import Infobox from '../ui/Infobox';
 import { url, required } from '../../helpers/validation-helpers';
 import { LIVE_FERDI_API, LIVE_FRANZ_API } from '../../config';
@@ -34,7 +35,6 @@ const messages = defineMessages({
   },
 });
 
-@observer
 class ChangeServer extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
@@ -106,6 +106,7 @@ class ChangeServer extends Component {
     return (
       <div className="auth__container">
         <form className="franz-form auth__form" onSubmit={e => this.submit(e)}>
+          <Link to='/auth/welcome'><img src="./assets/images/logo.svg" className="auth__logo" alt="" /></Link>
           <h1>{intl.formatMessage(messages.headline)}</h1>
           {form.$('server').value === this.franzServer && (
             <Infobox type="warning">
@@ -131,4 +132,4 @@ class ChangeServer extends Component {
   }
 }
 
-export default injectIntl(ChangeServer);
+export default injectIntl(observer(ChangeServer));

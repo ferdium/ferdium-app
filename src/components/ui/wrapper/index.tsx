@@ -1,9 +1,8 @@
 import classnames from 'classnames';
 import { Component, ReactNode } from 'react';
-import injectStyle from 'react-jss';
-import { IWithStyle } from '../typings/generic';
+import injectStyle, { WithStylesProps } from 'react-jss';
 
-interface IProps extends IWithStyle {
+interface IProps extends WithStylesProps<typeof styles> {
   children: ReactNode;
   className?: string;
   identifier: string;
@@ -34,4 +33,6 @@ class WrapperComponent extends Component<IProps> {
   }
 }
 
-export const Wrapper = injectStyle(styles)(WrapperComponent);
+export const Wrapper = injectStyle(styles, { injectTheme: true })(
+  WrapperComponent,
+);

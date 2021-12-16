@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 import { Field } from 'mobx-react-form';
 import classnames from 'classnames';
 
-@observer
 class Select extends Component {
   static propTypes = {
     field: PropTypes.instanceOf(Field).isRequired,
@@ -98,4 +97,4 @@ class Select extends Component {
   }
 }
 
-export default Select;
+export default observer(Select);

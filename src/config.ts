@@ -86,7 +86,7 @@ const TODO_TICKTICK_URL = 'https://ticktick.com/signin';
 const TODO_MSTODO_URL = 'https://todo.microsoft.com/?app#';
 const TODO_HABITICA_URL = 'https://habitica.com/login';
 const TODO_NOZBE_URL = 'https://app.nozbe.com/#login';
-const TODO_RTM_URL = 'https://www.rememberthemilk.com/login/';
+const TODO_RTM_URL = 'https://www.rememberthemilk.com/';
 const TODO_ANYDO_URL = 'https://desktop.any.do/';
 const TODO_GOOGLETASKS_URL =
   'https://tasks.google.com/embed/?origin=https%3A%2F%2Fcalendar.google.com&fullWidth=1';
@@ -172,6 +172,9 @@ export const CUSTOM_WEBSITE_RECIPE_ID = 'franz-custom-website';
 
 export const DEFAULT_SERVICE_ORDER = 99; // something high enough that it gets added to the end of the already-added services on the left sidebar
 
+export const SPLIT_COLUMNS_MIN = 1;
+export const SPLIT_COLUMNS_MAX = 5;
+
 export const DEFAULT_APP_SETTINGS = {
   autoLaunchOnStart: false,
   autoLaunchInBackground: false,
@@ -193,6 +196,7 @@ export const DEFAULT_APP_SETTINGS = {
   spellcheckerLanguage: 'en-us',
   darkMode: false,
   splitMode: false,
+  splitColumns: 3,
   fallbackLocale: 'en-US',
   beta: false,
   isAppMuted: false,

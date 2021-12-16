@@ -187,10 +187,6 @@ export default class TodoStore extends FeatureStore {
         break;
       default:
         debug('Other message received', channel, message);
-        console.log(
-          'this.stores.services.isTodosServiceAdded',
-          this.stores.services.isTodosServiceAdded,
-        );
         if (this.stores.services.isTodosServiceAdded) {
           this.actions.service.handleIPCMessage({
             serviceId: this.stores.services.isTodosServiceAdded.id,

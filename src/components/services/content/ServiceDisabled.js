@@ -16,16 +16,11 @@ const messages = defineMessages({
   },
 });
 
-@observer
 class ServiceDisabled extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
     enable: PropTypes.func.isRequired,
   };
-
-  countdownInterval = null;
-
-  countdownIntervalTimeout = 1000;
 
   render() {
     const { name, enable } = this.props;
@@ -44,4 +39,4 @@ class ServiceDisabled extends Component {
   }
 }
 
-export default injectIntl(ServiceDisabled);
+export default injectIntl(observer(ServiceDisabled));

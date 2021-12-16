@@ -276,6 +276,7 @@ interface UIStore {
   actionStatus: () => void;
   isDarkThemeActive: () => void;
   isSplitModeActive: () => void;
+  splitColumnsNo: () => void;
   showMessageBadgesEvenWhenMuted: () => void;
   theme: () => void;
 }

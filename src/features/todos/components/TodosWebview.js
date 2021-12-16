@@ -48,8 +48,6 @@ const styles = theme => ({
   },
 });
 
-@injectSheet(styles)
-@observer
 class TodosWebview extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -128,7 +126,6 @@ class TodosWebview extends Component {
     const { handleClientMessage } = this.props;
     if (!this.webview) return;
     this.webview.addEventListener('ipc-message', e => {
-      // console.log(e);
       handleClientMessage({ channel: e.channel, message: e.args[0] });
     });
   }
@@ -201,4 +198,6 @@ class TodosWebview extends Component {
   }
 }
 
-export default TodosWebview;
+export default injectSheet(styles, { injectTheme: true })(
+  observer(TodosWebview),
+);

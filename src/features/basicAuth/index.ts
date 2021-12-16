@@ -1,7 +1,5 @@
 import { AuthInfo, BrowserWindow, ipcRenderer } from 'electron';
 
-import BasicAuthComponent from './Component';
-
 import { state as ModalState } from './store';
 
 const debug = require('debug')('Ferdi:feature:basicAuth');
@@ -31,4 +29,4 @@ export function mainIpcHandler(mainWindow: BrowserWindow, authInfo: AuthInfo) {
   });
 }
 
-export const Component = BasicAuthComponent;
+export { default as Component } from './Component';

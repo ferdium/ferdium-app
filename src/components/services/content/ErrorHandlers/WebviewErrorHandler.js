@@ -31,8 +31,6 @@ const messages = defineMessages({
   },
 });
 
-@injectSheet(styles)
-@observer
 class WebviewErrorHandler extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
@@ -71,4 +69,6 @@ class WebviewErrorHandler extends Component {
   }
 }
 
-export default injectIntl(WebviewErrorHandler);
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(observer(WebviewErrorHandler)),
+);

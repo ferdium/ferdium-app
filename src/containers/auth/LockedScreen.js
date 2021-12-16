@@ -7,8 +7,6 @@ import SettingsStore from '../../stores/SettingsStore';
 import { hash } from '../../helpers/password-helpers';
 import UserStore from '../../stores/UserStore';
 
-@inject('stores', 'actions')
-@observer
 class LockedScreen extends Component {
   state = {
     error: false,
@@ -61,22 +59,20 @@ class LockedScreen extends Component {
     return (
       <div className="auth">
         <div className="auth__layout">
-          <div className="auth__container">
-            <Locked
-              onSubmit={this.onSubmit}
-              unlock={this.unlock}
-              useTouchIdToUnlock={useTouchIdToUnlock}
-              isSubmitting={stores.user.loginRequest.isExecuting}
-              error={this.state.error || {}}
-            />
-          </div>
+          <Locked
+            onSubmit={this.onSubmit}
+            unlock={this.unlock}
+            useTouchIdToUnlock={useTouchIdToUnlock}
+            isSubmitting={stores.user.loginRequest.isExecuting}
+            error={this.state.error || {}}
+          />
         </div>
       </div>
     );
   }
 }
 
-LockedScreen.wrappedComponent.propTypes = {
+LockedScreen.propTypes = {
   actions: PropTypes.shape({
     settings: PropTypes.instanceOf(SettingsStore).isRequired,
   }).isRequired,
@@ -86,4 +82,4 @@ LockedScreen.wrappedComponent.propTypes = {
   }).isRequired,
 };
 
-export default LockedScreen;
+export default inject('stores', 'actions')(observer(LockedScreen));

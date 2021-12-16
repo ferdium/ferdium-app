@@ -6,7 +6,6 @@ import SupportFerdi from '../../components/settings/supportFerdi/SupportFerdiDas
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 import AppStore from '../../stores/AppStore';
 
-@inject('actions')
 class SupportScreen extends Component {
   constructor(props) {
     super(props);
@@ -27,10 +26,10 @@ class SupportScreen extends Component {
   }
 }
 
-SupportScreen.wrappedComponent.propTypes = {
+SupportScreen.propTypes = {
   actions: PropTypes.shape({
     app: PropTypes.instanceOf(AppStore).isRequired,
   }).isRequired,
 };
 
-export default SupportScreen;
+export default inject('actions')(SupportScreen);

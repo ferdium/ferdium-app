@@ -4,18 +4,12 @@ import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 
 import { RouterStore } from 'mobx-react-router';
-import {
-  DEFAULT_TODO_RECIPE_ID,
-  DEFAULT_TODO_SERVICE_NAME,
-} from '../../config';
 import { sleep } from '../../helpers/async-helpers';
 import SetupAssistant from '../../components/auth/SetupAssistant';
 import ServicesStore from '../../stores/ServicesStore';
 import RecipesStore from '../../stores/RecipesStore';
 import UserStore from '../../stores/UserStore';
 
-@inject('stores', 'actions')
-@observer
 class SetupAssistantScreen extends Component {
   constructor(props) {
     super(props);
@@ -65,9 +59,7 @@ class SetupAssistantScreen extends Component {
   };
 
   async setupServices(serviceConfig) {
-    const {
-      stores: { services },
-    } = this.props;
+    const { stores: { services, router } } = this.props;
 
     this.setState({
       isSettingUpServices: true,
@@ -93,19 +85,13 @@ class SetupAssistantScreen extends Component {
       await sleep(100);
     }
 
-    // Add todo service
-    await services._createService({
-      recipeId: DEFAULT_TODO_RECIPE_ID,
-      serviceData: {
-        name: DEFAULT_TODO_SERVICE_NAME,
-      },
-      redirect: false,
-      skipCleanup: true,
-    });
-
     this.setState({
       isSettingUpServices: false,
     });
+
+    await sleep(100);
+
+    router.push("/");
   }
 
   render() {
@@ -120,7 +106,7 @@ class SetupAssistantScreen extends Component {
   }
 }
 
-SetupAssistantScreen.wrappedComponent.propTypes = {
+SetupAssistantScreen.propTypes = {
   stores: PropTypes.shape({
     services: PropTypes.instanceOf(ServicesStore),
     router: PropTypes.instanceOf(RouterStore).isRequired,
@@ -134,4 +120,4 @@ SetupAssistantScreen.wrappedComponent.propTypes = {
   }).isRequired,
 };
 
-export default SetupAssistantScreen;
+export default inject('stores', 'actions')(observer(SetupAssistantScreen));

@@ -1,10 +1,10 @@
 import classnames from 'classnames';
 import { Property } from 'csstype';
 import { Component, InputHTMLAttributes } from 'react';
-import injectStyle from 'react-jss';
+import injectStyle, { WithStylesProps } from 'react-jss';
 
 import { Theme } from '../../../themes';
-import { IFormField, IWithStyle } from '../typings/generic';
+import { IFormField } from '../typings/generic';
 
 import { Error } from '../error';
 import { Label } from '../label';
@@ -13,7 +13,7 @@ import { Wrapper } from '../wrapper';
 interface IProps
   extends InputHTMLAttributes<HTMLInputElement>,
     IFormField,
-    IWithStyle {
+    WithStylesProps<typeof styles> {
   className?: string;
 }
 
@@ -122,4 +122,6 @@ class ToggleComponent extends Component<IProps> {
   }
 }
 
-export const Toggle = injectStyle(styles)(ToggleComponent);
+export const Toggle = injectStyle(styles, { injectTheme: true })(
+  ToggleComponent,
+);

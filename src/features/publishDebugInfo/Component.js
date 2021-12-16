@@ -8,7 +8,7 @@ import { state as ModalState } from './store';
 import { H1 } from '../../components/ui/headline';
 import { sendAuthRequest } from '../../api/utils/auth';
 import Button from '../../components/ui/Button';
-import Input from '../../components/ui/Input';
+import { Input } from '../../components/ui/input/index';
 import Modal from '../../components/ui/Modal';
 import { DEBUG_API } from '../../config';
 import AppStore from '../../stores/AppStore';
@@ -50,11 +50,18 @@ const messages = defineMessages({
 });
 
 const styles = theme => ({
-  container: {
-    minWidth: '70vw',
+  modal: {
+    width: '80%',
+    maxWidth: 600,
+    background: theme.styleTypes.primary.contrast,
+    paddingTop: 30,
+  },
+  headline: {
+    fontSize: 20,
+    marginBottom: 20,
+    marginTop: -27,
   },
   info: {
-    paddingTop: 20,
     paddingBottom: 20,
   },
   link: {
@@ -67,32 +74,9 @@ const styles = theme => ({
     marginTop: 10,
     cursor: 'pointer',
   },
-  url: {
-    marginTop: 20,
-    width: '100%',
-
-    '& div': {
-      fontFamily:
-        'SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace',
-    },
-
-    '& input': {
-      width: '100%',
-      padding: 15,
-      borderRadius: 6,
-      border: `solid 1px ${theme.styleTypes.primary.accent}`,
-    },
-  },
 });
 
-@injectSheet(styles)
-@inject('stores', 'actions')
-@observer
 class PublishDebugLogModal extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-  };
-
   state = {
     log: null,
     error: false,
@@ -102,6 +86,11 @@ class PublishDebugLogModal extends Component {
   // Close this modal
   close() {
     ModalState.isModalVisible = false;
+    this.setState({
+      log: null,
+      error: false,
+      isSendingLog: false
+    });
   }
 
   async publishDebugInfo() {
@@ -157,77 +146,76 @@ class PublishDebugLogModal extends Component {
       <Modal
         isOpen={isModalVisible}
         shouldCloseOnOverlayClick
+        className={`${classes.modal} publish-debug`}
         close={() => this.close()}
       >
-        <div className={classes.container}>
-          <H1>{intl.formatMessage(messages.title)}</H1>
-          {log && (
-            <>
-              <p className={classes.info}>
-                {intl.formatMessage(messages.published)}
-              </p>
-              <Input
-                className={classes.url}
-                showLabel={false}
-                field={{
-                  type: 'url',
-                  value: `${DEBUG_API}/${log}`,
-                  disabled: true,
-                }}
-                readonly
-              />
-            </>
-          )}
+        <H1 className={classes.headline}>{intl.formatMessage(messages.title)}</H1>
+        {log && (
+          <>
+            <p className={classes.info}>
+              {intl.formatMessage(messages.published)}
+            </p>
+            <Input
+              showLabel={false}
+              value={`${DEBUG_API}/${log}`}
+              readonly
+            />
+          </>
+        )}
 
-          {error && (
-            <p className={classes.info}>{intl.formatMessage(messages.error)}</p>
-          )}
+        {error && (
+          <p className={classes.info}>{intl.formatMessage(messages.error)}</p>
+        )}
 
-          {!log && !error && (
-            <>
-              <p className={classes.info}>
-                {intl.formatMessage(messages.info)}
-              </p>
+        {!log && !error && (
+          <>
+            <p className={classes.info}>
+              {intl.formatMessage(messages.info)}
+            </p>
 
-              <a
-                href={`${DEBUG_API}/privacy.html`}
-                target="_blank"
-                className={classes.link}
-                rel="noreferrer"
-              >
-                {intl.formatMessage(messages.privacy)}
-              </a>
-              <a
-                href={`${DEBUG_API}/terms.html`}
-                target="_blank"
-                className={classes.link}
-                rel="noreferrer"
-              >
-                {intl.formatMessage(messages.terms)}
-              </a>
+            <a
+              href={`${DEBUG_API}/privacy.html`}
+              target="_blank"
+              className={classes.link}
+              rel="noreferrer"
+            >
+              {intl.formatMessage(messages.privacy)}
+            </a>
+            <a
+              href={`${DEBUG_API}/terms.html`}
+              target="_blank"
+              className={classes.link}
+              rel="noreferrer"
+            >
+              {intl.formatMessage(messages.terms)}
+            </a>
 
-              <Button
-                type="button"
-                label={intl.formatMessage(messages.publish)}
-                className={classes.button}
-                onClick={() => this.publishDebugInfo()}
-                disabled={isSendingLog}
-              />
-            </>
-          )}
-        </div>
+            <Button
+              type="button"
+              label={intl.formatMessage(messages.publish)}
+              className={classes.button}
+              onClick={() => this.publishDebugInfo()}
+              disabled={isSendingLog}
+            />
+          </>
+        )}
       </Modal>
     );
   }
 }
 
-PublishDebugLogModal.wrappedComponent.propTypes = {
+PublishDebugLogModal.propTypes = {
   stores: PropTypes.shape({
     app: PropTypes.instanceOf(AppStore).isRequired,
   }).isRequired,
   actions: PropTypes.shape({
     service: PropTypes.instanceOf(ServicesStore).isRequired,
   }).isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
-export default injectIntl(PublishDebugLogModal);
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(
+    inject('stores', 'actions')(observer(PublishDebugLogModal)),
+  ),
+);

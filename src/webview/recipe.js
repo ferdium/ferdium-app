@@ -16,6 +16,7 @@ import {
   disable as disableDarkMode,
 } from 'darkreader';
 
+import { existsSync } from 'fs';
 import ignoreList from './darkmode/ignore';
 import customDarkModeCss from './darkmode/custom';
 
@@ -209,9 +210,11 @@ class RecipeController {
         notificationsHandler,
         sessionHandler,
       );
-      // eslint-disable-next-line import/no-dynamic-require
-      require(modulePath)(this.recipe, { ...config, recipe });
-      debug('Initialize Recipe', config, recipe);
+      if (existsSync(modulePath)) {
+        // eslint-disable-next-line import/no-dynamic-require
+        require(modulePath)(this.recipe, { ...config, recipe });
+        debug('Initialize Recipe', config, recipe);
+      }
 
       this.settings.service = Object.assign(config, { recipe });
 

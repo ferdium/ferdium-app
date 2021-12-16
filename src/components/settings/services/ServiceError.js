@@ -25,7 +25,6 @@ const messages = defineMessages({
   },
 });
 
-@observer
 class ServiceError extends Component {
   render() {
     const { intl } = this.props;
@@ -60,4 +59,4 @@ class ServiceError extends Component {
   }
 }
 
-export default injectIntl(ServiceError);
+export default injectIntl(observer(ServiceError));

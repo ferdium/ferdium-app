@@ -1,17 +1,11 @@
 import { defineMessages, useIntl } from 'react-intl';
-import { BrowserWindow } from '@electron/remote';
 import { mdiOpenInNew } from '@mdi/js';
-import InfoBar from '../../ui/InfoBar';
 import { Icon } from '../../ui/icon';
 
 const messages = defineMessages({
   headline: {
     id: 'settings.supportFerdi.headline',
     defaultMessage: 'About Ferdi',
-  },
-  title: {
-    id: 'settings.supportFerdi.title',
-    defaultMessage: 'Do you like Ferdi?',
   },
   aboutIntro: {
     id: 'settings.supportFerdi.aboutIntro',
@@ -62,25 +56,7 @@ const messages = defineMessages({
     id: 'settings.supportFerdi.textGitHubSponsors',
     defaultMessage: 'GitHub Sponsors',
   },
-  openSurvey: {
-    id: 'settings.supportFerdi.openSurvey',
-    defaultMessage: 'Open survey',
-  },
-  bannerText: {
-    id: 'settings.supportFerdi.bannerText',
-    defaultMessage: 'Do you want to help us improve Ferdi?',
-  },
 });
-
-const openSurveyWindow = () => {
-  let win = new BrowserWindow({ width: 670, height: 400 });
-  win.on('closed', () => {
-    // @ts-expect-error Type 'null' is not assignable to type 'BrowserWindow'.
-    win = null;
-  });
-
-  win.loadURL('https://rp28.typeform.com/to/E3phJT');
-};
 
 const SupportFerdiDashboard = () => {
   const intl = useIntl();
@@ -95,7 +71,6 @@ const SupportFerdiDashboard = () => {
         </span>
       </div>
       <div className="settings__body">
-        <h1>{intl.formatMessage(messages.title)}</h1>
         <div>
           <p className="settings__support-badges">
             <a
@@ -219,14 +194,6 @@ const SupportFerdiDashboard = () => {
           </p>
         </div>
       </div>
-      <InfoBar
-        sticky
-        type="primary"
-        ctaLabel={intl.formatMessage(messages.openSurvey)}
-        onClick={openSurveyWindow}
-      >
-        {intl.formatMessage(messages.bannerText)}
-      </InfoBar>
     </div>
   );
 };

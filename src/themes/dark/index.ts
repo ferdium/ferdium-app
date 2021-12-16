@@ -6,12 +6,14 @@ import * as legacyStyles from '../legacy';
 
 export default (brandPrimary: string) => {
   const defaultStyles = makeDefaultThemeConfig(brandPrimary);
+  /*
   let brandPrimaryColor = color(legacyStyles.themeBrandPrimary);
   try {
     brandPrimaryColor = color(defaultStyles.brandPrimary);
   } catch {
     // Ignore invalid color and fall back to default.
   }
+  */
 
   const colorBackground = legacyStyles.darkThemeGrayDarkest;
   const colorText = legacyStyles.darkThemeTextColor;
@@ -139,15 +141,15 @@ export default (brandPrimary: string) => {
         },
         listItem: {
           border: color(drawerBg).lighten(0.2).hex(),
-          hoverBackground: color(drawerBg).lighten(0.2).hex(),
-          activeBackground: defaultStyles.brandPrimary,
+          hoverBackground: legacyStyles.darkThemeGrayDark,
+          activeBackground: legacyStyles.darkThemeGrayDarker,
           name: {
             color: colorText,
             activeColor: 'white',
           },
           services: {
             color: color(colorText).darken(0.5).hex(),
-            active: brandPrimaryColor.lighten(0.5).hex(),
+            active: color(colorText).darken(0.5).hex(),
           },
         },
       },

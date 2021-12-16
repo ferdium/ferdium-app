@@ -42,8 +42,6 @@ const messages = defineMessages({
   },
 });
 
-@inject('stores', 'actions')
-@observer
 class SettingsNavigation extends Component {
   static propTypes = {
     stores: PropTypes.shape({
@@ -175,4 +173,4 @@ class SettingsNavigation extends Component {
   }
 }
 
-export default injectIntl(SettingsNavigation);
+export default injectIntl(inject('stores', 'actions')(observer(SettingsNavigation)));

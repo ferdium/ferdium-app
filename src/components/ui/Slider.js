@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import { Field } from 'mobx-react-form';
 
-@observer
 class Slider extends Component {
   static propTypes = {
     field: PropTypes.instanceOf(Field).isRequired,
@@ -64,4 +63,4 @@ class Slider extends Component {
   }
 }
 
-export default Slider;
+export default observer(Slider);

@@ -43,7 +43,6 @@ const messages = defineMessages({
   },
 });
 
-@observer
 class Invite extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
@@ -125,8 +124,8 @@ class Invite extends Component {
       .some(emailValue => emailValue.trim() !== '');
 
     const sendButtonClassName = classnames({
-      'auth__button': true,
-      'invite__embed--button': embed
+      auth__button: true,
+      'invite__embed--button': embed,
     });
 
     const renderForm = (
@@ -198,4 +197,4 @@ class Invite extends Component {
   }
 }
 
-export default injectIntl(Invite);
+export default injectIntl(observer(Invite));

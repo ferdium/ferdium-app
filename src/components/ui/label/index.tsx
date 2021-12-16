@@ -1,15 +1,16 @@
 import classnames from 'classnames';
-import { Classes } from 'jss';
 import { Component, LabelHTMLAttributes } from 'react';
-import injectSheet from 'react-jss';
+import injectSheet, { WithStylesProps } from 'react-jss';
 
 import { IFormField } from '../typings/generic';
 
 import styles from './styles';
 
-interface ILabel extends IFormField, LabelHTMLAttributes<HTMLLabelElement> {
-  classes: Classes;
-  isRequired: boolean;
+interface ILabel
+  extends IFormField,
+    LabelHTMLAttributes<HTMLLabelElement>,
+    WithStylesProps<typeof styles> {
+  isRequired?: boolean;
 }
 
 class LabelComponent extends Component<ILabel> {
@@ -49,4 +50,4 @@ class LabelComponent extends Component<ILabel> {
   }
 }
 
-export const Label = injectSheet(styles)(LabelComponent);
+export const Label = injectSheet(styles, { injectTheme: true })(LabelComponent);

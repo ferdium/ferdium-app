@@ -11,76 +11,22 @@
 
 # Ferdi
 
-<p align="center">
-<img alt="GitHub Releases" src="https://img.shields.io/github/downloads/getferdi/ferdi/latest/total?label=Downloads&logo=iCloud&logoColor=%23FFFFFF">
+<p>
+<a href="https://github.com/getferdi/ferdi/actions/workflows/builds.yml"><img alt="Build Status" src="https://github.com/getferdi/ferdi/actions/workflows/builds.yml/badge.svg?branch=develop&event=push"></a>
+<a title="Crowdin" target="_blank" href="https://crowdin.com/project/getferdi"><img src="https://badges.crowdin.net/getferdi/localized.svg"></a>
+<img alt="GitHub Releases" src="https://img.shields.io/github/downloads/getferdi/ferdi/latest/total?label=downloads">
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-112-default.svg?logo=github' alt='Contributors'/></a>
+<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-115-default.svg?logo=github' alt='Contributors'/></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 <a href="#backers-via-opencollective"><img alt="Open Collective backers" src="https://img.shields.io/opencollective/backers/getferdi?logo=open-collective"></a>
-<a href="#sponsors-via-opencollective"><img alt="Open Collective sponsors" src="https://img.shields.io/opencollective/sponsors/getferdi?logo=open-collective"></a>
-<a href="https://github.com/getferdi/ferdi/actions/workflows/ferdi-builds.yml"><img alt="Build Status" src="https://github.com/getferdi/ferdi/actions/workflows/ferdi-builds.yml/badge.svg?branch=develop&event=push"></a>
 <a href="https://gitter.im/getferdi/community"><img alt="Gitter Chat Room" src="https://img.shields.io/gitter/room/getferdi/community"></a>
-<a href="https://chat.stackoverflow.com/rooms/237341/ferdi"><img alt="Stackoverflow Chat Room" src="https://img.shields.io/badge/stackoverflow--chat-ferdi-blue"></a>
 </p>
 
-🤴🏽 Hard-fork of [Franz](https://github.com/meetfranz/franz), adding awesome features and removing unwanted ones.
-
-## Table of contents
-
-<details>
-<summary>Toggle navigation</summary>
-
-- [Ferdi](#ferdi)
-  - [Table of contents](#table-of-contents)
-  - [What is Ferdi?](#what-is-ferdi)
-  - [Features](#features)
-  - [What does Ferdi look like?](#what-does-ferdi-look-like)
-  - [How to get and start using Ferdi](#how-to-get-and-start-using-ferdi)
-    - [Download Ferdi](#download-ferdi)
-    - [Or use Chocolatey (Windows only)](#or-use-chocolatey-windows-only)
-    - [Or use Windows Package Manager (Windows only)](#or-use-windows-package-manager-windows-only)
-    - [Or use homebrew (macOS or Linux)](#or-use-homebrew-macos-or-linux)
-    - [Or use snap (Linux only)](#or-use-snap-linux-only)
-    - [Or use AUR (Arch Linux)](#or-use-aur-arch-linux)
-  - [What makes Ferdi different from Franz?](#what-makes-ferdi-different-from-franz)
-    - [Removes unproductive paywalls and other other interruptions](#removes-unproductive-paywalls-and-other-other-interruptions)
-    - [Adds features to increase your productivity](#adds-features-to-increase-your-productivity)
-    - [Adds features to improve your privacy](#adds-features-to-improve-your-privacy)
-    - [Adds features to improve your experience using Ferdi](#adds-features-to-improve-your-experience-using-ferdi)
-    - [Fixes bugs](#fixes-bugs)
-    - [Adds new platforms](#adds-new-platforms)
-    - [Adds internal changes](#adds-internal-changes)
-  - [Contributing to Ferdi's development](#contributing-to-ferdis-development)
-  - [Nightly releases](#nightly-releases)
-  - [Troubleshooting recipes (self-help)](#troubleshooting-recipes-self-help)
-  - [Contributors ✨](#contributors-)
-  - [Backers via OpenCollective](#backers-via-opencollective)
-  - [Sponsors via OpenCollective](#sponsors-via-opencollective)
-  - [Other Sponsors](#other-sponsors)
-  </details>
-
-## What is Ferdi?
+> 🤴🏽 Hard-fork of [Franz](https://github.com/meetfranz/franz), adding awesome features and removing unwanted ones.
 
 Ferdi is a desktop app that helps you organize how you use your favourite apps by combining them into one application. It is based on Franz - a software already used by thousands of people - with the difference that Ferdi gives you many additional features and doesn't restrict its usage! Furthermore, Ferdi is compatible with your existing Franz account, so you can continue right where you left off. Please find out more about Ferdi and its features on [getferdi.com](https://getferdi.com).
 
-## Features
-
-- [x] Ferdi puts all your web apps into one place
-- [x] Native support for 189 services
-- [x] Workspaces to keep your personal and work life separated
-- [x] Support for multiple accounts on any service
-- [x] Dark Mode support for all of your services
-- [x] Optional cloud sync to keep your services synchronized between devices
-- [x] Better control over when you get which notifications
-- [x] Cross-platform so you can view your services on all your computers
-- [x] Full proxy support to work in every network environment
-- [x] Ferdi speaks your language: Support for 20+ languages
-
-...and best of all:
-
-- [x] Its completely free! There are no restrictions on features, no paywalls, no ads
-
-## What does Ferdi look like?
+## Screenshots
 
 <details>
 <summary>Toggle screenshots</summary>
@@ -96,49 +42,18 @@ Ferdi is a desktop app that helps you organize how you use your favourite apps b
 </p>
 </details>
 
-## How to get and start using Ferdi
+## Download
 
-### Download Ferdi
+👉 [getferdi.com/download](https://getferdi.com/download/)
 
-You can download Ferdi for Windows, Mac and Linux on [Ferdi's download page](https://getferdi.com/download) or you can find all variants in the [latest stable release](https://github.com/getferdi/ferdi/releases/latest) assets and [all the other releases here](https://github.com/getferdi/ferdi/releases).
-
-### Or use Chocolatey (Windows only)
-
-`$ choco install ferdi`
-
-(Don't know Chocolatey? [chocolatey.org](https://chocolatey.org/))
-
-### Or use Windows Package Manager (Windows only)
-
-`$ winget install --id AmineMouafik.Ferdi`
-
-(Don't know winget? [winget-cli](https://github.com/microsoft/winget-cli/))
-
-### Or use homebrew (macOS or Linux)
-
-`$ brew install --cask ferdi`
-
-(Don't know homebrew? [brew.sh](https://brew.sh/))
-
-### Or use snap (Linux only)
-
-`$ snap install ferdi`
-
-You can find published releases as `stable`, `beta` and `nightly` channels on [snapcraft.io](https://snapcraft.io/ferdi).
-
-(Don't know snap? [snapcraft.io](https://snapcraft.io/))
-
-### Or use AUR (Arch Linux)
-
-Ferdi has three separate AUR packages you can use:
-
-- **[ferdi](https://aur.archlinux.org/packages/ferdi/)**: Uses your system electron version to run the latest release - this version will work best on most systems.
-- **[ferdi-bin](https://aur.archlinux.org/packages/ferdi-bin/)**: Uses the latest Fedora release and extracts it to Arch. Use this version if you are having trouble with the `ferdi` package.
-- **[ferdi-git](https://aur.archlinux.org/packages/ferdi-git/)**: Uses your system electron version to run the latest commit from the develop branch and may be unstable but may also give you features that are not yet available in other versions. Please only use `ferdi-git` if you accept these risks.
-
-If you use an AUR Helper, e.g. yay, install it via `yay -S ferdi`.
+Assets made available via [GitHub releases](https://github.com/getferdi/ferdi/releases/latest).
 
 ## What makes Ferdi different from Franz?
+
+_Find answers to other frequently asked questions on [getferdi.com/faq](https://getferdi.com/faq/)._
+
+<details>
+<summary>Toggle answer</summary>
 
 ### Removes unproductive paywalls and other other interruptions
 
@@ -227,7 +142,7 @@ If you use an AUR Helper, e.g. yay, install it via `yay -S ferdi`.
 
 ### Adds internal changes
 
-- [x] Upgrades to Electron 15.3.0
+- [x] Upgrades to Electron 15.3.2
 - [x] Switches to [`electron-spellchecker`](https://github.com/electron-userland/electron-spellchecker) to improve application size
 - [x] Minifies build files to improve app size
 - [x] Adds "npm run prepare-code" command for development to lint and beautify code
@@ -237,21 +152,16 @@ If you use an AUR Helper, e.g. yay, install it via `yay -S ferdi`.
 - [x] Adds retry commands to flaky build steps ([#498](https://github.com/getferdi/ferdi/issues/498))
 - [x] Runs utility scripts pre-commit instead of pre-push ([#515](https://github.com/getferdi/ferdi/issues/515))
 
-> Thanks to all our [contributors](#contributors-) who helped realize all these amazing features! 💖
+</details>
 
-## Contributing to Ferdi's development
+## Troubleshooting [recipes](https://github.com/getferdi/recipes)
 
-We welcome all contributors. Please read the [contributing guidelines](CONTRIBUTING.md) to setup your development machine and proceed.
+<details>
+<summary>Toggle answer</summary>
 
-## Nightly releases
+One of the issues being raised by the users of Ferdi is that certain service-functionalities do not work. As good example of this is either the unread count (badge) stops working for specific services or the gmail logins don't work anymore. (These are just 2 of the most common problems reported).
 
-Nightly releases are automatically triggered every day ([details](https://github.com/getferdi/ferdi/pull/990)) and available in [getferdi/ferdi](https://github.com/getferdi/ferdi/releases). Maintainers still need to verify and manually publish the draft releases as pre-releases for now.
-
-## Troubleshooting recipes (self-help)
-
-One of the issues being raised by the awesome users of Ferdi is that certain service-functionalities do not work. As good example of this is either the unread count (badge) stops working for specific services or the gmail logins don't work anymore. (These are just 2 of the most common problems reported).
-
-Since we (the contributors to Ferdi) also eat our own dog food, we use Ferdi as our day-to-day communication app - and most likely have faced the same/similar issue. As a first step before filing an issue, we request you to follow these simple steps to see if the issue gets fixed. These recipes will get automatically upgraded when you upgrade to the newer versions of Ferdi, but to get new recipes **between** Ferdi releases, this documentation is quite useful.
+Since we (the contributors to Ferdi) also eat our own food, we use Ferdi as our day-to-day communication app - and most likely have faced the same/similar issue. As a first step before filing an issue, we request you to follow these simple steps to see if the issue gets fixed. These recipes will get automatically upgraded when you upgrade to the newer versions of Ferdi, but to get new recipes **between** Ferdi releases, this documentation is quite useful.
 
 - Make sure you are on the latest version of Ferdi. As of this writing, since the nightly CI packaging process is broken, we request you to download the latest nightly from the link in [Nightly releases](#nightly-releases) section.
 - Stop Ferdi
@@ -269,168 +179,35 @@ Since we (the contributors to Ferdi) also eat our own dog food, we use Ferdi as 
 - If this process did not fix the issue, please log a detailed bug report [here](https://github.com/getferdi/recipes/issues)
 - _Note:_ An automated process to perform these steps is being ideated and tracked [here](https://github.com/getferdi/ferdi/issues/1302)
 
+</details>
+
+## Contributing
+
+Please read the [contributing guidelines](CONTRIBUTING.md) to setup your development machine and proceed.
+
 ## Contributors ✨
 
-Thanks goes to these awesome people:
+Special thanks goes to these awesome people:
 
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tr>
-    <td align="center"><a href='https://vantezzen.io' title='Bennett: code, design, doc, ideas, translation, example, bug, content, infra, userTesting, question, projectManagement, review'><img src='https://avatars2.githubusercontent.com/u/10333196?v=4' alt='vantezzen' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://twitter.com/kytwb' title='Amine Mouafik: code, design, doc, ideas, bug, content, infra, userTesting, question, projectManagement, review, maintenance, platform, fundingFinding, blog, translation'><img src='https://avatars0.githubusercontent.com/u/412895?v=4' alt='kytwb' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='http://www.adlk.io' title='Stefan Malzner: code, content, design, doc, ideas, infra, projectManagement, test, translation'><img src='https://avatars1.githubusercontent.com/u/3265004?v=4' alt='adlk' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/Makazzz' title='Makazzz: bug, code, translation, content, doc, platform'><img src='https://avatars2.githubusercontent.com/u/49844464?v=4' alt='Makazzz' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='http://seriesgt.com' title='ZeroCool: code, ideas'><img src='https://avatars3.githubusercontent.com/u/5977640?v=4' alt='ZeroCool940711' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/rseitbekov' title='rseitbekov: code'><img src='https://avatars2.githubusercontent.com/u/35684439?v=4' alt='rseitbekov' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://djangogigs.com/developers/peter-bittner/' title='Peter Bittner: ideas, bug'><img src='https://avatars2.githubusercontent.com/u/665072?v=4' alt='bittner' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/justus-saul' title='Justus Saul: bug, ideas'><img src='https://avatars1.githubusercontent.com/u/5861826?v=4' alt='justus-saul' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/igreil' title='igreil: ideas'><img src='https://avatars0.githubusercontent.com/u/17239151?v=4' alt='igreil' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='http://marcolopes.eu' title='Marco Lopes: ideas'><img src='https://avatars1.githubusercontent.com/u/431889?v=4' alt='marcolopes' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/dayzlun' title='dayzlun: bug'><img src='https://avatars3.githubusercontent.com/u/17259690?v=4' alt='dayzlun' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://twitter.com/tobigue_' title='Tobias Günther: ideas'><img src='https://avatars2.githubusercontent.com/u/1560152?v=4' alt='tobigue' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/AGCaesar' title='AGCaesar: platform'><img src='https://avatars3.githubusercontent.com/u/7844066?v=4' alt='AGCaesar' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/xthursdayx' title='xthursdayx: code, doc, infra, platform'><img src='https://avatars0.githubusercontent.com/u/18044308?v=4' alt='xthursdayx' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/Gaboris' title='Gaboris: question, bug'><img src='https://avatars2.githubusercontent.com/u/9462372?v=4' alt='Gaboris' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='http://www.cu3ed.com/' title='Ce: bug'><img src='https://avatars1.githubusercontent.com/u/61343?v=4' alt='incace' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-  </tr>
-  <tr>
-    <td align="center"><a href='http://pztrn.name/' title='Stanislav N.: bug'><img src='https://avatars1.githubusercontent.com/u/869402?v=4' alt='pztrn' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='http://www.patrickcurl.com' title='Patrick Curl: ideas'><img src='https://avatars1.githubusercontent.com/u/1470061?v=4' alt='patrickcurl' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/Stanzilla' title='Benjamin Staneck: design'><img src='https://avatars3.githubusercontent.com/u/75278?v=4' alt='Stanzilla' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/ammarmalhas' title='ammarmalhas: bug, security'><img src='https://avatars1.githubusercontent.com/u/57057209?v=4' alt='ammarmalhas' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/steliyan' title='Steliyan Stoyanov: code, ideas'><img src='https://avatars1.githubusercontent.com/u/1850292?v=4' alt='steliyan' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/brorbw' title='Bror Winther: doc'><img src='https://avatars2.githubusercontent.com/u/5909562?v=4' alt='brorbw' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://fwdekker.com/' title='Felix W. Dekker: doc'><img src='https://avatars0.githubusercontent.com/u/13442533?v=4' alt='FWDekker' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/Sauceee' title='Sauceee: design'><img src='https://avatars2.githubusercontent.com/u/17987941?v=4' alt='Sauceee' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='http://lhw.ring0.de' title='Lennart Weller: platform'><img src='https://avatars2.githubusercontent.com/u/351875?v=4' alt='lhw' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/jereksel' title='Andrzej Ressel: code'><img src='https://avatars0.githubusercontent.com/u/1307829?v=4' alt='jereksel' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://gitlab.com/dpeukert' title='Daniel Peukert: code'><img src='https://avatars2.githubusercontent.com/u/3451904?v=4' alt='dpeukert' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/Ali_Shiple' title='Ali M. Shiple: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/12895436/small/00917d09ca1b4b6d8e0ef36af07ecf6b.jpg' alt='Ali_Shiple' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/elviseras' title='elviseras: translation'><img src='https://www.gravatar.com/avatar/25c2cf0d8cb4a4141e71c3b8a2e9324f' alt='elviseras' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/J370' title='J370: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14141203/small/7b12b5db419d8796450221c2eaaf6003.png' alt='J370' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/keunes' title='Koen: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/13018172/small/829115c606347b10218f34c637a2100c.png' alt='keunes' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/leandrogehlen' title='Leandro Gehlen: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14099621/small/1d9503523839c310dbce0af3c226e894.jpeg' alt='leandrogehlen' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-  </tr>
-  <tr>
-    <td align="center"><a href='https://crowdin.com/profile/Matthieu42' title='Matthieu42: translation'><img src='https://www.gravatar.com/avatar/735217ccccf11ba97573deee517ddb19' alt='Matthieu42' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/nicky18013' title='Nikita Bibanaev: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/13468928/small/2b31e7ac19645d950a79b33ffd5721b8.png' alt='nicky18013' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/Tatjana1998' title='Tatjana1998: translation'><img src='https://www.gravatar.com/avatar/ade202a04fcbb2c177e4f1d9936af29e' alt='Tatjana1998' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/seayko' title='tinect: translation'><img src='https://www.gravatar.com/avatar/65e2aef738ddf828f822d8463fd04918' alt='seayko' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/Pusnow' title='Wonsup Yoon: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/13514833/small/65f0b45587cc7e34f2827830cd324b16.jpeg' alt='Pusnow' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/zutt' title='zutt: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/13320003/small/50fdf9f8c7e54a446925bd79696ea625.JPG' alt='zutt' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='http://twitter.com/noemis_exec' title='n0emis: code, translation'><img src='https://avatars3.githubusercontent.com/u/22817873?v=4' alt='n0emis' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://www.monke-agency.com/equipe.html' title='gmarec: code'><img src='https://avatars2.githubusercontent.com/u/3405028?v=4' alt='gmarec' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/127oo1' title='127oo1: translation'><img src='https://www.gravatar.com/avatar/060c722be11da16ae31902e9c98326b2' alt='127oo1' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/ChTBoner' title='ChTBoner: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/13273153/small/a810886febf5199cfa1c98644444dea7.jpeg' alt='ChTBoner' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/johanengstrand' title='Johan Engstrand: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14152801/small/fd395f120efca971ca9b34c57fd02cca.png' alt='johanengstrand' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://mrassili.com' title='Marouane R: code'><img src='https://avatars0.githubusercontent.com/u/25288435?v=4' alt='mrassili' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/yourcontact' title='Roman: code, ideas'><img src='https://avatars2.githubusercontent.com/u/46404814?v=4' alt='yourcontact' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/mahadevans87' title='Mahadevan Sreenivasan: code, ideas, review, bug, doc, userTesting'><img src='https://avatars1.githubusercontent.com/u/1255523?v=4' alt='mahadevans87' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://jakelee.co.uk' title='Jake Lee: content'><img src='https://avatars2.githubusercontent.com/u/12380876?v=4' alt='JakeSteam' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/sampathBlam' title='Sampath Kumar Krishnan: code, review, ideas, bug, doc, userTesting'><img src='https://avatars1.githubusercontent.com/u/17728976?v=4' alt='sampathBlam' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-  </tr>
-  <tr>
-    <td align="center"><a href='https://github.com/saruwman' title='saruwman: doc, code'><img src='https://avatars2.githubusercontent.com/u/41330038?v=4' alt='saruwman' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/dorukkarinca' title='dorukkarinca: bug'><img src='https://avatars0.githubusercontent.com/u/9303867?v=4' alt='dorukkarinca' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://www.linkedin.com/in/gautamsi' title='Gautam Singh: code'><img src='https://avatars2.githubusercontent.com/u/5769869?v=4' alt='gautamsi' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://feikojoosten.com' title='Feiko Joosten: code'><img src='https://avatars0.githubusercontent.com/u/10920052?v=4' alt='FeikoJoosten' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/2bdelghafour' title='2bdelghafour: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14219410/small/31ff20f60d352fb46e314f3c180a77b0.jpeg' alt='2bdelghafour' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/abdoutanta' title='Abderrahim Tantaoui: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14213908/small/5b2fc8166f8a0a2b7313fbf49ee5b6b6.jpeg' alt='abdoutanta' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/AndiLeni' title='AndiLeni: translation'><img src='https://www.gravatar.com/avatar/4bd0da860de38afa735425ce2d4e10b5' alt='AndiLeni' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/brunofalmada' title='Bruno Almada: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14200540/small/f6f1addceeeabc02488f9b08520a902f.jpeg' alt='brunofalmada' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/Catarino' title='Catarino Gonçalo: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14208802/small/07287eb2de671257ca3d6bb4ba1cca67.jpeg' alt='Catarino' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/Alzemand' title='Edilson Alzemand Sigmaringa Junior: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14184269/small/f5e68247f01988ae7951a282f0fd4d06.jpeg' alt='Alzemand' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/MAT-OUT' title='MAT-OUT: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14201550/small/68dd2402bf2879bc3ca312d627710400.png' alt='MAT-OUT' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/mazzo98' title='mazzo98: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/12864917/small/69799b5fd7be2f67282715d5cdfd4ae1.png' alt='mazzo98' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/paprika-naught-tiffin-flyspeck' title='paprika-naught-tiffin-flyspeck: translation'><img src='https://www.gravatar.com/avatar/8671ebe7a7164dfa7624fbdbff69ed96' alt='paprika-naught-tiffin-flyspeck' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/patrickvalle' title='Patrick Valle: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14217484/small/8b73f313ee79fe33625e819cdac86551.jpg' alt='patrickvalle' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/peq42' title='peq42_: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14155811/small/b62a94dde7ec29948ec6a6af9fd24b1d.png' alt='peq42' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/karlinhos' title='Pumbinha: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14161139/small/96450eb44c22b3141ab4401e547109b8.png' alt='karlinhos' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-  </tr>
-  <tr>
-    <td align="center"><a href='https://crowdin.com/profile/dies' title='Serhiy Dmytryshyn: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/1/small/e84bcdf6c084ffd52527931f988fb410.png' alt='dies' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/SMile61' title='SMile61: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/14177585/small/1bb4f6ba39bff3df8f579e61460ce016.png' alt='SMile61' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://crowdin.com/profile/tinect' title='tinect: translation'><img src='https://crowdin-static.downloads.crowdin.com/avatar/12521988/small/56c2041645746af9e51dd28782b828c3.jpeg' alt='tinect' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/gega7' title='gega7: bug'><img src='https://avatars0.githubusercontent.com/u/20799911?v=4' alt='gega7' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/tristanplouz' title='tristanplouz: code, ideas'><img src='https://avatars2.githubusercontent.com/u/6893466?v=4' alt='tristanplouz' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/dannyqiu' title='Danny Qiu: code, bug'><img src='https://avatars1.githubusercontent.com/u/1170755?v=4' alt='dannyqiu' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/belyazidi56' title='Youssef Belyazidi: code'><img src='https://avatars3.githubusercontent.com/u/35711540?v=4' alt='belyazidi56' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/gabspeck' title='Gabriel Speckhahn: platform'><img src='https://avatars2.githubusercontent.com/u/749488?v=4' alt='gabspeck' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/dandelionadia' title='Nadiia Ridko: code'><img src='https://avatars0.githubusercontent.com/u/33199975?v=4' alt='dandelionadia' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://hohner.dev' title='Jan Hohner: userTesting'><img src='https://avatars0.githubusercontent.com/u/649895?v=4' alt='janhohner' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://marussy.com' title='Kristóf Marussy: code, maintenance, review'><img src='https://avatars1.githubusercontent.com/u/38888?v=4' alt='kris7t' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://cl.linkedin.com/in/juanvalentinmoraruiz' title='Juan Mora: code'><img src='https://avatars0.githubusercontent.com/u/4575267?v=4' alt='raicerk' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://tofran.com' title='Francisco Marques: code'><img src='https://avatars2.githubusercontent.com/u/5692603?v=4' alt='tofran' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://digitalcoyote.github.io/NuGetDefense/' title='Curtis Carter: platform'><img src='https://avatars3.githubusercontent.com/u/16868093?v=4' alt='digitalcoyote' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/kawarimidoll' title='カワリミ人形: doc'><img src='https://avatars0.githubusercontent.com/u/8146876?v=4' alt='kawarimidoll' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://immortal-pc.info/' title='1mm0rt41PC: code'><img src='https://avatars0.githubusercontent.com/u/5358076?v=4' alt='1mm0rt41PC' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-  </tr>
-  <tr>
-    <td align="center"><a href='http://code-addict.pl' title='Michał Kostewicz: code'><img src='https://avatars.githubusercontent.com/u/6313392?v=4' alt='k0staa' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://www.linkedin.com/in/yogainformatika/' title='Yoga Setiawan: code, platform'><img src='https://avatars.githubusercontent.com/u/1139881?v=4' alt='arioki1' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/MosheGross' title='Moshe Gross: code'><img src='https://avatars.githubusercontent.com/u/77084755?v=4' alt='MosheGross' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/stnkl' title='Stephan Rumswinkel: code, bug'><img src='https://avatars.githubusercontent.com/u/17520641?v=4' alt='stnkl' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/vraravam' title='Vijay Raghavan Aravamudhan: maintenance, doc, code, mentoring, review, infra, ideas, bug, content, userTesting, projectManagement'><img src='https://avatars.githubusercontent.com/u/69629?v=4' alt='vraravam' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://dustin.meecolabs.eu/' title='Dustin: design'><img src='https://avatars.githubusercontent.com/u/124467?v=4' alt='alopix' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/jakobsudau' title='Jakob Felix Julius Sudau: design'><img src='https://avatars.githubusercontent.com/u/721715?v=4' alt='jakobsudau' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://prasans.info' title='Prasanna: code'><img src='https://avatars.githubusercontent.com/u/380340?v=4' alt='prasann' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/markandan' title='Markandan R: code'><img src='https://avatars.githubusercontent.com/u/7975763?v=4' alt='markandan' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://markushatvan.com' title='Markus Hatvan: code, ideas, design, review, infra'><img src='https://avatars.githubusercontent.com/u/16797721?v=4' alt='mhatvan' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://sergiu.dev/' title='Sergiu Ghitea: code'><img src='https://avatars.githubusercontent.com/u/28300158?v=4' alt='sergiughf' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/ArviTheMan' title='ArviTheMan: doc'><img src='https://avatars.githubusercontent.com/u/73516201?v=4' alt='ArviTheMan' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://bandism.net/' title='Ikko Ashimine: code'><img src='https://avatars.githubusercontent.com/u/22633385?v=4' alt='eltociear' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/madsmtm' title='Mads Marquart: translation'><img src='https://avatars.githubusercontent.com/u/10577181?v=4' alt='madsmtm' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='http://mateusz.loskot.net/' title='Mateusz Łoskot: doc'><img src='https://avatars.githubusercontent.com/u/80741?v=4' alt='mloskot' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/skoshy' title='Stefan K: doc'><img src='https://avatars.githubusercontent.com/u/369825?v=4' alt='skoshy' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-  </tr>
-  <tr>
-    <td align="center"><a href='https://github.com/graves501' title='graves501: doc'><img src='https://avatars.githubusercontent.com/u/11211125?v=4' alt='graves501' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://www.ekino.com' title='Sadetdin EYILI: code, bug, userTesting'><img src='https://avatars.githubusercontent.com/u/5607440?v=4' alt='sad270' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/Tsakatac' title='Tsakatac: bug'><img src='https://avatars.githubusercontent.com/u/89021195?v=4' alt='Tsakatac' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='http://niute.ch' title='niu tech: code'><img src='https://avatars.githubusercontent.com/u/384997?v=4' alt='niutech' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/Suvarna221B' title='Suvarna Sivadas: code'><img src='https://avatars.githubusercontent.com/u/31803071?v=4' alt='Suvarna221B' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/johan-mathew' title='Johan Mathew: code'><img src='https://avatars.githubusercontent.com/u/31700508?v=4' alt='johan-mathew' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/AjeshKumarS' title='Ajesh Kumar S: code'><img src='https://avatars.githubusercontent.com/u/31558237?v=4' alt='AjeshKumarS' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/sreelekhaMarasig' title='Ajesh Kumar S: code'><img src='https://avatars.githubusercontent.com/u/93112178?v=4' alt='sreelekhaMarasig' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/MadhuriBandanadam' title='Madhuri: code'><img src='https://avatars.githubusercontent.com/u/63137999?v=4' alt='MadhuriBandanadam' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/abinmn' title='Abin Mn: code'><img src='https://avatars.githubusercontent.com/u/29946484?v=4' alt='abinmn' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/AnjithPaul' title='Anjith Paul: code'><img src='https://avatars.githubusercontent.com/u/65152866?v=4' alt='AnjithPaul' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/Vishnu017' title='Vishnu017: code'><img src='https://avatars.githubusercontent.com/u/39431453?v=4' alt='Vishnu017' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/rachelcynthia' title='Rachel Cynthia V: code'><img src='https://avatars.githubusercontent.com/u/46859572?v=4' alt='rachelcynthia' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/Chandrika-Priya' title='Chandrika Priya Bogadi: code'><img src='https://avatars.githubusercontent.com/u/46720139?v=4' alt='Chandrika-Priya' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/Dee-Bajaj' title='Deepti: code'><img src='https://avatars.githubusercontent.com/u/66486870?v=4' alt='Dee-Bajaj' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-    <td align="center"><a href='https://github.com/DarsiSreelekha' title='DarsiSreelekha: code'><img src='https://avatars.githubusercontent.com/u/89741061?v=4' alt='DarsiSreelekha' style='border-radius:42px;width:42px;height:42px;'/></a></td>
-  </tr>
-</table>
-
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
+<a href="https://github.com/getferdi/ferdi/blob/develop/.all-contributorsrc" target="_blank"><img src="https://opencollective.com/getferdi/contributors.svg?avatarHeight=42&width=890&button=off"></a>
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
 
-## Backers via OpenCollective
+### Backers via Open Collective
 
-<a href="https://opencollective.com/getferdi#section-contribute" target="_blank"><img src="https://opencollective.com/getferdi/backers.svg?width=890"></a>
+<a href="https://opencollective.com/getferdi#section-contribute" target="_blank"><img src="https://opencollective.com/getferdi/backers.svg?avatarHeight=42&width=890"></a>
 
 Mention to the individuals backing us via [GitHub Sponsors](https://github.com/sponsors/getferdi) as well.
 
-## Sponsors via OpenCollective
-
-<a href="https://opencollective.com/getferdi#section-contribute" target="_blank"><img src="https://opencollective.com/getferdi/sponsors.svg?width=890"></a>
-
-## Other Sponsors
+### Sponsors
 
 <p>
   <a href="https://www.digitalocean.com/">
-    <img src="https://opensource.nyc3.cdn.digitaloceanspaces.com/attribution/assets/SVG/DO_Logo_horizontal_blue.svg" width="201px">
+    <img src="https://getferdi.com/wp-content/uploads/sites/4/2021/09/digitalocean-logo-vector-1-1.svg" height="32px">
   </a>
 </p>
 <p>
   <a href="https://www.parallels.com/">
-    <img src="https://user-images.githubusercontent.com/412895/87706297-3025e380-c797-11ea-94c4-bf8414b0b5ab.png" height="32px">
+    <img src="https://getferdi.com/wp-content/uploads/sites/4/2021/12/Parallels_logo.svg" height="30px">
   </a>
 </p>

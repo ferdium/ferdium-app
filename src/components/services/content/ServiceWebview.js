@@ -9,7 +9,6 @@ import ServiceModel from '../../../models/Service';
 
 const debug = require('debug')('Ferdi:Services');
 
-@observer
 class ServiceWebview extends Component {
   static propTypes = {
     service: PropTypes.instanceOf(ServiceModel).isRequired,
@@ -31,11 +30,13 @@ class ServiceWebview extends Component {
             debug('Service logged a message:', e.message);
           });
           this.webview.view.addEventListener('did-navigate', () => {
-            document.title = `Ferdi - ${this.props.service.name} ${
-              this.props.service.dialogTitle
-                ? ` - ${this.props.service.dialogTitle}`
-                : ''
-            } ${`- ${this.props.service._webview.getTitle()}`}`;
+            if (this.props.service._webview) {
+              document.title = `Ferdi - ${this.props.service.name} ${
+                this.props.service.dialogTitle
+                  ? ` - ${this.props.service.dialogTitle}`
+                  : ''
+              } ${`- ${this.props.service._webview.getTitle()}`}`;
+            }
           });
         }
       },
@@ -108,10 +109,10 @@ class ServiceWebview extends Component {
         nodeintegration
         webpreferences={`spellcheck=${
           isSpellcheckerEnabled ? 1 : 0
-        }, contextIsolation=1, enableRemoteModule=1`}
+        }, contextIsolation=1, nativeWindowOpen=1, enableRemoteModule=1`}
       />
     );
   }
 }
 
-export default ServiceWebview;
+export default observer(ServiceWebview);

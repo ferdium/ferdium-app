@@ -14,9 +14,6 @@
   &.is-disabled .tab-item__icon {
     filter: grayscale(100%) opacity(0.2);
   }
-  .tab-item__icon {
-    width: 34px;
-  }
 }
 
 .tabs {
@@ -47,9 +44,9 @@
       $theme-brand-primary,
       $lightness: min(lightness($theme-brand-primary) * 1.35, 100)
     );
+    border-color: $theme-brand-primary;
     border-left-width: 4px;
     border-left-style: solid;
-    color: $theme-brand-primary;
 
     .tab-item__icon {
       margin-left: -4px;

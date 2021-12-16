@@ -37,7 +37,6 @@ const messages = defineMessages({
   },
 });
 
-@observer
 class EditUserForm extends Component {
   static propTypes = {
     status: MobxPropTypes.observableArray.isRequired,
@@ -128,4 +127,4 @@ class EditUserForm extends Component {
   }
 }
 
-export default injectIntl(EditUserForm);
+export default injectIntl(observer(EditUserForm));

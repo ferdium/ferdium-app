@@ -82,6 +82,8 @@ module.exports = {
         'react/sort-comp': 0,
         'react/state-in-constructor': 0,
         'react/static-property-placement': 0,
+        'react/function-component-definition': 0,
+        'react/jsx-no-useless-fragment': 0,
         //  eslint-plugin-jsx-a11y
         'jsx-a11y/click-events-have-key-events': 1,
         'jsx-a11y/mouse-events-have-key-events': 1,
@@ -115,6 +117,8 @@ module.exports = {
           },
         ],
         'unicorn/consistent-destructuring': 0,
+        // INFO: Turned off due to src/internal-server/database/factory.js
+        'unicorn/no-empty-file': 0,
         // eslint-plugin-prettier
         'prettier/prettier': 1,
       },
@@ -165,6 +169,8 @@ module.exports = {
     'react/static-property-placement': 0,
     'react/state-in-constructor': 1,
     'react/sort-comp': 0,
+    'react/function-component-definition': 0,
+    'react/jsx-no-useless-fragment': 0,
     //  eslint-plugin-jsx-a11y
     'jsx-a11y/click-events-have-key-events': 1,
     'jsx-a11y/no-static-element-interactions': 1,
@@ -187,6 +193,8 @@ module.exports = {
       },
     ],
     'unicorn/consistent-destructuring': 0,
+    // INFO: Turned off due to src/internal-server/database/factory.js
+    'unicorn/no-empty-file': 0,
     // eslint-plugin-prettier
     'prettier/prettier': 1,
   },

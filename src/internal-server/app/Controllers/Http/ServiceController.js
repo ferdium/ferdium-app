@@ -34,6 +34,7 @@ class ServiceController {
     do {
       serviceId = uuid();
     } while (
+      // eslint-disable-next-line no-await-in-loop, unicorn/no-await-expression-member
       (await Service.query().where('serviceId', serviceId).fetch()).rows
         .length > 0
     );
@@ -68,7 +69,8 @@ class ServiceController {
 
   // List all services a user has created
   async list({ response }) {
-    const services = (await Service.all()).rows;
+    const allServices = await Service.all();
+    const services = allServices.rows;
     // Convert to array with all data Franz wants
     const servicesArray = services.map(service => {
       const settings =
@@ -111,8 +113,8 @@ class ServiceController {
         size: '2mb',
       });
       const { id } = params;
-      const service = (await Service.query().where('serviceId', id).fetch())
-        .rows[0];
+      const serviceQuery = await Service.query().where('serviceId', id).fetch();
+      const service = serviceQuery.rows[0];
       const settings =
         typeof service.settings === 'string'
           ? JSON.parse(service.settings)
@@ -166,8 +168,8 @@ class ServiceController {
     const { id } = params;
 
     // Get current settings from db
-    const serviceData = (await Service.query().where('serviceId', id).fetch())
-      .rows[0];
+    const serviceQuery = await Service.query().where('serviceId', id).fetch();
+    const serviceData = serviceQuery.rows[0];
 
     const settings = {
       ...(typeof serviceData.settings === 'string'
@@ -185,8 +187,10 @@ class ServiceController {
       });
 
     // Get updated row
-    const service = (await Service.query().where('serviceId', id).fetch())
-      .rows[0];
+    const anotherServiceQuery = await Service.query()
+      .where('serviceId', id)
+      .fetch();
+    const service = anotherServiceQuery.rows[0];
 
     return response.send({
       data: {
@@ -218,11 +222,12 @@ class ServiceController {
 
     for (const service of Object.keys(data)) {
       // Get current settings from db
-      const serviceData = (
-        await Service.query() // eslint-disable-line no-await-in-loop
-          .where('serviceId', service)
-          .fetch()
-      ).rows[0];
+      // eslint-disable-next-line no-await-in-loop
+      const serviceQuery = await Service.query()
+        .where('serviceId', service)
+        .fetch();
+
+      const serviceData = serviceQuery.rows[0];
 
       const settings = {
         ...JSON.parse(serviceData.settings),
@@ -238,7 +243,8 @@ class ServiceController {
     }
 
     // Get new services
-    const services = (await Service.all()).rows;
+    const allServices = await Service.all();
+    const services = allServices.rows;
     // Convert to array with all data Franz wants
     const servicesArray = services.map(service => {
       const settings =

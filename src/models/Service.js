@@ -238,6 +238,7 @@ export default class Service {
       let url;
       try {
         url = normalizeUrl(this.customUrl, {
+          stripAuthentication: false,
           stripWWW: false,
           removeTrailingSlash: false,
         });

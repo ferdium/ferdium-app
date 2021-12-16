@@ -1,14 +1,13 @@
 import { mdiStar } from '@mdi/js';
 import classnames from 'classnames';
 import { Component } from 'react';
-import injectStyle from 'react-jss';
+import injectStyle, { WithStylesProps } from 'react-jss';
 
 import { Theme } from '../../../themes';
 import { Icon } from '../icon';
 import { Badge } from './index';
-import { IWithStyle } from '../typings/generic';
 
-interface IProps extends IWithStyle {
+interface IProps extends WithStylesProps<typeof styles> {
   badgeClasses?: string;
   iconClasses?: string;
   inverted?: boolean;
@@ -61,4 +60,6 @@ class ProBadgeComponent extends Component<IProps> {
   }
 }
 
-export const ProBadge = injectStyle(styles)(ProBadgeComponent);
+export const ProBadge = injectStyle(styles, { injectTheme: true })(
+  ProBadgeComponent,
+);

@@ -2,11 +2,11 @@ import Icon from '@mdi/react';
 import classnames from 'classnames';
 import { Property } from 'csstype';
 import { Component, MouseEvent } from 'react';
-import injectStyle, { withTheme } from 'react-jss';
+import injectStyle, { WithStylesProps } from 'react-jss';
 import Loader from 'react-loader';
 
 import { Theme } from '../../../themes';
-import { IFormField, IWithStyle } from '../typings/generic';
+import { IFormField } from '../typings/generic';
 
 type ButtonType =
   | 'primary'
@@ -16,7 +16,7 @@ type ButtonType =
   | 'warning'
   | 'inverted';
 
-interface IProps extends IFormField, IWithStyle {
+interface IProps extends IFormField, WithStylesProps<typeof styles> {
   className?: string;
   disabled?: boolean;
   id?: string;
@@ -179,7 +179,7 @@ class ButtonComponent extends Component<IProps> {
     const {
       classes,
       className,
-      theme,
+      // theme,
       disabled,
       id,
       label,
@@ -213,7 +213,7 @@ class ButtonComponent extends Component<IProps> {
               loaded={false}
               width={4}
               scale={0.45}
-              color={theme.buttonLoaderColor[buttonType!]}
+              // color={theme.buttonLoaderColor[buttonType!]}
               parentClassName={classes.loader}
             />
           )}
@@ -262,4 +262,6 @@ class ButtonComponent extends Component<IProps> {
   }
 }
 
-export const Button = injectStyle(styles)(withTheme(ButtonComponent));
+export const Button = injectStyle(styles, { injectTheme: true })(
+  ButtonComponent,
+);

@@ -111,8 +111,6 @@ const messages = defineMessages({
   },
 });
 
-@inject('stores', 'actions')
-@observer
 class EditServiceScreen extends Component {
   onSubmit(data) {
     const { action } = this.props.router.params;
@@ -438,7 +436,7 @@ class EditServiceScreen extends Component {
   }
 }
 
-EditServiceScreen.wrappedComponent.propTypes = {
+EditServiceScreen.propTypes = {
   stores: PropTypes.shape({
     user: PropTypes.instanceOf(UserStore).isRequired,
     recipes: PropTypes.instanceOf(RecipesStore).isRequired,
@@ -451,4 +449,6 @@ EditServiceScreen.wrappedComponent.propTypes = {
   }).isRequired,
 };
 
-export default injectIntl(EditServiceScreen);
+export default injectIntl(
+  inject('stores', 'actions')(observer(EditServiceScreen)),
+);

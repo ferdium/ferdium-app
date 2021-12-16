@@ -1,8 +1,12 @@
-import { ipcRenderer } from 'electron';
+type Recipe = {
+  setBadge: (direct: number, indirect: number) => void;
+  setDialogTitle: (title: string) => void;
+  injectCSS: (css: string | string[]) => void;
+};
 
 export default class Userscript {
   // Current ./lib/RecipeWebview instance
-  recipe = null;
+  recipe: Recipe | null = null;
 
   // Current ./recipe.js instance
   controller = null;
@@ -12,8 +16,6 @@ export default class Userscript {
 
   // Ferdi and service settings
   settings = {};
-
-  settingsUpdateHandler = null;
 
   constructor(recipe, controller, config) {
     this.recipe = recipe;
@@ -29,31 +31,18 @@ export default class Userscript {
    * @param {*} settings
    */
   // eslint-disable-next-line camelcase
-  internal_setSettings(settings) {
+  internal_setSettings(settings: any) {
     // This is needed to get a clean JS object from the settings itself to provide better accessibility
     // Otherwise this will be a mobX instance
     this.settings = JSON.parse(JSON.stringify(settings));
-
-    if (typeof this.settingsUpdateHandler === 'function') {
-      this.settingsUpdateHandler();
-    }
-  }
-
-  /**
-   * Register a settings handler to be executed when the settings change
-   *
-   * @param {function} handler
-   */
-  onSettingsUpdate(handler) {
-    this.settingsUpdateHandler = handler;
   }
 
   /**
    * Set badge count for the current service
-   * @param {*} direct Direct messages
-   * @param {*} indirect Indirect messages
+   * @param {number} direct Direct messages
+   * @param {number} indirect Indirect messages
    */
-  setBadge(direct = 0, indirect = 0) {
+  setBadge(direct: number = 0, indirect: number = 0) {
     if (this.recipe && this.recipe.setBadge) {
       this.recipe.setBadge(direct, indirect);
     }
@@ -63,7 +52,7 @@ export default class Userscript {
    * Set active dialog title to the app title
    * @param {*} title Dialog title
    */
-  setDialogTitle(title) {
+  setDialogTitle(title: string) {
     if (this.recipe && this.recipe.setDialogTitle) {
       this.recipe.setDialogTitle(title);
     }
@@ -74,8 +63,9 @@ export default class Userscript {
    *
    * @param  {...string} files
    */
-  injectCSSFiles(...files) {
+  injectCSSFiles(...files: string[]) {
     if (this.recipe && this.recipe.injectCSS) {
+      // @ts-expect-error A spread argument must either have a tuple type or be passed to a rest parameter.
       this.recipe.injectCSS(...files);
     }
   }
@@ -85,54 +75,33 @@ export default class Userscript {
    *
    * @param {string} css
    */
-  injectCSS(css) {
+  injectCSS(css: string) {
     const style = document.createElement('style');
     style.textContent = css;
     document.head.append(style);
   }
 
   /**
-   * Open "Find in Page" popup
-   */
-  openFindInPage() {
-    this.controller.openFindInPage();
-  }
-
-  /**
    * Set or update value in storage
    *
-   * @param {*} key
-   * @param {*} value
+   * @param {string} key
+   * @param {any} value
    */
-  set(key, value) {
+  set(key: string, value: string) {
     window.localStorage.setItem(`ferdi-user-${key}`, JSON.stringify(value));
   }
 
   /**
    * Get value from storage
    *
-   * @param {*} key
+   * @param {string} key
    * @return Value of the key
    */
-  get(key) {
-    return JSON.parse(window.localStorage.getItem(`ferdi-user-${key}`));
-  }
+  get(key: string) {
+    const ferdiUserKey = window.localStorage.getItem(`ferdi-user-${key}`);
 
-  /**
-   * Open a URL in an external browser
-   *
-   * @param {*} url
-   */
-  externalOpen(url) {
-    ipcRenderer.sendToHost('new-window', url);
-  }
-
-  /**
-   * Open a URL in the current service
-   *
-   * @param {*} url
-   */
-  internalOpen(url) {
-    window.location.href = url;
+    if (ferdiUserKey) {
+      return JSON.parse(ferdiUserKey);
+    }
   }
 }

@@ -49,8 +49,6 @@ const messages = defineMessages({
   },
 });
 
-@inject('stores', 'actions')
-@observer
 class EditUserScreen extends Component {
   componentWillUnmount() {
     this.props.actions.user.resetStatus();
@@ -150,7 +148,7 @@ class EditUserScreen extends Component {
   }
 }
 
-EditUserScreen.wrappedComponent.propTypes = {
+EditUserScreen.propTypes = {
   stores: PropTypes.shape({
     user: PropTypes.instanceOf(UserStore).isRequired,
   }).isRequired,
@@ -159,4 +157,6 @@ EditUserScreen.wrappedComponent.propTypes = {
   }).isRequired,
 };
 
-export default injectIntl(EditUserScreen);
+export default injectIntl(
+  inject('stores', 'actions')(observer(EditUserScreen)),
+);

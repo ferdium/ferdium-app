@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { observer, PropTypes as MobxPropTypes, inject } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import serverlessLogin from '../../helpers/serverless-helpers';
+import { shuffleArray } from '../../helpers/array-helpers';
 
 import Link from '../ui/Link';
 
@@ -16,14 +17,16 @@ const messages = defineMessages({
     id: 'welcome.loginButton',
     defaultMessage: 'Login to your account',
   },
+  changeServer: {
+    id: 'login.changeServer',
+    defaultMessage: 'Change server'
+  },
   serverless: {
     id: 'services.serverless',
     defaultMessage: 'Use Ferdi without an Account',
   },
 });
 
-@inject('actions')
-@observer
 class Login extends Component {
   static propTypes = {
     loginRoute: PropTypes.string.isRequired,
@@ -39,8 +42,10 @@ class Login extends Component {
 
   render() {
     const { intl } = this.props;
-    const { loginRoute, signupRoute, changeServerRoute, recipes } = this.props;
-
+    const { loginRoute, signupRoute, changeServerRoute } = this.props;
+    let { recipes } = this.props;
+    recipes = shuffleArray(recipes);
+    recipes.length = 8 * 2;
     return (
       <div className="welcome">
         <div className="welcome__content">
@@ -61,25 +66,22 @@ class Login extends Component {
           <Link to={loginRoute} className="button">
             {intl.formatMessage(messages.loginButton)}
           </Link>
+          <Link to={changeServerRoute}>
+            <span
+              style={{
+                color: '#fff'
+              }}
+            >
+              {intl.formatMessage(messages.changeServer)}
+            </span>
+          </Link>
           <br />
+          <br />
+          <hr />
           <br />
           <a className="button" onClick={this.useLocalServer.bind(this)}>
             {intl.formatMessage(messages.serverless)}
           </a>
-          <br />
-          <br />
-
-          <Link to={changeServerRoute}>
-            <span
-              style={{
-                textAlign: 'center',
-                width: '100%',
-                cursor: 'pointer',
-              }}
-            >
-              Change server
-            </span>
-          </Link>
         </div>
         <div className="welcome__featured-services">
           {recipes.map(recipe => (
@@ -93,4 +95,4 @@ class Login extends Component {
   }
 }
 
-export default injectIntl(Login);
+export default injectIntl(inject('actions')(observer(Login)));

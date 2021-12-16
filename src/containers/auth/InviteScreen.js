@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import Invite from '../../components/auth/Invite';
 
-@inject('stores', 'actions')
-@observer
 class InviteScreen extends Component {
   render() {
     const { actions } = this.props;
@@ -13,7 +11,7 @@ class InviteScreen extends Component {
   }
 }
 
-InviteScreen.wrappedComponent.propTypes = {
+InviteScreen.propTypes = {
   actions: PropTypes.shape({
     user: PropTypes.shape({
       invite: PropTypes.func.isRequired,
@@ -21,4 +19,4 @@ InviteScreen.wrappedComponent.propTypes = {
   }).isRequired,
 };
 
-export default InviteScreen;
+export default inject('stores', 'actions')(observer(InviteScreen));

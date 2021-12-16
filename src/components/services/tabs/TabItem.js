@@ -114,9 +114,6 @@ const styles = {
   },
 };
 
-@injectSheet(styles)
-@inject('stores')
-@observer
 class TabItem extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -239,6 +236,7 @@ class TabItem extends Component {
         label: intl.formatMessage(messages.reload),
         click: reload,
         accelerator: `${cmdOrCtrlShortcutKey()}+R`,
+        enabled: service.isEnabled,
       },
       {
         label: intl.formatMessage(globalMessages.edit),
@@ -256,6 +254,7 @@ class TabItem extends Component {
           : intl.formatMessage(messages.enableNotifications),
         click: () => toggleNotifications(),
         accelerator: `${cmdOrCtrlShortcutKey()}+${altKey()}+N`,
+        enabled: service.isEnabled,
       },
       {
         label: service.isMuted
@@ -263,6 +262,7 @@ class TabItem extends Component {
           : intl.formatMessage(messages.disableAudio),
         click: () => toggleAudio(),
         accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+A`,
+        enabled: service.isEnabled,
       },
       {
         label: service.isDarkModeEnabled
@@ -270,13 +270,14 @@ class TabItem extends Component {
           : intl.formatMessage(messages.enableDarkMode),
         click: () => toggleDarkMode(),
         accelerator: `${shiftKey()}+${altKey()}+D`,
+        enabled: service.isEnabled,
       },
       {
         label: intl.formatMessage(
           service.isEnabled ? messages.disableService : messages.enableService,
         ),
         click: () => (service.isEnabled ? disableService() : enableService()),
-       accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+S`,
+        accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+S`,
       },
       {
         label: intl.formatMessage(
@@ -287,7 +288,7 @@ class TabItem extends Component {
         // eslint-disable-next-line no-confusing-arrow
         click: () =>
           service.isHibernating ? wakeUpService() : hibernateService(),
-        enabled: service.canHibernate,
+        enabled: service.isEnabled && service.canHibernate,
       },
       {
         type: 'separator',
@@ -402,4 +403,10 @@ class TabItem extends Component {
   }
 }
 
-export default injectIntl(SortableElement(TabItem));
+export default injectIntl(
+  SortableElement(
+    injectSheet(styles, { injectTheme: true })(
+      inject('stores')(observer(TabItem)),
+    ),
+  ),
+);

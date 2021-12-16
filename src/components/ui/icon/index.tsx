@@ -1,12 +1,11 @@
 import MdiIcon from '@mdi/react';
 import classnames from 'classnames';
 import { Component } from 'react';
-import injectStyle from 'react-jss';
+import injectStyle, { WithStylesProps } from 'react-jss';
 
 import { Theme } from '../../../themes';
-import { IWithStyle } from '../typings/generic';
 
-interface IProps extends IWithStyle {
+interface IProps extends WithStylesProps<typeof styles> {
   icon: string;
   size?: number;
   className?: string;
@@ -43,4 +42,4 @@ class IconComponent extends Component<IProps> {
   }
 }
 
-export const Icon = injectStyle(styles)(IconComponent);
+export const Icon = injectStyle(styles, { injectTheme: true })(IconComponent);

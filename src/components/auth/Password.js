@@ -38,7 +38,6 @@ const messages = defineMessages({
   },
 });
 
-@observer
 class Password extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
@@ -79,7 +78,7 @@ class Password extends Component {
     return (
       <div className="auth__container">
         <form className="franz-form auth__form" onSubmit={e => this.submit(e)}>
-          <img src="./assets/images/logo.svg" className="auth__logo" alt="" />
+          <Link to='/auth/welcome'><img src="./assets/images/logo.svg" className="auth__logo" alt="" /></Link>
           <h1>{intl.formatMessage(messages.headline)}</h1>
           {status.length > 0 && status.includes('sent') && (
             <Infobox type="success" icon="checkbox-marked-circle-outline">
@@ -119,4 +118,4 @@ class Password extends Component {
   }
 }
 
-export default injectIntl(Password);
+export default injectIntl(observer(Password));

@@ -2,9 +2,9 @@ import { mdiEye, mdiEyeOff } from '@mdi/js';
 import Icon from '@mdi/react';
 import classnames from 'classnames';
 import { Component, createRef, InputHTMLAttributes } from 'react';
-import injectSheet from 'react-jss';
+import injectSheet, { WithStylesProps } from 'react-jss';
 
-import { IFormField, IWithStyle } from '../typings/generic';
+import { IFormField } from '../typings/generic';
 
 import { Error } from '../error';
 import { Label } from '../label';
@@ -20,7 +20,7 @@ interface IData {
 interface IProps
   extends InputHTMLAttributes<HTMLInputElement>,
     IFormField,
-    IWithStyle {
+    WithStylesProps<typeof styles> {
   focus?: boolean;
   prefix?: string;
   suffix?: string;
@@ -205,4 +205,4 @@ class InputComponent extends Component<IProps, IState> {
   }
 }
 
-export const Input = injectSheet(styles)(InputComponent);
+export const Input = injectSheet(styles, { injectTheme: true })(InputComponent);

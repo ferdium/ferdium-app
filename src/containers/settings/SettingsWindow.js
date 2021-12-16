@@ -11,8 +11,6 @@ import ErrorBoundary from '../../components/util/ErrorBoundary';
 import { workspaceStore } from '../../features/workspaces';
 import UIStore from '../../stores/UIStore';
 
-@inject('stores', 'actions')
-@observer
 class SettingsContainer extends Component {
   portalRoot = document.querySelector('#portalContainer');
 
@@ -48,7 +46,7 @@ class SettingsContainer extends Component {
   }
 }
 
-SettingsContainer.wrappedComponent.propTypes = {
+SettingsContainer.propTypes = {
   children: PropTypes.element.isRequired,
   stores: PropTypes.shape({
     services: PropTypes.instanceOf(ServicesStore).isRequired,
@@ -58,4 +56,4 @@ SettingsContainer.wrappedComponent.propTypes = {
   }).isRequired,
 };
 
-export default SettingsContainer;
+export default inject('stores', 'actions')(observer(SettingsContainer));

@@ -29,14 +29,20 @@ const messages = defineMessages({
   },
 });
 
-const styles = () => ({
+const styles = theme => ({
+  modal: {
+    width: '80%',
+    maxWidth: 600,
+    background: theme.styleTypes.primary.contrast,
+    paddingTop: 30,
+  },
   info: {
-    paddingTop: 20,
     paddingBottom: 20,
   },
   headline: {
     fontSize: 20,
     marginBottom: 20,
+    marginTop: -27,
   },
   buttonContainer: {
     display: 'flex',
@@ -53,9 +59,6 @@ const styles = () => ({
   },
 });
 
-@injectSheet(styles)
-@inject('stores', 'actions')
-@observer
 class NightlyBuildsModal extends Component {
   close() {
     ModalState.isModalVisible = false;
@@ -91,6 +94,7 @@ class NightlyBuildsModal extends Component {
     return (
       <Modal
         isOpen={isModalVisible}
+        className={`${classes.modal} nightly-builds`}
         shouldCloseOnOverlayClick
         close={this.close.bind(this)}
       >
@@ -119,7 +123,7 @@ class NightlyBuildsModal extends Component {
   }
 }
 
-NightlyBuildsModal.wrappedComponent.propTypes = {
+NightlyBuildsModal.propTypes = {
   stores: PropTypes.shape({
     settings: PropTypes.instanceOf(SettingsStore).isRequired,
   }).isRequired,
@@ -131,4 +135,8 @@ NightlyBuildsModal.wrappedComponent.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default injectIntl(NightlyBuildsModal);
+export default injectIntl(
+  injectSheet(styles)(
+    inject('stores', 'actions')(observer(NightlyBuildsModal)),
+  ),
+);

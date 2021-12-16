@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import { Field } from 'mobx-react-form';
 
-@observer
 class Toggle extends Component {
   static propTypes = {
     field: PropTypes.instanceOf(Field).isRequired,
@@ -69,4 +68,4 @@ class Toggle extends Component {
   }
 }
 
-export default Toggle;
+export default observer(Toggle);

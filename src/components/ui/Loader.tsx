@@ -12,8 +12,6 @@ type Props = {
   stores: FerdiStores;
 };
 
-@inject('stores')
-@observer
 class LoaderComponent extends Component<Props> {
   static defaultProps = {
     loaded: false,
@@ -43,4 +41,4 @@ class LoaderComponent extends Component<Props> {
   }
 }
 
-export default LoaderComponent;
+export default inject('stores')(observer(LoaderComponent));

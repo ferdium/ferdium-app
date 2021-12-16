@@ -17,7 +17,6 @@ type Props = {
   autoFocus: boolean;
 };
 
-@observer
 class SearchInput extends Component<Props> {
   static defaultProps = {
     value: '',
@@ -115,4 +114,4 @@ class SearchInput extends Component<Props> {
   }
 }
 
-export default SearchInput;
+export default observer(SearchInput);

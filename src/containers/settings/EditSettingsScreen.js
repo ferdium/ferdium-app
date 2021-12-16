@@ -20,6 +20,8 @@ import {
   DEFAULT_SETTING_KEEP_ALL_WORKSPACES_LOADED,
   DEFAULT_IS_FEATURE_ENABLED_BY_USER,
   WAKE_UP_STRATEGIES,
+  SPLIT_COLUMNS_MIN,
+  SPLIT_COLUMNS_MAX,
 } from '../../config';
 import { isMac } from '../../environment';
 
@@ -169,6 +171,10 @@ const messages = defineMessages({
     id: 'settings.app.form.splitMode',
     defaultMessage: 'Enable Split View Mode',
   },
+  splitColumns: {
+    id: 'settings.app.form.splitColumns',
+    defaultMessage: 'Number of columns',
+  },
   serviceRibbonWidth: {
     id: 'settings.app.form.serviceRibbonWidth',
     defaultMessage: 'Sidebar width',
@@ -239,8 +245,6 @@ const messages = defineMessages({
   },
 });
 
-@inject('stores', 'actions')
-@observer
 class EditSettingsScreen extends Component {
   constructor(props) {
     super(props);
@@ -310,6 +314,7 @@ class EditSettingsScreen extends Component {
         adaptableDarkMode: Boolean(settingsData.adaptableDarkMode),
         universalDarkMode: Boolean(settingsData.universalDarkMode),
         splitMode: Boolean(settingsData.splitMode),
+        splitColumns: Number(settingsData.splitColumns),
         serviceRibbonWidth: Number(settingsData.serviceRibbonWidth),
         iconSize: Number(settingsData.iconSize),
         enableLongPressServiceHint: Boolean(
@@ -613,6 +618,13 @@ class EditSettingsScreen extends Component {
           value: settings.all.app.splitMode,
           default: DEFAULT_APP_SETTINGS.splitMode,
         },
+        splitColumns: {
+          label: `${intl.formatMessage(
+            messages.splitColumns,
+          )} (${SPLIT_COLUMNS_MIN}-${SPLIT_COLUMNS_MAX})`,
+          value: settings.all.app.splitColumns,
+          default: DEFAULT_APP_SETTINGS.splitColumns,
+        },
         serviceRibbonWidth: {
           label: intl.formatMessage(messages.serviceRibbonWidth),
           value: settings.all.app.serviceRibbonWidth,
@@ -725,6 +737,7 @@ class EditSettingsScreen extends Component {
           isAdaptableDarkModeEnabled={
             this.props.stores.settings.app.adaptableDarkMode
           }
+          isSplitModeEnabled={this.props.stores.settings.app.splitMode}
           isTodosActivated={this.props.stores.todos.isFeatureEnabledByUser}
           isUsingCustomTodoService={
             this.props.stores.todos.isUsingCustomTodoService
@@ -738,7 +751,7 @@ class EditSettingsScreen extends Component {
   }
 }
 
-EditSettingsScreen.wrappedComponent.propTypes = {
+EditSettingsScreen.propTypes = {
   stores: PropTypes.shape({
     app: PropTypes.instanceOf(AppStore).isRequired,
     user: PropTypes.instanceOf(UserStore).isRequired,
@@ -756,4 +769,6 @@ EditSettingsScreen.wrappedComponent.propTypes = {
   }).isRequired,
 };
 
-export default injectIntl(EditSettingsScreen);
+export default injectIntl(
+  inject('stores', 'actions')(observer(EditSettingsScreen)),
+);

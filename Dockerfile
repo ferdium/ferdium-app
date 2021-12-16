@@ -16,7 +16,7 @@ RUN apt-get update -y \
 
 WORKDIR /usr/src/ferdi
 
-RUN npm i -g pnpm@6.19.0
+RUN npm i -g pnpm@6.23.6
 
 COPY package*.json ./
 

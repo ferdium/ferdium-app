@@ -13,8 +13,10 @@ const RECIPES_URL = `${LIVE_FERDI_API}/${API_VERSION}/recipes`;
 class RecipeController {
   // List official and custom recipes
   async list({ response }) {
-    const officialRecipes = JSON.parse(await (await fetch(RECIPES_URL)).text());
-    const customRecipesArray = (await Recipe.all()).rows;
+    const recipesUrlFetch = await fetch(RECIPES_URL);
+    const officialRecipes = JSON.parse(await recipesUrlFetch).text();
+    const allRecipes = await Recipe.all();
+    const customRecipesArray = allRecipes.rows;
     const customRecipes = customRecipesArray.map(recipe => ({
       id: recipe.recipeId,
       name: recipe.name,
@@ -46,7 +48,8 @@ class RecipeController {
     let results;
 
     if (needle === 'ferdi:custom') {
-      const dbResults = (await Recipe.all()).toJSON();
+      const allRecipes = await Recipe.all();
+      const dbResults = allRecipes.toJSON();
       results = dbResults.map(recipe => ({
         id: recipe.recipeId,
         name: recipe.name,
@@ -56,20 +59,18 @@ class RecipeController {
       let remoteResults = [];
       // eslint-disable-next-line eqeqeq
       if (Env.get('CONNECT_WITH_FRANZ') == 'true') {
-        remoteResults = JSON.parse(
-          await (
-            await fetch(
-              `${RECIPES_URL}/search?needle=${encodeURIComponent(needle)}`,
-            )
-          ).text(),
+        const recipesUrlFetch = await fetch(
+          `${RECIPES_URL}/search?needle=${encodeURIComponent(needle)}`,
         );
+        remoteResults = JSON.parse(await recipesUrlFetch.text());
       }
 
       debug('remoteResults:', remoteResults);
 
-      const localResultsArray = (
-        await Recipe.query().where('name', 'LIKE', `%${needle}%`).fetch()
-      ).toJSON();
+      const recipeQuery = await Recipe.query()
+        .where('name', 'LIKE', `%${needle}%`)
+        .fetch();
+      const localResultsArray = recipeQuery.toJSON();
       const localResults = localResultsArray.map(recipe => ({
         id: recipe.recipeId,
         name: recipe.name,

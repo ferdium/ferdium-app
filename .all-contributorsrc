@@ -10,7 +10,7 @@
   "commit": true,
   "commitConvention": "none",
   "badgeTemplate": "<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-<%= contributors.length %>-default.svg?logo=github' alt='Contributors'/></a>",
-  "contributorTemplate": "<a href='<%= contributor.profile %>' title='<%= contributor.name %>: <%= contributor.contributions.join(', ') %>'><img src='<%= contributor.avatar_url %>' alt='<%= contributor.login %>' style='border-radius:<%= options.imageSize %>px;width:<%= options.imageSize %>px;height:<%= options.imageSize %>px;'/></a>",
+  "contributorTemplate": "<a href='<%= contributor.profile %>' title='<%= contributor.name %>: <%= contributor.contributions.join(', ') %>'><img src='<%= contributor.avatar_url %>' alt='<%= contributor.login %>' style='width:<%= options.imageSize %>px;'/></a>",
   "contributors": [
     {
       "login": "vantezzen",
@@ -993,7 +993,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/384997?v=4",
       "profile": "http://niute.ch",
       "contributions": [
-        "code"
+        "code",
+        "bug"
       ]
     },
     {
@@ -1100,6 +1101,35 @@
       "name": "DarsiSreelekha",
       "avatar_url": "https://avatars.githubusercontent.com/u/89741061?v=4",
       "profile": "https://github.com/DarsiSreelekha",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "klaegera",
+      "name": "Adrian Klaeger",
+      "avatar_url": "https://avatars.githubusercontent.com/u/34807567?v=4",
+      "profile": "https://github.com/klaegera",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "martinbernat",
+      "name": "martinbernat",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6809891?v=4",
+      "profile": "https://github.com/martinbernat",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "dedotombo",
+      "name": "dedotombo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/42537874?v=4",
+      "profile": "https://github.com/dedotombo",
       "contributions": [
         "code"
       ]

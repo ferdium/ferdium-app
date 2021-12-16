@@ -199,7 +199,7 @@ export default class WorkspacesStore extends FeatureStore {
             : 'none';
         }
       }
-    }, 1000);
+    }, 500);
   };
 
   @action _deactivateActiveWorkspace = () => {
@@ -221,7 +221,7 @@ export default class WorkspacesStore extends FeatureStore {
           wrapper.style.display = '';
         }
       }
-    }, 1000);
+    }, 500);
   };
 
   @action _toggleWorkspaceDrawer = () => {

@@ -26,7 +26,6 @@ const messages = defineMessages({
   },
 });
 
-@observer
 class WebviewCrashHandler extends Component {
   static propTypes = {
     name: PropTypes.string.isRequired,
@@ -81,4 +80,4 @@ class WebviewCrashHandler extends Component {
   }
 }
 
-export default injectIntl(WebviewCrashHandler);
+export default injectIntl(observer(WebviewCrashHandler));

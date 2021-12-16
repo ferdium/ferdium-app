@@ -4,8 +4,6 @@ import { observer, inject } from 'mobx-react';
 import Loader from 'react-loader';
 import classnames from 'classnames';
 
-@inject('stores')
-@observer
 class Button extends Component {
   static propTypes = {
     className: PropTypes.string,
@@ -34,8 +32,6 @@ class Button extends Component {
     loaded: true,
     htmlForm: '',
   };
-
-  element = null;
 
   render() {
     const {
@@ -92,4 +88,4 @@ class Button extends Component {
   }
 }
 
-export default Button;
+export default inject('stores')(observer(Button));

@@ -5,14 +5,12 @@ import { observer, inject } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 
 import { LIVE_FRANZ_API } from '../../config';
-import { API_VERSION, isDevMode, useLiveAPI } from '../../environment-remote';
+import { API_VERSION } from '../../environment-remote';
 import Form from '../../lib/Form';
 import { required, email } from '../../helpers/validation-helpers';
-import serverlessLogin from '../../helpers/serverless-helpers';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
 import Link from '../ui/Link';
-import Infobox from '../ui/Infobox';
 
 import { globalError as globalErrorPropType } from '../../prop-types';
 
@@ -57,22 +55,12 @@ const messages = defineMessages({
     id: 'login.link.signup',
     defaultMessage: 'Create a free account',
   },
-  changeServer: {
-    id: 'login.changeServer',
-    defaultMessage: 'Change server',
-  },
-  serverless: {
-    id: 'services.serverless',
-    defaultMessage: 'Use Ferdi without an Account',
-  },
   passwordLink: {
     id: 'login.link.password',
     defaultMessage: 'Reset password',
   },
 });
 
-@inject('actions')
-@observer
 class Login extends Component {
   static propTypes = {
     onSubmit: PropTypes.func.isRequired,
@@ -81,9 +69,7 @@ class Login extends Component {
     isServerLogout: PropTypes.bool.isRequired,
     signupRoute: PropTypes.string.isRequired,
     passwordRoute: PropTypes.string.isRequired,
-    changeServerRoute: PropTypes.string.isRequired,
     error: globalErrorPropType.isRequired,
-    actions: PropTypes.object.isRequired,
   };
 
   form = new Form(
@@ -105,8 +91,6 @@ class Login extends Component {
     this.props.intl,
   );
 
-  emailField = null;
-
   submit(e) {
     e.preventDefault();
     this.form.submit({
@@ -115,10 +99,6 @@ class Login extends Component {
       },
       onError: () => {},
     });
-  }
-
-  useLocalServer() {
-    serverlessLogin(this.props.actions);
   }
 
   render() {
@@ -130,21 +110,14 @@ class Login extends Component {
       isServerLogout,
       signupRoute,
       passwordRoute,
-      changeServerRoute,
       error,
     } = this.props;
 
     return (
       <div className="auth__container">
         <form className="franz-form auth__form" onSubmit={e => this.submit(e)}>
-          <img src="./assets/images/logo.svg" className="auth__logo" alt="" />
+          <Link to='/auth/welcome'><img src="./assets/images/logo.svg" className="auth__logo" alt="" /></Link>
           <h1>{intl.formatMessage(messages.headline)}</h1>
-          {isDevMode && !useLiveAPI && (
-            <Infobox type="warning">
-              In Dev Mode your data is not persistent. Please use the live app
-              for accessing the production API.
-            </Infobox>
-          )}
           {isTokenExpired && (
             <p className="error-message center">
               {intl.formatMessage(messages.tokenExpired)}
@@ -155,13 +128,7 @@ class Login extends Component {
               {intl.formatMessage(messages.serverLogout)}
             </p>
           )}
-          <Input
-            field={form.$('email')}
-            ref={element => {
-              this.emailField = element;
-            }}
-            focus
-          />
+          <Input field={form.$('email')} focus />
           <Input field={form.$('password')} showPasswordToggle />
           {error.code === 'invalid-credentials' && (
             <>
@@ -205,12 +172,6 @@ class Login extends Component {
           )}
         </form>
         <div className="auth__links">
-          <Link to={changeServerRoute}>
-            {intl.formatMessage(messages.changeServer)}
-          </Link>
-          <a onClick={this.useLocalServer.bind(this)}>
-            {intl.formatMessage(messages.serverless)}
-          </a>
           <Link to={signupRoute}>
             {intl.formatMessage(messages.signupLink)}
           </Link>
@@ -223,4 +184,4 @@ class Login extends Component {
   }
 }
 
-export default injectIntl(Login);
+export default injectIntl(inject('actions')(observer(Login)));

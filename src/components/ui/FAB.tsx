@@ -14,7 +14,6 @@ type Props = {
   htmlForm: string;
 };
 
-@observer
 class Button extends Component<Props> {
   static defaultProps = {
     disabled: false,
@@ -22,8 +21,6 @@ class Button extends Component<Props> {
     type: 'button',
     htmlForm: '',
   };
-
-  element = null;
 
   render() {
     const { className, disabled, onClick, type, children, htmlForm } =
@@ -48,4 +45,4 @@ class Button extends Component<Props> {
   }
 }
 
-export default Button;
+export default observer(Button);

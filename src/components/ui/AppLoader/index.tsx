@@ -1,7 +1,7 @@
 import { Component } from 'react';
-import injectSheet, { withTheme } from 'react-jss';
 import classnames from 'classnames';
 
+import injectStyle from 'react-jss';
 import FullscreenLoader from '../FullscreenLoader';
 import { shuffleArray } from '../../../helpers/array-helpers';
 
@@ -24,8 +24,6 @@ type Props = {
   texts: string[];
 };
 
-@injectSheet(styles)
-@withTheme
 class AppLoader extends Component<Props> {
   static defaultProps = {
     texts: textList,
@@ -57,7 +55,6 @@ class AppLoader extends Component<Props> {
 
     return (
       <FullscreenLoader
-        title="Ferdi"
         className={classes.component}
         spinnerColor={theme.colorAppLoaderSpinner}
       >
@@ -77,4 +74,4 @@ class AppLoader extends Component<Props> {
   }
 }
 
-export default AppLoader;
+export default injectStyle(styles, { injectTheme: true })(AppLoader);

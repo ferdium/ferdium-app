@@ -25,11 +25,13 @@ class WorkspaceController {
     do {
       workspaceId = uuid();
     } while (
+      // eslint-disable-next-line no-await-in-loop, unicorn/no-await-expression-member
       (await Workspace.query().where('workspaceId', workspaceId).fetch()).rows
         .length > 0
     );
 
-    const order = (await Workspace.all()).rows.length;
+    const allWorkspaces = await Workspace.all();
+    const order = allWorkspaces.rows.length;
     const { name } = data;
     delete data.name;
 
@@ -54,7 +56,6 @@ class WorkspaceController {
     // Validate user input
     const validation = await validateAll(request.all(), {
       name: 'required',
-      services: 'required|array',
     });
     if (validation.fails()) {
       return response.status(401).send({
@@ -76,8 +77,10 @@ class WorkspaceController {
       });
 
     // Get updated row
-    const workspace = (await Workspace.query().where('workspaceId', id).fetch())
-      .rows[0];
+    const workspaceQuery = await Workspace.query()
+      .where('workspaceId', id)
+      .fetch();
+    const workspace = workspaceQuery.rows[0];
 
     return response.send({
       id: workspace.workspaceId,
@@ -118,7 +121,8 @@ class WorkspaceController {
 
   // List all workspaces a user has created
   async list({ response }) {
-    const workspaces = (await Workspace.all()).rows;
+    const allWorkspaces = await Workspace.all();
+    const workspaces = allWorkspaces.rows;
     // Convert to array with all data Franz wants
     let workspacesArray = [];
     if (workspaces) {

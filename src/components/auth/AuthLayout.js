@@ -19,7 +19,6 @@ import AppUpdateInfoBar from '../AppUpdateInfoBar';
 import { GITHUB_FERDI_URL } from '../../config';
 import { Icon } from '../ui/icon';
 
-@observer
 class AuthLayout extends Component {
   static propTypes = {
     children: oneOrManyChildElements.isRequired,
@@ -107,4 +106,4 @@ class AuthLayout extends Component {
   }
 }
 
-export default injectIntl(AuthLayout);
+export default injectIntl(observer(AuthLayout));

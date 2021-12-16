@@ -1,8 +1,8 @@
 import classnames from 'classnames';
 import { Component, createRef, TextareaHTMLAttributes } from 'react';
-import injectSheet from 'react-jss';
+import injectSheet, { WithStylesProps } from 'react-jss';
 
-import { IFormField, IWithStyle } from '../typings/generic';
+import { IFormField } from '../typings/generic';
 
 import { Error } from '../error';
 import { Label } from '../label';
@@ -17,7 +17,7 @@ interface IData {
 interface IProps
   extends TextareaHTMLAttributes<HTMLTextAreaElement>,
     IFormField,
-    IWithStyle {
+    WithStylesProps<typeof styles> {
   focus?: boolean;
   data: IData;
   textareaClassName?: string;
@@ -123,4 +123,6 @@ class TextareaComponent extends Component<IProps> {
   }
 }
 
-export const Textarea = injectSheet(styles)(TextareaComponent);
+export const Textarea = injectSheet(styles, { injectTheme: true })(
+  TextareaComponent,
+);

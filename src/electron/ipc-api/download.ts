@@ -48,7 +48,7 @@ export default (params: { mainWindow: BrowserWindow }) => {
 
             debug('File blob saved to', saveDialog.filePath);
           } catch (error) {
-            console.log(error);
+            console.error(error);
           }
         }
       } catch (error) {

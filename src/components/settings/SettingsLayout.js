@@ -16,7 +16,6 @@ const messages = defineMessages({
   },
 });
 
-@observer
 class SettingsLayout extends Component {
   static propTypes = {
     navigation: PropTypes.element.isRequired,
@@ -78,4 +77,4 @@ class SettingsLayout extends Component {
   }
 }
 
-export default injectIntl(SettingsLayout);
+export default injectIntl(observer(SettingsLayout));

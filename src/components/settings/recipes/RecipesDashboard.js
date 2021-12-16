@@ -51,7 +51,8 @@ const messages = defineMessages({
   },
   customRecipeIntro: {
     id: 'settings.recipes.customService.intro',
-    defaultMessage: 'To add a custom service, copy the service recipe to:',
+    defaultMessage:
+      'To add a custom service, copy the service recipe folder inside:',
   },
   openFolder: {
     id: 'settings.recipes.customService.openFolder',
@@ -104,8 +105,6 @@ const styles = {
   },
 };
 
-@injectSheet(styles)
-@observer
 class RecipesDashboard extends Component {
   static propTypes = {
     recipes: MobxPropTypes.arrayOrObservableArray.isRequired,
@@ -236,28 +235,6 @@ class RecipesDashboard extends Component {
                 <H3>{intl.formatMessage(messages.headlineCommunityRecipes)}</H3>
               )}
               <div className="recipes__list">
-                {recipes.length === 0 && recipeFilter !== 'dev' && (
-                  <div className="align-middle settings__empty-state">
-                    <span className="emoji">
-                      <img src="./assets/images/emoji/dontknow.png" alt="" />
-                    </span>
-
-                    <p className="settings__empty-state-text">
-                      {intl.formatMessage(messages.nothingFound)}
-                    </p>
-
-                    <RecipeItem
-                      key={customWebsiteRecipe.id}
-                      recipe={customWebsiteRecipe}
-                      onClick={() =>
-                        isLoggedIn &&
-                        showAddServiceInterface({
-                          recipeId: customWebsiteRecipe.id,
-                        })
-                      }
-                    />
-                  </div>
-                )}
                 {communityRecipes.map(recipe => (
                   <RecipeItem
                     key={recipe.id}
@@ -269,6 +246,25 @@ class RecipesDashboard extends Component {
                   />
                 ))}
               </div>
+              {recipes.length === 0 && recipeFilter !== 'dev' && (
+                <div className="align-middle settings__empty-state">
+                  {customWebsiteRecipe && customWebsiteRecipe.id && (
+                    <RecipeItem
+                      key={customWebsiteRecipe.id}
+                      recipe={customWebsiteRecipe}
+                      onClick={() =>
+                        isLoggedIn &&
+                        showAddServiceInterface({
+                          recipeId: customWebsiteRecipe.id,
+                        })
+                      }
+                    />
+                  )}
+                  <p className="settings__empty-state-text">
+                    {intl.formatMessage(messages.nothingFound)}
+                  </p>
+                </div>
+              )}
               {recipeFilter === 'dev' && devRecipes.length > 0 && (
                 <div className={classes.devRecipeList}>
                   <H3>{intl.formatMessage(messages.headlineDevRecipes)}</H3>
@@ -294,4 +290,6 @@ class RecipesDashboard extends Component {
   }
 }
 
-export default injectIntl(RecipesDashboard);
+export default injectIntl(
+  injectSheet(styles, { injectTheme: true })(observer(RecipesDashboard)),
+);
