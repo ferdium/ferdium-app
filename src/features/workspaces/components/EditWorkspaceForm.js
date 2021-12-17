@@ -228,6 +228,7 @@ class EditWorkspaceForm extends Component {
             type="submit"
             label={intl.formatMessage(messages.buttonSave)}
             busy={isSaving}
+            className="franz-form__button"
             buttonType={isSaving ? 'secondary' : 'primary'}
             onClick={this.save.bind(this, form)}
             // TODO: Need to disable if no services have been added to this workspace
