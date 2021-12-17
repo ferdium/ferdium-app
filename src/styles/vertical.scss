@@ -22,7 +22,7 @@ $tabitem-bias: 30px;
     clip-path: inset(10px 10px 0 10px);
   }
 
-  div:first-of-type {
+  >div:first-of-type {
     overflow-x: scroll!important;
     width: 100%;
   }
