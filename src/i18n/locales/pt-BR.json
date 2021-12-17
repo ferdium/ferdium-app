@@ -346,7 +346,7 @@
   "settings.services.discoverServices": "Descobrir serviços",
   "settings.services.headline": "Seus serviços",
   "settings.services.noServicesAdded": "Comece adicionando um serviço.",
-  "settings.services.nothingFound": "Sorry, but no service matched your search term.",
+  "settings.services.nothingFound": "Desculpe, nenhum serviço foi encontrado.",
   "settings.services.servicesRequestFailed": "Não foi possível ler os seus serviços",
   "settings.services.tooltip.isDisabled": "O serviço está desativado",
   "settings.services.tooltip.isMuted": "Todos os sons estão silenciados",
