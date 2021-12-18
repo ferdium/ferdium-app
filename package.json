@@ -76,7 +76,7 @@
     "electron-fetch": "^1.7.4",
     "electron-find": "^1.0.7",
     "electron-react-titlebar": "^1.1.0",
-    "electron-updater": "^4.6.2",
+    "electron-updater": "^4.6.5",
     "electron-window-state": "^5.0.3",
     "fast-folder-size": "^1.5.0",
     "fs-extra": "^10.0.0",
