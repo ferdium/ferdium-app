@@ -1,4 +1,4 @@
-import { app, ipcMain, BrowserWindow } from 'electron';
+import { ipcMain, BrowserWindow } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import { isMac, isWindows } from '../../environment';
 
