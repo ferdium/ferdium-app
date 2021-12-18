@@ -11,7 +11,7 @@ import styles from './styles';
 class FullscreenLoader extends Component {
   static propTypes = {
     className: PropTypes.string,
-    title: PropTypes.string.isRequired,
+    title: PropTypes.string,
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
     spinnerColor: PropTypes.string,
