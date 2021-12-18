@@ -78,9 +78,7 @@ class SettingsNavigation extends Component {
       this.props.stores.user.isLoggingOut = true;
     }
 
-    this.props.stores.router.push(
-      isLoggedIn ? '/auth/logout' : '/auth/welcome',
-    );
+    this.props.stores.router.push('/auth/welcome');
 
     if (isLoggedIn) {
       // Reload Ferdi, otherwise many settings won't sync correctly with the server
