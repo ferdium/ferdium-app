@@ -5,6 +5,9 @@ import * as legacyStyles from '../legacy';
 import type { IStyleTypes } from '../IStyleTypes';
 
 export default (brandPrimary: string) => {
+  if (!brandPrimary) {
+    brandPrimary = '#7266F0';
+  }
   const brandSuccess = '#5cb85c';
   const brandInfo = '#5bc0de';
   const brandWarning = '#FF9F00';
