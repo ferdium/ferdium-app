@@ -31,7 +31,6 @@
     "manage-translations": "npm run extract && npm run compile && rimraf temp.json",
     "prebuild": "preval-build-info-cli && gulp build",
     "build": "electron-builder",
-    "commit": "git-cz",
     "contributors": "all-contributors",
     "reformat-files": "./node_modules/.bin/prettier --ignore-path .eslintignore --write --require-pragma \"**/*.{js,jsx,scss}\"",
     "apply-branding": "ts-node ./src/i18n/apply-branding.ts",
@@ -149,10 +148,8 @@
     "@typescript-eslint/parser": "^5.3.1",
     "all-contributors-cli": "^6.20.0",
     "babel-plugin-formatjs": "^10.3.11",
-    "commitizen": "^4.2.4",
     "concurrently": "^6.3.0",
     "cross-env": "^7.0.3",
-    "cz-conventional-changelog": "^3.3.0",
     "dotenv": "^10.0.0",
     "electron": "15.3.4",
     "electron-builder": "22.14.10",
@@ -205,20 +202,6 @@
   },
   "optionalDependencies": {
     "node-mac-permissions": "git@github.com:vraravam/node-mac-permissions.git#3cffec37379e6584627d831611a8ff12b57bbcdb"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog",
-      "disableScopeLowerCase": false,
-      "disableSubjectLowerCase": false,
-      "maxHeaderWidth": 100,
-      "maxLineWidth": 100,
-      "defaultType": "chore",
-      "defaultScope": "",
-      "defaultSubject": "",
-      "defaultBody": "",
-      "defaultIssues": ""
-    }
   },
   "browserslist": [
     "last 2 Chrome versions"
