@@ -266,7 +266,7 @@
   "settings.app.translationHelp": "Pomozite nam prevesti aplikaciju na Vaš jezik. ",
   "settings.app.universalDarkModeInfo": "Universal Dark Mode tries to dynamically generate dark mode styles for services that are otherwise not currently supported.",
   "settings.app.updateStatusAvailable": "Nadogradnja dostupna, preuzimanje...",
-  "settings.app.updateStatusSearching": "Traže se ažuriranja",
+  "settings.app.updateStatusSearching": "Searching for updates...",
   "settings.app.updateStatusUpToDate": "Koristite najnoviju verziju Franca.",
   "settings.invite.headline": "Pozovi prijatelje",
   "settings.navigation.account": "Korisnički račun",

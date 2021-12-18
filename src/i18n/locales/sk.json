@@ -266,7 +266,7 @@
   "settings.app.translationHelp": "Pomôžte nám preložiť Ferdi do svojho jazyka.",
   "settings.app.universalDarkModeInfo": "Univerzálny tmavý režim sa snaží dynamicky generovať štýly tmavého režimu pre služby, ktoré v súčasnosti nie sú podporované.",
   "settings.app.updateStatusAvailable": "Je dostupná aktualizácia, sťahuje sa...",
-  "settings.app.updateStatusSearching": "Vyhľadáva aktualizácie",
+  "settings.app.updateStatusSearching": "Searching for updates...",
   "settings.app.updateStatusUpToDate": "Používate najnovšiu verziu Ferdi",
   "settings.invite.headline": "Pozvať priateľov",
   "settings.navigation.account": "Účet",

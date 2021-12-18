@@ -266,7 +266,7 @@
   "settings.app.translationHelp": "Ferdi 번역을 도와주세요.",
   "settings.app.universalDarkModeInfo": "Universal Dark Mode tries to dynamically generate dark mode styles for services that are otherwise not currently supported.",
   "settings.app.updateStatusAvailable": "사용가능 한 업데이트 다운로드 중",
-  "settings.app.updateStatusSearching": "업데이트 검색",
+  "settings.app.updateStatusSearching": "Searching for updates...",
   "settings.app.updateStatusUpToDate": "Ferdi 최신 버전을 사용 중입니다.",
   "settings.invite.headline": "친구 초대하기",
   "settings.navigation.account": "계정",

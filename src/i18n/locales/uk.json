@@ -266,7 +266,7 @@
   "settings.app.translationHelp": "Допоможіть перекласти Ferdi на Вашу мову.",
   "settings.app.universalDarkModeInfo": "Універсальний темний режим намагається динамічно генерувати стилі темного режиму для сервісів, які поки не підтримують цей режим.",
   "settings.app.updateStatusAvailable": "Оновлення доступне, завантаження...",
-  "settings.app.updateStatusSearching": "Шукає оновлення",
+  "settings.app.updateStatusSearching": "Searching for updates...",
   "settings.app.updateStatusUpToDate": "Ви використовуєте останню версію Ferdi",
   "settings.invite.headline": "Запросити друзів",
   "settings.navigation.account": "Акаунт",

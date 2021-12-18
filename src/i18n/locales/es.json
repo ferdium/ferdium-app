@@ -266,7 +266,7 @@
   "settings.app.translationHelp": "Ayúdanos a traducir Ferdi a tu idioma.",
   "settings.app.universalDarkModeInfo": "El Modo Oscuro Universal intenta generar dinámicamente estilos de modo oscuro para servicios que de otro modo no están soportados actualmente.",
   "settings.app.updateStatusAvailable": "Actualización disponible, descargando...",
-  "settings.app.updateStatusSearching": "Buscando actualizaciones",
+  "settings.app.updateStatusSearching": "Searching for updates...",
   "settings.app.updateStatusUpToDate": "Estás utilizando la última versión de Ferdi",
   "settings.invite.headline": "Invitar amigos",
   "settings.navigation.account": "Cuenta",

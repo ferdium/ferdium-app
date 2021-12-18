@@ -266,7 +266,7 @@
   "settings.app.translationHelp": "Help us to translate Ferdi into your language.",
   "settings.app.universalDarkModeInfo": "Universal Dark Mode tries to dynamically generate dark mode styles for services that are otherwise not currently supported.",
   "settings.app.updateStatusAvailable": "Update available, downloading...",
-  "settings.app.updateStatusSearching": "מחפש עדכון",
+  "settings.app.updateStatusSearching": "Searching for updates...",
   "settings.app.updateStatusUpToDate": "אתה משתמש בגירסא האחרונה של פרדי",
   "settings.invite.headline": "הזמן חברים",
   "settings.navigation.account": "חשבון",

@@ -266,7 +266,7 @@
   "settings.app.translationHelp": "Hjälp oss att översätta Ferdi till ditt språk.",
   "settings.app.universalDarkModeInfo": "Globalt mörkt läge försöker att dynamiskt generera en mörk stil för tjänster som ännu inte stöds.",
   "settings.app.updateStatusAvailable": "Uppdatering tillgänglig, laddar ner...",
-  "settings.app.updateStatusSearching": "Söker efter uppdatering",
+  "settings.app.updateStatusSearching": "Searching for updates...",
   "settings.app.updateStatusUpToDate": "Du använder den senaste versionen av Ferdi",
   "settings.invite.headline": "Bjud in vänner",
   "settings.navigation.account": "Konto",

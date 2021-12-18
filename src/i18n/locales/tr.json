@@ -266,7 +266,7 @@
   "settings.app.translationHelp": "Ferdi'ı senin diline tercüme etmemiz için yardım et.",
   "settings.app.universalDarkModeInfo": "Universal Dark Mode tries to dynamically generate dark mode styles for services that are otherwise not currently supported.",
   "settings.app.updateStatusAvailable": "Güncelleme mevcut, indiriliyor...",
-  "settings.app.updateStatusSearching": "Güncellemeleri denetliyor",
+  "settings.app.updateStatusSearching": "Searching for updates...",
   "settings.app.updateStatusUpToDate": "Ferdi'ın son versiyonunu kullanıyorsun",
   "settings.invite.headline": "Arkadaşlarını davet et",
   "settings.navigation.account": "Hesap",

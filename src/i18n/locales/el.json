@@ -266,7 +266,7 @@
   "settings.app.translationHelp": "Βοηθήστε μας να μεταφράσουμε το Ferdi στη δική σας γλώσσα.",
   "settings.app.universalDarkModeInfo": "Universal Dark Mode tries to dynamically generate dark mode styles for services that are otherwise not currently supported.",
   "settings.app.updateStatusAvailable": "Υπάρχει διαθέσιμη ενημέρωση, γίνεται λήψη...",
-  "settings.app.updateStatusSearching": " Γίνεται αναζήτηση για ενημέρωση",
+  "settings.app.updateStatusSearching": "Searching for updates...",
   "settings.app.updateStatusUpToDate": "Χρησιμοποιείτε την τελευταία έκδοση του Ferdi",
   "settings.invite.headline": "Προσκαλέστε Φίλους",
   "settings.navigation.account": "Λογαριασμός",

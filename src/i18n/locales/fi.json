@@ -266,7 +266,7 @@
   "settings.app.translationHelp": "Auta meitä kääntämään Ferdi omalle kielellesi.",
   "settings.app.universalDarkModeInfo": "Yleinen Tumma-tila yrittää luoda palveluille tyylejä, joita ei tueta tällä hetkellä.",
   "settings.app.updateStatusAvailable": "Päivitys saatavilla, ladataan...",
-  "settings.app.updateStatusSearching": "Etsii päivityksiä",
+  "settings.app.updateStatusSearching": "Searching for updates...",
   "settings.app.updateStatusUpToDate": "Käytät Ferdin viimeisintä versiota",
   "settings.invite.headline": "Kutsu ystäviä",
   "settings.navigation.account": "Tili",

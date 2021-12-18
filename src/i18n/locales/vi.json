@@ -266,7 +266,7 @@
   "settings.app.translationHelp": "Giúp chúng tôi dịch Ferdi sang ngôn ngữ của bạn.",
   "settings.app.universalDarkModeInfo": "Chế độ tối chung cố gắng tạo động các kiểu chế độ tối cho các dịch vụ hiện không được hỗ trợ.",
   "settings.app.updateStatusAvailable": "Bản cập nhật phù hợp, đang tải...",
-  "settings.app.updateStatusSearching": "Đang tìm bản cập nhật",
+  "settings.app.updateStatusSearching": "Searching for updates...",
   "settings.app.updateStatusUpToDate": "Bạn đang sử dụng phiên bản mới nhất của Ferdi",
   "settings.invite.headline": "Mời bạn bè",
   "settings.navigation.account": "Tài khoản",

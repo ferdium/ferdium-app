@@ -266,7 +266,7 @@
   "settings.app.translationHelp": "ساعدنا على ترجمة فيردي إلى لغتك.",
   "settings.app.universalDarkModeInfo": "Universal Dark Mode tries to dynamically generate dark mode styles for services that are otherwise not currently supported.",
   "settings.app.updateStatusAvailable": "التحديث متوفر! يتم التحميل...",
-  "settings.app.updateStatusSearching": "يبحث عن تحديث",
+  "settings.app.updateStatusSearching": "Searching for updates...",
   "settings.app.updateStatusUpToDate": "أنت تستخدم الإصدار الأخير من فيردي",
   "settings.invite.headline": "أدعُ الأصدقاء",
   "settings.navigation.account": "الحساب",

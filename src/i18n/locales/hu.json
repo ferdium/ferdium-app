@@ -266,7 +266,7 @@
   "settings.app.translationHelp": "Segíts nekünk a Ferdi-ot lefordítani a nyelvedre.",
   "settings.app.universalDarkModeInfo": "Universal Dark Mode tries to dynamically generate dark mode styles for services that are otherwise not currently supported.",
   "settings.app.updateStatusAvailable": "Frissítés elérhető, letöltés folyamatban...",
-  "settings.app.updateStatusSearching": "Frissítéseket keres",
+  "settings.app.updateStatusSearching": "Searching for updates...",
   "settings.app.updateStatusUpToDate": "A Ferdi legfrissebb verzióját használod",
   "settings.invite.headline": "Barátok meghívása",
   "settings.navigation.account": "Fiók",

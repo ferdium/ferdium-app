@@ -266,7 +266,7 @@
   "settings.app.translationHelp": "Aiutaci a tradurre Ferdi nella tua lingua.",
   "settings.app.universalDarkModeInfo": "La modalità 'Dark Mode' universale cerca di generare dinamicamente uno stile di visualizzazione a sfondo scuro per quei servizi che non lo supportano nativamente.",
   "settings.app.updateStatusAvailable": "Aggiornamento disponibile, download in corso...",
-  "settings.app.updateStatusSearching": "Ricerca aggiornamenti",
+  "settings.app.updateStatusSearching": "Searching for updates...",
   "settings.app.updateStatusUpToDate": "Stai utilizzando l'ultima versione di Ferdi",
   "settings.invite.headline": "Invita Amici",
   "settings.navigation.account": "Account",

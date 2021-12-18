@@ -266,7 +266,7 @@
   "settings.app.translationHelp": "Cabhraigh linn Ferdi a aistriú i do theanga.",
   "settings.app.universalDarkModeInfo": "Universal Dark Mode tries to dynamically generate dark mode styles for services that are otherwise not currently supported.",
   "settings.app.updateStatusAvailable": "Nuashonrú le fáil, ag íoslódáil...",
-  "settings.app.updateStatusSearching": "Ag cuardach le nuashonruithe",
+  "settings.app.updateStatusSearching": "Searching for updates...",
   "settings.app.updateStatusUpToDate": "Tá tú ag baint úsáid as an leagan is deireanaí de Ferdi",
   "settings.invite.headline": "Tabhair cuireadh do thriúr chara",
   "settings.navigation.account": "Cuntas",

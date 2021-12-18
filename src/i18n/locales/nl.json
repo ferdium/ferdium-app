@@ -266,7 +266,7 @@
   "settings.app.translationHelp": "Help ons om Ferdi uw taal te laten spreken.",
   "settings.app.universalDarkModeInfo": "De universele donkere modus probeert dynamische stijlen voor services te genereren die eigenlijk geen donkere modus hebben.",
   "settings.app.updateStatusAvailable": "Update beschikbaar, downloaden...",
-  "settings.app.updateStatusSearching": "Zoekt naar updates",
+  "settings.app.updateStatusSearching": "Searching for updates...",
   "settings.app.updateStatusUpToDate": "Je gebruikt de laatste versie van Ferdi",
   "settings.invite.headline": "Vrienden uitnodigen",
   "settings.navigation.account": "Account",

@@ -266,7 +266,7 @@
   "settings.app.translationHelp": "Bantu kami menerjemahkan Ferdi ke bahasa Anda.",
   "settings.app.universalDarkModeInfo": "Universal Dark Mode tries to dynamically generate dark mode styles for services that are otherwise not currently supported.",
   "settings.app.updateStatusAvailable": "Versi baru tersedia, mengunduh...",
-  "settings.app.updateStatusSearching": "Sedang mencari versi baru",
+  "settings.app.updateStatusSearching": "Searching for updates...",
   "settings.app.updateStatusUpToDate": "Anda sedang menggunakan versi terbaru Ferdi",
   "settings.invite.headline": "Undang Teman",
   "settings.navigation.account": "Akun",

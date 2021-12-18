@@ -266,7 +266,7 @@
   "settings.app.translationHelp": "帮助我们翻译 Ferdi 成您的语言",
   "settings.app.universalDarkModeInfo": "Universal Dark Mode tries to dynamically generate dark mode styles for services that are otherwise not currently supported.",
   "settings.app.updateStatusAvailable": "更新可用，正在下载...",
-  "settings.app.updateStatusSearching": "正在搜索更新",
+  "settings.app.updateStatusSearching": "Searching for updates...",
   "settings.app.updateStatusUpToDate": "您正在使用最新版本的Ferdi",
   "settings.invite.headline": "邀请好友",
   "settings.navigation.account": "账户",
