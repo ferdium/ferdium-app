@@ -149,25 +149,31 @@ class Sidebar extends Component {
         />
         {isLoggedIn ? (
           <>
-            {stores.settings.all.app.lockingFeatureEnabled ? (
-              <button
-                type="button"
-                className="sidebar__button"
-                onClick={() => {
-                  actions.settings.update({
-                    type: 'app',
-                    data: {
-                      locked: true,
-                    },
-                  });
-                }}
-                data-tip={`${intl.formatMessage(
-                  messages.lockFerdi,
-                )} (${lockFerdiShortcutKey(false)})`}
-              >
-                <Icon icon={mdiLock} size={1.5} />
-              </button>
-            ) : null}
+            <button
+              type="button"
+              onClick={() => openSettings({ path: 'recipes' })}
+              className="sidebar__button sidebar__button--new-service"
+              data-tip={`${intl.formatMessage(
+                messages.addNewService,
+              )} (${addNewServiceShortcutKey(false)})`}
+            >
+              <Icon icon={mdiPlusBox} size={1.5} />
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                toggleWorkspaceDrawer();
+                this.updateToolTip();
+              }}
+              className={`sidebar__button sidebar__button--workspaces ${
+                isWorkspaceDrawerOpen ? 'is-active' : ''
+              }`}
+              data-tip={`${intl.formatMessage(
+                workspaceToggleMessage,
+              )} (${workspaceToggleShortcutKey(false)})`}
+            >
+              <Icon icon={mdiViewGrid} size={1.5} />
+            </button>
             {todosStore.isFeatureEnabledByUser ? (
               <button
                 type="button"
@@ -189,21 +195,6 @@ class Sidebar extends Component {
             <button
               type="button"
               onClick={() => {
-                toggleWorkspaceDrawer();
-                this.updateToolTip();
-              }}
-              className={`sidebar__button sidebar__button--workspaces ${
-                isWorkspaceDrawerOpen ? 'is-active' : ''
-              }`}
-              data-tip={`${intl.formatMessage(
-                workspaceToggleMessage,
-              )} (${workspaceToggleShortcutKey(false)})`}
-            >
-              <Icon icon={mdiViewGrid} size={1.5} />
-            </button>
-            <button
-              type="button"
-              onClick={() => {
                 toggleMuteApp();
                 this.updateToolTip();
               }}
@@ -216,16 +207,26 @@ class Sidebar extends Component {
             >
               <Icon icon={isAppMuted ? mdiBellOff : mdiBell} size={1.5} />
             </button>
-            <button
-              type="button"
-              onClick={() => openSettings({ path: 'recipes' })}
-              className="sidebar__button sidebar__button--new-service"
-              data-tip={`${intl.formatMessage(
-                messages.addNewService,
-              )} (${addNewServiceShortcutKey(false)})`}
-            >
-              <Icon icon={mdiPlusBox} size={1.5} />
-            </button>
+
+            {stores.settings.all.app.lockingFeatureEnabled ? (
+              <button
+                type="button"
+                className="sidebar__button"
+                onClick={() => {
+                  actions.settings.update({
+                    type: 'app',
+                    data: {
+                      locked: true,
+                    },
+                  });
+                }}
+                data-tip={`${intl.formatMessage(
+                  messages.lockFerdi,
+                )} (${lockFerdiShortcutKey(false)})`}
+              >
+                <Icon icon={mdiLock} size={1.5} />
+              </button>
+            ) : null}
           </>
         ) : (
           <Link
