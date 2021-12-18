@@ -142,7 +142,7 @@ _Find answers to other frequently asked questions on [getferdi.com/faq](https://
 
 ### Adds internal changes
 
-- [x] Upgrades to Electron 15.3.2
+- [x] Upgrades to Electron 15.3.4
 - [x] Switches to [`electron-spellchecker`](https://github.com/electron-userland/electron-spellchecker) to improve application size
 - [x] Minifies build files to improve app size
 - [x] Adds "npm run prepare-code" command for development to lint and beautify code
