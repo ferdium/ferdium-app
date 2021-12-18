@@ -39,8 +39,7 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
             }, 20);
           }
         } catch (error) {
-          console.error(error);
-          event.sender.send('autoUpdate', { error: true });
+          event.sender.send('autoUpdate', { error });
         }
       }
     });
@@ -74,9 +73,9 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
       params.mainWindow.webContents.send('autoUpdate', { downloaded: true });
     });
 
-    autoUpdater.on('error', () => {
+    autoUpdater.on('error', error => {
       debug('update-error');
-      params.mainWindow.webContents.send('autoUpdate', { error: true });
+      params.mainWindow.webContents.send('autoUpdate', { error });
     });
   }
 };

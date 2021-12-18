@@ -181,6 +181,7 @@ export default class AppStore extends Store {
       }
 
       if (data.error) {
+        console.log('Updater error:', data.error);
         this.updateStatus = this.updateStatusTypes.FAILED;
       }
     });

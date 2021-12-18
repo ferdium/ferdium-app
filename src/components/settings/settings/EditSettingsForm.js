@@ -12,6 +12,7 @@ import Toggle from '../../ui/Toggle';
 import ToggleRaw from '../../ui/ToggleRaw';
 import Select from '../../ui/Select';
 import Input from '../../ui/Input';
+import Infobox from '../../ui/Infobox';
 
 import {
   DEFAULT_APP_SETTINGS,
@@ -193,6 +194,7 @@ class EditSettingsForm extends Component {
     isUpdateAvailable: PropTypes.bool.isRequired,
     noUpdateAvailable: PropTypes.bool.isRequired,
     updateIsReadyToInstall: PropTypes.bool.isRequired,
+    updateFailed: PropTypes.bool.isRequired,
     isClearingAllCache: PropTypes.bool.isRequired,
     onClearAllCache: PropTypes.func.isRequired,
     getCacheSize: PropTypes.func.isRequired,
@@ -242,6 +244,7 @@ class EditSettingsForm extends Component {
       isUpdateAvailable,
       noUpdateAvailable,
       updateIsReadyToInstall,
+      updateFailed,
       isClearingAllCache,
       onClearAllCache,
       getCacheSize,
@@ -800,13 +803,20 @@ class EditSettingsForm extends Component {
                     <br />
                   </div>
                 )}
-                {intl.formatMessage(messages.currentVersion)} {ferdiVersion}
+                <p>
+                  {intl.formatMessage(messages.currentVersion)} {ferdiVersion}
+                </p>
                 {noUpdateAvailable && (
                   <>
                     <br />
                     <br />
                     {intl.formatMessage(messages.updateStatusUpToDate)}
                   </>
+                )}
+                {updateFailed && (
+                  <Infobox type="danger" icon="alert">
+                    An error occured (check the console for more details)
+                  </Infobox>
                 )}
                 <p className="settings__message">
                   <Icon icon={mdiGithub} />
