@@ -796,7 +796,7 @@ class EditSettingsForm extends Component {
                   <>
                     <br />
                     <br />
-                    {intl.formatMessage(messages.updateStatusUpToDate)}
+                    {intl.formatMessage(messages.updateStatusUpToDate)}.
                   </>
                 )}
                 {updateFailed && (
