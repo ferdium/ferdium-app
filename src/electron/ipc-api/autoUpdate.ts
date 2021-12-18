@@ -33,10 +33,6 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
           } else if (args.action === 'install') {
             debug('installing update');
             autoUpdater.quitAndInstall();
-            // we need to send a quit event
-            setTimeout(() => {
-              app.quit();
-            }, 20);
           }
         } catch (error) {
           event.sender.send('autoUpdate', { error });
