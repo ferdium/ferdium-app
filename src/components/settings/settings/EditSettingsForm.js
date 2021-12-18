@@ -9,7 +9,6 @@ import { mdiGithub, mdiOpenInNew } from '@mdi/js';
 import Form from '../../../lib/Form';
 import Button from '../../ui/Button';
 import Toggle from '../../ui/Toggle';
-import ToggleRaw from '../../ui/ToggleRaw';
 import Select from '../../ui/Select';
 import Input from '../../ui/Input';
 import Infobox from '../../ui/Infobox';
@@ -203,7 +202,6 @@ class EditSettingsForm extends Component {
     isDarkmodeEnabled: PropTypes.bool.isRequired,
     isAdaptableDarkModeEnabled: PropTypes.bool.isRequired,
     isSplitModeEnabled: PropTypes.bool.isRequired,
-    isNightlyEnabled: PropTypes.bool.isRequired,
     hasAddedTodosAsService: PropTypes.bool.isRequired,
     isOnline: PropTypes.bool.isRequired,
   };
@@ -252,7 +250,6 @@ class EditSettingsForm extends Component {
       isDarkmodeEnabled,
       isSplitModeEnabled,
       isTodosActivated,
-      isNightlyEnabled,
       hasAddedTodosAsService,
       isOnline,
     } = this.props;
@@ -770,17 +767,6 @@ class EditSettingsForm extends Component {
                 {automaticUpdates && (
                   <div>
                     <Toggle field={form.$('beta')} />
-                    <ToggleRaw
-                      field={{
-                        value: isNightlyEnabled,
-                        id: 'nightly',
-                        label: 'Include nightly versions',
-                        name: 'Nightly builds',
-                      }}
-                      onChange={
-                        window['ferdi'].features.nightlyBuilds.toggleFeature
-                      }
-                    />
                     {updateIsReadyToInstall ? (
                       <Button
                         label={intl.formatMessage(messages.buttonInstallUpdate)}

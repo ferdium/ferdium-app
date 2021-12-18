@@ -226,7 +226,6 @@ export const DEFAULT_APP_SETTINGS = {
   serviceRibbonWidth: 68,
   iconSize: iconSizeBias,
   sentry: false,
-  nightly: false,
   navigationBarBehaviour: 'custom',
   searchEngine: SEARCH_ENGINE_DDG,
   useVerticalStyle: false,

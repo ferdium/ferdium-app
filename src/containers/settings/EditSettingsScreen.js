@@ -229,7 +229,7 @@ const messages = defineMessages({
   },
   beta: {
     id: 'settings.app.form.beta',
-    defaultMessage: 'Include beta versions',
+    defaultMessage: 'Include pre-releases',
   },
   automaticUpdates: {
     id: 'settings.app.form.automaticUpdates',
@@ -743,7 +743,6 @@ class EditSettingsScreen extends Component {
           isUsingCustomTodoService={
             this.props.stores.todos.isUsingCustomTodoService
           }
-          isNightlyEnabled={this.props.stores.settings.app.nightly}
           hasAddedTodosAsService={services.isTodosServiceAdded}
           isOnline={app.isOnline}
         />

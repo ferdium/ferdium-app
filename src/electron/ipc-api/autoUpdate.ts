@@ -18,14 +18,6 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
           autoUpdater.allowPrerelease = Boolean(
             params.settings.app.get('beta'),
           );
-          autoUpdater.channel = autoUpdater.allowPrerelease ? 'beta' : 'latest';
-
-          if (params.settings.app.get('nightly')) {
-            autoUpdater.allowPrerelease = Boolean(
-              params.settings.app.get('nightly'),
-            );
-            autoUpdater.channel = 'alpha';
-          }
 
           if (args.action === 'check') {
             debug('checking for update');
