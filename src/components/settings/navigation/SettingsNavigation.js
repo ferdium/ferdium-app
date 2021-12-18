@@ -166,7 +166,7 @@ class SettingsNavigation extends Component {
         >
           {isLoggedIn && !isUsingWithoutAccount
             ? intl.formatMessage(messages.logout)
-            : 'Login'}
+            : 'Exit session'}
         </button>
       </div>
     );
