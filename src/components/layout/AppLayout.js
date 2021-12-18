@@ -22,6 +22,8 @@ import AppUpdateInfoBar from '../AppUpdateInfoBar';
 import Todos from '../../features/todos/containers/TodosScreen';
 import { Icon } from '../ui/icon';
 
+import LockedScreen from '../../containers/auth/LockedScreen';
+
 const messages = defineMessages({
   servicesUpdated: {
     id: 'infobar.servicesUpdated',
@@ -76,6 +78,7 @@ const toggleFullScreen = () => {
 class AppLayout extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
+    settings: PropTypes.object.isRequired,
     isFullScreen: PropTypes.bool.isRequired,
     sidebar: PropTypes.element.isRequired,
     workspacesDrawer: PropTypes.element.isRequired,
@@ -114,6 +117,7 @@ class AppLayout extends Component {
       authRequestFailed,
       reloadServicesAfterUpdate,
       installAppUpdate,
+      settings,
       showRequiredRequestsError,
       areRequiredRequestsSuccessful,
       retryRequiredRequests,
@@ -121,6 +125,11 @@ class AppLayout extends Component {
     } = this.props;
 
     const { intl } = this.props;
+
+    const { locked } = settings.app;
+    if (locked) {
+      return <LockedScreen />;
+    }
 
     return (
       <ErrorBoundary>

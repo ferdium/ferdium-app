@@ -144,6 +144,7 @@ class AppLayoutContainer extends Component {
     return (
       <ThemeProvider theme={ui.theme}>
         <AppLayout
+          settings={settings}
           isFullScreen={app.isFullScreen}
           isOnline={app.isOnline}
           showServicesUpdatedInfoBar={ui.showServicesUpdatedInfoBar}

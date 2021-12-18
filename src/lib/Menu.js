@@ -591,7 +591,10 @@ class FranzMenu {
     }
 
     const { intl } = window['ferdi'];
-    const tpl = _titleBarTemplateFactory(intl, this.stores.settings.app.locked);
+    const locked = this.stores.settings.app.locked
+      && this.stores.settings.app.lockingFeatureEnabled
+      && this.stores.user.isLoggedIn;
+    const tpl = _titleBarTemplateFactory(intl, locked);
     const { actions } = this;
 
     if (!isMac) {
@@ -611,7 +614,7 @@ class FranzMenu {
       });
     }
 
-    if (!this.stores.settings.app.locked) {
+    if (!locked) {
       tpl[1].submenu.push(
         {
           type: 'separator',
@@ -755,18 +758,18 @@ class FranzMenu {
             this.actions.ui.openSettings({ path: 'app' });
           },
           enabled: this.stores.user.isLoggedIn,
-          visible: !this.stores.settings.app.locked,
+          visible: !locked,
         },
         {
           label: intl.formatMessage(menuItems.checkForUpdates),
-          visible: !this.stores.settings.app.locked,
+          visible: !locked,
           click: () => {
             this.actions.app.checkForUpdates();
           },
         },
         {
           type: 'separator',
-          visible: !this.stores.settings.app.locked,
+          visible: !locked,
         },
         {
           label: intl.formatMessage(menuItems.services),
@@ -846,7 +849,7 @@ class FranzMenu {
             this.actions.ui.openSettings({ path: 'app' });
           },
           enabled: this.stores.user.isLoggedIn,
-          visible: !this.stores.settings.locked,
+          visible: !locked,
         },
         {
           type: 'separator',
@@ -868,7 +871,7 @@ class FranzMenu {
       );
     }
 
-    if (!this.stores.settings.app.locked) {
+    if (!locked) {
       if (serviceTpl.length > 0) {
         tpl[3].submenu = serviceTpl;
       }
