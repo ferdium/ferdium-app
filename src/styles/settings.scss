@@ -264,6 +264,10 @@
     .proxyHost {
       flex-basis: 70%;
     }
+
+    a {
+      display: inline-block;
+    }
   }
 
   .settings__close {
@@ -579,5 +583,6 @@
 .settings__support-badges {
   a {
     margin-right: 10px;
+    display: inline-block;
   }
 }

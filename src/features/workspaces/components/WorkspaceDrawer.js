@@ -99,7 +99,11 @@ class WorkspaceDrawer extends Component {
 
   componentDidMount() {
     ReactTooltip.rebuild();
-    getUserWorkspacesRequest.execute();
+    try {
+      getUserWorkspacesRequest.execute();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   render() {
