@@ -9,7 +9,6 @@ import injectSheet from 'react-jss';
 
 import ServiceView from './ServiceView';
 import Appear from '../../ui/effects/Appear';
-import serverlessLogin from '../../../helpers/serverless-helpers';
 
 const messages = defineMessages({
   getStarted: {
@@ -52,7 +51,6 @@ class Services extends Component {
     update: PropTypes.func.isRequired,
     userHasCompletedSignup: PropTypes.bool.isRequired,
     classes: PropTypes.object.isRequired,
-    actions: PropTypes.object.isRequired,
     isSpellcheckerEnabled: PropTypes.bool.isRequired,
   };
 
@@ -66,12 +64,6 @@ class Services extends Component {
 
   _confettiTimeout = null;
 
-  constructor(props) {
-    super(props);
-
-    this.useLocalServer = this.useLocalServer.bind(this);
-  }
-
   componentDidMount() {
     this._confettiTimeout = window.setTimeout(() => {
       this.setState({
@@ -84,10 +76,6 @@ class Services extends Component {
     if (this._confettiTimeout) {
       clearTimeout(this._confettiTimeout);
     }
-  }
-
-  useLocalServer() {
-    serverlessLogin(this.props.actions);
   }
 
   render() {
@@ -108,7 +96,6 @@ class Services extends Component {
     const { showConfetti } = this.state;
 
     const { intl } = this.props;
-    const isLoggedIn = Boolean(localStorage.getItem('authToken'));
 
     return (
       <div className="services">
@@ -129,33 +116,13 @@ class Services extends Component {
                 alt="Logo"
                 style={{ maxHeight: '50vh' }}
               />
-              {!isLoggedIn && (
-                <>
-                  <p>{intl.formatMessage(messages.login)}</p>
-                  <p>{intl.formatMessage(messages.serverInfo)}</p>
-                </>
-              )}
               <Appear timeout={300} transitionName="slideUp">
                 <Link
-                  to={isLoggedIn ? '/settings/recipes' : '/auth/welcome'}
+                  to='/settings/recipes'
                   className="button"
                 >
-                  {isLoggedIn
-                    ? intl.formatMessage(messages.getStarted)
-                    : 'Login'}
+                  {intl.formatMessage(messages.getStarted)}
                 </Link>
-                {!isLoggedIn && (
-                  <button
-                    type="button"
-                    className="button"
-                    style={{
-                      marginLeft: 10,
-                    }}
-                    onClick={this.useLocalServer}
-                  >
-                    {intl.formatMessage(messages.serverless)}
-                  </button>
-                )}
               </Appear>
             </div>
           </Appear>

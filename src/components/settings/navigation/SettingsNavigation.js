@@ -57,40 +57,34 @@ class SettingsNavigation extends Component {
     workspaceCount: PropTypes.number.isRequired,
   };
 
-  handleLoginLogout() {
-    const isLoggedIn = Boolean(localStorage.getItem('authToken'));
+  handleLogout() {
     const isUsingWithoutAccount =
       this.props.stores.settings.app.server === LOCAL_SERVER;
 
-    if (isLoggedIn) {
-      // Remove current auth token
-      localStorage.removeItem('authToken');
+    // Remove current auth token
+    localStorage.removeItem('authToken');
 
-      if (isUsingWithoutAccount) {
-        // Reset server back to Ferdi API
-        this.props.actions.settings.update({
-          type: 'app',
-          data: {
-            server: LIVE_FERDI_API,
-          },
-        });
-      }
-      this.props.stores.user.isLoggingOut = true;
+    if (isUsingWithoutAccount) {
+      // Reset server back to Ferdi API
+      this.props.actions.settings.update({
+        type: 'app',
+        data: {
+          server: LIVE_FERDI_API,
+        },
+      });
     }
+    this.props.stores.user.isLoggingOut = true;
 
     this.props.stores.router.push('/auth/welcome');
 
-    if (isLoggedIn) {
-      // Reload Ferdi, otherwise many settings won't sync correctly with the server
-      // after logging into another account
-      window.location.reload();
-    }
+    // Reload Ferdi, otherwise many settings won't sync correctly with the server
+    // after logging into another account
+    window.location.reload();
   }
 
   render() {
     const { serviceCount, workspaceCount, stores } = this.props;
     const { intl } = this.props;
-    const isLoggedIn = Boolean(localStorage.getItem('authToken'));
     const isUsingWithoutAccount = stores.settings.app.server === LOCAL_SERVER;
     const isUsingFranzServer = stores.settings.app.server === LIVE_FRANZ_API;
 
@@ -107,7 +101,6 @@ class SettingsNavigation extends Component {
           to="/settings/services"
           className="settings-navigation__link"
           activeClassName="is-active"
-          disabled={!isLoggedIn}
         >
           {intl.formatMessage(messages.yourServices)}{' '}
           <span className="badge">{serviceCount}</span>
@@ -116,7 +109,6 @@ class SettingsNavigation extends Component {
           to="/settings/workspaces"
           className="settings-navigation__link"
           activeClassName="is-active"
-          disabled={!isLoggedIn}
         >
           {intl.formatMessage(messages.yourWorkspaces)}{' '}
           <span className="badge">{workspaceCount}</span>
@@ -126,7 +118,6 @@ class SettingsNavigation extends Component {
             to="/settings/user"
             className="settings-navigation__link"
             activeClassName="is-active"
-            disabled={!isLoggedIn}
           >
             {intl.formatMessage(messages.account)}
           </Link>
@@ -136,7 +127,6 @@ class SettingsNavigation extends Component {
             to="/settings/team"
             className="settings-navigation__link"
             activeClassName="is-active"
-            disabled={!isLoggedIn}
           >
             {intl.formatMessage(messages.team)}
           </Link>
@@ -158,11 +148,11 @@ class SettingsNavigation extends Component {
         <span className="settings-navigation__expander" />
         <button
           type="button"
-          to={isLoggedIn ? '/auth/logout' : '/auth/welcome'}
+          to='/auth/logout'
           className="settings-navigation__link"
-          onClick={this.handleLoginLogout.bind(this)}
+          onClick={this.handleLogout.bind(this)}
         >
-          {isLoggedIn && !isUsingWithoutAccount
+          {!isUsingWithoutAccount
             ? intl.formatMessage(messages.logout)
             : 'Exit session'}
         </button>

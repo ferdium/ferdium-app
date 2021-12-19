@@ -40,7 +40,17 @@ class AppLayoutContainer extends Component {
       requests,
       user,
       workspaces,
+      router
     } = this.props.stores;
+
+    /* HOTFIX for:
+      [mobx] Encountered an uncaught exception that was thrown by a reaction or observer component, in: 'Reaction[bound ]' TypeError: Cannot read properties of null (reading 'push')
+      at RouterStore.push (store.js:25)
+      at UserStore._requireAuthenticatedUser
+    */
+    if (!user.isLoggedIn) {
+      router.push('/auth/welcome');
+    }
 
     const {
       setActive,

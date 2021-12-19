@@ -148,8 +148,6 @@ class RecipesDashboard extends Component {
     const communityRecipes = recipes.filter(r => !r.isDevRecipe);
     const devRecipes = recipes.filter(r => r.isDevRecipe);
 
-    const isLoggedIn = Boolean(localStorage.getItem('authToken'));
-
     return (
       <div className="settings__main">
         <div className="settings__header">
@@ -240,7 +238,6 @@ class RecipesDashboard extends Component {
                     key={recipe.id}
                     recipe={recipe}
                     onClick={() =>
-                      isLoggedIn &&
                       showAddServiceInterface({ recipeId: recipe.id })
                     }
                   />
@@ -253,7 +250,6 @@ class RecipesDashboard extends Component {
                       key={customWebsiteRecipe.id}
                       recipe={customWebsiteRecipe}
                       onClick={() =>
-                        isLoggedIn &&
                         showAddServiceInterface({
                           recipeId: customWebsiteRecipe.id,
                         })
@@ -274,7 +270,6 @@ class RecipesDashboard extends Component {
                         key={recipe.id}
                         recipe={recipe}
                         onClick={() =>
-                          isLoggedIn &&
                           showAddServiceInterface({ recipeId: recipe.id })
                         }
                       />

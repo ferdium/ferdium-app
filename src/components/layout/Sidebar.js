@@ -3,12 +3,10 @@ import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
 import { defineMessages, injectIntl } from 'react-intl';
 import { inject, observer } from 'mobx-react';
-import { Link } from 'react-router';
 import {
   mdiCheckAll,
   mdiViewGrid,
   mdiPlusBox,
-  mdiLoginVariant,
   mdiCog,
   mdiBellOff,
   mdiBell,
@@ -137,7 +135,6 @@ class Sidebar extends Component {
     const workspaceToggleMessage = isWorkspaceDrawerOpen
       ? messages.closeWorkspaceDrawer
       : messages.openWorkspaceDrawer;
-    const isLoggedIn = Boolean(localStorage.getItem('authToken'));
 
     return (
       <div className="sidebar">
@@ -147,96 +144,86 @@ class Sidebar extends Component {
           disableToolTip={() => this.disableToolTip()}
           useVerticalStyle={stores.settings.all.app.useVerticalStyle}
         />
-        {isLoggedIn ? (
-          <>
-            <button
-              type="button"
-              onClick={() => openSettings({ path: 'recipes' })}
-              className="sidebar__button sidebar__button--new-service"
-              data-tip={`${intl.formatMessage(
-                messages.addNewService,
-              )} (${addNewServiceShortcutKey(false)})`}
-            >
-              <Icon icon={mdiPlusBox} size={1.5} />
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                toggleWorkspaceDrawer();
-                this.updateToolTip();
-              }}
-              className={`sidebar__button sidebar__button--workspaces ${
-                isWorkspaceDrawerOpen ? 'is-active' : ''
-              }`}
-              data-tip={`${intl.formatMessage(
-                workspaceToggleMessage,
-              )} (${workspaceToggleShortcutKey(false)})`}
-            >
-              <Icon icon={mdiViewGrid} size={1.5} />
-            </button>
-            {todosStore.isFeatureEnabledByUser ? (
-              <button
-                type="button"
-                onClick={() => {
-                  todoActions.toggleTodosPanel();
-                  this.updateToolTip();
-                }}
-                disabled={isTodosServiceActive}
-                className={`sidebar__button sidebar__button--todos ${
-                  todosStore.isTodosPanelVisible ? 'is-active' : ''
-                }`}
-                data-tip={`${intl.formatMessage(
-                  todosToggleMessage,
-                )} (${todosToggleShortcutKey(false)})`}
-              >
-                <Icon icon={mdiCheckAll} size={1.5} />
-              </button>
-            ) : null}
-            <button
-              type="button"
-              onClick={() => {
-                toggleMuteApp();
-                this.updateToolTip();
-              }}
-              className={`sidebar__button sidebar__button--audio ${
-                isAppMuted ? 'is-muted' : ''
-              }`}
-              data-tip={`${intl.formatMessage(
-                isAppMuted ? messages.unmute : messages.mute,
-              )} (${muteFerdiShortcutKey(false)})`}
-            >
-              <Icon icon={isAppMuted ? mdiBellOff : mdiBell} size={1.5} />
-            </button>
-
-            {stores.settings.all.app.lockingFeatureEnabled ? (
-              <button
-                type="button"
-                className="sidebar__button"
-                onClick={() => {
-                  actions.settings.update({
-                    type: 'app',
-                    data: {
-                      locked: true,
-                    },
-                  });
-                }}
-                data-tip={`${intl.formatMessage(
-                  messages.lockFerdi,
-                )} (${lockFerdiShortcutKey(false)})`}
-              >
-                <Icon icon={mdiLock} size={1.5} />
-              </button>
-            ) : null}
-          </>
-        ) : (
-          <Link
-            to="/auth/welcome"
+        <>
+          <button
+            type="button"
+            onClick={() => openSettings({ path: 'recipes' })}
             className="sidebar__button sidebar__button--new-service"
-            data-tip="Login"
+            data-tip={`${intl.formatMessage(
+              messages.addNewService,
+            )} (${addNewServiceShortcutKey(false)})`}
           >
-            <Icon icon={mdiLoginVariant} size={1.5} />
-          </Link>
-        )}
+            <Icon icon={mdiPlusBox} size={1.5} />
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              toggleWorkspaceDrawer();
+              this.updateToolTip();
+            }}
+            className={`sidebar__button sidebar__button--workspaces ${
+              isWorkspaceDrawerOpen ? 'is-active' : ''
+            }`}
+            data-tip={`${intl.formatMessage(
+              workspaceToggleMessage,
+            )} (${workspaceToggleShortcutKey(false)})`}
+          >
+            <Icon icon={mdiViewGrid} size={1.5} />
+          </button>
+          {todosStore.isFeatureEnabledByUser ? (
+            <button
+              type="button"
+              onClick={() => {
+                todoActions.toggleTodosPanel();
+                this.updateToolTip();
+              }}
+              disabled={isTodosServiceActive}
+              className={`sidebar__button sidebar__button--todos ${
+                todosStore.isTodosPanelVisible ? 'is-active' : ''
+              }`}
+              data-tip={`${intl.formatMessage(
+                todosToggleMessage,
+              )} (${todosToggleShortcutKey(false)})`}
+            >
+              <Icon icon={mdiCheckAll} size={1.5} />
+            </button>
+          ) : null}
+          <button
+            type="button"
+            onClick={() => {
+              toggleMuteApp();
+              this.updateToolTip();
+            }}
+            className={`sidebar__button sidebar__button--audio ${
+              isAppMuted ? 'is-muted' : ''
+            }`}
+            data-tip={`${intl.formatMessage(
+              isAppMuted ? messages.unmute : messages.mute,
+            )} (${muteFerdiShortcutKey(false)})`}
+          >
+            <Icon icon={isAppMuted ? mdiBellOff : mdiBell} size={1.5} />
+          </button>
+
+          {stores.settings.all.app.lockingFeatureEnabled ? (
+            <button
+              type="button"
+              className="sidebar__button"
+              onClick={() => {
+                actions.settings.update({
+                  type: 'app',
+                  data: {
+                    locked: true,
+                  },
+                });
+              }}
+              data-tip={`${intl.formatMessage(
+                messages.lockFerdi,
+              )} (${lockFerdiShortcutKey(false)})`}
+            >
+              <Icon icon={mdiLock} size={1.5} />
+            </button>
+          ) : null}
+        </>
         <button
           type="button"
           onClick={() => openSettings({ path: 'app' })}
