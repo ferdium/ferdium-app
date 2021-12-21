@@ -27,7 +27,7 @@ const messages = defineMessages({
   },
 });
 
-class Login extends Component {
+class Welcome extends Component {
   static propTypes = {
     loginRoute: PropTypes.string.isRequired,
     signupRoute: PropTypes.string.isRequired,
@@ -95,4 +95,4 @@ class Login extends Component {
   }
 }
 
-export default injectIntl(inject('actions')(observer(Login)));
+export default injectIntl(inject('actions')(observer(Welcome)));

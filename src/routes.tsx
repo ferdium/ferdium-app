@@ -15,7 +15,6 @@ import InviteSettingsScreen from './containers/settings/InviteScreen';
 import SupportFerdiScreen from './containers/settings/SupportScreen';
 import WelcomeScreen from './containers/auth/WelcomeScreen';
 import LoginScreen from './containers/auth/LoginScreen';
-import LockedScreen from './containers/auth/LockedScreen';
 import PasswordScreen from './containers/auth/PasswordScreen';
 import ChangeServerScreen from './containers/auth/ChangeServerScreen';
 import SignupScreen from './containers/auth/SignupScreen';
@@ -38,13 +37,8 @@ type Props = {
 
 class Routes extends Component<Props> {
   render() {
-    const { locked } = this.props.stores.settings.app;
 
     const { history } = this.props;
-
-    if (locked) {
-      return <LockedScreen />;
-    }
 
     return (
       <Router history={history}>

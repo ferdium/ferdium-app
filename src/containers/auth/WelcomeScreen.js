@@ -6,7 +6,7 @@ import Welcome from '../../components/auth/Welcome';
 import UserStore from '../../stores/UserStore';
 import RecipePreviewsStore from '../../stores/RecipePreviewsStore';
 
-class LoginScreen extends Component {
+class WelcomeScreen extends Component {
   render() {
     const { user, recipePreviews } = this.props.stores;
 
@@ -21,11 +21,11 @@ class LoginScreen extends Component {
   }
 }
 
-LoginScreen.propTypes = {
+WelcomeScreen.propTypes = {
   stores: PropTypes.shape({
     user: PropTypes.instanceOf(UserStore).isRequired,
     recipePreviews: PropTypes.instanceOf(RecipePreviewsStore).isRequired,
   }).isRequired,
 };
 
-export default inject('stores', 'actions')(observer(LoginScreen));
+export default inject('stores', 'actions')(observer(WelcomeScreen));
