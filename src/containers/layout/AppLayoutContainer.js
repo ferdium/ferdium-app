@@ -22,7 +22,6 @@ import AppLoader from '../../components/ui/AppLoader';
 import { workspaceActions } from '../../features/workspaces/actions';
 import WorkspaceDrawer from '../../features/workspaces/components/WorkspaceDrawer';
 import { workspaceStore } from '../../features/workspaces';
-import WorkspacesStore from '../../features/workspaces/store';
 
 class AppLayoutContainer extends Component {
   static defaultProps = {
@@ -39,7 +38,6 @@ class AppLayoutContainer extends Component {
       globalError,
       requests,
       user,
-      workspaces,
       router
     } = this.props.stores;
 
@@ -85,10 +83,12 @@ class AppLayoutContainer extends Component {
       services.allServicesRequest.isExecuting &&
       services.allServicesRequest.isExecutingFirstTime;
 
+    const isLoadingSettings = !settings.loaded;
+
     if (
+      isLoadingSettings ||
       isLoadingFeatures ||
-      isLoadingServices ||
-      workspaces.isLoadingWorkspaces
+      isLoadingServices
     ) {
       return (
         <ThemeProvider theme={ui.theme}>
@@ -191,7 +191,6 @@ AppLayoutContainer.propTypes = {
     user: PropTypes.instanceOf(UserStore).isRequired,
     requests: PropTypes.instanceOf(RequestStore).isRequired,
     globalError: PropTypes.instanceOf(GlobalErrorStore).isRequired,
-    workspaces: PropTypes.instanceOf(WorkspacesStore).isRequired,
   }).isRequired,
   actions: PropTypes.shape({
     service: PropTypes.instanceOf(ServicesStore).isRequired,

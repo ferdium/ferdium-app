@@ -19,7 +19,7 @@ export default class SettingsStore extends Store {
     'updateAppSettings',
   );
 
-  startup = true;
+  loaded = false;
 
   fileSystemSettingsTypes = FILE_SYSTEM_SETTINGS_TYPES;
 
@@ -84,11 +84,10 @@ export default class SettingsStore extends Store {
     ipcRenderer.on('appSettings', (event, resp) => {
       // Lock on startup if enabled in settings
       if (
-        this.startup &&
+        !this.loaded &&
         resp.type === 'app' &&
         resp.data.lockingFeatureEnabled
       ) {
-        this.startup = false;
         process.nextTick(() => {
           if (!this.all.app.locked) {
             this.all.app.locked = true;
@@ -97,6 +96,7 @@ export default class SettingsStore extends Store {
       }
       debug('Get appSettings resolves', resp.type, resp.data);
       Object.assign(this._fileSystemSettingsCache[resp.type], resp.data);
+      this.loaded = true;
       ipcRenderer.send('initialAppSettings', resp);
     });
 
