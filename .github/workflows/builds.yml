@@ -47,11 +47,11 @@ jobs:
           submodules: recursive
           fetch-depth: 0 # Note: Needed to be able to pull the 'develop' branch as well for merging
           # ssh-key: ${{ secrets.FERDI_PUBLISH_TOKEN }}
-      - name: Use Node.js specified in the '.nvmrc' file
+      - name: Use Node.js 16.13.0
         uses: actions/setup-node@v2
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
         with:
-          node-version-file: '.nvmrc'
+          node-version: 16.13.0
       - id: should_run
         name: Check whether there are any commits since this run was last triggered and push them and/or set the output
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
@@ -134,14 +134,14 @@ jobs:
         with:
           key: ${{ runner.os }}-${{ env.cache-name }}
           path: ${{ env.ELECTRON_BUILDER_CACHE }}
-      - name: Use Node.js specified in the '.nvmrc' file
+      - name: Use Node.js 16.13.0
         uses: actions/setup-node@v2
         with:
-          node-version-file: '.nvmrc'
+          node-version: 16.13.0
       - name: Install pnpm
         uses: pnpm/action-setup@v2.0.1
         with:
-          version: 6.24.1
+          version: 6.23.6
       - name: Install node dependencies
         run: npm i
       - name: Package recipes
@@ -216,14 +216,14 @@ jobs:
         with:
           key: ${{ runner.os }}-${{ env.cache-name }}
           path: ${{ env.ELECTRON_BUILDER_CACHE }}
-      - name: Use Node.js specified in the '.nvmrc' file
+      - name: Use Node.js 16.13.0
         uses: actions/setup-node@v2
         with:
-          node-version-file: '.nvmrc'
+          node-version: 16.13.0
       - name: Install pnpm
         uses: pnpm/action-setup@v2.0.1
         with:
-          version: 6.24.1
+          version: 6.23.6
       - name: Install node dependencies
         run: npm i
       - name: Figure out used package.json version
@@ -319,14 +319,14 @@ jobs:
         with:
           key: ${{ runner.os }}-${{ env.cache-name }}
           path: ${{ env.ELECTRON_BUILDER_CACHE }}
-      - name: Use Node.js specified in the '.nvmrc' file
+      - name: Use Node.js 16.13.0
         uses: actions/setup-node@v2
         with:
-          node-version-file: '.nvmrc'
+          node-version: 16.13.0
       - name: Install pnpm
         uses: pnpm/action-setup@v2.0.1
         with:
-          version: 6.24.1
+          version: 6.23.6
       - name: Install node dependencies
         run: npm i
         shell: bash
