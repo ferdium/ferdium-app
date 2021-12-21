@@ -59,6 +59,7 @@ export default class Request {
         .then(result => {
           setTimeout(
             action(() => {
+              this.error = null;
               this.result = result;
               if (this._currentApiCall) this._currentApiCall.result = result;
               this.isExecuting = false;

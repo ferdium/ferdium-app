@@ -14,7 +14,7 @@ class RecipeController {
   // List official and custom recipes
   async list({ response }) {
     const recipesUrlFetch = await fetch(RECIPES_URL);
-    const officialRecipes = JSON.parse(await recipesUrlFetch).text();
+    const officialRecipes = JSON.parse(await recipesUrlFetch.text());
     const allRecipes = await Recipe.all();
     const customRecipesArray = allRecipes.rows;
     const customRecipes = customRecipesArray.map(recipe => ({

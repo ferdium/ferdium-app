@@ -22,7 +22,6 @@ import AppLoader from '../../components/ui/AppLoader';
 import { workspaceActions } from '../../features/workspaces/actions';
 import WorkspaceDrawer from '../../features/workspaces/components/WorkspaceDrawer';
 import { workspaceStore } from '../../features/workspaces';
-import WorkspacesStore from '../../features/workspaces/store';
 
 class AppLayoutContainer extends Component {
   static defaultProps = {
@@ -39,8 +38,17 @@ class AppLayoutContainer extends Component {
       globalError,
       requests,
       user,
-      workspaces,
+      router
     } = this.props.stores;
+
+    /* HOTFIX for:
+      [mobx] Encountered an uncaught exception that was thrown by a reaction or observer component, in: 'Reaction[bound ]' TypeError: Cannot read properties of null (reading 'push')
+      at RouterStore.push (store.js:25)
+      at UserStore._requireAuthenticatedUser
+    */
+    if (!user.isLoggedIn) {
+      router.push('/auth/welcome');
+    }
 
     const {
       setActive,
@@ -75,10 +83,12 @@ class AppLayoutContainer extends Component {
       services.allServicesRequest.isExecuting &&
       services.allServicesRequest.isExecutingFirstTime;
 
+    const isLoadingSettings = !settings.loaded;
+
     if (
+      isLoadingSettings ||
       isLoadingFeatures ||
-      isLoadingServices ||
-      workspaces.isLoadingWorkspaces
+      isLoadingServices
     ) {
       return (
         <ThemeProvider theme={ui.theme}>
@@ -144,6 +154,7 @@ class AppLayoutContainer extends Component {
     return (
       <ThemeProvider theme={ui.theme}>
         <AppLayout
+          settings={settings}
           isFullScreen={app.isFullScreen}
           isOnline={app.isOnline}
           showServicesUpdatedInfoBar={ui.showServicesUpdatedInfoBar}
@@ -180,7 +191,6 @@ AppLayoutContainer.propTypes = {
     user: PropTypes.instanceOf(UserStore).isRequired,
     requests: PropTypes.instanceOf(RequestStore).isRequired,
     globalError: PropTypes.instanceOf(GlobalErrorStore).isRequired,
-    workspaces: PropTypes.instanceOf(WorkspacesStore).isRequired,
   }).isRequired,
   actions: PropTypes.shape({
     service: PropTypes.instanceOf(ServicesStore).isRequired,

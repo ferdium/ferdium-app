@@ -7,7 +7,6 @@ import serviceProxy from '../features/serviceProxy';
 import basicAuth from '../features/basicAuth';
 import workspaces from '../features/workspaces';
 import quickSwitch from '../features/quickSwitch';
-import nightlyBuilds from '../features/nightlyBuilds';
 import publishDebugInfo from '../features/publishDebugInfo';
 import communityRecipes from '../features/communityRecipes';
 import todos from '../features/todos';
@@ -70,7 +69,6 @@ export default class FeaturesStore extends Store {
     basicAuth();
     workspaces(this.stores, this.actions);
     quickSwitch();
-    nightlyBuilds();
     publishDebugInfo();
     communityRecipes(this.stores, this.actions);
     todos(this.stores, this.actions);

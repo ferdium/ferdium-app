@@ -12,6 +12,9 @@ import { Icon } from '../../../components/ui/icon';
 import WorkspaceDrawerItem from './WorkspaceDrawerItem';
 import { workspaceActions } from '../actions';
 import { workspaceStore } from '../index';
+import {
+  getUserWorkspacesRequest,
+} from '../api';
 
 const messages = defineMessages({
   headline: {
@@ -96,6 +99,11 @@ class WorkspaceDrawer extends Component {
 
   componentDidMount() {
     ReactTooltip.rebuild();
+    try {
+      getUserWorkspacesRequest.execute();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   render() {

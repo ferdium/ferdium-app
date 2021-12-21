@@ -229,7 +229,7 @@ const messages = defineMessages({
   },
   beta: {
     id: 'settings.app.form.beta',
-    defaultMessage: 'Include beta versions',
+    defaultMessage: 'Include pre-releases',
   },
   automaticUpdates: {
     id: 'settings.app.form.automaticUpdates',
@@ -727,6 +727,7 @@ class EditSettingsScreen extends Component {
           isUpdateAvailable={updateStatus === updateStatusTypes.AVAILABLE}
           noUpdateAvailable={updateStatus === updateStatusTypes.NOT_AVAILABLE}
           updateIsReadyToInstall={updateStatus === updateStatusTypes.DOWNLOADED}
+          updateFailed={updateStatus === updateStatusTypes.FAILED}
           onSubmit={d => this.onSubmit(d)}
           getCacheSize={() => app.cacheSize}
           isClearingAllCache={isClearingAllCache}
@@ -742,7 +743,6 @@ class EditSettingsScreen extends Component {
           isUsingCustomTodoService={
             this.props.stores.todos.isUsingCustomTodoService
           }
-          isNightlyEnabled={this.props.stores.settings.app.nightly}
           hasAddedTodosAsService={services.isTodosServiceAdded}
           isOnline={app.isOnline}
         />

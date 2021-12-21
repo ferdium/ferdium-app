@@ -9,9 +9,9 @@ import { mdiGithub, mdiOpenInNew } from '@mdi/js';
 import Form from '../../../lib/Form';
 import Button from '../../ui/Button';
 import Toggle from '../../ui/Toggle';
-import ToggleRaw from '../../ui/ToggleRaw';
 import Select from '../../ui/Select';
 import Input from '../../ui/Input';
+import Infobox from '../../ui/Infobox';
 
 import {
   DEFAULT_APP_SETTINGS,
@@ -157,7 +157,7 @@ const messages = defineMessages({
   },
   updateStatusSearching: {
     id: 'settings.app.updateStatusSearching',
-    defaultMessage: 'Is searching for update',
+    defaultMessage: 'Searching for updates...',
   },
   updateStatusAvailable: {
     id: 'settings.app.updateStatusAvailable',
@@ -193,6 +193,7 @@ class EditSettingsForm extends Component {
     isUpdateAvailable: PropTypes.bool.isRequired,
     noUpdateAvailable: PropTypes.bool.isRequired,
     updateIsReadyToInstall: PropTypes.bool.isRequired,
+    updateFailed: PropTypes.bool.isRequired,
     isClearingAllCache: PropTypes.bool.isRequired,
     onClearAllCache: PropTypes.func.isRequired,
     getCacheSize: PropTypes.func.isRequired,
@@ -201,7 +202,6 @@ class EditSettingsForm extends Component {
     isDarkmodeEnabled: PropTypes.bool.isRequired,
     isAdaptableDarkModeEnabled: PropTypes.bool.isRequired,
     isSplitModeEnabled: PropTypes.bool.isRequired,
-    isNightlyEnabled: PropTypes.bool.isRequired,
     hasAddedTodosAsService: PropTypes.bool.isRequired,
     isOnline: PropTypes.bool.isRequired,
   };
@@ -242,6 +242,7 @@ class EditSettingsForm extends Component {
       isUpdateAvailable,
       noUpdateAvailable,
       updateIsReadyToInstall,
+      updateFailed,
       isClearingAllCache,
       onClearAllCache,
       getCacheSize,
@@ -249,7 +250,6 @@ class EditSettingsForm extends Component {
       isDarkmodeEnabled,
       isSplitModeEnabled,
       isTodosActivated,
-      isNightlyEnabled,
       hasAddedTodosAsService,
       isOnline,
     } = this.props;
@@ -767,17 +767,6 @@ class EditSettingsForm extends Component {
                 {automaticUpdates && (
                   <div>
                     <Toggle field={form.$('beta')} />
-                    <ToggleRaw
-                      field={{
-                        value: isNightlyEnabled,
-                        id: 'nightly',
-                        label: 'Include nightly versions',
-                        name: 'Nightly builds',
-                      }}
-                      onChange={
-                        window['ferdi'].features.nightlyBuilds.toggleFeature
-                      }
-                    />
                     {updateIsReadyToInstall ? (
                       <Button
                         label={intl.formatMessage(messages.buttonInstallUpdate)}
@@ -800,13 +789,20 @@ class EditSettingsForm extends Component {
                     <br />
                   </div>
                 )}
-                {intl.formatMessage(messages.currentVersion)} {ferdiVersion}
+                <p>
+                  {intl.formatMessage(messages.currentVersion)} {ferdiVersion}
+                </p>
                 {noUpdateAvailable && (
                   <>
                     <br />
                     <br />
-                    {intl.formatMessage(messages.updateStatusUpToDate)}
+                    {intl.formatMessage(messages.updateStatusUpToDate)}.
                   </>
+                )}
+                {updateFailed && (
+                  <Infobox type="danger" icon="alert">
+                    An error occured (check the console for more details)
+                  </Infobox>
                 )}
                 <p className="settings__message">
                   <Icon icon={mdiGithub} />

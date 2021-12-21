@@ -24,23 +24,24 @@
     }
   }
 
-  .recipes__navigation {
-    height: auto;
-    margin-bottom: 35px;
-
-    .badge {
-      margin-right: 10px;
-    }
-
-    &.recipes__navigation--disabled {
-      filter: grayscale(100%);
-      opacity: 0.3;
-      pointer-events: none;
-    }
-  }
-
   &__service-request {
     float: right;
+  }
+}
+
+.recipes__navigation {
+  height: auto;
+  margin-bottom: 25px;
+
+  .badge {
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+
+  &.recipes__navigation--disabled {
+    filter: grayscale(100%);
+    opacity: 0.3;
+    pointer-events: none;
   }
 }
 

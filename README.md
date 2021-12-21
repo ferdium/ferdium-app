@@ -14,7 +14,6 @@
 <p>
 <a href="https://github.com/getferdi/ferdi/actions/workflows/builds.yml"><img alt="Build Status" src="https://github.com/getferdi/ferdi/actions/workflows/builds.yml/badge.svg?branch=develop&event=push"></a>
 <a title="Crowdin" target="_blank" href="https://crowdin.com/project/getferdi"><img src="https://badges.crowdin.net/getferdi/localized.svg"></a>
-<img alt="GitHub Releases" src="https://img.shields.io/github/downloads/getferdi/ferdi/latest/total?label=downloads">
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 <a href='#contributors-'><img src='https://img.shields.io/badge/contributors-115-default.svg?logo=github' alt='Contributors'/></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
@@ -142,7 +141,7 @@ _Find answers to other frequently asked questions on [getferdi.com/faq](https://
 
 ### Adds internal changes
 
-- [x] Upgrades to Electron 15.3.2
+- [x] Upgrades to Electron 15.3.4
 - [x] Switches to [`electron-spellchecker`](https://github.com/electron-userland/electron-spellchecker) to improve application size
 - [x] Minifies build files to improve app size
 - [x] Adds "npm run prepare-code" command for development to lint and beautify code

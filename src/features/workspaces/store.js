@@ -102,7 +102,6 @@ export default class WorkspacesStore extends FeatureStore {
     ]);
     this._registerReactions(this._allReactions);
 
-    getUserWorkspacesRequest.execute();
     this.isFeatureActive = true;
   }
 

@@ -264,6 +264,10 @@
     .proxyHost {
       flex-basis: 70%;
     }
+
+    a {
+      display: inline-block;
+    }
   }
 
   .settings__close {
@@ -320,7 +324,6 @@
   .settings__message {
     border-top: 1px solid $theme-gray-lighter;
     color: $theme-gray-light;
-    display: flex;
     margin-top: 40px;
     padding-top: 15px;
 
@@ -580,5 +583,6 @@
 .settings__support-badges {
   a {
     margin-right: 10px;
+    display: inline-block;
   }
 }

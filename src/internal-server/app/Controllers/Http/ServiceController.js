@@ -125,6 +125,7 @@ class ServiceController {
       do {
         iconId = uuid() + uuid();
       } while (fs.existsSync(path.join(Env.get('USER_PATH'), 'icons', iconId)));
+      iconId = `${iconId}.${icon.extname}`;
 
       await icon.move(path.join(Env.get('USER_PATH'), 'icons'), {
         name: iconId,

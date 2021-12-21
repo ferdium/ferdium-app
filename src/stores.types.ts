@@ -212,7 +212,7 @@ interface SettingsStore {
   actions: Actions;
   api: Api;
   fileSystemSettingsTypes: any[];
-  startup: boolean;
+  loaded: boolean;
   stores: Stores;
   updateAppSettingsRequest: () => void;
   _fileSystemSettingsCache: () => void;

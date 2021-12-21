@@ -1,4 +1,4 @@
-import { app, ipcMain, BrowserWindow } from 'electron';
+import { ipcMain, BrowserWindow } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import { isMac, isWindows } from '../../environment';
 
@@ -18,14 +18,6 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
           autoUpdater.allowPrerelease = Boolean(
             params.settings.app.get('beta'),
           );
-          autoUpdater.channel = autoUpdater.allowPrerelease ? 'beta' : 'latest';
-
-          if (params.settings.app.get('nightly')) {
-            autoUpdater.allowPrerelease = Boolean(
-              params.settings.app.get('nightly'),
-            );
-            autoUpdater.channel = 'alpha';
-          }
 
           if (args.action === 'check') {
             debug('checking for update');
@@ -33,14 +25,9 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
           } else if (args.action === 'install') {
             debug('installing update');
             autoUpdater.quitAndInstall();
-            // we need to send a quit event
-            setTimeout(() => {
-              app.quit();
-            }, 20);
           }
         } catch (error) {
-          console.error(error);
-          event.sender.send('autoUpdate', { error: true });
+          event.sender.send('autoUpdate', { error });
         }
       }
     });
@@ -74,9 +61,9 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
       params.mainWindow.webContents.send('autoUpdate', { downloaded: true });
     });
 
-    autoUpdater.on('error', () => {
+    autoUpdater.on('error', error => {
       debug('update-error');
-      params.mainWindow.webContents.send('autoUpdate', { error: true });
+      params.mainWindow.webContents.send('autoUpdate', { error });
     });
   }
 };

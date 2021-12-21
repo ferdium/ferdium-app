@@ -165,13 +165,6 @@ class AccountDashboard extends Component {
                               />
                             </div>
                           </div>
-                          <Button
-                            label={intl.formatMessage(
-                              messages.accountEditButton,
-                            )}
-                            className="franz-form__button--inverted"
-                            onClick={openEditAccount}
-                          />
                         </div>
                       </div>
                       {user.isSubscriptionOwner && isUsingFranzServer && (
