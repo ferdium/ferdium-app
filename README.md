@@ -54,7 +54,7 @@ _Find answers to other frequently asked questions on [getferdi.com/faq](https://
 <details>
 <summary>Toggle answer</summary>
 
-### Removes unproductive paywalls and other other interruptions
+### Removes unproductive paywalls and other interruptions
 
 - [x] Removes the counter-productive fullscreen app delay inviting users to upgrade
 - [x] Removes pages begging you to donate after registration
@@ -158,7 +158,7 @@ _Find answers to other frequently asked questions on [getferdi.com/faq](https://
 <details>
 <summary>Toggle answer</summary>
 
-One of the issues being raised by the users of Ferdi is that certain service-functionalities do not work. As good example of this is either the unread count (badge) stops working for specific services or the gmail logins don't work anymore. (These are just 2 of the most common problems reported).
+One of the issues being raised by the users of Ferdi is that certain service-functionalities do not work. A good example of this is either the unread count (badge) stops working for specific services or the gmail logins don't work anymore. (These are just 2 of the most common problems reported).
 
 Since we (the contributors to Ferdi) also eat our own food, we use Ferdi as our day-to-day communication app - and most likely have faced the same/similar issue. As a first step before filing an issue, we request you to follow these simple steps to see if the issue gets fixed. These recipes will get automatically upgraded when you upgrade to the newer versions of Ferdi, but to get new recipes **between** Ferdi releases, this documentation is quite useful.
 
