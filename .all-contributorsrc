@@ -1133,6 +1133,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "leofiore",
+      "name": "Leonardo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/655964?v=4",
+      "profile": "https://github.com/leofiore",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 16,
