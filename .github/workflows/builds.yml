@@ -328,8 +328,12 @@ jobs:
         with:
           version: 6.23.6
       - name: Install node dependencies
-        run: npm i
-        shell: bash
+        uses: nick-invision/retry@v2.4.0
+        with:
+          command: npm i
+          timeout_minutes: 15
+          max_attempts: 3
+          retry_on: error
       - name: Package recipes
         run: pnpm i && pnpm run package
         working-directory: ./recipes
