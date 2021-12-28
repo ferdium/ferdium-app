@@ -332,7 +332,7 @@ jobs:
         with:
           command: npm i
           timeout_minutes: 15
-          max_attempts: 3
+          max_attempts: 6
           retry_on: error
       - name: Package recipes
         run: pnpm i && pnpm run package
