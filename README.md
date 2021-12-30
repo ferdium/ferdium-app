@@ -201,7 +201,7 @@ Mention to the individuals backing us via [GitHub Sponsors](https://github.com/s
 ### Sponsors
 
 <p>
-  <a href="https://www.digitalocean.com/">
+  <a href="https://www.digitalocean.com/?refcode=5292301af793">
     <img src="https://getferdi.com/wp-content/uploads/sites/4/2021/09/digitalocean-logo-vector-1-1.svg" height="32px">
   </a>
 </p>
