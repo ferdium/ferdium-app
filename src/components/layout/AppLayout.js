@@ -126,7 +126,7 @@ class AppLayout extends Component {
 
     const { intl } = this.props;
 
-    const { locked } = settings.app;
+    const { locked, automaticUpdates } = settings.app;
     if (locked) {
       return <LockedScreen />;
     }
@@ -191,7 +191,7 @@ class AppLayout extends Component {
                     {intl.formatMessage(messages.servicesUpdated)}
                   </InfoBar>
                 )}
-              {appUpdateIsDownloaded && this.state.shouldShowAppUpdateInfoBar && (
+              {automaticUpdates && appUpdateIsDownloaded && this.state.shouldShowAppUpdateInfoBar && (
                 <AppUpdateInfoBar
                   onInstallUpdate={installAppUpdate}
                   onHide={() => {

@@ -378,6 +378,9 @@ class EditSettingsForm extends Component {
                 }}
               >
                 {intl.formatMessage(messages.headlineUpdates)}
+                {automaticUpdates && (updateIsReadyToInstall || isUpdateAvailable) && (
+                  <span className="update-available">•</span>
+                )}
               </h2>
             </div>
 

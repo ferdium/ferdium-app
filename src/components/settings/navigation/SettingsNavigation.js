@@ -137,6 +137,11 @@ class SettingsNavigation extends Component {
           activeClassName="is-active"
         >
           {intl.formatMessage(globalMessages.settings)}
+          {stores.settings.app.automaticUpdates &&
+            (stores.app.updateStatus === stores.app.updateStatusTypes.AVAILABLE ||
+              stores.app.updateStatus === stores.app.updateStatusTypes.DOWNLOADED) && (
+            <span className="update-available">•</span>
+          )}
         </Link>
         <Link
           to="/settings/support"
