@@ -218,6 +218,7 @@
 
     .badge {
       margin-right: 10px;
+      position: relative;
     }
 
     &::-webkit-scrollbar {
@@ -519,6 +520,7 @@
   overflow: hidden;
 
   .settings-navigation__link {
+    position: relative;
     align-items: center;
     justify-content: space-between;
     color: $theme-text-color;

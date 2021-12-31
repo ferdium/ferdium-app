@@ -15,7 +15,7 @@
 <a href="https://github.com/getferdi/ferdi/actions/workflows/builds.yml"><img alt="Build Status" src="https://github.com/getferdi/ferdi/actions/workflows/builds.yml/badge.svg?branch=develop&event=push"></a>
 <a title="Crowdin" target="_blank" href="https://crowdin.com/project/getferdi"><img src="https://badges.crowdin.net/getferdi/localized.svg"></a>
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-115-default.svg?logo=github' alt='Contributors'/></a>
+<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-117-default.svg?logo=github' alt='Contributors'/></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 <a href="#backers-via-opencollective"><img alt="Open Collective backers" src="https://img.shields.io/opencollective/backers/getferdi?logo=open-collective"></a>
 <a href="https://gitter.im/getferdi/community"><img alt="Gitter Chat Room" src="https://img.shields.io/gitter/room/getferdi/community"></a>
@@ -54,7 +54,7 @@ _Find answers to other frequently asked questions on [getferdi.com/faq](https://
 <details>
 <summary>Toggle answer</summary>
 
-### Removes unproductive paywalls and other other interruptions
+### Removes unproductive paywalls and other interruptions
 
 - [x] Removes the counter-productive fullscreen app delay inviting users to upgrade
 - [x] Removes pages begging you to donate after registration
@@ -158,7 +158,7 @@ _Find answers to other frequently asked questions on [getferdi.com/faq](https://
 <details>
 <summary>Toggle answer</summary>
 
-One of the issues being raised by the users of Ferdi is that certain service-functionalities do not work. As good example of this is either the unread count (badge) stops working for specific services or the gmail logins don't work anymore. (These are just 2 of the most common problems reported).
+One of the issues being raised by the users of Ferdi is that certain service-functionalities do not work. A good example of this is either the unread count (badge) stops working for specific services or the gmail logins don't work anymore. (These are just 2 of the most common problems reported).
 
 Since we (the contributors to Ferdi) also eat our own food, we use Ferdi as our day-to-day communication app - and most likely have faced the same/similar issue. As a first step before filing an issue, we request you to follow these simple steps to see if the issue gets fixed. These recipes will get automatically upgraded when you upgrade to the newer versions of Ferdi, but to get new recipes **between** Ferdi releases, this documentation is quite useful.
 
@@ -201,7 +201,7 @@ Mention to the individuals backing us via [GitHub Sponsors](https://github.com/s
 ### Sponsors
 
 <p>
-  <a href="https://www.digitalocean.com/">
+  <a href="https://www.digitalocean.com/?refcode=5292301af793">
     <img src="https://getferdi.com/wp-content/uploads/sites/4/2021/09/digitalocean-logo-vector-1-1.svg" height="32px">
   </a>
 </p>

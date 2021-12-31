@@ -1133,6 +1133,24 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "leofiore",
+      "name": "Leonardo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/655964?v=4",
+      "profile": "https://github.com/leofiore",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "crscaballero",
+      "name": "Cristian Caballero",
+      "avatar_url": "https://avatars.githubusercontent.com/u/48134692?v=4",
+      "profile": "https://github.com/crscaballero",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 16,

@@ -233,12 +233,14 @@ class Sidebar extends Component {
           )} (${settingsShortcutKey(false)})`}
         >
           <Icon icon={mdiCog} size={1.5} />
-          {(this.props.stores.app.updateStatus ===
-            this.props.stores.app.updateStatusTypes.AVAILABLE ||
-            this.props.stores.app.updateStatus ===
-              this.props.stores.app.updateStatusTypes.DOWNLOADED) && (
-            <span className="update-available">•</span>
-          )}
+          {
+            (this.props.stores.settings.app.automaticUpdates &&
+              (this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.AVAILABLE ||
+              this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.DOWNLOADED)
+            ) && (
+              <span className="update-available">•</span>
+            )
+          }
         </button>
         {this.state.tooltipEnabled && (
           <ReactTooltip place="right" type="dark" effect="solid" />

@@ -58,7 +58,7 @@ html {
   }
 }
 
-.app .sidebar .sidebar__button .update-available {
+.update-available {
   align-items: center;
   background: $theme-brand-danger;
   border-radius: 20px;
@@ -77,6 +77,16 @@ html {
   animation-name: pulse-danger;
   animation-duration: 0.75s;
   animation-iteration-count: 6;
+}
+
+.badge .update-available {
+  right: -10px;
+}
+
+.settings-navigation__link .update-available {
+  position: relative;
+  bottom: 0;
+  right: 0;
 }
 
 body.win32:not(.isFullScreen) .app .app__content {

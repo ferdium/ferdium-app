@@ -162,27 +162,29 @@ export default class AppStore extends Store {
     // Check for an update in 30s (need a delay to prevent Squirrel Installer lock file issues)
     setTimeout(() => this._checkForUpdates(), ms('30s'));
     ipcRenderer.on('autoUpdate', (event, data) => {
-      if (data.available) {
-        this.updateStatus = this.updateStatusTypes.AVAILABLE;
-        if (isMac) {
-          app.dock.bounce();
+      if (this.updateStatus !== this.updateStatusTypes.FAILED) {
+        if (data.available) {
+          this.updateStatus = this.updateStatusTypes.AVAILABLE;
+          if (isMac && this.stores.settings.app.automaticUpdates) {
+            app.dock.bounce();
+          }
         }
-      }
 
-      if (data.available !== undefined && !data.available) {
-        this.updateStatus = this.updateStatusTypes.NOT_AVAILABLE;
-      }
-
-      if (data.downloaded) {
-        this.updateStatus = this.updateStatusTypes.DOWNLOADED;
-        if (isMac) {
-          app.dock.bounce();
+        if (data.available !== undefined && !data.available) {
+          this.updateStatus = this.updateStatusTypes.NOT_AVAILABLE;
         }
-      }
 
-      if (data.error) {
-        console.log('Updater error:', data.error);
-        this.updateStatus = this.updateStatusTypes.FAILED;
+        if (data.downloaded) {
+          this.updateStatus = this.updateStatusTypes.DOWNLOADED;
+          if (isMac && this.stores.settings.app.automaticUpdates) {
+            app.dock.bounce();
+          }
+        }
+
+        if (data.error) {
+          console.log('Updater error:', data.error);
+          this.updateStatus = this.updateStatusTypes.FAILED;
+        }
       }
     });
 
