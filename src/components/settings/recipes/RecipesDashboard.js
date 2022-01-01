@@ -114,6 +114,7 @@ class RecipesDashboard extends Component {
     recipes: MobxPropTypes.arrayOrObservableArray.isRequired,
     customWebsiteRecipe: PropTypes.instanceOf(RecipePreview).isRequired,
     isLoading: PropTypes.bool.isRequired,
+    hasLoadedRecipes: PropTypes.bool.isRequired,
     showAddServiceInterface: PropTypes.func.isRequired,
     searchRecipes: PropTypes.func.isRequired,
     resetSearch: PropTypes.func.isRequired,
@@ -136,6 +137,7 @@ class RecipesDashboard extends Component {
       recipes,
       customWebsiteRecipe,
       isLoading,
+      hasLoadedRecipes,
       showAddServiceInterface,
       searchRecipes,
       resetSearch,
@@ -255,7 +257,7 @@ class RecipesDashboard extends Component {
                   />
                 ))}
               </div>
-              {recipes.length === 0 && recipeFilter !== 'dev' && (
+              {hasLoadedRecipes && recipes.length === 0 && recipeFilter !== 'dev' && (
                 <div className="align-middle settings__empty-state">
                   {customWebsiteRecipe && customWebsiteRecipe.id && (
                     <RecipeItem
