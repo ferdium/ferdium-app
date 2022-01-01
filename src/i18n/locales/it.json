@@ -287,6 +287,7 @@
   "settings.recipes.headline": "Servizi disponibili",
   "settings.recipes.missingService": "Manca un servizio?",
   "settings.recipes.nothingFound": "Non è stato trovato alcun servizio corrispondente alla ricerca impostata. Ricorda che anche se non esiste un servizio specifico, potrebbe essere possibile usare la funzionalità \"Sito Custom\". Inoltre potrebbe essere che sul sito web di Ferdi siano mostrati più servizi di quanti disponibili nella applicazione correntemente in uso. Nel caso, per accedere a questi servizi, è possibile aggiornare Ferdi.",
+  "settings.recipes.mostPopular": "Più popolari",
   "settings.recipes.servicesSuccessfulAddedInfo": "Servizio aggiunto con successo",
   "settings.searchService": "Cerca servizio",
   "settings.service.error.goBack": "Torna ai servizi",

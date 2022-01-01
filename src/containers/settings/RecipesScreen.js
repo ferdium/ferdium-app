@@ -49,7 +49,7 @@ class RecipesScreen extends Component {
 
   componentDidMount() {
     this.autorunDisposer = autorun(() => {
-      const { filter } = { filter: 'all', ...this.props.params };
+      const { filter } = this.props.params;
       const { currentFilter } = this.state;
 
       if (filter === 'all' && currentFilter !== 'all') {
