@@ -26,11 +26,12 @@ function darkenAbsolute(originalColor, absoluteChange) {
 }
 
 function generateAccentStyle(accentColorStr) {
-  let accentColor = color(DEFAULT_APP_SETTINGS.accentColor);
+  let accentColor;
   try {
     accentColor = color(accentColorStr);
   } catch {
-    // Ignore invalid accent color.
+    accentColorStr = DEFAULT_APP_SETTINGS.accentColor;
+    accentColor = color(accentColorStr);
   }
   const darkerColorStr = darkenAbsolute(accentColor, 5).hex();
   return `
@@ -69,7 +70,8 @@ function generateAccentStyle(accentColorStr) {
     .theme__dark .franz-form__button,
     .franz-form__button,
     .ferdi__fab,
-    .franz-form .franz-form__slider-wrapper .slider::-webkit-slider-thumb {
+    .franz-form .franz-form__slider-wrapper .slider::-webkit-slider-thumb,
+    span.loader div > div > div {
       background: ${accentColorStr};
     }
 
