@@ -10,10 +10,9 @@ export default class RecipePreviewsStore extends Store {
     'all',
   );
 
-  @observable searchRecipePreviewsRequest = new Request(
-    this.api.recipePreviews,
-    'search',
-  );
+  @observable featuredRecipePreviewsRequest = new CachedRequest(this.api.recipePreviews, 'featured');
+
+  @observable searchRecipePreviewsRequest = new Request(this.api.recipePreviews, 'search');
 
   constructor(...args) {
     super(...args);
@@ -24,6 +23,10 @@ export default class RecipePreviewsStore extends Store {
 
   @computed get all() {
     return this.allRecipePreviewsRequest.execute().result || [];
+  }
+
+  @computed get featured() {
+    return this.featuredRecipePreviewsRequest.execute().result || [];
   }
 
   @computed get searchResults() {
