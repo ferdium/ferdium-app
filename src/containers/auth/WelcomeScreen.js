@@ -15,7 +15,7 @@ class WelcomeScreen extends Component {
         loginRoute={user.loginRoute}
         signupRoute={user.signupRoute}
         changeServerRoute={user.changeServerRoute}
-        recipes={recipePreviews.all}
+        recipes={recipePreviews.featured}
       />
     );
   }

@@ -1,4 +1,4 @@
-import { ipcMain, BrowserWindow } from 'electron';
+import { app, ipcMain, BrowserWindow } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import { isMac, isWindows } from '../../environment';
 
@@ -24,6 +24,7 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
             autoUpdater.checkForUpdates();
           } else if (args.action === 'install') {
             debug('installing update');
+            app.removeAllListeners('window-all-closed');
             autoUpdater.quitAndInstall();
           }
         } catch (error) {

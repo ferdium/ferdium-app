@@ -49,11 +49,13 @@ class RecipesScreen extends Component {
 
   componentDidMount() {
     this.autorunDisposer = autorun(() => {
-      const { filter } = { filter: 'all', ...this.props.params };
+      const { filter } = this.props.params;
       const { currentFilter } = this.state;
 
       if (filter === 'all' && currentFilter !== 'all') {
         this.setState({ currentFilter: 'all' });
+      } else if (filter === 'featured' && currentFilter !== 'featured') {
+        this.setState({ currentFilter: 'featured' });
       } else if (filter === 'dev' && currentFilter !== 'dev') {
         this.setState({ currentFilter: 'dev' });
       }
@@ -113,7 +115,7 @@ class RecipesScreen extends Component {
 
     const { app: appActions, service: serviceActions } = this.props.actions;
 
-    const { filter } = { filter: 'all', ...this.props.params };
+    const { filter } = this.props.params;
     let recipeFilter;
 
     if (filter === 'all') {
@@ -123,6 +125,8 @@ class RecipesScreen extends Component {
       ]);
     } else if (filter === 'dev') {
       recipeFilter = communityRecipesStore.communityRecipes;
+    } else {
+      recipeFilter = recipePreviews.featured;
     }
     recipeFilter = recipeFilter.sort(this._sortByName);
 
@@ -149,10 +153,10 @@ class RecipesScreen extends Component {
       service => service.id === CUSTOM_WEBSITE_RECIPE_ID,
     );
 
-    const isLoading =
-      recipePreviews.allRecipePreviewsRequest.isExecuting ||
-      recipes.installRecipeRequest.isExecuting ||
-      recipePreviews.searchRecipePreviewsRequest.isExecuting;
+    const isLoading = recipePreviews.featuredRecipePreviewsRequest.isExecuting
+      || recipePreviews.allRecipePreviewsRequest.isExecuting
+      || recipes.installRecipeRequest.isExecuting
+      || recipePreviews.searchRecipePreviewsRequest.isExecuting;
 
     const recipeDirectory = userDataRecipesPath('dev');
 
@@ -163,6 +167,7 @@ class RecipesScreen extends Component {
           customWebsiteRecipe={customWebsiteRecipe}
           isLoading={isLoading}
           addedServiceCount={services.all.length}
+          hasLoadedRecipes={recipePreviews.featuredRecipePreviewsRequest.wasExecuted}
           showAddServiceInterface={serviceActions.showAddServiceInterface}
           searchRecipes={e => this.searchRecipes(e)}
           resetSearch={() => this.resetSearch()}

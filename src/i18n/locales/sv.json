@@ -287,6 +287,7 @@
   "settings.recipes.headline": "Tillgängliga tjänster",
   "settings.recipes.missingService": "Saknar du en tjänst?",
   "settings.recipes.nothingFound": "Tyvärr, men ingen tjänst matchade ditt sökord - men du kan fortfarande förmodligen lägga till det med \"Anpassad webbplats\" alternativet. Observera att webbplatsen kan visa fler tjänster som har lagts till Ferdi sedan den version som du för närvarande är på. För att få dessa nya tjänster, överväg att uppgradera till en nyare version av Ferdi.",
+  "settings.recipes.mostPopular": "Mest populära",
   "settings.recipes.servicesSuccessfulAddedInfo": "Tjänsten har lagts till",
   "settings.searchService": "Sök efter tjänst",
   "settings.service.error.goBack": "Tillbaka till tjänster",

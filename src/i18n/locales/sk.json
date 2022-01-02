@@ -287,6 +287,7 @@
   "settings.recipes.headline": "Dostupné služby",
   "settings.recipes.missingService": "Chýba vám služba?",
   "settings.recipes.nothingFound": "Je nám ľúto, vášmu hľadanému výrazu nezodpovedá žiadna služba, ale pravdepodobne ju môžete pridať pomocou možnosti \"Custom Website\". Upozorňujeme, že na webovej lokalite sa môžu zobraziť ďalšie služby, ktoré boli do Ferdi pridané od verzie, na ktorej sa práve nachádzate. Ak chcete získať tieto nové služby, zvážte aktualizáciu na novšiu verziu Ferdi.",
+  "settings.recipes.mostPopular": "Najpopulárnejšie",
   "settings.recipes.servicesSuccessfulAddedInfo": "Služba bola úspešne pridaná",
   "settings.searchService": "Vyhľadať službu",
   "settings.service.error.goBack": "Späť na služby",
