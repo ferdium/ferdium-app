@@ -99,6 +99,10 @@ function generateAccentStyle(accentColorStr) {
       background: ${darkerColorStr};
     }
 
+    .settings__close {
+      border-color: ${darkerColorStr}!important;
+    }
+
     .theme__dark .franz-form__button.franz-form__button--inverted,
     .franz-form__button.franz-form__button--inverted {
       background: none;
