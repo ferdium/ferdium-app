@@ -535,18 +535,8 @@
     }
     border-bottom: 1px solid darken($theme-gray-lightest, 3%);
 
-    .badge {
-      background: $theme-gray-light;
-      color: #fff;
-    }
-
     &:hover {
       background: darken($theme-gray-lightest, 8%);
-
-      .badge {
-        background: $theme-gray-light;
-        color: #fff;
-      }
     }
 
     &.is-active {
