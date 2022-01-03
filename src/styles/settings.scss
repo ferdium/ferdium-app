@@ -153,13 +153,11 @@
 
 .settings {
   border-radius: $theme-border-radius;
-  box-shadow: 0 20px 50px rgba($dark-theme-black, 0.5);
   display: flex;
   height: 100%;
   max-height: 720px;
   max-width: 900px;
   min-height: 400px;
-  overflow: hidden;
   position: relative;
   width: 100%;
   z-index: 9999;
@@ -169,7 +167,8 @@
     flex: 1;
     flex-direction: column;
     height: auto;
-    border-radius: 0 $theme-border-radius $theme-border-radius 0;
+    border-radius: $theme-border-radius;
+    box-shadow: 0 20px 50px rgba($dark-theme-black, 0.5);
     overflow: hidden;
     background: #fff;
   }
@@ -273,7 +272,7 @@
 
   .settings__close {
     background: $theme-brand-primary;
-    // border-left: 1px solid darken($theme-brand-primary, 8%);
+    border-left: 1px solid darken($theme-brand-primary, 8%);
     color: #fff;
     font-size: 20px;
     height: 50px;
@@ -283,6 +282,7 @@
     @media (prefers-reduced-motion: no-preference) {
       transition: background $theme-transition-time;
     }
+    border-top-right-radius: $theme-border-radius;
     cursor: pointer;
 
     &::before {
@@ -513,14 +513,14 @@
   flex-direction: column;
   height: auto;
   width: 240px;
-  height: 100%;
+  height: calc(100% - 100px);
   align-self: center;
   border-top-left-radius: $theme-border-radius;
   border-bottom-left-radius: $theme-border-radius;
   overflow: hidden;
+  box-shadow: 0 20px 50px rgba($dark-theme-black, 0.5);
 
   .settings-navigation__link {
-    position: relative;
     align-items: center;
     justify-content: space-between;
     color: $theme-text-color;
@@ -535,18 +535,8 @@
     }
     border-bottom: 1px solid darken($theme-gray-lightest, 3%);
 
-    .badge {
-      background: $theme-gray-light;
-      color: #fff;
-    }
-
     &:hover {
       background: darken($theme-gray-lightest, 8%);
-
-      .badge {
-        background: $theme-gray-light;
-        color: #fff;
-      }
     }
 
     &.is-active {
