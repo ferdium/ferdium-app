@@ -1,6 +1,6 @@
 export default theme => ({
   component: {
-    zIndex: 500,
+    zIndex: 9999,
     position: 'absolute',
   },
   overlay: {

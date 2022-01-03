@@ -286,6 +286,7 @@
   "settings.recipes.customService.openFolder": "Klasörü aç",
   "settings.recipes.headline": "Mevcut servisler",
   "settings.recipes.missingService": "Aradığın servisi bulamadın mı?",
+  "settings.recipes.mostPopular": "Most popular",
   "settings.recipes.nothingFound": "Üzgünüz, ancak hiçbir hizmet arama teriminizle eşleşmedi - ancak \"Özel Web Sitesi\" seçeneğini kullanarak yeni bir tane ekleyebilirsiniz. Web sitesinde, şu anda bulunduğunuz sürümden bu yana Ferdi'ye eklenen daha fazla hizmet gösterilebileceğini lütfen unutmayın. Bu yeni hizmetleri almak için lütfen Ferdi'nin daha yeni bir sürümüne geçmeyi düşünün.",
   "settings.recipes.mostPopular": "En popüler",
   "settings.recipes.servicesSuccessfulAddedInfo": "Servis başarıyla eklendi",

@@ -366,7 +366,7 @@ class EditSettingsForm extends Component {
               >
                 {intl.formatMessage(messages.headlineAdvanced)}
               </h2>
-              <h2
+              {(isMac || isWindows || process.env.APPIMAGE) && <h2
                 id="updates"
                 className={
                   this.state.activeSetttingsTab === 'updates'
@@ -381,7 +381,7 @@ class EditSettingsForm extends Component {
                 {automaticUpdates && (updateIsReadyToInstall || isUpdateAvailable) && (
                   <span className="update-available">•</span>
                 )}
-              </h2>
+              </h2>}
             </div>
 
             {/* General */}
