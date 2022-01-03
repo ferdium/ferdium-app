@@ -286,6 +286,7 @@
   "settings.recipes.customService.openFolder": "Avaa kansio",
   "settings.recipes.headline": "Käytettävissä olevat palvelut",
   "settings.recipes.missingService": "Palvelu puuttuu?",
+  "settings.recipes.mostPopular": "Most popular",
   "settings.recipes.nothingFound": "Pahoittelut, mutta yksikään palvelu ei täsmää hakutermiisi - saatat kuitenkin pystyä lisäämään sen käyttämällä \"Mukautettu sivusto\" -vaihtoehtoa. Huomioithan, että sivusto saattaa näyttää enemmän palveluja mitä asennetussa Ferdin versiossa on. Saadaksesi käyttöön nämä uudet palvelut, harkitse päivittämistä uudempaan Ferdin versioon.",
   "settings.recipes.mostPopular": "Suosituin",
   "settings.recipes.servicesSuccessfulAddedInfo": "Palvelu lisätty onnistuneesti",
