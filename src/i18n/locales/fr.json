@@ -286,6 +286,7 @@
   "settings.recipes.customService.openFolder": "Ouvrir le dossier",
   "settings.recipes.headline": "Services disponibles",
   "settings.recipes.missingService": "Un service est manquant?",
+  "settings.recipes.mostPopular": "Most popular",
   "settings.recipes.nothingFound": "Désolé, mais aucun service ne correspond à votre recherche - mais vous pouvez toujours l'ajouter en utilisant l'option \"Custom Website\". Veuillez noter que le site Web pourrait afficher plus de services qui ont été ajoutés à Ferdi depuis la version sur laquelle vous êtes actuellement. Pour obtenir ces nouveaux services, veuillez envisager la mise à niveau vers une version plus récente de Ferdi.",
   "settings.recipes.mostPopular": "Les plus populaires",
   "settings.recipes.servicesSuccessfulAddedInfo": "Le service a été ajouté avec succès",
