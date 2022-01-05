@@ -388,8 +388,9 @@ export default class AppStore extends Store {
       ipcRenderer.send('autoUpdate', {
         action: 'check',
       });
-
-      this.actions.recipe.update();
+      if (this.stores.settings.app.automaticUpdates) {
+        this.actions.recipe.update();
+      }
     }
   }
 

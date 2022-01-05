@@ -243,6 +243,7 @@ class EditSettingsForm extends Component {
       noUpdateAvailable,
       updateIsReadyToInstall,
       updateFailed,
+      showServicesUpdatedInfoBar,
       isClearingAllCache,
       onClearAllCache,
       getCacheSize,
@@ -378,7 +379,7 @@ class EditSettingsForm extends Component {
                 }}
               >
                 {intl.formatMessage(messages.headlineUpdates)}
-                {automaticUpdates && (updateIsReadyToInstall || isUpdateAvailable) && (
+                {automaticUpdates && (updateIsReadyToInstall || isUpdateAvailable || showServicesUpdatedInfoBar) && (
                   <span className="update-available">•</span>
                 )}
               </h2>}
