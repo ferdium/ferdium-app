@@ -768,45 +768,49 @@ class EditSettingsForm extends Component {
             {this.state.activeSetttingsTab === 'updates' && (
               <div>
                 <Toggle field={form.$('automaticUpdates')} />
-                {automaticUpdates && (
-                  <div>
-                    <Toggle field={form.$('beta')} />
-                    {updateIsReadyToInstall ? (
-                      <Button
-                        label={intl.formatMessage(messages.buttonInstallUpdate)}
-                        onClick={installUpdate}
-                      />
-                    ) : (
-                      <Button
-                        buttonType="secondary"
-                        label={intl.formatMessage(updateButtonLabelMessage)}
-                        onClick={checkForUpdates}
-                        disabled={
-                          !automaticUpdates ||
-                          isCheckingForUpdates ||
-                          isUpdateAvailable ||
-                          !isOnline
-                        }
-                        loaded={!isCheckingForUpdates || !isUpdateAvailable}
-                      />
-                    )}
-                    <br />
-                  </div>
-                )}
-                <p>
-                  {intl.formatMessage(messages.currentVersion)} {ferdiVersion}
-                </p>
-                {noUpdateAvailable && (
+                {(isMac || isWindows || process.env.APPIMAGE) && (
                   <>
-                    <br />
-                    <br />
-                    {intl.formatMessage(messages.updateStatusUpToDate)}.
+                    {automaticUpdates && (
+                      <>
+                        <div>
+                          <Toggle field={form.$('beta')} />
+                          {updateIsReadyToInstall ? (
+                            <Button
+                              label={intl.formatMessage(messages.buttonInstallUpdate)}
+                              onClick={installUpdate}
+                            />
+                          ) : (
+                            <Button
+                              buttonType="secondary"
+                              label={intl.formatMessage(updateButtonLabelMessage)}
+                              onClick={checkForUpdates}
+                              disabled={
+                                !automaticUpdates ||
+                                isCheckingForUpdates ||
+                                isUpdateAvailable ||
+                                !isOnline
+                              }
+                              loaded={!isCheckingForUpdates || !isUpdateAvailable}
+                            />
+                          )}
+                          <br />
+                        </div>
+                        <p>
+                          {intl.formatMessage(messages.currentVersion)} {ferdiVersion}
+                        </p>
+                        {noUpdateAvailable && (
+                          <p>
+                            {intl.formatMessage(messages.updateStatusUpToDate)}.
+                          </p>
+                        )}
+                        {updateFailed && (
+                          <Infobox type="danger" icon="alert">
+                            An error occured (check the console for more details)
+                          </Infobox>
+                        )}
+                      </>
+                    )}
                   </>
-                )}
-                {updateFailed && (
-                  <Infobox type="danger" icon="alert">
-                    An error occured (check the console for more details)
-                  </Infobox>
                 )}
                 <p className="settings__message">
                   <Icon icon={mdiGithub} />
