@@ -182,8 +182,13 @@ export default class AppStore extends Store {
         }
 
         if (data.error) {
-          console.log('Updater error:', data.error);
-          this.updateStatus = this.updateStatusTypes.FAILED;
+          if (data.error.message && data.error.message.startsWith('404')) {
+            this.updateStatus = this.updateStatusTypes.NOT_AVAILABLE;
+            console.warn('Updater warning: there seems to be unpublished pre-release(s) available on GitHub', data.error);
+          } else {
+            console.error('Updater error:', data.error);
+            this.updateStatus = this.updateStatusTypes.FAILED;
+          }
         }
       }
     });
