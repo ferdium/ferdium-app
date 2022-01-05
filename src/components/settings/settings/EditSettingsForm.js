@@ -5,7 +5,8 @@ import { observer } from 'mobx-react';
 import prettyBytes from 'pretty-bytes';
 import { defineMessages, injectIntl } from 'react-intl';
 
-import { mdiGithub, mdiOpenInNew } from '@mdi/js';
+import { mdiGithub, mdiOpenInNew, mdiPowerPlug } from '@mdi/js';
+
 import Form from '../../../lib/Form';
 import Button from '../../ui/Button';
 import Toggle from '../../ui/Toggle';
@@ -174,6 +175,14 @@ const messages = defineMessages({
   appRestartRequired: {
     id: 'settings.app.restartRequired',
     defaultMessage: 'Changes require restart',
+  },
+  servicesUpdated: {
+    id: 'infobar.servicesUpdated',
+    defaultMessage: 'Your services have been updated.',
+  },
+  buttonReloadServices: {
+    id: 'infobar.buttonReloadServices',
+    defaultMessage: 'Reload services',
   },
   numberOfColumns: {
     id: 'settings.app.form.splitColumns',
@@ -768,9 +777,9 @@ class EditSettingsForm extends Component {
             {this.state.activeSetttingsTab === 'updates' && (
               <div>
                 <Toggle field={form.$('automaticUpdates')} />
-                {(isMac || isWindows || process.env.APPIMAGE) && (
+                {automaticUpdates && (
                   <>
-                    {automaticUpdates && (
+                    {(isMac || isWindows || process.env.APPIMAGE) && (
                       <>
                         <div>
                           <Toggle field={form.$('beta')} />
@@ -809,6 +818,23 @@ class EditSettingsForm extends Component {
                           </Infobox>
                         )}
                       </>
+                    )}
+                    {showServicesUpdatedInfoBar ? (
+                      <>
+                        <p>
+                          <Icon icon={mdiPowerPlug} />
+                          {intl.formatMessage(messages.servicesUpdated)}
+                        </p>
+                        <Button
+                          label={intl.formatMessage(messages.buttonReloadServices)}
+                          onClick={() => window.location.reload()}
+                        />
+                      </>
+                    ) : (
+                      <p>
+                        <Icon icon={mdiPowerPlug} />
+                        Your services are up-to-date.
+                      </p>
                     )}
                   </>
                 )}
