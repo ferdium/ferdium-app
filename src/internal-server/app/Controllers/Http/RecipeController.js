@@ -85,6 +85,21 @@ class RecipeController {
     return response.send(results);
   }
 
+  // Return an empty array
+  update({
+    response,
+  }) {
+    return response.send([]);
+  }
+
+  async popularRecipes({
+    response,
+  }) {
+    const recipesUrlFetch = await fetch(`${RECIPES_URL}/popular`);
+    const featuredRecipes = JSON.parse(await recipesUrlFetch.text());
+    return response.send(featuredRecipes);
+  }
+
   // Download a recipe
   async download({ response, params }) {
     // Validate user input
