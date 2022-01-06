@@ -13,7 +13,6 @@ import {
   removeSync,
   PathOrFileDescriptor,
 } from 'fs-extra';
-import fetch from 'electron-fetch';
 
 import ServiceModel from '../../models/Service';
 import RecipePreviewModel from '../../models/RecipePreview';
@@ -411,10 +410,11 @@ export default class ServerApi {
 
         const packageUrl = `${apiBase()}/recipes/download/${recipeId}`;
 
-        const res = await fetch(packageUrl);
+        const res = await window.fetch(packageUrl);
         debug('Recipe downloaded', recipeId);
-        const buffer = await res.buffer();
-        writeFileSync(archivePath, buffer);
+        const blob = await res.blob();
+        const buffer = await blob.arrayBuffer();
+        writeFileSync(tempArchivePath, Buffer.from(buffer));
       }
       debug(archivePath);
 

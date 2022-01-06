@@ -72,7 +72,6 @@
     "dbus-next": "^0.10.2",
     "debug": "^4.3.2",
     "electron-dl": "^3.2.1",
-    "electron-fetch": "^1.7.4",
     "electron-find": "^1.0.7",
     "electron-react-titlebar": "^1.1.0",
     "electron-updater": "^4.6.5",
