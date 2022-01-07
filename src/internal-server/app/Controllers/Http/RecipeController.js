@@ -85,10 +85,17 @@ class RecipeController {
     return response.send(results);
   }
 
-  // Return an empty array
-  update({
-    response,
-  }) {
+  async update({ request, response }) {
+    // eslint-disable-next-line eqeqeq
+    if (Env.get('CONNECT_WITH_FRANZ') == 'true') {
+      const body = request.all();
+      const remoteUpdates = await fetch(`${RECIPES_URL}/update`, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {'Content-Type': 'application/json'}
+      });
+      return response.send(await remoteUpdates.json());
+    }
     return response.send([]);
   }
 
@@ -116,18 +123,17 @@ class RecipeController {
 
     const service = params.recipe;
 
+    // eslint-disable-next-line eqeqeq
+    if (Env.get('CONNECT_WITH_FRANZ') == 'true') {
+      return response.redirect(`${RECIPES_URL}/download/${service}`);
+    }
     // Check for invalid characters
     if (/\.+/.test(service) || /\/+/.test(service)) {
       return response.send('Invalid recipe name');
     }
-
     // Check if recipe exists in recipes folder
     if (await Drive.exists(`${service}.tar.gz`)) {
       return response.send(await Drive.get(`${service}.tar.gz`));
-    }
-    // eslint-disable-next-line eqeqeq
-    if (Env.get('CONNECT_WITH_FRANZ') == 'true') {
-      return response.redirect(`${RECIPES_URL}/download/${service}`);
     }
     return response.status(400).send({
       message: 'Recipe not found',
