@@ -30,7 +30,7 @@ const messages = defineMessages({
   },
   mostPopularRecipes: {
     id: 'settings.recipes.mostPopular',
-    defaultMessage: '!!!Most popular',
+    defaultMessage: 'Most popular',
   },
   allRecipes: {
     id: 'settings.recipes.all',
