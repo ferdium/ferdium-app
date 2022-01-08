@@ -87,7 +87,6 @@ class AppLayout extends Component {
     showServicesUpdatedInfoBar: PropTypes.bool.isRequired,
     appUpdateIsDownloaded: PropTypes.bool.isRequired,
     authRequestFailed: PropTypes.bool.isRequired,
-    reloadServicesAfterUpdate: PropTypes.func.isRequired,
     installAppUpdate: PropTypes.func.isRequired,
     showRequiredRequestsError: PropTypes.bool.isRequired,
     areRequiredRequestsSuccessful: PropTypes.bool.isRequired,
@@ -115,7 +114,6 @@ class AppLayout extends Component {
       showServicesUpdatedInfoBar,
       appUpdateIsDownloaded,
       authRequestFailed,
-      reloadServicesAfterUpdate,
       installAppUpdate,
       settings,
       showRequiredRequestsError,
@@ -175,12 +173,12 @@ class AppLayout extends Component {
                   {intl.formatMessage(messages.authRequestFailed)}
                 </InfoBar>
               )}
-              {showServicesUpdatedInfoBar &&
+              {automaticUpdates && showServicesUpdatedInfoBar &&
                 this.state.shouldShowServicesUpdatedInfoBar && (
                   <InfoBar
                     type="primary"
                     ctaLabel={intl.formatMessage(messages.buttonReloadServices)}
-                    onClick={reloadServicesAfterUpdate}
+                    onClick={() => window.location.reload()}
                     onHide={() => {
                       this.setState({
                         shouldShowServicesUpdatedInfoBar: false,

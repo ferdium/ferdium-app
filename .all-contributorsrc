@@ -30,7 +30,8 @@
         "userTesting",
         "question",
         "projectManagement",
-        "review"
+        "review",
+        "translation"
       ]
     },
     {
@@ -693,7 +694,8 @@
       "profile": "https://github.com/tristanplouz",
       "contributions": [
         "code",
-        "ideas"
+        "ideas",
+        "translation"
       ]
     },
     {
@@ -739,7 +741,8 @@
       "avatar_url": "https://avatars0.githubusercontent.com/u/649895?v=4",
       "profile": "https://hohner.dev",
       "contributions": [
-        "userTesting"
+        "userTesting",
+        "translation"
       ]
     },
     {
@@ -852,7 +855,8 @@
         "bug",
         "content",
         "userTesting",
-        "projectManagement"
+        "projectManagement",
+        "translation"
       ]
     },
     {
@@ -901,7 +905,8 @@
         "ideas",
         "design",
         "review",
-        "infra"
+        "infra",
+        "translation"
       ]
     },
     {
@@ -1122,7 +1127,8 @@
       "profile": "https://github.com/martinbernat",
       "contributions": [
         "code",
-        "bug"
+        "bug",
+        "translation"
       ]
     },
     {
@@ -1160,6 +1166,1122 @@
       "profile": "http://userfriendly.tech",
       "contributions": [
         "userTesting"
+      ]
+    },
+    {
+      "login": "rmkanda",
+      "name": "Ramakrishnan Kandasamy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/38713281?v=4",
+      "profile": "https://github.com/rmkanda",
+      "contributions": [
+        "review"
+      ]
+    },
+    {
+      "login": "xrup",
+      "name": "xrup",
+      "avatar_url": "https://www.gravatar.com/avatar/9e65aa6d4db623146ec4c571db081a6d",
+      "profile": "https://crowdin.com/profile/xrup",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "daedgoco",
+      "name": "daedgoco",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14233276/small/8823401d22f9ae6865925e4f20eb15e1.png",
+      "profile": "https://crowdin.com/profile/daedgoco",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "adria.soce",
+      "name": "Adrià Solé",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14234338/small/6dc05d89e672bd624e9e37253f852b77.jpeg",
+      "profile": "https://crowdin.com/profile/adria.soce",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "endersonmenezes",
+      "name": "Enderson Menezes",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14234572/small/384477b34fae0a3f98f386cc658b9494.jpeg",
+      "profile": "https://crowdin.com/profile/endersonmenezes",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Ali-Alqazwini",
+      "name": "ali",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14236770/small/328f8ae5f996f60bb2c174a9f8f808ec.jpeg",
+      "profile": "https://crowdin.com/profile/Ali-Alqazwini",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "martonnagy",
+      "name": "Marton Nagy",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14243516/small/54af6111fd1260698f1b6d187245e074.jpeg",
+      "profile": "https://crowdin.com/profile/martonnagy",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "edsonmanuelcarballovera",
+      "name": "Edson Manuel Carballo Vera",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14244460/small/28a9b867da8e2b92904d79348cb39a55.jpeg",
+      "profile": "https://crowdin.com/profile/edsonmanuelcarballovera",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "xelio_91_",
+      "name": "alby.grassi",
+      "avatar_url": "https://www.gravatar.com/avatar/47a0291b35c0031ad0fee6b7cf717728",
+      "profile": "https://crowdin.com/profile/xelio_91_",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "mos.vasilis",
+      "name": "Vasilis Moschopoulos",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14266920/small/47c551cf2f468d43a4449a74d8134cc0.jpg",
+      "profile": "https://crowdin.com/profile/mos.vasilis",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "crystyanalencar",
+      "name": "crystyanalencar",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14289028/small/288f15e47856de74b8fdda14ed8d9b69.png",
+      "profile": "https://crowdin.com/profile/crystyanalencar",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "larsmagnusherland",
+      "name": "larsmagnusherland",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/13219280/small/424b39a9b0f10a08f63eb1aaea1ba180.png",
+      "profile": "https://crowdin.com/profile/larsmagnusherland",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "GPMartins",
+      "name": "GPMartins",
+      "avatar_url": "https://www.gravatar.com/avatar/b0d3d14cd9dddfbde33ebbb8ec93b997",
+      "profile": "https://crowdin.com/profile/GPMartins",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "MosciolaroMike",
+      "name": "Michelangelo Amoruso Manzari",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14312004/small/06d41030406626131151993d08164756.jpeg",
+      "profile": "https://crowdin.com/profile/MosciolaroMike",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "nicolo.castellini",
+      "name": "Nicoló Castellini",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14315116/small/e28f5f575b7cac2e62ad38dbeefa287d.jpeg",
+      "profile": "https://crowdin.com/profile/nicolo.castellini",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "ValleBL",
+      "name": "Valentin",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14316376/small/10e3598076d2bc111c4377633cf5a77c.jpeg",
+      "profile": "https://crowdin.com/profile/ValleBL",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Jashnok",
+      "name": "Joshua",
+      "avatar_url": "https://www.gravatar.com/avatar/f9d8eedb517530409b8dd9415b29ae74",
+      "profile": "https://crowdin.com/profile/Jashnok",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "mulettohonor",
+      "name": "Muletto Honor",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14320218/small/31446d0a50fe681a174dcfce6ccb863b.jpg",
+      "profile": "https://crowdin.com/profile/mulettohonor",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "mysticfall",
+      "name": "Xavier Cho",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14325066/small/ea4c81f6e5a2320d077679986808e618.jpeg",
+      "profile": "https://crowdin.com/profile/mysticfall",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "borntzal",
+      "name": "borntzal",
+      "avatar_url": "https://www.gravatar.com/avatar/b9fe7367a9c911e427a22f5214732e4d",
+      "profile": "https://crowdin.com/profile/borntzal",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "mahoganypinewood",
+      "name": "Norbert Kőhegyi",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14342206/small/3de2d02f113a1950869a38970ce550db.jpg",
+      "profile": "https://crowdin.com/profile/mahoganypinewood",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "eandersons",
+      "name": "Edgars",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/13356613/small/d25f02bc7a75913ce9a11d3c61be6477.png",
+      "profile": "https://crowdin.com/profile/eandersons",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "cnoguerol",
+      "name": "César Noguerol",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14371498/small/77c91c1552d0303285eee49a7233bb2a.jpeg",
+      "profile": "https://crowdin.com/profile/cnoguerol",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "pjs21s",
+      "name": "JinSang Park",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14377502/small/f64299e436a34afa05cab3827a0c8b11.jpeg",
+      "profile": "https://crowdin.com/profile/pjs21s",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "tcarreira",
+      "name": "Tiago Carreira",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14378030/small/e3cf7bb00b6a1711dab58c59ea04cee3.jpeg",
+      "profile": "https://crowdin.com/profile/tcarreira",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "huantrg",
+      "name": "Huan Tran",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14394210/small/ac7208150dfb9196ce6a494390bdfa51.jpeg",
+      "profile": "https://crowdin.com/profile/huantrg",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "maximax",
+      "name": "maximax",
+      "avatar_url": "https://www.gravatar.com/avatar/a537523faffbbf55a0f39471143c3264",
+      "profile": "https://crowdin.com/profile/maximax",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "birobirobiro) (birobirobiro",
+      "name": "João Inácio (birobirobiro)",
+      "avatar_url": "https://www.gravatar.com/avatar/2ea06a80ecd7e4a34acfa43cfa01fa25",
+      "profile": "https://crowdin.com/profile/birobirobiro) (birobirobiro",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "pludi",
+      "name": "Peter L.",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14038315/small/22f4df26f65181a7d3a9de773d11315d.png",
+      "profile": "https://crowdin.com/profile/pludi",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "algonrey",
+      "name": "Alberto González",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14446576/small/e2423064f8b64e4d91eb1d26d1c9e3ed.png",
+      "profile": "https://crowdin.com/profile/algonrey",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "mganovelli",
+      "name": "mganovelli",
+      "avatar_url": "https://www.gravatar.com/avatar/73572bf6ada06e0a31902a679231d339",
+      "profile": "https://crowdin.com/profile/mganovelli",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "dvirmalka",
+      "name": "Dvir M",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14451536/small/e724aa43f781c935e408be99e679fe5e.jpg",
+      "profile": "https://crowdin.com/profile/dvirmalka",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Emilio_D",
+      "name": "Daniel Brandobur",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14452294/small/13b5c161612a2f366078b563e9f5e08b.png",
+      "profile": "https://crowdin.com/profile/Emilio_D",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "totoyeah",
+      "name": "totoderek",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14465378/small/234131e24d58cb37ca87aea532d3d347.png",
+      "profile": "https://crowdin.com/profile/totoyeah",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "kev.cabrerar",
+      "name": "Kevin Cabrera",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14471950/small/383c6a879a45001c36228e17e2d81090.png",
+      "profile": "https://crowdin.com/profile/kev.cabrerar",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "hugosantosmobile",
+      "name": "Hugo Santos",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14477058/small/e8a048695e4de818fdf1e3e1326d14c4.png",
+      "profile": "https://crowdin.com/profile/hugosantosmobile",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "sbglasius",
+      "name": "Søren Berg Glasius",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14480260/small/9643f9f295172a5a9959209eee3999bd.png",
+      "profile": "https://crowdin.com/profile/sbglasius",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "mustbedreaming",
+      "name": "mustbedreaming",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14482836/small/32bf7ac73042f53cb9b7c82c57023ddb.png",
+      "profile": "https://crowdin.com/profile/mustbedreaming",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Carsso",
+      "name": "Germain Carré",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/12353537/small/d9567780a35d1e674cf47a69c301b0c4.png",
+      "profile": "https://crowdin.com/profile/Carsso",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "dominikbullo",
+      "name": "Dominik Bullo",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14494704/small/1debb3d67c6ad7d7f45f0b7a38eb21a7.jpeg",
+      "profile": "https://crowdin.com/profile/dominikbullo",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "gonperezramirez",
+      "name": "Gonzalo Pérez",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14504898/small/4f20dd9bbc823c78568eb6f1cfb2aeb9.jpeg",
+      "profile": "https://crowdin.com/profile/gonperezramirez",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Carlescampins",
+      "name": "Carlescampins",
+      "avatar_url": "https://www.gravatar.com/avatar/b84ccc92d132102110b7aec628f47b6a",
+      "profile": "https://crowdin.com/profile/Carlescampins",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "cverond",
+      "name": "Cristiano Verondini",
+      "avatar_url": "https://www.gravatar.com/avatar/70e4384a871e45743f26bdcc21303c56",
+      "profile": "https://crowdin.com/profile/cverond",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "eliyahillel",
+      "name": "אליה הלל",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14367648/small/834d1cf668a6ca97b2c66093019b5991.jpeg",
+      "profile": "https://crowdin.com/profile/eliyahillel",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "sfkmk",
+      "name": "Samuel Francois Köhler",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14541090/small/f0a810349778c46b7572301340b471e8.jpeg",
+      "profile": "https://crowdin.com/profile/sfkmk",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Letrab",
+      "name": "Bartel",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14544608/small/91c226dbb12aa1067e294cd5c4332ae1.png",
+      "profile": "https://crowdin.com/profile/Letrab",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "alexmartins",
+      "name": "Alexandre Martins",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14544796/small/e3c922101c1ceb7c7a6b7bd165a15d98.jpeg",
+      "profile": "https://crowdin.com/profile/alexmartins",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "jartsa",
+      "name": "Jari Myrskykari",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14080739/small/6dadf0a40522a0e918f746f2b32e6c27.jpg",
+      "profile": "https://crowdin.com/profile/jartsa",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "ugurcansayan",
+      "name": "Uğurcan Sayan",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/13023570/small/96cfec0b4d18e4b26b59dfeeaa369cf6.jpg",
+      "profile": "https://crowdin.com/profile/ugurcansayan",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "nasmi3",
+      "name": "Alex",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14563170/small/072d3aadc3866c16ed1a5b5082e81f26.png",
+      "profile": "https://crowdin.com/profile/nasmi3",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "n-mitic",
+      "name": "Nikola Mitić",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14588102/small/5f8b6b73c8d583e6b424607470c09cb7.jpeg",
+      "profile": "https://crowdin.com/profile/n-mitic",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "fawkulce",
+      "name": "fawkulce",
+      "avatar_url": "https://www.gravatar.com/avatar/9004e98cd5e707875b3dd9268214a664",
+      "profile": "https://crowdin.com/profile/fawkulce",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Glenac",
+      "name": "Glenac",
+      "avatar_url": "https://www.gravatar.com/avatar/080652c67697630c9885a1157ad8a360",
+      "profile": "https://crowdin.com/profile/Glenac",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "victoriousnathan55",
+      "name": "Victorious",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14319626/small/120632761f7821f4cbfdac046086b6e7.jpeg",
+      "profile": "https://crowdin.com/profile/victoriousnathan55",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "raoul-m",
+      "name": "Raoul Molai",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/13238611/small/2906ff4c9e8704be8cb86d1b1cb124b1.jpg",
+      "profile": "https://crowdin.com/profile/raoul-m",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "nathanaelhoun",
+      "name": "Nathanaël",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14628456/small/7c0f5919fba56edfddf08bf715039f75.jpeg",
+      "profile": "https://crowdin.com/profile/nathanaelhoun",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "radulaurentiu",
+      "name": "Laurentiu Radu",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14631958/small/c3a0112e9eb596f0a54cdebf5d99b82a.jpg",
+      "profile": "https://crowdin.com/profile/radulaurentiu",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "GiacomoGuaresi",
+      "name": "GiacomoGuaresi",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14659702/small/12e79e3fc332762058ee525a95b72447.jpeg",
+      "profile": "https://crowdin.com/profile/GiacomoGuaresi",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "cohedz",
+      "name": "Hung Nguyen",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14664150/small/18ae8a7eaa36ba6202fa43eedd84b8d2.jpg",
+      "profile": "https://crowdin.com/profile/cohedz",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "facundo_ingenia",
+      "name": "Facundo Saravia",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14672204/small/eaf2caaff3d2851fabb3d74f76d0542e.png",
+      "profile": "https://crowdin.com/profile/facundo_ingenia",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "llsaboya",
+      "name": "Lefebvre Saboya",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14682462/small/ee313d9b222ea3d1f10bd337d6cb6fce.jpeg",
+      "profile": "https://crowdin.com/profile/llsaboya",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "beez276",
+      "name": "beez276",
+      "avatar_url": "https://www.gravatar.com/avatar/4a5e7e0b13e365d0783e480ddff338fc",
+      "profile": "https://crowdin.com/profile/beez276",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "namu",
+      "name": "namu",
+      "avatar_url": "https://www.gravatar.com/avatar/ddf44bc1e0a05ca46fa9b81f1f916f15",
+      "profile": "https://crowdin.com/profile/namu",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "kauelima",
+      "name": "Kaue Lima",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/13054953/small/3319b5f15e0452b664f94e632d51276e.jpeg",
+      "profile": "https://crowdin.com/profile/kauelima",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "AlexDep",
+      "name": "AlexDep",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14705362/small/ba978b0356a94767dc79441c70aee964.png",
+      "profile": "https://crowdin.com/profile/AlexDep",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "tanloibdp",
+      "name": "Nguyễn Tấn Lợi",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14736534/small/42b4da2ca619a6517adbb38bc60c7e5c.jpeg",
+      "profile": "https://crowdin.com/profile/tanloibdp",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "vovven",
+      "name": "Alex Widén",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14748884/small/9829dddc625adca8d20e9687f40f009e.jpeg",
+      "profile": "https://crowdin.com/profile/vovven",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "amin_tado",
+      "name": "amin_tado",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/12875002/small/fea4dcbf0c1e15743c467d0e152e43d9.jpg",
+      "profile": "https://crowdin.com/profile/amin_tado",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Rintan",
+      "name": "Rintan",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/12710633/small/bd1081c95585021cb9862a5f9d1756ec.png",
+      "profile": "https://crowdin.com/profile/Rintan",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "rishubil",
+      "name": "Nesswit",
+      "avatar_url": "https://www.gravatar.com/avatar/4943e03e0f0cf28d12fbc98064b3f244",
+      "profile": "https://crowdin.com/profile/rishubil",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "AmazingClaymore",
+      "name": "Elia De Togni",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14812758/small/a9f623f45c833c7ba7f04cf2962f3793.png",
+      "profile": "https://crowdin.com/profile/AmazingClaymore",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "zkm3f",
+      "name": "zkm3f",
+      "avatar_url": "https://www.gravatar.com/avatar/2c79623d62d2bb36b31883abd5b08a12",
+      "profile": "https://crowdin.com/profile/zkm3f",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "PrinceNorris",
+      "name": "Sebastian Jasiński",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/13962625/small/552e23414407b34f8f67db5ea49a5604.png",
+      "profile": "https://crowdin.com/profile/PrinceNorris",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "MoaufmKlo",
+      "name": "MoaufmKlo",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/13720247/small/e01249ad9a091fda233cfaec0774c1fc.png",
+      "profile": "https://crowdin.com/profile/MoaufmKlo",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "marcosorso",
+      "name": "Marcos Orso",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14830692/small/0550fa339b76765dd8b200afabd43b0a.jpeg",
+      "profile": "https://crowdin.com/profile/marcosorso",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "popdisk",
+      "name": "Nice Brown",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14844316/small/5a12669ef15f26b6c53a5d5afe38a6b3.jpeg",
+      "profile": "https://crowdin.com/profile/popdisk",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Loremed",
+      "name": "Loremed",
+      "avatar_url": "https://www.gravatar.com/avatar/76d86c860fa5bdc1694ff9c7dc9778fb",
+      "profile": "https://crowdin.com/profile/Loremed",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "yarinShapira",
+      "name": "yarinShapira",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14845706/small/abf9ec9309f40dfcb01eae2c8fca02fb.png",
+      "profile": "https://crowdin.com/profile/yarinShapira",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Kissadere",
+      "name": "Christopher Coss",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/12721969/small/8feaec1d16dd268e5ec29204a6e1d080.jpg",
+      "profile": "https://crowdin.com/profile/Kissadere",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "portakalimsi",
+      "name": "Buğra Çağlar",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/13990869/small/a4e0b16904126d8e0d014d952f4bc1b6.jpeg",
+      "profile": "https://crowdin.com/profile/portakalimsi",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "sobeitnow0",
+      "name": "sobeitnow0",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14738292/small/727b33d7bd2ca021cf85b788c6cee9d1.jpeg",
+      "profile": "https://crowdin.com/profile/sobeitnow0",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "dinzahir99",
+      "name": "Muhammad Zahiruddin",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/12732934/small/cae45ad9864def2074b1e3c35efce683.png",
+      "profile": "https://crowdin.com/profile/dinzahir99",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "aninuscsalas",
+      "name": "Aninus Partikler",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14358620/small/7f3849dd7ea25ac874fac1986810e329.png",
+      "profile": "https://crowdin.com/profile/aninuscsalas",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "wellingtonsmelo.android",
+      "name": "Wellington Melo",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14888906/small/8d128e54285cac52c0e50e53d4691c82.jpeg",
+      "profile": "https://crowdin.com/profile/wellingtonsmelo.android",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "miangou",
+      "name": "miangou",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14891930/small/78e766643ac488bebc490ecf4677c0c9.jpeg",
+      "profile": "https://crowdin.com/profile/miangou",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "HelaBasa",
+      "name": "Store",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/13976107/small/ab4177e8d90665d4603e548488d15c68.jpg",
+      "profile": "https://crowdin.com/profile/HelaBasa",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "technowhizz",
+      "name": "technowhizz",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14897978/small/2d2a416e423758dd52a3dd0f657fdf0c.jpeg",
+      "profile": "https://crowdin.com/profile/technowhizz",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "LucasMasrider",
+      "name": "Trần Lê Quốc Huy",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14613056/small/090933fb64948358fa226ad830de2b21.jpg",
+      "profile": "https://crowdin.com/profile/LucasMasrider",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "mble",
+      "name": "Maciej Błędkowski",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14273256/small/7df80579990a9d9e3cf672d04b372297.jpeg",
+      "profile": "https://crowdin.com/profile/mble",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "d3ward",
+      "name": "d3ward",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/13781643/small/bf617deeeba0d2efafef223ddb1c3c03.png",
+      "profile": "https://crowdin.com/profile/d3ward",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "amyaan",
+      "name": "amyaan",
+      "avatar_url": "https://www.gravatar.com/avatar/eac6ef8c854035fa9af245f866da0a42",
+      "profile": "https://crowdin.com/profile/amyaan",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "fredwilliamtjr",
+      "name": "Fred William Torno Junior",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14932371/small/e694cada2c8fd7924162e1badcc6af3f.png",
+      "profile": "https://crowdin.com/profile/fredwilliamtjr",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "luis449bp",
+      "name": "José Luis Bandala Pérez",
+      "avatar_url": "https://www.gravatar.com/avatar/e7dbf284ff40c3c32845e1b95d257c61",
+      "profile": "https://crowdin.com/profile/luis449bp",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "gurbii",
+      "name": "gurbii",
+      "avatar_url": "https://www.gravatar.com/avatar/bedbdd12dbf6df0abed084a7f6efe772",
+      "profile": "https://crowdin.com/profile/gurbii",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "13luizhenrique",
+      "name": "Luiz Henrique",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/13926183/small/d20b071be813e20efa3a121bc2658989.png",
+      "profile": "https://crowdin.com/profile/13luizhenrique",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "clementbiron",
+      "name": "Clément Biron",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14951127/small/a95b2d3ff6d1b64bf0d75d561e025ec6.png",
+      "profile": "https://crowdin.com/profile/clementbiron",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "ttxsyqz",
+      "name": "ttxsyqz",
+      "avatar_url": "https://www.gravatar.com/avatar/8913ba1176abfc32fa2021a8ec683511",
+      "profile": "https://crowdin.com/profile/ttxsyqz",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "BluePantherFIN",
+      "name": "Janne Salmi",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14958709/small/f32c96756fb16350385ea3dee38626f7.jpeg",
+      "profile": "https://crowdin.com/profile/BluePantherFIN",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "TheRedLadybug62",
+      "name": "TheRedLadybug62",
+      "avatar_url": "https://www.gravatar.com/avatar/4b1fdb0a13f1bdf2bbfda46e9d78f2d0",
+      "profile": "https://crowdin.com/profile/TheRedLadybug62",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "SiderealArt",
+      "name": "曹恩逢",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/12960382/small/efd52e2c41be32bfd52569ac15d228b7.jpg",
+      "profile": "https://crowdin.com/profile/SiderealArt",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "jakobsson0",
+      "name": "Martin Jakobsson",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14965633/small/6195809f0df9712fd7d4248d33cc846c.png",
+      "profile": "https://crowdin.com/profile/jakobsson0",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Guus",
+      "name": "Guus",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/12495264/small/eb334ff402b0b9bf49493bfce968399d.png",
+      "profile": "https://crowdin.com/profile/Guus",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "peterpacket",
+      "name": "peterpacket",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14970427/small/da8ab2c6b80d2c06a3b9094e53b94db9.jpeg",
+      "profile": "https://crowdin.com/profile/peterpacket",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "ogghi",
+      "name": "ogghi",
+      "avatar_url": "https://www.gravatar.com/avatar/59e381507a01e1c8cf58d2521260c0e1",
+      "profile": "https://crowdin.com/profile/ogghi",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "studinsky",
+      "name": "Vladimir Studinsky",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/13280232/small/4dd03819450e266c9b42a7eff880f9dc.jpg",
+      "profile": "https://crowdin.com/profile/studinsky",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "antaljanosbenjamin",
+      "name": "János Benjamin Antal",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14982759/small/174144d1761e4b9f8e50353b4dbca8d1.jpeg",
+      "profile": "https://crowdin.com/profile/antaljanosbenjamin",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "oguzhankara34",
+      "name": "Oğuzhan K",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14989979/small/a404ab91595a7c5cf02854477ac4c559.jpeg",
+      "profile": "https://crowdin.com/profile/oguzhankara34",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "b_n",
+      "name": "Ben Naylor",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14999083/small/00ae25b0d879d7578ca2d3c8c9a0c038.jpeg",
+      "profile": "https://crowdin.com/profile/b_n",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "ignaciocastro",
+      "name": "Ignacio Castro",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14239666/small/ac376ab1a3f35722ab4a153b26ee881a.jpeg",
+      "profile": "https://crowdin.com/profile/ignaciocastro",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "lagstrom",
+      "name": "Niklas Lagström",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/15030387/small/329d60a44b8deba42c825e2dc1a9e7a0.jpeg",
+      "profile": "https://crowdin.com/profile/lagstrom",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "jatatox",
+      "name": "Greivin Cordoncillo Romero",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/15031761/small/6482c4317b9aa45d3e61ef82eb77b48a.jpeg",
+      "profile": "https://crowdin.com/profile/jatatox",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "gherman.ovidiu.ionut",
+      "name": "Ovidiu Gherman",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/15031877/small/2ccf7f461f67f226b58260e459802848.jpeg",
+      "profile": "https://crowdin.com/profile/gherman.ovidiu.ionut",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "erykosky",
+      "name": "Eryk Lewandowski",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/15041515/small/43f0bd10f84bf785654f3412f2215df9.png",
+      "profile": "https://crowdin.com/profile/erykosky",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "natas999",
+      "name": "방현수",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14401308/small/e0d6f0cdc5114be795273e5b690f0896.jpeg",
+      "profile": "https://crowdin.com/profile/natas999",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "MyUncleSam",
+      "name": "MyUncleSam",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/15046019/small/d48a41a2a7e2d205dbe3316cd834dfb6.jpeg",
+      "profile": "https://crowdin.com/profile/MyUncleSam",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "mcwladkoe",
+      "name": "Vladyslav Samotoi",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/12996072/small/be802e915089a812d93e676674c9454f.png",
+      "profile": "https://crowdin.com/profile/mcwladkoe",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "vyacheslav_malashin",
+      "name": "Vyacheslav Malashin",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/15062315/small/397445945985e829703b1fe3e4f4ccf4.JPG",
+      "profile": "https://crowdin.com/profile/vyacheslav_malashin",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "chatoskuntakinte",
+      "name": "Chatos Kuntakinte",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/15062523/small/acb7763df860ca67fe30dbafcf9e31e0.png",
+      "profile": "https://crowdin.com/profile/chatoskuntakinte",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "e0f",
+      "name": "Juha Köpman",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14443460/small/fda983d878c8cd64f9224d2c27a2a56c.jpg",
+      "profile": "https://crowdin.com/profile/e0f",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "AiOO",
+      "name": "AiOO",
+      "avatar_url": "https://www.gravatar.com/avatar/f39fe4e7e61f4aea84e369b5f9d9c2f6",
+      "profile": "https://crowdin.com/profile/AiOO",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "musyawaroh123",
+      "name": "Ibra AF",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/13583172/small/f3e47a6f884ad97a5a8d354f0fe5a853.jpg",
+      "profile": "https://crowdin.com/profile/musyawaroh123",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "bekwendhausen",
+      "name": "Rebecca Wendhausen",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/15085045/small/3afbce411d873055baca51f69d3bfd8c.png",
+      "profile": "https://crowdin.com/profile/bekwendhausen",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "dastillero",
+      "name": "David Astillero Pérez",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14935695/small/abf96cf0a2ccb90f0ffbd7ffad4bf6f0.jpeg",
+      "profile": "https://crowdin.com/profile/dastillero",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "mscythe",
+      "name": "mscythe",
+      "avatar_url": "https://www.gravatar.com/avatar/f5c7d39046e60be1692b03d09624a49e",
+      "profile": "https://crowdin.com/profile/mscythe",
+      "contributions": [
+        "translation"
       ]
     }
   ],

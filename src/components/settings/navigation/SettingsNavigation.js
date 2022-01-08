@@ -137,9 +137,9 @@ class SettingsNavigation extends Component {
           activeClassName="is-active"
         >
           {intl.formatMessage(globalMessages.settings)}
-          {stores.settings.app.automaticUpdates &&
+          {stores.settings.app.automaticUpdates && (stores.ui.showServicesUpdatedInfoBar ||
             (stores.app.updateStatus === stores.app.updateStatusTypes.AVAILABLE ||
-              stores.app.updateStatus === stores.app.updateStatusTypes.DOWNLOADED) && (
+              stores.app.updateStatus === stores.app.updateStatusTypes.DOWNLOADED)) && (
             <span className="update-available">•</span>
           )}
         </Link>

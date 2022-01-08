@@ -278,10 +278,6 @@ class ServiceController {
     return response.send(servicesArray);
   }
 
-  update({ response }) {
-    return response.send([]);
-  }
-
   async delete({ params, response }) {
     // Update data in database
     await Service.query().where('serviceId', params.id).delete();

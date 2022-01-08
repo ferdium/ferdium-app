@@ -127,6 +127,7 @@ class AppLayoutContainer extends Component {
         toggleMuteApp={toggleMuteApp}
         toggleWorkspaceDrawer={workspaceActions.toggleWorkspaceDrawer}
         isWorkspaceDrawerOpen={workspaceStore.isWorkspaceDrawerOpen}
+        showServicesUpdatedInfoBar={ui.showServicesUpdatedInfoBar}
         showMessageBadgeWhenMutedSetting={
           settings.all.app.showMessageBadgeWhenMuted
         }
@@ -165,7 +166,6 @@ class AppLayoutContainer extends Component {
           sidebar={sidebar}
           workspacesDrawer={workspacesDrawer}
           services={servicesContainer}
-          reloadServicesAfterUpdate={() => window.location.reload()}
           installAppUpdate={installUpdate}
           globalError={globalError.error}
           showRequiredRequestsError={requests.showRequiredRequestsError}
