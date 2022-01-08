@@ -17,7 +17,7 @@ import { readJsonSync } from 'fs-extra';
 import Store from './lib/Store';
 import Request from './lib/Request';
 import { CHECK_INTERVAL, DEFAULT_APP_SETTINGS } from '../config';
-import { isMac, electronVersion, osRelease } from '../environment';
+import { isMac, isWindows, electronVersion, osRelease } from '../environment';
 import { ferdiVersion, userDataPath, ferdiLocale } from '../environment-remote';
 import { generatedTranslations } from '../i18n/translations';
 import { getLocale } from '../helpers/i18n-helpers';
@@ -182,8 +182,13 @@ export default class AppStore extends Store {
         }
 
         if (data.error) {
-          console.log('Updater error:', data.error);
-          this.updateStatus = this.updateStatusTypes.FAILED;
+          if (data.error.message && data.error.message.startsWith('404')) {
+            this.updateStatus = this.updateStatusTypes.NOT_AVAILABLE;
+            console.warn('Updater warning: there seems to be unpublished pre-release(s) available on GitHub', data.error);
+          } else {
+            console.error('Updater error:', data.error);
+            this.updateStatus = this.updateStatusTypes.FAILED;
+          }
         }
       }
     });
@@ -382,13 +387,15 @@ export default class AppStore extends Store {
   }
 
   @action _checkForUpdates() {
-    if (this.isOnline) {
+    if (this.isOnline && this.stores.settings.app.automaticUpdates && (isMac || isWindows || process.env.APPIMAGE)) {
       debug('_checkForUpdates: sending event to autoUpdate:check');
       this.updateStatus = this.updateStatusTypes.CHECKING;
       ipcRenderer.send('autoUpdate', {
         action: 'check',
       });
+    }
 
+    if (this.isOnline && this.stores.settings.app.automaticUpdates) {
       this.actions.recipe.update();
     }
   }

@@ -74,6 +74,7 @@ class Sidebar extends Component {
     toggleNotifications: PropTypes.func.isRequired,
     toggleAudio: PropTypes.func.isRequired,
     toggleDarkMode: PropTypes.func.isRequired,
+    showServicesUpdatedInfoBar: PropTypes.bool.isRequired,
     showMessageBadgeWhenMutedSetting: PropTypes.bool.isRequired,
     showServiceNameSetting: PropTypes.bool.isRequired,
     showMessageBadgesEvenWhenMuted: PropTypes.bool.isRequired,
@@ -234,10 +235,10 @@ class Sidebar extends Component {
         >
           <Icon icon={mdiCog} size={1.5} />
           {
-            (this.props.stores.settings.app.automaticUpdates &&
+            this.props.stores.settings.app.automaticUpdates &&
               (this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.AVAILABLE ||
-              this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.DOWNLOADED)
-            ) && (
+              this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.DOWNLOADED ||
+              this.props.showServicesUpdatedInfoBar) && (
               <span className="update-available">•</span>
             )
           }

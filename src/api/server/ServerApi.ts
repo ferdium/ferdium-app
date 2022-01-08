@@ -13,7 +13,6 @@ import {
   removeSync,
   PathOrFileDescriptor,
 } from 'fs-extra';
-import fetch from 'electron-fetch';
 
 import ServiceModel from '../../models/Service';
 import RecipePreviewModel from '../../models/RecipePreview';
@@ -391,59 +390,54 @@ export default class ServerApi {
   }
 
   async getRecipePackage(recipeId: string) {
-    try {
-      const recipesDirectory = userDataRecipesPath();
-      const recipeTempDirectory = join(recipesDirectory, 'temp', recipeId);
-      const tempArchivePath = join(recipeTempDirectory, 'recipe.tar.gz');
+    const recipesDirectory = userDataRecipesPath();
+    const recipeTempDirectory = join(recipesDirectory, 'temp', recipeId);
+    const tempArchivePath = join(recipeTempDirectory, 'recipe.tar.gz');
 
-      const internalRecipeFile = asarRecipesPath(`${recipeId}.tar.gz`);
+    const internalRecipeFile = asarRecipesPath(`${recipeId}.tar.gz`);
 
-      ensureDirSync(recipeTempDirectory);
+    ensureDirSync(recipeTempDirectory);
 
-      let archivePath: PathOrFileDescriptor;
+    let archivePath: PathOrFileDescriptor;
 
-      if (pathExistsSync(internalRecipeFile)) {
-        debug('[ServerApi::getRecipePackage] Using internal recipe file');
-        archivePath = internalRecipeFile;
-      } else {
-        debug('[ServerApi::getRecipePackage] Downloading recipe from server');
-        archivePath = tempArchivePath;
+    if (pathExistsSync(internalRecipeFile)) {
+      debug('[ServerApi::getRecipePackage] Using internal recipe file');
+      archivePath = internalRecipeFile;
+    } else {
+      debug('[ServerApi::getRecipePackage] Downloading recipe from server');
+      archivePath = tempArchivePath;
 
-        const packageUrl = `${apiBase()}/recipes/download/${recipeId}`;
+      const packageUrl = `${apiBase()}/recipes/download/${recipeId}`;
 
-        const res = await fetch(packageUrl);
-        debug('Recipe downloaded', recipeId);
-        const buffer = await res.buffer();
-        writeFileSync(archivePath, buffer);
-      }
-      debug(archivePath);
-
-      await sleep(10);
-
-      // @ts-expect-error No overload matches this call.
-      await tar.x({
-        file: archivePath,
-        cwd: recipeTempDirectory,
-        preservePaths: true,
-        unlink: true,
-        preserveOwner: false,
-        onwarn: x => debug('warn', recipeId, x),
-      });
-
-      await sleep(10);
-
-      const { id } = readJsonSync(join(recipeTempDirectory, 'package.json'));
-      const recipeDirectory = join(recipesDirectory, id);
-      copySync(recipeTempDirectory, recipeDirectory);
-      removeSync(recipeTempDirectory);
-      removeSync(join(recipesDirectory, recipeId, 'recipe.tar.gz'));
-
-      return id;
-    } catch (error) {
-      console.error(error);
-
-      return false;
+      const res = await window.fetch(packageUrl);
+      debug('Recipe downloaded', recipeId);
+      const blob = await res.blob();
+      const buffer = await blob.arrayBuffer();
+      writeFileSync(tempArchivePath, Buffer.from(buffer));
     }
+    debug(archivePath);
+
+    await sleep(10);
+
+    // @ts-expect-error No overload matches this call.
+    await tar.x({
+      file: archivePath,
+      cwd: recipeTempDirectory,
+      preservePaths: true,
+      unlink: true,
+      preserveOwner: false,
+      onwarn: x => debug('warn', recipeId, x),
+    });
+
+    await sleep(10);
+
+    const { id } = readJsonSync(join(recipeTempDirectory, 'package.json'));
+    const recipeDirectory = join(recipesDirectory, id);
+    copySync(recipeTempDirectory, recipeDirectory);
+    removeSync(recipeTempDirectory);
+    removeSync(join(recipesDirectory, recipeId, 'recipe.tar.gz'));
+
+    return id;
   }
 
   // Health Check

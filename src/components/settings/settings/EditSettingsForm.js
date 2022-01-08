@@ -5,7 +5,8 @@ import { observer } from 'mobx-react';
 import prettyBytes from 'pretty-bytes';
 import { defineMessages, injectIntl } from 'react-intl';
 
-import { mdiGithub, mdiOpenInNew } from '@mdi/js';
+import { mdiGithub, mdiOpenInNew, mdiPowerPlug } from '@mdi/js';
+
 import Form from '../../../lib/Form';
 import Button from '../../ui/Button';
 import Toggle from '../../ui/Toggle';
@@ -175,6 +176,14 @@ const messages = defineMessages({
     id: 'settings.app.restartRequired',
     defaultMessage: 'Changes require restart',
   },
+  servicesUpdated: {
+    id: 'infobar.servicesUpdated',
+    defaultMessage: 'Your services have been updated.',
+  },
+  buttonReloadServices: {
+    id: 'infobar.buttonReloadServices',
+    defaultMessage: 'Reload services',
+  },
   numberOfColumns: {
     id: 'settings.app.form.splitColumns',
     defaultMessage: 'Number of columns',
@@ -243,6 +252,7 @@ class EditSettingsForm extends Component {
       noUpdateAvailable,
       updateIsReadyToInstall,
       updateFailed,
+      showServicesUpdatedInfoBar,
       isClearingAllCache,
       onClearAllCache,
       getCacheSize,
@@ -366,7 +376,7 @@ class EditSettingsForm extends Component {
               >
                 {intl.formatMessage(messages.headlineAdvanced)}
               </h2>
-              {(isMac || isWindows || process.env.APPIMAGE) && <h2
+              <h2
                 id="updates"
                 className={
                   this.state.activeSetttingsTab === 'updates'
@@ -378,10 +388,10 @@ class EditSettingsForm extends Component {
                 }}
               >
                 {intl.formatMessage(messages.headlineUpdates)}
-                {automaticUpdates && (updateIsReadyToInstall || isUpdateAvailable) && (
+                {automaticUpdates && (updateIsReadyToInstall || isUpdateAvailable || showServicesUpdatedInfoBar) && (
                   <span className="update-available">•</span>
                 )}
-              </h2>}
+              </h2>
             </div>
 
             {/* General */}
@@ -768,44 +778,65 @@ class EditSettingsForm extends Component {
               <div>
                 <Toggle field={form.$('automaticUpdates')} />
                 {automaticUpdates && (
-                  <div>
-                    <Toggle field={form.$('beta')} />
-                    {updateIsReadyToInstall ? (
-                      <Button
-                        label={intl.formatMessage(messages.buttonInstallUpdate)}
-                        onClick={installUpdate}
-                      />
-                    ) : (
-                      <Button
-                        buttonType="secondary"
-                        label={intl.formatMessage(updateButtonLabelMessage)}
-                        onClick={checkForUpdates}
-                        disabled={
-                          !automaticUpdates ||
-                          isCheckingForUpdates ||
-                          isUpdateAvailable ||
-                          !isOnline
-                        }
-                        loaded={!isCheckingForUpdates || !isUpdateAvailable}
-                      />
-                    )}
-                    <br />
-                  </div>
-                )}
-                <p>
-                  {intl.formatMessage(messages.currentVersion)} {ferdiVersion}
-                </p>
-                {noUpdateAvailable && (
                   <>
-                    <br />
-                    <br />
-                    {intl.formatMessage(messages.updateStatusUpToDate)}.
+                    {(isMac || isWindows || process.env.APPIMAGE) && (
+                      <>
+                        <div>
+                          <Toggle field={form.$('beta')} />
+                          {updateIsReadyToInstall ? (
+                            <Button
+                              label={intl.formatMessage(messages.buttonInstallUpdate)}
+                              onClick={installUpdate}
+                            />
+                          ) : (
+                            <Button
+                              buttonType="secondary"
+                              label={intl.formatMessage(updateButtonLabelMessage)}
+                              onClick={checkForUpdates}
+                              disabled={
+                                !automaticUpdates ||
+                                isCheckingForUpdates ||
+                                isUpdateAvailable ||
+                                !isOnline
+                              }
+                              loaded={!isCheckingForUpdates || !isUpdateAvailable}
+                            />
+                          )}
+                          <br />
+                        </div>
+                        <p>
+                          {intl.formatMessage(messages.currentVersion)} {ferdiVersion}
+                        </p>
+                        {noUpdateAvailable && (
+                          <p>
+                            {intl.formatMessage(messages.updateStatusUpToDate)}.
+                          </p>
+                        )}
+                        {updateFailed && (
+                          <Infobox type="danger" icon="alert">
+                            An error occured (check the console for more details)
+                          </Infobox>
+                        )}
+                      </>
+                    )}
+                    {showServicesUpdatedInfoBar ? (
+                      <>
+                        <p>
+                          <Icon icon={mdiPowerPlug} />
+                          {intl.formatMessage(messages.servicesUpdated)}
+                        </p>
+                        <Button
+                          label={intl.formatMessage(messages.buttonReloadServices)}
+                          onClick={() => window.location.reload()}
+                        />
+                      </>
+                    ) : (
+                      <p>
+                        <Icon icon={mdiPowerPlug} />
+                        Your services are up-to-date.
+                      </p>
+                    )}
                   </>
-                )}
-                {updateFailed && (
-                  <Infobox type="danger" icon="alert">
-                    An error occured (check the console for more details)
-                  </Infobox>
                 )}
                 <p className="settings__message">
                   <Icon icon={mdiGithub} />
