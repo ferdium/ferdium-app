@@ -89,18 +89,12 @@ class RecipeController {
     // eslint-disable-next-line eqeqeq
     if (Env.get('CONNECT_WITH_FRANZ') == 'true') {
       const body = request.all();
-      try {
-        const remoteUpdates = await fetch(`${RECIPES_URL}/update`, {
-          method: 'POST',
-          body: JSON.stringify(body),
-          headers: {'Content-Type': 'application/json'}
-        });
-        return response.send(
-          remoteUpdates.ok ? await remoteUpdates.json() : remoteUpdates,
-        );
-      } catch (error) {
-        return response.send({ error });
-      }
+      const remoteUpdates = await fetch(`${RECIPES_URL}/update`, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {'Content-Type': 'application/json'}
+      });
+      return response.send(await remoteUpdates.json());
     }
     return response.send([]);
   }
@@ -129,13 +123,13 @@ class RecipeController {
 
     const service = params.recipe;
 
-    // Check for invalid characters
-    if (/\.+/.test(service) || /\/+/.test(service)) {
-      return response.send('Invalid recipe name');
-    }
     // eslint-disable-next-line eqeqeq
     if (Env.get('CONNECT_WITH_FRANZ') == 'true') {
       return response.redirect(`${RECIPES_URL}/download/${service}`);
+    }
+    // Check for invalid characters
+    if (/\.+/.test(service) || /\/+/.test(service)) {
+      return response.send('Invalid recipe name');
     }
     // Check if recipe exists in recipes folder
     if (await Drive.exists(`${service}.tar.gz`)) {

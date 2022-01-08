@@ -1,6 +1,6 @@
 {
   "app.errorHandler.action": "Абнавіць",
-  "app.errorHandler.headline": "Something went wrong.",
+  "app.errorHandler.headline": "Нешта пайшло не так.",
   "changeserver.customServerLabel": "Custom server",
   "changeserver.headline": "Change server",
   "changeserver.label": "Паслужнік",
