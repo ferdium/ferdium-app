@@ -1,9 +1,8 @@
 import { action, observable, computed, reaction } from 'mobx';
-import { nativeTheme, systemPreferences } from '@electron/remote';
+import { nativeTheme } from '@electron/remote';
 
 import { theme, ThemeType } from '../themes';
 import Store from './lib/Store';
-import { isMac, isWindows } from '../environment';
 
 export default class UIStore extends Store {
   @observable showServicesUpdatedInfoBar = false;
@@ -20,23 +19,11 @@ export default class UIStore extends Store {
       this._toggleServiceUpdatedInfoBar.bind(this),
     );
 
-    // Listen for theme change on MacOS
-    if (isMac) {
-      systemPreferences.subscribeNotification(
-        'AppleInterfaceThemeChangedNotification',
-        () => {
-          this.isOsDarkThemeActive = nativeTheme.shouldUseDarkColors;
-          this.actions.service.shareSettingsWithServiceProcess();
-        },
-      );
-    }
-
-    if (isWindows) {
-      nativeTheme.on('updated', () => {
-        this.isOsDarkThemeActive = nativeTheme.shouldUseDarkColors;
-        this.actions.service.shareSettingsWithServiceProcess();
-      });
-    }
+    // Listen for theme change
+    nativeTheme.on('updated', () => {
+      this.isOsDarkThemeActive = nativeTheme.shouldUseDarkColors;
+      this.actions.service.shareSettingsWithServiceProcess();
+    });
   }
 
   setup() {
