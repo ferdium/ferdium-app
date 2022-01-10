@@ -232,7 +232,7 @@ export default class TrayIcon {
       platform = `${platform}-dark`;
     }
 
-    return nativeImage.createFromPath(
+    const trayImg = nativeImage.createFromPath(
       join(
         __dirname,
         '..',
@@ -243,5 +243,11 @@ export default class TrayIcon {
         `${asset}.${FILE_EXTENSION}`,
       ),
     );
+
+    if (isMac && macosVersion.isGreaterThanOrEqualTo('11')) {
+      trayImg.setTemplateImage(true);
+    }
+
+    return trayImg;
   }
 }
