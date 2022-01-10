@@ -1,6 +1,7 @@
 import { ipcMain } from 'electron';
-import doNotDisturb from '@sindresorhus/do-not-disturb';
 import { isMac } from '../../environment';
+
+const { getDoNotDisturb } = require('macos-notification-state');
 
 const debug = require('debug')('Ferdi:ipcApi:dnd');
 
@@ -11,7 +12,7 @@ export default async () => {
     }
 
     try {
-      const isDND = await doNotDisturb.isEnabled();
+      const isDND = getDoNotDisturb();
       debug('Fetching DND state, set to', isDND);
       return isDND;
     } catch (error) {
