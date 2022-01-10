@@ -1,6 +1,6 @@
 name: Bug Report
 description: Report an Ferdi bug
-title: "[Bug]: "
+title: ""
 labels: ["bug :beetle:"]
 body:
 - type: markdown
