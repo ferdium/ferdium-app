@@ -8,6 +8,8 @@ import { mdiFlash } from '@mdi/js';
 import Link from '../ui/Link';
 import InfoBar from '../ui/InfoBar';
 
+import { Component as PublishDebugInfo } from '../../features/publishDebugInfo';
+
 import {
   oneOrManyChildElements,
   globalError as globalErrorPropType,
@@ -101,6 +103,7 @@ class AuthLayout extends Component {
             <img src="./assets/images/adlk.svg" alt="" />
           </Link>
         </div>
+        <PublishDebugInfo />
       </>
     );
   }
