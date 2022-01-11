@@ -2301,6 +2301,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "niebloomj",
+      "name": "Baruch Jacob Niebloom",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5156403?v=4",
+      "profile": "https://github.com/niebloomj",
+      "contributions": [
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 16,
