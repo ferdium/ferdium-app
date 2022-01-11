@@ -2292,6 +2292,15 @@
       "contributions": [
         "userTesting"
       ]
+    },
+    {
+      "login": "lorenzolewis",
+      "name": "Lorenzo Lewis",
+      "avatar_url": "https://avatars.githubusercontent.com/u/15347255?v=4",
+      "profile": "http://lorenzolewis.click",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 16,
