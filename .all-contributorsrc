@@ -2283,6 +2283,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "Privatecoder",
+      "name": "Privatecoder",
+      "avatar_url": "https://avatars.githubusercontent.com/u/45964815?v=4",
+      "profile": "https://github.com/Privatecoder",
+      "contributions": [
+        "userTesting"
+      ]
     }
   ],
   "contributorsPerLine": 16,
