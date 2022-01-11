@@ -12,6 +12,7 @@
 # Ferdi
 
 <p>
+<a href="https://dashboard.guardrails.io/gh/getferdi/104676"><img alt="GuardRails" src="https://api.guardrails.io/v2/badges/getferdi/ferdi.svg?token=72f809173ab2b880b950dfacdc3f48e6f2962a6ca23a3c6028934cd8f95db9fb&provider=github"></a>
 <a href="https://github.com/getferdi/ferdi/actions/workflows/builds.yml"><img alt="Build Status" src="https://github.com/getferdi/ferdi/actions/workflows/builds.yml/badge.svg?branch=develop&event=push"></a>
 <a title="Crowdin" target="_blank" href="https://crowdin.com/project/getferdi"><img src="https://badges.crowdin.net/getferdi/localized.svg"></a>
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
