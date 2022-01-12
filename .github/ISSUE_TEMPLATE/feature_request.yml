@@ -1,6 +1,6 @@
 name: Feature Request
 description: Suggest an idea for Ferdi
-title: "[Feature Request]: "
+title: ""
 labels: ["enhancement :sparkles:"]
 body:
 - type: markdown

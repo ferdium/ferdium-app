@@ -2283,6 +2283,33 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "Privatecoder",
+      "name": "Privatecoder",
+      "avatar_url": "https://avatars.githubusercontent.com/u/45964815?v=4",
+      "profile": "https://github.com/Privatecoder",
+      "contributions": [
+        "userTesting"
+      ]
+    },
+    {
+      "login": "lorenzolewis",
+      "name": "Lorenzo Lewis",
+      "avatar_url": "https://avatars.githubusercontent.com/u/15347255?v=4",
+      "profile": "http://lorenzolewis.click",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "niebloomj",
+      "name": "Baruch Jacob Niebloom",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5156403?v=4",
+      "profile": "https://github.com/niebloomj",
+      "contributions": [
+        "review"
+      ]
     }
   ],
   "contributorsPerLine": 16,

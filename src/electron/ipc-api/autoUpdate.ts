@@ -25,6 +25,7 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
           } else if (args.action === 'install') {
             debug('installing update');
             app.removeAllListeners('window-all-closed');
+            params.mainWindow.removeAllListeners('close');
             autoUpdater.quitAndInstall();
           }
         } catch (error) {
