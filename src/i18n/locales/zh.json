@@ -286,7 +286,7 @@
   "settings.recipes.customService.openFolder": "打开文件夹",
   "settings.recipes.headline": "可用的服务",
   "settings.recipes.missingService": "找不到服务？",
-  "settings.recipes.mostPopular": "最受欢迎的",
+  "settings.recipes.mostPopular": "最受欢迎",
   "settings.recipes.nothingFound": "对不起，没有任何服务匹配您的搜索词 - 但您仍然可以使用“自定义网站”选项添加它。 请注意，网站可能会显示自您当前使用的版本以来添加到Ferdi的更多服务。 为了获得这些新服务，请考虑升级为较新版本的费尔迪。",
   "settings.recipes.servicesSuccessfulAddedInfo": "服务添加成功",
   "settings.searchService": "搜索服务",

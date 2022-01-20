@@ -286,7 +286,7 @@
   "settings.recipes.customService.openFolder": "Otevřít složku",
   "settings.recipes.headline": "Dostupné služby",
   "settings.recipes.missingService": "Chybějící služba?",
-  "settings.recipes.mostPopular": "Nejoblíbenější",
+  "settings.recipes.mostPopular": "Nejpopulárnější",
   "settings.recipes.nothingFound": "Omlouváme se, ale žádná služba neodpovídá vašemu hledanému výrazu - ale stále jej můžete přidat pomocí volby \"Vlastní webová stránka\". Vezměte prosím na vědomí, že webové stránky mohou zobrazovat více služeb, které byly přidány do Ferdi od verze, ve které se právě nacházíte. Chcete-li získat tyto nové služby, zvažte prosím upgrade na novější verzi Ferdi.",
   "settings.recipes.servicesSuccessfulAddedInfo": "Služba byla úspěšně přidána",
   "settings.searchService": "Vyhledat službu",

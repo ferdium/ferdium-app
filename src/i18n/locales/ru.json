@@ -286,7 +286,7 @@
   "settings.recipes.customService.openFolder": "Открыть папку",
   "settings.recipes.headline": "Доступные сервисы",
   "settings.recipes.missingService": "Не можете найти сервис?",
-  "settings.recipes.mostPopular": "Самые популярные",
+  "settings.recipes.mostPopular": "Наиболее популярное",
   "settings.recipes.nothingFound": "Извините, но сервис не соответствует вашему поисковому запросу - но вы все еще можете добавить его, используя опцию \"Пользовательский сайт\". Пожалуйста, обратите внимание, что на сайте может отображаться больше служб, которые могли быть добавлены в новых версиях Ferdi. Для получения новых сервисов, пожалуйста, обновите Ferdi до актуальной версии.",
   "settings.recipes.servicesSuccessfulAddedInfo": "Сервис успешно добавлен",
   "settings.searchService": "Найти сервис",
