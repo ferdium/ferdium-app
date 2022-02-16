@@ -18,7 +18,7 @@
   "feature.publishDebugInfo.terms": "服务条款",
   "feature.publishDebugInfo.title": "发布调试信息",
   "feature.quickSwitch.info": "使用 TAB ，↑ 和 ↓ 选择服务。使用回车键（ENTER）打开服务",
-  "feature.quickSwitch.search": "搜索...",
+  "feature.quickSwitch.search": "搜索……",
   "feature.quickSwitch.title": "快速切换",
   "global.api.unhealthy": "无法链接到 Ferdi 在线服务",
   "global.cancel": "取消",
