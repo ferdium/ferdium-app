@@ -243,6 +243,8 @@
   "settings.app.form.universalDarkMode": "Použiť univerzálny tmavý režim",
   "settings.app.form.useTouchIdToUnlock": "Povoliť TouchID na odomknutie Ferdi",
   "settings.app.form.useVerticalStyle": "Vodorovný štýl",
+  "settings.app.form.wakeUpHibernationSplay": "Splay hibernate/wake cycles to reduce load",
+  "settings.app.form.wakeUpHibernationStrategy": "Hibernation strategy after automatic wake up",
   "settings.app.form.wakeUpStrategy": "Stratégia prebudenia",
   "settings.app.headlineAdvanced": "Pokročilé",
   "settings.app.headlineAppearance": "Vzhľad",

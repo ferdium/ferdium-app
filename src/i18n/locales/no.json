@@ -243,6 +243,8 @@
   "settings.app.form.universalDarkMode": "Aktiver universelt mørkt tema",
   "settings.app.form.useTouchIdToUnlock": "Tillat å bruke TouchID for å låse opp Ferdi",
   "settings.app.form.useVerticalStyle": "Bruk horisontal stil",
+  "settings.app.form.wakeUpHibernationSplay": "Splay hibernate/wake cycles to reduce load",
+  "settings.app.form.wakeUpHibernationStrategy": "Hibernation strategy after automatic wake up",
   "settings.app.form.wakeUpStrategy": "Vekke strategi",
   "settings.app.headlineAdvanced": "Avansert",
   "settings.app.headlineAppearance": "Utseende",

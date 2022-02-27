@@ -243,6 +243,8 @@
   "settings.app.form.universalDarkMode": "Ενεργοποίηση καθολικής σκοτεινής λειτουργίας",
   "settings.app.form.useTouchIdToUnlock": "Να επιτρέπεται η χρήση του TouchID για ξεκλείδωμα Ferdi",
   "settings.app.form.useVerticalStyle": "Χρήση οριζόντιου στυλ",
+  "settings.app.form.wakeUpHibernationSplay": "Splay hibernate/wake cycles to reduce load",
+  "settings.app.form.wakeUpHibernationStrategy": "Hibernation strategy after automatic wake up",
   "settings.app.form.wakeUpStrategy": "Στρατηγική αφύπνισης",
   "settings.app.headlineAdvanced": "Για προχωρημένους",
   "settings.app.headlineAppearance": "Εμφάνιση",
