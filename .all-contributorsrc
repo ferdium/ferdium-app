@@ -2310,6 +2310,15 @@
       "contributions": [
         "review"
       ]
+    },
+    {
+      "login": "jamesandariese",
+      "name": "James Andariese",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2583421?v=4",
+      "profile": "https://github.com/jamesandariese",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 16,

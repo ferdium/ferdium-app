@@ -243,6 +243,8 @@
   "settings.app.form.universalDarkMode": "Abilita la modalità scura universale",
   "settings.app.form.useTouchIdToUnlock": "Consenti l'utilizzo di TouchID per sbloccare Ferdi",
   "settings.app.form.useVerticalStyle": "Usa stile orizzontale",
+  "settings.app.form.wakeUpHibernationSplay": "Splay hibernate/wake cycles to reduce load",
+  "settings.app.form.wakeUpHibernationStrategy": "Hibernation strategy after automatic wake up",
   "settings.app.form.wakeUpStrategy": "Strategia di risveglio",
   "settings.app.headlineAdvanced": "Avanzate",
   "settings.app.headlineAppearance": "Aspetto",

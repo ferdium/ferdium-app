@@ -96,7 +96,7 @@ class ServiceView extends Component {
     }
 
     return (
-      <div className={webviewClasses} data-name={service.name}>
+      <div className={webviewClasses} data-name={service.name} style={{order: service.order}}>
         {service.isActive && service.isEnabled && (
           <>
             {service.hasCrashed && (

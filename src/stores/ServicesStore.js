@@ -239,7 +239,7 @@ export default class ServicesStore extends Store {
             ms(`${this.stores.settings.all.app.wakeUpStrategy}s`)
         ) {
           // If service is in hibernation and the wakeup time has elapsed, wake it.
-          this._awake({ serviceId: service.id });
+          this._awake({ serviceId: service.id, automatic: true });
         }
       }
 
@@ -1043,11 +1043,59 @@ export default class ServicesStore extends Store {
     service.lastHibernated = Date.now();
   }
 
-  @action _awake({ serviceId }) {
+  @action _awake({ serviceId, automatic }) {
+    const now = Date.now();
     const service = this.one(serviceId);
-    debug(`Waking up from service hibernation for ${service.name}`);
+    const automaticTag = automatic ? ' automatically ' : ' ';
+    debug(
+      `Waking up${automaticTag}from service hibernation for ${service.name}`,
+    );
+
+    if (automatic) {
+      // if this is an automatic wake up, use the wakeUpHibernationStrategy
+      // which sets the lastUsed time to an offset from now rather than to now.
+      // Also add an optional random splay to desync the wakeups and
+      // potentially reduce load.
+      //
+      // offsetNow = now - (hibernationStrategy - wakeUpHibernationStrategy)
+      //
+      // if wUHS = hS = 60, offsetNow = now.  hibernation again in 60 seconds.
+      //
+      // if wUHS = 20 and hS = 60, offsetNow = now - 40.  hibernation again in
+      // 20 seconds.
+      //
+      // possibly also include splay in wUHS before subtracting from hS.
+      //
+      const mainStrategy = this.stores.settings.all.app.hibernationStrategy;
+      let strategy = this.stores.settings.all.app.wakeUpHibernationStrategy;
+      debug(`wakeUpHibernationStrategy = ${strategy}`);
+      debug(`hibernationStrategy = ${mainStrategy}`);
+      if (!strategy || strategy < 1) {
+        strategy = this.stores.settings.all.app.hibernationStrategy;
+      }
+      let splay = 0;
+      // Add splay.  This will keep the service awake a little longer.
+      if (
+        this.stores.settings.all.app.wakeUpHibernationSplay &&
+        Math.random() >= 0.5
+      ) {
+        // Add 10 additional seconds 50% of the time.
+        splay = 10;
+        debug('Added splay');
+      } else {
+        debug('skipping splay');
+      }
+      // wake up again in strategy + splay seconds instead of mainStrategy seconds.
+      service.lastUsed = now - ms(`${mainStrategy - (strategy + splay)}s`);
+    } else {
+      service.lastUsed = now;
+    }
+    debug(
+      `Setting service.lastUsed to ${service.lastUsed} (${
+        (now - service.lastUsed) / 1000
+      }s ago)`,
+    );
     service.isHibernationRequested = false;
-    service.lastUsed = Date.now();
     service.lastHibernated = null;
   }
 

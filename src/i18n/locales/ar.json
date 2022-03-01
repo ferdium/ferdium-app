@@ -243,6 +243,8 @@
   "settings.app.form.universalDarkMode": "تمكين الوضع المظلم الكامل",
   "settings.app.form.useTouchIdToUnlock": "السماح باستخدام TouchID لفتح فردي",
   "settings.app.form.useVerticalStyle": "استخدام النمط الأفقي",
+  "settings.app.form.wakeUpHibernationSplay": "Splay hibernate/wake cycles to reduce load",
+  "settings.app.form.wakeUpHibernationStrategy": "Hibernation strategy after automatic wake up",
   "settings.app.form.wakeUpStrategy": "استراتيجية الإيقاظ",
   "settings.app.headlineAdvanced": "متقدم",
   "settings.app.headlineAppearance": "المظهر",

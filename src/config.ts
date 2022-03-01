@@ -58,6 +58,17 @@ export const WAKE_UP_STRATEGIES = {
   3600: 'Wake up after 1hour',
 };
 
+export const WAKE_UP_HIBERNATION_STRATEGIES = {
+  0: 'Use main hibernation strategy',
+  10: 'Extremely Fast Hibernation (10sec)',
+  30: 'Very Fast Hibernation (30sec)',
+  60: 'Fast Hibernation (1min)',
+  300: 'Normal Hibernation (5min)',
+  600: 'Slow Hibernation (10min)',
+  1800: 'Very Slow Hibernation (30min)',
+  3600: 'Extremely Slow Hibernation (1hour)',
+};
+
 export const NAVIGATION_BAR_BEHAVIOURS = {
   custom: 'Show navigation bar on custom websites only',
   always: 'Show navigation bar on all services',
@@ -217,6 +228,8 @@ export const DEFAULT_APP_SETTINGS = {
   hibernateOnStartup: true,
   hibernationStrategy: '300', // seconds
   wakeUpStrategy: '300', // seconds
+  wakeUpHibernationStrategy: '0', // seconds -- 0 means do the same as hibernationStrategy
+  wakeUpHibernationSplay: true,
   inactivityLock: 0,
   automaticUpdates: true,
   universalDarkMode: true,

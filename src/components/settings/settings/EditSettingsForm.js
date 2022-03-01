@@ -424,6 +424,8 @@ class EditSettingsForm extends Component {
                 </p>
 
                 <Select field={form.$('wakeUpStrategy')} />
+                <Select field={form.$('wakeUpHibernationStrategy')} />
+                <Toggle field={form.$('wakeUpHibernationSplay')} />
 
                 <Hr />
 

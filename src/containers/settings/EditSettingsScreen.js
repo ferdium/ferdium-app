@@ -20,6 +20,7 @@ import {
   DEFAULT_SETTING_KEEP_ALL_WORKSPACES_LOADED,
   DEFAULT_IS_FEATURE_ENABLED_BY_USER,
   WAKE_UP_STRATEGIES,
+  WAKE_UP_HIBERNATION_STRATEGIES,
   SPLIT_COLUMNS_MIN,
   SPLIT_COLUMNS_MAX,
 } from '../../config';
@@ -114,6 +115,14 @@ const messages = defineMessages({
   wakeUpStrategy: {
     id: 'settings.app.form.wakeUpStrategy',
     defaultMessage: 'Wake up strategy',
+  },
+  wakeUpHibernationStrategy: {
+    id: 'settings.app.form.wakeUpHibernationStrategy',
+    defaultMessage: 'Hibernation strategy after automatic wake up',
+  },
+  wakeUpHibernationSplay: {
+    id: 'settings.app.form.wakeUpHibernationSplay',
+    defaultMessage: 'Splay hibernate/wake cycles to reduce load',
   },
   predefinedTodoServer: {
     id: 'settings.app.form.predefinedTodoServer',
@@ -295,6 +304,8 @@ class EditSettingsScreen extends Component {
         hibernateOnStartup: Boolean(settingsData.hibernateOnStartup),
         hibernationStrategy: Number(settingsData.hibernationStrategy),
         wakeUpStrategy: Number(settingsData.wakeUpStrategy),
+        wakeUpHibernationStrategy: Number(settingsData.wakeUpHibernationStrategy),
+        wakeUpHibernationSplay: Boolean(settingsData.wakeUpHibernationSplay),
         predefinedTodoServer: settingsData.predefinedTodoServer,
         customTodoServer: settingsData.customTodoServer,
         lockingFeatureEnabled: Boolean(settingsData.lockingFeatureEnabled),
@@ -388,6 +399,11 @@ class EditSettingsScreen extends Component {
 
     const wakeUpStrategies = getSelectOptions({
       locales: WAKE_UP_STRATEGIES,
+      sort: false,
+    });
+
+    const wakeUpHibernationStrategies = getSelectOptions({
+      locales: WAKE_UP_HIBERNATION_STRATEGIES,
       sort: false,
     });
 
@@ -511,6 +527,17 @@ class EditSettingsScreen extends Component {
           options: wakeUpStrategies,
           default: DEFAULT_APP_SETTINGS.wakeUpStrategy,
         },
+        wakeUpHibernationStrategy: {
+          label: intl.formatMessage(messages.wakeUpHibernationStrategy),
+          value: settings.all.app.wakeUpHibernationStrategy,
+          options: wakeUpHibernationStrategies,
+          default: DEFAULT_APP_SETTINGS.wakeUpHibernationStrategy,
+        },
+	wakeUpHibernationSplay: {
+          label: intl.formatMessage(messages.wakeUpHibernationSplay),
+	  value: settings.all.app.wakeUpHibernationSplay,
+	  default: DEFAULT_APP_SETTINGS.wakeUpHibernationSplay,
+	},
         predefinedTodoServer: {
           label: intl.formatMessage(messages.predefinedTodoServer),
           value: settings.all.app.predefinedTodoServer,

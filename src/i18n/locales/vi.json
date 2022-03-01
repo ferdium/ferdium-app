@@ -243,6 +243,8 @@
   "settings.app.form.universalDarkMode": "Bật Chế độ tối chung",
   "settings.app.form.useTouchIdToUnlock": "Cho phép sử dụng TouchID để mở khóa Ferdi",
   "settings.app.form.useVerticalStyle": "Sử dụng kiểu ngang",
+  "settings.app.form.wakeUpHibernationSplay": "Splay hibernate/wake cycles to reduce load",
+  "settings.app.form.wakeUpHibernationStrategy": "Hibernation strategy after automatic wake up",
   "settings.app.form.wakeUpStrategy": "Chiến lược đánh thức",
   "settings.app.headlineAdvanced": "Nâng cao",
   "settings.app.headlineAppearance": "Giao diện",
