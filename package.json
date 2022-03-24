@@ -82,7 +82,7 @@
     "macos-notification-state": "github:getferdi/macos-notification-state#fix-monterey-detect",
     "macos-version": "^5.2.1",
     "mime-types": "^2.1.33",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.6",
     "mobx": "^5.15.0",
     "mobx-localstorage": "^1.2.0",
     "mobx-react": "^6.3.1",
