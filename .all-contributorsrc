@@ -86,7 +86,8 @@
         "translation",
         "content",
         "doc",
-        "platform"
+        "platform",
+        "translation"
       ]
     },
     {
@@ -2318,6 +2319,69 @@
       "profile": "https://github.com/jamesandariese",
       "contributions": [
         "code"
+      ]
+    },
+    {
+      "login": "Jipem",
+      "name": "Jean-Pierre MÉRESSE",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/15101883/small/56a810446c7f1b7bfd566825bdf38f97.png",
+      "profile": "https://crowdin.com/profile/Jipem",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "XianZongzi",
+      "name": "咸粽子",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/13898579/small/a62e017825193da284eb84b7a318f6b7_default.png",
+      "profile": "https://crowdin.com/profile/XianZongzi",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "barkinarga",
+      "name": "Barkın Arga",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/12813629/small/44d528df52ccd5972d167835ace78078.jpg",
+      "profile": "https://crowdin.com/profile/barkinarga",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Droidnius",
+      "name": "Santiago",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14790068/small/2d824af4ac6a1f41f82b24020409ae44.jpg",
+      "profile": "https://crowdin.com/profile/Droidnius",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "Radiquum",
+      "name": "Kentai Radiquum",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/15166222/small/bb762aa8ef3fcac773487ef3ef8708ce.jpeg",
+      "profile": "https://crowdin.com/profile/Radiquum",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "bymcs",
+      "name": "Mehmet Can",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/15166456/small/c4d6a35eb95112121b167386c044967d.png",
+      "profile": "https://crowdin.com/profile/bymcs",
+      "contributions": [
+        "translation"
+      ]
+    },
+    {
+      "login": "banhetom",
+      "name": "banhetom",
+      "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/15203804/small/b8dbe2bfd68c749f7965f39ede727882.png",
+      "profile": "https://crowdin.com/profile/banhetom",
+      "contributions": [
+        "translation"
       ]
     }
   ],
