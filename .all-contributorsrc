@@ -2383,6 +2383,15 @@
       "contributions": [
         "translation"
       ]
+    },
+    {
+      "login": "ElliotThiebaut",
+      "name": "Elliot Thiebaut",
+      "avatar_url": "https://avatars.githubusercontent.com/u/60610988?v=4",
+      "profile": "https://elliotthiebaut.com",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 16,
