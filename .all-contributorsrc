@@ -2410,6 +2410,15 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "mauricio-sousa",
+      "name": "Maurício Sousa",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1117502?v=4",
+      "profile": "https://github.com/mauricio-sousa",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 16,
