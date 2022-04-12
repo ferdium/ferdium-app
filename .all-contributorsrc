@@ -2437,6 +2437,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "SvenAbels",
+      "name": "SvenAbels",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1993969?v=4",
+      "profile": "https://github.com/SvenAbels",
+      "contributions": [
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 16,
