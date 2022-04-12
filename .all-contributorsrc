@@ -2428,6 +2428,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "carlituxman",
+      "name": "carlituxman",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2116042?v=4",
+      "profile": "https://github.com/carlituxman",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 16,
