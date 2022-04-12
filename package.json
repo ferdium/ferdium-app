@@ -188,7 +188,7 @@
     "preval-build-info": "^1.0.3",
     "rimraf": "^3.0.2",
     "sass": "^1.47.0",
-    "simple-git": "^3.3.0",
+    "simple-git": "^3.5.0",
     "ts-loader": "^5.4.5",
     "ts-mocha": "^8.0.0",
     "ts-node": "^10.2.1",
