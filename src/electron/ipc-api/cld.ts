@@ -2,7 +2,7 @@ import { ipcMain } from 'electron';
 // @ts-ignore
 import cld from 'cld';
 
-const debug = require('debug')('Ferdi:ipcApi:cld');
+const debug = require('debug')('ferdium:ipcApi:cld');
 
 export default async () => {
   ipcMain.handle('detect-language', async (_event, { sample }) => {

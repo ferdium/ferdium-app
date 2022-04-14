@@ -27,13 +27,13 @@ export const shiftKey = (isAccelerator = true) =>
 // Platform specific shortcut keys
 export const cmdOrCtrlShortcutKey = (isAccelerator = true) =>
   isAccelerator ? cmdKey : ctrlKey;
-export const lockFerdiShortcutKey = (isAccelerator = true) =>
+export const lockferdiumShortcutKey = (isAccelerator = true) =>
   `${cmdOrCtrlShortcutKey(isAccelerator)}+${shiftKey(isAccelerator)}+L`;
 export const todosToggleShortcutKey = (isAccelerator = true) =>
   `${cmdOrCtrlShortcutKey(isAccelerator)}+T`;
 export const workspaceToggleShortcutKey = (isAccelerator = true) =>
   `${cmdOrCtrlShortcutKey(isAccelerator)}+D`;
-export const muteFerdiShortcutKey = (isAccelerator = true) =>
+export const muteferdiumShortcutKey = (isAccelerator = true) =>
   `${cmdOrCtrlShortcutKey(isAccelerator)}+${shiftKey(isAccelerator)}+M`;
 export const addNewServiceShortcutKey = (isAccelerator = true) =>
   `${cmdOrCtrlShortcutKey(isAccelerator)}+N`;

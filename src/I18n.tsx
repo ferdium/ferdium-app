@@ -18,7 +18,7 @@ type Props = {
 
 class I18N extends Component<Props> {
   componentDidUpdate() {
-    window['ferdi'].menu.rebuild();
+    window['ferdium'].menu.rebuild();
   }
 
   render() {
@@ -28,7 +28,7 @@ class I18N extends Component<Props> {
       <IntlProvider
         {...{ locale, key: locale, messages: translations[locale] }}
         ref={intlProvider => {
-          window['ferdi'].intl = intlProvider ? intlProvider.state.intl : null;
+          window['ferdium'].intl = intlProvider ? intlProvider.state.intl : null;
         }}
       >
         {children}

@@ -1,7 +1,7 @@
 /**
  * Context Menu builder.
  *
- * Based on "electron-spellchecker"'s  ContextMenuBuilder but customized for Ferdi
+ * Based on "electron-spellchecker"'s  ContextMenuBuilder but customized for ferdium
  * and for usage with Electron's build-in spellchecker
  *
  * Source: https://github.com/electron-userland/electron-spellchecker/blob/master/src/context-menu-builder.js
@@ -29,7 +29,7 @@ interface ContextMenuStringTable {
   pasteAndMatchStyle: () => string;
   searchWith: ({ searchEngine }: { searchEngine: string }) => string;
   openLinkUrl: () => string;
-  openLinkInFerdiUrl: () => string;
+  openLinkInferdiumUrl: () => string;
   openInBrowser: () => string;
   copyLinkUrl: () => string;
   copyImageUrl: () => string;
@@ -53,7 +53,7 @@ const contextMenuStringTable: ContextMenuStringTable = {
   pasteAndMatchStyle: () => 'Paste and match style',
   searchWith: ({ searchEngine }) => `Search with ${searchEngine}`,
   openLinkUrl: () => 'Open Link',
-  openLinkInFerdiUrl: () => 'Open Link in Ferdi',
+  openLinkInferdiumUrl: () => 'Open Link in ferdium',
   openInBrowser: () => 'Open in Browser',
   copyLinkUrl: () => 'Copy Link',
   copyImageUrl: () => 'Copy Image Address',
@@ -222,8 +222,8 @@ export class ContextMenuBuilder {
       },
     });
 
-    const openInFerdiLink = new MenuItem({
-      label: this.stringTable.openLinkInFerdiUrl(),
+    const openInferdiumLink = new MenuItem({
+      label: this.stringTable.openLinkInferdiumUrl(),
       click: () => {
         window.location.href = menuInfo.linkURL;
       },
@@ -231,7 +231,7 @@ export class ContextMenuBuilder {
 
     menu.append(copyLink);
     menu.append(openLink);
-    menu.append(openInFerdiLink);
+    menu.append(openInferdiumLink);
 
     if (this.isSrcUrlValid(menuInfo)) {
       this.addSeparator(menu);

@@ -1,7 +1,7 @@
 /**
  * Script that automatically creates links to issues and users inside README.md
  *
- * e.g. "#123" => "[#123](https://github.com/getferdi/ferdi/issues/123)"
+ * e.g. "#123" => "[#123](https://github.com/getferdium/ferdium/issues/123)"
  * and  "franz/#123" => "[franz#123](https://github.com/meetfranz/franz/issues/123)"
  * and "@abc" => "[@abc](https://github.com/abc)"
  */
@@ -38,14 +38,14 @@ readme = readme.replace(/(?<!\[)\w+\/\w+#\d+(?![\d\]])/gi, match => {
   return `[${repo}#${issueNr}](https://github.com/${repo}/issues/${issueNr})`;
 });
 
-// Replace Ferdi issues
+// Replace ferdium issues
 // Regex matches strings that don't begin with a "[", i.e. are not already linked and
 // don't begin with "franz", i.e. are not Franz issues, followed by a "#" and digits to indicate
 // a GitHub issue, and not ending with a "]"
 readme = readme.replace(/(?<!\[|franz)#\d+(?![\d\]])/gi, match => {
   const issueNr = match.replace('#', '');
   replacements += 1;
-  return `[#${issueNr}](https://github.com/getferdi/ferdi/issues/${issueNr})`;
+  return `[#${issueNr}](https://github.com/getferdium/ferdium/issues/${issueNr})`;
 });
 
 // Link GitHub users

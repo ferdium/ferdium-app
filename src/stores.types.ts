@@ -1,4 +1,4 @@
-export interface FerdiStores {
+export interface ferdiumStores {
   app: AppStore;
   communityRecipes: CommunityRecipesStore;
   features: FeaturesStore;

@@ -4,7 +4,7 @@ import Request from '../../stores/lib/Request';
 import Workspace from './models/Workspace';
 import apiBase from '../../api/apiBase';
 
-const debug = require('debug')('Ferdi:feature:workspaces:api');
+const debug = require('debug')('ferdium:feature:workspaces:api');
 
 export const workspaceApi = {
   getUserWorkspaces: async () => {

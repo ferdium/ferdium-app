@@ -125,12 +125,12 @@ const messages = defineMessages({
   },
   proxyRestartInfo: {
     id: 'settings.service.form.proxy.restartInfo',
-    defaultMessage: 'Please restart Ferdi after changing proxy Settings.',
+    defaultMessage: 'Please restart ferdium after changing proxy Settings.',
   },
   proxyInfo: {
     id: 'settings.service.form.proxy.info',
     defaultMessage:
-      'Proxy settings will not be synchronized with the Ferdi servers.',
+      'Proxy settings will not be synchronized with the ferdium servers.',
   },
 });
 

@@ -2,7 +2,7 @@
   {
     "descriptors": [
       {
-        "defaultMessage": "!!!A new update for Ferdi is available.",
+        "defaultMessage": "!!!A new update for ferdium is available.",
         "end": {
           "column": 3,
           "line": 12
@@ -72,7 +72,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Extra settings offered by Ferdi will not be saved",
+        "defaultMessage": "!!!Extra settings offered by ferdium will not be saved",
         "end": {
           "column": 3,
           "line": 25
@@ -129,7 +129,7 @@
   {
     "descriptors": [
       {
-        "defaultMessage": "!!!Import your Ferdi 4 services",
+        "defaultMessage": "!!!Import your ferdium 4 services",
         "end": {
           "column": 3,
           "line": 16
@@ -142,7 +142,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Services not yet supported in Ferdi 5",
+        "defaultMessage": "!!!Services not yet supported in ferdium 5",
         "end": {
           "column": 3,
           "line": 20
@@ -295,7 +295,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Ferdi is currently locked. Please unlock Ferdi with your password to see your messages.",
+        "defaultMessage": "!!!ferdium is currently locked. Please unlock ferdium with your password to see your messages.",
         "end": {
           "column": 3,
           "line": 23
@@ -469,7 +469,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Try importing your Franz account into Ferdi",
+        "defaultMessage": "!!!Try importing your Franz account into ferdium",
         "end": {
           "column": 3,
           "line": 47
@@ -534,7 +534,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Use Ferdi without an Account",
+        "defaultMessage": "!!!Use ferdium without an Account",
         "end": {
           "column": 3,
           "line": 67
@@ -879,7 +879,7 @@
         }
       },
       {
-        "defaultMessage": "!!!By creating a Ferdi account you accept the",
+        "defaultMessage": "!!!By creating a ferdium account you accept the",
         "end": {
           "column": 3,
           "line": 46
@@ -957,7 +957,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Use Ferdi without an Account",
+        "defaultMessage": "!!!Use ferdium without an Account",
         "end": {
           "column": 3,
           "line": 70
@@ -1014,7 +1014,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Use Ferdi without an Account",
+        "defaultMessage": "!!!Use ferdium without an Account",
         "end": {
           "column": 3,
           "line": 22
@@ -1193,13 +1193,13 @@
         }
       },
       {
-        "defaultMessage": "!!!Lock Ferdi",
+        "defaultMessage": "!!!Lock ferdium",
         "end": {
           "column": 3,
           "line": 55
         },
         "file": "src/components/layout/Sidebar.js",
-        "id": "sidebar.lockFerdi",
+        "id": "sidebar.lockferdium",
         "start": {
           "column": 13,
           "line": 52
@@ -1351,7 +1351,7 @@
   {
     "descriptors": [
       {
-        "defaultMessage": "!!!Oh no! Ferdi lost the connection to {name}.",
+        "defaultMessage": "!!!Oh no! ferdium lost the connection to {name}.",
         "end": {
           "column": 3,
           "line": 18
@@ -1496,7 +1496,7 @@
   {
     "descriptors": [
       {
-        "defaultMessage": "!!!Welcome to Ferdi",
+        "defaultMessage": "!!!Welcome to ferdium",
         "end": {
           "column": 3,
           "line": 18
@@ -1522,7 +1522,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Please login to use Ferdi.",
+        "defaultMessage": "!!!Please login to use ferdium.",
         "end": {
           "column": 3,
           "line": 26
@@ -1535,7 +1535,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Use Ferdi without an Account",
+        "defaultMessage": "!!!Use ferdium without an Account",
         "end": {
           "column": 3,
           "line": 30
@@ -1548,7 +1548,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Optionally, you can change your Ferdi server by clicking the cog in the bottom left corner.",
+        "defaultMessage": "!!!Optionally, you can change your ferdium server by clicking the cog in the bottom left corner.",
         "end": {
           "column": 3,
           "line": 34
@@ -1945,7 +1945,7 @@
         }
       },
       {
-        "defaultMessage": "!!!If you don't need your Ferdi account any longer, you can delete your account and all related data here.",
+        "defaultMessage": "!!!If you don't need your ferdium account any longer, you can delete your account and all related data here.",
         "end": {
           "column": 3,
           "line": 46
@@ -1997,7 +1997,7 @@
         }
       },
       {
-        "defaultMessage": "You are using Ferdi without an account. If you want to use Ferdi with an account and keep your services synchronized across installations, please select a server in the Settings tab then login.",
+        "defaultMessage": "You are using ferdium without an account. If you want to use ferdium with an account and keep your services synchronized across installations, please select a server in the Settings tab then login.",
         "end": {
           "column": 3,
           "line": 63
@@ -2093,13 +2093,13 @@
         }
       },
       {
-        "defaultMessage": "!!!About Ferdi",
+        "defaultMessage": "!!!About ferdium",
         "end": {
           "column": 3,
           "line": 42
         },
         "file": "src/components/settings/navigation/SettingsNavigation.js",
-        "id": "settings.navigation.supportFerdi",
+        "id": "settings.navigation.supportferdium",
         "start": {
           "column": 16,
           "line": 39
@@ -2189,7 +2189,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Sorry, but no service matched your search term - but you can still probably add it using the \"Custom Website\" option. Please note that the website might show more services that have been added to Ferdi since the version that you are currently on. To get those new services, please consider upgrading to a newer version of Ferdi.",
+        "defaultMessage": "!!!Sorry, but no service matched your search term - but you can still probably add it using the \"Custom Website\" option. Please note that the website might show more services that have been added to ferdium since the version that you are currently on. To get those new services, please consider upgrading to a newer version of ferdium.",
         "end": {
           "column": 3,
           "line": 42
@@ -2623,7 +2623,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Please restart Ferdi after changing proxy Settings.",
+        "defaultMessage": "!!!Please restart ferdium after changing proxy Settings.",
         "end": {
           "column": 3,
           "line": 122
@@ -2636,7 +2636,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Proxy settings will not be synchronized with the Ferdi servers.",
+        "defaultMessage": "!!!Proxy settings will not be synchronized with the ferdium servers.",
         "end": {
           "column": 3,
           "line": 126
@@ -2794,7 +2794,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Sorry, but no service matched your search term. Please note that the website might show more services that have been added to Ferdi since the version that you are currently on. To get those new services, please consider upgrading to a newer version of Ferdi.",
+        "defaultMessage": "!!!Sorry, but no service matched your search term. Please note that the website might show more services that have been added to ferdium since the version that you are currently on. To get those new services, please consider upgrading to a newer version of ferdium.",
         "end": {
           "column": 3,
           "line": 30
@@ -2903,7 +2903,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Sending telemetry data allows us to find errors in Ferdi - we will not send any personal information like your message data! Changing this option requires you to restart Ferdi.",
+        "defaultMessage": "!!!Sending telemetry data allows us to find errors in ferdium - we will not send any personal information like your message data! Changing this option requires you to restart ferdium.",
         "end": {
           "column": 3,
           "line": 34
@@ -2916,7 +2916,7 @@
         }
       },
       {
-        "defaultMessage": "!!!By default, Ferdi will keep all your services open and loaded in the background so they are ready when you want to use them. Service Hibernation will unload your services after a specified amount. This is useful to save RAM or keeping services from slowing down your computer.",
+        "defaultMessage": "!!!By default, ferdium will keep all your services open and loaded in the background so they are ready when you want to use them. Service Hibernation will unload your services after a specified amount. This is useful to save RAM or keeping services from slowing down your computer.",
         "end": {
           "column": 3,
           "line": 38
@@ -2929,7 +2929,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Minutes of inactivity, after which Ferdi should automatically lock. Use 0 to disable",
+        "defaultMessage": "!!!Minutes of inactivity, after which ferdium should automatically lock. Use 0 to disable",
         "end": {
           "column": 3,
           "line": 42
@@ -2968,7 +2968,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Please make sure to set a password you'll remember.\nIf you loose this password, you will have to reinstall Ferdi.",
+        "defaultMessage": "!!!Please make sure to set a password you'll remember.\nIf you loose this password, you will have to reinstall ferdium.",
         "end": {
           "column": 3,
           "line": 54
@@ -2981,7 +2981,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Password Lock allows you to keep your messages protected.\nUsing Password Lock, you will be prompted to enter your password everytime you start Ferdi or lock Ferdi yourself using the lock symbol in the bottom left corner or the shortcut CMD/CTRL+Shift+L.",
+        "defaultMessage": "!!!Password Lock allows you to keep your messages protected.\nUsing Password Lock, you will be prompted to enter your password everytime you start ferdium or lock ferdium yourself using the lock symbol in the bottom left corner or the shortcut CMD/CTRL+Shift+L.",
         "end": {
           "column": 3,
           "line": 58
@@ -3007,7 +3007,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Scheduled Do-not-Disturb allows you to define a period of time in which you do not want to get Notifications from Ferdi.",
+        "defaultMessage": "!!!Scheduled Do-not-Disturb allows you to define a period of time in which you do not want to get Notifications from ferdium.",
         "end": {
           "column": 3,
           "line": 66
@@ -3111,7 +3111,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Help us to translate Ferdi into your language.",
+        "defaultMessage": "!!!Help us to translate ferdium into your language.",
         "end": {
           "column": 3,
           "line": 98
@@ -3124,7 +3124,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Ferdi uses your Mac's build-in spellchecker to check for typos. If you want to change the languages the spellchecker checks for, you can do so in your Mac's System Preferences.",
+        "defaultMessage": "!!!ferdium uses your Mac's build-in spellchecker to check for typos. If you want to change the languages the spellchecker checks for, you can do so in your Mac's System Preferences.",
         "end": {
           "column": 3,
           "line": 102
@@ -3150,7 +3150,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Ferdi cache is currently using {size} of disk space.",
+        "defaultMessage": "!!!ferdium cache is currently using {size} of disk space.",
         "end": {
           "column": 3,
           "line": 110
@@ -3241,7 +3241,7 @@
         }
       },
       {
-        "defaultMessage": "!!!You are using the latest version of Ferdi",
+        "defaultMessage": "!!!You are using the latest version of ferdium",
         "end": {
           "column": 3,
           "line": 138
@@ -3316,39 +3316,39 @@
   {
     "descriptors": [
       {
-        "defaultMessage": "!!!About Ferdi",
+        "defaultMessage": "!!!About ferdium",
         "end": {
           "column": 3,
           "line": 10
         },
-        "file": "src/components/settings/supportFerdi/SupportFerdiDashboard.js",
-        "id": "settings.supportFerdi.headline",
+        "file": "src/components/settings/supportferdium/SupportferdiumDashboard.js",
+        "id": "settings.supportferdium.headline",
         "start": {
           "column": 12,
           "line": 7
         }
       },
       {
-        "defaultMessage": "!!!Do you like Ferdi?",
+        "defaultMessage": "!!!Do you like ferdium?",
         "end": {
           "column": 3,
           "line": 14
         },
-        "file": "src/components/settings/supportFerdi/SupportFerdiDashboard.js",
-        "id": "settings.supportFerdi.title",
+        "file": "src/components/settings/supportferdium/SupportferdiumDashboard.js",
+        "id": "settings.supportferdium.title",
         "start": {
           "column": 9,
           "line": 11
         }
       },
       {
-        "defaultMessage": "!!!<p>Ferdi is an open-source and a community-lead application.</p><p>Thanks to the people who make this possbile:</p>",
+        "defaultMessage": "!!!<p>ferdium is an open-source and a community-lead application.</p><p>Thanks to the people who make this possbile:</p>",
         "end": {
           "column": 3,
           "line": 18
         },
-        "file": "src/components/settings/supportFerdi/SupportFerdiDashboard.js",
-        "id": "settings.supportFerdi.aboutIntro",
+        "file": "src/components/settings/supportferdium/SupportferdiumDashboard.js",
+        "id": "settings.supportferdium.aboutIntro",
         "start": {
           "column": 14,
           "line": 15
@@ -3360,8 +3360,8 @@
           "column": 3,
           "line": 22
         },
-        "file": "src/components/settings/supportFerdi/SupportFerdiDashboard.js",
-        "id": "settings.supportFerdi.textListContributors",
+        "file": "src/components/settings/supportferdium/SupportferdiumDashboard.js",
+        "id": "settings.supportferdium.textListContributors",
         "start": {
           "column": 24,
           "line": 19
@@ -3373,21 +3373,21 @@
           "column": 3,
           "line": 26
         },
-        "file": "src/components/settings/supportFerdi/SupportFerdiDashboard.js",
-        "id": "settings.supportFerdi.textListContributorsHere",
+        "file": "src/components/settings/supportferdium/SupportferdiumDashboard.js",
+        "id": "settings.supportferdium.textListContributorsHere",
         "start": {
           "column": 28,
           "line": 23
         }
       },
       {
-        "defaultMessage": "!!!The development of Ferdi is done by volunteers. People who use Ferdi like you. They maintain, fix, and improve Ferdi in their spare time.",
+        "defaultMessage": "!!!The development of ferdium is done by volunteers. People who use ferdium like you. They maintain, fix, and improve ferdium in their spare time.",
         "end": {
           "column": 3,
           "line": 30
         },
-        "file": "src/components/settings/supportFerdi/SupportFerdiDashboard.js",
-        "id": "settings.supportFerdi.textVolunteers",
+        "file": "src/components/settings/supportferdium/SupportferdiumDashboard.js",
+        "id": "settings.supportferdium.textVolunteers",
         "start": {
           "column": 18,
           "line": 27
@@ -3399,8 +3399,8 @@
           "column": 3,
           "line": 34
         },
-        "file": "src/components/settings/supportFerdi/SupportFerdiDashboard.js",
-        "id": "settings.supportFerdi.textSupportWelcome",
+        "file": "src/components/settings/supportferdium/SupportferdiumDashboard.js",
+        "id": "settings.supportferdium.textSupportWelcome",
         "start": {
           "column": 22,
           "line": 31
@@ -3412,8 +3412,8 @@
           "column": 3,
           "line": 38
         },
-        "file": "src/components/settings/supportFerdi/SupportFerdiDashboard.js",
-        "id": "settings.supportFerdi.textSupportWelcomeHere",
+        "file": "src/components/settings/supportferdium/SupportferdiumDashboard.js",
+        "id": "settings.supportferdium.textSupportWelcomeHere",
         "start": {
           "column": 26,
           "line": 35
@@ -3425,8 +3425,8 @@
           "column": 3,
           "line": 42
         },
-        "file": "src/components/settings/supportFerdi/SupportFerdiDashboard.js",
-        "id": "settings.supportFerdi.textExpenses",
+        "file": "src/components/settings/supportferdium/SupportferdiumDashboard.js",
+        "id": "settings.supportferdium.textExpenses",
         "start": {
           "column": 16,
           "line": 39
@@ -3438,21 +3438,21 @@
           "column": 3,
           "line": 46
         },
-        "file": "src/components/settings/supportFerdi/SupportFerdiDashboard.js",
-        "id": "settings.supportFerdi.textOpenCollective",
+        "file": "src/components/settings/supportferdium/SupportferdiumDashboard.js",
+        "id": "settings.supportferdium.textOpenCollective",
         "start": {
           "column": 22,
           "line": 43
         }
       },
       {
-        "defaultMessage": "!!!If you feel like supporting Ferdi development with a donation, you can do so on both,",
+        "defaultMessage": "!!!If you feel like supporting ferdium development with a donation, you can do so on both,",
         "end": {
           "column": 3,
           "line": 50
         },
-        "file": "src/components/settings/supportFerdi/SupportFerdiDashboard.js",
-        "id": "settings.supportFerdi.textDonation",
+        "file": "src/components/settings/supportferdium/SupportferdiumDashboard.js",
+        "id": "settings.supportferdium.textDonation",
         "start": {
           "column": 16,
           "line": 47
@@ -3464,8 +3464,8 @@
           "column": 3,
           "line": 54
         },
-        "file": "src/components/settings/supportFerdi/SupportFerdiDashboard.js",
-        "id": "settings.supportFerdi.textDonationAnd",
+        "file": "src/components/settings/supportferdium/SupportferdiumDashboard.js",
+        "id": "settings.supportferdium.textDonationAnd",
         "start": {
           "column": 19,
           "line": 51
@@ -3477,8 +3477,8 @@
           "column": 3,
           "line": 58
         },
-        "file": "src/components/settings/supportFerdi/SupportFerdiDashboard.js",
-        "id": "settings.supportFerdi.textGitHubSponsors",
+        "file": "src/components/settings/supportferdium/SupportferdiumDashboard.js",
+        "id": "settings.supportferdium.textGitHubSponsors",
         "start": {
           "column": 22,
           "line": 55
@@ -3490,28 +3490,28 @@
           "column": 3,
           "line": 62
         },
-        "file": "src/components/settings/supportFerdi/SupportFerdiDashboard.js",
-        "id": "settings.supportFerdi.openSurvey",
+        "file": "src/components/settings/supportferdium/SupportferdiumDashboard.js",
+        "id": "settings.supportferdium.openSurvey",
         "start": {
           "column": 14,
           "line": 59
         }
       },
       {
-        "defaultMessage": "!!!Do you want to help us improve Ferdi?",
+        "defaultMessage": "!!!Do you want to help us improve ferdium?",
         "end": {
           "column": 3,
           "line": 66
         },
-        "file": "src/components/settings/supportFerdi/SupportFerdiDashboard.js",
-        "id": "settings.supportFerdi.bannerText",
+        "file": "src/components/settings/supportferdium/SupportferdiumDashboard.js",
+        "id": "settings.supportferdium.bannerText",
         "start": {
           "column": 14,
           "line": 63
         }
       }
     ],
-    "path": "src/components/settings/supportFerdi/SupportFerdiDashboard.json"
+    "path": "src/components/settings/supportferdium/SupportferdiumDashboard.json"
   },
   {
     "descriptors": [
@@ -3555,7 +3555,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Franz's Team Management allows you to manage Franz Subscriptions for multiple users. Please keep in mind that having a Franz Premium subscription will give you no advantages in using Ferdi: The only reason you still have access to Team Management is so you can manage your legacy Franz Teams and so that you don't loose any functionality in managing your account.",
+        "defaultMessage": "!!!Franz's Team Management allows you to manage Franz Subscriptions for multiple users. Please keep in mind that having a Franz Premium subscription will give you no advantages in using ferdium: The only reason you still have access to Team Management is so you can manage your legacy Franz Teams and so that you don't loose any functionality in managing your account.",
         "end": {
           "column": 3,
           "line": 30
@@ -4198,7 +4198,7 @@
   {
     "descriptors": [
       {
-        "defaultMessage": "!!!Launch Ferdi on start",
+        "defaultMessage": "!!!Launch ferdium on start",
         "end": {
           "column": 3,
           "line": 33
@@ -4224,7 +4224,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Keep Ferdi in background when closing the window",
+        "defaultMessage": "!!!Keep ferdium in background when closing the window",
         "end": {
           "column": 3,
           "line": 41
@@ -4250,7 +4250,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Always show Ferdi in System Tray",
+        "defaultMessage": "!!!Always show ferdium in System Tray",
         "end": {
           "column": 3,
           "line": 49
@@ -4263,7 +4263,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Always show Ferdi in Menu Bar",
+        "defaultMessage": "!!!Always show ferdium in Menu Bar",
         "end": {
           "column": 3,
           "line": 53
@@ -4276,7 +4276,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Reload Ferdi after system resume",
+        "defaultMessage": "!!!Reload ferdium after system resume",
         "end": {
           "column": 3,
           "line": 57
@@ -4289,7 +4289,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Minimize Ferdi to system tray",
+        "defaultMessage": "!!!Minimize ferdium to system tray",
         "end": {
           "column": 3,
           "line": 61
@@ -4302,7 +4302,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Close Ferdi to system tray",
+        "defaultMessage": "!!!Close ferdium to system tray",
         "end": {
           "column": 3,
           "line": 65
@@ -4910,7 +4910,7 @@
   {
     "descriptors": [
       {
-        "defaultMessage": "!!!Changes in Ferdi {version}",
+        "defaultMessage": "!!!Changes in ferdium {version}",
         "end": {
           "column": 3,
           "line": 23
@@ -4959,7 +4959,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Nightly builds are highly experimental versions of Ferdi that may contain unpolished or uncompleted features. These nightly builds are mainly used by developers to test their newly developed features and how they will perform in the final build. If you don't know what you are doing, we suggest not activating nightly builds.",
+        "defaultMessage": "!!!Nightly builds are highly experimental versions of ferdium that may contain unpolished or uncompleted features. These nightly builds are mainly used by developers to test their newly developed features and how they will perform in the final build. If you don't know what you are doing, we suggest not activating nightly builds.",
         "end": {
           "column": 3,
           "line": 23
@@ -5016,7 +5016,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Publishing your debug information helps us find issues and errors in Ferdi. By publishing your debug information you accept Ferdi Debugger's privacy policy and terms of service",
+        "defaultMessage": "!!!Publishing your debug information helps us find issues and errors in ferdium. By publishing your debug information you accept ferdium Debugger's privacy policy and terms of service",
         "end": {
           "column": 3,
           "line": 26
@@ -5213,7 +5213,7 @@
   {
     "descriptors": [
       {
-        "defaultMessage": "!!!Ferdi is better together!",
+        "defaultMessage": "!!!ferdium is better together!",
         "end": {
           "column": 3,
           "line": 20
@@ -5226,7 +5226,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Tell your friends and colleagues how awesome Ferdi is and help us to spread the word.",
+        "defaultMessage": "!!!Tell your friends and colleagues how awesome ferdium is and help us to spread the word.",
         "end": {
           "column": 3,
           "line": 24
@@ -5278,7 +5278,7 @@
         }
       },
       {
-        "defaultMessage": "!!! I've added {count} services to Ferdi! Get the free app for WhatsApp, Messenger, Slack, Skype and co at www.meetfranz.com",
+        "defaultMessage": "!!! I've added {count} services to ferdium! Get the free app for WhatsApp, Messenger, Slack, Skype and co at www.meetfranz.com",
         "end": {
           "column": 3,
           "line": 40
@@ -5291,7 +5291,7 @@
         }
       },
       {
-        "defaultMessage": "!!! I've added {count} services to Ferdi! Get the free app for WhatsApp, Messenger, Slack, Skype and co at www.meetfranz.com /cc @FranzMessenger",
+        "defaultMessage": "!!! I've added {count} services to ferdium! Get the free app for WhatsApp, Messenger, Slack, Skype and co at www.meetfranz.com /cc @FranzMessenger",
         "end": {
           "column": 3,
           "line": 44
@@ -5724,7 +5724,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Less is More: Introducing Ferdi Workspaces",
+        "defaultMessage": "!!!Less is More: Introducing ferdium Workspaces",
         "end": {
           "column": 3,
           "line": 48
@@ -5830,7 +5830,7 @@
   {
     "descriptors": [
       {
-        "defaultMessage": "!!!Can't connect to Ferdi Online Services",
+        "defaultMessage": "!!!Can't connect to ferdium Online Services",
         "end": {
           "column": 3,
           "line": 7
@@ -6316,7 +6316,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Reload Ferdi",
+        "defaultMessage": "!!!Reload ferdium",
         "end": {
           "column": 3,
           "line": 138
@@ -6329,13 +6329,13 @@
         }
       },
       {
-        "defaultMessage": "!!!Lock Ferdi",
+        "defaultMessage": "!!!Lock ferdium",
         "end": {
           "column": 3,
           "line": 142
         },
         "file": "src/lib/Menu.js",
-        "id": "menu.view.lockFerdi",
+        "id": "menu.view.lockferdium",
         "start": {
           "column": 13,
           "line": 139
@@ -6446,7 +6446,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Ferdi Debug Information",
+        "defaultMessage": "!!!ferdium Debug Information",
         "end": {
           "column": 3,
           "line": 178
@@ -6589,7 +6589,7 @@
         }
       },
       {
-        "defaultMessage": "!!!About Ferdi",
+        "defaultMessage": "!!!About ferdium",
         "end": {
           "column": 3,
           "line": 222

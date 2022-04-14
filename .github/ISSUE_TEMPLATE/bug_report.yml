@@ -1,5 +1,5 @@
 name: Bug report
-description: Report a bug in Ferdi
+description: Report a bug in ferdium
 title: "Describe your bug"
 labels: ["bug :beetle:"]
 body:
@@ -8,7 +8,7 @@ body:
     label: Avoid duplicates
     description: Please ensure you've completed the following
     options:
-      - label: I have searched the [issues tracker](https://github.com/getferdi/ferdi/issues) for a bug report similar to mine, in vain
+      - label: I have searched the [issues tracker](https://github.com/getferdium/ferdium/issues) for a bug report similar to mine, in vain
         required: true
 - type: textarea
   attributes:
@@ -24,7 +24,7 @@ body:
 - type: textarea
   attributes:
     label: Debug link
-    description: Get your debug link via Ferdi's "Help" > "Publish Debug Information", then share your link with us
+    description: Get your debug link via ferdium's "Help" > "Publish Debug Information", then share your link with us
   validations:
     required: true
 - type: textarea

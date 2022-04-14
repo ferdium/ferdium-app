@@ -11,7 +11,7 @@ import { hash } from '../helpers/password-helpers';
 import Request from './lib/Request';
 import Store from './lib/Store';
 
-const debug = require('debug')('Ferdi:SettingsStore');
+const debug = require('debug')('ferdium:SettingsStore');
 
 export default class SettingsStore extends Store {
   @observable updateAppSettingsRequest = new Request(

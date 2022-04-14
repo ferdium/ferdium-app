@@ -2,14 +2,14 @@ import { Component, ReactChildren } from 'react';
 import { observer, inject } from 'mobx-react';
 import Loader from 'react-loader';
 
-import { FerdiStores } from '../../stores.types';
+import { ferdiumStores } from '../../stores.types';
 
 type Props = {
   children: ReactChildren;
   loaded: boolean;
   className: string;
   color: string;
-  stores: FerdiStores;
+  stores: ferdiumStores;
 };
 
 class LoaderComponent extends Component<Props> {

@@ -1,6 +1,6 @@
 import { ipcRenderer } from 'electron';
 
-const debug = require('debug')('Ferdi:Plugin:DialogTitleHandler');
+const debug = require('debug')('ferdium:Plugin:DialogTitleHandler');
 
 export class DialogTitleHandler {
   titleCache: { title: string };

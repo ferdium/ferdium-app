@@ -3,7 +3,7 @@ import { state as ModalState } from './store';
 export { default as Component } from './Component';
 const state = ModalState;
 
-const debug = require('debug')('Ferdi:feature:quickSwitch');
+const debug = require('debug')('ferdium:feature:quickSwitch');
 
 export default function initialize() {
   debug('Initialize quickSwitch feature');
@@ -12,7 +12,7 @@ export default function initialize() {
     state.isModalVisible = true;
   }
 
-  window['ferdi'].features.quickSwitch = {
+  window['ferdium'].features.quickSwitch = {
     state,
     showModal,
   };

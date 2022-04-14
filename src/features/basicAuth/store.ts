@@ -1,7 +1,7 @@
 import { observable } from 'mobx';
 import { ipcRenderer } from 'electron';
 
-const debug = require('debug')('Ferdi:feature:basicAuth');
+const debug = require('debug')('ferdium:feature:basicAuth');
 
 const defaultState = {
   isModalVisible: true,

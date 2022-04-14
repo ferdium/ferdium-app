@@ -151,7 +151,7 @@ class ServiceView extends Component {
                   😴
                 </span><br/><br/>
                 This service is currently hibernating.<br/>
-                Try switching services or reloading Ferdi.
+                Try switching services or reloading ferdium.
               </div>
             )}
           </>

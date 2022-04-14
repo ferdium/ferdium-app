@@ -18,7 +18,7 @@ import Store from './lib/Store';
 import Request from './lib/Request';
 import { CHECK_INTERVAL, DEFAULT_APP_SETTINGS } from '../config';
 import { isMac, isWindows, electronVersion, osRelease } from '../environment';
-import { ferdiVersion, userDataPath, ferdiLocale } from '../environment-remote';
+import { ferdiumVersion, userDataPath, ferdiumLocale } from '../environment-remote';
 import { generatedTranslations } from '../i18n/translations';
 import { getLocale } from '../helpers/i18n-helpers';
 
@@ -29,13 +29,13 @@ import {
 import { openExternalUrl } from '../helpers/url-helpers';
 import { sleep } from '../helpers/async-helpers';
 
-const debug = require('debug')('Ferdi:AppStore');
+const debug = require('debug')('ferdium:AppStore');
 
 const mainWindow = getCurrentWindow();
 
 const executablePath = isMac ? remoteProcess.execPath : process.execPath;
 const autoLauncher = new AutoLaunch({
-  name: 'Ferdi',
+  name: 'ferdium',
   path: executablePath,
 });
 
@@ -74,7 +74,7 @@ export default class AppStore extends Store {
 
   @observable updateStatus = '';
 
-  @observable locale = ferdiLocale;
+  @observable locale = ferdiumLocale;
 
   @observable isSystemMuteOverridden = false;
 
@@ -139,7 +139,7 @@ export default class AppStore extends Store {
 
     this.isOnline = navigator.onLine;
 
-    // Check if Ferdi should launch on start
+    // Check if ferdium should launch on start
     // Needs to be delayed a bit
     this._autoStart();
 
@@ -193,7 +193,7 @@ export default class AppStore extends Store {
       }
     });
 
-    // Handle deep linking (ferdi://)
+    // Handle deep linking (ferdium://)
     ipcRenderer.on('navigateFromDeepLink', (event, data) => {
       debug('Navigate from deep link', data);
       let { url } = data;
@@ -252,7 +252,7 @@ export default class AppStore extends Store {
     if (isMac && !localStorage.getItem(CATALINA_NOTIFICATION_HACK_KEY)) {
       debug('Triggering macOS Catalina notification permission trigger');
       // eslint-disable-next-line no-new
-      new window.Notification('Welcome to Ferdi 5', {
+      new window.Notification('Welcome to ferdium 5', {
         body: 'Have a wonderful day & happy messaging.',
       });
 
@@ -274,8 +274,8 @@ export default class AppStore extends Store {
         release: osRelease,
         screens: screen.getAllDisplays(),
       },
-      ferdi: {
-        version: ferdiVersion,
+      ferdium: {
+        version: ferdiumVersion,
         electron: electronVersion,
         installedRecipes: this.stores.recipes.all.map(recipe => ({
           id: recipe.id,
@@ -492,7 +492,7 @@ export default class AppStore extends Store {
 
   _getDefaultLocale() {
     return getLocale({
-      locale: ferdiLocale,
+      locale: ferdiumLocale,
       locales,
       fallbackLocale: DEFAULT_APP_SETTINGS.fallbackLocale,
     });

@@ -12,11 +12,11 @@ import Button from '../ui/Button';
 const messages = defineMessages({
   headline: {
     id: 'import.headline',
-    defaultMessage: 'Import your Ferdi 4 services',
+    defaultMessage: 'Import your ferdium 4 services',
   },
   notSupportedHeadline: {
     id: 'import.notSupportedHeadline',
-    defaultMessage: 'Services not yet supported in Ferdi 5',
+    defaultMessage: 'Services not yet supported in ferdium 5',
   },
   submitButtonLabel: {
     id: 'import.submit.label',

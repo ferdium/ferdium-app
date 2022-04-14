@@ -4,7 +4,7 @@ import { defineMessages, injectIntl } from 'react-intl';
 import { inject, observer } from 'mobx-react';
 import { RouterStore } from 'mobx-react-router';
 
-import { LOCAL_SERVER, LIVE_FERDI_API, LIVE_FRANZ_API } from '../../../config';
+import { LOCAL_SERVER, LIVE_ferdium_API, LIVE_FRANZ_API } from '../../../config';
 import Link from '../../ui/Link';
 import UIStore from '../../../stores/UIStore';
 import SettingsStore from '../../../stores/SettingsStore';
@@ -32,9 +32,9 @@ const messages = defineMessages({
     id: 'settings.navigation.team',
     defaultMessage: 'Manage Team',
   },
-  supportFerdi: {
-    id: 'settings.navigation.supportFerdi',
-    defaultMessage: 'About Ferdi',
+  supportferdium: {
+    id: 'settings.navigation.supportferdium',
+    defaultMessage: 'About ferdium',
   },
   logout: {
     id: 'settings.navigation.logout',
@@ -65,11 +65,11 @@ class SettingsNavigation extends Component {
     localStorage.removeItem('authToken');
 
     if (isUsingWithoutAccount) {
-      // Reset server back to Ferdi API
+      // Reset server back to ferdium API
       this.props.actions.settings.update({
         type: 'app',
         data: {
-          server: LIVE_FERDI_API,
+          server: LIVE_ferdium_API,
         },
       });
     }
@@ -77,7 +77,7 @@ class SettingsNavigation extends Component {
 
     this.props.stores.router.push('/auth/welcome');
 
-    // Reload Ferdi, otherwise many settings won't sync correctly with the server
+    // Reload ferdium, otherwise many settings won't sync correctly with the server
     // after logging into another account
     window.location.reload();
   }
@@ -148,7 +148,7 @@ class SettingsNavigation extends Component {
           className="settings-navigation__link"
           activeClassName="is-active"
         >
-          {intl.formatMessage(messages.supportFerdi)}
+          {intl.formatMessage(messages.supportferdium)}
         </Link>
         <span className="settings-navigation__expander" />
         <button

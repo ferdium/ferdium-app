@@ -2,7 +2,7 @@ directories:
   app: ./build
   output: ./out
 
-appId: "com.kytwb.ferdi"
+appId: "com.kytwb.ferdium"
 
 mac:
   hardenedRuntime: true
@@ -47,9 +47,9 @@ win:
 linux:
   icon: ./build-helpers/images/icons
   category: Network;InstantMessaging;
-  executableName: ferdi
+  executableName: ferdium
   synopsis: "Messaging app for WhatsApp, Slack, Telegram, Gmail, Hangouts and many many more."
-  description: "Ferdi is your messaging app / former Emperor of Austria and combines chat & messaging services into one application. Ferdi currently supports Slack, WhatsApp, Gmail, Facebook Messenger, Telegram, Google Hangouts, GroupMe, Skype and many more. You can download Ferdi for free for Mac & Windows."
+  description: "ferdium is your messaging app / former Emperor of Austria and combines chat & messaging services into one application. ferdium currently supports Slack, WhatsApp, Gmail, Facebook Messenger, Telegram, Google Hangouts, GroupMe, Skype and many more. You can download ferdium for free for Mac & Windows."
   target:
     - target: AppImage
     - target: deb
@@ -64,8 +64,8 @@ nsis:
   oneClick: true
 
 protocols:
-  name: Ferdi
-  schemes: [ferdi]
+  name: ferdium
+  schemes: [ferdium]
 
 asarUnpack:
   - ./recipes

@@ -38,7 +38,7 @@ const DEFAULT_USER_DATA = {
   email: '',
   emailValidated: true,
   features: {},
-  firstname: 'Ferdi',
+  firstname: 'ferdium',
   id: '82c1cf9d-ab58-4da2-b55e-aaa41d2142d8',
   isSubscriptionOwner: true,
   lastname: 'Application',
@@ -221,7 +221,7 @@ class UserController {
     }
 
     return response.send(
-      'Your account has been imported. You can now use your Franz account in Ferdi.',
+      'Your account has been imported. You can now use your Franz account in ferdium.',
     );
   }
 
@@ -237,19 +237,19 @@ class UserController {
     const workspaces = allWorkspaces.toJSON();
 
     const exportData = {
-      username: 'Ferdi',
-      mail: 'internal@getferdi.com',
+      username: 'ferdium',
+      mail: 'internal@getferdium.com',
       services,
       workspaces,
     };
 
     return response
       .header('Content-Type', 'application/force-download')
-      .header('Content-disposition', 'attachment; filename=export.ferdi-data')
+      .header('Content-disposition', 'attachment; filename=export.ferdium-data')
       .send(exportData);
   }
 
-  async importFerdi({ request, response }) {
+  async importferdium({ request, response }) {
     const validation = await validateAll(request.all(), {
       file: 'required',
     });

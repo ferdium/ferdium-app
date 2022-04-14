@@ -56,7 +56,7 @@ module.exports = {
         // @typescript-eslint
         // TODO: Turn this rule on again after gulp -> webpack migration
         // gulp-typescript doesn't consider custom index.d.ts in @types
-        // This is necessary as workaround for window.ferdi vs window['ferdi']
+        // This is necessary as workaround for window.ferdium vs window['ferdium']
         '@typescript-eslint/dot-notation': 0,
         '@typescript-eslint/indent': 0,
         '@typescript-eslint/no-shadow': 0,
@@ -132,7 +132,7 @@ module.exports = {
     'implicit-arrow-linebreak': 0,
     indent: 0,
     // TODO: Turn this rule on once the js to ts conversions are over
-    // This is necessary as workaround for window.ferdi vs window['ferdi']
+    // This is necessary as workaround for window.ferdium vs window['ferdium']
     'dot-notation': 0,
     'function-paren-newline': 0,
     'linebreak-style': 0,

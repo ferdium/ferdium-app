@@ -11,7 +11,7 @@ import allContributors from 'all-contributors-cli';
  * and paste its output into this script.
  *
  * Usage:
- * 1. Open https://crowdin.com/project/getferdi/settings#members
+ * 1. Open https://crowdin.com/project/getferdium/settings#members
  * 2. Open the console and execute the script below:
 
 const members = [];

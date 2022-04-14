@@ -13,8 +13,8 @@ export function enforceMacOSAppLocation() {
     type: 'error',
     message: 'Move to Applications folder?',
     detail:
-      'Ferdi must live in the Applications folder to be able to run correctly.',
-    buttons: ['Move to Applications folder', 'Quit Ferdi'],
+      'ferdium must live in the Applications folder to be able to run correctly.',
+    buttons: ['Move to Applications folder', 'Quit ferdium'],
     defaultId: 0,
     cancelId: 1,
   });
@@ -31,7 +31,7 @@ export function enforceMacOSAppLocation() {
         api.dialog.showMessageBoxSync({
           type: 'error',
           message:
-            'Another version of Ferdi is currently running. Quit it, then launch this version of the app again.',
+            'Another version of ferdium is currently running. Quit it, then launch this version of the app again.',
           buttons: ['OK'],
         });
 

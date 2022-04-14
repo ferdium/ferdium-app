@@ -14,7 +14,7 @@ RUN apt-get update -y \
   && apt-get install --no-install-recommends -y rpm ruby gem \
   && gem install fpm --no-ri --no-rdoc --no-document
 
-WORKDIR /usr/src/ferdi
+WORKDIR /usr/src/ferdium
 
 RUN npm i -g npm@8.1.2 pnpm@6.24.1
 
@@ -24,12 +24,12 @@ RUN npm i
 
 COPY . .
 
-WORKDIR /usr/src/ferdi/recipes
+WORKDIR /usr/src/ferdium/recipes
 
 RUN pnpm i \
   && pnpm run package
 
-WORKDIR /usr/src/ferdi
+WORKDIR /usr/src/ferdium
 
 RUN npm run build
 
@@ -37,8 +37,8 @@ RUN npm run build
 
 FROM docker.io/library/busybox:latest
 
-WORKDIR /ferdi
+WORKDIR /ferdium
 
-COPY --from=builder /usr/src/ferdi/out/* /ferdi/
+COPY --from=builder /usr/src/ferdium/out/* /ferdium/
 
-VOLUME [ "/ferdi-out" ]
+VOLUME [ "/ferdium-out" ]

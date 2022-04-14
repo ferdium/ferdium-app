@@ -2,7 +2,7 @@ import { ipcRenderer } from 'electron';
 import { BrowserWindow } from '@electron/remote';
 import { pathExistsSync, readFileSync, existsSync } from 'fs-extra';
 
-const debug = require('debug')('Ferdi:Plugin:RecipeWebview');
+const debug = require('debug')('ferdium:Plugin:RecipeWebview');
 
 class RecipeWebview {
   badgeHandler: any;

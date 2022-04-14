@@ -42,7 +42,7 @@ const messages = defineMessages({
   deleteInfo: {
     id: 'settings.account.deleteInfo',
     defaultMessage:
-      "If you don't need your Ferdi account any longer, you can delete your account and all related data here.",
+      "If you don't need your ferdium account any longer, you can delete your account and all related data here.",
   },
   deleteEmailSent: {
     id: 'settings.account.deleteEmailSent',
@@ -51,7 +51,7 @@ const messages = defineMessages({
   },
   yourLicense: {
     id: 'settings.account.yourLicense',
-    defaultMessage: 'Your Ferdi License:',
+    defaultMessage: 'Your ferdium License:',
   },
   accountUnavailable: {
     id: 'settings.account.accountUnavailable',
@@ -60,7 +60,7 @@ const messages = defineMessages({
   accountUnavailableInfo: {
     id: 'settings.account.accountUnavailableInfo',
     defaultMessage:
-      'You are using Ferdi without an account. If you want to use Ferdi with an account and keep your services synchronized across installations, please select a server in the Settings tab then login.',
+      'You are using ferdium without an account. If you want to use ferdium with an account and keep your services synchronized across installations, please select a server in the Settings tab then login.',
   },
 });
 

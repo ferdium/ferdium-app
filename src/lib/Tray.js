@@ -37,8 +37,8 @@ export default class TrayIcon {
     {
       label:
         tray.mainWindow.isVisible() && tray.mainWindow.isFocused()
-          ? 'Hide Ferdi'
-          : 'Show Ferdi',
+          ? 'Hide ferdium'
+          : 'Show ferdium',
       click() {
         tray._toggleWindow();
       },
@@ -53,7 +53,7 @@ export default class TrayIcon {
       },
     },
     {
-      label: 'Quit Ferdi',
+      label: 'Quit ferdium',
       click() {
         app.quit();
       },
@@ -71,7 +71,7 @@ export default class TrayIcon {
     this.mainWindow = BrowserWindow.getAllWindows()[0];
 
     // listen to window events to be able to set correct string
-    // to tray menu ('Hide Ferdi' / 'Show Ferdi')
+    // to tray menu ('Hide ferdium' / 'Show ferdium')
     this.mainWindow.on('hide', () => {
       this._updateTrayMenu(null);
     });
@@ -114,7 +114,7 @@ export default class TrayIcon {
     if (this.trayIcon) return;
 
     this.trayIcon = new Tray(this._getAsset('tray', INDICATOR_TRAY_PLAIN));
-    this.trayIcon.setToolTip('Ferdi');
+    this.trayIcon.setToolTip('ferdium');
 
     this.trayMenu = Menu.buildFromTemplate(this.trayMenuTemplate(this));
     if (isLinux) {

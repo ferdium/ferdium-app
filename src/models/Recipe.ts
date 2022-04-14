@@ -78,7 +78,7 @@ export default class Recipe {
     }
 
     if (!data.id) {
-      // Ferdi 4 recipes do not have an Id
+      // ferdium 4 recipes do not have an Id
       throw new Error(`Recipe '${data.name}' requires Id`);
     }
 

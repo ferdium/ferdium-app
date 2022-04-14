@@ -9,7 +9,7 @@ import Button from '../ui/Button';
 import Link from '../ui/Link';
 import Infobox from '../ui/Infobox';
 import { url, required } from '../../helpers/validation-helpers';
-import { LIVE_FERDI_API, LIVE_FRANZ_API } from '../../config';
+import { LIVE_ferdium_API, LIVE_FRANZ_API } from '../../config';
 import globalMessages from '../../i18n/globalMessages';
 
 const messages = defineMessages({
@@ -23,7 +23,7 @@ const messages = defineMessages({
   },
   warning: {
     id: 'changeserver.warning',
-    defaultMessage: 'Extra settings offered by Ferdi will not be saved',
+    defaultMessage: 'Extra settings offered by ferdium will not be saved',
   },
   customServerLabel: {
     id: 'changeserver.customServerLabel',
@@ -41,11 +41,11 @@ class ChangeServer extends Component {
     server: PropTypes.string.isRequired,
   };
 
-  ferdiServer = LIVE_FERDI_API;
+  ferdiumServer = LIVE_ferdium_API;
 
   franzServer = LIVE_FRANZ_API;
 
-  defaultServers = [this.franzServer, this.ferdiServer];
+  defaultServers = [this.franzServer, this.ferdiumServer];
 
   form = new Form(
     {
@@ -54,7 +54,7 @@ class ChangeServer extends Component {
           label: this.props.intl.formatMessage(messages.label),
           value: this.props.server,
           options: [
-            { value: this.ferdiServer, label: 'Ferdi' },
+            { value: this.ferdiumServer, label: 'ferdium' },
             { value: this.franzServer, label: 'Franz' },
             {
               value: this.defaultServers.includes(this.props.server)

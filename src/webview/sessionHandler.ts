@@ -1,4 +1,4 @@
-const debug = require('debug')('Ferdi:Plugin:SessionHandler');
+const debug = require('debug')('ferdium:Plugin:SessionHandler');
 
 export class SessionHandler {
   async releaseServiceWorkers() {

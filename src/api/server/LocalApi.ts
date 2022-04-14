@@ -4,7 +4,7 @@ import fastFolderSize from 'fast-folder-size';
 
 import { getServicePartitionsDirectory } from '../../helpers/service-helpers';
 
-const debug = require('debug')('Ferdi:LocalApi');
+const debug = require('debug')('ferdium:LocalApi');
 
 export default class LocalApi {
   // Settings

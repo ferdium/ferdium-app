@@ -11,11 +11,11 @@ export const LOCAL_PORT = 45_569;
 export const LOCAL_API = 'http://localhost:3000';
 export const DEV_FRANZ_API = 'https://dev.franzinfra.com';
 
-export const LIVE_FERDI_API = 'https://api.getferdi.com';
+export const LIVE_ferdium_API = 'https://api.getferdium.com';
 export const LIVE_FRANZ_API = 'https://api.franzinfra.com';
 
-// URL used to submit debugger information, see https://github.com/getferdi/debugger
-export const DEBUG_API = 'https://debug.getferdi.com';
+// URL used to submit debugger information, see https://github.com/getferdium/debugger
+export const DEBUG_API = 'https://debug.getferdium.com';
 
 export const LOCAL_WS_API = 'ws://localhost:3000';
 export const DEV_WS_API = 'wss://dev.franzinfra.com';
@@ -23,7 +23,7 @@ export const LIVE_WS_API = 'wss://api.franzinfra.com';
 
 export const LOCAL_API_WEBSITE = 'http://localhost:3333';
 export const DEV_API_FRANZ_WEBSITE = 'https://meetfranz.com';
-export const LIVE_API_FERDI_WEBSITE = 'https://getferdi.com';
+export const LIVE_API_ferdium_WEBSITE = 'https://getferdium.com';
 
 export const STATS_API = 'https://stats.franzinfra.com';
 
@@ -159,17 +159,17 @@ export const DEFAULT_WINDOW_OPTIONS = {
 };
 
 export const GITHUB_FRANZ_URL = 'https://github.com/meetfranz';
-export const GITHUB_FERDI_URL = 'https://github.com/getferdi';
-export const FRANZ_SERVICE_REQUEST = `${GITHUB_FERDI_URL}/recipes/issues`;
-export const FRANZ_TRANSLATION = 'https://crowdin.com/project/getferdi';
+export const GITHUB_ferdium_URL = 'https://github.com/getferdium';
+export const FRANZ_SERVICE_REQUEST = `${GITHUB_ferdium_URL}/recipes/issues`;
+export const FRANZ_TRANSLATION = 'https://crowdin.com/project/getferdium';
 export const FRANZ_DEV_DOCS = 'http://bit.ly/franz-dev-hub';
 
 export const FILE_SYSTEM_SETTINGS_TYPES = ['app', 'proxy'];
 
-export const LOCAL_SERVER = 'You are using Ferdi without a server';
-export const SERVER_NOT_LOADED = 'Ferdi::SERVER_NOT_LOADED';
+export const LOCAL_SERVER = 'You are using ferdium without a server';
+export const SERVER_NOT_LOADED = 'ferdium::SERVER_NOT_LOADED';
 
-export const ALLOWED_PROTOCOLS = ['https:', 'http:', 'ftp:', 'ferdi:'];
+export const ALLOWED_PROTOCOLS = ['https:', 'http:', 'ftp:', 'ferdium:'];
 
 export const DEFAULT_SETTING_KEEP_ALL_WORKSPACES_LOADED = false;
 
@@ -214,8 +214,8 @@ export const DEFAULT_APP_SETTINGS = {
   enableGPUAcceleration: true,
   enableGlobalHideShortcut: false,
 
-  // Ferdi specific options
-  server: LIVE_FERDI_API,
+  // ferdium specific options
+  server: LIVE_ferdium_API,
   predefinedTodoServer: DEFAULT_TODO_SERVICE,
   autohideMenuBar: false,
   lockingFeatureEnabled: false,

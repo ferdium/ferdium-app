@@ -13,7 +13,7 @@ interface IUser {
   team: object;
 }
 
-// TODO: Need to cleanup these fields since we have removed the tiers of the paid plans from Ferdi
+// TODO: Need to cleanup these fields since we have removed the tiers of the paid plans from ferdium
 export default class User {
   id: string | null = null;
 

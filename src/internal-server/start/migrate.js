@@ -1,13 +1,13 @@
-const { ferdiVersion } = require('../../environment-remote');
+const { ferdiumVersion } = require('../../environment-remote');
 
 /**
- * Migrate server database to work with current Ferdi version
+ * Migrate server database to work with current ferdium version
  */
 const Database = use('Database');
 const User = use('App/Models/User');
 
 const migrateLog = text => {
-  console.log('\u001B[36m%s\u001B[0m', 'Ferdi Migration:', '\u001B[0m', text);
+  console.log('\u001B[36m%s\u001B[0m', 'ferdium Migration:', '\u001B[0m', text);
 };
 
 module.exports = async () => {
@@ -21,7 +21,7 @@ module.exports = async () => {
   const user = await User.find(1);
   let settings;
   if (!user) {
-    migrateLog("🎩  Migrating from old Ferdi version as user doesn't exist");
+    migrateLog("🎩  Migrating from old ferdium version as user doesn't exist");
 
     // Create new user
     await Database.raw('INSERT INTO  "users" ("id") VALUES (\'1\');');
@@ -35,18 +35,18 @@ module.exports = async () => {
   if (
     !settings ||
     !settings.db_version ||
-    settings.db_version !== ferdiVersion
+    settings.db_version !== ferdiumVersion
   ) {
     const srcVersion =
       settings && settings.db_version ? settings.db_version : '5.4.0-beta.2';
-    migrateLog(`🔮  Migrating table from ${srcVersion} to ${ferdiVersion}`);
+    migrateLog(`🔮  Migrating table from ${srcVersion} to ${ferdiumVersion}`);
 
-    // Migrate database to current Ferdi version
+    // Migrate database to current ferdium version
     // Currently no migrations
 
     // Update version number in database
     if (!settings) settings = {};
-    settings.db_version = ferdiVersion;
+    settings.db_version = ferdiumVersion;
     const newUser = await User.find(1); // Fetch user again as we might have only just created it
     newUser.settings = JSON.stringify(settings);
     await newUser.save();

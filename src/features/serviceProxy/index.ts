@@ -1,7 +1,7 @@
 import { autorun, observable } from 'mobx';
 import { session } from '@electron/remote';
 
-const debug = require('debug')('Ferdi:feature:serviceProxy');
+const debug = require('debug')('ferdium:feature:serviceProxy');
 
 export const config = observable({
   isEnabled: true,

@@ -2,12 +2,12 @@ import { join } from 'path';
 import osName from 'os-name';
 import { api as electronApi } from './electron-util';
 import {
-  LIVE_FERDI_API,
+  LIVE_ferdium_API,
   DEV_FRANZ_API,
   LOCAL_API,
   LOCAL_API_WEBSITE,
   DEV_API_FRANZ_WEBSITE,
-  LIVE_API_FERDI_WEBSITE,
+  LIVE_API_ferdium_WEBSITE,
   LIVE_WS_API,
   LOCAL_WS_API,
   DEV_WS_API,
@@ -26,12 +26,12 @@ import {
 import * as buildInfo from './buildInfo.json';
 
 export const { app } = electronApi;
-export const ferdiVersion = app.getVersion();
-export const ferdiLocale = app.getLocale();
+export const ferdiumVersion = app.getVersion();
+export const ferdiumLocale = app.getLocale();
 
 // Set app directory before loading user modules
-if (process.env.FERDI_APPDATA_DIR != null) {
-  app.setPath('appData', process.env.FERDI_APPDATA_DIR);
+if (process.env.ferdium_APPDATA_DIR != null) {
+  app.setPath('appData', process.env.ferdium_APPDATA_DIR);
   app.setPath('userData', app.getPath('appData'));
 } else if (process.env.PORTABLE_EXECUTABLE_DIR != null) {
   app.setPath(
@@ -68,9 +68,9 @@ let wsApi: string;
 let web: string;
 let todos: string;
 if (!isDevMode || (isDevMode && useLiveAPI)) {
-  api = LIVE_FERDI_API;
+  api = LIVE_ferdium_API;
   wsApi = LIVE_WS_API;
-  web = LIVE_API_FERDI_WEBSITE;
+  web = LIVE_API_ferdium_WEBSITE;
   todos = PRODUCTION_TODOS_FRONTEND_URL;
 } else if (isDevMode && useLocalAPI) {
   api = LOCAL_API;
@@ -92,7 +92,7 @@ export const TODOS_FRONTEND = todos;
 
 export function aboutAppDetails() {
   return [
-    `Version: ${ferdiVersion}`,
+    `Version: ${ferdiumVersion}`,
     `Electron: ${electronVersion}`,
     `Chrome: ${chromeVersion}`,
     `Node.js: ${nodeVersion}`,
