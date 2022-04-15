@@ -12,7 +12,7 @@ export default function useLocalServer(actions) {
   // Log into local server
   // Credentials are ignored by the server but the client requires them
   actions.user.login({
-    email: 'ferdi@localhost',
-    password: 'FERDI_',
+    email: 'ferdium@localhost',
+    password: 'FERDIUM_',
   });
 }

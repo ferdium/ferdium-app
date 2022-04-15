@@ -50,7 +50,7 @@ import {
 
 import { DEFAULT_APP_SETTINGS } from '../config';
 
-const debug = require('debug')('Ferdi:Plugin');
+const debug = require('debug')('Ferdium:Plugin');
 
 const badgeHandler = new BadgeHandler();
 
@@ -105,9 +105,9 @@ window.open = (url, frameName, features) => {
   }
 };
 
-// We can't override APIs here, so we first expose functions via 'window.ferdi',
+// We can't override APIs here, so we first expose functions via 'window.ferdium',
 // then overwrite the corresponding field of the window object by injected JS.
-contextBridge.exposeInMainWorld('ferdi', {
+contextBridge.exposeInMainWorld('ferdium', {
   open: window.open,
   setBadge: (direct, indirect) => badgeHandler.setBadge(direct, indirect),
   safeParseInt: text => badgeHandler.safeParseInt(text),
@@ -119,7 +119,7 @@ contextBridge.exposeInMainWorld('ferdi', {
 
 ipcRenderer.sendToHost(
   'inject-js-unsafe',
-  'window.open = window.ferdi.open;',
+  'window.open = window.ferdium.open;',
   notificationsClassDefinition,
   screenShareJs,
 );

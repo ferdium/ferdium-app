@@ -21,9 +21,9 @@ import {
   SPLIT_COLUMNS_MAX,
   SPLIT_COLUMNS_MIN,
 } from '../../../config';
-import { isMac, isWindows, lockFerdiShortcutKey } from '../../../environment';
+import { isMac, isWindows, lockFerdiumShortcutKey } from '../../../environment';
 import {
-  ferdiVersion,
+  ferdiumVersion,
   userDataPath,
   userDataRecipesPath,
 } from '../../../environment-remote';
@@ -31,7 +31,7 @@ import { openPath } from '../../../helpers/url-helpers';
 import globalMessages from '../../../i18n/globalMessages';
 import { Icon } from '../../ui/icon';
 
-const debug = require('debug')('Ferdi:EditSettingsForm');
+const debug = require('debug')('Ferdium:EditSettingsForm');
 
 const messages = defineMessages({
   headlineGeneral: {
@@ -41,21 +41,21 @@ const messages = defineMessages({
   sentryInfo: {
     id: 'settings.app.sentryInfo',
     defaultMessage:
-      'Sending telemetry data allows us to find errors in Ferdi - we will not send any personal information like your message data!',
+      'Sending telemetry data allows us to find errors in Ferdium - we will not send any personal information like your message data!',
   },
   hibernateInfo: {
     id: 'settings.app.hibernateInfo',
     defaultMessage:
-      'By default, Ferdi will keep all your services open and loaded in the background so they are ready when you want to use them. Service Hibernation will unload your services after a specified amount. This is useful to save RAM or keeping services from slowing down your computer.',
+      'By default, Ferdium will keep all your services open and loaded in the background so they are ready when you want to use them. Service Hibernation will unload your services after a specified amount. This is useful to save RAM or keeping services from slowing down your computer.',
   },
   inactivityLockInfo: {
     id: 'settings.app.inactivityLockInfo',
     defaultMessage:
-      'Minutes of inactivity, after which Ferdi should automatically lock. Use 0 to disable',
+      'Minutes of inactivity, after which Ferdium should automatically lock. Use 0 to disable',
   },
   todoServerInfo: {
     id: 'settings.app.todoServerInfo',
-    defaultMessage: 'This server will be used for the "Ferdi Todo" feature.',
+    defaultMessage: 'This server will be used for the "Ferdium Todo" feature.',
   },
   lockedPassword: {
     id: 'settings.app.lockedPassword',
@@ -64,12 +64,12 @@ const messages = defineMessages({
   lockedPasswordInfo: {
     id: 'settings.app.lockedPasswordInfo',
     defaultMessage:
-      "Please make sure to set a password you'll remember.\nIf you loose this password, you will have to reinstall Ferdi.",
+      "Please make sure to set a password you'll remember.\nIf you loose this password, you will have to reinstall Ferdium.",
   },
   lockInfo: {
     id: 'settings.app.lockInfo',
     defaultMessage:
-      'Password Lock allows you to keep your messages protected.\nUsing Password Lock, you will be prompted to enter your password everytime you start Ferdi or lock Ferdi yourself using the lock symbol in the bottom left corner or the shortcut {lockShortcut}.',
+      'Password Lock allows you to keep your messages protected.\nUsing Password Lock, you will be prompted to enter your password everytime you start Ferdium or lock Ferdium yourself using the lock symbol in the bottom left corner or the shortcut {lockShortcut}.',
   },
   scheduledDNDTimeInfo: {
     id: 'settings.app.scheduledDNDTimeInfo',
@@ -79,7 +79,7 @@ const messages = defineMessages({
   scheduledDNDInfo: {
     id: 'settings.app.scheduledDNDInfo',
     defaultMessage:
-      'Scheduled Do-not-Disturb allows you to define a period of time in which you do not want to get Notifications from Ferdi.',
+      'Scheduled Do-not-Disturb allows you to define a period of time in which you do not want to get Notifications from Ferdium.',
   },
   headlineLanguage: {
     id: 'settings.app.headlineLanguage',
@@ -113,12 +113,12 @@ const messages = defineMessages({
   },
   translationHelp: {
     id: 'settings.app.translationHelp',
-    defaultMessage: 'Help us to translate Ferdi into your language.',
+    defaultMessage: 'Help us to translate Ferdium into your language.',
   },
   spellCheckerLanguageInfo: {
     id: 'settings.app.spellCheckerLanguageInfo',
     defaultMessage:
-      "Ferdi uses your Mac's build-in spellchecker to check for typos. If you want to change the languages the spellchecker checks for, you can do so in your Mac's System Preferences.",
+      "Ferdium uses your Mac's build-in spellchecker to check for typos. If you want to change the languages the spellchecker checks for, you can do so in your Mac's System Preferences.",
   },
   subheadlineCache: {
     id: 'settings.app.subheadlineCache',
@@ -126,7 +126,7 @@ const messages = defineMessages({
   },
   cacheInfo: {
     id: 'settings.app.cacheInfo',
-    defaultMessage: 'Ferdi cache is currently using {size} of disk space.',
+    defaultMessage: 'Ferdium cache is currently using {size} of disk space.',
   },
   cacheNotCleared: {
     id: 'settings.app.cacheNotCleared',
@@ -136,16 +136,16 @@ const messages = defineMessages({
     id: 'settings.app.buttonClearAllCache',
     defaultMessage: 'Clear cache',
   },
-  subheadlineFerdiProfile: {
-    id: 'settings.app.subheadlineFerdiProfile',
-    defaultMessage: 'Ferdi Profile',
+  subheadlineFerdiumProfile: {
+    id: 'settings.app.subheadlineFerdiumProfile',
+    defaultMessage: 'Ferdium Profile',
   },
-  buttonOpenFerdiProfileFolder: {
-    id: 'settings.app.buttonOpenFerdiProfileFolder',
+  buttonOpenFerdiumProfileFolder: {
+    id: 'settings.app.buttonOpenFerdiumProfileFolder',
     defaultMessage: 'Open Profile folder',
   },
-  buttonOpenFerdiServiceRecipesFolder: {
-    id: 'settings.app.buttonOpenFerdiServiceRecipesFolder',
+  buttonOpenFerdiumServiceRecipesFolder: {
+    id: 'settings.app.buttonOpenFerdiumServiceRecipesFolder',
     defaultMessage: 'Open Service Recipes folder',
   },
   buttonSearchForUpdate: {
@@ -166,7 +166,7 @@ const messages = defineMessages({
   },
   updateStatusUpToDate: {
     id: 'settings.app.updateStatusUpToDate',
-    defaultMessage: 'You are using the latest version of Ferdi',
+    defaultMessage: 'You are using the latest version of Ferdium',
   },
   currentVersion: {
     id: 'settings.app.currentVersion',
@@ -275,7 +275,7 @@ class EditSettingsForm extends Component {
     }
 
     const { lockingFeatureEnabled, scheduledDNDEnabled } =
-      window['ferdi'].stores.settings.all.app;
+      window['ferdium'].stores.settings.all.app;
 
     let cacheSize;
     let notCleared;
@@ -655,7 +655,7 @@ class EditSettingsForm extends Component {
                 >
                   <span>
                     {intl.formatMessage(messages.lockInfo, {
-                      lockShortcut: `${lockFerdiShortcutKey(false)}`,
+                      lockShortcut: `${lockFerdiumShortcutKey(false)}`,
                     })}
                   </span>
                 </p>
@@ -749,14 +749,14 @@ class EditSettingsForm extends Component {
 
                 <div className="settings__settings-group">
                   <h3>
-                    {intl.formatMessage(messages.subheadlineFerdiProfile)}
+                    {intl.formatMessage(messages.subheadlineFerdiumProfile)}
                   </h3>
                   <p>
                     <div className="settings__open-settings-file-container">
                       <Button
                         buttonType="secondary"
                         label={intl.formatMessage(
-                          messages.buttonOpenFerdiProfileFolder,
+                          messages.buttonOpenFerdiumProfileFolder,
                         )}
                         className="settings__open-settings-file-button"
                         onClick={() => openPath(profileFolder)}
@@ -764,7 +764,7 @@ class EditSettingsForm extends Component {
                       <Button
                         buttonType="secondary"
                         label={intl.formatMessage(
-                          messages.buttonOpenFerdiServiceRecipesFolder,
+                          messages.buttonOpenFerdiumServiceRecipesFolder,
                         )}
                         className="settings__open-settings-file-button"
                         onClick={() => openPath(recipeFolder)}
@@ -807,7 +807,7 @@ class EditSettingsForm extends Component {
                           <br />
                         </div>
                         <p>
-                          {intl.formatMessage(messages.currentVersion)} {ferdiVersion}
+                          {intl.formatMessage(messages.currentVersion)} {ferdiumVersion}
                         </p>
                         {noUpdateAvailable && (
                           <p>
@@ -842,7 +842,7 @@ class EditSettingsForm extends Component {
                 )}
                 <p className="settings__message">
                   <Icon icon={mdiGithub} />
-                  Ferdi is based on{' '}
+                  Ferdium is based on{' '}
                   <a
                     href={`${GITHUB_FRANZ_URL}/franz`}
                     target="_blank"

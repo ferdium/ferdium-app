@@ -2,7 +2,7 @@ import { ipcRenderer } from 'electron';
 import { SPELLCHECKER_LOCALES } from '../i18n/languages';
 import { isMac } from '../environment';
 
-const debug = require('debug')('Ferdi:spellchecker');
+const debug = require('debug')('Ferdium:spellchecker');
 
 export function getSpellcheckerLocaleByFuzzyIdentifier(identifier: string) {
   const locales = Object.keys(SPELLCHECKER_LOCALES).filter(

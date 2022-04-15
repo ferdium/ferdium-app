@@ -2,14 +2,14 @@ import { defineMessages, useIntl } from 'react-intl';
 
 import { mdiInformation } from '@mdi/js';
 import InfoBar from './ui/InfoBar';
-import { GITHUB_FERDI_URL } from '../config';
+import { GITHUB_FERDIUM_URL } from '../config';
 import { openExternalUrl } from '../helpers/url-helpers';
 import { Icon } from './ui/icon';
 
 const messages = defineMessages({
   updateAvailable: {
     id: 'infobar.updateAvailable',
-    defaultMessage: 'A new update for Ferdi is available.',
+    defaultMessage: 'A new update for Ferdium is available.',
   },
   changelog: {
     id: 'infobar.buttonChangelog',
@@ -43,7 +43,7 @@ const AppUpdateInfoBar = ({ onInstallUpdate, onHide }: Props) => {
         type="button"
         onClick={() =>
           openExternalUrl(
-            `${GITHUB_FERDI_URL}/ferdi/blob/develop/CHANGELOG.md`,
+            `${GITHUB_FERDIUM_URL}/ferdium/blob/develop/CHANGELOG.md`,
             true,
           )
         }

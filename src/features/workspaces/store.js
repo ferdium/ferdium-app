@@ -15,7 +15,7 @@ import { createActionBindings } from '../utils/ActionBinding';
 
 import { KEEP_WS_LOADED_USID } from '../../config';
 
-const debug = require('debug')('Ferdi:feature:workspaces:store');
+const debug = require('debug')('Ferdium:feature:workspaces:store');
 
 export default class WorkspacesStore extends FeatureStore {
   @observable isFeatureActive = false;

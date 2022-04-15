@@ -1,4 +1,4 @@
-# This workflow will do a clean install of ferdi dev-dependencies, update the dependencies, build the source code and run tests. It will only run on scheduled trigger.
+# This workflow will do a clean install of ferdium dev-dependencies, update the dependencies, build the source code and run tests. It will only run on scheduled trigger.
 
 name: Dependency updates
 

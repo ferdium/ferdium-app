@@ -2,7 +2,7 @@ import { ipcMain, Session, session } from 'electron';
 
 import { TODOS_PARTITION_ID } from '../../config';
 
-const debug = require('debug')('Ferdi:ipcApi:sessionStorage');
+const debug = require('debug')('Ferdium:ipcApi:sessionStorage');
 
 function deduceSession(serviceId: string | undefined | null): Session {
   if (serviceId) {

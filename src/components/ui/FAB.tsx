@@ -28,7 +28,7 @@ class Button extends Component<Props> {
 
     const buttonProps = {
       className: classnames({
-        ferdi__fab: true,
+        ferdium__fab: true,
         [`${className}`]: className,
       }),
       type,

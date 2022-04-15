@@ -14,7 +14,7 @@ const migrate = require('./migrate');
 
 migrate();
 
-const OnlyAllowFerdi = async ({ request, response }, next) => {
+const OnlyAllowFerdium = async ({ request, response }, next) => {
   const version = request.header('X-Franz-Version');
   if (!version) {
     return response.status(403).redirect('/');
@@ -30,7 +30,7 @@ Route.get('health', ({ response }) =>
     api: 'success',
     db: 'success',
   }),
-).middleware(OnlyAllowFerdi);
+).middleware(OnlyAllowFerdium);
 
 // API is grouped under '/v1/' route
 Route.group(() => {
@@ -63,7 +63,7 @@ Route.group(() => {
   Route.get('workspace', 'WorkspaceController.list');
 })
   .prefix(API_VERSION)
-  .middleware(OnlyAllowFerdi);
+  .middleware(OnlyAllowFerdium);
 
 Route.group(() => {
   Route.get('icon/:id', 'ServiceController.icon');
@@ -75,7 +75,7 @@ Route.get('import', ({ view }) => view.render('import'));
 
 // Account transfer
 Route.get('export', 'UserController.export');
-Route.post('transfer', 'UserController.importFerdi');
+Route.post('transfer', 'UserController.importFerdium');
 Route.get('transfer', ({ view }) => view.render('transfer'));
 
 // Index

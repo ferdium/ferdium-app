@@ -1,13 +1,13 @@
 declare global {
   interface Window {
-    ferdi: any;
+    ferdium: any;
   }
 
   namespace NodeJS {
     interface ProcessEnv {
       GITHUB_AUTH_TOKEN: string;
       NODE_ENV: 'development' | 'production';
-      FERDI_APPDATA_DIR?: string;
+      FERDIUM_APPDATA_DIR?: string;
       PORTABLE_EXECUTABLE_DIR?: string;
       ELECTRON_IS_DEV?: string;
       APPDATA?: string;

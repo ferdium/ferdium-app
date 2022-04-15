@@ -106,7 +106,7 @@ window.navigator.mediaDevices.getDisplayMedia = () => new Promise(async (resolve
   try {
     const selectionElem = document.createElement('div');
     selectionElem.classList = ['desktop-capturer-selection'];
-    selectionElem.innerHTML = await window.ferdi.getDisplayMediaSelector();
+    selectionElem.innerHTML = await window.ferdium.getDisplayMediaSelector();
     document.body.appendChild(selectionElem);
 
     document

@@ -35,7 +35,7 @@ import {
 
 import { removeServicePartitionDirectory } from '../../helpers/service-helpers';
 
-const debug = require('debug')('Ferdi:ServerApi');
+const debug = require('debug')('Ferdium:ServerApi');
 
 module.paths.unshift(getDevRecipeDirectory(), getRecipeDirectory());
 

@@ -1,6 +1,6 @@
 import { ipcRenderer } from 'electron';
 
-const debug = require('debug')('Ferdi:Plugin:BadgeHandler');
+const debug = require('debug')('Ferdium:Plugin:BadgeHandler');
 
 export class BadgeHandler {
   // TODO: Need to extract this into a utility class and reuse outside of the recipes

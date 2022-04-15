@@ -8,7 +8,7 @@ import Request from './lib/Request';
 import { matchRoute } from '../helpers/routing-helpers';
 import { asarRecipesPath } from '../helpers/asar-helpers';
 
-const debug = require('debug')('Ferdi:RecipeStore');
+const debug = require('debug')('Ferdium:RecipeStore');
 
 export default class RecipesStore extends Store {
   @observable allRecipesRequest = new CachedRequest(this.api.recipes, 'all');

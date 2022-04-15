@@ -14,7 +14,7 @@ export default class Userscript {
   // Service configuration
   config = {};
 
-  // Ferdi and service settings
+  // Ferdium and service settings
   settings = {};
 
   constructor(recipe, controller, config) {
@@ -25,7 +25,7 @@ export default class Userscript {
   }
 
   /**
-   * Set internal copy of Ferdi's settings.
+   * Set internal copy of Ferdium's settings.
    * This is only used internally and can not be used to change any settings
    *
    * @param {*} settings
@@ -88,7 +88,7 @@ export default class Userscript {
    * @param {any} value
    */
   set(key: string, value: string) {
-    window.localStorage.setItem(`ferdi-user-${key}`, JSON.stringify(value));
+    window.localStorage.setItem(`ferdium-user-${key}`, JSON.stringify(value));
   }
 
   /**
@@ -98,10 +98,10 @@ export default class Userscript {
    * @return Value of the key
    */
   get(key: string) {
-    const ferdiUserKey = window.localStorage.getItem(`ferdi-user-${key}`);
+    const ferdiumUserKey = window.localStorage.getItem(`ferdium-user-${key}`);
 
-    if (ferdiUserKey) {
-      return JSON.parse(ferdiUserKey);
+    if (ferdiumUserKey) {
+      return JSON.parse(ferdiumUserKey);
     }
   }
 }

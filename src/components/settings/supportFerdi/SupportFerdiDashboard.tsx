@@ -2,20 +2,20 @@ import { defineMessages, useIntl } from 'react-intl';
 
 const messages = defineMessages({
   headline: {
-    id: 'settings.supportFerdi.headline',
-    defaultMessage: 'About Ferdi',
+    id: 'settings.supportFerdium.headline',
+    defaultMessage: 'About Ferdium',
   },
   aboutIntro: {
-    id: 'settings.supportFerdi.aboutIntro',
+    id: 'settings.supportFerdium.aboutIntro',
     defaultMessage: 'Special thanks goes to these awesome people:',
   },
   about: {
-    id: 'settings.supportFerdi.about',
-    defaultMessage: 'The development of Ferdi is done by contributors. People who use Ferdi like you. They maintain, fix, and improve Ferdi in their spare time.',
+    id: 'settings.supportFerdium.about',
+    defaultMessage: 'The development of Ferdium is done by contributors. People who use Ferdium like you. They maintain, fix, and improve Ferdium in their spare time.',
   }
 });
 
-const SupportFerdiDashboard = () => {
+const SupportFerdiumDashboard = () => {
   const intl = useIntl();
 
   return (
@@ -29,50 +29,50 @@ const SupportFerdiDashboard = () => {
         <div>
           <p className="settings__support-badges">
             <a
-              href="https://twitter.com/getferdi/"
+              href="https://twitter.com/ferdium/"
               target="_blank"
               rel="noreferrer"
             >
               <img
                 alt="Twitter Follow"
-                src="https://img.shields.io/twitter/follow/getferdi?label=Follow&style=social"
+                src="https://img.shields.io/twitter/follow/ferdium?label=Follow&style=social"
               />
             </a>
             <a
-              href="https://github.com/getferdi/ferdi"
+              href="https://github.com/ferdium/ferdium"
               target="_blank"
               rel="noreferrer"
             >
               <img
                 alt="GitHub Stars"
-                src="https://img.shields.io/github/stars/getferdi/ferdi?style=social"
+                src="https://img.shields.io/github/stars/ferdium/ferdium?style=social"
               />
             </a>
-            <a target="_blank" href="https://crowdin.com/project/getferdi">
-              <img src="https://badges.crowdin.net/getferdi/localized.svg" alt="Crowdin"/>
+            <a target="_blank" href="https://crowdin.com/project/ferdium">
+              <img src="https://badges.crowdin.net/ferdium/localized.svg" alt="Crowdin"/>
             </a>
             <a
-              href="https://opencollective.com/getferdi#section-contributors"
+              href="https://opencollective.com/ferdium#section-contributors"
               target="_blank"
               rel="noreferrer"
             >
               <img
                 alt="Open Collective backers"
-                src="https://img.shields.io/opencollective/backers/getferdi?logo=open-collective"
+                src="https://img.shields.io/opencollective/backers/ferdium?logo=open-collective"
               />
             </a>
           </p>
           <p>{intl.formatMessage(messages.aboutIntro)}</p>
           <p>
             <a
-              href="https://github.com/getferdi/ferdi#contributors-"
+              href="https://github.com/ferdium/ferdium#contributors-"
               target="_blank"
               rel="noreferrer"
             >
               <img
                 alt="GitHub contributors (non-exhaustive)"
                 width="100%"
-                src="https://opencollective.com/getferdi/contributors.svg?width=600&avatarHeight=42&button=off"
+                src="https://opencollective.com/ferdium/contributors.svg?width=600&avatarHeight=42&button=off"
               />
             </a>
           </p>
@@ -83,4 +83,4 @@ const SupportFerdiDashboard = () => {
   );
 };
 
-export default SupportFerdiDashboard;
+export default SupportFerdiumDashboard;

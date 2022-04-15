@@ -69,7 +69,7 @@ function generateAccentStyle(accentColorStr) {
     .franz-form .franz-form__toggle-wrapper .franz-form__toggle.is-active .franz-form__toggle-button,
     .theme__dark .franz-form__button,
     .franz-form__button,
-    .ferdi__fab,
+    .ferdium__fab,
     .franz-form .franz-form__slider-wrapper .slider::-webkit-slider-thumb,
     span.loader div > div > div {
       background: ${accentColorStr};

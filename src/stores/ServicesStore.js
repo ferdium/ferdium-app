@@ -17,9 +17,9 @@ import {
 import { workspaceStore } from '../features/workspaces';
 import { DEFAULT_SERVICE_SETTINGS, KEEP_WS_LOADED_USID } from '../config';
 import { SPELLCHECKER_LOCALES } from '../i18n/languages';
-import { ferdiVersion } from '../environment-remote';
+import { ferdiumVersion } from '../environment-remote';
 
-const debug = require('debug')('Ferdi:ServiceStore');
+const debug = require('debug')('Ferdium:ServiceStore');
 
 export default class ServicesStore extends Store {
   @observable allServicesRequest = new CachedRequest(this.api.services, 'all');
@@ -563,7 +563,7 @@ export default class ServicesStore extends Store {
       if (!pathExistsSync(filePath)) {
         writeFileSync(
           filePath,
-          `module.exports = (config, Ferdi) => {
+          `module.exports = (config, Ferdium) => {
   // Write your scripts here
   console.log("Hello, World!", config);
 };
@@ -691,7 +691,7 @@ export default class ServicesStore extends Store {
       const service = this.active;
       if (service) {
         if (service._webview) {
-          document.title = `Ferdi - ${service.name} ${
+          document.title = `Ferdium - ${service.name} ${
             service.dialogTitle ? ` - ${service.dialogTitle}` : ''
           } ${service._webview ? `- ${service._webview.getTitle()}` : ''}`;
           this._focusService({ serviceId: service.id });
@@ -1127,7 +1127,7 @@ export default class ServicesStore extends Store {
     const service = this.active;
     if (service) {
       this.actions.service.focusService({ serviceId: service.id });
-      document.title = `Ferdi - ${service.name} ${
+      document.title = `Ferdium - ${service.name} ${
         service.dialogTitle ? ` - ${service.dialogTitle}` : ''
       } ${service._webview ? `- ${service._webview.getTitle()}` : ''}`;
     } else {
@@ -1282,7 +1282,7 @@ export default class ServicesStore extends Store {
         'initialize-recipe',
         {
           ...shareWithWebview,
-          franzVersion: ferdiVersion,
+          franzVersion: ferdiumVersion,
         },
         service.recipe,
       );

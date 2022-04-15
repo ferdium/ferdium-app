@@ -18,7 +18,7 @@ import { Icon } from '../../ui/icon';
 
 const IS_SERVICE_DEBUGGING_ENABLED = (
   localStorage.getItem('debug') || ''
-).includes('Ferdi:Service');
+).includes('Ferdium:Service');
 
 const messages = defineMessages({
   reload: {

@@ -5,13 +5,13 @@ import injectSheet from 'react-jss';
 import { defineMessages, injectIntl } from 'react-intl';
 
 import { mdiAlert } from '@mdi/js';
-import { LIVE_API_FERDI_WEBSITE } from '../../../config';
+import { LIVE_API_FERDIUM_WEBSITE } from '../../../config';
 import { Icon } from '../../ui/icon';
 
 const messages = defineMessages({
   text: {
     id: 'connectionLostBanner.message',
-    defaultMessage: 'Oh no! Ferdi lost the connection to {name}.',
+    defaultMessage: 'Oh no! Ferdium lost the connection to {name}.',
   },
   moreInformation: {
     id: 'connectionLostBanner.informationLink',
@@ -87,7 +87,7 @@ class ConnectionLostBanner extends Component {
           {intl.formatMessage(messages.text, { name })}
           <br />
           <a
-            href={`${LIVE_API_FERDI_WEBSITE}/support#what-does-franz-lost-the-connection-to-service-mean`}
+            href={`${LIVE_API_FERDIUM_WEBSITE}/support#what-does-franz-lost-the-connection-to-service-mean`}
             className={classes.link}
           >
             {intl.formatMessage(messages.moreInformation)}

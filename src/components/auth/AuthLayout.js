@@ -18,7 +18,7 @@ import globalMessages from '../../i18n/globalMessages';
 
 import { isWindows } from '../../environment';
 import AppUpdateInfoBar from '../AppUpdateInfoBar';
-import { GITHUB_FERDI_URL } from '../../config';
+import { GITHUB_FERDIUM_URL } from '../../config';
 import { Icon } from '../ui/icon';
 
 class AuthLayout extends Component {
@@ -57,7 +57,7 @@ class AuthLayout extends Component {
       <>
         {isWindows && !isFullScreen && (
           <TitleBar
-            menu={window['ferdi'].menu.template}
+            menu={window['ferdium'].menu.template}
             icon="assets/images/logo.svg"
           />
         )}
@@ -96,7 +96,7 @@ class AuthLayout extends Component {
           </div>
           {/* </div> */}
           <Link
-            to={`${GITHUB_FERDI_URL}/ferdi`}
+            to={`${GITHUB_FERDIUM_URL}/ferdium`}
             className="auth__adlk"
             target="_blank"
           >

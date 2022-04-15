@@ -3,7 +3,7 @@ import { isMac } from '../../environment';
 
 const { getDoNotDisturb } = require('macos-notification-state');
 
-const debug = require('debug')('Ferdi:ipcApi:dnd');
+const debug = require('debug')('Ferdium:ipcApi:dnd');
 
 export default async () => {
   ipcMain.handle('get-dnd', async () => {

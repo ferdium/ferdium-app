@@ -2,7 +2,7 @@ import { ipcRenderer } from 'electron';
 
 import { v1 as uuidV1 } from 'uuid';
 
-const debug = require('debug')('Ferdi:Notifications');
+const debug = require('debug')('Ferdium:Notifications');
 
 export class NotificationsHandler {
   onNotify = (data: { title: string; options: any; notificationId: string }) =>
@@ -37,7 +37,7 @@ export const notificationsClassDefinition = `(() => {
     constructor(title = '', options = {}) {
       this.title = title;
       this.options = options;
-      window.ferdi.displayNotification(title, options)
+      window.ferdium.displayNotification(title, options)
         .then(() => {
           if (typeof (this.onClick) === 'function') {
             this.onClick();

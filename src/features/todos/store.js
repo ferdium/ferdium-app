@@ -18,7 +18,7 @@ import { createActionBindings } from '../utils/ActionBinding';
 import { IPC, TODOS_ROUTES } from './constants';
 import UserAgent from '../../models/UserAgent';
 
-const debug = require('debug')('Ferdi:feature:todos:store');
+const debug = require('debug')('Ferdium:feature:todos:store');
 
 export default class TodoStore extends FeatureStore {
   @observable stores = null;

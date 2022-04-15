@@ -3,7 +3,7 @@ changelog:
     labels:
       - ignore-for-release
     authors:
-      - FerdiBot
+      - FerdiumBot
       - allcontributors
   categories:
     - title: Breaking Changes 🛠

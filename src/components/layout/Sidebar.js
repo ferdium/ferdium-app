@@ -16,11 +16,11 @@ import {
 import Tabbar from '../services/tabs/Tabbar';
 import {
   settingsShortcutKey,
-  lockFerdiShortcutKey,
+  lockFerdiumShortcutKey,
   todosToggleShortcutKey,
   workspaceToggleShortcutKey,
   addNewServiceShortcutKey,
-  muteFerdiShortcutKey,
+  muteFerdiumShortcutKey,
 } from '../../environment';
 import { todosStore } from '../../features/todos';
 import { todoActions } from '../../features/todos/actions';
@@ -52,15 +52,15 @@ const messages = defineMessages({
   },
   openTodosDrawer: {
     id: 'sidebar.openTodosDrawer',
-    defaultMessage: 'Open Ferdi Todos',
+    defaultMessage: 'Open Ferdium Todos',
   },
   closeTodosDrawer: {
     id: 'sidebar.closeTodosDrawer',
-    defaultMessage: 'Close Ferdi Todos',
+    defaultMessage: 'Close Ferdium Todos',
   },
-  lockFerdi: {
-    id: 'sidebar.lockFerdi',
-    defaultMessage: 'Lock Ferdi',
+  lockFerdium: {
+    id: 'sidebar.lockFerdium',
+    defaultMessage: 'Lock Ferdium',
   },
 });
 
@@ -200,7 +200,7 @@ class Sidebar extends Component {
             }`}
             data-tip={`${intl.formatMessage(
               isAppMuted ? messages.unmute : messages.mute,
-            )} (${muteFerdiShortcutKey(false)})`}
+            )} (${muteFerdiumShortcutKey(false)})`}
           >
             <Icon icon={isAppMuted ? mdiBellOff : mdiBell} size={1.5} />
           </button>
@@ -218,8 +218,8 @@ class Sidebar extends Component {
                 });
               }}
               data-tip={`${intl.formatMessage(
-                messages.lockFerdi,
-              )} (${lockFerdiShortcutKey(false)})`}
+                messages.lockFerdium,
+              )} (${lockFerdiumShortcutKey(false)})`}
             >
               <Icon icon={mdiLock} size={1.5} />
             </button>

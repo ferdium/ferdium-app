@@ -28,7 +28,7 @@ const messages = defineMessages({
   copy: {
     id: 'settings.team.copy',
     defaultMessage:
-      "Franz's Team Management allows you to manage Franz Subscriptions for multiple users. Please keep in mind that having a Franz Premium subscription will give you no advantages in using Ferdi: The only reason you still have access to Team Management is so you can manage your legacy Franz Teams and so that you don't loose any functionality in managing your account.",
+      "Franz's Team Management allows you to manage Franz Subscriptions for multiple users. Please keep in mind that having a Franz Premium subscription will give you no advantages in using Ferdium: The only reason you still have access to Team Management is so you can manage your legacy Franz Teams and so that you don't loose any functionality in managing your account.",
   },
   manageButton: {
     id: 'settings.team.manageAction',
@@ -152,7 +152,7 @@ class TeamDashboard extends Component {
                   <img
                     className={classes.image}
                     src="https://cdn.franzinfra.com/announcements/assets/teams.png"
-                    alt="Ferdi for Teams"
+                    alt="Ferdium for Teams"
                   />
                 </div>
                 <div className={classes.buttonContainer}>

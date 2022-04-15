@@ -41,7 +41,7 @@ const messages = defineMessages({
   },
   customServerSuggestion: {
     id: 'login.customServerSuggestion',
-    defaultMessage: 'Try importing your Franz account into Ferdi',
+    defaultMessage: 'Try importing your Franz account into Ferdium',
   },
   tokenExpired: {
     id: 'login.tokenExpired',
@@ -135,13 +135,13 @@ class Login extends Component {
               <p className="error-message center">
                 {intl.formatMessage(messages.invalidCredentials)}
               </p>
-              {window['ferdi'].stores.settings.all.app.server !==
+              {window['ferdium'].stores.settings.all.app.server !==
                 LIVE_FRANZ_API && (
                 <p className="error-message center">
                   {intl.formatMessage(messages.customServerQuestion)}{' '}
                   <Link
                     to={`${window[
-                      'ferdi'
+                      'ferdium'
                     ].stores.settings.all.app.server.replace(
                       API_VERSION,
                       '',

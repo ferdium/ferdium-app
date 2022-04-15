@@ -2,7 +2,7 @@ import { observable, toJS } from 'mobx';
 import { pathExistsSync, outputJsonSync, readJsonSync } from 'fs-extra';
 import { userDataPath } from '../environment-remote';
 
-const debug = require('debug')('Ferdi:Settings');
+const debug = require('debug')('Ferdium:Settings');
 
 export default class Settings {
   type = '';

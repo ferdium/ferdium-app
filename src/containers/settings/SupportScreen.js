@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { inject } from 'mobx-react';
 import PropTypes from 'prop-types';
 
-import SupportFerdi from '../../components/settings/supportFerdi/SupportFerdiDashboard';
+import SupportFerdium from '../../components/settings/supportFerdium/SupportFerdiumDashboard';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 import AppStore from '../../stores/AppStore';
 
@@ -20,7 +20,7 @@ class SupportScreen extends Component {
   render() {
     return (
       <ErrorBoundary>
-        <SupportFerdi openLink={this.openLink} />
+        <SupportFerdium openLink={this.openLink} />
       </ErrorBoundary>
     );
   }

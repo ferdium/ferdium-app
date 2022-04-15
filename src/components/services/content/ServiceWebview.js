@@ -7,7 +7,7 @@ import { join } from 'path';
 
 import ServiceModel from '../../../models/Service';
 
-const debug = require('debug')('Ferdi:Services');
+const debug = require('debug')('Ferdium:Services');
 
 class ServiceWebview extends Component {
   static propTypes = {
@@ -31,7 +31,7 @@ class ServiceWebview extends Component {
           });
           this.webview.view.addEventListener('did-navigate', () => {
             if (this.props.service._webview) {
-              document.title = `Ferdi - ${this.props.service.name} ${
+              document.title = `Ferdium - ${this.props.service.name} ${
                 this.props.service.dialogTitle
                   ? ` - ${this.props.service.dialogTitle}`
                   : ''
@@ -56,7 +56,7 @@ class ServiceWebview extends Component {
       webview.view.blur();
       webview.view.focus();
       window.setTimeout(() => {
-        document.title = `Ferdi - ${this.props.service.name} ${
+        document.title = `Ferdium - ${this.props.service.name} ${
           this.props.service.dialogTitle
             ? ` - ${this.props.service.dialogTitle}`
             : ''

@@ -2,14 +2,14 @@ import { AuthInfo, BrowserWindow, ipcRenderer } from 'electron';
 
 import { state as ModalState } from './store';
 
-const debug = require('debug')('Ferdi:feature:basicAuth');
+const debug = require('debug')('Ferdium:feature:basicAuth');
 
 const state = ModalState;
 
 export default function initialize() {
   debug('Initialize basicAuth feature');
 
-  window['ferdi'].features.basicAuth = {
+  window['ferdium'].features.basicAuth = {
     state,
   };
 

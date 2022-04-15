@@ -1,12 +1,12 @@
-# Contributing to Ferdi 5
+# Contributing to Ferdium 5
 
-:tada: First off, thanks for taking the time and your effort to make Ferdi better! :tada:
+:tada: First off, thanks for taking the time and your effort to make Ferdium better! :tada:
 
 ## Table of contents
 
 <!-- TOC depthFrom:2 depthTo:2 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-- [Contributing to Ferdi 5](#contributing-to-ferdi-5)
+- [Contributing to Ferdium 5](#contributing-to-ferdium-5)
   - [Table of contents](#table-of-contents)
   - [Code of Conduct](#code-of-conduct)
   - [What should I know before I get started?](#what-should-i-know-before-i-get-started)
@@ -38,11 +38,11 @@
 
 ## Code of Conduct
 
-This project and everyone participating in it is governed by the [Ferdi Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [hello@getferdi.com](mailto:hello@getferdi.com).
+This project and everyone participating in it is governed by the [Ferdium Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [hello@ferdium.org](mailto:hello@ferdium.org).
 
 ## What should I know before I get started?
 
-For the moment, Ferdi's development is a bit slow but all contributions are highly appreciated. [Check this issue for discussion](https://github.com/getferdi/ferdi/issues/956).
+For the moment, Ferdium's development is a bit slow but all contributions are highly appreciated. [Check this issue for discussion](https://github.com/ferdium/ferdium-app/issues/956).
 
 ## How Can I Contribute?
 
@@ -98,8 +98,8 @@ npm i -g windows-build-tools --vs2015
 ### Clone repository with submodule
 
 ```bash
-git clone https://github.com/getferdi/ferdi.git
-cd ferdi
+git clone https://github.com/ferdium/ferdium.git
+cd ferdium
 git submodule update --init --recursive --remote --rebase --force
 ```
 
@@ -116,7 +116,7 @@ export ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
 
 ### Install dependencies
 
-Run the following command to install all dependencies, and link sibling modules with Ferdi.
+Run the following command to install all dependencies, and link sibling modules with Ferdium.
 
 ```bash
 npm i
@@ -132,7 +132,7 @@ npm run build
 
 ### Package recipe repository
 
-Ferdi requires its recipes to be packaged before it can use it. When running Ferdi as a development instance, you'll need to package the local recipes before you can create any services inside Ferdi.
+Ferdium requires its recipes to be packaged before it can use it. When running Ferdium as a development instance, you'll need to package the local recipes before you can create any services inside Ferdium.
 
 ```bash
 cd recipes && pnpm i && pnpm run package
@@ -141,25 +141,25 @@ cd recipes && pnpm i && pnpm run package
 ### Using Docker to build a linux-targetted packaged app
 
 ```bash
-docker build -t ferdi-package-`uname -m` .
+docker build -t ferdium-package-`uname -m` .
 ```
 
-The above will place all the built artifacts into the `/ferdi` folder within the image.
+The above will place all the built artifacts into the `/ferdium` folder within the image.
 
-If you want to copy them outside of the image, simply mount a volume into a different location, and copy all files from `/ferdi` into the mounted folder (`/ferdi-out` in the example command below).
+If you want to copy them outside of the image, simply mount a volume into a different location, and copy all files from `/ferdium` into the mounted folder (`/ferdium-out` in the example command below).
 
 ```bash
 DATE=`date +"%Y-%b-%d-%H-%M"`
 mkdir -p ~/Downloads/$DATE
-docker run -e GIT_SHA=`git rev-parse --short HEAD` -v ~/Downloads/$DATE:/ferdi-out -it ferdi-package sh
+docker run -e GIT_SHA=`git rev-parse --short HEAD` -v ~/Downloads/$DATE:/ferdium-out -it ferdium-package sh
 # inside the container:
-mv /ferdi/Ferdi-*.AppImage /ferdi-out/Ferdi-$GIT_SHA.AppImage
-mv /ferdi/ferdi-*.tar.gz /ferdi-out/Ferdi-$GIT_SHA.tar.gz
-mv /ferdi/ferdi-*.x86_64.rpm /ferdi-out/Ferdi-x86_64-$GIT_SHA.rpm
-mv /ferdi/ferdi_*_amd64.deb /ferdi-out/Ferdi-amd64-$GIT_SHA.deb
-mv /ferdi/ferdi-*.freebsd /ferdi-out/Ferdi-$GIT_SHA.freebsd
-mv /ferdi/ferdi /ferdi-out/Ferdi-$GIT_SHA
-mv /ferdi/latest-linux.yml /ferdi-out/latest-linux-$GIT_SHA.yml
+mv /ferdium/Ferdium-*.AppImage /ferdium-out/Ferdium-$GIT_SHA.AppImage
+mv /ferdium/ferdium-*.tar.gz /ferdium-out/Ferdium-$GIT_SHA.tar.gz
+mv /ferdium/ferdium-*.x86_64.rpm /ferdium-out/Ferdium-x86_64-$GIT_SHA.rpm
+mv /ferdium/ferdium_*_amd64.deb /ferdium-out/Ferdium-amd64-$GIT_SHA.deb
+mv /ferdium/ferdium-*.freebsd /ferdium-out/Ferdium-$GIT_SHA.freebsd
+mv /ferdium/ferdium /ferdium-out/Ferdium-$GIT_SHA
+mv /ferdium/latest-linux.yml /ferdium-out/latest-linux-$GIT_SHA.yml
 ```
 
 ### Code Signing on a mac
@@ -182,13 +182,13 @@ Run these two commands **simultaneously** in different terminals:
 
 ```bash
 npm run dev
-DEBUG=Ferdi:* npm run start
+DEBUG=Ferdium:* npm run start
 ```
 
 - Optionally, you can run both commands in one terminal with [concurrently](https://www.npmjs.com/package/concurrently):
 
 ```bash
-DEBUG_COLORS=1 DEBUG=Ferdi:* npm run start:all-dev
+DEBUG_COLORS=1 DEBUG=Ferdium:* npm run start:all-dev
 ```
 
 Note: please prefer [`debug()`](https://github.com/visionmedia/debug) over `console.log()`.
@@ -228,11 +228,11 @@ git merge --no-ff nightly --no-verify
 git push
 ```
 
-This will automatically trigger the build, as part of which, a new, draft release will be created [here](https://github.com/getferdi/ferdi/releases/). Once all the assets are uploaded (19 assets in total), publish the release (you will need elevated permissions in GitHub for doing this). The last commit of the `release` branch will be tagged.
+This will automatically trigger the build, as part of which, a new, draft release will be created [here](https://github.com/ferdium/ferdium-app/releases/). Once all the assets are uploaded (19 assets in total), publish the release (you will need elevated permissions in GitHub for doing this). The last commit of the `release` branch will be tagged.
 
 ### Nightly releases
 
-Nightly releases are automatically triggered every day ([details](https://github.com/getferdi/ferdi/pull/990)) and available in [getferdi/ferdi](https://github.com/getferdi/ferdi/releases). Maintainers still need to verify and manually publish the draft releases as pre-releases for now.
+Nightly releases are automatically triggered every day ([details](https://github.com/ferdium/ferdium-app/pull/990)) and available in [ferdium/ferdium](https://github.com/ferdium/ferdium-app/releases). Maintainers still need to verify and manually publish the draft releases as pre-releases for now.
 
 ### Updating the code after a hiatus
 

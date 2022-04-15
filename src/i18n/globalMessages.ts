@@ -3,7 +3,7 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   APIUnhealthy: {
     id: 'global.api.unhealthy',
-    defaultMessage: "Can't connect to Ferdi online services",
+    defaultMessage: "Can't connect to Ferdium online services",
   },
   notConnectedToTheInternet: {
     id: 'global.notConnectedToTheInternet',
@@ -64,7 +64,7 @@ export default defineMessages({
   },
   quitConfirmation: {
     id: 'global.quitConfirmation',
-    defaultMessage: 'Do you really want to quit Ferdi?',
+    defaultMessage: 'Do you really want to quit Ferdium?',
   },
   settings: {
     id: 'global.settings',

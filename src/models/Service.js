@@ -14,7 +14,7 @@ import {
   ifUndefinedNumber,
 } from '../jsUtils';
 
-const debug = require('debug')('Ferdi:Service');
+const debug = require('debug')('Ferdium:Service');
 
 export default class Service {
   id = '';
@@ -173,7 +173,7 @@ export default class Service {
     );
 
     // Check if "Hibernate on Startup" is enabled and hibernate all services except active one
-    const { hibernateOnStartup } = window['ferdi'].stores.settings.app;
+    const { hibernateOnStartup } = window['ferdium'].stores.settings.app;
     // The service store is probably not loaded yet so we need to use localStorage data to get active service
     const isActive =
       window.localStorage.service &&

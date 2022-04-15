@@ -23,7 +23,7 @@ const messages = defineMessages({
   },
   serverless: {
     id: 'services.serverless',
-    defaultMessage: 'Use Ferdi without an Account',
+    defaultMessage: 'Use Ferdium without an Account',
   },
 });
 
@@ -56,7 +56,7 @@ class Welcome extends Component {
           />
           {/* <img src="./assets/images/welcome.png" className="welcome__services" alt="" /> */}
           <div className="welcome__text">
-            <h1>Ferdi</h1>
+            <h1>Ferdium</h1>
           </div>
         </div>
         <div className="welcome__buttons">

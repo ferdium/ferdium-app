@@ -1,5 +1,5 @@
 import localStorage from 'mobx-localstorage';
-import { ferdiLocale, ferdiVersion } from '../../environment-remote';
+import { ferdiumLocale, ferdiumVersion } from '../../environment-remote';
 
 export const prepareAuthRequest = (
   // eslint-disable-next-line unicorn/no-object-as-default-parameter
@@ -11,10 +11,10 @@ export const prepareAuthRequest = (
     headers: {
       'Content-Type': 'application/json',
       'X-Franz-Source': 'desktop',
-      'X-Franz-Version': ferdiVersion,
+      'X-Franz-Version': ferdiumVersion,
       'X-Franz-platform': process.platform,
       'X-Franz-Timezone-Offset': new Date().getTimezoneOffset(),
-      'X-Franz-System-Locale': ferdiLocale,
+      'X-Franz-System-Locale': ferdiumLocale,
       // @ts-expect-error Property 'headers' does not exist on type '{ method: string; }'.
       ...options.headers,
     },

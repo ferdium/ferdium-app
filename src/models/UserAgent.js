@@ -2,7 +2,7 @@ import { action, computed, observe, observable } from 'mobx';
 
 import defaultUserAgent from '../helpers/userAgent-helpers';
 
-const debug = require('debug')('Ferdi:UserAgent');
+const debug = require('debug')('Ferdium:UserAgent');
 
 export default class UserAgent {
   _willNavigateListener = null;
@@ -37,7 +37,7 @@ export default class UserAgent {
     if (typeof this.getUserAgent === 'function') {
       return this.getUserAgent();
     }
-    const globalPref = window['ferdi'].stores.settings.all.app.userAgentPref;
+    const globalPref = window['ferdium'].stores.settings.all.app.userAgentPref;
     if (typeof globalPref === 'string') {
       const trimmed = globalPref.trim();
       if (trimmed !== '') {
