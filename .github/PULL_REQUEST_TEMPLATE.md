@@ -5,8 +5,8 @@
 
 #### Pre-flight Checklist
 
-1. Please remember that if you are logging a bug for some service that has _stopped working_ or is _working incorrectly_, please log the bug [here](https://github.com/ferdium/recipes/issues)
-2. If you are requesting support for a **new service** in Ferdium, please log it [here](https://github.com/ferdium/recipes/pulls)
+1. Please remember that if you are logging a bug for some service that has _stopped working_ or is _working incorrectly_, please log the bug [here](https://github.com/ferdium/ferdium-recipes/issues)
+2. If you are requesting support for a **new service** in Ferdium, please log it [here](https://github.com/ferdium/ferdium-recipes/pulls)
 3. Please remember to read the [self-help documentation](https://github.com/ferdium/ferdium#troubleshooting-recipes-self-help) - in case it helps you unblock yourself for issues related to older versions of recipes that were installed on your machine. (These will get automatically upgraded when you upgrade to the newer versions of Ferdium, but to get new recipes between Ferdium releases, this documentation is quite useful.)
 4. Please consider supporting Ferdium!
   👉 https://github.com/sponsors/ferdium

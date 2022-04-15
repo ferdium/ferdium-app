@@ -43,7 +43,7 @@ const AppUpdateInfoBar = ({ onInstallUpdate, onHide }: Props) => {
         type="button"
         onClick={() =>
           openExternalUrl(
-            `${GITHUB_FERDIUM_URL}/ferdium/blob/develop/CHANGELOG.md`,
+            `${GITHUB_FERDIUM_URL}/ferdium-app/blob/develop/CHANGELOG.md`,
             true,
           )
         }

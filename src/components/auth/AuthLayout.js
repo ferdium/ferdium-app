@@ -96,7 +96,7 @@ class AuthLayout extends Component {
           </div>
           {/* </div> */}
           <Link
-            to={`${GITHUB_FERDIUM_URL}/ferdium`}
+            to={`${GITHUB_FERDIUM_URL}/ferdium-app`}
             className="auth__adlk"
             target="_blank"
           >

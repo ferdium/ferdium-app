@@ -29,23 +29,23 @@ const SupportFerdiumDashboard = () => {
         <div>
           <p className="settings__support-badges">
             <a
-              href="https://twitter.com/ferdium/"
+              href="https://twitter.com/ferdiumteam/"
               target="_blank"
               rel="noreferrer"
             >
               <img
                 alt="Twitter Follow"
-                src="https://img.shields.io/twitter/follow/ferdium?label=Follow&style=social"
+                src="https://img.shields.io/twitter/follow/ferdiumteam?label=Follow&style=social"
               />
             </a>
             <a
-              href="https://github.com/ferdium/ferdium"
+              href="https://github.com/ferdium/ferdium-app"
               target="_blank"
               rel="noreferrer"
             >
               <img
                 alt="GitHub Stars"
-                src="https://img.shields.io/github/stars/ferdium/ferdium?style=social"
+                src="https://img.shields.io/github/stars/ferdium/ferdium-app?style=social"
               />
             </a>
             <a target="_blank" href="https://crowdin.com/project/ferdium">
@@ -65,7 +65,7 @@ const SupportFerdiumDashboard = () => {
           <p>{intl.formatMessage(messages.aboutIntro)}</p>
           <p>
             <a
-              href="https://github.com/ferdium/ferdium#contributors-"
+              href="https://github.com/ferdium/ferdium-app#contributors-"
               target="_blank"
               rel="noreferrer"
             >
