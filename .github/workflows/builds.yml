@@ -309,6 +309,8 @@ jobs:
         uses: pnpm/action-setup@v2.0.1
         with:
           version: 6.24.1
+      - name: Install node-gyp
+        run: npm install -g node-gyp@8.4.1
       - name: Install node dependencies
         uses: nick-invision/retry@v2.4.0
         with:
