@@ -5,7 +5,7 @@
   "appId": "org.ferdium.ferdium-app",
   "version": "5.8.2-nightly.7",
   "description": "Messaging app for WhatsApp, Slack, Telegram, HipChat, Hangouts and many many more.",
-  "copyright": "kytwb",
+  "copyright": "org.ferdium",
   "main": "index.js",
   "homepage": "https://github.com/ferdium/ferdium-app",
   "repository": "https://github.com/ferdium/ferdium-app.git",
@@ -41,7 +41,7 @@
     "add-crowdin-contributors": "ts-node scripts/add-crowdin-contributors.ts"
   },
   "keywords": [],
-  "author": "Amine Mouafik <amine@mouafik.fr>",
+  "author": "Ferdium Contributors",
   "license": "Apache-2.0",
   "dependencies": {
     "@adonisjs/ace": "^5.0.8",

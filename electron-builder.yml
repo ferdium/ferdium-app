@@ -2,7 +2,7 @@ directories:
   app: ./build
   output: ./out
 
-appId: "com.kytwb.ferdium"
+appId: "org.ferdium.ferdium-app"
 
 mac:
   hardenedRuntime: true
@@ -42,7 +42,7 @@ win:
       arch: [x64, ia32]
     - target: portable
       arch: [x64, ia32]
-  publisherName: "Amine Mouafik"
+  publisherName: "Ferdium Contributors"
 
 linux:
   icon: ./build-helpers/images/icons

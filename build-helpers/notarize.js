@@ -10,7 +10,7 @@ exports.default = async function notarizing(context) {
   const { notarize } = require('electron-notarize');
 
   await notarize({
-    appBundleId: 'com.kytwb.ferdium',
+    appBundleId: 'org.ferdium.ferdium-app',
     appPath: `${appOutDir}/${appName}.app`,
     ascProvider: 'B6J9X9DWFL',
     appleId: process.env.APPLEID,
