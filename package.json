@@ -79,7 +79,7 @@
     "jsonwebtoken": "^8.5.1",
     "jss": "^10.8.1",
     "lodash": "^4.17.21",
-    "macos-notification-state": "github:ferdium/macos-notification-state#fix-monterey-detect",
+    "macos-notification-state": "github:nbashkankov/macos-notification-state#fix-monterey-detect",
     "macos-version": "^5.2.1",
     "mime-types": "^2.1.33",
     "minimist": "^1.2.6",
