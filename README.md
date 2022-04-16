@@ -60,6 +60,7 @@ Special thanks goes to these awesome people:
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
 
+<!-- TODO: Uncomment once we get funding sorted
 ### Backers via Open Collective
 
 <a href="https://opencollective.com/ferdium#section-contribute" target="_blank"><img src="https://opencollective.com/ferdium/backers.svg?avatarHeight=42&width=890"></a>
@@ -78,3 +79,4 @@ Mention to the individuals backing us via [GitHub Sponsors](https://github.com/s
     <img src="https://ferdium.org/wp-content/uploads/sites/4/2021/12/Parallels_logo.svg" height="30px">
   </a>
 </p>
+-->
