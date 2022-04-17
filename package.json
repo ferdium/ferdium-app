@@ -5,7 +5,7 @@
   "appId": "org.ferdium.ferdium-app",
   "version": "5.8.2-nightly.7",
   "description": "Messaging app for WhatsApp, Slack, Telegram, HipChat, Hangouts and many many more.",
-  "author": "Ferdium Contributors <hello@ferdium.com> (https://ferdium.org/)",
+  "author": "Ferdium Contributors <hello@ferdium.org> (https://ferdium.org/)",
   "license": "Apache-2.0",
   "copyright": "org.ferdium",
   "main": "index.js",
