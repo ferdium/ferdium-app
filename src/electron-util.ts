@@ -1,7 +1,7 @@
 // Enhanced from: https://github.com/dertieran/electron-util/blob/replace-remote/source/api.js
 
 import * as electron from 'electron';
-import { initialize } from '@electron/remote/main';
+import { initialize, enable } from '@electron/remote/main';
 
 export const initializeRemote = () => {
   if (process.type !== 'browser') {
@@ -12,6 +12,10 @@ export const initializeRemote = () => {
 
   initialize();
 };
+
+export const enableWebContents = (webContents: electron.WebContents) => {
+  enable(webContents);
+}
 
 export const remote = new Proxy(
   {},

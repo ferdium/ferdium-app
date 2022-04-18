@@ -13,7 +13,7 @@ import { emptyDirSync, ensureFileSync } from 'fs-extra';
 import { join } from 'path';
 import windowStateKeeper from 'electron-window-state';
 import ms from 'ms';
-import { initializeRemote } from './electron-util';
+import { enableWebContents, initializeRemote } from './electron-util';
 import { enforceMacOSAppLocation } from './enforce-macos-app-location';
 
 initializeRemote();
@@ -214,13 +214,18 @@ const createWindow = () => {
       webviewTag: true,
       preload: join(__dirname, 'sentry.js'),
       nativeWindowOpen: true,
-      // @ts-expect-error Object literal may only specify known properties, and 'enableRemoteModule' does not exist in type 'WebPreferences'.
-      enableRemoteModule: true,
     },
+  });
+
+  enableWebContents(mainWindow.webContents);
+
+  app.on('browser-window-created', (_, window) => {
+    enableWebContents(window.webContents);
   });
 
   app.on('web-contents-created', (_e, contents) => {
     if (contents.getType() === 'webview') {
+      enableWebContents(contents);
       contents.on('new-window', event => {
         event.preventDefault();
       });
@@ -523,6 +528,7 @@ ipcMain.on('open-browser-window', (_e, { url, serviceId }) => {
       nativeWindowOpen: true,
     },
   });
+  enableWebContents(child.webContents);
   child.show();
   child.loadURL(url);
   debug('Received open-browser-window', url);
