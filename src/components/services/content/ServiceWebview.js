@@ -109,7 +109,7 @@ class ServiceWebview extends Component {
         nodeintegration
         webpreferences={`spellcheck=${
           isSpellcheckerEnabled ? 1 : 0
-        }, contextIsolation=1, nativeWindowOpen=1`}
+        }, contextIsolation=1`}
       />
     );
   }

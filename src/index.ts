@@ -213,7 +213,6 @@ const createWindow = () => {
       contextIsolation: false,
       webviewTag: true,
       preload: join(__dirname, 'sentry.js'),
-      nativeWindowOpen: true,
     },
   });
 
@@ -525,7 +524,6 @@ ipcMain.on('open-browser-window', (_e, { url, serviceId }) => {
     fullscreenable: false,
     webPreferences: {
       session: serviceSession,
-      nativeWindowOpen: true,
     },
   });
   enableWebContents(child.webContents);
