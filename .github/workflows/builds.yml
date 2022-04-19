@@ -138,6 +138,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version-file: '.nvmrc'
+      - name: Install npm
+        run: npm i -gf npm@8.7.0
       - name: Install pnpm
         uses: pnpm/action-setup@v2.0.1
         with:
@@ -220,6 +222,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version-file: '.nvmrc'
+      - name: Install npm
+        run: npm i -gf npm@8.7.0
       - name: Install pnpm
         uses: pnpm/action-setup@v2.0.1
         with:
@@ -305,6 +309,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version-file: '.nvmrc'
+      - name: Install npm
+        run: npm i -gf npm@8.7.0
       - name: Install pnpm
         uses: pnpm/action-setup@v2.0.1
         with:

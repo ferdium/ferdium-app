@@ -62,7 +62,7 @@ Currently, these are the combinations of system dependencies that work for MacOS
 node -v
 v16.14.2
 npm -v
-8.5.0
+8.7.0
 pnpm -v
 6.32.8
 ```
