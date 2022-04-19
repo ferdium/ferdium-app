@@ -809,7 +809,7 @@ class FranzMenu {
       click: () => {
         dialog.showMessageBox({
           type: 'info',
-          title: 'Franz Ferdiumnand',
+          title: 'Ferdium',
           message: 'Ferdium',
           detail: aboutAppDetails(),
         });
