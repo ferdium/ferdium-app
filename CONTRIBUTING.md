@@ -60,11 +60,13 @@ Currently, these are the combinations of system dependencies that work for MacOS
 
 ```bash
 node -v
-v16.14.2
+v18.0.0
 npm -v
 8.7.0
 pnpm -v
 6.32.8
+python -v
+3.10.4
 ```
 
 _Note:_ You can choose any package manager to manage multiple versions of `node` and `npm`. For eg, [nvm](https://github.com/nvm-sh/nvm) or [asdf](https://github.com/asdf-vm/asdf).
