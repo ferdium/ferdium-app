@@ -1,6 +1,6 @@
 exports.default = async function notarizing(context) {
   const { electronPlatformName, appOutDir } = context;
-  if (electronPlatformName !== 'darwin' || process.env.SKIP_NOTARIZATION === 'true' || (process.env.GIT_BRANCH_NAME !== 'release' && process.env.GIT_BRANCH_NAME !== 'nightly')) {
+  if (electronPlatformName !== 'darwin' || process.env.CSC_IDENTITY_AUTO_DISCOVERY === 'false' || (process.env.GIT_BRANCH_NAME !== 'release' && process.env.GIT_BRANCH_NAME !== 'nightly')) {
     return;
   }
 
