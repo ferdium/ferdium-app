@@ -91,12 +91,10 @@ dnf install libX11-devel libXext-devel libXScrnSaver-devel libxkbfile-devel rpm
 
 #### Windows
 
-Please make sure you run this command as an administrator:
+Please make sure you have the following installed:
 
-```bash
-npm i -g windows-build-tools --vs2015
-```
-
+- Python 3 or higher (we recommend the latest version: [3.10.4](https://www.python.org/ftp/python/3.10.4/python-3.10.4-amd64.exe))
+- Microsoft Visual Studio Build Tools (2019 or higher) - Only tested with 2019 so far.
 ### Clone repository with submodule
 
 ```bash
@@ -114,6 +112,14 @@ Set these env vars into your profile (or if you use [direnv](https://direnv.net/
 ```bash
 export ELECTRON_CACHE=$HOME/.cache/electron
 export ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
+```
+
+#### If you are using Powershell:
+If you are using Powershell make sure you set the following env vars
+```
+$env:CI = $true
+$env:ELECTRON_CACHE = $HOME + '\.cache\electron'
+$env:ELECTRON_BUILDER_CACHE = $HOME + '\.cache\electron-builder'
 ```
 
 ### Install dependencies
