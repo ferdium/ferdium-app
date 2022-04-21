@@ -135,7 +135,7 @@ class AppLayout extends Component {
           {isWindows && !isFullScreen && (
             <TitleBar
               menu={window['ferdium'].menu.template}
-              icon="assets/images/logo.svg"
+              icon="assets/images/ferdium-icon.svg"
             />
           )}
           {isMac && !isFullScreen && (

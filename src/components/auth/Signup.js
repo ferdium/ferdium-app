@@ -123,7 +123,7 @@ class Signup extends Component {
             className="franz-form auth__form"
             onSubmit={e => this.submit(e)}
           >
-            <Link to='/auth/welcome'><img src="./assets/images/logo.svg" className="auth__logo" alt="" /></Link>
+            <Link to='/auth/welcome'><img src="./assets/images/ferdium-icon.svg" className="auth__logo" alt="" /></Link>
             <h1>{intl.formatMessage(messages.headline)}</h1>
             <div className="grid__row">
               <Input field={form.$('firstname')} focus />
