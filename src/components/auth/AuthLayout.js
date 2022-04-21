@@ -58,7 +58,7 @@ class AuthLayout extends Component {
         {isWindows && !isFullScreen && (
           <TitleBar
             menu={window['ferdium'].menu.template}
-            icon="assets/images/logo.svg"
+            icon="assets/images/ferdium-icon.svg"
           />
         )}
         <div className="auth">

@@ -99,7 +99,7 @@ class Locked extends Component {
     return (
       <div className="auth__container">
         <form className="franz-form auth__form" onSubmit={e => this.submit(e)}>
-          <img src="./assets/images/logo.svg" className="auth__logo" alt="" />
+          <img src="./assets/images/ferdium-icon.svg" className="auth__logo" alt="" />
           <h1>{intl.formatMessage(messages.headline)}</h1>
 
           {touchIdEnabled && (
