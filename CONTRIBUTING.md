@@ -1,4 +1,4 @@
-# Contributing to Ferdium 5
+# Contributing to Ferdium 6
 
 :tada: First off, thanks for taking the time and your effort to make Ferdium better! :tada:
 
@@ -6,51 +6,55 @@
 
 <!-- TOC depthFrom:2 depthTo:2 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-- [Contributing to Ferdium 5](#contributing-to-ferdium-5)
-  - [Table of contents](#table-of-contents)
-  - [Code of Conduct](#code-of-conduct)
-  - [What should I know before I get started?](#what-should-i-know-before-i-get-started)
-  - [How Can I Contribute?](#how-can-i-contribute)
-  - [Setting up your Development machine](#setting-up-your-development-machine)
-    - [Install System-level dependencies](#install-system-level-dependencies)
-      - [Node.js, npm, pnpm](#nodejs-npm-pnpm)
-      - [Git](#git)
-      - [Debian/Ubuntu](#debianubuntu)
-      - [Fedora](#fedora)
-      - [Windows](#windows)
-    - [Clone repository with submodule](#clone-repository-with-submodule)
-    - [Local caching of dependencies](#local-caching-of-dependencies)
-    - [Install dependencies](#install-dependencies)
-    - [Fix native modules to match current electron node version](#fix-native-modules-to-match-current-electron-node-version)
-    - [Package recipe repository](#package-recipe-repository)
-    - [Using Docker to build a linux-targetted packaged app](#using-docker-to-build-a-linux-targetted-packaged-app)
-    - [Code Signing on a mac](#code-signing-on-a-mac)
-    - [Start development app](#start-development-app)
-    - [Styleguide](#styleguide)
-      - [Git Commit Messages format](#git-commit-messages-format)
-      - [Javascript Coding style-checker](#javascript-coding-style-checker)
-  - [Packaging](#packaging)
-  - [Release](#release)
-    - [Nightly releases](#nightly-releases)
-    - [Updating the code after a hiatus](#updating-the-code-after-a-hiatus)
+- [Table of contents](#table-of-contents)
+- [Code of Conduct](#code-of-conduct)
+- [What should I know before I get started?](#what-should-i-know-before-i-get-started)
+- [How can I contribute?](#how-can-i-contribute)
+- [Setting up your development machine](#setting-up-your-development-machine)
+  - [Install system-level dependencies](#install-system-level-dependencies)
+    - [Node.js, npm, pnpm](#nodejs-npm-pnpm)
+    - [Git](#git)
+    - [On Debian/Ubuntu](#on-debianubuntu)
+    - [On Fedora](#on-fedora)
+    - [On Windows](#on-windows)
+  - [Clone repository with submodule](#clone-repository-with-submodule)
+  - [Local caching of dependencies](#local-caching-of-dependencies)
+  - [Install dependencies](#install-dependencies)
+  - [Fix native modules to match current electron node version](#fix-native-modules-to-match-current-electron-node-version)
+  - [Package recipe repository](#package-recipe-repository)
+  - [Using Docker to build a linux-targetted packaged app](#using-docker-to-build-a-linux-targetted-packaged-app)
+  - [Code Signing on a mac](#code-signing-on-a-mac)
+  - [Start development app](#start-development-app)
+  - [Styleguide](#styleguide)
+    - [Git Commit Messages format](#git-commit-messages-format)
+    - [Javascript Coding style-checker](#javascript-coding-style-checker)
+- [Packaging](#packaging)
+- [Release](#release)
+  - [Nightly releases](#nightly-releases)
+  - [Updating the code after a hiatus](#updating-the-code-after-a-hiatus)
 
 <!-- /TOC -->
 
 ## Code of Conduct
 
-This project and everyone participating in it is governed by the [Ferdium Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to [hello@ferdium.org](mailto:hello@ferdium.org).
+This project and everyone participating in it is governed by the [Ferdium Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
+Please report unacceptable behavior to [hello@ferdium.org](mailto:hello@ferdium.org).
 
 ## What should I know before I get started?
 
-For the moment, Ferdium's development is a bit slow but all contributions are highly appreciated. [Check this issue for discussion](https://github.com/ferdium/ferdium-app/issues/956).
+For the moment, Ferdium's development is only starting, aiming at releasing a 6.0.0 version with the rebranded assets and tooling upgrade completed.
+You can join the Discord official chat here : https://discord.com/invite/xpNTzgKmHM.
 
-## How Can I Contribute?
+## How can I contribute?
 
-As a basic rule, before filing issues, feature requests or anything else. Take a look at the issues and check if this has not already been reported by another user. If so, engage in the already existing discussion.
+As a basic rule, before filing issues, feature requests or anything else : take a look at the existing issues and check if this has not already been reported by another user.
+If so, engage in the already existing discussion.
 
-## Setting up your Development machine
+## Setting up your development machine
 
-### Install System-level dependencies
+### Install system-level dependencies
+
+_Note:_ This list can likely get outdated. If so, please refer to the specific version of the [electronuserland builder](https://hub.docker.com/r/electronuserland/builder) that we use in our [Dockerfile](./Dockerfile).
 
 #### Node.js, npm, pnpm
 
@@ -69,32 +73,31 @@ python -v
 3.10.4
 ```
 
-_Note:_ You can choose any package manager to manage multiple versions of `node` and `npm`. For eg, [nvm](https://github.com/nvm-sh/nvm) or [asdf](https://github.com/asdf-vm/asdf).
+_Note:_ You can choose any version manager to manage multiple versions of `node` and `npm`. For eg, [nvm](https://github.com/nvm-sh/nvm) or [asdf](https://github.com/asdf-vm/asdf).
 
 #### Git
 
 The version [2.23.0](https://github.com/git-for-windows/git/releases/tag/v2.23.0.windows.1) for Git is working fine for development. You can then use the console from Git to do the development procedure.
 
-_Note:_ This list can likely get outdated. If so, please refer to the specific version of the [electronuserland builder](https://hub.docker.com/r/electronuserland/builder) that we use in our [Dockerfile](./Dockerfile).
-
-#### Debian/Ubuntu
+#### On Debian/Ubuntu
 
 ```bash
 apt-get update -y && apt-get install --no-install-recommends -y rpm ruby gem && gem install fpm --no-ri --no-rdoc --no-document
 ```
 
-#### Fedora
+#### On Fedora
 
 ```bash
 dnf install libX11-devel libXext-devel libXScrnSaver-devel libxkbfile-devel rpm
 ```
 
-#### Windows
+#### On Windows
 
 Please make sure you have the following installed:
 
 - Python 3 or higher (we recommend the latest version: [3.10.4](https://www.python.org/ftp/python/3.10.4/python-3.10.4-amd64.exe))
 - Microsoft Visual Studio Build Tools (2019 or higher) - Only tested with 2019 so far.
+
 ### Clone repository with submodule
 
 ```bash
@@ -103,20 +106,18 @@ cd ferdium
 git submodule update --init --recursive --remote --rebase --force
 ```
 
-It is important you execute the last command to get the required submodules (recipes).
+It is important you execute the last command to get the required submodule (ferdium-recipes).
 
 ### Local caching of dependencies
 
 Set these env vars into your profile (or if you use [direnv](https://direnv.net/), you can manage them via the respective `.envrc` file)
 
 ```bash
+# On bash or equivalent
 export ELECTRON_CACHE=$HOME/.cache/electron
 export ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
-```
 
-#### If you are using Powershell:
-If you are using Powershell make sure you set the following env vars
-```
+# On Powershell
 $env:CI = $true
 $env:ELECTRON_CACHE = $HOME + '\.cache\electron'
 $env:ELECTRON_BUILDER_CACHE = $HOME + '\.cache\electron-builder'
@@ -127,7 +128,7 @@ $env:ELECTRON_BUILDER_CACHE = $HOME + '\.cache\electron-builder'
 Run the following command to install all dependencies, and link sibling modules with Ferdium.
 
 ```bash
-npm i
+npm install
 ```
 
 If you encounter the `gyp: No Xcode or CLT version` error on macOS at this step, please have a look [here](https://medium.com/flawless-app-stories/gyp-no-xcode-or-clt-version-detected-macos-catalina-anansewaa-38b536389e8d).
@@ -143,7 +144,7 @@ npm run build
 Ferdium requires its recipes to be packaged before it can use it. When running Ferdium as a development instance, you'll need to package the local recipes before you can create any services inside Ferdium.
 
 ```bash
-cd recipes && pnpm i && pnpm run package
+cd recipes && pnpm install && pnpm run package
 ```
 
 ### Using Docker to build a linux-targetted packaged app
