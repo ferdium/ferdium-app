@@ -33,6 +33,7 @@
     "manage-translations": "npm run extract && npm run compile && rimraf temp.json",
     "prebuild": "preval-build-info-cli && gulp build",
     "build": "electron-builder",
+    "build:unix": "./scripts/build-unix.sh",
     "contributors": "all-contributors",
     "reformat-files": "./node_modules/.bin/prettier --ignore-path .eslintignore --write --require-pragma \"**/*.{js,jsx,scss}\"",
     "update-submodules": "git submodule update --init --recursive --remote --rebase --force",

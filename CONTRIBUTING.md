@@ -218,6 +218,10 @@ Note: please prefer [`debug()`](https://github.com/visionmedia/debug) over `cons
 ## Packaging
 
 ```bash
+# On Unix
+npm run build:unix
+
+# On Windows
 npm run build
 ```
 
