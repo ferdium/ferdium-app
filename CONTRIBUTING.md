@@ -220,10 +220,10 @@ Note: please prefer [`debug()`](https://github.com/visionmedia/debug) over `cons
 
 ```bash
 # On Unix
-npm run build:unix
+./scripts/build-unix.sh
 
 # On Windows
-npm run build
+.\scripts\build-windows.ps1 
 ```
 
 Assets will be available in the `out` folder.
