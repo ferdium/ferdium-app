@@ -12,13 +12,13 @@ set -e
 
 export CI=true
 
-EXPECTED_NODE_VERSION=`cat .nvmrc`
-ACTUAL_NODE_VERSION=`node -v`
-if [ "v$EXPECTED_NODE_VERSION" != $ACTUAL_NODE_VERSION ]; then
+EXPECTED_NODE_VERSION=$(cat .nvmrc)
+ACTUAL_NODE_VERSION=$(node -v)
+if [ "v$EXPECTED_NODE_VERSION" != "$ACTUAL_NODE_VERSION" ]; then
   echo "You are not running the expected version of node!"
   echo "  expected: [v$EXPECTED_NODE_VERSION]"
   echo "  actual  : [$ACTUAL_NODE_VERSION]"
-  exit -1
+  exit 1
 fi
 
 # If you are moving to a new version of node or any other system dependency, then cleaning is recommended so that there's no irregular results due to cached modules
@@ -37,7 +37,7 @@ else
 fi
 
 # If 'asdf' is installed, reshim for new nodejs if necessary
-type asdf &> /dev/null 2>&1 && asdf reshim nodejs
+type asdf &>/dev/null 2>&1 && asdf reshim nodejs
 
 # Ensure that the system dependencies are at the correct version
 npm i -gf npm@8.7.0
@@ -45,7 +45,7 @@ npm i -gf pnpm@6.32.8
 # npm i -gf node-gyp@9.0.0
 
 # If 'asdf' is installed, reshim for new nodejs if necessary
-type asdf &> /dev/null 2>&1 && asdf reshim nodejs
+type asdf &>/dev/null 2>&1 && asdf reshim nodejs
 
 # This is useful if we move from 'npm' to 'pnpm' for the main repo as well
 if [[ -s 'pnpm-lock.yaml' ]]; then
@@ -60,10 +60,10 @@ fi
 $BASE_CMD i
 $BASE_CMD run prepare-code
 
-# Check if the 'recipes' folder is present either as a git submodule or a symbolic link
-if [ `ls -l recipes/* | wc -l` -lt 3 ]; then
+# Check if the 'recipes' folder is present either as a git submodule or a symbolic link (package.json is present in recipes folder)
+if ! [ -f "recipes/package.json" ]; then
   echo "FAILING since 'recipes' folder/submodule has not been checked out"
-  exit -1
+  exit 1
 fi
 
 # This log statement is only to remind me which 'recipes' folder I am using (symlink or git submodule)
@@ -76,9 +76,8 @@ fi
 cd recipes && pnpm i && pnpm run package && cd ..
 
 # Since I am building on a mac, and only interested in the Ferdium.app artefact....
-arch=`uname -m`
-if [[ $arch =~ "arm" ]]
-then
+arch=$(uname -m)
+if [[ $arch =~ "arm" ]]; then
   TARGET_ARCH=arm64
 else
   TARGET_ARCH=x64
