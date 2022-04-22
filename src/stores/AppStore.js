@@ -29,8 +29,7 @@ import {
 import { openExternalUrl } from '../helpers/url-helpers';
 import { sleep } from '../helpers/async-helpers';
 
-// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
-// const debug = require('debug')('Ferdium:AppStore');
+const debug = require('debug')('Ferdium:AppStore');
 
 const mainWindow = getCurrentWindow();
 
@@ -196,7 +195,7 @@ export default class AppStore extends Store {
 
     // Handle deep linking (ferdium://)
     ipcRenderer.on('navigateFromDeepLink', (event, data) => {
-      console.log('Navigate from deep link', data);
+      debug('Navigate from deep link', data);
       let { url } = data;
       if (!url) return;
 
@@ -218,28 +217,28 @@ export default class AppStore extends Store {
     this.isSystemDarkModeEnabled = nativeTheme.shouldUseDarkColors;
 
     ipcRenderer.on('isWindowFocused', (event, isFocused) => {
-      console.log('Setting is focused to', isFocused);
+      debug('Setting is focused to', isFocused);
       this.isFocused = isFocused;
     });
 
     powerMonitor.on('suspend', () => {
-      console.log('System suspended starting timer');
+      debug('System suspended starting timer');
 
       this.timeSuspensionStart = moment();
     });
 
     powerMonitor.on('resume', () => {
-      console.log('System resumed, last suspended on', this.timeSuspensionStart);
+      debug('System resumed, last suspended on', this.timeSuspensionStart);
       this.actions.service.resetLastPollTimer();
 
       if (
         this.timeSuspensionStart.add(10, 'm').isBefore(moment()) &&
         this.stores.settings.app.get('reloadAfterResume')
       ) {
-        console.log('Reloading services, user info and features');
+        debug('Reloading services, user info and features');
 
         setInterval(() => {
-          console.log('Reload app interval is starting');
+          debug('Reload app interval is starting');
           if (this.isOnline) {
             window.location.reload();
           }
@@ -251,7 +250,7 @@ export default class AppStore extends Store {
     // notifications got stuck after upgrade but forcing a notification
     // via `new Notification` triggered the permission request
     if (isMac && !localStorage.getItem(CATALINA_NOTIFICATION_HACK_KEY)) {
-      console.log('Triggering macOS Catalina notification permission trigger');
+      debug('Triggering macOS Catalina notification permission trigger');
       // eslint-disable-next-line no-new
       new window.Notification('Welcome to Ferdium 5', {
         body: 'Have a wonderful day & happy messaging.',
@@ -320,7 +319,7 @@ export default class AppStore extends Store {
 
     const notification = new window.Notification(title, options);
 
-    console.log('New notification', title, options);
+    debug('New notification', title, options);
 
     notification.addEventListener('click', () => {
       if (serviceId) {
@@ -342,7 +341,7 @@ export default class AppStore extends Store {
         }
         mainWindow.focus();
 
-        console.log('Notification click handler');
+        debug('Notification click handler');
       }
     });
   }
@@ -371,10 +370,10 @@ export default class AppStore extends Store {
 
     try {
       if (enable) {
-        console.log('enabling launch on startup', executablePath);
+        debug('enabling launch on startup', executablePath);
         autoLauncher.enable();
       } else {
-        console.log('disabling launch on startup');
+        debug('disabling launch on startup');
         autoLauncher.disable();
       }
     } catch (error) {
@@ -389,7 +388,7 @@ export default class AppStore extends Store {
 
   @action _checkForUpdates() {
     if (this.isOnline && this.stores.settings.app.automaticUpdates && (isMac || isWindows || process.env.APPIMAGE)) {
-      console.log('_checkForUpdates: sending event to autoUpdate:check');
+      debug('_checkForUpdates: sending event to autoUpdate:check');
       this.updateStatus = this.updateStatusTypes.CHECKING;
       ipcRenderer.send('autoUpdate', {
         action: 'check',
@@ -402,7 +401,7 @@ export default class AppStore extends Store {
   }
 
   @action _installUpdate() {
-    console.log('_installUpdate: sending event to autoUpdate:install');
+    debug('_installUpdate: sending event to autoUpdate:install');
     ipcRenderer.send('autoUpdate', {
       action: 'install',
     });
@@ -488,7 +487,7 @@ export default class AppStore extends Store {
     }
 
     moment.locale(this.locale);
-    console.log(`Set locale to "${this.locale}"`);
+    debug(`Set locale to "${this.locale}"`);
   }
 
   _getDefaultLocale() {
@@ -542,7 +541,7 @@ export default class AppStore extends Store {
     this.autoLaunchOnStart = await this._checkAutoStart();
 
     if (this.stores.settings.all.stats.appStarts === 1) {
-      console.log('Set app to launch on start');
+      debug('Set app to launch on start');
       this.actions.app.launchOnStartup({
         enable: true,
       });
@@ -554,9 +553,9 @@ export default class AppStore extends Store {
   }
 
   async _systemDND() {
-    console.log('Checking if Do Not Disturb Mode is on');
+    debug('Checking if Do Not Disturb Mode is on');
     const dnd = await ipcRenderer.invoke('get-dnd');
-    console.log('Do not disturb mode is', dnd);
+    debug('Do not disturb mode is', dnd);
     if (
       dnd !== this.stores.settings.all.app.isAppMuted &&
       !this.isSystemMuteOverridden

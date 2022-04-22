@@ -10,8 +10,7 @@ import Store from './lib/Store';
 import Request from './lib/Request';
 import CachedRequest from './lib/CachedRequest';
 
-// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
-// const debug = require('debug')('Ferdium:UserStore');
+const debug = require('debug')('Ferdium:UserStore');
 
 // TODO: split stores into UserStore and AuthStore
 export default class UserStore extends Store {
@@ -395,7 +394,7 @@ export default class UserStore extends Store {
     }
 
     if (!this.data.locale) {
-      console.log('Migrate "locale" to user data');
+      debug('Migrate "locale" to user data');
       this.actions.user.update({
         userData: {
           locale: this.stores.app.locale,

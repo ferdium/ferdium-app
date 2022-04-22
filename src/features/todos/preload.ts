@@ -1,10 +1,9 @@
 import { ipcRenderer } from 'electron';
 import { IPC } from './constants';
 
-// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
-// const debug = require('debug')('Ferdium:feature:todos:preload');
+const debug = require('debug')('Ferdium:feature:todos:preload');
 
-console.log('Preloading Todos Webview');
+debug('Preloading Todos Webview');
 
 let hostMessageListener = ({ action }) => {
   switch (action) {
@@ -28,7 +27,7 @@ window['ferdium'] = {
 };
 
 ipcRenderer.on(IPC.TODOS_HOST_CHANNEL, (event, message) => {
-  console.log('Received host message', event, message);
+  debug('Received host message', event, message);
   hostMessageListener(message);
 });
 

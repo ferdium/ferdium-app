@@ -8,8 +8,7 @@ import Request from './lib/Request';
 import { matchRoute } from '../helpers/routing-helpers';
 import { asarRecipesPath } from '../helpers/asar-helpers';
 
-// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
-// const debug = require('debug')('Ferdium:RecipeStore');
+const debug = require('debug')('Ferdium:RecipeStore');
 
 export default class RecipesStore extends Store {
   @observable allRecipesRequest = new CachedRequest(this.api.recipes, 'all');
@@ -48,7 +47,7 @@ export default class RecipesStore extends Store {
         return activeRecipe;
       }
 
-      console.log(`Recipe ${match.id} not installed`);
+      debug(`Recipe ${match.id} not installed`);
     }
 
     return null;
@@ -79,7 +78,7 @@ export default class RecipesStore extends Store {
     const recipes = {};
 
     // Hackfix, reference this.all to fetch services
-    console.log(`Check Recipe updates for ${this.all.map(recipe => recipe.id)}`);
+    debug(`Check Recipe updates for ${this.all.map(recipe => recipe.id)}`);
 
     for (const r of recipeIds) {
       const recipe = this.one(r);
@@ -108,7 +107,7 @@ export default class RecipesStore extends Store {
     }
 
     const updates = [...remoteUpdates, ...localUpdates];
-    console.log(
+    debug(
       'Got update information (local, remote):',
       localUpdates,
       remoteUpdates,
@@ -146,7 +145,7 @@ export default class RecipesStore extends Store {
 
       if (!this.stores.recipes.isInstalled(recipeId)) {
         router.push('/settings/recipes');
-        console.log(`Recipe ${recipeId} is not installed, trying to install it`);
+        debug(`Recipe ${recipeId} is not installed, trying to install it`);
 
         const recipe = await this.installRecipeRequest.execute(recipeId)
           ._promise;

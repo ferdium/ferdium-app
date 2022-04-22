@@ -4,15 +4,14 @@ import fastFolderSize from 'fast-folder-size';
 
 import { getServicePartitionsDirectory } from '../../helpers/service-helpers';
 
-// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
-// const debug = require('debug')('Ferdium:LocalApi');
+const debug = require('debug')('Ferdium:LocalApi');
 
 export default class LocalApi {
   // Settings
   getAppSettings(type: string) {
     return new Promise(resolve => {
       ipcRenderer.once('appSettings', (_event, resp) => {
-        console.log('LocalApi::getAppSettings resolves', resp.type, resp.data);
+        debug('LocalApi::getAppSettings resolves', resp.type, resp.data);
         resolve(resp);
       });
 
@@ -21,7 +20,7 @@ export default class LocalApi {
   }
 
   async updateAppSettings(type: string, data: any) {
-    console.log('LocalApi::updateAppSettings resolves', type, data);
+    debug('LocalApi::updateAppSettings resolves', type, data);
     ipcRenderer.send('updateAppSettings', {
       type,
       data,
@@ -40,7 +39,7 @@ export default class LocalApi {
             reject(err);
           }
 
-          console.log('LocalApi::getAppCacheSize resolves', bytes);
+          debug('LocalApi::getAppCacheSize resolves', bytes);
           resolve(bytes);
         },
       );

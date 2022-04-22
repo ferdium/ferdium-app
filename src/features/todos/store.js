@@ -18,8 +18,7 @@ import { createActionBindings } from '../utils/ActionBinding';
 import { IPC, TODOS_ROUTES } from './constants';
 import UserAgent from '../../models/UserAgent';
 
-// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
-// const debug = require('debug')('Ferdium:feature:todos:store');
+const debug = require('debug')('Ferdium:feature:todos:store');
 
 export default class TodoStore extends FeatureStore {
   @observable stores = null;
@@ -97,7 +96,7 @@ export default class TodoStore extends FeatureStore {
   // ========== PUBLIC API ========= //
 
   @action start(stores, actions) {
-    console.log('TodoStore::start');
+    debug('TodoStore::start');
     this.stores = stores;
     this.actions = actions;
 
@@ -134,7 +133,7 @@ export default class TodoStore extends FeatureStore {
 
   @action stop() {
     super.stop();
-    console.log('TodoStore::stop');
+    debug('TodoStore::stop');
     this.reset();
     this.isFeatureActive = false;
   }
@@ -163,7 +162,7 @@ export default class TodoStore extends FeatureStore {
   };
 
   @action _setTodosWebview = ({ webview }) => {
-    console.log('_setTodosWebview', webview);
+    debug('_setTodosWebview', webview);
     if (this.webview !== webview) {
       this.webview = webview;
       this.userAgentModel.setWebviewReference(webview);
@@ -171,14 +170,14 @@ export default class TodoStore extends FeatureStore {
   };
 
   @action _handleHostMessage = message => {
-    console.log('_handleHostMessage', message);
+    debug('_handleHostMessage', message);
     if (message.action === 'todos:create') {
       this.webview.send(IPC.TODOS_HOST_CHANNEL, message);
     }
   };
 
   @action _handleClientMessage = ({ channel, message = {} }) => {
-    console.log('_handleClientMessage', channel, message);
+    debug('_handleClientMessage', channel, message);
     switch (message.action) {
       case 'todos:initialized':
         this._onTodosClientInitialized();
@@ -187,7 +186,7 @@ export default class TodoStore extends FeatureStore {
         this._goToService(message.data);
         break;
       default:
-        console.log('Other message received', channel, message);
+        debug('Other message received', channel, message);
         if (this.stores.services.isTodosServiceAdded) {
           this.actions.service.handleIPCMessage({
             serviceId: this.stores.services.isTodosServiceAdded.id,
@@ -203,7 +202,7 @@ export default class TodoStore extends FeatureStore {
   };
 
   @action _toggleTodosFeatureVisibility = () => {
-    console.log('_toggleTodosFeatureVisibility');
+    debug('_toggleTodosFeatureVisibility');
 
     this._updateSettings({
       isFeatureEnabledByUser: !this.settings.isFeatureEnabledByUser,
@@ -211,14 +210,14 @@ export default class TodoStore extends FeatureStore {
   };
 
   _openDevTools = () => {
-    console.log('_openDevTools');
+    debug('_openDevTools');
 
     const webview = document.querySelector('#todos-panel webview');
     if (webview) webview.openDevTools();
   };
 
   _reload = () => {
-    console.log('_reload');
+    debug('_reload');
 
     const webview = document.querySelector('#todos-panel webview');
     if (webview) webview.reload();
@@ -286,7 +285,7 @@ export default class TodoStore extends FeatureStore {
     const { pathname } = this.stores.router.location;
 
     if (pathname === TODOS_ROUTES.TARGET) {
-      console.log('Router is on todos route, show todos panel');
+      debug('Router is on todos route, show todos panel');
       // todosStore.start(stores, actions);
       this.stores.router.push('/');
 

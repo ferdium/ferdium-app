@@ -1,7 +1,6 @@
 import { ipcRenderer } from 'electron';
 
-// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
-// const debug = require('debug')('Ferdium:Plugin:BadgeHandler');
+const debug = require('debug')('Ferdium:Plugin:BadgeHandler');
 
 export class BadgeHandler {
   // TODO: Need to extract this into a utility class and reuse outside of the recipes
@@ -27,7 +26,7 @@ export class BadgeHandler {
       indirect: this.safeParseInt(indirect),
     };
 
-    console.log('Sending badge count to host: %j', count);
+    debug('Sending badge count to host: %j', count);
     ipcRenderer.sendToHost('message-counts', count);
   }
 }

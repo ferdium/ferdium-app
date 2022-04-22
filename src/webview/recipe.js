@@ -50,8 +50,7 @@ import {
 
 import { DEFAULT_APP_SETTINGS } from '../config';
 
-// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
-// const debug = require('debug')('Ferdium:Plugin');
+const debug = require('debug')('Ferdium:Plugin');
 
 const badgeHandler = new BadgeHandler();
 
@@ -65,7 +64,7 @@ const notificationsHandler = new NotificationsHandler();
 const originalWindowOpen = window.open;
 
 window.open = (url, frameName, features) => {
-  console.log('window.open', url, frameName, features);
+  debug('window.open', url, frameName, features);
   if (!url) {
     // The service hasn't yet supplied a URL (as used in Skype).
     // Return a new dummy window object and wait for the service to change the properties
@@ -171,12 +170,12 @@ class RecipeController {
   async initialize() {
     for (const channel of Object.keys(this.ipcEvents)) {
       ipcRenderer.on(channel, (...args) => {
-        console.log('Received IPC event for channel', channel, 'with', ...args);
+        debug('Received IPC event for channel', channel, 'with', ...args);
         this[this.ipcEvents[channel]](...args);
       });
     }
 
-    console.log('Send "hello" to host');
+    debug('Send "hello" to host');
     setTimeout(() => ipcRenderer.sendToHost('hello'), 100);
 
     this.spellcheckingProvider = null;
@@ -199,9 +198,9 @@ class RecipeController {
   }
 
   loadRecipeModule(event, config, recipe) {
-    console.log('loadRecipeModule');
+    debug('loadRecipeModule');
     const modulePath = join(recipe.path, 'webview.js');
-    console.log('module path', modulePath);
+    debug('module path', modulePath);
     // Delete module from cache
     delete require.cache[require.resolve(modulePath)];
     try {
@@ -214,7 +213,7 @@ class RecipeController {
       if (existsSync(modulePath)) {
         // eslint-disable-next-line import/no-dynamic-require
         require(modulePath)(this.recipe, { ...config, recipe });
-        console.log('Initialize Recipe', config, recipe);
+        debug('Initialize Recipe', config, recipe);
       }
 
       this.settings.service = Object.assign(config, { recipe });
@@ -266,18 +265,18 @@ class RecipeController {
   }
 
   update() {
-    console.log('enableSpellchecking', this.settings.app.enableSpellchecking);
-    console.log('isDarkModeEnabled', this.settings.service.isDarkModeEnabled);
-    console.log(
+    debug('enableSpellchecking', this.settings.app.enableSpellchecking);
+    debug('isDarkModeEnabled', this.settings.service.isDarkModeEnabled);
+    debug(
       'System spellcheckerLanguage',
       this.settings.app.spellcheckerLanguage,
     );
-    console.log(
+    debug(
       'Service spellcheckerLanguage',
       this.settings.service.spellcheckerLanguage,
     );
-    console.log('darkReaderSettigs', this.settings.service.darkReaderSettings);
-    console.log('searchEngine', this.settings.app.searchEngine);
+    debug('darkReaderSettigs', this.settings.service.darkReaderSettings);
+    debug('searchEngine', this.settings.app.searchEngine);
 
     if (this.userscript && this.userscript.internal_setSettings) {
       this.userscript.internal_setSettings(this.settings);
@@ -285,10 +284,10 @@ class RecipeController {
 
     if (this.settings.app.enableSpellchecking) {
       let { spellcheckerLanguage } = this;
-      console.log(`Setting spellchecker language to ${spellcheckerLanguage}`);
+      debug(`Setting spellchecker language to ${spellcheckerLanguage}`);
       if (spellcheckerLanguage.includes('automatic')) {
         this.automaticLanguageDetection();
-        console.log(
+        debug(
           'Found `automatic` locale, falling back to user locale until detected',
           this.settings.app.locale,
         );
@@ -296,14 +295,14 @@ class RecipeController {
       }
       switchDict(spellcheckerLanguage, this.settings.service.id);
     } else {
-      console.log('Disable spellchecker');
+      debug('Disable spellchecker');
     }
 
     if (!this.recipe) {
       this.hasUpdatedBeforeRecipeLoaded = true;
     }
 
-    console.log(
+    debug(
       'Darkmode enabled?',
       this.settings.service.isDarkModeEnabled,
       'Dark theme active?',
@@ -323,11 +322,11 @@ class RecipeController {
       this.settings.service.isDarkModeEnabled &&
       this.settings.app.isDarkThemeActive !== false
     ) {
-      console.log('Enable dark mode');
+      debug('Enable dark mode');
 
       // Check if recipe has a custom dark mode handler
       if (this.recipe && this.recipe.darkModeHandler) {
-        console.log('Using custom dark mode handler');
+        debug('Using custom dark mode handler');
 
         // Remove other dark mode styles if they were already loaded
         if (this.hasUpdatedBeforeRecipeLoaded) {
@@ -338,7 +337,7 @@ class RecipeController {
 
         this.recipe.darkModeHandler(true, handlerConfig);
       } else if (darkModeStyleExists(this.settings.service.recipe.path)) {
-        console.log('Injecting darkmode from recipe');
+        debug('Injecting darkmode from recipe');
         injectDarkModeStyle(this.settings.service.recipe.path);
 
         // Make sure universal dark mode is disabled
@@ -348,7 +347,7 @@ class RecipeController {
         this.settings.app.universalDarkMode &&
         !ignoreList.includes(window.location.host)
       ) {
-        console.log('Injecting Dark Reader');
+        debug('Injecting Dark Reader');
 
         // Use Dark Reader instead
         const { brightness, contrast, sepia } =
@@ -362,8 +361,8 @@ class RecipeController {
         this.universalDarkModeInjected = true;
       }
     } else {
-      console.log('Remove dark mode');
-      console.log('DarkMode disabled - removing remaining styles');
+      debug('Remove dark mode');
+      debug('DarkMode disabled - removing remaining styles');
 
       if (this.recipe && this.recipe.darkModeHandler) {
         // Remove other dark mode styles if they were already loaded
@@ -375,10 +374,10 @@ class RecipeController {
 
         this.recipe.darkModeHandler(false, handlerConfig);
       } else if (isDarkModeStyleInjected()) {
-        console.log('Removing injected darkmode from recipe');
+        debug('Removing injected darkmode from recipe');
         removeDarkModeStyle();
       } else {
-        console.log('Removing Dark Reader');
+        debug('Removing Dark Reader');
 
         disableDarkMode();
         this.universalDarkModeInjected = false;
@@ -406,7 +405,7 @@ class RecipeController {
   }
 
   serviceIdEcho(event) {
-    console.log('Received a service echo ping');
+    debug('Received a service echo ping');
     event.sender.send('service-id', this.settings.service.id);
   }
 
@@ -428,7 +427,7 @@ class RecipeController {
         // Force a minimum length to get better detection results
         if (value.length < 25) return;
 
-        console.log('Detecting language for', value);
+        debug('Detecting language for', value);
         const locale = await ipcRenderer.invoke('detect-language', {
           sample: value,
         });
@@ -438,7 +437,7 @@ class RecipeController {
 
         const spellcheckerLocale =
           getSpellcheckerLocaleByFuzzyIdentifier(locale);
-        console.log(
+        debug(
           'Language detected reliably, setting spellchecker language to',
           spellcheckerLocale,
         );
