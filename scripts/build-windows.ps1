@@ -50,7 +50,7 @@ Test-CommandExists python "Python is not installed"
 $EXPECTED_NODE_VERSION = (cat .nvmrc)
 $ACTUAL_NODE_VERSION = (node -v)
 
-if ( "v$EXPECTED_NODE_VERSION" -ne $ACTUAL_NODE_VERSION) {
+if ("v$EXPECTED_NODE_VERSION" -ne $ACTUAL_NODE_VERSION) {
   fail_with_docs "You are not running the expected version of node!
    expected: [v$EXPECTED_NODE_VERSION]
    actual  : [$ACTUAL_NODE_VERSION]"
@@ -60,7 +60,7 @@ if ( "v$EXPECTED_NODE_VERSION" -ne $ACTUAL_NODE_VERSION) {
 $EXPECTED_NPM_VERSION = (Get-Content package.json | ConvertFrom-Json).engines.npm 
 $ACTUAL_NPM_VERSION = (npm -v)
 
-if ( $EXPECTED_NPM_VERSION -ne $ACTUAL_NPM_VERSION) {
+if ($EXPECTED_NPM_VERSION -ne $ACTUAL_NPM_VERSION) {
   Write-Host "You are not running the expected version of npm!
    expected: [$EXPECTED_NPM_VERSION]
    actual  : [$ACTUAL_NPM_VERSION]"
@@ -120,7 +120,7 @@ if ( $env:CLEAN -eq "true" )
 }
 
 # Ensure that the system dependencies are at the correct version
-npm i -gf npm@8.7.0
+npm i -gf npm@$EXPECTED_NPM_VERSION
 npm i -gf pnpm@6.32.8
 
 # This is useful if we move from 'npm' to 'pnpm' for the main repo as well
