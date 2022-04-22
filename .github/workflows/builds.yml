@@ -23,10 +23,10 @@ on:
   workflow_dispatch:
     inputs:
       message:
-        description: 'Message for build'
+        description: "Message for build"
         required: true
   schedule:
-    - cron: '15 0 * * *' # every night at 12:15 am (to allow for dependency builds to complete)
+    - cron: "15 0 * * *" # every night at 12:15 am (to allow for dependency builds to complete)
 
 env:
   USE_HARD_LINKS: false
@@ -35,7 +35,7 @@ env:
 jobs:
   check_updates:
     runs-on: ubuntu-latest
-    name: 'Check latest commit: ${{ github.event.inputs.message }}'
+    name: "Check latest commit: ${{ github.event.inputs.message }}"
     outputs:
       should_run: ${{ steps.should_run.outputs.should_run }}
     steps:
@@ -51,7 +51,7 @@ jobs:
         uses: actions/setup-node@v3
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
       - id: should_run
         name: Check whether there are any commits since this run was last triggered and push them and/or set the output
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
@@ -93,7 +93,7 @@ jobs:
           fi
 
   build_mac:
-    name: 'macos ${{ github.event.inputs.message }}'
+    name: "macos ${{ github.event.inputs.message }}"
     needs: check_updates
     if: ${{ (needs.check_updates.outputs.should_run != 'false') && (github.event_name != 'workflow_dispatch' || (github.event_name == 'workflow_dispatch' && (contains(github.event.inputs.message, '[macOS]') || (!contains(github.event.inputs.message, '[macOS]') && !contains(github.event.inputs.message, '[Linux]') && !contains(github.event.inputs.message, '[Windows]'))))) }}
     runs-on: macos-latest
@@ -136,13 +136,11 @@ jobs:
       - name: Use Node.js specified in the '.nvmrc' file
         uses: actions/setup-node@v3
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
       - name: Install npm
-        run: npm i -gf npm@8.7.0
+        run: npm i -gf "npm@$(jq --raw-output .engines.npm <"package.json")" && npm -v
       - name: Install pnpm
-        uses: pnpm/action-setup@v2.0.1
-        with:
-          version: 6.32.8
+        run: npm i -gf "pnpm@$(jq --raw-output .engines.pnpm <"./recipes/package.json")" && pnpm -v
       - name: Install node dependencies
         run: npm i
       - name: Package recipes
@@ -180,7 +178,7 @@ jobs:
           # CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
 
   build_linux:
-    name: 'ubuntu ${{ github.event.inputs.message }}'
+    name: "ubuntu ${{ github.event.inputs.message }}"
     needs: check_updates
     if: ${{ (needs.check_updates.outputs.should_run != 'false') && (github.event_name != 'workflow_dispatch' || (github.event_name == 'workflow_dispatch' && (contains(github.event.inputs.message, '[Linux]') || (!contains(github.event.inputs.message, '[macOS]') && !contains(github.event.inputs.message, '[Linux]') && !contains(github.event.inputs.message, '[Windows]'))))) }}
     runs-on: ubuntu-20.04
@@ -223,13 +221,11 @@ jobs:
       - name: Use Node.js specified in the '.nvmrc' file
         uses: actions/setup-node@v3
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
       - name: Install npm
-        run: npm i -gf npm@8.7.0
+        run: npm i -gf "npm@$(jq --raw-output .engines.npm <"package.json")" && npm -v
       - name: Install pnpm
-        uses: pnpm/action-setup@v2.0.1
-        with:
-          version: 6.32.8
+        run: npm i -gf "pnpm@$(jq --raw-output .engines.pnpm <"./recipes/package.json")" && pnpm -v
       - name: Install node dependencies
         run: npm i
       - name: Figure out used package.json version
@@ -288,7 +284,7 @@ jobs:
         shell: bash
 
   build_windows:
-    name: 'windows ${{ github.event.inputs.message }}'
+    name: "windows ${{ github.event.inputs.message }}"
     needs: check_updates
     if: ${{ (needs.check_updates.outputs.should_run != 'false') && (github.event_name != 'workflow_dispatch' || (github.event_name == 'workflow_dispatch' && (contains(github.event.inputs.message, '[Windows]') || (!contains(github.event.inputs.message, '[macOS]') && !contains(github.event.inputs.message, '[Linux]') && !contains(github.event.inputs.message, '[Windows]'))))) }}
     runs-on: windows-latest
@@ -315,7 +311,7 @@ jobs:
       - name: Use Node.js specified in the '.nvmrc' file
         uses: actions/setup-node@v3
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
       - name: Install npm
         run: npm i -gf npm@8.7.0
       - name: Install pnpm
