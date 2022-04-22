@@ -256,7 +256,7 @@ jobs:
           # echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
           npm run build -- --publish always -c.publish.provider=github -c.publish.owner=${{ github.repository_owner }}
           # -c.snap.publish.provider=snapStore -c.snap.publish.repo=nightlies -c.snap.publish.channels=edge
-          snapcraft logout
+          # snapcraft logout
         shell: bash
       - name: Build Ferdium with publish for 'release' beta branch
         if: ${{ env.GIT_BRANCH_NAME == 'release' && contains(env.PACKAGE_VERSION, 'beta') }}
