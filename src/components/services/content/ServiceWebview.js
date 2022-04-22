@@ -7,7 +7,8 @@ import { join } from 'path';
 
 import ServiceModel from '../../../models/Service';
 
-const debug = require('debug')('Ferdium:Services');
+// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
+// const debug = require('debug')('Ferdium:Services');
 
 class ServiceWebview extends Component {
   static propTypes = {
@@ -27,7 +28,7 @@ class ServiceWebview extends Component {
       () => {
         if (this.webview && this.webview.view) {
           this.webview.view.addEventListener('console-message', e => {
-            debug('Service logged a message:', e.message);
+            console.log('Service logged a message:', e.message);
           });
           this.webview.view.addEventListener('did-navigate', () => {
             if (this.props.service._webview) {
@@ -50,7 +51,7 @@ class ServiceWebview extends Component {
 
   refocusWebview = () => {
     const { webview } = this;
-    debug('Refocus Webview is called', this.props.service);
+    console.log('Refocus Webview is called', this.props.service);
     if (!webview) return;
     if (this.props.service.isActive) {
       webview.view.blur();
@@ -63,7 +64,7 @@ class ServiceWebview extends Component {
         } ${`- ${this.props.service._webview.getTitle()}`}`;
       }, 100);
     } else {
-      debug('Refocus not required - Not active service');
+      console.log('Refocus not required - Not active service');
     }
   };
 

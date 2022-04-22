@@ -6,11 +6,12 @@ import { dirname } from 'path';
 import { askForScreenCaptureAccess } from 'node-mac-permissions';
 import { userDataPath } from '../environment-remote';
 
-const debug = require('debug')('Ferdium:macOSPermissions');
+// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
+// const debug = require('debug')('Ferdium:macOSPermissions');
 
 const isExplicitScreenCapturePermissionReqd =
   macosVersion.isGreaterThanOrEqualTo('10.15');
-debug(
+console.log(
   `Should check explicitly for screen-capture permissions: ${isExplicitScreenCapturePermissionReqd}`,
 );
 
@@ -21,7 +22,7 @@ function hasPromptedForScreenCapturePermission(): string | boolean {
     return false;
   }
 
-  debug('Checking if status file exists');
+  console.log('Checking if status file exists');
   return filePath && pathExistsSync(filePath);
 }
 
@@ -31,7 +32,7 @@ function hasScreenCapturePermissionAlreadyBeenGranted(): boolean {
   }
 
   const screenCaptureStatus = systemPreferences.getMediaAccessStatus('screen');
-  debug(`screen-capture permissions status: ${screenCaptureStatus}`);
+  console.log(`screen-capture permissions status: ${screenCaptureStatus}`);
   return screenCaptureStatus === 'granted';
 }
 
@@ -49,18 +50,18 @@ function createStatusFile() {
 }
 
 export const askFormacOSPermissions = async (mainWindow: BrowserWindow) => {
-  debug('Checking camera & microphone permissions');
+  console.log('Checking camera & microphone permissions');
   systemPreferences.askForMediaAccess('camera');
   systemPreferences.askForMediaAccess('microphone');
 
   if (hasScreenCapturePermissionAlreadyBeenGranted()) {
-    debug('Already obtained screen-capture permissions - writing status file');
+    console.log('Already obtained screen-capture permissions - writing status file');
     createStatusFile();
     return;
   }
 
   if (!hasPromptedForScreenCapturePermission()) {
-    debug('Checking screen capture permissions');
+    console.log('Checking screen capture permissions');
 
     const { response } = await dialog.showMessageBox(mainWindow, {
       type: 'info',
@@ -73,11 +74,11 @@ export const askFormacOSPermissions = async (mainWindow: BrowserWindow) => {
     });
 
     if (response === 0) {
-      debug('Asking for access');
+      console.log('Asking for access');
       askForScreenCaptureAccess();
       createStatusFile();
     } else if (response === 1) {
-      debug("Don't ask again");
+      console.log("Don't ask again");
       createStatusFile();
     }
   }

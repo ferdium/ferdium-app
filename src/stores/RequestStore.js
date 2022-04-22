@@ -4,7 +4,8 @@ import ms from 'ms';
 
 import Store from './lib/Store';
 
-const debug = require('debug')('Ferdium:RequestsStore');
+// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
+// const debug = require('debug')('Ferdium:RequestsStore');
 
 export default class RequestStore extends Store {
   @observable userInfoRequest;
@@ -65,7 +66,7 @@ export default class RequestStore extends Store {
         }
 
         this._autoRetry();
-        debug(`Retry required requests delayed in ${delay / 1000}s`);
+        console.log(`Retry required requests delayed in ${delay / 1000}s`);
       }, delay);
     }
   }

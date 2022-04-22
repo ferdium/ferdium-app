@@ -2,7 +2,8 @@ import { ipcRenderer } from 'electron';
 import { BrowserWindow } from '@electron/remote';
 import { pathExistsSync, readFileSync, existsSync } from 'fs-extra';
 
-const debug = require('debug')('Ferdium:Plugin:RecipeWebview');
+// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
+// const debug = require('debug')('Ferdium:Plugin:RecipeWebview');
 
 class RecipeWebview {
   badgeHandler: any;
@@ -27,7 +28,7 @@ class RecipeWebview {
     ipcRenderer.on('poll', () => {
       this.loopFunc();
 
-      debug('Poll event');
+      console.log('Poll event');
 
       // This event is for checking if the service recipe is still actively
       // communicating with the client
@@ -109,7 +110,7 @@ class RecipeWebview {
 
         if (head) {
           head.append(styles);
-          debug('Append styles', styles);
+          console.log('Append styles', styles);
         }
       }
     });
@@ -121,13 +122,13 @@ class RecipeWebview {
         if (existsSync(file)) {
           return readFileSync(file, 'utf8');
         }
-        debug('Script not found', file);
+        console.log('Script not found', file);
         return null;
       }),
     ).then(scripts => {
       const scriptsFound = scripts.filter(script => script !== null);
       if (scriptsFound.length > 0) {
-        debug('Inject scripts to main world', scriptsFound);
+        console.log('Inject scripts to main world', scriptsFound);
         ipcRenderer.sendToHost('inject-js-unsafe', ...scriptsFound);
       }
     });

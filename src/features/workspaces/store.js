@@ -15,7 +15,8 @@ import { createActionBindings } from '../utils/ActionBinding';
 
 import { KEEP_WS_LOADED_USID } from '../../config';
 
-const debug = require('debug')('Ferdium:feature:workspaces:store');
+// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
+// const debug = require('debug')('Ferdium:feature:workspaces:store');
 
 export default class WorkspacesStore extends FeatureStore {
   @observable isFeatureActive = false;
@@ -69,7 +70,7 @@ export default class WorkspacesStore extends FeatureStore {
   // ========== PUBLIC API ========= //
 
   @action start(stores, actions) {
-    debug('WorkspacesStore::start');
+    console.log('WorkspacesStore::start');
     this.stores = stores;
     this.actions = actions;
 
@@ -115,7 +116,7 @@ export default class WorkspacesStore extends FeatureStore {
 
   @action stop() {
     super.stop();
-    debug('WorkspacesStore::stop');
+    console.log('WorkspacesStore::stop');
     this.reset();
     this.isFeatureActive = false;
   }
@@ -273,7 +274,7 @@ export default class WorkspacesStore extends FeatureStore {
   };
 
   _activateLastUsedWorkspaceReaction = () => {
-    debug('_activateLastUsedWorkspaceReaction');
+    console.log('_activateLastUsedWorkspaceReaction');
     if (!this.activeWorkspace && this.userHasWorkspaces) {
       const { lastActiveWorkspace } = this.settings;
       if (lastActiveWorkspace) {

@@ -1,4 +1,5 @@
-const debug = require('debug')('Ferdium:Plugin:SessionHandler');
+// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
+// const debug = require('debug')('Ferdium:Plugin:SessionHandler');
 
 export class SessionHandler {
   async releaseServiceWorkers() {
@@ -7,10 +8,10 @@ export class SessionHandler {
         await window.navigator.serviceWorker.getRegistrations();
       for (const registration of registrations) {
         registration.unregister();
-        debug('ServiceWorker unregistered');
+        console.log('ServiceWorker unregistered');
       }
     } catch (error) {
-      debug(error);
+      console.log(error);
     }
   }
 }
