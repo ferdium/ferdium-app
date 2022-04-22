@@ -31,7 +31,7 @@ import { openPath } from '../../../helpers/url-helpers';
 import globalMessages from '../../../i18n/globalMessages';
 import { Icon } from '../../ui/icon';
 
-const debug = require('debug')('Ferdium:EditSettingsForm');
+const debug = require('../../../preload-safe-debug')('Ferdium:EditSettingsForm');
 
 const messages = defineMessages({
   headlineGeneral: {

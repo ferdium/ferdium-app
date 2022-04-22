@@ -4,7 +4,7 @@ const { validateAll } = use('Validator');
 const Env = use('Env');
 
 const fetch = require('node-fetch');
-const debug = require('debug')('Ferdium:internalServer:RecipeController');
+const debug = require('../../../../preload-safe-debug')('Ferdium:internalServer:RecipeController');
 const { LIVE_FERDIUM_API } = require('../../../../config');
 const { API_VERSION } = require('../../../../environment-remote');
 

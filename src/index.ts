@@ -12,6 +12,7 @@ import {
 import { emptyDirSync, ensureFileSync } from 'fs-extra';
 import { join } from 'path';
 import windowStateKeeper from 'electron-window-state';
+import minimist from 'minimist';
 import ms from 'ms';
 import { enableWebContents, initializeRemote } from './electron-util';
 import { enforceMacOSAppLocation } from './enforce-macos-app-location';
@@ -44,7 +45,7 @@ import { asarPath } from './helpers/asar-helpers';
 import { openExternalUrl } from './helpers/url-helpers';
 import userAgent from './helpers/userAgent-helpers';
 
-const debug = require('debug')('Ferdium:App');
+const debug = require('./preload-safe-debug')('Ferdium:App');
 
 // Globally set useragent to fix user agent override in service workers
 debug('Set userAgent to ', userAgent());
@@ -422,7 +423,7 @@ const createWindow = () => {
 // used for Kerberos support
 // Usage e.g. MACOS
 // $ Ferdium.app/Contents/MacOS/Ferdium --auth-server-whitelist *.mydomain.com --auth-negotiate-delegate-whitelist *.mydomain.com
-const argv = require('minimist')(process.argv.slice(1));
+const argv = minimist(process.argv.slice(1));
 
 if (argv['auth-server-whitelist']) {
   app.commandLine.appendSwitch(

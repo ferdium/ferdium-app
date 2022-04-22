@@ -2,7 +2,7 @@ import { ipcRenderer } from 'electron';
 
 import { v1 as uuidV1 } from 'uuid';
 
-const debug = require('debug')('Ferdium:Notifications');
+const debug = require('../preload-safe-debug')('Ferdium:Notifications');
 
 export class NotificationsHandler {
   onNotify = (data: { title: string; options: any; notificationId: string }) =>

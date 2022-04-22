@@ -1,4 +1,4 @@
-const debug = require('debug')('Ferdium:Plugin:SessionHandler');
+const debug = require('../preload-safe-debug')('Ferdium:Plugin:SessionHandler');
 
 export class SessionHandler {
   async releaseServiceWorkers() {

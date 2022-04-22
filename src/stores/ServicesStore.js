@@ -19,7 +19,7 @@ import { DEFAULT_SERVICE_SETTINGS, KEEP_WS_LOADED_USID } from '../config';
 import { SPELLCHECKER_LOCALES } from '../i18n/languages';
 import { ferdiumVersion } from '../environment-remote';
 
-const debug = require('debug')('Ferdium:ServiceStore');
+const debug = require('../preload-safe-debug')('Ferdium:ServiceStore');
 
 export default class ServicesStore extends Store {
   @observable allServicesRequest = new CachedRequest(this.api.services, 'all');

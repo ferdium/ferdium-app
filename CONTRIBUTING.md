@@ -202,6 +202,8 @@ DEBUG_COLORS=1 DEBUG=Ferdium:* npm run start:all-dev
 ```
 
 Note: please prefer [`debug()`](https://github.com/visionmedia/debug) over `console.log()`.
+However, due to an [Electron bug](https://github.com/electron/electron/issues/31689), using `require('debug')` directly is dangerous and can lead to data loss in services.
+Please use the `src/preload-safe-debug` module instead until the bug gets fixed.
 
 ### Styleguide
 

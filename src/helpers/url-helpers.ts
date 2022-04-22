@@ -6,7 +6,7 @@ import { shell } from 'electron';
 
 import { ALLOWED_PROTOCOLS } from '../config';
 
-const debug = require('debug')('Ferdium:Helpers:url');
+const debug = require('../preload-safe-debug')('Ferdium:Helpers:url');
 
 export function isValidExternalURL(url: string | URL) {
   let parsedUrl: URL;

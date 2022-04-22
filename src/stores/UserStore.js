@@ -10,7 +10,7 @@ import Store from './lib/Store';
 import Request from './lib/Request';
 import CachedRequest from './lib/CachedRequest';
 
-const debug = require('debug')('Ferdium:UserStore');
+const debug = require('../preload-safe-debug')('Ferdium:UserStore');
 
 // TODO: split stores into UserStore and AuthStore
 export default class UserStore extends Store {

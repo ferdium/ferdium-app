@@ -29,7 +29,7 @@ import {
 import { openExternalUrl } from '../helpers/url-helpers';
 import { sleep } from '../helpers/async-helpers';
 
-const debug = require('debug')('Ferdium:AppStore');
+const debug = require('../preload-safe-debug')('Ferdium:AppStore');
 
 const mainWindow = getCurrentWindow();
 

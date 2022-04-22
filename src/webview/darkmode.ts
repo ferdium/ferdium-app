@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { pathExistsSync, readFileSync } from 'fs-extra';
 
-const debug = require('debug')('Ferdium:DarkMode');
+const debug = require('../preload-safe-debug')('Ferdium:DarkMode');
 
 const chars = [...'abcdefghijklmnopqrstuvwxyz'];
 

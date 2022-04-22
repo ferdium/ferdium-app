@@ -14,7 +14,7 @@ import {
   ifUndefinedNumber,
 } from '../jsUtils';
 
-const debug = require('debug')('Ferdium:Service');
+const debug = require('../preload-safe-debug')('Ferdium:Service');
 
 export default class Service {
   id = '';

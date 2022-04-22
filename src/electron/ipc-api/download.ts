@@ -4,7 +4,7 @@ import mime from 'mime-types';
 import { writeFileSync } from 'fs-extra';
 import { PathLike } from 'fs';
 
-const debug = require('debug')('Ferdium:ipcApi:download');
+const debug = require('../../preload-safe-debug')('Ferdium:ipcApi:download');
 
 function decodeBase64Image(dataString: string) {
   const matches = dataString.match(/^data:([+/A-Za-z-]+);base64,(.+)$/);

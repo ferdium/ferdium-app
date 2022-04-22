@@ -7,7 +7,7 @@ import { join } from 'path';
 
 import ServiceModel from '../../../models/Service';
 
-const debug = require('debug')('Ferdium:Services');
+const debug = require('../../../preload-safe-debug')('Ferdium:Services');
 
 class ServiceWebview extends Component {
   static propTypes = {

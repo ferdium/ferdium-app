@@ -6,7 +6,7 @@ import { dirname } from 'path';
 import { askForScreenCaptureAccess } from 'node-mac-permissions';
 import { userDataPath } from '../environment-remote';
 
-const debug = require('debug')('Ferdium:macOSPermissions');
+const debug = require('../preload-safe-debug')('Ferdium:macOSPermissions');
 
 const isExplicitScreenCapturePermissionReqd =
   macosVersion.isGreaterThanOrEqualTo('10.15');

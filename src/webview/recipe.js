@@ -50,7 +50,7 @@ import {
 
 import { DEFAULT_APP_SETTINGS } from '../config';
 
-const debug = require('debug')('Ferdium:Plugin');
+const debug = require('../preload-safe-debug')('Ferdium:Plugin');
 
 const badgeHandler = new BadgeHandler();
 
