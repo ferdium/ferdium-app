@@ -313,11 +313,9 @@ jobs:
         with:
           node-version-file: ".nvmrc"
       - name: Install npm
-        run: npm i -gf npm@8.7.0
+        run: npm i -gf "npm@$(jq --raw-output .engines.npm <"package.json")" && npm -v
       - name: Install pnpm
-        uses: pnpm/action-setup@v2.0.1
-        with:
-          version: 6.32.8
+        run: npm i -gf "pnpm@$(jq --raw-output .engines.pnpm <"./recipes/package.json")" && pnpm -v
       - name: Install node dependencies
         uses: nick-invision/retry@v2.4.0
         with:
