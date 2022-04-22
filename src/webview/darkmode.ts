@@ -1,7 +1,8 @@
 import { join } from 'path';
 import { pathExistsSync, readFileSync } from 'fs-extra';
 
-const debug = require('debug')('Ferdium:DarkMode');
+// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
+// const debug = require('debug')('Ferdium:DarkMode');
 
 const chars = [...'abcdefghijklmnopqrstuvwxyz'];
 
@@ -26,7 +27,7 @@ export function injectDarkModeStyle(recipePath: string) {
 
     document.querySelector('head')?.appendChild(styles);
 
-    debug('Injected Dark Mode style with ID', ID);
+    console.log('Injected Dark Mode style with ID', ID);
   }
 }
 
@@ -36,7 +37,7 @@ export function removeDarkModeStyle() {
   if (style) {
     style.remove();
 
-    debug('Removed Dark Mode Style with ID', ID);
+    console.log('Removed Dark Mode Style with ID', ID);
   }
 }
 

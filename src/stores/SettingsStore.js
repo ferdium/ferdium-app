@@ -11,7 +11,8 @@ import { hash } from '../helpers/password-helpers';
 import Request from './lib/Request';
 import Store from './lib/Store';
 
-const debug = require('debug')('Ferdium:SettingsStore');
+// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
+// const debug = require('debug')('Ferdium:SettingsStore');
 
 export default class SettingsStore extends Store {
   @observable updateAppSettingsRequest = new Request(
@@ -94,7 +95,7 @@ export default class SettingsStore extends Store {
           }
         });
       }
-      debug('Get appSettings resolves', resp.type, resp.data);
+      console.log('Get appSettings resolves', resp.type, resp.data);
       Object.assign(this._fileSystemSettingsCache[resp.type], resp.data);
       this.loaded = true;
       ipcRenderer.send('initialAppSettings', resp);
@@ -146,10 +147,10 @@ export default class SettingsStore extends Store {
   @action async _update({ type, data }) {
     const appSettings = this.all;
     if (!this.fileSystemSettingsTypes.includes(type)) {
-      debug('Update settings', type, data, this.all);
+      console.log('Update settings', type, data, this.all);
       localStorage.setItem(type, Object.assign(appSettings[type], data));
     } else {
-      debug('Update settings on file system', type, data);
+      console.log('Update settings on file system', type, data);
       ipcRenderer.send('updateAppSettings', {
         type,
         data,
@@ -200,7 +201,7 @@ export default class SettingsStore extends Store {
         });
       }
 
-      debug('Migrated updates settings');
+      console.log('Migrated updates settings');
     });
 
     this._ensureMigrationAndMarkDone('5.6.0-beta.6-settings', () => {

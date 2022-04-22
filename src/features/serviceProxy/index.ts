@@ -1,7 +1,8 @@
 import { autorun, observable } from 'mobx';
 import { session } from '@electron/remote';
 
-const debug = require('debug')('Ferdium:feature:serviceProxy');
+// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
+// const debug = require('debug')('Ferdium:feature:serviceProxy');
 
 export const config = observable({
   isEnabled: true,
@@ -11,7 +12,7 @@ export default function init(stores: {
   services: { enabled: any };
   settings: { proxy: any };
 }) {
-  debug('Initializing `serviceProxy` feature');
+  console.log('Initializing `serviceProxy` feature');
 
   autorun(() => {
     config.isEnabled = true;
@@ -19,7 +20,7 @@ export default function init(stores: {
     const services = stores.services.enabled;
     const proxySettings = stores.settings.proxy;
 
-    debug('Service Proxy autorun');
+    console.log('Service Proxy autorun');
 
     for (const service of services) {
       const s = session.fromPartition(`persist:service-${service.id}`);
@@ -35,14 +36,14 @@ export default function init(stores: {
           const proxyHost = `${serviceProxyConfig.host}${
             serviceProxyConfig.port ? `:${serviceProxyConfig.port}` : ''
           }`;
-          debug(
+          console.log(
             `Setting proxy config from service settings for "${service.name}" (${service.id}) to`,
             proxyHost,
           );
 
           s.setProxy({ proxyRules: proxyHost })
             .then(() => {
-              debug(
+              console.log(
                 `Using proxy "${proxyHost}" for "${service.name}" (${service.id})`,
               );
             })

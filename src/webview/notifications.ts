@@ -2,7 +2,8 @@ import { ipcRenderer } from 'electron';
 
 import { v1 as uuidV1 } from 'uuid';
 
-const debug = require('debug')('Ferdium:Notifications');
+// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
+// const debug = require('debug')('Ferdium:Notifications');
 
 export class NotificationsHandler {
   onNotify = (data: { title: string; options: any; notificationId: string }) =>
@@ -10,7 +11,7 @@ export class NotificationsHandler {
 
   displayNotification(title: string, options: any) {
     return new Promise(resolve => {
-      debug('New notification', title, options);
+      console.log('New notification', title, options);
 
       const notificationId = uuidV1();
 
