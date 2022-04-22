@@ -6,32 +6,33 @@
 
 <!-- TOC depthFrom:2 depthTo:2 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-- [Table of contents](#table-of-contents)
-- [Code of Conduct](#code-of-conduct)
-- [What should I know before I get started?](#what-should-i-know-before-i-get-started)
-- [How can I contribute?](#how-can-i-contribute)
-- [Setting up your development machine](#setting-up-your-development-machine)
-  - [Install system-level dependencies](#install-system-level-dependencies)
-    - [Node.js, npm, pnpm](#nodejs-npm-pnpm)
-    - [Git](#git)
-    - [On Debian/Ubuntu](#on-debianubuntu)
-    - [On Fedora](#on-fedora)
-    - [On Windows](#on-windows)
-  - [Clone repository with submodule](#clone-repository-with-submodule)
-  - [Local caching of dependencies](#local-caching-of-dependencies)
-  - [Install dependencies](#install-dependencies)
-  - [Fix native modules to match current electron node version](#fix-native-modules-to-match-current-electron-node-version)
-  - [Package recipe repository](#package-recipe-repository)
-  - [Using Docker to build a linux-targetted packaged app](#using-docker-to-build-a-linux-targetted-packaged-app)
-  - [Code Signing on a mac](#code-signing-on-a-mac)
-  - [Start development app](#start-development-app)
-  - [Styleguide](#styleguide)
-    - [Git Commit Messages format](#git-commit-messages-format)
-    - [Javascript Coding style-checker](#javascript-coding-style-checker)
-- [Packaging](#packaging)
-- [Release](#release)
-  - [Nightly releases](#nightly-releases)
-  - [Updating the code after a hiatus](#updating-the-code-after-a-hiatus)
+- [Contributing to Ferdium 6](#contributing-to-ferdium-6)
+  - [Table of contents](#table-of-contents)
+  - [Code of Conduct](#code-of-conduct)
+  - [What should I know before I get started?](#what-should-i-know-before-i-get-started)
+  - [How can I contribute?](#how-can-i-contribute)
+  - [Setting up your development machine](#setting-up-your-development-machine)
+    - [Install system-level dependencies](#install-system-level-dependencies)
+      - [Node.js, npm, pnpm](#nodejs-npm-pnpm)
+      - [Git](#git)
+      - [On Debian/Ubuntu](#on-debianubuntu)
+      - [On Fedora](#on-fedora)
+      - [On Windows](#on-windows)
+    - [Clone repository with submodule](#clone-repository-with-submodule)
+    - [Local caching of dependencies](#local-caching-of-dependencies)
+    - [Install dependencies](#install-dependencies)
+    - [Fix native modules to match current electron node version](#fix-native-modules-to-match-current-electron-node-version)
+    - [Package recipe repository](#package-recipe-repository)
+    - [Using Docker to build a linux-targetted packaged app](#using-docker-to-build-a-linux-targetted-packaged-app)
+    - [Code Signing on a mac](#code-signing-on-a-mac)
+    - [Start development app](#start-development-app)
+    - [Styleguide](#styleguide)
+      - [Git Commit Messages format](#git-commit-messages-format)
+      - [Javascript Coding style-checker](#javascript-coding-style-checker)
+  - [Packaging](#packaging)
+  - [Release](#release)
+    - [Nightly releases](#nightly-releases)
+    - [Updating the code after a hiatus](#updating-the-code-after-a-hiatus)
 
 <!-- /TOC -->
 
@@ -128,7 +129,7 @@ $env:ELECTRON_BUILDER_CACHE = $HOME + '\.cache\electron-builder'
 Run the following command to install all dependencies, and link sibling modules with Ferdium.
 
 ```bash
-npm install
+npm i
 ```
 
 If you encounter the `gyp: No Xcode or CLT version` error on macOS at this step, please have a look [here](https://medium.com/flawless-app-stories/gyp-no-xcode-or-clt-version-detected-macos-catalina-anansewaa-38b536389e8d).
@@ -144,7 +145,7 @@ npm run build
 Ferdium requires its recipes to be packaged before it can use it. When running Ferdium as a development instance, you'll need to package the local recipes before you can create any services inside Ferdium.
 
 ```bash
-cd recipes && pnpm install && pnpm run package
+cd recipes && pnpm i && pnpm run package
 ```
 
 ### Using Docker to build a linux-targetted packaged app
@@ -223,7 +224,7 @@ Note: please prefer [`debug()`](https://github.com/visionmedia/debug) over `cons
 ./scripts/build-unix.sh
 
 # On Windows
-.\scripts\build-windows.ps1 
+.\scripts\build-windows.ps1
 ```
 
 Assets will be available in the `out` folder.
