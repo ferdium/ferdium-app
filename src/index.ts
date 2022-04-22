@@ -12,6 +12,7 @@ import {
 import { emptyDirSync, ensureFileSync } from 'fs-extra';
 import { join } from 'path';
 import windowStateKeeper from 'electron-window-state';
+import minimist from 'minimist';
 import ms from 'ms';
 import { enableWebContents, initializeRemote } from './electron-util';
 import { enforceMacOSAppLocation } from './enforce-macos-app-location';
@@ -44,11 +45,10 @@ import { asarPath } from './helpers/asar-helpers';
 import { openExternalUrl } from './helpers/url-helpers';
 import userAgent from './helpers/userAgent-helpers';
 
-// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
-// const debug = require('debug')('Ferdium:App');
+const debug = require('./preload-safe-debug')('Ferdium:App');
 
 // Globally set useragent to fix user agent override in service workers
-console.log('Set userAgent to', userAgent());
+debug('Set userAgent to ', userAgent());
 app.userAgentFallback = userAgent();
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -127,7 +127,7 @@ if (!gotTheLock) {
           if (argv.includes('--reset-window')) {
             // Needs to be delayed to not interfere with mainWindow.restore();
             setTimeout(() => {
-              console.log('Resetting windows via Task');
+              debug('Resetting windows via Task');
               window.setPosition(
                 DEFAULT_WINDOW_OPTIONS.x + 100,
                 DEFAULT_WINDOW_OPTIONS.y + 100,
@@ -140,7 +140,7 @@ if (!gotTheLock) {
           } else if (argv.includes('--quit')) {
             // Needs to be delayed to not interfere with mainWindow.restore();
             setTimeout(() => {
-              console.log('Quitting Ferdium via Task');
+              debug('Quitting Ferdium via Task');
               app.quit();
             }, 1);
           }
@@ -162,7 +162,7 @@ if (
 
 // Disable GPU acceleration
 if (!retrieveSettingValue('enableGPUAcceleration', false)) {
-  console.log('Disable GPU Acceleration');
+  debug('Disable GPU Acceleration');
   app.disableHardwareAcceleration();
 }
 
@@ -184,7 +184,7 @@ const createWindow = () => {
   let posY = mainWindowState.y || DEFAULT_WINDOW_OPTIONS.y;
 
   if (!isPositionValid({ x: posX, y: posY })) {
-    console.log('Window is out of screen bounds, resetting window');
+    debug('Window is out of screen bounds, resetting window');
     posX = DEFAULT_WINDOW_OPTIONS.x;
     posY = DEFAULT_WINDOW_OPTIONS.y;
   }
@@ -285,7 +285,7 @@ const createWindow = () => {
 
   // Emitted when the window is closed.
   mainWindow.on('close', e => {
-    console.log('Window: close window');
+    debug('Window: close window');
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
@@ -298,7 +298,7 @@ const createWindow = () => {
     ) {
       e.preventDefault();
       if (isWindows) {
-        console.log('Window: minimize');
+        debug('Window: minimize');
         mainWindow?.minimize();
 
         if (
@@ -307,16 +307,16 @@ const createWindow = () => {
             DEFAULT_APP_SETTINGS.closeToSystemTray,
           )
         ) {
-          console.log('Skip taskbar: true');
+          debug('Skip taskbar: true');
           mainWindow?.setSkipTaskbar(true);
         }
       } else if (isMac && mainWindow?.isFullScreen()) {
-        console.log('Window: leaveFullScreen and hide');
+        debug('Window: leaveFullScreen and hide');
         mainWindow.once('show', () => mainWindow?.setFullScreen(true));
         mainWindow.once('leave-full-screen', () => mainWindow?.hide());
         mainWindow.setFullScreen(false);
       } else {
-        console.log('Window: hide');
+        debug('Window: hide');
         mainWindow?.hide();
       }
     } else {
@@ -337,31 +337,31 @@ const createWindow = () => {
         DEFAULT_APP_SETTINGS.minimizeToSystemTray,
       )
     ) {
-      console.log('Skip taskbar: true');
+      debug('Skip taskbar: true');
       mainWindow?.setSkipTaskbar(true);
       trayIcon.show();
     }
   });
 
   mainWindow.on('maximize', () => {
-    console.log('Window: maximize');
+    debug('Window: maximize');
     // @ts-expect-error Property 'isMaximized' does not exist on type 'App'.
     app.isMaximized = true;
   });
 
   mainWindow.on('unmaximize', () => {
-    console.log('Window: unmaximize');
+    debug('Window: unmaximize');
     // @ts-expect-error Property 'isMaximized' does not exist on type 'App'.
     app.isMaximized = false;
   });
 
   mainWindow.on('restore', () => {
-    console.log('Window: restore');
+    debug('Window: restore');
     mainWindow?.setSkipTaskbar(false);
 
     // @ts-expect-error Property 'wasMaximized' does not exist on type 'App'.
     if (app.wasMaximized) {
-      console.log('Window: was maximized before, maximize window');
+      debug('Window: was maximized before, maximize window');
       mainWindow?.maximize();
     }
 
@@ -371,7 +371,7 @@ const createWindow = () => {
         DEFAULT_APP_SETTINGS.enableSystemTray,
       )
     ) {
-      console.log('Tray: hiding tray icon');
+      debug('Tray: hiding tray icon');
       trayIcon.hide();
     }
   });
@@ -383,7 +383,7 @@ const createWindow = () => {
   }
 
   mainWindow.on('show', () => {
-    console.log('Skip taskbar: true');
+    debug('Skip taskbar: true');
     mainWindow?.setSkipTaskbar(false);
   });
 
@@ -423,7 +423,7 @@ const createWindow = () => {
 // used for Kerberos support
 // Usage e.g. MACOS
 // $ Ferdium.app/Contents/MacOS/Ferdium --auth-server-whitelist *.mydomain.com --auth-negotiate-delegate-whitelist *.mydomain.com
-const argv = require('minimist')(process.argv.slice(1));
+const argv = minimist(process.argv.slice(1));
 
 if (argv['auth-server-whitelist']) {
   app.commandLine.appendSwitch(
@@ -500,18 +500,18 @@ let authCallback = noop;
 app.on('login', (event, _webContents, _request, authInfo, callback) => {
   // @ts-expect-error Type '(username?: string | undefined, password?: string | undefined) => void' is not assignable to type '() => null'.
   authCallback = callback;
-  console.log('browser login event', authInfo);
+  debug('browser login event', authInfo);
   event.preventDefault();
 
   if (!authInfo.isProxy && authInfo.scheme === 'basic') {
-    console.log('basic auth handler', authInfo);
+    debug('basic auth handler', authInfo);
     basicAuthHandler(mainWindow!, authInfo);
   }
 });
 
 // TODO: evaluate if we need to store the authCallback for every service
 ipcMain.on('feature-basic-auth-credentials', (_e, { user, password }) => {
-  console.log('Received basic auth credentials', user, '********');
+  debug('Received basic auth credentials', user, '********');
 
   // @ts-expect-error Expected 0 arguments, but got 2.
   authCallback(user, password);
@@ -530,13 +530,13 @@ ipcMain.on('open-browser-window', (_e, { url, serviceId }) => {
   enableWebContents(child.webContents);
   child.show();
   child.loadURL(url);
-  console.log('Received open-browser-window', url);
+  debug('Received open-browser-window', url);
 });
 
 ipcMain.on(
   'modifyRequestHeaders',
   (_e, { modifiedRequestHeaders, serviceId }) => {
-    console.log(
+    debug(
       `Received modifyRequestHeaders ${modifiedRequestHeaders} for serviceId ${serviceId}`,
     );
     for (const headerFilterSet of modifiedRequestHeaders) {
@@ -557,7 +557,7 @@ ipcMain.on(
 );
 
 ipcMain.on('knownCertificateHosts', (_e, { knownHosts, serviceId }) => {
-  console.log(
+  debug(
     `Received knownCertificateHosts ${knownHosts} for serviceId ${serviceId}`,
   );
   session
@@ -577,7 +577,7 @@ ipcMain.on('knownCertificateHosts', (_e, { knownHosts, serviceId }) => {
 });
 
 ipcMain.on('feature-basic-auth-cancel', () => {
-  console.log('Cancel basic auth');
+  debug('Cancel basic auth');
 
   // @ts-expect-error Expected 0 arguments, but got 2.
   authCallback(null);
@@ -596,7 +596,7 @@ ipcMain.on('find-in-page', (e, text, options) => {
       }
     }
     const requestId = webContents.findInPage(text, sanitizedOptions);
-    console.log('Find in page', text, options, requestId);
+    debug('Find in page', text, options, requestId);
     e.returnValue = requestId;
   } else {
     e.returnValue = null;
@@ -625,10 +625,10 @@ ipcMain.on('set-spellchecker-locales', (_e, { locale, serviceId }) => {
 
   const serviceSession = session.fromPartition(`persist:service-${serviceId}`);
   const [defaultLocale] = serviceSession.getSpellCheckerLanguages();
-  console.log(`Spellchecker default locale is: ${defaultLocale}`);
+  debug(`Spellchecker default locale is: ${defaultLocale}`);
 
   const locales = [locale, defaultLocale, DEFAULT_APP_SETTINGS.fallbackLocale];
-  console.log(`Setting spellchecker locales to: ${locales}`);
+  debug(`Setting spellchecker locales to: ${locales}`);
   serviceSession.setSpellCheckerLanguages(locales);
 });
 
@@ -646,10 +646,10 @@ app.on('window-all-closed', () => {
       DEFAULT_APP_SETTINGS.runInBackground,
     )
   ) {
-    console.log('Window: all windows closed, quit app');
+    debug('Window: all windows closed, quit app');
     app.quit();
   } else {
-    console.log("Window: don't quit app");
+    debug("Window: don't quit app");
   }
 });
 
@@ -695,7 +695,7 @@ app.on('will-finish-launching', () => {
     event.preventDefault();
 
     onDidLoad((window: BrowserWindow) => {
-      console.log('open-url event', url);
+      debug('open-url event', url);
       handleDeepLink(window, url);
     });
   });

@@ -1,8 +1,7 @@
 import { computed } from 'mobx';
 import { FeatureStore } from '../utils/FeatureStore';
 
-// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
-// const debug = require('debug')('Ferdium:feature:communityRecipes:store');
+const debug = require('../../preload-safe-debug')('Ferdium:feature:communityRecipes:store');
 
 export class CommunityRecipesStore extends FeatureStore {
   stores: any;
@@ -10,13 +9,13 @@ export class CommunityRecipesStore extends FeatureStore {
   actions: any;
 
   start(stores: any, actions: any) {
-    console.log('start');
+    debug('start');
     this.stores = stores;
     this.actions = actions;
   }
 
   stop() {
-    console.log('stop');
+    debug('stop');
     super.stop();
   }
 

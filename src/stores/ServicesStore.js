@@ -19,8 +19,7 @@ import { DEFAULT_SERVICE_SETTINGS, KEEP_WS_LOADED_USID } from '../config';
 import { SPELLCHECKER_LOCALES } from '../i18n/languages';
 import { ferdiumVersion } from '../environment-remote';
 
-// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
-// const debug = require('debug')('Ferdium:ServiceStore');
+const debug = require('../preload-safe-debug')('Ferdium:ServiceStore');
 
 export default class ServicesStore extends Store {
   @observable allServicesRequest = new CachedRequest(this.api.services, 'all');
@@ -213,7 +212,7 @@ export default class ServicesStore extends Store {
   serviceMaintenanceTick = debounce(() => {
     this._serviceMaintenance();
     this.serviceMaintenanceTick();
-    console.log('Service maintenance tick');
+    debug('Service maintenance tick');
   }, ms('10s'));
 
   /**
@@ -251,7 +250,7 @@ export default class ServicesStore extends Store {
         // If service did not reply for more than 1m try to reload.
         if (!service.isActive) {
           if (this.stores.app.isOnline && service.lostRecipeReloadAttempt < 3) {
-            console.log(
+            debug(
               `Reloading service: ${service.name} (${service.id}). Attempt: ${service.lostRecipeReloadAttempt}`,
             );
             // service.webview.reload();
@@ -260,7 +259,7 @@ export default class ServicesStore extends Store {
             service.lostRecipeConnection = false;
           }
         } else {
-          console.log(`Service lost connection: ${service.name} (${service.id}).`);
+          debug(`Service lost connection: ${service.name} (${service.id}).`);
           service.lostRecipeConnection = true;
         }
       } else {
@@ -364,7 +363,7 @@ export default class ServicesStore extends Store {
         return activeService;
       }
 
-      console.log('Service not available');
+      debug('Service not available');
     }
 
     return null;
@@ -398,9 +397,9 @@ export default class ServicesStore extends Store {
     skipCleanup = false,
   }) {
     if (!this.stores.recipes.isInstalled(recipeId)) {
-      console.log(`Recipe "${recipeId}" is not installed, installing recipe`);
+      debug(`Recipe "${recipeId}" is not installed, installing recipe`);
       await this.stores.recipes._install({ recipeId });
-      console.log(`Recipe "${recipeId}" installed`);
+      debug(`Recipe "${recipeId}" installed`);
     }
 
     // set default values for serviceData
@@ -617,7 +616,7 @@ export default class ServicesStore extends Store {
     if (service) {
       service.isActive = false;
     } else {
-      console.log('No service is active');
+      debug('No service is active');
     }
   }
 
@@ -660,7 +659,7 @@ export default class ServicesStore extends Store {
       service.webview = webview;
 
       if (!service.isAttached) {
-        console.log('Webview is not attached, initializing');
+        debug('Webview is not attached, initializing');
         service.initializeWebViewEvents({
           handleIPCMessage: this.actions.service.handleIPCMessage,
           openWindow: this.actions.service.openWindow,
@@ -709,7 +708,7 @@ export default class ServicesStore extends Store {
           }
         }
       } else {
-        console.log('No service is active');
+        debug('No service is active');
       }
     } else {
       this.allServicesRequest.invalidate();
@@ -728,7 +727,7 @@ export default class ServicesStore extends Store {
     // eslint-disable-next-line default-case
     switch (channel) {
       case 'hello': {
-        console.log('Received hello event from', serviceId);
+        debug('Received hello event from', serviceId);
 
         this._initRecipePolling(service.id);
         this._initializeServiceRecipeInWebview(serviceId);
@@ -742,7 +741,7 @@ export default class ServicesStore extends Store {
         break;
       }
       case 'message-counts': {
-        console.log(`Received unread message info from '${serviceId}'`, args[0]);
+        debug(`Received unread message info from '${serviceId}'`, args[0]);
 
         this.actions.service.setUnreadMessageCount({
           serviceId,
@@ -755,7 +754,7 @@ export default class ServicesStore extends Store {
         break;
       }
       case 'active-dialog-title': {
-        console.log(`Received active dialog title from '${serviceId}'`, args[0]);
+        debug(`Received active dialog title from '${serviceId}'`, args[0]);
 
         this.actions.service.setDialogTitle({
           serviceId,
@@ -920,7 +919,7 @@ export default class ServicesStore extends Store {
         serviceId: service.id,
       });
     } else {
-      console.log('No service is active');
+      debug('No service is active');
     }
   }
 
@@ -1028,7 +1027,7 @@ export default class ServicesStore extends Store {
     if (service) {
       this._openDevTools({ serviceId: service.id });
     } else {
-      console.log('No service is active');
+      debug('No service is active');
     }
   }
 
@@ -1038,7 +1037,7 @@ export default class ServicesStore extends Store {
       return;
     }
 
-    console.log(`Hibernate ${service.name}`);
+    debug(`Hibernate ${service.name}`);
 
     service.isHibernationRequested = true;
     service.lastHibernated = Date.now();
@@ -1048,7 +1047,7 @@ export default class ServicesStore extends Store {
     const now = Date.now();
     const service = this.one(serviceId);
     const automaticTag = automatic ? ' automatically ' : ' ';
-    console.log(
+    debug(
       `Waking up${automaticTag}from service hibernation for ${service.name}`,
     );
 
@@ -1069,8 +1068,8 @@ export default class ServicesStore extends Store {
       //
       const mainStrategy = this.stores.settings.all.app.hibernationStrategy;
       let strategy = this.stores.settings.all.app.wakeUpHibernationStrategy;
-      console.log(`wakeUpHibernationStrategy = ${strategy}`);
-      console.log(`hibernationStrategy = ${mainStrategy}`);
+      debug(`wakeUpHibernationStrategy = ${strategy}`);
+      debug(`hibernationStrategy = ${mainStrategy}`);
       if (!strategy || strategy < 1) {
         strategy = this.stores.settings.all.app.hibernationStrategy;
       }
@@ -1082,16 +1081,16 @@ export default class ServicesStore extends Store {
       ) {
         // Add 10 additional seconds 50% of the time.
         splay = 10;
-        console.log('Added splay');
+        debug('Added splay');
       } else {
-        console.log('skipping splay');
+        debug('skipping splay');
       }
       // wake up again in strategy + splay seconds instead of mainStrategy seconds.
       service.lastUsed = now - ms(`${mainStrategy - (strategy + splay)}s`);
     } else {
       service.lastUsed = now;
     }
-    console.log(
+    debug(
       `Setting service.lastUsed to ${service.lastUsed} (${
         (now - service.lastUsed) / 1000
       }s ago)`,
@@ -1101,7 +1100,7 @@ export default class ServicesStore extends Store {
   }
 
   @action _resetLastPollTimer({ serviceId = null }) {
-    console.log(
+    debug(
       `Reset last poll timer for ${
         serviceId ? `service: "${serviceId}"` : 'all services'
       }`,
@@ -1132,7 +1131,7 @@ export default class ServicesStore extends Store {
         service.dialogTitle ? ` - ${service.dialogTitle}` : ''
       } ${service._webview ? `- ${service._webview.getTitle()}` : ''}`;
     } else {
-      console.log('No service is active');
+      debug('No service is active');
     }
   }
 
@@ -1146,7 +1145,7 @@ export default class ServicesStore extends Store {
         },
       });
     } else {
-      console.log('No service is active');
+      debug('No service is active');
     }
   }
 
@@ -1262,7 +1261,7 @@ export default class ServicesStore extends Store {
       this.allDisplayed.findIndex(service => service.isActive) === -1 &&
       this.allDisplayed.length > 0
     ) {
-      console.log('No active service found, setting active service to index 0');
+      debug('No active service found, setting active service to index 0');
 
       this._setActive({ serviceId: this.allDisplayed[0].id });
     }
@@ -1278,7 +1277,7 @@ export default class ServicesStore extends Store {
         JSON.stringify(service.shareWithWebview),
       );
 
-      console.log('Initialize recipe', service.recipe.id, service.name);
+      debug('Initialize recipe', service.recipe.id, service.name);
       service.webview.send(
         'initialize-recipe',
         {

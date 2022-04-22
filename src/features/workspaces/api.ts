@@ -4,15 +4,14 @@ import Request from '../../stores/lib/Request';
 import Workspace from './models/Workspace';
 import apiBase from '../../api/apiBase';
 
-// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
-// const debug = require('debug')('Ferdium:feature:workspaces:api');
+const debug = require('../../preload-safe-debug')('Ferdium:feature:workspaces:api');
 
 export const workspaceApi = {
   getUserWorkspaces: async () => {
     const url = `${apiBase()}/workspace`;
-    console.log('getUserWorkspaces GET', url);
+    debug('getUserWorkspaces GET', url);
     const result = await sendAuthRequest(url, { method: 'GET' });
-    console.log('getUserWorkspaces RESULT', result);
+    debug('getUserWorkspaces RESULT', result);
     if (!result.ok) {
       throw new Error("Couldn't getUserWorkspaces");
     }
@@ -26,9 +25,9 @@ export const workspaceApi = {
       method: 'POST',
       body: JSON.stringify({ name }),
     };
-    console.log('createWorkspace POST', url, options);
+    debug('createWorkspace POST', url, options);
     const result = await sendAuthRequest(url, options);
-    console.log('createWorkspace RESULT', result);
+    debug('createWorkspace RESULT', result);
     if (!result.ok) {
       throw new Error("Couldn't createWorkspace");
     }
@@ -37,9 +36,9 @@ export const workspaceApi = {
 
   deleteWorkspace: async workspace => {
     const url = `${apiBase()}/workspace/${workspace.id}`;
-    console.log('deleteWorkspace DELETE', url);
+    debug('deleteWorkspace DELETE', url);
     const result = await sendAuthRequest(url, { method: 'DELETE' });
-    console.log('deleteWorkspace RESULT', result);
+    debug('deleteWorkspace RESULT', result);
     if (!result.ok) {
       throw new Error("Couldn't deleteWorkspace");
     }
@@ -52,9 +51,9 @@ export const workspaceApi = {
       method: 'PUT',
       body: JSON.stringify(pick(workspace, ['name', 'services'])),
     };
-    console.log('updateWorkspace UPDATE', url, options);
+    debug('updateWorkspace UPDATE', url, options);
     const result = await sendAuthRequest(url, options);
-    console.log('updateWorkspace RESULT', result);
+    debug('updateWorkspace RESULT', result);
     if (!result.ok) {
       throw new Error("Couldn't updateWorkspace");
     }

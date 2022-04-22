@@ -14,8 +14,7 @@ import {
   ifUndefinedNumber,
 } from '../jsUtils';
 
-// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
-// const debug = require('debug')('Ferdium:Service');
+const debug = require('../preload-safe-debug')('Ferdium:Service');
 
 export default class Service {
   id = '';
@@ -306,25 +305,25 @@ export default class Service {
     // Send those headers to ipcMain so that it can be set in session
     if (typeof this.recipe.modifyRequestHeaders === 'function') {
       const modifiedRequestHeaders = this.recipe.modifyRequestHeaders();
-      console.log(this.name, 'modifiedRequestHeaders', modifiedRequestHeaders);
+      debug(this.name, 'modifiedRequestHeaders', modifiedRequestHeaders);
       ipcRenderer.send('modifyRequestHeaders', {
         modifiedRequestHeaders,
         serviceId: this.id,
       });
     } else {
-      console.log(this.name, 'modifyRequestHeaders is not defined in the recipe');
+      debug(this.name, 'modifyRequestHeaders is not defined in the recipe');
     }
 
     // if the recipe has implemented 'knownCertificateHosts'
     if (typeof this.recipe.knownCertificateHosts === 'function') {
       const knownHosts = this.recipe.knownCertificateHosts();
-      console.log(this.name, 'knownCertificateHosts', knownHosts);
+      debug(this.name, 'knownCertificateHosts', knownHosts);
       ipcRenderer.send('knownCertificateHosts', {
         knownHosts,
         serviceId: this.id,
       });
     } else {
-      console.log(this.name, 'knownCertificateHosts is not defined in the recipe');
+      debug(this.name, 'knownCertificateHosts is not defined in the recipe');
     }
 
     this.webview.addEventListener('ipc-message', async e => {
@@ -348,7 +347,7 @@ export default class Service {
     this.webview.addEventListener(
       'new-window',
       (event, url, frameName, options) => {
-        console.log('new-window', event, url, frameName, options);
+        debug('new-window', event, url, frameName, options);
         if (!isValidExternalURL(event.url)) {
           return;
         }
@@ -372,7 +371,7 @@ export default class Service {
     );
 
     this.webview.addEventListener('did-start-loading', event => {
-      console.log('Did start load', this.name, event);
+      debug('Did start load', this.name, event);
 
       this.hasCrashed = false;
       this.isLoading = true;
@@ -391,7 +390,7 @@ export default class Service {
     this.webview.addEventListener('did-navigate', didLoad.bind(this));
 
     this.webview.addEventListener('did-fail-load', event => {
-      console.log('Service failed to load', this.name, event);
+      debug('Service failed to load', this.name, event);
       if (
         event.isMainFrame &&
         event.errorCode !== -21 &&
@@ -404,33 +403,33 @@ export default class Service {
     });
 
     this.webview.addEventListener('crashed', () => {
-      console.log('Service crashed', this.name);
+      debug('Service crashed', this.name);
       this.hasCrashed = true;
     });
 
     this.webview.addEventListener('found-in-page', ({ result }) => {
-      console.log('Found in page', result);
+      debug('Found in page', result);
       this.webview.send('found-in-page', result);
     });
 
     webviewWebContents.on('login', (event, request, authInfo, callback) => {
       // const authCallback = callback;
-      console.log('browser login event', authInfo);
+      debug('browser login event', authInfo);
       event.preventDefault();
 
       if (authInfo.isProxy && authInfo.scheme === 'basic') {
-        console.log('Sending service echo ping');
+        debug('Sending service echo ping');
         webviewWebContents.send('get-service-id');
 
-        console.log('Received service id', this.id);
+        debug('Received service id', this.id);
 
         const ps = stores.settings.proxy[this.id];
 
         if (ps) {
-          console.log('Sending proxy auth callback for service', this.id);
+          debug('Sending proxy auth callback for service', this.id);
           callback(ps.user, ps.password);
         } else {
-          console.log('No proxy auth config found for', this.id);
+          debug('No proxy auth config found for', this.id);
         }
       }
     });

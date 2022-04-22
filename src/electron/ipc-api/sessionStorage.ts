@@ -2,8 +2,7 @@ import { ipcMain, Session, session } from 'electron';
 
 import { TODOS_PARTITION_ID } from '../../config';
 
-// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
-// const debug = require('debug')('Ferdium:ipcApi:sessionStorage');
+const debug = require('../../preload-safe-debug')('Ferdium:ipcApi:sessionStorage');
 
 function deduceSession(serviceId: string | undefined | null): Session {
   if (serviceId) {
@@ -22,14 +21,14 @@ export default async () => {
       const serviceSession = deduceSession(serviceId);
       serviceSession.flushStorageData();
       if (targetsToClear) {
-        console.log('Clearing targets:', targetsToClear);
+        debug('Clearing targets:', targetsToClear);
         serviceSession.clearStorageData(targetsToClear);
       } else {
-        console.log('Clearing all targets');
+        debug('Clearing all targets');
         serviceSession.clearStorageData();
       }
     } catch (error) {
-      console.log(error);
+      debug(error);
     }
   });
 

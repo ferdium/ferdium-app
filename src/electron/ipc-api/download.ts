@@ -4,8 +4,7 @@ import mime from 'mime-types';
 import { writeFileSync } from 'fs-extra';
 import { PathLike } from 'fs';
 
-// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
-// const debug = require('debug')('Ferdium:ipcApi:download');
+const debug = require('../../preload-safe-debug')('Ferdium:ipcApi:download');
 
 function decodeBase64Image(dataString: string) {
   const matches = dataString.match(/^data:([+/A-Za-z-]+);base64,(.+)$/);
@@ -28,7 +27,7 @@ export default (params: { mainWindow: BrowserWindow }) => {
           const dl = await download(win!, url, {
             saveAs: true,
           });
-          console.log('File saved to', dl.savePath);
+          debug('File saved to', dl.savePath);
         } else {
           const extension = mime.extension(fileOptions.mime);
           const filename = `${fileOptions.name}.${extension}`;
@@ -47,7 +46,7 @@ export default (params: { mainWindow: BrowserWindow }) => {
               'binary',
             );
 
-            console.log('File blob saved to', saveDialog.filePath);
+            debug('File blob saved to', saveDialog.filePath);
           } catch (error) {
             console.error(error);
           }

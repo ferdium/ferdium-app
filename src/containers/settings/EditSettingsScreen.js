@@ -37,7 +37,7 @@ import globalMessages from '../../i18n/globalMessages';
 import WorkspacesStore from '../../features/workspaces/store';
 import ServicesStore from '../../stores/ServicesStore';
 
-const debug = require('debug')('Ferdium:EditSettingsScreen');
+const debug = require('../../preload-safe-debug')('Ferdium:EditSettingsScreen');
 
 const messages = defineMessages({
   autoLaunchOnStart: {

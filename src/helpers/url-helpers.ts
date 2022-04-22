@@ -6,8 +6,7 @@ import { shell } from 'electron';
 
 import { ALLOWED_PROTOCOLS } from '../config';
 
-// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
-// const debug = require('debug')('Ferdium:Helpers:url');
+const debug = require('../preload-safe-debug')('Ferdium:Helpers:url');
 
 export function isValidExternalURL(url: string | URL) {
   let parsedUrl: URL;
@@ -19,7 +18,7 @@ export function isValidExternalURL(url: string | URL) {
 
   const isAllowed = ALLOWED_PROTOCOLS.includes(parsedUrl.protocol);
 
-  console.log('protocol check is', isAllowed, 'for:', url);
+  debug('protocol check is', isAllowed, 'for:', url);
 
   return isAllowed;
 }
@@ -38,7 +37,7 @@ export function openExternalUrl(
   url: string | URL,
   skipValidityCheck: boolean = false,
 ) {
-  console.log('Open url:', url, 'with skipValidityCheck:', skipValidityCheck);
+  debug('Open url:', url, 'with skipValidityCheck:', skipValidityCheck);
   if (skipValidityCheck || isValidExternalURL(url)) {
     shell.openExternal(url.toString());
   }

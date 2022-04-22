@@ -2,7 +2,7 @@ import { app, ipcMain, BrowserWindow } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import { isMac, isWindows } from '../../environment';
 
-const debug = require('debug')('Ferdium:ipcApi:autoUpdate');
+const debug = require('../../preload-safe-debug')('Ferdium:ipcApi:autoUpdate');
 
 export default (params: { mainWindow: BrowserWindow; settings: any }) => {
   const enableUpdate = Boolean(params.settings.app.get('automaticUpdates'));

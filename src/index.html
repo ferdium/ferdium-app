@@ -28,6 +28,9 @@
       require('./sentry');
       const { isDevMode } = require('./environment-remote');
       if (isDevMode) {
+        // Here we must access `debug` directly (instead of through `preload-safe-debug`),
+        // because we need to set the log level.
+        // However, this is safe, because we aren't in a preload script.
         const debugging = require('debug');
         debugging.enable(process.env.DEBUG);
 

@@ -14,7 +14,7 @@ import { DEBUG_API } from '../../config';
 import AppStore from '../../stores/AppStore';
 import ServicesStore from '../../stores/ServicesStore';
 
-const debug = require('debug')('Ferdium:feature:publishDebugInfo');
+const debug = require('../../preload-safe-debug')('Ferdium:feature:publishDebugInfo');
 
 const messages = defineMessages({
   title: {

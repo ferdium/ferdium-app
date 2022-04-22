@@ -1,7 +1,6 @@
 import { ipcRenderer } from 'electron';
 
-// TODO: Go back to 'debug' from 'console.log' when https://github.com/electron/electron/issues/31689 is fixed
-// const debug = require('debug')('Ferdium:Plugin:DialogTitleHandler');
+const debug = require('../preload-safe-debug')('Ferdium:Plugin:DialogTitleHandler');
 
 export class DialogTitleHandler {
   titleCache: { title: string };
@@ -26,7 +25,7 @@ export class DialogTitleHandler {
       return;
     }
 
-    console.log('Sending active dialog title to host %s', newTitle);
+    debug('Sending active dialog title to host %s', newTitle);
     ipcRenderer.sendToHost('active-dialog-title', newTitle);
 
     this.titleCache.title = newTitle;
