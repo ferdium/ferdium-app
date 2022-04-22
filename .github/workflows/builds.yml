@@ -313,9 +313,9 @@ jobs:
         with:
           node-version-file: ".nvmrc"
       - name: Install npm
-        run: npm i -gf "npm@$(jq --raw-output .engines.npm <"package.json")" && npm -v
+        run: FOR /F %A IN ('jq --raw-output .engines.npm package.json') DO npm i -gf npm@%~A && npm -v
       - name: Install pnpm
-        run: npm i -gf "pnpm@$(jq --raw-output .engines.pnpm <"./recipes/package.json")" && pnpm -v
+        run: FOR /F %A IN ('jq --raw-output .engines.pnpm recipes/package.json') DO npm i -gf pnpm@%~A && pnpm -v
       - name: Install node dependencies
         uses: nick-invision/retry@v2.4.0
         with:
