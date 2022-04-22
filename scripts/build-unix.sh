@@ -98,7 +98,7 @@ else
 fi
 
 # Now the meat.....
-$BASE_CMD install
+$BASE_CMD i
 $BASE_CMD run prepare-code
 
 # -----------------------------------------------------------------------------
@@ -111,13 +111,13 @@ popd
 
 # -----------------------------------------------------------------------------
 printf "\n*************** Building app ***************\n"
-if [[ "$(uname --machine)" =~ "arm" ]]; then
+if [[ "$(uname -m)" =~ "arm" ]]; then
   TARGET_ARCH=arm64
 else
   TARGET_ARCH=x64
 fi
 
-if [[ "$(uname | tr '[:upper:]' '[:lower:]')" =~ "Darwin" ]]; then
+if [[ "$(uname)" =~ "Darwin" ]]; then
   TARGET_OS="mac"
 else
   TARGET_OS="linux"
