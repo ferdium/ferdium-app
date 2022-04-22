@@ -50,7 +50,7 @@ class Welcome extends Component {
       <div className="welcome">
         <div className="welcome__content">
           <img
-            src="./assets/images/ferdium-icon.svg"
+            src="./assets/images/logo.svg"
             className="welcome__logo"
             alt=""
           />

@@ -145,7 +145,7 @@ class AccountDashboard extends Component {
                       <div className="account">
                         <div className="account__box account__box--flex">
                           <div className="account__avatar">
-                            <img src="./assets/images/ferdium-icon.svg" alt="" />
+                            <img src="./assets/images/logo.svg" alt="" />
                           </div>
                           <div className="account__info">
                             <H1>

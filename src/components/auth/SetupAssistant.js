@@ -212,7 +212,7 @@ class SetupAssistant extends Component {
           </Appear>
         )}
 
-        <img src="./assets/images/ferdium-icon.svg" className="auth__logo" alt="" />
+        <img src="./assets/images/logo.svg" className="auth__logo" alt="" />
         <h1>{intl.formatMessage(messages.headline)}</h1>
         <h2>{intl.formatMessage(messages.subHeadline)}</h2>
         <div className={classnames('grid', classes.servicesGrid)}>

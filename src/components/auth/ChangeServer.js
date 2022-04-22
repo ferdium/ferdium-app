@@ -106,7 +106,7 @@ class ChangeServer extends Component {
     return (
       <div className="auth__container">
         <form className="franz-form auth__form" onSubmit={e => this.submit(e)}>
-          <Link to='/auth/welcome'><img src="./assets/images/ferdium-icon.svg" className="auth__logo" alt="" /></Link>
+          <Link to='/auth/welcome'><img src="./assets/images/logo.svg" className="auth__logo" alt="" /></Link>
           <h1>{intl.formatMessage(messages.headline)}</h1>
           {form.$('server').value === this.franzServer && (
             <Infobox type="warning">

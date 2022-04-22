@@ -112,7 +112,7 @@ class Services extends Component {
           <Appear timeout={1500} transitionName="slideUp">
             <div className="services__no-service">
               <img
-                src="./assets/images/moustache.svg"
+                src="./assets/images/logo-beard-only.svg"
                 alt="Logo"
                 style={{ maxHeight: '50vh' }}
               />
