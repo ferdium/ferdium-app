@@ -25,14 +25,14 @@ fail_with_docs() {
 }
 
 command_exists() {
-  type $1 &> /dev/null 2>&1
+  type "$1" &> /dev/null 2>&1
 }
 
 # -----------------------------------------------------------------------------
 #                  Checking the developer environment
 # checking for installed programmes
-command -v node >/dev/null || fail_with_docs "Node is not installed"
-command -v jq >/dev/null || fail_with_docs "jq is not installed"
+command_exists node || fail_with_docs "Node is not installed"
+command_exists jq || fail_with_docs "jq is not installed"
 
 EXPECTED_NODE_VERSION=$(cat .nvmrc)
 ACTUAL_NODE_VERSION=$(node -v)
