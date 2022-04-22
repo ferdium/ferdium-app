@@ -138,9 +138,9 @@ jobs:
         with:
           node-version-file: ".nvmrc"
       - name: Install npm
-        run: npm i -gf "npm@$(jq --raw-output .engines.npm <"package.json")" && npm -v
+        run: npm i -gf "npm@$(jq --raw-output .engines.npm ./package.json)" && npm -v
       - name: Install pnpm
-        run: npm i -gf "pnpm@$(jq --raw-output .engines.pnpm <"./recipes/package.json")" && pnpm -v
+        run: npm i -gf "pnpm@$(jq --raw-output .engines.pnpm ./recipes/package.json)" && pnpm -v
       - name: Install node dependencies
         run: npm i
       - name: Package recipes
@@ -223,9 +223,9 @@ jobs:
         with:
           node-version-file: ".nvmrc"
       - name: Install npm
-        run: npm i -gf "npm@$(jq --raw-output .engines.npm <"package.json")" && npm -v
+        run: npm i -gf "npm@$(jq --raw-output .engines.npm ./package.json)" && npm -v
       - name: Install pnpm
-        run: npm i -gf "pnpm@$(jq --raw-output .engines.pnpm <"./recipes/package.json")" && pnpm -v
+        run: npm i -gf "pnpm@$(jq --raw-output .engines.pnpm ./recipes/package.json)" && pnpm -v
       - name: Install node dependencies
         run: npm i
       - name: Figure out used package.json version
@@ -313,9 +313,9 @@ jobs:
         with:
           node-version-file: ".nvmrc"
       - name: Install npm
-        run: FOR /F %A IN ('jq --raw-output .engines.npm package.json') DO npm i -gf npm@%~A && npm -v
+        run: npm i -gf "npm@$(jq --raw-output .engines.npm package.json)" && npm -v
       - name: Install pnpm
-        run: FOR /F %A IN ('jq --raw-output .engines.pnpm recipes/package.json') DO npm i -gf pnpm@%~A && pnpm -v
+        run: npm i -gf "pnpm@$(jq --raw-output .engines.pnpm ./recipes/package.json)" && pnpm -v
       - name: Install node dependencies
         uses: nick-invision/retry@v2.4.0
         with:
