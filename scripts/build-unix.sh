@@ -25,7 +25,7 @@ fail_with_docs() {
 }
 
 command_exists() {
-  type "$1" &> /dev/null 2>&1
+  type "$1" &>/dev/null 2>&1
 }
 
 # -----------------------------------------------------------------------------
@@ -79,7 +79,7 @@ command_exists asdf && asdf reshim nodejs
 
 # Ensure that the system dependencies are at the correct version
 EXPECTED_NPM_VERSION=$(jq --raw-output .engines.npm <"package.json")
-EXPECTED_PNPM_VERSION="6.32.8" # TODO: find a way to figure out the correct version
+EXPECTED_PNPM_VERSION=$(jq --raw-output .engines.pnpm <"./recipes/package.json")
 if [[ "$(npm --version)" != "$EXPECTED_NPM_VERSION" ]]; then
   npm i -gf "npm@$EXPECTED_NPM_VERSION"
 fi

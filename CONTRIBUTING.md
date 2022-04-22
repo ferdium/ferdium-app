@@ -6,33 +6,32 @@
 
 <!-- TOC depthFrom:2 depthTo:2 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-- [Contributing to Ferdium 6](#contributing-to-ferdium-6)
-  - [Table of contents](#table-of-contents)
-  - [Code of Conduct](#code-of-conduct)
-  - [What should I know before I get started?](#what-should-i-know-before-i-get-started)
-  - [How can I contribute?](#how-can-i-contribute)
-  - [Setting up your development machine](#setting-up-your-development-machine)
-    - [Install system-level dependencies](#install-system-level-dependencies)
-      - [Node.js, npm, pnpm](#nodejs-npm-pnpm)
-      - [Git](#git)
-      - [On Debian/Ubuntu](#on-debianubuntu)
-      - [On Fedora](#on-fedora)
-      - [On Windows](#on-windows)
-    - [Clone repository with submodule](#clone-repository-with-submodule)
-    - [Local caching of dependencies](#local-caching-of-dependencies)
-    - [Install dependencies](#install-dependencies)
-    - [Fix native modules to match current electron node version](#fix-native-modules-to-match-current-electron-node-version)
-    - [Package recipe repository](#package-recipe-repository)
-    - [Using Docker to build a linux-targetted packaged app](#using-docker-to-build-a-linux-targetted-packaged-app)
-    - [Code Signing on a mac](#code-signing-on-a-mac)
-    - [Start development app](#start-development-app)
-    - [Styleguide](#styleguide)
-      - [Git Commit Messages format](#git-commit-messages-format)
-      - [Javascript Coding style-checker](#javascript-coding-style-checker)
-  - [Packaging](#packaging)
-  - [Release](#release)
-    - [Nightly releases](#nightly-releases)
-    - [Updating the code after a hiatus](#updating-the-code-after-a-hiatus)
+- [Table of contents](#table-of-contents)
+- [Code of Conduct](#code-of-conduct)
+- [What should I know before I get started?](#what-should-i-know-before-i-get-started)
+- [How can I contribute?](#how-can-i-contribute)
+- [Setting up your development machine](#setting-up-your-development-machine)
+  - [Install system-level dependencies](#install-system-level-dependencies)
+    - [Node.js, npm, pnpm](#nodejs-npm-pnpm)
+    - [Git](#git)
+    - [On Debian/Ubuntu](#on-debianubuntu)
+    - [On Fedora](#on-fedora)
+    - [On Windows](#on-windows)
+  - [Clone repository with submodule](#clone-repository-with-submodule)
+  - [Local caching of dependencies](#local-caching-of-dependencies)
+  - [Install dependencies](#install-dependencies)
+  - [Fix native modules to match current electron node version](#fix-native-modules-to-match-current-electron-node-version)
+  - [Package recipe repository](#package-recipe-repository)
+  - [Using Docker to build a linux-targetted packaged app](#using-docker-to-build-a-linux-targetted-packaged-app)
+  - [Code Signing on a mac](#code-signing-on-a-mac)
+  - [Start development app](#start-development-app)
+  - [Styleguide](#styleguide)
+    - [Git Commit Messages format](#git-commit-messages-format)
+    - [Javascript Coding style-checker](#javascript-coding-style-checker)
+- [Packaging](#packaging)
+- [Release](#release)
+  - [Nightly releases](#nightly-releases)
+  - [Updating the code after a hiatus](#updating-the-code-after-a-hiatus)
 
 <!-- /TOC -->
 
@@ -59,19 +58,20 @@ _Note:_ This list can likely get outdated. If so, please refer to the specific v
 
 #### Node.js, npm, pnpm
 
-Please make sure you are conforming to the `engines` requirements used by the developers/contributors as specified in the [package.json file](./package.json#engines).
+Please make sure you are conforming to the `engines` requirements used by the developers/contributors as specified in the [`package.json`](./package.json#engines) and [`recipes/package.json`](./recipes/package.json#engine) files.
 
 Currently, these are the combinations of system dependencies that work for MacOS/Linux/Windows:
 
 ```bash
-node -v
-v18.0.0
-npm -v
-8.7.0
-pnpm -v
-6.32.8
-python -v
-3.10.4
+$ jq --null-input '[inputs.engines] | add' < ./package.json < ./recipes/package.json
+{
+  "node": "18.0.0",
+  "npm": "8.7.0",
+  "pnpm": "6.32.8"
+}
+
+$ python --version
+Python 3.10.4
 ```
 
 _Note:_ You can choose any version manager to manage multiple versions of `node` and `npm`. For eg, [nvm](https://github.com/nvm-sh/nvm) or [asdf](https://github.com/asdf-vm/asdf).
