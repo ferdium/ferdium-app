@@ -144,7 +144,7 @@ class Invite extends Component {
 
         <form className="franz-form auth__form" onSubmit={e => this.submit(e)}>
           {!embed && (
-            <img src="./assets/images/ferdium-icon.svg" className="auth__logo" alt="" />
+            <img src="./assets/images/logo.svg" className="auth__logo" alt="" />
           )}
           <h1 className={embed && 'invite__embed'}>
             {intl.formatMessage(messages.headline)}
