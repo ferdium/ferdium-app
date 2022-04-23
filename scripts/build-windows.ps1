@@ -7,8 +7,8 @@
 
 $USERHOME = "${env:HOMEDRIVE}${env:HOMEPATH}"
 
-$env:ELECTRON_CACHE = $USERHOME + '/.cache/electron'
-$env:ELECTRON_BUILDER_CACHE = $USERHOME + '/.cache/electron-builder'
+$env:ELECTRON_CACHE = "$USERHOME\.cache\electron"
+$env:ELECTRON_BUILDER_CACHE = "$USERHOME\.cache\electron-builder"
 $env:CSC_IDENTITY_AUTO_DISCOVERY = $false
 $env:CI = $true
 
@@ -53,7 +53,7 @@ if ("v$EXPECTED_NODE_VERSION" -ne $ACTUAL_NODE_VERSION) {
 }
 
 # Check if the 'recipes' folder is present either as a git submodule or a symbolic link
-if (-not (Test-Path -Path "recipes/package.json" -PathType Leaf)) {
+if (-not (Test-Path -Path recipes\package.json -PathType Leaf)) {
   fail_with_docs "'recipes' folder is missing or submodule has not been checked out"
 }
 
@@ -165,7 +165,7 @@ $TARGET_ARCH="x64"
 Write-Host "*************** App successfully built! ***************"
 
 # Final check to ensure that the version built is the same as the latest commit
-$VERSION_BUILT_HASH = (Get-Content "build/buildInfo.json" | ConvertFrom-Json).gitHashShort
+$VERSION_BUILT_HASH = (Get-Content build\buildInfo.json | ConvertFrom-Json).gitHashShort
 $GIT_BUILT_HASH = (git rev-parse --short HEAD)
 if ($VERSION_BUILT_HASH -ne $GIT_BUILT_HASH)
 {
