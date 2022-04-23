@@ -3,8 +3,8 @@
 # INTRO:
 # This file is used to build ferdium on both x64 and arm-based for macos and linux (not tested on arm for linux).
 # It also handles any corrupted node modules with the 'CLEAN' env var (set it to 'true' for cleaning)
-# It will install the system dependencies except for node (which is still verified)
-# I sometimes symlink my 'recipes' folder so that any changes that I need to do in it can also be committed and pushed
+# It will install the system dependencies except for node and python (which are still verified)
+# I sometimes symlink my 'recipes' folder so that any changes that I need to do in it can also be committed and pushed independently
 # This file can live anywhere in your PATH
 
 set -e
@@ -30,10 +30,12 @@ command_exists() {
 
 # -----------------------------------------------------------------------------
 #                  Checking the developer environment
-# checking for installed programmes
+# Check for installed programmes
 command_exists node || fail_with_docs "Node is not installed"
 command_exists jq || fail_with_docs "jq is not installed"
+command_exists python || fail_with_docs "python is not installed"
 
+# Check node version
 EXPECTED_NODE_VERSION=$(cat .nvmrc)
 ACTUAL_NODE_VERSION=$(node -v)
 if [ "v$EXPECTED_NODE_VERSION" != "$ACTUAL_NODE_VERSION" ]; then
@@ -73,23 +75,40 @@ else
 fi
 
 # -----------------------------------------------------------------------------
-printf "\n*************** Installing node dependencies ***************\n"
+# Ensure that the system dependencies are at the correct version - fail if not
+# Check python version
+EXPECTED_PYTHON_VERSION="3.10.4"
+ACTUAL_PYTHON_VERSION=$(python --version | sed -e "s/Python //")
+if [[ "$ACTUAL_PYTHON_VERSION" != "$EXPECTED_PYTHON_VERSION" ]]; then
+  fail_with_docs "You are not running the expected version of Python!
+    expected: [$EXPECTED_PYTHON_VERSION]
+    actual  : [$ACTUAL_PYTHON_VERSION]"
+fi
+
+# -----------------------------------------------------------------------------
+# Ensure that the system dependencies are at the correct version - recover if not
 # If 'asdf' is installed, reshim for new nodejs if necessary
 command_exists asdf && asdf reshim nodejs
 
 # Ensure that the system dependencies are at the correct version
-EXPECTED_NPM_VERSION=$(jq --raw-output .engines.npm <"package.json")
-EXPECTED_PNPM_VERSION=$(jq --raw-output .engines.pnpm <"./recipes/package.json")
-if [[ "$(npm --version)" != "$EXPECTED_NPM_VERSION" ]]; then
-  npm i -gf "npm@$EXPECTED_NPM_VERSION"
+# Check npm version
+EXPECTED_NPM_VERSION=$(jq --raw-output .engines.npm ./package.json)
+ACTUAL_NPM_VERSION=$(npm --version)
+if [[ "$ACTUAL_NPM_VERSION" != "$EXPECTED_NPM_VERSION" ]]; then
+  npm i -gf npm@$EXPECTED_NPM_VERSION
 fi
-if [[ "$(pnpm --version)" != "$EXPECTED_PNPM_VERSION" ]]; then
-  npm i -gf "pnpm@$EXPECTED_PNPM_VERSION"
+
+# Check pnpm version
+EXPECTED_PNPM_VERSION=$(jq --raw-output .engines.pnpm ./recipes/package.json)
+ACTUAL_PNPM_VERSION=$(pnpm --version)
+if [[ "$ACTUAL_PNPM_VERSION" != "$EXPECTED_PNPM_VERSION" ]]; then
+  npm i -gf pnpm@$EXPECTED_PNPM_VERSION
 fi
 
 # If 'asdf' is installed, reshim for new nodejs if necessary
 command_exists asdf && asdf reshim nodejs
 
+# -----------------------------------------------------------------------------
 # This is useful if we move from 'npm' to 'pnpm' for the main repo as well
 if [[ -s 'pnpm-lock.yaml' ]]; then
   BASE_CMD=pnpm
@@ -123,13 +142,16 @@ else
   TARGET_OS="linux"
 fi
 
-$BASE_CMD run build -- "--$TARGET_ARCH" --"$TARGET_OS" --dir
+$BASE_CMD run build -- --$TARGET_ARCH --$TARGET_OS --dir
 
 printf "\n*************** App successfully built! ***************\n"
+
 # Final check to ensure that the version built is the same as the latest commit
-cat build/buildInfo.json
-git --no-pager log -1
-if [[ $(git rev-parse --short HEAD) != $(jq --raw-output .gitHashShort <"build/buildInfo.json") ]]; then
-  echo "The built version is not on the latest commit"
+VERSION_BUILT_HASH=$(jq --raw-output .gitHashShort ./build/buildInfo.json)
+GIT_BUILT_HASH=$(git rev-parse --short HEAD)
+if [[ $GIT_BUILT_HASH != $VERSION_BUILT_HASH ]]; then
+  echo "The built version is not on the latest commit
+    latest commit : [$GIT_BUILT_HASH]
+    actual build  : [$VERSION_BUILT_HASH]"
   exit 1
 fi
