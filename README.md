@@ -48,6 +48,10 @@ Assets made available via [GitHub releases](https://github.com/ferdium/ferdium-a
 
 _Find answers to frequently asked questions on [ferdium.org/faq](https://ferdium.org/faq/)._
 
+## Migrating from Ferdi
+
+If you are a pre-existing user of Ferdi, and are thinking of switching to Ferdium, you might want to run [the following script](./scripts/migration/migrate-windows.ps1) to migrate your existing Ferdi profile such that Ferdium can pick up the configurations.
+
 ## Contributing
 
 Please read the [contributing guidelines](CONTRIBUTING.md) to setup your development machine and proceed.
