@@ -96,7 +96,7 @@ if ($env:CLEAN -eq "true")
 # Check python version
 $EXPECTED_PYTHON_VERSION = "3.10.4"
 $ACTUAL_PYTHON_VERSION = (python --version).trim("Python ")
-if ([System.Version]$ACTUAL_PYTHON_VERSION -le [System.Version]$EXPECTED_PYTHON_VERSION) {
+if ([System.Version]$ACTUAL_PYTHON_VERSION -ne [System.Version]$EXPECTED_PYTHON_VERSION) {
   fail_with_docs "You are not running the expected version of Python!
     expected: [$EXPECTED_PYTHON_VERSION]
     actual  : [$ACTUAL_PYTHON_VERSION]"
@@ -106,7 +106,7 @@ if ([System.Version]$ACTUAL_PYTHON_VERSION -le [System.Version]$EXPECTED_PYTHON_
 # Check MSVS Tools through MSVS_VERSION
 $EXPECTED_MSVST_VERSION = "2015"
 $ACTUAL_MSVST_VERSION = (npm config get msvs_version)
-if ([double]$ACTUAL_MSVST_VERSION -le [double]$EXPECTED_MSVST_VERSION) {
+if ([double]$ACTUAL_MSVST_VERSION -ne [double]$EXPECTED_MSVST_VERSION) {
   fail_with_docs "You are not running the expected version of MSVS Tools!
     expected: [$EXPECTED_MSVST_VERSION]
     actual  : [$ACTUAL_MSVST_VERSION]"
@@ -150,7 +150,7 @@ else
 & $BASE_CMD run prepare-code
 
 # -----------------------------------------------------------------------------
-Write-Host "\n*************** Building recipes ***************\n"
+Write-Host "*************** Building recipes ***************"
 # Note: 'recipes' is already using only pnpm - can switch to $BASE_CMD AFTER both repos are using pnpm
 Push-Location recipes
 pnpm i
@@ -158,7 +158,7 @@ pnpm package
 Pop-Location
 
 # -----------------------------------------------------------------------------
-Write-Host "\n*************** Building app ***************\n"
+Write-Host "*************** Building app ***************"
 $TARGET_ARCH="x64"
 & $BASE_CMD run build -- --$TARGET_ARCH --dir
 

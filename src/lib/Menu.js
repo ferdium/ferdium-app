@@ -520,7 +520,7 @@ const _titleBarTemplateFactory = (intl, locked) => [
         label: intl.formatMessage(menuItems.changelog),
         click() {
           openExternalUrl(
-            `${GITHUB_FERDIUM_URL}/ferdium/releases/tag/v${ferdiumVersion}`,
+            `${GITHUB_FERDIUM_URL}/ferdium-app/releases/tag/v${ferdiumVersion}`,
             true,
           );
         },
