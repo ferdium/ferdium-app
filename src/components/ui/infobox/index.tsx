@@ -14,7 +14,6 @@ interface IProps extends WithStylesProps<typeof styles> {
   onUnmount?: () => void;
   ctaOnClick?: () => void;
   ctaLabel?: string;
-  ctaLoading?: boolean;
   children: ReactNode;
   className: string;
 }
@@ -115,7 +114,6 @@ class InfoboxComponent extends Component<IProps, IState> {
     ctaOnClick: () => {},
     onDismiss: () => {},
     ctaLabel: '',
-    ctaLoading: false,
   };
 
   state = {

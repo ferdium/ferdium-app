@@ -26,12 +26,7 @@ import WorkspacesScreen from './features/workspaces/containers/WorkspacesScreen'
 import EditWorkspaceScreen from './features/workspaces/containers/EditWorkspaceScreen';
 import { WORKSPACES_ROUTES } from './features/workspaces/constants';
 
-import SettingsStore from './stores/SettingsStore';
-
 type Props = {
-  stores: {
-    settings: typeof SettingsStore;
-  };
   history: any;
 };
 
