@@ -18,14 +18,12 @@ interface IProps
   extends TextareaHTMLAttributes<HTMLTextAreaElement>,
     IFormField,
     WithStylesProps<typeof styles> {
-  focus?: boolean;
   data: IData;
   textareaClassName?: string;
 }
 
 class TextareaComponent extends Component<IProps> {
   static defaultProps = {
-    focus: false,
     onChange: () => {},
     onBlur: () => {},
     onFocus: () => {},
