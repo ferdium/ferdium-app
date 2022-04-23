@@ -63,12 +63,14 @@ if [ "$CLEAN" != "true" ]; then
   printf "\n*************** SKIPPING Cleaning ***************\n"
 else
   printf "\n*************** Cleaning!!!!!! ***************\n"
-  npm cache clean --force
-  rm -rf ~/.npm ~/.node-gyp ~/.asdf/installs/nodejs/*/.npm/
+
   if [[ -s 'pnpm-lock.yaml' ]]; then
     pnpm store prune || true # in case the pnpm executable itself is not present
     rm -rf ~/.pnpm-store ~/.pnpm-state
   fi
+
+  npm cache clean --force
+  rm -rf ~/.npm ~/.node-gyp ~/.electron-gyp ~/.asdf/installs/nodejs/*/.npm/
 
   git -C recipes clean -fxd # Clean recipes folder/submodule
   git clean -fxd            # Note: This will blast away the 'recipes' folder if you have symlinked it
@@ -125,7 +127,7 @@ printf "\n*************** Building recipes ***************\n"
 # Note: 'recipes' is already using only pnpm - can switch to $BASE_CMD AFTER both repos are using pnpm
 pushd recipes
 pnpm i
-pnpm run package
+pnpm package
 popd
 
 # -----------------------------------------------------------------------------

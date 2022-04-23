@@ -27,7 +27,7 @@ COPY . .
 WORKDIR /usr/src/ferdium/recipes
 
 RUN pnpm i \
-  && pnpm run package
+  && pnpm package
 
 WORKDIR /usr/src/ferdium
 

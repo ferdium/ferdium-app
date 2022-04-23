@@ -31,8 +31,7 @@
     "extract": "formatjs extract 'src/**/*.{js,ts,tsx}' --out-file temp.json --flatten --id-interpolation-pattern '[sha512:contenthash:base64:6]' --preserve-whitespace",
     "compile": "formatjs compile 'temp.json' --out-file src/i18n/locales/en-US.json",
     "manage-translations": "npm run extract && npm run compile && rimraf temp.json",
-    "prebuild": "preval-build-info-cli && gulp build",
-    "build": "electron-builder",
+    "build": "preval-build-info-cli && gulp build && electron-builder",
     "contributors": "all-contributors",
     "reformat-files": "./node_modules/.bin/prettier --ignore-path .eslintignore --write --require-pragma \"**/*.{js,jsx,scss}\"",
     "update-submodules": "git submodule update --init --recursive --remote --rebase --force",
@@ -110,7 +109,7 @@
     "react-tooltip": "^4.2.21",
     "route-parser": "^0.0.5",
     "semver": "^7.3.5",
-    "sqlite3": "5.0.2",
+    "sqlite3": "5.0.5",
     "tar": "^6.1.11",
     "tslib": "^2.3.1",
     "useragent-generator": "^1.1.1-amkt-22079-finish.0",
@@ -119,6 +118,7 @@
     "ws": "^8.4.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.17.9",
     "@babel/eslint-parser": "^7.16.3",
     "@babel/plugin-proposal-class-properties": "^7.16.7",
     "@babel/plugin-proposal-decorators": "^7.16.7",

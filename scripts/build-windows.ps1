@@ -67,11 +67,9 @@ if ($env:CLEAN -eq "true")
 {
   $NPM_PATH = "$USERHOME\.npm"
   $NODE_GYP = "$USERHOME\.node-gyp"
+  $ELECTRON_GYP = "$USERHOME\.electron-gyp"
 
   Write-Host "Cleaning!"
-  npm cache clean --force
-  Remove-Item -Path $NPM_PATH -Recurse -ErrorAction SilentlyContinue
-  Remove-Item -Path $NODE_GYP -Recurse -ErrorAction SilentlyContinue
 
   if ( (Test-Path -Path ".\pnpm-lock.yaml") -and (Get-Command -ErrorAction Ignore -Type Application pnpm) )
   {
@@ -80,9 +78,14 @@ if ($env:CLEAN -eq "true")
 
     pnpm store prune
 
-    Remove-Item -Path $PNPM_STORE -Recurse
-    Remove-Item -Path $PNPM_STATE -Recurse
+    Remove-Item -Path $PNPM_STORE -Recurse -ErrorAction SilentlyContinue
+    Remove-Item -Path $PNPM_STATE -Recurse -ErrorAction SilentlyContinue
   }
+
+  npm cache clean --force
+  Remove-Item -Path $NPM_PATH -Recurse -ErrorAction SilentlyContinue
+  Remove-Item -Path $NODE_GYP -Recurse -ErrorAction SilentlyContinue
+  Remove-Item -Path $ELECTRON_GYP -Recurse -ErrorAction SilentlyContinue
 
   git -C recipes clean -fxd # Clean recipes folder/submodule
   git clean -fxd            # Note: This will blast away the 'recipes' folder if you have symlinked it
@@ -151,7 +154,7 @@ Write-Host "\n*************** Building recipes ***************\n"
 # Note: 'recipes' is already using only pnpm - can switch to $BASE_CMD AFTER both repos are using pnpm
 Push-Location recipes
 pnpm i
-pnpm run package
+pnpm package
 Pop-Location
 
 # -----------------------------------------------------------------------------

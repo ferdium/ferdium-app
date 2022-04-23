@@ -146,7 +146,7 @@ npm run build
 Ferdium requires its recipes to be packaged before it can use it. When running Ferdium as a development instance, you'll need to package the local recipes before you can create any services inside Ferdium.
 
 ```bash
-cd recipes && pnpm i && pnpm run package
+cd recipes && pnpm i && pnpm package
 ```
 
 ### Using Docker to build a linux-targetted packaged app
