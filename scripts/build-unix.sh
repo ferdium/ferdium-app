@@ -102,7 +102,7 @@ fi
 
 # Check pnpm version
 EXPECTED_PNPM_VERSION=$(jq --raw-output .engines.pnpm ./recipes/package.json)
-ACTUAL_PNPM_VERSION=$(pnpm --version)
+ACTUAL_PNPM_VERSION=$(pnpm --version || true) # in case the pnpm executable itself is not present
 if [[ "$ACTUAL_PNPM_VERSION" != "$EXPECTED_PNPM_VERSION" ]]; then
   npm i -gf pnpm@$EXPECTED_PNPM_VERSION
 fi
