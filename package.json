@@ -150,7 +150,7 @@
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
     "electron": "18.1.0",
-    "electron-builder": "^22.14.12",
+    "electron-builder": "23.0.7",
     "electron-notarize": "^1.1.1",
     "eslint": "^8.6.0",
     "eslint-config-airbnb": "^19.0.4",
