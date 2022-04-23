@@ -127,7 +127,7 @@ if ($EXPECTED_NPM_VERSION -ne $ACTUAL_NPM_VERSION) {
 
 # Check pnpm version
 $EXPECTED_PNPM_VERSION = (Get-Content recipes\package.json | ConvertFrom-Json).engines.pnpm
-ACTUAL_PNPM_VERSION=$(pnpm --version)
+$ACTUAL_PNPM_VERSION = (pnpm --version)
 if ($ACTUAL_PNPM_VERSION -ne $EXPECTED_PNPM_VERSION) {
   npm i -gf pnpm@$EXPECTED_PNPM_VERSION
 }
