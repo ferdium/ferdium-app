@@ -5,7 +5,6 @@
 # I sometimes symlink my 'recipes' folder so that any changes that I need to do in it can also be committed and pushed
 # This file can live anywhere in your PATH
 
-
 $USERHOME = "${env:HOMEDRIVE}${env:HOMEPATH}"
 
 $env:ELECTRON_CACHE = $USERHOME + '/.cache/electron'
@@ -26,7 +25,6 @@ Function fail_with_docs {Param ($1)
 }
 
 Function Test-CommandExists { Param ($command, $1)
-
   $oldPreference = $ErrorActionPreference
   $ErrorActionPreference = "stop"
 
@@ -57,7 +55,7 @@ if ("v$EXPECTED_NODE_VERSION" -ne $ACTUAL_NODE_VERSION) {
 }
 
 # Checking npm version
-$EXPECTED_NPM_VERSION = (Get-Content package.json | ConvertFrom-Json).engines.npm 
+$EXPECTED_NPM_VERSION = (Get-Content package.json | ConvertFrom-Json).engines.npm
 $ACTUAL_NPM_VERSION = (npm -v)
 
 if ($EXPECTED_NPM_VERSION -ne $ACTUAL_NPM_VERSION) {
@@ -68,7 +66,7 @@ if ($EXPECTED_NPM_VERSION -ne $ACTUAL_NPM_VERSION) {
 }
 
 # Checking python version
-$EXPECTED_PYTHON_VERSION = "3.6"
+$EXPECTED_PYTHON_VERSION = "3.10.4"
 $ACTUAL_PYTHON_VERSION = (python --version).trim("Python ")
 
 if ([System.Version]$ACTUAL_PYTHON_VERSION -le [System.Version]$EXPECTED_PYTHON_VERSION) {
@@ -94,7 +92,7 @@ if (-not (Test-Path -Path "recipes/package.json" -PathType Leaf)) {
   fail_with_docs "'recipes' folder is missing or submodule has not been checked out"
 }
 
-if ( $env:CLEAN -eq "true" )
+if ($env:CLEAN -eq "true")
 {
   $NPM_PATH = "$USERHOME\.npm"
   $NODE_GYP = "$USERHOME\.node-gyp"
@@ -120,11 +118,13 @@ if ( $env:CLEAN -eq "true" )
 }
 
 # Ensure that the system dependencies are at the correct version
+$EXPECTED_PNPM_VERSION = (Get-Content recipes\package.json | ConvertFrom-Json).engines.pnpm
+
 npm i -gf npm@$EXPECTED_NPM_VERSION
-npm i -gf pnpm@6.32.8
+npm i -gf pnpm@$EXPECTED_PNPM_VERSION
 
 # This is useful if we move from 'npm' to 'pnpm' for the main repo as well
-if ( (Test-Path -Path ".\pnpm-lock.yaml") -and (Get-Command -ErrorAction Ignore -Type Application pnpm) )
+if ((Test-Path -Path ".\pnpm-lock.yaml") -and (Get-Command -ErrorAction Ignore -Type Application pnpm))
 {
   $BASE_CMD="pnpm"
   $env:EXEC_CMD="pnpm dlx"
