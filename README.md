@@ -17,7 +17,6 @@
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 <a href='#contributors-'><img src='https://img.shields.io/badge/contributors-256-default.svg?logo=github' alt='Contributors'/></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
-<a href="#backers-via-opencollective"><img alt="Open Collective backers" src="https://img.shields.io/opencollective/backers/ferdium?logo=open-collective"></a>
 </p>
 
 > 🤴🏽 Hard-fork of [Franz](https://github.com/meetfranz/franz), adding awesome features and removing unwanted ones.
@@ -63,24 +62,3 @@ Special thanks goes to these awesome people:
 <a href="https://github.com/ferdium/ferdium-app/blob/develop/.all-contributorsrc" target="_blank"><img src="https://opencollective.com/ferdium/contributors.svg?avatarHeight=42&width=890&button=off"></a>
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
-
-<!-- TODO: Uncomment once we get funding sorted
-### Backers via Open Collective
-
-<a href="https://opencollective.com/ferdium#section-contribute" target="_blank"><img src="https://opencollective.com/ferdium/backers.svg?avatarHeight=42&width=890"></a>
-
-Mention to the individuals backing us via [GitHub Sponsors](https://github.com/sponsors/ferdium) as well.
-
-### Sponsors
-
-<p>
-  <a href="https://www.digitalocean.com/?refcode=5292301af793">
-    <img src="https://ferdium.org/wp-content/uploads/sites/4/2021/09/digitalocean-logo-vector-1-1.svg" height="32px">
-  </a>
-</p>
-<p>
-  <a href="https://www.parallels.com/">
-    <img src="https://ferdium.org/wp-content/uploads/sites/4/2021/12/Parallels_logo.svg" height="30px">
-  </a>
-</p>
--->

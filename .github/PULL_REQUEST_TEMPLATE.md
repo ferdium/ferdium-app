@@ -8,12 +8,7 @@
 1. Please remember that if you are logging a bug for some service that has _stopped working_ or is _working incorrectly_, please log the bug [here](https://github.com/ferdium/ferdium-recipes/issues)
 2. If you are requesting support for a **new service** in Ferdium, please log it [here](https://github.com/ferdium/ferdium-recipes/pulls)
 3. Please remember to read the [self-help documentation](https://github.com/ferdium/ferdium-app#troubleshooting-recipes-self-help) - in case it helps you unblock yourself for issues related to older versions of recipes that were installed on your machine. (These will get automatically upgraded when you upgrade to the newer versions of Ferdium, but to get new recipes between Ferdium releases, this documentation is quite useful.)
-<!-- TODO: Uncomment once we get funding sorted
-4. Please consider supporting Ferdium!
-  👉 https://github.com/sponsors/ferdium
-  👉 https://opencollective.com/ferdium/donate
--->
-5. Please ensure you've completed all of the following.
+4. Please ensure you've completed all of the following.
 
 - [ ] I have read the [Contributing Guidelines](https://github.com/ferdium/ferdium-app/blob/develop/CONTRIBUTING.md) for this project.
 - [ ] I agree to follow the [Code of Conduct](https://github.com/ferdium/ferdium-app/blob/develop/CODE_OF_CONDUCT.md) that this project adheres to.
