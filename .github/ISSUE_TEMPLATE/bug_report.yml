@@ -20,6 +20,58 @@ body:
       options:
         - label: I have searched the [issues tracker](https://github.com/ferdium/ferdium-app/issues) for a bug report similar to mine, in vain
           required: true
+  - type: input
+    attributes:
+      label: Ferdium Version
+      description: What version of Ferdium are you using?
+      placeholder: 6.0.0-nightly.7
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: What Operating System are you using?
+      options:
+        - Windows
+        - macOS
+        - Ubuntu
+        - Other Linux
+        - Other (specify below)
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Operating System Version
+      description: What Operating System version are you using? On Windows, click Start button > Settings > System > About. On macOS, click the Apple Menu > About This Mac. On Linux, use lsb_release or uname -a.
+      placeholder: "e.g. Windows 10 version 1909, macOS Catalina 10.15.7, or Ubuntu 20.04"
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: What arch are you using?
+      options:
+        - x64
+        - ia32
+        - arm64 (including Apple Silicon)
+        - Other (specify in Additional information section)
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Last Known Working Ferdium version
+      description: What is the last version of Ferdium this worked in, if applicable?
+      placeholder: 6.0.0-nightly.7
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: A clear and concise description of what you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Actual Behavior
+      description: A clear description of what actually happens.
+    validations:
+      required: true
   - type: textarea
     attributes:
       label: Steps to reproduce
