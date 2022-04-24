@@ -11,9 +11,18 @@
 
 # Ferdium
 
+- [Ferdium](#ferdium)
+  - [Screenshots](#screenshots)
+  - [Download](#download)
+  - [Unsigned Nightlies on MacOS](#unsigned-nightlies-on-macos)
+  - [Migrating from Ferdi](#migrating-from-ferdi)
+  - [Contributing](#contributing)
+
 <p>
 <a href="https://github.com/ferdium/ferdium-app/actions/workflows/builds.yml"><img alt="Build Status" src="https://github.com/ferdium/ferdium-app/actions/workflows/builds.yml/badge.svg?branch=develop&event=push"></a>
+<!-- TODO: Uncomment once we have integrated with crowdin
 <a title="Crowdin" target="_blank" href="https://crowdin.com/project/ferdium"><img src="https://badges.crowdin.net/ferdium/localized.svg"></a>
+-->
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 <a href='#contributors-'><img src='https://img.shields.io/badge/contributors-256-default.svg?logo=github' alt='Contributors'/></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
@@ -47,6 +56,10 @@ Assets made available via [GitHub releases](https://github.com/ferdium/ferdium-a
 
 _Find answers to frequently asked questions on [ferdium.org/faq](https://ferdium.org/faq/)._
 
+## Unsigned Nightlies on MacOS
+
+Since we are waiting to acquire the Apple Developer License, we are publishing our nightlies without being signed. If you download these, and are on MacOS beyond Catalina, you will face the issue that the OS says the `dmg` is corrupted. If so, please run the command in [this comment](https://github.com/ferdium/ferdium-app/issues/34#issuecomment-1107655575)
+
 ## Migrating from Ferdi
 
 If you are a pre-existing user of Ferdi, and are thinking of switching to Ferdium, you might want to run [the following script](./scripts/migration/migrate-windows.ps1) to migrate your existing Ferdi profile such that Ferdium can pick up the configurations.
@@ -55,6 +68,7 @@ If you are a pre-existing user of Ferdi, and are thinking of switching to Ferdiu
 
 Please read the [contributing guidelines](CONTRIBUTING.md) to setup your development machine and proceed.
 
+<!-- TODO: Uncomment once we have integrated with opencollective
 ## Contributors ✨
 
 Special thanks goes to these awesome people:
@@ -62,3 +76,4 @@ Special thanks goes to these awesome people:
 <a href="https://github.com/ferdium/ferdium-app/blob/develop/.all-contributorsrc" target="_blank"><img src="https://opencollective.com/ferdium/contributors.svg?avatarHeight=42&width=890&button=off"></a>
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+-->
