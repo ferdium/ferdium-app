@@ -66,7 +66,7 @@ Currently, these are the combinations of system dependencies that work for MacOS
 ```bash
 $ jq --null-input '[inputs.engines] | add' < ./package.json < ./recipes/package.json
 {
-  "node": "18.0.0",
+  "node": "16.14.2",
   "npm": "8.7.0",
   "pnpm": "6.32.8"
 }
@@ -98,7 +98,7 @@ dnf install libX11-devel libXext-devel libXScrnSaver-devel libxkbfile-devel rpm
 Please make sure you have the following installed:
 
 - Python 3 or higher (we recommend the latest version: [3.10.4](https://www.python.org/ftp/python/3.10.4/python-3.10.4-amd64.exe))
-- Microsoft Visual Studio Build Tools (2019 or higher) - Only tested with 2019 so far.
+- Microsoft Visual Studio Build Tools (2019 or higher - with Windows 10 SDK selected) - Only tested with 2019 so far.
 
 ### Clone repository with submodule
 
