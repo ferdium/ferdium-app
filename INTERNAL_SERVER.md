@@ -14,25 +14,15 @@ Internal Ferdium Server used for storing settings/preferences without logging in
 - Only allows Ferdium clients to connect to the API
 
 ## Configuration
-franz-server's configuration is saved inside the `env.ini` file. Besides AdonisJS's settings, `ferdium-internal-server` has the following custom settings:
-- `CONNECT_WITH_FRANZ` (`true` or `false`, default: `true`): Whether to enable connections to the Franz server. By enabling this option, ferdium-internal-server can:
-  - Show the full Franz recipe library instead of only custom recipes
-  - Import Franz accounts
+ferdium-internal-server's configuration is saved inside the `env.ini` file. Besides AdonisJS's settings, `ferdium-internal-server` has the following custom settings:
+- `CONNECT_WITH_FRANZ` (`true` or `false`, default: `true`): Whether to enable connections to the Franz server. By enabling this option, `ferdium-internal-server` can:
+  - Show the full Franz/Ferdi recipe library instead of only custom recipes
+  - Import Franz/Ferdi accounts
 
-## Importing your Franz account
+## Importing your Franz/Ferdi account
 `ferdium-internal-server` allows you to import your full Franz account, including all its settings.
 
-To import your Franz account, open `http://localhost:45569/import` in your browser and login using your Franz account details. `ferdium-internal-server` will create a new user with the same credentials and copy your Franz settings, services and workspaces.
-
-## Development
-
-You can locally develop `ferdium-internal-server` outside of Ferdium.
-
-1. Start the local server via
-  ```bash
-  npm run start:server
-  ```
-2. Change Ferdium's server to `http://localhost:45568` to start using the local test server.
+To import your Franz/Ferdi account, within Ferdium, click on `Help > Import/Export Configuration Data` which will open the running server page in your browser. You can then login using your Franz account details. `ferdium-internal-server` will create a new user with the same credentials and copy your Franz settings, services and workspaces.
 
 ## Note For previous contributors
-For anyone who has *previously* setup Ferdium for development, you will need to unregister the `src/internal-server` from being a git submodule. You can do this by following the steps outlined [here](https://www.w3docs.com/snippets/git/how-to-remove-a-git-submodule.html)
+For anyone who has _previously_ setup Ferdium for development, you will need to unregister the `src/internal-server` from being tracked as a git submodule. You can do this by following the steps outlined [here](https://www.w3docs.com/snippets/git/how-to-remove-a-git-submodule.html)
