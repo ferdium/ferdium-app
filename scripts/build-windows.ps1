@@ -65,8 +65,10 @@ if (-not (Test-Path -Path recipes\package.json -PathType Leaf)) {
 # so that there's no irregular results due to cached modules
 if ($env:CLEAN -eq "true")
 {
-  $NPM_PATH = "$USERHOME\.npm"
-  $NODE_GYP = "$USERHOME\.node-gyp"
+  $NPM_PATH = "$USERHOME\AppData\Roaming\npm\node_modules"
+  $NPM_CACHE1_PATH = "$USERHOME\AppData\Local\npm-cache"
+  $NPM_CACHE2_PATH = "$USERHOME\AppData\Roaming\npm-cache"
+  $NODE_GYP = "$USERHOME\AppData\Local\node-gyp"
   $ELECTRON_GYP = "$USERHOME\.electron-gyp"
 
   Write-Host "Cleaning!"
@@ -84,6 +86,8 @@ if ($env:CLEAN -eq "true")
 
   npm cache clean --force
   Remove-Item -Path $NPM_PATH -Recurse -ErrorAction SilentlyContinue
+  Remove-Item -Path $NPM_CACHE1_PATH -Recurse -ErrorAction SilentlyContinue
+  Remove-Item -Path $NPM_CACHE2_PATH -Recurse -ErrorAction SilentlyContinue
   Remove-Item -Path $NODE_GYP -Recurse -ErrorAction SilentlyContinue
   Remove-Item -Path $ELECTRON_GYP -Recurse -ErrorAction SilentlyContinue
 
