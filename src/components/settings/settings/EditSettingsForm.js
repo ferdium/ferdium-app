@@ -816,7 +816,7 @@ class EditSettingsForm extends Component {
                         )}
                         {updateFailed && (
                           <Infobox type="danger" icon="alert">
-                            An error occured (check the console for more details)
+                            An error occurred (check the console for more details)
                           </Infobox>
                         )}
                       </>
