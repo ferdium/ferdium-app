@@ -36,11 +36,9 @@ jobs:
         with:
           node-version-file: '.nvmrc'
       - name: Install npm
-        run: npm i -gf npm@8.7.0
+        run: npm i -gf "npm@$(node -p 'require("./package.json").engines.npm')" && npm -v
       - name: Install pnpm
-        uses: pnpm/action-setup@v2.0.1
-        with:
-          version: 6.32.8
+        run: npm i -gf "pnpm@$(node -p 'require("./recipes/package.json").engines.pnpm')" && pnpm -v
       - name: Install node dependencies
         run: npm i
       - name: Update submodules
