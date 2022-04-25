@@ -64,6 +64,7 @@ Please make sure you are conforming to the `engines` requirements used by the de
 Currently, these are the combinations of system dependencies that work for MacOS/Linux/Windows:
 
 ```bash
+# Note: 'jq' is not a required system dependency; its only here to show the combined output of versions needed
 $ jq --null-input '[inputs.engines] | add' < ./package.json < ./recipes/package.json
 {
   "node": "16.14.2",

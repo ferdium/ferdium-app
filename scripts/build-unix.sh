@@ -94,14 +94,14 @@ command_exists asdf && asdf reshim nodejs
 
 # Ensure that the system dependencies are at the correct version
 # Check npm version
-EXPECTED_NPM_VERSION=$(jq --raw-output .engines.npm ./package.json)
+EXPECTED_NPM_VERSION=$(node -p 'require("./package.json").engines.npm')
 ACTUAL_NPM_VERSION=$(npm --version)
 if [[ "$ACTUAL_NPM_VERSION" != "$EXPECTED_NPM_VERSION" ]]; then
   npm i -gf npm@$EXPECTED_NPM_VERSION
 fi
 
 # Check pnpm version
-EXPECTED_PNPM_VERSION=$(jq --raw-output .engines.pnpm ./recipes/package.json)
+EXPECTED_PNPM_VERSION=$(node -p 'require("./recipes/package.json").engines.pnpm')
 ACTUAL_PNPM_VERSION=$(pnpm --version || true) # in case the pnpm executable itself is not present
 if [[ "$ACTUAL_PNPM_VERSION" != "$EXPECTED_PNPM_VERSION" ]]; then
   npm i -gf pnpm@$EXPECTED_PNPM_VERSION
