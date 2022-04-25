@@ -313,9 +313,9 @@ jobs:
         with:
           node-version-file: ".nvmrc"
       - name: Install npm
-        run: npm i -gf "npm@$(node -p 'require("./package.json").engines.npm')" && npm -v
+        run: npm i -gf "npm@$(node -p 'require(\"./package.json\").engines.npm')" && npm -v
       - name: Install pnpm
-        run: npm i -gf "pnpm@$(node -p 'require("./recipes/package.json").engines.pnpm')" && pnpm -v
+        run: npm i -gf "pnpm@$(node -p 'require(\"./recipes/package.json\").engines.pnpm')" && pnpm -v
       - name: Install node dependencies
         uses: nick-invision/retry@v2.4.0
         with:
