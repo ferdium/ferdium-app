@@ -199,7 +199,7 @@
   },
   "optionalDependencies": {
     "macos-notification-state": "github:nbashkankov/macos-notification-state#fix-monterey-detect",
-    "node-mac-permissions": "github:codebytere/node-mac-permissions#e5519ad11e02768bfa2f6bbbdd74ff4030d5341d"
+    "node-mac-permissions": "2.2.1"
   },
   "browserslist": [
     "last 2 Chrome versions"
