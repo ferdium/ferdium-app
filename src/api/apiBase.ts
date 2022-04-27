@@ -34,7 +34,6 @@ const apiBase = (withVersion = true) => {
 export default apiBase;
 
 export function termsBase() {
-  // TODO: This needs to handle local vs ferdium vs franz servers
   return (window as any).ferdium.stores.settings.all.app.server !== LIVE_FRANZ_API
     ? (window as any).ferdium.stores.settings.all.app.server
     : DEV_API_FRANZ_WEBSITE;
