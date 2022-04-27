@@ -312,6 +312,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
+      - name: Fixes Binding file
+        run: mv -v C:\Users\runneradmin\AppData\Local\node-gyp\Cache\16.14.2\include\node\common.gypi.DELETE.* C:\Users\runneradmin\AppData\Local\node-gyp\Cache\16.14.2\include\node\common.gypi
       - name: Install npm
         run: npm i -gf "npm@$(node -p 'require(\"./package.json\").engines.npm')" && npm -v
       - name: Install pnpm
