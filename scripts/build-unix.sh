@@ -32,7 +32,6 @@ command_exists() {
 #                  Checking the developer environment
 # Check for installed programmes
 command_exists node || fail_with_docs "Node is not installed"
-command_exists jq || fail_with_docs "jq is not installed"
 command_exists python || fail_with_docs "python is not installed"
 
 # Check node version
@@ -149,7 +148,7 @@ $BASE_CMD run build -- --$TARGET_ARCH --$TARGET_OS --dir
 printf "\n*************** App successfully built! ***************\n"
 
 # Final check to ensure that the version built is the same as the latest commit
-VERSION_BUILT_HASH=$(jq --raw-output .gitHashShort ./build/buildInfo.json)
+VERSION_BUILT_HASH=$(node -p 'require("./build/buildInfo.json").gitHashShort')
 GIT_BUILT_HASH=$(git rev-parse --short HEAD)
 if [[ $GIT_BUILT_HASH != $VERSION_BUILT_HASH ]]; then
   echo "The built version is not on the latest commit
