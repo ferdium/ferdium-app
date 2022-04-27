@@ -137,6 +137,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
+      - name: Failing here!
       - name: Install npm
         run: npm i -gf "npm@$(node -p 'require("./package.json").engines.npm')" && npm -v
       - name: Install pnpm
