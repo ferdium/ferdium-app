@@ -8,7 +8,7 @@ import { H1, H2 } from '../../ui/headline';
 import Loader from '../../ui/Loader';
 import Button from '../../ui/Button';
 import Infobox from '../../ui/Infobox';
-import { LOCAL_SERVER, LIVE_FRANZ_API } from '../../../config';
+import { LOCAL_SERVER, LIVE_FRANZ_API, LIVE_FERDI_API } from '../../../config';
 
 const messages = defineMessages({
   headline: {
@@ -95,6 +95,7 @@ class AccountDashboard extends Component {
 
     const isUsingWithoutAccount = server === LOCAL_SERVER;
     const isUsingFranzServer = server === LIVE_FRANZ_API;
+    const isUsingFerdiServer = server === LIVE_FERDI_API;
 
     return (
       <div className="settings__main">
@@ -188,6 +189,29 @@ class AccountDashboard extends Component {
                   )}
 
                   {isUsingFranzServer && (
+                    <div className="account franz-form">
+                      <div className="account__box">
+                        <H2>
+                          {intl.formatMessage(messages.headlineDangerZone)}
+                        </H2>
+                        {!isDeleteAccountSuccessful && (
+                          <div className="account__subscription">
+                            <p>{intl.formatMessage(messages.deleteInfo)}</p>
+                            <Button
+                              label={intl.formatMessage(messages.deleteAccount)}
+                              buttonType="danger"
+                              onClick={() => deleteAccount()}
+                              loaded={!isLoadingDeleteAccount}
+                            />
+                          </div>
+                        )}
+                        {isDeleteAccountSuccessful && (
+                          <p>{intl.formatMessage(messages.deleteEmailSent)}</p>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                  {isUsingFerdiServer && (
                     <div className="account franz-form">
                       <div className="account__box">
                         <H2>
