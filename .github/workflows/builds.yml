@@ -34,7 +34,7 @@ env:
 
 jobs:
   check_updates:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     name: "Check latest commit: ${{ github.event.inputs.message }}"
     outputs:
       should_run: ${{ steps.should_run.outputs.should_run }}
@@ -96,7 +96,7 @@ jobs:
     name: "macos ${{ github.event.inputs.message }}"
     needs: check_updates
     if: ${{ (needs.check_updates.outputs.should_run != 'false') && (github.event_name != 'workflow_dispatch' || (github.event_name == 'workflow_dispatch' && (contains(github.event.inputs.message, '[macOS]') || (!contains(github.event.inputs.message, '[macOS]') && !contains(github.event.inputs.message, '[Linux]') && !contains(github.event.inputs.message, '[Windows]'))))) }}
-    runs-on: macos-latest
+    runs-on: macos-12
     steps:
       - name: Set env vars
         run: |
@@ -287,7 +287,7 @@ jobs:
     name: "windows ${{ github.event.inputs.message }}"
     needs: check_updates
     if: ${{ (needs.check_updates.outputs.should_run != 'false') && (github.event_name != 'workflow_dispatch' || (github.event_name == 'workflow_dispatch' && (contains(github.event.inputs.message, '[Windows]') || (!contains(github.event.inputs.message, '[macOS]') && !contains(github.event.inputs.message, '[Linux]') && !contains(github.event.inputs.message, '[Windows]'))))) }}
-    runs-on: windows-latest
+    runs-on: windows-2019
     steps:
       - name: Set env vars
         run: |
