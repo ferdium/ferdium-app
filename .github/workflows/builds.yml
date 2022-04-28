@@ -287,7 +287,7 @@ jobs:
     name: "windows ${{ github.event.inputs.message }}"
     needs: check_updates
     if: ${{ (needs.check_updates.outputs.should_run != 'false') && (github.event_name != 'workflow_dispatch' || (github.event_name == 'workflow_dispatch' && (contains(github.event.inputs.message, '[Windows]') || (!contains(github.event.inputs.message, '[macOS]') && !contains(github.event.inputs.message, '[Linux]') && !contains(github.event.inputs.message, '[Windows]'))))) }}
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
       - name: Set env vars
         run: |
