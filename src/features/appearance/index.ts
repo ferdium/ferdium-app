@@ -194,7 +194,7 @@ function generateServiceRibbonWidthStyle(
       font-size: ${width / 3}px !important;
     }
     .app .app__content {
-      padding-top: ${width + sidebarSizeBias}px !important;
+      padding-top: ${width}px !important;
     }
     .workspaces-drawer {
       margin-top: -${width}px !important;
