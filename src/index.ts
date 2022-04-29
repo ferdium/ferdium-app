@@ -7,6 +7,7 @@ import {
   ipcMain,
   session,
   dialog,
+  desktopCapturer,
 } from 'electron';
 
 import { emptyDirSync, ensureFileSync } from 'fs-extra';
@@ -631,6 +632,11 @@ ipcMain.on('set-spellchecker-locales', (_e, { locale, serviceId }) => {
   debug(`Setting spellchecker locales to: ${locales}`);
   serviceSession.setSpellCheckerLanguages(locales);
 });
+
+
+ipcMain.handle('get-desktop-capturer-sources', () => desktopCapturer.getSources({
+  types: ['screen', 'window'],
+}));
 
 ipcMain.on('window.toolbar-double-clicked', () => {
   mainWindow?.isMaximized() ? mainWindow.unmaximize() : mainWindow?.maximize();

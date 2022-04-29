@@ -1,11 +1,9 @@
-import { desktopCapturer } from 'electron';
+import { ipcRenderer } from 'electron';
 
 const CANCEL_ID = 'desktop-capturer-selection__cancel';
 
 export async function getDisplayMediaSelector() {
-  const sources = await desktopCapturer.getSources({
-    types: ['screen', 'window'],
-  });
+  const sources = await ipcRenderer.invoke('get-desktop-capturer-sources');
   return `<div class="desktop-capturer-selection__scroller">
   <ul class="desktop-capturer-selection__list">
     ${sources
