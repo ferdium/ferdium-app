@@ -24,7 +24,7 @@
 <a title="Crowdin" target="_blank" href="https://crowdin.com/project/ferdium"><img src="https://badges.crowdin.net/ferdium/localized.svg"></a>
 -->
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-258-default.svg?logo=github' alt='Contributors'/></a>
+<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-288-default.svg?logo=github' alt='Contributors'/></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 > 🤴🏽 Hard-fork of [Franz](https://github.com/meetfranz/franz), adding awesome features and removing unwanted ones.
@@ -406,6 +406,46 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href='https://github.com/guillermin012' title='guillermin012: ideas'><img src='https://avatars.githubusercontent.com/u/76463041?v=4' alt='guillermin012' style='width:100px;'/></a></td>
     <td align="center"><a href='https://github.com/SpecialAro' title='André Oliveira: code, infra, design'><img src='https://avatars.githubusercontent.com/u/37463445?v=4' alt='SpecialAro' style='width:100px;'/></a></td>
     <td align="center"><a href='https://github.com/fernandofig' title='Fernando Figueiredo: code, design'><img src='https://avatars.githubusercontent.com/u/1110864?v=4' alt='fernandofig' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://meetfranz.com/' title='Harald: code'><img src='https://avatars.githubusercontent.com/u/135914?v=4' alt='haraldox' style='width:100px;'/></a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href='http://linkedin.com/in/phmigotto' title='Peter Migotto: code'><img src='https://avatars.githubusercontent.com/u/25492456?v=4' alt='phmigotto' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://github.com/DBozhinovski' title='Darko Bozhinovski: code'><img src='https://avatars.githubusercontent.com/u/271746?v=4' alt='DBozhinovski' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://hrwg.de/' title='Rico Herwig: translation'><img src='https://avatars.githubusercontent.com/u/12065150?v=4' alt='rherwig' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://github.com/atakangktepe' title='Atakan Goktepe: code'><img src='https://avatars.githubusercontent.com/u/12830048?v=4' alt='atakangktepe' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://github.com/Jensderond' title='Jens de Rond: translation'><img src='https://avatars.githubusercontent.com/u/6972822?v=4' alt='Jensderond' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://github.com/michaelhays' title='Michael Hays: code'><img src='https://avatars.githubusercontent.com/u/6445661?v=4' alt='michaelhays' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://github.com/haveneersrobin' title='Robin Haveneers: translation'><img src='https://avatars.githubusercontent.com/u/7559898?v=4' alt='haveneersrobin' style='width:100px;'/></a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href='https://closingin.me/' title='Rémi Weislinger: code'><img src='https://avatars.githubusercontent.com/u/2735603?v=4' alt='closingin' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://github.com/dnlup' title='dnlup: translation'><img src='https://avatars.githubusercontent.com/u/15520377?v=4' alt='dnlup' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://ywjameslin.tw/' title='YWJamesLin: translation'><img src='https://avatars.githubusercontent.com/u/4758887?v=4' alt='YWJamesLin' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://github.com/3b3ziz' title='Ahmad M. Abdelaziz: code'><img src='https://avatars.githubusercontent.com/u/11807541?v=4' alt='3b3ziz' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://hiro-group.ronc.one/' title='Alessandro Roncone: doc'><img src='https://avatars.githubusercontent.com/u/4378663?v=4' alt='alecive' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://csy54.github.io/' title='CSY54: code'><img src='https://avatars.githubusercontent.com/u/18496305?v=4' alt='CSY54' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://mazedlx.net/' title='Christian Leo-Pernold: doc'><img src='https://avatars.githubusercontent.com/u/9453522?v=4' alt='mazedlx' style='width:100px;'/></a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href='https://vaseker.ru/' title='Dmitry Vasilyev: translation'><img src='https://avatars.githubusercontent.com/u/1942271?v=4' alt='vaseker' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://github.com/gkotian' title='Gautam Kotian: doc'><img src='https://avatars.githubusercontent.com/u/1580240?v=4' alt='gkotian' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://github.com/Guillerman' title='Guillerman: translation'><img src='https://avatars.githubusercontent.com/u/13747538?v=4' alt='Guillerman' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://github.com/jbellingham' title='Jesse Bellingham: infra'><img src='https://avatars.githubusercontent.com/u/5078290?v=4' alt='jbellingham' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://www.linkedin.com/in/konradkleine/' title='Konrad Kleine: infra'><img src='https://avatars.githubusercontent.com/u/193408?v=4' alt='kwk' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://frumania.com/' title='Marcel Törpe: code'><img src='https://avatars.githubusercontent.com/u/12220576?v=4' alt='frumania' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://github.com/melodywei861016' title='Melody Wei: code'><img src='https://avatars.githubusercontent.com/u/21094559?v=4' alt='melodywei861016' style='width:100px;'/></a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href='http://www.nielsbom.com/' title='Niels Bom: doc'><img src='https://avatars.githubusercontent.com/u/327080?v=4' alt='nielsbom' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://github.com/dabalroman' title='Roman Dąbal: code'><img src='https://avatars.githubusercontent.com/u/13556759?v=4' alt='dabalroman' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://github.com/apo-mak' title='apo-mak: translation'><img src='https://avatars.githubusercontent.com/u/25563515?v=4' alt='apo-mak' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://lecroq.be/' title='Christopher Peeters: translation'><img src='https://avatars.githubusercontent.com/u/32568187?v=4' alt='cpeetersburg' style='width:100px;'/></a></td>
+    <td align="center"><a href='http://www.codewars.com/users/grzeswol' title='Grzegorz Wolsza: translation'><img src='https://avatars.githubusercontent.com/u/2955105?v=4' alt='grzeswol' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://github.com/imaginarny' title='imaginarny: code'><img src='https://avatars.githubusercontent.com/u/20380121?v=4' alt='imaginarny' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://github.com/jaebradley' title='Jae Bradley: doc'><img src='https://avatars.githubusercontent.com/u/8136030?v=4' alt='jaebradley' style='width:100px;'/></a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href='https://github.com/skoruppa' title='skoruppa: code'><img src='https://avatars.githubusercontent.com/u/899429?v=4' alt='skoruppa' style='width:100px;'/></a></td>
   </tr>
 </table>
 
