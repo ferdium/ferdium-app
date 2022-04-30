@@ -322,18 +322,14 @@ function generateStyle(settings) {
   ) {
     style += generateAccentStyle(accentColor);
   }
-  if (
-    serviceRibbonWidth !== DEFAULT_APP_SETTINGS.serviceRibbonWidth ||
-    iconSize !== DEFAULT_APP_SETTINGS.iconSize ||
-    isWindows //Overrides defaults for vertical.scss with generateServiceRibbonWidthStyle function
-  ) {
-    style += generateServiceRibbonWidthStyle(
-      serviceRibbonWidth,
-      iconSize,
-      useVerticalStyle,
-      showServiceName,
-    );
-  }
+
+  style += generateServiceRibbonWidthStyle(
+    serviceRibbonWidth,
+    iconSize,
+    useVerticalStyle,
+    showServiceName,
+  );
+  
   if (showDragArea) {
     style += generateShowDragAreaStyle(accentColor);
   }
