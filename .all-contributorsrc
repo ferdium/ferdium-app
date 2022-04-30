@@ -2413,6 +2413,17 @@
       ]
     },
     {
+      "login": "SpecialAro",
+      "name": "André Oliveira",
+      "avatar_url": "https://avatars.githubusercontent.com/u/37463445?v=4",
+      "profile": "https://github.com/SpecialAro",
+      "contributions": [
+        "code",
+        "infra",
+        "design"
+      ]
+    },
+    {
       "login": "fernandofig",
       "name": "Fernando Figueiredo",
       "avatar_url": "https://avatars.githubusercontent.com/u/1110864?v=4",
