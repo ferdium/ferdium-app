@@ -69,7 +69,7 @@ $tabitem-bias: 30px;
 }
 
 .app .app__content {
-  padding-top: $sidebar-width;
+  padding-top: $sidebar-width + $sidebar-bias;
 }
 
 .workspaces-drawer {
