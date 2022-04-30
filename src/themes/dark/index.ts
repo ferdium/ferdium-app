@@ -155,7 +155,7 @@ export default (brandPrimary: string) => {
       },
     }),
 
-    // Todos
+    // Todos list
     todos: merge({}, defaultStyles.todos, {
       todosLayer: {
         borderLeftColor: legacyStyles.darkThemeGrayDarker,
