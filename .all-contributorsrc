@@ -3,10 +3,12 @@
   "projectOwner": "ferdium",
   "repoType": "github",
   "repoHost": "https://github.com",
+  "skipCi": true,
   "files": [
     "README.md"
   ],
-  "imageSize": 42,
+  "contributorsPerLine": 7,
+  "imageSize": 100,
   "commit": true,
   "commitConvention": "none",
   "badgeTemplate": "<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-<%= contributors.length %>-default.svg?logo=github' alt='Contributors'/></a>",
@@ -2433,7 +2435,5 @@
         "design"
       ]
     }
-  ],
-  "contributorsPerLine": 16,
-  "skipCi": true
+  ]
 }
