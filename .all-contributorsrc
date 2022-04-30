@@ -1,5 +1,5 @@
 {
-  "projectName": "ferdium",
+  "projectName": "ferdium-app",
   "projectOwner": "ferdium",
   "repoType": "github",
   "repoHost": "https://github.com",
@@ -1670,7 +1670,8 @@
       "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14628456/small/7c0f5919fba56edfddf08bf715039f75.jpeg",
       "profile": "https://crowdin.com/profile/nathanaelhoun",
       "contributions": [
-        "translation"
+        "translation",
+        "infra"
       ]
     },
     {
