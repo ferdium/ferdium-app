@@ -95,6 +95,7 @@ body.win32:not(.isFullScreen) .app .app__content {
 
 .mode__split .app .app__service {
   overflow-x: auto;
+  scroll-snap-type: x proximity;
 }
 
 .app {
