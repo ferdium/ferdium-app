@@ -3,6 +3,7 @@ import { reaction } from 'mobx';
 import { DEFAULT_APP_SETTINGS, iconSizeBias } from '../../config';
 
 const STYLE_ELEMENT_ID = 'custom-appearance-style';
+const isWindows = process.platform === 'win32';
 
 function createStyleElement() {
   const styles = document.createElement('style');
@@ -172,6 +173,10 @@ function generateServiceRibbonWidthStyle(
     tabItemHeightBias = -5;
   }
 
+  if (isWindows) {
+    sidebarSizeBias = 0;
+  }
+
   // Due to the lowest values for SIDEBAR_WIDTH and ICON_SIZES, this can be computed to a negative value
   const minimumAdjustedIconSize = Math.max(width / 2 + iconSize, 2);
 
@@ -319,7 +324,8 @@ function generateStyle(settings) {
   }
   if (
     serviceRibbonWidth !== DEFAULT_APP_SETTINGS.serviceRibbonWidth ||
-    iconSize !== DEFAULT_APP_SETTINGS.iconSize
+    iconSize !== DEFAULT_APP_SETTINGS.iconSize ||
+    isWindows //Overrides defaults for vertical.scss with generateServiceRibbonWidthStyle function
   ) {
     style += generateServiceRibbonWidthStyle(
       serviceRibbonWidth,
