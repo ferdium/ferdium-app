@@ -1,5 +1,5 @@
 {
-  "projectName": "ferdium",
+  "projectName": "ferdium-app",
   "projectOwner": "ferdium",
   "repoType": "github",
   "repoHost": "https://github.com",
@@ -1670,7 +1670,8 @@
       "avatar_url": "https://crowdin-static.downloads.crowdin.com/avatar/14628456/small/7c0f5919fba56edfddf08bf715039f75.jpeg",
       "profile": "https://crowdin.com/profile/nathanaelhoun",
       "contributions": [
-        "translation"
+        "translation",
+        "infra"
       ]
     },
     {
@@ -2409,6 +2410,27 @@
       "profile": "https://github.com/guillermin012",
       "contributions": [
         "ideas"
+      ]
+    },
+    {
+      "login": "SpecialAro",
+      "name": "André Oliveira",
+      "avatar_url": "https://avatars.githubusercontent.com/u/37463445?v=4",
+      "profile": "https://github.com/SpecialAro",
+      "contributions": [
+        "code",
+        "infra",
+        "design"
+      ]
+    },
+    {
+      "login": "fernandofig",
+      "name": "Fernando Figueiredo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1110864?v=4",
+      "profile": "https://github.com/fernandofig",
+      "contributions": [
+        "code",
+        "design"
       ]
     }
   ],
