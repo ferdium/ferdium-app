@@ -1,5 +1,5 @@
 {
-  "projectName": "ferdium",
+  "projectName": "ferdium-app",
   "projectOwner": "ferdium",
   "repoType": "github",
   "repoHost": "https://github.com",
@@ -2409,6 +2409,15 @@
       "profile": "https://github.com/guillermin012",
       "contributions": [
         "ideas"
+      ]
+    },
+    {
+      "login": "fernandofig",
+      "name": "Fernando Figueiredo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1110864?v=4",
+      "profile": "https://github.com/fernandofig",
+      "contributions": [
+        "code"
       ]
     }
   ],
