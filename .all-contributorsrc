@@ -2411,6 +2411,16 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "fernandofig",
+      "name": "Fernando Figueiredo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1110864?v=4",
+      "profile": "https://github.com/fernandofig",
+      "contributions": [
+        "code",
+        "design"
+      ]
     }
   ],
   "contributorsPerLine": 16,
