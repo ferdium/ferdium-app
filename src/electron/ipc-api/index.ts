@@ -4,6 +4,7 @@ import settings from './settings';
 import sessionStorage from './sessionStorage';
 import appIndicator from './appIndicator';
 import download from './download';
+import processManager from './processManager';
 import localServer from './localServer';
 import languageDetect from './languageDetect';
 import dnd from './dnd';
@@ -19,6 +20,7 @@ export default (params: {
   autoUpdate(params);
   appIndicator(params);
   download(params);
+  processManager();
   localServer(params);
   languageDetect();
   dnd();

@@ -1,3 +1,4 @@
+import { ipcRenderer } from 'electron';
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
@@ -371,6 +372,10 @@ class EditSettingsScreen extends Component {
         todosActions.toggleTodosFeatureVisibility();
       }
     }
+  }
+
+  openProcessManager() {
+    ipcRenderer.send('openProcessManager');
   }
 
   prepareForm() {
@@ -771,6 +776,7 @@ class EditSettingsScreen extends Component {
           isUsingCustomTodoService={
             this.props.stores.todos.isUsingCustomTodoService
           }
+          openProcessManager={() => this.openProcessManager()}
           hasAddedTodosAsService={services.isTodosServiceAdded}
           isOnline={app.isOnline}
         />

@@ -210,6 +210,7 @@ class EditSettingsForm extends Component {
     automaticUpdates: PropTypes.bool.isRequired,
     isDarkmodeEnabled: PropTypes.bool.isRequired,
     isAdaptableDarkModeEnabled: PropTypes.bool.isRequired,
+    openProcessManager: PropTypes.func.isRequired,
     isSplitModeEnabled: PropTypes.bool.isRequired,
     hasAddedTodosAsService: PropTypes.bool.isRequired,
     isOnline: PropTypes.bool.isRequired,
@@ -259,6 +260,7 @@ class EditSettingsForm extends Component {
       automaticUpdates,
       isDarkmodeEnabled,
       isSplitModeEnabled,
+      openProcessManager,
       isTodosActivated,
       hasAddedTodosAsService,
       isOnline,
@@ -743,6 +745,16 @@ class EditSettingsForm extends Component {
                       loaded={!isClearingAllCache}
                     />
                   </p>
+                  <div style={{
+                    marginTop: 20,
+                  }}
+                  >
+                    <Button
+                      buttonType="secondary"
+                      label="Open Process Manager"
+                      onClick={openProcessManager}
+                    />
+                  </div>
                 </div>
 
                 <Hr />
