@@ -270,42 +270,39 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
-          # TODO: Commented out the snapcraft artifact publishing for now (need to setup the snapcraft login, etc)
-          # SNAPCRAFT_LOGIN: ${{ secrets.SNAPCRAFT_LOGIN }}
+          SNAPCRAFT_LOGIN: ${{ secrets.SNAPCRAFT_LOGIN }}
         run: |
-          # sudo snap install snapcraft --classic
-          # echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
+          sudo snap install snapcraft --classic
+          echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
           npm run build -- --publish always -c.publish.provider=github -c.publish.owner=${{ github.repository_owner }}
-          # -c.snap.publish.provider=snapStore -c.snap.publish.repo=nightlies -c.snap.publish.channels=edge
-          # snapcraft logout
+          -c.snap.publish.provider=snapStore -c.snap.publish.repo=nightlies -c.snap.publish.channels=edge
+          snapcraft logout
         shell: bash
       - name: Build Ferdium with publish for 'release' beta branch
         if: ${{ env.GIT_BRANCH_NAME == 'release' && contains(env.PACKAGE_VERSION, 'beta') }}
         env:
           GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
-          # TODO: Commented out the snapcraft artifact publishing for now (need to setup the snapcraft login, etc)
-          # SNAPCRAFT_LOGIN: ${{ secrets.SNAPCRAFT_LOGIN }}
+          SNAPCRAFT_LOGIN: ${{ secrets.SNAPCRAFT_LOGIN }}
         run: |
-          # sudo snap install snapcraft --classic
-          # echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
+          sudo snap install snapcraft --classic
+          echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
           npm run build -- --publish always -c.publish.provider=github -c.publish.owner=${{ github.repository_owner }}
-          # -c.snap.publish.provider=snapStore -c.snap.publish.repo=ferdium -c.snap.publish.channels=beta
-          # snapcraft logout
+          -c.snap.publish.provider=snapStore -c.snap.publish.repo=ferdium -c.snap.publish.channels=beta
+          snapcraft logout
         shell: bash
       - name: Build Ferdium with publish for 'release' stable branch
         if: ${{ env.GIT_BRANCH_NAME == 'release' && !contains(env.PACKAGE_VERSION, 'beta') }}
         env:
           GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
-          # TODO: Commented out the snapcraft artifact publishing for now (need to setup the snapcraft login, etc)
-          # SNAPCRAFT_LOGIN: ${{ secrets.SNAPCRAFT_LOGIN }}
+          SNAPCRAFT_LOGIN: ${{ secrets.SNAPCRAFT_LOGIN }}
         run: |
-          # sudo snap install snapcraft --classic
-          # echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
+          sudo snap install snapcraft --classic
+          echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
           npm run build -- --publish always -c.publish.provider=github -c.publish.owner=${{ github.repository_owner }}
-          # -c.snap.publish.provider=snapStore -c.snap.publish.repo=ferdium -c.snap.publish.channels=stable
-          # snapcraft logout
+          -c.snap.publish.provider=snapStore -c.snap.publish.repo=ferdium -c.snap.publish.channels=stable
+          snapcraft logout
         shell: bash
 
   build_windows:
