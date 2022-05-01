@@ -1,5 +1,6 @@
 import color from 'color';
 import { reaction } from 'mobx';
+import { isWindows, isLinux } from '../../environment';
 import { DEFAULT_APP_SETTINGS, iconSizeBias } from '../../config';
 
 const STYLE_ELEMENT_ID = 'custom-appearance-style';
@@ -172,6 +173,10 @@ function generateServiceRibbonWidthStyle(
     tabItemHeightBias = -5;
   }
 
+  if (isWindows || isLinux) {
+    sidebarSizeBias = 0;
+  }
+
   // Due to the lowest values for SIDEBAR_WIDTH and ICON_SIZES, this can be computed to a negative value
   const minimumAdjustedIconSize = Math.max(width / 2 + iconSize, 2);
 
@@ -194,7 +199,7 @@ function generateServiceRibbonWidthStyle(
       font-size: ${width / 3}px !important;
     }
     .app .app__content {
-      padding-top: ${width}px !important;
+      padding-top: ${width + sidebarSizeBias}px !important;
     }
     .workspaces-drawer {
       margin-top: -${width}px !important;
@@ -317,17 +322,14 @@ function generateStyle(settings) {
   ) {
     style += generateAccentStyle(accentColor);
   }
-  if (
-    serviceRibbonWidth !== DEFAULT_APP_SETTINGS.serviceRibbonWidth ||
-    iconSize !== DEFAULT_APP_SETTINGS.iconSize
-  ) {
-    style += generateServiceRibbonWidthStyle(
-      serviceRibbonWidth,
-      iconSize,
-      useVerticalStyle,
-      showServiceName,
-    );
-  }
+
+  style += generateServiceRibbonWidthStyle(
+    serviceRibbonWidth,
+    iconSize,
+    useVerticalStyle,
+    showServiceName,
+  );
+
   if (showDragArea) {
     style += generateShowDragAreaStyle(accentColor);
   }
