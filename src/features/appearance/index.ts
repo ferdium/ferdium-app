@@ -1,6 +1,6 @@
 import color from 'color';
 import { reaction } from 'mobx';
-import { isWindows } from '../../environment';
+import { isWindows, isLinux } from '../../environment';
 import { DEFAULT_APP_SETTINGS, iconSizeBias } from '../../config';
 
 const STYLE_ELEMENT_ID = 'custom-appearance-style';
@@ -173,7 +173,7 @@ function generateServiceRibbonWidthStyle(
     tabItemHeightBias = -5;
   }
 
-  if (isWindows) {
+  if (isWindows || isLinux) {
     sidebarSizeBias = 0;
   }
 
