@@ -4,6 +4,39 @@ directories:
 
 appId: "org.ferdium.ferdium-app"
 
+publish:
+  provider: github
+  owner: ${ github.repository_owner }
+
+snap:
+  publish:
+    provider: snapStore
+
+nsis:
+  perMachine: false
+  oneClick: true
+
+dmg:
+  background: ./build-helpers/images/dmgInstaller.tiff
+  icon: ./build-helpers/images/icon.icns
+  iconSize: 128
+  contents:
+    [
+      { x: 380, y: 240, type: link, path: /Applications },
+      { x: 122, y: 240, type: file },
+    ]
+
+afterSign: ./build-helpers/notarize.js
+
+protocols:
+  name: Ferdium
+  schemes: [ferdium]
+
+asarUnpack:
+  - ./recipes
+  - ./assets/fonts
+  - ./assets/images/taskbar
+
 mac:
   hardenedRuntime: true
   gatekeeperAssess: false
@@ -20,18 +53,6 @@ mac:
   extendInfo:
     NSCameraUsageDescription: "This app requires camera access for video chats"
     NSMicrophoneUsageDescription: "This app requires microphone access for voice chats"
-
-dmg:
-  background: ./build-helpers/images/dmgInstaller.tiff
-  icon: ./build-helpers/images/icon.icns
-  iconSize: 128
-  contents:
-    [
-      { x: 380, y: 240, type: link, path: /Applications },
-      { x: 122, y: 240, type: file },
-    ]
-
-afterSign: ./build-helpers/notarize.js
 
 win:
   icon: ./build-helpers/images/icon.ico
@@ -58,16 +79,3 @@ linux:
     - target: rpm
     - target: freebsd
     - target: snap
-
-nsis:
-  perMachine: false
-  oneClick: true
-
-protocols:
-  name: Ferdium
-  schemes: [ferdium]
-
-asarUnpack:
-  - ./recipes
-  - ./assets/fonts
-  - ./assets/images/taskbar
