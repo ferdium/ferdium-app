@@ -6,7 +6,6 @@ appId: "org.ferdium.ferdium-app"
 
 publish:
   provider: github
-  owner: ${ github.repository_owner }
 
 snap:
   publish:
