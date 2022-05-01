@@ -59,14 +59,15 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
 
-          # TODO: Need to check if this is required, keeping for future reference (can be removed if the submodule-update issue is resolved with other changes in this commit)
           # Defensive: update submodules in the develop branch
-          # git checkout develop
-          # git submodule update --init --recursive --remote --rebase --force
-          # git add .
-          # git commit -am "Update submodules [skip ci]" --no-verify || true
-          # git push origin develop --no-verify
-          # git checkout -
+          git checkout develop
+          git submodule update --init --recursive --remote --rebase --force
+          git add .
+          git commit -am "Update submodules [skip ci]" --no-verify || true
+          git push origin develop --no-verify
+          git checkout -
+
+          git submodule update --init --recursive --remote --rebase --force
 
           CHANGES_COUNT=$(git diff --shortstat origin/develop | wc -l)
           MANUAL_REBUILD="${{ github.event_name == 'workflow_dispatch' }}"
