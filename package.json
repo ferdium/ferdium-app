@@ -56,6 +56,7 @@
     "@adonisjs/shield": "^1.1.0",
     "@adonisjs/validator": "^5.1.0",
     "@electron/remote": "2.0.8",
+    "@krisdages/electron-process-manager": "3.0.0",
     "@mdi/js": "^6.6.96",
     "@mdi/react": "^1.6.0",
     "@sentry/electron": "^2.5.4",
