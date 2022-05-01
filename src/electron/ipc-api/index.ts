@@ -5,7 +5,7 @@ import sessionStorage from './sessionStorage';
 import appIndicator from './appIndicator';
 import download from './download';
 import localServer from './localServer';
-import cld from './cld';
+import languageDetect from './languageDetect';
 import dnd from './dnd';
 import focusState from './focusState';
 
@@ -20,7 +20,7 @@ export default (params: {
   appIndicator(params);
   download(params);
   localServer(params);
-  cld();
+  languageDetect();
   dnd();
   focusState(params);
 };
