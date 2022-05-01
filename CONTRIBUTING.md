@@ -71,9 +71,6 @@ $ jq --null-input '[inputs.engines] | add' < ./package.json < ./recipes/package.
   "npm": "8.7.0",
   "pnpm": "6.32.11"
 }
-
-$ python --version
-Python 3.10.4
 ```
 
 _Note:_ You can choose any version manager to manage multiple versions of `node` and `npm`. For eg, [nvm](https://github.com/nvm-sh/nvm) or [asdf](https://github.com/asdf-vm/asdf).
@@ -98,7 +95,6 @@ dnf install libX11-devel libXext-devel libXScrnSaver-devel libxkbfile-devel rpm
 
 Please make sure you have the following installed:
 
-- Python 3 or higher (we recommend the latest version: [3.10.4](https://www.python.org/ftp/python/3.10.4/python-3.10.4-amd64.exe))
 - Microsoft Visual Studio Build Tools (2019 or higher - with Windows 10 SDK selected) - Only tested with 2019 so far.
 
 ### Clone repository with submodule

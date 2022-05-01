@@ -3,7 +3,7 @@
 # INTRO:
 # This file is used to build ferdium on both x64 and arm-based for macos and linux (not tested on arm for linux).
 # It also handles any corrupted node modules with the 'CLEAN' env var (set it to 'true' for cleaning)
-# It will install the system dependencies except for node and python (which are still verified)
+# It will install the system dependencies except for node (which is still verified)
 # I sometimes symlink my 'recipes' folder so that any changes that I need to do in it can also be committed and pushed independently
 # This file can live anywhere in your PATH
 
@@ -32,7 +32,6 @@ command_exists() {
 #                  Checking the developer environment
 # Check for installed programmes
 command_exists node || fail_with_docs "Node is not installed"
-command_exists python || fail_with_docs "python is not installed"
 
 # Check node version
 EXPECTED_NODE_VERSION=$(cat .nvmrc)
@@ -69,7 +68,7 @@ else
   fi
 
   npm cache clean --force
-  rm -rf ~/.npm ~/.node-gyp ~/.electron-gyp ~/.asdf/installs/nodejs/*/.npm/
+  rm -rf ~/.npm ~/.electron-gyp ~/.asdf/installs/nodejs/*/.npm/
 
   git -C recipes clean -fxd # Clean recipes folder/submodule
   git clean -fxd            # Note: This will blast away the 'recipes' folder if you have symlinked it
@@ -77,14 +76,6 @@ fi
 
 # -----------------------------------------------------------------------------
 # Ensure that the system dependencies are at the correct version - fail if not
-# Check python version
-EXPECTED_PYTHON_VERSION="3.10.4"
-ACTUAL_PYTHON_VERSION=$(python --version | sed -e "s/Python //")
-if [[ "$ACTUAL_PYTHON_VERSION" != "$EXPECTED_PYTHON_VERSION" ]]; then
-  fail_with_docs "You are not running the expected version of Python!
-    expected: [$EXPECTED_PYTHON_VERSION]
-    actual  : [$ACTUAL_PYTHON_VERSION]"
-fi
 
 # -----------------------------------------------------------------------------
 # Ensure that the system dependencies are at the correct version - recover if not

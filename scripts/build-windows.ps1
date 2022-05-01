@@ -1,7 +1,7 @@
 # INTRO:
 # This file is used to build ferdium on windows.
 # It also handles any corrupted node modules with the 'CLEAN' env var (set it to 'true' for cleaning)
-# It will install the system dependencies except for node and python (which are still verified)
+# It will install the system dependencies except for node (which is still verified)
 # I sometimes symlink my 'recipes' folder so that any changes that I need to do in it can also be committed and pushed independently
 # This file can live anywhere in your PATH
 
@@ -40,8 +40,7 @@ Function Test-CommandExists { Param ($command, $1)
 # Check for installed programmes
 Test-CommandExists node "Node is not installed"
 Test-CommandExists npm "npm is not installed"
-Test-CommandExists python "Python is not installed"
-# NEEDS proper way to CHECK MSVS Tools
+# TODO: Needs proper way to check MSVS Build Tools
 
 # Check node version
 $EXPECTED_NODE_VERSION = (cat .nvmrc)
@@ -68,7 +67,6 @@ if ($env:CLEAN -eq "true")
   $NPM_PATH = "$USERHOME\AppData\Roaming\npm\node_modules"
   $NPM_CACHE1_PATH = "$USERHOME\AppData\Local\npm-cache"
   $NPM_CACHE2_PATH = "$USERHOME\AppData\Roaming\npm-cache"
-  $NODE_GYP = "$USERHOME\AppData\Local\node-gyp"
   $ELECTRON_GYP = "$USERHOME\.electron-gyp"
 
   Write-Host "Cleaning!"
@@ -88,7 +86,6 @@ if ($env:CLEAN -eq "true")
   Remove-Item -Path $NPM_PATH -Recurse -ErrorAction SilentlyContinue
   Remove-Item -Path $NPM_CACHE1_PATH -Recurse -ErrorAction SilentlyContinue
   Remove-Item -Path $NPM_CACHE2_PATH -Recurse -ErrorAction SilentlyContinue
-  Remove-Item -Path $NODE_GYP -Recurse -ErrorAction SilentlyContinue
   Remove-Item -Path $ELECTRON_GYP -Recurse -ErrorAction SilentlyContinue
 
   git -C recipes clean -fxd # Clean recipes folder/submodule
@@ -97,15 +94,6 @@ if ($env:CLEAN -eq "true")
 
 # -----------------------------------------------------------------------------
 # Ensure that the system dependencies are at the correct version - fail if not
-# Check python version
-$EXPECTED_PYTHON_VERSION = "3.10.4"
-$ACTUAL_PYTHON_VERSION = (python --version).trim("Python ")
-if ([System.Version]$ACTUAL_PYTHON_VERSION -ne [System.Version]$EXPECTED_PYTHON_VERSION) {
-  fail_with_docs "You are not running the expected version of Python!
-    expected: [$EXPECTED_PYTHON_VERSION]
-    actual  : [$ACTUAL_PYTHON_VERSION]"
-}
-
 # TODO: Needs proper way to check MSVS Tools
 # Check MSVS Tools through MSVS_VERSION
 $EXPECTED_MSVST_VERSION = "2015"
