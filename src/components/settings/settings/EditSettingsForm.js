@@ -574,6 +574,12 @@ class EditSettingsForm extends Component {
 
                 <Toggle field={form.$('useVerticalStyle')} />
 
+                <Toggle field={form.$('hideRecipesButton')} />
+
+                <Toggle field={form.$('hideWorkspacesButton')} />
+
+                <Toggle field={form.$('hideNotificationsButton')} />
+
                 <Toggle field={form.$('alwaysShowWorkspaces')} />
 
                 <Hr />

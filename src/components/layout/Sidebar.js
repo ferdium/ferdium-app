@@ -128,6 +128,11 @@ class Sidebar extends Component {
       actions,
       isTodosServiceActive,
     } = this.props;
+    const {
+      hideRecipesButton,
+      hideWorkspacesButton,
+      hideNotificationsButton,
+    } = stores.settings.app;
     const { intl } = this.props;
     const todosToggleMessage = todosStore.isTodosPanelVisible
       ? messages.closeTodosDrawer
@@ -146,31 +151,35 @@ class Sidebar extends Component {
           useVerticalStyle={stores.settings.all.app.useVerticalStyle}
         />
         <>
-          <button
-            type="button"
-            onClick={() => openSettings({ path: 'recipes' })}
-            className="sidebar__button sidebar__button--new-service"
-            data-tip={`${intl.formatMessage(
-              messages.addNewService,
-            )} (${addNewServiceShortcutKey(false)})`}
-          >
-            <Icon icon={mdiPlusBox} size={1.5} />
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              toggleWorkspaceDrawer();
-              this.updateToolTip();
-            }}
-            className={`sidebar__button sidebar__button--workspaces ${
-              isWorkspaceDrawerOpen ? 'is-active' : ''
-            }`}
-            data-tip={`${intl.formatMessage(
-              workspaceToggleMessage,
-            )} (${workspaceToggleShortcutKey(false)})`}
-          >
-            <Icon icon={mdiViewGrid} size={1.5} />
-          </button>
+          {!hideRecipesButton ? (
+            <button
+              type="button"
+              onClick={() => openSettings({ path: 'recipes' })}
+              className="sidebar__button sidebar__button--new-service"
+              data-tip={`${intl.formatMessage(
+                messages.addNewService,
+              )} (${addNewServiceShortcutKey(false)})`}
+            >
+              <Icon icon={mdiPlusBox} size={1.5} />
+            </button>
+          ) : null}
+          {!hideWorkspacesButton ? (
+            <button
+              type="button"
+              onClick={() => {
+                toggleWorkspaceDrawer();
+                this.updateToolTip();
+              }}
+              className={`sidebar__button sidebar__button--workspaces ${
+                isWorkspaceDrawerOpen ? 'is-active' : ''
+              }`}
+              data-tip={`${intl.formatMessage(
+                workspaceToggleMessage,
+              )} (${workspaceToggleShortcutKey(false)})`}
+            >
+              <Icon icon={mdiViewGrid} size={1.5} />
+            </button>
+          ) : null}
           {todosStore.isFeatureEnabledByUser ? (
             <button
               type="button"
@@ -189,22 +198,23 @@ class Sidebar extends Component {
               <Icon icon={mdiCheckAll} size={1.5} />
             </button>
           ) : null}
-          <button
-            type="button"
-            onClick={() => {
-              toggleMuteApp();
-              this.updateToolTip();
-            }}
-            className={`sidebar__button sidebar__button--audio ${
-              isAppMuted ? 'is-muted' : ''
-            }`}
-            data-tip={`${intl.formatMessage(
-              isAppMuted ? messages.unmute : messages.mute,
-            )} (${muteFerdiumShortcutKey(false)})`}
-          >
-            <Icon icon={isAppMuted ? mdiBellOff : mdiBell} size={1.5} />
-          </button>
-
+          {!hideNotificationsButton ? (
+            <button
+              type="button"
+              onClick={() => {
+                toggleMuteApp();
+                this.updateToolTip();
+              }}
+              className={`sidebar__button sidebar__button--audio ${
+                isAppMuted ? 'is-muted' : ''
+              }`}
+              data-tip={`${intl.formatMessage(
+                isAppMuted ? messages.unmute : messages.mute,
+              )} (${muteFerdiumShortcutKey(false)})`}
+            >
+              <Icon icon={isAppMuted ? mdiBellOff : mdiBell} size={1.5} />
+            </button>
+          ) : null}
           {stores.settings.all.app.lockingFeatureEnabled ? (
             <button
               type="button"
