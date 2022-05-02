@@ -201,6 +201,22 @@ const messages = defineMessages({
     id: 'settings.app.form.useVerticalStyle',
     defaultMessage: 'Use horizontal style',
   },
+  hideRecipesButton: {
+    id: 'settings.app.form.hideRecipesButton',
+    defaultMessage: 'Hide Recipes button',
+  },
+  hideWorkspacesButton: {
+    id: 'settings.app.form.hideWorkspacesButton',
+    defaultMessage: 'Hide Workspace Drawer button',
+  },
+  hideNotificationsButton: {
+    id: 'settings.app.form.hideNotificationsButton',
+    defaultMessage: 'Hide Notifications & Sound button',
+  },
+  hideSettingsButton: {
+    id: 'settings.app.form.hideSettingsButton',
+    defaultMessage: 'Hide Settings button',
+  },
   alwaysShowWorkspaces: {
     id: 'settings.app.form.alwaysShowWorkspaces',
     defaultMessage: 'Always show workspace drawer',
@@ -333,6 +349,10 @@ class EditSettingsScreen extends Component {
           settingsData.enableLongPressServiceHint,
         ),
         useVerticalStyle: Boolean(settingsData.useVerticalStyle),
+        hideRecipesButton: Boolean(settingsData.hideRecipesButton),
+        hideWorkspacesButton: Boolean(settingsData.hideWorkspacesButton),
+        hideNotificationsButton: Boolean(settingsData.hideNotificationsButton),
+        hideSettingsButton: Boolean(settingsData.hideSettingsButton),
         alwaysShowWorkspaces: Boolean(settingsData.alwaysShowWorkspaces),
         accentColor: settingsData.accentColor,
         showMessageBadgeWhenMuted: Boolean(
@@ -678,6 +698,26 @@ class EditSettingsScreen extends Component {
           label: intl.formatMessage(messages.useVerticalStyle),
           value: settings.all.app.useVerticalStyle,
           default: DEFAULT_APP_SETTINGS.useVerticalStyle,
+        },
+        hideRecipesButton: {
+          label: intl.formatMessage(messages.hideRecipesButton),
+          value: settings.all.app.hideRecipesButton,
+          default: DEFAULT_APP_SETTINGS.hideRecipesButton,
+        },
+        hideWorkspacesButton: {
+          label: intl.formatMessage(messages.hideWorkspacesButton),
+          value: settings.all.app.hideWorkspacesButton,
+          default: DEFAULT_APP_SETTINGS.hideWorkspacesButton,
+        },
+        hideNotificationsButton: {
+          label: intl.formatMessage(messages.hideNotificationsButton),
+          value: settings.all.app.hideNotificationsButton,
+          default: DEFAULT_APP_SETTINGS.hideNotificationsButton,
+        },
+        hideSettingsButton: {
+          label: intl.formatMessage(messages.hideSettingsButton),
+          value: settings.all.app.hideSettingsButton,
+          default: DEFAULT_APP_SETTINGS.hideSettingsButton,
         },
         alwaysShowWorkspaces: {
           label: intl.formatMessage(messages.alwaysShowWorkspaces),
