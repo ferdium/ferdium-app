@@ -11,6 +11,8 @@ import {
   mdiBellOff,
   mdiBell,
   mdiLock,
+  mdiChevronUp,
+  mdiChevronDown,
 } from '@mdi/js';
 
 import Tabbar from '../services/tabs/Tabbar';
@@ -98,6 +100,7 @@ class Sidebar extends Component {
 
   state = {
     tooltipEnabled: true,
+    isCollapsed: true
   };
 
   componentDidUpdate() {
@@ -110,6 +113,10 @@ class Sidebar extends Component {
 
   disableToolTip() {
     this.setState({ tooltipEnabled: false });
+  }
+
+  collapseMenu() {
+    this.setState({ isCollapsed: !this.state.isCollapsed });
   }
 
   updateToolTip() {
@@ -151,7 +158,18 @@ class Sidebar extends Component {
           useVerticalStyle={stores.settings.all.app.useVerticalStyle}
         />
         <>
-          {!hideRecipesButton ? (
+          <button
+            type="button"
+            onClick={() => this.collapseMenu()}
+            className="sidebar__button sidebar__button--hamburger-menu"
+          >
+          {this.state.isCollapsed ?
+            <Icon icon={mdiChevronUp} size={1.5} />
+          :
+            <Icon icon={mdiChevronDown} size={1.5} />
+          }
+          </button>
+          {!hideRecipesButton && !this.state.isCollapsed ? (
             <button
               type="button"
               onClick={() => openSettings({ path: 'recipes' })}
@@ -163,7 +181,7 @@ class Sidebar extends Component {
               <Icon icon={mdiPlusBox} size={1.5} />
             </button>
           ) : null}
-          {!hideWorkspacesButton ? (
+          {!hideWorkspacesButton && !this.state.isCollapsed ? (
             <button
               type="button"
               onClick={() => {
@@ -180,7 +198,7 @@ class Sidebar extends Component {
               <Icon icon={mdiViewGrid} size={1.5} />
             </button>
           ) : null}
-          {todosStore.isFeatureEnabledByUser ? (
+          {todosStore.isFeatureEnabledByUser && !this.state.isCollapsed ? (
             <button
               type="button"
               onClick={() => {
@@ -198,7 +216,7 @@ class Sidebar extends Component {
               <Icon icon={mdiCheckAll} size={1.5} />
             </button>
           ) : null}
-          {!hideNotificationsButton ? (
+          {!hideNotificationsButton && !this.state.isCollapsed ? (
             <button
               type="button"
               onClick={() => {
@@ -235,24 +253,26 @@ class Sidebar extends Component {
             </button>
           ) : null}
         </>
-        <button
-          type="button"
-          onClick={() => openSettings({ path: 'app' })}
-          className="sidebar__button sidebar__button--settings"
-          data-tip={`${intl.formatMessage(
-            globalMessages.settings,
-          )} (${settingsShortcutKey(false)})`}
-        >
-          <Icon icon={mdiCog} size={1.5} />
-          {
-            this.props.stores.settings.app.automaticUpdates &&
-              (this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.AVAILABLE ||
-              this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.DOWNLOADED ||
-              this.props.showServicesUpdatedInfoBar) && (
-              <span className="update-available">•</span>
-            )
-          }
-        </button>
+        {!this.state.isCollapsed ? (
+          <button
+            type="button"
+            onClick={() => openSettings({ path: 'app' })}
+            className="sidebar__button sidebar__button--settings"
+            data-tip={`${intl.formatMessage(
+              globalMessages.settings,
+            )} (${settingsShortcutKey(false)})`}
+          >
+            <Icon icon={mdiCog} size={1.5} />
+            {
+              this.props.stores.settings.app.automaticUpdates &&
+                (this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.AVAILABLE ||
+                this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.DOWNLOADED ||
+                this.props.showServicesUpdatedInfoBar) && (
+                <span className="update-available">•</span>
+              )
+            }
+          </button>
+          ) : null}
         {this.state.tooltipEnabled && (
           <ReactTooltip place="right" type="dark" effect="solid" />
         )}
