@@ -152,6 +152,14 @@ class Sidebar extends Component {
       ? messages.closeWorkspaceDrawer
       : messages.openWorkspaceDrawer;
 
+    const numberActiveButtons = [
+      !hideRecipesButton,
+      !hideWorkspacesButton,
+      !hideNotificationsButton,
+      !hideSettingsButton,
+      todosStore.isFeatureEnabledByUser
+    ].filter(Boolean).length;
+
     return (
       <div className="sidebar">
         <Tabbar
@@ -161,7 +169,7 @@ class Sidebar extends Component {
           useVerticalStyle={stores.settings.all.app.useVerticalStyle}
         />
         <>
-          {hideRecipesButton && hideWorkspacesButton && hideNotificationsButton && hideSettingsButton && !todosStore.isFeatureEnabledByUser ? (
+          {numberActiveButtons <= 1 ? (
             null
           ) :
             <button
