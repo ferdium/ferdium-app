@@ -49,7 +49,7 @@ Ferdium is a desktop app that helps you organize how you use your favourite apps
 
 ## Download
 
-👉 [ferdium.org/download](https://ferdium.org/download/)
+👉 [ferdium.org/download](https://ferdium.org/download)
 
 Assets made available via [GitHub releases](https://github.com/ferdium/ferdium-app/releases/latest).
 
