@@ -13,6 +13,7 @@ import {
   mdiLock,
   mdiMenu,
   mdiChevronDown,
+  mdiChevronRight,
 } from '@mdi/js';
 
 import Tabbar from '../services/tabs/Tabbar';
@@ -139,6 +140,7 @@ class Sidebar extends Component {
       hideRecipesButton,
       hideWorkspacesButton,
       hideNotificationsButton,
+      useVerticalStyle
     } = stores.settings.app;
     const { intl } = this.props;
     const todosToggleMessage = todosStore.isTodosPanelVisible
@@ -168,6 +170,9 @@ class Sidebar extends Component {
             >
             {this.state.isCollapsed ?
               <Icon icon={mdiMenu} size={1.5} />
+            :
+            (useVerticalStyle) ?
+              <Icon icon={mdiChevronRight} size={1.5} />
             :
               <Icon icon={mdiChevronDown} size={1.5} />
             }
