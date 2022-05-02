@@ -11,7 +11,7 @@ import {
   mdiBellOff,
   mdiBell,
   mdiLock,
-  mdiChevronUp,
+  mdiMenu,
   mdiChevronDown,
 } from '@mdi/js';
 
@@ -100,7 +100,7 @@ class Sidebar extends Component {
 
   state = {
     tooltipEnabled: true,
-    isCollapsed: true
+    isCollapsed: false
   };
 
   componentDidUpdate() {
@@ -158,17 +158,21 @@ class Sidebar extends Component {
           useVerticalStyle={stores.settings.all.app.useVerticalStyle}
         />
         <>
-          <button
-            type="button"
-            onClick={() => this.collapseMenu()}
-            className="sidebar__button sidebar__button--hamburger-menu"
-          >
-          {this.state.isCollapsed ?
-            <Icon icon={mdiChevronUp} size={1.5} />
-          :
-            <Icon icon={mdiChevronDown} size={1.5} />
+          {hideRecipesButton && hideWorkspacesButton && !todosStore.isFeatureEnabledByUser && hideNotificationsButton ? (
+            null
+          ) :
+            <button
+              type="button"
+              onClick={() => this.collapseMenu()}
+              className="sidebar__button sidebar__button--hamburger-menu"
+            >
+            {this.state.isCollapsed ?
+              <Icon icon={mdiMenu} size={1.5} />
+            :
+              <Icon icon={mdiChevronDown} size={1.5} />
+            }
+            </button>
           }
-          </button>
           {!hideRecipesButton && !this.state.isCollapsed ? (
             <button
               type="button"
