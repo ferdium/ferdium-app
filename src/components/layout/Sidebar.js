@@ -141,7 +141,7 @@ class Sidebar extends Component {
       hideWorkspacesButton,
       hideNotificationsButton,
       useVerticalStyle,
-      collapseSettingsButton
+      hideSettingsButton
     } = stores.settings.app;
     const { intl } = this.props;
     const todosToggleMessage = todosStore.isTodosPanelVisible
@@ -263,7 +263,7 @@ class Sidebar extends Component {
             </button>
           ) : null}
         </>
-        {this.state.isCollapsed && collapseSettingsButton ?
+        {this.state.isCollapsed && hideSettingsButton ?
           null :
           (
           <button

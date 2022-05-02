@@ -243,7 +243,7 @@ export const DEFAULT_APP_SETTINGS = {
   navigationBarBehaviour: 'custom',
   searchEngine: SEARCH_ENGINE_DDG,
   useVerticalStyle: false,
-  collapseSettingsButton: true,
+  hideSettingsButton: true,
   hideRecipesButton: false,
   hideWorkspacesButton: false,
   hideNotificationsButton: false,
