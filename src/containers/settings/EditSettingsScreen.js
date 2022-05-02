@@ -201,6 +201,10 @@ const messages = defineMessages({
     id: 'settings.app.form.useVerticalStyle',
     defaultMessage: 'Use horizontal style',
   },
+  collapseSettingsButton: {
+    id: 'settings.app.form.collapseSettingsButton',
+    defaultMessage: 'Collapse Settings button',
+  },
   hideRecipesButton: {
     id: 'settings.app.form.hideRecipesButton',
     defaultMessage: 'Hide Recipes button',
@@ -345,6 +349,7 @@ class EditSettingsScreen extends Component {
           settingsData.enableLongPressServiceHint,
         ),
         useVerticalStyle: Boolean(settingsData.useVerticalStyle),
+        collapseSettingsButton: Boolean(settingsData.collapseSettingsButton),
         hideRecipesButton: Boolean(settingsData.hideRecipesButton),
         hideWorkspacesButton: Boolean(settingsData.hideWorkspacesButton),
         hideNotificationsButton: Boolean(settingsData.hideNotificationsButton),
@@ -693,6 +698,11 @@ class EditSettingsScreen extends Component {
           label: intl.formatMessage(messages.useVerticalStyle),
           value: settings.all.app.useVerticalStyle,
           default: DEFAULT_APP_SETTINGS.useVerticalStyle,
+        },
+        collapseSettingsButton: {
+          label: intl.formatMessage(messages.collapseSettingsButton),
+          value: settings.all.app.collapseSettingsButton,
+          default: DEFAULT_APP_SETTINGS.collapseSettingsButton,
         },
         hideRecipesButton: {
           label: intl.formatMessage(messages.hideRecipesButton),

@@ -140,7 +140,8 @@ class Sidebar extends Component {
       hideRecipesButton,
       hideWorkspacesButton,
       hideNotificationsButton,
-      useVerticalStyle
+      useVerticalStyle,
+      collapseSettingsButton
     } = stores.settings.app;
     const { intl } = this.props;
     const todosToggleMessage = todosStore.isTodosPanelVisible
@@ -262,7 +263,9 @@ class Sidebar extends Component {
             </button>
           ) : null}
         </>
-        {!this.state.isCollapsed ? (
+        {this.state.isCollapsed && collapseSettingsButton ?
+          null :
+          (
           <button
             type="button"
             onClick={() => openSettings({ path: 'app' })}
@@ -281,7 +284,7 @@ class Sidebar extends Component {
               )
             }
           </button>
-          ) : null}
+          )}
         {this.state.tooltipEnabled && (
           <ReactTooltip place="right" type="dark" effect="solid" />
         )}
