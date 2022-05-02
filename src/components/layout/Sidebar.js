@@ -116,7 +116,7 @@ class Sidebar extends Component {
   }
 
   collapseMenu() {
-    this.setState({ isCollapsed: !this.state.isCollapsed });
+    this.setState(({ isCollapsed }) => ({ isCollapsed: !isCollapsed }));
   }
 
   updateToolTip() {
