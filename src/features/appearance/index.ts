@@ -129,7 +129,7 @@ function generateServiceRibbonWidthStyle(
   let fontSize = 11;
   let tabItemHeightBias = -5;
   let sidebarSizeBias = 22;
-  const tabItemWidthBias = 2;
+  const tabItemWidthBias = 3;
 
   switch (width) {
     case 35:
@@ -223,7 +223,7 @@ function generateServiceRibbonWidthStyle(
     }
     .tab-item {
       width: ${width}px !important;
-      height: min-content !important;
+      height: ${width - tabItemWidthBias}px !important;
     }
     .tab-item .tab-item__icon {
       width: ${minimumAdjustedIconSize}px !important;
