@@ -140,8 +140,8 @@ class Sidebar extends Component {
       hideRecipesButton,
       hideWorkspacesButton,
       hideNotificationsButton,
-      useVerticalStyle,
-      hideSettingsButton
+      hideSettingsButton,
+      useVerticalStyle
     } = stores.settings.app;
     const { intl } = this.props;
     const todosToggleMessage = todosStore.isTodosPanelVisible
@@ -161,7 +161,7 @@ class Sidebar extends Component {
           useVerticalStyle={stores.settings.all.app.useVerticalStyle}
         />
         <>
-          {hideRecipesButton && hideWorkspacesButton && !todosStore.isFeatureEnabledByUser && hideNotificationsButton ? (
+          {hideRecipesButton && hideWorkspacesButton && hideNotificationsButton && hideSettingsButton && !todosStore.isFeatureEnabledByUser ? (
             null
           ) :
             <button
@@ -208,6 +208,43 @@ class Sidebar extends Component {
               <Icon icon={mdiViewGrid} size={1.5} />
             </button>
           ) : null}
+          {!hideNotificationsButton && !this.state.isCollapsed ? (
+            <button
+              type="button"
+              onClick={() => {
+                toggleMuteApp();
+                this.updateToolTip();
+              }}
+              className={`sidebar__button sidebar__button--audio ${
+                isAppMuted ? 'is-muted' : ''
+              }`}
+              data-tip={`${intl.formatMessage(
+                isAppMuted ? messages.unmute : messages.mute,
+              )} (${muteFerdiumShortcutKey(false)})`}
+            >
+              <Icon icon={isAppMuted ? mdiBellOff : mdiBell} size={1.5} />
+            </button>
+          ) : null}
+          {!hideSettingsButton && !this.state.isCollapsed ? (
+            <button
+              type="button"
+              onClick={() => openSettings({ path: 'app' })}
+              className="sidebar__button sidebar__button--settings"
+              data-tip={`${intl.formatMessage(
+                globalMessages.settings,
+              )} (${settingsShortcutKey(false)})`}
+            >
+              <Icon icon={mdiCog} size={1.5} />
+              {
+                this.props.stores.settings.app.automaticUpdates &&
+                  (this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.AVAILABLE ||
+                  this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.DOWNLOADED ||
+                  this.props.showServicesUpdatedInfoBar) && (
+                  <span className="update-available">•</span>
+                )
+              }
+            </button>
+          ) : null}
           {todosStore.isFeatureEnabledByUser && !this.state.isCollapsed ? (
             <button
               type="button"
@@ -224,23 +261,6 @@ class Sidebar extends Component {
               )} (${todosToggleShortcutKey(false)})`}
             >
               <Icon icon={mdiCheckAll} size={1.5} />
-            </button>
-          ) : null}
-          {!hideNotificationsButton && !this.state.isCollapsed ? (
-            <button
-              type="button"
-              onClick={() => {
-                toggleMuteApp();
-                this.updateToolTip();
-              }}
-              className={`sidebar__button sidebar__button--audio ${
-                isAppMuted ? 'is-muted' : ''
-              }`}
-              data-tip={`${intl.formatMessage(
-                isAppMuted ? messages.unmute : messages.mute,
-              )} (${muteFerdiumShortcutKey(false)})`}
-            >
-              <Icon icon={isAppMuted ? mdiBellOff : mdiBell} size={1.5} />
             </button>
           ) : null}
           {stores.settings.all.app.lockingFeatureEnabled ? (
@@ -263,28 +283,6 @@ class Sidebar extends Component {
             </button>
           ) : null}
         </>
-        {this.state.isCollapsed && hideSettingsButton ?
-          null :
-          (
-          <button
-            type="button"
-            onClick={() => openSettings({ path: 'app' })}
-            className="sidebar__button sidebar__button--settings"
-            data-tip={`${intl.formatMessage(
-              globalMessages.settings,
-            )} (${settingsShortcutKey(false)})`}
-          >
-            <Icon icon={mdiCog} size={1.5} />
-            {
-              this.props.stores.settings.app.automaticUpdates &&
-                (this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.AVAILABLE ||
-                this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.DOWNLOADED ||
-                this.props.showServicesUpdatedInfoBar) && (
-                <span className="update-available">•</span>
-              )
-            }
-          </button>
-          )}
         {this.state.tooltipEnabled && (
           <ReactTooltip place="right" type="dark" effect="solid" />
         )}
