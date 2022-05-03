@@ -8,6 +8,7 @@ publish:
   provider: github
 
 snap:
+  plugs: ["default", "camera"]
   publish:
     provider: snapStore
 
