@@ -6,8 +6,8 @@ echo "********************************************"
 echo "      Ferdium User Data Migration Tool      "
 echo "          WARNING: UNIX OS Only!            "
 echo "********************************************"
-echo "\n\nThis tool migrates your user data from Ferdi to Ferdium."
-echo "Intended to be used on Linux or MacOS machine.\n\n"
+echo "This tool migrates your user data from Ferdi to Ferdium."
+echo "Intended to be used on Linux or MacOS machine."
 read -p "Do you want to proceed? (y/N) " confirm
 
 case "$confirm" in
@@ -33,7 +33,7 @@ FERDI_PATH="$BASE_PATH/Ferdi"
 FERDIUM_PATH="$BASE_PATH/Ferdium2"
 
 if [ -d "$FERDIUM_PATH" ]; then
-  echo "\nPath $FERDIUM_PATH exist, making a backup\n"
+  echo "Path $FERDIUM_PATH exist, making a backup"
   if ! mv -vf "$FERDIUM_PATH" "$FERDIUM_PATH.bak" 2> /dev/null ; then
     read -p "A previous backup already exists at $FERDIUM_PATH.bak. do you want to remove it? (y/N) " confirm
     echo
@@ -49,22 +49,22 @@ if [ -d "$FERDIUM_PATH" ]; then
 fi
 
 if mv -vf "$FERDI_PATH" "$FERDIUM_PATH"; then
-  echo "\nFiles exported succesfully"
+  echo "Files exported succesfully"
 else
-  echo "\nERROR!"
+  echo "ERROR!"
   echo "No user data was found to be exported. Exiting..."
   exit 1
 fi
 
 if [ -f "$FERDIUM_PATH/server.sqlite" ]; then
-  echo "\n********************************************"
+  echo "********************************************"
   echo "                 Success!                   "
   echo "********************************************"
 else
-  echo "\n********************************************\n"
-  echo "WARNING: Your data was partially migrated!\n"
+  echo "********************************************"
+  echo "WARNING: Your data was partially migrated!"
   echo "It was detected that your account is using Ferdi servers to sync your data."
   echo "Please, check this guide on how to export and import your data manually:"
-  echo "https://github.com/ferdium/ferdi/blob/main/MIGRATION.md\n"
+  echo "https://github.com/ferdium/ferdi/blob/main/MIGRATION.md"
   echo "********************************************"
 fi
