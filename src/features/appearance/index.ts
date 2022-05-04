@@ -193,7 +193,7 @@ function generateServiceRibbonWidthStyle(
       vertical ? sidebarServicesAlignment = "right" : sidebarServicesAlignment = "end";
       break;
     default:
-      vertical ? sidebarServicesAlignment = "right" : sidebarServicesAlignment = "start";
+      vertical ? sidebarServicesAlignment = "left" : sidebarServicesAlignment = "start";
       break;
   }
 
