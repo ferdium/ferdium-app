@@ -52,7 +52,7 @@ else
     exit 1
 fi
 
-if [ -f $FERDIUM_PATH/server.sqlite ];then
+if [ -f "$FERDIUM_PATH/server.sqlite" ];then
     echo -e "\n********************************************"
     echo -e "                 Success!                   "
     echo -e "********************************************"
