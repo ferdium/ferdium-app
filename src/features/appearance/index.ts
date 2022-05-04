@@ -123,6 +123,7 @@ function generateServiceRibbonWidthStyle(
   iconSizeStr,
   vertical,
   isLabelEnabled,
+  sidebarServicesLocation,
 ) {
   const width = Number(widthStr);
   const iconSize = Number(iconSizeStr) - iconSizeBias;
@@ -180,11 +181,30 @@ function generateServiceRibbonWidthStyle(
   // Due to the lowest values for SIDEBAR_WIDTH and ICON_SIZES, this can be computed to a negative value
   const minimumAdjustedIconSize = Math.max(width / 2 + iconSize, 2);
 
+  let sidebarServicesAlignment;
+  switch (sidebarServicesLocation) {
+    case 0:
+      vertical ? sidebarServicesAlignment = "left" : sidebarServicesAlignment = "start";
+      break;
+    case 1:
+      vertical ? sidebarServicesAlignment = "center" : sidebarServicesAlignment = "center";
+      break;
+    case 2:
+      vertical ? sidebarServicesAlignment = "right" : sidebarServicesAlignment = "end";
+      break;
+    default:
+      vertical ? sidebarServicesAlignment = "right" : sidebarServicesAlignment = "start";
+      break;
+  }
+
   return vertical
     ? `
     .sidebar {
       height: ${width}px !important;
       overflow: hidden !important;
+    }
+    .sidebar div {
+      justify-content: ${sidebarServicesAlignment};
     }
     .tab-item {
       height: ${width - tabItemWidthBias}px !important;
@@ -220,6 +240,9 @@ function generateServiceRibbonWidthStyle(
     : `
     .sidebar {
       width: ${width}px !important;
+    }
+    .tabs {
+      justify-content: ${sidebarServicesAlignment};
     }
     .tab-item {
       width: ${width}px !important;
@@ -310,6 +333,7 @@ function generateStyle(settings) {
   const {
     accentColor,
     serviceRibbonWidth,
+    sidebarServicesLocation,
     iconSize,
     showDragArea,
     useVerticalStyle,
@@ -328,6 +352,7 @@ function generateStyle(settings) {
     iconSize,
     useVerticalStyle,
     showServiceName,
+    sidebarServicesLocation,
   );
 
   if (showDragArea) {
@@ -363,6 +388,7 @@ export default function initAppearance(stores) {
       settings.all.app.serviceRibbonWidth,
       settings.all.app.iconSize,
       settings.all.app.showDragArea,
+      settings.all.app.sidebarServicesLocation,
       settings.all.app.useVerticalStyle,
       settings.all.app.alwaysShowWorkspaces,
       settings.all.app.showServiceName,

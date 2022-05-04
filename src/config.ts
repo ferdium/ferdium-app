@@ -140,6 +140,12 @@ export const SIDEBAR_WIDTH = {
   100: 'Extremely wide sidebar',
 };
 
+export const SIDEBAR_SERVICES_LOCATION = {
+  0: 'Top/Left',
+  1: 'Center',
+  2: 'Bottom/Right'
+}
+
 export const ICON_SIZES = {
   0: 'Very small icons',
   10: 'Small icons',
@@ -238,6 +244,7 @@ export const DEFAULT_APP_SETTINGS = {
   adaptableDarkMode: true,
   accentColor: DEFAULT_ACCENT_COLOR,
   serviceRibbonWidth: 68,
+  sidebarServicesLocation: 0,
   iconSize: iconSizeBias,
   sentry: false,
   navigationBarBehaviour: 'custom',
