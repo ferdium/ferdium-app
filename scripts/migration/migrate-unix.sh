@@ -30,7 +30,7 @@ else
 fi
 
 FERDI_PATH="$BASE_PATH/Ferdi"
-FERDIUM_PATH="$BASE_PATH/Ferdium2"
+FERDIUM_PATH="$BASE_PATH/Ferdium"
 
 if [ -d "$FERDIUM_PATH" ]; then
   echo "Path $FERDIUM_PATH exist, making a backup"
