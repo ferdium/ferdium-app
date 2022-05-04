@@ -45,7 +45,6 @@ if [ -d "$FERDIUM_PATH" ]; then
 fi
 
 if mv -vf "$FERDI_PATH" "$FERDIUM_PATH"; then
-    cp -rf "$FERDIUM_PATH" "$FERDI_PATH"
     echo -e "\nFiles exported succesfully"
 else
     echo -e "\nERROR!"
