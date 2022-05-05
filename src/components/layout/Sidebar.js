@@ -233,26 +233,6 @@ class Sidebar extends Component {
               <Icon icon={isAppMuted ? mdiBellOff : mdiBell} size={1.5} />
             </button>
           ) : null}
-          {!hideSettingsButton && !this.state.isCollapsed ? (
-            <button
-              type="button"
-              onClick={() => openSettings({ path: 'app' })}
-              className="sidebar__button sidebar__button--settings"
-              data-tip={`${intl.formatMessage(
-                globalMessages.settings,
-              )} (${settingsShortcutKey(false)})`}
-            >
-              <Icon icon={mdiCog} size={1.5} />
-              {
-                this.props.stores.settings.app.automaticUpdates &&
-                  (this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.AVAILABLE ||
-                  this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.DOWNLOADED ||
-                  this.props.showServicesUpdatedInfoBar) && (
-                  <span className="update-available">•</span>
-                )
-              }
-            </button>
-          ) : null}
           {todosStore.isFeatureEnabledByUser && !this.state.isCollapsed ? (
             <button
               type="button"
@@ -294,6 +274,26 @@ class Sidebar extends Component {
         {this.state.tooltipEnabled && (
           <ReactTooltip place="right" type="dark" effect="solid" />
         )}
+        {!hideSettingsButton && !this.state.isCollapsed ? (
+            <button
+              type="button"
+              onClick={() => openSettings({ path: 'app' })}
+              className="sidebar__button sidebar__button--settings"
+              data-tip={`${intl.formatMessage(
+                globalMessages.settings,
+              )} (${settingsShortcutKey(false)})`}
+            >
+              <Icon icon={mdiCog} size={1.5} />
+              {
+                this.props.stores.settings.app.automaticUpdates &&
+                  (this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.AVAILABLE ||
+                  this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.DOWNLOADED ||
+                  this.props.showServicesUpdatedInfoBar) && (
+                  <span className="update-available">•</span>
+                )
+              }
+            </button>
+          ) : null}
       </div>
     );
   }
