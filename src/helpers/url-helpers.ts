@@ -15,6 +15,9 @@ export function isValidExternalURL(url: string | URL) {
   } catch {
     return false;
   }
+  if (url.toString().endsWith('/')) {
+    return false;
+  }
 
   const isAllowed = ALLOWED_PROTOCOLS.includes(parsedUrl.protocol);
 
