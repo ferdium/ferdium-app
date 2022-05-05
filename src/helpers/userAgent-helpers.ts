@@ -28,7 +28,7 @@ function windows() {
 
 function linux() {
   const archString = is64Bit ? 'x86_64' : osArch;
-  return `X11; Ubuntu; Linux ${archString}`;
+  return `X11; Linux ${archString}`;
 }
 
 export default function userAgent() {
