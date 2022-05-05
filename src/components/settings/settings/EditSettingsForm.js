@@ -399,6 +399,7 @@ class EditSettingsForm extends Component {
             {/* General */}
             {this.state.activeSetttingsTab === 'general' && (
               <div>
+                <h2><center>Main</center></h2>
                 <Toggle field={form.$('autoLaunchOnStart')} />
                 <Toggle field={form.$('runInBackground')} />
                 <Toggle field={form.$('confirmOnQuit')} />
@@ -407,32 +408,8 @@ class EditSettingsForm extends Component {
                 <Toggle field={form.$('startMinimized')} />
                 {isWindows && <Toggle field={form.$('minimizeToSystemTray')} />}
                 {isWindows && <Toggle field={form.$('closeToSystemTray')} />}
-                <Select field={form.$('navigationBarBehaviour')} />
-
-                <Hr />
-
-                <Select field={form.$('hibernationStrategy')} />
-                <Toggle field={form.$('hibernateOnStartup')} />
-                <p
-                  className="settings__message"
-                  style={{
-                    borderTop: 0,
-                    marginTop: 0,
-                    paddingTop: 0,
-                    marginBottom: '2rem',
-                  }}
-                >
-                  <span>{intl.formatMessage(messages.hibernateInfo)}</span>
-                </p>
-
-                <Select field={form.$('wakeUpStrategy')} />
-                <Select field={form.$('wakeUpHibernationStrategy')} />
-                <Toggle field={form.$('wakeUpHibernationSplay')} />
-
-                <Hr />
 
                 <Toggle field={form.$('keepAllWorkspacesLoaded')} />
-                <Hr />
 
                 {!hasAddedTodosAsService && (
                   <>
@@ -468,6 +445,7 @@ class EditSettingsForm extends Component {
                 )}
 
                 <Toggle field={form.$('scheduledDNDEnabled')} />
+
                 {scheduledDNDEnabled && (
                   <>
                     <div
@@ -517,19 +495,40 @@ class EditSettingsForm extends Component {
                 >
                   <span>{intl.formatMessage(messages.scheduledDNDInfo)}</span>
                 </p>
+
+                <Hr />
+
+                <Select field={form.$('navigationBarBehaviour')} />
+
+                <Hr />
+
+                <h2><center>Hibernation</center></h2>
+                <Select field={form.$('hibernationStrategy')} />
+                <Toggle field={form.$('hibernateOnStartup')} />
+                <p
+                  className="settings__message"
+                  style={{
+                    borderTop: 0,
+                    marginTop: 0,
+                    paddingTop: 0,
+                    marginBottom: '2rem',
+                  }}
+                >
+                  <span>{intl.formatMessage(messages.hibernateInfo)}</span>
+                </p>
+
+                <Select field={form.$('wakeUpStrategy')} />
+                <Select field={form.$('wakeUpHibernationStrategy')} />
+                <Toggle field={form.$('wakeUpHibernationSplay')} />
+
               </div>
             )}
 
             {/* Appearance */}
             {this.state.activeSetttingsTab === 'appearance' && (
               <div>
-                <Toggle field={form.$('showDisabledServices')} />
-                <Toggle field={form.$('showServiceName')} />
-                <Toggle field={form.$('showMessageBadgeWhenMuted')} />
-
+                <h2><center>General UI</center></h2>
                 {isMac && <Toggle field={form.$('showDragArea')} />}
-
-                <Hr />
 
                 <Toggle field={form.$('adaptableDarkMode')} />
                 {!isAdaptableDarkModeEnabled && (
@@ -554,8 +553,6 @@ class EditSettingsForm extends Component {
                   </>
                 )}
 
-                <Hr />
-
                 <Toggle field={form.$('splitMode')} />
                 {isSplitModeEnabled && (
                   <Input
@@ -569,6 +566,21 @@ class EditSettingsForm extends Component {
                 )}
 
                 <Hr />
+
+                <Input
+                  placeholder="Accent Color"
+                  onChange={e => this.submit(e)}
+                  field={form.$('accentColor')}
+                />
+                <p>
+                  {intl.formatMessage(messages.accentColorInfo, {
+                    defaultAccentColor: DEFAULT_APP_SETTINGS.accentColor,
+                  })}
+                </p>
+
+                <Hr />
+
+                <h2><center>Sidebar Settings</center></h2>
 
                 <Select field={form.$('serviceRibbonWidth')} />
 
@@ -587,21 +599,14 @@ class EditSettingsForm extends Component {
                 <Toggle field={form.$('alwaysShowWorkspaces')} />
 
                 <Hr />
-                <Select field={form.$('iconSize')} />
+
+                <h2><center>Service Icons Settings</center></h2>
+
+                <Toggle field={form.$('showDisabledServices')} />
+                <Toggle field={form.$('showServiceName')} />
+                <Toggle field={form.$('showMessageBadgeWhenMuted')} />
                 <Toggle field={form.$('enableLongPressServiceHint')} />
-
-                <Hr />
-
-                <Input
-                  placeholder="Accent Color"
-                  onChange={e => this.submit(e)}
-                  field={form.$('accentColor')}
-                />
-                <p>
-                  {intl.formatMessage(messages.accentColorInfo, {
-                    defaultAccentColor: DEFAULT_APP_SETTINGS.accentColor,
-                  })}
-                </p>
+                <Select field={form.$('iconSize')} />
               </div>
             )}
 
@@ -838,7 +843,7 @@ class EditSettingsForm extends Component {
                         )}
                         {updateFailed && (
                           <Infobox type="danger" icon="alert">
-                            An error occurred (check the console for more details)
+                            &nbsp;An error occurred (check the console for more details)
                           </Infobox>
                         )}
                       </>
@@ -857,7 +862,7 @@ class EditSettingsForm extends Component {
                     ) : (
                       <p>
                         <Icon icon={mdiPowerPlug} />
-                        Your services are up-to-date.
+                          &nbsp;Your services are up-to-date.
                       </p>
                     )}
                   </>
