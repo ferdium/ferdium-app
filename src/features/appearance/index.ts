@@ -1,7 +1,15 @@
 import color from 'color';
 import { reaction } from 'mobx';
 import { isWindows, isLinux } from '../../environment';
-import { DEFAULT_APP_SETTINGS, iconSizeBias } from '../../config';
+import {
+  DEFAULT_APP_SETTINGS,
+  iconSizeBias,
+  SIDEBAR_SERVICES_LOCATION_TOPLEFT,
+  SIDEBAR_SERVICES_LOCATION_CENTER,
+  SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT,
+} from '../../config';
+
+
 
 const STYLE_ELEMENT_ID = 'custom-appearance-style';
 
@@ -123,6 +131,7 @@ function generateServiceRibbonWidthStyle(
   iconSizeStr,
   vertical,
   isLabelEnabled,
+  sidebarServicesLocation,
 ) {
   const width = Number(widthStr);
   const iconSize = Number(iconSizeStr) - iconSizeBias;
@@ -180,11 +189,30 @@ function generateServiceRibbonWidthStyle(
   // Due to the lowest values for SIDEBAR_WIDTH and ICON_SIZES, this can be computed to a negative value
   const minimumAdjustedIconSize = Math.max(width / 2 + iconSize, 2);
 
+  let sidebarServicesAlignment;
+  switch (sidebarServicesLocation) {
+    case SIDEBAR_SERVICES_LOCATION_TOPLEFT:
+      sidebarServicesAlignment = vertical ? "left" : "start";
+      break;
+    case SIDEBAR_SERVICES_LOCATION_CENTER:
+      sidebarServicesAlignment = vertical ? "center" : "center";
+      break;
+    case SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT:
+      sidebarServicesAlignment = vertical ? "right" : "end";
+      break;
+    default:
+      sidebarServicesAlignment = vertical ? "left" : "start";
+      break;
+  }
+
   return vertical
     ? `
     .sidebar {
       height: ${width}px !important;
       overflow: hidden !important;
+    }
+    .sidebar div {
+      justify-content: ${sidebarServicesAlignment};
     }
     .tab-item {
       height: ${width - tabItemWidthBias}px !important;
@@ -220,6 +248,9 @@ function generateServiceRibbonWidthStyle(
     : `
     .sidebar {
       width: ${width}px !important;
+    }
+    .tabs {
+      justify-content: ${sidebarServicesAlignment};
     }
     .tab-item {
       width: ${width}px !important;
@@ -310,6 +341,7 @@ function generateStyle(settings) {
   const {
     accentColor,
     serviceRibbonWidth,
+    sidebarServicesLocation,
     iconSize,
     showDragArea,
     useVerticalStyle,
@@ -328,6 +360,7 @@ function generateStyle(settings) {
     iconSize,
     useVerticalStyle,
     showServiceName,
+    sidebarServicesLocation,
   );
 
   if (showDragArea) {
@@ -363,6 +396,7 @@ export default function initAppearance(stores) {
       settings.all.app.serviceRibbonWidth,
       settings.all.app.iconSize,
       settings.all.app.showDragArea,
+      settings.all.app.sidebarServicesLocation,
       settings.all.app.useVerticalStyle,
       settings.all.app.alwaysShowWorkspaces,
       settings.all.app.showServiceName,

@@ -140,6 +140,15 @@ export const SIDEBAR_WIDTH = {
   100: 'Extremely wide sidebar',
 };
 
+export const SIDEBAR_SERVICES_LOCATION_TOPLEFT = 0;
+export const SIDEBAR_SERVICES_LOCATION_CENTER = 1;
+export const SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT = 2;
+export const SIDEBAR_SERVICES_LOCATION = {
+  [SIDEBAR_SERVICES_LOCATION_TOPLEFT]: 'Top/Left',
+  [SIDEBAR_SERVICES_LOCATION_CENTER]: 'Center',
+  [SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT]: 'Bottom/Right'
+}
+
 export const ICON_SIZES = {
   0: 'Very small icons',
   10: 'Small icons',
@@ -238,6 +247,7 @@ export const DEFAULT_APP_SETTINGS = {
   adaptableDarkMode: true,
   accentColor: DEFAULT_ACCENT_COLOR,
   serviceRibbonWidth: 68,
+  sidebarServicesLocation: SIDEBAR_SERVICES_LOCATION_TOPLEFT,
   iconSize: iconSizeBias,
   sentry: false,
   navigationBarBehaviour: 'custom',

@@ -572,6 +572,8 @@ class EditSettingsForm extends Component {
 
                 <Select field={form.$('serviceRibbonWidth')} />
 
+                <Select field={form.$('sidebarServicesLocation')} />
+
                 <Toggle field={form.$('useVerticalStyle')} />
 
                 <Toggle field={form.$('hideRecipesButton')} />

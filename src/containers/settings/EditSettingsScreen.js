@@ -14,6 +14,7 @@ import {
   DEFAULT_APP_SETTINGS,
   HIBERNATION_STRATEGIES,
   SIDEBAR_WIDTH,
+  SIDEBAR_SERVICES_LOCATION,
   ICON_SIZES,
   NAVIGATION_BAR_BEHAVIOURS,
   SEARCH_ENGINE_NAMES,
@@ -189,6 +190,10 @@ const messages = defineMessages({
     id: 'settings.app.form.serviceRibbonWidth',
     defaultMessage: 'Sidebar width',
   },
+  sidebarServicesLocation: {
+    id: 'settings.app.form.sidebarServicesLocation',
+    defaultMessage: 'Sidebar Services Icons Location',
+  },
   iconSize: {
     id: 'settings.app.form.iconSize',
     defaultMessage: 'Service icon size',
@@ -344,6 +349,7 @@ class EditSettingsScreen extends Component {
         splitMode: Boolean(settingsData.splitMode),
         splitColumns: Number(settingsData.splitColumns),
         serviceRibbonWidth: Number(settingsData.serviceRibbonWidth),
+        sidebarServicesLocation: Number(settingsData.sidebarServicesLocation),
         iconSize: Number(settingsData.iconSize),
         enableLongPressServiceHint: Boolean(
           settingsData.enableLongPressServiceHint,
@@ -439,6 +445,11 @@ class EditSettingsScreen extends Component {
 
     const sidebarWidth = getSelectOptions({
       locales: SIDEBAR_WIDTH,
+      sort: false,
+    });
+
+    const sidebarServicesLocation = getSelectOptions({
+      locales: SIDEBAR_SERVICES_LOCATION,
       sort: false,
     });
 
@@ -682,6 +693,12 @@ class EditSettingsScreen extends Component {
           value: settings.all.app.serviceRibbonWidth,
           default: DEFAULT_APP_SETTINGS.serviceRibbonWidth,
           options: sidebarWidth,
+        },
+        sidebarServicesLocation: {
+          label: intl.formatMessage(messages.sidebarServicesLocation),
+          value: settings.all.app.sidebarServicesLocation,
+          default: DEFAULT_APP_SETTINGS.sidebarServicesLocation,
+          options: sidebarServicesLocation,
         },
         iconSize: {
           label: intl.formatMessage(messages.iconSize),
