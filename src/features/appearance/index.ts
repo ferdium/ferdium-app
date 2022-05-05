@@ -1,7 +1,15 @@
 import color from 'color';
 import { reaction } from 'mobx';
 import { isWindows, isLinux } from '../../environment';
-import { DEFAULT_APP_SETTINGS, iconSizeBias } from '../../config';
+import {
+  DEFAULT_APP_SETTINGS,
+  iconSizeBias,
+  SIDEBAR_SERVICES_LOCATION_TOPLEFT,
+  SIDEBAR_SERVICES_LOCATION_CENTER,
+  SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT,
+} from '../../config';
+
+
 
 const STYLE_ELEMENT_ID = 'custom-appearance-style';
 
@@ -183,13 +191,13 @@ function generateServiceRibbonWidthStyle(
 
   let sidebarServicesAlignment;
   switch (sidebarServicesLocation) {
-    case 0:
+    case SIDEBAR_SERVICES_LOCATION_TOPLEFT:
       sidebarServicesAlignment = vertical ? "left" : "start";
       break;
-    case 1:
+    case SIDEBAR_SERVICES_LOCATION_CENTER:
       sidebarServicesAlignment = vertical ? "center" : "center";
       break;
-    case 2:
+    case SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT:
       sidebarServicesAlignment = vertical ? "right" : "end";
       break;
     default:

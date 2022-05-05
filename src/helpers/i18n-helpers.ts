@@ -24,6 +24,7 @@ export function getSelectOptions({
   resetToDefaultText = '',
   automaticDetectionText = '',
   sort = true,
+  addDefault=false,
 }) {
   const options: object[] = [];
 
@@ -41,11 +42,13 @@ export function getSelectOptions({
     });
   }
 
-  options.push({
-    value: '───',
-    label: '───',
-    disabled: true,
-  });
+  if (addDefault) {
+    options.push({
+      value: '───',
+      label: '───',
+      disabled: true,
+    });
+  }
 
   let keys = Object.keys(locales);
   if (sort) {
