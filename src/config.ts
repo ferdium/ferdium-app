@@ -254,6 +254,8 @@ export const DEFAULT_APP_SETTINGS = {
   searchEngine: SEARCH_ENGINE_DDG,
   useVerticalStyle: false,
   hideRecipesButton: false,
+  useGrayscaleServices: false,
+  grayscaleServicesDim: 50,
   hideWorkspacesButton: false,
   hideNotificationsButton: false,
   hideSettingsButton: false,

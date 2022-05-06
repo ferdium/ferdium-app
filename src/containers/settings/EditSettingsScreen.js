@@ -210,6 +210,14 @@ const messages = defineMessages({
     id: 'settings.app.form.hideRecipesButton',
     defaultMessage: 'Hide Recipes button',
   },
+  useGrayscaleServices: {
+    id: 'settings.app.form.useGrayscaleServices',
+    defaultMessage: 'Use grayscale services',
+  },
+  grayscaleServicesDim: {
+    id: 'settings.app.form.grayscaleServicesDim',
+    defaultMessage: 'Input grayscale dim level (%)',
+  },
   hideWorkspacesButton: {
     id: 'settings.app.form.hideWorkspacesButton',
     defaultMessage: 'Hide Workspace Drawer button',
@@ -356,6 +364,8 @@ class EditSettingsScreen extends Component {
         ),
         useVerticalStyle: Boolean(settingsData.useVerticalStyle),
         hideRecipesButton: Boolean(settingsData.hideRecipesButton),
+        useGrayscaleServices: Boolean(settingsData.useGrayscaleServices),
+        grayscaleServicesDim: Number(settingsData.grayscaleServicesDim),
         hideWorkspacesButton: Boolean(settingsData.hideWorkspacesButton),
         hideNotificationsButton: Boolean(settingsData.hideNotificationsButton),
         hideSettingsButton: Boolean(settingsData.hideSettingsButton),
@@ -721,6 +731,16 @@ class EditSettingsScreen extends Component {
           value: settings.all.app.hideRecipesButton,
           default: DEFAULT_APP_SETTINGS.hideRecipesButton,
         },
+        useGrayscaleServices: {
+          label: intl.formatMessage(messages.useGrayscaleServices),
+          value: settings.all.app.useGrayscaleServices,
+          default: DEFAULT_APP_SETTINGS.useGrayscaleServices,
+        },
+        grayscaleServicesDim: {
+          label: intl.formatMessage(messages.grayscaleServicesDim),
+          value: settings.all.app.grayscaleServicesDim,
+          default: DEFAULT_APP_SETTINGS.grayscaleServicesDim,
+        },
         hideWorkspacesButton: {
           label: intl.formatMessage(messages.hideWorkspacesButton),
           value: settings.all.app.hideWorkspacesButton,
@@ -828,6 +848,7 @@ class EditSettingsScreen extends Component {
           isAdaptableDarkModeEnabled={
             this.props.stores.settings.app.adaptableDarkMode
           }
+          isUseGrayscaleServicesEnabled={this.props.stores.settings.app.useGrayscaleServices}
           isSplitModeEnabled={this.props.stores.settings.app.splitMode}
           isTodosActivated={this.props.stores.todos.isFeatureEnabledByUser}
           isUsingCustomTodoService={
