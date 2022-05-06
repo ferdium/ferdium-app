@@ -132,6 +132,8 @@ function generateServiceRibbonWidthStyle(
   vertical,
   isLabelEnabled,
   sidebarServicesLocation,
+  useGrayscaleServices,
+  grayscaleServicesDim,
 ) {
   const width = Number(widthStr);
   const iconSize = Number(iconSizeStr) - iconSizeBias;
@@ -205,6 +207,10 @@ function generateServiceRibbonWidthStyle(
       break;
   }
 
+  const graysacleServices =
+  `filter: grayscale(1);
+  opacity: ${grayscaleServicesDim}%;`
+
   return vertical
     ? `
     .sidebar {
@@ -222,6 +228,7 @@ function generateServiceRibbonWidthStyle(
     }
     .tab-item .tab-item__icon {
       width: ${minimumAdjustedIconSize}px !important;
+      ${useGrayscaleServices ? graysacleServices : null},
     }
     .sidebar__button {
       font-size: ${width / 3}px !important;
@@ -258,6 +265,7 @@ function generateServiceRibbonWidthStyle(
     }
     .tab-item .tab-item__icon {
       width: ${minimumAdjustedIconSize}px !important;
+      ${useGrayscaleServices ? graysacleServices : null},
     }
     .sidebar__button {
       font-size: ${width / 3}px !important;
@@ -342,6 +350,8 @@ function generateStyle(settings) {
     accentColor,
     serviceRibbonWidth,
     sidebarServicesLocation,
+    useGrayscaleServices,
+    grayscaleServicesDim,
     iconSize,
     showDragArea,
     useVerticalStyle,
@@ -361,6 +371,8 @@ function generateStyle(settings) {
     useVerticalStyle,
     showServiceName,
     sidebarServicesLocation,
+    useGrayscaleServices,
+    grayscaleServicesDim,
   );
 
   if (showDragArea) {
@@ -397,6 +409,8 @@ export default function initAppearance(stores) {
       settings.all.app.iconSize,
       settings.all.app.showDragArea,
       settings.all.app.sidebarServicesLocation,
+      settings.all.app.useGrayscaleServices,
+      settings.all.app.grayscaleServicesDim,
       settings.all.app.useVerticalStyle,
       settings.all.app.alwaysShowWorkspaces,
       settings.all.app.showServiceName,

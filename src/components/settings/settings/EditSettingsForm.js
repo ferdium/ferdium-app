@@ -210,6 +210,7 @@ class EditSettingsForm extends Component {
     automaticUpdates: PropTypes.bool.isRequired,
     isDarkmodeEnabled: PropTypes.bool.isRequired,
     isAdaptableDarkModeEnabled: PropTypes.bool.isRequired,
+    isUseGrayscaleServicesEnabled: PropTypes.bool.isRequired,
     openProcessManager: PropTypes.func.isRequired,
     isSplitModeEnabled: PropTypes.bool.isRequired,
     hasAddedTodosAsService: PropTypes.bool.isRequired,
@@ -249,6 +250,7 @@ class EditSettingsForm extends Component {
       form,
       isCheckingForUpdates,
       isAdaptableDarkModeEnabled,
+      isUseGrayscaleServicesEnabled,
       isUpdateAvailable,
       noUpdateAvailable,
       updateIsReadyToInstall,
@@ -604,6 +606,16 @@ class EditSettingsForm extends Component {
 
                 <Toggle field={form.$('showDisabledServices')} />
                 <Toggle field={form.$('showServiceName')} />
+                <Toggle field={form.$('useGrayscaleServices')} />
+
+                {isUseGrayscaleServicesEnabled && (
+                  <Input
+                      type="number"
+                      onChange={e => this.submit(e)}
+                      field={form.$('grayscaleServicesDim')}
+                    />
+                )}
+
                 <Toggle field={form.$('showMessageBadgeWhenMuted')} />
                 <Toggle field={form.$('enableLongPressServiceHint')} />
                 <Select field={form.$('iconSize')} />

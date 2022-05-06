@@ -216,6 +216,8 @@
   "settings.app.form.hibernationStrategy": "Hibernation strategy",
   "settings.app.form.hideNotificationsButton": "Hide Notifications & Sound button",
   "settings.app.form.hideRecipesButton": "Hide Recipes button",
+  "settings.app.form.useGrayscaleServices": "Use grayscale services",
+  "settings.app.form.grayscaleServicesDim": "Input grayscale dim level (%)",
   "settings.app.form.hideSettingsButton": "Hide Settings button",
   "settings.app.form.hideWorkspacesButton": "Hide Workspace Drawer button",
   "settings.app.form.iconSize": "Service icon size",
