@@ -441,7 +441,7 @@
   "validation.minLength": "{field} phải dài ít nhất {length} ký tự",
   "validation.oneRequired": "Ít nhất một cái được yêu cầu",
   "validation.required": "{field} là bắt buộc",
-  "validation.url": "{field} không phải là URL hợp lệ",
+  "validation.url": "{field} is not a valid URL",
   "webControls.back": "Quay lại",
   "webControls.forward": "Tới trước",
   "webControls.goHome": "Trang chủ",
