@@ -441,7 +441,7 @@
   "validation.minLength": "Кількість символів в {field} повина бути не меньше {length}",
   "validation.oneRequired": "Потрібен принаймні один",
   "validation.required": "{field} обов'язвоке",
-  "validation.url": "{field} не є валідним URL",
+  "validation.url": "{field} is not a valid URL",
   "webControls.back": "Назад",
   "webControls.forward": "Вперед",
   "webControls.goHome": "Головна",
