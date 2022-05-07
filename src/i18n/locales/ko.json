@@ -66,7 +66,7 @@
   "locked.unlockWithPassword": "비밀번호로 열기",
   "login.changeServer": "서버 번경",
   "login.customServerQuestion": "Using a custom Ferdium server?",
-  "login.customServerSuggestion": "Try importing your Franz account",
+  "login.customServerSuggestion": "Try importing your Franz account into Ferdium",
   "login.email.label": "이메일 주소",
   "login.headline": "로그인",
   "login.invalidCredentials": "이메일 또는 비밀번호가 일치하지 않습니다",

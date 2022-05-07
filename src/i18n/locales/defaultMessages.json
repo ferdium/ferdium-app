@@ -456,7 +456,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Using a Franz account to log in?",
+        "defaultMessage": "!!!Using a custom Ferdium server?",
         "end": {
           "column": 3,
           "line": 43

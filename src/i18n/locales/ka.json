@@ -66,7 +66,7 @@
   "locked.unlockWithPassword": "Unlock with Password",
   "login.changeServer": "Change server",
   "login.customServerQuestion": "Using a custom Ferdium server?",
-  "login.customServerSuggestion": "Try importing your Franz account",
+  "login.customServerSuggestion": "Try importing your Franz account into Ferdium",
   "login.email.label": "მეილი",
   "login.headline": "შესვლა",
   "login.invalidCredentials": "მეილი ან პაროლი არასწორია",

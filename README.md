@@ -20,9 +20,7 @@
   - [Contributors ✨](#contributors-)
 
 [![Builds](https://github.com/ferdium/ferdium-app/actions/workflows/builds.yml/badge.svg)](https://github.com/ferdium/ferdium-app/actions/workflows/builds.yml)
-<!-- TODO: Uncomment once we have integrated with crowdin
-<a title="Crowdin" target="_blank" href="https://crowdin.com/project/ferdium"><img src="https://badges.crowdin.net/ferdium/localized.svg"></a>
--->
+[![Crowdin](https://badges.crowdin.net/ferdium-app/localized.svg)](https://crowdin.com/project/ferdium-app)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 <a href='#contributors-'><img src='https://img.shields.io/badge/contributors-291-default.svg?logo=github' alt='Contributors'/></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->

@@ -66,7 +66,7 @@
   "locked.unlockWithPassword": "パスワードでロック解除",
   "login.changeServer": "サーバーの変更",
   "login.customServerQuestion": "Using a custom Ferdium server?",
-  "login.customServerSuggestion": "Try importing your Franz account",
+  "login.customServerSuggestion": "Try importing your Franz account into Ferdium",
   "login.email.label": "メールアドレス",
   "login.headline": "サインイン",
   "login.invalidCredentials": "メールアドレスまたはパスワードが間違っています",

@@ -66,7 +66,7 @@
   "locked.unlockWithPassword": "Desbloqueja amb contrasenya",
   "login.changeServer": "Canvía de Servidor",
   "login.customServerQuestion": "Using a custom Ferdium server?",
-  "login.customServerSuggestion": "Try importing your Franz account",
+  "login.customServerSuggestion": "Try importing your Franz account into Ferdium",
   "login.email.label": "Correu electrònic",
   "login.headline": "Accedir-hi",
   "login.invalidCredentials": "El correu electrònic o la contrasenya no són vàlids",

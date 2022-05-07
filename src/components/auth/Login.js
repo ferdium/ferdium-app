@@ -38,7 +38,7 @@ const messages = defineMessages({
   },
   customServerQuestion: {
     id: 'login.customServerQuestion',
-    defaultMessage: 'Using a Franz account to log in?',
+    defaultMessage: 'Using a custom Ferdium server?',
   },
   customServerSuggestion: {
     id: 'login.customServerSuggestion',
