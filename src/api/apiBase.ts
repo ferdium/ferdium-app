@@ -9,6 +9,7 @@ import {
   LOCAL_SERVER,
   SERVER_NOT_LOADED,
 } from '../config';
+import { fixUrl } from '../helpers/url-helpers';
 
 // Note: This cannot be used from the internal-server since we are not running within the context of a browser window
 const apiBase = (withVersion = true) => {
@@ -28,13 +29,13 @@ const apiBase = (withVersion = true) => {
         }`
       : (window as any).ferdium.stores.settings.all.app.server;
 
-  return withVersion ? `${url}/${API_VERSION}` : url;
+  return fixUrl(withVersion ? `${url}/${API_VERSION}` : url);
 };
 
 export default apiBase;
 
 export function termsBase() {
-  return (window as any).ferdium.stores.settings.all.app.server !== LIVE_FRANZ_API
+  return fixUrl((window as any).ferdium.stores.settings.all.app.server !== LIVE_FRANZ_API
     ? (window as any).ferdium.stores.settings.all.app.server
-    : DEV_API_FRANZ_WEBSITE;
+    : DEV_API_FRANZ_WEBSITE);
 }

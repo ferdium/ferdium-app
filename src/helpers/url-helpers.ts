@@ -15,15 +15,16 @@ export function isValidExternalURL(url: string | URL) {
   } catch {
     return false;
   }
-  if (url.toString().endsWith('/')) {
-    return false;
-  }
 
   const isAllowed = ALLOWED_PROTOCOLS.includes(parsedUrl.protocol);
 
   debug('protocol check is', isAllowed, 'for:', url);
 
   return isAllowed;
+}
+
+export function fixUrl(url: string | URL) {
+  return url.toString().replaceAll('//', '/').replace('http:/', 'http://').replace('https:/', 'https://').replace('file:/', 'file://');
 }
 
 export function isValidFileUrl(path: string) {
@@ -40,8 +41,9 @@ export function openExternalUrl(
   url: string | URL,
   skipValidityCheck: boolean = false,
 ) {
-  debug('Open url:', url, 'with skipValidityCheck:', skipValidityCheck);
-  if (skipValidityCheck || isValidExternalURL(url)) {
-    shell.openExternal(url.toString());
+  const fixedUrl = fixUrl(url.toString());
+  debug('Open url:', fixedUrl, 'with skipValidityCheck:', skipValidityCheck);
+  if (skipValidityCheck || isValidExternalURL(fixedUrl)) {
+    shell.openExternal(fixedUrl.toString());
   }
 }
