@@ -441,7 +441,7 @@
   "validation.minLength": "{field} trebuie să aibă cel puțin {length} caractere",
   "validation.oneRequired": "Cel puțin unul este necesar",
   "validation.required": "{field} este necesar",
-  "validation.url": "{field} nu este un URL valid",
+  "validation.url": "{field} is not a valid URL",
   "webControls.back": "Înapoi",
   "webControls.forward": "Înainte",
   "webControls.goHome": "Acasă",
