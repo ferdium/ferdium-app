@@ -21,6 +21,7 @@ import Select from '../../ui/Select';
 import { isMac } from '../../../environment';
 import globalMessages from '../../../i18n/globalMessages';
 import { Icon } from '../../ui/icon';
+import { H3 } from '../../ui/headline';
 
 const messages = defineMessages({
   saveService: {
@@ -324,7 +325,7 @@ class EditServiceForm extends Component {
             <div className="service-flex-grid">
               <div className="settings__options">
                 <div className="settings__settings-group">
-                  <h3>{intl.formatMessage(messages.headlineNotifications)}</h3>
+                  <H3>{intl.formatMessage(messages.headlineNotifications)}</H3>
                   <Toggle field={form.$('isNotificationEnabled')} />
                   <Toggle field={form.$('isMuted')} />
                   <p className="settings__help indented__help">
@@ -333,7 +334,7 @@ class EditServiceForm extends Component {
                 </div>
 
                 <div className="settings__settings-group">
-                  <h3>{intl.formatMessage(messages.headlineBadges)}</h3>
+                  <H3>{intl.formatMessage(messages.headlineBadges)}</H3>
                   <Toggle field={form.$('isBadgeEnabled')} />
                   {recipe.hasIndirectMessages &&
                     form.$('isBadgeEnabled').value && (
@@ -352,7 +353,7 @@ class EditServiceForm extends Component {
                 </div>
 
                 <div className="settings__settings-group">
-                  <h3>{intl.formatMessage(messages.headlineGeneral)}</h3>
+                  <H3>{intl.formatMessage(messages.headlineGeneral)}</H3>
                   <Toggle field={form.$('isEnabled')} />
                   <Toggle field={form.$('isHibernationEnabled')} />
                   <p className="settings__help indented__help">
@@ -362,11 +363,11 @@ class EditServiceForm extends Component {
                   <Toggle field={form.$('isDarkModeEnabled')} />
                   {form.$('isDarkModeEnabled').value && (
                     <>
-                      <h3>
+                      <H3>
                         {intl.formatMessage(
                           messages.headlineDarkReaderSettings,
                         )}
-                      </h3>
+                      </H3>
                       <Slider field={form.$('darkReaderBrightness')} />
                       <Slider field={form.$('darkReaderContrast')} />
                       <Slider field={form.$('darkReaderSepia')} />
@@ -391,10 +392,10 @@ class EditServiceForm extends Component {
 
             {isProxyFeatureEnabled && (
               <div className="settings__settings-group">
-                <h3>
+                <H3>
                   {intl.formatMessage(messages.headlineProxy)}
                   <span className="badge badge--success">beta</span>
-                </h3>
+                </H3>
                 <Toggle field={form.$('proxy.isEnabled')} />
                 {form.$('proxy.isEnabled').value && (
                   <>

@@ -13,7 +13,7 @@ import Toggle from '../../ui/Toggle';
 import Select from '../../ui/Select';
 import Input from '../../ui/Input';
 import Infobox from '../../ui/Infobox';
-import { H1, H2 } from '../../ui/headline';
+import { H1, H2, H3, H5 } from '../../ui/headline';
 
 import {
   DEFAULT_APP_SETTINGS,
@@ -336,7 +336,7 @@ class EditSettingsForm extends Component {
           >
             {/* Titles */}
             <div className="recipes__navigation">
-              <h2
+              <H5
                 id="general"
                 className={
                   this.state.activeSetttingsTab === 'general'
@@ -348,8 +348,8 @@ class EditSettingsForm extends Component {
                 }}
               >
                 {intl.formatMessage(messages.headlineGeneral)}
-              </h2>
-              <h2
+              </H5>
+              <H5
                 id="appearance"
                 className={
                   this.state.activeSetttingsTab === 'appearance'
@@ -361,8 +361,8 @@ class EditSettingsForm extends Component {
                 }}
               >
                 {intl.formatMessage(messages.headlineAppearance)}
-              </h2>
-              <h2
+              </H5>
+              <H5
                 id="privacy"
                 className={
                   this.state.activeSetttingsTab === 'privacy'
@@ -374,8 +374,8 @@ class EditSettingsForm extends Component {
                 }}
               >
                 {intl.formatMessage(messages.headlinePrivacy)}
-              </h2>
-              <h2
+              </H5>
+              <H5
                 id="language"
                 className={
                   this.state.activeSetttingsTab === 'language'
@@ -387,8 +387,8 @@ class EditSettingsForm extends Component {
                 }}
               >
                 {intl.formatMessage(messages.headlineLanguage)}
-              </h2>
-              <h2
+              </H5>
+              <H5
                 id="advanced"
                 className={
                   this.state.activeSetttingsTab === 'advanced'
@@ -400,8 +400,8 @@ class EditSettingsForm extends Component {
                 }}
               >
                 {intl.formatMessage(messages.headlineAdvanced)}
-              </h2>
-              <h2
+              </H5>
+              <H5
                 id="updates"
                 className={
                   this.state.activeSetttingsTab === 'updates'
@@ -416,7 +416,7 @@ class EditSettingsForm extends Component {
                 {automaticUpdates && (updateIsReadyToInstall || isUpdateAvailable || showServicesUpdatedInfoBar) && (
                   <span className="update-available">•</span>
                 )}
-              </h2>
+              </H5>
             </div>
 
             {/* General */}
@@ -781,7 +781,7 @@ class EditSettingsForm extends Component {
                 <Hr />
 
                 <div className="settings__settings-group">
-                  <h3>{intl.formatMessage(messages.subheadlineCache)}</h3>
+                  <H3>{intl.formatMessage(messages.subheadlineCache)}</H3>
                   <p>
                     {intl.formatMessage(messages.cacheInfo, {
                       size: cacheSize,
@@ -817,9 +817,9 @@ class EditSettingsForm extends Component {
                 <Hr />
 
                 <div className="settings__settings-group">
-                  <h3>
+                  <H3>
                     {intl.formatMessage(messages.subheadlineFerdiumProfile)}
-                  </h3>
+                  </H3>
                   <p>
                     <div className="settings__open-settings-file-container">
                       <Button
