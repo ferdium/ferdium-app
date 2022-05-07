@@ -441,7 +441,7 @@
   "validation.minLength": "{field} ha de ser al menys {length} caràcters de llargada",
   "validation.oneRequired": "At least one is required",
   "validation.required": "{field} es requerit",
-  "validation.url": "{field} es una URL no vàlida",
+  "validation.url": "{field} is not a valid URL",
   "webControls.back": "Enrere",
   "webControls.forward": "Endavant",
   "webControls.goHome": "Inici",
