@@ -34,6 +34,10 @@
       }
     }
 
+    .settings__section_header {
+      text-align: center;
+    }
+
     .settings__main {
       background: $dark-theme-gray-darkest;
     }
@@ -267,6 +271,10 @@
 
     a {
       display: inline-block;
+    }
+
+    .no-bottom-margin {
+      margin-bottom: 0;
     }
   }
 

@@ -8,6 +8,7 @@ import classnames from 'classnames';
 import Form from '../../lib/Form';
 import Toggle from '../ui/Toggle';
 import Button from '../ui/Button';
+import { H1 } from '../ui/headline';
 
 const messages = defineMessages({
   headline: {
@@ -90,7 +91,7 @@ class Import extends Component {
             onSubmit={e => this.submit(e)}
           >
             <img src="./assets/images/logo.svg" className="auth__logo" alt="" />
-            <h1>{intl.formatMessage(messages.headline)}</h1>
+            <H1>{intl.formatMessage(messages.headline)}</H1>
             <table className="service-table available-services">
               <tbody>
                 {this.form.$('import').map((service, i) => (

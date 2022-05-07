@@ -579,11 +579,11 @@ class EditSettingsScreen extends Component {
           options: wakeUpHibernationStrategies,
           default: DEFAULT_APP_SETTINGS.wakeUpHibernationStrategy,
         },
-	wakeUpHibernationSplay: {
+        wakeUpHibernationSplay: {
           label: intl.formatMessage(messages.wakeUpHibernationSplay),
-	  value: settings.all.app.wakeUpHibernationSplay,
-	  default: DEFAULT_APP_SETTINGS.wakeUpHibernationSplay,
-	},
+          value: settings.all.app.wakeUpHibernationSplay,
+          default: DEFAULT_APP_SETTINGS.wakeUpHibernationSplay,
+        },
         predefinedTodoServer: {
           label: intl.formatMessage(messages.predefinedTodoServer),
           value: settings.all.app.predefinedTodoServer,

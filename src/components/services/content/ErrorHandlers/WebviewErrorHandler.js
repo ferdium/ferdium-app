@@ -7,6 +7,7 @@ import injectSheet from 'react-jss';
 import Button from '../../../ui/Button';
 
 import styles from './styles';
+import { H1 } from '../../../ui/headline';
 
 const messages = defineMessages({
   headline: {
@@ -46,7 +47,7 @@ class WebviewErrorHandler extends Component {
 
     return (
       <div className={classes.component}>
-        <h1>{intl.formatMessage(messages.headline)}</h1>
+        <H1>{intl.formatMessage(messages.headline)}</H1>
         <p>{intl.formatMessage(messages.text, { name })}</p>
         <p>
           <strong>{intl.formatMessage(messages.errorMessage)}:</strong>{' '}

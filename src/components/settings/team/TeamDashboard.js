@@ -9,6 +9,7 @@ import classnames from 'classnames';
 import Loader from '../../ui/Loader';
 import Button from '../../ui/Button';
 import Infobox from '../../ui/Infobox';
+import { H1 } from '../../ui/headline';
 import { LIVE_FRANZ_API } from '../../../config';
 
 const messages = defineMessages({
@@ -42,6 +43,14 @@ const messages = defineMessages({
     id: 'settings.team.teamsUnavailableInfo',
     defaultMessage:
       'Teams are currently only available when using the Franz Server and after paying for Franz Professional. Please change your server to https://api.franzinfra.com to use teams.',
+  },
+  tryReloadUserInfoRequest: {
+    id: 'settings.team.tryReloadUserInfoRequest',
+    defaultMessage: 'Try reloading',
+  },
+  userInfoRequestFailed: {
+    id: 'settings.team.userInfoRequestFailed',
+    defaultMessage: 'User Info request failed',
   },
 });
 
@@ -136,14 +145,14 @@ class TeamDashboard extends Component {
 
             {!userInfoRequestFailed && !isLoading && (
               <>
-                <h1
+                <H1
                   className={classnames({
                     [classes.headline]: true,
                     [classes.headlineWithSpacing]: true,
                   })}
                 >
                   {intl.formatMessage(messages.contentHeadline)}
-                </h1>
+                </H1>
                 <div className={classes.container}>
                   <div className={classes.content}>
                     <p>{intl.formatMessage(messages.intro)}</p>
@@ -177,9 +186,9 @@ class TeamDashboard extends Component {
           </span>
         </div>
         <div className="settings__body">
-          <h1 className={classes.headline}>
+          <H1 className={classes.headline}>
             {intl.formatMessage(messages.teamsUnavailable)}
-          </h1>
+          </H1>
           <p
             className="settings__message"
             style={{

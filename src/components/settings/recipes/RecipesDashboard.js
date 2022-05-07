@@ -9,7 +9,7 @@ import injectSheet from 'react-jss';
 import { mdiOpenInNew } from '@mdi/js';
 import { Button } from '../../ui/button/index';
 import { Input } from '../../ui/input/index';
-import { H3, H2 } from '../../ui/headline';
+import { H3, H2, H1 } from '../../ui/headline';
 import SearchInput from '../../ui/SearchInput';
 import Infobox from '../../ui/Infobox';
 import RecipeItem from './RecipeItem';
@@ -157,7 +157,7 @@ class RecipesDashboard extends Component {
     return (
       <div className="settings__main">
         <div className="settings__header">
-          <h1>{intl.formatMessage(messages.headline)}</h1>
+          <H1>{intl.formatMessage(messages.headline)}</H1>
         </div>
         <div className="settings__body recipes">
           {serviceStatus.length > 0 && serviceStatus.includes('created') && (

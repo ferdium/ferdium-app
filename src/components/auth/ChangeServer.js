@@ -11,6 +11,7 @@ import Infobox from '../ui/Infobox';
 import { url, required } from '../../helpers/validation-helpers';
 import { LIVE_FERDIUM_API, LIVE_FRANZ_API, LIVE_FERDI_API } from '../../config';
 import globalMessages from '../../i18n/globalMessages';
+import { H1 } from '../ui/headline';
 
 const messages = defineMessages({
   headline: {
@@ -110,7 +111,7 @@ class ChangeServer extends Component {
       <div className="auth__container">
         <form className="franz-form auth__form" onSubmit={e => this.submit(e)}>
           <Link to='/auth/welcome'><img src="./assets/images/logo.svg" className="auth__logo" alt="" /></Link>
-          <h1>{intl.formatMessage(messages.headline)}</h1>
+          <H1>{intl.formatMessage(messages.headline)}</H1>
           {(form.$('server').value === this.franzServer || form.$('server').value === this.ferdiServer) && (
             <Infobox type="warning">
               {intl.formatMessage(messages.warning)}

@@ -9,6 +9,7 @@ import Form from '../../../lib/Form';
 import Button from '../../ui/Button';
 import Radio from '../../ui/Radio';
 import Infobox from '../../ui/Infobox';
+import { H2 } from '../../ui/headline';
 
 const messages = defineMessages({
   headline: {
@@ -85,7 +86,7 @@ class EditUserForm extends Component {
                 {intl.formatMessage(messages.successInfo)}
               </Infobox>
             )}
-            <h2>{intl.formatMessage(messages.headlineAccount)}</h2>
+            <H2>{intl.formatMessage(messages.headlineAccount)}</H2>
             <div className="grid__row">
               <Input {...form.$('firstname').bind()} focus />
               <Input {...form.$('lastname').bind()} />
@@ -95,7 +96,7 @@ class EditUserForm extends Component {
             {form.$('accountType').value === 'company' && (
               <Input field={form.$('organization')} />
             )}
-            <h2>{intl.formatMessage(messages.headlinePassword)}</h2>
+            <H2>{intl.formatMessage(messages.headlinePassword)}</H2>
             <Input {...form.$('oldPassword').bind()} showPasswordToggle />
             <Input
               {...form.$('newPassword').bind()}

@@ -4,6 +4,7 @@ import injectSheet from 'react-jss';
 import { defineMessages, injectIntl } from 'react-intl';
 
 import Button from '../../ui/Button';
+import { H1 } from '../../ui/headline';
 
 import styles from './styles';
 
@@ -39,9 +40,9 @@ class ErrorBoundary extends Component {
     if (this.state.hasError) {
       return (
         <div className={classes.component}>
-          <h1 className={classes.title}>
+          <H1 className={classes.title}>
             {intl.formatMessage(messages.headline)}
-          </h1>
+          </H1>
           <Button
             label={intl.formatMessage(messages.action)}
             buttonType="inverted"

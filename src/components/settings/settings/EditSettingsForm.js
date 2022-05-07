@@ -13,6 +13,7 @@ import Toggle from '../../ui/Toggle';
 import Select from '../../ui/Select';
 import Input from '../../ui/Input';
 import Infobox from '../../ui/Infobox';
+import { H1, H2 } from '../../ui/headline';
 
 import {
   DEFAULT_APP_SETTINGS,
@@ -92,6 +93,26 @@ const messages = defineMessages({
   headlineAppearance: {
     id: 'settings.app.headlineAppearance',
     defaultMessage: 'Appearance',
+  },
+  sectionMain: {
+    id: 'settings.app.sectionMain',
+    defaultMessage: 'Main',
+  },
+  sectionHibernation: {
+    id: 'settings.app.sectionHibernation',
+    defaultMessage: 'Hibernation',
+  },
+  sectionGeneralUi: {
+    id: 'settings.app.sectionGeneralUi',
+    defaultMessage: 'General UI',
+  },
+  sectionSidebarSettings: {
+    id: 'settings.app.sectionSidebarSettings',
+    defaultMessage: 'Sidebar Settings',
+  },
+  sectionServiceIconsSettings: {
+    id: 'settings.app.sectionServiceIconsSettings',
+    defaultMessage: 'Service Icons Settings',
   },
   universalDarkModeInfo: {
     id: 'settings.app.universalDarkModeInfo',
@@ -305,7 +326,7 @@ class EditSettingsForm extends Component {
     return (
       <div className="settings__main">
         <div className="settings__header">
-          <h1>{intl.formatMessage(globalMessages.settings)}</h1>
+          <H1>{intl.formatMessage(globalMessages.settings)}</H1>
         </div>
         <div className="settings__body">
           <form
@@ -401,7 +422,9 @@ class EditSettingsForm extends Component {
             {/* General */}
             {this.state.activeSetttingsTab === 'general' && (
               <div>
-                <h2><center>Main</center></h2>
+                <H2 className='settings__section_header'>
+                  {intl.formatMessage(messages.sectionMain)}
+                </H2>
                 <Toggle field={form.$('autoLaunchOnStart')} />
                 <Toggle field={form.$('runInBackground')} />
                 <Toggle field={form.$('confirmOnQuit')} />
@@ -504,7 +527,9 @@ class EditSettingsForm extends Component {
 
                 <Hr />
 
-                <h2><center>Hibernation</center></h2>
+                <H2 className='settings__section_header'>
+                  {intl.formatMessage(messages.sectionHibernation)}
+                </H2>
                 <Select field={form.$('hibernationStrategy')} />
                 <Toggle field={form.$('hibernateOnStartup')} />
                 <p
@@ -522,14 +547,15 @@ class EditSettingsForm extends Component {
                 <Select field={form.$('wakeUpStrategy')} />
                 <Select field={form.$('wakeUpHibernationStrategy')} />
                 <Toggle field={form.$('wakeUpHibernationSplay')} />
-
               </div>
             )}
 
             {/* Appearance */}
             {this.state.activeSetttingsTab === 'appearance' && (
               <div>
-                <h2><center>General UI</center></h2>
+                <H2 className='settings__section_header'>
+                  {intl.formatMessage(messages.sectionGeneralUi)}
+                </H2>
                 {isMac && <Toggle field={form.$('showDragArea')} />}
 
                 <Toggle field={form.$('adaptableDarkMode')} />
@@ -582,7 +608,9 @@ class EditSettingsForm extends Component {
 
                 <Hr />
 
-                <h2><center>Sidebar Settings</center></h2>
+                <H2 className='settings__section_header'>
+                  {intl.formatMessage(messages.sectionSidebarSettings)}
+                </H2>
 
                 <Select field={form.$('serviceRibbonWidth')} />
 
@@ -602,7 +630,9 @@ class EditSettingsForm extends Component {
 
                 <Hr />
 
-                <h2><center>Service Icons Settings</center></h2>
+                <H2 className='settings__section_header'>
+                  {intl.formatMessage(messages.sectionServiceIconsSettings)}
+                </H2>
 
                 <Toggle field={form.$('showDisabledServices')} />
                 <Toggle field={form.$('showServiceName')} />

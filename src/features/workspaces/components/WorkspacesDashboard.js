@@ -12,6 +12,7 @@ import CreateWorkspaceForm from './CreateWorkspaceForm';
 import Request from '../../../stores/lib/Request';
 import Appear from '../../../components/ui/effects/Appear';
 import UIStore from '../../../stores/UIStore';
+import { H1 } from '../../../components/ui/headline';
 
 const messages = defineMessages({
   headline: {
@@ -98,7 +99,7 @@ class WorkspacesDashboard extends Component {
     return (
       <div className="settings__main">
         <div className="settings__header">
-          <h1>{intl.formatMessage(messages.headline)}</h1>
+          <H1>{intl.formatMessage(messages.headline)}</H1>
         </div>
         <div className="settings__body">
           {/* ===== Workspace updated info ===== */}

@@ -7,6 +7,7 @@ import classnames from 'classnames';
 import Loader from '../Loader';
 
 import styles from './styles';
+import { H1 } from '../headline';
 
 class FullscreenLoader extends Component {
   static propTypes = {
@@ -37,7 +38,7 @@ class FullscreenLoader extends Component {
             [`${className}`]: className,
           })}
         >
-          <h1 className={classes.title}>{title}</h1>
+          <H1 className={classes.title}>{title}</H1>
           <Loader color={spinnerColor || theme.colorFullscreenLoaderSpinner} />
           {children && <div className={classes.content}>{children}</div>}
         </div>

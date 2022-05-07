@@ -13,6 +13,7 @@ import Button from '../ui/Button';
 import Link from '../ui/Link';
 
 import { globalError as globalErrorPropType } from '../../prop-types';
+import { H1 } from '../ui/headline';
 
 const messages = defineMessages({
   headline: {
@@ -117,7 +118,7 @@ class Login extends Component {
       <div className="auth__container">
         <form className="franz-form auth__form" onSubmit={e => this.submit(e)}>
           <Link to='/auth/welcome'><img src="./assets/images/logo.svg" className="auth__logo" alt="" /></Link>
-          <h1>{intl.formatMessage(messages.headline)}</h1>
+          <H1>{intl.formatMessage(messages.headline)}</H1>
           {isTokenExpired && (
             <p className="error-message center">
               {intl.formatMessage(messages.tokenExpired)}

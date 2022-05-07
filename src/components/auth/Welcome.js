@@ -7,6 +7,7 @@ import serverlessLogin from '../../helpers/serverless-helpers';
 import { shuffleArray } from '../../helpers/array-helpers';
 
 import Link from '../ui/Link';
+import { H1 } from '../ui/headline';
 
 const messages = defineMessages({
   signupButton: {
@@ -56,7 +57,7 @@ class Welcome extends Component {
           />
           {/* <img src="./assets/images/welcome.png" className="welcome__services" alt="" /> */}
           <div className="welcome__text">
-            <h1>Ferdium</h1>
+            <H1>Ferdium</H1>
           </div>
         </div>
         <div className="welcome__buttons">

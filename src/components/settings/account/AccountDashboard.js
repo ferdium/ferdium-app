@@ -107,9 +107,9 @@ class AccountDashboard extends Component {
         <div className="settings__body">
           {isUsingWithoutAccount && (
             <>
-              <h1 style={{ marginBottom: 0 }}>
+              <H1 className='.no-bottom-margin'>
                 {intl.formatMessage(messages.accountUnavailable)}
-              </h1>
+              </H1>
               <p
                 className="settings__message"
                 style={{

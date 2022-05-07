@@ -10,6 +10,7 @@ import Loader from '../../ui/Loader';
 import FAB from '../../ui/FAB';
 import ServiceItem from './ServiceItem';
 import Appear from '../../ui/effects/Appear';
+import { H1 } from '../../ui/headline';
 
 const messages = defineMessages({
   headline: {
@@ -87,7 +88,7 @@ class ServicesDashboard extends Component {
     return (
       <div className="settings__main">
         <div className="settings__header">
-          <h1>{intl.formatMessage(messages.headline)}</h1>
+          <H1>{intl.formatMessage(messages.headline)}</H1>
         </div>
         <div className="settings__body">
           {(services.length > 0 || searchNeedle) && !isLoading && (

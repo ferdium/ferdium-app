@@ -12,6 +12,7 @@ import Link from '../ui/Link';
 
 import { globalError as globalErrorPropType } from '../../prop-types';
 import { termsBase } from '../../api/apiBase';
+import { H1 } from '../ui/headline';
 
 const messages = defineMessages({
   headline: {
@@ -124,7 +125,7 @@ class Signup extends Component {
             onSubmit={e => this.submit(e)}
           >
             <Link to='/auth/welcome'><img src="./assets/images/logo.svg" className="auth__logo" alt="" /></Link>
-            <h1>{intl.formatMessage(messages.headline)}</h1>
+            <H1>{intl.formatMessage(messages.headline)}</H1>
             <div className="grid__row">
               <Input field={form.$('firstname')} focus />
               <Input field={form.$('lastname')} />

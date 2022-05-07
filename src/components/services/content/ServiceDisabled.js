@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 
 import Button from '../../ui/Button';
+import { H1 } from '../../ui/headline';
 
 const messages = defineMessages({
   headline: {
@@ -28,7 +29,7 @@ class ServiceDisabled extends Component {
 
     return (
       <div className="services__info-layer">
-        <h1>{intl.formatMessage(messages.headline, { name })}</h1>
+        <H1>{intl.formatMessage(messages.headline, { name })}</H1>
         <Button
           label={intl.formatMessage(messages.action, { name })}
           buttonType="inverted"

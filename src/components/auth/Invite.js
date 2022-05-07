@@ -11,6 +11,7 @@ import Form from '../../lib/Form';
 import { email } from '../../helpers/validation-helpers';
 import Input from '../ui/Input';
 import Button from '../ui/Button';
+import { H1 } from '../ui/headline';
 
 const messages = defineMessages({
   settingsHeadline: {
@@ -146,9 +147,9 @@ class Invite extends Component {
           {!embed && (
             <img src="./assets/images/logo.svg" className="auth__logo" alt="" />
           )}
-          <h1 className={embed && 'invite__embed'}>
+          <H1 className={embed && 'invite__embed'}>
             {intl.formatMessage(messages.headline)}
-          </h1>
+          </H1>
           {form.$('invite').map(invite => (
             <div className="grid" key={invite.key}>
               <div className="grid__row">
@@ -184,7 +185,7 @@ class Invite extends Component {
       >
         {embed && (
           <div className="settings__header">
-            <h1>{this.props.intl.formatMessage(messages.settingsHeadline)}</h1>
+            <H1>{this.props.intl.formatMessage(messages.settingsHeadline)}</H1>
           </div>
         )}
         {!embed ? (

@@ -14,6 +14,7 @@ import Appear from '../ui/effects/Appear';
 import globalMessages from '../../i18n/globalMessages';
 
 import { CDN_URL } from '../../config';
+import { H1, H2 } from '../ui/headline';
 
 const SLACK_ID = 'slack';
 
@@ -213,8 +214,8 @@ class SetupAssistant extends Component {
         )}
 
         <img src="./assets/images/logo.svg" className="auth__logo" alt="" />
-        <h1>{intl.formatMessage(messages.headline)}</h1>
-        <h2>{intl.formatMessage(messages.subHeadline)}</h2>
+        <H1>{intl.formatMessage(messages.headline)}</H1>
+        <H2>{intl.formatMessage(messages.subHeadline)}</H2>
         <div className={classnames('grid', classes.servicesGrid)}>
           {Object.keys(services).map(id => {
             const service = services[id];
@@ -252,7 +253,7 @@ class SetupAssistant extends Component {
                   className={classes.serviceIcon}
                   alt=""
                 />
-                <h2>{service.name}</h2>
+                <H2>{service.name}</H2>
                 {id === SLACK_ID && slackWorkspace && (
                   <Badge type="secondary" className={classes.slackBadge}>
                     {slackWorkspace}
@@ -280,7 +281,7 @@ class SetupAssistant extends Component {
         >
           <div className={classes.slackModalContent}>
             <img src={`${CDN_URL}/recipes/dist/slack/src/icon.svg`} alt="" />
-            <h1>Create your first Slack workspace</h1>
+            <H1>Create your first Slack workspace</H1>
             <form
               onSubmit={e => {
                 e.preventDefault();

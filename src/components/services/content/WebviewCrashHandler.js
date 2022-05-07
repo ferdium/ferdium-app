@@ -5,6 +5,7 @@ import { defineMessages, injectIntl } from 'react-intl';
 import ms from 'ms';
 
 import Button from '../../ui/Button';
+import { H1 } from '../../ui/headline';
 
 const messages = defineMessages({
   headline: {
@@ -61,7 +62,7 @@ class WebviewCrashHandler extends Component {
 
     return (
       <div className="services__info-layer">
-        <h1>{intl.formatMessage(messages.headline)}</h1>
+        <H1>{intl.formatMessage(messages.headline)}</H1>
         <p>{intl.formatMessage(messages.text, { name })}</p>
         <Button
           // label={`Reload ${name}`}

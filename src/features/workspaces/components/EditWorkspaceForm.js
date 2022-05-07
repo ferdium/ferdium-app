@@ -18,6 +18,7 @@ import Request from '../../../stores/lib/Request';
 import { KEEP_WS_LOADED_USID } from '../../../config';
 
 import Toggle from '../../../components/ui/Toggle';
+import { H2 } from '../../../components/ui/headline';
 
 const messages = defineMessages({
   buttonDelete: {
@@ -183,7 +184,7 @@ class EditWorkspaceForm extends Component {
               {intl.formatMessage(messages.keepLoadedInfo)}
             </p>
           </div>
-          <h2>{intl.formatMessage(messages.servicesInWorkspaceHeadline)}</h2>
+          <H2>{intl.formatMessage(messages.servicesInWorkspaceHeadline)}</H2>
           <div className={classes.serviceList}>
             {services.length === 0 ? (
               <div className="align-middle settings__empty-state">
