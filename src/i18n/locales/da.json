@@ -441,7 +441,7 @@
   "validation.minLength": "{field} skal være mindst {length} tegn langt",
   "validation.oneRequired": "Mindst én er påkrævet",
   "validation.required": "{field} er påkrævet",
-  "validation.url": "{field} er ikke en gyldig URL",
+  "validation.url": "{field} is not a valid URL",
   "webControls.back": "Tilbage",
   "webControls.forward": "Fremad",
   "webControls.goHome": "Hjem",
