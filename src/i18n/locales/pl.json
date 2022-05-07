@@ -441,7 +441,7 @@
   "validation.minLength": "{field} powinien mieć co najmniej {length} znaków",
   "validation.oneRequired": "Przynajmniej jeden jest wymagany",
   "validation.required": "{field} jest wymagane",
-  "validation.url": "{field} nie jest poprawnym adresem URL",
+  "validation.url": "{field} is not a valid URL",
   "webControls.back": "Wstecz",
   "webControls.forward": "Prześlij dalej",
   "webControls.goHome": "Strona główna",
