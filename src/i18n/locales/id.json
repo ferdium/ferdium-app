@@ -441,7 +441,7 @@
   "validation.minLength": "{field} setidaknya harus {length} karakter",
   "validation.oneRequired": "Setidaknya diperlukan satu",
   "validation.required": "{field} wajib diisi",
-  "validation.url": "{field} bukan URL yang benar",
+  "validation.url": "{field} is not a valid URL",
   "webControls.back": "Back",
   "webControls.forward": "Forward",
   "webControls.goHome": "Home",
