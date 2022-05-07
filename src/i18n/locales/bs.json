@@ -65,7 +65,7 @@
   "locked.touchIdPrompt": "unlock via Touch ID",
   "locked.unlockWithPassword": "Unlock with Password",
   "login.changeServer": "Change server",
-  "login.customServerQuestion": "Using a Franz account to log in?",
+  "login.customServerQuestion": "Using a custom Ferdium server?",
   "login.customServerSuggestion": "Try importing your Franz account into Ferdium",
   "login.email.label": "Email address",
   "login.headline": "Sign in",

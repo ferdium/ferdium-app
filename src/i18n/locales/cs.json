@@ -65,7 +65,7 @@
   "locked.touchIdPrompt": "odemknout pomocí Touch ID",
   "locked.unlockWithPassword": "Odemknout pomocí hesla",
   "login.changeServer": "Změnit server",
-  "login.customServerQuestion": "Using a Franz account to log in?",
+  "login.customServerQuestion": "Using a custom Ferdium server?",
   "login.customServerSuggestion": "Try importing your Franz account into Ferdium",
   "login.email.label": "E-mailová adresa",
   "login.headline": "Přihlásit se",

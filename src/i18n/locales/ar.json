@@ -65,7 +65,7 @@
   "locked.touchIdPrompt": "فتح عبر بصمة الإصبع",
   "locked.unlockWithPassword": "فتح بكلمة المرور",
   "login.changeServer": "تغيير الخادم",
-  "login.customServerQuestion": "Using a Franz account to log in?",
+  "login.customServerQuestion": "Using a custom Ferdium server?",
   "login.customServerSuggestion": "Try importing your Franz account into Ferdium",
   "login.email.label": "البريد الإلكتروني",
   "login.headline": "تسجيل الدخول",
