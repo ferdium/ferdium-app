@@ -66,7 +66,7 @@
   "locked.unlockWithPassword": "Kilidi parola ile aç",
   "login.changeServer": "Sunucuyu değiştir",
   "login.customServerQuestion": "Using a custom Ferdium server?",
-  "login.customServerSuggestion": "Try importing your Franz account into Ferdium",
+  "login.customServerSuggestion": "Try importing your Franz account",
   "login.email.label": "E-posta adresi",
   "login.headline": "Oturum Aç",
   "login.invalidCredentials": "Yanlış parola ya da e-posta adresi",

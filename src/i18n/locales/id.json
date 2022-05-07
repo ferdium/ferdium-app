@@ -66,7 +66,7 @@
   "locked.unlockWithPassword": "Unlock with Password",
   "login.changeServer": "Ganti server",
   "login.customServerQuestion": "Using a custom Ferdium server?",
-  "login.customServerSuggestion": "Try importing your Franz account into Ferdium",
+  "login.customServerSuggestion": "Try importing your Franz account",
   "login.email.label": "Alamat email",
   "login.headline": "Masuk",
   "login.invalidCredentials": "Email atau kata sandi tidak valid",

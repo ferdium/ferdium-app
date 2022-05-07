@@ -66,7 +66,7 @@
   "locked.unlockWithPassword": "Odblokuj hasłem",
   "login.changeServer": "Zmień serwer",
   "login.customServerQuestion": "Using a custom Ferdium server?",
-  "login.customServerSuggestion": "Try importing your Franz account into Ferdium",
+  "login.customServerSuggestion": "Try importing your Franz account",
   "login.email.label": "Adres email",
   "login.headline": "Zaloguj się",
   "login.invalidCredentials": "Adres email lub hasło są błędne",

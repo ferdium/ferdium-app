@@ -66,7 +66,7 @@
   "locked.unlockWithPassword": "Odomknúť heslom",
   "login.changeServer": "Zmeniť server",
   "login.customServerQuestion": "Using a custom Ferdium server?",
-  "login.customServerSuggestion": "Try importing your Franz account into Ferdium",
+  "login.customServerSuggestion": "Try importing your Franz account",
   "login.email.label": "E-mailová adresa",
   "login.headline": "Prihlásiť sa",
   "login.invalidCredentials": "E-mail alebo heslo nesúhlasia",

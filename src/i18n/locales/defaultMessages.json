@@ -469,7 +469,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Try importing your Franz account into Ferdium",
+        "defaultMessage": "!!!Try importing your Franz account",
         "end": {
           "column": 3,
           "line": 47

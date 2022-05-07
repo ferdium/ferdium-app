@@ -66,7 +66,7 @@
   "locked.unlockWithPassword": "Mở khoá bằng mật khẩu",
   "login.changeServer": "Thay đổi máy chủ",
   "login.customServerQuestion": "Using a custom Ferdium server?",
-  "login.customServerSuggestion": "Try importing your Franz account into Ferdium",
+  "login.customServerSuggestion": "Try importing your Franz account",
   "login.email.label": "Địa chỉ E-mail",
   "login.headline": "Đăng nhập",
   "login.invalidCredentials": "Email hoặc mật khẩu chưa chính xác",
