@@ -441,7 +441,7 @@
   "validation.minLength": "{field} يجب أن يكون على الأقل {length} حرفاً",
   "validation.oneRequired": "واحد على الأقل مطلوب",
   "validation.required": "{field} مطلوب",
-  "validation.url": "{field} is not a valid URL (cannot end in '/')",
+  "validation.url": "{field} is not a valid URL",
   "webControls.back": "الرجوع",
   "webControls.forward": "تقدم",
   "webControls.goHome": "الرئيسية",

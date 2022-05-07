@@ -441,7 +441,7 @@
   "validation.minLength": "{field} by měl mít alespoň {length} znaků",
   "validation.oneRequired": "Alespoň jeden je povinný",
   "validation.required": "{field} je povinné",
-  "validation.url": "{field} is not a valid URL (cannot end in '/')",
+  "validation.url": "{field} is not a valid URL",
   "webControls.back": "Zpět",
   "webControls.forward": "Přeposlat",
   "webControls.goHome": "Domů",
