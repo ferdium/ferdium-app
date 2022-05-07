@@ -121,7 +121,10 @@ class ChangeServer extends Component {
           {!this.defaultServers.includes(form.$('server').value) && (
             <Input
               placeholder="Custom Server"
-              onChange={e => this.submit(e)}
+              onChange={e => {
+                this.form.$('customServer').value = this.form.$('customServer').value.replace(/\/$/, "");
+                this.submit(e)
+              }}
               field={form.$('customServer')}
             />
           )}
