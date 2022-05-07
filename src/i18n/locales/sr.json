@@ -441,7 +441,7 @@
   "validation.minLength": "{field} треба да буде најмање {length} карактера дугачко",
   "validation.oneRequired": "At least one is required",
   "validation.required": "{field} је неопходно",
-  "validation.url": "{field} није валидан УРЛ",
+  "validation.url": "{field} is not a valid URL",
   "webControls.back": "Back",
   "webControls.forward": "Forward",
   "webControls.goHome": "Home",

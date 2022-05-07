@@ -441,7 +441,7 @@
   "validation.minLength": "{field} en az {length} karakter uzunluğunda olmalı",
   "validation.oneRequired": "At least one is required",
   "validation.required": "{field} gereklidir",
-  "validation.url": "{field} geçerli bir URL değil",
+  "validation.url": "{field} is not a valid URL",
   "webControls.back": "Geri",
   "webControls.forward": "İleri",
   "webControls.goHome": "Ana Sayfa",

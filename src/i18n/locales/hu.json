@@ -441,7 +441,7 @@
   "validation.minLength": "{field} mezőnek legalább {length} karakter hosszúnak kell lennie",
   "validation.oneRequired": "Legalább egy kitöltése szükséges",
   "validation.required": "{field} kitöltése kötelező",
-  "validation.url": "{field} nem érvényes URL",
+  "validation.url": "{field} is not a valid URL",
   "webControls.back": "Vissza",
   "webControls.forward": "Előre",
   "webControls.goHome": "Kezdőlap",

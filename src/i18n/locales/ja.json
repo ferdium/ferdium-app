@@ -441,7 +441,7 @@
   "validation.minLength": "{field}は少なくとも{length}文字以上でなければなりません",
   "validation.oneRequired": "少なくとも1つは必要です",
   "validation.required": "{field}は必須です",
-  "validation.url": "{field}は正しいURLではありません",
+  "validation.url": "{field} is not a valid URL",
   "webControls.back": "戻る",
   "webControls.forward": "次へ",
   "webControls.goHome": "ホーム",

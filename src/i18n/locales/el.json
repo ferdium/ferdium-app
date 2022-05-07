@@ -441,7 +441,7 @@
   "validation.minLength": "{field} πρέπει να είναι τουλάχιστον {length} χαρακτήρες",
   "validation.oneRequired": "Απαιτείται τουλάχιστον ένα",
   "validation.required": "{field} απαιτείται",
-  "validation.url": "{field} δεν είναι έγκυρη διεύθυνση URL",
+  "validation.url": "{field} is not a valid URL",
   "webControls.back": "Πίσω",
   "webControls.forward": "Μπροστά",
   "webControls.goHome": "Αρχική",
