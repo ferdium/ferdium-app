@@ -441,7 +441,7 @@
   "validation.minLength": "{field} by malo byť dlhé aspoň {length} znakov",
   "validation.oneRequired": "Je nutné zadať aspoň jeden",
   "validation.required": "{field} je povinné",
-  "validation.url": "{field} nie je platná URL",
+  "validation.url": "{field} is not a valid URL",
   "webControls.back": "Naspäť",
   "webControls.forward": "Dopredu",
   "webControls.goHome": "Úvod",
