@@ -66,7 +66,7 @@
   "locked.unlockWithPassword": "Lås op med adgangskode",
   "login.changeServer": "Skift server",
   "login.customServerQuestion": "Using a custom Ferdium server?",
-  "login.customServerSuggestion": "Try importing your Franz account into Ferdium",
+  "login.customServerSuggestion": "Try importing your Franz account",
   "login.email.label": "Mailadresse",
   "login.headline": "Log ind",
   "login.invalidCredentials": "Ugyldig mail eller adgangskode",
