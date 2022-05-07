@@ -441,7 +441,7 @@
   "validation.minLength": "{field} 는 최소한 {length} 보다 길어야 합니다.",
   "validation.oneRequired": "적어도 하나는 필요 합니다.",
   "validation.required": "{field} 는 필수입니다.",
-  "validation.url": "{field} 는 유효하지 않은 URL입니다.",
+  "validation.url": "{field} is not a valid URL",
   "webControls.back": "뒤로가기",
   "webControls.forward": "앞으로 가기",
   "webControls.goHome": "홈",
