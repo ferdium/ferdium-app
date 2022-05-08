@@ -740,14 +740,30 @@ class FranzMenu {
       );
     }
 
+    const about = {
+      label: intl.formatMessage(menuItems.about),
+      click: () => {
+        dialog.showMessageBox({
+          type: 'info',
+          title: app.name,
+          message: app.name,
+          detail: aboutAppDetails(),
+          buttons: ['Close'],
+          // TODO: Can add a 'Copy' button with the following clickHandler
+          // click: () => {
+          //   clipboard.write({
+          //     text: aboutAppDetails(),
+          //   });
+          // }
+        });
+      },
+    };
+
     tpl.unshift({
       label: isMac ? app.name : intl.formatMessage(menuItems.file),
       accelerator: `${altKey()}+F`,
       submenu: [
-        {
-          label: intl.formatMessage(menuItems.about),
-          role: 'about',
-        },
+        about,
         {
           type: 'separator',
         },
@@ -804,20 +820,8 @@ class FranzMenu {
       ],
     });
 
-    const about = {
-      label: intl.formatMessage(menuItems.about),
-      click: () => {
-        dialog.showMessageBox({
-          type: 'info',
-          title: 'Ferdium',
-          message: 'Ferdium',
-          detail: aboutAppDetails(),
-        });
-      },
-    };
-
     if (isMac) {
-      // Edit menu.
+      // Edit menu
       tpl[1].submenu.push(
         {
           type: 'separator',
