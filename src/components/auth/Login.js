@@ -42,7 +42,7 @@ const messages = defineMessages({
   },
   customServerSuggestion: {
     id: 'login.customServerSuggestion',
-    defaultMessage: 'Try importing your Franz account into Ferdium',
+    defaultMessage: 'Try importing your Franz account',
   },
   tokenExpired: {
     id: 'login.tokenExpired',
