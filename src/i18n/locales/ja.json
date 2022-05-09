@@ -8,7 +8,7 @@
   "changeserver.warning": "Ferdiumの追加設定は保存されません",
   "connectionLostBanner.cta": "サービスをリロードする",
   "connectionLostBanner.informationLink": "何が起きましたか？",
-  "connectionLostBanner.message": "{name}への接続が切断されました。",
+  "connectionLostBanner.message": "{name} への接続が切断されました。",
   "feature.basicAuth.signIn": "サインイン",
   "feature.publishDebugInfo.error": "デバッグ情報の公開中にエラーが発生しました。後でもう一度試すか、コンソールを表示して詳細な情報を確認します。",
   "feature.publishDebugInfo.info": "デバッグ情報を公開することで、Ferdiumの開発者が問題やエラーを発見する手助けとなります。 デバッグ情報を公開することで、Ferdium Debuggerのプライバシーポリシーと利用規約に同意したことになります。",
