@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 import Locked from '../../components/auth/Locked';
 import SettingsStore from '../../stores/SettingsStore';
@@ -7,7 +6,17 @@ import SettingsStore from '../../stores/SettingsStore';
 import { hash } from '../../helpers/password-helpers';
 import UserStore from '../../stores/UserStore';
 
-class LockedScreen extends Component {
+interface IProps {
+  actions: {
+    settings: SettingsStore,
+  },
+  stores: {
+    settings: SettingsStore,
+    user: UserStore,
+  }
+};
+
+class LockedScreen extends Component<IProps> {
   state = {
     error: false,
   };
@@ -71,15 +80,5 @@ class LockedScreen extends Component {
     );
   }
 }
-
-LockedScreen.propTypes = {
-  actions: PropTypes.shape({
-    settings: PropTypes.instanceOf(SettingsStore).isRequired,
-  }).isRequired,
-  stores: PropTypes.shape({
-    settings: PropTypes.instanceOf(SettingsStore).isRequired,
-    user: PropTypes.instanceOf(UserStore).isRequired,
-  }).isRequired,
-};
 
 export default inject('stores', 'actions')(observer(LockedScreen));

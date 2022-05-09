@@ -1,6 +1,5 @@
 /* eslint-disable no-await-in-loop */
 import { Component } from 'react';
-import PropTypes from 'prop-types';
 import { inject, observer } from 'mobx-react';
 
 import { RouterStore } from 'mobx-react-router';
@@ -10,12 +9,23 @@ import ServicesStore from '../../stores/ServicesStore';
 import RecipesStore from '../../stores/RecipesStore';
 import UserStore from '../../stores/UserStore';
 
-class SetupAssistantScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isSettingUpServices: false,
-    };
+interface IProps {
+  stores: {
+    services?: ServicesStore,
+    router: RouterStore,
+    recipes?: RecipesStore,
+    user?: UserStore,
+  },
+  actions: {
+    user: UserStore,
+    service: ServicesStore,
+    recipe: RecipesStore,
+  },
+};
+
+class SetupAssistantScreen extends Component<IProps> {
+  state = {
+    isSettingUpServices: false,
   }
 
   // TODO: Why are these hardcoded here? Do they need to conform to specific services in the packaged recipes? If so, its more important to fix this
@@ -69,11 +79,8 @@ class SetupAssistantScreen extends Component {
     for (const config of serviceConfig) {
       const serviceData = {
         name: this.services[config.id].name,
+        team: config.team
       };
-
-      if (config.team) {
-        serviceData.team = config.team;
-      }
 
       await services._createService({
         recipeId: config.id,
@@ -91,7 +98,7 @@ class SetupAssistantScreen extends Component {
 
     await sleep(100);
 
-    router.push("/");
+    router.push('/');
   }
 
   render() {
@@ -105,19 +112,5 @@ class SetupAssistantScreen extends Component {
     );
   }
 }
-
-SetupAssistantScreen.propTypes = {
-  stores: PropTypes.shape({
-    services: PropTypes.instanceOf(ServicesStore),
-    router: PropTypes.instanceOf(RouterStore).isRequired,
-    recipes: PropTypes.instanceOf(RecipesStore),
-    user: PropTypes.instanceOf(UserStore),
-  }).isRequired,
-  actions: PropTypes.shape({
-    user: PropTypes.instanceOf(UserStore).isRequired,
-    service: PropTypes.instanceOf(ServicesStore).isRequired,
-    recipe: PropTypes.instanceOf(RecipesStore).isRequired,
-  }).isRequired,
-};
 
 export default inject('stores', 'actions')(observer(SetupAssistantScreen));
