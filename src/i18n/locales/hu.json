@@ -330,7 +330,7 @@
   "settings.service.form.icon": "Egyedi ikon",
   "settings.service.form.iconDelete": "Törlés",
   "settings.service.form.iconUpload": "Húzd ide a képet, vagy kattints ide",
-  "settings.service.form.indirectMessageInfo": "Értesítést kapsz minden üzenetről a csatornában, nem csak @felhasználónév, @csatorna, @here és egyéb említések esetén",
+  "settings.service.form.indirectMessageInfo": "Értesítést kapsz minden üzenetről a csatornában, nem csak @felhasználónév, @csatorna, @here és egyéb említések esetén...",
   "settings.service.form.indirectMessages": "Üzenet kitűző megjelenítése minden üzenethez",
   "settings.service.form.isHibernatedEnabledInfo": "When enabled, a service will be shut down after a period of time to save system resources.",
   "settings.service.form.isMutedInfo": "Ha kikapcsolod, minden értesítési és lejátszott hang némításra kerül",
