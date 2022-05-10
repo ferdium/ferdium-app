@@ -11,7 +11,7 @@
   "connectionLostBanner.message": "Hayır, olamaz! Ferdium {name} ile bağlantısını yitirdi.",
   "feature.basicAuth.signIn": "Giriş Yap",
   "feature.publishDebugInfo.error": "Hata ayıklama bilgisi oluşturulurken hata oluştu. Lütfen daha sonra tekrar deneyin veya daha fazla bilgi için konsolu görüntüleyin.",
-  "feature.publishDebugInfo.info": "Hata ayıklama bilgilerinizi yayınlamak, Ferdium'deki sorunları ve hataları bulmamıza yardımcı olur. Hata ayıklama bilgilerinizi yayınlayarak Ferdium Hata Ayıklayıcı'nın gizlilik politikasını ve hizmet şartlarını kabul etmiş olursunuz.",
+  "feature.publishDebugInfo.info": "Hata ayıklama bilgilerinizi yayınlamak, Ferdium'deki sorunları ve hataları bulmamıza yardımcı olur. Hata ayıklama bilgilerinizi yayınlayarak Ferdium Hata Ayıklayıcı'nın gizlilik politikasını ve hizmet şartlarını kabul etmiş olursunuz",
   "feature.publishDebugInfo.privacy": "Gizlilik ilkesi",
   "feature.publishDebugInfo.publish": "Onayla ve yayımla",
   "feature.publishDebugInfo.published": "Hata ayıklama günlüğünüz hazır ve burada mevcut",
