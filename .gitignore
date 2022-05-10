@@ -107,6 +107,14 @@ fabric.properties
 # https://plugins.jetbrains.com/plugin/12206-codestream
 .idea/codestream.xml
 
+# Idea modules and profiles
+.idea/ferdium-app.iml
+.idea/modules.xml
+.idea/.gitignore
+.idea/vcs.xml
+.idea/inspectionProfiles/Project_Default.xml
+.idea/misc.xml
+
 ### macOS ###
 # General
 .DS_Store
