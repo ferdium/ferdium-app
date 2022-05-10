@@ -1,3 +1,4 @@
 files:
   - source: /src/i18n/locales/en-US.json
     translation: /src/i18n/locales/%two_letters_code%.json
+commit_message: "[skip ci]"
