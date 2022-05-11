@@ -51,7 +51,7 @@ Ferdium is a desktop app that helps you organize how you use your favourite apps
 
 Assets made available via [GitHub releases](https://github.com/ferdium/ferdium-app/releases/latest).
 
-_Find answers to frequently asked questions on [ferdium.org/faq](https://ferdium.org/faq/)._
+_Find answers to frequently asked questions on [ferdium.org/faq](https://ferdium.org/faq)._
 
 ## Unsigned Nightlies on MacOS
 
