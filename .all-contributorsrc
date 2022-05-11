@@ -2740,6 +2740,15 @@
       "contributions": [
         "infra"
       ]
+    },
+    {
+      "login": "cm-schl",
+      "name": "cm-schl",
+      "avatar_url": "https://avatars.githubusercontent.com/u/63400209?v=4",
+      "profile": "https://github.com/cm-schl",
+      "contributions": [
+        "doc"
+      ]
     }
   ]
 }
