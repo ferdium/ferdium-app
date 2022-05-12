@@ -108,7 +108,8 @@ describe('url_helpers', () => {
     });
 
     it('returns true for valid file url', () => {
-      const result = url_helpers.isValidFileUrl('file:///');  // root folder should be safe for windows as well i think
+      const fileName = process.platform === 'win32' ? 'file:///c:\\' : 'file:///';
+      const result = url_helpers.isValidFileUrl(fileName);
       expect(result).toBe(true);
     });
   });
