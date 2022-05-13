@@ -211,7 +211,7 @@ export default class TrayIcon {
       this._getAsset('tray', this._getAssetFromIndicator(this.indicator)),
     );
 
-    if (isMac) {
+    if (isMac && !macosVersion.isGreaterThanOrEqualTo('11')) {
       this.trayIcon.setPressedImage(
         this._getAsset(
           'tray',
@@ -226,8 +226,12 @@ export default class TrayIcon {
 
     if (
       isMac &&
-      (nativeTheme.shouldUseDarkColors ||
-        macosVersion.isGreaterThanOrEqualTo('11'))
+      macosVersion.isGreaterThanOrEqualTo('11')
+    ) {
+      platform = `${platform}-20`;
+    } else if (
+      isMac &&
+      nativeTheme.shouldUseDarkColors
     ) {
       platform = `${platform}-dark`;
     }
@@ -243,10 +247,6 @@ export default class TrayIcon {
         `${asset}.${FILE_EXTENSION}`,
       ),
     );
-
-    if (isMac && macosVersion.isGreaterThanOrEqualTo('11')) {
-      trayImg.setTemplateImage(true);
-    }
 
     return trayImg;
   }
