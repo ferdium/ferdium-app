@@ -52,18 +52,19 @@ class Locked extends Component {
     error: globalErrorPropType.isRequired,
   };
 
-  form = new Form(
-    {
+  form = (() => {
+    const { intl } = this.props;
+    return new Form({
       fields: {
         password: {
-          label: this.props.intl.formatMessage(messages.passwordLabel),
+          label: intl.formatMessage(messages.passwordLabel),
           value: '',
           type: 'password',
         },
       },
     },
-    this.props.intl,
-  );
+    intl,
+  )})();
 
   submit(e) {
     e.preventDefault();

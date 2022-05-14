@@ -73,34 +73,35 @@ class Signup extends Component {
     error: globalErrorPropType.isRequired,
   };
 
-  form = new Form(
-    {
+  form = (() => {
+    const { intl } = this.props;
+    return new Form({
       fields: {
         firstname: {
-          label: this.props.intl.formatMessage(messages.firstnameLabel),
+          label: intl.formatMessage(messages.firstnameLabel),
           value: '',
           validators: [required],
         },
         lastname: {
-          label: this.props.intl.formatMessage(messages.lastnameLabel),
+          label: intl.formatMessage(messages.lastnameLabel),
           value: '',
           validators: [required],
         },
         email: {
-          label: this.props.intl.formatMessage(messages.emailLabel),
+          label: intl.formatMessage(messages.emailLabel),
           value: '',
           validators: [required, email],
         },
         password: {
-          label: this.props.intl.formatMessage(messages.passwordLabel),
+          label: intl.formatMessage(messages.passwordLabel),
           value: '',
           validators: [required, minLength(6)],
           type: 'password',
         },
       },
     },
-    this.props.intl,
-  );
+    intl,
+  )})();
 
   submit(e) {
     e.preventDefault();

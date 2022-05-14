@@ -73,24 +73,25 @@ class Login extends Component {
     error: globalErrorPropType.isRequired,
   };
 
-  form = new Form(
-    {
+  form = (() => {
+    const { intl } = this.props;
+    return new Form({
       fields: {
         email: {
-          label: this.props.intl.formatMessage(messages.emailLabel),
+          label: intl.formatMessage(messages.emailLabel),
           value: '',
           validators: [required, email],
         },
         password: {
-          label: this.props.intl.formatMessage(messages.passwordLabel),
+          label: intl.formatMessage(messages.passwordLabel),
           value: '',
           validators: [required],
           type: 'password',
         },
       },
     },
-    this.props.intl,
-  );
+    intl,
+  )})();
 
   submit(e) {
     e.preventDefault();

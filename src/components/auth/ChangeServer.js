@@ -50,11 +50,12 @@ class ChangeServer extends Component {
 
   defaultServers = [this.ferdiumServer, this.franzServer, this.ferdiServer];
 
-  form = new Form(
-    {
+  form = (() => {
+    const { intl } = this.props;
+    return new Form({
       fields: {
         server: {
-          label: this.props.intl.formatMessage(messages.label),
+          label: intl.formatMessage(messages.label),
           value: this.props.server,
           options: [
             { value: this.ferdiumServer, label: 'Ferdium (Default)' },
@@ -69,14 +70,15 @@ class ChangeServer extends Component {
           ],
         },
         customServer: {
-          label: this.props.intl.formatMessage(messages.customServerLabel),
+          label: intl.formatMessage(messages.customServerLabel),
           value: '',
           validators: [url, required],
         },
       },
     },
-    this.props.intl,
+    intl,
   );
+  })();
 
   componentDidMount() {
     if (this.defaultServers.includes(this.props.server)) {

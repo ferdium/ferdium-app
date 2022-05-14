@@ -61,6 +61,7 @@ class Invite extends Component {
   state = { showSuccessInfo: false };
 
   componentDidMount() {
+    const { intl } = this.props;
     this.form = new Form(
       {
         fields: {
@@ -68,8 +69,8 @@ class Invite extends Component {
             ...Array.from({ length: 3 }).fill({
               fields: {
                 name: {
-                  label: this.props.intl.formatMessage(messages.nameLabel),
-                  placeholder: this.props.intl.formatMessage(
+                  label: intl.formatMessage(messages.nameLabel),
+                  placeholder: intl.formatMessage(
                     messages.nameLabel,
                   ),
                   onChange: () => {
@@ -78,8 +79,8 @@ class Invite extends Component {
                   // related: ['invite.0.email'], // path accepted but does not work
                 },
                 email: {
-                  label: this.props.intl.formatMessage(messages.emailLabel),
-                  placeholder: this.props.intl.formatMessage(
+                  label: intl.formatMessage(messages.emailLabel),
+                  placeholder: intl.formatMessage(
                     messages.emailLabel,
                   ),
                   onChange: () => {
@@ -92,7 +93,7 @@ class Invite extends Component {
           ],
         },
       },
-      this.props.intl,
+      intl,
     );
 
     document.querySelector('input:first-child')?.focus();
@@ -185,7 +186,7 @@ class Invite extends Component {
       >
         {embed && (
           <div className="settings__header">
-            <H1>{this.props.intl.formatMessage(messages.settingsHeadline)}</H1>
+            <H1>{intl.formatMessage(messages.settingsHeadline)}</H1>
           </div>
         )}
         {!embed ? (
