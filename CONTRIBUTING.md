@@ -186,17 +186,10 @@ codesign --deep --force --verbose --sign - node_modules/electron/dist/Electron.a
 
 ### Start development app
 
-Run these two commands **simultaneously** in different terminals:
+Run this command on the terminal:
 
 ```bash
-npm run dev
-DEBUG=Ferdium:* npm run start
-```
-
-- Optionally, you can run both commands in one terminal with [concurrently](https://www.npmjs.com/package/concurrently):
-
-```bash
-DEBUG_COLORS=1 DEBUG=Ferdium:* npm run start:all-dev
+npm run debug
 ```
 
 Note: please prefer [`debug()`](https://github.com/visionmedia/debug) over `console.log()`.

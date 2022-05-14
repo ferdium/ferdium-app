@@ -39,7 +39,8 @@
     "link-readme": "ts-node scripts/link-readme.ts",
     "minify-images": "./scripts/minify-images.sh",
     "start:server": "ts-node src/internal-server/test.ts",
-    "add-crowdin-contributors": "ts-node scripts/add-crowdin-contributors.ts"
+    "add-crowdin-contributors": "ts-node scripts/add-crowdin-contributors.ts",
+    "debug": "cross-env-shell DEBUG_COLORS=1 DEBUG=Ferdium:* npm run start:all-dev"
   },
   "keywords": [],
   "dependencies": {
