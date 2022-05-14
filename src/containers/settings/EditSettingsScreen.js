@@ -303,6 +303,12 @@ class EditSettingsScreen extends Component {
       workspaces: workspaceActions,
     } = this.props.actions;
 
+    let alreadyHashed = false;
+    if (settingsData.lockedPassword === '') {
+      settingsData.lockedPassword = this.props.stores.settings.all.app.lockedPassword;
+      alreadyHashed = true;
+    }
+
     this.setState({
       lockedPassword: settingsData.lockedPassword,
     });
@@ -339,7 +345,7 @@ class EditSettingsScreen extends Component {
         predefinedTodoServer: settingsData.predefinedTodoServer,
         customTodoServer: settingsData.customTodoServer,
         lockingFeatureEnabled: Boolean(settingsData.lockingFeatureEnabled),
-        lockedPassword: hash(String(settingsData.lockedPassword)),
+        lockedPassword: alreadyHashed ? settingsData.lockedPassword : hash(String(settingsData.lockedPassword)),
         useTouchIdToUnlock: Boolean(settingsData.useTouchIdToUnlock),
         inactivityLock: Number(settingsData.inactivityLock),
         scheduledDNDEnabled: Boolean(settingsData.scheduledDNDEnabled),
