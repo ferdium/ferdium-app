@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import { Field } from 'mobx-react-form';
 
+// Should this file be converted into the coding style similar to './toggle/index.tsx'?
 class Slider extends Component {
   static propTypes = {
     field: PropTypes.instanceOf(Field).isRequired,

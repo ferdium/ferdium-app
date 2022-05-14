@@ -17,6 +17,7 @@ type Props = {
   autoFocus: boolean;
 };
 
+// Should this file be converted into the coding style similar to './toggle/index.tsx'?
 class SearchInput extends Component<Props> {
   static defaultProps = {
     value: '',

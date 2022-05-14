@@ -10,6 +10,7 @@ type Props = {
   showLabel: boolean;
 };
 
+// Should this file be converted into the coding style similar to './toggle/index.tsx'?
 class Radio extends Component<Props> {
   static defaultProps = {
     focus: false,

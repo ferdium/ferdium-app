@@ -16,6 +16,7 @@ const messages = defineMessages({
   },
 });
 
+// Can this file be merged into the './input/index.tsx' file?
 class Input extends Component {
   static propTypes = {
     field: PropTypes.instanceOf(Field).isRequired,

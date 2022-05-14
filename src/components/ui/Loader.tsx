@@ -12,6 +12,7 @@ type Props = {
   stores: FerdiumStores;
 };
 
+// Can this file be merged into the './loader/index.tsx' file?
 class LoaderComponent extends Component<Props> {
   static defaultProps = {
     loaded: false,

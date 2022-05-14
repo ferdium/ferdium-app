@@ -24,6 +24,7 @@ const styles = theme => ({
   },
 });
 
+// Should this file be converted into the coding style similar to './toggle/index.tsx'?
 class ServiceIcon extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,

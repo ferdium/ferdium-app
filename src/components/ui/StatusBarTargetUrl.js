@@ -5,6 +5,7 @@ import classnames from 'classnames';
 
 import Appear from './effects/Appear';
 
+// Should this file be converted into the coding style similar to './toggle/index.tsx'?
 class StatusBarTargetUrl extends Component {
   static propTypes = {
     className: PropTypes.string,

@@ -4,6 +4,7 @@ import { observer, inject } from 'mobx-react';
 import Loader from 'react-loader';
 import classnames from 'classnames';
 
+// Can this file be merged into the './/button/index.tsx' file?
 class Button extends Component {
   static propTypes = {
     className: PropTypes.string,

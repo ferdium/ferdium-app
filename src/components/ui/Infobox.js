@@ -19,6 +19,7 @@ const messages = defineMessages({
   },
 });
 
+// Can this file be merged into the './infobox/index.tsx' file?
 class Infobox extends Component {
   static propTypes = {
     // eslint-disable-next-line react/forbid-prop-types

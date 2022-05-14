@@ -15,6 +15,7 @@ type Props = {
   textUpload: string;
 };
 
+// Should this file be converted into the coding style similar to './toggle/index.tsx'?
 class ImageUpload extends Component<Props> {
   static defaultProps = {
     multiple: false,

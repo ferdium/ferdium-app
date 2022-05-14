@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import { Field } from 'mobx-react-form';
 import classnames from 'classnames';
 
+// Can this file be merged into the './select/index.tsx' file?
 class Select extends Component {
   static propTypes = {
     field: PropTypes.instanceOf(Field).isRequired,

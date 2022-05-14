@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import { Field } from 'mobx-react-form';
 
+// Can this file be merged into the './toggle/index.tsx' file?
 class Toggle extends Component {
   static propTypes = {
     field: PropTypes.instanceOf(Field).isRequired,

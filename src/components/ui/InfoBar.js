@@ -16,6 +16,7 @@ const messages = defineMessages({
   },
 });
 
+// Should this file be converted into the coding style similar to './toggle/index.tsx'?
 class InfoBar extends Component {
   static propTypes = {
     // eslint-disable-next-line react/forbid-prop-types
