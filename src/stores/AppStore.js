@@ -17,6 +17,7 @@ import { readJsonSync } from 'fs-extra';
 import Store from './lib/Store';
 import Request from './lib/Request';
 import { CHECK_INTERVAL, DEFAULT_APP_SETTINGS } from '../config';
+import { cleanseJSObject } from '../jsUtils';
 import { isMac, isWindows, electronVersion, osRelease } from '../environment';
 import { ferdiumVersion, userDataPath, ferdiumLocale } from '../environment-remote';
 import { generatedTranslations } from '../i18n/translations';
@@ -265,7 +266,7 @@ export default class AppStore extends Store {
   }
 
   @computed get debugInfo() {
-    const settings = JSON.parse(JSON.stringify(this.stores.settings.app));
+    const settings = cleanseJSObject(this.stores.settings.app);
     settings.lockedPassword = '******';
 
     return {

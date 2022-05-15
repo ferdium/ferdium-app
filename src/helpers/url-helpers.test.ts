@@ -3,7 +3,7 @@ import * as url_helpers from './url-helpers'
 describe('url_helpers', () => {
   describe('isValidExternalURL', () => {
     describe('with string', () => {
-      it('returns false for empty string ', () => {
+      it('returns false for empty string', () => {
         const result = url_helpers.isValidExternalURL('');
         expect(result).toBe(false);
       });

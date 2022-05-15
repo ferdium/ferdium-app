@@ -9,6 +9,7 @@ const fetch = require('node-fetch');
 const { v4: uuid } = require('uuid');
 const crypto = require('crypto');
 const { DEFAULT_APP_SETTINGS } = require('../../../../config');
+const { convertToJSON } = require('../../../../jsUtils');
 const { API_VERSION } = require('../../../../environment-remote');
 const { default: userAgent } = require('../../../../helpers/userAgent-helpers');
 
@@ -87,10 +88,7 @@ class UserController {
   async me({ response }) {
     const user = await User.find(1);
 
-    const settings =
-      typeof user.settings === 'string'
-        ? JSON.parse(user.settings)
-        : user.settings;
+    const settings = convertToJSON(user.settings);
 
     return response.send({
       ...DEFAULT_USER_DATA,
@@ -101,10 +99,7 @@ class UserController {
   async updateMe({ request, response }) {
     const user = await User.find(1);
 
-    let settings = user.settings || {};
-    if (typeof settings === 'string') {
-      settings = JSON.parse(settings);
-    }
+    const settings = convertToJSON(user.settings || {});
 
     const newSettings = {
       ...settings,
@@ -304,12 +299,8 @@ class UserController {
         .rows.length > 0
     );
 
-    if (
-      workspace.services &&
-      typeof workspace.services === 'string' &&
-      workspace.services.length > 0
-    ) {
-      workspace.services = JSON.parse(workspace.services);
+    if (workspace.services) {
+      workspace.services = convertToJSON(workspace.services);
     }
     const services =
       workspace.services && typeof workspace.services === 'object'
@@ -317,12 +308,8 @@ class UserController {
             oldServiceId => serviceIdTranslation[oldServiceId],
           )
         : [];
-    if (
-      workspace.data &&
-      typeof workspace.data === 'string' &&
-      workspace.data.length > 0
-    ) {
-      workspace.data = JSON.parse(workspace.data);
+    if (workspace.data) {
+      workspace.data = convertToJSON(workspace.data);
     }
 
     await Workspace.create({
@@ -347,12 +334,8 @@ class UserController {
     // store the old serviceId as the key for future lookup
     serviceIdTranslation[service.serviceId] = newServiceId;
 
-    if (
-      service.settings &&
-      typeof service.settings === 'string' &&
-      service.settings.length > 0
-    ) {
-      service.settings = JSON.parse(service.settings);
+    if (service.settings) {
+      service.settings = convertToJSON(service.settings);
     }
 
     await Service.create({

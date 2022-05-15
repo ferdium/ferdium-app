@@ -16,6 +16,7 @@ import {
 } from '../helpers/recipe-helpers';
 import { workspaceStore } from '../features/workspaces';
 import { DEFAULT_SERVICE_SETTINGS, KEEP_WS_LOADED_USID } from '../config';
+import { cleanseJSObject } from '../jsUtils';
 import { SPELLCHECKER_LOCALES } from '../i18n/languages';
 import { ferdiumVersion } from '../environment-remote';
 
@@ -861,7 +862,7 @@ export default class ServicesStore extends Store {
     const service = this.one(serviceId);
 
     // Make sure the args are clean, otherwise ElectronJS can't transmit them
-    const cleanArgs = JSON.parse(JSON.stringify(args));
+    const cleanArgs = cleanseJSObject(args);
 
     if (service.webview) {
       service.webview.send(channel, cleanArgs);
@@ -1273,9 +1274,7 @@ export default class ServicesStore extends Store {
 
     if (service.webview) {
       // We need to completely clone the object, otherwise Electron won't be able to send the object via IPC
-      const shareWithWebview = JSON.parse(
-        JSON.stringify(service.shareWithWebview),
-      );
+      const shareWithWebview = cleanseJSObject(service.shareWithWebview);
 
       debug('Initialize recipe', service.recipe.id, service.name);
       service.webview.send(

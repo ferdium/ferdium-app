@@ -2,6 +2,7 @@ const Workspace = use('App/Models/Workspace');
 const { validateAll } = use('Validator');
 
 const { v4: uuid } = require('uuid');
+const { convertToJSON } = require('../../../../jsUtils');
 
 class WorkspaceController {
   // Create a new workspace for user
@@ -130,10 +131,7 @@ class WorkspaceController {
         id: workspace.workspaceId,
         name: workspace.name,
         order: workspace.order,
-        services:
-          typeof workspace.services === 'string'
-            ? JSON.parse(workspace.services)
-            : workspace.services,
+        services: convertToJSON(workspace.services),
         userId: 1,
       }));
     }

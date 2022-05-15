@@ -1,3 +1,4 @@
+const { convertToJSON } = require('../../jsUtils');
 const { ferdiumVersion } = require('../../environment-remote');
 
 /**
@@ -26,10 +27,7 @@ module.exports = async () => {
     // Create new user
     await Database.raw('INSERT INTO  "users" ("id") VALUES (\'1\');');
   } else {
-    settings =
-      typeof user.settings === 'string'
-        ? JSON.parse(user.settings)
-        : user.settings;
+    settings = convertToJSON(user.settings);
   }
 
   if (
