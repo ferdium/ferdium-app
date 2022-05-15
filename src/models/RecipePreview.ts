@@ -4,7 +4,6 @@ interface IRecipePreview {
   icon: string;
   featured: boolean;
   aliases: string[];
-  isDevRecipe: boolean;
 }
 
 export default class RecipePreview {
@@ -17,8 +16,6 @@ export default class RecipePreview {
   featured: boolean = false;
 
   aliases: string[] = [];
-
-  isDevRecipe: boolean = false;
 
   constructor(data: IRecipePreview) {
     if (!data) {
