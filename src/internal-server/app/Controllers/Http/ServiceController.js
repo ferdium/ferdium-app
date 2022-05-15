@@ -4,6 +4,7 @@ const Env = use('Env');
 
 const { v4: uuid } = require('uuid');
 const { LOCAL_HOSTNAME, DEFAULT_SERVICE_ORDER } = require('../../../../config');
+const { convertToJSON } = require('../../../../jsUtils');
 const { API_VERSION } = require('../../../../environment-remote');
 const moveIcon = require('../../ImageHelper');
 
@@ -72,10 +73,7 @@ class ServiceController {
     const services = allServices.rows;
     // Convert to array with all data Franz wants
     const servicesArray = services.map(service => {
-      const settings =
-        typeof service.settings === 'string'
-          ? JSON.parse(service.settings)
-          : service.settings;
+      const settings = convertToJSON(service.settings);
 
       return {
         customRecipe: false,
@@ -88,7 +86,7 @@ class ServiceController {
         order: DEFAULT_SERVICE_ORDER,
         spellcheckerLanguage: '',
         workspaces: [],
-        ...JSON.parse(service.settings),
+        ...settings,
         iconUrl: settings.iconId
           ? `http://${hostname}:${port}/${API_VERSION}/icon/${settings.iconId}`
           : null,
@@ -108,10 +106,7 @@ class ServiceController {
       const { id } = params;
       const serviceQuery = await Service.query().where('serviceId', id).fetch();
       const service = serviceQuery.rows[0];
-      const settings =
-        typeof service.settings === 'string'
-          ? JSON.parse(service.settings)
-          : service.settings;
+      const settings = convertToJSON(service.settings);
 
       const icon = request.file('icon', {
         types: ['image'],
@@ -160,9 +155,7 @@ class ServiceController {
     const serviceData = serviceQuery.rows[0];
 
     const settings = {
-      ...(typeof serviceData.settings === 'string'
-        ? JSON.parse(serviceData.settings)
-        : serviceData.settings),
+      ...convertToJSON(serviceData.settings),
       ...data,
     };
 
@@ -205,7 +198,7 @@ class ServiceController {
       const serviceData = serviceQuery.rows[0];
 
       const settings = {
-        ...JSON.parse(serviceData.settings),
+        ...convertToJSON(serviceData.settings),
         order: data[service],
       };
 
@@ -222,10 +215,7 @@ class ServiceController {
     const services = allServices.rows;
     // Convert to array with all data Franz wants
     const servicesArray = services.map(service => {
-      const settings =
-        typeof service.settings === 'string'
-          ? JSON.parse(service.settings)
-          : service.settings;
+      const settings = convertToJSON(service.settings);
 
       return {
         customRecipe: false,
@@ -238,7 +228,7 @@ class ServiceController {
         order: DEFAULT_SERVICE_ORDER,
         spellcheckerLanguage: '',
         workspaces: [],
-        ...JSON.parse(service.settings),
+        ...settings,
         iconUrl: settings.iconId
           ? `http://${hostname}:${port}/${API_VERSION}/icon/${settings.iconId}`
           : null,

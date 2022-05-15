@@ -1,3 +1,5 @@
+import { cleanseJSObject, convertToJSON } from '../../jsUtils';
+
 type Recipe = {
   setBadge: (direct: number, indirect: number) => void;
   setDialogTitle: (title: string) => void;
@@ -34,7 +36,7 @@ export default class Userscript {
   internal_setSettings(settings: any) {
     // This is needed to get a clean JS object from the settings itself to provide better accessibility
     // Otherwise this will be a mobX instance
-    this.settings = JSON.parse(JSON.stringify(settings));
+    this.settings = cleanseJSObject(settings);
   }
 
   /**
@@ -101,7 +103,7 @@ export default class Userscript {
     const ferdiumUserKey = window.localStorage.getItem(`ferdium-user-${key}`);
 
     if (ferdiumUserKey) {
-      return JSON.parse(ferdiumUserKey);
+      return convertToJSON(ferdiumUserKey);
     }
   }
 }

@@ -6,6 +6,7 @@ const Env = use('Env');
 const fetch = require('node-fetch');
 const debug = require('../../../../preload-safe-debug')('Ferdium:internalServer:RecipeController');
 const { LIVE_FERDIUM_API } = require('../../../../config');
+const { convertToJSON } = require('../../../../jsUtils');
 const { API_VERSION } = require('../../../../environment-remote');
 
 const RECIPES_URL = `${LIVE_FERDIUM_API}/${API_VERSION}/recipes`;
@@ -14,13 +15,13 @@ class RecipeController {
   // List official and custom recipes
   async list({ response }) {
     const recipesUrlFetch = await fetch(RECIPES_URL);
-    const officialRecipes = JSON.parse(await recipesUrlFetch.text());
+    const officialRecipes = convertToJSON(await recipesUrlFetch.text());
     const allRecipes = await Recipe.all();
     const customRecipesArray = allRecipes.rows;
     const customRecipes = customRecipesArray.map(recipe => ({
       id: recipe.recipeId,
       name: recipe.name,
-      ...JSON.parse(recipe.data),
+      ...convertToJSON(recipe.data),
     }));
 
     const recipes = [...officialRecipes, ...customRecipes];
@@ -53,7 +54,7 @@ class RecipeController {
       results = dbResults.map(recipe => ({
         id: recipe.recipeId,
         name: recipe.name,
-        ...JSON.parse(recipe.data),
+        ...convertToJSON(recipe.data),
       }));
     } else {
       let remoteResults = [];
@@ -62,7 +63,7 @@ class RecipeController {
         const recipesUrlFetch = await fetch(
           `${RECIPES_URL}/search?needle=${encodeURIComponent(needle)}`,
         );
-        remoteResults = JSON.parse(await recipesUrlFetch.text());
+        remoteResults = convertToJSON(await recipesUrlFetch.text());
       }
 
       debug('remoteResults:', remoteResults);
@@ -74,7 +75,7 @@ class RecipeController {
       const localResults = localResultsArray.map(recipe => ({
         id: recipe.recipeId,
         name: recipe.name,
-        ...JSON.parse(recipe.data),
+        ...convertToJSON(recipe.data),
       }));
 
       debug('localResults:', localResults);
@@ -96,7 +97,7 @@ class RecipeController {
     response,
   }) {
     const recipesUrlFetch = await fetch(`${RECIPES_URL}/popular`);
-    const featuredRecipes = JSON.parse(await recipesUrlFetch.text());
+    const featuredRecipes = convertToJSON(await recipesUrlFetch.text());
     return response.send(featuredRecipes);
   }
 
