@@ -24,7 +24,7 @@ export function isValidExternalURL(url: string | URL) {
 }
 
 export function fixUrl(url: string | URL) {
-  return url.toString().replaceAll('//', '/').replace('http:/', 'http://').replace('https:/', 'https://').replace('file:/', 'file://');
+  return url.toString().replaceAll('//', '/').replaceAll('http:/', 'http://').replaceAll('https:/', 'https://').replaceAll('file:/', 'file://');
 }
 
 export function isValidFileUrl(path: string) {

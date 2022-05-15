@@ -73,6 +73,9 @@ describe('url_helpers', () => {
     it('handles string starting with http://', () => {
       expect(url_helpers.fixUrl('http://some/random/url')).toEqual('http://some/random/url');
       expect(url_helpers.fixUrl('http://some//random//url')).toEqual('http://some/random/url');
+
+      const gmailEmbeddedUrl = 'https://www.google.com/url?q=https://github.com/ferdium/ferdium-app/issues/87&source=gmail';
+      expect(url_helpers.fixUrl(gmailEmbeddedUrl)).toEqual(gmailEmbeddedUrl); // it should NOT remove the double-slash from the embedded url in the query string
     });
 
     it('handles string starting with https://', () => {
