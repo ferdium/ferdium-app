@@ -66,7 +66,7 @@ Route.group(() => {
   .middleware(OnlyAllowFerdium);
 
 Route.group(() => {
-  Route.get('icon/:id', 'ServiceController.icon');
+  Route.get('icon/:id', 'ImageController.icon');
 }).prefix(API_VERSION);
 
 // Franz account import

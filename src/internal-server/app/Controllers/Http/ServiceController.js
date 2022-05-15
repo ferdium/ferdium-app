@@ -3,10 +3,9 @@ const { validateAll } = use('Validator');
 const Env = use('Env');
 
 const { v4: uuid } = require('uuid');
-const path = require('path');
-const fs = require('fs-extra');
 const { LOCAL_HOSTNAME, DEFAULT_SERVICE_ORDER } = require('../../../../config');
 const { API_VERSION } = require('../../../../environment-remote');
+const moveIcon = require('../../ImageHelper');
 
 const hostname = LOCAL_HOSTNAME;
 const port = Env.get('PORT');
@@ -104,14 +103,8 @@ class ServiceController {
   }
 
   async edit({ request, response, params }) {
+    // Upload custom service icon if present
     if (request.file('icon')) {
-      // Upload custom service icon
-      await fs.ensureDir(path.join(Env.get('USER_PATH'), 'icons'));
-
-      const icon = request.file('icon', {
-        types: ['image'],
-        size: '2mb',
-      });
       const { id } = params;
       const serviceQuery = await Service.query().where('serviceId', id).fetch();
       const service = serviceQuery.rows[0];
@@ -120,19 +113,13 @@ class ServiceController {
           ? JSON.parse(service.settings)
           : service.settings;
 
-      // Generate new icon ID
-      let iconId;
-      do {
-        iconId = uuid() + uuid();
-      } while (fs.existsSync(path.join(Env.get('USER_PATH'), 'icons', iconId)));
-      iconId = `${iconId}.${icon.extname}`;
-
-      await icon.move(path.join(Env.get('USER_PATH'), 'icons'), {
-        name: iconId,
-        overwrite: true,
+      const icon = request.file('icon', {
+        types: ['image'],
+        size: '2mb',
       });
 
-      if (!icon.moved()) {
+      const iconId = await moveIcon(icon);
+      if (iconId === '-1') {
         return response.status(500).send(icon.error());
       }
 
@@ -203,19 +190,6 @@ class ServiceController {
       },
       status: ['updated'],
     });
-  }
-
-  async icon({ params, response }) {
-    const { id } = params;
-
-    const iconPath = path.join(Env.get('USER_PATH'), 'icons', id);
-    if (!fs.existsSync(iconPath)) {
-      return response.status(404).send({
-        status: "Icon doesn't exist",
-      });
-    }
-
-    return response.download(iconPath);
   }
 
   async reorder({ request, response }) {
