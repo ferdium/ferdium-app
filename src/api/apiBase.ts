@@ -37,11 +37,20 @@ export default apiBase;
 
 export function termsBase() {
 
-  const terms = (window as any).ferdium.stores.settings.all.app.server !== LIVE_FRANZ_API
-    ? ((window as any).ferdium.stores.settings.all.app.server === 'You are using Ferdium without a server'
-        ? LIVE_FERDIUM_API
-        : (window as any).ferdium.stores.settings.all.app.server)
-    : DEV_API_FRANZ_WEBSITE;
+  const serverType = (window as any).ferdium.stores.settings.all.app.server;
+  const noServer = 'You are using Ferdium without a server';
+
+  let terms;
+  switch (serverType) {
+    case LIVE_FRANZ_API:
+      terms = DEV_API_FRANZ_WEBSITE;
+      break;
+    case noServer:
+      terms = LIVE_FERDIUM_API;
+      break;
+    default:
+      terms = serverType;
+  }
 
   return fixUrl(terms);
 }
