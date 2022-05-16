@@ -15,7 +15,7 @@ import Infobox from '../../ui/Infobox';
 import RecipeItem from './RecipeItem';
 import Loader from '../../ui/Loader';
 import Appear from '../../ui/effects/Appear';
-import { FRANZ_SERVICE_REQUEST } from '../../../config';
+import { FERDIUM_SERVICE_REQUEST } from '../../../config';
 import RecipePreview from '../../../models/RecipePreview';
 import { Icon } from '../../ui/icon';
 
@@ -204,7 +204,7 @@ class RecipesDashboard extends Component {
               {intl.formatMessage(messages.customRecipes)}
             </Link>
             <a
-              href={FRANZ_SERVICE_REQUEST}
+              href={FERDIUM_SERVICE_REQUEST}
               target="_blank"
               className="link recipes__service-request"
               rel="noreferrer"
