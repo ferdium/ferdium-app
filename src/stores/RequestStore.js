@@ -1,6 +1,7 @@
 import { ipcRenderer } from 'electron';
 import { action, computed, observable } from 'mobx';
 import ms from 'ms';
+import { LOCAL_PORT } from '../config';
 
 import Store from './lib/Store';
 
@@ -13,7 +14,7 @@ export default class RequestStore extends Store {
 
   @observable showRequiredRequestsError = false;
 
-  @observable localServerPort = 45_569;
+  @observable localServerPort = LOCAL_PORT;
 
   retries = 0;
 
