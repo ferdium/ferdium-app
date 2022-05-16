@@ -360,6 +360,7 @@ class EditServiceForm extends Component {
                     {intl.formatMessage(messages.isHibernationEnabledInfo)}
                   </p>
                   <Toggle field={form.$('isWakeUpEnabled')} />
+                  <Toggle field={form.$('trapLinkClicks')} />
                   <Toggle field={form.$('isDarkModeEnabled')} />
                   {form.$('isDarkModeEnabled').value && (
                     <>
