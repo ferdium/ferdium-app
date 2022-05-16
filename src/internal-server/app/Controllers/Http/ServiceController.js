@@ -3,7 +3,7 @@ const { validateAll } = use('Validator');
 const Env = use('Env');
 
 const { v4: uuid } = require('uuid');
-const { LOCAL_HOSTNAME, DEFAULT_SERVICE_ORDER } = require('../../../../config');
+const { LOCAL_HOSTNAME, DEFAULT_SERVICE_ORDER, DEFAULT_SERVICE_SETTINGS } = require('../../../../config');
 const { convertToJSON } = require('../../../../jsUtils');
 const { API_VERSION } = require('../../../../environment-remote');
 const moveIcon = require('../../ImageHelper');
@@ -14,8 +14,10 @@ const port = Env.get('PORT');
 class ServiceController {
   // Create a new service for user
   async create({ request, response }) {
+    const data = request.all();
+
     // Validate user input
-    const validation = await validateAll(request.all(), {
+    const validation = await validateAll(data, {
       name: 'required|string',
       recipeId: 'required',
     });
@@ -27,16 +29,13 @@ class ServiceController {
       });
     }
 
-    const data = request.all();
-
     // Get new, unused uuid
     let serviceId;
     do {
       serviceId = uuid();
     } while (
       // eslint-disable-next-line no-await-in-loop, unicorn/no-await-expression-member
-      (await Service.query().where('serviceId', serviceId).fetch()).rows
-        .length > 0
+      (await Service.query().where('serviceId', serviceId).fetch()).rows.length > 0
     );
 
     await Service.create({
@@ -46,21 +45,23 @@ class ServiceController {
       settings: JSON.stringify(data),
     });
 
+    // TODO: Remove duplication
     return response.send({
       data: {
         userId: 1,
         id: serviceId,
-        isEnabled: true,
-        isNotificationEnabled: true,
-        isBadgeEnabled: true,
-        isMuted: false,
+        isEnabled: DEFAULT_SERVICE_SETTINGS.isEnabled,
+        isNotificationEnabled: DEFAULT_SERVICE_SETTINGS.isNotificationEnabled,
+        isBadgeEnabled: DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
+        isMuted: DEFAULT_SERVICE_SETTINGS.isMuted,
         isDarkModeEnabled: '', // TODO: This should ideally be a boolean (false). But, changing it caused the sidebar toggle to not work.
         spellcheckerLanguage: '',
         order: DEFAULT_SERVICE_ORDER,
         customRecipe: false,
-        hasCustomIcon: false,
+        hasCustomIcon: DEFAULT_SERVICE_SETTINGS.customIcon,
         workspaces: [],
         iconUrl: null,
+        // Overwrite previous default settings with what's obtained from the request
         ...data,
       },
       status: ['created'],
@@ -75,18 +76,21 @@ class ServiceController {
     const servicesArray = services.map(service => {
       const settings = convertToJSON(service.settings);
 
+      // TODO: Remove duplication
       return {
         customRecipe: false,
         hasCustomIcon: false,
-        isBadgeEnabled: true,
+        isBadgeEnabled: DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
         isDarkModeEnabled: '', // TODO: This should ideally be a boolean (false). But, changing it caused the sidebar toggle to not work.
-        isEnabled: true,
-        isMuted: false,
-        isNotificationEnabled: true,
+        isEnabled: DEFAULT_SERVICE_SETTINGS.isEnabled,
+        isMuted: DEFAULT_SERVICE_SETTINGS.isMuted,
+        isNotificationEnabled: DEFAULT_SERVICE_SETTINGS.isNotificationEnabled,
         order: DEFAULT_SERVICE_ORDER,
         spellcheckerLanguage: '',
         workspaces: [],
+        // Overwrite previous default settings with what's obtained from the db
         ...settings,
+        // Overwrite even after the spread operator with specific values
         iconUrl: settings.iconId
           ? `http://${hostname}:${port}/${API_VERSION}/icon/${settings.iconId}`
           : null,
@@ -217,18 +221,21 @@ class ServiceController {
     const servicesArray = services.map(service => {
       const settings = convertToJSON(service.settings);
 
+      // TODO: Remove duplication
       return {
         customRecipe: false,
-        hasCustomIcon: false,
-        isBadgeEnabled: true,
+        hasCustomIcon: DEFAULT_SERVICE_SETTINGS.customIcon,
+        isBadgeEnabled: DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
         isDarkModeEnabled: '', // TODO: This should ideally be a boolean (false). But, changing it caused the sidebar toggle to not work.
-        isEnabled: true,
-        isMuted: false,
-        isNotificationEnabled: true,
+        isEnabled: DEFAULT_SERVICE_SETTINGS.isEnabled,
+        isMuted: DEFAULT_SERVICE_SETTINGS.isMuted,
+        isNotificationEnabled: DEFAULT_SERVICE_SETTINGS.isNotificationEnabled,
         order: DEFAULT_SERVICE_ORDER,
         spellcheckerLanguage: '',
         workspaces: [],
+        // Overwrite previous default settings with what's obtained from the db
         ...settings,
+        // Overwrite even after the spread operator with specific values
         iconUrl: settings.iconId
           ? `http://${hostname}:${port}/${API_VERSION}/icon/${settings.iconId}`
           : null,

@@ -188,10 +188,9 @@ export default class SettingsStore extends Store {
 
   // Helper
   async _migrate() {
-    const legacySettings = localStorage.getItem('app') || {};
-
     this._ensureMigrationAndMarkDone('password-hashing', () => {
       if (this.stores.settings.app.lockedPassword !== '') {
+        const legacySettings = localStorage.getItem('app') || {};
         this.actions.settings.update({
           type: 'app',
           data: {
@@ -200,7 +199,7 @@ export default class SettingsStore extends Store {
         });
       }
 
-      debug('Migrated updates settings');
+      debug('Migrated password-hashing settings');
     });
 
     this._ensureMigrationAndMarkDone('5.6.0-beta.6-settings', () => {
@@ -210,6 +209,8 @@ export default class SettingsStore extends Store {
           searchEngine: DEFAULT_APP_SETTINGS.searchEngine,
         },
       });
+
+      debug('Migrated default search engine settings');
     });
 
     this._ensureMigrationAndMarkDone('user-agent-settings', () => {
@@ -219,6 +220,8 @@ export default class SettingsStore extends Store {
           userAgentPref: DEFAULT_APP_SETTINGS.userAgentPref,
         },
       });
+
+      debug('Migrated default user-agent settings');
     });
   }
 }

@@ -16,6 +16,7 @@ import {
 
 const debug = require('../preload-safe-debug')('Ferdium:Service');
 
+// TODO: Shouldn't most of these values default to what's defined in DEFAULT_SERVICE_SETTINGS?
 export default class Service {
   id = '';
 
