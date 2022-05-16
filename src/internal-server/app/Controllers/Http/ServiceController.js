@@ -1,15 +1,10 @@
 const Service = use('App/Models/Service');
 const { validateAll } = use('Validator');
-const Env = use('Env');
 
 const { v4: uuid } = require('uuid');
-const { LOCAL_HOSTNAME, DEFAULT_SERVICE_ORDER, DEFAULT_SERVICE_SETTINGS } = require('../../../../config');
+const { DEFAULT_SERVICE_ORDER, DEFAULT_SERVICE_SETTINGS } = require('../../../../config');
 const { convertToJSON } = require('../../../../jsUtils');
-const { API_VERSION } = require('../../../../environment-remote');
-const moveIcon = require('../../ImageHelper');
-
-const hostname = LOCAL_HOSTNAME;
-const port = Env.get('PORT');
+const { deduceIconUrl, moveIcon } = require('../../ImageHelper');
 
 class ServiceController {
   // Create a new service for user
@@ -91,9 +86,7 @@ class ServiceController {
         // Overwrite previous default settings with what's obtained from the db
         ...settings,
         // Overwrite even after the spread operator with specific values
-        iconUrl: settings.iconId
-          ? `http://${hostname}:${port}/${API_VERSION}/icon/${settings.iconId}`
-          : null,
+        iconUrl: deduceIconUrl(settings.iconId),
         id: service.serviceId,
         name: service.name,
         recipeId: service.recipeId,
@@ -144,7 +137,7 @@ class ServiceController {
           id,
           name: service.name,
           ...newSettings,
-          iconUrl: `http://${hostname}:${port}/${API_VERSION}/icon/${newSettings.iconId}`,
+          iconUrl: deduceIconUrl(newSettings.iconId),
           userId: 1,
         },
         status: ['updated'],
@@ -182,7 +175,7 @@ class ServiceController {
         id,
         name: service.name,
         ...settings,
-        iconUrl: `${Env.get('APP_URL')}/${API_VERSION}/icon/${settings.iconId}`,
+        iconUrl: deduceIconUrl(settings.iconId),
         userId: 1,
       },
       status: ['updated'],
@@ -236,9 +229,7 @@ class ServiceController {
         // Overwrite previous default settings with what's obtained from the db
         ...settings,
         // Overwrite even after the spread operator with specific values
-        iconUrl: settings.iconId
-          ? `http://${hostname}:${port}/${API_VERSION}/icon/${settings.iconId}`
-          : null,
+        iconUrl: deduceIconUrl(settings.iconId),
         id: service.serviceId,
         name: service.name,
         recipeId: service.recipeId,
