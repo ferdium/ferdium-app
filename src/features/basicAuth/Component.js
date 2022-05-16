@@ -7,7 +7,7 @@ import classnames from 'classnames';
 
 import Modal from '../../components/ui/Modal';
 import Input from '../../components/ui/Input';
-import Button from '../../components/ui/Button';
+import Button from '../../components/ui/button';
 
 import { state, resetState, sendCredentials, cancelLogin } from './store';
 import Form from './Form';
