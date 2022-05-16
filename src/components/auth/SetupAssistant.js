@@ -6,7 +6,7 @@ import injectSheet from 'react-jss';
 import classnames from 'classnames';
 
 import { Input } from '../ui/input/index';
-import { Button } from '../ui/button/index';
+import Button from '../ui/button';
 import { Badge } from '../ui/badge';
 import Modal from '../ui/Modal';
 import * as Infobox from '../ui/Infobox';

@@ -10,7 +10,7 @@ import Appear from '../ui/effects/Appear';
 import Form from '../../lib/Form';
 import { email } from '../../helpers/validation-helpers';
 import Input from '../ui/Input';
-import Button from '../ui/Button';
+import Button from '../ui/button';
 import { H1 } from '../ui/headline';
 
 const messages = defineMessages({

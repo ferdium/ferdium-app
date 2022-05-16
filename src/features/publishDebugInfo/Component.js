@@ -7,7 +7,7 @@ import { state as ModalState } from './store';
 
 import { H1 } from '../../components/ui/headline';
 import { sendAuthRequest } from '../../api/utils/auth';
-import Button from '../../components/ui/Button';
+import Button from '../../components/ui/button';
 import { Input } from '../../components/ui/input/index';
 import Modal from '../../components/ui/Modal';
 import { DEBUG_API } from '../../config';
