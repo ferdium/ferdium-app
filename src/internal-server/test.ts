@@ -6,4 +6,4 @@ const dummyUserFolder = join(__dirname, 'user_data');
 
 ensureDirSync(dummyUserFolder);
 
-server(dummyUserFolder, 45_568);
+server(dummyUserFolder, 46_568);
