@@ -5,6 +5,7 @@ import { API_VERSION } from '../environment-remote';
 import {
   DEV_API_FRANZ_WEBSITE,
   LIVE_FRANZ_API,
+  LIVE_FERDIUM_API,
   LOCAL_HOSTNAME,
   LOCAL_SERVER,
   SERVER_NOT_LOADED,
@@ -35,7 +36,12 @@ const apiBase = (withVersion = true) => {
 export default apiBase;
 
 export function termsBase() {
-  return fixUrl((window as any).ferdium.stores.settings.all.app.server !== LIVE_FRANZ_API
-    ? (window as any).ferdium.stores.settings.all.app.server
-    : DEV_API_FRANZ_WEBSITE);
+
+  const terms = (window as any).ferdium.stores.settings.all.app.server !== LIVE_FRANZ_API
+    ? ((window as any).ferdium.stores.settings.all.app.server === 'You are using Ferdium without a server'
+        ? LIVE_FERDIUM_API
+        : (window as any).ferdium.stores.settings.all.app.server)
+    : DEV_API_FRANZ_WEBSITE;
+
+  return fixUrl(terms);
 }
