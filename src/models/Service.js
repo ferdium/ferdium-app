@@ -213,6 +213,7 @@ export default class Service {
       url: this.url,
       hasCustomIcon: this.hasCustomIcon,
       onlyShowFavoritesInUnreadCount: this.onlyShowFavoritesInUnreadCount,
+      trapLinkClicks: this.trapLinkClicks,
     };
   }
 

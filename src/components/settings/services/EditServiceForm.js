@@ -108,6 +108,10 @@ const messages = defineMessages({
     id: 'settings.service.form.headlineGeneral',
     defaultMessage: 'General',
   },
+  headlineAppearance: {
+    id: 'settings.service.form.headlineAppearance',
+    defaultMessage: 'Appearance',
+  },
   headlineDarkReaderSettings: {
     id: 'settings.service.form.headlineDarkReaderSettings',
     defaultMessage: 'Dark Reader Settings',
@@ -132,6 +136,10 @@ const messages = defineMessages({
     id: 'settings.service.form.proxy.info',
     defaultMessage:
       'Proxy settings will not be synchronized with the Ferdium servers.',
+  },
+  serviceRestartRequired: {
+    id: 'settings.service.restartRequired',
+    defaultMessage: 'Changes require reload of the service',
   },
 });
 
@@ -361,6 +369,13 @@ class EditServiceForm extends Component {
                   </p>
                   <Toggle field={form.$('isWakeUpEnabled')} />
                   <Toggle field={form.$('trapLinkClicks')} />
+                  <p className="settings__help indented__help">
+                    {intl.formatMessage(messages.serviceRestartRequired)}
+                  </p>
+                </div>
+
+                <div className="settings__settings-group">
+                  <H3>{intl.formatMessage(messages.headlineAppearance)}</H3>
                   <Toggle field={form.$('isDarkModeEnabled')} />
                   {form.$('isDarkModeEnabled').value && (
                     <>
