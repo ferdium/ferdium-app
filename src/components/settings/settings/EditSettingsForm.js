@@ -436,6 +436,8 @@ class EditSettingsForm extends Component {
 
                 <Toggle field={form.$('keepAllWorkspacesLoaded')} />
 
+                <Toggle field={form.$('isTrapLinkClicksDefault')} />
+
                 {!hasAddedTodosAsService && (
                   <>
                     <Toggle field={form.$('enableTodos')} />

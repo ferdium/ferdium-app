@@ -144,6 +144,8 @@ class EditServiceScreen extends Component {
 
     const { stores, router } = this.props;
 
+    const { isTrapLinkClicksDefault } = stores.settings.all.app;
+
     const { action } = router.params;
 
     let defaultSpellcheckerLanguage =
@@ -205,7 +207,8 @@ class EditServiceScreen extends Component {
         trapLinkClicks: {
           label: intl.formatMessage(messages.trapLinkClicks),
           value: service.trapLinkClicks,
-          default: DEFAULT_SERVICE_SETTINGS.trapLinkClicks,
+          // TODO: THIS ONLY WORKS AS A DEFAULT FOR THE CREATION OF A RECIPE. IT DOESN'T OVERRIDE THE CURRENT EXISTING RECIPES SETTINGS FOR NOW (IT SHOULD).
+          default: isTrapLinkClicksDefault,
         },
         isMuted: {
           label: intl.formatMessage(messages.enableAudio),
