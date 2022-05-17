@@ -65,7 +65,7 @@ const styles = theme => ({
     display: 'block',
     zIndex: 1,
     width: '100%',
-    height: '23px',
+    height: '29px',
     position: 'absolute',
     top: 0,
   },

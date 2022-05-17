@@ -286,8 +286,8 @@ function generateShowDragAreaStyle(accentColor) {
       background-color: ${accentColor};
     }
     #root {
-      /** Remove 22px from app height, otherwise the page will be too high */
-      height: calc(100% - 22px);
+      /** Remove 28px from app height, otherwise the page will be too high */
+      height: calc(100% - 28px);
     }
   `;
 }
@@ -304,7 +304,7 @@ function generateVerticalStyle(widthStr, alwaysShowWorkspaces) {
   }
   const width = Number(widthStr);
   const sidebarWidth = width - 4;
-  const verticalStyleOffset = 23;
+  const verticalStyleOffset = 29;
 
   return `
   .sidebar {
