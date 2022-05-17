@@ -35,11 +35,7 @@ interface IProps extends IFormField, WithStylesProps<typeof styles> {
 let buttonTransition: string = 'none';
 let loaderContainerTransition: string = 'none';
 
-if (
-  typeof window !== 'undefined' &&
-  window &&
-  window.matchMedia('(prefers-reduced-motion: no-preference)')
-) {
+if (window && window.matchMedia('(prefers-reduced-motion: no-preference)')) {
   buttonTransition = 'background .5s, opacity 0.3s';
   loaderContainerTransition = 'all 0.3s';
 }
@@ -263,6 +259,6 @@ class ButtonComponent extends Component<IProps> {
   }
 }
 
-const Button = injectStyle(styles, { injectTheme: true })(ButtonComponent);
-
-export default Button;
+export const Button = injectStyle(styles, { injectTheme: true })(
+  ButtonComponent,
+);

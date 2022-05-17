@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import ms from 'ms';
 
-import Button from '../../ui/button';
+import Button from '../../ui/Button';
 import { H1 } from '../../ui/headline';
 
 const messages = defineMessages({
