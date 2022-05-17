@@ -5,7 +5,7 @@ import { defineMessages, injectIntl } from 'react-intl';
 import Form from '../../lib/Form';
 import Input from '../ui/Input';
 import Select from '../ui/Select';
-import Button from '../ui/button';
+import Button from '../ui/Button';
 import Link from '../ui/Link';
 import Infobox from '../ui/Infobox';
 import { url, required } from '../../helpers/validation-helpers';

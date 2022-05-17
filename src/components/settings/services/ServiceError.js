@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import { defineMessages, injectIntl } from 'react-intl';
 
 import Infobox from '../../ui/Infobox';
-import Button from '../../ui/button';
+import Button from '../../ui/Button';
 
 const messages = defineMessages({
   headline: {

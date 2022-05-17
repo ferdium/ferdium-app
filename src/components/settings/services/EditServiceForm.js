@@ -14,7 +14,7 @@ import { TabItem } from '../../ui/Tabs/TabItem';
 import Input from '../../ui/Input';
 import Toggle from '../../ui/Toggle';
 import Slider from '../../ui/Slider';
-import Button from '../../ui/button';
+import Button from '../../ui/Button';
 import ImageUpload from '../../ui/ImageUpload';
 import Select from '../../ui/Select';
 

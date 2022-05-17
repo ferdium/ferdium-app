@@ -6,7 +6,7 @@ import { defineMessages, injectIntl } from 'react-intl';
 
 import Form from '../../lib/Form';
 import Input from '../ui/Input';
-import Button from '../ui/button';
+import Button from '../ui/Button';
 import { H1 } from '../ui/headline';
 import { isMac } from '../../environment';
 

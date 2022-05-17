@@ -9,7 +9,7 @@ import { API_VERSION } from '../../environment-remote';
 import Form from '../../lib/Form';
 import { required, email } from '../../helpers/validation-helpers';
 import Input from '../ui/Input';
-import Button from '../ui/button';
+import Button from '../ui/Button';
 import Link from '../ui/Link';
 
 import { globalError as globalErrorPropType } from '../../prop-types';

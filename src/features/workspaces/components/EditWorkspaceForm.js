@@ -7,7 +7,7 @@ import injectSheet from 'react-jss';
 
 import { Infobox } from '../../../components/ui/infobox/index';
 import { Input } from '../../../components/ui/input/index';
-import Button from '../../../components/ui/button';
+import { Button } from '../../../components/ui/button/index';
 import Workspace from '../models/Workspace';
 import Service from '../../../models/Service';
 import Form from '../../../lib/Form';

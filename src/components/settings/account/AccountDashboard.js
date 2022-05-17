@@ -6,7 +6,7 @@ import ReactTooltip from 'react-tooltip';
 import { H1, H2 } from '../../ui/headline';
 
 import Loader from '../../ui/Loader';
-import Button from '../../ui/button';
+import Button from '../../ui/Button';
 import Infobox from '../../ui/Infobox';
 import { LOCAL_SERVER, LIVE_FRANZ_API, LIVE_FERDI_API } from '../../../config';
 

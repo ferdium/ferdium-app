@@ -5,7 +5,7 @@ import { defineMessages, injectIntl } from 'react-intl';
 import injectSheet from 'react-jss';
 
 import { Input } from '../../../components/ui/input/index';
-import Button from '../../../components/ui/button';
+import { Button } from '../../../components/ui/button/index';
 import Form from '../../../lib/Form';
 import { required } from '../../../helpers/validation-helpers';
 import { workspaceStore } from '../index';

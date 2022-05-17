@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 
 import { Input } from '../../ui/input/index';
 import Form from '../../../lib/Form';
-import Button from '../../ui/button';
+import Button from '../../ui/Button';
 import Radio from '../../ui/Radio';
 import Infobox from '../../ui/Infobox';
 import { H2 } from '../../ui/headline';

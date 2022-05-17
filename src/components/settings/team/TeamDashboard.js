@@ -7,7 +7,7 @@ import injectSheet from 'react-jss';
 import classnames from 'classnames';
 
 import Loader from '../../ui/Loader';
-import Button from '../../ui/button';
+import Button from '../../ui/Button';
 import Infobox from '../../ui/Infobox';
 import { H1 } from '../../ui/headline';
 import { LIVE_FRANZ_API } from '../../../config';
