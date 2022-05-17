@@ -15,6 +15,7 @@
   - [Screenshots](#screenshots)
   - [Download](#download)
   - [Unsigned Nightlies on MacOS](#unsigned-nightlies-on-macos)
+  - [Unsigned Nightlies on Windows](#unsigned-nightlies-on-windows)
   - [Migrating from Ferdi](#migrating-from-ferdi)
   - [Contributing](#contributing)
   - [Contributors ✨](#contributors-)
@@ -56,6 +57,13 @@ _Find answers to frequently asked questions on [ferdium.org/faq](https://ferdium
 ## Unsigned Nightlies on MacOS
 
 Since we are waiting to acquire the Apple Developer License, we are publishing our nightlies without being signed. If you download these, and are on MacOS beyond Catalina, you will face the issue that the OS says the `dmg` is corrupted. If so, please run the command in [this comment](https://github.com/ferdium/ferdium-app/issues/34#issuecomment-1107655575)
+
+## Unsigned Nightlies on Windows
+
+Similarly to the MacOS, we do not currently have a certificate to sign the nightlies on Windows. For this reason, an error will appear when launching the setup tool or the portable app if your execution policy is not set to `Bypass` or `Unrestricted`. In order to allow the script to run, it is sufficient to right-click on the `.exe` to access its properties and to tick the box labeled `Unblock` at the bottom of the General tab. Alternatively, you could execute the following in a PowerShell:
+```PowerShell
+Unblock-File -Path .\Ferdium-Setup-6.0.0-nightly.xx.exe; .\Ferdium-Setup-6.0.0-nightly.xx.exe
+```
 
 ## Migrating from Ferdi
 
