@@ -77,7 +77,7 @@ _Note:_ You can choose any version manager to manage multiple versions of `node`
 
 #### Git
 
-The version [2.23.0](https://github.com/git-for-windows/git/releases/tag/v2.23.0.windows.1) for Git is working fine for development. You can then use the console from Git to do the development procedure.
+The version [2.23.0](https://git-scm.com/download) for Git is working fine for development. You can then use the console from Git to do the development procedure.
 
 #### On Debian/Ubuntu
 
