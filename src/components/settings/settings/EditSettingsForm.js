@@ -8,7 +8,7 @@ import { defineMessages, injectIntl } from 'react-intl';
 import { mdiGithub, mdiOpenInNew, mdiPowerPlug } from '@mdi/js';
 
 import Form from '../../../lib/Form';
-import Button from '../../ui/Button';
+import Button from '../../ui/button';
 import Toggle from '../../ui/Toggle';
 import Select from '../../ui/Select';
 import Input from '../../ui/Input';

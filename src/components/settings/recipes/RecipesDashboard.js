@@ -7,7 +7,7 @@ import { Link } from 'react-router';
 import injectSheet from 'react-jss';
 
 import { mdiOpenInNew } from '@mdi/js';
-import { Button } from '../../ui/button/index';
+import Button from '../../ui/button';
 import { Input } from '../../ui/input/index';
 import { H3, H2, H1 } from '../../ui/headline';
 import SearchInput from '../../ui/SearchInput';
