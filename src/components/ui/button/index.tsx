@@ -30,6 +30,7 @@ interface IProps extends IFormField, WithStylesProps<typeof styles> {
   icon?: string;
   href?: string;
   target?: string;
+  htmlForm?: string;
 }
 
 let buttonTransition: string = 'none';
@@ -191,10 +192,10 @@ class ButtonComponent extends Component<IProps> {
       icon,
       href,
       target,
+      htmlForm,
     } = this.props;
 
     const { busy } = this.state;
-
     let showLoader = false;
     if (loaded) {
       showLoader = !loaded;
@@ -239,6 +240,7 @@ class ButtonComponent extends Component<IProps> {
         })}
         disabled={disabled}
         data-type="franz-button"
+        {...(htmlForm && { form: htmlForm })}
       >
         {content}
       </button>
