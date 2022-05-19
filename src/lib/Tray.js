@@ -248,6 +248,10 @@ export default class TrayIcon {
       ),
     );
 
+    if (isMac && macosVersion.isGreaterThanOrEqualTo('11')) {
+      trayImg.setTemplateImage(true);
+    }
+
     return trayImg;
   }
 }
