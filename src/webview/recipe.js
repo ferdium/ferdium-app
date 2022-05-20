@@ -163,6 +163,11 @@ class RecipeController {
     return selected;
   }
 
+  @computed get trapLinkClicks() {
+    const selected = this.settings.app.globalTrapLinkClicks && !this.settings.service.trapLinkClicks
+    return selected;
+  }
+
   cldIdentifier = null;
 
   findInPage = null;
@@ -185,6 +190,7 @@ class RecipeController {
       () => this.spellcheckerLanguage,
       () => this.settings.app.searchEngine,
       () => this.settings.app.clipboardNotifications,
+      () => this.settings.app.globalTrapLinkClicks,
     );
 
     autorun(() => this.update());
@@ -196,7 +202,7 @@ class RecipeController {
       });
     });
   }
-
+  
   loadRecipeModule(event, config, recipe) {
     debug('loadRecipeModule');
     const modulePath = join(recipe.path, 'webview.js');
@@ -297,6 +303,20 @@ class RecipeController {
     } else {
       debug('Disable spellchecker');
     }
+
+    debug('------------------------ trapLinkClicks')
+    debug('globalTrapLinkClicks', this.settings.app.globalTrapLinkClicks)
+    debug('trapLinkClicks', this.settings.service.trapLinkClicks)
+    if (this.settings.app.globalTrapLinkClicks) {
+      let { trapLinkClicks } = this;
+      this.settings.service.trapLinkClicks = trapLinkClicks
+    }
+    debug('trapLinkClicks', this.settings.service.trapLinkClicks)
+    debug('this.trapLinkClicks', this.trapLinkClicks)
+
+    // if (this.settings.app.globalTrapLinkClicks && !this.settings.service.trapLinkClicks) {
+    //   this.settings.service.trapLinkClicks = true;
+    // }
 
     if (!this.recipe) {
       this.hasUpdatedBeforeRecipeLoaded = true;

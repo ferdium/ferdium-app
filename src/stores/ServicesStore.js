@@ -137,6 +137,13 @@ export default class ServicesStore extends Store {
     );
 
     reaction(
+      () => this.stores.settings.app.globalTrapLinkClicks,
+      () => {
+        this._shareSettingsWithServiceProcess();
+      },
+    );
+
+    reaction(
       () => this.stores.settings.app.spellcheckerLanguage,
       () => {
         this._shareSettingsWithServiceProcess();

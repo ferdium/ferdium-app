@@ -264,7 +264,7 @@ export const DEFAULT_APP_SETTINGS = {
   enableLongPressServiceHint: false,
   proxyFeatureEnabled: false,
   onlyShowFavoritesInUnreadCount: false,
-  trapLinkClicks: false,
+  globalTrapLinkClicks: false,
 };
 
 export const DEFAULT_SERVICE_SETTINGS = {

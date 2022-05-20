@@ -151,8 +151,8 @@ const messages = defineMessages({
     defaultMessage: 'Lock after inactivity',
   },
   // TODO: THIS ONLY WORKS AS A DEFAULT FOR THE CREATION OF A RECIPE. IT DOESN'T OVERRIDE THE CURRENT EXISTING RECIPES SETTINGS FOR NOW (IT SHOULD).
-  trapLinkClicks: {
-    id: 'settings.app.form.trapLinkClicks',
+  globalTrapLinkClicks: {
+    id: 'settings.app.form.globalTrapLinkClicks',
     defaultMessage: 'Open URLs within Ferdium by default'
   },
   scheduledDNDEnabled: {
@@ -349,7 +349,7 @@ class EditSettingsScreen extends Component {
         lockedPassword: useOriginalPassword ? this.props.stores.settings.all.app.lockedPassword : hash(String(settingsData.lockedPassword)),
         useTouchIdToUnlock: Boolean(settingsData.useTouchIdToUnlock),
         inactivityLock: Number(settingsData.inactivityLock),
-        trapLinkClicks: Boolean(settingsData.trapLinkClicks),
+        globalTrapLinkClicks: Boolean(settingsData.globalTrapLinkClicks),
         scheduledDNDEnabled: Boolean(settingsData.scheduledDNDEnabled),
         scheduledDNDStart: settingsData.scheduledDNDStart,
         scheduledDNDEnd: settingsData.scheduledDNDEnd,
@@ -625,10 +625,10 @@ class EditSettingsScreen extends Component {
           default: 0,
           type: 'number',
         },
-        trapLinkClicks: {
-          label: intl.formatMessage(messages.trapLinkClicks),
-          value: settings.all.app.trapLinkClicks,
-          default: DEFAULT_APP_SETTINGS.trapLinkClicks,
+        globalTrapLinkClicks: {
+          label: intl.formatMessage(messages.globalTrapLinkClicks),
+          value: settings.all.app.globalTrapLinkClicks,
+          default: DEFAULT_APP_SETTINGS.globalTrapLinkClicks,
         },
         scheduledDNDEnabled: {
           label: intl.formatMessage(messages.scheduledDNDEnabled),
