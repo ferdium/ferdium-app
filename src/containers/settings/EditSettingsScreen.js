@@ -150,7 +150,6 @@ const messages = defineMessages({
     id: 'settings.app.form.inactivityLock',
     defaultMessage: 'Lock after inactivity',
   },
-  // TODO: THIS ONLY WORKS AS A DEFAULT FOR THE CREATION OF A RECIPE. IT DOESN'T OVERRIDE THE CURRENT EXISTING RECIPES SETTINGS FOR NOW (IT SHOULD).
   globalTrapLinkClicks: {
     id: 'settings.app.form.globalTrapLinkClicks',
     defaultMessage: 'Open URLs within Ferdium by default'

@@ -49,6 +49,7 @@ import {
 } from './spellchecker';
 
 import { DEFAULT_APP_SETTINGS } from '../config';
+import { ifUndefinedBoolean, ifUndefinedString } from '../jsUtils';
 
 const debug = require('../preload-safe-debug')('Ferdium:Plugin');
 
@@ -157,15 +158,7 @@ class RecipeController {
   }
 
   @computed get spellcheckerLanguage() {
-    const selected =
-      this.settings.service.spellcheckerLanguage ||
-      this.settings.app.spellcheckerLanguage;
-    return selected;
-  }
-
-  @computed get trapLinkClicks() {
-    const selected = this.settings.app.globalTrapLinkClicks && !this.settings.service.trapLinkClicks
-    return selected;
+    return ifUndefinedString(this.settings.service.spellcheckerLanguage, this.settings.app.spellcheckerLanguage);
   }
 
   cldIdentifier = null;
@@ -190,7 +183,6 @@ class RecipeController {
       () => this.spellcheckerLanguage,
       () => this.settings.app.searchEngine,
       () => this.settings.app.clipboardNotifications,
-      () => this.settings.app.globalTrapLinkClicks,
     );
 
     autorun(() => this.update());
@@ -202,7 +194,7 @@ class RecipeController {
       });
     });
   }
-  
+
   loadRecipeModule(event, config, recipe) {
     debug('loadRecipeModule');
     const modulePath = join(recipe.path, 'webview.js');
@@ -217,8 +209,13 @@ class RecipeController {
         sessionHandler,
       );
       if (existsSync(modulePath)) {
+        const mergedSettings = { ...config, recipe };
+
+        // Resolve global vs service-specific settings prior to loading the recipe
+        mergedSettings.trapLinkClicks = ifUndefinedBoolean(this.settings.service.trapLinkClicks, this.settings.app.globalTrapLinkClicks);
+
         // eslint-disable-next-line import/no-dynamic-require
-        require(modulePath)(this.recipe, { ...config, recipe });
+        require(modulePath)(this.recipe, mergedSettings);
         debug('Initialize Recipe', config, recipe);
       }
 
@@ -303,20 +300,6 @@ class RecipeController {
     } else {
       debug('Disable spellchecker');
     }
-
-    debug('------------------------ trapLinkClicks')
-    debug('globalTrapLinkClicks', this.settings.app.globalTrapLinkClicks)
-    debug('trapLinkClicks', this.settings.service.trapLinkClicks)
-    if (this.settings.app.globalTrapLinkClicks) {
-      const { trapLinkClicks } = this;
-      this.settings.service.trapLinkClicks = trapLinkClicks
-    }
-    debug('trapLinkClicks', this.settings.service.trapLinkClicks)
-    debug('this.trapLinkClicks', this.trapLinkClicks)
-
-    // if (this.settings.app.globalTrapLinkClicks && !this.settings.service.trapLinkClicks) {
-    //   this.settings.service.trapLinkClicks = true;
-    // }
 
     if (!this.recipe) {
       this.hasUpdatedBeforeRecipeLoaded = true;
