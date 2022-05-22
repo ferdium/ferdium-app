@@ -137,8 +137,8 @@ const messages = defineMessages({
     defaultMessage:
       'Proxy settings will not be synchronized with the Ferdium servers.',
   },
-  serviceRestartRequired: {
-    id: 'settings.service.restartRequired',
+  serviceReloadRequired: {
+    id: 'settings.service.reloadRequired',
     defaultMessage: 'Changes require reload of the service',
   },
 });
@@ -369,8 +369,9 @@ class EditServiceForm extends Component {
                   </p>
                   <Toggle field={form.$('isWakeUpEnabled')} />
                   <Toggle field={form.$('trapLinkClicks')} />
+                  {/* TODO: Need to figure out how to effect this change without a reload of the recipe */}
                   <p className="settings__help indented__help">
-                    {intl.formatMessage(messages.serviceRestartRequired)}
+                    {intl.formatMessage(messages.serviceReloadRequired)}
                   </p>
                 </div>
 

@@ -49,7 +49,7 @@ import {
 } from './spellchecker';
 
 import { DEFAULT_APP_SETTINGS } from '../config';
-import { ifUndefinedBoolean, ifUndefinedString } from '../jsUtils';
+import { ifUndefinedString } from '../jsUtils';
 
 const debug = require('../preload-safe-debug')('Ferdium:Plugin');
 
@@ -209,13 +209,8 @@ class RecipeController {
         sessionHandler,
       );
       if (existsSync(modulePath)) {
-        const mergedSettings = { ...config, recipe };
-
-        // Resolve global vs service-specific settings prior to loading the recipe
-        mergedSettings.trapLinkClicks = ifUndefinedBoolean(this.settings.service.trapLinkClicks, this.settings.app.globalTrapLinkClicks);
-
         // eslint-disable-next-line import/no-dynamic-require
-        require(modulePath)(this.recipe, mergedSettings);
+        require(modulePath)(this.recipe, { ...config, recipe });
         debug('Initialize Recipe', config, recipe);
       }
 

@@ -150,10 +150,6 @@ const messages = defineMessages({
     id: 'settings.app.form.inactivityLock',
     defaultMessage: 'Lock after inactivity',
   },
-  globalTrapLinkClicks: {
-    id: 'settings.app.form.globalTrapLinkClicks',
-    defaultMessage: 'Open URLs within Ferdium by default'
-  },
   scheduledDNDEnabled: {
     id: 'settings.app.form.scheduledDNDEnabled',
     defaultMessage: 'Enable scheduled Do-not-Disturb',
@@ -348,7 +344,6 @@ class EditSettingsScreen extends Component {
         lockedPassword: useOriginalPassword ? this.props.stores.settings.all.app.lockedPassword : hash(String(settingsData.lockedPassword)),
         useTouchIdToUnlock: Boolean(settingsData.useTouchIdToUnlock),
         inactivityLock: Number(settingsData.inactivityLock),
-        globalTrapLinkClicks: Boolean(settingsData.globalTrapLinkClicks),
         scheduledDNDEnabled: Boolean(settingsData.scheduledDNDEnabled),
         scheduledDNDStart: settingsData.scheduledDNDStart,
         scheduledDNDEnd: settingsData.scheduledDNDEnd,
@@ -623,11 +618,6 @@ class EditSettingsScreen extends Component {
           value: settings.all.app.inactivityLock,
           default: 0,
           type: 'number',
-        },
-        globalTrapLinkClicks: {
-          label: intl.formatMessage(messages.globalTrapLinkClicks),
-          value: settings.all.app.globalTrapLinkClicks,
-          default: DEFAULT_APP_SETTINGS.globalTrapLinkClicks,
         },
         scheduledDNDEnabled: {
           label: intl.formatMessage(messages.scheduledDNDEnabled),
