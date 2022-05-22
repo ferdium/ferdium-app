@@ -308,7 +308,7 @@ class RecipeController {
     debug('globalTrapLinkClicks', this.settings.app.globalTrapLinkClicks)
     debug('trapLinkClicks', this.settings.service.trapLinkClicks)
     if (this.settings.app.globalTrapLinkClicks) {
-      let { trapLinkClicks } = this;
+      const { trapLinkClicks } = this;
       this.settings.service.trapLinkClicks = trapLinkClicks
     }
     debug('trapLinkClicks', this.settings.service.trapLinkClicks)
