@@ -54,6 +54,8 @@ export default class Service {
 
   @observable isBadgeEnabled = true;
 
+  @observable trapLinkClicks = false;
+
   @observable isIndirectMessageBadgeEnabled = true;
 
   @observable iconUrl = '';
@@ -134,6 +136,10 @@ export default class Service {
       data.isBadgeEnabled,
       this.isBadgeEnabled,
     );
+    this.trapLinkClicks = ifUndefinedBoolean(
+      data.trapLinkClicks,
+      this.trapLinkClicks,
+    );
     this.isIndirectMessageBadgeEnabled = ifUndefinedBoolean(
       data.isIndirectMessageBadgeEnabled,
       this.isIndirectMessageBadgeEnabled,
@@ -207,6 +213,7 @@ export default class Service {
       url: this.url,
       hasCustomIcon: this.hasCustomIcon,
       onlyShowFavoritesInUnreadCount: this.onlyShowFavoritesInUnreadCount,
+      trapLinkClicks: this.trapLinkClicks,
     };
   }
 

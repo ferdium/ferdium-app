@@ -48,6 +48,7 @@ class ServiceController {
         isEnabled: DEFAULT_SERVICE_SETTINGS.isEnabled,
         isNotificationEnabled: DEFAULT_SERVICE_SETTINGS.isNotificationEnabled,
         isBadgeEnabled: DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
+        trapLinkClicks: DEFAULT_SERVICE_SETTINGS.trapLinkClicks,
         isMuted: DEFAULT_SERVICE_SETTINGS.isMuted,
         isDarkModeEnabled: '', // TODO: This should ideally be a boolean (false). But, changing it caused the sidebar toggle to not work.
         spellcheckerLanguage: '',
@@ -76,6 +77,7 @@ class ServiceController {
         customRecipe: false,
         hasCustomIcon: false,
         isBadgeEnabled: DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
+        trapLinkClicks: DEFAULT_SERVICE_SETTINGS.trapLinkClicks,
         isDarkModeEnabled: '', // TODO: This should ideally be a boolean (false). But, changing it caused the sidebar toggle to not work.
         isEnabled: DEFAULT_SERVICE_SETTINGS.isEnabled,
         isMuted: DEFAULT_SERVICE_SETTINGS.isMuted,
@@ -219,6 +221,7 @@ class ServiceController {
         customRecipe: false,
         hasCustomIcon: DEFAULT_SERVICE_SETTINGS.customIcon,
         isBadgeEnabled: DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
+        trapLinkClicks: DEFAULT_SERVICE_SETTINGS.trapLinkClicks,
         isDarkModeEnabled: '', // TODO: This should ideally be a boolean (false). But, changing it caused the sidebar toggle to not work.
         isEnabled: DEFAULT_SERVICE_SETTINGS.isEnabled,
         isMuted: DEFAULT_SERVICE_SETTINGS.isMuted,

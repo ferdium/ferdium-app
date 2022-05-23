@@ -49,6 +49,7 @@ import {
 } from './spellchecker';
 
 import { DEFAULT_APP_SETTINGS } from '../config';
+import { ifUndefinedString } from '../jsUtils';
 
 const debug = require('../preload-safe-debug')('Ferdium:Plugin');
 
@@ -157,10 +158,7 @@ class RecipeController {
   }
 
   @computed get spellcheckerLanguage() {
-    const selected =
-      this.settings.service.spellcheckerLanguage ||
-      this.settings.app.spellcheckerLanguage;
-    return selected;
+    return ifUndefinedString(this.settings.service.spellcheckerLanguage, this.settings.app.spellcheckerLanguage);
   }
 
   cldIdentifier = null;

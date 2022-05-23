@@ -85,6 +85,10 @@ const messages = defineMessages({
     id: 'settings.service.form.darkReaderSepia',
     defaultMessage: 'Dark Reader Sepia',
   },
+  trapLinkClicks: {
+    id: 'settings.service.form.trapLinkClicks',
+    defaultMessage: 'Open URLs within Ferdium',
+  },
   onlyShowFavoritesInUnreadCount: {
     id: 'settings.service.form.onlyShowFavoritesInUnreadCount',
     defaultMessage: 'Only show Favorites in unread count',
@@ -197,6 +201,11 @@ class EditServiceScreen extends Component {
           label: intl.formatMessage(messages.enableBadge),
           value: service.isBadgeEnabled,
           default: DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
+        },
+        trapLinkClicks: {
+          label: intl.formatMessage(messages.trapLinkClicks),
+          value: service.trapLinkClicks,
+          default: DEFAULT_SERVICE_SETTINGS.trapLinkClicks,
         },
         isMuted: {
           label: intl.formatMessage(messages.enableAudio),

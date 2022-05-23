@@ -410,6 +410,7 @@ export default class ServicesStore extends Store {
       isWakeUpEnabled: DEFAULT_SERVICE_SETTINGS.isWakeUpEnabled,
       isNotificationEnabled: DEFAULT_SERVICE_SETTINGS.isNotificationEnabled,
       isBadgeEnabled: DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
+      trapLinkClicks: DEFAULT_SERVICE_SETTINGS.trapLinkClicks,
       isMuted: DEFAULT_SERVICE_SETTINGS.isMuted,
       customIcon: DEFAULT_SERVICE_SETTINGS.customIcon,
       isDarkModeEnabled: DEFAULT_SERVICE_SETTINGS.isDarkModeEnabled,
