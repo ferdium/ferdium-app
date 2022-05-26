@@ -1,6 +1,7 @@
-# [v6.0.0-beta.1](https://github.com/ferdium/ferdium-app/compare/v5.8.2-nightly.2...v6.0.0-nightly.44) (2022-05-23)
+# [v6.0.0-beta.1](https://github.com/ferdium/ferdium-app/compare/v5.8.2-nightly.2...v6.0.0-nightly.47) (2022-05-26)
 
 ### Features
+
 - Rebrand from Ferdi to Ferdium (text and visuals)
 - [New website](https://ferdium.org/) is up and running!
 - Ferdium server is also available for those who want to self-host
@@ -30,7 +31,7 @@
 
 ### Under the hood
 
-- Upgrade `electron` to the latest public version (18.2.4) to bring in lots of security fixes
+- Upgrade `electron` to the latest public version (18.3.1) to bring in lots of security fixes
 - Remove explicit dependency on `node-gyp` so as to minimize issues for compilation across different OSes and versions
 - Turn off signing of mac and windows artifacts till we acquire the licenses
 - Add build scripts for linux, macos and windows to help new contributors get Ferdium setup quickly for local development
