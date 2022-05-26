@@ -56,7 +56,10 @@ _Find answers to frequently asked questions on [ferdium.org/faq](https://ferdium
 
 ## Unsigned Nightlies on MacOS
 
-Since we are waiting to acquire the Apple Developer License, we are publishing our nightlies without being signed. If you download these, and are on MacOS beyond Catalina, you will face the issue that the OS says the `dmg` is corrupted. If so, please run the command in [this comment](https://github.com/ferdium/ferdium-app/issues/34#issuecomment-1107655575)
+Since we are waiting to acquire the Apple Developer License, we are publishing our nightlies without being signed. If you download these, and are on MacOS beyond Catalina, you will face the issue that the OS says the `dmg` is corrupted. If so, please run the following command in your terminal:
+```bash
+sudo xattr -rd com.apple.quarantine /Applications/Ferdium.app
+```
 
 ## Unsigned Nightlies on Windows
 
