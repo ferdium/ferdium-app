@@ -216,7 +216,7 @@ const messages = defineMessages({
   },
   grayscaleServicesDim: {
     id: 'settings.app.form.grayscaleServicesDim',
-    defaultMessage: 'Input grayscale dim level (%)',
+    defaultMessage: 'Grayscale dim level',
   },
   hideWorkspacesButton: {
     id: 'settings.app.form.hideWorkspacesButton',

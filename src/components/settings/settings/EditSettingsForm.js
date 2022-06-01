@@ -31,6 +31,7 @@ import {
 import { openPath } from '../../../helpers/url-helpers';
 import globalMessages from '../../../i18n/globalMessages';
 import { Icon } from '../../ui/icon';
+import Slider from '../../ui/Slider';
 
 const debug = require('../../../preload-safe-debug')('Ferdium:EditSettingsForm');
 
@@ -639,11 +640,11 @@ class EditSettingsForm extends Component {
                 <Toggle field={form.$('useGrayscaleServices')} />
 
                 {isUseGrayscaleServicesEnabled && (
-                  <Input
+                  <Slider
                       type="number"
                       onChange={e => this.submit(e)}
                       field={form.$('grayscaleServicesDim')}
-                    />
+                  />
                 )}
 
                 <Toggle field={form.$('showMessageBadgeWhenMuted')} />
