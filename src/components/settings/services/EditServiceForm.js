@@ -490,7 +490,9 @@ class EditServiceForm extends Component {
         </div>
         <div className="settings__controls">
           {/* Delete Button */}
-          {action === 'edit' && deleteButton}
+          <div>
+            {action === 'edit' && deleteButton}
+          </div>
 
           {/* Save Button */}
           {isSaving || isValidatingCustomUrl ? (
