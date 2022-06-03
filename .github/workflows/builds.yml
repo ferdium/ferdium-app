@@ -372,8 +372,8 @@ jobs:
           GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: true
           # TODO: Commented out the code signing process for now (so as to at least get unsigned nightlies available for testing)
-          WIN_CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
-          WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
+          # WIN_CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
+          # WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
       - name: Build Ferdium with publish for 'release' branch
         if: ${{ env.GIT_BRANCH_NAME == 'release' }}
         run: npm run build -- --publish always
@@ -384,5 +384,5 @@ jobs:
           # TODO: Commented out the code signing process for now (so as to at least get unsigned nightlies available for testing)
           # WIN_CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
           # WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
-          WIN_CSC_LINK: ${{ secrets.MY_CERTS }}
-          WIN_CSC_KEY_PASSWORD: ${{ secrets.MY_CERTS_PWD }}
+          # WIN_CSC_LINK: ${{ secrets.MY_CERTS }}
+          # WIN_CSC_KEY_PASSWORD: ${{ secrets.MY_CERTS_PWD }}
