@@ -659,6 +659,7 @@ app.on('window-all-closed', () => {
   ) {
     debug('Window: all windows closed, quit app');
     if (!overrideAppQuitForUpdate) {
+      // TODO: based on https://github.com/electron-userland/electron-builder/issues/6058#issuecomment-1130344017 (not yet tested since we don't have signed builds yet for macos)
       app.quit();
     }
   } else {

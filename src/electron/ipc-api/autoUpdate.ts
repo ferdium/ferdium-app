@@ -32,7 +32,6 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
             for (const window of openedWindows)  window.close();
 
             autoUpdater.quitAndInstall();
-            // TODO: based on https://github.com/electron-userland/electron-builder/issues/6058#issuecomment-1130344017 (not yet tested since we don't have signed builds yet for macos)
           }
         } catch (error) {
           event.sender.send('autoUpdate', { error });
