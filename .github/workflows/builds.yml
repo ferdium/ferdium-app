@@ -2,7 +2,7 @@
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
 # Note: This workflow requires some secrets setup, and set on this repo with the names:
-# 'PUBLISH_TOKEN' (A GitHub Personal Access Token with appropriate permissions - for publishing the built artifacts)
+# 'FERDIUM_PUBLISH_TOKEN' (A GitHub Personal Access Token with appropriate permissions - for publishing the built artifacts)
 # 'APPLEID' (The username of your Apple developer account - for notarizing the mac artifacts)
 # 'APPLEID_PASSWORD' (An app-specific password - for notarizing the mac artifacts)
 # 'CSC_LINK' (The HTTPS link or local path to certificate - for code signing of mac artifacts)
@@ -25,9 +25,8 @@ on:
       message:
         description: "Message for build"
         required: true
-  # disable automated build
-  # schedule:
-  #  - cron: "15 0 * * *" # every night at 12:15 am (to allow for dependency builds to complete)
+  schedule:
+    - cron: "15 0 * * *" # every night at 12:15 am (to allow for dependency builds to complete)
 
 env:
   USE_HARD_LINKS: false
@@ -47,7 +46,7 @@ jobs:
           ref: nightly
           submodules: recursive
           fetch-depth: 0 # Note: Needed to be able to pull the 'develop' branch as well for merging
-          # ssh-key: ${{ secrets.PUBLISH_TOKEN }}
+          # ssh-key: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
       - name: Use Node.js specified in the '.nvmrc' file
         uses: actions/setup-node@v3
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
@@ -162,15 +161,15 @@ jobs:
       - name: Run linter and tests
         run: npm run lint && npm run test
       - name: Build Ferdium without publish for any branch not 'nightly' and not 'release'
-        if: ${{ env.GIT_BRANCH_NAME != 'nightly' && env.GIT_BRANCH_NAME != 'release' && env.GIT_BRANCH_NAME != 'Alphrag-local-release' }}
+        if: ${{ env.GIT_BRANCH_NAME != 'nightly' && env.GIT_BRANCH_NAME != 'release' }}
         run: npm run build -- --publish never
         shell: bash
       - name: Build Ferdium with publish for 'nightly' branch
-        if: ${{ env.GIT_BRANCH_NAME == 'nightly' || env.GIT_BRANCH_NAME == 'Alphrag-local-release' }}
+        if: ${{ env.GIT_BRANCH_NAME == 'nightly' }}
         run: npm run build -- --publish always
         shell: bash
         env:
-          GH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+          GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: true
           # TODO: Commented out the code signing process for now (so as to at least get unsigned nightlies available for testing)
           # APPLEID: ${{ secrets.APPLEID }}
@@ -182,7 +181,7 @@ jobs:
         run: npm run build -- --publish always
         shell: bash
         env:
-          GH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+          GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
           # TODO: Commented out the code signing process for now (so as to at least get unsigned nightlies available for testing)
           # APPLEID: ${{ secrets.APPLEID }}
@@ -257,22 +256,41 @@ jobs:
         if: ${{ env.GIT_BRANCH_NAME != 'nightly' && env.GIT_BRANCH_NAME != 'release' }}
         run: npm run build -- --publish never
         shell: bash
-      # DISABLE SNAPCRAFT
       - name: Build Ferdium with publish for 'nightly' branch
         if: ${{ env.GIT_BRANCH_NAME == 'nightly' }}
         env:
-          GH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+          GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
+          SNAPCRAFT_LOGIN: ${{ secrets.SNAPCRAFT_LOGIN }}
         run: |
-          npm run build -- --publish always
+          sudo snap install snapcraft --classic
+          echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
+          npm run build -- --publish always -c.snap.publish.repo=nightlies -c.snap.publish.channels=edge
+          snapcraft logout
         shell: bash
       - name: Build Ferdium with publish for 'release' beta branch
         if: ${{ env.GIT_BRANCH_NAME == 'release' && contains(env.PACKAGE_VERSION, 'beta') }}
         env:
-          GH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+          GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
+          SNAPCRAFT_LOGIN: ${{ secrets.SNAPCRAFT_LOGIN }}
         run: |
-          npm run build -- --publish always
+          sudo snap install snapcraft --classic
+          echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
+          npm run build -- --publish always -c.snap.publish.repo=ferdium -c.snap.publish.channels=beta
+          snapcraft logout
+        shell: bash
+      - name: Build Ferdium with publish for 'release' stable branch
+        if: ${{ env.GIT_BRANCH_NAME == 'release' && !contains(env.PACKAGE_VERSION, 'beta') }}
+        env:
+          GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+          SNAPCRAFT_LOGIN: ${{ secrets.SNAPCRAFT_LOGIN }}
+        run: |
+          sudo snap install snapcraft --classic
+          echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
+          npm run build -- --publish always -c.snap.publish.repo=ferdium -c.snap.publish.channels=stable
+          snapcraft logout
         shell: bash
 
   build_windows:
@@ -343,15 +361,15 @@ jobs:
         run: npm run lint && npm run test
         shell: bash
       - name: Build Ferdium without publish for any branch not 'nightly' and not 'release'
-        if: ${{ env.GIT_BRANCH_NAME != 'nightly' && env.GIT_BRANCH_NAME != 'release' && env.GIT_BRANCH_NAME != 'Alphrag-local-release' }}
+        if: ${{ env.GIT_BRANCH_NAME != 'nightly' && env.GIT_BRANCH_NAME != 'release' }}
         run: npm run build -- --publish never
         shell: bash
       - name: Build Ferdium with publish for 'nightly' branch
-        if: ${{ env.GIT_BRANCH_NAME == 'nightly' || env.GIT_BRANCH_NAME == 'Alphrag-local-release' }}
+        if: ${{ env.GIT_BRANCH_NAME == 'nightly' }}
         run: npm run build -- --publish always
         shell: bash
         env:
-          GH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+          GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: true
           # TODO: Commented out the code signing process for now (so as to at least get unsigned nightlies available for testing)
           WIN_CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
@@ -361,7 +379,7 @@ jobs:
         run: npm run build -- --publish always
         shell: bash
         env:
-          GH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+          GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
           # TODO: Commented out the code signing process for now (so as to at least get unsigned nightlies available for testing)
           # WIN_CSC_LINK: ${{ secrets.WIN_CSC_LINK }}

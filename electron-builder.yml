@@ -2,10 +2,15 @@ directories:
   app: ./build
   output: ./out
 
-appId: "org.alphrag.ferdium-app"
+appId: "org.ferdium.ferdium-app"
 
 publish:
   provider: github
+
+snap:
+  plugs: ["default", "camera"]
+  publish:
+    provider: snapStore
 
 nsis:
   perMachine: false
@@ -24,7 +29,7 @@ dmg:
 # afterSign: ./build-helpers/notarize.js
 
 protocols:
-  name: Ferdium-Alphrag
+  name: Ferdium
   schemes: [ferdium]
 
 asarUnpack:
@@ -58,7 +63,7 @@ win:
       arch: [x64, ia32]
     - target: portable
       arch: [x64, ia32]
-  publisherName: ["Ferdium Contributors", "Ambroise Grau"]
+  publisherName: "Ferdium Contributors"
 
 linux:
   icon: ./build-helpers/images/icons
@@ -74,3 +79,4 @@ linux:
     - target: tar.gz
     - target: rpm
     - target: freebsd
+    - target: snap
