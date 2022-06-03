@@ -1,0 +1,30 @@
+name: Verify secrets
+
+on: [workflow_dispatch]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check token
+      run: |
+        if [ ${{ secrets.PUBLISH_TOKEN }} != '' ]; then
+          echo "Token is set and ready for use."
+        else
+          echo "Token is not available for this workflow."
+        fi
+    - name: Check certifs for Mac
+      run: |
+        if [ ${{ secrets.CSC_LINK }} != '' && ${{ secrets.CSC_KEY_PASSWORD }} != '' ]; then
+          echo "- Certificate variables for Mac correctly set!"
+        else
+          echo "- Error with values contained in CSC_* certificates."
+        fi
+    - name: Check certifs for Windows
+      run: |
+        if [ ${{ secrets.WIN_CSC_LINK }} != '' && ${{ secrets.WIN_CSC_KEY_PASSWORD }} != '' ]; then
+          echo "- Certificate variables for Windows correctly set!"
+        else
+          echo "- Error with values contained in WIN_CSC_* certificates."
+        fi

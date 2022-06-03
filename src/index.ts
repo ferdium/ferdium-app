@@ -15,6 +15,7 @@ import { join } from 'path';
 import windowStateKeeper from 'electron-window-state';
 import minimist from 'minimist';
 import ms from 'ms';
+import { EventEmitter } from 'events';
 import { enableWebContents, initializeRemote } from './electron-util';
 import { enforceMacOSAppLocation } from './enforce-macos-app-location';
 
@@ -56,6 +57,9 @@ app.userAgentFallback = userAgent();
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: BrowserWindow | undefined;
 let willQuitApp = false;
+let overrideAppQuitForUpdate = false;
+
+export const appEvents = new EventEmitter();
 
 // Register methods to be called once the window has been loaded.
 let onDidLoadFns: any[] | null = [];
@@ -320,7 +324,8 @@ const createWindow = () => {
         debug('Window: hide');
         mainWindow?.hide();
       }
-    } else {
+    } else if (!overrideAppQuitForUpdate) {
+      debug('Quitting the app');
       dbus.stop();
       app.quit();
     }
@@ -653,10 +658,17 @@ app.on('window-all-closed', () => {
     )
   ) {
     debug('Window: all windows closed, quit app');
-    app.quit();
+    if (!overrideAppQuitForUpdate) {
+      app.quit();
+    }
   } else {
     debug("Window: don't quit app");
   }
+});
+
+appEvents.on('install-update', () => {
+  willQuitApp = true;
+  overrideAppQuitForUpdate = true;
 });
 
 app.on('before-quit', event => {
