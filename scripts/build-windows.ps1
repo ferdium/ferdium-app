@@ -150,7 +150,11 @@ pnpm package
 Pop-Location
 
 # -----------------------------------------------------------------------------
-Write-Host "*************** Building app ***************"
+Write-Host "*************** Building app arm64 ***************"
+$TARGET_ARCH="arm64"
+& $BASE_CMD run build -- --$TARGET_ARCH --dir
+
+Write-Host "*************** Building app x64 ***************"
 $TARGET_ARCH="x64"
 & $BASE_CMD run build -- --$TARGET_ARCH --dir
 
