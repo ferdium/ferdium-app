@@ -151,7 +151,7 @@
     "concurrently": "7.2.1",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
-    "electron": "18.3.2",
+    "electron": "18.3.3",
     "electron-builder": "23.1.0",
     "electron-notarize": "^1.2.1",
     "eslint": "^8.13.0",
