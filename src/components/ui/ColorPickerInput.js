@@ -3,16 +3,14 @@ import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { Field } from 'mobx-react-form';
 import classnames from 'classnames';
-import { defineMessages, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 
 import { SliderPicker } from 'react-color';
-import { scorePassword as scorePasswordFunc } from '../../helpers/password-helpers';
 
 
 import { DEFAULT_APP_SETTINGS } from '../../config';
 
 
-// Can this file be merged into the './input/index.tsx' file?
 class ColorPickerInput extends Component {
   static propTypes = {
     field: PropTypes.instanceOf(Field).isRequired,
@@ -58,15 +56,10 @@ class ColorPickerInput extends Component {
     this.inputElement.focus();
   }
 
-  handleChangeComplete = (color, e) => {
+  handleChangeComplete = (color) => {
     const { field } = this.props;
     this.setState({ background: color.hex });
-
-    if (e.type != 'mousedown') {
-      field.value = color.hex
-      console.log('Picker field.value', field.value)
-      console.log('Picker field.value', e)
-    }
+    field.value = color.hex
   };
 
   render() {
@@ -106,9 +99,10 @@ class ColorPickerInput extends Component {
           }}
           disabled={field.disabled}
         />
-        <div className="franz-form__input-wrapper">
-          {prefix && <span className="franz-form__input-prefix">{prefix}</span>}
-          {/* <input
+        <center>
+        <div className="franz-form__input-wrapper franz-form__input-wrapper__color-picker">
+          {/* {prefix && <span className="franz-form__input-prefix">{prefix}</span>} */}
+          <input
             id={field.id}
             type={type}
             className="franz-form__input"
@@ -122,15 +116,10 @@ class ColorPickerInput extends Component {
               this.inputElement = element;
             }}
             disabled={field.disabled}
-          /> */}
-          {suffix && <span className="franz-form__input-suffix">{suffix}</span>}
+          />
+          {/* {suffix && <span className="franz-form__input-suffix">{suffix}</span>} */}
         </div>
-        {field.label && showLabel && (
-          <label className="franz-form__label" htmlFor={field.name}>
-            {field.label}
-          </label>
-        )}
-        {field.error && <div className="franz-form__error">{field.error}</div>}
+        </center>
       </div>
     );
   }

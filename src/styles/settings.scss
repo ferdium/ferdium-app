@@ -63,8 +63,16 @@
       }
     }
 
-    .settings__apply-color {
-      align-items: center;
+    .settings__settings-group__apply-color {
+      display: flex;
+    }
+
+    .settings__settings-group__apply-color__button {
+      height: 60px;
+    }
+
+    .franz-form__input-wrapper__color-picker {
+      width: 20%;
     }
 
     .settings__help {

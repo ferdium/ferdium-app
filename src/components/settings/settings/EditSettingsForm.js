@@ -116,15 +116,14 @@ const messages = defineMessages({
     id: 'settings.app.sectionServiceIconsSettings',
     defaultMessage: 'Service Icons Settings',
   },
+  sectionAccentColorSettings: {
+    id: 'sectionAccentColorSettings',
+    defaultMessage: 'Accent Color Settings',
+  },
   universalDarkModeInfo: {
     id: 'settings.app.universalDarkModeInfo',
     defaultMessage:
       'Universal Dark Mode tries to dynamically generate dark mode styles for services that are otherwise not currently supported.',
-  },
-  accentColorInfo: {
-    id: 'settings.app.accentColorInfo',
-    defaultMessage:
-      'Write your accent color in a CSS-compatible format. (Default: {defaultAccentColor})',
   },
   headlinePrivacy: {
     id: 'settings.app.headlinePrivacy',
@@ -596,20 +595,22 @@ class EditSettingsForm extends Component {
                 )}
 
                 <Hr />
-                <div className="settings__settings-group">
+                <H2 className='settings__section_header'>
+                  {intl.formatMessage(messages.sectionAccentColorSettings)}
+                </H2>
+                <div className="settings__settings-group__apply-color">
                   <ColorPickerInput
-                    placeholder="Accent Color"
                     onChange={e => this.submit(e)}
                     field={form.$('accentColor')}
                   />
-                <>
-                  <Button
-                    buttonType="secondary"
-                    className="settings__apply-color"
-                    label={"Apply color"}
-                    onClick={(e) => { this.submit(e) }}
-                  />
-                </>
+                  <>
+                    <Button
+                      buttonType="secondary"
+                      className="settings__settings-group__apply-color__button"
+                      label={"Apply color"}
+                      onClick={(e) => { this.submit(e) }}
+                    />
+                  </>
                 </div>
                 <Hr />
 
