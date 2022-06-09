@@ -12,6 +12,7 @@ import Button from '../../ui/button';
 import Toggle from '../../ui/Toggle';
 import Select from '../../ui/Select';
 import Input from '../../ui/Input';
+import ColorPickerInput from '../../ui/ColorPickerInput';
 import Infobox from '../../ui/Infobox';
 import { H1, H2, H3, H5 } from '../../ui/headline';
 
@@ -595,18 +596,21 @@ class EditSettingsForm extends Component {
                 )}
 
                 <Hr />
-
-                <Input
-                  placeholder="Accent Color"
-                  onChange={e => this.submit(e)}
-                  field={form.$('accentColor')}
-                />
-                <p>
-                  {intl.formatMessage(messages.accentColorInfo, {
-                    defaultAccentColor: DEFAULT_APP_SETTINGS.accentColor,
-                  })}
-                </p>
-
+                <div className="settings__settings-group">
+                  <ColorPickerInput
+                    placeholder="Accent Color"
+                    onChange={e => this.submit(e)}
+                    field={form.$('accentColor')}
+                  />
+                <>
+                  <Button
+                    buttonType="secondary"
+                    className="settings__apply-color"
+                    label={"Apply color"}
+                    onClick={(e) => { this.submit(e) }}
+                  />
+                </>
+                </div>
                 <Hr />
 
                 <H2 className='settings__section_header'>
