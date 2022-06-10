@@ -120,6 +120,11 @@ const messages = defineMessages({
     id: 'sectionAccentColorSettings',
     defaultMessage: 'Accent Color Settings',
   },
+  accentColorInfo: {
+    id: 'settings.app.accentColorInfo',
+    defaultMessage:
+      'Write your accent color in a CSS-compatible format. (Default: {defaultAccentColor} or clear the input field)',
+  },
   universalDarkModeInfo: {
     id: 'settings.app.universalDarkModeInfo',
     defaultMessage:
@@ -607,11 +612,16 @@ class EditSettingsForm extends Component {
                     <Button
                       buttonType="secondary"
                       className="settings__settings-group__apply-color__button"
-                      label={"Apply color"}
+                      label="Apply color"
                       onClick={(e) => { this.submit(e) }}
                     />
                   </>
                 </div>
+                <p>
+                  {intl.formatMessage(messages.accentColorInfo, {
+                    defaultAccentColor: DEFAULT_APP_SETTINGS.accentColor,
+                  })}
+                </p>
                 <Hr />
 
                 <H2 className='settings__section_header'>

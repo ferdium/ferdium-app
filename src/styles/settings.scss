@@ -63,18 +63,6 @@
       }
     }
 
-    .settings__settings-group__apply-color {
-      display: flex;
-    }
-
-    .settings__settings-group__apply-color__button {
-      height: 60px;
-    }
-
-    .franz-form__input-wrapper__color-picker {
-      width: 20%;
-    }
-
     .settings__help {
       color: $dark-theme-gray-lightest;
     }
@@ -187,6 +175,23 @@
     box-shadow: 0 20px 50px rgba($dark-theme-black, 0.5);
     overflow: hidden;
     background: #fff;
+  }
+  
+  .settings__section_header {
+    text-align: center;
+  }
+
+  .settings__settings-group__apply-color {
+    display: flex;
+  }
+
+  .settings__settings-group__apply-color__button {
+    height: 60px;
+  }
+
+  .franz-form__input-wrapper__color-picker {
+    width: 20% !important;
+    margin-top: 2%;
   }
 
   .settings__header {

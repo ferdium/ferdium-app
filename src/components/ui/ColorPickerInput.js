@@ -16,21 +16,11 @@ class ColorPickerInput extends Component {
     field: PropTypes.instanceOf(Field).isRequired,
     className: PropTypes.string,
     focus: PropTypes.bool,
-    showPasswordToggle: PropTypes.bool,
-    showLabel: PropTypes.bool,
-    scorePassword: PropTypes.bool,
-    prefix: PropTypes.string,
-    suffix: PropTypes.string,
   };
 
   static defaultProps = {
     className: null,
     focus: false,
-    showPasswordToggle: false,
-    showLabel: true,
-    scorePassword: false,
-    prefix: '',
-    suffix: '',
   };
 
   state = {
@@ -49,7 +39,6 @@ class ColorPickerInput extends Component {
     const { field } = this.props;
 
     field.onChange(e);
-    console.log('Picker button', e)
   }
 
   focus() {
@@ -66,9 +55,6 @@ class ColorPickerInput extends Component {
     const {
       field,
       className,
-      showLabel,
-      prefix,
-      suffix,
     } = this.props;
 
     let { type } = field;
@@ -91,7 +77,6 @@ class ColorPickerInput extends Component {
           name={field.name}
           value={field.value}
           placeholder={field.placeholder}
-          onChange={e => this.onChange(e)}
           onBlur={field.onBlur}
           onFocus={field.onFocus}
           ref={element => {
@@ -101,7 +86,6 @@ class ColorPickerInput extends Component {
         />
         <center>
         <div className="franz-form__input-wrapper franz-form__input-wrapper__color-picker">
-          {/* {prefix && <span className="franz-form__input-prefix">{prefix}</span>} */}
           <input
             id={field.id}
             type={type}
@@ -117,7 +101,6 @@ class ColorPickerInput extends Component {
             }}
             disabled={field.disabled}
           />
-          {/* {suffix && <span className="franz-form__input-suffix">{suffix}</span>} */}
         </div>
         </center>
       </div>
