@@ -8,7 +8,7 @@ publish:
   provider: github
 
 snap:
-  plugs: ["default", "camera", "audio-record"]
+  plugs: ["default", "camera", "audio-record", "removable-media"]
   publish:
     provider: snapStore
 
