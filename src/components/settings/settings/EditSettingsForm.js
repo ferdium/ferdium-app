@@ -12,6 +12,7 @@ import Button from '../../ui/button';
 import Toggle from '../../ui/Toggle';
 import Select from '../../ui/Select';
 import Input from '../../ui/Input';
+import ColorPickerInput from '../../ui/ColorPickerInput';
 import Infobox from '../../ui/Infobox';
 import { H1, H2, H3, H5 } from '../../ui/headline';
 
@@ -115,15 +116,19 @@ const messages = defineMessages({
     id: 'settings.app.sectionServiceIconsSettings',
     defaultMessage: 'Service Icons Settings',
   },
-  universalDarkModeInfo: {
-    id: 'settings.app.universalDarkModeInfo',
-    defaultMessage:
-      'Universal Dark Mode tries to dynamically generate dark mode styles for services that are otherwise not currently supported.',
+  sectionAccentColorSettings: {
+    id: 'settings.app.sectionAccentColorSettings',
+    defaultMessage: 'Accent Color Settings',
   },
   accentColorInfo: {
     id: 'settings.app.accentColorInfo',
     defaultMessage:
-      'Write your accent color in a CSS-compatible format. (Default: {defaultAccentColor})',
+      'Write your accent color in a CSS-compatible format. (Default: {defaultAccentColor} or clear the input field)',
+  },
+  universalDarkModeInfo: {
+    id: 'settings.app.universalDarkModeInfo',
+    defaultMessage:
+      'Universal Dark Mode tries to dynamically generate dark mode styles for services that are otherwise not currently supported.',
   },
   headlinePrivacy: {
     id: 'settings.app.headlinePrivacy',
@@ -595,18 +600,29 @@ class EditSettingsForm extends Component {
                 )}
 
                 <Hr />
-
-                <Input
-                  placeholder="Accent Color"
-                  onChange={e => this.submit(e)}
-                  field={form.$('accentColor')}
-                />
+                <H2 className='settings__section_header'>
+                  {intl.formatMessage(messages.sectionAccentColorSettings)}
+                </H2>
+                <div className="settings__settings-group__apply-color">
+                  <ColorPickerInput
+                    onChange={e => this.submit(e)}
+                    field={form.$('accentColor')}
+                    className='color-picker-input'
+                  />
+                  <>
+                    <Button
+                      buttonType="secondary"
+                      className="settings__settings-group__apply-color__button"
+                      label="Apply color"
+                      onClick={(e) => { this.submit(e) }}
+                    />
+                  </>
+                </div>
                 <p>
                   {intl.formatMessage(messages.accentColorInfo, {
                     defaultAccentColor: DEFAULT_APP_SETTINGS.accentColor,
                   })}
                 </p>
-
                 <Hr />
 
                 <H2 className='settings__section_header'>
