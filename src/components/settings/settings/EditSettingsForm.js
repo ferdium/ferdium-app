@@ -607,6 +607,7 @@ class EditSettingsForm extends Component {
                   <ColorPickerInput
                     onChange={e => this.submit(e)}
                     field={form.$('accentColor')}
+                    className='color-picker-input'
                   />
                   <>
                     <Button
