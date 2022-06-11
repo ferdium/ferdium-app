@@ -267,6 +267,7 @@
   "settings.app.restartRequired": "Changes require restart",
   "settings.app.scheduledDNDInfo": "Scheduled Do-not-Disturb allows you to define a period of time in which you do not want to get Notifications from Ferdium.",
   "settings.app.scheduledDNDTimeInfo": "Times in 24-Hour-Format. End time can be before start time (e.g. start 17:00, end 09:00) to enable Do-not-Disturb overnight.",
+  "settings.app.sectionAccentColorSettings": "Accent Color Settings",
   "settings.app.sectionGeneralUi": "General UI",
   "settings.app.sectionHibernation": "Hibernation",
   "settings.app.sectionMain": "Main",

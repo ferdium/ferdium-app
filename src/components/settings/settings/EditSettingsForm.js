@@ -117,7 +117,7 @@ const messages = defineMessages({
     defaultMessage: 'Service Icons Settings',
   },
   sectionAccentColorSettings: {
-    id: 'sectionAccentColorSettings',
+    id: 'settings.app.sectionAccentColorSettings',
     defaultMessage: 'Accent Color Settings',
   },
   accentColorInfo: {

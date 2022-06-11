@@ -1,23 +1,21 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { ChangeEvent, Component } from 'react';
 import { observer } from 'mobx-react';
 import { Field } from 'mobx-react-form';
 import classnames from 'classnames';
-import { injectIntl } from 'react-intl';
-
 import { SliderPicker } from 'react-color';
-
-
 import { DEFAULT_APP_SETTINGS } from '../../config';
 
+interface IProps {
+  field: Field;
+  className?: string;
+  focus?: boolean;
+};
 
-class ColorPickerInput extends Component {
-  static propTypes = {
-    field: PropTypes.instanceOf(Field).isRequired,
-    className: PropTypes.string,
-    focus: PropTypes.bool,
-  };
+interface IState {
+  background: string;
+}
 
+class ColorPickerInput extends Component<IProps, IState> {
   static defaultProps = {
     className: null,
     focus: false,
@@ -27,7 +25,7 @@ class ColorPickerInput extends Component {
     background: DEFAULT_APP_SETTINGS.accentColor,
   };
 
-  inputElement;
+  inputElement: HTMLInputElement | null | undefined;
 
   componentDidMount() {
     if (this.props.focus) {
@@ -35,17 +33,17 @@ class ColorPickerInput extends Component {
     }
   }
 
-  onChange(e) {
+  onChange(e: ChangeEvent<HTMLInputElement>) {
     const { field } = this.props;
 
     field.onChange(e);
   }
 
   focus() {
-    this.inputElement.focus();
+    this.inputElement?.focus();
   }
 
-  handleChangeComplete = (color) => {
+  handleChangeComplete = (color: { hex: string; }) => {
     const { field } = this.props;
     this.setState({ background: color.hex });
     field.value = color.hex
@@ -79,12 +77,11 @@ class ColorPickerInput extends Component {
           placeholder={field.placeholder}
           onBlur={field.onBlur}
           onFocus={field.onFocus}
-          ref={element => {
+          ref={(element: HTMLInputElement | null | undefined) => {
             this.inputElement = element;
           }}
           disabled={field.disabled}
         />
-        <center>
         <div className="franz-form__input-wrapper franz-form__input-wrapper__color-picker">
           <input
             id={field.id}
@@ -102,10 +99,9 @@ class ColorPickerInput extends Component {
             disabled={field.disabled}
           />
         </div>
-        </center>
       </div>
     );
   }
 }
 
-export default injectIntl(observer(ColorPickerInput));
+export default observer(ColorPickerInput);
