@@ -60,7 +60,6 @@
     "@krisdages/electron-process-manager": "3.0.0",
     "@mdi/js": "^6.6.96",
     "@mdi/react": "^1.6.0",
-    "@sentry/electron": "^2.5.4",
     "auto-launch": "^5.0.5",
     "btoa": "^1.2.1",
     "classnames": "^2.3.1",

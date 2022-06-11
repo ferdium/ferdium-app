@@ -41,11 +41,6 @@ const messages = defineMessages({
     id: 'settings.app.headlineGeneral',
     defaultMessage: 'General',
   },
-  sentryInfo: {
-    id: 'settings.app.sentryInfo',
-    defaultMessage:
-      'Sending telemetry data allows us to find errors in Ferdium - we will not send any personal information like your message data!',
-  },
   hibernateInfo: {
     id: 'settings.app.hibernateInfo',
     defaultMessage:
@@ -684,10 +679,6 @@ class EditSettingsForm extends Component {
 
                 <Hr />
 
-                <Toggle field={form.$('sentry')} />
-                <p className="settings__help">
-                  {intl.formatMessage(messages.sentryInfo)}
-                </p>
                 <p className="settings__help">
                   {intl.formatMessage(messages.appRestartRequired)}
                 </p>

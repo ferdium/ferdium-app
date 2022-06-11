@@ -249,7 +249,6 @@ export const DEFAULT_APP_SETTINGS = {
   serviceRibbonWidth: 68,
   sidebarServicesLocation: SIDEBAR_SERVICES_LOCATION_TOPLEFT,
   iconSize: iconSizeBias,
-  sentry: false,
   navigationBarBehaviour: 'custom',
   searchEngine: SEARCH_ENGINE_DDG,
   useVerticalStyle: false,

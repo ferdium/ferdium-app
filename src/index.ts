@@ -93,11 +93,6 @@ const proxySettings = new Settings('proxy');
 const retrieveSettingValue = (key: string, defaultValue: boolean) =>
   ifUndefinedBoolean(settings.get(key), defaultValue);
 
-if (retrieveSettingValue('sentry', DEFAULT_APP_SETTINGS.sentry)) {
-  // eslint-disable-next-line global-require
-  require('./sentry');
-}
-
 const liftSingleInstanceLock = retrieveSettingValue(
   'liftSingleInstanceLock',
   false,
@@ -218,7 +213,6 @@ const createWindow = () => {
       nodeIntegration: true,
       contextIsolation: false,
       webviewTag: true,
-      preload: join(__dirname, 'sentry.js'),
     },
   });
 

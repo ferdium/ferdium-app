@@ -102,10 +102,6 @@ const messages = defineMessages({
     id: 'settings.app.form.searchEngine',
     defaultMessage: 'Search engine',
   },
-  sentry: {
-    id: 'settings.app.form.sentry',
-    defaultMessage: 'Send telemetry data',
-  },
   hibernateOnStartup: {
     id: 'settings.app.form.hibernateOnStartup',
     defaultMessage: 'Keep services in hibernation on startup',
@@ -332,7 +328,6 @@ class EditSettingsScreen extends Component {
         notifyTaskBarOnMessage: Boolean(settingsData.notifyTaskBarOnMessage),
         navigationBarBehaviour: settingsData.navigationBarBehaviour,
         searchEngine: settingsData.searchEngine,
-        sentry: Boolean(settingsData.sentry),
         hibernateOnStartup: Boolean(settingsData.hibernateOnStartup),
         hibernationStrategy: Number(settingsData.hibernationStrategy),
         wakeUpStrategy: Number(settingsData.wakeUpStrategy),
@@ -552,11 +547,6 @@ class EditSettingsScreen extends Component {
           value: settings.all.app.searchEngine,
           default: DEFAULT_APP_SETTINGS.searchEngine,
           options: searchEngines,
-        },
-        sentry: {
-          label: intl.formatMessage(messages.sentry),
-          value: settings.all.app.sentry,
-          default: DEFAULT_APP_SETTINGS.sentry,
         },
         hibernateOnStartup: {
           label: intl.formatMessage(messages.hibernateOnStartup),
