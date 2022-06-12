@@ -8,7 +8,6 @@ import terser from 'gulp-terser';
 import htmlMin from 'gulp-htmlmin';
 import connect from 'gulp-connect';
 import { exec } from 'child_process';
-import dotenv from 'dotenv';
 import sassVariables from 'gulp-sass-variables';
 import { removeSync, outputJson } from 'fs-extra';
 import kebabCase from 'kebab-case';
@@ -20,7 +19,7 @@ import config from './package.json';
 
 import * as rawStyleConfig from './scripts/theme/default/legacy';
 
-dotenv.config();
+import 'dotenv/config';
 
 const sass = gulpSass(dartSass);
 
