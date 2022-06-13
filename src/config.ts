@@ -111,8 +111,7 @@ export const TODO_SERVICE_RECIPE_IDS = {
   [TODO_MSTODO_URL]: 'mstodo',
   [TODO_HABITICA_URL]: 'habitica',
   [TODO_ANYDO_URL]: 'anydo',
-  [TODO_GOOGLETASKS_URL]: 'Google Tasks',
-  [TODO_GOOGLEKEEP_URL]: 'google-keep',
+  [TODO_GOOGLEKEEP_URL]: 'googlekeep',
 };
 
 export const TODO_APPS = {
