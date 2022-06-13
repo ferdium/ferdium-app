@@ -64,12 +64,10 @@
   }
 
   .tab-item__label {
-    display: block;
-    margin-top: 6px;
+    display: flex;
+    position: relative;
     font-size: 11px;
-    padding-left: 4px;
-    padding-right: 4px;
-    line-height: 13px;
+    justify-content: center;
   }
 
   &.is-disabled .tab-item__icon {
