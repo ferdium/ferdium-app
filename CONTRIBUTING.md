@@ -100,8 +100,8 @@ Please make sure you have the following installed:
 ### Clone repository with submodule
 
 ```bash
-git clone https://github.com/ferdium/ferdium.git
-cd ferdium
+git clone https://github.com/ferdium/ferdium-app.git
+cd ferdium-app
 git submodule update --init --recursive --remote --rebase --force
 ```
 
@@ -133,6 +133,19 @@ npm i
 If you encounter the `gyp: No Xcode or CLT version` error on macOS at this step, please have a look [here](https://medium.com/flawless-app-stories/gyp-no-xcode-or-clt-version-detected-macos-catalina-anansewaa-38b536389e8d).
 
 ### Fix native modules to match current electron node version
+
+1. If you are using nvm on MacOS, you must add the following to `~/.huskyrc`:
+
+```
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+```
+
+2. You must set `CI=true` environment variable otherwise this will fail with husky unable to find .git:
+
+3. You must specify a GitHub Personal Access Token. The error indicates "programmatically" is an option, which is unclear, but can also be set as an environment variable, (note your personal access tokens are sensitive!)
+   eg:
+   `GH_TOKEN=xxxx`
 
 ```bash
 npm run build
