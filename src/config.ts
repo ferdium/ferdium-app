@@ -102,6 +102,7 @@ const TODO_RTM_URL = 'https://www.rememberthemilk.com/';
 const TODO_ANYDO_URL = 'https://desktop.any.do/';
 const TODO_GOOGLETASKS_URL =
   'https://tasks.google.com/embed/?origin=https%3A%2F%2Fcalendar.google.com&fullWidth=1';
+const TODO_GOOGLEKEEP_URL = 'https://keep.google.com/'
 
 export const TODO_SERVICE_RECIPE_IDS = {
   [TODO_TODOIST_URL]: 'todoist',
@@ -110,6 +111,8 @@ export const TODO_SERVICE_RECIPE_IDS = {
   [TODO_MSTODO_URL]: 'mstodo',
   [TODO_HABITICA_URL]: 'habitica',
   [TODO_ANYDO_URL]: 'anydo',
+  [TODO_GOOGLETASKS_URL]: 'Google Tasks',
+  [TODO_GOOGLEKEEP_URL]: 'google-keep',
 };
 
 export const TODO_APPS = {
@@ -122,6 +125,7 @@ export const TODO_APPS = {
   [TODO_RTM_URL]: 'Remember The Milk',
   [TODO_ANYDO_URL]: 'Any.do',
   [TODO_GOOGLETASKS_URL]: 'Google Tasks',
+  [TODO_GOOGLEKEEP_URL]: 'Google Keep',
   [CUSTOM_TODO_SERVICE]: 'Other service',
 };
 
