@@ -230,6 +230,12 @@ function generateServiceRibbonWidthStyle(
       width: ${minimumAdjustedIconSize}px !important;
       ${useGrayscaleServices ? graysacleServices : null},
     }
+    .tab-item .tab-item__label {
+      margin-left: 0px !important;
+    }
+    .tab-item.is-label-enabled {
+      padding-bottom: 0px !important;
+    }
     .sidebar__button {
       font-size: ${width / 3}px !important;
     }
