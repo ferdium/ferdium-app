@@ -61,7 +61,7 @@ _Note:_ This list can likely get outdated. If so, please refer to the specific v
 
 Please make sure you are conforming to the `engines` requirements used by the developers/contributors as specified in the [`package.json`](./package.json#engines) and [`recipes/package.json`](./recipes/package.json#engine) files.
 
-Currently, these are the combinations of system dependencies that work for MacOS/Linux/Windows:
+Currently, these are the combinations of system dependencies that work for MacOS/Linux/Windows. Versions are pinned down to the patch number so ensure you have the exact matching versions installed and in use.
 
 ```bash
 # Note: 'jq' is not a required system dependency; its only here to show the combined output of versions needed
@@ -134,18 +134,20 @@ If you encounter the `gyp: No Xcode or CLT version` error on macOS at this step,
 
 ### Fix native modules to match current electron node version
 
-1. If you are using nvm on MacOS, you must add the following to `~/.huskyrc`:
+Before running the npm build scripts
+
+1. If you are using nvm to manage your Node installation on MacOS, you may have to add the following to a `~/.huskyrc` file:
 
 ```
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 ```
 
-2. You must set `CI=true` environment variable otherwise this will fail with husky unable to find .git:
-
-3. You must specify a GitHub Personal Access Token. The error indicates "programmatically" is an option, which is unclear, but can also be set as an environment variable, (note your personal access tokens are sensitive!)
+2. You must specify a GitHub Personal Access Token. The error indicates "programmatically" is an option, but `gh auth login` did not solve the error. This can also be set as an environment variable (note your personal access tokens are sensitive!) [Read More About Personal Access Tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
    eg:
    `GH_TOKEN=xxxx`
+
+Finally, run:
 
 ```bash
 npm run build
