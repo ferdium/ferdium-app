@@ -23,7 +23,7 @@
 [![Builds](https://github.com/ferdium/ferdium-app/actions/workflows/builds.yml/badge.svg)](https://github.com/ferdium/ferdium-app/actions/workflows/builds.yml)
 [![Crowdin](https://badges.crowdin.net/ferdium-app/localized.svg)](https://crowdin.com/project/ferdium-app)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-298-default.svg?logo=github' alt='Contributors'/></a>
+<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-299-default.svg?logo=github' alt='Contributors'/></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 > 🤴🏽 Hard-fork of [Franz](https://github.com/meetfranz/franz), adding awesome features and removing unwanted ones.
@@ -467,6 +467,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href='https://github.com/MagicLegend' title='MagicLegend: bug'><img src='https://avatars.githubusercontent.com/u/3169104?v=4' alt='MagicLegend' style='width:100px;'/></a></td>
     <td align="center"><a href='https://github.com/Alphrag' title='Alphrag: doc'><img src='https://avatars.githubusercontent.com/u/34252790?v=4' alt='Alphrag' style='width:100px;'/></a></td>
     <td align="center"><a href='http://maxwipfli.ch' title='Max Wipfli: code'><img src='https://avatars.githubusercontent.com/u/17591869?v=4' alt='MaxWipfli' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://github.com/davidajetter-tw' title='davidajetter-tw: code'><img src='https://avatars.githubusercontent.com/u/105304388?v=4' alt='davidajetter-tw' style='width:100px;'/></a></td>
   </tr>
 </table>
 
