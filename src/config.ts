@@ -76,14 +76,18 @@ export const NAVIGATION_BAR_BEHAVIOURS = {
   never: 'Never show navigation bar',
 };
 
+export const SEARCH_ENGINE_STARTPAGE = 'startPage';
 export const SEARCH_ENGINE_GOOGLE = 'google';
 export const SEARCH_ENGINE_DDG = 'duckDuckGo';
 export const SEARCH_ENGINE_NAMES = {
+  [SEARCH_ENGINE_STARTPAGE]: 'Startpage',
   [SEARCH_ENGINE_GOOGLE]: 'Google',
   [SEARCH_ENGINE_DDG]: 'DuckDuckGo',
 };
 
 export const SEARCH_ENGINE_URLS = {
+  [SEARCH_ENGINE_STARTPAGE]: ({ searchTerm }) =>
+  `https://www.startpage.com/sp/search?query=${searchTerm}`,
   [SEARCH_ENGINE_GOOGLE]: ({ searchTerm }) =>
     `https://www.google.com/search?q=${searchTerm}`,
   [SEARCH_ENGINE_DDG]: ({ searchTerm }) =>
@@ -253,7 +257,7 @@ export const DEFAULT_APP_SETTINGS = {
   sidebarServicesLocation: SIDEBAR_SERVICES_LOCATION_TOPLEFT,
   iconSize: iconSizeBias,
   navigationBarBehaviour: 'custom',
-  searchEngine: SEARCH_ENGINE_DDG,
+  searchEngine: SEARCH_ENGINE_STARTPAGE,
   useVerticalStyle: false,
   hideRecipesButton: false,
   useGrayscaleServices: false,
