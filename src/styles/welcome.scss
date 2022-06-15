@@ -68,6 +68,13 @@
       background: none;
       color: #fff;
     }
+
+    &__change-server {
+      display: flex;
+      width: 30%;
+      margin: 5% auto 5% auto;
+      justify-content: center;
+    }
   }
 
   &__featured-services {

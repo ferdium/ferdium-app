@@ -60,21 +60,17 @@ class Welcome extends Component {
             <H1>Ferdium</H1>
           </div>
         </div>
+        <Link to={changeServerRoute} className="button__change-server">
+            <span>
+              {intl.formatMessage(messages.changeServer)}
+            </span>
+        </Link>
         <div className="welcome__buttons">
           <Link to={signupRoute} className="button button__inverted">
             {intl.formatMessage(messages.signupButton)}
           </Link>
           <Link to={loginRoute} className="button">
             {intl.formatMessage(messages.loginButton)}
-          </Link>
-          <Link to={changeServerRoute}>
-            <span
-              style={{
-                color: '#fff'
-              }}
-            >
-              {intl.formatMessage(messages.changeServer)}
-            </span>
           </Link>
           <br />
           <br />
