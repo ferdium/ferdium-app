@@ -259,9 +259,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
-          SNAPCRAFT_LOGIN: ${{ secrets.SNAPCRAFT_LOGIN }}
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_LOGIN }}
         run: |
-          sudo snap install snapcraft --channel=5.x/stable --classic
+          sudo snap install snapcraft --classic
           echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
           npm run build -- --publish always -c.snap.publish.repo=nightlies -c.snap.publish.channels=edge
           snapcraft logout
@@ -271,9 +271,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
-          SNAPCRAFT_LOGIN: ${{ secrets.SNAPCRAFT_LOGIN }}
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_LOGIN }}
         run: |
-          sudo snap install snapcraft --channel=5.x/stable --classic
+          sudo snap install snapcraft --classic
           echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
           npm run build -- --publish always -c.snap.publish.repo=ferdium -c.snap.publish.channels=beta
           snapcraft logout
@@ -283,9 +283,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
-          SNAPCRAFT_LOGIN: ${{ secrets.SNAPCRAFT_LOGIN }}
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_LOGIN }}
         run: |
-          sudo snap install snapcraft --channel=5.x/stable --classic
+          sudo snap install snapcraft --classic
           echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
           npm run build -- --publish always -c.snap.publish.repo=ferdium -c.snap.publish.channels=stable
           snapcraft logout
