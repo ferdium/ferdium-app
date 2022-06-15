@@ -3,6 +3,7 @@ import {
   app,
   Menu,
   dialog,
+  webContents,
   systemPreferences,
   getCurrentWindow,
 } from '@electron/remote';
@@ -622,8 +623,15 @@ class FranzMenu {
         {
           label: intl.formatMessage(menuItems.toggleDevTools),
           accelerator: `${cmdOrCtrlShortcutKey()}+${altKey()}+I`,
-          click: (menuItem, browserWindow) => {
-            browserWindow.webContents.toggleDevTools();
+          click: () => {
+            const windowWebContents = webContents.fromId(1);
+            const { isDevToolsOpened, openDevTools, closeDevTools } = windowWebContents;
+    
+            if (isDevToolsOpened()) {
+              closeDevTools();
+            } else {
+              openDevTools({ mode: 'right' });
+            }
           },
         },
         {
