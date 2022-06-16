@@ -8,7 +8,11 @@ import { H1, H2 } from '../../ui/headline';
 import Loader from '../../ui/Loader';
 import Button from '../../ui/button';
 import Infobox from '../../ui/Infobox';
-import { LOCAL_SERVER, LIVE_FRANZ_API, LIVE_FERDI_API } from '../../../config';
+import {
+  LOCAL_SERVER,
+  LIVE_FRANZ_API,
+  // LIVE_FERDI_API,
+} from '../../../config';
 
 const messages = defineMessages({
   headline: {
@@ -95,7 +99,7 @@ class AccountDashboard extends Component {
 
     const isUsingWithoutAccount = server === LOCAL_SERVER;
     const isUsingFranzServer = server === LIVE_FRANZ_API;
-    const isUsingFerdiServer = server === LIVE_FERDI_API;
+    // const isUsingFerdiServer = server === LIVE_FERDI_API;
 
     return (
       <div className="settings__main">
@@ -211,7 +215,7 @@ class AccountDashboard extends Component {
                       </div>
                     </div>
                   )}
-                  {isUsingFerdiServer && (
+                  {/* {isUsingFerdiServer && (
                     <div className="account franz-form">
                       <div className="account__box">
                         <H2>
@@ -233,7 +237,7 @@ class AccountDashboard extends Component {
                         )}
                       </div>
                     </div>
-                  )}
+                  )} */}
                 </>
               )}
             </>

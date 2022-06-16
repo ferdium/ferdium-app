@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 
-import { LIVE_FRANZ_API, LIVE_FERDI_API } from '../../config';
+import {
+  LIVE_FRANZ_API,
+  // LIVE_FERDI_API,
+} from '../../config';
 import { API_VERSION } from '../../environment-remote';
 import Form from '../../lib/Form';
 import { required, email } from '../../helpers/validation-helpers';
@@ -155,7 +158,7 @@ class Login extends Component {
                   </Link>
                 </p>
               )}
-              {window['ferdium'].stores.settings.all.app.server !==
+              {/* {window['ferdium'].stores.settings.all.app.server !==
                 LIVE_FERDI_API && (
                 <p className="error-message center">
                   {intl.formatMessage(messages.customServerQuestion)}{' '}
@@ -172,7 +175,7 @@ class Login extends Component {
                     {intl.formatMessage(messages.customServerSuggestion)}
                   </Link>
                 </p>
-              )}
+              )} */}
             </>
           )}
           {isSubmitting ? (
