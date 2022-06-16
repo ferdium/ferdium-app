@@ -259,7 +259,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
-          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_LOGIN }}
+          SNAPCRAFT_LOGIN: ${{ secrets.SNAPCRAFT_LOGIN }}
         run: |
           sudo snap install snapcraft --channel=5.x/stable --classic
           echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
@@ -271,7 +271,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
-          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_LOGIN }}
+          SNAPCRAFT_LOGIN: ${{ secrets.SNAPCRAFT_LOGIN }}
         run: |
           sudo snap install snapcraft --channel=5.x/stable --classic
           echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
@@ -283,7 +283,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
-          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_LOGIN }}
+          SNAPCRAFT_LOGIN: ${{ secrets.SNAPCRAFT_LOGIN }}
         run: |
           sudo snap install snapcraft --channel=5.x/stable --classic
           echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
