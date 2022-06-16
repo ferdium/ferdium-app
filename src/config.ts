@@ -13,7 +13,6 @@ export const DEV_FRANZ_API = 'https://dev.franzinfra.com';
 
 export const LIVE_FERDIUM_API = 'https://api.ferdium.org';
 export const LIVE_FRANZ_API = 'https://api.franzinfra.com';
-// export const LIVE_FERDI_API = 'https://api.getferdi.com';
 
 // URL used to submit debugger information, see https://github.com/ferdium/debugger
 export const DEBUG_API = 'https://debug.ferdium.org';
