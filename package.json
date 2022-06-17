@@ -188,13 +188,13 @@
     "rimraf": "3.0.2",
     "sass": "1.52.3",
     "simple-git": "3.7.1",
-    "ts-loader": "5.4.5",
+    "ts-loader": "9.3.0",
     "ts-node": "10.8.1",
     "typescript": "4.7.3",
     "wait-on": "6.0.1",
-    "webpack": "4.46.0",
-    "webpack-cli": "3.3.12",
-    "webpack-dev-server": "3.11.3"
+    "webpack": "5.73.0",
+    "webpack-cli": "4.10.0",
+    "webpack-dev-server": "4.9.2"
   },
   "optionalDependencies": {
     "macos-notification-state": "github:nbashkankov/macos-notification-state#fix-monterey-detect",
