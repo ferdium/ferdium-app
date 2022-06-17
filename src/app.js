@@ -4,6 +4,7 @@ import { render } from 'react-dom';
 import { Provider } from 'mobx-react';
 import { syncHistoryWithStore, RouterStore } from 'mobx-react-router';
 import { hashHistory } from 'react-router';
+import TopBarProgress from 'react-topbar-progress-indicator';
 
 import ServerApi from './api/server/ServerApi';
 import LocalApi from './api/server/LocalApi';
@@ -53,8 +54,8 @@ window.addEventListener('load', () => {
 // TODO: send this request to the recipe.js
 window.addEventListener('mouseup', e => {
   if (e.button === 3 || e.button === 4) {
-      e.preventDefault()
-      e.stopPropagation()
+    e.preventDefault()
+    e.stopPropagation()
   }
 });
 
@@ -63,3 +64,13 @@ window.addEventListener('dragover', event => event.preventDefault());
 window.addEventListener('drop', event => event.preventDefault());
 window.addEventListener('dragover', event => event.stopPropagation());
 window.addEventListener('drop', event => event.stopPropagation());
+
+TopBarProgress.config({
+  barThickness: 4,
+  barColors: {
+    '0': '#f00',
+    '0.5': '#0f0',
+    '1.0': '#00f',
+  },
+  shadowBlur: 5
+});
