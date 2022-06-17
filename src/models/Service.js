@@ -74,8 +74,6 @@ export default class Service {
 
   @observable isLoading = true;
 
-  @observable isLoadingPage = true;
-
   @observable isError = false;
 
   @observable errorMessage = '';
@@ -385,20 +383,11 @@ export default class Service {
 
       this.hasCrashed = false;
       this.isLoading = true;
-      this.isLoadingPage = true;
       this.isError = false;
-    });
-
-    this.webview.addEventListener('did-stop-loading', event => {
-      debug('Did stop load', this.name, event);
-
-      this.isLoading = false;
-      this.isLoadingPage = false;
     });
 
     const didLoad = () => {
       this.isLoading = false;
-      this.isLoadingPage = false;
 
       if (!this.isError) {
         this.isFirstLoad = false;
@@ -418,7 +407,6 @@ export default class Service {
         this.isError = true;
         this.errorMessage = event.errorDescription;
         this.isLoading = false;
-        this.isLoadingPage = false;
       }
     });
 
