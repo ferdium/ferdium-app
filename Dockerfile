@@ -16,7 +16,7 @@ RUN apt-get update -y \
 
 WORKDIR /usr/src/ferdium
 
-RUN npm i -g npm@8.10.0 pnpm@7.1.7
+RUN npm i -g npm@8.10.0 pnpm@7.2.1
 
 COPY package*.json ./
 
