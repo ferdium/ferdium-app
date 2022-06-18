@@ -2422,7 +2422,11 @@
       "contributions": [
         "code",
         "infra",
-        "design"
+        "design",
+        "bug",
+        "userTesting",
+        "review",
+        "ideas"
       ]
     },
     {
