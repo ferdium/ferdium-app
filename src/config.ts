@@ -252,6 +252,7 @@ export const DEFAULT_APP_SETTINGS = {
   userAgentPref: '',
   adaptableDarkMode: true,
   accentColor: DEFAULT_ACCENT_COLOR,
+  progressbarAccentColor: DEFAULT_ACCENT_COLOR,
   serviceRibbonWidth: 68,
   sidebarServicesLocation: SIDEBAR_SERVICES_LOCATION_TOPLEFT,
   iconSize: iconSizeBias,

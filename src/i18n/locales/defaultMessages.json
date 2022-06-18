@@ -3059,7 +3059,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Write your accent color in a CSS-compatible format. (Default: {defaultAccentColor})",
+        "defaultMessage": "!!!Write your color choice in a CSS-compatible format. (Default: {defaultAccentColor})",
         "end": {
           "column": 3,
           "line": 86
@@ -4634,6 +4634,19 @@
         },
         "file": "src/containers/settings/EditSettingsScreen.js",
         "id": "settings.app.form.accentColor",
+        "start": {
+          "column": 15,
+          "line": 170
+        }
+      },
+      {
+        "defaultMessage": "!!!Accent color",
+        "end": {
+          "column": 3,
+          "line": 173
+        },
+        "file": "src/containers/settings/EditSettingsScreen.js",
+        "id": "settings.app.form.progressbarAccentColor",
         "start": {
           "column": 15,
           "line": 170

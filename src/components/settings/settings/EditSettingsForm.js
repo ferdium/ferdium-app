@@ -118,7 +118,15 @@ const messages = defineMessages({
   accentColorInfo: {
     id: 'settings.app.accentColorInfo',
     defaultMessage:
-      'Write your accent color in a CSS-compatible format. (Default: {defaultAccentColor} or clear the input field)',
+      'Write your color choice in a CSS-compatible format. (Default: {defaultAccentColor} or clear the input field)',
+  },
+  overallTheme: {
+    id: 'settings.app.overallTheme',
+    defaultMessage: 'Overall Theme',
+  },
+  progressbarTheme: {
+    id: 'settings.app.progressbarTheme',
+    defaultMessage: 'Progressbar Theme',
   },
   universalDarkModeInfo: {
     id: 'settings.app.universalDarkModeInfo',
@@ -598,25 +606,40 @@ class EditSettingsForm extends Component {
                 <H2 className='settings__section_header'>
                   {intl.formatMessage(messages.sectionAccentColorSettings)}
                 </H2>
+                <p>
+                  {intl.formatMessage(messages.accentColorInfo, {
+                    defaultAccentColor: DEFAULT_APP_SETTINGS.accentColor,
+                  })}
+                </p>
+                <p>
+                {intl.formatMessage(messages.overallTheme)}
                 <div className="settings__settings-group__apply-color">
                   <ColorPickerInput
                     onChange={e => this.submit(e)}
                     field={form.$('accentColor')}
                     className='color-picker-input'
                   />
-                  <>
-                    <Button
-                      buttonType="secondary"
-                      className="settings__settings-group__apply-color__button"
-                      label="Apply color"
-                      onClick={(e) => { this.submit(e) }}
-                    />
-                  </>
                 </div>
+                </p>
                 <p>
-                  {intl.formatMessage(messages.accentColorInfo, {
-                    defaultAccentColor: DEFAULT_APP_SETTINGS.accentColor,
-                  })}
+                {intl.formatMessage(messages.progressbarTheme)}
+                <div className="settings__settings-group__apply-color">
+                  <ColorPickerInput
+                    onChange={e => this.submit(e)}
+                    field={form.$('progressbarAccentColor')}
+                    className='color-picker-input'
+                  />
+                </div>
+                </p>
+                <p>
+                <div className="settings__settings-group__apply-color">
+                  <Button
+                    buttonType="secondary"
+                    className="settings__settings-group__apply-color__button"
+                    label="Apply color"
+                    onClick={(e) => { this.submit(e) }}
+                  />
+                </div>
                 </p>
                 <Hr />
 

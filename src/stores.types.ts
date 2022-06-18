@@ -58,6 +58,7 @@ interface Api {
 interface AppStore {
   actions: Actions;
   accentColor: string;
+  progressbarAccentColor: string;
   api: Api;
   authRequestFailed: () => void;
   autoLaunchOnStart: () => void;

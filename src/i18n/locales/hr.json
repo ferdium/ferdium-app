@@ -182,7 +182,7 @@
   "settings.account.tryReloadUserInfoRequest": "Pokušajte ponovno",
   "settings.account.userInfoRequestFailed": "Nije moguće učitati informacije o korisniku",
   "settings.account.yourLicense": "Your Ferdium License:",
-  "settings.app.accentColorInfo": "Write your accent color in a CSS-compatible format. (Default: {defaultAccentColor})",
+  "settings.app.accentColorInfo": "Write your color choice in a CSS-compatible format. (Default: {defaultAccentColor})",
   "settings.app.buttonClearAllCache": "Očisti memoriju",
   "settings.app.buttonInstallUpdate": "Ponovo pokreni i instaliraj ažuriranje",
   "settings.app.buttonOpenFerdiumProfileFolder": "Open Profile folder",

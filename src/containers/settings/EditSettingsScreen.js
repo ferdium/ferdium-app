@@ -234,6 +234,10 @@ const messages = defineMessages({
     id: 'settings.app.form.accentColor',
     defaultMessage: 'Accent color',
   },
+  progressbarAccentColor: {
+    id: 'settings.app.form.progressbarAccentColor',
+    defaultMessage: 'Progressbar Accent color',
+  },
   showDisabledServices: {
     id: 'settings.app.form.showDisabledServices',
     defaultMessage: 'Display disabled services tabs',
@@ -368,6 +372,7 @@ class EditSettingsScreen extends Component {
         hideSettingsButton: Boolean(settingsData.hideSettingsButton),
         alwaysShowWorkspaces: Boolean(settingsData.alwaysShowWorkspaces),
         accentColor: settingsData.accentColor,
+        progressbarAccentColor: settingsData.progressbarAccentColor,
         showMessageBadgeWhenMuted: Boolean(
           settingsData.showMessageBadgeWhenMuted,
         ),
@@ -757,6 +762,11 @@ class EditSettingsScreen extends Component {
           label: intl.formatMessage(messages.accentColor),
           value: settings.all.app.accentColor,
           default: DEFAULT_APP_SETTINGS.accentColor,
+        },
+        progressbarAccentColor: {
+          label: intl.formatMessage(messages.progressbarAccentColor),
+          value: settings.all.app.progressbarAccentColor,
+          default: DEFAULT_APP_SETTINGS.progressbarAccentColor,
         },
         enableGPUAcceleration: {
           label: intl.formatMessage(messages.enableGPUAcceleration),
