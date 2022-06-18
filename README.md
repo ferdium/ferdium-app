@@ -459,7 +459,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href='https://github.com/skoruppa' title='skoruppa: code'><img src='https://avatars.githubusercontent.com/u/899429?v=4' alt='skoruppa' style='width:100px;'/></a></td>
-    <td align="center"><a href='https://github.com/NathanaelGandhi' title='Nathanael: infra'><img src='https://avatars.githubusercontent.com/u/36506137?v=4' alt='NathanaelGandhi' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://github.com/NathanaelGandhi' title='Nathanael: infra, code'><img src='https://avatars.githubusercontent.com/u/36506137?v=4' alt='NathanaelGandhi' style='width:100px;'/></a></td>
     <td align="center"><a href='https://github.com/Evan-aja' title='Evan: infra'><img src='https://avatars.githubusercontent.com/u/71018479?v=4' alt='Evan-aja' style='width:100px;'/></a></td>
     <td align="center"><a href='https://github.com/cedricroijakkers' title='Cedric Roijakkers: infra'><img src='https://avatars.githubusercontent.com/u/15158042?v=4' alt='cedricroijakkers' style='width:100px;'/></a></td>
     <td align="center"><a href='https://kishaningithub.github.io/' title='Kishan B: infra'><img src='https://avatars.githubusercontent.com/u/763760?v=4' alt='kishaningithub' style='width:100px;'/></a></td>
