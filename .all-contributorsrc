@@ -2817,6 +2817,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "MurzNN",
+      "name": "Alexey Murz Korepov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/336662?v=4",
+      "profile": "http://korepov.pro/",
+      "contributions": [
+        "code"
+      ]
     }
   ]
 }
