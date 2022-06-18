@@ -417,7 +417,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href='https://elliotthiebaut.com' title='Elliot Thiebaut: bug'><img src='https://avatars.githubusercontent.com/u/60610988?v=4' alt='ElliotThiebaut' style='width:100px;'/></a></td>
     <td align="center"><a href='https://github.com/woropajj' title='Jakub: bug'><img src='https://avatars.githubusercontent.com/u/57800049?v=4' alt='woropajj' style='width:100px;'/></a></td>
     <td align="center"><a href='https://github.com/guillermin012' title='guillermin012: ideas'><img src='https://avatars.githubusercontent.com/u/76463041?v=4' alt='guillermin012' style='width:100px;'/></a></td>
-    <td align="center"><a href='https://github.com/SpecialAro' title='André Oliveira: code, infra, design'><img src='https://avatars.githubusercontent.com/u/37463445?v=4' alt='SpecialAro' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://github.com/SpecialAro' title='André Oliveira: code, infra, design, bug, userTesting, review, ideas'><img src='https://avatars.githubusercontent.com/u/37463445?v=4' alt='SpecialAro' style='width:100px;'/></a></td>
     <td align="center"><a href='https://github.com/fernandofig' title='Fernando Figueiredo: code, design'><img src='https://avatars.githubusercontent.com/u/1110864?v=4' alt='fernandofig' style='width:100px;'/></a></td>
     <td align="center"><a href='https://meetfranz.com/' title='Harald: code'><img src='https://avatars.githubusercontent.com/u/135914?v=4' alt='haraldox' style='width:100px;'/></a></td>
   </tr>
