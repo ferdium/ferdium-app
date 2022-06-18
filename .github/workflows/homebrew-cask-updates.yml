@@ -1,0 +1,24 @@
+name: bump-ferdium-casks
+on:
+  push:
+    tags:
+      - '*'
+  # schedule:
+  #   - cron: "0 1 * * *" # every night at 1:00 am (to allow for dependency builds to complete)
+  # # Allows you to run this workflow manually from the Actions tab
+  # workflow_dispatch:
+
+jobs:
+  bump-casks:
+    runs-on: macos-latest
+    steps:
+    - uses: macauley/action-homebrew-bump-cask@v1
+      with:
+        # Required, custom GitHub access token with only the 'public_repo' scope enabled
+        token: ${{secrets.HOMEBREW_FERDIUM_PUBLISH_TOKEN}}
+        # Bump all outdated casks in this tap
+        tap: ferdium/homebrew-ferdium
+        # Bump only these casks if outdated
+        cask: ferdium-nightly,ferdium-beta
+        # livecheck: true
+        dryrun: false
