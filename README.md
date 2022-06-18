@@ -23,7 +23,7 @@
 [![Builds](https://github.com/ferdium/ferdium-app/actions/workflows/builds.yml/badge.svg)](https://github.com/ferdium/ferdium-app/actions/workflows/builds.yml)
 [![Crowdin](https://badges.crowdin.net/ferdium-app/localized.svg)](https://crowdin.com/project/ferdium-app)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-302-default.svg?logo=github' alt='Contributors'/></a>
+<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-303-default.svg?logo=github' alt='Contributors'/></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 > 🤴🏽 Hard-fork of [Franz](https://github.com/meetfranz/franz), adding awesome features and removing unwanted ones.
@@ -477,6 +477,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href='http://www.realityloop.com/' title='Brian Gilbert: design'><img src='https://avatars.githubusercontent.com/u/114017?v=4' alt='BrianGilbert' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://amangalampalli.github.io/' title='Aditya Mangalampalli: design'><img src='https://avatars.githubusercontent.com/u/25261413?v=4' alt='amangalampalli' style='width:100px;'/></a></td>
   </tr>
 </table>
 
