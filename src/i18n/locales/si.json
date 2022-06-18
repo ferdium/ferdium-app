@@ -182,7 +182,7 @@
   "settings.account.tryReloadUserInfoRequest": "යළි උත්සාහය",
   "settings.account.userInfoRequestFailed": "Could not load user information",
   "settings.account.yourLicense": "ඔබගේ ෆර්ඩි බලපත්‍රය:",
-  "settings.app.accentColorInfo": "Write your accent color in a CSS-compatible format. (Default: {defaultAccentColor})",
+  "settings.app.accentColorInfo": "Write your color choice in a CSS-compatible format. (Default: {defaultAccentColor})",
   "settings.app.buttonClearAllCache": "Clear cache",
   "settings.app.buttonInstallUpdate": "Restart & install update",
   "settings.app.buttonOpenFerdiumProfileFolder": "පැතිකඩ බහාලුම විවෘත",

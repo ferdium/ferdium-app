@@ -182,7 +182,7 @@
   "settings.account.tryReloadUserInfoRequest": "נסה שוב",
   "settings.account.userInfoRequestFailed": "אי אפשר לטעון את פרטי המשתמש",
   "settings.account.yourLicense": "רישיון הפרדי שלך:",
-  "settings.app.accentColorInfo": "Write your accent color in a CSS-compatible format. (Default: {defaultAccentColor})",
+  "settings.app.accentColorInfo": "Write your color choice in a CSS-compatible format. (Default: {defaultAccentColor})",
   "settings.app.buttonClearAllCache": "ניקוי המטמון",
   "settings.app.buttonInstallUpdate": "הפעל מחדש והתקן עדכונים",
   "settings.app.buttonOpenFerdiumProfileFolder": "Open Profile folder",

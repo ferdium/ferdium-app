@@ -3,7 +3,6 @@ import { observer } from 'mobx-react';
 import { Field } from 'mobx-react-form';
 import classnames from 'classnames';
 import { SliderPicker } from 'react-color';
-import { DEFAULT_APP_SETTINGS } from '../../config';
 
 interface IProps {
   field: Field;
@@ -11,18 +10,10 @@ interface IProps {
   focus?: boolean;
 };
 
-interface IState {
-  background: string;
-}
-
-class ColorPickerInput extends Component<IProps, IState> {
+class ColorPickerInput extends Component<IProps> {
   static defaultProps = {
     className: null,
     focus: false,
-  };
-
-  state = {
-    background: DEFAULT_APP_SETTINGS.accentColor,
   };
 
   inputElement: HTMLInputElement | null | undefined;
@@ -45,7 +36,6 @@ class ColorPickerInput extends Component<IProps, IState> {
 
   handleChangeComplete = (color: { hex: string; }) => {
     const { field } = this.props;
-    this.setState({ background: color.hex });
     field.value = color.hex
   };
 
@@ -67,7 +57,7 @@ class ColorPickerInput extends Component<IProps, IState> {
         })}
       >
         <SliderPicker
-          color={ this.state.background }
+          color={ field.value }
           onChangeComplete={ this.handleChangeComplete }
           id={field.id}
           type={type}
