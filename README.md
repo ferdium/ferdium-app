@@ -56,7 +56,11 @@ _Find answers to frequently asked questions on [ferdium.org/faq](https://ferdium
 
 ## Unsigned Nightlies on MacOS
 
-Since we are waiting to acquire the Apple Developer License, we are publishing our nightlies without being signed. If you download these, and are on MacOS beyond Catalina, you will face the issue that the OS says the `dmg` is corrupted. If so, please run the following command in your terminal:
+Since we are waiting to acquire the Apple Developer License, we are publishing our nightlies without being signed. On MacOS Catalina and newer, you will receive the prompt that "Ferdium" cannot be opened because the developer cannot be verified. 
+
+To work around this, simply Control/Right-click on the app and select "Open" twice. 
+
+Alternatively, click "Open Anyway" under the "General" section of Security & Privacy of the "System Preferences" application, or execute the following command:
 ```bash
 sudo xattr -rd com.apple.quarantine /Applications/Ferdium.app
 ```
