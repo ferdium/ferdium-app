@@ -390,6 +390,7 @@ class EditServiceForm extends Component {
                       <Slider field={form.$('darkReaderSepia')} />
                     </>
                   )}
+                  <Toggle field={form.$('isProgressbarEnabled')} />
                 </div>
               </div>
               <div className="service-icon">

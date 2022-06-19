@@ -114,8 +114,8 @@ class ServiceView extends Component {
               !service.isServiceAccessRestricted && (
                 <WebviewLoader loaded={false} name={service.name} />
               )}
-            {service.isLoadingPage && !service.isFirstLoad && (
-                <TopBarProgress />
+            {service.isProgressbarEnabled && service.isLoadingPage && !service.isFirstLoad && (
+              <TopBarProgress />
             )}
             {service.isError && (
               <WebviewErrorHandler

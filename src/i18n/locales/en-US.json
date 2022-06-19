@@ -323,6 +323,7 @@
   "settings.service.form.enableDarkMode": "Enable Dark Mode",
   "settings.service.form.enableHibernation": "Enable hibernation",
   "settings.service.form.enableNotification": "Enable notifications",
+  "settings.service.form.enableProgressbar": "Enable Progress bar",
   "settings.service.form.enableService": "Enable service",
   "settings.service.form.enableWakeUp": "Enable wake up",
   "settings.service.form.headlineAppearance": "Appearance",

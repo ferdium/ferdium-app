@@ -295,6 +295,7 @@ export default class AppStore extends Store {
           isHibernating: service.isHibernating,
           hasCrashed: service.hasCrashed,
           isDarkModeEnabled: service.isDarkModeEnabled,
+          isProgressbarEnabled: service.isProgressbarEnabled,
         })),
         messages: this.stores.globalError.messages,
         workspaces: this.stores.workspaces.workspaces.map(workspace => ({
