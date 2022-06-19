@@ -8,7 +8,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: bluwy/release-for-reddit-action@v1
+      - name: Release for Reddit
+        uses: bluwy/release-for-reddit-action@v1.2.0
         with:
           username: ${{ secrets.REDDIT_USERNAME }}
           password: ${{ secrets.REDDIT_PASSWORD }}
