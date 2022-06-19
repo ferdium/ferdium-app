@@ -2,6 +2,8 @@ name: bump-ferdium-casks
 on:
   release:
     types: [published]
+  # Manual trigger from the UI
+  workflow_dispatch:
 
 jobs:
   bump-casks:
@@ -14,6 +16,7 @@ jobs:
         # Bump all outdated casks in this tap
         tap: ferdium/homebrew-ferdium
         # Bump only these casks if outdated
-        cask: ferdium-nightly,ferdium-beta
-        # livecheck: true
+        cask: ferdium-nightly
+        livecheck: true
         dryrun: false
+# TODO: Need separate ones for the beta and public builds
