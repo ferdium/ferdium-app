@@ -66,6 +66,8 @@ export default class Service {
 
   @observable isDarkModeEnabled = false;
 
+  @observable isProgressbarEnabled = true;
+
   @observable darkReaderSettings = { brightness: 100, contrast: 90, sepia: 10 };
 
   @observable spellcheckerLanguage = null;
@@ -155,6 +157,10 @@ export default class Service {
       data.darkReaderSettings,
       this.darkReaderSettings,
     );
+    this.isProgressbarEnabled = ifUndefinedBoolean(
+      data.isProgressbarEnabled,
+      this.isProgressbarEnabled,
+    );
     this.hasCustomUploadedIcon = ifUndefinedBoolean(
       data.hasCustomIcon,
       this.hasCustomUploadedIcon,
@@ -210,6 +216,7 @@ export default class Service {
       id: this.id,
       spellcheckerLanguage: this.spellcheckerLanguage,
       isDarkModeEnabled: this.isDarkModeEnabled,
+      isProgressbarEnabled: this.isProgressbarEnabled,
       darkReaderSettings: this.darkReaderSettings,
       team: this.team,
       url: this.url,

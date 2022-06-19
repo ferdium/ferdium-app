@@ -282,6 +282,7 @@ export const DEFAULT_SERVICE_SETTINGS = {
   isMuted: false,
   customIcon: false,
   isDarkModeEnabled: false,
+  isProgressbarEnabled: true,
   // Note: Do NOT change these default values. If they change, then the corresponding changes in the recipes needs to be done
   hasDirectMessages: true,
   hasIndirectMessages: false,

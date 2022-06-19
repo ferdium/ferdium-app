@@ -414,6 +414,7 @@ export default class ServicesStore extends Store {
       isMuted: DEFAULT_SERVICE_SETTINGS.isMuted,
       customIcon: DEFAULT_SERVICE_SETTINGS.customIcon,
       isDarkModeEnabled: DEFAULT_SERVICE_SETTINGS.isDarkModeEnabled,
+      isProgressbarEnabled: DEFAULT_SERVICE_SETTINGS.isProgressbarEnabled,
       spellcheckerLanguage:
         SPELLCHECKER_LOCALES[this.stores.settings.app.spellcheckerLanguage],
       userAgentPref: '',
