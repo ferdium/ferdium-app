@@ -49,7 +49,7 @@ console.clear();
 console.log(JSON.stringify(members));
 
  * 3. Paste the output of the script (JSON Array) below to set 'list' to that value
- * 4. Execute this script using 'npm run add-crowdin-contributors'
+ * 4. Execute this script using 'pnpm add-crowdin-contributors'
  * 5. Regenerate the README table using the CLI ('all-contributors generate')
  * Please check if the generated data is ok and no data is lost.
 */

@@ -36,16 +36,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-      - name: Install npm
-        run: npm i -gf "npm@$(node -p 'require("./package.json").engines.npm')" && npm -v
       - name: Install pnpm
-        run: npm i -gf "pnpm@$(node -p 'require("./recipes/package.json").engines.pnpm')" && pnpm -v
+        run: npm i -gf "pnpm@$(node -p 'require("./package.json").engines.pnpm')" && pnpm -v
       - name: Install node dependencies
-        run: npm i
+        run: pnpm i
       - name: Update submodules
         run: |
           rm -rf ./recipes
-          npm run update-submodules
+          pnpm update-submodules
           git add .
           echo "GIT_DIRTY=$(git status -s | wc -l)" >> $GITHUB_ENV
       - name: Update browserslist db
@@ -56,8 +54,8 @@ jobs:
       - name: Run linter, reformatter, rebrander and tests
         if: ${{ env.GIT_DIRTY != '0' }}
         run: |
-          npm run prepare-code
-          npm run test
+          pnpm prepare-code
+          pnpm test
       - name: Commit submodules, dependency-updates and linter changes
         if: ${{ env.GIT_DIRTY != '0' }}
         run: |
