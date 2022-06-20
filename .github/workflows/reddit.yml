@@ -15,9 +15,8 @@ jobs:
           password: ${{ secrets.REDDIT_PASSWORD }}
           app-id: ${{ secrets.REDDIT_APP_ID }}
           app-secret: ${{ secrets.REDDIT_APP_SECRET }}
-          #subreddit: ferdium # Submit to /r/ferdium # uncomment this after testing on a dummy subreddit when moving to the main one
-          subreddit: ferdiumtests # Submit to /r/ferdiumtests # Delete this line after testing on dummy repository
+          subreddit: ferdium # Submit to /r/ferdium
           title: "[Release] Ferdium ${{ github.event.release.tag_name }}"
-          # flair-id: 7aa4f288-bf0d-11ec-a939-8e36666e1f23 # uncomment this after testing on a dummy subreddit when moving to the main one
+          flair-id: 7aa4f288-bf0d-11ec-a939-8e36666e1f23
           comment: ${{ github.event.release.body }}
           notification: true
