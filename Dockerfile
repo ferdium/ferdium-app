@@ -10,15 +10,17 @@ ARG USE_SYSTEM_FPM=true
 # Note: Added to bypass the error with missing git repo information for the 'preval-build-info' module
 ARG PREVAL_BUILD_INFO_PLACEHOLDERS=true
 
+# Note: 'fpm' is needed for building on ARM machines
 RUN apt-get update -y \
   && apt-get install --no-install-recommends -y rpm ruby gem \
   && gem install fpm --no-ri --no-rdoc --no-document
 
 WORKDIR /usr/src/ferdium
 
-RUN npm i -g npm@8.12.2 pnpm@7.2.1
-
 COPY package*.json ./
+COPY .npmrc ./
+
+RUN npm i -gf "npm@$(node -p 'require("./package.json").engines.npm')" && npm -v
 
 RUN npm i
 
@@ -26,12 +28,14 @@ COPY . .
 
 WORKDIR /usr/src/ferdium/recipes
 
+RUN npm i -gf "pnpm@$(node -p 'require("./package.json").engines.pnpm')" && pnpm -v
+
 RUN pnpm i \
   && pnpm package
 
 WORKDIR /usr/src/ferdium
 
-RUN npm run build
+RUN npm run build --dir
 
 # --------------------------------------------------------------------------------------------
 
