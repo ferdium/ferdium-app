@@ -222,6 +222,7 @@ export const DEFAULT_APP_SETTINGS = {
   enableSpellchecking: true,
   spellcheckerLanguage: 'en-us',
   darkMode: false,
+  navigationBarManualActive: false,
   splitMode: false,
   splitColumns: 3,
   fallbackLocale: 'en-US',
