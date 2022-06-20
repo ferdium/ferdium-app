@@ -183,10 +183,12 @@
 
   .settings__settings-group__apply-color {
     display: flex;
+    justify-content: center;
   }
 
   .settings__settings-group__apply-color__button {
-    height: 60px;
+    height: 40px;
+    margin-bottom: 3%;
   }
 
   .franz-form__input-wrapper__color-picker {
