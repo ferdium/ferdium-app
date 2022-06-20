@@ -1,6 +1,6 @@
 # Note: Before running this file, you should have already cloned the git repo + submodules on the host machine. This is used when actively developing on your local machine, but you want to build for a different architecture
 
-FROM docker.io/library/node:16.15.0-buster as builder
+FROM docker.io/library/node:16.15.1-buster as builder
 
 ENV PATH="/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/usr/local/lib:/usr/include:/usr/share"
 
@@ -16,7 +16,7 @@ RUN apt-get update -y \
 
 WORKDIR /usr/src/ferdium
 
-RUN npm i -g npm@8.10.0 pnpm@7.2.1
+RUN npm i -g npm@8.12.2 pnpm@7.2.1
 
 COPY package*.json ./
 

@@ -13,8 +13,8 @@
   "repository": "https://github.com/ferdium/ferdium-app.git",
   "private": true,
   "engines": {
-    "node": "16.15.0",
-    "npm": "8.10.0"
+    "node": "16.15.1",
+    "npm": "8.12.2"
   },
   "engine-strict": true,
   "scripts": {
