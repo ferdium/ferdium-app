@@ -82,6 +82,8 @@ interface AppStore {
   isSystemDarkModeEnabled: () => void;
   isSystemMuteOverridden: () => void;
   locale: () => void;
+  reloadAfterResume: boolean;
+  reloadAfterResumeTime: number;
   stores: Stores;
   timeOfflineStart: () => void;
   timeSuspensionStart: () => void;
