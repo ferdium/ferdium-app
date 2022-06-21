@@ -233,6 +233,7 @@
   "settings.app.form.privateNotifications": "Don't show message content in notifications",
   "settings.app.form.progressbarAccentColor": "Progressbar Accent color",
   "settings.app.form.reloadAfterResume": "Reload Ferdium after system resume",
+  "settings.app.form.reloadAfterResumeTime": "Time to consider the system as idle/suspended (in minutes)",
   "settings.app.form.runInBackground": "Keep Ferdium in background when closing the window",
   "settings.app.form.scheduledDNDEnabled": "Enable scheduled Do-not-Disturb",
   "settings.app.form.scheduledDNDEnd": "To",
