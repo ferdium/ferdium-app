@@ -17,7 +17,7 @@ import { readJsonSync } from 'fs-extra';
 import { Stores } from 'src/stores.types';
 import { ApiInterface } from 'src/api';
 import { Actions } from 'src/actions/lib/actions';
-import Store from './lib/Store';
+import TypedStore from './lib/TypedStore';
 import Request from './lib/Request';
 import { CHECK_INTERVAL, DEFAULT_APP_SETTINGS } from '../config';
 import { cleanseJSObject } from '../jsUtils';
@@ -52,7 +52,7 @@ const CATALINA_NOTIFICATION_HACK_KEY =
 
 const locales = generatedTranslations();
 
-export default class AppStore extends Store {
+export default class AppStore extends TypedStore {
   updateStatusTypes = {
     CHECKING: 'CHECKING',
     AVAILABLE: 'AVAILABLE',

@@ -4,14 +4,7 @@ import { ApiInterface } from 'src/api';
 import { Stores } from 'src/stores.types';
 import Reaction from './Reaction';
 
-export default abstract class Store {
-  // status implementation
-  stores: Stores;
-
-  api: ApiInterface;
-
-  actions: Actions;
-
+export default abstract class TypedStore {
   _reactions: Reaction[] = [];
 
   @observable _status: any = null;
@@ -24,11 +17,11 @@ export default abstract class Store {
     this._status = status;
   }
 
-  constructor(stores: Stores, api: ApiInterface, actions: Actions) {
-    this.stores = stores;
-    this.api = api;
-    this.actions = actions;
-  }
+  constructor(
+    public stores: Stores,
+    public api: ApiInterface,
+    public actions: Actions,
+  ) {}
 
   registerReactions(reactions: { (r: IReactionPublic): void }[]): void {
     for (const reaction of reactions) {
