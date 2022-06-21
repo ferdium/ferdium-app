@@ -3,7 +3,7 @@
   "productName": "Ferdium",
   "desktopName": "ferdium.desktop",
   "appId": "org.ferdium.ferdium-app",
-  "version": "6.0.0-nightly.69",
+  "version": "6.0.0-nightly.70",
   "description": "Messaging app for WhatsApp, Slack, Telegram, HipChat, Hangouts and many many more.",
   "author": "Ferdium Contributors <hello@ferdium.org> (https://ferdium.org/)",
   "license": "Apache-2.0",
