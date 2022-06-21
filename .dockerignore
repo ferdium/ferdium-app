@@ -1,5 +1,4 @@
 .all-contributorsrc
-.devcontainer
 .dockerignore
 .editorconfig
 .husky/
