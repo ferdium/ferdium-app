@@ -234,7 +234,7 @@ export default class AppStore extends Store {
 
       if (
         this.timeSuspensionStart.add(10, 'm').isBefore(moment()) &&
-        this.stores.settings.app.get('reloadAfterResume')
+        this.stores.settings.app.reloadAfterResume
       ) {
         debug('Reloading services, user info and features');
 
