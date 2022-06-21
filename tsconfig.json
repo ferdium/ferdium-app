@@ -22,6 +22,7 @@
     ],
     "sourceMap": true,
     "skipLibCheck": true,
+    // TODO: Need to switch
     "noImplicitAny": false,
     "pretty": true,
     "allowSyntheticDefaultImports": true,
