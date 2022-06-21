@@ -26,8 +26,8 @@
     }
   },
   {
-    "id": "settings.recipes.mostPopular",
-    "defaultMessage": "!!!Most popular",
+    "id": "settings.recipes.ferdiumPicks",
+    "defaultMessage": "!!!Ferdium Picks",
     "file": "src/components/settings/recipes/RecipesDashboard.js",
     "start": {
       "line": 27,

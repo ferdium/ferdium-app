@@ -28,9 +28,9 @@ const messages = defineMessages({
     id: 'settings.searchService',
     defaultMessage: 'Search service',
   },
-  mostPopularRecipes: {
-    id: 'settings.recipes.mostPopular',
-    defaultMessage: 'Most popular',
+  ferdiumPicksRecipes: {
+    id: 'settings.recipes.ferdiumPicks',
+    defaultMessage: 'Ferdium Picks',
   },
   allRecipes: {
     id: 'settings.recipes.all',
@@ -185,7 +185,7 @@ class RecipesDashboard extends Component {
               activeClassName={`${!searchNeedle ? 'badge--primary' : ''}`}
               onClick={() => resetSearch()}
             >
-              {intl.formatMessage(messages.mostPopularRecipes)}
+              {intl.formatMessage(messages.ferdiumPicksRecipes)}
             </Link>
             <Link
               to="/settings/recipes/all"

@@ -2150,13 +2150,13 @@
         }
       },
       {
-        "defaultMessage": "!!!Most popular",
+        "defaultMessage": "!!!Ferdium Picks",
         "end": {
           "column": 3,
           "line": 30
         },
         "file": "src/components/settings/recipes/RecipesDashboard.js",
-        "id": "settings.recipes.mostPopular",
+        "id": "settings.recipes.ferdiumPicks",
         "start": {
           "column": 22,
           "line": 27
