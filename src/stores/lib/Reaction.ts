@@ -1,24 +1,24 @@
-import { autorun } from 'mobx';
+import { autorun, IReactionDisposer, IReactionPublic } from 'mobx';
 
 export default class Reaction {
-  reaction;
+  public reaction: (r: IReactionPublic) => any;
 
-  isRunning = false;
+  private isRunning: boolean = false;
 
-  dispose;
+  public dispose?: IReactionDisposer;
 
-  constructor(reaction) {
+  constructor(reaction: any) {
     this.reaction = reaction;
   }
 
-  start() {
+  start(): void {
     if (!this.isRunning) {
       this.dispose = autorun(this.reaction);
       this.isRunning = true;
     }
   }
 
-  stop() {
+  stop(): void {
     if (this.isRunning) {
       this.dispose?.();
       this.isRunning = false;

@@ -10,7 +10,7 @@ const translations = generatedTranslations();
 
 type Props = {
   stores: {
-    app: typeof AppStore;
+    app: AppStore;
     user: typeof UserStore;
   };
   children: ReactNode;

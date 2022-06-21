@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
+import { ActionDefinitions } from './lib/actions';
 
-export default {
+export default <ActionDefinitions>{
   update: {
     type: PropTypes.string.isRequired,
     data: PropTypes.object.isRequired,

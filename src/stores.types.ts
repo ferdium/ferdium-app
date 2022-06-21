@@ -1,3 +1,9 @@
+import Workspace from './features/workspaces/models/Workspace';
+import Recipe from './models/Recipe';
+import Service from './models/Service';
+import User from './models/User';
+import { CachedRequest } from './stores/lib/CachedRequest';
+
 export interface FerdiumStores {
   app: AppStore;
   communityRecipes: CommunityRecipesStore;
@@ -62,9 +68,11 @@ interface AppStore {
   api: Api;
   authRequestFailed: () => void;
   autoLaunchOnStart: () => void;
+  automaticUpdates: boolean;
   clearAppCacheRequest: () => void;
   dictionaries: [];
   fetchDataInterval: 4;
+  get(key: string): any;
   getAppCacheSizeRequest: () => void;
   healthCheckRequest: () => void;
   isClearingAllCache: () => void;
@@ -105,7 +113,7 @@ interface FeaturesStore {
   api: Api;
   defaultFeaturesRequest: () => void;
   features: () => void;
-  featuresRequest: () => void;
+  featuresRequest: CachedRequest;
   stores: Stores;
   _reactions: any[];
   _status: () => void;
@@ -136,8 +144,8 @@ interface RecipePreviewsStore {
   _reactions: [];
   _status: () => void;
   actionStatus: () => void;
-  all: () => void;
-  dev: () => void;
+  all: Recipe[];
+  dev: Recipe[];
   searchResults: () => void;
 }
 
@@ -152,7 +160,7 @@ interface RecipeStore {
   _status: () => void;
   actionStatus: () => void;
   active: () => void;
-  all: () => void;
+  all: Recipe[];
   recipeIdForServices: () => void;
 }
 
@@ -179,7 +187,7 @@ interface RouterStore {
   goForward: () => void;
   history: () => void;
   location: () => void;
-  push: () => void;
+  push(path: string): void;
   replace: () => void;
 }
 
@@ -200,13 +208,18 @@ export interface ServicesStore {
   actionStatus: () => void;
   active: () => void;
   activeSettings: () => void;
-  all: () => void;
+  all: Service[];
   allDisplayed: () => void;
   allDisplayedUnordered: () => void;
   enabled: () => void;
   filtered: () => void;
   isTodosServiceActive: () => void;
   isTodosServiceAdded: () => void;
+}
+
+// TODO: Create actual type based on the default config in config.ts
+interface ISettings {
+  [key: string]: any;
 }
 
 interface SettingsStore {
@@ -220,7 +233,7 @@ interface SettingsStore {
   _reactions: [];
   _status: () => void;
   actionStatus: () => void;
-  all: () => void;
+  all: ISettings;
   app: AppStore;
   migration: () => void;
   proxy: () => void;
@@ -301,7 +314,7 @@ interface UserStore {
   deleteAccountRequest: () => void;
   fetchUserInfoInterval: null;
   getLegacyServicesRequest: () => void;
-  getUserInfoRequest: () => void;
+  getUserInfoRequest: CachedRequest;
   hasCompletedSignup: () => void;
   id: () => void;
   inviteRequest: () => void;
@@ -320,11 +333,11 @@ interface UserStore {
   _requireAuthenticatedUser: () => void;
   _status: () => void;
   changeServerRoute: () => void;
-  data: () => void;
+  data: User;
   importRoute: () => void;
   inviteRoute: () => void;
-  isLoggedIn: () => void;
-  isTokenExpired: () => void;
+  isLoggedIn: boolean;
+  isTokenExpired: () => boolean;
   legacyServices: () => void;
   loginRoute: () => void;
   logoutRoute: () => void;
@@ -348,6 +361,7 @@ export interface WorkspacesStore {
   isWorkspaceDrawerOpen: () => void;
   nextWorkspace: () => void;
   stores: Stores;
+  workspaces: Workspace[];
   workspaceBeingEdited: () => void;
   _actions: any[];
   _activateLastUsedWorkspaceReaction: () => void;

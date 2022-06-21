@@ -5,20 +5,28 @@
     "baseUrl": ".",
     "strict": true,
     "target": "esnext",
-    "lib": ["esnext", "dom"],
+    "lib": [
+      "esnext",
+      "dom"
+    ],
     "module": "CommonJS",
     "jsx": "react-jsx",
-    "typeRoots": ["@types", "node_modules/@types"],
+    "typeRoots": [
+      "@types",
+      "node_modules/@types"
+    ],
     "moduleResolution": "node",
-    "types": ["node", "jest"],
+    "types": [
+      "node",
+      "jest"
+    ],
     "sourceMap": true,
     "skipLibCheck": true,
-    // TODO: Need to switch
     "noImplicitAny": false,
     "pretty": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
-    "composite": true,
+    "composite": false,
     // TODO: Change this config option to false once ms v3 is released and adopted
     "esModuleInterop": true,
     "importHelpers": true,
@@ -35,5 +43,11 @@
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true
   },
-  "exclude": ["node_modules", "build"]
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "build"
+  ]
 }
