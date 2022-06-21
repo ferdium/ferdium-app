@@ -469,7 +469,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href='https://github.com/Alt37' title='Alt37: bug'><img src='https://avatars.githubusercontent.com/u/44649402?v=4' alt='Alt37' style='width:100px;'/></a></td>
     <td align="center"><a href='https://github.com/MagicLegend' title='MagicLegend: bug'><img src='https://avatars.githubusercontent.com/u/3169104?v=4' alt='MagicLegend' style='width:100px;'/></a></td>
-    <td align="center"><a href='https://github.com/Alphrag' title='Alphrag: doc'><img src='https://avatars.githubusercontent.com/u/34252790?v=4' alt='Alphrag' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://github.com/Alphrag' title='Alphrag: doc, infra'><img src='https://avatars.githubusercontent.com/u/34252790?v=4' alt='Alphrag' style='width:100px;'/></a></td>
     <td align="center"><a href='http://maxwipfli.ch' title='Max Wipfli: code'><img src='https://avatars.githubusercontent.com/u/17591869?v=4' alt='MaxWipfli' style='width:100px;'/></a></td>
     <td align="center"><a href='https://github.com/davidajetter-tw' title='davidajetter-tw: doc'><img src='https://avatars.githubusercontent.com/u/105304388?v=4' alt='davidajetter-tw' style='width:100px;'/></a></td>
     <td align="center"><a href='https://github.com/stacksjb' title='Jesse: doc'><img src='https://avatars.githubusercontent.com/u/2865491?v=4' alt='stacksjb' style='width:100px;'/></a></td>
