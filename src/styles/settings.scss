@@ -23,6 +23,15 @@
 }
 
 .theme__dark {
+
+  .settings__hr {
+    color: rgba($dark-theme-gray, 0.8);
+  }
+  
+  .settings__hr-sections {
+    color: rgba($dark-theme-text-color, 0.5);
+  }
+
   .settings-wrapper {
     background: rgba($dark-theme-black, 0.8);
   }
@@ -36,6 +45,7 @@
 
     .settings__section_header {
       text-align: center;
+      margin-bottom: 40px;
     }
 
     .settings__main {
@@ -176,9 +186,18 @@
     overflow: hidden;
     background: #fff;
   }
+
+  .settings__hr {
+    color: rgba($theme-gray, 0.2);
+  }
   
+  .settings__hr-sections {
+    color: rgba($theme-gray, 0.4);
+  }
+
   .settings__section_header {
     text-align: center;
+    margin-bottom: 40px;
   }
 
   .settings__settings-group__apply-color {

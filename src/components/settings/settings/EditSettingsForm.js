@@ -107,6 +107,22 @@ const messages = defineMessages({
     id: 'settings.app.sectionSidebarSettings',
     defaultMessage: 'Sidebar Settings',
   },
+  sectionPrivacy: {
+    id: 'settings.app.sectionPrivacy',
+    defaultMessage: 'Privacy Settings',
+  },
+  sectionLanguage: {
+    id: 'settings.app.sectionLanguage',
+    defaultMessage: 'Language Settings',
+  },
+  sectionAdvanced: {
+    id: 'settings.app.sectionAdvanced',
+    defaultMessage: 'Advanced Settings',
+  },
+  sectionUpdates: {
+    id: 'settings.app.sectionUpdates',
+    defaultMessage: 'App Updates Settings',
+  },
   sectionServiceIconsSettings: {
     id: 'settings.app.sectionServiceIconsSettings',
     defaultMessage: 'Service Icons Settings',
@@ -220,7 +236,8 @@ const messages = defineMessages({
   },
 });
 
-const Hr = () => <hr style={{ marginBottom: 20 }} />;
+const Hr = () => <hr className='settings__hr' style={{ marginBottom: 20, borderStyle: "dashed" }} />;
+const HrSections = () => <hr className='settings__hr-sections' style={{ marginTop: 20, marginBottom: 40, borderStyle: "solid" }} />;
 
 class EditSettingsForm extends Component {
   static propTypes = {
@@ -438,10 +455,12 @@ class EditSettingsForm extends Component {
                 <Toggle field={form.$('runInBackground')} />
                 <Toggle field={form.$('confirmOnQuit')} />
                 <Toggle field={form.$('enableSystemTray')} />
+                {reloadAfterResume && <Hr />}
                 <Toggle field={form.$('reloadAfterResume')} />
                 {reloadAfterResume && (
                   <div>
                     <Input field={form.$('reloadAfterResumeTime')} />
+                    <Hr />
                   </div>
                 )}
                 <Toggle field={form.$('startMinimized')} />
@@ -452,6 +471,7 @@ class EditSettingsForm extends Component {
 
                 {!hasAddedTodosAsService && (
                   <>
+                    {isTodosActivated && <Hr />}
                     <Toggle field={form.$('enableTodos')} />
                     {isTodosActivated && (
                       <div>
@@ -479,10 +499,10 @@ class EditSettingsForm extends Component {
                         )}
                       </div>
                     )}
-                    <Hr />
                   </>
                 )}
 
+                {scheduledDNDEnabled && <Hr />}
                 <Toggle field={form.$('scheduledDNDEnabled')} />
 
                 {scheduledDNDEnabled && (
@@ -539,7 +559,7 @@ class EditSettingsForm extends Component {
 
                 <Select field={form.$('navigationBarBehaviour')} />
 
-                <Hr />
+                <HrSections />
 
                 <H2 className='settings__section_header'>
                   {intl.formatMessage(messages.sectionHibernation)}
@@ -595,6 +615,7 @@ class EditSettingsForm extends Component {
                   </>
                 )}
 
+                {isSplitModeEnabled && <Hr />}
                 <Toggle field={form.$('splitMode')} />
                 {isSplitModeEnabled && (
                   <Input
@@ -607,7 +628,7 @@ class EditSettingsForm extends Component {
                   />
                 )}
 
-                <Hr />
+                <HrSections />
                 <H2 className='settings__section_header'>
                   {intl.formatMessage(messages.sectionAccentColorSettings)}
                 </H2>
@@ -646,7 +667,7 @@ class EditSettingsForm extends Component {
                   />
                 </div>
                 </p>
-                <Hr />
+                <HrSections />
 
                 <H2 className='settings__section_header'>
                   {intl.formatMessage(messages.sectionSidebarSettings)}
@@ -668,7 +689,7 @@ class EditSettingsForm extends Component {
 
                 <Toggle field={form.$('alwaysShowWorkspaces')} />
 
-                <Hr />
+                <HrSections />
 
                 <H2 className='settings__section_header'>
                   {intl.formatMessage(messages.sectionServiceIconsSettings)}
@@ -676,14 +697,20 @@ class EditSettingsForm extends Component {
 
                 <Toggle field={form.$('showDisabledServices')} />
                 <Toggle field={form.$('showServiceName')} />
+
+                {isUseGrayscaleServicesEnabled && <Hr />}
+
                 <Toggle field={form.$('useGrayscaleServices')} />
 
                 {isUseGrayscaleServicesEnabled && (
-                  <Slider
-                      type="number"
-                      onChange={e => this.submit(e)}
-                      field={form.$('grayscaleServicesDim')}
-                  />
+                  <>
+                    <Slider
+                        type="number"
+                        onChange={e => this.submit(e)}
+                        field={form.$('grayscaleServicesDim')}
+                    />
+                    <Hr />
+                  </>
                 )}
 
                 <Toggle field={form.$('showMessageBadgeWhenMuted')} />
@@ -695,6 +722,10 @@ class EditSettingsForm extends Component {
             {/* Privacy */}
             {this.state.activeSetttingsTab === 'privacy' && (
               <div>
+                <H2 className='settings__section_header'>
+                  {intl.formatMessage(messages.sectionPrivacy)}
+                </H2>
+
                 <Toggle field={form.$('privateNotifications')} />
                 <Toggle field={form.$('clipboardNotifications')} />
                 {(isWindows || isMac) && (
@@ -704,8 +735,6 @@ class EditSettingsForm extends Component {
                 <Hr />
 
                 <Select field={form.$('searchEngine')} />
-
-                <Hr />
 
                 <p className="settings__help">
                   {intl.formatMessage(messages.appRestartRequired)}
@@ -760,6 +789,11 @@ class EditSettingsForm extends Component {
             {/* Language */}
             {this.state.activeSetttingsTab === 'language' && (
               <div>
+
+                <H2 className='settings__section_header'>
+                  {intl.formatMessage(messages.sectionLanguage)}
+                </H2>
+
                 <Select field={form.$('locale')} showLabel={false} />
 
                 <Hr />
@@ -794,6 +828,11 @@ class EditSettingsForm extends Component {
             {/* Advanced */}
             {this.state.activeSetttingsTab === 'advanced' && (
               <div>
+
+                <H2 className='settings__section_header'>
+                  {intl.formatMessage(messages.sectionAdvanced)}
+                </H2>
+
                 <Toggle field={form.$('enableGPUAcceleration')} />
                 <Toggle field={form.$('enableGlobalHideShortcut')} />
                 <p className="settings__help indented__help">
@@ -883,6 +922,10 @@ class EditSettingsForm extends Component {
             {/* Updates */}
             {this.state.activeSetttingsTab === 'updates' && (
               <div>
+                <H2 className='settings__section_header'>
+                  {intl.formatMessage(messages.sectionUpdates)}
+                </H2>
+
                 <Toggle field={form.$('automaticUpdates')} />
                 {automaticUpdates && (
                   <>
