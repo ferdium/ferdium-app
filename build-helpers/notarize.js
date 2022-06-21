@@ -12,7 +12,7 @@ exports.default = async function notarizing(context) {
   await notarize({
     appBundleId: 'org.ferdium.ferdium-app',
     appPath: `${appOutDir}/${appName}.app`,
-    ascProvider: '55E9FPJ93P',
+    ascProvider: 'B6J9X9DWFL',
     appleId: process.env.APPLEID,
     appleIdPassword: process.env.APPLEID_PASSWORD,
   });
