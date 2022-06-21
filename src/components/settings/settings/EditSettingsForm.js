@@ -308,7 +308,7 @@ class EditSettingsForm extends Component {
       updateButtonLabelMessage = messages.buttonSearchForUpdate;
     }
 
-    const { lockingFeatureEnabled, scheduledDNDEnabled } =
+    const { lockingFeatureEnabled, scheduledDNDEnabled, reloadAfterResume } =
       window['ferdium'].stores.settings.all.app;
 
     let cacheSize;
@@ -439,6 +439,11 @@ class EditSettingsForm extends Component {
                 <Toggle field={form.$('confirmOnQuit')} />
                 <Toggle field={form.$('enableSystemTray')} />
                 <Toggle field={form.$('reloadAfterResume')} />
+                {reloadAfterResume && (
+                  <div>
+                    <Input field={form.$('reloadAfterResumeTime')} />
+                  </div>
+                )}
                 <Toggle field={form.$('startMinimized')} />
                 {isWindows && <Toggle field={form.$('minimizeToSystemTray')} />}
                 {isWindows && <Toggle field={form.$('closeToSystemTray')} />}

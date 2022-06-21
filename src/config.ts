@@ -207,6 +207,7 @@ export const DEFAULT_APP_SETTINGS = {
   autoLaunchInBackground: false,
   runInBackground: true,
   reloadAfterResume: true,
+  reloadAfterResumeTime: 10,
   enableSystemTray: true,
   startMinimized: false,
   confirmOnQuit: false,
