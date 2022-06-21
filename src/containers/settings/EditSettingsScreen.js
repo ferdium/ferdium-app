@@ -74,6 +74,10 @@ const messages = defineMessages({
     id: 'settings.app.form.reloadAfterResume',
     defaultMessage: 'Reload Ferdium after system resume',
   },
+  reloadAfterResumeTime: {
+    id: 'settings.app.form.reloadAfterResumeTime',
+    defaultMessage: 'Time to consider the system as idle/suspended (in minutes)',
+  },
   minimizeToSystemTray: {
     id: 'settings.app.form.minimizeToSystemTray',
     defaultMessage: 'Minimize Ferdium to system tray',
@@ -323,6 +327,7 @@ class EditSettingsScreen extends Component {
         runInBackground: Boolean(settingsData.runInBackground),
         enableSystemTray: Boolean(settingsData.enableSystemTray),
         reloadAfterResume: Boolean(settingsData.reloadAfterResume),
+        reloadAfterResumeTime: Number(settingsData.reloadAfterResumeTime),
         startMinimized: Boolean(settingsData.startMinimized),
         confirmOnQuit: Boolean(settingsData.confirmOnQuit),
         minimizeToSystemTray: Boolean(settingsData.minimizeToSystemTray),
@@ -515,6 +520,11 @@ class EditSettingsScreen extends Component {
           label: intl.formatMessage(messages.reloadAfterResume),
           value: settings.all.app.reloadAfterResume,
           default: DEFAULT_APP_SETTINGS.reloadAfterResume,
+        },
+        reloadAfterResumeTime: {
+          label: intl.formatMessage(messages.reloadAfterResumeTime),
+          value: settings.all.app.reloadAfterResumeTime,
+          default: DEFAULT_APP_SETTINGS.reloadAfterResumeTime,
         },
         minimizeToSystemTray: {
           label: intl.formatMessage(messages.minimizeToSystemTray),

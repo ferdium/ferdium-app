@@ -242,9 +242,11 @@ export default class AppStore extends TypedStore {
       debug('System resumed, last suspended on', this.timeSuspensionStart);
       this.actions.service.resetLastPollTimer();
 
+      const idleTime = this.stores.settings.app.reloadAfterResumeTime;
+
       if (
-        this.timeSuspensionStart.add(10, 'm').isBefore(moment()) &&
-        this.stores.settings.app.get('reloadAfterResume')
+        this.timeSuspensionStart.add(idleTime, 'm').isBefore(moment()) &&
+        this.stores.settings.app.reloadAfterResume
       ) {
         debug('Reloading services, user info and features');
 
