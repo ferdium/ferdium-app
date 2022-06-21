@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
+import { ActionDefinitions } from './lib/actions';
 
-export default {
+export default <ActionDefinitions>{
   setBadge: {
     unreadDirectMessageCount: PropTypes.number.isRequired,
     unreadIndirectMessageCount: PropTypes.number,

@@ -86,7 +86,7 @@ export const SEARCH_ENGINE_NAMES = {
 
 export const SEARCH_ENGINE_URLS = {
   [SEARCH_ENGINE_STARTPAGE]: ({ searchTerm }) =>
-  `https://www.startpage.com/sp/search?query=${searchTerm}`,
+    `https://www.startpage.com/sp/search?query=${searchTerm}`,
   [SEARCH_ENGINE_GOOGLE]: ({ searchTerm }) =>
     `https://www.google.com/search?q=${searchTerm}`,
   [SEARCH_ENGINE_DDG]: ({ searchTerm }) =>
@@ -105,7 +105,7 @@ const TODO_RTM_URL = 'https://www.rememberthemilk.com/';
 const TODO_ANYDO_URL = 'https://desktop.any.do/';
 const TODO_GOOGLETASKS_URL =
   'https://tasks.google.com/embed/?origin=https%3A%2F%2Fcalendar.google.com&fullWidth=1';
-const TODO_GOOGLEKEEP_URL = 'https://keep.google.com/'
+const TODO_GOOGLEKEEP_URL = 'https://keep.google.com/';
 
 export const TODO_SERVICE_RECIPE_IDS = {
   [TODO_TODOIST_URL]: 'todoist',
@@ -152,8 +152,8 @@ export const SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT = 2;
 export const SIDEBAR_SERVICES_LOCATION = {
   [SIDEBAR_SERVICES_LOCATION_TOPLEFT]: 'Top/Left',
   [SIDEBAR_SERVICES_LOCATION_CENTER]: 'Center',
-  [SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT]: 'Bottom/Right'
-}
+  [SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT]: 'Bottom/Right',
+};
 
 export const ICON_SIZES = {
   0: 'Very small icons',

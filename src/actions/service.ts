@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import ServiceModel from '../models/Service';
+import { ActionDefinitions } from './lib/actions';
 
-export default {
+export default <ActionDefinitions>{
   setActive: {
     serviceId: PropTypes.string.isRequired,
     keepActiveRoute: PropTypes.bool,

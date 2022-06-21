@@ -53,8 +53,8 @@ window.addEventListener('load', () => {
 // TODO: send this request to the recipe.js
 window.addEventListener('mouseup', e => {
   if (e.button === 3 || e.button === 4) {
-    e.preventDefault()
-    e.stopPropagation()
+    e.preventDefault();
+    e.stopPropagation();
   }
 });
 

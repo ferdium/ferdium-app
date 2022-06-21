@@ -2,12 +2,16 @@ import { computed, observable } from 'mobx';
 import Reaction from './Reaction';
 
 export default class Store {
-  stores = {};
+  /** @type Stores */
+  stores;
 
-  api = {};
+  /** @type ApiInterface */
+  api;
 
-  actions = {};
+  /** @type Actions */
+  actions;
 
+  /** @type Reaction[] */
   _reactions = [];
 
   // status implementation
@@ -28,8 +32,9 @@ export default class Store {
   }
 
   registerReactions(reactions) {
-    for (const reaction of reactions)
+    for (const reaction of reactions) {
       this._reactions.push(new Reaction(reaction));
+    }
   }
 
   setup() {}

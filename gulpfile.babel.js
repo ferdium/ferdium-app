@@ -70,16 +70,12 @@ const paths = {
   javascripts: {
     src: 'src/**/*.js',
     dest: 'build/',
-    watch: [
-      'src/**/*.js',
-    ],
+    watch: 'src/**/*.js',
   },
   typescripts: {
     src: ['src/**/*.ts', 'src/**/*.tsx'],
     dest: 'build/',
-    watch: [
-      'src/**/*.ts',
-    ],
+    watch: ['src/**/*.ts', 'src/**/*.tsx'],
   },
 };
 

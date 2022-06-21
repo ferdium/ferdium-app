@@ -1,4 +1,27 @@
-export const createActionsFromDefinitions = (actionDefinitions, validate) => {
+import PropTypes from 'prop-types';
+
+export interface ActionDefinitions {
+  [key: string]: {
+    [key: string]: PropTypes.InferType<any>;
+  };
+}
+
+export interface Actions {
+  [key: string]: {
+    [key: string]: {
+      (...args: any[]): void;
+      listeners: Array<Function>;
+      notify: (params: any) => void;
+      listen: (listener: (params: any) => void) => void;
+      off: (listener: (params: any) => void) => void;
+    };
+  };
+}
+
+export const createActionsFromDefinitions = (
+  actionDefinitions: ActionDefinitions,
+  validate: any,
+) => {
   const actions = {};
   // eslint-disable-next-line unicorn/no-array-for-each
   Object.keys(actionDefinitions).forEach(actionName => {

@@ -14,12 +14,19 @@ import ms from 'ms';
 import { URL } from 'url';
 import { readJsonSync } from 'fs-extra';
 
-import Store from './lib/Store';
+import { Stores } from 'src/stores.types';
+import { ApiInterface } from 'src/api';
+import { Actions } from 'src/actions/lib/actions';
+import TypedStore from './lib/TypedStore';
 import Request from './lib/Request';
 import { CHECK_INTERVAL, DEFAULT_APP_SETTINGS } from '../config';
 import { cleanseJSObject } from '../jsUtils';
 import { isMac, isWindows, electronVersion, osRelease } from '../environment';
-import { ferdiumVersion, userDataPath, ferdiumLocale } from '../environment-remote';
+import {
+  ferdiumVersion,
+  userDataPath,
+  ferdiumLocale,
+} from '../environment-remote';
 import { generatedTranslations } from '../i18n/translations';
 import { getLocale } from '../helpers/i18n-helpers';
 
@@ -45,7 +52,7 @@ const CATALINA_NOTIFICATION_HACK_KEY =
 
 const locales = generatedTranslations();
 
-export default class AppStore extends Store {
+export default class AppStore extends TypedStore {
   updateStatusTypes = {
     CHECKING: 'CHECKING',
     AVAILABLE: 'AVAILABLE',
@@ -89,10 +96,10 @@ export default class AppStore extends Store {
 
   dictionaries = [];
 
-  fetchDataInterval = null;
+  fetchDataInterval: null | NodeJS.Timer = null;
 
-  constructor(...args) {
-    super(...args);
+  constructor(stores: Stores, api: ApiInterface, actions: Actions) {
+    super(stores, api, actions);
 
     // Register action handlers
     this.actions.app.notify.listen(this._notify.bind(this));
@@ -118,7 +125,7 @@ export default class AppStore extends Store {
     ]);
   }
 
-  async setup() {
+  async setup(): Promise<void> {
     this._appStartsCounter();
     // Focus the active service
     window.addEventListener('focus', this.actions.service.focusActiveService);
@@ -162,7 +169,7 @@ export default class AppStore extends Store {
     setInterval(() => this._checkForUpdates(), CHECK_INTERVAL);
     // Check for an update in 30s (need a delay to prevent Squirrel Installer lock file issues)
     setTimeout(() => this._checkForUpdates(), ms('30s'));
-    ipcRenderer.on('autoUpdate', (event, data) => {
+    ipcRenderer.on('autoUpdate', (_, data) => {
       if (this.updateStatus !== this.updateStatusTypes.FAILED) {
         if (data.available) {
           this.updateStatus = this.updateStatusTypes.AVAILABLE;
@@ -185,7 +192,10 @@ export default class AppStore extends Store {
         if (data.error) {
           if (data.error.message && data.error.message.startsWith('404')) {
             this.updateStatus = this.updateStatusTypes.NOT_AVAILABLE;
-            console.warn('Updater warning: there seems to be unpublished pre-release(s) available on GitHub', data.error);
+            console.warn(
+              'Updater warning: there seems to be unpublished pre-release(s) available on GitHub',
+              data.error,
+            );
           } else {
             console.error('Updater error:', data.error);
             this.updateStatus = this.updateStatusTypes.FAILED;
@@ -195,7 +205,7 @@ export default class AppStore extends Store {
     });
 
     // Handle deep linking (ferdium://)
-    ipcRenderer.on('navigateFromDeepLink', (event, data) => {
+    ipcRenderer.on('navigateFromDeepLink', (_, data) => {
       debug('Navigate from deep link', data);
       let { url } = data;
       if (!url) return;
@@ -217,7 +227,7 @@ export default class AppStore extends Store {
 
     this.isSystemDarkModeEnabled = nativeTheme.shouldUseDarkColors;
 
-    ipcRenderer.on('isWindowFocused', (event, isFocused) => {
+    ipcRenderer.on('isWindowFocused', (_, isFocused) => {
       debug('Setting is focused to', isFocused);
       this.isFocused = isFocused;
     });
@@ -391,7 +401,11 @@ export default class AppStore extends Store {
   }
 
   @action _checkForUpdates() {
-    if (this.isOnline && this.stores.settings.app.automaticUpdates && (isMac || isWindows || process.env.APPIMAGE)) {
+    if (
+      this.isOnline &&
+      this.stores.settings.app.automaticUpdates &&
+      (isMac || isWindows || process.env.APPIMAGE)
+    ) {
       debug('_checkForUpdates: sending event to autoUpdate:check');
       this.updateStatus = this.updateStatusTypes.CHECKING;
       ipcRenderer.send('autoUpdate', {
@@ -526,7 +540,7 @@ export default class AppStore extends Store {
   }
 
   _handleLogout() {
-    if (!this.stores.user.isLoggedIn) {
+    if (!this.stores.user.isLoggedIn && this.fetchDataInterval !== null) {
       clearInterval(this.fetchDataInterval);
     }
   }

@@ -69,7 +69,7 @@ function onDidLoad(fn: {
   (window: BrowserWindow): void;
   (window: BrowserWindow): void;
   (arg0: BrowserWindow): void;
-}) {
+}): void {
   if (onDidLoadFns) {
     onDidLoadFns.push(fn);
   } else if (mainWindow) {
