@@ -478,7 +478,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href='http://www.realityloop.com/' title='Brian Gilbert: design'><img src='https://avatars.githubusercontent.com/u/114017?v=4' alt='BrianGilbert' style='width:100px;'/></a></td>
     <td align="center"><a href='https://amangalampalli.github.io/' title='Aditya Mangalampalli: design'><img src='https://avatars.githubusercontent.com/u/25261413?v=4' alt='amangalampalli' style='width:100px;'/></a></td>
-    <td align="center"><a href='http://cino.io' title='Ricardo Cino: infra'><img src='https://avatars.githubusercontent.com/u/2735602?v=4' alt='cino' style='width:100px;'/></a></td>
+    <td align="center"><a href='http://cino.io' title='Ricardo Cino: infra, code'><img src='https://avatars.githubusercontent.com/u/2735602?v=4' alt='cino' style='width:100px;'/></a></td>
   </tr>
 </table>
 
