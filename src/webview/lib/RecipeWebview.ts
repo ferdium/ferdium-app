@@ -98,7 +98,7 @@ class RecipeWebview {
    * @param  {string | number | undefined | null} text to be parsed
    */
   isImage(url): boolean {
-    return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
+    return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url.split(/[#?]/)[0]);
   }
 
   /**
