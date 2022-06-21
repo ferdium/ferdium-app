@@ -124,6 +124,10 @@ const menuItems = defineMessages({
     id: 'menu.view.toggleFullScreen',
     defaultMessage: 'Toggle Full Screen',
   },
+  toggleNavigationBar: {
+    id: 'menu.view.toggleNavigationBar',
+    defaultMessage: 'Toggle Navigation Bar',
+  },
   toggleDarkMode: {
     id: 'menu.view.toggleDarkMode',
     defaultMessage: 'Toggle Dark Mode',
@@ -458,6 +462,21 @@ const _titleBarTemplateFactory = (intl, locked) => [
       {
         label: intl.formatMessage(menuItems.toggleFullScreen),
         role: 'toggleFullScreen',
+      },
+      {
+        label: intl.formatMessage(menuItems.toggleNavigationBar),
+        accelerator: `${cmdOrCtrlShortcutKey()}+B`,
+        role: 'toggleNavigationBar',
+        type: 'checkbox',
+        checked: window['ferdium'].stores.settings.app.navigationBarManualActive,
+        click: () => {
+          window['ferdium'].actions.settings.update({
+            type: 'app',
+            data: {
+              navigationBarManualActive: !window['ferdium'].stores.settings.app.navigationBarManualActive,
+            }
+          });
+        }
       },
       {
         label: intl.formatMessage(menuItems.toggleDarkMode),

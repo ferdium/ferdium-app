@@ -77,12 +77,13 @@ class ServiceView extends Component {
       isSpellcheckerEnabled,
     } = this.props;
 
-    const { navigationBarBehaviour } = stores.settings.app;
+    const { navigationBarBehaviour, navigationBarManualActive } = stores.settings.app;
 
     const showNavBar =
       navigationBarBehaviour === 'always' ||
       (navigationBarBehaviour === 'custom' &&
-        service.recipe.id === CUSTOM_WEBSITE_RECIPE_ID);
+        service.recipe.id === CUSTOM_WEBSITE_RECIPE_ID) ||
+      navigationBarManualActive;
 
     const webviewClasses = classnames({
       services__webview: true,
