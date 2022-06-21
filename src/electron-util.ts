@@ -15,7 +15,7 @@ export const initializeRemote = () => {
 
 export const enableWebContents = (webContents: electron.WebContents) => {
   enable(webContents);
-}
+};
 
 export const remote = new Proxy(
   {},

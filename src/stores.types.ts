@@ -15,7 +15,7 @@ export interface FerdiumStores {
   workspaces: WorkspacesStore;
 }
 
-interface Stores {
+export interface Stores {
   app: AppStore;
   communityRecipes: CommunityRecipesStore;
   features: FeaturesStore;
@@ -95,8 +95,8 @@ interface AppStore {
 interface CommunityRecipesStore {
   actions: Actions;
   stores: Stores;
-  _actions: [];
-  _reactions: [];
+  _actions: any[];
+  _reactions: any[];
   communityRecipes: () => void;
 }
 
