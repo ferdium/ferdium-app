@@ -147,6 +147,7 @@ class ServiceController {
         status: ['updated'],
       });
     }
+
     // Update service info
     const data = request.all();
     const { id } = params;
@@ -154,6 +155,10 @@ class ServiceController {
     // Get current settings from db
     const serviceQuery = await Service.query().where('serviceId', id).fetch();
     const serviceData = serviceQuery.rows[0];
+
+    if (data.customIcon === 'delete') {
+      data.iconId = '';
+    }
 
     const settings = {
       ...convertToJSON(serviceData.settings),
