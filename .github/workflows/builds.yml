@@ -254,6 +254,8 @@ jobs:
         if: ${{ env.GIT_BRANCH_NAME != 'nightly' && env.GIT_BRANCH_NAME != 'release' }}
         run: npm run build -- --publish never
         shell: bash
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: false
       - name: Build Ferdium with publish for 'nightly' branch
         if: ${{ env.GIT_BRANCH_NAME == 'nightly' }}
         env:
@@ -362,6 +364,8 @@ jobs:
         if: ${{ env.GIT_BRANCH_NAME != 'nightly' && env.GIT_BRANCH_NAME != 'release' }}
         run: npm run build -- --publish never
         shell: bash
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: false
       - name: Build Ferdium with publish for 'nightly' branch
         if: ${{ env.GIT_BRANCH_NAME == 'nightly' }}
         run: npm run build -- --publish always
