@@ -814,7 +814,7 @@ export default class ServicesStore extends Store {
       }
       case 'avatar': {
         const url = args[0];
-        if (service.iconUrl !== url && !service.hasCustomUploadedIcon) {
+        if (service.iconUrl !== url && !service.hasCustomIcon) {
           service.customIconUrl = url;
 
           this.actions.service.updateService({
