@@ -3,6 +3,7 @@ import Recipe from './models/Recipe';
 import Service from './models/Service';
 import User from './models/User';
 import { CachedRequest } from './stores/lib/CachedRequest';
+import Reaction from './stores/lib/Reaction';
 
 export interface FerdiumStores {
   app: AppStore;
@@ -61,11 +62,21 @@ interface Api {
   user: UserStore;
 }
 
-interface AppStore {
+interface TypedStore {
   actions: Actions;
+  api: Api;
+  stores: Stores;
+  _reactions: Reaction[];
+  _status: any;
+  actionStatus: () => void;
+  initialize: () => void;
+  tearDown: () => void;
+  resetStatus: () => void;
+}
+
+interface AppStore extends TypedStore {
   accentColor: string;
   progressbarAccentColor: string;
-  api: Api;
   authRequestFailed: () => void;
   autoLaunchOnStart: () => void;
   automaticUpdates: boolean;
@@ -84,7 +95,6 @@ interface AppStore {
   locale: () => void;
   reloadAfterResume: boolean;
   reloadAfterResumeTime: number;
-  stores: Stores;
   timeOfflineStart: () => void;
   timeSuspensionStart: () => void;
   updateStatus: () => void;
@@ -95,91 +105,56 @@ interface AppStore {
     DOWNLOADED: 'DOWNLOADED';
     FAILED: 'FAILED';
   };
-  _reactions: any[];
-  _status: () => void;
-  actionStatus: () => void;
   cacheSize: () => void;
   debugInfo: () => void;
 }
 
-interface CommunityRecipesStore {
-  actions: Actions;
-  stores: Stores;
-  _actions: any[];
-  _reactions: any[];
+interface CommunityRecipesStore extends TypedStore {
   communityRecipes: () => void;
 }
 
-interface FeaturesStore {
-  actions: Actions;
-  api: Api;
+interface FeaturesStore extends TypedStore {
+  anonymousFeatures: () => void;
   defaultFeaturesRequest: () => void;
   features: () => void;
   featuresRequest: CachedRequest;
-  stores: Stores;
-  _reactions: any[];
-  _status: () => void;
+  _monitorLoginStatus: () => void;
   _updateFeatures: () => void;
-  actionStatus: () => void;
-  anonymousFeatures: () => void;
+  _setupFeatures: () => void;
 }
 
-interface GlobalErrorStore {
-  actions: Actions;
-  api: Api;
+interface GlobalErrorStore extends TypedStore {
   error: () => void;
   messages: () => void;
   response: () => void;
-  stores: Stores;
   _handleRequests: () => void;
-  _reactions: [];
-  _status: () => void;
-  actionStatus: () => void;
 }
 
-interface RecipePreviewsStore {
-  actions: Actions;
+interface RecipePreviewsStore extends TypedStore {
   allRecipePreviewsRequest: () => void;
-  api: Api;
   searchRecipePreviewsRequest: () => void;
-  stores: Stores;
-  _reactions: [];
-  _status: () => void;
-  actionStatus: () => void;
   all: Recipe[];
   dev: Recipe[];
   searchResults: () => void;
 }
 
-interface RecipeStore {
-  actions: Actions;
+interface RecipeStore extends TypedStore {
   allRecipesRequest: () => void;
-  api: Api;
   getRecipeUpdatesRequest: () => void;
   installRecipeRequest: () => void;
-  stores: Stores;
-  _reactions: any[];
-  _status: () => void;
-  actionStatus: () => void;
   isInstalled: (id: string) => boolean;
   active: () => void;
   all: Recipe[];
   recipeIdForServices: () => void;
 }
 
-interface RequestsStore {
-  actions: Actions;
-  api: Api;
+interface RequestsStore extends TypedStore {
   localServerPort: () => void;
   retries: number;
   retryDelay: number;
   servicesRequest: () => void;
   showRequiredRequestsError: () => void;
-  stores: Stores;
   userInfoRequest: () => void;
-  _reactions: any[];
-  _status: () => void;
-  actionStatus: () => void;
   areRequiredRequestsLoading: () => void;
   areRequiredRequestsSuccessful: () => void;
 }
@@ -203,9 +178,7 @@ interface RouterStore {
   replace: () => void;
 }
 
-export interface ServicesStore {
-  actions: Actions;
-  api: Api;
+export interface ServicesStore extends TypedStore {
   clearCacheRequest: () => void;
   createServiceRequest: () => void;
   deleteServiceRequest: () => void;
@@ -214,11 +187,7 @@ export interface ServicesStore {
   lastUsedServices: () => void;
   reorderServicesRequest: () => void;
   serviceMaintenanceTick: () => void;
-  stores: Stores;
   updateServiceRequest: () => void;
-  _reactions: any[];
-  _status: () => void;
-  actionStatus: () => void;
   active: () => void;
   activeSettings: () => void;
   all: Service[];
@@ -235,17 +204,11 @@ interface ISettings {
   [key: string]: any;
 }
 
-interface SettingsStore {
-  actions: Actions;
-  api: Api;
+interface SettingsStore extends TypedStore {
   fileSystemSettingsTypes: any[];
   loaded: boolean;
-  stores: Stores;
   updateAppSettingsRequest: () => void;
   _fileSystemSettingsCache: () => void;
-  _reactions: [];
-  _status: () => void;
-  actionStatus: () => void;
   all: ISettings;
   app: AppStore;
   migration: () => void;
@@ -254,22 +217,17 @@ interface SettingsStore {
   stats: () => void;
 }
 
-interface TodosStore {
-  actions: Actions;
-  api: Api;
+interface TodosStore extends TypedStore {
   isFeatureActive: () => void;
   isInitialized: true;
-  stores: Stores;
   userAgentModel: () => void;
   webview: () => void;
-  _actions: any[];
   _allReactions: any[];
   _firstLaunchReaction: () => void;
   _goToService: () => void;
   _handleNewWindowEvent: () => void;
   _onTodosClientInitialized: () => void;
   _openDevTools: () => void;
-  _reactions: any[];
   _reload: () => void;
   _routeCheckReaction: () => void;
   _updateSettings: () => void;
@@ -292,14 +250,8 @@ interface TodosStore {
   _toggleTodosPanel: () => void;
 }
 
-interface UIStore {
-  actions: Actions;
-  api: Api;
+interface UIStore extends TypedStore {
   isOsDarkThemeActive: () => void;
-  stores: Stores;
-  _reactions: [];
-  _status: () => void;
-  actionStatus: () => void;
   showServicesUpdatedInfoBar: boolean;
   isDarkThemeActive: () => void;
   isSplitModeActive: () => void;
@@ -308,7 +260,7 @@ interface UIStore {
   theme: () => void;
 }
 
-interface UserStore {
+interface UserStore extends TypedStore {
   BASE_ROUTE: '/auth';
   CHANGE_SERVER_ROUTE: '/auth/server';
   IMPORT_ROUTE: '/auth/signup/import';
@@ -320,9 +272,6 @@ interface UserStore {
   SIGNUP_ROUTE: '/auth/signup';
   WELCOME_ROUTE: '/auth/welcome';
   accountType: () => void;
-  actionStatus: () => void;
-  actions: Actions;
-  api: Api;
   authToken: () => void;
   deleteAccountRequest: () => void;
   fetchUserInfoInterval: null;
@@ -339,12 +288,9 @@ interface UserStore {
   logoutReasonTypes: { SERVER: 'SERVER' };
   passwordRequest: () => void;
   signupRequest: () => void;
-  stores: Stores;
   updateUserInfoRequest: () => void;
   userData: () => void;
-  _reactions: any[];
   _requireAuthenticatedUser: () => void;
-  _status: () => void;
   changeServerRoute: () => void;
   data: User;
   importRoute: () => void;
@@ -360,7 +306,7 @@ interface UserStore {
   team: () => void;
 }
 
-export interface WorkspacesStore {
+export interface WorkspacesStore extends TypedStore {
   activeWorkspace: () => void;
   delete: ({ workspace }) => void;
   update: ({ workspace }) => void;
@@ -373,17 +319,14 @@ export interface WorkspacesStore {
   isSwitchingWorkspace: () => void;
   isWorkspaceDrawerOpen: () => void;
   nextWorkspace: () => void;
-  stores: Stores;
   workspaces: Workspace[];
   workspaceBeingEdited: () => void;
-  _actions: any[];
   _activateLastUsedWorkspaceReaction: () => void;
   _allActions: any[];
   _allReactions: any[];
   _cleanupInvalidServiceReferences: () => void;
   _getWorkspaceById: () => void;
   _openDrawerWithSettingsReaction: () => void;
-  _reactions: any[];
   _setActiveServiceOnWorkspaceSwitchReaction: () => void;
   _setWorkspaceBeingEditedReaction: () => void;
   _toggleKeepAllWorkspacesLoadedSetting: () => void;

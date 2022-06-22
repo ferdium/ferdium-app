@@ -18,9 +18,9 @@ export default abstract class TypedStore {
   }
 
   constructor(
-    public stores: Stores,
-    public api: ApiInterface,
-    public actions: Actions,
+    public readonly stores: Stores,
+    public readonly api: ApiInterface,
+    public readonly actions: Actions,
   ) {}
 
   registerReactions(reactions: { (r: IReactionPublic): void }[]): void {

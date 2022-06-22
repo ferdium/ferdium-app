@@ -38,7 +38,7 @@ window.addEventListener('load', () => {
     render() {
       const preparedApp = (
         <Provider stores={stores} actions={actions}>
-          <I18N>
+          <I18N stores={{ app: stores.app, user: stores.user }}>
             <Routes history={history} />
           </I18N>
         </Provider>
