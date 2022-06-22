@@ -1,8 +1,6 @@
 import { computed, observable, runInAction } from 'mobx';
 
-import Store from './lib/Store';
 import CachedRequest from './lib/CachedRequest';
-
 import serviceProxy from '../features/serviceProxy';
 import basicAuth from '../features/basicAuth';
 import workspaces from '../features/workspaces';
@@ -11,8 +9,9 @@ import publishDebugInfo from '../features/publishDebugInfo';
 import communityRecipes from '../features/communityRecipes';
 import todos from '../features/todos';
 import appearance from '../features/appearance';
+import TypedStore from './lib/TypedStore';
 
-export default class FeaturesStore extends Store {
+export default class FeaturesStore extends TypedStore {
   @observable defaultFeaturesRequest = new CachedRequest(
     this.api.features,
     'default',
@@ -25,7 +24,7 @@ export default class FeaturesStore extends Store {
 
   @observable features = {};
 
-  async setup() {
+  async setup(): Promise<void> {
     this.registerReactions([
       this._updateFeatures,
       this._monitorLoginStatus.bind(this),
@@ -35,11 +34,11 @@ export default class FeaturesStore extends Store {
     setTimeout(this._setupFeatures.bind(this), 1);
   }
 
-  @computed get anonymousFeatures() {
+  @computed get anonymousFeatures(): any {
     return this.defaultFeaturesRequest.execute().result || {};
   }
 
-  _updateFeatures = () => {
+  _updateFeatures = (): void => {
     const features = {};
     if (this.stores.user.isLoggedIn) {
       let requestResult = {};
@@ -55,7 +54,7 @@ export default class FeaturesStore extends Store {
     });
   };
 
-  _monitorLoginStatus() {
+  _monitorLoginStatus(): void {
     if (this.stores.user.isLoggedIn) {
       this.featuresRequest.invalidate({ immediately: true });
     } else {
@@ -64,7 +63,7 @@ export default class FeaturesStore extends Store {
     }
   }
 
-  _setupFeatures() {
+  _setupFeatures(): void {
     serviceProxy(this.stores);
     basicAuth();
     workspaces(this.stores, this.actions);
