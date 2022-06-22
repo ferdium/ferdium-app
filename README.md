@@ -54,17 +54,6 @@ Assets made available via [GitHub releases](https://github.com/ferdium/ferdium-a
 
 _Find answers to frequently asked questions on [ferdium.org/faq](https://ferdium.org/faq)._
 
-## Unsigned Nightlies on MacOS
-
-Since we are waiting to acquire the Apple Developer License, we are publishing our nightlies without being signed. On MacOS Catalina and newer, you will receive the prompt that "Ferdium" cannot be opened because the developer cannot be verified. 
-
-To work around this, simply Control/Right-click on the app and select "Open" twice. 
-
-Alternatively, click "Open Anyway" under the "General" section of Security & Privacy of the "System Preferences" application, or execute the following command:
-```bash
-sudo xattr -rd com.apple.quarantine /Applications/Ferdium.app
-```
-
 ## Unsigned Nightlies on Windows
 
 Similarly to the MacOS, we do not currently have a certificate to sign the nightlies on Windows. For this reason, an error will appear when launching the setup tool or the portable app if your execution policy is not set to `Bypass` or `Unrestricted`. In order to allow the script to run, it is sufficient to right-click on the `.exe` to access its properties and to tick the box labeled `Unblock` at the bottom of the General tab. Alternatively, you could execute the following in a PowerShell:
