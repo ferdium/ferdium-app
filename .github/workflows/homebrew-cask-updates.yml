@@ -1,4 +1,5 @@
-name: bump-ferdium-casks
+name: Homebrew cask updates
+
 on:
   release:
     types: [published]
@@ -9,14 +10,39 @@ jobs:
   bump-casks:
     runs-on: macos-latest
     steps:
-    - uses: macauley/action-homebrew-bump-cask@v1
+    - name: Publish nightly
+      uses: macauley/action-homebrew-bump-cask@v1
+      if: contains(${{ github.event.release.tag_name }}, "nightly")
       with:
         # Required, custom GitHub access token with only the 'public_repo' scope enabled
-        token: ${{secrets.HOMEBREW_FERDIUM_PUBLISH_TOKEN}}
+        token: ${{ secrets.HOMEBREW_FERDIUM_PUBLISH_TOKEN }}
         # Bump all outdated casks in this tap
         tap: ferdium/homebrew-ferdium
         # Bump only these casks if outdated
         cask: ferdium-nightly
         livecheck: true
         dryrun: false
-# TODO: Need separate ones for the beta and public builds
+    - name: Publish beta
+      uses: macauley/action-homebrew-bump-cask@v1
+      if: contains(${{ github.event.release.tag_name }}, "beta")
+      with:
+        # Required, custom GitHub access token with only the 'public_repo' scope enabled
+        token: ${{ secrets.HOMEBREW_FERDIUM_PUBLISH_TOKEN }}
+        # Bump all outdated casks in this tap
+        tap: ferdium/homebrew-ferdium
+        # Bump only these casks if outdated
+        cask: ferdium-beta
+        livecheck: true
+        dryrun: false
+    - name: Publish release
+      uses: macauley/action-homebrew-bump-cask@v1
+      if: ${{ !contains(${{ github.event.release.tag_name }}, "nightly") && !contains(${{ github.event.release.tag_name }}, "beta") }}
+      with:
+        # Required, custom GitHub access token with only the 'public_repo' scope enabled
+        token: ${{ secrets.HOMEBREW_FERDIUM_PUBLISH_TOKEN }}
+        # Bump all outdated casks in this tap
+        tap: ferdium/homebrew-ferdium
+        # Bump only these casks if outdated
+        cask: ferdium
+        livecheck: true
+        dryrun: false

@@ -1,4 +1,4 @@
-name: Release
+name: Publish to Reddit
 
 on:
   release:
@@ -18,5 +18,5 @@ jobs:
           subreddit: ferdium # Submit to /r/ferdium
           title: "[Release] Ferdium ${{ github.event.release.tag_name }}"
           # flair-id: "7aa4f288-bf0d-11ec-a939-8e36666e1f23"
-          comment: ${{ github.event.release.body }}
+          comment: "${{ github.event.release.body }}"
           notification: true
