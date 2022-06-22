@@ -23,6 +23,7 @@ interface IRecipe {
     disablewebsecurity?: boolean;
     autoHibernate?: boolean;
     partition?: string;
+    local?: boolean;
     message?: string;
     allowFavoritesDelineationInUnreadCount?: boolean;
   };
@@ -70,6 +71,9 @@ export default class Recipe {
   path: string = '';
 
   partition: string = '';
+
+  // TODO: Is this being used?
+  local: boolean = false;
 
   // TODO: Need to reconcile which of these are optional/mandatory
   constructor(data: IRecipe) {
@@ -134,6 +138,7 @@ export default class Recipe {
       data.config.autoHibernate,
       this.autoHibernate,
     );
+    this.local = ifUndefinedBoolean(data.config.local, this.local);
     this.message = ifUndefinedString(data.config.message, this.message);
     this.allowFavoritesDelineationInUnreadCount = ifUndefinedBoolean(
       data.config.allowFavoritesDelineationInUnreadCount,

@@ -2,23 +2,27 @@ import { action, computed, observable } from 'mobx';
 import { readJSONSync } from 'fs-extra';
 import semver from 'semver';
 
-import Store from './lib/Store';
+import { Stores } from 'src/stores.types';
+import { ApiInterface } from 'src/api';
+import { Actions } from 'src/actions/lib/actions';
+import Recipe from 'src/models/Recipe';
 import CachedRequest from './lib/CachedRequest';
 import Request from './lib/Request';
 import { matchRoute } from '../helpers/routing-helpers';
 import { asarRecipesPath } from '../helpers/asar-helpers';
+import TypedStore from './lib/TypedStore';
 
 const debug = require('../preload-safe-debug')('Ferdium:RecipeStore');
 
-export default class RecipesStore extends Store {
+export default class RecipesStore extends TypedStore {
   @observable allRecipesRequest = new CachedRequest(this.api.recipes, 'all');
 
   @observable installRecipeRequest = new Request(this.api.recipes, 'install');
 
   @observable getRecipeUpdatesRequest = new Request(this.api.recipes, 'update');
 
-  constructor(...args) {
-    super(...args);
+  constructor(stores: Stores, api: ApiInterface, actions: Actions) {
+    super(stores, api, actions);
 
     // Register action handlers
     this.actions.recipe.install.listen(this._install.bind(this));
@@ -28,11 +32,12 @@ export default class RecipesStore extends Store {
     this.registerReactions([this._checkIfRecipeIsInstalled.bind(this)]);
   }
 
-  setup() {
-    return this.all;
+  async setup(): Promise<void> {
+    // Initially load all recipes
+    this.all;
   }
 
-  @computed get all() {
+  @computed get all(): Recipe[] {
     return this.allRecipesRequest.execute().result || [];
   }
 
@@ -53,20 +58,20 @@ export default class RecipesStore extends Store {
     return null;
   }
 
-  @computed get recipeIdForServices() {
+  @computed get recipeIdForServices(): string[] {
     return this.stores.services.all.map(s => s.recipe.id);
   }
 
-  one(id) {
+  one(id: string): Recipe | undefined {
     return this.all.find(recipe => recipe.id === id);
   }
 
-  isInstalled(id) {
+  isInstalled(id: string): boolean {
     return !!this.one(id);
   }
 
   // Actions
-  async _install({ recipeId }) {
+  async _install({ recipeId }): Promise<Recipe> {
     const recipe = await this.installRecipeRequest.execute(recipeId)._promise;
     await this.allRecipesRequest.invalidate({ immediately: true })._promise;
 
@@ -82,7 +87,9 @@ export default class RecipesStore extends Store {
 
     for (const r of recipeIds) {
       const recipe = this.one(r);
-      recipes[r] = recipe.version;
+      if (recipe) {
+        recipes[r] = recipe.version;
+      }
     }
 
     if (Object.keys(recipes).length === 0) return;
@@ -93,7 +100,7 @@ export default class RecipesStore extends Store {
     // Check for local updates
     const allJsonFile = asarRecipesPath('all.json');
     const allJson = readJSONSync(allJsonFile);
-    const localUpdates = [];
+    const localUpdates: string[] = [];
 
     for (const recipe of Object.keys(recipes)) {
       const version = recipes[recipe];
@@ -134,7 +141,7 @@ export default class RecipesStore extends Store {
     }
   }
 
-  async _checkIfRecipeIsInstalled() {
+  async _checkIfRecipeIsInstalled(): Promise<void> {
     const { router } = this.stores;
 
     const match =

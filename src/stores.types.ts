@@ -161,6 +161,7 @@ interface RecipeStore {
   _reactions: any[];
   _status: () => void;
   actionStatus: () => void;
+  isInstalled: (id: string) => boolean;
   active: () => void;
   all: Recipe[];
   recipeIdForServices: () => void;
@@ -188,7 +189,16 @@ interface RouterStore {
   goBack: () => void;
   goForward: () => void;
   history: () => void;
-  location: () => void;
+  location: {
+    pathname: string;
+    search: string;
+    action: string;
+    key: string;
+    state: any;
+    query: any;
+    hash?: string;
+    basename?: string;
+  };
   push(path: string): void;
   replace: () => void;
 }
@@ -199,6 +209,7 @@ export interface ServicesStore {
   clearCacheRequest: () => void;
   createServiceRequest: () => void;
   deleteServiceRequest: () => void;
+  allServicesRequest: CachedRequest;
   filterNeedle: () => void;
   lastUsedServices: () => void;
   reorderServicesRequest: () => void;
@@ -285,11 +296,11 @@ interface UIStore {
   actions: Actions;
   api: Api;
   isOsDarkThemeActive: () => void;
-  showServicesUpdatedInfoBar: () => void;
   stores: Stores;
   _reactions: [];
   _status: () => void;
   actionStatus: () => void;
+  showServicesUpdatedInfoBar: boolean;
   isDarkThemeActive: () => void;
   isSplitModeActive: () => void;
   splitColumnsNo: () => void;
