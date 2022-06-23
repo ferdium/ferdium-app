@@ -9,7 +9,7 @@ export const ifUndefined = <T>(
   defaultValue: T,
 ): T => {
   if (source !== undefined && source !== null) {
-    return source as T;
+    return source;
   }
 
   return defaultValue;
