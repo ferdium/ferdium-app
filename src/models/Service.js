@@ -127,9 +127,7 @@ export default class Service {
     this.name = ifUndefinedString(data.name, this.name);
     this.team = ifUndefinedString(data.team, this.team);
     this.customUrl = ifUndefinedString(data.customUrl, this.customUrl);
-    // this.customIconUrl = ifUndefinedString(data.customIconUrl, this.customIconUrl);
     this.iconUrl = ifUndefinedString(data.iconUrl, this.iconUrl);
-
     this.order = ifUndefinedNumber(data.order, this.order);
     this.isEnabled = ifUndefinedBoolean(data.isEnabled, this.isEnabled);
     this.isNotificationEnabled = ifUndefinedBoolean(
@@ -162,7 +160,7 @@ export default class Service {
       this.isProgressbarEnabled,
     );
     this.hasCustomUploadedIcon = ifUndefinedBoolean(
-      data.hasCustomIcon,
+      data.iconId?.length > 0,
       this.hasCustomUploadedIcon,
     );
     this.onlyShowFavoritesInUnreadCount = ifUndefinedBoolean(
