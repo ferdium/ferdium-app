@@ -31,7 +31,7 @@ import { aboutAppDetails, ferdiumVersion } from '../environment-remote';
 import { todoActions } from '../features/todos/actions';
 import { workspaceActions } from '../features/workspaces/actions';
 import { workspaceStore } from '../features/workspaces/index';
-import apiBase, { termsBase } from '../api/apiBase';
+import apiBase, { serverBase } from '../api/apiBase';
 import { openExternalUrl } from '../helpers/url-helpers';
 import globalMessages from '../i18n/globalMessages';
 
@@ -567,13 +567,13 @@ const _titleBarTemplateFactory = (intl, locked) => [
       {
         label: intl.formatMessage(menuItems.tos),
         click() {
-          openExternalUrl(`${termsBase()}/terms`, true);
+          openExternalUrl(`${serverBase()}/terms`, true);
         },
       },
       {
         label: intl.formatMessage(menuItems.privacy),
         click() {
-          openExternalUrl(`${termsBase()}/privacy`, true);
+          openExternalUrl(`${serverBase()}/privacy`, true);
         },
       },
     ],

@@ -35,7 +35,7 @@ const apiBase = (withVersion = true) => {
 
 export default apiBase;
 
-export function termsBase() {
+export function serverBase() {
 
   const serverType = (window as any).ferdium.stores.settings.all.app.server;
   const noServer = 'You are using Ferdium without a server';
