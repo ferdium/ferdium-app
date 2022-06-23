@@ -6,6 +6,7 @@ import { defineMessages, injectIntl } from 'react-intl';
 
 import { LIVE_FRANZ_API } from '../../config';
 import { API_VERSION } from '../../environment-remote';
+import { serverBase } from '../../api/apiBase'; // TODO: Remove this line after fixing password recovery in-app
 import Form from '../../lib/Form';
 import { required, email } from '../../helpers/validation-helpers';
 import Input from '../ui/Input';
@@ -69,7 +70,7 @@ class Login extends Component {
     isTokenExpired: PropTypes.bool.isRequired,
     isServerLogout: PropTypes.bool.isRequired,
     signupRoute: PropTypes.string.isRequired,
-    passwordRoute: PropTypes.string.isRequired,
+    // passwordRoute: PropTypes.string.isRequired, // TODO: Uncomment this line after fixing password recovery in-app
     error: globalErrorPropType.isRequired,
   };
 
@@ -111,7 +112,7 @@ class Login extends Component {
       isTokenExpired,
       isServerLogout,
       signupRoute,
-      passwordRoute,
+      // passwordRoute, // TODO: Uncomment this line after fixing password recovery in-app
       error,
     } = this.props;
 
@@ -177,7 +178,11 @@ class Login extends Component {
           <Link to={signupRoute}>
             {intl.formatMessage(messages.signupLink)}
           </Link>
-          <Link to={passwordRoute}>
+          <Link 
+            // to={passwordRoute} // TODO: Uncomment this line after fixing password recovery in-app
+            to={`${serverBase()}/user/forgot`} // TODO: Remove this line after fixing password recovery in-app
+            target='_blank' // TODO: Remove this line after fixing password recovery in-app
+          >
             {intl.formatMessage(messages.passwordLink)}
           </Link>
         </div>
