@@ -9,7 +9,7 @@ export default class Workspace {
 
   @observable order = null;
 
-  @observable services = [];
+  @observable services: string[] = [];
 
   @observable userId = null;
 

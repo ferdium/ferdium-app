@@ -2,7 +2,7 @@ import semver from 'semver';
 import { pathExistsSync } from 'fs-extra';
 import { join } from 'path';
 import { DEFAULT_SERVICE_SETTINGS } from '../config';
-import { ifUndefinedString, ifUndefinedBoolean } from '../jsUtils';
+import { ifUndefined } from '../jsUtils';
 
 interface IRecipe {
   id: string;
@@ -34,7 +34,7 @@ export default class Recipe {
 
   name: string = '';
 
-  description = '';
+  description: string = '';
 
   version: string = '';
 
@@ -75,6 +75,19 @@ export default class Recipe {
   // TODO: Is this being used?
   local: boolean = false;
 
+  // TODO Add types for this once we know if they are neccesary to pass
+  // on to the initialize-recipe ipc event.
+  overrideUserAgent: any;
+
+  buildUrl: any;
+
+  modifyRequestHeaders: any;
+
+  knownCertificateHosts: any;
+
+  events: any;
+  // End todo.
+
   // TODO: Need to reconcile which of these are optional/mandatory
   constructor(data: IRecipe) {
     if (!data) {
@@ -93,61 +106,64 @@ export default class Recipe {
     }
 
     // from the recipe
-    this.id = ifUndefinedString(data.id, this.id);
-    this.name = ifUndefinedString(data.name, this.name);
-    this.version = ifUndefinedString(data.version, this.version);
+    this.id = ifUndefined<string>(data.id, this.id);
+    this.name = ifUndefined<string>(data.name, this.name);
+    this.version = ifUndefined<string>(data.version, this.version);
     this.aliases = data.aliases || this.aliases;
-    this.serviceURL = ifUndefinedString(
+    this.serviceURL = ifUndefined<string>(
       data.config.serviceURL,
       this.serviceURL,
     );
-    this.hasDirectMessages = ifUndefinedBoolean(
+    this.hasDirectMessages = ifUndefined<boolean>(
       data.config.hasDirectMessages,
       this.hasDirectMessages,
     );
-    this.hasIndirectMessages = ifUndefinedBoolean(
+    this.hasIndirectMessages = ifUndefined<boolean>(
       data.config.hasIndirectMessages,
       this.hasIndirectMessages,
     );
-    this.hasNotificationSound = ifUndefinedBoolean(
+    this.hasNotificationSound = ifUndefined<boolean>(
       data.config.hasNotificationSound,
       this.hasNotificationSound,
     );
-    this.hasTeamId = ifUndefinedBoolean(data.config.hasTeamId, this.hasTeamId);
-    this.hasCustomUrl = ifUndefinedBoolean(
+    this.hasTeamId = ifUndefined<boolean>(
+      data.config.hasTeamId,
+      this.hasTeamId,
+    );
+    this.hasCustomUrl = ifUndefined<boolean>(
       data.config.hasCustomUrl,
       this.hasCustomUrl,
     );
-    this.hasHostedOption = ifUndefinedBoolean(
+    this.hasHostedOption = ifUndefined<boolean>(
       data.config.hasHostedOption,
       this.hasHostedOption,
     );
-    this.urlInputPrefix = ifUndefinedString(
+    this.urlInputPrefix = ifUndefined<string>(
       data.config.urlInputPrefix,
       this.urlInputPrefix,
     );
-    this.urlInputSuffix = ifUndefinedString(
+    this.urlInputSuffix = ifUndefined<string>(
       data.config.urlInputSuffix,
       this.urlInputSuffix,
     );
-    this.disablewebsecurity = ifUndefinedBoolean(
+    this.disablewebsecurity = ifUndefined<boolean>(
       data.config.disablewebsecurity,
       this.disablewebsecurity,
     );
-    this.autoHibernate = ifUndefinedBoolean(
+    this.autoHibernate = ifUndefined<boolean>(
       data.config.autoHibernate,
       this.autoHibernate,
     );
-    this.local = ifUndefinedBoolean(data.config.local, this.local);
-    this.message = ifUndefinedString(data.config.message, this.message);
-    this.allowFavoritesDelineationInUnreadCount = ifUndefinedBoolean(
+    this.local = ifUndefined<boolean>(data.config.local, this.local);
+    this.message = ifUndefined<string>(data.config.message, this.message);
+    this.allowFavoritesDelineationInUnreadCount = ifUndefined<boolean>(
       data.config.allowFavoritesDelineationInUnreadCount,
       this.allowFavoritesDelineationInUnreadCount,
     );
 
     // computed
     this.path = data.path;
-    this.partition = ifUndefinedString(data.config.partition, this.partition);
+    this.partition = ifUndefined<string>(data.config.partition, this.partition);
   }
 
   // TODO: Need to remove this if its not used anywhere

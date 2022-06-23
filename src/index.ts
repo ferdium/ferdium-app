@@ -30,7 +30,7 @@ import {
   userDataRecipesPath,
   userDataPath,
 } from './environment-remote';
-import { ifUndefinedBoolean } from './jsUtils';
+import { ifUndefined } from './jsUtils';
 
 import { mainIpcHandler as basicAuthHandler } from './features/basicAuth';
 import ipcApi from './electron/ipc-api';
@@ -91,7 +91,7 @@ const settings = new Settings('app', DEFAULT_APP_SETTINGS);
 const proxySettings = new Settings('proxy');
 
 const retrieveSettingValue = (key: string, defaultValue: boolean) =>
-  ifUndefinedBoolean(settings.get(key), defaultValue);
+  ifUndefined<boolean>(settings.get(key), defaultValue);
 
 const liftSingleInstanceLock = retrieveSettingValue(
   'liftSingleInstanceLock',

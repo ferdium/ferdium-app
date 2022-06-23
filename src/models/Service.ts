@@ -3,114 +3,121 @@ import { ipcRenderer } from 'electron';
 import { webContents } from '@electron/remote';
 import normalizeUrl from 'normalize-url';
 import { join } from 'path';
+import ElectronWebView from 'react-electron-web-view';
 
 import { todosStore } from '../features/todos';
 import { isValidExternalURL } from '../helpers/url-helpers';
 import UserAgent from './UserAgent';
 import { DEFAULT_SERVICE_ORDER } from '../config';
-import {
-  ifUndefinedString,
-  ifUndefinedBoolean,
-  ifUndefinedNumber,
-} from '../jsUtils';
+import { ifUndefined } from '../jsUtils';
+import Recipe from './Recipe';
 
 const debug = require('../preload-safe-debug')('Ferdium:Service');
 
 // TODO: Shouldn't most of these values default to what's defined in DEFAULT_SERVICE_SETTINGS?
 export default class Service {
-  id = '';
+  id: string = '';
 
-  recipe = null;
+  recipe: Recipe;
 
-  _webview = null;
+  _webview: ElectronWebView | null = null;
 
-  timer = null;
+  timer: NodeJS.Timeout | null = null;
 
   events = {};
 
-  @observable isAttached = false;
+  @observable isAttached: boolean = false;
 
-  @observable isActive = false; // Is current webview active
+  @observable isActive: boolean = false; // Is current webview active
 
-  @observable name = '';
+  @observable name: string = '';
 
-  @observable unreadDirectMessageCount = 0;
+  @observable unreadDirectMessageCount: number = 0;
 
-  @observable unreadIndirectMessageCount = 0;
+  @observable unreadIndirectMessageCount: number = 0;
 
-  @observable dialogTitle = '';
+  @observable dialogTitle: string = '';
 
-  @observable order = DEFAULT_SERVICE_ORDER;
+  @observable order: number = DEFAULT_SERVICE_ORDER;
 
-  @observable isEnabled = true;
+  @observable isEnabled: boolean = true;
 
-  @observable isMuted = false;
+  @observable isMuted: boolean = false;
 
-  @observable team = '';
+  @observable team: string = '';
 
-  @observable customUrl = '';
+  @observable customUrl: string = '';
 
-  @observable isNotificationEnabled = true;
+  @observable isNotificationEnabled: boolean = true;
 
-  @observable isBadgeEnabled = true;
+  @observable isBadgeEnabled: boolean = true;
 
-  @observable trapLinkClicks = false;
+  @observable trapLinkClicks: boolean = false;
 
-  @observable isIndirectMessageBadgeEnabled = true;
+  @observable isIndirectMessageBadgeEnabled: boolean = true;
 
-  @observable iconUrl = '';
+  @observable iconUrl: string = '';
 
-  @observable hasCustomUploadedIcon = false;
+  @observable customIconUrl: string = '';
 
-  @observable hasCrashed = false;
+  @observable hasCustomUploadedIcon: boolean = false;
 
-  @observable isDarkModeEnabled = false;
+  @observable hasCrashed: boolean = false;
 
-  @observable isProgressbarEnabled = true;
+  @observable isDarkModeEnabled: boolean = false;
 
-  @observable darkReaderSettings = { brightness: 100, contrast: 90, sepia: 10 };
+  @observable isProgressbarEnabled: boolean = true;
 
-  @observable spellcheckerLanguage = null;
+  @observable darkReaderSettings: object = {
+    brightness: 100,
+    contrast: 90,
+    sepia: 10,
+  };
 
-  @observable isFirstLoad = true;
+  @observable spellcheckerLanguage: string | null = null;
 
-  @observable isLoading = true;
+  @observable isFirstLoad: boolean = true;
 
-  @observable isLoadingPage = true;
+  @observable isLoading: boolean = true;
 
-  @observable isError = false;
+  @observable isLoadingPage: boolean = true;
 
-  @observable errorMessage = '';
+  @observable isError: boolean = false;
 
-  @observable isUsingCustomUrl = false;
+  @observable errorMessage: string = '';
 
-  @observable isServiceAccessRestricted = false;
+  @observable isUsingCustomUrl: boolean = false;
 
+  @observable isServiceAccessRestricted: boolean = false;
+
+  // todo is this used?
   @observable restrictionType = null;
 
-  @observable isHibernationEnabled = false;
+  @observable isHibernationEnabled: boolean = false;
 
-  @observable isWakeUpEnabled = true;
+  @observable isWakeUpEnabled: boolean = true;
 
-  @observable isHibernationRequested = false;
+  @observable isHibernationRequested: boolean = false;
 
-  @observable onlyShowFavoritesInUnreadCount = false;
+  @observable onlyShowFavoritesInUnreadCount: boolean = false;
 
-  @observable lastUsed = Date.now(); // timestamp
+  @observable lastUsed: number = Date.now(); // timestamp
 
-  @observable lastHibernated = null; // timestamp
+  @observable lastHibernated: number | null = null; // timestamp
 
-  @observable lastPoll = Date.now();
+  @observable lastPoll: number = Date.now();
 
-  @observable lastPollAnswer = Date.now();
+  @observable lastPollAnswer: number = Date.now();
 
-  @observable lostRecipeConnection = false;
+  @observable lostRecipeConnection: boolean = false;
 
-  @observable lostRecipeReloadAttempt = 0;
+  @observable lostRecipeReloadAttempt: number = 0;
 
-  @observable userAgentModel = null;
+  @observable userAgentModel: UserAgent;
 
-  constructor(data, recipe) {
+  @observable proxy: string | null = null;
+
+  constructor(data, recipe: Recipe) {
     if (!data) {
       throw new Error('Service config not valid');
     }
@@ -123,64 +130,64 @@ export default class Service {
 
     this.userAgentModel = new UserAgent(recipe.overrideUserAgent);
 
-    this.id = ifUndefinedString(data.id, this.id);
-    this.name = ifUndefinedString(data.name, this.name);
-    this.team = ifUndefinedString(data.team, this.team);
-    this.customUrl = ifUndefinedString(data.customUrl, this.customUrl);
-    this.iconUrl = ifUndefinedString(data.iconUrl, this.iconUrl);
-    this.order = ifUndefinedNumber(data.order, this.order);
-    this.isEnabled = ifUndefinedBoolean(data.isEnabled, this.isEnabled);
-    this.isNotificationEnabled = ifUndefinedBoolean(
+    this.id = ifUndefined<string>(data.id, this.id);
+    this.name = ifUndefined<string>(data.name, this.name);
+    this.team = ifUndefined<string>(data.team, this.team);
+    this.customUrl = ifUndefined<string>(data.customUrl, this.customUrl);
+    this.iconUrl = ifUndefined<string>(data.iconUrl, this.iconUrl);
+    this.order = ifUndefined<number>(data.order, this.order);
+    this.isEnabled = ifUndefined<boolean>(data.isEnabled, this.isEnabled);
+    this.isNotificationEnabled = ifUndefined<boolean>(
       data.isNotificationEnabled,
       this.isNotificationEnabled,
     );
-    this.isBadgeEnabled = ifUndefinedBoolean(
+    this.isBadgeEnabled = ifUndefined<boolean>(
       data.isBadgeEnabled,
       this.isBadgeEnabled,
     );
-    this.trapLinkClicks = ifUndefinedBoolean(
+    this.trapLinkClicks = ifUndefined<boolean>(
       data.trapLinkClicks,
       this.trapLinkClicks,
     );
-    this.isIndirectMessageBadgeEnabled = ifUndefinedBoolean(
+    this.isIndirectMessageBadgeEnabled = ifUndefined<boolean>(
       data.isIndirectMessageBadgeEnabled,
       this.isIndirectMessageBadgeEnabled,
     );
-    this.isMuted = ifUndefinedBoolean(data.isMuted, this.isMuted);
-    this.isDarkModeEnabled = ifUndefinedBoolean(
+    this.isMuted = ifUndefined<boolean>(data.isMuted, this.isMuted);
+    this.isDarkModeEnabled = ifUndefined<boolean>(
       data.isDarkModeEnabled,
       this.isDarkModeEnabled,
     );
-    this.darkReaderSettings = ifUndefinedString(
+    this.darkReaderSettings = ifUndefined<object>(
       data.darkReaderSettings,
       this.darkReaderSettings,
     );
-    this.isProgressbarEnabled = ifUndefinedBoolean(
+    this.isProgressbarEnabled = ifUndefined<boolean>(
       data.isProgressbarEnabled,
       this.isProgressbarEnabled,
     );
-    this.hasCustomUploadedIcon = ifUndefinedBoolean(
+    this.hasCustomUploadedIcon = ifUndefined<boolean>(
       data.iconId?.length > 0,
       this.hasCustomUploadedIcon,
     );
-    this.onlyShowFavoritesInUnreadCount = ifUndefinedBoolean(
+    this.onlyShowFavoritesInUnreadCount = ifUndefined<boolean>(
       data.onlyShowFavoritesInUnreadCount,
       this.onlyShowFavoritesInUnreadCount,
     );
-    this.proxy = ifUndefinedString(data.proxy, this.proxy);
-    this.spellcheckerLanguage = ifUndefinedString(
+    this.proxy = ifUndefined<string | null>(data.proxy, this.proxy);
+    this.spellcheckerLanguage = ifUndefined<string | null>(
       data.spellcheckerLanguage,
       this.spellcheckerLanguage,
     );
-    this.userAgentPref = ifUndefinedString(
+    this.userAgentPref = ifUndefined<string | null>(
       data.userAgentPref,
       this.userAgentPref,
     );
-    this.isHibernationEnabled = ifUndefinedBoolean(
+    this.isHibernationEnabled = ifUndefined<boolean>(
       data.isHibernationEnabled,
       this.isHibernationEnabled,
     );
-    this.isWakeUpEnabled = ifUndefinedBoolean(
+    this.isWakeUpEnabled = ifUndefined<boolean>(
       data.isWakeUpEnabled,
       this.isWakeUpEnabled,
     );
@@ -195,7 +202,7 @@ export default class Service {
       this.isHibernationRequested = true;
     }
 
-    autorun(() => {
+    autorun((): void => {
       if (!this.isEnabled) {
         this.webview = null;
         this.isAttached = false;
@@ -209,7 +216,7 @@ export default class Service {
     });
   }
 
-  @computed get shareWithWebview() {
+  @computed get shareWithWebview(): object {
     return {
       id: this.id,
       spellcheckerLanguage: this.spellcheckerLanguage,
@@ -224,19 +231,19 @@ export default class Service {
     };
   }
 
-  @computed get isTodosService() {
+  @computed get isTodosService(): boolean {
     return this.recipe.id === todosStore.todoRecipeId;
   }
 
-  @computed get canHibernate() {
+  @computed get canHibernate(): boolean {
     return this.isHibernationEnabled;
   }
 
-  @computed get isHibernating() {
+  @computed get isHibernating(): boolean {
     return this.canHibernate && this.isHibernationRequested;
   }
 
-  get webview() {
+  get webview(): ElectronWebView | null {
     if (this.isTodosService) {
       return todosStore.webview;
     }
@@ -248,9 +255,9 @@ export default class Service {
     this._webview = webview;
   }
 
-  @computed get url() {
+  @computed get url(): string {
     if (this.recipe.hasCustomUrl && this.customUrl) {
-      let url;
+      let url: string = '';
       try {
         url = normalizeUrl(this.customUrl, {
           stripAuthentication: false,
@@ -277,7 +284,7 @@ export default class Service {
     return this.recipe.serviceURL;
   }
 
-  @computed get icon() {
+  @computed get icon(): string {
     if (this.iconUrl) {
       return this.iconUrl;
     }
@@ -285,15 +292,15 @@ export default class Service {
     return join(this.recipe.path, 'icon.svg');
   }
 
-  @computed get hasCustomIcon() {
+  @computed get hasCustomIcon(): boolean {
     return Boolean(this.iconUrl);
   }
 
-  @computed get userAgent() {
+  @computed get userAgent(): string {
     return this.userAgentModel.userAgent;
   }
 
-  @computed get userAgentPref() {
+  @computed get userAgentPref(): string | null {
     return this.userAgentModel.userAgentPref;
   }
 
@@ -301,15 +308,15 @@ export default class Service {
     this.userAgentModel.userAgentPref = pref;
   }
 
-  @computed get defaultUserAgent() {
+  @computed get defaultUserAgent(): String {
     return this.userAgentModel.defaultUserAgent;
   }
 
-  @computed get partition() {
+  @computed get partition(): string {
     return this.recipe.partition || `persist:service-${this.id}`;
   }
 
-  initializeWebViewEvents({ handleIPCMessage, openWindow, stores }) {
+  initializeWebViewEvents({ handleIPCMessage, openWindow, stores }): void {
     const webviewWebContents = webContents.fromId(
       this.webview.getWebContentsId(),
     );
@@ -401,6 +408,7 @@ export default class Service {
       this.isLoadingPage = false;
     });
 
+    // eslint-disable-next-line unicorn/consistent-function-scoping
     const didLoad = () => {
       this.isLoading = false;
       this.isLoadingPage = false;
@@ -437,7 +445,7 @@ export default class Service {
       this.webview.send('found-in-page', result);
     });
 
-    webviewWebContents.on('login', (event, request, authInfo, callback) => {
+    webviewWebContents.on('login', (event, _, authInfo, callback) => {
       // const authCallback = callback;
       debug('browser login event', authInfo);
       event.preventDefault();
@@ -460,7 +468,7 @@ export default class Service {
     });
   }
 
-  initializeWebViewListener() {
+  initializeWebViewListener(): void {
     if (this.webview && this.recipe.events) {
       for (const eventName of Object.keys(this.recipe.events)) {
         const eventHandler = this.recipe[this.recipe.events[eventName]];
@@ -471,7 +479,7 @@ export default class Service {
     }
   }
 
-  resetMessageCount() {
+  resetMessageCount(): void {
     this.unreadDirectMessageCount = 0;
     this.unreadIndirectMessageCount = 0;
   }

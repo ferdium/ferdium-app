@@ -158,7 +158,10 @@ class RecipeController {
   }
 
   @computed get spellcheckerLanguage() {
-    return ifUndefinedString(this.settings.service.spellcheckerLanguage, this.settings.app.spellcheckerLanguage);
+    return ifUndefinedString(
+      this.settings.service.spellcheckerLanguage,
+      this.settings.app.spellcheckerLanguage,
+    );
   }
 
   cldIdentifier = null;
@@ -197,13 +200,13 @@ class RecipeController {
     // Add ability to go forward or back with mouse buttons (inside the recipe)
     window.addEventListener('mouseup', e => {
       if (e.button === 3) {
-          e.preventDefault()
-          e.stopPropagation()
-          window.history.back()
+        e.preventDefault();
+        e.stopPropagation();
+        window.history.back();
       } else if (e.button === 4) {
-        e.preventDefault()
-        e.stopPropagation()
-        window.history.forward()
+        e.preventDefault();
+        e.stopPropagation();
+        window.history.forward();
       }
     });
   }
