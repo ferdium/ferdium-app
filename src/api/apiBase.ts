@@ -55,7 +55,7 @@ export function serverBase() {
   return fixUrl(terms);
 }
 
-export function serverName() {
+export function serverName(): string {
 
   const serverType = (window as any).ferdium.stores.settings.all.app.server;
   const noServer = 'You are using Ferdium without a server';
