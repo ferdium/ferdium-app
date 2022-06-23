@@ -75,15 +75,18 @@ export default class Recipe {
   // TODO: Is this being used?
   local: boolean = false;
 
-  overrideUserAgent: null | Function = (): string => '';
+  // TODO Add types for this once we know if they are neccesary to pass
+  // on to the initialize-recipe ipc event.
+  overrideUserAgent: any;
 
-  buildUrl: null | Function = (): string => '';
+  buildUrl: any;
 
-  modifyRequestHeaders: null | Function = (): object | null => null;
+  modifyRequestHeaders: any;
 
-  knownCertificateHosts: null | Function = (): string[] | null => null;
+  knownCertificateHosts: any;
 
-  events: { (key: string): string } | null = null;
+  events: any;
+  // End todo.
 
   // TODO: Need to reconcile which of these are optional/mandatory
   constructor(data: IRecipe) {
