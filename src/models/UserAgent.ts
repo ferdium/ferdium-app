@@ -1,25 +1,28 @@
 import { action, computed, observe, observable } from 'mobx';
 
+import ElectronWebView from 'react-electron-web-view';
 import defaultUserAgent from '../helpers/userAgent-helpers';
 
 const debug = require('../preload-safe-debug')('Ferdium:UserAgent');
 
 export default class UserAgent {
-  _willNavigateListener = null;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _willNavigateListener = (_event: any): void => {};
 
-  _didNavigateListener = null;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _didNavigateListener = (_event: any): void => {};
 
-  @observable.ref webview = null;
+  @observable.ref webview: ElectronWebView = null;
 
-  @observable chromelessUserAgent = false;
+  @observable chromelessUserAgent: boolean = false;
 
-  @observable userAgentPref = null;
+  @observable userAgentPref: string | null = null;
 
-  @observable getUserAgent = null;
+  @observable overrideUserAgent = (): string => '';
 
-  constructor(overrideUserAgent = null) {
+  constructor(overrideUserAgent: any = null) {
     if (typeof overrideUserAgent === 'function') {
-      this.getUserAgent = overrideUserAgent;
+      this.overrideUserAgent = overrideUserAgent;
     }
 
     observe(this, 'webview', change => {
@@ -33,10 +36,12 @@ export default class UserAgent {
     });
   }
 
-  @computed get defaultUserAgent() {
-    if (typeof this.getUserAgent === 'function') {
-      return this.getUserAgent();
+  @computed get defaultUserAgent(): string {
+    const replacedUserAgent = this.overrideUserAgent();
+    if (replacedUserAgent.length > 0) {
+      return replacedUserAgent;
     }
+
     const globalPref = window['ferdium'].stores.settings.all.app.userAgentPref;
     if (typeof globalPref === 'string') {
       const trimmed = globalPref.trim();
@@ -47,7 +52,7 @@ export default class UserAgent {
     return defaultUserAgent();
   }
 
-  @computed get serviceUserAgentPref() {
+  @computed get serviceUserAgentPref(): string | null {
     if (typeof this.userAgentPref === 'string') {
       const trimmed = this.userAgentPref.trim();
       if (trimmed !== '') {
@@ -57,12 +62,12 @@ export default class UserAgent {
     return null;
   }
 
-  @computed get userAgentWithoutChromeVersion() {
+  @computed get userAgentWithoutChromeVersion(): string {
     const withChrome = this.defaultUserAgent;
     return withChrome.replace(/Chrome\/[\d.]+/, 'Chrome');
   }
 
-  @computed get userAgent() {
+  @computed get userAgent(): string {
     return (
       this.serviceUserAgentPref ||
       (this.chromelessUserAgent
@@ -71,11 +76,11 @@ export default class UserAgent {
     );
   }
 
-  @action setWebviewReference(webview) {
+  @action setWebviewReference(webview: ElectronWebView): void {
     this.webview = webview;
   }
 
-  @action _handleNavigate(url, forwardingHack = false) {
+  @action _handleNavigate(url: string, forwardingHack: boolean = false): void {
     if (url.startsWith('https://accounts.google.com')) {
       if (!this.chromelessUserAgent) {
         debug('Setting user agent to chromeless for url', url);
@@ -92,7 +97,7 @@ export default class UserAgent {
     }
   }
 
-  _addWebviewEvents(webview) {
+  _addWebviewEvents(webview: ElectronWebView): void {
     debug('Adding event handlers');
 
     this._willNavigateListener = event => this._handleNavigate(event.url, true);
@@ -102,7 +107,7 @@ export default class UserAgent {
     webview.addEventListener('did-navigate', this._didNavigateListener);
   }
 
-  _removeWebviewEvents(webview) {
+  _removeWebviewEvents(webview: ElectronWebView): void {
     debug('Removing event handlers');
 
     webview.removeEventListener('will-navigate', this._willNavigateListener);

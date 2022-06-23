@@ -76,25 +76,34 @@ interface TypedStore {
 
 interface AppStore extends TypedStore {
   accentColor: string;
+  adaptableDarkMode: boolean;
   progressbarAccentColor: string;
   authRequestFailed: () => void;
   autoLaunchOnStart: () => void;
   automaticUpdates: boolean;
   clearAppCacheRequest: () => void;
+  clipboardNotifications: boolean;
+  darkMode: boolean;
   dictionaries: [];
+  enableSpellchecking: boolean;
   fetchDataInterval: 4;
   get(key: string): any;
   getAppCacheSizeRequest: () => void;
   healthCheckRequest: () => void;
   isClearingAllCache: () => void;
+  isAppMuted: boolean;
   isFocused: () => void;
   isFullScreen: () => void;
-  isOnline: () => void;
+  isOnline: boolean;
   isSystemDarkModeEnabled: () => void;
   isSystemMuteOverridden: () => void;
   locale: () => void;
   reloadAfterResume: boolean;
   reloadAfterResumeTime: number;
+  searchEngine: string;
+  spellcheckerLanguage: string;
+  splitMode: boolean;
+  splitColumns: number;
   timeOfflineStart: () => void;
   timeSuspensionStart: () => void;
   updateStatus: () => void;
@@ -105,6 +114,7 @@ interface AppStore extends TypedStore {
     DOWNLOADED: 'DOWNLOADED';
     FAILED: 'FAILED';
   };
+  universalDarkMode: boolean;
   cacheSize: () => void;
   debugInfo: () => void;
 }
@@ -145,7 +155,9 @@ interface RecipeStore extends TypedStore {
   isInstalled: (id: string) => boolean;
   active: () => void;
   all: Recipe[];
+  one: (id: string) => Recipe;
   recipeIdForServices: () => void;
+  _install({ recipeId: string }): Promise<Recipe>;
 }
 
 interface RequestsStore extends TypedStore {
@@ -183,7 +195,7 @@ export interface ServicesStore extends TypedStore {
   createServiceRequest: () => void;
   deleteServiceRequest: () => void;
   allServicesRequest: CachedRequest;
-  filterNeedle: () => void;
+  filterNeedle: string;
   lastUsedServices: () => void;
   reorderServicesRequest: () => void;
   serviceMaintenanceTick: () => void;
@@ -237,7 +249,9 @@ interface TodosStore extends TypedStore {
   isTodosPanelForceHidden: () => void;
   isTodosPanelVisible: () => void;
   isUsingPredefinedTodoServer: () => void;
-  settings: () => void;
+  settings: {
+    isFeatureEnabledByUser: boolean;
+  };
   todoRecipeId: () => void;
   todoUrl: () => void;
   userAgent: () => void;
@@ -256,7 +270,7 @@ interface UIStore extends TypedStore {
   isDarkThemeActive: () => void;
   isSplitModeActive: () => void;
   splitColumnsNo: () => void;
-  showMessageBadgesEvenWhenMuted: () => void;
+  showMessageBadgesEvenWhenMuted: boolean;
   theme: () => void;
 }
 
@@ -315,12 +329,21 @@ export interface WorkspacesStore extends TypedStore {
   saving: boolean;
   filterServicesByActiveWorkspace: () => void;
   isFeatureActive: () => void;
+  isAnyWorkspaceActive: boolean;
   isSettingsRouteActive: () => void;
   isSwitchingWorkspace: () => void;
   isWorkspaceDrawerOpen: () => void;
   nextWorkspace: () => void;
   workspaces: Workspace[];
   workspaceBeingEdited: () => void;
+  reorderServicesOfActiveWorkspace: ({
+    oldIndex,
+    newIndex,
+  }: {
+    oldIndex: string;
+    newIndex: string;
+  }) => void;
+  settings: any;
   _activateLastUsedWorkspaceReaction: () => void;
   _allActions: any[];
   _allReactions: any[];

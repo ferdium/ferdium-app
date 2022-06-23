@@ -11,22 +11,22 @@ import UserStore from '../../stores/UserStore';
 
 interface IProps {
   stores: {
-    services?: ServicesStore,
-    router: RouterStore,
-    recipes?: RecipesStore,
-    user?: UserStore,
-  },
+    services: ServicesStore;
+    router: RouterStore;
+    recipes?: RecipesStore;
+    user?: UserStore;
+  };
   actions: {
-    user: UserStore,
-    service: ServicesStore,
-    recipe: RecipesStore,
-  },
+    user: UserStore;
+    service: ServicesStore;
+    recipe: RecipesStore;
+  };
 };
 
 class SetupAssistantScreen extends Component<IProps> {
   state = {
     isSettingUpServices: false,
-  }
+  };
 
   // TODO: Why are these hardcoded here? Do they need to conform to specific services in the packaged recipes? If so, its more important to fix this
   services = {
@@ -69,7 +69,9 @@ class SetupAssistantScreen extends Component<IProps> {
   };
 
   async setupServices(serviceConfig) {
-    const { stores: { services, router } } = this.props;
+    const {
+      stores: { services, router },
+    } = this.props;
 
     this.setState({
       isSettingUpServices: true,
@@ -79,7 +81,7 @@ class SetupAssistantScreen extends Component<IProps> {
     for (const config of serviceConfig) {
       const serviceData = {
         name: this.services[config.id].name,
-        team: config.team
+        team: config.team,
       };
 
       await services._createService({
