@@ -36,7 +36,7 @@ jobs:
         dryrun: false
     - name: Publish release
       uses: macauley/action-homebrew-bump-cask@v1
-      if: ${{ !contains(${{ github.event.release.tag_name }}, "nightly") && !contains(${{ github.event.release.tag_name }}, "beta") }}
+      if: ${{ !contains(github.event.release.tag_name, "nightly") && !contains(github.event.release.tag_name, "beta") }}
       with:
         # Required, custom GitHub access token with only the 'public_repo' scope enabled
         token: ${{ secrets.HOMEBREW_FERDIUM_PUBLISH_TOKEN }}
