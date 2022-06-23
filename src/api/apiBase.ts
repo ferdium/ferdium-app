@@ -54,3 +54,26 @@ export function serverBase() {
 
   return fixUrl(terms);
 }
+
+export function serverName(): string {
+
+  const serverType = (window as any).ferdium.stores.settings.all.app.server;
+  const noServer = 'You are using Ferdium without a server';
+
+  let nameServer;
+  switch (serverType) {
+    case LIVE_FRANZ_API:
+      nameServer = 'Franz Server';
+      break;
+    case LIVE_FERDIUM_API:
+      nameServer = 'Ferdium Server';
+      break;
+    case noServer:
+      nameServer = 'no Server';
+      break;
+    default:
+      nameServer = 'a Custom Server';
+  }
+
+  return nameServer;
+}
