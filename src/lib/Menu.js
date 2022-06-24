@@ -473,15 +473,18 @@ const _titleBarTemplateFactory = (intl, locked) => [
         accelerator: `${cmdOrCtrlShortcutKey()}+B`,
         role: 'toggleNavigationBar',
         type: 'checkbox',
-        checked: window['ferdium'].stores.settings.app.navigationBarManualActive,
+        checked:
+          window['ferdium'].stores.settings.app.navigationBarManualActive,
         click: () => {
           window['ferdium'].actions.settings.update({
             type: 'app',
             data: {
-              navigationBarManualActive: !window['ferdium'].stores.settings.app.navigationBarManualActive,
-            }
+              navigationBarManualActive:
+                !window['ferdium'].stores.settings.app
+                  .navigationBarManualActive,
+            },
           });
-        }
+        },
       },
       {
         label: intl.formatMessage(menuItems.splitModeToggle),
@@ -494,9 +497,9 @@ const _titleBarTemplateFactory = (intl, locked) => [
             type: 'app',
             data: {
               splitMode: !window['ferdium'].stores.settings.app.splitMode,
-            }
+            },
           });
-        }
+        },
       },
       {
         label: intl.formatMessage(menuItems.toggleDarkMode),
@@ -631,9 +634,10 @@ class FranzMenu {
     }
 
     const { intl } = window['ferdium'];
-    const locked = this.stores.settings.app.locked
-      && this.stores.settings.app.lockingFeatureEnabled
-      && this.stores.user.isLoggedIn;
+    const locked =
+      this.stores.settings.app.locked &&
+      this.stores.settings.app.lockingFeatureEnabled &&
+      this.stores.user.isLoggedIn;
     const tpl = _titleBarTemplateFactory(intl, locked);
     const { actions } = this;
 
@@ -664,8 +668,9 @@ class FranzMenu {
           accelerator: `${cmdOrCtrlShortcutKey()}+${altKey()}+I`,
           click: () => {
             const windowWebContents = webContents.fromId(1);
-            const { isDevToolsOpened, openDevTools, closeDevTools } = windowWebContents;
-    
+            const { isDevToolsOpened, openDevTools, closeDevTools } =
+              windowWebContents;
+
             if (isDevToolsOpened()) {
               closeDevTools();
             } else {
@@ -1105,14 +1110,16 @@ class FranzMenu {
       ? menuItems.closeTodosDrawer
       : menuItems.openTodosDrawer;
 
-    menu.push({
-      label: intl.formatMessage(drawerLabel),
-      accelerator: `${todosToggleShortcutKey()}`,
-      click: () => {
-        todoActions.toggleTodosPanel();
-      },
-      enabled: this.stores.user.isLoggedIn && isFeatureEnabledByUser,
-    });
+    if (isFeatureEnabledByUser) {
+      menu.push({
+        label: intl.formatMessage(drawerLabel),
+        accelerator: `${todosToggleShortcutKey()}`,
+        click: () => {
+          todoActions.toggleTodosPanel();
+        },
+        enabled: this.stores.user.isLoggedIn && isFeatureEnabledByUser,
+      });
+    }
 
     if (!isFeatureEnabledByUser) {
       menu.push(
@@ -1124,6 +1131,7 @@ class FranzMenu {
           click: () => {
             todoActions.toggleTodosFeatureVisibility();
           },
+          enabled: this.stores.user.isLoggedIn,
         },
       );
     }
@@ -1155,7 +1163,9 @@ class FranzMenu {
       {
         label: intl.formatMessage(menuItems.publishDebugInfo),
         click: () => {
-          window['ferdium'].features.publishDebugInfo.state.isModalVisible = true;
+          window[
+            'ferdium'
+          ].features.publishDebugInfo.state.isModalVisible = true;
         },
       },
     ];

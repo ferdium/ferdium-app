@@ -206,8 +206,10 @@ export default class TodoStore extends FeatureStore {
   @action _toggleTodosFeatureVisibility = () => {
     debug('_toggleTodosFeatureVisibility');
 
+    const isFeatureEnabled = !this.settings.isFeatureEnabledByUser;
     this._updateSettings({
-      isFeatureEnabledByUser: !this.settings.isFeatureEnabledByUser,
+      isFeatureEnabledByUser: isFeatureEnabled,
+      isTodosPanelVisible: isFeatureEnabled,
     });
   };
 
