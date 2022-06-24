@@ -75,11 +75,10 @@
   }
 
   .menu-pane {
-    border-bottom-left-radius: $theme-border-radius-small;
-    border-bottom-right-radius: $theme-border-radius-small;
-    box-shadow: 0 0 10px rgba(black, .5);
-
     &.menu-endblock {
+      border-bottom-left-radius: $theme-border-radius-small;
+      border-bottom-right-radius: $theme-border-radius-small;
+      box-shadow:  0px 15px 10px -15px rgba(black, .5);
       border-left-width: 0px;
     }
   }
