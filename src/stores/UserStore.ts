@@ -4,83 +4,94 @@ import jwt from 'jsonwebtoken';
 import localStorage from 'mobx-localstorage';
 import { ipcRenderer } from 'electron';
 
+import { ApiInterface } from 'src/api';
+import { Actions } from 'src/actions/lib/actions';
+import { Stores } from 'src/stores.types';
 import { TODOS_PARTITION_ID } from '../config';
 import { isDevMode } from '../environment-remote';
-import Store from './lib/Store';
 import Request from './lib/Request';
 import CachedRequest from './lib/CachedRequest';
+import TypedStore from './lib/TypedStore';
 
 const debug = require('../preload-safe-debug')('Ferdium:UserStore');
 
 // TODO: split stores into UserStore and AuthStore
-export default class UserStore extends Store {
-  BASE_ROUTE = '/auth';
+export default class UserStore extends TypedStore {
+  BASE_ROUTE: string = '/auth';
 
-  WELCOME_ROUTE = `${this.BASE_ROUTE}/welcome`;
+  WELCOME_ROUTE: string = `${this.BASE_ROUTE}/welcome`;
 
-  LOGIN_ROUTE = `${this.BASE_ROUTE}/login`;
+  LOGIN_ROUTE: string = `${this.BASE_ROUTE}/login`;
 
-  LOGOUT_ROUTE = `${this.BASE_ROUTE}/logout`;
+  LOGOUT_ROUTE: string = `${this.BASE_ROUTE}/logout`;
 
-  SIGNUP_ROUTE = `${this.BASE_ROUTE}/signup`;
+  SIGNUP_ROUTE: string = `${this.BASE_ROUTE}/signup`;
 
-  SETUP_ROUTE = `${this.BASE_ROUTE}/signup/setup`;
+  SETUP_ROUTE: string = `${this.BASE_ROUTE}/signup/setup`;
 
-  IMPORT_ROUTE = `${this.BASE_ROUTE}/signup/import`;
+  IMPORT_ROUTE: string = `${this.BASE_ROUTE}/signup/import`;
 
-  INVITE_ROUTE = `${this.BASE_ROUTE}/signup/invite`;
+  INVITE_ROUTE: string = `${this.BASE_ROUTE}/signup/invite`;
 
-  PASSWORD_ROUTE = `${this.BASE_ROUTE}/password`;
+  PASSWORD_ROUTE: string = `${this.BASE_ROUTE}/password`;
 
-  CHANGE_SERVER_ROUTE = `${this.BASE_ROUTE}/server`;
+  CHANGE_SERVER_ROUTE: string = `${this.BASE_ROUTE}/server`;
 
-  @observable loginRequest = new Request(this.api.user, 'login');
+  @observable loginRequest: Request = new Request(this.api.user, 'login');
 
-  @observable signupRequest = new Request(this.api.user, 'signup');
+  @observable signupRequest: Request = new Request(this.api.user, 'signup');
 
-  @observable passwordRequest = new Request(this.api.user, 'password');
+  @observable passwordRequest: Request = new Request(this.api.user, 'password');
 
-  @observable inviteRequest = new Request(this.api.user, 'invite');
+  @observable inviteRequest: Request = new Request(this.api.user, 'invite');
 
-  @observable getUserInfoRequest = new CachedRequest(this.api.user, 'getInfo');
+  @observable getUserInfoRequest: CachedRequest = new CachedRequest(
+    this.api.user,
+    'getInfo',
+  );
 
-  @observable updateUserInfoRequest = new Request(this.api.user, 'updateInfo');
+  @observable updateUserInfoRequest: Request = new Request(
+    this.api.user,
+    'updateInfo',
+  );
 
-  @observable getLegacyServicesRequest = new CachedRequest(
+  @observable getLegacyServicesRequest: CachedRequest = new CachedRequest(
     this.api.user,
     'getLegacyServices',
   );
 
-  @observable deleteAccountRequest = new CachedRequest(this.api.user, 'delete');
+  @observable deleteAccountRequest: CachedRequest = new CachedRequest(
+    this.api.user,
+    'delete',
+  );
 
-  @observable isImportLegacyServicesExecuting = false;
+  @observable isImportLegacyServicesExecuting: boolean = false;
 
-  @observable isImportLegacyServicesCompleted = false;
+  @observable isImportLegacyServicesCompleted: boolean = false;
 
-  @observable isLoggingOut = false;
+  @observable isLoggingOut: boolean = false;
 
-  @observable id;
+  @observable id: string | null | undefined;
 
-  @observable authToken = localStorage.getItem('authToken') || null;
+  @observable authToken: string | null =
+    localStorage.getItem('authToken') || null;
 
-  @observable accountType;
+  @observable accountType: string | undefined;
 
-  @observable hasCompletedSignup = false;
+  @observable hasCompletedSignup: boolean = false;
 
-  @observable userData = {};
-
-  @observable actionStatus = [];
+  @observable userData: object = {};
 
   logoutReasonTypes = {
     SERVER: 'SERVER',
   };
 
-  @observable logoutReason = null;
+  @observable logoutReason: string | null = null;
 
   fetchUserInfoInterval = null;
 
-  constructor(...args) {
-    super(...args);
+  constructor(stores: Stores, api: ApiInterface, actions: Actions) {
+    super(stores, api, actions);
 
     // Register action handlers
     this.actions.user.login.listen(this._login.bind(this));
@@ -104,54 +115,58 @@ export default class UserStore extends Store {
     ]);
   }
 
-  setup() {
+  setup(): void {
     // Data migration
     this._migrateUserLocale();
   }
 
   // Routes
-  get loginRoute() {
+  get loginRoute(): string {
     return this.LOGIN_ROUTE;
   }
 
-  get logoutRoute() {
+  get logoutRoute(): string {
     return this.LOGOUT_ROUTE;
   }
 
-  get signupRoute() {
+  get signupRoute(): string {
     return this.SIGNUP_ROUTE;
   }
 
-  get setupRoute() {
+  get setupRoute(): string {
     return this.SETUP_ROUTE;
   }
 
-  get inviteRoute() {
+  get inviteRoute(): string {
     return this.INVITE_ROUTE;
   }
 
-  get importRoute() {
+  get importRoute(): string {
     return this.IMPORT_ROUTE;
   }
 
-  get passwordRoute() {
+  get passwordRoute(): string {
     return this.PASSWORD_ROUTE;
   }
 
-  get changeServerRoute() {
+  get changeServerRoute(): string {
     return this.CHANGE_SERVER_ROUTE;
   }
 
   // Data
-  @computed get isLoggedIn() {
+  @computed get isLoggedIn(): boolean {
     return Boolean(localStorage.getItem('authToken'));
   }
 
-  @computed get isTokenExpired() {
+  @computed get isTokenExpired(): boolean {
     if (!this.authToken) return false;
+    const parsedToken = this._parseToken(this.authToken);
 
-    const { tokenExpiry } = this._parseToken(this.authToken);
-    return this.authToken !== null && moment(tokenExpiry).isBefore(moment());
+    return (
+      parsedToken !== false &&
+      this.authToken !== null &&
+      moment(parsedToken.tokenExpiry).isBefore(moment())
+    );
   }
 
   @computed get data() {
@@ -160,23 +175,23 @@ export default class UserStore extends Store {
     return this.getUserInfoRequest.execute().result || {};
   }
 
-  @computed get team() {
+  @computed get team(): any {
     return this.data.team || null;
   }
 
-  @computed get legacyServices() {
+  @computed get legacyServices(): any {
     return this.getLegacyServicesRequest.execute() || {};
   }
 
   // Actions
-  @action async _login({ email, password }) {
+  @action async _login({ email, password }): Promise<void> {
     const authToken = await this.loginRequest.execute(email, password)._promise;
     this._setUserData(authToken);
 
     this.stores.router.push('/');
   }
 
-  @action _tokenLogin(authToken) {
+  @action _tokenLogin(authToken: string): void {
     this._setUserData(authToken);
 
     this.stores.router.push('/');
@@ -191,7 +206,7 @@ export default class UserStore extends Store {
     company,
     plan,
     currency,
-  }) {
+  }): Promise<void> {
     const authToken = await this.signupRequest.execute({
       firstname,
       lastname,
@@ -211,14 +226,14 @@ export default class UserStore extends Store {
     this.stores.router.push(this.SETUP_ROUTE);
   }
 
-  @action async _retrievePassword({ email }) {
+  @action async _retrievePassword({ email }): Promise<void> {
     const request = this.passwordRequest.execute(email);
 
     await request._promise;
     this.actionStatus = request.result.status || [];
   }
 
-  @action async _invite({ invites }) {
+  @action async _invite({ invites }): Promise<void> {
     const data = invites.filter(invite => invite.email !== '');
 
     const response = await this.inviteRequest.execute(data)._promise;
@@ -231,7 +246,7 @@ export default class UserStore extends Store {
     }
   }
 
-  @action async _update({ userData }) {
+  @action async _update({ userData }): Promise<void> {
     if (!this.isLoggedIn) return;
 
     const response = await this.updateUserInfoRequest.execute(userData)
@@ -241,11 +256,11 @@ export default class UserStore extends Store {
     this.actionStatus = response.status || [];
   }
 
-  @action _resetStatus() {
+  @action _resetStatus(): void {
     this.actionStatus = [];
   }
 
-  @action _logout() {
+  @action _logout(): void {
     // workaround mobx issue
     localStorage.removeItem('authToken');
     window.localStorage.removeItem('authToken');
@@ -260,7 +275,7 @@ export default class UserStore extends Store {
     }
   }
 
-  @action async _importLegacyServices({ services }) {
+  @action async _importLegacyServices({ services }): Promise<void> {
     this.isImportLegacyServicesExecuting = true;
 
     // Reduces recipe duplicates
@@ -289,12 +304,12 @@ export default class UserStore extends Store {
     this.isImportLegacyServicesCompleted = true;
   }
 
-  @action async _delete() {
+  @action async _delete(): Promise<void> {
     this.deleteAccountRequest.execute();
   }
 
   // This is a mobx autorun which forces the user to login if not authenticated
-  _requireAuthenticatedUser = () => {
+  _requireAuthenticatedUser = (): void => {
     if (this.isTokenExpired) {
       this._logout();
     }
@@ -328,13 +343,13 @@ export default class UserStore extends Store {
   };
 
   // Reactions
-  async _getUserData() {
+  async _getUserData(): Promise<void> {
     if (this.isLoggedIn) {
       let data;
       try {
         data = await this.getUserInfoRequest.execute()._promise;
       } catch {
-        return false;
+        return;
       }
 
       // We need to set the beta flag for the SettingsStore
@@ -364,9 +379,9 @@ export default class UserStore extends Store {
     }
   }
 
-  _setUserData(authToken) {
+  _setUserData(authToken: any): void {
     const data = this._parseToken(authToken);
-    if (data.authToken) {
+    if (data !== false && data.authToken) {
       localStorage.setItem('authToken', data.authToken);
 
       this.authToken = data.authToken;
@@ -377,20 +392,21 @@ export default class UserStore extends Store {
     }
   }
 
-  getAuthURL(url) {
+  getAuthURL(url: string): string {
     const parsedUrl = new URL(url);
     const params = new URLSearchParams(parsedUrl.search.slice(1));
 
-    params.append('authToken', this.authToken);
+    // TODO: Remove the neccesity for `as string`
+    params.append('authToken', this.authToken as string);
 
     return `${parsedUrl.origin}${parsedUrl.pathname}?${params.toString()}`;
   }
 
-  async _migrateUserLocale() {
+  async _migrateUserLocale(): Promise<void> {
     try {
       await this.getUserInfoRequest._promise;
     } catch {
-      return false;
+      return;
     }
 
     if (!this.data.locale) {

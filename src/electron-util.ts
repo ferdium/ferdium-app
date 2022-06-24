@@ -3,7 +3,7 @@
 import * as electron from 'electron';
 import { initialize, enable } from '@electron/remote/main';
 
-export const initializeRemote = () => {
+export const initializeRemote = (): void => {
   if (process.type !== 'browser') {
     throw new Error(
       'The remote api must be initialized from the main process.',
@@ -13,7 +13,7 @@ export const initializeRemote = () => {
   initialize();
 };
 
-export const enableWebContents = (webContents: electron.WebContents) => {
+export const enableWebContents = (webContents: electron.WebContents): void => {
   enable(webContents);
 };
 

@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
 import { Router, Route, IndexRedirect } from 'react-router';
 
@@ -31,8 +31,7 @@ type Props = {
 };
 
 class Routes extends Component<Props> {
-  render() {
-
+  render(): ReactElement {
     const { history } = this.props;
 
     return (

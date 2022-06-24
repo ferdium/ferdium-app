@@ -1,15 +1,15 @@
 import { Component } from 'react';
 import { inject, observer } from 'mobx-react';
+import { UserStore } from 'src/stores.types';
 import Password from '../../components/auth/Password';
-import UserStore from '../../stores/UserStore';
 
 interface IProps {
   actions: {
-    user: UserStore,
-  },
+    user: UserStore;
+  };
   stores: {
-    user: UserStore,
-  }
+    user: UserStore;
+  };
 };
 
 class PasswordScreen extends Component<IProps> {
