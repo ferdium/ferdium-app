@@ -124,12 +124,16 @@ class AppLayout extends Component {
 
     const { intl } = this.props;
 
-    const { locked, automaticUpdates } = settings.app;
+    const { locked, automaticUpdates, showDragArea } = settings.app;
     if (locked) {
       return <LockedScreen />;
     }
 
     return (
+      <>
+      {isMac && !isFullScreen && showDragArea && (
+        <div className="window-draggable" />
+      )}
       <ErrorBoundary>
         <div className="app">
           {isWindows && !isFullScreen && (
@@ -138,7 +142,7 @@ class AppLayout extends Component {
               icon="assets/images/logo.svg"
             />
           )}
-          {isMac && !isFullScreen && (
+          {isMac && !isFullScreen && showDragArea && (
             <span
               onDoubleClick={toggleFullScreen}
               className={classes.titleBar}
@@ -207,6 +211,7 @@ class AppLayout extends Component {
           </div>
         </div>
       </ErrorBoundary>
+      </>
     );
   }
 }
