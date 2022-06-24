@@ -206,9 +206,17 @@ const messages = defineMessages({
     id: 'settings.app.form.useVerticalStyle',
     defaultMessage: 'Use horizontal style',
   },
+  hideCollapseButton: {
+    id: 'settings.app.form.hideCollapseButton',
+    defaultMessage: 'Hide Collapse button',
+  },
   hideRecipesButton: {
     id: 'settings.app.form.hideRecipesButton',
     defaultMessage: 'Hide Recipes button',
+  },
+  hideSplitModeButton: {
+    id: 'settings.app.form.hideSplitModeButton',
+    defaultMessage: 'Hide Split Mode button',
   },
   useGrayscaleServices: {
     id: 'settings.app.form.useGrayscaleServices',
@@ -369,7 +377,9 @@ class EditSettingsScreen extends Component {
           settingsData.enableLongPressServiceHint,
         ),
         useVerticalStyle: Boolean(settingsData.useVerticalStyle),
+        hideCollapseButton: Boolean(settingsData.hideCollapseButton),
         hideRecipesButton: Boolean(settingsData.hideRecipesButton),
+        hideSplitModeButton: Boolean(settingsData.hideSplitModeButton),
         useGrayscaleServices: Boolean(settingsData.useGrayscaleServices),
         grayscaleServicesDim: Number(settingsData.grayscaleServicesDim),
         hideWorkspacesButton: Boolean(settingsData.hideWorkspacesButton),
@@ -733,10 +743,20 @@ class EditSettingsScreen extends Component {
           value: settings.all.app.useVerticalStyle,
           default: DEFAULT_APP_SETTINGS.useVerticalStyle,
         },
+        hideCollapseButton: {
+          label: intl.formatMessage(messages.hideCollapseButton),
+          value: settings.all.app.hideCollapseButton,
+          default: DEFAULT_APP_SETTINGS.hideCollapseButton,
+        },
         hideRecipesButton: {
           label: intl.formatMessage(messages.hideRecipesButton),
           value: settings.all.app.hideRecipesButton,
           default: DEFAULT_APP_SETTINGS.hideRecipesButton,
+        },
+        hideSplitModeButton: {
+          label: intl.formatMessage(messages.hideSplitModeButton),
+          value: settings.all.app.hideSplitModeButton,
+          default: DEFAULT_APP_SETTINGS.hideSplitModeButton,
         },
         useGrayscaleServices: {
           label: intl.formatMessage(messages.useGrayscaleServices),
