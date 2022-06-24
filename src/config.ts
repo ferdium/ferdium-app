@@ -191,8 +191,9 @@ export const DEFAULT_SETTING_KEEP_ALL_WORKSPACES_LOADED = false;
 
 export const DEFAULT_TODOS_WIDTH = 300;
 export const TODOS_MIN_WIDTH = 200;
-export const DEFAULT_TODOS_VISIBLE = true;
+export const DEFAULT_TODOS_VISIBLE = false;
 export const DEFAULT_IS_FEATURE_ENABLED_BY_USER = true;
+export const DEFAULT_IS_TODO_FEATURE_ENABLED_BY_USER = false;
 export const TODOS_PARTITION_ID = 'persist:todos';
 
 export const CUSTOM_WEBSITE_RECIPE_ID = 'franz-custom-website';

@@ -9,7 +9,7 @@ import {
   DEFAULT_TODOS_WIDTH,
   TODOS_MIN_WIDTH,
   DEFAULT_TODOS_VISIBLE,
-  DEFAULT_IS_FEATURE_ENABLED_BY_USER,
+  DEFAULT_IS_TODO_FEATURE_ENABLED_BY_USER,
 } from '../../config';
 import { isValidExternalURL } from '../../helpers/url-helpers';
 import { FeatureStore } from '../utils/FeatureStore';
@@ -267,7 +267,7 @@ export default class TodoStore extends FeatureStore {
 
     if (this.settings.isFeatureEnabledByUser === undefined) {
       this._updateSettings({
-        isFeatureEnabledByUser: DEFAULT_IS_FEATURE_ENABLED_BY_USER,
+        isFeatureEnabledByUser: DEFAULT_IS_TODO_FEATURE_ENABLED_BY_USER,
       });
     }
 
