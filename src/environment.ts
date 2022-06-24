@@ -37,5 +37,7 @@ export const muteFerdiumShortcutKey = (isAccelerator = true) =>
   `${cmdOrCtrlShortcutKey(isAccelerator)}+${shiftKey(isAccelerator)}+M`;
 export const addNewServiceShortcutKey = (isAccelerator = true) =>
   `${cmdOrCtrlShortcutKey(isAccelerator)}+N`;
+export const splitModeToggleShortcutKey = (isAccelerator = true) =>
+  `${cmdOrCtrlShortcutKey(isAccelerator)}+${altKey(isAccelerator)}+S`;
 export const settingsShortcutKey = (isAccelerator = true) =>
   `${cmdOrCtrlShortcutKey(isAccelerator)}+${isMac ? ',' : 'P'}`;

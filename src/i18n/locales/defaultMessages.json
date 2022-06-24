@@ -1115,6 +1115,19 @@
         }
       },
       {
+        "defaultMessage": "!!!Split Mode Toggle",
+        "end": {
+          "column": 3,
+          "line": 27
+        },
+        "file": "src/components/layout/Sidebar.js",
+        "id": "sidebar.splitModeToggle",
+        "start": {
+          "column": 17,
+          "line": 24
+        }
+      },
+      {
         "defaultMessage": "!!!Disable notifications & audio",
         "end": {
           "column": 3,

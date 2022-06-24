@@ -25,6 +25,7 @@ import {
   todosToggleShortcutKey,
   workspaceToggleShortcutKey,
   addNewServiceShortcutKey,
+  splitModeToggleShortcutKey,
   muteFerdiumShortcutKey,
 } from '../environment';
 import { aboutAppDetails, ferdiumVersion } from '../environment-remote';
@@ -127,6 +128,10 @@ const menuItems = defineMessages({
   toggleNavigationBar: {
     id: 'menu.view.toggleNavigationBar',
     defaultMessage: 'Toggle Navigation Bar',
+  },
+  splitModeToggle: {
+    id: 'menu.view.splitModeToggle',
+    defaultMessage: 'Toggle Split Mode',
   },
   toggleDarkMode: {
     id: 'menu.view.toggleDarkMode',
@@ -474,6 +479,21 @@ const _titleBarTemplateFactory = (intl, locked) => [
             type: 'app',
             data: {
               navigationBarManualActive: !window['ferdium'].stores.settings.app.navigationBarManualActive,
+            }
+          });
+        }
+      },
+      {
+        label: intl.formatMessage(menuItems.splitModeToggle),
+        accelerator: `${splitModeToggleShortcutKey()}`,
+        role: 'splitModeToggle',
+        type: 'checkbox',
+        checked: window['ferdium'].stores.settings.app.splitMode,
+        click: () => {
+          window['ferdium'].actions.settings.update({
+            type: 'app',
+            data: {
+              splitMode: !window['ferdium'].stores.settings.app.splitMode,
             }
           });
         }
