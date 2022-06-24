@@ -2,6 +2,7 @@ import Workspace from './features/workspaces/models/Workspace';
 import Recipe from './models/Recipe';
 import Service from './models/Service';
 import User from './models/User';
+import { Request } from './stores/lib/Request';
 import { CachedRequest } from './stores/lib/CachedRequest';
 import Reaction from './stores/lib/Reaction';
 
@@ -98,6 +99,7 @@ interface AppStore extends TypedStore {
   isSystemDarkModeEnabled: () => void;
   isSystemMuteOverridden: () => void;
   locale: () => void;
+  lockedPassword: string;
   reloadAfterResume: boolean;
   reloadAfterResumeTime: number;
   searchEngine: string;
@@ -192,7 +194,7 @@ interface RouterStore {
 
 export interface ServicesStore extends TypedStore {
   clearCacheRequest: () => void;
-  createServiceRequest: () => void;
+  createServiceRequest: CachedRequest;
   deleteServiceRequest: () => void;
   allServicesRequest: CachedRequest;
   filterNeedle: string;
@@ -216,7 +218,9 @@ interface ISettings {
   [key: string]: any;
 }
 
-interface SettingsStore extends TypedStore {
+export interface SettingsStore extends TypedStore {
+  update: (value: any) => void;
+  remove: (value: any) => void;
   fileSystemSettingsTypes: any[];
   loaded: boolean;
   updateAppSettingsRequest: () => void;
@@ -247,6 +251,7 @@ interface TodosStore extends TypedStore {
   isFeatureEnabledByUser: () => void;
   isTodoUrlValid: () => void;
   isTodosPanelForceHidden: () => void;
+  isTodosEnabled: boolean;
   isTodosPanelVisible: () => void;
   isUsingPredefinedTodoServer: () => void;
   settings: {
@@ -274,7 +279,7 @@ interface UIStore extends TypedStore {
   theme: () => void;
 }
 
-interface UserStore extends TypedStore {
+export interface UserStore extends TypedStore {
   BASE_ROUTE: '/auth';
   CHANGE_SERVER_ROUTE: '/auth/server';
   IMPORT_ROUTE: '/auth/signup/import';
@@ -293,30 +298,34 @@ interface UserStore extends TypedStore {
   getUserInfoRequest: CachedRequest;
   hasCompletedSignup: () => void;
   id: () => void;
+  importLegacyServices: () => Promise<void>;
   inviteRequest: () => void;
-  isImportLegacyServicesCompleted: () => void;
-  isImportLegacyServicesExecuting: () => void;
+  isImportLegacyServicesCompleted: boolean;
+  isImportLegacyServicesExecuting: boolean;
   isLoggingOut: () => void;
   loginRequest: () => void;
   logoutReason: () => void;
   logoutReasonTypes: { SERVER: 'SERVER' };
-  passwordRequest: () => void;
+  passwordRequest: Request;
+  retrievePassword: Promise<void>
   signupRequest: () => void;
   updateUserInfoRequest: () => void;
   userData: () => void;
   _requireAuthenticatedUser: () => void;
+  _importLegacyServices: () => void;
+  _retrievePassword: () => void;
   changeServerRoute: () => void;
   data: User;
-  importRoute: () => void;
-  inviteRoute: () => void;
+  importRoute: string;
+  inviteRoute: string;
   isLoggedIn: boolean;
-  isTokenExpired: () => boolean;
+  isTokenExpired: boolean;
   legacyServices: () => void;
-  loginRoute: () => void;
-  logoutRoute: () => void;
-  passwordRoute: () => void;
-  setupRoute: () => void;
-  signupRoute: () => void;
+  loginRoute: string;
+  logoutRoute: string;
+  passwordRoute: string;
+  setupRoute: string;
+  signupRoute: string;
   team: () => void;
 }
 

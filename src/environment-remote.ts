@@ -26,8 +26,8 @@ import {
 import * as buildInfo from './buildInfo.json';
 
 export const { app } = electronApi;
-export const ferdiumVersion = app.getVersion();
-export const ferdiumLocale = app.getLocale();
+export const ferdiumVersion: string = app.getVersion();
+export const ferdiumLocale: string = app.getLocale();
 
 // Set app directory before loading user modules
 if (process.env.FERDIUM_APPDATA_DIR != null) {
@@ -44,7 +44,7 @@ if (process.env.FERDIUM_APPDATA_DIR != null) {
   app.setPath('userData', join(app.getPath('appData'), app.name));
 }
 
-export const isDevMode =
+export const isDevMode: boolean =
   process.env.ELECTRON_IS_DEV !== undefined
     ? Number.parseInt(process.env.ELECTRON_IS_DEV, 10) === 1
     : !app.isPackaged;
@@ -52,11 +52,11 @@ if (isDevMode) {
   app.setPath('userData', join(app.getPath('appData'), `${app.name}Dev`));
 }
 
-export function userDataPath(...segments: string[]) {
+export function userDataPath(...segments: string[]): string {
   return join(app.getPath('userData'), ...[segments].flat());
 }
 
-export function userDataRecipesPath(...segments: string[]) {
+export function userDataRecipesPath(...segments: string[]): string {
   return userDataPath('recipes', ...[segments].flat());
 }
 
@@ -84,13 +84,13 @@ if (!isDevMode || (isDevMode && useLiveAPI)) {
   todos = PRODUCTION_TODOS_FRONTEND_URL;
 }
 
-export const API = api;
-export const API_VERSION = 'v1';
-export const WS_API = wsApi;
-export const WEBSITE = web;
-export const TODOS_FRONTEND = todos;
+export const API: string = api;
+export const API_VERSION: string = 'v1';
+export const WS_API: string = wsApi;
+export const WEBSITE: string = web;
+export const TODOS_FRONTEND: string = todos;
 
-export function aboutAppDetails() {
+export function aboutAppDetails(): string {
   return [
     `Version: ${ferdiumVersion}`,
     `Electron: ${electronVersion}`,

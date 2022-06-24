@@ -2,6 +2,9 @@ import { ipcRenderer } from 'electron';
 import { getCurrentWindow } from '@electron/remote';
 import { action, computed, observable, reaction } from 'mobx';
 import localStorage from 'mobx-localstorage';
+import { Stores } from 'src/stores.types';
+import { ApiInterface } from 'src/api';
+import { Actions } from 'src/actions/lib/actions';
 import {
   DEFAULT_APP_SETTINGS,
   FILE_SYSTEM_SETTINGS_TYPES,
@@ -9,11 +12,11 @@ import {
 } from '../config';
 import { hash } from '../helpers/password-helpers';
 import Request from './lib/Request';
-import Store from './lib/Store';
+import TypedStore from './lib/TypedStore';
 
 const debug = require('../preload-safe-debug')('Ferdium:SettingsStore');
 
-export default class SettingsStore extends Store {
+export default class SettingsStore extends TypedStore {
   @observable updateAppSettingsRequest = new Request(
     this.api.local,
     'updateAppSettings',
@@ -28,15 +31,15 @@ export default class SettingsStore extends Store {
     proxy: {},
   };
 
-  constructor(...args) {
-    super(...args);
+  constructor(stores: Stores, api: ApiInterface, actions: Actions) {
+    super(stores, api, actions);
 
     // Register action handlers
     this.actions.settings.update.listen(this._update.bind(this));
     this.actions.settings.remove.listen(this._remove.bind(this));
   }
 
-  async setup() {
+  async setup(): Promise<void> {
     await this._migrate();
 
     reaction(
@@ -81,7 +84,7 @@ export default class SettingsStore extends Store {
       }
     });
 
-    ipcRenderer.on('appSettings', (event, resp) => {
+    ipcRenderer.on('appSettings', (_, resp) => {
       // Lock on startup if enabled in settings
       if (
         !this.loaded &&
@@ -143,7 +146,7 @@ export default class SettingsStore extends Store {
     };
   }
 
-  @action async _update({ type, data }) {
+  @action async _update({ type, data }): Promise<void> {
     const appSettings = this.all;
     if (!this.fileSystemSettingsTypes.includes(type)) {
       debug('Update settings', type, data, this.all);
@@ -159,7 +162,7 @@ export default class SettingsStore extends Store {
     }
   }
 
-  @action async _remove({ type, key }) {
+  @action async _remove({ type, key }): Promise<void> {
     if (type === 'app') return; // app keys can't be deleted
 
     const appSettings = this.all[type];
@@ -173,7 +176,7 @@ export default class SettingsStore extends Store {
     }
   }
 
-  _ensureMigrationAndMarkDone(migrationName, callback) {
+  _ensureMigrationAndMarkDone(migrationName: string, callback: Function): void {
     if (!this.all.migration[migrationName]) {
       callback();
 
@@ -187,7 +190,7 @@ export default class SettingsStore extends Store {
   }
 
   // Helper
-  async _migrate() {
+  async _migrate(): Promise<void> {
     this._ensureMigrationAndMarkDone('password-hashing', () => {
       if (this.stores.settings.app.lockedPassword !== '') {
         const legacySettings = localStorage.getItem('app') || {};

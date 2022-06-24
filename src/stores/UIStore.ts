@@ -1,17 +1,19 @@
 import { action, observable, computed, reaction } from 'mobx';
 import { nativeTheme } from '@electron/remote';
 
-import { theme, ThemeType } from '../themes';
-import Store from './lib/Store';
+import { Stores } from 'src/stores.types';
+import { ApiInterface } from 'src/api';
+import { Actions } from 'src/actions/lib/actions';
+import { Theme, theme, ThemeType } from '../themes';
+import TypedStore from './lib/TypedStore';
 
-export default class UIStore extends Store {
+export default class UIStore extends TypedStore {
   @observable showServicesUpdatedInfoBar = false;
 
   @observable isOsDarkThemeActive = nativeTheme.shouldUseDarkColors;
 
-  constructor(...args) {
-    super(...args);
-
+  constructor(stores: Stores, api: ApiInterface, actions: Actions) {
+    super(stores, api, actions);
     // Register action handlers
     this.actions.ui.openSettings.listen(this._openSettings.bind(this));
     this.actions.ui.closeSettings.listen(this._closeSettings.bind(this));
@@ -26,7 +28,7 @@ export default class UIStore extends Store {
     });
   }
 
-  setup() {
+  setup(): void {
     reaction(
       () => this.isDarkThemeActive,
       () => {
@@ -74,15 +76,15 @@ export default class UIStore extends Store {
     );
   }
 
-  @computed get isSplitModeActive() {
+  @computed get isSplitModeActive(): boolean {
     return this.stores.settings.app.splitMode;
   }
 
-  @computed get splitColumnsNo() {
+  @computed get splitColumnsNo(): number {
     return this.stores.settings.app.splitColumns;
   }
 
-  @computed get theme() {
+  @computed get theme(): Theme {
     const themeId =
       this.isDarkThemeActive || this.stores.settings.app.darkMode
         ? ThemeType.dark
@@ -92,16 +94,16 @@ export default class UIStore extends Store {
   }
 
   // Actions
-  @action _openSettings({ path = '/settings' }) {
+  @action _openSettings({ path = '/settings' }): void {
     const settingsPath = path !== '/settings' ? `/settings/${path}` : path;
     this.stores.router.push(settingsPath);
   }
 
-  @action _closeSettings() {
+  @action _closeSettings(): void {
     this.stores.router.push('/');
   }
 
-  @action _toggleServiceUpdatedInfoBar({ visible }) {
+  @action _toggleServiceUpdatedInfoBar({ visible }): void {
     let visibility = visible;
     if (visibility === null) {
       visibility = !this.showServicesUpdatedInfoBar;
@@ -110,7 +112,7 @@ export default class UIStore extends Store {
   }
 
   // Reactions
-  _setupThemeInDOM() {
+  _setupThemeInDOM(): void {
     if (!this.isDarkThemeActive) {
       document.body.classList.remove('theme__dark');
     } else {
@@ -118,16 +120,16 @@ export default class UIStore extends Store {
     }
   }
 
-  _setupModeInDOM() {
+  _setupModeInDOM(): void {
     if (!this.isSplitModeActive) {
       document.body.classList.remove('mode__split');
     } else {
       document.body.classList.add('mode__split');
-      document.body.dataset.columns = this.splitColumnsNo;
+      document.body.dataset.columns = this.splitColumnsNo.toString();
     }
   }
 
-  _setupColumnsInDOM() {
-    document.body.dataset.columns = this.splitColumnsNo;
+  _setupColumnsInDOM(): void {
+    document.body.dataset.columns = this.splitColumnsNo.toString();
   }
 }

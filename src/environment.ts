@@ -6,18 +6,18 @@ export const isMac = process.platform === 'darwin';
 export const isWindows = process.platform === 'win32';
 export const isLinux = process.platform === 'linux';
 
-export const electronVersion = process.versions.electron;
-export const chromeVersion = process.versions.chrome;
-export const nodeVersion = process.versions.node;
+export const electronVersion: string = process.versions.electron;
+export const chromeVersion: string = process.versions.chrome;
+export const nodeVersion: string = process.versions.node;
 
-export const osArch = arch();
-export const osRelease = release();
-export const is64Bit = osArch.match(/64/);
+export const osArch: string = arch();
+export const osRelease: string = release();
+export const is64Bit: RegExpMatchArray | null = osArch.match(/64/);
 
 // for accelerator, show the shortform that electron/OS understands
 // for tooltip, show symbol
-const ctrlKey = isMac ? '⌘' : 'Ctrl';
-const cmdKey = isMac ? 'Cmd' : 'Ctrl';
+const ctrlKey: string = isMac ? '⌘' : 'Ctrl';
+const cmdKey: string = isMac ? 'Cmd' : 'Ctrl';
 
 export const altKey = (isAccelerator = true) =>
   !isAccelerator && isMac ? '⌥' : 'Alt';

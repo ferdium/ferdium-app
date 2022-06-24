@@ -17,7 +17,7 @@ type Props = {
 };
 
 class I18N extends Component<Props> {
-  componentDidUpdate() {
+  componentDidUpdate(): void {
     window['ferdium'].menu.rebuild();
   }
 
