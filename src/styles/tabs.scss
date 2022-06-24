@@ -34,6 +34,7 @@
   justify-content: center;
   min-height: 50px;
   position: relative;
+  flex-wrap: wrap;
   @media (prefers-reduced-motion: no-preference) {
     transition: background $theme-transition-time;
   }
@@ -49,9 +50,6 @@
     border-left-style: solid;
 
     .tab-item__icon {
-      margin-left: -4px;
-    }
-    .tab-item__label {
       margin-left: -4px;
     }
   }

@@ -366,15 +366,10 @@ class TabItem extends Component {
             : ''
         }`}
       >
-        {showServiceNameSetting ? (
-          <div>
-            <img src={service.icon} className="tab-item__icon" alt="" />
-            <span className="tab-item__label">{service.name}</span>
-          </div>
-        ) : (
-          <img src={service.icon} className="tab-item__icon" alt="" />
+        <img src={service.icon} className="tab-item__icon" alt="" />
+        {showServiceNameSetting && (
+          <span className="tab-item__label">{service.name}</span>
         )}
-
         {notificationBadge}
         {errorBadge}
         {IS_SERVICE_DEBUGGING_ENABLED && (
