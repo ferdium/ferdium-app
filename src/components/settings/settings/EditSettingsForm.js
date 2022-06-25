@@ -994,7 +994,7 @@ class EditSettingsForm extends Component {
                 )}
                 <p className="settings__message">
                   <Icon icon={mdiGithub} />
-                  Ferdium is based on{' '}
+                  {' '}Ferdium is based on{' '}
                   <a
                     href={`${GITHUB_FRANZ_URL}/franz`}
                     target="_blank"

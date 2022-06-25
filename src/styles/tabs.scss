@@ -31,10 +31,10 @@
   align-items: center;
   display: flex;
   height: 65px;
-  justify-content: center;
+  justify-content: space-evenly;
   min-height: 50px;
   position: relative;
-  flex-wrap: wrap;
+  flex-direction: column;
   @media (prefers-reduced-motion: no-preference) {
     transition: background $theme-transition-time;
   }
@@ -63,9 +63,7 @@
 
   .tab-item__label {
     display: flex;
-    position: relative;
     font-size: 11px;
-    justify-content: center;
   }
 
   &.is-disabled .tab-item__icon {
