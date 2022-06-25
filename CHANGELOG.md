@@ -1,3 +1,55 @@
+# [v6.0.0-beta.2](https://github.com/ferdium/ferdium-app/compare/v6.0.0-nightly.47...v6.0.0-nightly.77) (2022-06-25)
+
+### Features
+
+- Add ability to navigate recipe with mouse buttons
+- Add audio-record plug to snap build
+- Add removable-media snap interface
+- Add color picker component for accent color setting
+- Add 'Google Keep' as another option in Ferdium TODOs
+- Add progress indicator on top of the Ferdium window for page loading. The color of the progressbar can be set globally, and it can be enabled/disabled per-service
+- Add `startpage.com` as option search-engine and make it the default for new users
+- Remove Ferdi Server from available Servers List
+- Add Toggle Navbar to View Menu (global)
+- Change 'Most Popular' list in Services to 'Ferdium Picks'
+- Change login screen layout
+- Disable TODOs feature by default
+- Add split mode toggle to side bar, View menu and hide/collapse button
+- Improve TODO menu behaviour on fresh install
+
+### Services
+
+### Bug fixes
+
+- Fix hero image (was referring to ferdi repo)
+- Fix blank window appearing on startup
+- Fix service labels cut off when using Slim Sidebar
+- Fix broken faq url
+- Fix for Developer Tools not showing up via menu
+- Move location of 'Change server' link on main screen for better visibility
+- Fix default accent color to Ferdium gradient
+- Fix reload after resume and add idle time setting
+- Don't replace custom icon when service updates
+- Workaroud for in-app Password Recovery
+- Fix navigation toolbar buttons not being clickable
+- Fix drag-n-drop not working if the service name is shown
+- Fix ribbon menu style on windows
+
+### Under the hood
+
+- Expose a new utility method 'Ferdium.isImage' for use by recipes
+- Align 'Save service' button to right when adding recipe
+- Change Input box to slider on Grayscale dim level
+- Upgrade `electron` to the latest public version (`19.0.6`) to bring in lots of security fixes
+- Upgrade `node` to `16.15.1`, `npm` to `8.12.2` and `pnpm` to `7.3.0`
+- Upgrade `electron-builder` to `23.2.0` and `electron-updater` to `5.0.6`
+- Enable AutoUpdates from in-app with self-sign certificates on macOS and windows
+- Remove integration with sentry
+- Update CONTRIBUTING.md for new contributors' dev machine setup
+- Lock snapcraft to v5 since v7 breaks the build
+- Add GH workflows to publish on nightly, beta and release builds for homebrew casks and reddit
+- Remove DevContainer from project
+
 # [v6.0.0-beta.1](https://github.com/ferdium/ferdium-app/compare/v5.8.2-nightly.2...v6.0.0-nightly.47) (2022-05-26)
 
 ### Features
