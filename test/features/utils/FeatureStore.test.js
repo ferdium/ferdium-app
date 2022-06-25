@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import { observable } from 'mobx';
-import { FeatureStore } from './FeatureStore';
-import { createActionsFromDefinitions } from '../../actions/lib/actions';
-import { createActionBindings } from './ActionBinding';
-import { createReactions } from '../../stores/lib/Reaction';
+import { FeatureStore } from '../../../src/features/utils/FeatureStore';
+import { createActionsFromDefinitions } from '../../../src/actions/lib/actions';
+import { createActionBindings } from '../../../src/features/utils/ActionBinding';
+import { createReactions } from '../../../src/stores/lib/Reaction';
 
 const actions = createActionsFromDefinitions(
   {

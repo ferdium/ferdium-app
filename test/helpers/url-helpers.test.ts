@@ -1,4 +1,4 @@
-import * as url_helpers from './url-helpers'
+import * as url_helpers from '../../src/helpers/url-helpers';
 
 describe('url_helpers', () => {
   describe('isValidExternalURL', () => {
@@ -38,7 +38,9 @@ describe('url_helpers', () => {
       // Note: not testing the invalid string urls - since the URL ctor itself will raise an error
 
       it('returns false for invalid url', () => {
-        const result = url_helpers.isValidExternalURL(new URL('shttps://google'));
+        const result = url_helpers.isValidExternalURL(
+          new URL('shttps://google'),
+        );
         expect(result).toBe(false);
       });
 
@@ -48,7 +50,9 @@ describe('url_helpers', () => {
       });
 
       it('returns true for valid https url', () => {
-        const result = url_helpers.isValidExternalURL(new URL('https://google'));
+        const result = url_helpers.isValidExternalURL(
+          new URL('https://google'),
+        );
         expect(result).toBe(true);
       });
     });
@@ -71,21 +75,34 @@ describe('url_helpers', () => {
     });
 
     it('handles string starting with http://', () => {
-      expect(url_helpers.fixUrl('http://some/random/url')).toEqual('http://some/random/url');
-      expect(url_helpers.fixUrl('http://some//random//url')).toEqual('http://some/random/url');
+      expect(url_helpers.fixUrl('http://some/random/url')).toEqual(
+        'http://some/random/url',
+      );
+      expect(url_helpers.fixUrl('http://some//random//url')).toEqual(
+        'http://some/random/url',
+      );
 
-      const gmailEmbeddedUrl = 'https://www.google.com/url?q=https://github.com/ferdium/ferdium-app/issues/87&source=gmail';
+      const gmailEmbeddedUrl =
+        'https://www.google.com/url?q=https://github.com/ferdium/ferdium-app/issues/87&source=gmail';
       expect(url_helpers.fixUrl(gmailEmbeddedUrl)).toEqual(gmailEmbeddedUrl); // it should NOT remove the double-slash from the embedded url in the query string
     });
 
     it('handles string starting with https://', () => {
-      expect(url_helpers.fixUrl('https://some/random/url')).toEqual('https://some/random/url');
-      expect(url_helpers.fixUrl('https://some//random//url')).toEqual('https://some/random/url');
+      expect(url_helpers.fixUrl('https://some/random/url')).toEqual(
+        'https://some/random/url',
+      );
+      expect(url_helpers.fixUrl('https://some//random//url')).toEqual(
+        'https://some/random/url',
+      );
     });
 
     it('handles string starting with file://', () => {
-      expect(url_helpers.fixUrl('file://some/random/url')).toEqual('file://some/random/url');
-      expect(url_helpers.fixUrl('file://some//random//url')).toEqual('file://some/random/url');
+      expect(url_helpers.fixUrl('file://some/random/url')).toEqual(
+        'file://some/random/url',
+      );
+      expect(url_helpers.fixUrl('file://some//random//url')).toEqual(
+        'file://some/random/url',
+      );
     });
   });
 
@@ -111,7 +128,8 @@ describe('url_helpers', () => {
     });
 
     it('returns true for valid file url', () => {
-      const fileName = process.platform === 'win32' ? 'file:///c:\\' : 'file:///';
+      const fileName =
+        process.platform === 'win32' ? 'file:///c:\\' : 'file:///';
       const result = url_helpers.isValidFileUrl(fileName);
       expect(result).toBe(true);
     });

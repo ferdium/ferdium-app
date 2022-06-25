@@ -12,7 +12,6 @@
     "module": "CommonJS",
     "jsx": "react-jsx",
     "typeRoots": [
-      "@types",
       "node_modules/@types"
     ],
     "moduleResolution": "node",
@@ -46,6 +45,7 @@
   },
   "include": [
     "src",
-    "scripts"
+    "scripts",
+    "test",
   ],
 }

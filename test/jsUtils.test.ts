@@ -1,4 +1,4 @@
-import * as jsUtils from './jsUtils'
+import * as jsUtils from '../src/jsUtils';
 
 describe('jsUtils', () => {
   describe('ifUndefinedString', () => {
