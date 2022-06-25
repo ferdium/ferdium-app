@@ -8,7 +8,6 @@ import terser from 'gulp-terser';
 import htmlMin from 'gulp-htmlmin';
 import connect from 'gulp-connect';
 import { exec } from 'child_process';
-import dotenv from 'dotenv';
 import sassVariables from 'gulp-sass-variables';
 import { removeSync, outputJson } from 'fs-extra';
 import kebabCase from 'kebab-case';
@@ -20,7 +19,7 @@ import config from './package.json';
 
 import * as rawStyleConfig from './scripts/theme/default/legacy';
 
-dotenv.config();
+import 'dotenv/config';
 
 const sass = gulpSass(dartSass);
 
@@ -69,18 +68,14 @@ const paths = {
     watch: 'src/styles/**/*.scss',
   },
   javascripts: {
-    src: 'src/**/*.js',
+    src: ['src/**/*.js', 'src/**/*.jsx'],
     dest: 'build/',
-    watch: [
-      'src/**/*.js',
-    ],
+    watch: ['src/**/*.js', 'src/**/*.jsx'],
   },
   typescripts: {
     src: ['src/**/*.ts', 'src/**/*.tsx'],
     dest: 'build/',
-    watch: [
-      'src/**/*.ts',
-    ],
+    watch: ['src/**/*.ts', 'src/**/*.tsx'],
   },
 };
 
@@ -192,7 +187,7 @@ export function styles() {
 
 export function processJavascripts() {
   return gulp
-    .src([paths.javascripts.src], { since: gulp.lastRun(processJavascripts) })
+    .src(paths.javascripts.src, { since: gulp.lastRun(processJavascripts) })
     .pipe(
       babel({
         comments: false,

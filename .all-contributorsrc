@@ -2422,7 +2422,11 @@
       "contributions": [
         "code",
         "infra",
-        "design"
+        "design",
+        "bug",
+        "userTesting",
+        "review",
+        "ideas"
       ]
     },
     {
@@ -2711,7 +2715,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/36506137?v=4",
       "profile": "https://github.com/NathanaelGandhi",
       "contributions": [
-        "infra"
+        "infra",
+        "code"
       ]
     },
     {
@@ -2783,7 +2788,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/34252790?v=4",
       "profile": "https://github.com/Alphrag",
       "contributions": [
-        "doc"
+        "doc",
+        "infra"
       ]
     },
     {
@@ -2792,6 +2798,61 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/17591869?v=4",
       "profile": "http://maxwipfli.ch",
       "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "davidajetter-tw",
+      "name": "davidajetter-tw",
+      "avatar_url": "https://avatars.githubusercontent.com/u/105304388?v=4",
+      "profile": "https://github.com/davidajetter-tw",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "stacksjb",
+      "name": "Jesse",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2865491?v=4",
+      "profile": "https://github.com/stacksjb",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "MurzNN",
+      "name": "Alexey Murz Korepov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/336662?v=4",
+      "profile": "http://korepov.pro/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "BrianGilbert",
+      "name": "Brian Gilbert",
+      "avatar_url": "https://avatars.githubusercontent.com/u/114017?v=4",
+      "profile": "http://www.realityloop.com/",
+      "contributions": [
+        "design"
+      ]
+    },
+    {
+      "login": "amangalampalli",
+      "name": "Aditya Mangalampalli",
+      "avatar_url": "https://avatars.githubusercontent.com/u/25261413?v=4",
+      "profile": "https://amangalampalli.github.io/",
+      "contributions": [
+        "design"
+      ]
+    },
+    {
+      "login": "cino",
+      "name": "Ricardo Cino",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2735602?v=4",
+      "profile": "http://cino.io",
+      "contributions": [
+        "infra",
         "code"
       ]
     }

@@ -116,6 +116,7 @@ export default class Request {
     return !this.wasExecuted && this.isExecuting;
   }
 
+  /* eslint-disable unicorn/no-thenable */
   then(...args) {
     if (!this._promise)
       throw new Error(

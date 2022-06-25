@@ -23,6 +23,15 @@
 }
 
 .theme__dark {
+
+  .settings__hr {
+    color: rgba($dark-theme-gray, 0.8);
+  }
+  
+  .settings__hr-sections {
+    color: rgba($dark-theme-text-color, 0.5);
+  }
+
   .settings-wrapper {
     background: rgba($dark-theme-black, 0.8);
   }
@@ -36,6 +45,7 @@
 
     .settings__section_header {
       text-align: center;
+      margin-bottom: 40px;
     }
 
     .settings__main {
@@ -175,6 +185,37 @@
     box-shadow: 0 20px 50px rgba($dark-theme-black, 0.5);
     overflow: hidden;
     background: #fff;
+  }
+
+  .settings__hr {
+    color: rgba($theme-gray, 0.2);
+  }
+  
+  .settings__hr-sections {
+    color: rgba($theme-gray, 0.4);
+  }
+
+  .settings__section_header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .settings__settings-group__apply-color {
+    display: flex;
+    justify-content: center;
+  }
+
+  .settings__settings-group__apply-color__button {
+    height: 40px;
+    margin-bottom: 3%;
+  }
+
+  .franz-form__input-wrapper__color-picker {
+    width: 20% !important;
+    margin-top: 2%;
+  }
+  .color-picker-input {
+    align-items: center;
   }
 
   .settings__header {
@@ -370,9 +411,6 @@
     }
   }
 
-  .settings__delete-button {
-    right: 0;
-  }
   .settings__open-recipe-file-button, .settings__open-settings-file-button {
     cursor: pointer;
     margin-right: 10px;

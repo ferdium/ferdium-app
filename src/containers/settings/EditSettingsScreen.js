@@ -74,6 +74,10 @@ const messages = defineMessages({
     id: 'settings.app.form.reloadAfterResume',
     defaultMessage: 'Reload Ferdium after system resume',
   },
+  reloadAfterResumeTime: {
+    id: 'settings.app.form.reloadAfterResumeTime',
+    defaultMessage: 'Time to consider the system as idle/suspended (in minutes)',
+  },
   minimizeToSystemTray: {
     id: 'settings.app.form.minimizeToSystemTray',
     defaultMessage: 'Minimize Ferdium to system tray',
@@ -101,10 +105,6 @@ const messages = defineMessages({
   searchEngine: {
     id: 'settings.app.form.searchEngine',
     defaultMessage: 'Search engine',
-  },
-  sentry: {
-    id: 'settings.app.form.sentry',
-    defaultMessage: 'Send telemetry data',
   },
   hibernateOnStartup: {
     id: 'settings.app.form.hibernateOnStartup',
@@ -206,9 +206,17 @@ const messages = defineMessages({
     id: 'settings.app.form.useVerticalStyle',
     defaultMessage: 'Use horizontal style',
   },
+  hideCollapseButton: {
+    id: 'settings.app.form.hideCollapseButton',
+    defaultMessage: 'Hide Collapse button',
+  },
   hideRecipesButton: {
     id: 'settings.app.form.hideRecipesButton',
     defaultMessage: 'Hide Recipes button',
+  },
+  hideSplitModeButton: {
+    id: 'settings.app.form.hideSplitModeButton',
+    defaultMessage: 'Hide Split Mode button',
   },
   useGrayscaleServices: {
     id: 'settings.app.form.useGrayscaleServices',
@@ -216,7 +224,7 @@ const messages = defineMessages({
   },
   grayscaleServicesDim: {
     id: 'settings.app.form.grayscaleServicesDim',
-    defaultMessage: 'Input grayscale dim level (%)',
+    defaultMessage: 'Grayscale dim level',
   },
   hideWorkspacesButton: {
     id: 'settings.app.form.hideWorkspacesButton',
@@ -237,6 +245,10 @@ const messages = defineMessages({
   accentColor: {
     id: 'settings.app.form.accentColor',
     defaultMessage: 'Accent color',
+  },
+  progressbarAccentColor: {
+    id: 'settings.app.form.progressbarAccentColor',
+    defaultMessage: 'Progressbar Accent color',
   },
   showDisabledServices: {
     id: 'settings.app.form.showDisabledServices',
@@ -323,6 +335,7 @@ class EditSettingsScreen extends Component {
         runInBackground: Boolean(settingsData.runInBackground),
         enableSystemTray: Boolean(settingsData.enableSystemTray),
         reloadAfterResume: Boolean(settingsData.reloadAfterResume),
+        reloadAfterResumeTime: Number(settingsData.reloadAfterResumeTime),
         startMinimized: Boolean(settingsData.startMinimized),
         confirmOnQuit: Boolean(settingsData.confirmOnQuit),
         minimizeToSystemTray: Boolean(settingsData.minimizeToSystemTray),
@@ -332,7 +345,6 @@ class EditSettingsScreen extends Component {
         notifyTaskBarOnMessage: Boolean(settingsData.notifyTaskBarOnMessage),
         navigationBarBehaviour: settingsData.navigationBarBehaviour,
         searchEngine: settingsData.searchEngine,
-        sentry: Boolean(settingsData.sentry),
         hibernateOnStartup: Boolean(settingsData.hibernateOnStartup),
         hibernationStrategy: Number(settingsData.hibernationStrategy),
         wakeUpStrategy: Number(settingsData.wakeUpStrategy),
@@ -365,7 +377,9 @@ class EditSettingsScreen extends Component {
           settingsData.enableLongPressServiceHint,
         ),
         useVerticalStyle: Boolean(settingsData.useVerticalStyle),
+        hideCollapseButton: Boolean(settingsData.hideCollapseButton),
         hideRecipesButton: Boolean(settingsData.hideRecipesButton),
+        hideSplitModeButton: Boolean(settingsData.hideSplitModeButton),
         useGrayscaleServices: Boolean(settingsData.useGrayscaleServices),
         grayscaleServicesDim: Number(settingsData.grayscaleServicesDim),
         hideWorkspacesButton: Boolean(settingsData.hideWorkspacesButton),
@@ -373,6 +387,7 @@ class EditSettingsScreen extends Component {
         hideSettingsButton: Boolean(settingsData.hideSettingsButton),
         alwaysShowWorkspaces: Boolean(settingsData.alwaysShowWorkspaces),
         accentColor: settingsData.accentColor,
+        progressbarAccentColor: settingsData.progressbarAccentColor,
         showMessageBadgeWhenMuted: Boolean(
           settingsData.showMessageBadgeWhenMuted,
         ),
@@ -516,6 +531,11 @@ class EditSettingsScreen extends Component {
           value: settings.all.app.reloadAfterResume,
           default: DEFAULT_APP_SETTINGS.reloadAfterResume,
         },
+        reloadAfterResumeTime: {
+          label: intl.formatMessage(messages.reloadAfterResumeTime),
+          value: settings.all.app.reloadAfterResumeTime,
+          default: DEFAULT_APP_SETTINGS.reloadAfterResumeTime,
+        },
         minimizeToSystemTray: {
           label: intl.formatMessage(messages.minimizeToSystemTray),
           value: settings.all.app.minimizeToSystemTray,
@@ -552,11 +572,6 @@ class EditSettingsScreen extends Component {
           value: settings.all.app.searchEngine,
           default: DEFAULT_APP_SETTINGS.searchEngine,
           options: searchEngines,
-        },
-        sentry: {
-          label: intl.formatMessage(messages.sentry),
-          value: settings.all.app.sentry,
-          default: DEFAULT_APP_SETTINGS.sentry,
         },
         hibernateOnStartup: {
           label: intl.formatMessage(messages.hibernateOnStartup),
@@ -728,10 +743,20 @@ class EditSettingsScreen extends Component {
           value: settings.all.app.useVerticalStyle,
           default: DEFAULT_APP_SETTINGS.useVerticalStyle,
         },
+        hideCollapseButton: {
+          label: intl.formatMessage(messages.hideCollapseButton),
+          value: settings.all.app.hideCollapseButton,
+          default: DEFAULT_APP_SETTINGS.hideCollapseButton,
+        },
         hideRecipesButton: {
           label: intl.formatMessage(messages.hideRecipesButton),
           value: settings.all.app.hideRecipesButton,
           default: DEFAULT_APP_SETTINGS.hideRecipesButton,
+        },
+        hideSplitModeButton: {
+          label: intl.formatMessage(messages.hideSplitModeButton),
+          value: settings.all.app.hideSplitModeButton,
+          default: DEFAULT_APP_SETTINGS.hideSplitModeButton,
         },
         useGrayscaleServices: {
           label: intl.formatMessage(messages.useGrayscaleServices),
@@ -767,6 +792,11 @@ class EditSettingsScreen extends Component {
           label: intl.formatMessage(messages.accentColor),
           value: settings.all.app.accentColor,
           default: DEFAULT_APP_SETTINGS.accentColor,
+        },
+        progressbarAccentColor: {
+          label: intl.formatMessage(messages.progressbarAccentColor),
+          value: settings.all.app.progressbarAccentColor,
+          default: DEFAULT_APP_SETTINGS.progressbarAccentColor,
         },
         enableGPUAcceleration: {
           label: intl.formatMessage(messages.enableGPUAcceleration),

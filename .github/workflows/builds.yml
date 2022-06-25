@@ -164,30 +164,30 @@ jobs:
         if: ${{ env.GIT_BRANCH_NAME != 'nightly' && env.GIT_BRANCH_NAME != 'release' }}
         run: npm run build -- --publish never
         shell: bash
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: false
       - name: Build Ferdium with publish for 'nightly' branch
         if: ${{ env.GIT_BRANCH_NAME == 'nightly' }}
         run: npm run build -- --publish always
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
-          CSC_IDENTITY_AUTO_DISCOVERY: false
-          # TODO: Commented out the code signing process for now (so as to at least get unsigned nightlies available for testing)
-          # APPLEID: ${{ secrets.APPLEID }}
-          # APPLEID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
-          # CSC_LINK: ${{ secrets.CSC_LINK }}
-          # CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
+          CSC_IDENTITY_AUTO_DISCOVERY: true
+          APPLEID: ${{ secrets.APPLEID }}
+          APPLEID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
+          CSC_LINK: ${{ secrets.CSC_LINK }}
+          CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
       - name: Build Ferdium with publish for 'release' branch
         if: ${{ env.GIT_BRANCH_NAME == 'release' }}
         run: npm run build -- --publish always
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
-          CSC_IDENTITY_AUTO_DISCOVERY: false
-          # TODO: Commented out the code signing process for now (so as to at least get unsigned nightlies available for testing)
-          # APPLEID: ${{ secrets.APPLEID }}
-          # APPLEID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
-          # CSC_LINK: ${{ secrets.CSC_LINK }}
-          # CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
+          CSC_IDENTITY_AUTO_DISCOVERY: true
+          APPLEID: ${{ secrets.APPLEID }}
+          APPLEID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
+          CSC_LINK: ${{ secrets.CSC_LINK }}
+          CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
 
   build_linux:
     name: "ubuntu ${{ github.event.inputs.message }}"
@@ -254,6 +254,8 @@ jobs:
         if: ${{ env.GIT_BRANCH_NAME != 'nightly' && env.GIT_BRANCH_NAME != 'release' }}
         run: npm run build -- --publish never
         shell: bash
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: false
       - name: Build Ferdium with publish for 'nightly' branch
         if: ${{ env.GIT_BRANCH_NAME == 'nightly' }}
         env:
@@ -261,7 +263,7 @@ jobs:
           CSC_IDENTITY_AUTO_DISCOVERY: false
           SNAPCRAFT_LOGIN: ${{ secrets.SNAPCRAFT_LOGIN }}
         run: |
-          sudo snap install snapcraft --classic
+          sudo snap install snapcraft --channel=5.x/stable --classic
           echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
           npm run build -- --publish always -c.snap.publish.repo=nightlies -c.snap.publish.channels=edge
           snapcraft logout
@@ -273,7 +275,7 @@ jobs:
           CSC_IDENTITY_AUTO_DISCOVERY: false
           SNAPCRAFT_LOGIN: ${{ secrets.SNAPCRAFT_LOGIN }}
         run: |
-          sudo snap install snapcraft --classic
+          sudo snap install snapcraft --channel=5.x/stable --classic
           echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
           npm run build -- --publish always -c.snap.publish.repo=ferdium -c.snap.publish.channels=beta
           snapcraft logout
@@ -285,7 +287,7 @@ jobs:
           CSC_IDENTITY_AUTO_DISCOVERY: false
           SNAPCRAFT_LOGIN: ${{ secrets.SNAPCRAFT_LOGIN }}
         run: |
-          sudo snap install snapcraft --classic
+          sudo snap install snapcraft --channel=5.x/stable --classic
           echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
           npm run build -- --publish always -c.snap.publish.repo=ferdium -c.snap.publish.channels=stable
           snapcraft logout
@@ -362,23 +364,23 @@ jobs:
         if: ${{ env.GIT_BRANCH_NAME != 'nightly' && env.GIT_BRANCH_NAME != 'release' }}
         run: npm run build -- --publish never
         shell: bash
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: false
       - name: Build Ferdium with publish for 'nightly' branch
         if: ${{ env.GIT_BRANCH_NAME == 'nightly' }}
         run: npm run build -- --publish always
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
-          CSC_IDENTITY_AUTO_DISCOVERY: false
-          # TODO: Commented out the code signing process for now (so as to at least get unsigned nightlies available for testing)
-          # WIN_CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
-          # WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
+          CSC_IDENTITY_AUTO_DISCOVERY: true
+          WIN_CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
+          WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
       - name: Build Ferdium with publish for 'release' branch
         if: ${{ env.GIT_BRANCH_NAME == 'release' }}
         run: npm run build -- --publish always
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
-          CSC_IDENTITY_AUTO_DISCOVERY: false
-          # TODO: Commented out the code signing process for now (so as to at least get unsigned nightlies available for testing)
-          # WIN_CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
-          # WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
+          CSC_IDENTITY_AUTO_DISCOVERY: true
+          WIN_CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
+          WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}

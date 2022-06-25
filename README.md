@@ -14,8 +14,6 @@
 - [Ferdium](#ferdium)
   - [Screenshots](#screenshots)
   - [Download](#download)
-  - [Unsigned Nightlies on MacOS](#unsigned-nightlies-on-macos)
-  - [Unsigned Nightlies on Windows](#unsigned-nightlies-on-windows)
   - [Migrating from Ferdi](#migrating-from-ferdi)
   - [Contributing](#contributing)
   - [Contributors ✨](#contributors-)
@@ -23,7 +21,7 @@
 [![Builds](https://github.com/ferdium/ferdium-app/actions/workflows/builds.yml/badge.svg)](https://github.com/ferdium/ferdium-app/actions/workflows/builds.yml)
 [![Crowdin](https://badges.crowdin.net/ferdium-app/localized.svg)](https://crowdin.com/project/ferdium-app)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-298-default.svg?logo=github' alt='Contributors'/></a>
+<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-304-default.svg?logo=github' alt='Contributors'/></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 > 🤴🏽 Hard-fork of [Franz](https://github.com/meetfranz/franz), adding awesome features and removing unwanted ones.
@@ -53,20 +51,6 @@ Ferdium is a desktop app that helps you organize how you use your favourite apps
 Assets made available via [GitHub releases](https://github.com/ferdium/ferdium-app/releases/latest).
 
 _Find answers to frequently asked questions on [ferdium.org/faq](https://ferdium.org/faq)._
-
-## Unsigned Nightlies on MacOS
-
-Since we are waiting to acquire the Apple Developer License, we are publishing our nightlies without being signed. If you download these, and are on MacOS beyond Catalina, you will face the issue that the OS says the `dmg` is corrupted. If so, please run the following command in your terminal:
-```bash
-sudo xattr -rd com.apple.quarantine /Applications/Ferdium.app
-```
-
-## Unsigned Nightlies on Windows
-
-Similarly to the MacOS, we do not currently have a certificate to sign the nightlies on Windows. For this reason, an error will appear when launching the setup tool or the portable app if your execution policy is not set to `Bypass` or `Unrestricted`. In order to allow the script to run, it is sufficient to right-click on the `.exe` to access its properties and to tick the box labeled `Unblock` at the bottom of the General tab. Alternatively, you could execute the following in a PowerShell:
-```PowerShell
-Unblock-File -Path .\Ferdium-Setup-6.0.0-nightly.xx.exe; .\Ferdium-Setup-6.0.0-nightly.xx.exe
-```
 
 ## Migrating from Ferdi
 
@@ -413,7 +397,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href='https://elliotthiebaut.com' title='Elliot Thiebaut: bug'><img src='https://avatars.githubusercontent.com/u/60610988?v=4' alt='ElliotThiebaut' style='width:100px;'/></a></td>
     <td align="center"><a href='https://github.com/woropajj' title='Jakub: bug'><img src='https://avatars.githubusercontent.com/u/57800049?v=4' alt='woropajj' style='width:100px;'/></a></td>
     <td align="center"><a href='https://github.com/guillermin012' title='guillermin012: ideas'><img src='https://avatars.githubusercontent.com/u/76463041?v=4' alt='guillermin012' style='width:100px;'/></a></td>
-    <td align="center"><a href='https://github.com/SpecialAro' title='André Oliveira: code, infra, design'><img src='https://avatars.githubusercontent.com/u/37463445?v=4' alt='SpecialAro' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://github.com/SpecialAro' title='André Oliveira: code, infra, design, bug, userTesting, review, ideas'><img src='https://avatars.githubusercontent.com/u/37463445?v=4' alt='SpecialAro' style='width:100px;'/></a></td>
     <td align="center"><a href='https://github.com/fernandofig' title='Fernando Figueiredo: code, design'><img src='https://avatars.githubusercontent.com/u/1110864?v=4' alt='fernandofig' style='width:100px;'/></a></td>
     <td align="center"><a href='https://meetfranz.com/' title='Harald: code'><img src='https://avatars.githubusercontent.com/u/135914?v=4' alt='haraldox' style='width:100px;'/></a></td>
   </tr>
@@ -455,7 +439,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href='https://github.com/skoruppa' title='skoruppa: code'><img src='https://avatars.githubusercontent.com/u/899429?v=4' alt='skoruppa' style='width:100px;'/></a></td>
-    <td align="center"><a href='https://github.com/NathanaelGandhi' title='Nathanael: infra'><img src='https://avatars.githubusercontent.com/u/36506137?v=4' alt='NathanaelGandhi' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://github.com/NathanaelGandhi' title='Nathanael: infra, code'><img src='https://avatars.githubusercontent.com/u/36506137?v=4' alt='NathanaelGandhi' style='width:100px;'/></a></td>
     <td align="center"><a href='https://github.com/Evan-aja' title='Evan: infra'><img src='https://avatars.githubusercontent.com/u/71018479?v=4' alt='Evan-aja' style='width:100px;'/></a></td>
     <td align="center"><a href='https://github.com/cedricroijakkers' title='Cedric Roijakkers: infra'><img src='https://avatars.githubusercontent.com/u/15158042?v=4' alt='cedricroijakkers' style='width:100px;'/></a></td>
     <td align="center"><a href='https://kishaningithub.github.io/' title='Kishan B: infra'><img src='https://avatars.githubusercontent.com/u/763760?v=4' alt='kishaningithub' style='width:100px;'/></a></td>
@@ -465,8 +449,16 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href='https://github.com/Alt37' title='Alt37: bug'><img src='https://avatars.githubusercontent.com/u/44649402?v=4' alt='Alt37' style='width:100px;'/></a></td>
     <td align="center"><a href='https://github.com/MagicLegend' title='MagicLegend: bug'><img src='https://avatars.githubusercontent.com/u/3169104?v=4' alt='MagicLegend' style='width:100px;'/></a></td>
-    <td align="center"><a href='https://github.com/Alphrag' title='Alphrag: doc'><img src='https://avatars.githubusercontent.com/u/34252790?v=4' alt='Alphrag' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://github.com/Alphrag' title='Alphrag: doc, infra'><img src='https://avatars.githubusercontent.com/u/34252790?v=4' alt='Alphrag' style='width:100px;'/></a></td>
     <td align="center"><a href='http://maxwipfli.ch' title='Max Wipfli: code'><img src='https://avatars.githubusercontent.com/u/17591869?v=4' alt='MaxWipfli' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://github.com/davidajetter-tw' title='davidajetter-tw: doc'><img src='https://avatars.githubusercontent.com/u/105304388?v=4' alt='davidajetter-tw' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://github.com/stacksjb' title='Jesse: doc'><img src='https://avatars.githubusercontent.com/u/2865491?v=4' alt='stacksjb' style='width:100px;'/></a></td>
+    <td align="center"><a href='http://korepov.pro/' title='Alexey Murz Korepov: code'><img src='https://avatars.githubusercontent.com/u/336662?v=4' alt='MurzNN' style='width:100px;'/></a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href='http://www.realityloop.com/' title='Brian Gilbert: design'><img src='https://avatars.githubusercontent.com/u/114017?v=4' alt='BrianGilbert' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://amangalampalli.github.io/' title='Aditya Mangalampalli: design'><img src='https://avatars.githubusercontent.com/u/25261413?v=4' alt='amangalampalli' style='width:100px;'/></a></td>
+    <td align="center"><a href='http://cino.io' title='Ricardo Cino: infra, code'><img src='https://avatars.githubusercontent.com/u/2735602?v=4' alt='cino' style='width:100px;'/></a></td>
   </tr>
 </table>
 

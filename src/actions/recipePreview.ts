@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
+import { ActionDefinitions } from './lib/actions';
 
-export default {
+export default <ActionDefinitions>{
   search: {
     needle: PropTypes.string.isRequired,
   },

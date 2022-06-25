@@ -5,6 +5,7 @@ import { observer, PropTypes as MobxPropTypes, inject } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import serverlessLogin from '../../helpers/serverless-helpers';
 import { shuffleArray } from '../../helpers/array-helpers';
+import { serverName } from '../../api/apiBase';
 
 import Link from '../ui/Link';
 import { H1 } from '../ui/headline';
@@ -18,9 +19,13 @@ const messages = defineMessages({
     id: 'welcome.loginButton',
     defaultMessage: 'Login to your account',
   },
+  changeServerMessage: {
+    id: 'login.changeServerMessage',
+    defaultMessage: 'You are using {serverNameParse}, do you want to switch?'
+  },
   changeServer: {
     id: 'login.changeServer',
-    defaultMessage: 'Change server'
+    defaultMessage: 'Change here!'
   },
   serverless: {
     id: 'services.serverless',
@@ -47,6 +52,9 @@ class Welcome extends Component {
     let { recipes } = this.props;
     recipes = shuffleArray(recipes);
     recipes.length = 8 * 2;
+
+    const serverNameParse = serverName();
+
     return (
       <div className="welcome">
         <div className="welcome__content">
@@ -56,9 +64,9 @@ class Welcome extends Component {
             alt=""
           />
           {/* <img src="./assets/images/welcome.png" className="welcome__services" alt="" /> */}
-          <div className="welcome__text">
-            <H1>Ferdium</H1>
-          </div>
+        </div>
+        <div className="welcome__text">
+          <H1>Ferdium</H1>
         </div>
         <div className="welcome__buttons">
           <Link to={signupRoute} className="button button__inverted">
@@ -67,16 +75,16 @@ class Welcome extends Component {
           <Link to={loginRoute} className="button">
             {intl.formatMessage(messages.loginButton)}
           </Link>
-          <Link to={changeServerRoute}>
-            <span
-              style={{
-                color: '#fff'
-              }}
-            >
-              {intl.formatMessage(messages.changeServer)}
+          <div className="welcome__text__change-server">
+            <span>
+              {intl.formatMessage(messages.changeServerMessage, { serverNameParse })}
             </span>
-          </Link>
-          <br />
+            <Link to={changeServerRoute} className="button__change-server">
+                <span>
+                  {intl.formatMessage(messages.changeServer)}
+                </span>
+            </Link>
+          </div>
           <br />
           <hr />
           <br />

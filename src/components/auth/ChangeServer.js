@@ -9,7 +9,7 @@ import Button from '../ui/button';
 import Link from '../ui/Link';
 import Infobox from '../ui/Infobox';
 import { url, required } from '../../helpers/validation-helpers';
-import { LIVE_FERDIUM_API, LIVE_FRANZ_API, LIVE_FERDI_API } from '../../config';
+import { LIVE_FERDIUM_API, LIVE_FRANZ_API } from '../../config';
 import globalMessages from '../../i18n/globalMessages';
 import { H1 } from '../ui/headline';
 
@@ -44,11 +44,9 @@ class ChangeServer extends Component {
 
   ferdiumServer = LIVE_FERDIUM_API;
 
-  ferdiServer = LIVE_FERDI_API;
-
   franzServer = LIVE_FRANZ_API;
 
-  defaultServers = [this.ferdiumServer, this.franzServer, this.ferdiServer];
+  defaultServers = [ this.ferdiumServer, this.franzServer ];
 
   form = (() => {
     const { intl } = this.props;
@@ -60,7 +58,6 @@ class ChangeServer extends Component {
           options: [
             { value: this.ferdiumServer, label: 'Ferdium (Default)' },
             { value: this.franzServer, label: 'Franz' },
-            { value: this.ferdiServer, label: 'Ferdi' },
             {
               value: this.defaultServers.includes(this.props.server)
                 ? ''
@@ -114,7 +111,7 @@ class ChangeServer extends Component {
         <form className="franz-form auth__form" onSubmit={e => this.submit(e)}>
           <Link to='/auth/welcome'><img src="./assets/images/logo.svg" className="auth__logo" alt="" /></Link>
           <H1>{intl.formatMessage(messages.headline)}</H1>
-          {(form.$('server').value === this.franzServer || form.$('server').value === this.ferdiServer) && (
+          {(form.$('server').value === this.franzServer) && (
             <Infobox type="warning">
               {intl.formatMessage(messages.warning)}
             </Infobox>

@@ -14,19 +14,26 @@
   }
 
   &__text {
-    border-left: 1px solid #fff;
-    margin-left: 40px;
-    padding-left: 40px;
-
     h1 {
       font-size: 60px;
       letter-spacing: -0.4rem;
       margin-bottom: 5px;
+      color: rgb(255, 255, 255);
+      justify-content: center;
+      margin-top: 5%;
+      display: flex;
     }
 
     h2 {
       margin-bottom: 0;
       margin-left: 2px;
+    }
+
+    &__change-server {
+      display: flex;
+      margin: 10% auto auto auto;
+      justify-content: center;
+      color: #999;
     }
   }
 
@@ -67,6 +74,20 @@
     &__inverted:hover {
       background: none;
       color: #fff;
+    }
+
+    &__change-server {
+      display: flex;
+      margin: 0 0 0 1%;
+      color: #999;
+      text-decoration: underline;
+    }
+
+    &__change-server:hover {
+      display: flex;
+      margin: 0 0 0 1%;
+      color: rgb(20, 122, 255);
+      text-decoration: none;
     }
   }
 

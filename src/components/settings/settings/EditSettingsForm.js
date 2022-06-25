@@ -12,6 +12,7 @@ import Button from '../../ui/button';
 import Toggle from '../../ui/Toggle';
 import Select from '../../ui/Select';
 import Input from '../../ui/Input';
+import ColorPickerInput from '../../ui/ColorPickerInput';
 import Infobox from '../../ui/Infobox';
 import { H1, H2, H3, H5 } from '../../ui/headline';
 
@@ -31,6 +32,7 @@ import {
 import { openPath } from '../../../helpers/url-helpers';
 import globalMessages from '../../../i18n/globalMessages';
 import { Icon } from '../../ui/icon';
+import Slider from '../../ui/Slider';
 
 const debug = require('../../../preload-safe-debug')('Ferdium:EditSettingsForm');
 
@@ -38,11 +40,6 @@ const messages = defineMessages({
   headlineGeneral: {
     id: 'settings.app.headlineGeneral',
     defaultMessage: 'General',
-  },
-  sentryInfo: {
-    id: 'settings.app.sentryInfo',
-    defaultMessage:
-      'Sending telemetry data allows us to find errors in Ferdium - we will not send any personal information like your message data!',
   },
   hibernateInfo: {
     id: 'settings.app.hibernateInfo',
@@ -110,19 +107,47 @@ const messages = defineMessages({
     id: 'settings.app.sectionSidebarSettings',
     defaultMessage: 'Sidebar Settings',
   },
+  sectionPrivacy: {
+    id: 'settings.app.sectionPrivacy',
+    defaultMessage: 'Privacy Settings',
+  },
+  sectionLanguage: {
+    id: 'settings.app.sectionLanguage',
+    defaultMessage: 'Language Settings',
+  },
+  sectionAdvanced: {
+    id: 'settings.app.sectionAdvanced',
+    defaultMessage: 'Advanced Settings',
+  },
+  sectionUpdates: {
+    id: 'settings.app.sectionUpdates',
+    defaultMessage: 'App Updates Settings',
+  },
   sectionServiceIconsSettings: {
     id: 'settings.app.sectionServiceIconsSettings',
     defaultMessage: 'Service Icons Settings',
+  },
+  sectionAccentColorSettings: {
+    id: 'settings.app.sectionAccentColorSettings',
+    defaultMessage: 'Accent Color Settings',
+  },
+  accentColorInfo: {
+    id: 'settings.app.accentColorInfo',
+    defaultMessage:
+      'Write your color choice in a CSS-compatible format. (Default: {defaultAccentColor} or clear the input field)',
+  },
+  overallTheme: {
+    id: 'settings.app.overallTheme',
+    defaultMessage: 'Overall Theme',
+  },
+  progressbarTheme: {
+    id: 'settings.app.progressbarTheme',
+    defaultMessage: 'Progressbar Theme',
   },
   universalDarkModeInfo: {
     id: 'settings.app.universalDarkModeInfo',
     defaultMessage:
       'Universal Dark Mode tries to dynamically generate dark mode styles for services that are otherwise not currently supported.',
-  },
-  accentColorInfo: {
-    id: 'settings.app.accentColorInfo',
-    defaultMessage:
-      'Write your accent color in a CSS-compatible format. (Default: {defaultAccentColor})',
   },
   headlinePrivacy: {
     id: 'settings.app.headlinePrivacy',
@@ -211,7 +236,8 @@ const messages = defineMessages({
   },
 });
 
-const Hr = () => <hr style={{ marginBottom: 20 }} />;
+const Hr = () => <hr className='settings__hr' style={{ marginBottom: 20, borderStyle: "dashed" }} />;
+const HrSections = () => <hr className='settings__hr-sections' style={{ marginTop: 20, marginBottom: 40, borderStyle: "solid" }} />;
 
 class EditSettingsForm extends Component {
   static propTypes = {
@@ -299,7 +325,7 @@ class EditSettingsForm extends Component {
       updateButtonLabelMessage = messages.buttonSearchForUpdate;
     }
 
-    const { lockingFeatureEnabled, scheduledDNDEnabled } =
+    const { lockingFeatureEnabled, scheduledDNDEnabled, reloadAfterResume } =
       window['ferdium'].stores.settings.all.app;
 
     let cacheSize;
@@ -429,7 +455,14 @@ class EditSettingsForm extends Component {
                 <Toggle field={form.$('runInBackground')} />
                 <Toggle field={form.$('confirmOnQuit')} />
                 <Toggle field={form.$('enableSystemTray')} />
+                {reloadAfterResume && <Hr />}
                 <Toggle field={form.$('reloadAfterResume')} />
+                {reloadAfterResume && (
+                  <div>
+                    <Input field={form.$('reloadAfterResumeTime')} />
+                    <Hr />
+                  </div>
+                )}
                 <Toggle field={form.$('startMinimized')} />
                 {isWindows && <Toggle field={form.$('minimizeToSystemTray')} />}
                 {isWindows && <Toggle field={form.$('closeToSystemTray')} />}
@@ -438,6 +471,7 @@ class EditSettingsForm extends Component {
 
                 {!hasAddedTodosAsService && (
                   <>
+                    {isTodosActivated && <Hr />}
                     <Toggle field={form.$('enableTodos')} />
                     {isTodosActivated && (
                       <div>
@@ -465,10 +499,10 @@ class EditSettingsForm extends Component {
                         )}
                       </div>
                     )}
-                    <Hr />
                   </>
                 )}
 
+                {scheduledDNDEnabled && <Hr />}
                 <Toggle field={form.$('scheduledDNDEnabled')} />
 
                 {scheduledDNDEnabled && (
@@ -525,7 +559,7 @@ class EditSettingsForm extends Component {
 
                 <Select field={form.$('navigationBarBehaviour')} />
 
-                <Hr />
+                <HrSections />
 
                 <H2 className='settings__section_header'>
                   {intl.formatMessage(messages.sectionHibernation)}
@@ -581,6 +615,7 @@ class EditSettingsForm extends Component {
                   </>
                 )}
 
+                {isSplitModeEnabled && <Hr />}
                 <Toggle field={form.$('splitMode')} />
                 {isSplitModeEnabled && (
                   <Input
@@ -593,20 +628,46 @@ class EditSettingsForm extends Component {
                   />
                 )}
 
-                <Hr />
-
-                <Input
-                  placeholder="Accent Color"
-                  onChange={e => this.submit(e)}
-                  field={form.$('accentColor')}
-                />
+                <HrSections />
+                <H2 className='settings__section_header'>
+                  {intl.formatMessage(messages.sectionAccentColorSettings)}
+                </H2>
                 <p>
                   {intl.formatMessage(messages.accentColorInfo, {
                     defaultAccentColor: DEFAULT_APP_SETTINGS.accentColor,
                   })}
                 </p>
-
-                <Hr />
+                <p>
+                {intl.formatMessage(messages.overallTheme)}
+                <div className="settings__settings-group__apply-color">
+                  <ColorPickerInput
+                    onChange={e => this.submit(e)}
+                    field={form.$('accentColor')}
+                    className='color-picker-input'
+                  />
+                </div>
+                </p>
+                <p>
+                {intl.formatMessage(messages.progressbarTheme)}
+                <div className="settings__settings-group__apply-color">
+                  <ColorPickerInput
+                    onChange={e => this.submit(e)}
+                    field={form.$('progressbarAccentColor')}
+                    className='color-picker-input'
+                  />
+                </div>
+                </p>
+                <p>
+                <div className="settings__settings-group__apply-color">
+                  <Button
+                    buttonType="secondary"
+                    className="settings__settings-group__apply-color__button"
+                    label="Apply color"
+                    onClick={(e) => { this.submit(e) }}
+                  />
+                </div>
+                </p>
+                <HrSections />
 
                 <H2 className='settings__section_header'>
                   {intl.formatMessage(messages.sectionSidebarSettings)}
@@ -618,7 +679,11 @@ class EditSettingsForm extends Component {
 
                 <Toggle field={form.$('useVerticalStyle')} />
 
+                <Toggle field={form.$('hideCollapseButton')} />
+
                 <Toggle field={form.$('hideRecipesButton')} />
+
+                <Toggle field={form.$('hideSplitModeButton')} />
 
                 <Toggle field={form.$('hideWorkspacesButton')} />
 
@@ -628,7 +693,7 @@ class EditSettingsForm extends Component {
 
                 <Toggle field={form.$('alwaysShowWorkspaces')} />
 
-                <Hr />
+                <HrSections />
 
                 <H2 className='settings__section_header'>
                   {intl.formatMessage(messages.sectionServiceIconsSettings)}
@@ -636,14 +701,20 @@ class EditSettingsForm extends Component {
 
                 <Toggle field={form.$('showDisabledServices')} />
                 <Toggle field={form.$('showServiceName')} />
+
+                {isUseGrayscaleServicesEnabled && <Hr />}
+
                 <Toggle field={form.$('useGrayscaleServices')} />
 
                 {isUseGrayscaleServicesEnabled && (
-                  <Input
-                      type="number"
-                      onChange={e => this.submit(e)}
-                      field={form.$('grayscaleServicesDim')}
+                  <>
+                    <Slider
+                        type="number"
+                        onChange={e => this.submit(e)}
+                        field={form.$('grayscaleServicesDim')}
                     />
+                    <Hr />
+                  </>
                 )}
 
                 <Toggle field={form.$('showMessageBadgeWhenMuted')} />
@@ -655,6 +726,10 @@ class EditSettingsForm extends Component {
             {/* Privacy */}
             {this.state.activeSetttingsTab === 'privacy' && (
               <div>
+                <H2 className='settings__section_header'>
+                  {intl.formatMessage(messages.sectionPrivacy)}
+                </H2>
+
                 <Toggle field={form.$('privateNotifications')} />
                 <Toggle field={form.$('clipboardNotifications')} />
                 {(isWindows || isMac) && (
@@ -665,12 +740,6 @@ class EditSettingsForm extends Component {
 
                 <Select field={form.$('searchEngine')} />
 
-                <Hr />
-
-                <Toggle field={form.$('sentry')} />
-                <p className="settings__help">
-                  {intl.formatMessage(messages.sentryInfo)}
-                </p>
                 <p className="settings__help">
                   {intl.formatMessage(messages.appRestartRequired)}
                 </p>
@@ -724,6 +793,11 @@ class EditSettingsForm extends Component {
             {/* Language */}
             {this.state.activeSetttingsTab === 'language' && (
               <div>
+
+                <H2 className='settings__section_header'>
+                  {intl.formatMessage(messages.sectionLanguage)}
+                </H2>
+
                 <Select field={form.$('locale')} showLabel={false} />
 
                 <Hr />
@@ -758,6 +832,11 @@ class EditSettingsForm extends Component {
             {/* Advanced */}
             {this.state.activeSetttingsTab === 'advanced' && (
               <div>
+
+                <H2 className='settings__section_header'>
+                  {intl.formatMessage(messages.sectionAdvanced)}
+                </H2>
+
                 <Toggle field={form.$('enableGPUAcceleration')} />
                 <Toggle field={form.$('enableGlobalHideShortcut')} />
                 <p className="settings__help indented__help">
@@ -847,6 +926,10 @@ class EditSettingsForm extends Component {
             {/* Updates */}
             {this.state.activeSetttingsTab === 'updates' && (
               <div>
+                <H2 className='settings__section_header'>
+                  {intl.formatMessage(messages.sectionUpdates)}
+                </H2>
+
                 <Toggle field={form.$('automaticUpdates')} />
                 {automaticUpdates && (
                   <>
@@ -911,7 +994,7 @@ class EditSettingsForm extends Component {
                 )}
                 <p className="settings__message">
                   <Icon icon={mdiGithub} />
-                  Ferdium is based on{' '}
+                  {' '}Ferdium is based on{' '}
                   <a
                     href={`${GITHUB_FRANZ_URL}/franz`}
                     target="_blank"

@@ -390,6 +390,7 @@ class EditServiceForm extends Component {
                       <Slider field={form.$('darkReaderSepia')} />
                     </>
                   )}
+                  <Toggle field={form.$('isProgressbarEnabled')} />
                 </div>
               </div>
               <div className="service-icon">
@@ -490,7 +491,9 @@ class EditServiceForm extends Component {
         </div>
         <div className="settings__controls">
           {/* Delete Button */}
-          {action === 'edit' && deleteButton}
+          <div>
+            {action === 'edit' && deleteButton}
+          </div>
 
           {/* Save Button */}
           {isSaving || isValidatingCustomUrl ? (

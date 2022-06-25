@@ -31,9 +31,10 @@
   align-items: center;
   display: flex;
   height: 65px;
-  justify-content: center;
+  justify-content: space-evenly;
   min-height: 50px;
   position: relative;
+  flex-direction: column;
   @media (prefers-reduced-motion: no-preference) {
     transition: background $theme-transition-time;
   }
@@ -51,9 +52,6 @@
     .tab-item__icon {
       margin-left: -4px;
     }
-    .tab-item__label {
-      margin-left: -4px;
-    }
   }
 
   &.is-label-enabled{
@@ -64,12 +62,8 @@
   }
 
   .tab-item__label {
-    display: block;
-    margin-top: 6px;
+    display: flex;
     font-size: 11px;
-    padding-left: 4px;
-    padding-right: 4px;
-    line-height: 13px;
   }
 
   &.is-disabled .tab-item__icon {

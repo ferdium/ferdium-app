@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 
-import { LIVE_FRANZ_API, LIVE_FERDI_API } from '../../config';
+import { LIVE_FRANZ_API } from '../../config';
 import { API_VERSION } from '../../environment-remote';
+import { serverBase } from '../../api/apiBase'; // TODO: Remove this line after fixing password recovery in-app
 import Form from '../../lib/Form';
 import { required, email } from '../../helpers/validation-helpers';
 import Input from '../ui/Input';
@@ -69,7 +70,7 @@ class Login extends Component {
     isTokenExpired: PropTypes.bool.isRequired,
     isServerLogout: PropTypes.bool.isRequired,
     signupRoute: PropTypes.string.isRequired,
-    passwordRoute: PropTypes.string.isRequired,
+    // passwordRoute: PropTypes.string.isRequired, // TODO: Uncomment this line after fixing password recovery in-app
     error: globalErrorPropType.isRequired,
   };
 
@@ -111,7 +112,7 @@ class Login extends Component {
       isTokenExpired,
       isServerLogout,
       signupRoute,
-      passwordRoute,
+      // passwordRoute, // TODO: Uncomment this line after fixing password recovery in-app
       error,
     } = this.props;
 
@@ -155,24 +156,6 @@ class Login extends Component {
                   </Link>
                 </p>
               )}
-              {window['ferdium'].stores.settings.all.app.server !==
-                LIVE_FERDI_API && (
-                <p className="error-message center">
-                  {intl.formatMessage(messages.customServerQuestion)}{' '}
-                  <Link
-                    to={`${window[
-                      'ferdium'
-                    ].stores.settings.all.app.server.replace(
-                      API_VERSION,
-                      '',
-                    )}/import`}
-                    target="_blank"
-                    style={{ cursor: 'pointer', textDecoration: 'underline' }}
-                  >
-                    {intl.formatMessage(messages.customServerSuggestion)}
-                  </Link>
-                </p>
-              )}
             </>
           )}
           {isSubmitting ? (
@@ -195,7 +178,11 @@ class Login extends Component {
           <Link to={signupRoute}>
             {intl.formatMessage(messages.signupLink)}
           </Link>
-          <Link to={passwordRoute}>
+          <Link 
+            // to={passwordRoute} // TODO: Uncomment this line after fixing password recovery in-app
+            to={`${serverBase()}/user/forgot`} // TODO: Remove this line after fixing password recovery in-app
+            target='_blank' // TODO: Remove this line after fixing password recovery in-app
+          >
             {intl.formatMessage(messages.passwordLink)}
           </Link>
         </div>

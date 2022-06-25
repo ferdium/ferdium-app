@@ -15,6 +15,7 @@ import { join } from 'path';
 import windowStateKeeper from 'electron-window-state';
 import minimist from 'minimist';
 import ms from 'ms';
+import { EventEmitter } from 'events';
 import { enableWebContents, initializeRemote } from './electron-util';
 import { enforceMacOSAppLocation } from './enforce-macos-app-location';
 
@@ -29,7 +30,7 @@ import {
   userDataRecipesPath,
   userDataPath,
 } from './environment-remote';
-import { ifUndefinedBoolean } from './jsUtils';
+import { ifUndefined } from './jsUtils';
 
 import { mainIpcHandler as basicAuthHandler } from './features/basicAuth';
 import ipcApi from './electron/ipc-api';
@@ -56,6 +57,9 @@ app.userAgentFallback = userAgent();
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: BrowserWindow | undefined;
 let willQuitApp = false;
+let overrideAppQuitForUpdate = false;
+
+export const appEvents = new EventEmitter();
 
 // Register methods to be called once the window has been loaded.
 let onDidLoadFns: any[] | null = [];
@@ -65,7 +69,7 @@ function onDidLoad(fn: {
   (window: BrowserWindow): void;
   (window: BrowserWindow): void;
   (arg0: BrowserWindow): void;
-}) {
+}): void {
   if (onDidLoadFns) {
     onDidLoadFns.push(fn);
   } else if (mainWindow) {
@@ -87,12 +91,7 @@ const settings = new Settings('app', DEFAULT_APP_SETTINGS);
 const proxySettings = new Settings('proxy');
 
 const retrieveSettingValue = (key: string, defaultValue: boolean) =>
-  ifUndefinedBoolean(settings.get(key), defaultValue);
-
-if (retrieveSettingValue('sentry', DEFAULT_APP_SETTINGS.sentry)) {
-  // eslint-disable-next-line global-require
-  require('./sentry');
-}
+  ifUndefined<boolean>(settings.get(key), defaultValue);
 
 const liftSingleInstanceLock = retrieveSettingValue(
   'liftSingleInstanceLock',
@@ -214,7 +213,6 @@ const createWindow = () => {
       nodeIntegration: true,
       contextIsolation: false,
       webviewTag: true,
-      preload: join(__dirname, 'sentry.js'),
     },
   });
 
@@ -320,7 +318,8 @@ const createWindow = () => {
         debug('Window: hide');
         mainWindow?.hide();
       }
-    } else {
+    } else if (!overrideAppQuitForUpdate) {
+      debug('Quitting the app');
       dbus.stop();
       app.quit();
     }
@@ -653,10 +652,18 @@ app.on('window-all-closed', () => {
     )
   ) {
     debug('Window: all windows closed, quit app');
-    app.quit();
+    if (!overrideAppQuitForUpdate) {
+      // TODO: based on https://github.com/electron-userland/electron-builder/issues/6058#issuecomment-1130344017 (not yet tested since we don't have signed builds yet for macos)
+      app.quit();
+    }
   } else {
     debug("Window: don't quit app");
   }
+});
+
+appEvents.on('install-update', () => {
+  willQuitApp = true;
+  overrideAppQuitForUpdate = true;
 });
 
 app.on('before-quit', event => {

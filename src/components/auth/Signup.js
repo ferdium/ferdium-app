@@ -11,7 +11,7 @@ import Button from '../ui/button';
 import Link from '../ui/Link';
 
 import { globalError as globalErrorPropType } from '../../prop-types';
-import { termsBase } from '../../api/apiBase';
+import { serverBase } from '../../api/apiBase';
 import { H1 } from '../ui/headline';
 
 const messages = defineMessages({
@@ -160,7 +160,7 @@ class Signup extends Component {
               {intl.formatMessage(messages.legalInfo)}
               <br />
               <Link
-                to={`${termsBase()}/terms`}
+                to={`${serverBase()}/terms`}
                 target="_blank"
                 className="link"
               >
@@ -168,7 +168,7 @@ class Signup extends Component {
               </Link>
               &nbsp;&amp;&nbsp;
               <Link
-                to={`${termsBase()}/privacy`}
+                to={`${serverBase()}/privacy`}
                 target="_blank"
                 className="link"
               >

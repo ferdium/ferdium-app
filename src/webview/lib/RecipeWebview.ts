@@ -93,6 +93,15 @@ class RecipeWebview {
   }
 
   /**
+   * Find if url contains image
+   *
+   * @param  {string | number | undefined | null} text to be parsed
+   */
+  isImage(url): boolean {
+    return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url.split(/[#?]/)[0]);
+  }
+
+  /**
    * Injects the contents of a CSS file into the current webview
    *
    * @param {Array} files     CSS files that should be injected. This must

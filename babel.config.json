@@ -4,12 +4,12 @@
       "@babel/preset-env",
       {
         "targets": {
-          "electron": 18
+          "electron": 19
         }
       }
     ],
     ["@babel/preset-react", { "runtime": "automatic" }],
-    "@babel/preset-typescript",
+    "@babel/preset-typescript"
   ],
   "plugins": [
     [

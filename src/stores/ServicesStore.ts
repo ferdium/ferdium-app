@@ -5,7 +5,9 @@ import ms from 'ms';
 import { ensureFileSync, pathExistsSync, writeFileSync } from 'fs-extra';
 import { join } from 'path';
 
-import Store from './lib/Store';
+import { Stores } from 'src/stores.types';
+import { ApiInterface } from 'src/api';
+import { Actions } from 'src/actions/lib/actions';
 import Request from './lib/Request';
 import CachedRequest from './lib/CachedRequest';
 import { matchRoute } from '../helpers/routing-helpers';
@@ -14,39 +16,56 @@ import {
   getRecipeDirectory,
   getDevRecipeDirectory,
 } from '../helpers/recipe-helpers';
+import Service from '../models/Service';
 import { workspaceStore } from '../features/workspaces';
 import { DEFAULT_SERVICE_SETTINGS, KEEP_WS_LOADED_USID } from '../config';
 import { cleanseJSObject } from '../jsUtils';
 import { SPELLCHECKER_LOCALES } from '../i18n/languages';
 import { ferdiumVersion } from '../environment-remote';
+import TypedStore from './lib/TypedStore';
 
 const debug = require('../preload-safe-debug')('Ferdium:ServiceStore');
 
-export default class ServicesStore extends Store {
-  @observable allServicesRequest = new CachedRequest(this.api.services, 'all');
+export default class ServicesStore extends TypedStore {
+  @observable allServicesRequest: CachedRequest = new CachedRequest(
+    this.api.services,
+    'all',
+  );
 
-  @observable createServiceRequest = new Request(this.api.services, 'create');
+  @observable createServiceRequest: Request = new Request(
+    this.api.services,
+    'create',
+  );
 
-  @observable updateServiceRequest = new Request(this.api.services, 'update');
+  @observable updateServiceRequest: Request = new Request(
+    this.api.services,
+    'update',
+  );
 
-  @observable reorderServicesRequest = new Request(
+  @observable reorderServicesRequest: Request = new Request(
     this.api.services,
     'reorder',
   );
 
-  @observable deleteServiceRequest = new Request(this.api.services, 'delete');
+  @observable deleteServiceRequest: Request = new Request(
+    this.api.services,
+    'delete',
+  );
 
-  @observable clearCacheRequest = new Request(this.api.services, 'clearCache');
+  @observable clearCacheRequest: Request = new Request(
+    this.api.services,
+    'clearCache',
+  );
 
-  @observable filterNeedle = null;
+  @observable filterNeedle: string | null = null;
 
   // Array of service IDs that have recently been used
   // [0] => Most recent, [n] => Least recent
   // No service ID should be in the list multiple times, not all service IDs have to be in the list
-  @observable lastUsedServices = [];
+  @observable lastUsedServices: string[] = [];
 
-  constructor(...args) {
-    super(...args);
+  constructor(stores: Stores, api: ApiInterface, actions: Actions) {
+    super(stores, api, actions);
 
     // Register action handlers
     this.actions.service.setActive.listen(this._setActive.bind(this));
@@ -207,14 +226,16 @@ export default class ServicesStore extends Store {
     this.serviceMaintenanceTick.cancel();
   }
 
-  /**
-   * Сheck for services to become hibernated.
-   */
-  serviceMaintenanceTick = debounce(() => {
+  _serviceMaintenanceTicker() {
     this._serviceMaintenance();
     this.serviceMaintenanceTick();
     debug('Service maintenance tick');
-  }, ms('10s'));
+  }
+
+  /**
+   * Сheck for services to become hibernated.
+   */
+  serviceMaintenanceTick = debounce(this._serviceMaintenanceTicker, ms('10s'));
 
   /**
    * Run various maintenance tasks on services
@@ -271,7 +292,7 @@ export default class ServicesStore extends Store {
   }
 
   // Computed props
-  @computed get all() {
+  @computed get all(): Service[] {
     if (this.stores.user.isLoggedIn) {
       const services = this.allServicesRequest.execute().result;
       if (services) {
@@ -289,7 +310,7 @@ export default class ServicesStore extends Store {
     return [];
   }
 
-  @computed get enabled() {
+  @computed get enabled(): Service[] {
     return this.all.filter(service => service.isEnabled);
   }
 
@@ -344,9 +365,14 @@ export default class ServicesStore extends Store {
   }
 
   @computed get filtered() {
-    return this.all.filter(service =>
-      service.name.toLowerCase().includes(this.filterNeedle.toLowerCase()),
-    );
+    if (this.filterNeedle !== null) {
+      return this.all.filter(service =>
+        service.name.toLowerCase().includes(this.filterNeedle!.toLowerCase()),
+      );
+    }
+
+    // Return all if there is no filterNeedle present
+    return this.all;
   }
 
   @computed get active() {
@@ -382,8 +408,9 @@ export default class ServicesStore extends Store {
     return this.active && this.active.isTodosService;
   }
 
-  one(id) {
-    return this.all.find(service => service.id === id);
+  // TODO: This can actually return undefined as well
+  one(id: string): Service {
+    return this.all.find(service => service.id === id) as Service;
   }
 
   async _showAddServiceInterface({ recipeId }) {
@@ -414,6 +441,7 @@ export default class ServicesStore extends Store {
       isMuted: DEFAULT_SERVICE_SETTINGS.isMuted,
       customIcon: DEFAULT_SERVICE_SETTINGS.customIcon,
       isDarkModeEnabled: DEFAULT_SERVICE_SETTINGS.isDarkModeEnabled,
+      isProgressbarEnabled: DEFAULT_SERVICE_SETTINGS.isProgressbarEnabled,
       spellcheckerLanguage:
         SPELLCHECKER_LOCALES[this.stores.settings.app.spellcheckerLanguage],
       userAgentPref: '',
@@ -448,7 +476,11 @@ export default class ServicesStore extends Store {
 
   @action async _createFromLegacyService({ data }) {
     const { id } = data.recipe;
-    const serviceData = {};
+    const serviceData: {
+      name?: string;
+      team?: string;
+      customUrl?: string;
+    } = {};
 
     if (data.name) {
       serviceData.name = data.name;
@@ -529,7 +561,7 @@ export default class ServicesStore extends Store {
     }
   }
 
-  @action async _deleteService({ serviceId, redirect }) {
+  @action async _deleteService({ serviceId, redirect }): Promise<void> {
     const request = this.deleteServiceRequest.execute(serviceId);
 
     if (redirect) {
@@ -537,14 +569,14 @@ export default class ServicesStore extends Store {
     }
 
     this.allServicesRequest.patch(result => {
-      remove(result, c => c.id === serviceId);
+      remove(result, (c: Service) => c.id === serviceId);
     });
 
     await request._promise;
     this.actionStatus = request.result.status;
   }
 
-  @action async _openRecipeFile({ recipe, file }) {
+  @action async _openRecipeFile({ recipe, file }): Promise<void> {
     // Get directory for recipe
     const normalDirectory = getRecipeDirectory(recipe);
     const devDirectory = getDevRecipeDirectory(recipe);
@@ -701,7 +733,7 @@ export default class ServicesStore extends Store {
             setTimeout(() => {
               document
                 .querySelector('.services__webview-wrapper.is-active')
-                .scrollIntoView({
+                ?.scrollIntoView({
                   behavior: 'smooth',
                   block: 'end',
                   inline: 'nearest',
@@ -1045,7 +1077,13 @@ export default class ServicesStore extends Store {
     service.lastHibernated = Date.now();
   }
 
-  @action _awake({ serviceId, automatic }) {
+  @action _awake({
+    serviceId,
+    automatic,
+  }: {
+    serviceId: string;
+    automatic?: boolean;
+  }) {
     const now = Date.now();
     const service = this.one(serviceId);
     const automaticTag = automatic ? ' automatically ' : ' ';
@@ -1222,7 +1260,7 @@ export default class ServicesStore extends Store {
     }
   }
 
-  _shareSettingsWithServiceProcess() {
+  _shareSettingsWithServiceProcess(): void {
     const settings = {
       ...this.stores.settings.app,
       isDarkThemeActive: this.stores.ui.isDarkThemeActive,
@@ -1233,7 +1271,7 @@ export default class ServicesStore extends Store {
     });
   }
 
-  _cleanUpTeamIdAndCustomUrl(recipeId, data) {
+  _cleanUpTeamIdAndCustomUrl(recipeId, data): any {
     const serviceData = data;
     const recipe = this.stores.recipes.one(recipeId);
 

@@ -8,7 +8,7 @@ interface IUser {
   organization: string | null;
   accountType: string | null;
   beta: boolean;
-  locale: boolean;
+  locale: string;
   isSubscriptionOwner: boolean;
   team: object;
 }
@@ -37,7 +37,7 @@ export default class User {
 
   @observable beta = false;
 
-  @observable locale = false;
+  @observable locale: string | null = null;
 
   @observable team = {};
 

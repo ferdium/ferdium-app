@@ -14,6 +14,7 @@ import {
   mdiMenu,
   mdiChevronDown,
   mdiChevronRight,
+  mdiViewSplitVertical,
 } from '@mdi/js';
 
 import Tabbar from '../services/tabs/Tabbar';
@@ -23,6 +24,7 @@ import {
   todosToggleShortcutKey,
   workspaceToggleShortcutKey,
   addNewServiceShortcutKey,
+  splitModeToggleShortcutKey,
   muteFerdiumShortcutKey,
 } from '../../environment';
 import { todosStore } from '../../features/todos';
@@ -36,6 +38,10 @@ const messages = defineMessages({
   addNewService: {
     id: 'sidebar.addNewService',
     defaultMessage: 'Add new service',
+  },
+  splitModeToggle: {
+    id: 'sidebar.splitModeToggle',
+    defaultMessage: 'Split Mode Toggle',
   },
   mute: {
     id: 'sidebar.muteApp',
@@ -137,11 +143,14 @@ class Sidebar extends Component {
       isTodosServiceActive,
     } = this.props;
     const {
+      hideCollapseButton,
       hideRecipesButton,
       hideWorkspacesButton,
       hideNotificationsButton,
       hideSettingsButton,
-      useVerticalStyle
+      hideSplitModeButton,
+      useVerticalStyle,
+      splitMode,
     } = stores.settings.app;
     const { intl } = this.props;
     const todosToggleMessage = todosStore.isTodosPanelVisible
@@ -157,6 +166,7 @@ class Sidebar extends Component {
       !hideWorkspacesButton,
       !hideNotificationsButton,
       !hideSettingsButton,
+      !hideSplitModeButton,
       todosStore.isFeatureEnabledByUser
     ].filter(Boolean).length;
 
@@ -169,7 +179,7 @@ class Sidebar extends Component {
           useVerticalStyle={stores.settings.all.app.useVerticalStyle}
         />
         <>
-          {numberActiveButtons <= 1 ? (
+          {numberActiveButtons <= 1 || hideCollapseButton ? (
             null
           ) :
             <button
@@ -197,6 +207,25 @@ class Sidebar extends Component {
               )} (${addNewServiceShortcutKey(false)})`}
             >
               <Icon icon={mdiPlusBox} size={1.5} />
+            </button>
+          ) : null}
+          {!hideSplitModeButton && !this.state.isCollapsed ? (
+            <button
+              type="button"
+              onClick={() => {
+                actions.settings.update({
+                  type: 'app',
+                  data: {
+                    splitMode: !splitMode,
+                  },
+                });
+              }}
+              className="sidebar__button sidebar__button--split-mode-toggle"
+              data-tip={`${intl.formatMessage(
+                messages.splitModeToggle,
+              )} (${splitModeToggleShortcutKey(false)})`}
+            >
+              <Icon icon={mdiViewSplitVertical} size={1.5} />
             </button>
           ) : null}
           {!hideWorkspacesButton && !this.state.isCollapsed ? (

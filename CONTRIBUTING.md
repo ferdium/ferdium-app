@@ -19,17 +19,13 @@
       - [On Fedora](#on-fedora)
       - [On Windows](#on-windows)
     - [Clone repository with submodule](#clone-repository-with-submodule)
-    - [Local caching of dependencies](#local-caching-of-dependencies)
-    - [Install dependencies](#install-dependencies)
-    - [Fix native modules to match current electron node version](#fix-native-modules-to-match-current-electron-node-version)
-    - [Package recipe repository](#package-recipe-repository)
-    - [Using Docker to build a linux-targetted packaged app](#using-docker-to-build-a-linux-targetted-packaged-app)
-    - [Code Signing on a mac](#code-signing-on-a-mac)
+    - [Run the script](#run-the-script)
+    - [Using Docker to build a linux-targetted packaged app (not supported as a 1st-class citizen)](#using-docker-to-build-a-linux-targetted-packaged-app-not-supported-as-a-1st-class-citizen)
     - [Start development app](#start-development-app)
     - [Styleguide](#styleguide)
       - [Git Commit Messages format](#git-commit-messages-format)
       - [Javascript Coding style-checker](#javascript-coding-style-checker)
-  - [Packaging](#packaging)
+    - [Code Signing on a mac (not necessary in the normal circumstances)](#code-signing-on-a-mac-not-necessary-in-the-normal-circumstances)
   - [Release](#release)
     - [Nightly releases](#nightly-releases)
     - [Updating the code after a hiatus](#updating-the-code-after-a-hiatus)
@@ -61,15 +57,15 @@ _Note:_ This list can likely get outdated. If so, please refer to the specific v
 
 Please make sure you are conforming to the `engines` requirements used by the developers/contributors as specified in the [`package.json`](./package.json#engines) and [`recipes/package.json`](./recipes/package.json#engine) files.
 
-Currently, these are the combinations of system dependencies that work for MacOS/Linux/Windows:
+Currently, these are the combinations of system dependencies that work for MacOS/Linux/Windows. Versions are pinned down to the patch number so ensure you have the exact matching versions installed and in use.
 
 ```bash
 # Note: 'jq' is not a required system dependency; its only here to show the combined output of versions needed
 $ jq --null-input '[inputs.engines] | add' < ./package.json < ./recipes/package.json
 {
-  "node": "16.15.0",
-  "npm": "8.10.0",
-  "pnpm": "7.1.2"
+  "node": "16.15.1",
+  "npm": "8.12.2",
+  "pnpm": "7.3.0"
 }
 ```
 
@@ -100,53 +96,30 @@ Please make sure you have the following installed:
 ### Clone repository with submodule
 
 ```bash
-git clone https://github.com/ferdium/ferdium.git
-cd ferdium
+git clone https://github.com/ferdium/ferdium-app.git
+cd ferdium-app
 git submodule update --init --recursive --remote --rebase --force
 ```
 
-It is important you execute the last command to get the required submodule (ferdium-recipes).
+It is important you execute the last command to get the required submodule (`ferdium-recipes`).
 
-### Local caching of dependencies
+### Run the script
 
-Set these env vars into your profile (or if you use [direnv](https://direnv.net/), you can manage them via the respective `.envrc` file)
-
-```bash
-# On bash or equivalent
-export ELECTRON_CACHE=$HOME/.cache/electron
-export ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
-
-# On Powershell
-$env:CI = $true
-$env:ELECTRON_CACHE = $HOME + '\.cache\electron'
-$env:ELECTRON_BUILDER_CACHE = $HOME + '\.cache\electron-builder'
-```
-
-### Install dependencies
-
-Run the following command to install all dependencies, and link sibling modules with Ferdium.
+Run the following script to install all dependencies, and build Ferdium.
 
 ```bash
-npm i
+# On Unix
+./scripts/build-unix.sh
+
+# On Windows Powershell
+.\scripts\build-windows.ps1
 ```
+
+Assets will be available in the `out` folder.
 
 If you encounter the `gyp: No Xcode or CLT version` error on macOS at this step, please have a look [here](https://medium.com/flawless-app-stories/gyp-no-xcode-or-clt-version-detected-macos-catalina-anansewaa-38b536389e8d).
 
-### Fix native modules to match current electron node version
-
-```bash
-npm run build
-```
-
-### Package recipe repository
-
-Ferdium requires its recipes to be packaged before it can use it. When running Ferdium as a development instance, you'll need to package the local recipes before you can create any services inside Ferdium.
-
-```bash
-cd recipes && pnpm i && pnpm package
-```
-
-### Using Docker to build a linux-targetted packaged app
+### Using Docker to build a linux-targetted packaged app (not supported as a 1st-class citizen)
 
 ```bash
 docker build -t ferdium-package-`uname -m` .
@@ -168,20 +141,6 @@ mv /ferdium/ferdium_*_amd64.deb /ferdium-out/Ferdium-amd64-$GIT_SHA.deb
 mv /ferdium/ferdium-*.freebsd /ferdium-out/Ferdium-$GIT_SHA.freebsd
 mv /ferdium/ferdium /ferdium-out/Ferdium-$GIT_SHA
 mv /ferdium/latest-linux.yml /ferdium-out/latest-linux-$GIT_SHA.yml
-```
-
-### Code Signing on a mac
-
-If you are building the packaged app (on a mac) for local testing, you can set this environment variable to bypass the code signing step during the packaging process (`npm run build`):
-
-```bash
-export CSC_IDENTITY_AUTO_DISCOVERY=false
-```
-
-Or else, if you want to self-sign on a mac with non-registered certificate (not for distribution of the resulting package), you can follow [this thread](https://github.com/electron/electron/issues/7476#issuecomment-356084754) and run this command:
-
-```bash
-codesign --deep --force --verbose --sign - node_modules/electron/dist/Electron.app
 ```
 
 ### Start development app
@@ -210,17 +169,13 @@ Please use the `src/preload-safe-debug` module instead until the bug gets fixed.
 
 - Please use `prettier` and the defined rules to maintain a consistent style
 
-## Packaging
+### Code Signing on a mac (not necessary in the normal circumstances)
+
+If you want to self-sign on a mac with non-registered certificate (not for distribution of the resulting package), you can follow [this thread](https://github.com/electron/electron/issues/7476#issuecomment-356084754) and run this command:
 
 ```bash
-# On Unix
-./scripts/build-unix.sh
-
-# On Windows
-.\scripts\build-windows.ps1
+codesign --deep --force --verbose --sign - node_modules/electron/dist/Electron.app
 ```
-
-Assets will be available in the `out` folder.
 
 ## Release
 

@@ -1,5 +1,7 @@
 import color from 'color';
 import { reaction } from 'mobx';
+import TopBarProgress from 'react-topbar-progress-indicator';
+
 import { isWindows, isLinux } from '../../environment';
 import {
   DEFAULT_APP_SETTINGS,
@@ -8,8 +10,6 @@ import {
   SIDEBAR_SERVICES_LOCATION_CENTER,
   SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT,
 } from '../../config';
-
-
 
 const STYLE_ELEMENT_ID = 'custom-appearance-style';
 
@@ -230,6 +230,13 @@ function generateServiceRibbonWidthStyle(
       width: ${minimumAdjustedIconSize}px !important;
       ${useGrayscaleServices ? graysacleServices : null},
     }
+    .tab-item .tab-item__label {
+      margin-left: 4px !important;
+      font-size: ${fontSize}px !important;
+    }
+    .tab-item.is-label-enabled {
+      padding-bottom: 0px !important;
+    }
     .sidebar__button {
       font-size: ${width / 3}px !important;
     }
@@ -245,10 +252,7 @@ function generateServiceRibbonWidthStyle(
     .darwin .sidebar .sidebar__button--workspaces.is-active {
       height: ${width - sidebarSizeBias}px !important;
     }
-    .tab-item .tab-item__label{
-      font-size: ${fontSize}px !important;
-    }
-    .tab-item div{
+    .tab-item div {
       overflow: hidden !important;
     }
   `
@@ -392,19 +396,33 @@ function generateStyle(settings) {
 
   return style;
 }
+
+function updateProgressbar(settings) {
+  TopBarProgress.config({
+    barThickness: 4,
+    barColors: {
+      '0': settings.progressbarAccentColor,
+    },
+    shadowBlur: 5
+  });
+}
+
 function updateStyle(settings) {
   const style = generateStyle(settings);
   setAppearance(style);
+  updateProgressbar(settings);
 }
 
 export default function initAppearance(stores) {
   const { settings } = stores;
   createStyleElement();
+  updateProgressbar(settings);
 
   // Update style when settings change
   reaction(
     () => [
       settings.all.app.accentColor,
+      settings.all.app.progressbarAccentColor,
       settings.all.app.serviceRibbonWidth,
       settings.all.app.iconSize,
       settings.all.app.showDragArea,

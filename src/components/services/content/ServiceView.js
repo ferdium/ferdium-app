@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-no-useless-fragment */
-import { Component, Fragment } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { autorun } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import classnames from 'classnames';
+import TopBarProgress from 'react-topbar-progress-indicator';
 
 import ServiceModel from '../../../models/Service';
 import StatusBarTargetUrl from '../../ui/StatusBarTargetUrl';
@@ -76,12 +77,13 @@ class ServiceView extends Component {
       isSpellcheckerEnabled,
     } = this.props;
 
-    const { navigationBarBehaviour } = stores.settings.app;
+    const { navigationBarBehaviour, navigationBarManualActive } = stores.settings.app;
 
     const showNavBar =
       navigationBarBehaviour === 'always' ||
       (navigationBarBehaviour === 'custom' &&
-        service.recipe.id === CUSTOM_WEBSITE_RECIPE_ID);
+        service.recipe.id === CUSTOM_WEBSITE_RECIPE_ID) ||
+      navigationBarManualActive;
 
     const webviewClasses = classnames({
       services__webview: true,
@@ -113,6 +115,9 @@ class ServiceView extends Component {
               !service.isServiceAccessRestricted && (
                 <WebviewLoader loaded={false} name={service.name} />
               )}
+            {service.isProgressbarEnabled && service.isLoadingPage && !service.isFirstLoad && (
+              <TopBarProgress />
+            )}
             {service.isError && (
               <WebviewErrorHandler
                 name={service.recipe.name}

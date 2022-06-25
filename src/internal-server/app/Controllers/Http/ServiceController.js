@@ -51,6 +51,7 @@ class ServiceController {
         trapLinkClicks: DEFAULT_SERVICE_SETTINGS.trapLinkClicks,
         isMuted: DEFAULT_SERVICE_SETTINGS.isMuted,
         isDarkModeEnabled: '', // TODO: This should ideally be a boolean (false). But, changing it caused the sidebar toggle to not work.
+        isProgressbarEnabled: DEFAULT_SERVICE_SETTINGS.isProgressbarEnabled,
         spellcheckerLanguage: '',
         order: DEFAULT_SERVICE_ORDER,
         customRecipe: false,
@@ -79,6 +80,7 @@ class ServiceController {
         isBadgeEnabled: DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
         trapLinkClicks: DEFAULT_SERVICE_SETTINGS.trapLinkClicks,
         isDarkModeEnabled: '', // TODO: This should ideally be a boolean (false). But, changing it caused the sidebar toggle to not work.
+        isProgressbarEnabled: DEFAULT_SERVICE_SETTINGS.isProgressbarEnabled,
         isEnabled: DEFAULT_SERVICE_SETTINGS.isEnabled,
         isMuted: DEFAULT_SERVICE_SETTINGS.isMuted,
         isNotificationEnabled: DEFAULT_SERVICE_SETTINGS.isNotificationEnabled,
@@ -145,6 +147,7 @@ class ServiceController {
         status: ['updated'],
       });
     }
+
     // Update service info
     const data = request.all();
     const { id } = params;
@@ -152,6 +155,10 @@ class ServiceController {
     // Get current settings from db
     const serviceQuery = await Service.query().where('serviceId', id).fetch();
     const serviceData = serviceQuery.rows[0];
+
+    if (data.customIcon === 'delete') {
+      data.iconId = '';
+    }
 
     const settings = {
       ...convertToJSON(serviceData.settings),
@@ -223,6 +230,7 @@ class ServiceController {
         isBadgeEnabled: DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
         trapLinkClicks: DEFAULT_SERVICE_SETTINGS.trapLinkClicks,
         isDarkModeEnabled: '', // TODO: This should ideally be a boolean (false). But, changing it caused the sidebar toggle to not work.
+        isProgressbarEnabled: DEFAULT_SERVICE_SETTINGS.isProgressbarEnabled,
         isEnabled: DEFAULT_SERVICE_SETTINGS.isEnabled,
         isMuted: DEFAULT_SERVICE_SETTINGS.isMuted,
         isNotificationEnabled: DEFAULT_SERVICE_SETTINGS.isNotificationEnabled,

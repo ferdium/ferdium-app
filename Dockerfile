@@ -1,6 +1,6 @@
 # Note: Before running this file, you should have already cloned the git repo + submodules on the host machine. This is used when actively developing on your local machine, but you want to build for a different architecture
 
-FROM docker.io/library/node:16.15.0-buster as builder
+FROM docker.io/library/node:16.15.1-buster as builder
 
 ENV PATH="/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/usr/local/lib:/usr/include:/usr/share"
 
@@ -10,15 +10,17 @@ ARG USE_SYSTEM_FPM=true
 # Note: Added to bypass the error with missing git repo information for the 'preval-build-info' module
 ARG PREVAL_BUILD_INFO_PLACEHOLDERS=true
 
+# Note: 'fpm' is needed for building on ARM machines
 RUN apt-get update -y \
   && apt-get install --no-install-recommends -y rpm ruby gem \
   && gem install fpm --no-ri --no-rdoc --no-document
 
 WORKDIR /usr/src/ferdium
 
-RUN npm i -g npm@8.10.0 pnpm@7.1.2
-
 COPY package*.json ./
+COPY .npmrc ./
+
+RUN npm i -gf "npm@$(node -p 'require("./package.json").engines.npm')" && npm -v
 
 RUN npm i
 
@@ -26,12 +28,14 @@ COPY . .
 
 WORKDIR /usr/src/ferdium/recipes
 
+RUN npm i -gf "pnpm@$(node -p 'require("./package.json").engines.pnpm')" && pnpm -v
+
 RUN pnpm i \
   && pnpm package
 
 WORKDIR /usr/src/ferdium
 
-RUN npm run build
+RUN npm run build --dir
 
 # --------------------------------------------------------------------------------------------
 
