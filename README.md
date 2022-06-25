@@ -14,8 +14,6 @@
 - [Ferdium](#ferdium)
   - [Screenshots](#screenshots)
   - [Download](#download)
-  - [Unsigned Nightlies on MacOS](#unsigned-nightlies-on-macos)
-  - [Unsigned Nightlies on Windows](#unsigned-nightlies-on-windows)
   - [Migrating from Ferdi](#migrating-from-ferdi)
   - [Contributing](#contributing)
   - [Contributors ✨](#contributors-)
@@ -53,13 +51,6 @@ Ferdium is a desktop app that helps you organize how you use your favourite apps
 Assets made available via [GitHub releases](https://github.com/ferdium/ferdium-app/releases/latest).
 
 _Find answers to frequently asked questions on [ferdium.org/faq](https://ferdium.org/faq)._
-
-## Unsigned Nightlies on Windows
-
-Similarly to the MacOS, we do not currently have a certificate to sign the nightlies on Windows. For this reason, an error will appear when launching the setup tool or the portable app if your execution policy is not set to `Bypass` or `Unrestricted`. In order to allow the script to run, it is sufficient to right-click on the `.exe` to access its properties and to tick the box labeled `Unblock` at the bottom of the General tab. Alternatively, you could execute the following in a PowerShell:
-```PowerShell
-Unblock-File -Path .\Ferdium-Setup-6.0.0-nightly.xx.exe; .\Ferdium-Setup-6.0.0-nightly.xx.exe
-```
 
 ## Migrating from Ferdi
 
