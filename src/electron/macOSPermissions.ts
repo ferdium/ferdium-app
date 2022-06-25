@@ -2,7 +2,6 @@ import { systemPreferences, BrowserWindow, dialog } from 'electron';
 import { pathExistsSync, mkdirSync, writeFileSync } from 'fs-extra';
 import macosVersion from 'macos-version';
 import { dirname } from 'path';
-// @ts-ignore
 import { askForScreenCaptureAccess } from 'node-mac-permissions';
 import { userDataPath } from '../environment-remote';
 
@@ -35,7 +34,7 @@ function hasScreenCapturePermissionAlreadyBeenGranted(): boolean {
   return screenCaptureStatus === 'granted';
 }
 
-function createStatusFile() {
+function createStatusFile(): void {
   try {
     writeFileSync(filePath, '');
   } catch (error) {
@@ -48,7 +47,9 @@ function createStatusFile() {
   }
 }
 
-export const askFormacOSPermissions = async (mainWindow: BrowserWindow) => {
+export const askFormacOSPermissions = async (
+  mainWindow: BrowserWindow,
+): Promise<void> => {
   debug('Checking camera & microphone permissions');
   systemPreferences.askForMediaAccess('camera');
   systemPreferences.askForMediaAccess('microphone');

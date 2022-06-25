@@ -5,11 +5,11 @@ import { userDataPath } from '../environment-remote';
 const debug = require('../preload-safe-debug')('Ferdium:Settings');
 
 export default class Settings {
-  type = '';
+  type: string = '';
 
-  defaultState: {};
+  defaultState: object;
 
-  @observable store = {};
+  @observable store: object = {};
 
   constructor(type: string, defaultState = {}) {
     this.type = type;
@@ -23,41 +23,41 @@ export default class Settings {
     }
   }
 
-  set(settings) {
+  set(settings: object): void {
     this.store = this._merge(settings);
 
     this._writeFile();
   }
 
-  get all() {
+  get all(): object {
     return this.store;
   }
 
-  get allSerialized() {
+  get allSerialized(): object {
     return toJS(this.store);
   }
 
-  get(key: string | number) {
+  get(key: string | number): any {
     return this.store[key];
   }
 
-  _merge(settings) {
+  _merge(settings: object): object {
     return Object.assign(this.defaultState, this.store, settings);
   }
 
-  _hydrate() {
+  _hydrate(): void {
     this.store = this._merge(readJsonSync(this.settingsFile));
     debug('Hydrate store', this.type, this.allSerialized);
   }
 
-  _writeFile() {
+  _writeFile(): void {
     outputJsonSync(this.settingsFile, this.store, {
       spaces: 2,
     });
     debug('Write settings file', this.type, this.allSerialized);
   }
 
-  get settingsFile() {
+  get settingsFile(): string {
     return userDataPath(
       'config',
       `${this.type === 'app' ? 'settings' : this.type}.json`,
