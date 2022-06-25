@@ -11,7 +11,7 @@ const translations = generatedTranslations();
 type Props = {
   stores: {
     app: AppStore;
-    user: typeof UserStore;
+    user: UserStore;
   };
   children: ReactNode;
 };
