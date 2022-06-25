@@ -1,6 +1,6 @@
-import makeDefaultThemeConfig from './default';
-import makeDarkThemeConfig from './dark';
-import { theme, ThemeType } from '.';
+import makeDefaultThemeConfig from '../../src/themes/default';
+import makeDarkThemeConfig from '../../src/themes/dark';
+import { theme, ThemeType } from '../../src/themes';
 
 describe('Load theme', () => {
   it('loads default theme', () => {
