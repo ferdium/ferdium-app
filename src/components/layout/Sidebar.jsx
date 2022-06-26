@@ -93,6 +93,8 @@ class Sidebar extends Component {
     wakeUpService: PropTypes.func.isRequired,
     toggleMuteApp: PropTypes.func.isRequired,
     isAppMuted: PropTypes.bool.isRequired,
+    toggleCollapseMenu: PropTypes.func.isRequired,
+    isMenuCollapsed: PropTypes.bool.isRequired,
     isWorkspaceDrawerOpen: PropTypes.bool.isRequired,
     toggleWorkspaceDrawer: PropTypes.func.isRequired,
     isTodosServiceActive: PropTypes.bool.isRequired,
@@ -105,10 +107,13 @@ class Sidebar extends Component {
     }).isRequired,
   };
 
-  state = {
-    tooltipEnabled: true,
-    isCollapsed: false
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      tooltipEnabled: true,
+    };
+  }
 
   componentDidUpdate() {
     ReactTooltip.rebuild();
@@ -122,10 +127,6 @@ class Sidebar extends Component {
     this.setState({ tooltipEnabled: false });
   }
 
-  collapseMenu() {
-    this.setState((prevState) => ({ isCollapsed: !prevState.isCollapsed }));
-  }
-
   updateToolTip() {
     this.disableToolTip();
     setTimeout(this.enableToolTip.bind(this));
@@ -135,6 +136,7 @@ class Sidebar extends Component {
     const {
       openSettings,
       toggleMuteApp,
+      toggleCollapseMenu,
       isAppMuted,
       isWorkspaceDrawerOpen,
       toggleWorkspaceDrawer,
@@ -167,8 +169,10 @@ class Sidebar extends Component {
       !hideNotificationsButton,
       !hideSettingsButton,
       !hideSplitModeButton,
-      todosStore.isFeatureEnabledByUser
+      todosStore.isFeatureEnabledByUser,
     ].filter(Boolean).length;
+
+    const { isMenuCollapsed } = stores.settings.all.app;
 
     return (
       <div className="sidebar">
@@ -179,25 +183,26 @@ class Sidebar extends Component {
           useVerticalStyle={stores.settings.all.app.useVerticalStyle}
         />
         <>
-          {numberActiveButtons <= 1 || hideCollapseButton ? (
-            null
-          ) :
+          {numberActiveButtons <= 1 || hideCollapseButton ? null : (
             <button
               type="button"
-              onClick={() => this.collapseMenu()}
+              onClick={() => toggleCollapseMenu()}
               className="sidebar__button sidebar__button--hamburger-menu"
             >
-            {this.state.isCollapsed ?
-              <Icon icon={mdiMenu} size={1.5} />
-            :
-            (useVerticalStyle) ?
-              <Icon icon={mdiChevronRight} size={1.5} />
-            :
-              <Icon icon={mdiChevronDown} size={1.5} />
-            }
+              {isMenuCollapsed && !useVerticalStyle ? (
+                <Icon icon={mdiMenu} size={1.5} />
+              ) : null}
+
+              {isMenuCollapsed && useVerticalStyle ? (
+                <Icon icon={mdiChevronRight} size={1.5} />
+              ) : null}
+
+              {!isMenuCollapsed ? (
+                <Icon icon={mdiChevronDown} size={1.5} />
+              ) : null}
             </button>
-          }
-          {!hideRecipesButton && !this.state.isCollapsed ? (
+          )}
+          {!hideRecipesButton && !isMenuCollapsed ? (
             <button
               type="button"
               onClick={() => openSettings({ path: 'recipes' })}
@@ -209,7 +214,7 @@ class Sidebar extends Component {
               <Icon icon={mdiPlusBox} size={1.5} />
             </button>
           ) : null}
-          {!hideSplitModeButton && !this.state.isCollapsed ? (
+          {!hideSplitModeButton && !isMenuCollapsed ? (
             <button
               type="button"
               onClick={() => {
@@ -228,7 +233,7 @@ class Sidebar extends Component {
               <Icon icon={mdiViewSplitVertical} size={1.5} />
             </button>
           ) : null}
-          {!hideWorkspacesButton && !this.state.isCollapsed ? (
+          {!hideWorkspacesButton && !isMenuCollapsed ? (
             <button
               type="button"
               onClick={() => {
@@ -245,7 +250,7 @@ class Sidebar extends Component {
               <Icon icon={mdiViewGrid} size={1.5} />
             </button>
           ) : null}
-          {!hideNotificationsButton && !this.state.isCollapsed ? (
+          {!hideNotificationsButton && !isMenuCollapsed ? (
             <button
               type="button"
               onClick={() => {
@@ -262,7 +267,7 @@ class Sidebar extends Component {
               <Icon icon={isAppMuted ? mdiBellOff : mdiBell} size={1.5} />
             </button>
           ) : null}
-          {todosStore.isFeatureEnabledByUser && !this.state.isCollapsed ? (
+          {todosStore.isFeatureEnabledByUser && !isMenuCollapsed ? (
             <button
               type="button"
               onClick={() => {
@@ -303,26 +308,26 @@ class Sidebar extends Component {
         {this.state.tooltipEnabled && (
           <ReactTooltip place="right" type="dark" effect="solid" />
         )}
-        {!hideSettingsButton && !this.state.isCollapsed ? (
-            <button
-              type="button"
-              onClick={() => openSettings({ path: 'app' })}
-              className="sidebar__button sidebar__button--settings"
-              data-tip={`${intl.formatMessage(
-                globalMessages.settings,
-              )} (${settingsShortcutKey(false)})`}
-            >
-              <Icon icon={mdiCog} size={1.5} />
-              {
-                this.props.stores.settings.app.automaticUpdates &&
-                  (this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.AVAILABLE ||
-                  this.props.stores.app.updateStatus === this.props.stores.app.updateStatusTypes.DOWNLOADED ||
-                  this.props.showServicesUpdatedInfoBar) && (
-                  <span className="update-available">•</span>
-                )
-              }
-            </button>
-          ) : null}
+        {!hideSettingsButton && !isMenuCollapsed ? (
+          <button
+            type="button"
+            onClick={() => openSettings({ path: 'app' })}
+            className="sidebar__button sidebar__button--settings"
+            data-tip={`${intl.formatMessage(
+              globalMessages.settings,
+            )} (${settingsShortcutKey(false)})`}
+          >
+            <Icon icon={mdiCog} size={1.5} />
+            {this.props.stores.settings.app.automaticUpdates &&
+              (this.props.stores.app.updateStatus ===
+                this.props.stores.app.updateStatusTypes.AVAILABLE ||
+                this.props.stores.app.updateStatus ===
+                  this.props.stores.app.updateStatusTypes.DOWNLOADED ||
+                this.props.showServicesUpdatedInfoBar) && (
+                <span className="update-available">•</span>
+              )}
+          </button>
+        ) : null}
       </div>
     );
   }

@@ -69,7 +69,7 @@ class AppLayoutContainer extends Component {
 
     const { retryRequiredRequests } = this.props.actions.requests;
 
-    const { installUpdate, toggleMuteApp } = this.props.actions.app;
+    const { installUpdate, toggleMuteApp, toggleCollapseMenu } = this.props.actions.app;
 
     const { openSettings, closeSettings } = this.props.actions.ui;
 
@@ -113,6 +113,7 @@ class AppLayoutContainer extends Component {
         services={services.allDisplayed}
         setActive={setActive}
         isAppMuted={settings.all.app.isAppMuted}
+        isMenuCollapsed={settings.all.app.isMenuCollapsed}
         openSettings={openSettings}
         closeSettings={closeSettings}
         reorder={reorder}
@@ -125,6 +126,7 @@ class AppLayoutContainer extends Component {
         hibernateService={hibernate}
         wakeUpService={awake}
         toggleMuteApp={toggleMuteApp}
+        toggleCollapseMenu={toggleCollapseMenu}
         toggleWorkspaceDrawer={workspaceActions.toggleWorkspaceDrawer}
         isWorkspaceDrawerOpen={workspaceStore.isWorkspaceDrawerOpen}
         showServicesUpdatedInfoBar={ui.showServicesUpdatedInfoBar}
