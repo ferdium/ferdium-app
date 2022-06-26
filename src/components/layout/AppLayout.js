@@ -65,7 +65,7 @@ const styles = theme => ({
     display: 'block',
     zIndex: 1,
     width: '100%',
-    height: '29px',
+    height: '10px',
     position: 'absolute',
     top: 0,
   },
@@ -124,14 +124,14 @@ class AppLayout extends Component {
 
     const { intl } = this.props;
 
-    const { locked, automaticUpdates, showDragArea } = settings.app;
+    const { locked, automaticUpdates } = settings.app;
     if (locked) {
       return <LockedScreen />;
     }
 
     return (
       <>
-      {isMac && !isFullScreen && showDragArea && (
+      {isMac && !isFullScreen && (
         <div className="window-draggable" />
       )}
       <ErrorBoundary>
@@ -142,7 +142,7 @@ class AppLayout extends Component {
               icon="assets/images/logo.svg"
             />
           )}
-          {isMac && !isFullScreen && showDragArea && (
+          {isMac && !isFullScreen && (
             <span
               onDoubleClick={toggleFullScreen}
               className={classes.titleBar}
