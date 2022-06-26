@@ -75,19 +75,6 @@ export default class Recipe {
   // TODO: Is this being used?
   local: boolean = false;
 
-  // TODO Add types for this once we know if they are neccesary to pass
-  // on to the initialize-recipe ipc event.
-  overrideUserAgent: any;
-
-  buildUrl: any;
-
-  modifyRequestHeaders: any;
-
-  knownCertificateHosts: any;
-
-  events: any;
-  // End todo.
-
   // TODO: Need to reconcile which of these are optional/mandatory
   constructor(data: IRecipe) {
     if (!data) {
