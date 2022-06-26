@@ -10,7 +10,7 @@ import { isValidExternalURL } from '../helpers/url-helpers';
 import UserAgent from './UserAgent';
 import { DEFAULT_SERVICE_ORDER } from '../config';
 import { ifUndefined } from '../jsUtils';
-import Recipe from './Recipe';
+import { IRecipe } from './Recipe';
 
 const debug = require('../preload-safe-debug')('Ferdium:Service');
 
@@ -18,7 +18,7 @@ const debug = require('../preload-safe-debug')('Ferdium:Service');
 export default class Service {
   id: string = '';
 
-  recipe: Recipe;
+  recipe: IRecipe;
 
   _webview: ElectronWebView | null = null;
 
@@ -117,7 +117,7 @@ export default class Service {
 
   @observable proxy: string | null = null;
 
-  constructor(data, recipe: Recipe) {
+  constructor(data, recipe: IRecipe) {
     if (!data) {
       throw new Error('Service config not valid');
     }
@@ -128,9 +128,7 @@ export default class Service {
 
     this.recipe = recipe;
 
-    // @ts-ignore Property 'overrideUserAgent' does not exist on type 'Recipe'
-    const { overrideUserAgent } = recipe;
-    this.userAgentModel = new UserAgent(overrideUserAgent);
+    this.userAgentModel = new UserAgent(recipe.overrideUserAgent);
 
     this.id = ifUndefined<string>(data.id, this.id);
     this.name = ifUndefined<string>(data.name, this.name);
@@ -272,7 +270,6 @@ export default class Service {
         );
       }
 
-      // @ts-ignore Property 'buildUrl' does not exist on type 'Recipe'
       const { buildUrl } = this.recipe;
       if (typeof buildUrl === 'function') {
         url = buildUrl(url);
@@ -327,13 +324,10 @@ export default class Service {
 
     this.userAgentModel.setWebviewReference(this.webview);
 
-    // @ts-ignore Property 'modifyRequestHeaders', 'knownCertificateHosts does not exist on type 'Recipe'
-    const { modifyRequestHeaders, knownCertificateHosts } = this.recipe;
-
     // If the recipe has implemented 'modifyRequestHeaders',
     // Send those headers to ipcMain so that it can be set in session
-    if (typeof modifyRequestHeaders === 'function') {
-      const modifiedRequestHeaders = modifyRequestHeaders();
+    if (typeof this.recipe.modifyRequestHeaders === 'function') {
+      const modifiedRequestHeaders = this.recipe.modifyRequestHeaders();
       debug(this.name, 'modifiedRequestHeaders', modifiedRequestHeaders);
       ipcRenderer.send('modifyRequestHeaders', {
         modifiedRequestHeaders,
@@ -344,8 +338,8 @@ export default class Service {
     }
 
     // if the recipe has implemented 'knownCertificateHosts'
-    if (typeof knownCertificateHosts === 'function') {
-      const knownHosts = knownCertificateHosts();
+    if (typeof this.recipe.knownCertificateHosts === 'function') {
+      const knownHosts = this.recipe.knownCertificateHosts();
       debug(this.name, 'knownCertificateHosts', knownHosts);
       ipcRenderer.send('knownCertificateHosts', {
         knownHosts,
@@ -476,12 +470,9 @@ export default class Service {
   }
 
   initializeWebViewListener(): void {
-    // @ts-ignore Property 'events' does not exist on type 'Recipe'
-    const { events } = this.recipe;
-
-    if (this.webview && events) {
-      for (const eventName of Object.keys(events)) {
-        const eventHandler = this.recipe[events[eventName]];
+    if (this.webview && this.recipe.events) {
+      for (const eventName of Object.keys(this.recipe.events)) {
+        const eventHandler = this.recipe[this.recipe.events[eventName]];
         if (typeof eventHandler === 'function') {
           this.webview.addEventListener(eventName, eventHandler);
         }
