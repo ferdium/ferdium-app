@@ -10,7 +10,7 @@ import { isValidExternalURL } from '../helpers/url-helpers';
 import UserAgent from './UserAgent';
 import { DEFAULT_SERVICE_ORDER } from '../config';
 import { ifUndefined } from '../jsUtils';
-import Recipe from './Recipe';
+import { IRecipe } from './Recipe';
 
 const debug = require('../preload-safe-debug')('Ferdium:Service');
 
@@ -18,7 +18,7 @@ const debug = require('../preload-safe-debug')('Ferdium:Service');
 export default class Service {
   id: string = '';
 
-  recipe: Recipe;
+  recipe: IRecipe;
 
   _webview: ElectronWebView | null = null;
 
@@ -117,7 +117,7 @@ export default class Service {
 
   @observable proxy: string | null = null;
 
-  constructor(data, recipe: Recipe) {
+  constructor(data, recipe: IRecipe) {
     if (!data) {
       throw new Error('Service config not valid');
     }
@@ -270,8 +270,9 @@ export default class Service {
         );
       }
 
-      if (typeof this.recipe.buildUrl === 'function') {
-        url = this.recipe.buildUrl(url);
+      const { buildUrl } = this.recipe;
+      if (typeof buildUrl === 'function') {
+        url = buildUrl(url);
       }
 
       return url;
