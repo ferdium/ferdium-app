@@ -1,11 +1,11 @@
 import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
 
-import Signup from '../../components/auth/Signup';
 import { DefaultProps, GlobalError } from 'src/@types/ferdium-components.types';
+import Signup from '../../components/auth/Signup';
 
 interface SignUpScreenComponents extends DefaultProps {
-  error: GlobalError,
+  error: GlobalError;
 }
 
 class SignupScreen extends Component<SignUpScreenComponents> {
