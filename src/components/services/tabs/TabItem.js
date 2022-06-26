@@ -322,7 +322,7 @@ class TabItem extends Component {
       service.isBadgeEnabled
     ) {
       notificationBadge = (
-        <span>
+        <>
           {service.unreadDirectMessageCount > 0 && (
             <span className="tab-item__message-count">
               {service.unreadDirectMessageCount}
@@ -336,7 +336,7 @@ class TabItem extends Component {
           {service.isHibernating && (
             <span className="tab-item__message-count hibernating">•</span>
           )}
-        </span>
+        </>
       );
     }
 
