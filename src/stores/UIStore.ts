@@ -1,7 +1,7 @@
 import { action, observable, computed, reaction } from 'mobx';
 import { nativeTheme } from '@electron/remote';
 
-import { Stores } from 'src/stores.types';
+import { Stores } from 'src/@types/stores.types';
 import { ApiInterface } from 'src/api';
 import { Actions } from 'src/actions/lib/actions';
 import { Theme, theme, ThemeType } from '../themes';

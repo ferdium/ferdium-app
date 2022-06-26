@@ -9,7 +9,7 @@ import {
   getUserWorkspacesRequest,
   updateWorkspaceRequest,
 } from '../api';
-import { WorkspacesStore } from '../../../stores.types';
+import { WorkspacesStore } from '../../../@types/stores.types';
 
 type Props = {
   actions: {

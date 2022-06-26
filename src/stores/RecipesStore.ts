@@ -2,7 +2,7 @@ import { action, computed, observable } from 'mobx';
 import { readJSONSync } from 'fs-extra';
 import semver from 'semver';
 
-import { Stores } from 'src/stores.types';
+import { Stores } from 'src/@types/stores.types';
 import { ApiInterface } from 'src/api';
 import { Actions } from 'src/actions/lib/actions';
 import Recipe from 'src/models/Recipe';

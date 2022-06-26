@@ -8,13 +8,13 @@ import AppStore from './stores/AppStore';
 
 const translations = generatedTranslations();
 
-type Props = {
+interface Props {
   stores: {
     app: AppStore;
     user: UserStore;
   };
   children: ReactNode;
-};
+}
 
 class I18N extends Component<Props> {
   componentDidUpdate(): void {

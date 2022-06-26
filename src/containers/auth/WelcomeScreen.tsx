@@ -1,19 +1,11 @@
-import { Component } from 'react';
+import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
 
+import { DefaultProps } from 'src/@types/ferdium-components.types';
 import Welcome from '../../components/auth/Welcome';
-import UserStore from '../../stores/UserStore';
-import RecipePreviewsStore from '../../stores/RecipePreviewsStore';
 
-interface IProps {
-  stores: {
-    user: UserStore,
-    recipePreviews: RecipePreviewsStore,
-  },
-};
-
-class WelcomeScreen extends Component<IProps> {
-  render() {
+class WelcomeScreen extends Component<DefaultProps> {
+  render(): ReactElement {
     const { user, recipePreviews } = this.props.stores;
 
     return (

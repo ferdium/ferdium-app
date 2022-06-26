@@ -1,18 +1,16 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
-import { RouterStore } from 'mobx-react-router';
+import { DefaultProps } from 'src/@types/ferdium-components.types';
 import ChangeServer from '../../components/auth/ChangeServer';
-import SettingsStore from '../../stores/SettingsStore';
 
-class ChangeServerScreen extends Component {
-  constructor(props) {
+class ChangeServerScreen extends Component<DefaultProps> {
+  constructor(props: DefaultProps) {
     super(props);
 
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onSubmit(values) {
+  onSubmit(values: any): void {
     const { server } = values;
 
     this.props.actions.settings.update({
@@ -24,22 +22,12 @@ class ChangeServerScreen extends Component {
     this.props.stores.router.push('/auth');
   }
 
-  render() {
+  render(): ReactElement {
     const { stores } = this.props;
     const { server } = stores.settings.all.app;
 
     return <ChangeServer onSubmit={this.onSubmit} server={server} />;
   }
 }
-
-ChangeServerScreen.propTypes = {
-  actions: PropTypes.shape({
-    settings: PropTypes.instanceOf(SettingsStore).isRequired,
-  }).isRequired,
-  stores: PropTypes.shape({
-    settings: PropTypes.instanceOf(SettingsStore).isRequired,
-    router: PropTypes.instanceOf(RouterStore).isRequired,
-  }).isRequired,
-};
 
 export default inject('stores', 'actions')(observer(ChangeServerScreen));

@@ -2,7 +2,7 @@ import { action, computed, observable } from 'mobx';
 import { Actions } from 'src/actions/lib/actions';
 import { ApiInterface } from 'src/api';
 import Recipe from 'src/models/Recipe';
-import { Stores } from 'src/stores.types';
+import { Stores } from 'src/@types/stores.types';
 
 import CachedRequest from './lib/CachedRequest';
 import Request from './lib/Request';

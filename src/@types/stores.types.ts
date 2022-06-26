@@ -1,10 +1,13 @@
-import Workspace from './features/workspaces/models/Workspace';
-import Recipe from './models/Recipe';
-import Service from './models/Service';
-import User from './models/User';
-import { Request } from './stores/lib/Request';
-import { CachedRequest } from './stores/lib/CachedRequest';
-import Reaction from './stores/lib/Reaction';
+import Workspace from '../features/workspaces/models/Workspace';
+import Recipe from '../models/Recipe';
+import Service from '../models/Service';
+import User from '../models/User';
+import { Request } from '../stores/lib/Request';
+import { CachedRequest } from '../stores/lib/CachedRequest';
+import Reaction from '../stores/lib/Reaction';
+
+// TODO: This file will be removed in the future when all stores are
+// correctly typed and the use of these interfaces are obsolete.
 
 export interface FerdiumStores {
   app: AppStore;
@@ -307,7 +310,7 @@ export interface UserStore extends TypedStore {
   logoutReason: () => void;
   logoutReasonTypes: { SERVER: 'SERVER' };
   passwordRequest: Request;
-  retrievePassword: Promise<void>
+  retrievePassword: Promise<void>;
   signupRequest: () => void;
   updateUserInfoRequest: () => void;
   userData: () => void;

@@ -1,28 +1,19 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, ReactElement, ReactNode } from 'react';
 import { inject, observer } from 'mobx-react';
 import { ThemeProvider } from 'react-jss';
 
+import { DefaultProps } from 'src/@types/ferdium-components.types';
+import { Location } from 'mobx-react-router';
 import AuthLayout from '../../components/auth/AuthLayout';
-import AppStore from '../../stores/AppStore';
-import UserStore from '../../stores/UserStore';
-import GlobalErrorStore from '../../stores/GlobalErrorStore';
-import UIStore from '../../stores/UIStore';
-import SettingsStore from '../../stores/SettingsStore';
 import AppLoader from '../../components/ui/AppLoader';
 
-import { oneOrManyChildElements } from '../../prop-types';
-import FeaturesStore from '../../stores/FeaturesStore';
+interface AuthLayoutContainerProps extends DefaultProps {
+  location: Location;
+  children: ReactNode[] | ReactNode;
+}
 
-class AuthLayoutContainer extends Component {
-  static propTypes = {
-    children: oneOrManyChildElements.isRequired,
-    location: PropTypes.shape({
-      pathname: PropTypes.string.isRequired,
-    }).isRequired,
-  };
-
-  render() {
+class AuthLayoutContainer extends Component<AuthLayoutContainerProps> {
+  render(): ReactElement {
     const { stores, actions, children, location } = this.props;
     const { app, features, globalError, user } = stores;
 
@@ -33,7 +24,7 @@ class AuthLayoutContainer extends Component {
     if (isLoadingBaseFeatures) {
       return (
         <ThemeProvider theme={stores.ui.theme}>
-          <AppLoader />
+          <AppLoader theme={stores.ui.theme} />
         </ThemeProvider>
       );
     }
@@ -42,7 +33,7 @@ class AuthLayoutContainer extends Component {
     if (isLoggingOut) {
       return (
         <ThemeProvider theme={stores.ui.theme}>
-          <AppLoader texts={['Logging you out...']} />
+          <AppLoader theme={stores.ui.theme} texts={['Logging you out...']} />
         </ThemeProvider>
       );
     }
@@ -68,19 +59,5 @@ class AuthLayoutContainer extends Component {
     );
   }
 }
-
-AuthLayoutContainer.propTypes = {
-  stores: PropTypes.shape({
-    app: PropTypes.instanceOf(AppStore).isRequired,
-    features: PropTypes.instanceOf(FeaturesStore).isRequired,
-    globalError: PropTypes.instanceOf(GlobalErrorStore).isRequired,
-    user: PropTypes.instanceOf(UserStore).isRequired,
-    ui: PropTypes.instanceOf(UIStore).isRequired,
-  }).isRequired,
-  actions: PropTypes.shape({
-    app: PropTypes.instanceOf(AppStore).isRequired,
-    settings: PropTypes.instanceOf(SettingsStore).isRequired,
-  }).isRequired,
-};
 
 export default inject('stores', 'actions')(observer(AuthLayoutContainer));

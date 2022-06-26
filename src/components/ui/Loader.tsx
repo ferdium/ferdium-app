@@ -2,7 +2,7 @@ import { Component, ReactChildren } from 'react';
 import { observer, inject } from 'mobx-react';
 import Loader from 'react-loader';
 
-import { FerdiumStores } from '../../stores.types';
+import { FerdiumStores } from '../../@types/stores.types';
 
 type Props = {
   children: ReactChildren;

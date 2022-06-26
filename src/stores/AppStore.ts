@@ -14,7 +14,7 @@ import ms from 'ms';
 import { URL } from 'url';
 import { readJsonSync } from 'fs-extra';
 
-import { Stores } from 'src/stores.types';
+import { Stores } from 'src/@types/stores.types';
 import { ApiInterface } from 'src/api';
 import { Actions } from 'src/actions/lib/actions';
 import TypedStore from './lib/TypedStore';

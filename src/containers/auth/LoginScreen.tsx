@@ -1,17 +1,14 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
+import { DefaultProps, GlobalError } from 'src/@types/ferdium-components.types';
 import Login from '../../components/auth/Login';
-import UserStore from '../../stores/UserStore';
 
-import { globalError as globalErrorPropType } from '../../prop-types';
+interface LoginScreenProps extends DefaultProps {
+  error: GlobalError;
+}
 
-class LoginScreen extends Component {
-  static propTypes = {
-    error: globalErrorPropType.isRequired,
-  };
-
-  render() {
+class LoginScreen extends Component<LoginScreenProps> {
+  render(): ReactElement {
     const { actions, stores, error } = this.props;
     return (
       <Login
@@ -28,14 +25,5 @@ class LoginScreen extends Component {
     );
   }
 }
-
-LoginScreen.propTypes = {
-  actions: PropTypes.shape({
-    user: PropTypes.instanceOf(UserStore).isRequired,
-  }).isRequired,
-  stores: PropTypes.shape({
-    user: PropTypes.instanceOf(UserStore).isRequired,
-  }).isRequired,
-};
 
 export default inject('stores', 'actions')(observer(LoginScreen));
