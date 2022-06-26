@@ -1,34 +1,23 @@
 import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
-import { SettingsStore } from 'src/stores.types';
+import { DefaultProps } from 'src/@types/ferdium-components.types';
 import Locked from '../../components/auth/Locked';
 
 import { hash } from '../../helpers/password-helpers';
-import UserStore from '../../stores/UserStore';
 
-interface IProps {
-  actions: {
-    settings: SettingsStore;
-  };
-  stores: {
-    settings: SettingsStore;
-    user: UserStore;
-  };
-}
-
-class LockedScreen extends Component<IProps> {
+class LockedScreen extends Component<DefaultProps> {
   state = {
     error: false,
   };
 
-  constructor(props) {
+  constructor(props: DefaultProps) {
     super(props);
 
     this.onSubmit = this.onSubmit.bind(this);
     this.unlock = this.unlock.bind(this);
   }
 
-  onSubmit(values): void {
+  onSubmit(values: any): void {
     const { password } = values;
 
     let correctPassword = this.props.stores.settings.all.app.lockedPassword;

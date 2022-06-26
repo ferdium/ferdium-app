@@ -6,7 +6,7 @@ import { ipcRenderer } from 'electron';
 
 import { ApiInterface } from 'src/api';
 import { Actions } from 'src/actions/lib/actions';
-import { Stores } from 'src/stores.types';
+import { Stores } from 'src/@types/stores.types';
 import { TODOS_PARTITION_ID } from '../config';
 import { isDevMode } from '../environment-remote';
 import Request from './lib/Request';

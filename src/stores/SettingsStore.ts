@@ -2,7 +2,7 @@ import { ipcRenderer } from 'electron';
 import { getCurrentWindow } from '@electron/remote';
 import { action, computed, observable, reaction } from 'mobx';
 import localStorage from 'mobx-localstorage';
-import { Stores } from 'src/stores.types';
+import { Stores } from 'src/@types/stores.types';
 import { ApiInterface } from 'src/api';
 import { Actions } from 'src/actions/lib/actions';
 import {

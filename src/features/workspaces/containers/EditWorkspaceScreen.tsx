@@ -6,7 +6,7 @@ import EditWorkspaceForm from '../components/EditWorkspaceForm';
 import Workspace from '../models/Workspace';
 import { workspaceStore } from '../index';
 import { deleteWorkspaceRequest, updateWorkspaceRequest } from '../api';
-import { ServicesStore, WorkspacesStore } from '../../../stores.types';
+import { ServicesStore, WorkspacesStore } from '../../../@types/stores.types';
 
 type Props = {
   actions: {

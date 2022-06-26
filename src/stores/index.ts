@@ -1,4 +1,3 @@
-import { Stores } from 'src/stores.types';
 import { RouterStore } from 'mobx-react-router';
 import { ApiInterface } from 'src/api';
 import { Actions } from 'src/actions/lib/actions';
@@ -16,12 +15,29 @@ import { workspaceStore } from '../features/workspaces';
 import { communityRecipesStore } from '../features/communityRecipes';
 import { todosStore } from '../features/todos';
 
+export interface RealStores {
+  router: RouterStore;
+  app: AppStore;
+  user: UserStore;
+  features: FeaturesStore;
+  settings: SettingsStore;
+  services: ServicesStore;
+  recipes: RecipesStore;
+  recipePreviews: RecipePreviewsStore;
+  ui: UIStore;
+  requests: RequestStore;
+  globalError: GlobalErrorStore;
+  workspaces: typeof workspaceStore;
+  communityRecipes: typeof communityRecipesStore;
+  todos: typeof todosStore;
+}
+
 export default (
   api: ApiInterface,
   actions: Actions,
   router: RouterStore,
-): Stores => {
-  const stores: Stores | any = {};
+): RealStores => {
+  const stores: RealStores | any = {};
   Object.assign(stores, {
     router,
     app: new AppStore(stores, api, actions),
