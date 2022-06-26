@@ -43,7 +43,7 @@
 - Upgrade `electron` to the latest public version (`19.0.6`) to bring in lots of security fixes
 - Upgrade `node` to `16.15.1`, `npm` to `8.12.2` and `pnpm` to `7.3.0`
 - Upgrade `electron-builder` to `23.2.0` and `electron-updater` to `5.0.6`
-- Enable AutoUpdates from in-app with self-sign certificates on macOS and windows
+- Enable AutoUpdates from in-app with code-signing certificates on macOS and windows
 - Remove integration with sentry
 - Update CONTRIBUTING.md for new contributors' dev machine setup
 - Lock snapcraft to v5 since v7 breaks the build
