@@ -54,7 +54,7 @@ _Find answers to frequently asked questions on [ferdium.org/faq](https://ferdium
 
 ## Migrating from Ferdi
 
-If you are a pre-existing user of Ferdi, and are thinking of switching to Ferdium, you might want to run [the following scripts](./scripts/migration) to migrate your existing Ferdi profile such that Ferdium can pick up the configurations. (.ps1 for PowerShell/Windows users and .sh for UNIX (Linux and MacOS users)
+If you are a pre-existing user of Ferdi, and are thinking of switching to Ferdium, you might want to run [the following scripts](./scripts/migration) to migrate your existing Ferdi profile such that Ferdium can pick up the configurations. (.ps1 for PowerShell/Windows users and .sh for UNIX (Linux and MacOS users). For a more detailed explanation, please see [MIGRATION.md](MIGRATION.md)
 
 ## Contributing
 

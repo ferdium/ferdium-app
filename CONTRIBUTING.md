@@ -39,8 +39,7 @@ Please report unacceptable behavior to [hello@ferdium.org](mailto:hello@ferdium.
 
 ## What should I know before I get started?
 
-For the moment, Ferdium's development is only starting, aiming at releasing a 6.0.0 version with the rebranded assets and tooling upgrade completed.
-You can join the Discord official chat here : https://discord.com/invite/xpNTzgKmHM.
+For the moment, Ferdium's development is only starting, aiming at releasing a 6.0.0 version with the rebranded assets and tooling upgrade completed. You can join our official [Discord chat](https://discord.com/invite/xpNTzgKmHM) to get more updates and discuss issues with the other contributors.
 
 ## How can I contribute?
 
