@@ -114,6 +114,9 @@ export default class AppStore extends TypedStore {
     this.actions.app.healthCheck.listen(this._healthCheck.bind(this));
     this.actions.app.muteApp.listen(this._muteApp.bind(this));
     this.actions.app.toggleMuteApp.listen(this._toggleMuteApp.bind(this));
+    this.actions.app.toggleCollapseMenu.listen(
+      this._toggleCollapseMenu.bind(this),
+    );
     this.actions.app.clearAllCache.listen(this._clearAllCache.bind(this));
 
     this.registerReactions([
@@ -446,6 +449,15 @@ export default class AppStore extends TypedStore {
   @action _toggleMuteApp() {
     this._muteApp({
       isMuted: !this.stores.settings.all.app.isAppMuted,
+    });
+  }
+
+  @action _toggleCollapseMenu(): void {
+    this.actions.settings.update({
+      type: 'app',
+      data: {
+        isMenuCollapsed: !this.stores.settings.all.app.isMenuCollapsed,
+      },
     });
   }
 
