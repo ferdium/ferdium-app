@@ -94,8 +94,9 @@ export default class RecipesStore extends TypedStore {
 
     if (Object.keys(recipes).length === 0) return;
 
-    const remoteUpdates = await this.getRecipeUpdatesRequest.execute(recipes)
-      ._promise;
+    // TODO: This line needs to be uncomment once we fix the App-Server interaction problem.
+    // const remoteUpdates = await this.getRecipeUpdatesRequest.execute(recipes)._promise;
+    const remoteUpdates = [];
 
     // Check for local updates
     const allJsonFile = asarRecipesPath('all.json');
@@ -113,10 +114,7 @@ export default class RecipesStore extends TypedStore {
       }
     }
 
-    const updates = [
-      // ...remoteUpdates, //TODO: This line needs to be uncomment once we fix the App-Server interaction problem.
-      ...localUpdates,
-    ];
+    const updates = [...remoteUpdates, ...localUpdates];
     debug(
       'Got update information (local, remote):',
       localUpdates,
