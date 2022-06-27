@@ -1,17 +1,16 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, ReactNode } from 'react';
 import { inject, observer } from 'mobx-react';
 
+import { StoresProps } from 'src/@types/ferdium-components.types';
 import Invite from '../../components/auth/Invite';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
-import UserStore from '../../stores/UserStore';
 
-class InviteScreen extends Component {
-  componentWillUnmount() {
+class InviteScreen extends Component<StoresProps> {
+  componentWillUnmount(): void {
     this.props.stores.user.inviteRequest.reset();
   }
 
-  render() {
+  render(): ReactNode {
     const { actions } = this.props;
     const { user } = this.props.stores;
 
@@ -29,14 +28,5 @@ class InviteScreen extends Component {
     );
   }
 }
-
-InviteScreen.propTypes = {
-  actions: PropTypes.shape({
-    user: PropTypes.instanceOf(UserStore).isRequired,
-  }).isRequired,
-  stores: PropTypes.shape({
-    user: PropTypes.instanceOf(UserStore).isRequired,
-  }).isRequired,
-};
 
 export default inject('stores', 'actions')(observer(InviteScreen));

@@ -1,9 +1,9 @@
 import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
-import { DefaultProps } from 'src/@types/ferdium-components.types';
+import { StoresProps } from 'src/@types/ferdium-components.types';
 import Invite from '../../components/auth/Invite';
 
-class InviteScreen extends Component<DefaultProps> {
+class InviteScreen extends Component<StoresProps> {
   render(): ReactElement {
     const { actions } = this.props;
 

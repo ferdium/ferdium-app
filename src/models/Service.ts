@@ -14,6 +14,12 @@ import { IRecipe } from './Recipe';
 
 const debug = require('../preload-safe-debug')('Ferdium:Service');
 
+interface DarkReaderInterface {
+  brightness: number;
+  contrast: number;
+  sepia: number;
+}
+
 // TODO: Shouldn't most of these values default to what's defined in DEFAULT_SERVICE_SETTINGS?
 export default class Service {
   id: string = '';
@@ -68,7 +74,7 @@ export default class Service {
 
   @observable isProgressbarEnabled: boolean = true;
 
-  @observable darkReaderSettings: object = {
+  @observable darkReaderSettings: DarkReaderInterface = {
     brightness: 100,
     contrast: 90,
     sepia: 10,
@@ -158,7 +164,7 @@ export default class Service {
       data.isDarkModeEnabled,
       this.isDarkModeEnabled,
     );
-    this.darkReaderSettings = ifUndefined<object>(
+    this.darkReaderSettings = ifUndefined<DarkReaderInterface>(
       data.darkReaderSettings,
       this.darkReaderSettings,
     );
@@ -309,7 +315,7 @@ export default class Service {
     this.userAgentModel.userAgentPref = pref;
   }
 
-  @computed get defaultUserAgent(): String {
+  @computed get defaultUserAgent(): string {
     return this.userAgentModel.defaultUserAgent;
   }
 

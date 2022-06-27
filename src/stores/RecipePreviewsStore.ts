@@ -4,6 +4,7 @@ import { ApiInterface } from 'src/api';
 import Recipe from 'src/models/Recipe';
 import { Stores } from 'src/@types/stores.types';
 
+import RecipePreview from 'src/models/RecipePreview';
 import CachedRequest from './lib/CachedRequest';
 import Request from './lib/Request';
 import TypedStore from './lib/TypedStore';
@@ -35,15 +36,15 @@ export default class RecipePreviewsStore extends TypedStore {
     // Not implemented
   }
 
-  @computed get all(): Recipe[] {
+  @computed get all(): RecipePreview[] {
     return this.allRecipePreviewsRequest.execute().result || [];
   }
 
-  @computed get featured(): Recipe[] {
+  @computed get featured(): RecipePreview[] {
     return this.featuredRecipePreviewsRequest.execute().result || [];
   }
 
-  @computed get searchResults(): Recipe[] {
+  @computed get searchResults(): RecipePreview[] {
     return this.searchRecipePreviewsRequest.result || [];
   }
 

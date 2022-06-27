@@ -1,10 +1,10 @@
 import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
-import { DefaultProps } from 'src/@types/ferdium-components.types';
+import { StoresProps } from 'src/@types/ferdium-components.types';
 import ChangeServer from '../../components/auth/ChangeServer';
 
-class ChangeServerScreen extends Component<DefaultProps> {
-  constructor(props: DefaultProps) {
+class ChangeServerScreen extends Component<StoresProps> {
+  constructor(props: StoresProps) {
     super(props);
 
     this.onSubmit = this.onSubmit.bind(this);

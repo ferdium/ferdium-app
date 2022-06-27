@@ -1,7 +1,7 @@
 import { Actions } from 'src/actions/lib/actions';
 import { RealStores } from 'src/stores';
 
-export interface DefaultProps {
+export interface StoresProps {
   actions: Actions;
   stores: RealStores;
 }

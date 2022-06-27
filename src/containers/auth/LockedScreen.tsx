@@ -1,16 +1,16 @@
 import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
-import { DefaultProps } from 'src/@types/ferdium-components.types';
+import { StoresProps } from 'src/@types/ferdium-components.types';
 import Locked from '../../components/auth/Locked';
 
 import { hash } from '../../helpers/password-helpers';
 
-class LockedScreen extends Component<DefaultProps> {
+class LockedScreen extends Component<StoresProps> {
   state = {
     error: false,
   };
 
-  constructor(props: DefaultProps) {
+  constructor(props: StoresProps) {
     super(props);
 
     this.onSubmit = this.onSubmit.bind(this);

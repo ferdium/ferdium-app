@@ -2,11 +2,11 @@
 import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
 
-import { DefaultProps } from 'src/@types/ferdium-components.types';
+import { StoresProps } from 'src/@types/ferdium-components.types';
 import { sleep } from '../../helpers/async-helpers';
 import SetupAssistant from '../../components/auth/SetupAssistant';
 
-class SetupAssistantScreen extends Component<DefaultProps> {
+class SetupAssistantScreen extends Component<StoresProps> {
   state = {
     isSettingUpServices: false,
   };
