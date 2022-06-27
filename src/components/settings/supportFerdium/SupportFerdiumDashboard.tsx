@@ -11,8 +11,9 @@ const messages = defineMessages({
   },
   about: {
     id: 'settings.supportFerdium.about',
-    defaultMessage: 'The development of Ferdium is done by contributors. People who use Ferdium like you. They maintain, fix, and improve Ferdium in their spare time.',
-  }
+    defaultMessage:
+      'The development of Ferdium is done by contributors. People who use Ferdium like you. They maintain, fix, and improve Ferdium in their spare time.',
+  },
 });
 
 const SupportFerdiumDashboard = () => {
@@ -49,7 +50,10 @@ const SupportFerdiumDashboard = () => {
               />
             </a>
             <a target="_blank" href="https://crowdin.com/project/ferdium">
-              <img src="https://badges.crowdin.net/ferdium/localized.svg" alt="Crowdin"/>
+              <img
+                src="https://badges.crowdin.net/ferdium/localized.svg"
+                alt="Crowdin"
+              />
             </a>
             <a
               href="https://opencollective.com/ferdium#section-contributors"
@@ -76,7 +80,9 @@ const SupportFerdiumDashboard = () => {
               />
             </a>
           </p>
-          <p className="settings__message">{intl.formatMessage(messages.about)}</p>
+          <p className="settings__message">
+            {intl.formatMessage(messages.about)}
+          </p>
         </div>
       </div>
     </div>
