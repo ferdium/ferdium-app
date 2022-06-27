@@ -1,7 +1,6 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
-import injectSheet from 'react-jss';
-import { defineMessages, injectIntl } from 'react-intl';
+import { Component, ReactNode } from 'react';
+import withStyles, { WithStylesProps } from 'react-jss';
+import { defineMessages, injectIntl, IntlShape } from 'react-intl';
 
 import Button from '../../ui/button';
 import { H1 } from '../../ui/headline';
@@ -19,21 +18,20 @@ const messages = defineMessages({
   },
 });
 
-class ErrorBoundary extends Component {
+interface ErrorBoundaryProps extends WithStylesProps<typeof styles> {
+  intl: IntlShape;
+}
+
+class ErrorBoundary extends Component<ErrorBoundaryProps> {
   state = {
     hasError: false,
   };
 
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    children: PropTypes.node.isRequired,
-  };
-
-  componentDidCatch() {
+  componentDidCatch(): void {
     this.setState({ hasError: true });
   }
 
-  render() {
+  render(): ReactNode {
     const { classes } = this.props;
     const { intl } = this.props;
 
@@ -56,6 +54,6 @@ class ErrorBoundary extends Component {
   }
 }
 
-export default injectIntl(
-  injectSheet(styles, { injectTheme: true })(ErrorBoundary),
+export default withStyles(styles, { injectTheme: true })(
+  injectIntl<'intl', ErrorBoundaryProps>(ErrorBoundary),
 );
