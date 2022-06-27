@@ -1,34 +1,22 @@
-import { Children, Component } from 'react';
-import PropTypes from 'prop-types';
+import { Children, Component, ReactElement, ReactNode } from 'react';
 import { inject, observer } from 'mobx-react';
 import { ThemeProvider } from 'react-jss';
 
-import AppStore from '../../stores/AppStore';
-import RecipesStore from '../../stores/RecipesStore';
-import ServicesStore from '../../stores/ServicesStore';
-import FeaturesStore from '../../stores/FeaturesStore';
-import UIStore from '../../stores/UIStore';
-import SettingsStore from '../../stores/SettingsStore';
-import UserStore from '../../stores/UserStore';
-import RequestStore from '../../stores/RequestStore';
-import GlobalErrorStore from '../../stores/GlobalErrorStore';
-
-import { oneOrManyChildElements } from '../../prop-types';
+import { StoresProps } from 'src/@types/ferdium-components.types';
 import AppLayout from '../../components/layout/AppLayout';
 import Sidebar from '../../components/layout/Sidebar';
 import Services from '../../components/services/content/Services';
 import AppLoader from '../../components/ui/AppLoader';
 
-import { workspaceActions } from '../../features/workspaces/actions';
 import WorkspaceDrawer from '../../features/workspaces/components/WorkspaceDrawer';
 import { workspaceStore } from '../../features/workspaces';
 
-class AppLayoutContainer extends Component {
-  static defaultProps = {
-    children: null,
-  };
+interface AppLayoutContainerProps extends StoresProps {
+  children: ReactNode;
+}
 
-  render() {
+class AppLayoutContainer extends Component<AppLayoutContainerProps> {
+  render(): ReactElement {
     const {
       app,
       features,
@@ -38,7 +26,7 @@ class AppLayoutContainer extends Component {
       globalError,
       requests,
       user,
-      router
+      router,
     } = this.props.stores;
 
     /* HOTFIX for:
@@ -69,7 +57,8 @@ class AppLayoutContainer extends Component {
 
     const { retryRequiredRequests } = this.props.actions.requests;
 
-    const { installUpdate, toggleMuteApp, toggleCollapseMenu } = this.props.actions.app;
+    const { installUpdate, toggleMuteApp, toggleCollapseMenu } =
+      this.props.actions.app;
 
     const { openSettings, closeSettings } = this.props.actions.ui;
 
@@ -85,14 +74,10 @@ class AppLayoutContainer extends Component {
 
     const isLoadingSettings = !settings.loaded;
 
-    if (
-      isLoadingSettings ||
-      isLoadingFeatures ||
-      isLoadingServices
-    ) {
+    if (isLoadingSettings || isLoadingFeatures || isLoadingServices) {
       return (
         <ThemeProvider theme={ui.theme}>
-          <AppLoader />
+          <AppLoader theme={ui.theme} />
         </ThemeProvider>
       );
     }
@@ -127,7 +112,9 @@ class AppLayoutContainer extends Component {
         wakeUpService={awake}
         toggleMuteApp={toggleMuteApp}
         toggleCollapseMenu={toggleCollapseMenu}
-        toggleWorkspaceDrawer={workspaceActions.toggleWorkspaceDrawer}
+        toggleWorkspaceDrawer={
+          this.props.actions.workspaces.toggleWorkspaceDrawer
+        }
         isWorkspaceDrawerOpen={workspaceStore.isWorkspaceDrawerOpen}
         showServicesUpdatedInfoBar={ui.showServicesUpdatedInfoBar}
         showMessageBadgeWhenMutedSetting={
@@ -181,27 +168,5 @@ class AppLayoutContainer extends Component {
     );
   }
 }
-
-AppLayoutContainer.propTypes = {
-  stores: PropTypes.shape({
-    services: PropTypes.instanceOf(ServicesStore).isRequired,
-    features: PropTypes.instanceOf(FeaturesStore).isRequired,
-    recipes: PropTypes.instanceOf(RecipesStore).isRequired,
-    app: PropTypes.instanceOf(AppStore).isRequired,
-    ui: PropTypes.instanceOf(UIStore).isRequired,
-    settings: PropTypes.instanceOf(SettingsStore).isRequired,
-    user: PropTypes.instanceOf(UserStore).isRequired,
-    requests: PropTypes.instanceOf(RequestStore).isRequired,
-    globalError: PropTypes.instanceOf(GlobalErrorStore).isRequired,
-  }).isRequired,
-  actions: PropTypes.shape({
-    service: PropTypes.instanceOf(ServicesStore).isRequired,
-    ui: PropTypes.instanceOf(UIStore).isRequired,
-    app: PropTypes.instanceOf(AppStore).isRequired,
-    requests: PropTypes.instanceOf(RequestStore).isRequired,
-  }).isRequired,
-  // eslint-disable-next-line react/require-default-props
-  children: oneOrManyChildElements,
-};
 
 export default inject('stores', 'actions')(observer(AppLayoutContainer));

@@ -1,9 +1,9 @@
 import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
-import { DefaultProps, GlobalError } from 'src/@types/ferdium-components.types';
+import { StoresProps, GlobalError } from 'src/@types/ferdium-components.types';
 import Login from '../../components/auth/Login';
 
-interface LoginScreenProps extends DefaultProps {
+interface LoginScreenProps extends StoresProps {
   error: GlobalError;
 }
 

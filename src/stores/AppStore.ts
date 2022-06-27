@@ -94,6 +94,10 @@ export default class AppStore extends TypedStore {
 
   @observable isFocused = true;
 
+  @observable lockingFeatureEnabled = false;
+
+  @observable launchInBackground = false;
+
   dictionaries = [];
 
   fetchDataInterval: null | NodeJS.Timer = null;

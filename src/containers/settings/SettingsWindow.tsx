@@ -1,30 +1,39 @@
-import { Component } from 'react';
+import { Component, ReactNode, ReactPortal } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react';
 
-import ServicesStore from '../../stores/ServicesStore';
+import { StoresProps } from 'src/@types/ferdium-components.types';
 
 import Layout from '../../components/settings/SettingsLayout';
 import Navigation from '../../components/settings/navigation/SettingsNavigation';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 import { workspaceStore } from '../../features/workspaces';
-import UIStore from '../../stores/UIStore';
 
-class SettingsContainer extends Component {
-  portalRoot = document.querySelector('#portalContainer');
+interface SettingsContainerProps extends StoresProps {
+  children: ReactNode;
+}
 
-  el = document.createElement('div');
+class SettingsContainer extends Component<SettingsContainerProps> {
+  portalRoot: any;
 
-  componentDidMount() {
+  el: HTMLDivElement;
+
+  constructor(props: SettingsContainerProps) {
+    super(props);
+
+    this.portalRoot = document.querySelector('#portalContainer');
+    this.el = document.createElement('div');
+  }
+
+  componentDidMount(): void {
     this.portalRoot.append(this.el);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     this.el.remove();
   }
 
-  render() {
+  render(): ReactPortal {
     const { children, stores } = this.props;
     const { closeSettings } = this.props.actions.ui;
 
@@ -45,15 +54,5 @@ class SettingsContainer extends Component {
     );
   }
 }
-
-SettingsContainer.propTypes = {
-  children: PropTypes.element.isRequired,
-  stores: PropTypes.shape({
-    services: PropTypes.instanceOf(ServicesStore).isRequired,
-  }).isRequired,
-  actions: PropTypes.shape({
-    ui: PropTypes.instanceOf(UIStore).isRequired,
-  }).isRequired,
-};
 
 export default inject('stores', 'actions')(observer(SettingsContainer));

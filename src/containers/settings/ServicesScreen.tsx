@@ -1,27 +1,22 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
-import { RouterStore } from 'mobx-react-router';
 
-// import RecipePreviewsStore from '../../stores/RecipePreviewsStore';
-import UserStore from '../../stores/UserStore';
-import ServiceStore from '../../stores/ServicesStore';
-
+import { StoresProps } from 'src/@types/ferdium-components.types';
 import ServicesDashboard from '../../components/settings/services/ServicesDashboard';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 
-class ServicesScreen extends Component {
-  componentWillUnmount() {
+class ServicesScreen extends Component<StoresProps> {
+  componentWillUnmount(): void {
     this.props.actions.service.resetFilter();
     this.props.actions.service.resetStatus();
   }
 
-  deleteService() {
+  deleteService(): void {
     this.props.actions.service.deleteService();
-    this.props.stores.services.resetFilter();
+    this.props.actions.service.resetFilter();
   }
 
-  render() {
+  render(): ReactElement {
     const { user, services, router } = this.props.stores;
     const { toggleService, filter, resetFilter } = this.props.actions.service;
     const isLoading = services.allServicesRequest.isExecuting;
@@ -54,16 +49,5 @@ class ServicesScreen extends Component {
     );
   }
 }
-
-ServicesScreen.propTypes = {
-  stores: PropTypes.shape({
-    user: PropTypes.instanceOf(UserStore).isRequired,
-    services: PropTypes.instanceOf(ServiceStore).isRequired,
-    router: PropTypes.instanceOf(RouterStore).isRequired,
-  }).isRequired,
-  actions: PropTypes.shape({
-    service: PropTypes.instanceOf(ServiceStore).isRequired,
-  }).isRequired,
-};
 
 export default inject('stores', 'actions')(observer(ServicesScreen));

@@ -1,14 +1,10 @@
 import { readJsonSync } from 'fs-extra';
-import { Component } from 'react';
-import PropTypes from 'prop-types';
-import { autorun } from 'mobx';
+import { Component, ReactElement } from 'react';
+import { autorun, IReactionDisposer } from 'mobx';
 import { inject, observer } from 'mobx-react';
 
-import RecipePreviewsStore from '../../stores/RecipePreviewsStore';
-import RecipeStore from '../../stores/RecipesStore';
-import ServiceStore from '../../stores/ServicesStore';
-import UserStore from '../../stores/UserStore';
-
+import { StoresProps } from 'src/@types/ferdium-components.types';
+import Recipe from 'src/models/Recipe';
 import RecipesDashboard from '../../components/settings/recipes/RecipesDashboard';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 import { CUSTOM_WEBSITE_RECIPE_ID, FRANZ_DEV_DOCS } from '../../config';
@@ -16,38 +12,36 @@ import { userDataRecipesPath } from '../../environment-remote';
 import { asarRecipesPath } from '../../helpers/asar-helpers';
 import { communityRecipesStore } from '../../features/communityRecipes';
 import RecipePreview from '../../models/RecipePreview';
-import AppStore from '../../stores/AppStore';
 import { openPath } from '../../helpers/url-helpers';
 
-class RecipesScreen extends Component {
-  static propTypes = {
-    params: PropTypes.shape({
-      filter: PropTypes.string,
-    }),
+interface RecipesScreenProps extends StoresProps {
+  params: {
+    filter?: string | null;
   };
+}
 
-  static defaultProps = {
-    params: {
-      filter: null,
-    },
-  };
-
-  state = {
+class RecipesScreen extends Component<RecipesScreenProps> {
+  state: {
+    needle: string | null;
+    currentFilter: string;
+  } = {
     needle: null,
     currentFilter: 'featured',
   };
 
-  autorunDisposer = null;
+  autorunDisposer: IReactionDisposer | null = null;
 
-  customRecipes = [];
+  customRecipes: Recipe[] = [];
 
-  constructor(props) {
+  constructor(props: RecipesScreenProps) {
     super(props);
+
+    this.props.params.filter = this.props.params.filter || null;
 
     this.customRecipes = readJsonSync(asarRecipesPath('all.json'));
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     this.autorunDisposer = autorun(() => {
       const { filter } = this.props.params;
       const { currentFilter } = this.state;
@@ -62,12 +56,15 @@ class RecipesScreen extends Component {
     });
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     this.props.stores.services.resetStatus();
-    this.autorunDisposer();
+
+    if (typeof this.autorunDisposer === 'function') {
+      this.autorunDisposer();
+    }
   }
 
-  searchRecipes(needle) {
+  searchRecipes(needle: string | null): void {
     if (needle === '') {
       this.resetSearch();
     } else {
@@ -77,7 +74,7 @@ class RecipesScreen extends Component {
     }
   }
 
-  _sortByName(recipe1, recipe2) {
+  _sortByName(recipe1, recipe2): number {
     if (recipe1.name.toLowerCase() < recipe2.name.toLowerCase()) {
       return -1;
     }
@@ -87,7 +84,7 @@ class RecipesScreen extends Component {
     return 0;
   }
 
-  prepareRecipes(recipes) {
+  prepareRecipes(recipes: RecipePreview[]): RecipePreview[] {
     return (
       recipes
         // Filter out duplicate recipes
@@ -102,15 +99,15 @@ class RecipesScreen extends Component {
   }
 
   // Create an array of RecipePreviews from an array of recipe objects
-  createPreviews(recipes) {
-    return recipes.map(recipe => new RecipePreview(recipe));
+  createPreviews(recipes: Recipe[]) {
+    return recipes.map((recipe: any) => new RecipePreview(recipe));
   }
 
-  resetSearch() {
+  resetSearch(): void {
     this.setState({ needle: null });
   }
 
-  render() {
+  render(): ReactElement {
     const { recipePreviews, recipes, services } = this.props.stores;
 
     const { app: appActions, service: serviceActions } = this.props.actions;
@@ -130,33 +127,34 @@ class RecipesScreen extends Component {
     }
     recipeFilter = recipeFilter.sort(this._sortByName);
 
-    const allRecipes = this.state.needle
-      ? this.prepareRecipes([
-          // All search recipes from server
-          ...recipePreviews.searchResults,
-          // All search recipes from local recipes
-          ...this.createPreviews(
-            this.customRecipes.filter(
-              service =>
-                service.name
-                  .toLowerCase()
-                  .includes(this.state.needle.toLowerCase()) ||
-                (service.aliases || []).some(alias =>
-                  alias.toLowerCase().includes(this.state.needle.toLowerCase()),
-                ),
+    const { needle } = this.state;
+    const allRecipes =
+      needle !== null
+        ? this.prepareRecipes([
+            // All search recipes from server
+            ...recipePreviews.searchResults,
+            // All search recipes from local recipes
+            ...this.createPreviews(
+              this.customRecipes.filter(
+                (recipe: Recipe) =>
+                  recipe.name.toLowerCase().includes(needle.toLowerCase()) ||
+                  (recipe.aliases || []).some(alias =>
+                    alias.toLowerCase().includes(needle.toLowerCase()),
+                  ),
+              ),
             ),
-          ),
-        ]).sort(this._sortByName)
-      : recipeFilter;
+          ]).sort(this._sortByName)
+        : recipeFilter;
 
     const customWebsiteRecipe = recipePreviews.all.find(
       service => service.id === CUSTOM_WEBSITE_RECIPE_ID,
     );
 
-    const isLoading = recipePreviews.featuredRecipePreviewsRequest.isExecuting
-      || recipePreviews.allRecipePreviewsRequest.isExecuting
-      || recipes.installRecipeRequest.isExecuting
-      || recipePreviews.searchRecipePreviewsRequest.isExecuting;
+    const isLoading =
+      recipePreviews.featuredRecipePreviewsRequest.isExecuting ||
+      recipePreviews.allRecipePreviewsRequest.isExecuting ||
+      recipes.installRecipeRequest.isExecuting ||
+      recipePreviews.searchRecipePreviewsRequest.isExecuting;
 
     const recipeDirectory = userDataRecipesPath('dev');
 
@@ -167,7 +165,9 @@ class RecipesScreen extends Component {
           customWebsiteRecipe={customWebsiteRecipe}
           isLoading={isLoading}
           addedServiceCount={services.all.length}
-          hasLoadedRecipes={recipePreviews.featuredRecipePreviewsRequest.wasExecuted}
+          hasLoadedRecipes={
+            recipePreviews.featuredRecipePreviewsRequest.wasExecuted
+          }
           showAddServiceInterface={serviceActions.showAddServiceInterface}
           searchRecipes={e => this.searchRecipes(e)}
           resetSearch={() => this.resetSearch()}
@@ -184,21 +184,5 @@ class RecipesScreen extends Component {
     );
   }
 }
-
-RecipesScreen.propTypes = {
-  stores: PropTypes.shape({
-    recipePreviews: PropTypes.instanceOf(RecipePreviewsStore).isRequired,
-    recipes: PropTypes.instanceOf(RecipeStore).isRequired,
-    services: PropTypes.instanceOf(ServiceStore).isRequired,
-    user: PropTypes.instanceOf(UserStore).isRequired,
-  }).isRequired,
-  actions: PropTypes.shape({
-    app: PropTypes.instanceOf(AppStore).isRequired,
-    service: PropTypes.instanceOf(ServiceStore).isRequired,
-    recipePreview: PropTypes.shape({
-      search: PropTypes.func.isRequired,
-    }).isRequired,
-  }).isRequired,
-};
 
 export default inject('stores', 'actions')(observer(RecipesScreen));

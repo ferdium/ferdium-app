@@ -1,9 +1,9 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 
-import UserStore from '../../stores/UserStore';
+import { StoresProps } from 'src/@types/ferdium-components.types';
+import { FormFields } from 'src/@types/mobx-form.types';
 import Form from '../../lib/Form';
 import EditUserForm from '../../components/settings/user/EditUserForm';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
@@ -49,7 +49,11 @@ const messages = defineMessages({
   },
 });
 
-class EditUserScreen extends Component {
+interface EditUserScreenProps extends StoresProps {
+  intl: any;
+}
+
+class EditUserScreen extends Component<EditUserScreenProps> {
   componentWillUnmount() {
     this.props.actions.user.resetStatus();
   }
@@ -59,13 +63,13 @@ class EditUserScreen extends Component {
 
     update({ userData });
 
-    document.querySelector('#form').scrollIntoView({ behavior: 'smooth' });
+    document.querySelector('#form')?.scrollIntoView({ behavior: 'smooth' });
   }
 
   prepareForm(user) {
     const { intl } = this.props;
 
-    const config = {
+    const config: FormFields = {
       fields: {
         firstname: {
           label: intl.formatMessage(messages.firstname),
@@ -122,10 +126,12 @@ class EditUserScreen extends Component {
       },
     };
 
+    // @ts-ignore: Remove this ignore once mobx-react-form v4 with typescript
+    // support has been released.
     return new Form(config);
   }
 
-  render() {
+  render(): ReactElement {
     const { user } = this.props.stores;
 
     if (user.getUserInfoRequest.isExecuting) {
@@ -137,7 +143,6 @@ class EditUserScreen extends Component {
     return (
       <ErrorBoundary>
         <EditUserForm
-          // user={user.data}
           status={user.actionStatus}
           form={form}
           isSaving={user.updateUserInfoRequest.isExecuting}
@@ -148,15 +153,6 @@ class EditUserScreen extends Component {
   }
 }
 
-EditUserScreen.propTypes = {
-  stores: PropTypes.shape({
-    user: PropTypes.instanceOf(UserStore).isRequired,
-  }).isRequired,
-  actions: PropTypes.shape({
-    user: PropTypes.instanceOf(UserStore).isRequired,
-  }).isRequired,
-};
-
-export default injectIntl(
+export default injectIntl<'intl', EditUserScreenProps>(
   inject('stores', 'actions')(observer(EditUserScreen)),
 );

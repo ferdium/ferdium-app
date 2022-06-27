@@ -1,36 +1,32 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
 
-import UserStore from '../../stores/UserStore';
-import AppStore from '../../stores/AppStore';
-import FeaturesStore from '../../stores/FeaturesStore';
-import SettingsStore from '../../stores/SettingsStore';
+import { StoresProps } from 'src/@types/ferdium-components.types';
 
 import AccountDashboard from '../../components/settings/account/AccountDashboard';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 import { LIVE_FRANZ_API } from '../../config';
 import { WEBSITE } from '../../environment-remote';
 
-class AccountScreen extends Component {
-  onCloseWindow() {
+class AccountScreen extends Component<StoresProps> {
+  onCloseWindow(): void {
     const { user, features } = this.props.stores;
     user.getUserInfoRequest.invalidate({ immediately: true });
     features.featuresRequest.invalidate({ immediately: true });
   }
 
-  reloadData() {
+  reloadData(): void {
     const { user } = this.props.stores;
 
     user.getUserInfoRequest.reload();
   }
 
-  handleWebsiteLink(route) {
+  handleWebsiteLink(route: string): void {
     const { actions, stores } = this.props;
 
-    const api = stores.settings.all.app.server;
+    const api: string = stores.settings.all.app.server;
 
-    const url =
+    const url: string =
       api === LIVE_FRANZ_API
         ? stores.user.getAuthURL(
             `${WEBSITE}${route}?utm_source=app&utm_medium=account_dashboard`,
@@ -40,7 +36,7 @@ class AccountScreen extends Component {
     actions.app.openExternalUrl({ url });
   }
 
-  render() {
+  render(): ReactElement {
     const { user, settings } = this.props.stores;
     const { user: userActions } = this.props.actions;
 
@@ -71,18 +67,5 @@ class AccountScreen extends Component {
     );
   }
 }
-
-AccountScreen.propTypes = {
-  stores: PropTypes.shape({
-    user: PropTypes.instanceOf(UserStore).isRequired,
-    features: PropTypes.instanceOf(FeaturesStore).isRequired,
-    settings: PropTypes.instanceOf(SettingsStore).isRequired,
-    app: PropTypes.instanceOf(AppStore).isRequired,
-  }).isRequired,
-  actions: PropTypes.shape({
-    app: PropTypes.instanceOf(AppStore).isRequired,
-    user: PropTypes.instanceOf(UserStore).isRequired,
-  }).isRequired,
-};
 
 export default inject('stores', 'actions')(observer(AccountScreen));

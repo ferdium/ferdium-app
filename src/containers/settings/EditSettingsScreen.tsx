@@ -1,13 +1,10 @@
 import { ipcRenderer } from 'electron';
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 
-import AppStore from '../../stores/AppStore';
-import SettingsStore from '../../stores/SettingsStore';
-import UserStore from '../../stores/UserStore';
-import TodosStore from '../../features/todos/store';
+import { FormFields } from 'src/@types/mobx-form.types';
+import { StoresProps } from 'src/@types/ferdium-components.types';
 import Form from '../../lib/Form';
 import { APP_LOCALES, SPELLCHECKER_LOCALES } from '../../i18n/languages';
 import {
@@ -36,8 +33,6 @@ import EditSettingsForm from '../../components/settings/settings/EditSettingsFor
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 
 import globalMessages from '../../i18n/globalMessages';
-import WorkspacesStore from '../../features/workspaces/store';
-import ServicesStore from '../../stores/ServicesStore';
 
 const debug = require('../../preload-safe-debug')('Ferdium:EditSettingsScreen');
 
@@ -76,7 +71,8 @@ const messages = defineMessages({
   },
   reloadAfterResumeTime: {
     id: 'settings.app.form.reloadAfterResumeTime',
-    defaultMessage: 'Time to consider the system as idle/suspended (in minutes)',
+    defaultMessage:
+      'Time to consider the system as idle/suspended (in minutes)',
   },
   minimizeToSystemTray: {
     id: 'settings.app.form.minimizeToSystemTray',
@@ -296,14 +292,14 @@ const messages = defineMessages({
   },
 });
 
-class EditSettingsScreen extends Component {
-  constructor(props) {
-    super(props);
+interface EditSettingsScreenProps extends StoresProps {
+  intl: any;
+}
 
-    this.state = {
-      lockedPassword: '',
-    };
-  }
+class EditSettingsScreen extends Component<EditSettingsScreenProps> {
+  state = {
+    lockedPassword: '',
+  };
 
   onSubmit(settingsData) {
     const { todos, workspaces } = this.props.stores;
@@ -348,12 +344,16 @@ class EditSettingsScreen extends Component {
         hibernateOnStartup: Boolean(settingsData.hibernateOnStartup),
         hibernationStrategy: Number(settingsData.hibernationStrategy),
         wakeUpStrategy: Number(settingsData.wakeUpStrategy),
-        wakeUpHibernationStrategy: Number(settingsData.wakeUpHibernationStrategy),
+        wakeUpHibernationStrategy: Number(
+          settingsData.wakeUpHibernationStrategy,
+        ),
         wakeUpHibernationSplay: Boolean(settingsData.wakeUpHibernationSplay),
         predefinedTodoServer: settingsData.predefinedTodoServer,
         customTodoServer: settingsData.customTodoServer,
         lockingFeatureEnabled: Boolean(settingsData.lockingFeatureEnabled),
-        lockedPassword: useOriginalPassword ? this.props.stores.settings.all.app.lockedPassword : hash(String(settingsData.lockedPassword)),
+        lockedPassword: useOriginalPassword
+          ? this.props.stores.settings.all.app.lockedPassword
+          : hash(String(settingsData.lockedPassword)),
         useTouchIdToUnlock: Boolean(settingsData.useTouchIdToUnlock),
         inactivityLock: Number(settingsData.inactivityLock),
         scheduledDNDEnabled: Boolean(settingsData.scheduledDNDEnabled),
@@ -492,7 +492,7 @@ class EditSettingsScreen extends Component {
       ),
     });
 
-    const config = {
+    const config: FormFields = {
       fields: {
         autoLaunchOnStart: {
           label: intl.formatMessage(messages.autoLaunchOnStart),
@@ -843,10 +843,12 @@ class EditSettingsScreen extends Component {
       };
     }
 
+    // @ts-ignore: Remove this ignore once mobx-react-form v4 with typescript
+    // support has been released.
     return new Form(config);
   }
 
-  render() {
+  render(): ReactElement {
     const { app, services } = this.props.stores;
     const {
       updateStatus,
@@ -869,7 +871,9 @@ class EditSettingsScreen extends Component {
           noUpdateAvailable={updateStatus === updateStatusTypes.NOT_AVAILABLE}
           updateIsReadyToInstall={updateStatus === updateStatusTypes.DOWNLOADED}
           updateFailed={updateStatus === updateStatusTypes.FAILED}
-          showServicesUpdatedInfoBar={this.props.stores.ui.showServicesUpdatedInfoBar}
+          showServicesUpdatedInfoBar={
+            this.props.stores.ui.showServicesUpdatedInfoBar
+          }
           onSubmit={d => this.onSubmit(d)}
           getCacheSize={() => app.cacheSize}
           isClearingAllCache={isClearingAllCache}
@@ -880,7 +884,9 @@ class EditSettingsScreen extends Component {
           isAdaptableDarkModeEnabled={
             this.props.stores.settings.app.adaptableDarkMode
           }
-          isUseGrayscaleServicesEnabled={this.props.stores.settings.app.useGrayscaleServices}
+          isUseGrayscaleServicesEnabled={
+            this.props.stores.settings.app.useGrayscaleServices
+          }
           isSplitModeEnabled={this.props.stores.settings.app.splitMode}
           isTodosActivated={this.props.stores.todos.isFeatureEnabledByUser}
           isUsingCustomTodoService={
@@ -894,24 +900,6 @@ class EditSettingsScreen extends Component {
     );
   }
 }
-
-EditSettingsScreen.propTypes = {
-  stores: PropTypes.shape({
-    app: PropTypes.instanceOf(AppStore).isRequired,
-    user: PropTypes.instanceOf(UserStore).isRequired,
-    settings: PropTypes.instanceOf(SettingsStore).isRequired,
-    services: PropTypes.instanceOf(ServicesStore).isRequired,
-    todos: PropTypes.instanceOf(TodosStore).isRequired,
-    workspaces: PropTypes.instanceOf(WorkspacesStore).isRequired,
-  }).isRequired,
-  actions: PropTypes.shape({
-    app: PropTypes.instanceOf(AppStore).isRequired,
-    user: PropTypes.instanceOf(UserStore).isRequired,
-    settings: PropTypes.instanceOf(SettingsStore).isRequired,
-    todos: PropTypes.instanceOf(TodosStore).isRequired,
-    workspaces: PropTypes.instanceOf(WorkspacesStore).isRequired,
-  }).isRequired,
-};
 
 export default injectIntl(
   inject('stores', 'actions')(observer(EditSettingsScreen)),

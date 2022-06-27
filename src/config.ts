@@ -276,6 +276,8 @@ export const DEFAULT_APP_SETTINGS = {
   enableLongPressServiceHint: false,
   proxyFeatureEnabled: false,
   onlyShowFavoritesInUnreadCount: false,
+  customTodoServer: '',
+  locale: 'en-US',
 };
 
 export const DEFAULT_SERVICE_SETTINGS = {
