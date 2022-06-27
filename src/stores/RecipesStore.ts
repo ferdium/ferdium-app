@@ -113,7 +113,10 @@ export default class RecipesStore extends TypedStore {
       }
     }
 
-    const updates = [...remoteUpdates, ...localUpdates];
+    const updates = [
+      // ...remoteUpdates, //TODO: This line needs to be uncomment once we fix the App-Server interaction problem.
+      ...localUpdates,
+    ];
     debug(
       'Got update information (local, remote):',
       localUpdates,
