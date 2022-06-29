@@ -427,6 +427,7 @@
   "sidebar.muteApp": "Disable notifications & audio",
   "sidebar.openTodosDrawer": "Open workspace drawer",
   "sidebar.openWorkspaceDrawer": "Open workspace drawer",
+  "sidebar.splitModeToggle": "Split Mode Toggle",
   "sidebar.unmuteApp": "Enable notifications & audio",
   "signup.email.label": "Email address",
   "signup.emailDuplicate": "A user with that email address already exists",
