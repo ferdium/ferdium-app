@@ -2855,6 +2855,15 @@
         "infra",
         "code"
       ]
+    },
+    {
+      "login": "mrksr",
+      "name": "Markus Kaiser",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5184063?v=4",
+      "profile": "https://mrksr.de",
+      "contributions": [
+        "infra"
+      ]
     }
   ]
 }
