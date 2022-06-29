@@ -151,7 +151,13 @@ Pop-Location
 
 # -----------------------------------------------------------------------------
 Write-Host "*************** Building app ***************"
-$TARGET_ARCH="x64"
+if ($env:PROCESSOR_ARCHITECTURE -eq "ARM64") {
+    $TARGET_ARCH="arm64"
+}
+else
+{
+    $TARGET_ARCH="x64"
+}
 & $BASE_CMD run build -- --$TARGET_ARCH --dir
 
 Write-Host "*************** App successfully built! ***************"

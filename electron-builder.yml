@@ -59,11 +59,11 @@ win:
   icon: ./build-helpers/images/icon.ico
   target:
     - target: nsis
-      arch: [x64, ia32]
+      arch: [x64, ia32, arm64]
     - target: msi
       arch: [x64, ia32]
     - target: portable
-      arch: [x64, ia32]
+      arch: [x64, ia32, arm64]
   # The name of the CN appearing in the certificate must be present in the publisherName list below
   publisherName: ["Ferdium Contributors", "Ambroise Grau"]
 
