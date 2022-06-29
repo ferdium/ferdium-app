@@ -21,7 +21,7 @@ import TypedStore from './lib/TypedStore';
 import Request from './lib/Request';
 import { CHECK_INTERVAL, DEFAULT_APP_SETTINGS } from '../config';
 import { cleanseJSObject } from '../jsUtils';
-import { isMac, isWindows, electronVersion, osRelease } from '../environment';
+import { isMac, electronVersion, osRelease } from '../environment';
 import {
   ferdiumVersion,
   userDataPath,
@@ -408,11 +408,7 @@ export default class AppStore extends TypedStore {
   }
 
   @action _checkForUpdates() {
-    if (
-      this.isOnline &&
-      this.stores.settings.app.automaticUpdates &&
-      (isMac || isWindows || process.env.APPIMAGE)
-    ) {
+    if (this.isOnline && this.stores.settings.app.automaticUpdates) {
       debug('_checkForUpdates: sending event to autoUpdate:check');
       this.updateStatus = this.updateStatusTypes.CHECKING;
       ipcRenderer.send('autoUpdate', {

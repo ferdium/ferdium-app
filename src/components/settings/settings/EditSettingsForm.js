@@ -932,46 +932,44 @@ class EditSettingsForm extends Component {
                 <Toggle field={form.$('automaticUpdates')} />
                 {automaticUpdates && (
                   <>
-                    {(isMac || isWindows || process.env.APPIMAGE) && (
-                      <>
-                        <div>
-                          <Toggle field={form.$('beta')} />
-                          {updateIsReadyToInstall ? (
-                            <Button
-                              label={intl.formatMessage(messages.buttonInstallUpdate)}
-                              onClick={installUpdate}
-                            />
-                          ) : (
-                            <Button
-                              buttonType="secondary"
-                              label={intl.formatMessage(updateButtonLabelMessage)}
-                              onClick={checkForUpdates}
-                              disabled={
-                                !automaticUpdates ||
-                                isCheckingForUpdates ||
-                                isUpdateAvailable ||
-                                !isOnline
-                              }
-                              loaded={!isCheckingForUpdates || !isUpdateAvailable}
-                            />
-                          )}
-                          <br />
-                        </div>
+                    <>
+                      <div>
+                        <Toggle field={form.$('beta')} />
+                        {updateIsReadyToInstall ? (
+                          <Button
+                            label={intl.formatMessage(messages.buttonInstallUpdate)}
+                            onClick={installUpdate}
+                          />
+                        ) : (
+                          <Button
+                            buttonType="secondary"
+                            label={intl.formatMessage(updateButtonLabelMessage)}
+                            onClick={checkForUpdates}
+                            disabled={
+                              !automaticUpdates ||
+                              isCheckingForUpdates ||
+                              isUpdateAvailable ||
+                              !isOnline
+                            }
+                            loaded={!isCheckingForUpdates || !isUpdateAvailable}
+                          />
+                        )}
+                        <br />
+                      </div>
+                      <p>
+                        {intl.formatMessage(messages.currentVersion)} {ferdiumVersion}
+                      </p>
+                      {noUpdateAvailable && (
                         <p>
-                          {intl.formatMessage(messages.currentVersion)} {ferdiumVersion}
+                          {intl.formatMessage(messages.updateStatusUpToDate)}.
                         </p>
-                        {noUpdateAvailable && (
-                          <p>
-                            {intl.formatMessage(messages.updateStatusUpToDate)}.
-                          </p>
-                        )}
-                        {updateFailed && (
-                          <Infobox type="danger" icon="alert">
-                            &nbsp;An error occurred (check the console for more details)
-                          </Infobox>
-                        )}
-                      </>
-                    )}
+                      )}
+                      {updateFailed && (
+                        <Infobox type="danger" icon="alert">
+                          &nbsp;An error occurred (check the console for more details)
+                        </Infobox>
+                      )}
+                    </>
                     {showServicesUpdatedInfoBar ? (
                       <>
                         <p>
