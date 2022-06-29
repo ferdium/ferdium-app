@@ -869,27 +869,26 @@ class EditSettingsForm extends Component {
                   {notCleared && (
                     <p>{intl.formatMessage(messages.cacheNotCleared)}</p>
                   )}
-                  <p>
-                    <Button
-                      buttonType="secondary"
-                      label={intl.formatMessage(messages.buttonClearAllCache)}
-                      onClick={() => {
-                        onClearAllCache();
-                        this.onClearCacheClicked();
-                      }}
-                      disabled={isClearingAllCache}
-                      loaded={!isClearingAllCache}
-                    />
-                  </p>
-                  <div style={{
-                    marginTop: 20,
-                  }}
-                  >
-                    <Button
-                      buttonType="secondary"
-                      label="Open Process Manager"
-                      onClick={openProcessManager}
-                    />
+                  <div className="settings__settings-group">
+                    <div className="settings__open-settings-cache-container">
+                      <Button
+                        buttonType="secondary"
+                        label={intl.formatMessage(messages.buttonClearAllCache)}
+                        className="settings__open-settings-cache-button"
+                        onClick={() => {
+                          onClearAllCache();
+                          this.onClearCacheClicked();
+                        }}
+                        disabled={isClearingAllCache}
+                        loaded={!isClearingAllCache}
+                      />
+                      <Button
+                        buttonType="secondary"
+                        label="Open Process Manager"
+                        className="settings__open-settings-cache-button"
+                        onClick={openProcessManager}
+                      />
+                    </div>
                   </div>
                 </div>
 
