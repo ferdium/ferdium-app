@@ -49,9 +49,9 @@ const SupportFerdiumDashboard = () => {
                 src="https://img.shields.io/github/stars/ferdium/ferdium-app?style=social"
               />
             </a>
-            <a target="_blank" href="https://crowdin.com/project/ferdium">
+            <a target="_blank" href="https://crowdin.com/project/ferdium-app">
               <img
-                src="https://badges.crowdin.net/ferdium/localized.svg"
+                src="https://badges.crowdin.net/ferdium-app/localized.svg"
                 alt="Crowdin"
               />
             </a>
