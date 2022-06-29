@@ -1,6 +1,5 @@
 import { ipcMain, BrowserWindow } from 'electron';
 import { autoUpdater } from 'electron-updater';
-import { isMac, isWindows } from '../../environment';
 import { appEvents } from '../..';
 
 const debug = require('../../preload-safe-debug')('Ferdium:ipcApi:autoUpdate');
@@ -11,7 +10,7 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
   if (!enableUpdate) {
     autoUpdater.autoInstallOnAppQuit = false;
     autoUpdater.autoDownload = false;
-  } else if (isMac || isWindows || process.env.APPIMAGE) {
+  } else {
     ipcMain.on('autoUpdate', (event, args) => {
       if (enableUpdate) {
         try {
