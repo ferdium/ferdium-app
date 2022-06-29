@@ -27,7 +27,7 @@
   .settings__hr {
     color: rgba($dark-theme-gray, 0.8);
   }
-  
+
   .settings__hr-sections {
     color: rgba($dark-theme-text-color, 0.5);
   }
@@ -190,7 +190,7 @@
   .settings__hr {
     color: rgba($theme-gray, 0.2);
   }
-  
+
   .settings__hr-sections {
     color: rgba($theme-gray, 0.4);
   }
@@ -419,6 +419,11 @@
     margin-top: 20px;
     display: flex;
     height: auto !important;
+  }
+
+  .settings__open-settings-cache-button, .settings__open-settings-cache-container {
+    cursor: pointer;
+    margin-right: 10px;
   }
 
   .settings__empty-state {
