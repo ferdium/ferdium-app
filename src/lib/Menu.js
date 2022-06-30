@@ -859,12 +859,21 @@ class FranzMenu {
     const about = {
       label: intl.formatMessage(menuItems.about),
       click: () => {
-        dialog.showMessageBox({
-          type: 'info',
-          title: 'Ferdium',
-          message: 'Ferdium',
-          detail: aboutAppDetails(),
-        });
+        dialog
+          .showMessageBox({
+            type: 'info',
+            title: 'Ferdium',
+            message: 'Ferdium',
+            detail: aboutAppDetails(),
+            buttons: ['Copy details', 'OK'],
+          })
+          .then(result => {
+            if (result.response === 0) {
+              clipboard.write({
+                text: aboutAppDetails(),
+              });
+            }
+          });
       },
     };
 
