@@ -9,7 +9,7 @@ export default abstract class TypedStore {
 
   @observable _status: any = null;
 
-  @observable stores: Stores;
+  stores: Stores;
 
   api: ApiInterface;
 
