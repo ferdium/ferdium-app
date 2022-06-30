@@ -26,7 +26,6 @@ import { DEFAULT_APP_SETTINGS, DEFAULT_WINDOW_OPTIONS } from './config';
 import { isMac, isWindows, isLinux, altKey } from './environment';
 import {
   isDevMode,
-  aboutAppDetails,
   userDataRecipesPath,
   userDataPath,
 } from './environment-remote';
@@ -165,11 +164,6 @@ if (!retrieveSettingValue('enableGPUAcceleration', false)) {
   debug('Disable GPU Acceleration');
   app.disableHardwareAcceleration();
 }
-
-app.setAboutPanelOptions({
-  applicationVersion: aboutAppDetails(),
-  version: '',
-});
 
 const createWindow = () => {
   // Remember window size

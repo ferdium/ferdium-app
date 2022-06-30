@@ -9,6 +9,7 @@ import {
 } from '@electron/remote';
 import { autorun, observable } from 'mobx';
 import { defineMessages } from 'react-intl';
+import osName from 'os-name';
 import {
   CUSTOM_WEBSITE_RECIPE_ID,
   GITHUB_FERDIUM_URL,
@@ -27,14 +28,21 @@ import {
   addNewServiceShortcutKey,
   splitModeToggleShortcutKey,
   muteFerdiumShortcutKey,
+  electronVersion,
+  chromeVersion,
+  nodeVersion,
+  osArch,
 } from '../environment';
-import { aboutAppDetails, ferdiumVersion } from '../environment-remote';
+import { ferdiumVersion } from '../environment-remote';
 import { todoActions } from '../features/todos/actions';
 import { workspaceActions } from '../features/workspaces/actions';
 import { workspaceStore } from '../features/workspaces/index';
 import apiBase, { serverBase } from '../api/apiBase';
 import { openExternalUrl } from '../helpers/url-helpers';
 import globalMessages from '../i18n/globalMessages';
+
+// @ts-expect-error Cannot find module '../buildInfo.json' or its corresponding type declarations.
+import * as buildInfo from '../buildInfo.json';
 
 const menuItems = defineMessages({
   edit: {
@@ -324,6 +332,14 @@ const menuItems = defineMessages({
   serviceGoHome: {
     id: 'menu.services.goHome',
     defaultMessage: 'Home',
+  },
+  ok: {
+    id: 'global.ok',
+    defaultMessage: 'Ok',
+  },
+  copyToClipboard: {
+    id: 'menu.services.copyToClipboard',
+    defaultMessage: 'Copy to clipboard',
   },
 });
 
@@ -797,10 +813,6 @@ class FranzMenu {
       accelerator: `${altKey()}+F`,
       submenu: [
         {
-          label: intl.formatMessage(menuItems.about),
-          role: 'about',
-        },
-        {
           type: 'separator',
         },
         {
@@ -856,15 +868,36 @@ class FranzMenu {
       ],
     });
 
+    const aboutAppDetails = [
+      `Version: ${ferdiumVersion}`,
+      `Electron: ${electronVersion}`,
+      `Chrome: ${chromeVersion}`,
+      `Node.js: ${nodeVersion}`,
+      `Platform: ${osName()}`,
+      `Arch: ${osArch}`,
+      `Build date: ${new Date(Number(buildInfo.timestamp))}`,
+      `Git SHA: ${buildInfo.gitHashShort}`,
+      `Git branch: ${buildInfo.gitBranch}`,
+    ].join('\n');
+
     const about = {
       label: intl.formatMessage(menuItems.about),
       click: () => {
-        dialog.showMessageBox({
-          type: 'info',
-          title: 'Ferdium',
-          message: 'Ferdium',
-          detail: aboutAppDetails(),
-        });
+        dialog
+          .showMessageBox({
+            type: 'info',
+            title: 'Ferdium',
+            message: 'Ferdium',
+            detail: aboutAppDetails,
+            buttons: [intl.formatMessage(menuItems.copyToClipboard), intl.formatMessage(menuItems.ok)],
+          })
+          .then(result => {
+            if (result.response === 0) {
+              clipboard.write({
+                text: aboutAppDetails,
+              });
+            }
+          });
       },
     };
 
@@ -889,7 +922,7 @@ class FranzMenu {
         },
       );
 
-      tpl[5].submenu.unshift(about, {
+      tpl[0].submenu.unshift(about, {
         type: 'separator',
       });
     } else {
