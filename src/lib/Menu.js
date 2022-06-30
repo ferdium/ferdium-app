@@ -9,6 +9,7 @@ import {
 } from '@electron/remote';
 import { autorun, observable } from 'mobx';
 import { defineMessages } from 'react-intl';
+import osName from 'os-name';
 import {
   CUSTOM_WEBSITE_RECIPE_ID,
   GITHUB_FERDIUM_URL,
@@ -39,7 +40,6 @@ import { workspaceStore } from '../features/workspaces/index';
 import apiBase, { serverBase } from '../api/apiBase';
 import { openExternalUrl } from '../helpers/url-helpers';
 import globalMessages from '../i18n/globalMessages';
-import osName from 'os-name';
 
 // @ts-expect-error Cannot find module '../buildInfo.json' or its corresponding type declarations.
 import * as buildInfo from '../buildInfo.json';
@@ -332,6 +332,14 @@ const menuItems = defineMessages({
   serviceGoHome: {
     id: 'menu.services.goHome',
     defaultMessage: 'Home',
+  },
+  ok: {
+    id: 'global.ok',
+    defaultMessage: 'Ok',
+  },
+  copyToClipboard: {
+    id: 'menu.services.copyToClipboard',
+    defaultMessage: 'Copy to clipboard',
   },
 });
 
@@ -881,7 +889,7 @@ class FranzMenu {
             title: 'Ferdium',
             message: 'Ferdium',
             detail: aboutAppDetails,
-            buttons: ['Copy to clipboard', 'OK'],
+            buttons: [intl.formatMessage(menuItems.copyToClipboard), intl.formatMessage(menuItems.ok)],
           })
           .then(result => {
             if (result.response === 0) {
