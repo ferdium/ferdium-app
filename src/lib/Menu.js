@@ -797,10 +797,6 @@ class FranzMenu {
       accelerator: `${altKey()}+F`,
       submenu: [
         {
-          label: intl.formatMessage(menuItems.about),
-          role: 'about',
-        },
-        {
           type: 'separator',
         },
         {
@@ -898,7 +894,7 @@ class FranzMenu {
         },
       );
 
-      tpl[5].submenu.unshift(about, {
+      tpl[0].submenu.unshift(about, {
         type: 'separator',
       });
     } else {
