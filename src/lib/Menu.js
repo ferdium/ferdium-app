@@ -27,14 +27,22 @@ import {
   addNewServiceShortcutKey,
   splitModeToggleShortcutKey,
   muteFerdiumShortcutKey,
+  electronVersion,
+  chromeVersion,
+  nodeVersion,
+  osArch,
 } from '../environment';
-import { aboutAppDetails, ferdiumVersion } from '../environment-remote';
+import { ferdiumVersion } from '../environment-remote';
 import { todoActions } from '../features/todos/actions';
 import { workspaceActions } from '../features/workspaces/actions';
 import { workspaceStore } from '../features/workspaces/index';
 import apiBase, { serverBase } from '../api/apiBase';
 import { openExternalUrl } from '../helpers/url-helpers';
 import globalMessages from '../i18n/globalMessages';
+import osName from 'os-name';
+
+// @ts-expect-error Cannot find module '../buildInfo.json' or its corresponding type declarations.
+import * as buildInfo from '../buildInfo.json';
 
 const menuItems = defineMessages({
   edit: {
@@ -852,6 +860,18 @@ class FranzMenu {
       ],
     });
 
+    const aboutAppDetails = [
+      `Version: ${ferdiumVersion}`,
+      `Electron: ${electronVersion}`,
+      `Chrome: ${chromeVersion}`,
+      `Node.js: ${nodeVersion}`,
+      `Platform: ${osName()}`,
+      `Arch: ${osArch}`,
+      `Build date: ${new Date(Number(buildInfo.timestamp))}`,
+      `Git SHA: ${buildInfo.gitHashShort}`,
+      `Git branch: ${buildInfo.gitBranch}`,
+    ].join('\n');
+
     const about = {
       label: intl.formatMessage(menuItems.about),
       click: () => {
@@ -860,13 +880,13 @@ class FranzMenu {
             type: 'info',
             title: 'Ferdium',
             message: 'Ferdium',
-            detail: aboutAppDetails(),
+            detail: aboutAppDetails,
             buttons: ['Copy to clipboard', 'OK'],
           })
           .then(result => {
             if (result.response === 0) {
               clipboard.write({
-                text: aboutAppDetails(),
+                text: aboutAppDetails,
               });
             }
           });

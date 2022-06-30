@@ -1,5 +1,4 @@
 import { join } from 'path';
-import osName from 'os-name';
 import { api as electronApi } from './electron-util';
 import {
   LIVE_FERDIUM_API,
@@ -14,16 +13,7 @@ import {
   LOCAL_TODOS_FRONTEND_URL,
   PRODUCTION_TODOS_FRONTEND_URL,
 } from './config';
-import {
-  chromeVersion,
-  electronVersion,
-  isWindows,
-  nodeVersion,
-  osArch,
-} from './environment';
-
-// @ts-expect-error Cannot find module './buildInfo.json' or its corresponding type declarations.
-import * as buildInfo from './buildInfo.json';
+import { isWindows } from './environment';
 
 export const { app } = electronApi;
 export const ferdiumVersion: string = app.getVersion();
@@ -89,17 +79,3 @@ export const API_VERSION: string = 'v1';
 export const WS_API: string = wsApi;
 export const WEBSITE: string = web;
 export const TODOS_FRONTEND: string = todos;
-
-export function aboutAppDetails(): string {
-  return [
-    `Version: ${ferdiumVersion}`,
-    `Electron: ${electronVersion}`,
-    `Chrome: ${chromeVersion}`,
-    `Node.js: ${nodeVersion}`,
-    `Platform: ${osName()}`,
-    `Arch: ${osArch}`,
-    `Build date: ${new Date(Number(buildInfo.timestamp))}`,
-    `Git SHA: ${buildInfo.gitHashShort}`,
-    `Git branch: ${buildInfo.gitBranch}`,
-  ].join('\n');
-}
