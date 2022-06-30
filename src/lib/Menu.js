@@ -865,7 +865,7 @@ class FranzMenu {
             title: 'Ferdium',
             message: 'Ferdium',
             detail: aboutAppDetails(),
-            buttons: ['Copy details', 'OK'],
+            buttons: ['Copy to clipboard', 'OK'],
           })
           .then(result => {
             if (result.response === 0) {
