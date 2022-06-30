@@ -1,20 +1,17 @@
-import { Component, ReactElement, ReactNode } from 'react';
+import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
 import { ThemeProvider } from 'react-jss';
+import { Outlet } from 'react-router-dom';
 
-import { Location } from 'mobx-react-router';
 import { StoresProps } from '../../@types/ferdium-components.types';
 import AuthLayout from '../../components/auth/AuthLayout';
 import AppLoader from '../../components/ui/AppLoader';
 
-interface AuthLayoutContainerProps extends StoresProps {
-  location: Location;
-  children: ReactNode;
-}
+interface AuthLayoutContainerProps extends StoresProps {}
 
 class AuthLayoutContainer extends Component<AuthLayoutContainerProps> {
   render(): ReactElement {
-    const { stores, actions, children, location } = this.props;
+    const { stores, actions } = this.props;
     const { app, features, globalError, user } = stores;
 
     const isLoadingBaseFeatures =
@@ -42,7 +39,7 @@ class AuthLayoutContainer extends Component<AuthLayoutContainerProps> {
       <ThemeProvider theme={stores.ui.theme}>
         <AuthLayout
           error={globalError.response}
-          pathname={location.pathname}
+          pathname={stores.router.location.pathname}
           isOnline={app.isOnline}
           isAPIHealthy={!app.healthCheckRequest.isError}
           retryHealthCheck={actions.app.healthCheck}
@@ -53,7 +50,7 @@ class AuthLayoutContainer extends Component<AuthLayoutContainerProps> {
             app.updateStatus === app.updateStatusTypes.DOWNLOADED
           }
         >
-          {children}
+          <Outlet />
         </AuthLayout>
       </ThemeProvider>
     );

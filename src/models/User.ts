@@ -1,4 +1,4 @@
-import { observable } from 'mobx';
+import { makeObservable, observable } from 'mobx';
 
 interface IUser {
   id: string | null;
@@ -42,6 +42,8 @@ export default class User {
   @observable team = {};
 
   constructor(data: IUser) {
+    makeObservable(this);
+
     if (!data) {
       throw new Error('User config not valid');
     }

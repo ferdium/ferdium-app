@@ -2,8 +2,8 @@ import { webFrame } from 'electron';
 
 import { render } from 'react-dom';
 import { Provider } from 'mobx-react';
-import { syncHistoryWithStore, RouterStore } from 'mobx-react-router';
-import { hashHistory } from 'react-router';
+import { RouterStore } from '@superwf/mobx-react-router';
+import { createHashHistory } from 'history';
 
 import ServerApi from './api/server/ServerApi';
 import LocalApi from './api/server/LocalApi';
@@ -14,7 +14,7 @@ import MenuFactory from './lib/Menu';
 import TouchBarFactory from './lib/TouchBar';
 
 import I18N from './I18n';
-import Routes from './routes';
+import FerdiumRoutes from './routes';
 
 // Basic electron Setup
 webFrame.setVisualZoomLevelLimits(1, 1);
@@ -22,9 +22,9 @@ webFrame.setVisualZoomLevelLimits(1, 1);
 window.addEventListener('load', () => {
   const serverApi = new ServerApi();
   const api = apiFactory(serverApi, new LocalApi());
-  const router = new RouterStore();
+  const history = createHashHistory();
+  const router = new RouterStore(history);
   const stores = storeFactory(api, actions, router);
-  const history = syncHistoryWithStore(hashHistory, router);
   const menu = new MenuFactory(stores, actions);
   const touchBar = new TouchBarFactory(stores, actions);
 
@@ -39,7 +39,7 @@ window.addEventListener('load', () => {
       const preparedApp = (
         <Provider stores={stores} actions={actions}>
           <I18N stores={{ app: stores.app, user: stores.user }}>
-            <Routes history={history} />
+            <FerdiumRoutes history={history} />
           </I18N>
         </Provider>
       );

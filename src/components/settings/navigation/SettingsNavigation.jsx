@@ -2,9 +2,13 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { defineMessages, injectIntl } from 'react-intl';
 import { inject, observer } from 'mobx-react';
-import { RouterStore } from 'mobx-react-router';
+import { RouterStore } from '@superwf/mobx-react-router';
 
-import { LOCAL_SERVER, LIVE_FERDIUM_API, LIVE_FRANZ_API } from '../../../config';
+import {
+  LOCAL_SERVER,
+  LIVE_FERDIUM_API,
+  LIVE_FRANZ_API,
+} from '../../../config';
 import Link from '../../ui/Link';
 import UIStore from '../../../stores/UIStore';
 import SettingsStore from '../../../stores/SettingsStore';

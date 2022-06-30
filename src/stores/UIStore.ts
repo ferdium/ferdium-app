@@ -1,4 +1,4 @@
-import { action, observable, computed, reaction } from 'mobx';
+import { action, observable, computed, reaction, makeObservable } from 'mobx';
 import { nativeTheme } from '@electron/remote';
 
 import { Stores } from '../@types/stores.types';
@@ -14,6 +14,9 @@ export default class UIStore extends TypedStore {
 
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
+
+    makeObservable(this);
+
     // Register action handlers
     this.actions.ui.openSettings.listen(this._openSettings.bind(this));
     this.actions.ui.closeSettings.listen(this._closeSettings.bind(this));

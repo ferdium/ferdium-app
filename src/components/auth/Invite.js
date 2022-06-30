@@ -2,7 +2,7 @@ import { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 
 import Infobox from '../ui/Infobox';
@@ -11,7 +11,7 @@ import Form from '../../lib/Form';
 import { email } from '../../helpers/validation-helpers';
 import Input from '../ui/Input';
 import Button from '../ui/button';
-import { H1 } from '../ui/headline';
+import { H1 }  from '../ui/headline';
 
 const messages = defineMessages({
   settingsHeadline: {

@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron';
-import { action, computed, observable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 import ms from 'ms';
 
 import { Actions } from '../actions/lib/actions';
@@ -27,6 +27,8 @@ export default class RequestStore extends TypedStore {
 
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
+
+    makeObservable(this);
 
     this.actions.requests.retryRequiredRequests.listen(
       this._retryRequiredRequests.bind(this),

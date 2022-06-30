@@ -1,4 +1,4 @@
-import { action, computed, observable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 import { readJSONSync } from 'fs-extra';
 import semver from 'semver';
 
@@ -23,6 +23,8 @@ export default class RecipesStore extends TypedStore {
 
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
+
+    makeObservable(this);
 
     // Register action handlers
     this.actions.recipe.install.listen(this._install.bind(this));

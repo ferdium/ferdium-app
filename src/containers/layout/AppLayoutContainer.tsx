@@ -1,8 +1,12 @@
-import { Children, Component, ReactElement, ReactNode } from 'react';
+import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
 import { ThemeProvider } from 'react-jss';
+import { Route, Routes } from 'react-router-dom';
 
 import { StoresProps } from '../../@types/ferdium-components.types';
+import WorkspacesScreen from '../../features/workspaces/containers/WorkspacesScreen';
+import { WORKSPACES_ROUTES } from '../../features/workspaces/constants';
+import EditWorkspaceScreen from '../../features/workspaces/containers/EditWorkspaceScreen';
 import AppLayout from '../../components/layout/AppLayout';
 import Sidebar from '../../components/layout/Sidebar';
 import Services from '../../components/services/content/Services';
@@ -10,10 +14,18 @@ import AppLoader from '../../components/ui/AppLoader';
 
 import WorkspaceDrawer from '../../features/workspaces/components/WorkspaceDrawer';
 import { workspaceStore } from '../../features/workspaces';
+import SettingsWindow from '../settings/SettingsWindow';
+import RecipesScreen from '../settings/RecipesScreen';
+import EditUserScreen from '../settings/EditUserScreen';
+import AccountScreen from '../settings/AccountScreen';
+import EditServiceScreen from '../settings/EditServiceScreen';
+import EditSettingsScreen from '../settings/EditSettingsScreen';
+import InviteSettingsScreen from '../settings/InviteScreen';
+import SupportFerdiumScreen from '../settings/SupportScreen';
+import ServicesScreen from '../settings/ServicesScreen';
+import TeamScreen from '../settings/TeamScreen';
 
-interface AppLayoutContainerProps extends StoresProps {
-  children: ReactNode;
-}
+interface AppLayoutContainerProps extends StoresProps {}
 
 class AppLayoutContainer extends Component<AppLayoutContainerProps> {
   render(): ReactElement {
@@ -61,8 +73,6 @@ class AppLayoutContainer extends Component<AppLayoutContainerProps> {
       this.props.actions.app;
 
     const { openSettings, closeSettings } = this.props.actions.ui;
-
-    const { children } = this.props;
 
     const isLoadingFeatures =
       features.featuresRequest.isExecuting &&
@@ -141,6 +151,8 @@ class AppLayoutContainer extends Component<AppLayoutContainerProps> {
       />
     );
 
+    console.log('AppLayoutContainer');
+
     return (
       <ThemeProvider theme={ui.theme}>
         <AppLayout
@@ -162,7 +174,60 @@ class AppLayoutContainer extends Component<AppLayoutContainerProps> {
           retryRequiredRequests={retryRequiredRequests}
           areRequiredRequestsLoading={requests.areRequiredRequestsLoading}
         >
-          {Children.count(children) > 0 ? children : null}
+          <Routes>
+            <Route
+              path="/settings"
+              element={<SettingsWindow {...this.props} />}
+            />
+            <Route
+              path="/settings/recipes"
+              element={<RecipesScreen {...this.props} />}
+            />
+            <Route
+              path="/settings/recipes/:filter"
+              element={<RecipesScreen {...this.props} />}
+            />
+            <Route
+              path="/settings/services"
+              element={<ServicesScreen {...this.props} />}
+            />
+            <Route
+              path="/settings/services/:action/:id"
+              element={<EditServiceScreen {...this.props} />}
+            />
+            <Route
+              path={WORKSPACES_ROUTES.ROOT}
+              element={<WorkspacesScreen {...this.props} />}
+            />
+            <Route
+              path={WORKSPACES_ROUTES.EDIT}
+              element={<EditWorkspaceScreen {...this.props} />}
+            />
+            <Route
+              path="/settings/user"
+              element={<AccountScreen {...this.props} />}
+            />
+            <Route
+              path="/settings/user/edit"
+              element={<EditUserScreen {...this.props} />}
+            />
+            <Route
+              path="/settings/team"
+              element={<TeamScreen {...this.props} />}
+            />
+            <Route
+              path="/settings/app"
+              element={<EditSettingsScreen {...this.props} />}
+            />
+            <Route
+              path="/settings/invite"
+              element={<InviteSettingsScreen {...this.props} />}
+            />
+            <Route
+              path="/settings/support"
+              element={<SupportFerdiumScreen {...this.props} />}
+            />
+          </Routes>
         </AppLayout>
       </ThemeProvider>
     );

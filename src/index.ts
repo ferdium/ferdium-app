@@ -31,6 +31,7 @@ import {
 } from './environment-remote';
 import { ifUndefined } from './jsUtils';
 
+
 import { mainIpcHandler as basicAuthHandler } from './features/basicAuth';
 import ipcApi from './electron/ipc-api';
 import Tray from './lib/Tray';
@@ -625,7 +626,6 @@ ipcMain.on('set-spellchecker-locales', (_e, { locale, serviceId }) => {
   debug(`Setting spellchecker locales to: ${locales}`);
   serviceSession.setSpellCheckerLanguages(locales);
 });
-
 
 ipcMain.handle('get-desktop-capturer-sources', () => desktopCapturer.getSources({
   types: ['screen', 'window'],

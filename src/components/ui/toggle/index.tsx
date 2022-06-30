@@ -122,6 +122,4 @@ class ToggleComponent extends Component<IProps> {
   }
 }
 
-export default injectStyle(styles, { injectTheme: true })(
-  ToggleComponent,
-);
+export default injectStyle(styles, { injectTheme: true })(ToggleComponent);

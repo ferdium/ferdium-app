@@ -1,4 +1,4 @@
-import { computed, action, observable } from 'mobx';
+import { computed, action, observable, makeObservable } from 'mobx';
 import localStorage from 'mobx-localstorage';
 
 import { ThemeType } from '../../themes';
@@ -32,6 +32,12 @@ export default class TodoStore extends FeatureStore {
   @observable userAgentModel = new UserAgent();
 
   isInitialized = false;
+
+  constructor() {
+    super();
+
+    makeObservable(this);
+  }
 
   @computed get width() {
     const width = this.settings.width || DEFAULT_TODOS_WIDTH;

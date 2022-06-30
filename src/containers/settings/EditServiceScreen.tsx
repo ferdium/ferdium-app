@@ -2,7 +2,6 @@ import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 
-import { RouterStore } from 'mobx-react-router';
 import { StoresProps } from '../../@types/ferdium-components.types';
 import { IRecipe } from '../../models/Recipe';
 import Service from '../../models/Service';
@@ -119,7 +118,6 @@ const messages = defineMessages({
 });
 
 interface EditServicesScreenProps extends StoresProps {
-  router: RouterStore;
   intl: any;
 }
 
@@ -151,10 +149,10 @@ class EditServiceScreen extends Component<EditServicesScreenProps> {
   prepareForm(recipe: IRecipe, service: Service | null, proxy: any): Form {
     const { intl } = this.props;
 
-    const { stores, router } = this.props;
+    const { stores } = this.props;
 
     // @ts-ignore TODO: This is actually there and we don't have a correct type right now.
-    const { action } = router.params;
+    const { action } = this.stores.router.params;
 
     let defaultSpellcheckerLanguage =
       SPELLCHECKER_LOCALES[stores.settings.app.spellcheckerLanguage];

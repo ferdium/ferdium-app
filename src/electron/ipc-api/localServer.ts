@@ -25,6 +25,7 @@ let localServerStarted = false;
 
 export default (params: { mainWindow: BrowserWindow }) => {
   ipcMain.on('startLocalServer', () => {
+    console.log('test');
     if (!localServerStarted) {
       // Find next unused port for server
       let port = LOCAL_PORT;

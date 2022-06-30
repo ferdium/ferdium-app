@@ -15,9 +15,9 @@ import RecipePreview from '../../models/RecipePreview';
 import { openPath } from '../../helpers/url-helpers';
 
 interface RecipesScreenProps extends StoresProps {
-  params: {
-    filter?: string | null;
-  };
+  // params: {
+  //   filter?: string | null;
+  // };
 }
 
 class RecipesScreen extends Component<RecipesScreenProps> {
@@ -29,6 +29,10 @@ class RecipesScreen extends Component<RecipesScreenProps> {
     currentFilter: 'featured',
   };
 
+  params: {
+    filter?: string | null;
+  };
+
   autorunDisposer: IReactionDisposer | null = null;
 
   customRecipes: Recipe[] = [];
@@ -36,14 +40,17 @@ class RecipesScreen extends Component<RecipesScreenProps> {
   constructor(props: RecipesScreenProps) {
     super(props);
 
-    this.props.params.filter = this.props.params.filter || null;
+    this.params = {
+      // @ts-ignore
+      filter: props.match?.params?.filter,
+    };
 
     this.customRecipes = readJsonSync(asarRecipesPath('all.json'));
   }
 
   componentDidMount(): void {
     this.autorunDisposer = autorun(() => {
-      const { filter } = this.props.params;
+      const { filter } = this.params;
       const { currentFilter } = this.state;
 
       if (filter === 'all' && currentFilter !== 'all') {
@@ -112,7 +119,7 @@ class RecipesScreen extends Component<RecipesScreenProps> {
 
     const { app: appActions, service: serviceActions } = this.props.actions;
 
-    const { filter } = this.props.params;
+    const { filter } = this.params;
     let recipeFilter;
 
     if (filter === 'all') {
@@ -125,7 +132,7 @@ class RecipesScreen extends Component<RecipesScreenProps> {
     } else {
       recipeFilter = recipePreviews.featured;
     }
-    recipeFilter = recipeFilter.sort(this._sortByName);
+    recipeFilter = [...recipeFilter].sort(this._sortByName);
 
     const { needle } = this.state;
     const allRecipes =

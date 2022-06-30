@@ -1,4 +1,4 @@
-import { autorun, computed, observable } from 'mobx';
+import { autorun, computed, makeObservable, observable } from 'mobx';
 import { ipcRenderer } from 'electron';
 import { webContents } from '@electron/remote';
 import normalizeUrl from 'normalize-url';
@@ -131,6 +131,8 @@ export default class Service {
     if (!recipe) {
       throw new Error('Service recipe not valid');
     }
+
+    makeObservable(this);
 
     this.recipe = recipe;
 

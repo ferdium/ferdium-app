@@ -2,7 +2,7 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import injectSheet from 'react-jss';
 
@@ -182,7 +182,7 @@ class RecipesDashboard extends Component {
             <Link
               to="/settings/recipes"
               className="badge"
-              activeClassName={`${!searchNeedle ? 'badge--primary' : ''}`}
+              // activeClassName={`${!searchNeedle ? 'badge--primary' : ''}`}
               onClick={() => resetSearch()}
             >
               {intl.formatMessage(messages.ferdiumPicksRecipes)}
@@ -190,7 +190,7 @@ class RecipesDashboard extends Component {
             <Link
               to="/settings/recipes/all"
               className="badge"
-              activeClassName={`${!searchNeedle ? 'badge--primary' : ''}`}
+              // activeClassName={`${!searchNeedle ? 'badge--primary' : ''}`}
               onClick={() => resetSearch()}
             >
               {intl.formatMessage(messages.allRecipes)}

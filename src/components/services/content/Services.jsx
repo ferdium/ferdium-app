@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer, PropTypes as MobxPropTypes, inject } from 'mobx-react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { defineMessages, injectIntl } from 'react-intl';
 import Confetti from 'react-confetti';
 import ms from 'ms';
@@ -50,6 +50,7 @@ class Services extends Component {
     openSettings: PropTypes.func.isRequired,
     update: PropTypes.func.isRequired,
     userHasCompletedSignup: PropTypes.bool.isRequired,
+    // eslint-disable-next-line react/forbid-prop-types
     classes: PropTypes.object.isRequired,
     isSpellcheckerEnabled: PropTypes.bool.isRequired,
   };
@@ -58,11 +59,15 @@ class Services extends Component {
     services: [],
   };
 
-  state = {
-    showConfetti: true,
-  };
-
   _confettiTimeout = null;
+
+  constructor() {
+    super();
+
+    this.state = {
+      showConfetti: true,
+    };
+  }
 
   componentDidMount() {
     this._confettiTimeout = window.setTimeout(() => {
@@ -117,10 +122,7 @@ class Services extends Component {
                 style={{ maxHeight: '50vh' }}
               />
               <Appear timeout={300} transitionName="slideUp">
-                <Link
-                  to='/settings/recipes'
-                  className="button"
-                >
+                <Link to="/settings/recipes" className="button">
                   {intl.formatMessage(messages.getStarted)}
                 </Link>
               </Appear>

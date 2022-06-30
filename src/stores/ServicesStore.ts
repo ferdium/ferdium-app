@@ -1,5 +1,5 @@
 import { shell } from 'electron';
-import { action, reaction, computed, observable } from 'mobx';
+import { action, reaction, computed, observable, makeObservable } from 'mobx';
 import { debounce, remove } from 'lodash';
 import ms from 'ms';
 import { ensureFileSync, pathExistsSync, writeFileSync } from 'fs-extra';
@@ -66,6 +66,8 @@ export default class ServicesStore extends TypedStore {
 
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
+
+    makeObservable(this);
 
     // Register action handlers
     this.actions.service.setActive.listen(this._setActive.bind(this));

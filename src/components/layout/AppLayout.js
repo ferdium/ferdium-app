@@ -7,6 +7,7 @@ import injectSheet from 'react-jss';
 import { ipcRenderer } from 'electron';
 
 import { mdiFlash, mdiPowerPlug } from '@mdi/js';
+import { Outlet } from 'react-router-dom';
 import InfoBar from '../ui/InfoBar';
 import { Component as BasicAuth } from '../../features/basicAuth';
 import { Component as QuickSwitch } from '../../features/quickSwitch';
@@ -83,7 +84,6 @@ class AppLayout extends Component {
     sidebar: PropTypes.element.isRequired,
     workspacesDrawer: PropTypes.element.isRequired,
     services: PropTypes.element.isRequired,
-    children: PropTypes.element,
     showServicesUpdatedInfoBar: PropTypes.bool.isRequired,
     appUpdateIsDownloaded: PropTypes.bool.isRequired,
     authRequestFailed: PropTypes.bool.isRequired,
@@ -99,10 +99,6 @@ class AppLayout extends Component {
     shouldShowServicesUpdatedInfoBar: true,
   };
 
-  static defaultProps = {
-    children: [],
-  };
-
   render() {
     const {
       classes,
@@ -110,7 +106,6 @@ class AppLayout extends Component {
       workspacesDrawer,
       sidebar,
       services,
-      children,
       showServicesUpdatedInfoBar,
       appUpdateIsDownloaded,
       authRequestFailed,
@@ -128,6 +123,8 @@ class AppLayout extends Component {
     if (locked) {
       return <LockedScreen />;
     }
+
+    console.log('AppLayout');
 
     return (
       <>
@@ -205,7 +202,7 @@ class AppLayout extends Component {
               <QuickSwitch />
               <PublishDebugInfo />
               {services}
-              {children}
+              <Outlet />
             </div>
             <Todos />
           </div>

@@ -1,4 +1,4 @@
-import { observable, action, computed } from 'mobx';
+import { observable, action, computed, makeObservable } from 'mobx';
 import { isEqual } from 'lodash/fp';
 
 export default class Request {
@@ -29,6 +29,8 @@ export default class Request {
   _currentApiCall = null;
 
   constructor(api, method) {
+    makeObservable(this);
+
     this._api = api;
     this._method = method;
   }

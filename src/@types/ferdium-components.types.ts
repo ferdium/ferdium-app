@@ -7,7 +7,7 @@ export interface StoresProps {
 }
 
 export interface GlobalError {
-  status: number;
-  message: string;
-  code: string;
+  status?: number;
+  message?: string;
+  code?: string;
 }

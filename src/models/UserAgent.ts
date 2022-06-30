@@ -1,4 +1,4 @@
-import { action, computed, observe, observable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 
 import ElectronWebView from 'react-electron-web-view';
 import defaultUserAgent from '../helpers/userAgent-helpers';
@@ -21,19 +21,22 @@ export default class UserAgent {
   @observable overrideUserAgent = (): string => '';
 
   constructor(overrideUserAgent: any = null) {
+    makeObservable(this);
+
     if (typeof overrideUserAgent === 'function') {
       this.overrideUserAgent = overrideUserAgent;
     }
 
-    observe(this, 'webview', change => {
-      const { oldValue, newValue } = change;
-      if (oldValue !== null) {
-        this._removeWebviewEvents(oldValue);
-      }
-      if (newValue !== null) {
-        this._addWebviewEvents(newValue);
-      }
-    });
+    // EH LOOKINTO
+    // observe(this, 'webview', change => {
+    //   const { oldValue, newValue } = change;
+    //   if (oldValue !== null) {
+    //     this._removeWebviewEvents(oldValue);
+    //   }
+    //   if (newValue !== null) {
+    //     this._addWebviewEvents(newValue);
+    //   }
+    // });
   }
 
   @computed get defaultUserAgent(): string {

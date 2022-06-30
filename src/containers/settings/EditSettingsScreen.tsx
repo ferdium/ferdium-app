@@ -860,6 +860,8 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
       this.props.actions.app;
     const form = this.prepareForm();
 
+    console.log('EditSettingsScreen');
+
     return (
       <ErrorBoundary>
         <EditSettingsForm

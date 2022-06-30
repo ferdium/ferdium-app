@@ -7,7 +7,7 @@ import {
   getCurrentWindow,
   process as remoteProcess,
 } from '@electron/remote';
-import { action, computed, observable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 import moment from 'moment';
 import AutoLaunch from 'auto-launch';
 import ms from 'ms';
@@ -104,6 +104,8 @@ export default class AppStore extends TypedStore {
 
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
+
+    makeObservable(this);
 
     // Register action handlers
     this.actions.app.notify.listen(this._notify.bind(this));
@@ -510,7 +512,7 @@ export default class AppStore extends TypedStore {
   }
 
   _setLocale() {
-    if (this.stores.user.isLoggedIn && this.stores.user.data.locale) {
+    if (this.stores.user?.isLoggedIn && this.stores.user.data.locale) {
       this.locale = this.stores.user.data.locale;
     } else if (!this.locale) {
       this.locale = this._getDefaultLocale();

@@ -177,12 +177,24 @@ class SelectComponent extends Component<IProps> {
 
   private keyListener: any;
 
-  componentWillReceiveProps(nextProps: IProps) {
-    if (nextProps.value && nextProps.value !== this.props.value) {
-      this.setState({
+  // componentWillReceiveProps(nextProps: IProps) {
+  //   if (nextProps.value && nextProps.value !== this.props.value) {
+  //     this.setState({
+  //       value: nextProps.value,
+  //     });
+  //   }
+  // }
+
+  static getDerivedStateFromProps(nextProps: IProps, prevState: IProps) {
+    if (nextProps.value && nextProps.value !== prevState.value) {
+      return {
         value: nextProps.value,
-      });
+      };
     }
+
+    return {
+      value: prevState.value,
+    };
   }
 
   componentDidUpdate() {
@@ -199,6 +211,7 @@ class SelectComponent extends Component<IProps> {
 
       if (data) {
         Object.keys(data).map(
+          // eslint-disable-next-line no-return-assign
           key => (this.inputRef.current!.dataset[key] = data[key]),
         );
       }
@@ -458,6 +471,6 @@ class SelectComponent extends Component<IProps> {
   }
 }
 
-export const Select = injectStyle(styles, { injectTheme: true })(
+export default injectStyle(styles, { injectTheme: true })(
   SelectComponent,
 );

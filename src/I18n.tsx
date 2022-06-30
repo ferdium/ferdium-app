@@ -24,6 +24,7 @@ class I18N extends Component<Props> {
   render(): ReactNode {
     const { stores, children } = this.props;
     const { locale } = stores.app;
+
     return (
       <IntlProvider
         {...{ locale, key: locale, messages: translations[locale] }}

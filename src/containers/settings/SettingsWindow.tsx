@@ -1,23 +1,20 @@
-import { Component, ReactNode, ReactPortal } from 'react';
+import { inject, observer } from 'mobx-react';
+import { Component, ReactPortal } from 'react';
 import ReactDOM from 'react-dom';
-import { observer, inject } from 'mobx-react';
+import { Outlet } from 'react-router-dom';
 
 import { StoresProps } from '../../@types/ferdium-components.types';
-import Layout from '../../components/settings/SettingsLayout';
 import Navigation from '../../components/settings/navigation/SettingsNavigation';
+import Layout from '../../components/settings/SettingsLayout';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 import { workspaceStore } from '../../features/workspaces';
 
-interface SettingsContainerProps extends StoresProps {
-  children: ReactNode;
-}
-
-class SettingsContainer extends Component<SettingsContainerProps> {
+class SettingsContainer extends Component<StoresProps> {
   portalRoot: any;
 
   el: HTMLDivElement;
 
-  constructor(props: SettingsContainerProps) {
+  constructor(props: StoresProps) {
     super(props);
 
     this.portalRoot = document.querySelector('#portalContainer');
@@ -33,7 +30,7 @@ class SettingsContainer extends Component<SettingsContainerProps> {
   }
 
   render(): ReactPortal {
-    const { children, stores } = this.props;
+    const { stores } = this.props;
     const { closeSettings } = this.props.actions.ui;
 
     const navigation = (
@@ -43,10 +40,12 @@ class SettingsContainer extends Component<SettingsContainerProps> {
       />
     );
 
+    console.log('settings window');
+
     return ReactDOM.createPortal(
       <ErrorBoundary>
         <Layout navigation={navigation} closeSettings={closeSettings}>
-          {children}
+          <Outlet />
         </Layout>
       </ErrorBoundary>,
       this.el,

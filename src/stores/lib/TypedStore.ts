@@ -1,4 +1,4 @@
-import { computed, IReactionPublic, observable } from 'mobx';
+import { computed, IReactionPublic, makeObservable, observable } from 'mobx';
 import { Actions } from '../../actions/lib/actions';
 import { ApiInterface } from '../../api';
 import { Stores } from '../../@types/stores.types';
@@ -9,6 +9,12 @@ export default abstract class TypedStore {
 
   @observable _status: any = null;
 
+  @observable stores: Stores;
+
+  api: ApiInterface;
+
+  actions: Actions;
+
   @computed get actionStatus() {
     return this._status || [];
   }
@@ -17,11 +23,13 @@ export default abstract class TypedStore {
     this._status = status;
   }
 
-  constructor(
-    public readonly stores: Stores,
-    public readonly api: ApiInterface,
-    public readonly actions: Actions,
-  ) {}
+  constructor(stores: Stores, api: ApiInterface, actions: Actions) {
+    makeObservable(this);
+
+    this.stores = stores;
+    this.api = api;
+    this.actions = actions;
+  }
 
   registerReactions(reactions: { (r: IReactionPublic): void }[]): void {
     for (const reaction of reactions) {
