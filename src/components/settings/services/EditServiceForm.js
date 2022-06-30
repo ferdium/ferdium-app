@@ -247,9 +247,9 @@ class EditServiceForm extends Component {
     );
 
     let activeTabIndex = 0;
-    if (recipe.hasHostedOption && service.team) {
+    if (recipe.hasHostedOption && service?.team) {
       activeTabIndex = 1;
-    } else if (recipe.hasHostedOption && service.customUrl) {
+    } else if (recipe.hasHostedOption && service?.customUrl) {
       activeTabIndex = 2;
     }
 
