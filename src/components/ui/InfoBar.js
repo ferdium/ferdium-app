@@ -7,7 +7,7 @@ import { defineMessages, injectIntl } from 'react-intl';
 
 import { mdiClose } from '@mdi/js';
 import Appear from './effects/Appear';
-import { Icon } from './icon';
+import Icon from './icon';
 
 const messages = defineMessages({
   hide: {

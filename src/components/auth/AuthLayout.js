@@ -19,7 +19,7 @@ import globalMessages from '../../i18n/globalMessages';
 import { isWindows } from '../../environment';
 import AppUpdateInfoBar from '../AppUpdateInfoBar';
 import { GITHUB_FERDIUM_URL } from '../../config';
-import { Icon } from '../ui/icon';
+import Icon from '../ui/icon';
 
 class AuthLayout extends Component {
   static propTypes = {

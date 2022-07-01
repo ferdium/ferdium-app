@@ -31,7 +31,7 @@ import {
 } from '../../../environment-remote';
 import { openPath } from '../../../helpers/url-helpers';
 import globalMessages from '../../../i18n/globalMessages';
-import { Icon } from '../../ui/icon';
+import Icon from '../../ui/icon';
 import Slider from '../../ui/Slider';
 
 const debug = require('../../../preload-safe-debug')('Ferdium:EditSettingsForm');

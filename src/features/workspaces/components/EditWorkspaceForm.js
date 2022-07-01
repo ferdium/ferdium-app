@@ -5,8 +5,8 @@ import { defineMessages, injectIntl } from 'react-intl';
 import { Link } from 'react-router';
 import injectSheet from 'react-jss';
 
-import { Infobox } from '../../../components/ui/infobox/index';
-import { Input } from '../../../components/ui/input/index';
+import Infobox from '../../../components/ui/infobox/index';
+import Input from '../../../components/ui/input/index';
 import Button from '../../../components/ui/button';
 import Workspace from '../models/Workspace';
 import Service from '../../../models/Service';

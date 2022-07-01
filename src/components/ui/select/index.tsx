@@ -11,9 +11,9 @@ import injectStyle, { WithStylesProps } from 'react-jss';
 import { Theme } from '../../../themes';
 import { IFormField } from '../typings/generic';
 
-import { Error } from '../error';
-import { Label } from '../label';
-import { Wrapper } from '../wrapper';
+import Error from '../error';
+import Label from '../label';
+import Wrapper from '../wrapper';
 
 interface IOptions {
   [index: string]: string;

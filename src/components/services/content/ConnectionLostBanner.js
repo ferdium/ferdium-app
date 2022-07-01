@@ -6,7 +6,7 @@ import { defineMessages, injectIntl } from 'react-intl';
 
 import { mdiAlert } from '@mdi/js';
 import { LIVE_API_FERDIUM_WEBSITE } from '../../../config';
-import { Icon } from '../../ui/icon';
+import Icon from '../../ui/icon';
 
 const messages = defineMessages({
   text: {

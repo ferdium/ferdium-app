@@ -6,9 +6,9 @@ import injectSheet, { WithStylesProps } from 'react-jss';
 
 import { IFormField } from '../typings/generic';
 
-import { Error } from '../error';
-import { Label } from '../label';
-import { Wrapper } from '../wrapper';
+import Error from '../error';
+import Label from '../label';
+import Wrapper from '../wrapper';
 import { scorePasswordFunc } from './scorePassword';
 
 import styles from './styles';
@@ -205,4 +205,4 @@ class InputComponent extends Component<IProps, IState> {
   }
 }
 
-export const Input = injectSheet(styles, { injectTheme: true })(InputComponent);
+export default injectSheet(styles, { injectTheme: true })(InputComponent);

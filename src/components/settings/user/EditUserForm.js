@@ -4,7 +4,7 @@ import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import { Link } from 'react-router';
 
-import { Input } from '../../ui/input/index';
+import Input from '../../ui/input/index';
 import Form from '../../../lib/Form';
 import Button from '../../ui/button';
 import Radio from '../../ui/Radio';

@@ -1,1 +1,1 @@
-export const TabItem = ({ children }) => <>{children}</>;
+export default ({ children }) => <>{children}</>;

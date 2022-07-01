@@ -7,7 +7,7 @@ import { mdiClose } from '@mdi/js';
 import ErrorBoundary from '../util/ErrorBoundary';
 import { oneOrManyChildElements } from '../../prop-types';
 import Appear from '../ui/effects/Appear';
-import { Icon } from '../ui/icon';
+import Icon from '../ui/icon';
 
 const messages = defineMessages({
   closeSettings: {

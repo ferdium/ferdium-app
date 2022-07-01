@@ -8,8 +8,8 @@ import injectSheet from 'react-jss';
 
 import { mdiOpenInNew } from '@mdi/js';
 import Button from '../../ui/button';
-import { Input } from '../../ui/input/index';
-import { H3, H2, H1 } from '../../ui/headline';
+import Input from '../../ui/input/index';
+import { H1, H2, H3 } from '../../ui/headline';
 import SearchInput from '../../ui/SearchInput';
 import Infobox from '../../ui/Infobox';
 import RecipeItem from './RecipeItem';
@@ -17,7 +17,7 @@ import Loader from '../../ui/Loader';
 import Appear from '../../ui/effects/Appear';
 import { FERDIUM_SERVICE_REQUEST } from '../../../config';
 import RecipePreview from '../../../models/RecipePreview';
-import { Icon } from '../../ui/icon';
+import Icon from '../../ui/icon';
 
 const messages = defineMessages({
   headline: {

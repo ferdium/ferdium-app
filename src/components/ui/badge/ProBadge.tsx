@@ -4,8 +4,8 @@ import { Component } from 'react';
 import injectStyle, { WithStylesProps } from 'react-jss';
 
 import { Theme } from '../../../themes';
-import { Icon } from '../icon';
-import { Badge } from './index';
+import Icon from '../icon';
+import Badge from './index';
 
 interface IProps extends WithStylesProps<typeof styles> {
   badgeClasses?: string;

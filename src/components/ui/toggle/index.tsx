@@ -6,9 +6,9 @@ import injectStyle, { WithStylesProps } from 'react-jss';
 import { Theme } from '../../../themes';
 import { IFormField } from '../typings/generic';
 
-import { Error } from '../error';
-import { Label } from '../label';
-import { Wrapper } from '../wrapper';
+import Error from '../error';
+import Label from '../label';
+import Wrapper from '../wrapper';
 
 interface IProps
   extends InputHTMLAttributes<HTMLInputElement>,
@@ -122,6 +122,6 @@ class ToggleComponent extends Component<IProps> {
   }
 }
 
-export const Toggle = injectStyle(styles, { injectTheme: true })(
+export default injectStyle(styles, { injectTheme: true })(
   ToggleComponent,
 );

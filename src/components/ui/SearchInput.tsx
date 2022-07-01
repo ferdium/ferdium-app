@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import { debounce } from 'lodash';
 import { mdiCloseCircleOutline, mdiMagnify } from '@mdi/js';
-import { Icon } from './icon';
+import Icon from './icon';
 
 type Props = {
   value: string;

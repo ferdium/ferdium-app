@@ -67,4 +67,4 @@ class BadgeComponent extends Component<IProps> {
   }
 }
 
-export const Badge = injectStyle(styles, { injectTheme: true })(BadgeComponent);
+export default injectStyle(styles, { injectTheme: true })(BadgeComponent);
