@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import Loader from 'react-loader';
 import { defineMessages, injectIntl } from 'react-intl';
 import { mdiAlert, mdiCheckboxMarkedCircleOutline, mdiClose } from '@mdi/js';
-import { Icon } from '../ui/icon';
+import Icon from '../ui/icon';
 
 const icons = {
   'checkbox-marked-circle-outline': mdiCheckboxMarkedCircleOutline,

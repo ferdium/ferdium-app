@@ -4,9 +4,9 @@ import injectSheet, { WithStylesProps } from 'react-jss';
 
 import { IFormField } from '../typings/generic';
 
-import { Error } from '../error';
-import { Label } from '../label';
-import { Wrapper } from '../wrapper';
+import Error from '../error';
+import Label from '../label';
+import Wrapper from '../wrapper';
 
 import styles from './styles';
 

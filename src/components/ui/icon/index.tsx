@@ -42,4 +42,4 @@ class IconComponent extends Component<IProps> {
   }
 }
 
-export const Icon = injectStyle(styles, { injectTheme: true })(IconComponent);
+export default injectStyle(styles, { injectTheme: true })(IconComponent);

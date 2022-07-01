@@ -4,7 +4,7 @@ import { Component, ReactNode } from 'react';
 import injectStyle, { WithStylesProps } from 'react-jss';
 
 import { Theme } from '../../../themes';
-import { Icon } from '../icon';
+import Icon from '../icon';
 
 interface IProps extends WithStylesProps<typeof styles> {
   icon?: string;
@@ -199,6 +199,6 @@ class InfoboxComponent extends Component<IProps, IState> {
   }
 }
 
-export const Infobox = injectStyle(styles, { injectTheme: true })(
+export default injectStyle(styles, { injectTheme: true })(
   InfoboxComponent,
 );

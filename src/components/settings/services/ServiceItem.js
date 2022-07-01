@@ -7,7 +7,7 @@ import classnames from 'classnames';
 
 import { mdiBellOff, mdiMessageBulletedOff, mdiPower } from '@mdi/js';
 import ServiceModel from '../../../models/Service';
-import { Icon } from '../../ui/icon';
+import Icon from '../../ui/icon';
 
 const messages = defineMessages({
   tooltipIsDisabled: {

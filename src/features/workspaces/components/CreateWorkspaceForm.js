@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import injectSheet from 'react-jss';
 
-import { Input } from '../../../components/ui/input/index';
+import Input from '../../../components/ui/input/index';
 import Button from '../../../components/ui/button';
 import Form from '../../../lib/Form';
 import { required } from '../../../helpers/validation-helpers';

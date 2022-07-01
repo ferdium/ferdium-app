@@ -4,7 +4,7 @@ import { mdiInformation } from '@mdi/js';
 import InfoBar from './ui/InfoBar';
 import { GITHUB_FERDIUM_URL } from '../config';
 import { openExternalUrl } from '../helpers/url-helpers';
-import { Icon } from './ui/icon';
+import Icon from './ui/icon';
 
 const messages = defineMessages({
   updateAvailable: {

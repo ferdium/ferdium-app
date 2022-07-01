@@ -32,7 +32,7 @@ import { todoActions } from '../../features/todos/actions';
 import AppStore from '../../stores/AppStore';
 import SettingsStore from '../../stores/SettingsStore';
 import globalMessages from '../../i18n/globalMessages';
-import { Icon } from '../ui/icon';
+import Icon from '../ui/icon';
 
 const messages = defineMessages({
   addNewService: {

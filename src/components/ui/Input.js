@@ -7,7 +7,7 @@ import { defineMessages, injectIntl } from 'react-intl';
 
 import { mdiEye, mdiEyeOff } from '@mdi/js';
 import { scorePassword as scorePasswordFunc } from '../../helpers/password-helpers';
-import { Icon } from './icon';
+import Icon from './icon';
 
 const messages = defineMessages({
   passwordToggle: {

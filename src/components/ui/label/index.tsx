@@ -50,4 +50,4 @@ class LabelComponent extends Component<ILabel> {
   }
 }
 
-export const Label = injectSheet(styles, { injectTheme: true })(LabelComponent);
+export default injectSheet(styles, { injectTheme: true })(LabelComponent);

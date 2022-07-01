@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import Dropzone from 'react-dropzone';
 import { mdiDelete, mdiFileImage } from '@mdi/js';
 import { isWindows } from '../../environment';
-import { Icon } from './icon';
+import Icon from './icon';
 
 type Props = {
   field: typeof Field;

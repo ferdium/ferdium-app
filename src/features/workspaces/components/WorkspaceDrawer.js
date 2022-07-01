@@ -8,7 +8,7 @@ import ReactTooltip from 'react-tooltip';
 import { mdiPlusBox, mdiCog } from '@mdi/js';
 
 import { H1 } from '../../../components/ui/headline';
-import { Icon } from '../../../components/ui/icon';
+import Icon from '../../../components/ui/icon';
 import WorkspaceDrawerItem from './WorkspaceDrawerItem';
 import { workspaceActions } from '../actions';
 import { workspaceStore } from '../index';

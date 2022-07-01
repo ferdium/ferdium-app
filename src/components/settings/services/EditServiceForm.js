@@ -10,7 +10,7 @@ import Form from '../../../lib/Form';
 import Recipe from '../../../models/Recipe';
 import Service from '../../../models/Service';
 import Tabs from '../../ui/Tabs/Tabs';
-import { TabItem } from '../../ui/Tabs/TabItem';
+import TabItem from '../../ui/Tabs/TabItem';
 import Input from '../../ui/Input';
 import Toggle from '../../ui/Toggle';
 import Slider from '../../ui/Slider';
@@ -20,7 +20,7 @@ import Select from '../../ui/Select';
 
 import { isMac } from '../../../environment';
 import globalMessages from '../../../i18n/globalMessages';
-import { Icon } from '../../ui/icon';
+import Icon from '../../ui/icon';
 import { H3 } from '../../ui/headline';
 
 const messages = defineMessages({

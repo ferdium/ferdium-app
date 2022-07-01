@@ -5,7 +5,7 @@ import injectSheet from 'react-jss';
 import classnames from 'classnames';
 import { defineMessages, injectIntl } from 'react-intl';
 
-import { Loader } from '../../../components/ui/loader/index';
+import Loader from '../../../components/ui/loader/index';
 import { workspaceStore } from '../index';
 
 const messages = defineMessages({

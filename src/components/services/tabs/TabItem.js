@@ -14,7 +14,7 @@ import ServiceModel from '../../../models/Service';
 import { cmdOrCtrlShortcutKey, shiftKey, altKey } from '../../../environment';
 import globalMessages from '../../../i18n/globalMessages';
 import SettingsStore from '../../../stores/SettingsStore';
-import { Icon } from '../../ui/icon';
+import Icon from '../../ui/icon';
 
 const IS_SERVICE_DEBUGGING_ENABLED = (
   localStorage.getItem('debug') || ''

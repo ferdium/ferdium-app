@@ -20,7 +20,7 @@ import WorkspaceSwitchingIndicator from '../../features/workspaces/components/Wo
 import { workspaceStore } from '../../features/workspaces';
 import AppUpdateInfoBar from '../AppUpdateInfoBar';
 import Todos from '../../features/todos/containers/TodosScreen';
-import { Icon } from '../ui/icon';
+import Icon from '../ui/icon';
 
 import LockedScreen from '../../containers/auth/LockedScreen';
 
