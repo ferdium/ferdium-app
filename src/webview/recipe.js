@@ -23,9 +23,9 @@ import customDarkModeCss from './darkmode/custom';
 import RecipeWebview from './lib/RecipeWebview';
 import Userscript from './lib/Userscript';
 
-import { BadgeHandler } from './badge';
-import { DialogTitleHandler } from './dialogTitle';
-import { SessionHandler } from './sessionHandler';
+import BadgeHandler from './badge';
+import DialogTitleHandler from './dialogTitle';
+import SessionHandler from './sessionHandler';
 import contextMenu from './contextMenu';
 import {
   darkModeStyleExists,

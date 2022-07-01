@@ -1,5 +1,5 @@
 import { computed } from 'mobx';
-import { FeatureStore } from '../utils/FeatureStore';
+import FeatureStore from '../utils/FeatureStore';
 
 const debug = require('../../preload-safe-debug')('Ferdium:feature:communityRecipes:store');
 

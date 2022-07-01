@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { observer, PropTypes as MobxPropTypes, inject } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import serverlessLogin from '../../helpers/serverless-helpers';
-import { shuffleArray } from '../../helpers/array-helpers';
+import shuffleArray from '../../helpers/array-helpers';
 import { serverName } from '../../api/apiBase';
 
 import Link from '../ui/Link';

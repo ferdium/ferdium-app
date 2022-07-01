@@ -8,7 +8,7 @@ import { Actions } from 'src/actions/lib/actions';
 import Recipe from 'src/models/Recipe';
 import CachedRequest from './lib/CachedRequest';
 import Request from './lib/Request';
-import { matchRoute } from '../helpers/routing-helpers';
+import matchRoute from '../helpers/routing-helpers';
 import { asarRecipesPath } from '../helpers/asar-helpers';
 import TypedStore from './lib/TypedStore';
 

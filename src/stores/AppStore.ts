@@ -27,7 +27,7 @@ import {
   userDataPath,
   ferdiumLocale,
 } from '../environment-remote';
-import { generatedTranslations } from '../i18n/translations';
+import generatedTranslations from '../i18n/translations';
 import { getLocale } from '../helpers/i18n-helpers';
 
 import {
@@ -35,7 +35,7 @@ import {
   removeServicePartitionDirectory,
 } from '../helpers/service-helpers';
 import { openExternalUrl } from '../helpers/url-helpers';
-import { sleep } from '../helpers/async-helpers';
+import sleep from '../helpers/async-helpers';
 
 const debug = require('../preload-safe-debug')('Ferdium:AppStore');
 

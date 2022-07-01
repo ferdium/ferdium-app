@@ -35,7 +35,7 @@ import {
 } from '../environment';
 import { ferdiumVersion } from '../environment-remote';
 import { todoActions } from '../features/todos/actions';
-import { workspaceActions } from '../features/workspaces/actions';
+import workspaceActions from '../features/workspaces/actions';
 import { workspaceStore } from '../features/workspaces/index';
 import apiBase, { serverBase } from '../api/apiBase';
 import { openExternalUrl } from '../helpers/url-helpers';

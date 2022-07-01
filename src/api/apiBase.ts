@@ -13,7 +13,7 @@ import {
 import { fixUrl } from '../helpers/url-helpers';
 
 // Note: This cannot be used from the internal-server since we are not running within the context of a browser window
-const apiBase = (withVersion = true) => {
+export default function apiBase(withVersion = true) {
   if (
     !(window as any).ferdium ||
     !(window as any).ferdium.stores.settings ||
@@ -32,8 +32,6 @@ const apiBase = (withVersion = true) => {
 
   return fixUrl(withVersion ? `${url}/${API_VERSION}` : url);
 };
-
-export default apiBase;
 
 export function serverBase() {
 

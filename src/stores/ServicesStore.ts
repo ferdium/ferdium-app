@@ -10,7 +10,7 @@ import { ApiInterface } from 'src/api';
 import { Actions } from 'src/actions/lib/actions';
 import Request from './lib/Request';
 import CachedRequest from './lib/CachedRequest';
-import { matchRoute } from '../helpers/routing-helpers';
+import matchRoute from '../helpers/routing-helpers';
 import { isInTimeframe } from '../helpers/schedule-helpers';
 import {
   getRecipeDirectory,
