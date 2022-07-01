@@ -12,7 +12,7 @@ import {
   DEFAULT_IS_TODO_FEATURE_ENABLED_BY_USER,
 } from '../../config';
 import { isValidExternalURL } from '../../helpers/url-helpers';
-import { FeatureStore } from '../utils/FeatureStore';
+import FeatureStore from '../utils/FeatureStore';
 import { createReactions } from '../../stores/lib/Reaction';
 import { createActionBindings } from '../utils/ActionBinding';
 import { IPC, TODOS_ROUTES } from './constants';

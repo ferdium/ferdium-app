@@ -2,7 +2,7 @@ import { Component, ReactNode } from 'react';
 import { inject, observer } from 'mobx-react';
 import { IntlProvider } from 'react-intl';
 
-import { generatedTranslations } from './i18n/translations';
+import generatedTranslations from './i18n/translations';
 import UserStore from './stores/UserStore';
 import AppStore from './stores/AppStore';
 

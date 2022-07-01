@@ -5,7 +5,7 @@ import { RouterStore } from 'mobx-react-router';
 import classnames from 'classnames';
 
 import { oneOrManyChildElements } from '../../prop-types';
-import { matchRoute } from '../../helpers/routing-helpers';
+import matchRoute from '../../helpers/routing-helpers';
 import { openExternalUrl } from '../../helpers/url-helpers';
 
 // Should this file be converted into the coding style similar to './toggle/index.tsx'?

@@ -3,7 +3,7 @@ import classnames from 'classnames';
 
 import injectStyle from 'react-jss';
 import FullscreenLoader from '../FullscreenLoader';
-import { shuffleArray } from '../../../helpers/array-helpers';
+import shuffleArray from '../../../helpers/array-helpers';
 
 import styles from './styles';
 

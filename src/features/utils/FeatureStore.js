@@ -1,4 +1,4 @@
-export class FeatureStore {
+export default class FeatureStore {
   _actions = [];
 
   _reactions = [];

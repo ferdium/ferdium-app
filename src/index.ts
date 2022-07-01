@@ -17,7 +17,7 @@ import minimist from 'minimist';
 import ms from 'ms';
 import { EventEmitter } from 'events';
 import { enableWebContents, initializeRemote } from './electron-util';
-import { enforceMacOSAppLocation } from './enforce-macos-app-location';
+import enforceMacOSAppLocation from './enforce-macos-app-location';
 
 initializeRemote();
 
@@ -37,7 +37,7 @@ import Tray from './lib/Tray';
 import DBus from './lib/DBus';
 import Settings from './electron/Settings';
 import handleDeepLink from './electron/deepLinking';
-import { isPositionValid } from './electron/windowUtils';
+import isPositionValid from './electron/windowUtils';
 // @ts-expect-error Cannot find module './package.json' or its corresponding type declarations.
 import { appId } from './package.json';
 import './electron/exception';

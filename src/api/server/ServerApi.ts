@@ -19,7 +19,7 @@ import RecipePreviewModel from '../../models/RecipePreview';
 import RecipeModel from '../../models/Recipe';
 import UserModel from '../../models/User';
 
-import { sleep } from '../../helpers/async-helpers';
+import sleep from '../../helpers/async-helpers';
 
 import { SERVER_NOT_LOADED } from '../../config';
 import { userDataRecipesPath, userDataPath } from '../../environment-remote';
