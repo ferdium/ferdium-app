@@ -268,7 +268,7 @@ class EditServiceScreen extends Component<EditServicesScreenProps> {
         userAgentPref: {
           label: intl.formatMessage(globalMessages.userAgentPref),
           placeholder: service?.defaultUserAgent,
-          value: service?.userAgentPref ? service.userAgentPref : '',
+          value: service?.userAgentPref || '',
         },
       },
     };

@@ -81,20 +81,20 @@ const styles = (theme: Theme) => ({
   },
   close: {
     color: (props: IProps) =>
-      theme.styleTypes[props.type ? props.type : 'primary'].contrast,
+      theme.styleTypes[props.type || 'primary'].contrast,
     marginRight: -5,
     border: 0,
     background: 'none',
   },
   cta: {
     borderColor: (props: IProps) =>
-      theme.styleTypes[props.type ? props.type : 'primary'].contrast,
+      theme.styleTypes[props.type || 'primary'].contrast,
     borderRadius: theme.borderRadiusSmall,
     borderStyle: 'solid',
     borderWidth: 1,
     background: 'none',
     color: (props: IProps) =>
-      theme.styleTypes[props.type ? props.type : 'primary'].contrast,
+      theme.styleTypes[props.type || 'primary'].contrast,
     marginLeft: 15,
     padding: [4, 10],
     fontSize: theme.uiFontSize,
