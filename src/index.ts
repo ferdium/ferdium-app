@@ -31,7 +31,6 @@ import {
 } from './environment-remote';
 import { ifUndefined } from './jsUtils';
 
-
 import { mainIpcHandler as basicAuthHandler } from './features/basicAuth';
 import ipcApi from './electron/ipc-api';
 import Tray from './lib/Tray';

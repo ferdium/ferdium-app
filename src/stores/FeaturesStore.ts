@@ -6,9 +6,9 @@ import {
   runInAction,
 } from 'mobx';
 
-import { Stores } from 'src/@types/stores.types';
-import { ApiInterface } from 'src/api';
-import { Actions } from 'src/actions/lib/actions';
+import { Stores } from '../@types/stores.types';
+import { ApiInterface } from '../api';
+import { Actions } from '../actions/lib/actions';
 import CachedRequest from './lib/CachedRequest';
 import serviceProxy from '../features/serviceProxy';
 import basicAuth from '../features/basicAuth';

@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { StoresProps } from 'src/@types/ferdium-components.types';
+import { StoresProps } from '../../../@types/ferdium-components.types';
 import WorkspacesDashboard from '../components/WorkspacesDashboard';
 import ErrorBoundary from '../../../components/util/ErrorBoundary';
 import { workspaceStore } from '../index';
