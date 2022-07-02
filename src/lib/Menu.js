@@ -889,10 +889,10 @@ class FranzMenu {
             title: 'Ferdium',
             message: 'Ferdium',
             detail: aboutAppDetails,
-            buttons: [intl.formatMessage(menuItems.copyToClipboard), intl.formatMessage(menuItems.ok)],
+            buttons: [intl.formatMessage(menuItems.ok), intl.formatMessage(menuItems.copyToClipboard)],
           })
           .then(result => {
-            if (result.response === 0) {
+            if (result.response === 1) {
               clipboard.write({
                 text: aboutAppDetails,
               });
