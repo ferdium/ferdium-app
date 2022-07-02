@@ -14,7 +14,7 @@
   "private": true,
   "engines": {
     "node": "16.15.1",
-    "npm": "8.12.2"
+    "npm": "8.13.2"
   },
   "engine-strict": true,
   "scripts": {
