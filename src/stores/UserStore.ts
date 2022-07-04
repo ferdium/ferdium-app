@@ -4,9 +4,9 @@ import jwt from 'jsonwebtoken';
 import localStorage from 'mobx-localstorage';
 import { ipcRenderer } from 'electron';
 
-import { ApiInterface } from 'src/api';
-import { Actions } from 'src/actions/lib/actions';
-import { Stores } from 'src/@types/stores.types';
+import { ApiInterface } from '../api';
+import { Actions } from '../actions/lib/actions';
+import { Stores } from '../@types/stores.types';
 import { TODOS_PARTITION_ID } from '../config';
 import { isDevMode } from '../environment-remote';
 import Request from './lib/Request';

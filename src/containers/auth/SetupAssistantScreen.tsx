@@ -2,7 +2,7 @@
 import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
 
-import { StoresProps } from 'src/@types/ferdium-components.types';
+import { StoresProps } from '../../@types/ferdium-components.types';
 import sleep from '../../helpers/async-helpers';
 import SetupAssistant from '../../components/auth/SetupAssistant';
 

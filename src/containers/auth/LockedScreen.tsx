@@ -1,6 +1,6 @@
 import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
-import { StoresProps } from 'src/@types/ferdium-components.types';
+import { StoresProps } from '../../@types/ferdium-components.types';
 import Locked from '../../components/auth/Locked';
 
 import { hash } from '../../helpers/password-helpers';

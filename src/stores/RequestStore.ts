@@ -2,9 +2,9 @@ import { ipcRenderer } from 'electron';
 import { action, computed, observable } from 'mobx';
 import ms from 'ms';
 
-import { Actions } from 'src/actions/lib/actions';
-import { ApiInterface } from 'src/api';
-import { Stores } from 'src/@types/stores.types';
+import { Actions } from '../actions/lib/actions';
+import { ApiInterface } from '../api';
+import { Stores } from '../@types/stores.types';
 import CachedRequest from './lib/CachedRequest';
 import { LOCAL_PORT } from '../config';
 

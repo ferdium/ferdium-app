@@ -1,6 +1,6 @@
 import { RouterStore } from 'mobx-react-router';
-import { ApiInterface } from 'src/api';
-import { Actions } from 'src/actions/lib/actions';
+import { ApiInterface } from '../api';
+import { Actions } from '../actions/lib/actions';
 import AppStore from './AppStore';
 import UserStore from './UserStore';
 import FeaturesStore from './FeaturesStore';

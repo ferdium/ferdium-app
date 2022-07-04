@@ -3,10 +3,10 @@ import { inject, observer } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 
 import { RouterStore } from 'mobx-react-router';
-import { StoresProps } from 'src/@types/ferdium-components.types';
-import { IRecipe } from 'src/models/Recipe';
-import Service from 'src/models/Service';
-import { FormFields } from 'src/@types/mobx-form.types';
+import { StoresProps } from '../../@types/ferdium-components.types';
+import { IRecipe } from '../../models/Recipe';
+import Service from '../../models/Service';
+import { FormFields } from '../../@types/mobx-form.types';
 import Form from '../../lib/Form';
 
 import ServiceError from '../../components/settings/services/ServiceError';

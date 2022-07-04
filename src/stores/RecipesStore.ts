@@ -2,10 +2,10 @@ import { action, computed, observable } from 'mobx';
 import { readJSONSync } from 'fs-extra';
 import semver from 'semver';
 
-import { Stores } from 'src/@types/stores.types';
-import { ApiInterface } from 'src/api';
-import { Actions } from 'src/actions/lib/actions';
-import Recipe from 'src/models/Recipe';
+import Recipe from '../models/Recipe';
+import { Stores } from '../@types/stores.types';
+import { ApiInterface } from '../api';
+import { Actions } from '../actions/lib/actions';
 import CachedRequest from './lib/CachedRequest';
 import Request from './lib/Request';
 import matchRoute from '../helpers/routing-helpers';

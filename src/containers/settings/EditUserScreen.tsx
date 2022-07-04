@@ -2,8 +2,8 @@ import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 
-import { StoresProps } from 'src/@types/ferdium-components.types';
-import { FormFields } from 'src/@types/mobx-form.types';
+import { StoresProps } from '../../@types/ferdium-components.types';
+import { FormFields } from '../../@types/mobx-form.types';
 import Form from '../../lib/Form';
 import EditUserForm from '../../components/settings/user/EditUserForm';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
