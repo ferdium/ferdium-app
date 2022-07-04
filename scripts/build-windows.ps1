@@ -96,9 +96,9 @@ if ($env:CLEAN -eq "true")
 # Ensure that the system dependencies are at the correct version - fail if not
 # TODO: Needs proper way to check MSVS Tools
 # Check MSVS Tools through MSVS_VERSION
-$EXPECTED_MSVST_VERSION = "2015"
+$EXPECTED_MSVST_VERSION = @("2019", "2022")
 $ACTUAL_MSVST_VERSION = (npm config get msvs_version)
-if ([double]$ACTUAL_MSVST_VERSION -ne [double]$EXPECTED_MSVST_VERSION) {
+if (-not ($EXPECTED_MSVST_VERSION -contains $ACTUAL_MSVST_VERSION)) {
   fail_with_docs "You are not running the expected version of MSVS Tools!
     expected: [$EXPECTED_MSVST_VERSION]
     actual  : [$ACTUAL_MSVST_VERSION]"
