@@ -3,8 +3,8 @@ import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 
-import { FormFields } from 'src/@types/mobx-form.types';
-import { StoresProps } from 'src/@types/ferdium-components.types';
+import { FormFields } from '../../@types/mobx-form.types';
+import { StoresProps } from '../../@types/ferdium-components.types';
 import Form from '../../lib/Form';
 import { APP_LOCALES, SPELLCHECKER_LOCALES } from '../../i18n/languages';
 import {

@@ -1,6 +1,6 @@
 import { computed, observable, action } from 'mobx';
 import localStorage from 'mobx-localstorage';
-import { matchRoute } from '../../helpers/routing-helpers';
+import matchRoute from '../../helpers/routing-helpers';
 import workspaceActions from './actions';
 import FeatureStore from '../utils/FeatureStore';
 import {

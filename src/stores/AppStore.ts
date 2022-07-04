@@ -14,9 +14,9 @@ import ms from 'ms';
 import { URL } from 'url';
 import { readJsonSync } from 'fs-extra';
 
-import { Stores } from 'src/@types/stores.types';
-import { ApiInterface } from 'src/api';
-import { Actions } from 'src/actions/lib/actions';
+import { Stores } from '../@types/stores.types';
+import { ApiInterface } from '../api';
+import { Actions } from '../actions/lib/actions';
 import TypedStore from './lib/TypedStore';
 import Request from './lib/Request';
 import { CHECK_INTERVAL, DEFAULT_APP_SETTINGS } from '../config';

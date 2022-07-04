@@ -5,9 +5,9 @@ import ms from 'ms';
 import { ensureFileSync, pathExistsSync, writeFileSync } from 'fs-extra';
 import { join } from 'path';
 
-import { Stores } from 'src/@types/stores.types';
-import { ApiInterface } from 'src/api';
-import { Actions } from 'src/actions/lib/actions';
+import { Stores } from '../@types/stores.types';
+import { ApiInterface } from '../api';
+import { Actions } from '../actions/lib/actions';
 import Request from './lib/Request';
 import CachedRequest from './lib/CachedRequest';
 import matchRoute from '../helpers/routing-helpers';

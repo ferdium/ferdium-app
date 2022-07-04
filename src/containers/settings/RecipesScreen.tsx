@@ -3,8 +3,8 @@ import { Component, ReactElement } from 'react';
 import { autorun, IReactionDisposer } from 'mobx';
 import { inject, observer } from 'mobx-react';
 
-import { StoresProps } from 'src/@types/ferdium-components.types';
-import Recipe from 'src/models/Recipe';
+import Recipe from '../../models/Recipe';
+import { StoresProps } from '../../@types/ferdium-components.types';
 import RecipesDashboard from '../../components/settings/recipes/RecipesDashboard';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 import { CUSTOM_WEBSITE_RECIPE_ID, FRANZ_DEV_DOCS } from '../../config';

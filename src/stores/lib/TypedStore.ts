@@ -1,7 +1,7 @@
 import { computed, IReactionPublic, observable } from 'mobx';
-import { Actions } from 'src/actions/lib/actions';
-import { ApiInterface } from 'src/api';
-import { Stores } from 'src/@types/stores.types';
+import { Actions } from '../../actions/lib/actions';
+import { ApiInterface } from '../../api';
+import { Stores } from '../../@types/stores.types';
 import Reaction from './Reaction';
 
 export default abstract class TypedStore {

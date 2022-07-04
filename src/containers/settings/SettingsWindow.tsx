@@ -2,8 +2,7 @@ import { Component, ReactNode, ReactPortal } from 'react';
 import ReactDOM from 'react-dom';
 import { observer, inject } from 'mobx-react';
 
-import { StoresProps } from 'src/@types/ferdium-components.types';
-
+import { StoresProps } from '../../@types/ferdium-components.types';
 import Layout from '../../components/settings/SettingsLayout';
 import Navigation from '../../components/settings/navigation/SettingsNavigation';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
