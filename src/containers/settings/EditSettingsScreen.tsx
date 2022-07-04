@@ -849,7 +849,7 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
   }
 
   render(): ReactElement {
-    const { app, services } = this.props.stores;
+    const { app } = this.props.stores;
     const {
       updateStatus,
       updateStatusTypes,
@@ -893,7 +893,6 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
             this.props.stores.todos.isUsingCustomTodoService
           }
           openProcessManager={() => this.openProcessManager()}
-          hasAddedTodosAsService={services.isTodosServiceAdded}
           isOnline={app.isOnline}
         />
       </ErrorBoundary>
