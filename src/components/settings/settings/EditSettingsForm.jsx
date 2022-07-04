@@ -34,7 +34,9 @@ import globalMessages from '../../../i18n/globalMessages';
 import Icon from '../../ui/icon';
 import Slider from '../../ui/Slider';
 
-const debug = require('../../../preload-safe-debug')('Ferdium:EditSettingsForm');
+const debug = require('../../../preload-safe-debug')(
+  'Ferdium:EditSettingsForm',
+);
 
 const messages = defineMessages({
   headlineGeneral: {
@@ -236,8 +238,18 @@ const messages = defineMessages({
   },
 });
 
-const Hr = () => <hr className='settings__hr' style={{ marginBottom: 20, borderStyle: "dashed" }} />;
-const HrSections = () => <hr className='settings__hr-sections' style={{ marginTop: 20, marginBottom: 40, borderStyle: "solid" }} />;
+const Hr = () => (
+  <hr
+    className="settings__hr"
+    style={{ marginBottom: 20, borderStyle: 'dashed' }}
+  />
+);
+const HrSections = () => (
+  <hr
+    className="settings__hr-sections"
+    style={{ marginTop: 20, marginBottom: 40, borderStyle: 'solid' }}
+  />
+);
 
 class EditSettingsForm extends Component {
   static propTypes = {
@@ -260,14 +272,17 @@ class EditSettingsForm extends Component {
     isUseGrayscaleServicesEnabled: PropTypes.bool.isRequired,
     openProcessManager: PropTypes.func.isRequired,
     isSplitModeEnabled: PropTypes.bool.isRequired,
-    hasAddedTodosAsService: PropTypes.bool.isRequired,
     isOnline: PropTypes.bool.isRequired,
   };
 
-  state = {
-    activeSetttingsTab: 'general',
-    clearCacheButtonClicked: false,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      activeSetttingsTab: 'general',
+      clearCacheButtonClicked: false,
+    };
+  }
 
   setActiveSettingsTab(tab) {
     this.setState({
@@ -311,7 +326,6 @@ class EditSettingsForm extends Component {
       isSplitModeEnabled,
       openProcessManager,
       isTodosActivated,
-      hasAddedTodosAsService,
       isOnline,
     } = this.props;
     const { intl } = this.props;
@@ -439,16 +453,19 @@ class EditSettingsForm extends Component {
                 }}
               >
                 {intl.formatMessage(messages.headlineUpdates)}
-                {automaticUpdates && (updateIsReadyToInstall || isUpdateAvailable || showServicesUpdatedInfoBar) && (
-                  <span className="update-available">•</span>
-                )}
+                {automaticUpdates &&
+                  (updateIsReadyToInstall ||
+                    isUpdateAvailable ||
+                    showServicesUpdatedInfoBar) && (
+                    <span className="update-available">•</span>
+                  )}
               </H5>
             </div>
 
             {/* General */}
             {this.state.activeSetttingsTab === 'general' && (
               <div>
-                <H2 className='settings__section_header'>
+                <H2 className="settings__section_header">
                   {intl.formatMessage(messages.sectionMain)}
                 </H2>
                 <Toggle field={form.$('autoLaunchOnStart')} />
@@ -469,38 +486,35 @@ class EditSettingsForm extends Component {
 
                 <Toggle field={form.$('keepAllWorkspacesLoaded')} />
 
-                {!hasAddedTodosAsService && (
-                  <>
-                    {isTodosActivated && <Hr />}
-                    <Toggle field={form.$('enableTodos')} />
-                    {isTodosActivated && (
+                {isTodosActivated && <Hr />}
+                <Toggle field={form.$('enableTodos')} />
+                {isTodosActivated && (
+                  <div>
+                    <Select field={form.$('predefinedTodoServer')} />
+                    {form.$('predefinedTodoServer').value ===
+                      'isUsingCustomTodoService' && (
                       <div>
-                        <Select field={form.$('predefinedTodoServer')} />
-                        {form.$('predefinedTodoServer').value ===
-                          'isUsingCustomTodoService' && (
-                          <div>
-                            <Input
-                              placeholder="Todo Server"
-                              onChange={e => this.submit(e)}
-                              field={form.$('customTodoServer')}
-                            />
-                            <p
-                              className="settings__message"
-                              style={{
-                                borderTop: 0,
-                                marginTop: 0,
-                                paddingTop: 0,
-                                marginBottom: '2rem',
-                              }}
-                            >
-                              {intl.formatMessage(messages.todoServerInfo)}
-                            </p>
-                          </div>
-                        )}
+                        <Input
+                          placeholder="Todo Server"
+                          onChange={e => this.submit(e)}
+                          field={form.$('customTodoServer')}
+                        />
+                        <p
+                          className="settings__message"
+                          style={{
+                            borderTop: 0,
+                            marginTop: 0,
+                            paddingTop: 0,
+                            marginBottom: '2rem',
+                          }}
+                        >
+                          {intl.formatMessage(messages.todoServerInfo)}
+                        </p>
                       </div>
                     )}
-                  </>
+                  </div>
                 )}
+                {isTodosActivated && <Hr />}
 
                 {scheduledDNDEnabled && <Hr />}
                 <Toggle field={form.$('scheduledDNDEnabled')} />
@@ -561,7 +575,7 @@ class EditSettingsForm extends Component {
 
                 <HrSections />
 
-                <H2 className='settings__section_header'>
+                <H2 className="settings__section_header">
                   {intl.formatMessage(messages.sectionHibernation)}
                 </H2>
                 <Select field={form.$('hibernationStrategy')} />
@@ -587,7 +601,7 @@ class EditSettingsForm extends Component {
             {/* Appearance */}
             {this.state.activeSetttingsTab === 'appearance' && (
               <div>
-                <H2 className='settings__section_header'>
+                <H2 className="settings__section_header">
                   {intl.formatMessage(messages.sectionGeneralUi)}
                 </H2>
                 {isMac && <Toggle field={form.$('showDragArea')} />}
@@ -629,7 +643,7 @@ class EditSettingsForm extends Component {
                 )}
 
                 <HrSections />
-                <H2 className='settings__section_header'>
+                <H2 className="settings__section_header">
                   {intl.formatMessage(messages.sectionAccentColorSettings)}
                 </H2>
                 <p>
@@ -638,38 +652,40 @@ class EditSettingsForm extends Component {
                   })}
                 </p>
                 <p>
-                {intl.formatMessage(messages.overallTheme)}
-                <div className="settings__settings-group__apply-color">
-                  <ColorPickerInput
-                    onChange={e => this.submit(e)}
-                    field={form.$('accentColor')}
-                    className='color-picker-input'
-                  />
-                </div>
+                  {intl.formatMessage(messages.overallTheme)}
+                  <div className="settings__settings-group__apply-color">
+                    <ColorPickerInput
+                      onChange={e => this.submit(e)}
+                      field={form.$('accentColor')}
+                      className="color-picker-input"
+                    />
+                  </div>
                 </p>
                 <p>
-                {intl.formatMessage(messages.progressbarTheme)}
-                <div className="settings__settings-group__apply-color">
-                  <ColorPickerInput
-                    onChange={e => this.submit(e)}
-                    field={form.$('progressbarAccentColor')}
-                    className='color-picker-input'
-                  />
-                </div>
+                  {intl.formatMessage(messages.progressbarTheme)}
+                  <div className="settings__settings-group__apply-color">
+                    <ColorPickerInput
+                      onChange={e => this.submit(e)}
+                      field={form.$('progressbarAccentColor')}
+                      className="color-picker-input"
+                    />
+                  </div>
                 </p>
                 <p>
-                <div className="settings__settings-group__apply-color">
-                  <Button
-                    buttonType="secondary"
-                    className="settings__settings-group__apply-color__button"
-                    label="Apply color"
-                    onClick={(e) => { this.submit(e) }}
-                  />
-                </div>
+                  <div className="settings__settings-group__apply-color">
+                    <Button
+                      buttonType="secondary"
+                      className="settings__settings-group__apply-color__button"
+                      label="Apply color"
+                      onClick={e => {
+                        this.submit(e);
+                      }}
+                    />
+                  </div>
                 </p>
                 <HrSections />
 
-                <H2 className='settings__section_header'>
+                <H2 className="settings__section_header">
                   {intl.formatMessage(messages.sectionSidebarSettings)}
                 </H2>
 
@@ -695,7 +711,7 @@ class EditSettingsForm extends Component {
 
                 <HrSections />
 
-                <H2 className='settings__section_header'>
+                <H2 className="settings__section_header">
                   {intl.formatMessage(messages.sectionServiceIconsSettings)}
                 </H2>
 
@@ -709,9 +725,9 @@ class EditSettingsForm extends Component {
                 {isUseGrayscaleServicesEnabled && (
                   <>
                     <Slider
-                        type="number"
-                        onChange={e => this.submit(e)}
-                        field={form.$('grayscaleServicesDim')}
+                      type="number"
+                      onChange={e => this.submit(e)}
+                      field={form.$('grayscaleServicesDim')}
                     />
                     <Hr />
                   </>
@@ -726,7 +742,7 @@ class EditSettingsForm extends Component {
             {/* Privacy */}
             {this.state.activeSetttingsTab === 'privacy' && (
               <div>
-                <H2 className='settings__section_header'>
+                <H2 className="settings__section_header">
                   {intl.formatMessage(messages.sectionPrivacy)}
                 </H2>
 
@@ -793,8 +809,7 @@ class EditSettingsForm extends Component {
             {/* Language */}
             {this.state.activeSetttingsTab === 'language' && (
               <div>
-
-                <H2 className='settings__section_header'>
+                <H2 className="settings__section_header">
                   {intl.formatMessage(messages.sectionLanguage)}
                 </H2>
 
@@ -832,8 +847,7 @@ class EditSettingsForm extends Component {
             {/* Advanced */}
             {this.state.activeSetttingsTab === 'advanced' && (
               <div>
-
-                <H2 className='settings__section_header'>
+                <H2 className="settings__section_header">
                   {intl.formatMessage(messages.sectionAdvanced)}
                 </H2>
 
@@ -925,7 +939,7 @@ class EditSettingsForm extends Component {
             {/* Updates */}
             {this.state.activeSetttingsTab === 'updates' && (
               <div>
-                <H2 className='settings__section_header'>
+                <H2 className="settings__section_header">
                   {intl.formatMessage(messages.sectionUpdates)}
                 </H2>
 
@@ -937,7 +951,9 @@ class EditSettingsForm extends Component {
                         <Toggle field={form.$('beta')} />
                         {updateIsReadyToInstall ? (
                           <Button
-                            label={intl.formatMessage(messages.buttonInstallUpdate)}
+                            label={intl.formatMessage(
+                              messages.buttonInstallUpdate,
+                            )}
                             onClick={installUpdate}
                           />
                         ) : (
@@ -957,7 +973,8 @@ class EditSettingsForm extends Component {
                         <br />
                       </div>
                       <p>
-                        {intl.formatMessage(messages.currentVersion)} {ferdiumVersion}
+                        {intl.formatMessage(messages.currentVersion)}{' '}
+                        {ferdiumVersion}
                       </p>
                       {noUpdateAvailable && (
                         <p>
@@ -966,7 +983,8 @@ class EditSettingsForm extends Component {
                       )}
                       {updateFailed && (
                         <Infobox type="danger" icon="alert">
-                          &nbsp;An error occurred (check the console for more details)
+                          &nbsp;An error occurred (check the console for more
+                          details)
                         </Infobox>
                       )}
                     </>
@@ -977,21 +995,22 @@ class EditSettingsForm extends Component {
                           {intl.formatMessage(messages.servicesUpdated)}
                         </p>
                         <Button
-                          label={intl.formatMessage(messages.buttonReloadServices)}
+                          label={intl.formatMessage(
+                            messages.buttonReloadServices,
+                          )}
                           onClick={() => window.location.reload()}
                         />
                       </>
                     ) : (
                       <p>
                         <Icon icon={mdiPowerPlug} />
-                          &nbsp;Your services are up-to-date.
+                        &nbsp;Your services are up-to-date.
                       </p>
                     )}
                   </>
                 )}
                 <p className="settings__message">
-                  <Icon icon={mdiGithub} />
-                  {' '}Ferdium is based on{' '}
+                  <Icon icon={mdiGithub} /> Ferdium is based on{' '}
                   <a
                     href={`${GITHUB_FRANZ_URL}/franz`}
                     target="_blank"
