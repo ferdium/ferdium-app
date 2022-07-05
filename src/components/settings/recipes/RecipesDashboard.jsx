@@ -182,7 +182,6 @@ class RecipesDashboard extends Component {
             <Link
               to="/settings/recipes"
               className="badge"
-              // activeClassName={`${!searchNeedle ? 'badge--primary' : ''}`}
               onClick={() => resetSearch()}
             >
               {intl.formatMessage(messages.ferdiumPicksRecipes)}
@@ -190,7 +189,6 @@ class RecipesDashboard extends Component {
             <Link
               to="/settings/recipes/all"
               className="badge"
-              // activeClassName={`${!searchNeedle ? 'badge--primary' : ''}`}
               onClick={() => resetSearch()}
             >
               {intl.formatMessage(messages.allRecipes)}

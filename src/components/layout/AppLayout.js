@@ -124,8 +124,6 @@ class AppLayout extends Component {
       return <LockedScreen />;
     }
 
-    console.log('AppLayout');
-
     return (
       <>
       {isMac && !isFullScreen && (
