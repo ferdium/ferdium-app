@@ -47,8 +47,6 @@ class SettingsLayout extends Component {
 
     const { intl } = this.props;
 
-    console.log('settings layout');
-
     return (
       <Appear transitionName="fadeIn-fast">
         <div className="settings-wrapper">

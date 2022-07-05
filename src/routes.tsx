@@ -3,22 +3,21 @@ import { inject, observer } from 'mobx-react';
 import { Route } from 'react-router';
 import {
   Navigate,
-  Outlet,
   Routes,
   unstable_HistoryRouter as HistoryRouter,
 } from 'react-router-dom';
 
 import AppLayoutContainer from './containers/layout/AppLayoutContainer';
-// import SettingsWindow from './containers/settings/SettingsWindow';
-// import RecipesScreen from './containers/settings/RecipesScreen';
-// import ServicesScreen from './containers/settings/ServicesScreen';
-// import EditServiceScreen from './containers/settings/EditServiceScreen';
-// import AccountScreen from './containers/settings/AccountScreen';
-// import TeamScreen from './containers/settings/TeamScreen';
-// import EditUserScreen from './containers/settings/EditUserScreen';
-// import EditSettingsScreen from './containers/settings/EditSettingsScreen';
-// import InviteSettingsScreen from './containers/settings/InviteScreen';
-// import SupportFerdiumScreen from './containers/settings/SupportScreen';
+import SettingsWindow from './containers/settings/SettingsWindow';
+import RecipesScreen from './containers/settings/RecipesScreen';
+import ServicesScreen from './containers/settings/ServicesScreen';
+import EditServiceScreen from './containers/settings/EditServiceScreen';
+import AccountScreen from './containers/settings/AccountScreen';
+import TeamScreen from './containers/settings/TeamScreen';
+import EditUserScreen from './containers/settings/EditUserScreen';
+import EditSettingsScreen from './containers/settings/EditSettingsScreen';
+import InviteSettingsScreen from './containers/settings/InviteScreen';
+import SupportFerdiumScreen from './containers/settings/SupportScreen';
 import WelcomeScreen from './containers/auth/WelcomeScreen';
 import LoginScreen from './containers/auth/LoginScreen';
 import PasswordScreen from './containers/auth/PasswordScreen';
@@ -28,9 +27,9 @@ import ImportScreen from './containers/auth/ImportScreen';
 import SetupAssistentScreen from './containers/auth/SetupAssistantScreen';
 import InviteScreen from './containers/auth/InviteScreen';
 import AuthLayoutContainer from './containers/auth/AuthLayoutContainer';
-// import WorkspacesScreen from './features/workspaces/containers/WorkspacesScreen';
-// import EditWorkspaceScreen from './features/workspaces/containers/EditWorkspaceScreen';
-// import { WORKSPACES_ROUTES } from './features/workspaces/constants';
+import WorkspacesScreen from './features/workspaces/containers/WorkspacesScreen';
+import EditWorkspaceScreen from './features/workspaces/containers/EditWorkspaceScreen';
+import { WORKSPACES_ROUTES } from './features/workspaces/constants';
 import { Actions } from './actions/lib/actions';
 import { RealStores } from './stores';
 
@@ -102,10 +101,63 @@ class FerdiumRoutes extends Component<Props> {
               element={<LoginScreen {...routeProps} {...errorProps} />}
             />
           </Route>
-          <Route path="/*" element={<AppLayoutContainer {...routeProps} />} />
-        </Routes>
 
-        <Outlet />
+          <Route path="/" element={<AppLayoutContainer {...routeProps} />}>
+            <Route
+              path="/settings"
+              element={<SettingsWindow {...this.props} />}
+            >
+              <Route
+                path="/settings/recipes"
+                element={<RecipesScreen {...this.props} />}
+              />
+              <Route
+                path="/settings/recipes/:filter"
+                element={<RecipesScreen {...this.props} />}
+              />
+              <Route
+                path="/settings/services"
+                element={<ServicesScreen {...this.props} />}
+              />
+              <Route
+                path="/settings/services/:action/:id"
+                element={<EditServiceScreen {...this.props} />}
+              />
+              <Route
+                path={WORKSPACES_ROUTES.ROOT}
+                element={<WorkspacesScreen {...this.props} />}
+              />
+              <Route
+                path={WORKSPACES_ROUTES.EDIT}
+                element={<EditWorkspaceScreen {...this.props} />}
+              />
+              <Route
+                path="/settings/user"
+                element={<AccountScreen {...this.props} />}
+              />
+              <Route
+                path="/settings/user/edit"
+                element={<EditUserScreen {...this.props} />}
+              />
+              <Route
+                path="/settings/team"
+                element={<TeamScreen {...this.props} />}
+              />
+              <Route
+                path="/settings/app"
+                element={<EditSettingsScreen {...this.props} />}
+              />
+              <Route
+                path="/settings/invite"
+                element={<InviteSettingsScreen {...this.props} />}
+              />
+              <Route
+                path="/settings/support"
+                element={<SupportFerdiumScreen {...this.props} />}
+              />
+            </Route>
+          </Route>
+        </Routes>
       </HistoryRouter>
     );
   }

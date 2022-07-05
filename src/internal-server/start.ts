@@ -47,7 +47,5 @@ export const server = async (userPath: string, port: number) => {
   process.env.HOST = LOCAL_HOSTNAME;
   process.env.PORT = port.toString();
 
-  console.log('START SERVERRRR');
   new Ignitor(fold).appRoot(__dirname).fireHttpServer().catch(console.error);
-  console.log('MAYBE STARTED');
 };

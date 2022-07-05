@@ -40,8 +40,6 @@ class SettingsContainer extends Component<StoresProps> {
       />
     );
 
-    console.log('settings window');
-
     return ReactDOM.createPortal(
       <ErrorBoundary>
         <Layout navigation={navigation} closeSettings={closeSettings}>
