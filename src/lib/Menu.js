@@ -37,7 +37,7 @@ import { ferdiumVersion } from '../environment-remote';
 import { todoActions } from '../features/todos/actions';
 import workspaceActions from '../features/workspaces/actions';
 import { workspaceStore } from '../features/workspaces/index';
-import apiBase, { serverBase } from '../api/apiBase';
+import apiBase, { serverBase, serverName } from '../api/apiBase';
 import { openExternalUrl } from '../helpers/url-helpers';
 import globalMessages from '../i18n/globalMessages';
 
@@ -870,6 +870,7 @@ class FranzMenu {
 
     const aboutAppDetails = [
       `Version: ${ferdiumVersion}`,
+      `Server: ${serverName()} Server`,
       `Electron: ${electronVersion}`,
       `Chrome: ${chromeVersion}`,
       `Node.js: ${nodeVersion}`,

@@ -21,7 +21,7 @@ const messages = defineMessages({
   },
   changeServerMessage: {
     id: 'login.changeServerMessage',
-    defaultMessage: 'You are using {serverNameParse}, do you want to switch?'
+    defaultMessage: 'You are using {serverNameParse} Server, do you want to switch?'
   },
   changeServer: {
     id: 'login.changeServer',
@@ -53,7 +53,9 @@ class Welcome extends Component {
     recipes = shuffleArray(recipes);
     recipes.length = 8 * 2;
 
-    const serverNameParse = serverName();
+    let serverNameParse = serverName();
+    serverNameParse =
+      serverNameParse === 'Custom' ? 'a Custom' : serverNameParse;
 
     return (
       <div className="welcome">

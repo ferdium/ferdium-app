@@ -61,16 +61,16 @@ export function serverName(): string {
   let nameServer;
   switch (serverType) {
     case LIVE_FRANZ_API:
-      nameServer = 'Franz Server';
+      nameServer = 'Franz';
       break;
     case LIVE_FERDIUM_API:
-      nameServer = 'Ferdium Server';
+      nameServer = 'Ferdium';
       break;
     case noServer:
-      nameServer = 'no Server';
+      nameServer = 'No';
       break;
     default:
-      nameServer = 'a Custom Server';
+      nameServer = 'Custom';
   }
 
   return nameServer;
