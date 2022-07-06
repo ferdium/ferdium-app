@@ -95,7 +95,7 @@ if ($env:CLEAN -eq "true")
 # Ensure that the system dependencies are at the correct version - fail if not
 # Check MSVS Tools through MSVS_VERSION
 $EXPECTED_MSVST_VERSION = @("2019","2022")
-
+# TODO: Implement path for ARM machines
 $MSVS_REG_PATH = "Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\X64"
 
 if(-not (Test-Path -Path $MSVS_REG_PATH)){
