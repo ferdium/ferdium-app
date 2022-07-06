@@ -99,7 +99,7 @@ $EXPECTED_MSVST_VERSION = @("2019","2022")
 $MSVS_REG_PATH = "Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\X64"
 
 if(-not (Test-Path -Path $MSVS_REG_PATH)){
-  fail_with_docs "You dont have the Microsoft Visual Studio Tools installed!"
+  fail_with_docs "You don't have the Microsoft Visual Studio Tools installed!"
 }
 
 $MSVS_VERSION =  [int]((Get-ItemProperty -Path $MSVS_REG_PATH).Version.substring(4, 2))
