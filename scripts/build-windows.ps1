@@ -115,15 +115,6 @@ if(-not $ACTUAL_MSVST_VERSION){
         expected: [$EXPECTED_MSVST_VERSION]"
 }
 
-# -------------------------LEGACY----------------------------------
-# Ensure that the system dependencies are at the correct version - fail if not
-# Check MSVS Tools through MSVS_VERSION
-# if (-not ($EXPECTED_MSVST_VERSION -contains $ACTUAL_MSVST_VERSION)) {
-#   fail_with_docs "You are not running the expected version of MSVS Tools!
-#     expected: [$EXPECTED_MSVST_VERSION]
-#     actual  : [$ACTUAL_MSVST_VERSION]"
-# }
-
 # -----------------------------------------------------------------------------
 # Ensure that the system dependencies are at the correct version - recover if not
 # Check npm version
