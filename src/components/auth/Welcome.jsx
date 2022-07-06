@@ -78,9 +78,7 @@ class Welcome extends Component {
           </Link>
           <div className="welcome__text__change-server">
             <span>
-              {intl.formatMessage(messages.changeServerMessage, {
-                serverNameParse,
-              })}
+              {intl.formatMessage(messages.changeServerMessage, { serverNameParse })}
             </span>
             <Link to={changeServerRoute} className="button__change-server">
               <span>{intl.formatMessage(messages.changeServer)}</span>

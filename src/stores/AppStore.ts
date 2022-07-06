@@ -512,7 +512,7 @@ export default class AppStore extends TypedStore {
   }
 
   _setLocale() {
-    if (this.stores.user?.isLoggedIn && this.stores.user.data.locale) {
+    if (this.stores.user?.isLoggedIn && this.stores.user?.data.locale) {
       this.locale = this.stores.user.data.locale;
     } else if (!this.locale) {
       this.locale = this._getDefaultLocale();
