@@ -3,6 +3,7 @@ import { Component, ReactElement } from 'react';
 import { autorun, IReactionDisposer } from 'mobx';
 import { inject, observer } from 'mobx-react';
 
+import { Params } from 'react-router-dom';
 import Recipe from '../../models/Recipe';
 import { StoresProps } from '../../@types/ferdium-components.types';
 import RecipesDashboard from '../../components/settings/recipes/RecipesDashboard';
@@ -13,11 +14,10 @@ import { asarRecipesPath } from '../../helpers/asar-helpers';
 import { communityRecipesStore } from '../../features/communityRecipes';
 import RecipePreview from '../../models/RecipePreview';
 import { openPath } from '../../helpers/url-helpers';
+import withParams from '../../components/util/WithParams';
 
 interface RecipesScreenProps extends StoresProps {
-  // params: {
-  //   filter?: string | null;
-  // };
+  params: Params;
 }
 
 class RecipesScreen extends Component<RecipesScreenProps> {
@@ -29,10 +29,6 @@ class RecipesScreen extends Component<RecipesScreenProps> {
     currentFilter: 'featured',
   };
 
-  params: {
-    filter?: string | null;
-  };
-
   autorunDisposer: IReactionDisposer | null = null;
 
   customRecipes: Recipe[] = [];
@@ -40,17 +36,12 @@ class RecipesScreen extends Component<RecipesScreenProps> {
   constructor(props: RecipesScreenProps) {
     super(props);
 
-    this.params = {
-      // @ts-ignore
-      filter: props.match?.params?.filter,
-    };
-
     this.customRecipes = readJsonSync(asarRecipesPath('all.json'));
   }
 
   componentDidMount(): void {
     this.autorunDisposer = autorun(() => {
-      const { filter } = this.params;
+      const { filter } = this.props.params;
       const { currentFilter } = this.state;
 
       if (filter === 'all' && currentFilter !== 'all') {
@@ -111,7 +102,7 @@ class RecipesScreen extends Component<RecipesScreenProps> {
   }
 
   resetSearch(): void {
-    this.setState({ needle: null });
+    this.setState({ needle: null, currentFilter: 'featured' });
   }
 
   render(): ReactElement {
@@ -119,7 +110,8 @@ class RecipesScreen extends Component<RecipesScreenProps> {
 
     const { app: appActions, service: serviceActions } = this.props.actions;
 
-    const { filter } = this.params;
+    const filter = this.state.currentFilter;
+
     let recipeFilter;
 
     if (filter === 'all') {
@@ -192,4 +184,4 @@ class RecipesScreen extends Component<RecipesScreenProps> {
   }
 }
 
-export default inject('stores', 'actions')(observer(RecipesScreen));
+export default withParams(inject('stores', 'actions')(observer(RecipesScreen)));
