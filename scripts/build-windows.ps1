@@ -95,25 +95,26 @@ if ($env:CLEAN -eq "true")
 # Ensure that the system dependencies are at the correct version - fail if not
 # Check MSVS Tools through MSVS_VERSION
 $EXPECTED_MSVST_VERSION = @("2019","2022")
-$MSVS_REG_PATH = "Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\Setup"
+
+$MSVS_REG_PATH = "Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\X64"
 
 if(-not (Test-Path -Path $MSVS_REG_PATH)){
-  fail_with_docs "You don't have MSVS Tools Installed!"
+  fail_with_docs "You dont have the Microsoft Visual Studio Tools installed!"
 }
 
-$MSVS_PATH =  (Get-ItemProperty -Path $MSVS_REG_PATH).SharedInstallationPath | Split-Path
-
-Get-ChildItem($MSVS_PATH) | ForEach-Object{
-  if($EXPECTED_MSVST_VERSION -contains $_){
-    $ACTUAL_MSVST_VERSION = $_
-    break
-  }
+$MSVS_VERSION =  [int]((Get-ItemProperty -Path $MSVS_REG_PATH).Version.substring(4, 2))
+switch($MSVS_VERSION) {
+  { $MSVS_VERSION -ge 30 } {$ACTUAL_MSVST_VERSION = "2022"}
+  { ($MSVS_VERSION -ge 20) -and ($MSVS_VERSION -le 29) } {$ACTUAL_MSVST_VERSION = "2019"}
+  { $MSVS_VERSION -lt 20 } {$ACTUAL_MSVST_VERSION = "2017 or lower"}
 }
 
-if(-not $ACTUAL_MSVST_VERSION){
+if (-not ($EXPECTED_MSVST_VERSION -contains $ACTUAL_MSVST_VERSION)) {
   fail_with_docs "You are not running the expected version of MSVS Tools!
-        expected: [$EXPECTED_MSVST_VERSION]"
+    expected: [$EXPECTED_MSVST_VERSION]
+    actual  : [$ACTUAL_MSVST_VERSION]"
 }
+npm config set msvs_version $ACTUAL_MSVST_VERSION
 
 # -----------------------------------------------------------------------------
 # Ensure that the system dependencies are at the correct version - recover if not
