@@ -58,6 +58,10 @@
       text-align: center;
       height: auto;
 
+      @media screen and (max-height: 750px) {
+        margin-top: 70px;
+      }
+
       .button {
         margin-right: 25px;
       }
