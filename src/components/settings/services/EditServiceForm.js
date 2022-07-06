@@ -406,7 +406,7 @@ class EditServiceForm extends Component {
                   field={form.$('customIcon')}
                   textDelete={intl.formatMessage(messages.iconDelete)}
                   textUpload={intl.formatMessage(messages.iconUpload)}
-                  maxSize={1_048_576}
+                  maxSize={2_097_152}
                   maxFiles={1}
                   textMaxFileSize={intl.formatMessage(messages.maxFileSize)}
                   textMaxFileSizeError={intl.formatMessage(
