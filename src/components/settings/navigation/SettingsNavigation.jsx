@@ -141,8 +141,11 @@ class SettingsNavigation extends Component {
         {isUsingFranzServer && (
           <NavLink
             to="/settings/team"
-            className="settings-navigation__link"
-            activeClassName="is-active"
+            className={({ isActive }) =>
+              isActive
+                ? 'settings-navigation__link is-active'
+                : 'settings-navigation__link'
+            }
           >
             {intl.formatMessage(messages.team)}
           </NavLink>

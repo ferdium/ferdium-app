@@ -2,6 +2,7 @@ import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 
+import { Params } from 'react-router-dom';
 import { StoresProps } from '../../@types/ferdium-components.types';
 import { IRecipe } from '../../models/Recipe';
 import Service from '../../models/Service';
@@ -21,6 +22,7 @@ import { SPELLCHECKER_LOCALES } from '../../i18n/languages';
 
 import globalMessages from '../../i18n/globalMessages';
 import { DEFAULT_APP_SETTINGS, DEFAULT_SERVICE_SETTINGS } from '../../config';
+import withParams from '../../components/util/WithParams';
 
 const messages = defineMessages({
   name: {
@@ -119,12 +121,12 @@ const messages = defineMessages({
 
 interface EditServicesScreenProps extends StoresProps {
   intl: any;
+  params: Params;
 }
 
 class EditServiceScreen extends Component<EditServicesScreenProps> {
   onSubmit(data: any) {
-    // @ts-ignore TODO: This is actually there and we don't have a correct type right now.
-    const { action } = this.props.router.params;
+    const { action } = this.props.params;
     const { recipes, services } = this.props.stores;
     const { createService, updateService } = this.props.actions.service;
     data.darkReaderSettings = {
@@ -151,8 +153,7 @@ class EditServiceScreen extends Component<EditServicesScreenProps> {
 
     const { stores } = this.props;
 
-    // @ts-ignore TODO: This is actually there and we don't have a correct type right now.
-    const { action } = this.stores.router.params;
+    const { action } = stores.router.pathValue;
 
     let defaultSpellcheckerLanguage =
       SPELLCHECKER_LOCALES[stores.settings.app.spellcheckerLanguage];
@@ -387,8 +388,7 @@ class EditServiceScreen extends Component<EditServicesScreenProps> {
 
   deleteService(): void {
     const { deleteService } = this.props.actions.service;
-    // @ts-ignore TODO: This is actually there and we don't have a correct type right now.
-    const { action } = this.props.router.params;
+    const { action } = this.props.params;
 
     if (action === 'edit') {
       const { activeSettings: service } = this.props.stores.services;
@@ -401,8 +401,7 @@ class EditServiceScreen extends Component<EditServicesScreenProps> {
 
   openRecipeFile(file: any): void {
     const { openRecipeFile } = this.props.actions.service;
-    // @ts-ignore TODO: This is actually there and we don't have a correct type right now.
-    const { action } = this.props.router.params;
+    const { action } = this.props.params;
 
     if (action === 'edit') {
       const { activeSettings: service } = this.props.stores.services;
@@ -415,9 +414,7 @@ class EditServiceScreen extends Component<EditServicesScreenProps> {
 
   render(): ReactElement {
     const { recipes, services, user } = this.props.stores;
-
-    // @ts-ignore TODO: This is actually there and we don't have a correct type right now.
-    const { action } = this.props.router.params;
+    const { action } = this.props.params;
 
     let recipe: null | IRecipe = null;
     let service: null | Service = null;
@@ -425,7 +422,6 @@ class EditServiceScreen extends Component<EditServicesScreenProps> {
 
     if (action === 'add') {
       recipe = recipes.active;
-
       // TODO: render error message when recipe is `null`
       if (!recipe) {
         return <ServiceError />;
@@ -473,6 +469,8 @@ class EditServiceScreen extends Component<EditServicesScreenProps> {
   }
 }
 
-export default injectIntl<'intl', EditServicesScreenProps>(
-  inject('stores', 'actions')(observer(EditServiceScreen)),
+export default withParams(
+  injectIntl<'intl', EditServicesScreenProps>(
+    inject('stores', 'actions')(observer(EditServiceScreen)),
+  ),
 );

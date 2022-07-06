@@ -172,7 +172,9 @@ class ButtonComponent extends Component<IProps> {
   constructor(props: IProps) {
     super(props);
 
-    this.setState({ busy: this.props.busy });
+    this.state = {
+      busy: props.busy || false,
+    };
   }
 
   // componentWillReceiveProps(nextProps: IProps) {
