@@ -54,7 +54,7 @@ class ImageUpload extends Component<Props> {
     field.set('');
   }
 
-  onDropRejected(rejectedFiles) {
+  onDropRejected(rejectedFiles): void {
     for (const file of rejectedFiles) {
       for (const error of file.errors) {
         if (error.code === 'file-too-large') {
@@ -86,7 +86,7 @@ class ImageUpload extends Component<Props> {
       [`${className}`]: className,
     });
 
-    const maxSizeParse =
+    const maxSizeParse: number =
       maxSize === undefined || maxSize === Number.POSITIVE_INFINITY
         ? 0
         : maxSize;
