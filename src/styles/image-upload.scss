@@ -112,3 +112,17 @@
   color: $theme-gray-light;
   font-size: 40px;
 }
+
+.image-upload-wrapper__file-size {
+  display: flex;
+  color: $theme-gray-light;
+  font-size: 10px;
+  margin-top: 3px;
+}
+
+.image-upload-wrapper__file-size-error {
+  display: flex;
+  color: $theme-brand-danger;
+  font-size: 12px;
+  margin-top: 10px;
+}

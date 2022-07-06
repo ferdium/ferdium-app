@@ -141,6 +141,14 @@ const messages = defineMessages({
     id: 'settings.service.reloadRequired',
     defaultMessage: 'Changes require reload of the service',
   },
+  maxFileSize: {
+    id: 'settings.service.form.maxFileSize',
+    defaultMessage: 'Maximum filesize:',
+  },
+  maxFileSizeError: {
+    id: 'settings.service.form.maxFileSizeError',
+    defaultMessage: 'The file you are trying to submit is too large.',
+  },
 });
 
 class EditServiceForm extends Component {
@@ -398,6 +406,12 @@ class EditServiceForm extends Component {
                   field={form.$('customIcon')}
                   textDelete={intl.formatMessage(messages.iconDelete)}
                   textUpload={intl.formatMessage(messages.iconUpload)}
+                  maxSize={1_048_576}
+                  maxFiles={1}
+                  textMaxFileSize={intl.formatMessage(messages.maxFileSize)}
+                  textMaxFileSizeError={intl.formatMessage(
+                    messages.maxFileSizeError,
+                  )}
                 />
               </div>
             </div>
