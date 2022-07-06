@@ -40,7 +40,6 @@ Function Test-CommandExists { Param ($command, $1)
 # Check for installed programmes
 Test-CommandExists node "Node is not installed"
 Test-CommandExists npm "npm is not installed"
-# TODO: Needs proper way to check MSVS Build Tools
 
 # Check node version
 $EXPECTED_NODE_VERSION = (cat .nvmrc)
@@ -94,14 +93,26 @@ if ($env:CLEAN -eq "true")
 
 # -----------------------------------------------------------------------------
 # Ensure that the system dependencies are at the correct version - fail if not
-# TODO: Needs proper way to check MSVS Tools
 # Check MSVS Tools through MSVS_VERSION
-$EXPECTED_MSVST_VERSION = @("2019", "2022")
-$ACTUAL_MSVST_VERSION = (npm config get msvs_version)
-if (-not ($EXPECTED_MSVST_VERSION -contains $ACTUAL_MSVST_VERSION)) {
+$EXPECTED_MSVST_VERSION = @("2019","2022")
+$MSVS_REG_PATH = "Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\Setup"
+
+if(-not (Test-Path -Path $MSVS_REG_PATH)){
+  fail_with_docs "You don't have MSVS Tools Installed!"
+}
+
+$MSVS_PATH =  (Get-ItemProperty -Path $MSVS_REG_PATH).SharedInstallationPath | Split-Path
+
+Get-ChildItem($MSVS_PATH) | ForEach-Object{
+  if($EXPECTED_MSVST_VERSION -contains $_){
+    $ACTUAL_MSVST_VERSION = $_
+    break
+  }
+}
+
+if(-not $ACTUAL_MSVST_VERSION){
   fail_with_docs "You are not running the expected version of MSVS Tools!
-    expected: [$EXPECTED_MSVST_VERSION]
-    actual  : [$ACTUAL_MSVST_VERSION]"
+        expected: [$EXPECTED_MSVST_VERSION]"
 }
 
 # -----------------------------------------------------------------------------
