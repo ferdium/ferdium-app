@@ -1,4 +1,4 @@
-import { observable, toJS } from 'mobx';
+import { makeObservable, observable, toJS } from 'mobx';
 import { pathExistsSync, outputJsonSync, readJsonSync } from 'fs-extra';
 import { userDataPath } from '../environment-remote';
 
@@ -12,6 +12,8 @@ export default class Settings {
   @observable store: object = {};
 
   constructor(type: string, defaultState = {}) {
+    makeObservable(this);
+
     this.type = type;
     this.store = defaultState;
     this.defaultState = defaultState;

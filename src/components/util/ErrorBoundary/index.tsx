@@ -32,8 +32,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps> {
   }
 
   render(): ReactNode {
-    const { classes } = this.props;
-    const { intl } = this.props;
+    const { classes, intl } = this.props;
 
     if (this.state.hasError) {
       return (

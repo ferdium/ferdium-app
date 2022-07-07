@@ -2,10 +2,10 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { defineMessages, injectIntl } from 'react-intl';
 import { inject, observer } from 'mobx-react';
-import { RouterStore } from 'mobx-react-router';
+import { RouterStore } from '@superwf/mobx-react-router';
 
+import { NavLink } from 'react-router-dom';
 import { LOCAL_SERVER, LIVE_FERDIUM_API, LIVE_FRANZ_API } from '../../../config';
-import Link from '../../ui/Link';
 import UIStore from '../../../stores/UIStore';
 import SettingsStore from '../../../stores/SettingsStore';
 import UserStore from '../../../stores/UserStore';
@@ -90,70 +90,94 @@ class SettingsNavigation extends Component {
 
     return (
       <div className="settings-navigation">
-        <Link
+        <NavLink
           to="/settings/recipes"
-          className="settings-navigation__link"
-          activeClassName="is-active"
+          className={({ isActive }) =>
+            isActive
+              ? 'settings-navigation__link is-active'
+              : 'settings-navigation__link'
+          }
         >
           {intl.formatMessage(messages.availableServices)}
-        </Link>
-        <Link
+        </NavLink>
+        <NavLink
           to="/settings/services"
-          className="settings-navigation__link"
-          activeClassName="is-active"
+          className={({ isActive }) =>
+            isActive
+              ? 'settings-navigation__link is-active'
+              : 'settings-navigation__link'
+          }
         >
           {intl.formatMessage(messages.yourServices)}{' '}
           <span className="badge">{serviceCount}</span>
-        </Link>
-        <Link
+        </NavLink>
+        <NavLink
           to="/settings/workspaces"
-          className="settings-navigation__link"
-          activeClassName="is-active"
+          className={({ isActive }) =>
+            isActive
+              ? 'settings-navigation__link is-active'
+              : 'settings-navigation__link'
+          }
         >
           {intl.formatMessage(messages.yourWorkspaces)}{' '}
           <span className="badge">{workspaceCount}</span>
-        </Link>
+        </NavLink>
         {!isUsingWithoutAccount && (
-          <Link
+          <NavLink
             to="/settings/user"
-            className="settings-navigation__link"
-            activeClassName="is-active"
+            className={({ isActive }) =>
+              isActive
+                ? 'settings-navigation__link is-active'
+                : 'settings-navigation__link'
+            }
           >
             {intl.formatMessage(messages.account)}
-          </Link>
+          </NavLink>
         )}
         {isUsingFranzServer && (
-          <Link
+          <NavLink
             to="/settings/team"
-            className="settings-navigation__link"
-            activeClassName="is-active"
+            className={({ isActive }) =>
+              isActive
+                ? 'settings-navigation__link is-active'
+                : 'settings-navigation__link'
+            }
           >
             {intl.formatMessage(messages.team)}
-          </Link>
+          </NavLink>
         )}
-        <Link
+        <NavLink
           to="/settings/app"
-          className="settings-navigation__link"
-          activeClassName="is-active"
+          className={({ isActive }) =>
+            isActive
+              ? 'settings-navigation__link is-active'
+              : 'settings-navigation__link'
+          }
         >
           {intl.formatMessage(globalMessages.settings)}
-          {stores.settings.app.automaticUpdates && (stores.ui.showServicesUpdatedInfoBar ||
-            (stores.app.updateStatus === stores.app.updateStatusTypes.AVAILABLE ||
-              stores.app.updateStatus === stores.app.updateStatusTypes.DOWNLOADED)) && (
-            <span className="update-available">•</span>
-          )}
-        </Link>
-        <Link
+          {stores.settings.app.automaticUpdates &&
+            (stores.ui.showServicesUpdatedInfoBar ||
+              stores.app.updateStatus ===
+                stores.app.updateStatusTypes.AVAILABLE ||
+              stores.app.updateStatus ===
+                stores.app.updateStatusTypes.DOWNLOADED) && (
+              <span className="update-available">•</span>
+            )}
+        </NavLink>
+        <NavLink
           to="/settings/support"
-          className="settings-navigation__link"
-          activeClassName="is-active"
+          className={({ isActive }) =>
+            isActive
+              ? 'settings-navigation__link is-active'
+              : 'settings-navigation__link'
+          }
         >
           {intl.formatMessage(messages.supportFerdium)}
-        </Link>
+        </NavLink>
         <span className="settings-navigation__expander" />
         <button
           type="button"
-          to='/auth/logout'
+          to="/auth/logout"
           className="settings-navigation__link"
           onClick={this.handleLogout.bind(this)}
         >

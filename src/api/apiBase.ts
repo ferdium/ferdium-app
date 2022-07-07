@@ -23,6 +23,7 @@ export default function apiBase(withVersion = true) {
     // Stores have not yet been loaded - return SERVER_NOT_LOADED to force a retry when stores are loaded
     return SERVER_NOT_LOADED;
   }
+
   const url =
     (window as any).ferdium.stores.settings.all.app.server === LOCAL_SERVER
       ? `http://${LOCAL_HOSTNAME}:${
@@ -34,7 +35,6 @@ export default function apiBase(withVersion = true) {
 };
 
 export function serverBase() {
-
   const serverType = (window as any).ferdium.stores.settings.all.app.server;
   const noServer = 'You are using Ferdium without a server';
 
@@ -54,7 +54,6 @@ export function serverBase() {
 }
 
 export function serverName(): string {
-
   const serverType = (window as any).ferdium.stores.settings.all.app.server;
   const noServer = 'You are using Ferdium without a server';
 

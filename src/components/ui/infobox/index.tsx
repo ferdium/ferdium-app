@@ -199,6 +199,4 @@ class InfoboxComponent extends Component<IProps, IState> {
   }
 }
 
-export default injectStyle(styles, { injectTheme: true })(
-  InfoboxComponent,
-);
+export default injectStyle(styles, { injectTheme: true })(InfoboxComponent);

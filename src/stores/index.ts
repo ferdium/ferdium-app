@@ -1,4 +1,4 @@
-import { RouterStore } from 'mobx-react-router';
+import { RouterStore } from '@superwf/mobx-react-router';
 import { ApiInterface } from '../api';
 import { Actions } from '../actions/lib/actions';
 import AppStore from './AppStore';

@@ -291,6 +291,10 @@ export default class ServerApi {
 
   // Features
   async getDefaultFeatures() {
+    if (apiBase() === SERVER_NOT_LOADED) {
+      throw new Error('Server not loaded');
+    }
+
     const request = await sendAuthRequest(`${apiBase()}/features/default`);
     if (!request.ok) {
       throw new Error(request.statusText);

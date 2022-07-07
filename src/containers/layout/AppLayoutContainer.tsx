@@ -1,19 +1,17 @@
-import { Children, Component, ReactElement, ReactNode } from 'react';
+import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
 import { ThemeProvider } from 'react-jss';
+import { Outlet } from 'react-router-dom';
 
 import { StoresProps } from '../../@types/ferdium-components.types';
 import AppLayout from '../../components/layout/AppLayout';
 import Sidebar from '../../components/layout/Sidebar';
 import Services from '../../components/services/content/Services';
 import AppLoader from '../../components/ui/AppLoader';
-
 import WorkspaceDrawer from '../../features/workspaces/components/WorkspaceDrawer';
 import { workspaceStore } from '../../features/workspaces';
 
-interface AppLayoutContainerProps extends StoresProps {
-  children: ReactNode;
-}
+interface AppLayoutContainerProps extends StoresProps {}
 
 class AppLayoutContainer extends Component<AppLayoutContainerProps> {
   render(): ReactElement {
@@ -61,8 +59,6 @@ class AppLayoutContainer extends Component<AppLayoutContainerProps> {
       this.props.actions.app;
 
     const { openSettings, closeSettings } = this.props.actions.ui;
-
-    const { children } = this.props;
 
     const isLoadingFeatures =
       features.featuresRequest.isExecuting &&
@@ -162,7 +158,7 @@ class AppLayoutContainer extends Component<AppLayoutContainerProps> {
           retryRequiredRequests={retryRequiredRequests}
           areRequiredRequestsLoading={requests.areRequiredRequestsLoading}
         >
-          {Children.count(children) > 0 ? children : null}
+          <Outlet />
         </AppLayout>
       </ThemeProvider>
     );

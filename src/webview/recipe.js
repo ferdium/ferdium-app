@@ -2,7 +2,7 @@
 /* eslint-disable import/first */
 import { contextBridge, ipcRenderer } from 'electron';
 import { join } from 'path';
-import { autorun, computed, observable } from 'mobx';
+import { autorun, computed, makeObservable, observable } from 'mobx';
 import { pathExistsSync, readFileSync } from 'fs-extra';
 import { debounce } from 'lodash';
 
@@ -154,6 +154,8 @@ class RecipeController {
   hasUpdatedBeforeRecipeLoaded = false;
 
   constructor() {
+    makeObservable(this);
+
     this.initialize();
   }
 

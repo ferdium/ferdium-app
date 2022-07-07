@@ -1,4 +1,5 @@
-import { action, computed, observable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
+
 import { Actions } from '../actions/lib/actions';
 import { ApiInterface } from '../api';
 import Recipe from '../models/Recipe';
@@ -27,6 +28,8 @@ export default class RecipePreviewsStore extends TypedStore {
 
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
+
+    makeObservable(this);
 
     // Register action handlers
     this.actions.recipePreview.search.listen(this._search.bind(this));

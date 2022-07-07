@@ -1,4 +1,4 @@
-import { action, computed, observe, observable } from 'mobx';
+import { action, computed, makeObservable, observable, observe } from 'mobx';
 
 import ElectronWebView from 'react-electron-web-view';
 import defaultUserAgent from '../helpers/userAgent-helpers';
@@ -21,6 +21,8 @@ export default class UserAgent {
   @observable overrideUserAgent = (): string => '';
 
   constructor(overrideUserAgent: any = null) {
+    makeObservable(this);
+
     if (typeof overrideUserAgent === 'function') {
       this.overrideUserAgent = overrideUserAgent;
     }

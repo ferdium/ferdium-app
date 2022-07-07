@@ -178,7 +178,7 @@ class Login extends Component {
           <Link to={signupRoute}>
             {intl.formatMessage(messages.signupLink)}
           </Link>
-          <Link 
+          <Link
             // to={passwordRoute} // TODO: Uncomment this line after fixing password recovery in-app
             to={`${serverBase()}/user/forgot`} // TODO: Remove this line after fixing password recovery in-app
             target='_blank' // TODO: Remove this line after fixing password recovery in-app

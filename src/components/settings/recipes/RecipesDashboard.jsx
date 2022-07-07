@@ -2,7 +2,7 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
-import { Link } from 'react-router';
+import { NavLink } from 'react-router-dom';
 
 import injectSheet from 'react-jss';
 
@@ -179,30 +179,33 @@ class RecipesDashboard extends Component {
             throttle
           />
           <div className="recipes__navigation">
-            <Link
+            <NavLink
               to="/settings/recipes"
-              className="badge"
-              activeClassName={`${!searchNeedle ? 'badge--primary' : ''}`}
+              className={() =>
+                recipeFilter === 'featured' ? 'badge badge--primary' : 'badge'
+              }
               onClick={() => resetSearch()}
             >
               {intl.formatMessage(messages.ferdiumPicksRecipes)}
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               to="/settings/recipes/all"
-              className="badge"
-              activeClassName={`${!searchNeedle ? 'badge--primary' : ''}`}
+              className={({ isActive }) =>
+                isActive && recipeFilter === 'all' ? 'badge badge--primary' : 'badge'
+              }
               onClick={() => resetSearch()}
             >
               {intl.formatMessage(messages.allRecipes)}
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               to="/settings/recipes/dev"
-              className="badge"
-              activeClassName={`${!searchNeedle ? 'badge--primary' : ''}`}
+              className={({ isActive }) =>
+                isActive && !searchNeedle ? 'badge badge--primary' : 'badge'
+              }
               onClick={() => resetSearch()}
             >
               {intl.formatMessage(messages.customRecipes)}
-            </Link>
+            </NavLink>
             <a
               href={FERDIUM_SERVICE_REQUEST}
               target="_blank"
@@ -257,24 +260,26 @@ class RecipesDashboard extends Component {
                   />
                 ))}
               </div>
-              {hasLoadedRecipes && recipes.length === 0 && recipeFilter !== 'dev' && (
-                <div className="align-middle settings__empty-state">
-                  {customWebsiteRecipe && customWebsiteRecipe.id && (
-                    <RecipeItem
-                      key={customWebsiteRecipe.id}
-                      recipe={customWebsiteRecipe}
-                      onClick={() =>
-                        showAddServiceInterface({
-                          recipeId: customWebsiteRecipe.id,
-                        })
-                      }
-                    />
-                  )}
-                  <p className="settings__empty-state-text">
-                    {intl.formatMessage(messages.nothingFound)}
-                  </p>
-                </div>
-              )}
+              {hasLoadedRecipes &&
+                recipes.length === 0 &&
+                recipeFilter !== 'dev' && (
+                  <div className="align-middle settings__empty-state">
+                    {customWebsiteRecipe && customWebsiteRecipe.id && (
+                      <RecipeItem
+                        key={customWebsiteRecipe.id}
+                        recipe={customWebsiteRecipe}
+                        onClick={() =>
+                          showAddServiceInterface({
+                            recipeId: customWebsiteRecipe.id,
+                          })
+                        }
+                      />
+                    )}
+                    <p className="settings__empty-state-text">
+                      {intl.formatMessage(messages.nothingFound)}
+                    </p>
+                  </div>
+                )}
               {recipeFilter === 'dev' && devRecipes.length > 0 && (
                 <div className={classes.devRecipeList}>
                   <H3>{intl.formatMessage(messages.headlineDevRecipes)}</H3>

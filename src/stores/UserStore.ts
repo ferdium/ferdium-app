@@ -1,4 +1,4 @@
-import { observable, computed, action } from 'mobx';
+import { observable, computed, action, makeObservable } from 'mobx';
 import moment from 'moment';
 import jwt from 'jsonwebtoken';
 import localStorage from 'mobx-localstorage';
@@ -92,6 +92,8 @@ export default class UserStore extends TypedStore {
 
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
+
+    makeObservable(this);
 
     // Register action handlers
     this.actions.user.login.listen(this._login.bind(this));

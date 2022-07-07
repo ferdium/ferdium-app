@@ -1,23 +1,14 @@
 import { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 
+import { StoresProps } from '../../../@types/ferdium-components.types';
 import ErrorBoundary from '../../../components/util/ErrorBoundary';
 import EditWorkspaceForm from '../components/EditWorkspaceForm';
 import Workspace from '../models/Workspace';
 import { workspaceStore } from '../index';
 import { deleteWorkspaceRequest, updateWorkspaceRequest } from '../api';
-import { ServicesStore, WorkspacesStore } from '../../../@types/stores.types';
 
-type Props = {
-  actions: {
-    workspaces: WorkspacesStore;
-  };
-  stores: {
-    services: ServicesStore;
-  };
-};
-
-class EditWorkspaceScreen extends Component<Props> {
+class EditWorkspaceScreen extends Component<StoresProps> {
   // @ts-expect-error Not all code paths return a value.
   onDelete = () => {
     const { workspaceBeingEdited } = workspaceStore;

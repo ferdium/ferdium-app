@@ -4,8 +4,8 @@ import { observer } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 
 import { mdiClose } from '@mdi/js';
+import { Outlet } from 'react-router-dom';
 import ErrorBoundary from '../util/ErrorBoundary';
-import { oneOrManyChildElements } from '../../prop-types';
 import Appear from '../ui/effects/Appear';
 import Icon from '../ui/icon';
 
@@ -19,7 +19,6 @@ const messages = defineMessages({
 class SettingsLayout extends Component {
   static propTypes = {
     navigation: PropTypes.element.isRequired,
-    children: oneOrManyChildElements.isRequired,
     closeSettings: PropTypes.func.isRequired,
   };
 
@@ -44,7 +43,7 @@ class SettingsLayout extends Component {
   }
 
   render() {
-    const { navigation, children, closeSettings } = this.props;
+    const { navigation, closeSettings } = this.props;
 
     const { intl } = this.props;
 
@@ -60,7 +59,8 @@ class SettingsLayout extends Component {
             />
             <div className="settings franz-form">
               {navigation}
-              {children}
+
+              <Outlet />
               <button
                 type="button"
                 className="settings__close"

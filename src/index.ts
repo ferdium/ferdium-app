@@ -626,7 +626,6 @@ ipcMain.on('set-spellchecker-locales', (_e, { locale, serviceId }) => {
   serviceSession.setSpellCheckerLanguages(locales);
 });
 
-
 ipcMain.handle('get-desktop-capturer-sources', () => desktopCapturer.getSources({
   types: ['screen', 'window'],
 }));

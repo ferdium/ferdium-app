@@ -169,20 +169,18 @@ class ButtonComponent extends Component<IProps> {
     busy: false,
   };
 
-  componentWillMount() {
-    this.setState({ busy: this.props.busy });
+  constructor(props: IProps) {
+    super(props);
+
+    this.state = {
+      busy: props.busy || false,
+    };
   }
 
-  componentWillReceiveProps(nextProps: IProps) {
-    if (nextProps.busy !== this.props.busy) {
-      if (this.props.busy) {
-        setTimeout(() => {
-          this.setState({ busy: nextProps.busy });
-        }, 300);
-      } else {
-        this.setState({ busy: nextProps.busy });
-      }
-    }
+  static getDerivedStateFromProps(nextProps: IProps) {
+    return {
+      busy: nextProps.busy,
+    };
   }
 
   render() {

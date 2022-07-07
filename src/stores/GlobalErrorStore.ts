@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, makeObservable } from 'mobx';
 import { Actions } from '../actions/lib/actions';
 import { ApiInterface } from '../api';
 import { Stores } from '../@types/stores.types';
@@ -33,6 +33,8 @@ export default class GlobalErrorStore extends TypedStore {
   // TODO: Get rid of the @ts-ignores in this function.
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
+
+    makeObservable(this);
 
     window.addEventListener('error', (...errorArgs: any[]): void => {
       // @ts-ignore ts-message: Expected 5 arguments, but got 2.

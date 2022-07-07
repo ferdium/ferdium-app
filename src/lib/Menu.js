@@ -7,7 +7,7 @@ import {
   systemPreferences,
   getCurrentWindow,
 } from '@electron/remote';
-import { autorun, observable } from 'mobx';
+import { autorun, makeObservable, observable } from 'mobx';
 import { defineMessages } from 'react-intl';
 import osName from 'os-name';
 import {
@@ -625,6 +625,8 @@ class FranzMenu {
   constructor(stores, actions) {
     this.stores = stores;
     this.actions = actions;
+
+    makeObservable(this);
 
     setTimeout(() => {
       autorun(this._build.bind(this));

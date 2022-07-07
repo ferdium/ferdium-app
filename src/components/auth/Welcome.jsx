@@ -25,7 +25,7 @@ const messages = defineMessages({
   },
   changeServer: {
     id: 'login.changeServer',
-    defaultMessage: 'Change here!'
+    defaultMessage: 'Change here!',
   },
   serverless: {
     id: 'services.serverless',
@@ -65,7 +65,6 @@ class Welcome extends Component {
             className="welcome__logo"
             alt=""
           />
-          {/* <img src="./assets/images/welcome.png" className="welcome__services" alt="" /> */}
         </div>
         <div className="welcome__text">
           <H1>Ferdium</H1>
@@ -82,9 +81,7 @@ class Welcome extends Component {
               {intl.formatMessage(messages.changeServerMessage, { serverNameParse })}
             </span>
             <Link to={changeServerRoute} className="button__change-server">
-                <span>
-                  {intl.formatMessage(messages.changeServer)}
-                </span>
+              <span>{intl.formatMessage(messages.changeServer)}</span>
             </Link>
           </div>
           <br />

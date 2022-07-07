@@ -8,7 +8,7 @@ import { SortableElement } from 'react-sortable-hoc';
 import injectSheet from 'react-jss';
 import ms from 'ms';
 
-import { observable, autorun, reaction } from 'mobx';
+import { observable, autorun, reaction, makeObservable } from 'mobx';
 import { mdiExclamation } from '@mdi/js';
 import ServiceModel from '../../../models/Service';
 import { cmdOrCtrlShortcutKey, shiftKey, altKey } from '../../../environment';
@@ -144,6 +144,9 @@ class TabItem extends Component {
 
   constructor(props) {
     super(props);
+
+    makeObservable(this);
+
     this.state = {
       showShortcutIndex: false,
     };
