@@ -197,7 +197,7 @@
     "webpack-dev-server": "4.9.3"
   },
   "optionalDependencies": {
-    "macos-notification-state": "github:nbashkankov/macos-notification-state#fix-monterey-detect",
+    "macos-notification-state": "2.0.1",
     "node-mac-permissions": "2.2.1"
   },
   "browserslist": [
