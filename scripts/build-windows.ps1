@@ -116,7 +116,7 @@ if (-not ($EXPECTED_MSVST_VERSION -contains $ACTUAL_MSVST_VERSION)) {
 }
 
 $NPM_CONFIG_MSVS_VERSION = npm config get msvs_version
-if(-not $NPM_CONFIG_MSVS_VERSION){
+if((-not $NPM_CONFIG_MSVS_VERSION) -or -not ($EXPECTED_MSVST_VERSION -contains $NPM_CONFIG_MSVS_VERSION)){
   npm config set msvs_version $ACTUAL_MSVST_VERSION
 }
 
