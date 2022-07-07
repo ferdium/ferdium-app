@@ -177,14 +177,6 @@ class SelectComponent extends Component<IProps> {
 
   private keyListener: any;
 
-  // componentWillReceiveProps(nextProps: IProps) {
-  //   if (nextProps.value && nextProps.value !== this.props.value) {
-  //     this.setState({
-  //       value: nextProps.value,
-  //     });
-  //   }
-  // }
-
   static getDerivedStateFromProps(nextProps: IProps, prevState: IProps) {
     if (nextProps.value && nextProps.value !== prevState.value) {
       return {
