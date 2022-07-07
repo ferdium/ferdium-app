@@ -114,7 +114,11 @@ if (-not ($EXPECTED_MSVST_VERSION -contains $ACTUAL_MSVST_VERSION)) {
     expected: [$EXPECTED_MSVST_VERSION]
     actual  : [$ACTUAL_MSVST_VERSION]"
 }
-npm config set msvs_version $ACTUAL_MSVST_VERSION
+
+$NPM_CONFIG_MSVS_VERSION = npm config get msvs_version
+if(-not $NPM_CONFIG_MSVS_VERSION){
+  npm config set msvs_version $ACTUAL_MSVST_VERSION
+}
 
 # -----------------------------------------------------------------------------
 # Ensure that the system dependencies are at the correct version - recover if not
