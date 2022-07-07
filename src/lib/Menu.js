@@ -638,7 +638,7 @@ class FranzMenu {
   }
 
   get template() {
-    return this.currentTemplate.toJS();
+    return JSON.parse(JSON.stringify(this.currentTemplate));
   }
 
   _build() {
