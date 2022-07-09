@@ -64,6 +64,7 @@
   "locked.touchId": "Ontgrendelen met Touch ID",
   "locked.touchIdPrompt": "ontgrendelen met Touch ID",
   "locked.unlockWithPassword": "Ontgrendelen met wachtwoord",
+  "login.backToWelcome": "Click the Ferdium icon to go back to the Welcome screen",
   "login.changeServer": "Wijzig hier!",
   "login.changeServerMessage": "You are using {serverNameParse} Server, do you want to switch?",
   "login.customServerQuestion": "Gebruik je een aangepaste Ferdium server?",
