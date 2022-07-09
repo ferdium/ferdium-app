@@ -64,6 +64,7 @@
   "locked.touchId": "Touch IDを使用する",
   "locked.touchIdPrompt": "Touch IDでロック解除",
   "locked.unlockWithPassword": "パスワードでロック解除",
+  "login.backToWelcome": "Click the Ferdium icon to go back to the Welcome screen",
   "login.changeServer": "ここで変更！",
   "login.changeServerMessage": "{serverNameParse}サーバーを使用しています。切り替えますか？",
   "login.customServerQuestion": "カスタムFerdiumサーバーを使用していますか？",
