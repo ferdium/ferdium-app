@@ -64,6 +64,7 @@
   "locked.touchId": "Lås op med Touch ID",
   "locked.touchIdPrompt": "lås op med Touch ID",
   "locked.unlockWithPassword": "Lås op med adgangskode",
+  "login.backToWelcome": "Click the Ferdium icon to go back to the Welcome screen",
   "login.changeServer": "Change here!",
   "login.changeServerMessage": "You are using {serverNameParse} Server, do you want to switch?",
   "login.customServerQuestion": "Using a custom Ferdium server?",
