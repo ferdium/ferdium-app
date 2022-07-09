@@ -64,6 +64,7 @@
   "locked.touchId": "Desbloquear com Touch ID",
   "locked.touchIdPrompt": "desbloquear via Touch ID",
   "locked.unlockWithPassword": "Desbloquear com palavra-passe",
+  "login.backToWelcome": "Click the Ferdium icon to go back to the Welcome screen",
   "login.changeServer": "Troque aqui!",
   "login.changeServerMessage": "You are using {serverNameParse} Server, do you want to switch?",
   "login.customServerQuestion": "Usando um servidor personalizado do Ferdium?",
