@@ -64,6 +64,7 @@
   "locked.touchId": "שחרור נעילה עם Touch ID",
   "locked.touchIdPrompt": "שחרור נעילה עם Touch ID",
   "locked.unlockWithPassword": "שחרור נעילה עם סיסמה",
+  "login.backToWelcome": "Click the Ferdium icon to go back to the Welcome screen",
   "login.changeServer": "Change here!",
   "login.changeServerMessage": "You are using {serverNameParse} Server, do you want to switch?",
   "login.customServerQuestion": "להשתמש בשרת Ferdium אחר?",
@@ -477,5 +478,4 @@
   "workspaceDrawer.workspaceFeatureInfo": "<p>סביבות העבודה של Ferdium מאפשרות לך להתמקד על מה שחשוב לך כרגע. ניתן להקים סדרות שונות של שירותים ולעבור ביניהן בכל רגע נתון.</p><p>מותר לך לבחור אילו שירותים נחוצים לך מתי ואיפה, כדי שנוכל לסייע לך להתחבר למה שחשוב שלך או להתנתק מהעבודה מתי שנחוץ לך.</p>",
   "workspaceDrawer.workspacesSettingsTooltip": "עריכת הגדרות סביבת עבודה",
   "workspaces.switchingIndicator.switchingTo": "מעבר אל"
-}
 }
