@@ -17,6 +17,7 @@ import Infobox from '../../ui/Infobox';
 import { H1, H2, H3, H5 } from '../../ui/headline';
 
 import {
+  DEFAULT_ACCENT_COLOR,
   DEFAULT_APP_SETTINGS,
   FRANZ_TRANSLATION,
   GITHUB_FRANZ_URL,
@@ -299,6 +300,14 @@ class EditSettingsForm extends Component {
     this.props.form.submit({
       onSuccess: form => {
         const values = form.values();
+        const accentColor = values.accentColor;
+        if (accentColor.trim().length === 0) {
+          values.accentColor = DEFAULT_ACCENT_COLOR;
+        }
+        const progressbarAccentColor = values.progressbarAccentColor;
+        if (progressbarAccentColor.trim().length === 0) {
+          values.progressbarAccentColor = DEFAULT_ACCENT_COLOR;
+        }
         this.props.onSubmit(values);
       },
       onError: () => {},
