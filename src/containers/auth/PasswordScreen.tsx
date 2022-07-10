@@ -1,19 +1,10 @@
-import { Component } from 'react';
+import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
+import { StoresProps } from '../../@types/ferdium-components.types';
 import Password from '../../components/auth/Password';
-import UserStore from '../../stores/UserStore';
 
-interface IProps {
-  actions: {
-    user: UserStore,
-  },
-  stores: {
-    user: UserStore,
-  }
-};
-
-class PasswordScreen extends Component<IProps> {
-  render() {
+class PasswordScreen extends Component<StoresProps> {
+  render(): ReactElement {
     const { actions, stores } = this.props;
 
     return (

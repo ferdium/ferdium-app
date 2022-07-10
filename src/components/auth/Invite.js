@@ -2,7 +2,7 @@ import { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 
 import Infobox from '../ui/Infobox';

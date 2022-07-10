@@ -24,7 +24,7 @@ export function getSelectOptions({
   resetToDefaultText = '',
   automaticDetectionText = '',
   sort = true,
-  addDefault=false,
+  addDefault = false,
 }) {
   const options: object[] = [];
 

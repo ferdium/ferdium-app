@@ -4,7 +4,7 @@ import { isMac } from './environment';
 import { isDevMode } from './environment-remote';
 import { api } from './electron-util';
 
-export function enforceMacOSAppLocation() {
+export default function enforceMacOSAppLocation(): void {
   if (isDevMode || !isMac || api.app.isInApplicationsFolder()) {
     return;
   }

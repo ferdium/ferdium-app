@@ -2,7 +2,7 @@ import Icon from '@mdi/react';
 import classnames from 'classnames';
 import { Property } from 'csstype';
 import { Component, MouseEvent } from 'react';
-import injectStyle, { WithStylesProps } from 'react-jss';
+import withStyles, { WithStylesProps } from 'react-jss';
 import Loader from 'react-loader';
 
 import { Theme } from '../../../themes';
@@ -18,6 +18,7 @@ type ButtonType =
 
 interface IProps extends IFormField, WithStylesProps<typeof styles> {
   className?: string;
+  label?: string;
   disabled?: boolean;
   id?: string;
   type?: 'button' | 'reset' | 'submit' | undefined;
@@ -148,12 +149,19 @@ const styles = (theme: Theme) => ({
 });
 
 class ButtonComponent extends Component<IProps> {
-  public static defaultProps = {
+  customDefaultProps: {
+    disabled: boolean;
+    type: 'button' | 'reset' | 'submit' | undefined;
+    onClick: (
+      event: MouseEvent<HTMLButtonElement> | MouseEvent<HTMLAnchorElement>,
+    ) => void;
+    buttonType: ButtonType;
+    busy: boolean;
+  } = {
     type: 'button',
     disabled: false,
     onClick: () => null,
     buttonType: 'primary' as ButtonType,
-    stretch: false,
     busy: false,
   };
 
@@ -161,20 +169,18 @@ class ButtonComponent extends Component<IProps> {
     busy: false,
   };
 
-  componentWillMount() {
-    this.setState({ busy: this.props.busy });
+  constructor(props: IProps) {
+    super(props);
+
+    this.state = {
+      busy: props.busy || false,
+    };
   }
 
-  componentWillReceiveProps(nextProps: IProps) {
-    if (nextProps.busy !== this.props.busy) {
-      if (this.props.busy) {
-        setTimeout(() => {
-          this.setState({ busy: nextProps.busy });
-        }, 300);
-      } else {
-        this.setState({ busy: nextProps.busy });
-      }
-    }
+  static getDerivedStateFromProps(nextProps: IProps) {
+    return {
+      busy: nextProps.busy,
+    };
   }
 
   render() {
@@ -193,7 +199,7 @@ class ButtonComponent extends Component<IProps> {
       href,
       target,
       htmlForm,
-    } = this.props;
+    } = { ...this.customDefaultProps, ...this.props };
 
     const { busy } = this.state;
     let showLoader = false;
@@ -265,6 +271,4 @@ class ButtonComponent extends Component<IProps> {
   }
 }
 
-const Button = injectStyle(styles, { injectTheme: true })(ButtonComponent);
-
-export default Button;
+export default withStyles(styles, { injectTheme: true })(ButtonComponent);

@@ -14,8 +14,6 @@
 - [Ferdium](#ferdium)
   - [Screenshots](#screenshots)
   - [Download](#download)
-  - [Unsigned Nightlies on MacOS](#unsigned-nightlies-on-macos)
-  - [Unsigned Nightlies on Windows](#unsigned-nightlies-on-windows)
   - [Migrating from Ferdi](#migrating-from-ferdi)
   - [Contributing](#contributing)
   - [Contributors ✨](#contributors-)
@@ -23,7 +21,7 @@
 [![Builds](https://github.com/ferdium/ferdium-app/actions/workflows/builds.yml/badge.svg)](https://github.com/ferdium/ferdium-app/actions/workflows/builds.yml)
 [![Crowdin](https://badges.crowdin.net/ferdium-app/localized.svg)](https://crowdin.com/project/ferdium-app)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-304-default.svg?logo=github' alt='Contributors'/></a>
+<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-305-default.svg?logo=github' alt='Contributors'/></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 > 🤴🏽 Hard-fork of [Franz](https://github.com/meetfranz/franz), adding awesome features and removing unwanted ones.
@@ -54,16 +52,9 @@ Assets made available via [GitHub releases](https://github.com/ferdium/ferdium-a
 
 _Find answers to frequently asked questions on [ferdium.org/faq](https://ferdium.org/faq)._
 
-## Unsigned Nightlies on Windows
-
-Similarly to the MacOS, we do not currently have a certificate to sign the nightlies on Windows. For this reason, an error will appear when launching the setup tool or the portable app if your execution policy is not set to `Bypass` or `Unrestricted`. In order to allow the script to run, it is sufficient to right-click on the `.exe` to access its properties and to tick the box labeled `Unblock` at the bottom of the General tab. Alternatively, you could execute the following in a PowerShell:
-```PowerShell
-Unblock-File -Path .\Ferdium-Setup-6.0.0-nightly.xx.exe; .\Ferdium-Setup-6.0.0-nightly.xx.exe
-```
-
 ## Migrating from Ferdi
 
-If you are a pre-existing user of Ferdi, and are thinking of switching to Ferdium, you might want to run [the following scripts](./scripts/migration) to migrate your existing Ferdi profile such that Ferdium can pick up the configurations. (.ps1 for PowerShell/Windows users and .sh for UNIX (Linux and MacOS users)
+If you are a pre-existing user of Ferdi, and are thinking of switching to Ferdium, you might want to run [the following scripts](./scripts/migration) to migrate your existing Ferdi profile such that Ferdium can pick up the configurations. (.ps1 for PowerShell/Windows users and .sh for UNIX (Linux and MacOS users). For a more detailed explanation, please see [MIGRATION.md](MIGRATION.md)
 
 ## Contributing
 
@@ -468,6 +459,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href='http://www.realityloop.com/' title='Brian Gilbert: design'><img src='https://avatars.githubusercontent.com/u/114017?v=4' alt='BrianGilbert' style='width:100px;'/></a></td>
     <td align="center"><a href='https://amangalampalli.github.io/' title='Aditya Mangalampalli: design'><img src='https://avatars.githubusercontent.com/u/25261413?v=4' alt='amangalampalli' style='width:100px;'/></a></td>
     <td align="center"><a href='http://cino.io' title='Ricardo Cino: infra, code'><img src='https://avatars.githubusercontent.com/u/2735602?v=4' alt='cino' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://mrksr.de' title='Markus Kaiser: infra'><img src='https://avatars.githubusercontent.com/u/5184063?v=4' alt='mrksr' style='width:100px;'/></a></td>
   </tr>
 </table>
 

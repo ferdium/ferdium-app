@@ -13,7 +13,7 @@ import {
 import { fixUrl } from '../helpers/url-helpers';
 
 // Note: This cannot be used from the internal-server since we are not running within the context of a browser window
-const apiBase = (withVersion = true) => {
+export default function apiBase(withVersion = true) {
   if (
     !(window as any).ferdium ||
     !(window as any).ferdium.stores.settings ||
@@ -23,6 +23,7 @@ const apiBase = (withVersion = true) => {
     // Stores have not yet been loaded - return SERVER_NOT_LOADED to force a retry when stores are loaded
     return SERVER_NOT_LOADED;
   }
+
   const url =
     (window as any).ferdium.stores.settings.all.app.server === LOCAL_SERVER
       ? `http://${LOCAL_HOSTNAME}:${
@@ -33,10 +34,7 @@ const apiBase = (withVersion = true) => {
   return fixUrl(withVersion ? `${url}/${API_VERSION}` : url);
 };
 
-export default apiBase;
-
-export function termsBase() {
-
+export function serverBase() {
   const serverType = (window as any).ferdium.stores.settings.all.app.server;
   const noServer = 'You are using Ferdium without a server';
 
@@ -53,4 +51,26 @@ export function termsBase() {
   }
 
   return fixUrl(terms);
+}
+
+export function serverName(): string {
+  const serverType = (window as any).ferdium.stores.settings.all.app.server;
+  const noServer = 'You are using Ferdium without a server';
+
+  let nameServer;
+  switch (serverType) {
+    case LIVE_FRANZ_API:
+      nameServer = 'Franz';
+      break;
+    case LIVE_FERDIUM_API:
+      nameServer = 'Ferdium';
+      break;
+    case noServer:
+      nameServer = 'No';
+      break;
+    default:
+      nameServer = 'Custom';
+  }
+
+  return nameServer;
 }

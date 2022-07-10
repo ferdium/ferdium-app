@@ -35,7 +35,7 @@ function hasScreenCapturePermissionAlreadyBeenGranted(): boolean {
   return screenCaptureStatus === 'granted';
 }
 
-function createStatusFile() {
+function createStatusFile(): void {
   try {
     writeFileSync(filePath, '');
   } catch (error) {
@@ -48,7 +48,9 @@ function createStatusFile() {
   }
 }
 
-export const askFormacOSPermissions = async (mainWindow: BrowserWindow) => {
+export const askFormacOSPermissions = async (
+  mainWindow: BrowserWindow,
+): Promise<void> => {
   debug('Checking camera & microphone permissions');
   systemPreferences.askForMediaAccess('camera');
   systemPreferences.askForMediaAccess('microphone');

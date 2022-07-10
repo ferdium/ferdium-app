@@ -2,7 +2,7 @@ import { ipcRenderer } from 'electron';
 
 const debug = require('../preload-safe-debug')('Ferdium:Plugin:DialogTitleHandler');
 
-export class DialogTitleHandler {
+export default class DialogTitleHandler {
   titleCache: { title: string };
 
   constructor() {

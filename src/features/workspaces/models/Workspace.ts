@@ -1,4 +1,4 @@
-import { observable } from 'mobx';
+import { makeObservable, observable } from 'mobx';
 
 import { KEEP_WS_LOADED_USID } from '../../../config';
 
@@ -9,7 +9,7 @@ export default class Workspace {
 
   @observable order = null;
 
-  @observable services = [];
+  @observable services: string[] = [];
 
   @observable userId = null;
 
@@ -17,6 +17,8 @@ export default class Workspace {
     if (!data.id) {
       throw new Error('Workspace requires Id');
     }
+
+    makeObservable(this);
 
     this.id = data.id;
     this.name = data.name;

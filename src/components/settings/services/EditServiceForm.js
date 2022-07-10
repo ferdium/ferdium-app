@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { defineMessages, injectIntl } from 'react-intl';
 import normalizeUrl from 'normalize-url';
 
@@ -10,7 +10,7 @@ import Form from '../../../lib/Form';
 import Recipe from '../../../models/Recipe';
 import Service from '../../../models/Service';
 import Tabs from '../../ui/Tabs/Tabs';
-import { TabItem } from '../../ui/Tabs/TabItem';
+import TabItem from '../../ui/Tabs/TabItem';
 import Input from '../../ui/Input';
 import Toggle from '../../ui/Toggle';
 import Slider from '../../ui/Slider';
@@ -20,7 +20,7 @@ import Select from '../../ui/Select';
 
 import { isMac } from '../../../environment';
 import globalMessages from '../../../i18n/globalMessages';
-import { Icon } from '../../ui/icon';
+import Icon from '../../ui/icon';
 import { H3 } from '../../ui/headline';
 
 const messages = defineMessages({
@@ -141,6 +141,14 @@ const messages = defineMessages({
     id: 'settings.service.reloadRequired',
     defaultMessage: 'Changes require reload of the service',
   },
+  maxFileSize: {
+    id: 'settings.service.form.maxFileSize',
+    defaultMessage: 'Maximum filesize:',
+  },
+  maxFileSizeError: {
+    id: 'settings.service.form.maxFileSizeError',
+    defaultMessage: 'The file you are trying to submit is too large.',
+  },
 });
 
 class EditServiceForm extends Component {
@@ -247,9 +255,9 @@ class EditServiceForm extends Component {
     );
 
     let activeTabIndex = 0;
-    if (recipe.hasHostedOption && service.team) {
+    if (recipe.hasHostedOption && service?.team) {
       activeTabIndex = 1;
-    } else if (recipe.hasHostedOption && service.customUrl) {
+    } else if (recipe.hasHostedOption && service?.customUrl) {
       activeTabIndex = 2;
     }
 
@@ -398,6 +406,12 @@ class EditServiceForm extends Component {
                   field={form.$('customIcon')}
                   textDelete={intl.formatMessage(messages.iconDelete)}
                   textUpload={intl.formatMessage(messages.iconUpload)}
+                  maxSize={2_097_152}
+                  maxFiles={1}
+                  textMaxFileSize={intl.formatMessage(messages.maxFileSize)}
+                  textMaxFileSizeError={intl.formatMessage(
+                    messages.maxFileSizeError,
+                  )}
                 />
               </div>
             </div>

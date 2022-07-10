@@ -7,8 +7,9 @@ import {
   systemPreferences,
   getCurrentWindow,
 } from '@electron/remote';
-import { autorun, observable } from 'mobx';
+import { autorun, makeObservable, observable } from 'mobx';
 import { defineMessages } from 'react-intl';
+import osName from 'os-name';
 import {
   CUSTOM_WEBSITE_RECIPE_ID,
   GITHUB_FERDIUM_URL,
@@ -25,15 +26,23 @@ import {
   todosToggleShortcutKey,
   workspaceToggleShortcutKey,
   addNewServiceShortcutKey,
+  splitModeToggleShortcutKey,
   muteFerdiumShortcutKey,
+  electronVersion,
+  chromeVersion,
+  nodeVersion,
+  osArch,
 } from '../environment';
-import { aboutAppDetails, ferdiumVersion } from '../environment-remote';
+import { ferdiumVersion } from '../environment-remote';
 import { todoActions } from '../features/todos/actions';
-import { workspaceActions } from '../features/workspaces/actions';
+import workspaceActions from '../features/workspaces/actions';
 import { workspaceStore } from '../features/workspaces/index';
-import apiBase, { termsBase } from '../api/apiBase';
+import apiBase, { serverBase, serverName } from '../api/apiBase';
 import { openExternalUrl } from '../helpers/url-helpers';
 import globalMessages from '../i18n/globalMessages';
+
+// @ts-expect-error Cannot find module '../buildInfo.json' or its corresponding type declarations.
+import * as buildInfo from '../buildInfo.json';
 
 const menuItems = defineMessages({
   edit: {
@@ -127,6 +136,10 @@ const menuItems = defineMessages({
   toggleNavigationBar: {
     id: 'menu.view.toggleNavigationBar',
     defaultMessage: 'Toggle Navigation Bar',
+  },
+  splitModeToggle: {
+    id: 'menu.view.splitModeToggle',
+    defaultMessage: 'Toggle Split Mode',
   },
   toggleDarkMode: {
     id: 'menu.view.toggleDarkMode',
@@ -320,6 +333,14 @@ const menuItems = defineMessages({
     id: 'menu.services.goHome',
     defaultMessage: 'Home',
   },
+  ok: {
+    id: 'global.ok',
+    defaultMessage: 'Ok',
+  },
+  copyToClipboard: {
+    id: 'menu.services.copyToClipboard',
+    defaultMessage: 'Copy to clipboard',
+  },
 });
 
 function getActiveService() {
@@ -468,15 +489,33 @@ const _titleBarTemplateFactory = (intl, locked) => [
         accelerator: `${cmdOrCtrlShortcutKey()}+B`,
         role: 'toggleNavigationBar',
         type: 'checkbox',
-        checked: window['ferdium'].stores.settings.app.navigationBarManualActive,
+        checked:
+          window['ferdium'].stores.settings.app.navigationBarManualActive,
         click: () => {
           window['ferdium'].actions.settings.update({
             type: 'app',
             data: {
-              navigationBarManualActive: !window['ferdium'].stores.settings.app.navigationBarManualActive,
-            }
+              navigationBarManualActive:
+                !window['ferdium'].stores.settings.app
+                  .navigationBarManualActive,
+            },
           });
-        }
+        },
+      },
+      {
+        label: intl.formatMessage(menuItems.splitModeToggle),
+        accelerator: `${splitModeToggleShortcutKey()}`,
+        role: 'splitModeToggle',
+        type: 'checkbox',
+        checked: window['ferdium'].stores.settings.app.splitMode,
+        click: () => {
+          window['ferdium'].actions.settings.update({
+            type: 'app',
+            data: {
+              splitMode: !window['ferdium'].stores.settings.app.splitMode,
+            },
+          });
+        },
       },
       {
         label: intl.formatMessage(menuItems.toggleDarkMode),
@@ -567,13 +606,13 @@ const _titleBarTemplateFactory = (intl, locked) => [
       {
         label: intl.formatMessage(menuItems.tos),
         click() {
-          openExternalUrl(`${termsBase()}/terms`, true);
+          openExternalUrl(`${serverBase()}/terms`, true);
         },
       },
       {
         label: intl.formatMessage(menuItems.privacy),
         click() {
-          openExternalUrl(`${termsBase()}/privacy`, true);
+          openExternalUrl(`${serverBase()}/privacy`, true);
         },
       },
     ],
@@ -587,6 +626,8 @@ class FranzMenu {
     this.stores = stores;
     this.actions = actions;
 
+    makeObservable(this);
+
     setTimeout(() => {
       autorun(this._build.bind(this));
     }, 10);
@@ -597,7 +638,7 @@ class FranzMenu {
   }
 
   get template() {
-    return this.currentTemplate.toJS();
+    return JSON.parse(JSON.stringify(this.currentTemplate));
   }
 
   _build() {
@@ -611,9 +652,10 @@ class FranzMenu {
     }
 
     const { intl } = window['ferdium'];
-    const locked = this.stores.settings.app.locked
-      && this.stores.settings.app.lockingFeatureEnabled
-      && this.stores.user.isLoggedIn;
+    const locked =
+      this.stores.settings.app.locked &&
+      this.stores.settings.app.lockingFeatureEnabled &&
+      this.stores.user.isLoggedIn;
     const tpl = _titleBarTemplateFactory(intl, locked);
     const { actions } = this;
 
@@ -644,8 +686,9 @@ class FranzMenu {
           accelerator: `${cmdOrCtrlShortcutKey()}+${altKey()}+I`,
           click: () => {
             const windowWebContents = webContents.fromId(1);
-            const { isDevToolsOpened, openDevTools, closeDevTools } = windowWebContents;
-    
+            const { isDevToolsOpened, openDevTools, closeDevTools } =
+              windowWebContents;
+
             if (isDevToolsOpened()) {
               closeDevTools();
             } else {
@@ -772,10 +815,6 @@ class FranzMenu {
       accelerator: `${altKey()}+F`,
       submenu: [
         {
-          label: intl.formatMessage(menuItems.about),
-          role: 'about',
-        },
-        {
           type: 'separator',
         },
         {
@@ -831,15 +870,37 @@ class FranzMenu {
       ],
     });
 
+    const aboutAppDetails = [
+      `Version: ${ferdiumVersion}`,
+      `Server: ${serverName()} Server`,
+      `Electron: ${electronVersion}`,
+      `Chrome: ${chromeVersion}`,
+      `Node.js: ${nodeVersion}`,
+      `Platform: ${osName()}`,
+      `Arch: ${osArch}`,
+      `Build date: ${new Date(Number(buildInfo.timestamp))}`,
+      `Git SHA: ${buildInfo.gitHashShort}`,
+      `Git branch: ${buildInfo.gitBranch}`,
+    ].join('\n');
+
     const about = {
       label: intl.formatMessage(menuItems.about),
       click: () => {
-        dialog.showMessageBox({
-          type: 'info',
-          title: 'Ferdium',
-          message: 'Ferdium',
-          detail: aboutAppDetails(),
-        });
+        dialog
+          .showMessageBox({
+            type: 'info',
+            title: 'Ferdium',
+            message: 'Ferdium',
+            detail: aboutAppDetails,
+            buttons: [intl.formatMessage(menuItems.ok), intl.formatMessage(menuItems.copyToClipboard)],
+          })
+          .then(result => {
+            if (result.response === 1) {
+              clipboard.write({
+                text: aboutAppDetails,
+              });
+            }
+          });
       },
     };
 
@@ -864,7 +925,7 @@ class FranzMenu {
         },
       );
 
-      tpl[5].submenu.unshift(about, {
+      tpl[0].submenu.unshift(about, {
         type: 'separator',
       });
     } else {
@@ -1085,14 +1146,16 @@ class FranzMenu {
       ? menuItems.closeTodosDrawer
       : menuItems.openTodosDrawer;
 
-    menu.push({
-      label: intl.formatMessage(drawerLabel),
-      accelerator: `${todosToggleShortcutKey()}`,
-      click: () => {
-        todoActions.toggleTodosPanel();
-      },
-      enabled: this.stores.user.isLoggedIn && isFeatureEnabledByUser,
-    });
+    if (isFeatureEnabledByUser) {
+      menu.push({
+        label: intl.formatMessage(drawerLabel),
+        accelerator: `${todosToggleShortcutKey()}`,
+        click: () => {
+          todoActions.toggleTodosPanel();
+        },
+        enabled: this.stores.user.isLoggedIn && isFeatureEnabledByUser,
+      });
+    }
 
     if (!isFeatureEnabledByUser) {
       menu.push(
@@ -1104,6 +1167,7 @@ class FranzMenu {
           click: () => {
             todoActions.toggleTodosFeatureVisibility();
           },
+          enabled: this.stores.user.isLoggedIn,
         },
       );
     }
@@ -1135,7 +1199,9 @@ class FranzMenu {
       {
         label: intl.formatMessage(menuItems.publishDebugInfo),
         click: () => {
-          window['ferdium'].features.publishDebugInfo.state.isModalVisible = true;
+          window[
+            'ferdium'
+          ].features.publishDebugInfo.state.isModalVisible = true;
         },
       },
     ];

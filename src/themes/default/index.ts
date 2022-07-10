@@ -2,7 +2,7 @@ import color from 'color';
 import { cloneDeep } from 'lodash';
 
 import * as legacyStyles from '../legacy';
-import type { IStyleTypes } from '../IStyleTypes';
+import type IStyleTypes from '../IStyleTypes';
 
 export default (brandPrimary: string) => {
   if (!brandPrimary) {

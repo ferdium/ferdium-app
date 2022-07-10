@@ -231,7 +231,8 @@ function generateServiceRibbonWidthStyle(
       ${useGrayscaleServices ? graysacleServices : null},
     }
     .tab-item .tab-item__label {
-      margin-left: 0px !important;
+      margin-left: 4px !important;
+      font-size: ${fontSize}px !important;
     }
     .tab-item.is-label-enabled {
       padding-bottom: 0px !important;
@@ -251,10 +252,7 @@ function generateServiceRibbonWidthStyle(
     .darwin .sidebar .sidebar__button--workspaces.is-active {
       height: ${width - sidebarSizeBias}px !important;
     }
-    .tab-item .tab-item__label{
-      font-size: ${fontSize}px !important;
-    }
-    .tab-item div{
+    .tab-item div {
       overflow: hidden !important;
     }
   `

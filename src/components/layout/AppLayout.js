@@ -7,6 +7,7 @@ import injectSheet from 'react-jss';
 import { ipcRenderer } from 'electron';
 
 import { mdiFlash, mdiPowerPlug } from '@mdi/js';
+import { Outlet } from 'react-router-dom';
 import InfoBar from '../ui/InfoBar';
 import { Component as BasicAuth } from '../../features/basicAuth';
 import { Component as QuickSwitch } from '../../features/quickSwitch';
@@ -20,7 +21,7 @@ import WorkspaceSwitchingIndicator from '../../features/workspaces/components/Wo
 import { workspaceStore } from '../../features/workspaces';
 import AppUpdateInfoBar from '../AppUpdateInfoBar';
 import Todos from '../../features/todos/containers/TodosScreen';
-import { Icon } from '../ui/icon';
+import Icon from '../ui/icon';
 
 import LockedScreen from '../../containers/auth/LockedScreen';
 
@@ -65,7 +66,7 @@ const styles = theme => ({
     display: 'block',
     zIndex: 1,
     width: '100%',
-    height: '29px',
+    height: '10px',
     position: 'absolute',
     top: 0,
   },
@@ -83,7 +84,6 @@ class AppLayout extends Component {
     sidebar: PropTypes.element.isRequired,
     workspacesDrawer: PropTypes.element.isRequired,
     services: PropTypes.element.isRequired,
-    children: PropTypes.element,
     showServicesUpdatedInfoBar: PropTypes.bool.isRequired,
     appUpdateIsDownloaded: PropTypes.bool.isRequired,
     authRequestFailed: PropTypes.bool.isRequired,
@@ -99,10 +99,6 @@ class AppLayout extends Component {
     shouldShowServicesUpdatedInfoBar: true,
   };
 
-  static defaultProps = {
-    children: [],
-  };
-
   render() {
     const {
       classes,
@@ -110,7 +106,6 @@ class AppLayout extends Component {
       workspacesDrawer,
       sidebar,
       services,
-      children,
       showServicesUpdatedInfoBar,
       appUpdateIsDownloaded,
       authRequestFailed,
@@ -130,6 +125,10 @@ class AppLayout extends Component {
     }
 
     return (
+      <>
+      {isMac && !isFullScreen && (
+        <div className="window-draggable" />
+      )}
       <ErrorBoundary>
         <div className="app">
           {isWindows && !isFullScreen && (
@@ -201,12 +200,13 @@ class AppLayout extends Component {
               <QuickSwitch />
               <PublishDebugInfo />
               {services}
-              {children}
+              <Outlet />
             </div>
             <Todos />
           </div>
         </div>
       </ErrorBoundary>
+      </>
     );
   }
 }

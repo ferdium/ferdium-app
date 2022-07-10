@@ -1,6 +1,11 @@
-import { Component } from 'react';
+import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
-import { Router, Route, IndexRedirect } from 'react-router';
+import { Route } from 'react-router';
+import {
+  Navigate,
+  Routes,
+  unstable_HistoryRouter as HistoryRouter,
+} from 'react-router-dom';
 
 import AppLayoutContainer from './containers/layout/AppLayoutContainer';
 import SettingsWindow from './containers/settings/SettingsWindow';
@@ -25,60 +30,137 @@ import AuthLayoutContainer from './containers/auth/AuthLayoutContainer';
 import WorkspacesScreen from './features/workspaces/containers/WorkspacesScreen';
 import EditWorkspaceScreen from './features/workspaces/containers/EditWorkspaceScreen';
 import { WORKSPACES_ROUTES } from './features/workspaces/constants';
+import { Actions } from './actions/lib/actions';
+import { RealStores } from './stores';
 
 type Props = {
+  stores: RealStores;
+  actions: Actions;
   history: any;
 };
 
-class Routes extends Component<Props> {
-  render() {
-
+class FerdiumRoutes extends Component<Props> {
+  render(): ReactElement {
     const { history } = this.props;
+    const routeProps = {
+      stores: this.props.stores,
+      actions: this.props.actions,
+    };
+    const errorProps = {
+      error: this.props.stores.globalError.error || {},
+    };
 
     return (
-      <Router history={history}>
-        <Route path="/" component={AppLayoutContainer}>
-          <Route path="/settings" component={SettingsWindow}>
-            <IndexRedirect to="/settings/recipes" />
-            <Route path="/settings/recipes" component={RecipesScreen} />
-            <Route path="/settings/recipes/:filter" component={RecipesScreen} />
-            <Route path="/settings/services" component={ServicesScreen} />
+      <HistoryRouter history={history}>
+        <Routes>
+          <Route path="/auth" element={<AuthLayoutContainer {...routeProps} />}>
             <Route
-              path="/settings/services/:action/:id"
-              component={EditServiceScreen}
+              path="/auth"
+              element={<Navigate to="/auth/welcome" replace />}
             />
-            <Route path={WORKSPACES_ROUTES.ROOT} component={WorkspacesScreen} />
             <Route
-              path={WORKSPACES_ROUTES.EDIT}
-              component={EditWorkspaceScreen}
+              path="/auth/welcome"
+              element={<WelcomeScreen {...routeProps} />}
             />
-            <Route path="/settings/user" component={AccountScreen} />
-            <Route path="/settings/user/edit" component={EditUserScreen} />
-            <Route path="/settings/team" component={TeamScreen} />
-            <Route path="/settings/app" component={EditSettingsScreen} />
-            <Route path="/settings/invite" component={InviteSettingsScreen} />
-            <Route path="/settings/support" component={SupportFerdiumScreen} />
+            <Route
+              path="/auth/login"
+              element={<LoginScreen {...routeProps} {...errorProps} />}
+            />
+            <Route
+              path="/auth/server"
+              element={<ChangeServerScreen {...routeProps} />}
+            />
+            <Route path="/auth/signup">
+              <Route
+                path="/auth/signup"
+                element={<Navigate to="/auth/signup/form" replace />}
+              />
+              <Route
+                path="/auth/signup/form"
+                element={<SignupScreen {...routeProps} {...errorProps} />}
+              />
+              <Route
+                path="/auth/signup/import"
+                element={<ImportScreen {...routeProps} />}
+              />
+              <Route
+                path="/auth/signup/setup"
+                element={<SetupAssistentScreen {...routeProps} />}
+              />
+              <Route
+                path="/auth/signup/invite"
+                element={<InviteScreen {...routeProps} />}
+              />
+            </Route>
+            <Route
+              path="/auth/password"
+              element={<PasswordScreen {...routeProps} />}
+            />
+            <Route
+              path="/auth/logout"
+              element={<LoginScreen {...routeProps} {...errorProps} />}
+            />
           </Route>
-        </Route>
-        <Route path="/auth" component={AuthLayoutContainer}>
-          <IndexRedirect to="/auth/welcome" />
-          <Route path="/auth/welcome" component={WelcomeScreen} />
-          <Route path="/auth/login" component={LoginScreen} />
-          <Route path="/auth/server" component={ChangeServerScreen} />
-          <Route path="/auth/signup">
-            <IndexRedirect to="/auth/signup/form" />
-            <Route path="/auth/signup/form" component={SignupScreen} />
-            <Route path="/auth/signup/import" component={ImportScreen} />
-            <Route path="/auth/signup/setup" component={SetupAssistentScreen} />
-            <Route path="/auth/signup/invite" component={InviteScreen} />
+
+          <Route path="/" element={<AppLayoutContainer {...routeProps} />}>
+            <Route
+              path="/settings"
+              element={<SettingsWindow {...this.props} />}
+            >
+              <Route
+                path="/settings/recipes"
+                element={<RecipesScreen {...this.props} />}
+              />
+              <Route
+                path="/settings/recipes/:filter"
+                element={<RecipesScreen {...this.props} />}
+              />
+              <Route
+                path="/settings/services"
+                element={<ServicesScreen {...this.props} />}
+              />
+              <Route
+                path="/settings/services/:action/:id"
+                element={<EditServiceScreen {...this.props} />}
+              />
+              <Route
+                path={WORKSPACES_ROUTES.ROOT}
+                element={<WorkspacesScreen {...this.props} />}
+              />
+              <Route
+                path={WORKSPACES_ROUTES.EDIT}
+                element={<EditWorkspaceScreen {...this.props} />}
+              />
+              <Route
+                path="/settings/user"
+                element={<AccountScreen {...this.props} />}
+              />
+              <Route
+                path="/settings/user/edit"
+                element={<EditUserScreen {...this.props} />}
+              />
+              <Route
+                path="/settings/team"
+                element={<TeamScreen {...this.props} />}
+              />
+              <Route
+                path="/settings/app"
+                element={<EditSettingsScreen {...this.props} />}
+              />
+              <Route
+                path="/settings/invite"
+                element={<InviteSettingsScreen {...this.props} />}
+              />
+              <Route
+                path="/settings/support"
+                element={<SupportFerdiumScreen {...this.props} />}
+              />
+            </Route>
           </Route>
-          <Route path="/auth/password" component={PasswordScreen} />
-          <Route path="/auth/logout" component={LoginScreen} />
-        </Route>
-        <Route path="*" component={AppLayoutContainer} />
-      </Router>
+        </Routes>
+      </HistoryRouter>
     );
   }
 }
 
-export default inject('stores', 'actions')(observer(Routes));
+export default inject('stores', 'actions')(observer(FerdiumRoutes));

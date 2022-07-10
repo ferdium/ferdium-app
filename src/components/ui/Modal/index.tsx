@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import injectCSS from 'react-jss';
 import { mdiClose } from '@mdi/js';
 
-import { Icon } from '../icon';
+import Icon from '../icon';
 import styles from './styles';
 
 type Props = {

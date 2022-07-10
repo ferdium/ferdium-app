@@ -1,8 +1,8 @@
-import { computed, observable, action } from 'mobx';
+import { computed, observable, action, makeObservable } from 'mobx';
 import localStorage from 'mobx-localstorage';
-import { matchRoute } from '../../helpers/routing-helpers';
-import { workspaceActions } from './actions';
-import { FeatureStore } from '../utils/FeatureStore';
+import matchRoute from '../../helpers/routing-helpers';
+import workspaceActions from './actions';
+import FeatureStore from '../utils/FeatureStore';
 import {
   createWorkspaceRequest,
   deleteWorkspaceRequest,
@@ -31,6 +31,12 @@ export default class WorkspacesStore extends FeatureStore {
   @observable isWorkspaceDrawerOpen = false;
 
   @observable isSettingsRouteActive = null;
+
+  constructor() {
+    super();
+
+    makeObservable(this);
+  }
 
   @computed get workspaces() {
     if (!this.isFeatureActive) return [];

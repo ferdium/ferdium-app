@@ -2,7 +2,7 @@ import { ipcRenderer } from 'electron';
 
 const debug = require('../preload-safe-debug')('Ferdium:Plugin:BadgeHandler');
 
-export class BadgeHandler {
+export default class BadgeHandler {
   // TODO: Need to extract this into a utility class and reuse outside of the recipes
   safeParseInt(text: string | number | undefined | null) {
     if (text === undefined || text === null) {

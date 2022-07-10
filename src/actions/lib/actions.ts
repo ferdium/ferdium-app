@@ -10,7 +10,7 @@ export interface Actions {
   [key: string]: {
     [key: string]: {
       (...args: any[]): void;
-      listeners: Array<Function>;
+      listeners: Function[];
       notify: (params: any) => void;
       listen: (listener: (params: any) => void) => void;
       off: (listener: (params: any) => void) => void;

@@ -40,7 +40,6 @@ Function Test-CommandExists { Param ($command, $1)
 # Check for installed programmes
 Test-CommandExists node "Node is not installed"
 Test-CommandExists npm "npm is not installed"
-# TODO: Needs proper way to check MSVS Build Tools
 
 # Check node version
 $EXPECTED_NODE_VERSION = (cat .nvmrc)
@@ -94,15 +93,41 @@ if ($env:CLEAN -eq "true")
 
 # -----------------------------------------------------------------------------
 # Ensure that the system dependencies are at the correct version - fail if not
-# TODO: Needs proper way to check MSVS Tools
 # Check MSVS Tools through MSVS_VERSION
-$EXPECTED_MSVST_VERSION = "2015"
-$ACTUAL_MSVST_VERSION = (npm config get msvs_version)
-if ([double]$ACTUAL_MSVST_VERSION -ne [double]$EXPECTED_MSVST_VERSION) {
-  fail_with_docs "You are not running the expected version of MSVS Tools!
+
+
+$EXPECTED_MSVST_VERSION = @("2019","2022")
+$NPM_CONFIG_MSVS_VERSION = npm config get msvs_version
+if((-not $NPM_CONFIG_MSVS_VERSION) -or -not ($EXPECTED_MSVST_VERSION -contains $NPM_CONFIG_MSVS_VERSION)){
+  Write-Host "Your Microsoft Visual Studio Tools isn't set properly or it's not the right version!
+              Checking your version..."
+
+  # TODO: Implement path for ARM machines
+  $MSVS_REG_PATH = "Registry::HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\14.0\VC\Runtimes\X64"
+
+  if(-not (Test-Path -Path $MSVS_REG_PATH)){
+    fail_with_docs "You don't have the Microsoft Visual Studio Tools installed!"
+  }
+
+  $MSVS_VERSION =  [int]((Get-ItemProperty -Path $MSVS_REG_PATH).Version.substring(4, 2))
+  switch($MSVS_VERSION) {
+    { $MSVS_VERSION -ge 30 } {$ACTUAL_MSVST_VERSION = "2022"}
+    { ($MSVS_VERSION -ge 20) -and ($MSVS_VERSION -le 29) } {$ACTUAL_MSVST_VERSION = "2019"}
+    { $MSVS_VERSION -lt 20 } {$ACTUAL_MSVST_VERSION = "2017 or lower"}
+  }
+
+  if (-not ($EXPECTED_MSVST_VERSION -contains $ACTUAL_MSVST_VERSION)) {
+    fail_with_docs "You are not running the expected version of MSVS Tools!
     expected: [$EXPECTED_MSVST_VERSION]
     actual  : [$ACTUAL_MSVST_VERSION]"
+  }
+
+  Write-Host "Changing your msvs_version on npm to [$ACTUAL_MSVST_VERSION]"
+  npm config set msvs_version $ACTUAL_MSVST_VERSION
 }
+
+
+
 
 # -----------------------------------------------------------------------------
 # Ensure that the system dependencies are at the correct version - recover if not
@@ -151,7 +176,13 @@ Pop-Location
 
 # -----------------------------------------------------------------------------
 Write-Host "*************** Building app ***************"
-$TARGET_ARCH="x64"
+if ($env:PROCESSOR_ARCHITECTURE -eq "ARM64") {
+    $TARGET_ARCH="arm64"
+}
+else
+{
+    $TARGET_ARCH="x64"
+}
 & $BASE_CMD run build -- --$TARGET_ARCH --dir
 
 Write-Host "*************** App successfully built! ***************"

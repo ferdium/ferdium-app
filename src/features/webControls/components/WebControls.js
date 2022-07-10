@@ -12,7 +12,7 @@ import {
   mdiEarth,
 } from '@mdi/js';
 
-import { Icon } from '../../../components/ui/icon';
+import Icon from '../../../components/ui/icon';
 
 const messages = defineMessages({
   goHome: {

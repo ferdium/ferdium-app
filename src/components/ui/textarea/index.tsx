@@ -4,9 +4,9 @@ import injectSheet, { WithStylesProps } from 'react-jss';
 
 import { IFormField } from '../typings/generic';
 
-import { Error } from '../error';
-import { Label } from '../label';
-import { Wrapper } from '../wrapper';
+import Error from '../error';
+import Label from '../label';
+import Wrapper from '../wrapper';
 
 import styles from './styles';
 
@@ -121,6 +121,6 @@ class TextareaComponent extends Component<IProps> {
   }
 }
 
-export const Textarea = injectSheet(styles, { injectTheme: true })(
+export default injectSheet(styles, { injectTheme: true })(
   TextareaComponent,
 );

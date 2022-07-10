@@ -15,6 +15,10 @@ snap:
 nsis:
   perMachine: false
   oneClick: true
+  artifactName: "${productName}-${os}-AutoSetup-${version}.${ext}"
+
+portable:
+  artifactName: "${productName}-${os}-Portable-${version}-${arch}.${ext}"
 
 dmg:
   background: ./build-helpers/images/dmgInstaller.tiff
@@ -25,6 +29,17 @@ dmg:
       { x: 380, y: 240, type: link, path: /Applications },
       { x: 122, y: 240, type: file },
     ]
+  artifactName: "${productName}-${os}-${version}-${arch}.${ext}"
+
+appImage:
+  artifactName: "${productName}-${os}-Portable-${version}-${arch}.${ext}"
+
+deb:
+  artifactName: "${productName}-${os}-${version}-${arch}.${ext}"
+
+rpm:
+  # Prevent creation of symlinks in /usr/lib/.build_id to avoid conflicts with other electron-based app having the symlink to chrome-sandbox
+  fpm: ["--rpm-rpmbuild-define=_build_id_links none"]
 
 # This is the notarization process which allows the app to be opened after download with the minimal warning.
 afterSign: ./build-helpers/notarize.js
@@ -46,6 +61,7 @@ mac:
   darkModeSupport: true
   entitlements: "./build-helpers/entitlements.mas.plist"
   entitlementsInherit: "./build-helpers/entitlements.mas.inherit.plist"
+  artifactName: "${productName}-${os}-bundle-${version}-${arch}.${ext}"
   target:
     - target: dmg
       arch: [x64, arm64]
@@ -56,15 +72,17 @@ mac:
     NSMicrophoneUsageDescription: "This app requires microphone access for voice chats"
 
 win:
+  artifactName: "${productName}-${os}-Installer-${version}-${arch}.${ext}"
   icon: ./build-helpers/images/icon.ico
   target:
     - target: nsis
-      arch: [x64, ia32]
+      arch: [x64, ia32, arm64]
     - target: msi
       arch: [x64, ia32]
     - target: portable
-      arch: [x64, ia32]
-  publisherName: "Ferdium Contributors"
+      arch: [x64, ia32, arm64]
+  # The name of the CN appearing in the certificate must be present in the publisherName list below
+  publisherName: ["Ferdium Contributors", "Ambroise Grau"]
 
 linux:
   icon: ./build-helpers/images/icons
@@ -73,6 +91,7 @@ linux:
   synopsis: "Messaging app for WhatsApp, Slack, Telegram, Gmail, Hangouts and many many more."
   # Note: Please keep the description as a single-line string, as this will become the Comment in the ferdium.desktop Linux launcher file, which requires a single line.
   description: 'Ferdium is your messaging app / former heir to the throne of Austria-Hungary and combines chat & messaging services into one application. Ferdium currently supports Slack, WhatsApp, Gmail, Facebook Messenger, Telegram, Google Hangouts, GroupMe, Skype and many more. You can download Ferdium for free for Mac, Windows, and Linux. For enabling webcam access you need to connect "camera" plug to snap, and for microphone with PulseAudio - "audio-record" plug. This can be done in Snap GUI or via command: `snap connect ferdium:camera; snap connect ferdium:audio-record`.'
+  artifactName: "${productName}-${os}-${version}.${ext}"
   target:
     - target: AppImage
     - target: deb

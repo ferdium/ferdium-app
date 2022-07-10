@@ -7,27 +7,27 @@ import {
   getCurrentWindow,
   process as remoteProcess,
 } from '@electron/remote';
-import { action, computed, observable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 import moment from 'moment';
 import AutoLaunch from 'auto-launch';
 import ms from 'ms';
 import { URL } from 'url';
 import { readJsonSync } from 'fs-extra';
 
-import { Stores } from 'src/stores.types';
-import { ApiInterface } from 'src/api';
-import { Actions } from 'src/actions/lib/actions';
+import { Stores } from '../@types/stores.types';
+import { ApiInterface } from '../api';
+import { Actions } from '../actions/lib/actions';
 import TypedStore from './lib/TypedStore';
 import Request from './lib/Request';
 import { CHECK_INTERVAL, DEFAULT_APP_SETTINGS } from '../config';
 import { cleanseJSObject } from '../jsUtils';
-import { isMac, isWindows, electronVersion, osRelease } from '../environment';
+import { isMac, electronVersion, osRelease } from '../environment';
 import {
   ferdiumVersion,
   userDataPath,
   ferdiumLocale,
 } from '../environment-remote';
-import { generatedTranslations } from '../i18n/translations';
+import generatedTranslations from '../i18n/translations';
 import { getLocale } from '../helpers/i18n-helpers';
 
 import {
@@ -35,7 +35,7 @@ import {
   removeServicePartitionDirectory,
 } from '../helpers/service-helpers';
 import { openExternalUrl } from '../helpers/url-helpers';
-import { sleep } from '../helpers/async-helpers';
+import sleep from '../helpers/async-helpers';
 
 const debug = require('../preload-safe-debug')('Ferdium:AppStore');
 
@@ -94,12 +94,18 @@ export default class AppStore extends TypedStore {
 
   @observable isFocused = true;
 
+  @observable lockingFeatureEnabled = false;
+
+  @observable launchInBackground = false;
+
   dictionaries = [];
 
   fetchDataInterval: null | NodeJS.Timer = null;
 
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
+
+    makeObservable(this);
 
     // Register action handlers
     this.actions.app.notify.listen(this._notify.bind(this));
@@ -114,6 +120,9 @@ export default class AppStore extends TypedStore {
     this.actions.app.healthCheck.listen(this._healthCheck.bind(this));
     this.actions.app.muteApp.listen(this._muteApp.bind(this));
     this.actions.app.toggleMuteApp.listen(this._toggleMuteApp.bind(this));
+    this.actions.app.toggleCollapseMenu.listen(
+      this._toggleCollapseMenu.bind(this),
+    );
     this.actions.app.clearAllCache.listen(this._clearAllCache.bind(this));
 
     this.registerReactions([
@@ -401,11 +410,7 @@ export default class AppStore extends TypedStore {
   }
 
   @action _checkForUpdates() {
-    if (
-      this.isOnline &&
-      this.stores.settings.app.automaticUpdates &&
-      (isMac || isWindows || process.env.APPIMAGE)
-    ) {
+    if (this.isOnline && this.stores.settings.app.automaticUpdates) {
       debug('_checkForUpdates: sending event to autoUpdate:check');
       this.updateStatus = this.updateStatusTypes.CHECKING;
       ipcRenderer.send('autoUpdate', {
@@ -446,6 +451,15 @@ export default class AppStore extends TypedStore {
   @action _toggleMuteApp() {
     this._muteApp({
       isMuted: !this.stores.settings.all.app.isAppMuted,
+    });
+  }
+
+  @action _toggleCollapseMenu(): void {
+    this.actions.settings.update({
+      type: 'app',
+      data: {
+        isMenuCollapsed: !this.stores.settings.all.app.isMenuCollapsed,
+      },
     });
   }
 
@@ -498,7 +512,7 @@ export default class AppStore extends TypedStore {
   }
 
   _setLocale() {
-    if (this.stores.user.isLoggedIn && this.stores.user.data.locale) {
+    if (this.stores.user?.isLoggedIn && this.stores.user?.data.locale) {
       this.locale = this.stores.user.data.locale;
     } else if (!this.locale) {
       this.locale = this._getDefaultLocale();

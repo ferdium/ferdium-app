@@ -2,9 +2,9 @@ import semver from 'semver';
 import { pathExistsSync } from 'fs-extra';
 import { join } from 'path';
 import { DEFAULT_SERVICE_SETTINGS } from '../config';
-import { ifUndefinedString, ifUndefinedBoolean } from '../jsUtils';
+import { ifUndefined } from '../jsUtils';
 
-interface IRecipe {
+interface RecipeData {
   id: string;
   name: string;
   version: string;
@@ -23,56 +23,92 @@ interface IRecipe {
     disablewebsecurity?: boolean;
     autoHibernate?: boolean;
     partition?: string;
+    local?: boolean;
     message?: string;
     allowFavoritesDelineationInUnreadCount?: boolean;
   };
 }
 
-export default class Recipe {
-  id: string = '';
+export interface IRecipe {
+  id: string;
+  name: string;
+  description: string;
+  version: string;
+  aliases: string[];
+  serviceURL: string;
+  hasDirectMessages: boolean;
+  hasIndirectMessages: boolean;
+  hasNotificationSound: boolean;
+  hasTeamId: boolean;
+  hasCustomUrl: boolean;
+  hasHostedOption: boolean;
+  urlInputPrefix: string;
+  urlInputSuffix: string;
+  message: string;
+  allowFavoritesDelineationInUnreadCount: boolean;
+  disablewebsecurity: boolean;
+  autoHibernate: boolean;
+  path: string;
+  partition: string;
+  local: boolean;
 
-  name: string = '';
+  readonly overrideUserAgent?: null | Function;
+  readonly buildUrl?: null | Function;
+  readonly modifyRequestHeaders?: null | Function;
+  readonly knownCertificateHosts?: null | Function;
+  readonly events?: null | { (key: string): string };
+}
+
+export default class Recipe implements IRecipe {
+  id = '';
+
+  name = '';
 
   description = '';
 
-  version: string = '';
+  version = '';
 
+  // Removing this specific type will cause a typescript error
+  // even while it's the exact same as the interface
   aliases: string[] = [];
 
-  serviceURL: string = '';
+  serviceURL = '';
 
-  hasDirectMessages: boolean = DEFAULT_SERVICE_SETTINGS.hasDirectMessages;
+  hasDirectMessages = DEFAULT_SERVICE_SETTINGS.hasDirectMessages;
 
-  hasIndirectMessages: boolean = DEFAULT_SERVICE_SETTINGS.hasIndirectMessages;
+  hasIndirectMessages = DEFAULT_SERVICE_SETTINGS.hasIndirectMessages;
 
-  hasNotificationSound: boolean = DEFAULT_SERVICE_SETTINGS.hasNotificationSound;
+  hasNotificationSound = DEFAULT_SERVICE_SETTINGS.hasNotificationSound;
 
-  hasTeamId: boolean = DEFAULT_SERVICE_SETTINGS.hasTeamId;
+  hasTeamId = DEFAULT_SERVICE_SETTINGS.hasTeamId;
 
-  hasCustomUrl: boolean = DEFAULT_SERVICE_SETTINGS.hasCustomUrl;
+  hasCustomUrl = DEFAULT_SERVICE_SETTINGS.hasCustomUrl;
 
-  hasHostedOption: boolean = DEFAULT_SERVICE_SETTINGS.hasHostedOption;
+  hasHostedOption = DEFAULT_SERVICE_SETTINGS.hasHostedOption;
 
-  urlInputPrefix: string = '';
+  urlInputPrefix = '';
 
-  urlInputSuffix: string = '';
+  urlInputSuffix = '';
 
-  message: string = '';
+  message = '';
 
-  allowFavoritesDelineationInUnreadCount: boolean =
+  allowFavoritesDelineationInUnreadCount =
     DEFAULT_SERVICE_SETTINGS.allowFavoritesDelineationInUnreadCount;
 
-  disablewebsecurity: boolean = DEFAULT_SERVICE_SETTINGS.disablewebsecurity;
+  disablewebsecurity = DEFAULT_SERVICE_SETTINGS.disablewebsecurity;
 
   // TODO: Is this even used?
-  autoHibernate: boolean = DEFAULT_SERVICE_SETTINGS.autoHibernate;
+  autoHibernate = DEFAULT_SERVICE_SETTINGS.autoHibernate;
 
-  path: string = '';
+  path = '';
 
-  partition: string = '';
+  partition = '';
+
+  // TODO: Is this being used?
+  local = false;
 
   // TODO: Need to reconcile which of these are optional/mandatory
-  constructor(data: IRecipe) {
+  constructor(data: RecipeData) {
     if (!data) {
       throw new Error('Recipe config not valid');
     }
@@ -89,60 +125,64 @@ export default class Recipe {
     }
 
     // from the recipe
-    this.id = ifUndefinedString(data.id, this.id);
-    this.name = ifUndefinedString(data.name, this.name);
-    this.version = ifUndefinedString(data.version, this.version);
-    this.aliases = data.aliases || this.aliases;
-    this.serviceURL = ifUndefinedString(
+    this.id = ifUndefined<string>(data.id, this.id);
+    this.name = ifUndefined<string>(data.name, this.name);
+    this.version = ifUndefined<string>(data.version, this.version);
+    this.aliases = ifUndefined<Array<string>>(data.aliases, this.aliases);
+    this.serviceURL = ifUndefined<string>(
       data.config.serviceURL,
       this.serviceURL,
     );
-    this.hasDirectMessages = ifUndefinedBoolean(
+    this.hasDirectMessages = ifUndefined<boolean>(
       data.config.hasDirectMessages,
       this.hasDirectMessages,
     );
-    this.hasIndirectMessages = ifUndefinedBoolean(
+    this.hasIndirectMessages = ifUndefined<boolean>(
       data.config.hasIndirectMessages,
       this.hasIndirectMessages,
     );
-    this.hasNotificationSound = ifUndefinedBoolean(
+    this.hasNotificationSound = ifUndefined<boolean>(
       data.config.hasNotificationSound,
       this.hasNotificationSound,
     );
-    this.hasTeamId = ifUndefinedBoolean(data.config.hasTeamId, this.hasTeamId);
-    this.hasCustomUrl = ifUndefinedBoolean(
+    this.hasTeamId = ifUndefined<boolean>(
+      data.config.hasTeamId,
+      this.hasTeamId,
+    );
+    this.hasCustomUrl = ifUndefined<boolean>(
       data.config.hasCustomUrl,
       this.hasCustomUrl,
     );
-    this.hasHostedOption = ifUndefinedBoolean(
+    this.hasHostedOption = ifUndefined<boolean>(
       data.config.hasHostedOption,
       this.hasHostedOption,
     );
-    this.urlInputPrefix = ifUndefinedString(
+    this.urlInputPrefix = ifUndefined<string>(
       data.config.urlInputPrefix,
       this.urlInputPrefix,
     );
-    this.urlInputSuffix = ifUndefinedString(
+    this.urlInputSuffix = ifUndefined<string>(
       data.config.urlInputSuffix,
       this.urlInputSuffix,
     );
-    this.disablewebsecurity = ifUndefinedBoolean(
+    this.disablewebsecurity = ifUndefined<boolean>(
       data.config.disablewebsecurity,
       this.disablewebsecurity,
     );
-    this.autoHibernate = ifUndefinedBoolean(
+    this.autoHibernate = ifUndefined<boolean>(
       data.config.autoHibernate,
       this.autoHibernate,
     );
-    this.message = ifUndefinedString(data.config.message, this.message);
-    this.allowFavoritesDelineationInUnreadCount = ifUndefinedBoolean(
+    this.local = ifUndefined<boolean>(data.config.local, this.local);
+    this.message = ifUndefined<string>(data.config.message, this.message);
+    this.allowFavoritesDelineationInUnreadCount = ifUndefined<boolean>(
       data.config.allowFavoritesDelineationInUnreadCount,
       this.allowFavoritesDelineationInUnreadCount,
     );
 
     // computed
     this.path = data.path;
-    this.partition = ifUndefinedString(data.config.partition, this.partition);
+    this.partition = ifUndefined<string>(data.config.partition, this.partition);
   }
 
   // TODO: Need to remove this if its not used anywhere

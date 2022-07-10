@@ -2,7 +2,7 @@
 /* eslint-disable import/first */
 import { contextBridge, ipcRenderer } from 'electron';
 import { join } from 'path';
-import { autorun, computed, observable } from 'mobx';
+import { autorun, computed, makeObservable, observable } from 'mobx';
 import { pathExistsSync, readFileSync } from 'fs-extra';
 import { debounce } from 'lodash';
 
@@ -23,9 +23,9 @@ import customDarkModeCss from './darkmode/custom';
 import RecipeWebview from './lib/RecipeWebview';
 import Userscript from './lib/Userscript';
 
-import { BadgeHandler } from './badge';
-import { DialogTitleHandler } from './dialogTitle';
-import { SessionHandler } from './sessionHandler';
+import BadgeHandler from './badge';
+import DialogTitleHandler from './dialogTitle';
+import SessionHandler from './sessionHandler';
 import contextMenu from './contextMenu';
 import {
   darkModeStyleExists,
@@ -154,11 +154,16 @@ class RecipeController {
   hasUpdatedBeforeRecipeLoaded = false;
 
   constructor() {
+    makeObservable(this);
+
     this.initialize();
   }
 
   @computed get spellcheckerLanguage() {
-    return ifUndefinedString(this.settings.service.spellcheckerLanguage, this.settings.app.spellcheckerLanguage);
+    return ifUndefinedString(
+      this.settings.service.spellcheckerLanguage,
+      this.settings.app.spellcheckerLanguage,
+    );
   }
 
   cldIdentifier = null;
@@ -197,13 +202,13 @@ class RecipeController {
     // Add ability to go forward or back with mouse buttons (inside the recipe)
     window.addEventListener('mouseup', e => {
       if (e.button === 3) {
-          e.preventDefault()
-          e.stopPropagation()
-          window.history.back()
+        e.preventDefault();
+        e.stopPropagation();
+        window.history.back();
       } else if (e.button === 4) {
-        e.preventDefault()
-        e.stopPropagation()
-        window.history.forward()
+        e.preventDefault();
+        e.stopPropagation();
+        window.history.forward();
       }
     });
   }

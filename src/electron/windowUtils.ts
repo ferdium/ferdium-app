@@ -1,6 +1,6 @@
 import { screen } from 'electron';
 
-export function isPositionValid(position: { x: number; y: number }) {
+export default function isPositionValid(position: { x: number; y: number }): boolean {
   const displays = screen.getAllDisplays();
   const { x, y } = position;
   return displays.some(

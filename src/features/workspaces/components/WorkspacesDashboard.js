@@ -5,7 +5,7 @@ import { observer, PropTypes as MobxPropTypes, inject } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import injectSheet from 'react-jss';
 
-import { Infobox } from '../../../components/ui/infobox/index';
+import Infobox from '../../../components/ui/infobox/index';
 import Loader from '../../../components/ui/Loader';
 import WorkspaceItem from './WorkspaceItem';
 import CreateWorkspaceForm from './CreateWorkspaceForm';

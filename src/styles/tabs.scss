@@ -31,9 +31,10 @@
   align-items: center;
   display: flex;
   height: 65px;
-  justify-content: center;
+  justify-content: space-evenly;
   min-height: 50px;
   position: relative;
+  flex-direction: column;
   @media (prefers-reduced-motion: no-preference) {
     transition: background $theme-transition-time;
   }
@@ -48,10 +49,7 @@
     border-left-width: 4px;
     border-left-style: solid;
 
-    .tab-item__icon {
-      margin-left: -4px;
-    }
-    .tab-item__label {
+    .tab-item__icon, .tab-item__label {
       margin-left: -4px;
     }
   }
@@ -65,9 +63,7 @@
 
   .tab-item__label {
     display: flex;
-    position: relative;
     font-size: 11px;
-    justify-content: center;
   }
 
   &.is-disabled .tab-item__icon {
