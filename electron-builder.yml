@@ -15,7 +15,7 @@ snap:
 nsis:
   perMachine: false
   oneClick: true
-  artifactName: "${productName}-${os}-AutoSetup-${version}.${ext}"
+  artifactName: "${productName}-${os}-AutoSetup-${version}-${arch}.${ext}"
 
 portable:
   artifactName: "${productName}-${os}-Portable-${version}-${arch}.${ext}"
