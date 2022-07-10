@@ -34,6 +34,23 @@ export default function apiBase(withVersion = true) {
   return fixUrl(withVersion ? `${url}/${API_VERSION}` : url);
 };
 
+export function needsToken(): boolean {
+  return (window as any).ferdium.stores.settings.all.app.server === LOCAL_SERVER;
+}
+
+export function localServerToken(): string | undefined {
+  return needsToken()
+    ? (window as any).ferdium.stores.requests.localServerToken
+    : undefined;
+}
+
+export function importExportURL() {
+  const base = apiBase(false);
+  return needsToken()
+    ? `${base}/token/${localServerToken()}`
+    : base;
+}
+
 export function serverBase() {
   const serverType = (window as any).ferdium.stores.settings.all.app.server;
   const noServer = 'You are using Ferdium without a server';

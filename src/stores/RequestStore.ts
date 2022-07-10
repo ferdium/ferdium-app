@@ -6,7 +6,7 @@ import { Actions } from '../actions/lib/actions';
 import { ApiInterface } from '../api';
 import { Stores } from '../@types/stores.types';
 import CachedRequest from './lib/CachedRequest';
-import { LOCAL_PORT } from '../config';
+import { LOCAL_HOSTNAME, LOCAL_PORT } from '../config';
 
 import TypedStore from './lib/TypedStore';
 
@@ -20,6 +20,8 @@ export default class RequestStore extends TypedStore {
   @observable showRequiredRequestsError = false;
 
   @observable localServerPort = LOCAL_PORT;
+
+  @observable localServerToken: string | undefined;
 
   retries: number = 0;
 
@@ -45,6 +47,9 @@ export default class RequestStore extends TypedStore {
       if (data.port) {
         this.localServerPort = data.port;
       }
+      if (data.token) {
+        this.localServerToken = data.token;
+      }
     });
   }
 
@@ -54,6 +59,10 @@ export default class RequestStore extends TypedStore {
 
   @computed get areRequiredRequestsLoading(): boolean {
     return this.userInfoRequest.isExecuting || this.servicesRequest.isExecuting;
+  }
+
+  @computed get localServerOrigin(): string {
+    return `http://${LOCAL_HOSTNAME}:${this.localServerPort}`;
   }
 
   @action _retryRequiredRequests(): void {

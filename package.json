@@ -111,6 +111,7 @@
     "react-tooltip": "4.2.21",
     "react-topbar-progress-indicator": "4.1.1",
     "route-parser": "0.0.5",
+    "sanitize-filename": "1.6.3",
     "semver": "7.3.7",
     "sqlite3": "5.0.8",
     "tar": "6.1.11",

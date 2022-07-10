@@ -33,6 +33,7 @@ import EditSettingsForm from '../../components/settings/settings/EditSettingsFor
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 
 import globalMessages from '../../i18n/globalMessages';
+import { importExportURL } from '../../api/apiBase';
 
 const debug = require('../../preload-safe-debug')('Ferdium:EditSettingsScreen');
 
@@ -894,6 +895,7 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           }
           openProcessManager={() => this.openProcessManager()}
           isOnline={app.isOnline}
+          serverURL={importExportURL()}
         />
       </ErrorBoundary>
     );

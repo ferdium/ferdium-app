@@ -25,7 +25,7 @@ import { SERVER_NOT_LOADED } from '../../config';
 import { userDataRecipesPath, userDataPath } from '../../environment-remote';
 import { asarRecipesPath } from '../../helpers/asar-helpers';
 import apiBase from '../apiBase';
-import { prepareAuthRequest, sendAuthRequest } from '../utils/auth';
+import { prepareAuthRequest, prepareLocalToken, sendAuthRequest } from '../utils/auth';
 
 import {
   getRecipeDirectory,
@@ -245,6 +245,8 @@ export default class ServerApi {
     });
 
     delete requestData.headers['Content-Type'];
+
+    await prepareLocalToken(requestData);
 
     const request = await window.fetch(
       `${apiBase()}/service/${serviceId}`,

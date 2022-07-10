@@ -166,7 +166,8 @@ interface RecipeStore extends TypedStore {
 }
 
 interface RequestsStore extends TypedStore {
-  localServerPort: () => void;
+  localServerPort: number;
+  localServerToken: string | undefined;
   retries: number;
   retryDelay: number;
   servicesRequest: () => void;

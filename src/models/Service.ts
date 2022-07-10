@@ -11,6 +11,7 @@ import UserAgent from './UserAgent';
 import { DEFAULT_SERVICE_ORDER } from '../config';
 import { ifUndefined } from '../jsUtils';
 import { IRecipe } from './Recipe';
+import { needsToken } from '../api/apiBase';
 
 const debug = require('../preload-safe-debug')('Ferdium:Service');
 
@@ -295,6 +296,21 @@ export default class Service {
 
   @computed get icon(): string {
     if (this.iconUrl) {
+      if (needsToken()) {
+        let url: URL;
+        try {
+          url = new URL(this.iconUrl);
+        } catch (error) {
+          debug('Invalid url', this.iconUrl, error);
+          return this.iconUrl;
+        }
+        const requestStore = (window as any).ferdium.stores.requests;
+        // Make sure we only pass the token to the local server.
+        if (url.origin === requestStore.localServerOrigin) {
+          url.searchParams.set('token', requestStore.localServerToken);
+          return url.toString();
+        }
+      }
       return this.iconUrl;
     }
 

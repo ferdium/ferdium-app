@@ -30,7 +30,7 @@ import {
   userDataPath,
   userDataRecipesPath,
 } from '../../../environment-remote';
-import { openPath } from '../../../helpers/url-helpers';
+import { openExternalUrl, openPath } from '../../../helpers/url-helpers';
 import globalMessages from '../../../i18n/globalMessages';
 import Icon from '../../ui/icon';
 import Slider from '../../ui/Slider';
@@ -197,6 +197,14 @@ const messages = defineMessages({
     id: 'settings.app.buttonOpenFerdiumServiceRecipesFolder',
     defaultMessage: 'Open Service Recipes folder',
   },
+  buttonOpenImportExport: {
+    id: 'settings.app.buttonOpenImportExport',
+    defaultMessage: 'Import / Export',
+  },
+  serverHelp: {
+    id: 'settings.app.serverHelp',
+    defaultMessage: 'Connected to server at {serverURL}',
+  },
   buttonSearchForUpdate: {
     id: 'settings.app.buttonSearchForUpdate',
     defaultMessage: 'Check for updates',
@@ -274,6 +282,7 @@ class EditSettingsForm extends Component {
     openProcessManager: PropTypes.func.isRequired,
     isSplitModeEnabled: PropTypes.bool.isRequired,
     isOnline: PropTypes.bool.isRequired,
+    serverURL: PropTypes.string.isRequired,
   };
 
   constructor(props) {
@@ -336,6 +345,7 @@ class EditSettingsForm extends Component {
       openProcessManager,
       isTodosActivated,
       isOnline,
+      serverURL,
     } = this.props;
     const { intl } = this.props;
 
@@ -939,7 +949,20 @@ class EditSettingsForm extends Component {
                         className="settings__open-settings-file-button"
                         onClick={() => openPath(recipeFolder)}
                       />
+                      <Button
+                        buttonType="secondary"
+                        label={intl.formatMessage(
+                          messages.buttonOpenImportExport,
+                        )}
+                        className="settings__open-settings-file-button"
+                        onClick={() => openExternalUrl(serverURL, true)}
+                      />
                     </div>
+                  </p>
+                  <p className="settings__help">
+                    {intl.formatMessage(messages.serverHelp, {
+                      serverURL,
+                    })}
                   </p>
                 </div>
               </div>
