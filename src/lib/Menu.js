@@ -10,13 +10,11 @@ import {
 import { autorun, makeObservable, observable } from 'mobx';
 import { defineMessages } from 'react-intl';
 import osName from 'os-name';
-import { fromJS } from "immutable";
+import { fromJS } from 'immutable';
+import semver from 'semver';
+import os from 'os';
 import {
-  CUSTOM_WEBSITE_RECIPE_ID,
-  GITHUB_FERDIUM_URL,
-  LIVE_API_FERDIUM_WEBSITE,
-} from '../config';
-import {
+  isWindows,
   cmdOrCtrlShortcutKey,
   altKey,
   shiftKey,
@@ -34,6 +32,11 @@ import {
   nodeVersion,
   osArch,
 } from '../environment';
+import {
+  CUSTOM_WEBSITE_RECIPE_ID,
+  GITHUB_FERDIUM_URL,
+  LIVE_API_FERDIUM_WEBSITE,
+} from '../config';
 import { ferdiumVersion } from '../environment-remote';
 import { todoActions } from '../features/todos/actions';
 import workspaceActions from '../features/workspaces/actions';
@@ -642,6 +645,15 @@ class FranzMenu {
     return fromJS(this.currentTemplate).toJS();
   }
 
+  getOsName() {
+    let osNameParse = osName();
+    const isWin11 = semver.satisfies(os.release(), '>=10.0.22000');
+
+    osNameParse = isWindows && isWin11 ? 'Windows 11' : osNameParse;
+
+    return osNameParse;
+  }
+
   _build() {
     // need to clone object so we don't modify computed (cached) object
     const serviceTpl = Object.assign([], this.serviceTpl());
@@ -877,7 +889,7 @@ class FranzMenu {
       `Electron: ${electronVersion}`,
       `Chrome: ${chromeVersion}`,
       `Node.js: ${nodeVersion}`,
-      `Platform: ${osName()}`,
+      `Platform: ${this.getOsName()}`,
       `Arch: ${osArch}`,
       `Build date: ${new Date(Number(buildInfo.timestamp))}`,
       `Git SHA: ${buildInfo.gitHashShort}`,
