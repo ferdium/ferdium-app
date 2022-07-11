@@ -76,6 +76,7 @@
     "electron-window-state": "5.0.3",
     "fast-folder-size": "1.7.0",
     "fs-extra": "10.1.0",
+    "immutable": "4.1.0",
     "jsonwebtoken": "8.5.1",
     "jss": "10.9.0",
     "languagedetect": "2.0.0",
