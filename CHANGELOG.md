@@ -1,3 +1,71 @@
+# [v6.0.0-beta.3](https://github.com/ferdium/ferdium-app/compare/v6.0.0-nightly.77...v6.0.0-nightly.97) (2022-07-12)
+
+### Features
+
+- Bring the draggable area back on MacOS
+- Remember collapsed state of hamburger menu on refresh/reboot
+- Add NSIS and portable arm64 builds for Windows OS
+- Copy Ferdium info from the `About` dialog into the clipboard
+- Change names of released artifacts for better intuitive experience of first time users
+- Add Server Information to About Dialog and to Global Messages
+- Add hint text to go back to welcome screen from the login screen
+- Remove `msi` builds on windows and build separate windows installers for all archs
+- Allow selecting help text (eg the `user-agent` helper urls)
+
+### Services
+
+- New recipe: `protondrive`
+- New recipe: `pushover`
+- Switch from counting of space-badges to room tile badges for Element
+- Fix syntax errors in nextcloud recipes
+- Hide `install messenger` button
+- Workaround for Whatsapp Web UI lag
+- New recipe: `trakt.tv`
+- New recipe: `Zammad`
+- Fix outlook issue by changing the service URL
+- New recipe: `Tiktok`
+- New recipe: `GamingOnLinux`
+- Allow self-hosted option for `bitbucket`
+- Fix in app URLs for `discord`
+- Fix indirect notification count in `github`
+- New recipe: `kiwiIRC`
+- Fix issue with `telegram` web-k not being recognized correctly
+- Fix `facebook` notifications counter
+
+### Bug fixes
+
+- Reduce tab item layout shift
+- Disable API Server recipes updates
+- Fix Cache Settings subsection styling
+- Fix toggle for pre-release updates on Ubuntu
+- Fix crowdin link on app
+- Disable symlinks to build_id for rpm
+- Fix bug of TODO settings not being shown when a TODO Recipe is present
+- Add file size info and error message while setting a custom image in the recipe settings screen
+- Use the default accent color if the user removes value from textbox
+- Fix Menu bar on Windows not being clickable
+- Fix local server import/export
+- Fix blank screen after in-app update on Windows
+- Fix Windows 11 Platform message
+
+### Under the hood
+
+- chore: moved tests to ./test directory
+- Add documentation about exporting settings when using the internal server [skip ci]
+- Converted portions of the javascript code into typescript
+- Move the `MIGRATION.md` documentation from another repo [skip ci]
+- recommend specific vscode extensions to setup development [skip ci]
+- Change allowed version for MSVS on Windows build script [skip ci]
+- Checks if MSVS 2019 or 2022 exists through reg key [skip ci]
+- Mobx & React-Router upgrade
+- Upgrade `npm` to `8.13.2` and `pnpm` to `7.4.1`
+- Upgrade `electron-updater` to `5.1.0`
+- Upgrade `electron` to `19.0.8`
+- Upgrade `moment` to fix dependabot warning
+- Upgrade `macos-notification-state` to `2.0.1`
+- Upgrade `pnpm` to `7.5.0`
+- Upgrade `electron-builder` to `23.3.1`
+
 # [v6.0.0-beta.2](https://github.com/ferdium/ferdium-app/compare/v6.0.0-nightly.47...v6.0.0-nightly.77) (2022-06-25)
 
 ### Features
