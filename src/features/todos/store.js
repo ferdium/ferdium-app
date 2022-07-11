@@ -1,4 +1,4 @@
-import { computed, action, observable } from 'mobx';
+import { computed, action, observable, makeObservable } from 'mobx';
 import localStorage from 'mobx-localstorage';
 
 import { ThemeType } from '../../themes';
@@ -12,7 +12,7 @@ import {
   DEFAULT_IS_TODO_FEATURE_ENABLED_BY_USER,
 } from '../../config';
 import { isValidExternalURL } from '../../helpers/url-helpers';
-import { FeatureStore } from '../utils/FeatureStore';
+import FeatureStore from '../utils/FeatureStore';
 import { createReactions } from '../../stores/lib/Reaction';
 import { createActionBindings } from '../utils/ActionBinding';
 import { IPC, TODOS_ROUTES } from './constants';
@@ -32,6 +32,12 @@ export default class TodoStore extends FeatureStore {
   @observable userAgentModel = new UserAgent();
 
   isInitialized = false;
+
+  constructor() {
+    super();
+
+    makeObservable(this);
+  }
 
   @computed get width() {
     const width = this.settings.width || DEFAULT_TODOS_WIDTH;

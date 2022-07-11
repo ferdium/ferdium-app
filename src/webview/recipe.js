@@ -2,7 +2,7 @@
 /* eslint-disable import/first */
 import { contextBridge, ipcRenderer } from 'electron';
 import { join } from 'path';
-import { autorun, computed, observable } from 'mobx';
+import { autorun, computed, makeObservable, observable } from 'mobx';
 import { pathExistsSync, readFileSync } from 'fs-extra';
 import { debounce } from 'lodash';
 
@@ -23,9 +23,9 @@ import customDarkModeCss from './darkmode/custom';
 import RecipeWebview from './lib/RecipeWebview';
 import Userscript from './lib/Userscript';
 
-import { BadgeHandler } from './badge';
-import { DialogTitleHandler } from './dialogTitle';
-import { SessionHandler } from './sessionHandler';
+import BadgeHandler from './badge';
+import DialogTitleHandler from './dialogTitle';
+import SessionHandler from './sessionHandler';
 import contextMenu from './contextMenu';
 import {
   darkModeStyleExists,
@@ -154,6 +154,8 @@ class RecipeController {
   hasUpdatedBeforeRecipeLoaded = false;
 
   constructor() {
+    makeObservable(this);
+
     this.initialize();
   }
 

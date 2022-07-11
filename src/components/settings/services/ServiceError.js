@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { observer } from 'mobx-react';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { defineMessages, injectIntl } from 'react-intl';
 
 import Infobox from '../../ui/Infobox';

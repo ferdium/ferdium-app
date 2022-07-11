@@ -263,6 +263,7 @@ export const DEFAULT_APP_SETTINGS = {
   searchEngine: SEARCH_ENGINE_STARTPAGE,
   useVerticalStyle: false,
   hideCollapseButton: false,
+  isMenuCollapsed: false,
   hideRecipesButton: false,
   hideSplitModeButton: true,
   useGrayscaleServices: false,
@@ -275,6 +276,8 @@ export const DEFAULT_APP_SETTINGS = {
   enableLongPressServiceHint: false,
   proxyFeatureEnabled: false,
   onlyShowFavoritesInUnreadCount: false,
+  customTodoServer: '',
+  locale: 'en-US',
 };
 
 export const DEFAULT_SERVICE_SETTINGS = {

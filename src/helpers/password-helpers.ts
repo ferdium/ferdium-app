@@ -1,10 +1,10 @@
 import { createHash, BinaryLike } from 'crypto';
 
-export function hash(password: BinaryLike) {
+export function hash(password: BinaryLike): string {
   return createHash('sha256').update(password).digest('base64');
 }
 
-export function scorePassword(password: string) {
+export function scorePassword(password: string): number {
   let score = 0;
   if (!password) {
     return score;

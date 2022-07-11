@@ -1,16 +1,16 @@
 import { shell } from 'electron';
-import { action, reaction, computed, observable } from 'mobx';
+import { action, reaction, computed, observable, makeObservable } from 'mobx';
 import { debounce, remove } from 'lodash';
 import ms from 'ms';
 import { ensureFileSync, pathExistsSync, writeFileSync } from 'fs-extra';
 import { join } from 'path';
 
-import { Stores } from 'src/stores.types';
-import { ApiInterface } from 'src/api';
-import { Actions } from 'src/actions/lib/actions';
+import { Stores } from '../@types/stores.types';
+import { ApiInterface } from '../api';
+import { Actions } from '../actions/lib/actions';
 import Request from './lib/Request';
 import CachedRequest from './lib/CachedRequest';
-import { matchRoute } from '../helpers/routing-helpers';
+import matchRoute from '../helpers/routing-helpers';
 import { isInTimeframe } from '../helpers/schedule-helpers';
 import {
   getRecipeDirectory,
@@ -66,6 +66,8 @@ export default class ServicesStore extends TypedStore {
 
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
+
+    makeObservable(this);
 
     // Register action handlers
     this.actions.service.setActive.listen(this._setActive.bind(this));

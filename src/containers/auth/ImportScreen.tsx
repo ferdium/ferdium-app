@@ -1,21 +1,10 @@
-import { Component } from 'react';
+import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
-import { RouterStore } from 'mobx-react-router';
-import { UserStore } from 'src/stores.types';
+import { StoresProps } from '../../@types/ferdium-components.types';
 import Import from '../../components/auth/Import';
 
-interface IProps {
-  actions: {
-    user: UserStore;
-  };
-  stores: {
-    user: UserStore;
-    router: RouterStore;
-  };
-}
-
-class ImportScreen extends Component<IProps> {
-  render() {
+class ImportScreen extends Component<StoresProps> {
+  render(): ReactElement {
     const { actions, stores } = this.props;
 
     if (stores.user.isImportLegacyServicesCompleted) {

@@ -1,7 +1,7 @@
 /* eslint-disable global-require */
 import { APP_LOCALES } from './languages';
 
-export const generatedTranslations = () => {
+export default function generatedTranslations() {
   const translations = [];
   for (const key of Object.keys(APP_LOCALES)) {
     try {

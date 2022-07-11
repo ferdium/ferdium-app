@@ -1,4 +1,4 @@
-export interface IStyleTypes {
+export default interface IStyleTypes {
   [index: string]: {
     accent: string;
     contrast: string;

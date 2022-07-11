@@ -1,0 +1,45 @@
+name: Tag all repos
+
+on:
+  release:
+    types: [published]
+  # Manual trigger from the UI
+  workflow_dispatch:
+
+jobs:
+  tag-repos:
+    runs-on: macos-latest
+    steps:
+    - name: Checkout code along with submodules for the 'nightly' branch if the trigger event is 'release'
+      uses: actions/checkout@v3
+      if: ${{ contains(github.event.release.tag_name, 'nightly') || (github.event_name == 'workflow_dispatch') }}
+      with:
+        ref: nightly
+        submodules: recursive
+        fetch-depth: 0 # Note: Needed to be able to pull the 'develop' branch as well for merging
+    - name: Checkout code along with submodules for the 'release' branch if the trigger event is 'release'
+      uses: actions/checkout@v3
+      if: ${{ !contains(github.event.release.tag_name, 'nightly') }}
+      with:
+        ref: release
+        submodules: recursive
+        fetch-depth: 0 # Note: Needed to be able to pull the 'develop' branch as well for merging
+    - name: Extract Git tag name from the currently checked out branch (not from the branch where this run was kicked off)
+      run: |
+        TAG_NAME=$(node -p 'require("./package.json").version')
+        echo "TAG_NAME=v$TAG_NAME" >> $GITHUB_ENV
+      shell: bash
+    - name: Tag the main repo
+      run: |
+        git tag -f $TAG_NAME
+        git push origin --tags --no-verify
+      shell: bash
+    # Also tag the submodule so as to help identify which changes went into which release
+    # TODO: Not working due to cross-repo access issues by the github-action bot
+    # - name: Tag the submodule
+    #   env:
+    #     GH_TOKEN: ${{ secrets.FERDIUM_RECIPES_PUBLISH_TOKEN }}
+    #   run: |
+    #     git -C recipes tag -f $TAG_NAME
+    #     git -C recipes push origin --tags --no-verify
+    #   shell: bash

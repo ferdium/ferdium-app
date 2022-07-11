@@ -1,4 +1,6 @@
 import localStorage from 'mobx-localstorage';
+import { when } from 'mobx';
+import { localServerToken, needsToken } from '../apiBase';
 import { ferdiumLocale, ferdiumVersion } from '../../environment-remote';
 
 export const prepareAuthRequest = (
@@ -29,10 +31,23 @@ export const prepareAuthRequest = (
   return request;
 };
 
-export const sendAuthRequest = (
+export const prepareLocalToken = async (
+  requestData: { method: string; headers?: any; body?: any },
+) => {
+  await when(() => !needsToken() || !!localServerToken(), { timeout: 2000 });
+  const token = localServerToken();
+  if (token) {
+    requestData.headers['X-Ferdium-Local-Token'] = token;
+  }
+}
+
+export const sendAuthRequest = async (
   url: RequestInfo,
   options?: { method: string; headers?: any; body?: any },
   auth?: boolean,
-) =>
+) => {
+  const request = prepareAuthRequest(options, auth);
+  await prepareLocalToken(request);
   // @ts-expect-error Argument of type '{ method: string; } & { mode: string; headers: any; }' is not assignable to parameter of type 'RequestInit | undefined'.
-  window.fetch(url, prepareAuthRequest(options, auth));
+  return window.fetch(url, request);
+};

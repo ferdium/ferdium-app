@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { observable, reaction } from 'mobx';
+import { makeObservable, observable, reaction } from 'mobx';
 import ElectronWebView from 'react-electron-web-view';
 import { join } from 'path';
 
@@ -21,6 +21,8 @@ class ServiceWebview extends Component {
 
   constructor(props) {
     super(props);
+
+    makeObservable(this);
 
     reaction(
       () => this.webview,

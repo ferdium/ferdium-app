@@ -19,7 +19,9 @@ import globalMessages from '../../i18n/globalMessages';
 import { isWindows } from '../../environment';
 import AppUpdateInfoBar from '../AppUpdateInfoBar';
 import { GITHUB_FERDIUM_URL } from '../../config';
-import { Icon } from '../ui/icon';
+import Icon from '../ui/icon';
+
+import { serverName } from '../../api/apiBase';
 
 class AuthLayout extends Component {
   static propTypes = {
@@ -53,6 +55,10 @@ class AuthLayout extends Component {
 
     const { intl } = this.props;
 
+    let serverNameParse = serverName();
+    serverNameParse =
+      serverNameParse === 'Custom' ? 'your Custom Server' : serverNameParse;
+
     return (
       <>
         {isWindows && !isFullScreen && (
@@ -85,7 +91,7 @@ class AuthLayout extends Component {
               onClick={retryHealthCheck}
             >
               <Icon icon={mdiFlash} />
-              {intl.formatMessage(globalMessages.APIUnhealthy)}
+              {intl.formatMessage(globalMessages.APIUnhealthy, { serverNameParse })}
             </InfoBar>
           )}
           <div className="auth__layout">

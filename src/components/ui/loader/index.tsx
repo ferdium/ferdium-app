@@ -41,6 +41,6 @@ class LoaderComponent extends Component<IProps> {
   }
 }
 
-export const Loader = injectStyle(styles, { injectTheme: true })(
+export default injectStyle(styles, { injectTheme: true })(
   LoaderComponent,
 );

@@ -1,10 +1,11 @@
+
 import { ipcRenderer } from 'electron';
 import { getCurrentWindow } from '@electron/remote';
-import { action, computed, observable, reaction } from 'mobx';
+import { action, computed, makeObservable, observable, reaction } from 'mobx';
 import localStorage from 'mobx-localstorage';
-import { Stores } from 'src/stores.types';
-import { ApiInterface } from 'src/api';
-import { Actions } from 'src/actions/lib/actions';
+import { Stores } from '../@types/stores.types';
+import { ApiInterface } from '../api';
+import { Actions } from '../actions/lib/actions';
 import {
   DEFAULT_APP_SETTINGS,
   FILE_SYSTEM_SETTINGS_TYPES,
@@ -22,7 +23,7 @@ export default class SettingsStore extends TypedStore {
     'updateAppSettings',
   );
 
-  loaded = false;
+  @observable loaded: boolean = false;
 
   fileSystemSettingsTypes = FILE_SYSTEM_SETTINGS_TYPES;
 
@@ -33,6 +34,8 @@ export default class SettingsStore extends TypedStore {
 
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
+
+    makeObservable(this);
 
     // Register action handlers
     this.actions.settings.update.listen(this._update.bind(this));

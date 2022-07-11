@@ -17,7 +17,7 @@ import minimist from 'minimist';
 import ms from 'ms';
 import { EventEmitter } from 'events';
 import { enableWebContents, initializeRemote } from './electron-util';
-import { enforceMacOSAppLocation } from './enforce-macos-app-location';
+import enforceMacOSAppLocation from './enforce-macos-app-location';
 
 initializeRemote();
 
@@ -26,7 +26,6 @@ import { DEFAULT_APP_SETTINGS, DEFAULT_WINDOW_OPTIONS } from './config';
 import { isMac, isWindows, isLinux, altKey } from './environment';
 import {
   isDevMode,
-  aboutAppDetails,
   userDataRecipesPath,
   userDataPath,
 } from './environment-remote';
@@ -38,7 +37,7 @@ import Tray from './lib/Tray';
 import DBus from './lib/DBus';
 import Settings from './electron/Settings';
 import handleDeepLink from './electron/deepLinking';
-import { isPositionValid } from './electron/windowUtils';
+import isPositionValid from './electron/windowUtils';
 // @ts-expect-error Cannot find module './package.json' or its corresponding type declarations.
 import { appId } from './package.json';
 import './electron/exception';
@@ -166,11 +165,6 @@ if (!retrieveSettingValue('enableGPUAcceleration', false)) {
   app.disableHardwareAcceleration();
 }
 
-app.setAboutPanelOptions({
-  applicationVersion: aboutAppDetails(),
-  version: '',
-});
-
 const createWindow = () => {
   // Remember window size
   const mainWindowState = windowStateKeeper({
@@ -276,7 +270,12 @@ const createWindow = () => {
   if (isWindows) {
     onDidLoad((window: BrowserWindow) => {
       const url = process.argv.slice(1);
-      if (url) {
+      if (
+        url &&
+        // The next line is a workaround after this 71c5237 [chore: Mobx & React-Router upgrade (#406)].
+        // For some reason, the app won't start until because it's trying to route to './build'.
+        url.toString() !== './build'
+      ) {
         handleDeepLink(window, url.toString());
       }
     });
@@ -631,7 +630,6 @@ ipcMain.on('set-spellchecker-locales', (_e, { locale, serviceId }) => {
   debug(`Setting spellchecker locales to: ${locales}`);
   serviceSession.setSpellCheckerLanguages(locales);
 });
-
 
 ipcMain.handle('get-desktop-capturer-sources', () => desktopCapturer.getSources({
   types: ['screen', 'window'],

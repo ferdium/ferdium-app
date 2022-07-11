@@ -8,13 +8,13 @@ import { SortableElement } from 'react-sortable-hoc';
 import injectSheet from 'react-jss';
 import ms from 'ms';
 
-import { observable, autorun, reaction } from 'mobx';
+import { observable, autorun, reaction, makeObservable } from 'mobx';
 import { mdiExclamation } from '@mdi/js';
 import ServiceModel from '../../../models/Service';
 import { cmdOrCtrlShortcutKey, shiftKey, altKey } from '../../../environment';
 import globalMessages from '../../../i18n/globalMessages';
 import SettingsStore from '../../../stores/SettingsStore';
-import { Icon } from '../../ui/icon';
+import Icon from '../../ui/icon';
 
 const IS_SERVICE_DEBUGGING_ENABLED = (
   localStorage.getItem('debug') || ''
@@ -144,6 +144,9 @@ class TabItem extends Component {
 
   constructor(props) {
     super(props);
+
+    makeObservable(this);
+
     this.state = {
       showShortcutIndex: false,
     };
@@ -322,7 +325,7 @@ class TabItem extends Component {
       service.isBadgeEnabled
     ) {
       notificationBadge = (
-        <span>
+        <>
           {service.unreadDirectMessageCount > 0 && (
             <span className="tab-item__message-count">
               {service.unreadDirectMessageCount}
@@ -336,7 +339,7 @@ class TabItem extends Component {
           {service.isHibernating && (
             <span className="tab-item__message-count hibernating">•</span>
           )}
-        </span>
+        </>
       );
     }
 

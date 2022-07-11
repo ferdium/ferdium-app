@@ -1,14 +1,14 @@
-import { action, computed, observable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 import { readJSONSync } from 'fs-extra';
 import semver from 'semver';
 
-import { Stores } from 'src/stores.types';
-import { ApiInterface } from 'src/api';
-import { Actions } from 'src/actions/lib/actions';
-import Recipe from 'src/models/Recipe';
+import Recipe from '../models/Recipe';
+import { Stores } from '../@types/stores.types';
+import { ApiInterface } from '../api';
+import { Actions } from '../actions/lib/actions';
 import CachedRequest from './lib/CachedRequest';
 import Request from './lib/Request';
-import { matchRoute } from '../helpers/routing-helpers';
+import matchRoute from '../helpers/routing-helpers';
 import { asarRecipesPath } from '../helpers/asar-helpers';
 import TypedStore from './lib/TypedStore';
 
@@ -23,6 +23,8 @@ export default class RecipesStore extends TypedStore {
 
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
+
+    makeObservable(this);
 
     // Register action handlers
     this.actions.recipe.install.listen(this._install.bind(this));
@@ -94,8 +96,9 @@ export default class RecipesStore extends TypedStore {
 
     if (Object.keys(recipes).length === 0) return;
 
-    const remoteUpdates = await this.getRecipeUpdatesRequest.execute(recipes)
-      ._promise;
+    // TODO: This line needs to be uncomment once we fix the App-Server interaction problem.
+    // const remoteUpdates = await this.getRecipeUpdatesRequest.execute(recipes)._promise;
+    const remoteUpdates = [];
 
     // Check for local updates
     const allJsonFile = asarRecipesPath('all.json');

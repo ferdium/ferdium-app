@@ -1,120 +1,135 @@
-.auth .welcome {
-  height: auto;
+.auth {
+  height: calc(100% - 28px);
 
-  &__content {
-    align-items: center;
-    color: #fff;
+  .welcome {
+    height: auto;
+    width: 480px;
     display: flex;
-    justify-content: center;
-    height: auto;
-  }
+    flex-direction: column;
+    flex-wrap: wrap;
 
-  &__logo {
-    width: 100px;
-  }
-
-  &__text {
-    h1 {
-      font-size: 60px;
-      letter-spacing: -0.4rem;
-      margin-bottom: 5px;
-      color: rgb(255, 255, 255);
-      justify-content: center;
-      margin-top: 5%;
+    &__content {
+      align-items: center;
+      color: #fff;
       display: flex;
-    }
-
-    h2 {
-      margin-bottom: 0;
-      margin-left: 2px;
-    }
-
-    &__change-server {
-      display: flex;
-      margin: 10% auto auto auto;
       justify-content: center;
-      color: #999;
+      height: auto;
     }
-  }
 
-  &__services {
-    height: 100%;
-    margin-left: -450px;
-    max-height: 600px;
-    max-width: 800px;
-    width: 100%;
-  }
+    &__logo {
+      width: 100px;
+    }
 
-  &__buttons {
-    display: block;
-    margin-top: 100px;
-    text-align: center;
-    height: auto;
+    &__text {
+      h1 {
+        font-size: 60px;
+        letter-spacing: -0.4rem;
+        margin-bottom: 5px;
+        color: rgb(255, 255, 255);
+        justify-content: center;
+        margin-top: 5%;
+        display: flex;
+      }
+
+      h2 {
+        margin-bottom: 0;
+        margin-left: 2px;
+      }
+
+      &__change-server {
+        display: flex;
+        margin: 10% auto auto auto;
+        justify-content: center;
+        color: #999;
+      }
+    }
+
+    &__services {
+      height: 100%;
+      margin-left: -450px;
+      max-height: 600px;
+      max-width: 800px;
+      width: 100%;
+    }
+
+    &__buttons {
+      display: block;
+      margin-top: 100px;
+      text-align: center;
+      height: auto;
+
+      @media screen and (max-height: 750px) {
+        margin-top: 70px;
+      }
+
+      .button {
+        margin-right: 25px;
+      }
+    }
 
     .button {
-      margin-right: 25px;
-    }
-  }
-
-  .button {
-    border-color: #fff;
-    color: #fff;
-    cursor: pointer;
-
-    &:hover {
-      background: #fff;
-      color: $theme-brand-primary;
-    }
-
-    &__inverted {
-      background: #fff;
-      color: $theme-brand-primary;
-    }
-
-    &__inverted:hover {
-      background: none;
+      border-color: #fff;
       color: #fff;
+      cursor: pointer;
+
+      &:hover {
+        background: #fff;
+        color: $theme-brand-primary;
+      }
+
+      &__inverted {
+        background: #fff;
+        color: $theme-brand-primary;
+      }
+
+      &__inverted:hover {
+        background: none;
+        color: #fff;
+      }
+
+      &__change-server {
+        display: flex;
+        margin: 0 0 0 1%;
+        color: #999;
+        text-decoration: underline;
+      }
+
+      &__change-server:hover {
+        display: flex;
+        margin: 0 0 0 1%;
+        color: rgb(20, 122, 255);
+        text-decoration: none;
+      }
     }
 
-    &__change-server {
+    &__featured-services {
+      align-items: center;
+      background: #fff;
+      border-radius: 6px;
       display: flex;
-      margin: 0 0 0 1%;
-      color: #999;
-      text-decoration: underline;
+      flex-wrap: wrap;
+      margin: 80px auto 0 auto;
+      padding: 20px 20px 5px;
+      text-align: center;
+      width: 480px;
+      height: auto;
+      @media screen and (max-height: 700px) {
+        display: none;
+      }
     }
 
-    &__change-server:hover {
-      display: flex;
-      margin: 0 0 0 1%;
-      color: rgb(20, 122, 255);
-      text-decoration: none;
-    }
-  }
-
-  &__featured-services {
-    align-items: center;
-    background: #fff;
-    border-radius: 6px;
-    display: flex;
-    flex-wrap: wrap;
-    margin: 80px auto 0 auto;
-    padding: 20px 20px 5px;
-    text-align: center;
-    width: 480px;
-    height: auto;
-  }
-
-  &__featured-service {
-    margin: 0 10px 15px;
-    height: 35px;
-    @media (prefers-reduced-motion: no-preference) {
-      transition: 0.5s filter, 0.5s opacity;
-    }
-    width: 35px;
-
-    img {
-      width: 35px;
+    &__featured-service {
+      margin: 0 10px 15px;
       height: 35px;
+      @media (prefers-reduced-motion: no-preference) {
+        transition: 0.5s filter, 0.5s opacity;
+      }
+      width: 35px;
+
+      img {
+        width: 35px;
+        height: 35px;
+      }
     }
   }
 }

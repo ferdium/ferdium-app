@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { inject, observer } from 'mobx-react';
+import { StoresProps } from '../../../@types/ferdium-components.types';
 import WorkspacesDashboard from '../components/WorkspacesDashboard';
 import ErrorBoundary from '../../../components/util/ErrorBoundary';
 import { workspaceStore } from '../index';
@@ -9,15 +10,8 @@ import {
   getUserWorkspacesRequest,
   updateWorkspaceRequest,
 } from '../api';
-import { WorkspacesStore } from '../../../stores.types';
 
-type Props = {
-  actions: {
-    workspaces: WorkspacesStore;
-  };
-};
-
-class WorkspacesScreen extends Component<Props> {
+class WorkspacesScreen extends Component<StoresProps> {
   render() {
     const { actions } = this.props;
     return (

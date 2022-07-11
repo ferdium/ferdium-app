@@ -1,12 +1,12 @@
-import { observable, computed, action } from 'mobx';
+import { observable, computed, action, makeObservable } from 'mobx';
 import moment from 'moment';
 import jwt from 'jsonwebtoken';
 import localStorage from 'mobx-localstorage';
 import { ipcRenderer } from 'electron';
 
-import { ApiInterface } from 'src/api';
-import { Actions } from 'src/actions/lib/actions';
-import { Stores } from 'src/stores.types';
+import { ApiInterface } from '../api';
+import { Actions } from '../actions/lib/actions';
+import { Stores } from '../@types/stores.types';
 import { TODOS_PARTITION_ID } from '../config';
 import { isDevMode } from '../environment-remote';
 import Request from './lib/Request';
@@ -92,6 +92,8 @@ export default class UserStore extends TypedStore {
 
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
+
+    makeObservable(this);
 
     // Register action handlers
     this.actions.user.login.listen(this._login.bind(this));

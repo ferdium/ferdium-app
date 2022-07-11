@@ -1,12 +1,12 @@
 import { ipcRenderer } from 'electron';
-import { action, computed, observable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 import ms from 'ms';
 
-import { Actions } from 'src/actions/lib/actions';
-import { ApiInterface } from 'src/api';
-import { Stores } from 'src/stores.types';
+import { Actions } from '../actions/lib/actions';
+import { ApiInterface } from '../api';
+import { Stores } from '../@types/stores.types';
 import CachedRequest from './lib/CachedRequest';
-import { LOCAL_PORT } from '../config';
+import { LOCAL_HOSTNAME, LOCAL_PORT } from '../config';
 
 import TypedStore from './lib/TypedStore';
 
@@ -21,12 +21,16 @@ export default class RequestStore extends TypedStore {
 
   @observable localServerPort = LOCAL_PORT;
 
+  @observable localServerToken: string | undefined;
+
   retries: number = 0;
 
   retryDelay: number = ms('2s');
 
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
+
+    makeObservable(this);
 
     this.actions.requests.retryRequiredRequests.listen(
       this._retryRequiredRequests.bind(this),
@@ -43,6 +47,9 @@ export default class RequestStore extends TypedStore {
       if (data.port) {
         this.localServerPort = data.port;
       }
+      if (data.token) {
+        this.localServerToken = data.token;
+      }
     });
   }
 
@@ -52,6 +59,10 @@ export default class RequestStore extends TypedStore {
 
   @computed get areRequiredRequestsLoading(): boolean {
     return this.userInfoRequest.isExecuting || this.servicesRequest.isExecuting;
+  }
+
+  @computed get localServerOrigin(): string {
+    return `http://${LOCAL_HOSTNAME}:${this.localServerPort}`;
   }
 
   @action _retryRequiredRequests(): void {

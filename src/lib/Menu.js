@@ -7,14 +7,14 @@ import {
   systemPreferences,
   getCurrentWindow,
 } from '@electron/remote';
-import { autorun, observable } from 'mobx';
+import { autorun, makeObservable, observable } from 'mobx';
 import { defineMessages } from 'react-intl';
+import osName from 'os-name';
+import { fromJS } from 'immutable';
+import semver from 'semver';
+import os from 'os';
 import {
-  CUSTOM_WEBSITE_RECIPE_ID,
-  GITHUB_FERDIUM_URL,
-  LIVE_API_FERDIUM_WEBSITE,
-} from '../config';
-import {
+  isWindows,
   cmdOrCtrlShortcutKey,
   altKey,
   shiftKey,
@@ -27,14 +27,26 @@ import {
   addNewServiceShortcutKey,
   splitModeToggleShortcutKey,
   muteFerdiumShortcutKey,
+  electronVersion,
+  chromeVersion,
+  nodeVersion,
+  osArch,
 } from '../environment';
-import { aboutAppDetails, ferdiumVersion } from '../environment-remote';
+import {
+  CUSTOM_WEBSITE_RECIPE_ID,
+  GITHUB_FERDIUM_URL,
+  LIVE_API_FERDIUM_WEBSITE,
+} from '../config';
+import { ferdiumVersion } from '../environment-remote';
 import { todoActions } from '../features/todos/actions';
-import { workspaceActions } from '../features/workspaces/actions';
+import workspaceActions from '../features/workspaces/actions';
 import { workspaceStore } from '../features/workspaces/index';
-import apiBase, { serverBase } from '../api/apiBase';
+import { importExportURL, serverBase, serverName } from '../api/apiBase';
 import { openExternalUrl } from '../helpers/url-helpers';
 import globalMessages from '../i18n/globalMessages';
+
+// @ts-expect-error Cannot find module '../buildInfo.json' or its corresponding type declarations.
+import * as buildInfo from '../buildInfo.json';
 
 const menuItems = defineMessages({
   edit: {
@@ -325,6 +337,14 @@ const menuItems = defineMessages({
     id: 'menu.services.goHome',
     defaultMessage: 'Home',
   },
+  ok: {
+    id: 'global.ok',
+    defaultMessage: 'Ok',
+  },
+  copyToClipboard: {
+    id: 'menu.services.copyToClipboard',
+    defaultMessage: 'Copy to clipboard',
+  },
 });
 
 function getActiveService() {
@@ -571,7 +591,7 @@ const _titleBarTemplateFactory = (intl, locked) => [
       {
         label: intl.formatMessage(menuItems.importExportData),
         click() {
-          openExternalUrl(apiBase(false), true);
+          openExternalUrl(importExportURL(), true);
         },
         enabled: !locked,
       },
@@ -610,6 +630,8 @@ class FranzMenu {
     this.stores = stores;
     this.actions = actions;
 
+    makeObservable(this);
+
     setTimeout(() => {
       autorun(this._build.bind(this));
     }, 10);
@@ -620,7 +642,16 @@ class FranzMenu {
   }
 
   get template() {
-    return this.currentTemplate.toJS();
+    return fromJS(this.currentTemplate).toJS();
+  }
+
+  getOsName() {
+    let osNameParse = osName();
+    const isWin11 = semver.satisfies(os.release(), '>=10.0.22000');
+
+    osNameParse = isWindows && isWin11 ? 'Windows 11' : osNameParse;
+
+    return osNameParse;
   }
 
   _build() {
@@ -797,10 +828,6 @@ class FranzMenu {
       accelerator: `${altKey()}+F`,
       submenu: [
         {
-          label: intl.formatMessage(menuItems.about),
-          role: 'about',
-        },
-        {
           type: 'separator',
         },
         {
@@ -856,15 +883,40 @@ class FranzMenu {
       ],
     });
 
+    const aboutAppDetails = [
+      `Version: ${ferdiumVersion}`,
+      `Server: ${serverName()} Server`,
+      `Electron: ${electronVersion}`,
+      `Chrome: ${chromeVersion}`,
+      `Node.js: ${nodeVersion}`,
+      `Platform: ${this.getOsName()}`,
+      `Arch: ${osArch}`,
+      `Build date: ${new Date(Number(buildInfo.timestamp))}`,
+      `Git SHA: ${buildInfo.gitHashShort}`,
+      `Git branch: ${buildInfo.gitBranch}`,
+    ].join('\n');
+
     const about = {
       label: intl.formatMessage(menuItems.about),
       click: () => {
-        dialog.showMessageBox({
-          type: 'info',
-          title: 'Ferdium',
-          message: 'Ferdium',
-          detail: aboutAppDetails(),
-        });
+        dialog
+          .showMessageBox({
+            type: 'info',
+            title: 'Ferdium',
+            message: 'Ferdium',
+            detail: aboutAppDetails,
+            buttons: [
+              intl.formatMessage(menuItems.ok),
+              intl.formatMessage(menuItems.copyToClipboard),
+            ],
+          })
+          .then(result => {
+            if (result.response === 1) {
+              clipboard.write({
+                text: aboutAppDetails,
+              });
+            }
+          });
       },
     };
 
@@ -889,7 +941,7 @@ class FranzMenu {
         },
       );
 
-      tpl[5].submenu.unshift(about, {
+      tpl[0].submenu.unshift(about, {
         type: 'separator',
       });
     } else {

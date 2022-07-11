@@ -19,13 +19,13 @@ import RecipePreviewModel from '../../models/RecipePreview';
 import RecipeModel from '../../models/Recipe';
 import UserModel from '../../models/User';
 
-import { sleep } from '../../helpers/async-helpers';
+import sleep from '../../helpers/async-helpers';
 
 import { SERVER_NOT_LOADED } from '../../config';
 import { userDataRecipesPath, userDataPath } from '../../environment-remote';
 import { asarRecipesPath } from '../../helpers/asar-helpers';
 import apiBase from '../apiBase';
-import { prepareAuthRequest, sendAuthRequest } from '../utils/auth';
+import { prepareAuthRequest, prepareLocalToken, sendAuthRequest } from '../utils/auth';
 
 import {
   getRecipeDirectory,
@@ -246,6 +246,8 @@ export default class ServerApi {
 
     delete requestData.headers['Content-Type'];
 
+    await prepareLocalToken(requestData);
+
     const request = await window.fetch(
       `${apiBase()}/service/${serviceId}`,
       // @ts-expect-error Argument of type '{ method: string; } & { mode: string; headers: any; }' is not assignable to parameter of type 'RequestInit | undefined'.
@@ -291,6 +293,10 @@ export default class ServerApi {
 
   // Features
   async getDefaultFeatures() {
+    if (apiBase() === SERVER_NOT_LOADED) {
+      throw new Error('Server not loaded');
+    }
+
     const request = await sendAuthRequest(`${apiBase()}/features/default`);
     if (!request.ok) {
       throw new Error(request.statusText);

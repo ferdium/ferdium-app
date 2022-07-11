@@ -1,5 +1,14 @@
-import { computed, observable, runInAction } from 'mobx';
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+  runInAction,
+} from 'mobx';
 
+import { Stores } from '../@types/stores.types';
+import { ApiInterface } from '../api';
+import { Actions } from '../actions/lib/actions';
 import CachedRequest from './lib/CachedRequest';
 import serviceProxy from '../features/serviceProxy';
 import basicAuth from '../features/basicAuth';
@@ -23,6 +32,12 @@ export default class FeaturesStore extends TypedStore {
   );
 
   @observable features = {};
+
+  constructor(stores: Stores, api: ApiInterface, actions: Actions) {
+    super(stores, api, actions);
+
+    makeObservable(this);
+  }
 
   async setup(): Promise<void> {
     this.registerReactions([
@@ -49,9 +64,11 @@ export default class FeaturesStore extends TypedStore {
       }
       Object.assign(features, requestResult);
     }
-    runInAction('FeaturesStore::_updateFeatures', () => {
-      this.features = features;
-    });
+    runInAction(
+      action('FeaturesStore::_updateFeatures', () => {
+        this.features = features;
+      }),
+    );
   };
 
   _monitorLoginStatus(): void {

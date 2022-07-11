@@ -1,12 +1,14 @@
-import { action, computed, observable } from 'mobx';
-import { Actions } from 'src/actions/lib/actions';
-import { ApiInterface } from 'src/api';
-import Recipe from 'src/models/Recipe';
-import { Stores } from 'src/stores.types';
+import { action, computed, makeObservable, observable } from 'mobx';
+
+import { Actions } from '../actions/lib/actions';
+import { ApiInterface } from '../api';
+import Recipe from '../models/Recipe';
+import { Stores } from '../@types/stores.types';
 
 import CachedRequest from './lib/CachedRequest';
 import Request from './lib/Request';
 import TypedStore from './lib/TypedStore';
+import RecipePreview from '../models/RecipePreview';
 
 export default class RecipePreviewsStore extends TypedStore {
   @observable allRecipePreviewsRequest = new CachedRequest(
@@ -27,6 +29,8 @@ export default class RecipePreviewsStore extends TypedStore {
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
 
+    makeObservable(this);
+
     // Register action handlers
     this.actions.recipePreview.search.listen(this._search.bind(this));
   }
@@ -35,15 +39,15 @@ export default class RecipePreviewsStore extends TypedStore {
     // Not implemented
   }
 
-  @computed get all(): Recipe[] {
+  @computed get all(): RecipePreview[] {
     return this.allRecipePreviewsRequest.execute().result || [];
   }
 
-  @computed get featured(): Recipe[] {
+  @computed get featured(): RecipePreview[] {
     return this.featuredRecipePreviewsRequest.execute().result || [];
   }
 
-  @computed get searchResults(): Recipe[] {
+  @computed get searchResults(): RecipePreview[] {
     return this.searchRecipePreviewsRequest.result || [];
   }
 

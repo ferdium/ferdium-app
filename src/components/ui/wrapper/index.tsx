@@ -33,6 +33,6 @@ class WrapperComponent extends Component<IProps> {
   }
 }
 
-export const Wrapper = injectStyle(styles, { injectTheme: true })(
+export default injectStyle(styles, { injectTheme: true })(
   WrapperComponent,
 );

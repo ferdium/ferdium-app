@@ -39,8 +39,7 @@ Please report unacceptable behavior to [hello@ferdium.org](mailto:hello@ferdium.
 
 ## What should I know before I get started?
 
-For the moment, Ferdium's development is only starting, aiming at releasing a 6.0.0 version with the rebranded assets and tooling upgrade completed.
-You can join the Discord official chat here : https://discord.com/invite/xpNTzgKmHM.
+For the moment, Ferdium's development is only starting, aiming at releasing a 6.0.0 version with the rebranded assets and tooling upgrade completed. You can join our official [Discord chat](https://discord.com/invite/xpNTzgKmHM) to get more updates and discuss issues with the other contributors.
 
 ## How can I contribute?
 
@@ -64,8 +63,8 @@ Currently, these are the combinations of system dependencies that work for MacOS
 $ jq --null-input '[inputs.engines] | add' < ./package.json < ./recipes/package.json
 {
   "node": "16.15.1",
-  "npm": "8.12.2",
-  "pnpm": "7.3.0"
+  "npm": "8.13.2",
+  "pnpm": "7.5.0"
 }
 ```
 
@@ -91,7 +90,7 @@ dnf install libX11-devel libXext-devel libXScrnSaver-devel libxkbfile-devel rpm
 
 Please make sure you have the following installed:
 
-- Microsoft Visual Studio Build Tools (2019 or higher - with Windows 10 SDK selected) - Only tested with 2019 so far.
+- Microsoft Visual Studio Build Tools (2019 or higher - with Windows 10 SDK selected).
 
 ### Clone repository with submodule
 

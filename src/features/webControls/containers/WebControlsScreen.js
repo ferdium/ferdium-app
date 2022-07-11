@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import PropTypes from 'prop-types';
 
-import { autorun, observable } from 'mobx';
+import { autorun, makeObservable, observable } from 'mobx';
 import WebControls from '../components/WebControls';
 import ServicesStore from '../../../stores/ServicesStore';
 import Service from '../../../models/Service';
@@ -26,6 +26,12 @@ class WebControlsScreen extends Component {
   webview = null;
 
   autorunDisposer = null;
+
+  constructor(props) {
+    super(props);
+
+    makeObservable(this);
+  }
 
   componentDidMount() {
     const { service } = this.props;

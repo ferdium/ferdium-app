@@ -1,29 +1,12 @@
 /* eslint-disable no-await-in-loop */
-import { Component } from 'react';
+import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
 
-import { RouterStore } from 'mobx-react-router';
-import { sleep } from '../../helpers/async-helpers';
+import { StoresProps } from '../../@types/ferdium-components.types';
+import sleep from '../../helpers/async-helpers';
 import SetupAssistant from '../../components/auth/SetupAssistant';
-import ServicesStore from '../../stores/ServicesStore';
-import RecipesStore from '../../stores/RecipesStore';
-import UserStore from '../../stores/UserStore';
 
-interface IProps {
-  stores: {
-    services: ServicesStore;
-    router: RouterStore;
-    recipes?: RecipesStore;
-    user?: UserStore;
-  };
-  actions: {
-    user: UserStore;
-    service: ServicesStore;
-    recipe: RecipesStore;
-  };
-};
-
-class SetupAssistantScreen extends Component<IProps> {
+class SetupAssistantScreen extends Component<StoresProps> {
   state = {
     isSettingUpServices: false,
   };
@@ -68,7 +51,7 @@ class SetupAssistantScreen extends Component<IProps> {
     },
   };
 
-  async setupServices(serviceConfig) {
+  async setupServices(serviceConfig: any): Promise<void> {
     const {
       stores: { services, router },
     } = this.props;
@@ -103,7 +86,7 @@ class SetupAssistantScreen extends Component<IProps> {
     router.push('/');
   }
 
-  render() {
+  render(): ReactElement {
     return (
       <SetupAssistant
         onSubmit={config => this.setupServices(config)}

@@ -1,4 +1,4 @@
-import { autorun, computed, observable } from 'mobx';
+import { autorun, computed, makeObservable, observable } from 'mobx';
 import { ipcRenderer } from 'electron';
 import { webContents } from '@electron/remote';
 import normalizeUrl from 'normalize-url';
@@ -10,15 +10,22 @@ import { isValidExternalURL } from '../helpers/url-helpers';
 import UserAgent from './UserAgent';
 import { DEFAULT_SERVICE_ORDER } from '../config';
 import { ifUndefined } from '../jsUtils';
-import Recipe from './Recipe';
+import { IRecipe } from './Recipe';
+import { needsToken } from '../api/apiBase';
 
 const debug = require('../preload-safe-debug')('Ferdium:Service');
+
+interface DarkReaderInterface {
+  brightness: number;
+  contrast: number;
+  sepia: number;
+}
 
 // TODO: Shouldn't most of these values default to what's defined in DEFAULT_SERVICE_SETTINGS?
 export default class Service {
   id: string = '';
 
-  recipe: Recipe;
+  recipe: IRecipe;
 
   _webview: ElectronWebView | null = null;
 
@@ -68,7 +75,7 @@ export default class Service {
 
   @observable isProgressbarEnabled: boolean = true;
 
-  @observable darkReaderSettings: object = {
+  @observable darkReaderSettings: DarkReaderInterface = {
     brightness: 100,
     contrast: 90,
     sepia: 10,
@@ -117,7 +124,7 @@ export default class Service {
 
   @observable proxy: string | null = null;
 
-  constructor(data, recipe: Recipe) {
+  constructor(data, recipe: IRecipe) {
     if (!data) {
       throw new Error('Service config not valid');
     }
@@ -125,6 +132,8 @@ export default class Service {
     if (!recipe) {
       throw new Error('Service recipe not valid');
     }
+
+    makeObservable(this);
 
     this.recipe = recipe;
 
@@ -158,7 +167,7 @@ export default class Service {
       data.isDarkModeEnabled,
       this.isDarkModeEnabled,
     );
-    this.darkReaderSettings = ifUndefined<object>(
+    this.darkReaderSettings = ifUndefined<DarkReaderInterface>(
       data.darkReaderSettings,
       this.darkReaderSettings,
     );
@@ -270,8 +279,9 @@ export default class Service {
         );
       }
 
-      if (typeof this.recipe.buildUrl === 'function') {
-        url = this.recipe.buildUrl(url);
+      const { buildUrl } = this.recipe;
+      if (typeof buildUrl === 'function') {
+        url = buildUrl(url);
       }
 
       return url;
@@ -286,6 +296,21 @@ export default class Service {
 
   @computed get icon(): string {
     if (this.iconUrl) {
+      if (needsToken()) {
+        let url: URL;
+        try {
+          url = new URL(this.iconUrl);
+        } catch (error) {
+          debug('Invalid url', this.iconUrl, error);
+          return this.iconUrl;
+        }
+        const requestStore = (window as any).ferdium.stores.requests;
+        // Make sure we only pass the token to the local server.
+        if (url.origin === requestStore.localServerOrigin) {
+          url.searchParams.set('token', requestStore.localServerToken);
+          return url.toString();
+        }
+      }
       return this.iconUrl;
     }
 
@@ -308,7 +333,7 @@ export default class Service {
     this.userAgentModel.userAgentPref = pref;
   }
 
-  @computed get defaultUserAgent(): String {
+  @computed get defaultUserAgent(): string {
     return this.userAgentModel.defaultUserAgent;
   }
 

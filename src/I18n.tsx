@@ -2,19 +2,19 @@ import { Component, ReactNode } from 'react';
 import { inject, observer } from 'mobx-react';
 import { IntlProvider } from 'react-intl';
 
-import { generatedTranslations } from './i18n/translations';
+import generatedTranslations from './i18n/translations';
 import UserStore from './stores/UserStore';
 import AppStore from './stores/AppStore';
 
 const translations = generatedTranslations();
 
-type Props = {
+interface Props {
   stores: {
     app: AppStore;
     user: UserStore;
   };
   children: ReactNode;
-};
+}
 
 class I18N extends Component<Props> {
   componentDidUpdate(): void {
@@ -24,6 +24,7 @@ class I18N extends Component<Props> {
   render(): ReactNode {
     const { stores, children } = this.props;
     const { locale } = stores.app;
+
     return (
       <IntlProvider
         {...{ locale, key: locale, messages: translations[locale] }}

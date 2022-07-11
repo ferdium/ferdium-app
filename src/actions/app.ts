@@ -26,5 +26,6 @@ export default <ActionDefinitions>{
     overrideSystemMute: PropTypes.bool,
   },
   toggleMuteApp: {},
+  toggleCollapseMenu: {},
   clearAllCache: {},
 };

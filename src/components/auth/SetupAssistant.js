@@ -5,11 +5,11 @@ import { defineMessages, injectIntl } from 'react-intl';
 import injectSheet from 'react-jss';
 import classnames from 'classnames';
 
-import { Input } from '../ui/input/index';
+import Input from '../ui/input/index';
 import Button from '../ui/button';
-import { Badge } from '../ui/badge';
+import Badge from '../ui/badge';
 import Modal from '../ui/Modal';
-import * as Infobox from '../ui/Infobox';
+import Infobox from '../ui/Infobox';
 import Appear from '../ui/effects/Appear';
 import globalMessages from '../../i18n/globalMessages';
 
