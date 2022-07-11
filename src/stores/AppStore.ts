@@ -220,6 +220,7 @@ export default class AppStore extends TypedStore {
       if (!url) return;
 
       url = url.replace(/\/$/, '');
+      url = url.replace(/\s?--(updated)/, '');
 
       this.stores.router.push(url);
     });
