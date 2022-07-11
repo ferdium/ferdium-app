@@ -10,6 +10,7 @@ import {
 import { autorun, makeObservable, observable } from 'mobx';
 import { defineMessages } from 'react-intl';
 import osName from 'os-name';
+import { fromJS } from "immutable";
 import {
   CUSTOM_WEBSITE_RECIPE_ID,
   GITHUB_FERDIUM_URL,
@@ -638,7 +639,7 @@ class FranzMenu {
   }
 
   get template() {
-    return JSON.parse(JSON.stringify(this.currentTemplate));
+    return fromJS(this.currentTemplate).toJS();
   }
 
   _build() {
@@ -892,7 +893,10 @@ class FranzMenu {
             title: 'Ferdium',
             message: 'Ferdium',
             detail: aboutAppDetails,
-            buttons: [intl.formatMessage(menuItems.ok), intl.formatMessage(menuItems.copyToClipboard)],
+            buttons: [
+              intl.formatMessage(menuItems.ok),
+              intl.formatMessage(menuItems.copyToClipboard),
+            ],
           })
           .then(result => {
             if (result.response === 1) {
