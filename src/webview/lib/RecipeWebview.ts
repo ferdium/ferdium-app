@@ -2,7 +2,9 @@ import { ipcRenderer } from 'electron';
 import { BrowserWindow } from '@electron/remote';
 import { pathExistsSync, readFileSync, existsSync } from 'fs-extra';
 
-const debug = require('../../preload-safe-debug')('Ferdium:Plugin:RecipeWebview');
+const debug = require('../../preload-safe-debug')(
+  'Ferdium:Plugin:RecipeWebview',
+);
 
 class RecipeWebview {
   badgeHandler: any;
@@ -111,9 +113,9 @@ class RecipeWebview {
 
     const url = link.getAttribute('href');
 
-    return /\.(jpg|jpeg|png|webp|avif|gif|svg)($|\?|:)/.test(
-      url.split(/[#?]/)[0],
-    );
+    const regex = /\.(jpg|jpeg|png|webp|avif|gif|svg)($|\?|:)/;
+
+    return regex.test(url.split(/[#?]/)[0]);
   }
 
   /**
