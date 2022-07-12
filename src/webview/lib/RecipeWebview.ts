@@ -98,9 +98,22 @@ class RecipeWebview {
    * @param  {string | number | undefined | null} text to be parsed
    */
   isImage(link): boolean {
-    const roles = ['img'];
+    if (typeof link === 'undefined') {
+      return false;
+    }
+
     const { role } = link.dataset;
-    return roles.includes(role);
+
+    if (typeof role !== 'undefined') {
+      const roles = ['img'];
+      return roles.includes(role);
+    }
+
+    const url = link.getAttribute('href');
+
+    return /\.(jpg|jpeg|png|webp|avif|gif|svg)($|\?|:)/.test(
+      url.split(/[#?]/)[0],
+    );
   }
 
   /**
