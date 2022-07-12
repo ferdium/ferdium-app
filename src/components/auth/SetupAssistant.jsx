@@ -32,6 +32,10 @@ const messages = defineMessages({
     id: 'setupAssistant.submit.label',
     defaultMessage: "Let's go",
   },
+  skipButtonLabel: {
+    id: 'setupAssistant.skip.label',
+    defaultMessage: 'Skip',
+  },
   inviteSuccessInfo: {
     id: 'invite.successInfo',
     defaultMessage: 'Invitations sent successfully',
@@ -145,21 +149,15 @@ class SetupAssistant extends Component {
     isInviteSuccessful: false,
   };
 
-  state = {
-    services: [
-      {
-        id: 'whatsapp',
-      },
-      {
-        id: 'messenger',
-      },
-      {
-        id: 'gmail',
-      },
-    ],
-    isSlackModalOpen: false,
-    slackWorkspace: '',
-  };
+  constructor() {
+    super();
+
+    this.state = {
+      services: [],
+      isSlackModalOpen: false,
+      slackWorkspace: '',
+    };
+  }
 
   slackWorkspaceHandler() {
     const { slackWorkspace = '', services } = this.state;
@@ -320,6 +318,13 @@ class SetupAssistant extends Component {
           onClick={() => onSubmit(this.state.services)}
           busy={isSettingUpServices}
           disabled={isSettingUpServices || addedServices.length === 0}
+        />
+        <Button
+          type="button"
+          className="auth__button auth__button--skip"
+          label={intl.formatMessage(messages.skipButtonLabel)}
+          onClick={() => onSubmit([])}
+          buttonType="secondary"
         />
       </div>
     );

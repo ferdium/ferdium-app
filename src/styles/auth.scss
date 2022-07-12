@@ -86,7 +86,10 @@
   .auth__button {
     width: 100%;
 
-    &.auth__button--skip { margin: 10px auto 0; }
+    &.auth__button--skip {
+      margin: 10px auto 0;
+      width: 20%;
+    }
   }
 
   .touchid__button {

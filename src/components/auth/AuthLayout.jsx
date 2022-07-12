@@ -36,9 +36,13 @@ class AuthLayout extends Component {
     appUpdateIsDownloaded: PropTypes.bool.isRequired,
   };
 
-  state = {
-    shouldShowAppUpdateInfoBar: true,
-  };
+  constructor() {
+    super();
+
+    this.state = {
+      shouldShowAppUpdateInfoBar: true,
+    };
+  }
 
   render() {
     const {
@@ -91,7 +95,9 @@ class AuthLayout extends Component {
               onClick={retryHealthCheck}
             >
               <Icon icon={mdiFlash} />
-              {intl.formatMessage(globalMessages.APIUnhealthy, { serverNameParse })}
+              {intl.formatMessage(globalMessages.APIUnhealthy, {
+                serverNameParse,
+              })}
             </InfoBar>
           )}
           <div className="auth__layout">
