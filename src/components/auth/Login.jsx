@@ -63,10 +63,6 @@ const messages = defineMessages({
     id: 'login.link.password',
     defaultMessage: 'Reset password',
   },
-  backToWelcome: {
-    id: 'login.backToWelcome',
-    defaultMessage: 'Click the Ferdium icon to go back to the Welcome screen',
-  },
 });
 
 class Login extends Component {
