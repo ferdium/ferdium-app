@@ -4,11 +4,13 @@ import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 
+import { mdiArrowLeftCircle } from '@mdi/js';
 import Form from '../../lib/Form';
 import { required, email, minLength } from '../../helpers/validation-helpers';
 import Input from '../ui/Input';
 import Button from '../ui/button';
 import Link from '../ui/Link';
+import Icon from '../ui/icon';
 
 import { globalError as globalErrorPropType } from '../../prop-types';
 import { serverBase } from '../../api/apiBase';
@@ -75,33 +77,35 @@ class Signup extends Component {
 
   form = (() => {
     const { intl } = this.props;
-    return new Form({
-      fields: {
-        firstname: {
-          label: intl.formatMessage(messages.firstnameLabel),
-          value: '',
-          validators: [required],
-        },
-        lastname: {
-          label: intl.formatMessage(messages.lastnameLabel),
-          value: '',
-          validators: [required],
-        },
-        email: {
-          label: intl.formatMessage(messages.emailLabel),
-          value: '',
-          validators: [required, email],
-        },
-        password: {
-          label: intl.formatMessage(messages.passwordLabel),
-          value: '',
-          validators: [required, minLength(6)],
-          type: 'password',
+    return new Form(
+      {
+        fields: {
+          firstname: {
+            label: intl.formatMessage(messages.firstnameLabel),
+            value: '',
+            validators: [required],
+          },
+          lastname: {
+            label: intl.formatMessage(messages.lastnameLabel),
+            value: '',
+            validators: [required],
+          },
+          email: {
+            label: intl.formatMessage(messages.emailLabel),
+            value: '',
+            validators: [required, email],
+          },
+          password: {
+            label: intl.formatMessage(messages.passwordLabel),
+            value: '',
+            validators: [required, minLength(6)],
+            type: 'password',
+          },
         },
       },
-    },
-    intl,
-  )})();
+      intl,
+    );
+  })();
 
   submit(e) {
     e.preventDefault();
@@ -125,7 +129,13 @@ class Signup extends Component {
             className="franz-form auth__form"
             onSubmit={e => this.submit(e)}
           >
-            <Link to='/auth/welcome'><img src="./assets/images/logo.svg" className="auth__logo" alt="" /></Link>
+            <Link to="/auth/welcome">
+              <img
+                src="./assets/images/logo.svg"
+                className="auth__logo"
+                alt=""
+              />
+            </Link>
             <H1>{intl.formatMessage(messages.headline)}</H1>
             <div className="grid__row">
               <Input field={form.$('firstname')} focus />
@@ -180,6 +190,11 @@ class Signup extends Component {
           <div className="auth__links">
             <Link to={loginRoute}>
               {intl.formatMessage(messages.loginLink)}
+            </Link>
+          </div>
+          <div className="auth__help">
+            <Link to="/auth/welcome">
+              <Icon icon={mdiArrowLeftCircle} size={1.5} />
             </Link>
           </div>
         </div>

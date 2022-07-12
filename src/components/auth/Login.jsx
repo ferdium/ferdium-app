@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 
+import { mdiArrowLeftCircle } from '@mdi/js';
+import Icon from '../ui/icon';
 import { LIVE_FRANZ_API } from '../../config';
 import { API_VERSION } from '../../environment-remote';
 import { serverBase } from '../../api/apiBase'; // TODO: Remove this line after fixing password recovery in-app
@@ -80,23 +82,25 @@ class Login extends Component {
 
   form = (() => {
     const { intl } = this.props;
-    return new Form({
-      fields: {
-        email: {
-          label: intl.formatMessage(messages.emailLabel),
-          value: '',
-          validators: [required, email],
-        },
-        password: {
-          label: intl.formatMessage(messages.passwordLabel),
-          value: '',
-          validators: [required],
-          type: 'password',
+    return new Form(
+      {
+        fields: {
+          email: {
+            label: intl.formatMessage(messages.emailLabel),
+            value: '',
+            validators: [required, email],
+          },
+          password: {
+            label: intl.formatMessage(messages.passwordLabel),
+            value: '',
+            validators: [required],
+            type: 'password',
+          },
         },
       },
-    },
-    intl,
-  )})();
+      intl,
+    );
+  })();
 
   submit(e) {
     e.preventDefault();
@@ -123,7 +127,9 @@ class Login extends Component {
     return (
       <div className="auth__container">
         <form className="franz-form auth__form" onSubmit={e => this.submit(e)}>
-          <Link to='/auth/welcome'><img src="./assets/images/logo.svg" className="auth__logo" alt="" /></Link>
+          <Link to="/auth/welcome">
+            <img src="./assets/images/logo.svg" className="auth__logo" alt="" />
+          </Link>
           <H1>{intl.formatMessage(messages.headline)}</H1>
           {isTokenExpired && (
             <p className="error-message center">
@@ -185,15 +191,15 @@ class Login extends Component {
           <Link
             // to={passwordRoute} // TODO: Uncomment this line after fixing password recovery in-app
             to={`${serverBase()}/user/forgot`} // TODO: Remove this line after fixing password recovery in-app
-            target='_blank' // TODO: Remove this line after fixing password recovery in-app
+            target="_blank" // TODO: Remove this line after fixing password recovery in-app
           >
             {intl.formatMessage(messages.passwordLink)}
           </Link>
         </div>
         <div className="auth__help">
-          <span>
-            {intl.formatMessage(messages.backToWelcome)}
-          </span>
+          <Link to="/auth/welcome">
+            <Icon icon={mdiArrowLeftCircle} size={1.5} />
+          </Link>
         </div>
       </div>
     );
