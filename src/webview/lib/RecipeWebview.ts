@@ -93,12 +93,14 @@ class RecipeWebview {
   }
 
   /**
-   * Find if url contains image
+   * Find if link contains image
    *
    * @param  {string | number | undefined | null} text to be parsed
    */
-  isImage(url): boolean {
-    return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url.split(/[#?]/)[0]);
+  isImage(link): boolean {
+    const roles = ['img'];
+    const { role } = link.dataset;
+    return roles.includes(role);
   }
 
   /**
