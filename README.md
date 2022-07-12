@@ -11,18 +11,26 @@
 
 # Ferdium
 
+[![Builds](https://github.com/ferdium/ferdium-app/actions/workflows/builds.yml/badge.svg)](https://github.com/ferdium/ferdium-app/actions/workflows/builds.yml)
+[![Crowdin](https://badges.crowdin.net/ferdium-app/localized.svg)](https://crowdin.com/project/ferdium-app)
+
+<!-- TODO: Uncomment when releasing for the first time -->
+<!-- ![GitHub release (latest by date)](https://img.shields.io/github/v/release/ferdium/ferdium-app) -->
+
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/ferdium/ferdium-app?include_prereleases&label=Pre-release%20Version)
+![GitHub all releases](https://img.shields.io/github/downloads/ferdium/ferdium-app/total?label=Total%20Releases)
+![GitHub release (by tag)](https://img.shields.io/github/downloads/ferdium/ferdium-app/v6.0.0-beta.3/total)
+
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-306-default.svg?logo=github' alt='Contributors'/></a>
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
+
 - [Ferdium](#ferdium)
   - [Screenshots](#screenshots)
   - [Download](#download)
   - [Migrating from Ferdi](#migrating-from-ferdi)
   - [Contributing](#contributing)
   - [Contributors ✨](#contributors-)
-
-[![Builds](https://github.com/ferdium/ferdium-app/actions/workflows/builds.yml/badge.svg)](https://github.com/ferdium/ferdium-app/actions/workflows/builds.yml)
-[![Crowdin](https://badges.crowdin.net/ferdium-app/localized.svg)](https://crowdin.com/project/ferdium-app)
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-306-default.svg?logo=github' alt='Contributors'/></a>
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 > 🤴🏽 Hard-fork of [Franz](https://github.com/meetfranz/franz), adding awesome features and removing unwanted ones.
 
