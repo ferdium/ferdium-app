@@ -14,7 +14,6 @@ import {
   mdiMenu,
   mdiChevronDown,
   mdiChevronRight,
-  mdiChevronLeft,
   mdiViewSplitVertical,
 } from '@mdi/js';
 
@@ -190,13 +189,7 @@ class Sidebar extends Component {
               onClick={() => toggleCollapseMenu()}
               className="sidebar__button sidebar__button--hamburger-menu"
             >
-              {isMenuCollapsed && !useHorizontalStyle ? (
-                <Icon icon={mdiMenu} size={1.5} />
-              ) : null}
-
-              {isMenuCollapsed && useHorizontalStyle ? (
-                <Icon icon={mdiChevronLeft} size={1.5} />
-              ) : null}
+              {isMenuCollapsed ? <Icon icon={mdiMenu} size={1.5} /> : null}
 
               {!isMenuCollapsed && !useHorizontalStyle ? (
                 <Icon icon={mdiChevronDown} size={1.5} />
