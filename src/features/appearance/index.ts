@@ -129,7 +129,7 @@ function generateAccentStyle(accentColorStr) {
 function generateServiceRibbonWidthStyle(
   widthStr,
   iconSizeStr,
-  vertical,
+  horizontal,
   isLabelEnabled,
   sidebarServicesLocation,
   useGrayscaleServices,
@@ -196,16 +196,16 @@ function generateServiceRibbonWidthStyle(
   let sidebarServicesAlignment;
   switch (sidebarServicesLocation) {
     case SIDEBAR_SERVICES_LOCATION_TOPLEFT:
-      sidebarServicesAlignment = vertical ? 'left' : 'start';
+      sidebarServicesAlignment = horizontal ? 'left' : 'start';
       break;
     case SIDEBAR_SERVICES_LOCATION_CENTER:
-      sidebarServicesAlignment = vertical ? 'center' : 'center';
+      sidebarServicesAlignment = horizontal ? 'center' : 'center';
       break;
     case SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT:
-      sidebarServicesAlignment = vertical ? 'right' : 'end';
+      sidebarServicesAlignment = horizontal ? 'right' : 'end';
       break;
     default:
-      sidebarServicesAlignment = vertical ? 'left' : 'start';
+      sidebarServicesAlignment = horizontal ? 'left' : 'start';
       break;
   }
 
@@ -213,7 +213,7 @@ function generateServiceRibbonWidthStyle(
   opacity: ${grayscaleServicesDim}%;`;
 
   const sizeDragArea = showDragArea ? verticalStyleOffset : 0;
-  return vertical
+  return horizontal
     ? `
     .sidebar {
       height: ${width}px !important;
@@ -370,7 +370,7 @@ function generateStyle(settings) {
     grayscaleServicesDim,
     iconSize,
     showDragArea,
-    useVerticalStyle,
+    useHorizontalStyle,
     alwaysShowWorkspaces,
     showServiceName,
   } = settings;
@@ -384,7 +384,7 @@ function generateStyle(settings) {
   style += generateServiceRibbonWidthStyle(
     serviceRibbonWidth,
     iconSize,
-    useVerticalStyle,
+    useHorizontalStyle,
     showServiceName,
     sidebarServicesLocation,
     useGrayscaleServices,
@@ -395,7 +395,7 @@ function generateStyle(settings) {
   if (showDragArea) {
     style += generateShowDragAreaStyle(accentColor);
   }
-  if (useVerticalStyle) {
+  if (useHorizontalStyle) {
     style += generateVerticalStyle(serviceRibbonWidth, alwaysShowWorkspaces);
   } else if (document.querySelector('#vertical-style')) {
     const link = document.querySelector('#vertical-style');
@@ -442,7 +442,7 @@ export default function initAppearance(stores) {
       settings.all.app.sidebarServicesLocation,
       settings.all.app.useGrayscaleServices,
       settings.all.app.grayscaleServicesDim,
-      settings.all.app.useVerticalStyle,
+      settings.all.app.useHorizontalStyle,
       settings.all.app.alwaysShowWorkspaces,
       settings.all.app.showServiceName,
     ],

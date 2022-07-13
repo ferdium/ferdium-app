@@ -261,7 +261,7 @@ export const DEFAULT_APP_SETTINGS = {
   iconSize: iconSizeBias,
   navigationBarBehaviour: 'custom',
   searchEngine: SEARCH_ENGINE_STARTPAGE,
-  useVerticalStyle: false,
+  useHorizontalStyle: false,
   hideCollapseButton: false,
   isMenuCollapsed: false,
   hideRecipesButton: false,
