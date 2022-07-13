@@ -134,6 +134,7 @@ function generateServiceRibbonWidthStyle(
   sidebarServicesLocation,
   useGrayscaleServices,
   grayscaleServicesDim,
+  showDragArea,
 ) {
   const width = Number(widthStr);
   const iconSize = Number(iconSizeStr) - iconSizeBias;
@@ -141,6 +142,7 @@ function generateServiceRibbonWidthStyle(
   let tabItemHeightBias = -5;
   let sidebarSizeBias = 22;
   const tabItemWidthBias = 3;
+  const verticalStyleOffset = 29;
 
   switch (width) {
     case 35:
@@ -194,23 +196,23 @@ function generateServiceRibbonWidthStyle(
   let sidebarServicesAlignment;
   switch (sidebarServicesLocation) {
     case SIDEBAR_SERVICES_LOCATION_TOPLEFT:
-      sidebarServicesAlignment = vertical ? "left" : "start";
+      sidebarServicesAlignment = vertical ? 'left' : 'start';
       break;
     case SIDEBAR_SERVICES_LOCATION_CENTER:
-      sidebarServicesAlignment = vertical ? "center" : "center";
+      sidebarServicesAlignment = vertical ? 'center' : 'center';
       break;
     case SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT:
-      sidebarServicesAlignment = vertical ? "right" : "end";
+      sidebarServicesAlignment = vertical ? 'right' : 'end';
       break;
     default:
-      sidebarServicesAlignment = vertical ? "left" : "start";
+      sidebarServicesAlignment = vertical ? 'left' : 'start';
       break;
   }
 
-  const graysacleServices =
-  `filter: grayscale(1);
-  opacity: ${grayscaleServicesDim}%;`
+  const graysacleServices = `filter: grayscale(1);
+  opacity: ${grayscaleServicesDim}%;`;
 
+  const sizeDragArea = showDragArea ? verticalStyleOffset : 0;
   return vertical
     ? `
     .sidebar {
@@ -247,7 +249,17 @@ function generateServiceRibbonWidthStyle(
       margin-top: -${width}px !important;
     }
     .darwin .sidebar {
-      height: ${width + sidebarSizeBias}px !important;
+      height: ${width + verticalStyleOffset - 3 - sizeDragArea}px !important;
+    }
+    .darwin .app .app__content {
+      padding-top: ${
+        width + sidebarSizeBias + (sizeDragArea !== 0 ? 4 - sizeDragArea : 4)
+      }px !important;
+    }
+    .darwin .workspaces-drawer {
+      margin-top: -${
+        width + verticalStyleOffset - 5 - sizeDragArea
+      }px !important;
     }
     .darwin .sidebar .sidebar__button--workspaces.is-active {
       height: ${width - sidebarSizeBias}px !important;
@@ -377,6 +389,7 @@ function generateStyle(settings) {
     sidebarServicesLocation,
     useGrayscaleServices,
     grayscaleServicesDim,
+    showDragArea,
   );
 
   if (showDragArea) {
@@ -403,7 +416,7 @@ function updateProgressbar(settings) {
     barColors: {
       '0': settings.progressbarAccentColor,
     },
-    shadowBlur: 5
+    shadowBlur: 5,
   });
 }
 
