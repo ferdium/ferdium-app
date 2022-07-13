@@ -30,8 +30,7 @@ WORKDIR /usr/src/ferdium/recipes
 
 RUN npm i -gf "pnpm@$(node -p 'require("./package.json").engines.pnpm')" && pnpm -v
 
-RUN pnpm i \
-  && pnpm package
+RUN pnpm i && pnpm lint && pnpm reformat-files && pnpm package
 
 WORKDIR /usr/src/ferdium
 
