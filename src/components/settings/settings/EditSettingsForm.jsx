@@ -19,7 +19,7 @@ import { H1, H2, H3, H5 } from '../../ui/headline';
 import {
   DEFAULT_ACCENT_COLOR,
   DEFAULT_APP_SETTINGS,
-  FRANZ_TRANSLATION,
+  FERDIUM_TRANSLATION,
   GITHUB_FRANZ_URL,
   SPLIT_COLUMNS_MAX,
   SPLIT_COLUMNS_MIN,
@@ -309,11 +309,11 @@ class EditSettingsForm extends Component {
     this.props.form.submit({
       onSuccess: form => {
         const values = form.values();
-        const accentColor = values.accentColor;
+        const { accentColor } = values;
         if (accentColor.trim().length === 0) {
           values.accentColor = DEFAULT_ACCENT_COLOR;
         }
-        const progressbarAccentColor = values.progressbarAccentColor;
+        const { progressbarAccentColor } = values;
         if (progressbarAccentColor.trim().length === 0) {
           values.progressbarAccentColor = DEFAULT_ACCENT_COLOR;
         }
@@ -852,7 +852,7 @@ class EditSettingsForm extends Component {
                 <Hr />
 
                 <a
-                  href={FRANZ_TRANSLATION}
+                  href={FERDIUM_TRANSLATION}
                   target="_blank"
                   className="link"
                   rel="noreferrer"
