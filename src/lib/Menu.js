@@ -1169,22 +1169,22 @@ class FranzMenu {
     if (isFeatureEnabledByUser) {
       menu.push(
         {
+          label: intl.formatMessage(menuItems.disableTodos),
+          click: () => {
+            todoActions.toggleTodosFeatureVisibility();
+          },
+          enabled: this.stores.user.isLoggedIn,
+        },
+        {
+          type: 'separator',
+        },
+        {
           label: intl.formatMessage(drawerLabel),
           accelerator: `${todosToggleShortcutKey()}`,
           click: () => {
             todoActions.toggleTodosPanel();
           },
           enabled: this.stores.user.isLoggedIn && isFeatureEnabledByUser,
-        },
-        {
-          type: 'separator',
-        },
-        {
-          label: intl.formatMessage(menuItems.disableTodos),
-          click: () => {
-            todoActions.toggleTodosFeatureVisibility();
-          },
-          enabled: this.stores.user.isLoggedIn,
         },
       );
     }
