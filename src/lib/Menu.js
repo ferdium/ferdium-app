@@ -32,11 +32,7 @@ import {
   nodeVersion,
   osArch,
 } from '../environment';
-import {
-  CUSTOM_WEBSITE_RECIPE_ID,
-  GITHUB_FERDIUM_URL,
-  LIVE_API_FERDIUM_WEBSITE,
-} from '../config';
+import { CUSTOM_WEBSITE_RECIPE_ID, LIVE_API_FERDIUM_WEBSITE } from '../config';
 import { ferdiumVersion } from '../environment-remote';
 import { todoActions } from '../features/todos/actions';
 import workspaceActions from '../features/workspaces/actions';
@@ -586,10 +582,7 @@ const _titleBarTemplateFactory = (intl, locked) => [
       {
         label: intl.formatMessage(menuItems.changelog),
         click() {
-          openExternalUrl(
-            `${GITHUB_FERDIUM_URL}/ferdium-app/releases/tag/v${ferdiumVersion}`,
-            true,
-          );
+          window.location.href = '#/releasenotes';
         },
       },
       {
