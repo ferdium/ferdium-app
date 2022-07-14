@@ -333,6 +333,10 @@ const menuItems = defineMessages({
     id: 'menu.todos.enableTodos',
     defaultMessage: 'Enable Todos',
   },
+  disableTodos: {
+    id: 'menu.todos.disableTodos',
+    defaultMessage: 'Disable Todos',
+  },
   serviceGoHome: {
     id: 'menu.services.goHome',
     defaultMessage: 'Home',
@@ -1163,29 +1167,36 @@ class FranzMenu {
       : menuItems.openTodosDrawer;
 
     if (isFeatureEnabledByUser) {
-      menu.push({
-        label: intl.formatMessage(drawerLabel),
-        accelerator: `${todosToggleShortcutKey()}`,
-        click: () => {
-          todoActions.toggleTodosPanel();
-        },
-        enabled: this.stores.user.isLoggedIn && isFeatureEnabledByUser,
-      });
-    }
-
-    if (!isFeatureEnabledByUser) {
       menu.push(
+        {
+          label: intl.formatMessage(drawerLabel),
+          accelerator: `${todosToggleShortcutKey()}`,
+          click: () => {
+            todoActions.toggleTodosPanel();
+          },
+          enabled: this.stores.user.isLoggedIn && isFeatureEnabledByUser,
+        },
         {
           type: 'separator',
         },
         {
-          label: intl.formatMessage(menuItems.enableTodos),
+          label: intl.formatMessage(menuItems.disableTodos),
           click: () => {
             todoActions.toggleTodosFeatureVisibility();
           },
           enabled: this.stores.user.isLoggedIn,
         },
       );
+    }
+
+    if (!isFeatureEnabledByUser) {
+      menu.push({
+        label: intl.formatMessage(menuItems.enableTodos),
+        click: () => {
+          todoActions.toggleTodosFeatureVisibility();
+        },
+        enabled: this.stores.user.isLoggedIn,
+      });
     }
 
     return menu;
