@@ -70,7 +70,7 @@ export default class AppStore extends TypedStore {
 
   @observable clearAppCacheRequest = new Request(this.api.local, 'clearCache');
 
-  @observable autoLaunchOnStart = true;
+  @observable autoLaunchOnStart = DEFAULT_APP_SETTINGS.autoLaunchOnStart;
 
   @observable isOnline = navigator.onLine;
 
@@ -94,9 +94,9 @@ export default class AppStore extends TypedStore {
 
   @observable isFocused = true;
 
-  @observable lockingFeatureEnabled = false;
+  @observable lockingFeatureEnabled = DEFAULT_APP_SETTINGS.lockingFeatureEnabled;
 
-  @observable launchInBackground = false;
+  @observable launchInBackground = DEFAULT_APP_SETTINGS.autoLaunchInBackground;
 
   dictionaries = [];
 
