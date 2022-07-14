@@ -20,7 +20,7 @@ class TabBar extends Component {
     updateService: PropTypes.func.isRequired,
     hibernateService: PropTypes.func.isRequired,
     wakeUpService: PropTypes.func.isRequired,
-    useVerticalStyle: PropTypes.bool.isRequired,
+    useHorizontalStyle: PropTypes.bool.isRequired,
     showMessageBadgeWhenMutedSetting: PropTypes.bool.isRequired,
     showServiceNameSetting: PropTypes.bool.isRequired,
     showMessageBadgesEvenWhenMuted: PropTypes.bool.isRequired,
@@ -80,13 +80,13 @@ class TabBar extends Component {
       toggleAudio,
       toggleDarkMode,
       deleteService,
-      useVerticalStyle,
+      useHorizontalStyle,
       showMessageBadgeWhenMutedSetting,
       showServiceNameSetting,
       showMessageBadgesEvenWhenMuted,
     } = this.props;
 
-    const axis = useVerticalStyle ? 'x' : 'y';
+    const axis = useHorizontalStyle ? 'x' : 'y';
 
     return (
       <div>

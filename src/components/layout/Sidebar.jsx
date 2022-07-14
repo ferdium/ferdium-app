@@ -151,7 +151,7 @@ class Sidebar extends Component {
       hideNotificationsButton,
       hideSettingsButton,
       hideSplitModeButton,
-      useVerticalStyle,
+      useHorizontalStyle,
       splitMode,
     } = stores.settings.app;
     const { intl } = this.props;
@@ -180,7 +180,7 @@ class Sidebar extends Component {
           {...this.props}
           enableToolTip={() => this.enableToolTip()}
           disableToolTip={() => this.disableToolTip()}
-          useVerticalStyle={stores.settings.all.app.useVerticalStyle}
+          useHorizontalStyle={stores.settings.all.app.useHorizontalStyle}
         />
         <>
           {numberActiveButtons <= 1 || hideCollapseButton ? null : (
@@ -189,16 +189,14 @@ class Sidebar extends Component {
               onClick={() => toggleCollapseMenu()}
               className="sidebar__button sidebar__button--hamburger-menu"
             >
-              {isMenuCollapsed && !useVerticalStyle ? (
-                <Icon icon={mdiMenu} size={1.5} />
-              ) : null}
+              {isMenuCollapsed ? <Icon icon={mdiMenu} size={1.5} /> : null}
 
-              {isMenuCollapsed && useVerticalStyle ? (
-                <Icon icon={mdiChevronRight} size={1.5} />
-              ) : null}
-
-              {!isMenuCollapsed ? (
+              {!isMenuCollapsed && !useHorizontalStyle ? (
                 <Icon icon={mdiChevronDown} size={1.5} />
+              ) : null}
+
+              {!isMenuCollapsed && useHorizontalStyle ? (
+                <Icon icon={mdiChevronRight} size={1.5} />
               ) : null}
             </button>
           )}

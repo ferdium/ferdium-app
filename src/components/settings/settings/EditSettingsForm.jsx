@@ -712,7 +712,7 @@ class EditSettingsForm extends Component {
 
                 <Select field={form.$('sidebarServicesLocation')} />
 
-                <Toggle field={form.$('useVerticalStyle')} />
+                <Toggle field={form.$('useHorizontalStyle')} />
 
                 <Toggle field={form.$('hideCollapseButton')} />
 
