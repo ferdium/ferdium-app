@@ -119,6 +119,7 @@
   "menu.services.goHome": "Hem",
   "menu.services.setNextServiceActive": "Aktivera nästa tjänst",
   "menu.todos": "Todos",
+  "menu.todos.disableTodos": "Disable Todos",
   "menu.todos.enableTodos": "Aktivera Todos",
   "menu.view": "Visa",
   "menu.view.back": "Tillbaka",
