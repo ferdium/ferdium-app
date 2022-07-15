@@ -213,6 +213,10 @@ const messages = defineMessages({
     id: 'settings.app.buttonInstallUpdate',
     defaultMessage: 'Restart & install update',
   },
+  buttonShowChangelog: {
+    id: 'settings.app.buttonShowChangelog',
+    defaultMessage: 'Show changelog',
+  },
   updateStatusSearching: {
     id: 'settings.app.updateStatusSearching',
     defaultMessage: 'Searching for updates...',
@@ -328,6 +332,7 @@ class EditSettingsForm extends Component {
       checkForUpdates,
       installUpdate,
       form,
+      updateVersion,
       isCheckingForUpdates,
       isAdaptableDarkModeEnabled,
       isUseGrayscaleServicesEnabled,
@@ -348,6 +353,9 @@ class EditSettingsForm extends Component {
       serverURL,
     } = this.props;
     const { intl } = this.props;
+
+    const updateVersionParsed =
+      updateVersion !== '' ? `?version=${updateVersion}` : '';
 
     let updateButtonLabelMessage = messages.buttonSearchForUpdate;
     if (isCheckingForUpdates) {
@@ -982,12 +990,22 @@ class EditSettingsForm extends Component {
                       <div>
                         <Toggle field={form.$('beta')} />
                         {updateIsReadyToInstall ? (
-                          <Button
-                            label={intl.formatMessage(
-                              messages.buttonInstallUpdate,
-                            )}
-                            onClick={installUpdate}
-                          />
+                          <>
+                            <Button
+                              label={intl.formatMessage(
+                                messages.buttonInstallUpdate,
+                              )}
+                              onClick={installUpdate}
+                            />
+                            <Button
+                              label={intl.formatMessage(
+                                messages.buttonShowChangelog,
+                              )}
+                              onClick={() => {
+                                window.location.href = `#/releasenotes${updateVersionParsed}`;
+                              }}
+                            />
+                          </>
                         ) : (
                           <Button
                             buttonType="secondary"

@@ -20,9 +20,21 @@ const messages = defineMessages({
     defaultMessage:
       'An error occured when connecting to Github, please try again later.',
   },
+  connectionErrorPageMissing: {
+    id: 'settings.releasenotes.connectionErrorPageMissing',
+    defaultMessage:
+      'An error occured when connecting to Github, the page you are looking for is missing.',
+  },
 });
 
-const ferdiumVersionParse = `v${ferdiumVersion}`;
+function getFerdiumVersion() {
+  const str = window.location.href;
+  const matches = str?.match(/version=([^&]*)/);
+  if (matches !== null) {
+    return `v${matches[1]}`;
+  }
+  return `v${ferdiumVersion}`;
+}
 
 class ReleaseNotesDashboard extends Component {
   static propTypes = {};
@@ -37,27 +49,34 @@ class ReleaseNotesDashboard extends Component {
     const { intl } = this.props;
 
     const octokit = new Octokit();
-    const response = await octokit.request(
-      'GET /repos/{owner}/{repo}/releases/tags/{tag}',
-      {
-        owner: 'ferdium',
-        repo: 'ferdium-app',
-        tag: ferdiumVersionParse,
-      },
-    );
+    try {
+      const response = await octokit.request(
+        'GET /repos/{owner}/{repo}/releases/tags/{tag}',
+        {
+          owner: 'ferdium',
+          repo: 'ferdium-app',
+          tag: getFerdiumVersion(),
+        },
+      );
 
-    debug('GH Connection Status', response.status);
-    if (response.status === 200) {
-      const json = await response.data.body;
-      this.setState({ data: json });
-    } else {
+      debug('GH Connection Status', response.status);
+      if (response.status === 200) {
+        const json = await response.data.body;
+        this.setState({ data: json });
+      } else {
+        this.setState({
+          data: `### ${intl.formatMessage(messages.connectionError)}`,
+        });
+      }
+
+      for (const link of document.querySelectorAll('.releasenotes__body a')) {
+        link.addEventListener('click', this.handleClick.bind(this), false);
+      }
+    } catch (error) {
+      debug('GH Connection Error Status', error);
       this.setState({
-        data: `## ${intl.formatMessage(messages.connectionError)}`,
+        data: `### ${intl.formatMessage(messages.connectionErrorPageMissing)}`,
       });
-    }
-
-    for (const link of document.querySelectorAll('.releasenotes__body a')) {
-      link.addEventListener('click', this.handleClick.bind(this), false);
     }
   }
 
@@ -83,7 +102,7 @@ class ReleaseNotesDashboard extends Component {
       <div className="settings__main">
         <div className="settings__header">
           <span className="settings__header-item">
-            Ferdium {ferdiumVersionParse} {' | '}
+            Ferdium {getFerdiumVersion()} {' | '}
           </span>
           <span className="settings__header-item__secondary">
             {intl.formatMessage(messages.headline)}
