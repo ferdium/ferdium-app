@@ -119,6 +119,7 @@
   "menu.services.goHome": "Hjem",
   "menu.services.setNextServiceActive": "Aktiver neste tjeneste",
   "menu.todos": "Gjøremål",
+  "menu.todos.disableTodos": "Disable Todos",
   "menu.todos.enableTodos": "Aktiver gjøremål",
   "menu.view": "Vis",
   "menu.view.back": "Tilbake",
