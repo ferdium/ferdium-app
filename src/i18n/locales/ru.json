@@ -119,6 +119,7 @@
   "menu.services.goHome": "Домой",
   "menu.services.setNextServiceActive": "Активировать следующий сервис",
   "menu.todos": "Задачи",
+  "menu.todos.disableTodos": "Disable Todos",
   "menu.todos.enableTodos": "Включить задачи",
   "menu.view": "Вид",
   "menu.view.back": "Назад",
