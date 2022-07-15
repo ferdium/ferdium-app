@@ -1162,41 +1162,36 @@ class FranzMenu {
     const { intl } = window['ferdium'];
     const menu = [];
 
-    const drawerLabel = isTodosPanelVisible
-      ? menuItems.closeTodosDrawer
-      : menuItems.openTodosDrawer;
+    menu.push({
+      label: intl.formatMessage(
+        !isFeatureEnabledByUser
+          ? menuItems.disableTodos
+          : menuItems.enableTodos
+      ),
+      click: () => {
+        todoActions.toggleTodosFeatureVisibility();
+      },
+      enabled: this.stores.user.isLoggedIn,
+    });
 
     if (isFeatureEnabledByUser) {
       menu.push(
         {
-          label: intl.formatMessage(menuItems.disableTodos),
-          click: () => {
-            todoActions.toggleTodosFeatureVisibility();
-          },
-          enabled: this.stores.user.isLoggedIn,
-        },
-        {
           type: 'separator',
         },
         {
-          label: intl.formatMessage(drawerLabel),
+          label: intl.formatMessage(
+            isTodosPanelVisible
+              ? menuItems.closeTodosDrawer
+              : menuItems.openTodosDrawer
+          ),
           accelerator: `${todosToggleShortcutKey()}`,
           click: () => {
             todoActions.toggleTodosPanel();
           },
-          enabled: this.stores.user.isLoggedIn && isFeatureEnabledByUser,
+          enabled: this.stores.user.isLoggedIn,
         },
       );
-    }
-
-    if (!isFeatureEnabledByUser) {
-      menu.push({
-        label: intl.formatMessage(menuItems.enableTodos),
-        click: () => {
-          todoActions.toggleTodosFeatureVisibility();
-        },
-        enabled: this.stores.user.isLoggedIn,
-      });
     }
 
     return menu;
