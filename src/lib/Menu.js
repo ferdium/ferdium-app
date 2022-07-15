@@ -1164,9 +1164,7 @@ class FranzMenu {
 
     menu.push({
       label: intl.formatMessage(
-        !isFeatureEnabledByUser
-          ? menuItems.disableTodos
-          : menuItems.enableTodos
+        isFeatureEnabledByUser ? menuItems.disableTodos : menuItems.enableTodos,
       ),
       click: () => {
         todoActions.toggleTodosFeatureVisibility();
@@ -1183,7 +1181,7 @@ class FranzMenu {
           label: intl.formatMessage(
             isTodosPanelVisible
               ? menuItems.closeTodosDrawer
-              : menuItems.openTodosDrawer
+              : menuItems.openTodosDrawer,
           ),
           accelerator: `${todosToggleShortcutKey()}`,
           click: () => {
