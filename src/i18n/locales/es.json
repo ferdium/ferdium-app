@@ -119,6 +119,7 @@
   "menu.services.goHome": "Inicio",
   "menu.services.setNextServiceActive": "Activa el siguiente servicio",
   "menu.todos": "Tareas pendientes",
+  "menu.todos.disableTodos": "Disable Todos",
   "menu.todos.enableTodos": "Habilitar Tareas pendientes",
   "menu.view": "Mostrar",
   "menu.view.back": "Volver",
