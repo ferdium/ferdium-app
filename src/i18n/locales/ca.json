@@ -119,6 +119,7 @@
   "menu.services.goHome": "Inici",
   "menu.services.setNextServiceActive": "Activa el següent servei",
   "menu.todos": "Tasques",
+  "menu.todos.disableTodos": "Disable Todos",
   "menu.todos.enableTodos": "Activar Tasques",
   "menu.view": "Visualitza",
   "menu.view.back": "Enrere",
