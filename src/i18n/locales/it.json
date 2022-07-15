@@ -119,6 +119,7 @@
   "menu.services.goHome": "Home",
   "menu.services.setNextServiceActive": "Attiva servizio seguente",
   "menu.todos": "Todo",
+  "menu.todos.disableTodos": "Disable Todos",
   "menu.todos.enableTodos": "Abilita Todos",
   "menu.view": "Visualizza",
   "menu.view.back": "Indietro",
