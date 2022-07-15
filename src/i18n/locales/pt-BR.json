@@ -119,6 +119,7 @@
   "menu.services.goHome": "Início",
   "menu.services.setNextServiceActive": "Ativar próximo serviço",
   "menu.todos": "Tarefas",
+  "menu.todos.disableTodos": "Disable Todos",
   "menu.todos.enableTodos": "Ativar Tarefas",
   "menu.view": "Visualizar",
   "menu.view.back": "Anterior",
