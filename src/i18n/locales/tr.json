@@ -119,6 +119,7 @@
   "menu.services.goHome": "Ana Sayfa",
   "menu.services.setNextServiceActive": "Bir sonraki servisi aktive et",
   "menu.todos": "Yapılacaklar",
+  "menu.todos.disableTodos": "Disable Todos",
   "menu.todos.enableTodos": "Yapılacaklar Listesi'ni Aç",
   "menu.view": "Görünüm",
   "menu.view.back": "Geri",
