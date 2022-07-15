@@ -119,6 +119,7 @@
   "menu.services.goHome": "Acasă",
   "menu.services.setNextServiceActive": "Activare serviciu următor",
   "menu.todos": "Todos",
+  "menu.todos.disableTodos": "Disable Todos",
   "menu.todos.enableTodos": "Activează Todos",
   "menu.view": "Vizualizare",
   "menu.view.back": "Înapoi",
