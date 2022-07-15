@@ -119,6 +119,7 @@
   "menu.services.goHome": "Trang chủ",
   "menu.services.setNextServiceActive": "Kích hoạt dịch vụ tiếp theo",
   "menu.todos": "Danh sách cần làm",
+  "menu.todos.disableTodos": "Disable Todos",
   "menu.todos.enableTodos": "Mở danh sách cần làm",
   "menu.view": "Hiển thị",
   "menu.view.back": "Quay lại",
