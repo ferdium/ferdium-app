@@ -119,6 +119,7 @@
   "menu.services.goHome": "홈",
   "menu.services.setNextServiceActive": "다음 서비스 활성화",
   "menu.todos": "Todos",
+  "menu.todos.disableTodos": "Disable Todos",
   "menu.todos.enableTodos": "Todos 허용",
   "menu.view": "View",
   "menu.view.back": "뒤로가기",
