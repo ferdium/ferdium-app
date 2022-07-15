@@ -119,6 +119,7 @@
   "menu.services.goHome": "Kezdőlap",
   "menu.services.setNextServiceActive": "Következő szolgáltatás",
   "menu.todos": "Tennivalók",
+  "menu.todos.disableTodos": "Disable Todos",
   "menu.todos.enableTodos": "Enable Todos",
   "menu.view": "Nézet",
   "menu.view.back": "Vissza",
