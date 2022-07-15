@@ -119,6 +119,7 @@
   "menu.services.goHome": "主頁",
   "menu.services.setNextServiceActive": "Activate next service",
   "menu.todos": "Todos",
+  "menu.todos.disableTodos": "Disable Todos",
   "menu.todos.enableTodos": "Enable Todos",
   "menu.view": "檢視",
   "menu.view.back": "返回",
