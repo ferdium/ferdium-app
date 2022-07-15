@@ -119,6 +119,7 @@
   "menu.services.goHome": "Startpagina",
   "menu.services.setNextServiceActive": "Activeer volgende service",
   "menu.todos": "Taken",
+  "menu.todos.disableTodos": "Disable Todos",
   "menu.todos.enableTodos": "Todos inschakelen",
   "menu.view": "Weergave",
   "menu.view.back": "Terug",
