@@ -119,6 +119,7 @@
   "menu.services.goHome": "ホーム",
   "menu.services.setNextServiceActive": "次のサービスを有効にする",
   "menu.todos": "ToDo",
+  "menu.todos.disableTodos": "Disable Todos",
   "menu.todos.enableTodos": "ToDoを有効にする",
   "menu.view": "表示",
   "menu.view.back": "戻る",
