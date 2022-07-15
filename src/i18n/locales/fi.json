@@ -119,6 +119,7 @@
   "menu.services.goHome": "Etusivu",
   "menu.services.setNextServiceActive": "Seuraava palvelu",
   "menu.todos": "Todos-tehtävät",
+  "menu.todos.disableTodos": "Disable Todos",
   "menu.todos.enableTodos": "Ota Todos käyttöön",
   "menu.view": "Katso",
   "menu.view.back": "Takaisin",
