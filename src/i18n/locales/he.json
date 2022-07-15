@@ -119,6 +119,7 @@
   "menu.services.goHome": "בית",
   "menu.services.setNextServiceActive": "הפעלת השירות הבא",
   "menu.todos": "משימות",
+  "menu.todos.disableTodos": "Disable Todos",
   "menu.todos.enableTodos": "הפעלת משימות",
   "menu.view": "תצוגה",
   "menu.view.back": "חזרה",
