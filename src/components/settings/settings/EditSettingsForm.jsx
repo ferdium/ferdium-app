@@ -990,22 +990,12 @@ class EditSettingsForm extends Component {
                       <div>
                         <Toggle field={form.$('beta')} />
                         {updateIsReadyToInstall ? (
-                          <>
-                            <Button
-                              label={intl.formatMessage(
-                                messages.buttonInstallUpdate,
-                              )}
-                              onClick={installUpdate}
-                            />
-                            <Button
-                              label={intl.formatMessage(
-                                messages.buttonShowChangelog,
-                              )}
-                              onClick={() => {
-                                window.location.href = `#/releasenotes${updateVersionParsed}`;
-                              }}
-                            />
-                          </>
+                          <Button
+                            label={intl.formatMessage(
+                              messages.buttonInstallUpdate,
+                            )}
+                            onClick={installUpdate}
+                          />
                         ) : (
                           <Button
                             buttonType="secondary"
@@ -1020,6 +1010,18 @@ class EditSettingsForm extends Component {
                             loaded={!isCheckingForUpdates || !isUpdateAvailable}
                           />
                         )}
+                        {isUpdateAvailable && (
+                          <Button
+                            className="settings__updates__changelog-button"
+                            label={intl.formatMessage(
+                              messages.buttonShowChangelog,
+                            )}
+                            onClick={() => {
+                              window.location.href = `#/releasenotes${updateVersionParsed}`;
+                            }}
+                          />
+                        )}
+                        <br />
                         <br />
                       </div>
                       <p>
