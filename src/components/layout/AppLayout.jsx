@@ -13,6 +13,7 @@ import { Component as BasicAuth } from '../../features/basicAuth';
 import { Component as QuickSwitch } from '../../features/quickSwitch';
 import { Component as PublishDebugInfo } from '../../features/publishDebugInfo';
 import ErrorBoundary from '../util/ErrorBoundary';
+import updateVersionParse from '../../helpers/update-helpers';
 
 // import globalMessages from '../../i18n/globalMessages';
 
@@ -94,10 +95,14 @@ class AppLayout extends Component {
     areRequiredRequestsLoading: PropTypes.bool.isRequired,
   };
 
-  state = {
-    shouldShowAppUpdateInfoBar: true,
-    shouldShowServicesUpdatedInfoBar: true,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      shouldShowAppUpdateInfoBar: true,
+      shouldShowServicesUpdatedInfoBar: true,
+    };
+  }
 
   render() {
     const {
@@ -115,6 +120,7 @@ class AppLayout extends Component {
       areRequiredRequestsSuccessful,
       retryRequiredRequests,
       areRequiredRequestsLoading,
+      updateVersion,
     } = this.props;
 
     const { intl } = this.props;
@@ -126,86 +132,91 @@ class AppLayout extends Component {
 
     return (
       <>
-      {isMac && !isFullScreen && (
-        <div className="window-draggable" />
-      )}
-      <ErrorBoundary>
-        <div className="app">
-          {isWindows && !isFullScreen && (
-            <TitleBar
-              menu={window['ferdium'].menu.template}
-              icon="assets/images/logo.svg"
-            />
-          )}
-          {isMac && !isFullScreen && (
-            <span
-              onDoubleClick={toggleFullScreen}
-              className={classes.titleBar}
-            />
-          )}
-          <div className={`app__content ${classes.appContent}`}>
-            {workspacesDrawer}
-            {sidebar}
-            <div className="app__service">
-              <WorkspaceSwitchingIndicator />
-              {!areRequiredRequestsSuccessful && showRequiredRequestsError && (
-                <InfoBar
-                  type="danger"
-                  ctaLabel="Try again"
-                  ctaLoading={areRequiredRequestsLoading}
-                  sticky
-                  onClick={retryRequiredRequests}
-                >
-                  <Icon icon={mdiFlash} />
-                  {intl.formatMessage(messages.requiredRequestsFailed)}
-                </InfoBar>
-              )}
-              {authRequestFailed && (
-                <InfoBar
-                  type="danger"
-                  ctaLabel="Try again"
-                  ctaLoading={areRequiredRequestsLoading}
-                  sticky
-                  onClick={retryRequiredRequests}
-                >
-                  <Icon icon={mdiFlash} />
-                  {intl.formatMessage(messages.authRequestFailed)}
-                </InfoBar>
-              )}
-              {automaticUpdates && showServicesUpdatedInfoBar &&
-                this.state.shouldShowServicesUpdatedInfoBar && (
+        {isMac && !isFullScreen && <div className="window-draggable" />}
+        <ErrorBoundary>
+          <div className="app">
+            {isWindows && !isFullScreen && (
+              <TitleBar
+                menu={window['ferdium'].menu.template}
+                icon="assets/images/logo.svg"
+              />
+            )}
+            {isMac && !isFullScreen && (
+              <span
+                onDoubleClick={toggleFullScreen}
+                className={classes.titleBar}
+              />
+            )}
+            <div className={`app__content ${classes.appContent}`}>
+              {workspacesDrawer}
+              {sidebar}
+              <div className="app__service">
+                <WorkspaceSwitchingIndicator />
+                {!areRequiredRequestsSuccessful && showRequiredRequestsError && (
                   <InfoBar
-                    type="primary"
-                    ctaLabel={intl.formatMessage(messages.buttonReloadServices)}
-                    onClick={() => window.location.reload()}
-                    onHide={() => {
-                      this.setState({
-                        shouldShowServicesUpdatedInfoBar: false,
-                      });
-                    }}
+                    type="danger"
+                    ctaLabel="Try again"
+                    ctaLoading={areRequiredRequestsLoading}
+                    sticky
+                    onClick={retryRequiredRequests}
                   >
-                    <Icon icon={mdiPowerPlug} />
-                    {intl.formatMessage(messages.servicesUpdated)}
+                    <Icon icon={mdiFlash} />
+                    {intl.formatMessage(messages.requiredRequestsFailed)}
                   </InfoBar>
                 )}
-              {automaticUpdates && appUpdateIsDownloaded && this.state.shouldShowAppUpdateInfoBar && (
-                <AppUpdateInfoBar
-                  onInstallUpdate={installAppUpdate}
-                  onHide={() => {
-                    this.setState({ shouldShowAppUpdateInfoBar: false });
-                  }}
-                />
-              )}
-              <BasicAuth />
-              <QuickSwitch />
-              <PublishDebugInfo />
-              {services}
-              <Outlet />
+                {authRequestFailed && (
+                  <InfoBar
+                    type="danger"
+                    ctaLabel="Try again"
+                    ctaLoading={areRequiredRequestsLoading}
+                    sticky
+                    onClick={retryRequiredRequests}
+                  >
+                    <Icon icon={mdiFlash} />
+                    {intl.formatMessage(messages.authRequestFailed)}
+                  </InfoBar>
+                )}
+                {automaticUpdates &&
+                  showServicesUpdatedInfoBar &&
+                  this.state.shouldShowServicesUpdatedInfoBar && (
+                    <InfoBar
+                      type="primary"
+                      ctaLabel={intl.formatMessage(
+                        messages.buttonReloadServices,
+                      )}
+                      onClick={() => window.location.reload()}
+                      onHide={() => {
+                        this.setState({
+                          shouldShowServicesUpdatedInfoBar: false,
+                        });
+                      }}
+                    >
+                      <Icon icon={mdiPowerPlug} />
+                      {intl.formatMessage(messages.servicesUpdated)}
+                    </InfoBar>
+                  )}
+                {automaticUpdates &&
+                  appUpdateIsDownloaded &&
+                  this.state.shouldShowAppUpdateInfoBar && (
+                    <AppUpdateInfoBar
+                      onInstallUpdate={installAppUpdate}
+                      updateVersionParsed={updateVersionParse(updateVersion)}
+                      onHide={() => {
+                        // eslint-disable-next-line react/no-unused-state
+                        this.setState({ shouldShowAppUpdateInfoBar: false });
+                      }}
+                    />
+                  )}
+                <BasicAuth />
+                <QuickSwitch />
+                <PublishDebugInfo />
+                {services}
+                <Outlet />
+              </div>
+              <Todos />
             </div>
-            <Todos />
           </div>
-        </div>
-      </ErrorBoundary>
+        </ErrorBoundary>
       </>
     );
   }

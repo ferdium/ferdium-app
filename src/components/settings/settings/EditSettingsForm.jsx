@@ -15,6 +15,7 @@ import Input from '../../ui/Input';
 import ColorPickerInput from '../../ui/ColorPickerInput';
 import Infobox from '../../ui/Infobox';
 import { H1, H2, H3, H5 } from '../../ui/headline';
+import updateVersionParse from '../../../helpers/update-helpers';
 
 import {
   DEFAULT_ACCENT_COLOR,
@@ -353,9 +354,6 @@ class EditSettingsForm extends Component {
       serverURL,
     } = this.props;
     const { intl } = this.props;
-
-    const updateVersionParsed =
-      updateVersion !== '' ? `?version=${updateVersion}` : '';
 
     let updateButtonLabelMessage = messages.buttonSearchForUpdate;
     if (isCheckingForUpdates) {
@@ -1010,14 +1008,16 @@ class EditSettingsForm extends Component {
                             loaded={!isCheckingForUpdates || !isUpdateAvailable}
                           />
                         )}
-                        {isUpdateAvailable && (
+                        {(isUpdateAvailable || updateIsReadyToInstall) && (
                           <Button
                             className="settings__updates__changelog-button"
                             label={intl.formatMessage(
                               messages.buttonShowChangelog,
                             )}
                             onClick={() => {
-                              window.location.href = `#/releasenotes${updateVersionParsed}`;
+                              window.location.href = `#/releasenotes${updateVersionParse(
+                                updateVersion,
+                              )}`;
                             }}
                           />
                         )}

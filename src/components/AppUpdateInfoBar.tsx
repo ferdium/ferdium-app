@@ -2,8 +2,6 @@ import { defineMessages, useIntl } from 'react-intl';
 
 import { mdiInformation } from '@mdi/js';
 import InfoBar from './ui/InfoBar';
-import { GITHUB_FERDIUM_URL } from '../config';
-import { openExternalUrl } from '../helpers/url-helpers';
 import Icon from './ui/icon';
 
 const messages = defineMessages({
@@ -24,9 +22,14 @@ const messages = defineMessages({
 type Props = {
   onInstallUpdate: () => void;
   onHide: () => void;
+  updateVersionParsed: string;
 };
 
-const AppUpdateInfoBar = ({ onInstallUpdate, onHide }: Props) => {
+const AppUpdateInfoBar = ({
+  onInstallUpdate,
+  updateVersionParsed,
+  onHide,
+}: Props) => {
   const intl = useIntl();
 
   return (
@@ -41,12 +44,9 @@ const AppUpdateInfoBar = ({ onInstallUpdate, onHide }: Props) => {
       <button
         className="info-bar__inline-button"
         type="button"
-        onClick={() =>
-          openExternalUrl(
-            `${GITHUB_FERDIUM_URL}/ferdium-app/blob/develop/CHANGELOG.md`,
-            true,
-          )
-        }
+        onClick={() => {
+          window.location.href = `#/releasenotes${updateVersionParsed}`;
+        }}
       >
         <u>{intl.formatMessage(messages.changelog)}</u>
       </button>
