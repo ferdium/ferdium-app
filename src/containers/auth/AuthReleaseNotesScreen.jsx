@@ -1,13 +1,16 @@
 import { Component } from 'react';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
+
 import { Octokit } from '@octokit/core';
 import { defineMessages, injectIntl } from 'react-intl';
 import Markdown from 'markdown-to-jsx';
-import { openExternalUrl } from '../../../helpers/url-helpers';
-import { getFerdiumVersion } from '../../../helpers/update-helpers';
+import { mdiArrowLeftCircle } from '@mdi/js';
+import { openExternalUrl } from '../../helpers/url-helpers';
+import Icon from '../../components/ui/icon';
+import { getFerdiumVersion } from '../../helpers/update-helpers';
 
-const debug = require('../../../preload-safe-debug')(
-  'Ferdium:ReleaseNotesDashboard',
+const debug = require('../../preload-safe-debug')(
+  'Ferdium:AuthReleaseNotesDashboard',
 );
 
 const messages = defineMessages({
@@ -27,7 +30,7 @@ const messages = defineMessages({
   },
 });
 
-class ReleaseNotesDashboard extends Component {
+class AuthReleaseNotesScreen extends Component {
   static propTypes = {};
 
   constructor(props) {
@@ -90,21 +93,36 @@ class ReleaseNotesDashboard extends Component {
 
     const { data } = this.state;
     return (
-      <div className="settings__main">
-        <div className="settings__header">
-          <span className="settings__header-item">
-            Ferdium {getFerdiumVersion()} {' | '}
-          </span>
-          <span className="settings__header-item__secondary">
-            {intl.formatMessage(messages.headline)}
-          </span>
-        </div>
-        <div className="settings__body releasenotes__body">
-          <Markdown options={{ wrapper: 'article' }}>{data}</Markdown>
+      <div className="auth__container auth__container--releasenotes">
+        <div className="auth__main--releasenotes">
+          <div className="auth__header">
+            <span className="auth__header-item">
+              Ferdium {getFerdiumVersion()} {' | '}
+            </span>
+            <span className="auth__header-item__secondary">
+              {intl.formatMessage(messages.headline)}
+            </span>
+          </div>
+          <div className="auth__body releasenotes__body">
+            <Markdown options={{ wrapper: 'article' }}>{data}</Markdown>
+          </div>
+          <div className="auth__help">
+            <button
+              type="button"
+              onClick={() => {
+                // For some reason <Link> doesn't work here. So we hard code the path to take us to the Welcome Screen
+                window.location.href = '#/auth/welcome';
+              }}
+            >
+              <Icon icon={mdiArrowLeftCircle} size={1.5} />
+            </button>
+          </div>
         </div>
       </div>
     );
   }
 }
 
-export default injectIntl(observer(ReleaseNotesDashboard));
+export default injectIntl(
+  inject('stores', 'actions')(observer(AuthReleaseNotesScreen)),
+);

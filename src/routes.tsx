@@ -22,6 +22,7 @@ import SupportFerdiumScreen from './containers/settings/SupportScreen';
 import ReleaseNotesScreen from './containers/settings/ReleaseNotesScreen';
 import WelcomeScreen from './containers/auth/WelcomeScreen';
 import LoginScreen from './containers/auth/LoginScreen';
+import AuthReleaseNotesScreen from './containers/auth/AuthReleaseNotesScreen';
 import PasswordScreen from './containers/auth/PasswordScreen';
 import ChangeServerScreen from './containers/auth/ChangeServerScreen';
 import SignupScreen from './containers/auth/SignupScreen';
@@ -101,6 +102,12 @@ class FerdiumRoutes extends Component<Props> {
             <Route
               path="/auth/logout"
               element={<LoginScreen {...routeProps} {...errorProps} />}
+            />
+            <Route
+              path="/auth/releasenotes"
+              element={
+                <AuthReleaseNotesScreen {...routeProps} {...errorProps} />
+              }
             />
           </Route>
 

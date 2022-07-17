@@ -45,7 +45,9 @@ const AppUpdateInfoBar = ({
         className="info-bar__inline-button"
         type="button"
         onClick={() => {
-          window.location.href = `#/releasenotes${updateVersionParsed}`;
+          window.location.href = window.location.href.includes('#/auth')
+            ? `#/auth/releasenotes${updateVersionParsed}`
+            : `#/releasenotes${updateVersionParsed}`;
         }}
       >
         <u>{intl.formatMessage(messages.changelog)}</u>

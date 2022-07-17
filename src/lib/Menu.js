@@ -582,7 +582,9 @@ const _titleBarTemplateFactory = (intl, locked) => [
       {
         label: intl.formatMessage(menuItems.changelog),
         click() {
-          window.location.href = '#/releasenotes';
+          window.location.href = window.location.href.includes('#/auth')
+            ? '#/auth/releasenotes'
+            : '#/releasenotes';
         },
       },
       {
