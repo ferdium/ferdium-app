@@ -8,6 +8,7 @@ import { Outlet } from 'react-router-dom';
 import ErrorBoundary from '../../util/ErrorBoundary';
 import Appear from '../../ui/effects/Appear';
 import Icon from '../../ui/icon';
+import { isEscKeyPress } from '../../../jsUtils';
 
 const messages = defineMessages({
   closeSettings: {
@@ -35,8 +36,7 @@ class ReleaseNotesLayout extends Component {
   }
 
   handleKeyDown(e) {
-    if (e.keyCode === 27) {
-      // escape key
+    if (isEscKeyPress(e.keyCode)) {
       this.props.closeSettings();
     }
   }

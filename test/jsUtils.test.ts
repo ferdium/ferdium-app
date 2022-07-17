@@ -110,4 +110,16 @@ describe('jsUtils', () => {
       expect(result).toEqual([{ a: 'b' }, { c: 'd' }]);
     });
   });
+
+  describe('isEscKeyPress', () => {
+    it('returns true if the key number is 27', () => {
+      const result = jsUtils.isEscKeyPress(27);
+      expect(result).toEqual(true);
+    });
+
+    it('returns false if the key number is 27', () => {
+      const result = jsUtils.isEscKeyPress(28);
+      expect(result).toEqual(false);
+    });
+  });
 });
