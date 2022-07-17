@@ -4,6 +4,7 @@ import { Octokit } from '@octokit/core';
 import { defineMessages, injectIntl } from 'react-intl';
 import Markdown from 'markdown-to-jsx';
 import { openExternalUrl } from '../../../helpers/url-helpers';
+import { ferdiumVersion } from '../../../environment-remote';
 import { getFerdiumVersion } from '../../../helpers/update-helpers';
 
 const debug = require('../../../preload-safe-debug')(
@@ -46,7 +47,7 @@ class ReleaseNotesDashboard extends Component {
         {
           owner: 'ferdium',
           repo: 'ferdium-app',
-          tag: getFerdiumVersion(),
+          tag: getFerdiumVersion(window.location.href, ferdiumVersion),
         },
       );
 
@@ -93,7 +94,7 @@ class ReleaseNotesDashboard extends Component {
       <div className="settings__main">
         <div className="settings__header">
           <span className="settings__header-item">
-            Ferdium {getFerdiumVersion()} {' | '}
+            Ferdium {getFerdiumVersion(window.location.href, ferdiumVersion)} {' | '}
           </span>
           <span className="settings__header-item__secondary">
             {intl.formatMessage(messages.headline)}

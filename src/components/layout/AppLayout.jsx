@@ -202,7 +202,6 @@ class AppLayout extends Component {
                       onInstallUpdate={installAppUpdate}
                       updateVersionParsed={updateVersionParse(updateVersion)}
                       onHide={() => {
-                        // eslint-disable-next-line react/no-unused-state
                         this.setState({ shouldShowAppUpdateInfoBar: false });
                       }}
                     />

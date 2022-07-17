@@ -15,7 +15,13 @@ import Input from '../../ui/Input';
 import ColorPickerInput from '../../ui/ColorPickerInput';
 import Infobox from '../../ui/Infobox';
 import { H1, H2, H3, H5 } from '../../ui/headline';
-import updateVersionParse from '../../../helpers/update-helpers';
+import {
+  ferdiumVersion,
+  userDataPath,
+  userDataRecipesPath,
+} from '../../../environment-remote';
+
+import { updateVersionParse } from '../../../helpers/update-helpers';
 
 import {
   DEFAULT_ACCENT_COLOR,
@@ -26,11 +32,6 @@ import {
   SPLIT_COLUMNS_MIN,
 } from '../../../config';
 import { isMac, isWindows, lockFerdiumShortcutKey } from '../../../environment';
-import {
-  ferdiumVersion,
-  userDataPath,
-  userDataRecipesPath,
-} from '../../../environment-remote';
 import { openExternalUrl, openPath } from '../../../helpers/url-helpers';
 import globalMessages from '../../../i18n/globalMessages';
 import Icon from '../../ui/icon';

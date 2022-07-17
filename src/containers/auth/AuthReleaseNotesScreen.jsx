@@ -7,7 +7,8 @@ import Markdown from 'markdown-to-jsx';
 import { mdiArrowLeftCircle } from '@mdi/js';
 import { openExternalUrl } from '../../helpers/url-helpers';
 import Icon from '../../components/ui/icon';
-import { getFerdiumVersion } from '../../helpers/update-helpers';
+import { ferdiumVersion } from '../../environment-remote';
+import { getFerdiumVersion } from '../../helpers/update-helpers'
 
 const debug = require('../../preload-safe-debug')(
   'Ferdium:AuthReleaseNotesDashboard',
@@ -49,7 +50,7 @@ class AuthReleaseNotesScreen extends Component {
         {
           owner: 'ferdium',
           repo: 'ferdium-app',
-          tag: getFerdiumVersion(),
+          tag: getFerdiumVersion(window.location.href, ferdiumVersion),
         },
       );
 
@@ -97,7 +98,7 @@ class AuthReleaseNotesScreen extends Component {
         <div className="auth__main--releasenotes">
           <div className="auth__header">
             <span className="auth__header-item">
-              Ferdium {getFerdiumVersion()} {' | '}
+              Ferdium {getFerdiumVersion(window.location.href, ferdiumVersion)} {' | '}
             </span>
             <span className="auth__header-item__secondary">
               {intl.formatMessage(messages.headline)}

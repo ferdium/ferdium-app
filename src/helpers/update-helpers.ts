@@ -1,14 +1,14 @@
-import { ferdiumVersion } from '../environment-remote';
-
-export default function updateVersionParse(updateVersion: string): string {
-  return updateVersion !== '' ? `?version=${updateVersion}` : '';
-}
-
-export function getFerdiumVersion(): string {
-  const str = window.location.href;
-  const matches = str?.match(/version=([^&]*)/);
+export function getFerdiumVersion(
+  currentLocation: string,
+  ferdiumVersion: string,
+): string {
+  const matches = currentLocation?.match(/version=([^&]*)/);
   if (matches !== null) {
     return `v${matches[1]}`;
   }
   return `v${ferdiumVersion}`;
+}
+
+export function updateVersionParse(updateVersion: string): string {
+  return updateVersion !== '' ? `?version=${updateVersion}` : '';
 }
