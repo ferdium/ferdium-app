@@ -1,10 +1,10 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 
 import { mdiClose } from '@mdi/js';
 import { Outlet } from 'react-router-dom';
+import { StoresProps } from '../../../@types/ferdium-components.types';
 import ErrorBoundary from '../../util/ErrorBoundary';
 import Appear from '../../ui/effects/Appear';
 import Icon from '../../ui/icon';
@@ -17,11 +17,11 @@ const messages = defineMessages({
   },
 });
 
-class ReleaseNotesLayout extends Component {
-  static propTypes = {
-    closeSettings: PropTypes.func.isRequired,
-  };
+interface IProps extends StoresProps {
+  intl: any;
+}
 
+class ReleaseNotesLayout extends Component<IProps> {
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown.bind(this), false);
   }
@@ -37,12 +37,12 @@ class ReleaseNotesLayout extends Component {
 
   handleKeyDown(e) {
     if (isEscKeyPress(e.keyCode)) {
-      this.props.closeSettings();
+      this.props.actions.ui.closeSettings();
     }
   }
 
   render() {
-    const { closeSettings } = this.props;
+    const { closeSettings } = this.props.actions.ui;
 
     const { intl } = this.props;
 
@@ -74,4 +74,6 @@ class ReleaseNotesLayout extends Component {
   }
 }
 
-export default injectIntl(observer(ReleaseNotesLayout));
+export default injectIntl<'intl', IProps>(
+  inject('stores', 'actions')(observer(ReleaseNotesLayout)),
+);

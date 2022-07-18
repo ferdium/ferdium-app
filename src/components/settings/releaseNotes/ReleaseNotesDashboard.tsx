@@ -28,8 +28,16 @@ const messages = defineMessages({
   },
 });
 
-class ReleaseNotesDashboard extends Component {
+interface IProps {
+  intl: any;
+}
+
+class ReleaseNotesDashboard extends Component<IProps> {
   static propTypes = {};
+
+  state = {
+    data: '',
+  };
 
   constructor(props) {
     super(props);
@@ -94,7 +102,8 @@ class ReleaseNotesDashboard extends Component {
       <div className="settings__main">
         <div className="settings__header">
           <span className="settings__header-item">
-            Ferdium {getFerdiumVersion(window.location.href, ferdiumVersion)} {' | '}
+            Ferdium {getFerdiumVersion(window.location.href, ferdiumVersion)}{' '}
+            {' | '}
           </span>
           <span className="settings__header-item__secondary">
             {intl.formatMessage(messages.headline)}

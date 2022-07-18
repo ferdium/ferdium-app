@@ -8,7 +8,7 @@ import { mdiArrowLeftCircle } from '@mdi/js';
 import { openExternalUrl } from '../../helpers/url-helpers';
 import Icon from '../../components/ui/icon';
 import { ferdiumVersion } from '../../environment-remote';
-import { getFerdiumVersion } from '../../helpers/update-helpers'
+import { getFerdiumVersion } from '../../helpers/update-helpers';
 
 const debug = require('../../preload-safe-debug')(
   'Ferdium:AuthReleaseNotesDashboard',
@@ -31,8 +31,16 @@ const messages = defineMessages({
   },
 });
 
-class AuthReleaseNotesScreen extends Component {
+interface IProps {
+  intl: any;
+}
+
+class AuthReleaseNotesScreen extends Component<IProps> {
   static propTypes = {};
+
+  state = {
+    data: '',
+  };
 
   constructor(props) {
     super(props);
@@ -98,7 +106,8 @@ class AuthReleaseNotesScreen extends Component {
         <div className="auth__main--releasenotes">
           <div className="auth__header">
             <span className="auth__header-item">
-              Ferdium {getFerdiumVersion(window.location.href, ferdiumVersion)} {' | '}
+              Ferdium {getFerdiumVersion(window.location.href, ferdiumVersion)}{' '}
+              {' | '}
             </span>
             <span className="auth__header-item__secondary">
               {intl.formatMessage(messages.headline)}
@@ -124,6 +133,6 @@ class AuthReleaseNotesScreen extends Component {
   }
 }
 
-export default injectIntl(
+export default injectIntl<'intl', IProps>(
   inject('stores', 'actions')(observer(AuthReleaseNotesScreen)),
 );

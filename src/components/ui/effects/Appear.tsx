@@ -1,10 +1,10 @@
-import { ReactChildren, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 type Props = {
-  children: ReactChildren;
+  children: ReactNode;
   transitionName: string;
-  className: string;
+  className?: string;
 };
 const Appear = ({
   children,
@@ -34,6 +34,10 @@ const Appear = ({
       {children}
     </ReactCSSTransitionGroup>
   );
+};
+
+Appear.defaultProps = {
+  className: '',
 };
 
 export default Appear;
