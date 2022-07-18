@@ -12,3 +12,12 @@ export function getFerdiumVersion(
 export function updateVersionParse(updateVersion: string): string {
   return updateVersion !== '' ? `?version=${updateVersion}` : '';
 }
+
+export function onAuthGoToReleaseNotes(
+  currentLocation: string,
+  updateVersionParsed: string = '',
+): string {
+  return currentLocation.includes('#/auth')
+    ? `#/auth/releasenotes${updateVersionParsed}`
+    : `#/releasenotes${updateVersionParsed}`;
+}

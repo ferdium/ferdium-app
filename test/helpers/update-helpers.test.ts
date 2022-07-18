@@ -55,3 +55,35 @@ describe('updateVersionParse', () => {
     expect(result).toEqual('?version=6.0.0');
   });
 });
+
+describe('onAuthGoToReleaseNotes', () => {
+  it(`returns '#/releasenotes' string for empty string`, () => {
+    const result = update_helpers.onAuthGoToReleaseNotes('', '');
+    expect(result).toEqual('#/releasenotes');
+  });
+
+  it(`returns '#/releasenotes' string for empty string`, () => {
+    const result = update_helpers.onAuthGoToReleaseNotes('', '?version=6.0.0');
+    expect(result).toEqual('#/releasenotes?version=6.0.0');
+  });
+
+  it(`returns '#/releasenotes' string for empty string`, () => {
+    const result = update_helpers.onAuthGoToReleaseNotes('');
+    expect(result).toEqual('#/releasenotes');
+  });
+
+  it(`returns '#/releasenotes' string for empty string`, () => {
+    const result = update_helpers.onAuthGoToReleaseNotes('#/auth', '');
+    expect(result).toEqual('#/auth/releasenotes');
+  });
+
+  it(`returns '#/releasenotes' string for empty string`, () => {
+    const result = update_helpers.onAuthGoToReleaseNotes('#/auth', '?version=6.0.0');
+    expect(result).toEqual('#/auth/releasenotes?version=6.0.0');
+  });
+
+  it(`returns '#/releasenotes' string for empty string`, () => {
+    const result = update_helpers.onAuthGoToReleaseNotes('#/auth');
+    expect(result).toEqual('#/auth/releasenotes');
+  });
+});

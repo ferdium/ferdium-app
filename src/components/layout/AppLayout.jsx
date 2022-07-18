@@ -13,7 +13,7 @@ import { Component as BasicAuth } from '../../features/basicAuth';
 import { Component as QuickSwitch } from '../../features/quickSwitch';
 import { Component as PublishDebugInfo } from '../../features/publishDebugInfo';
 import ErrorBoundary from '../util/ErrorBoundary';
-import updateVersionParse from '../../helpers/update-helpers';
+import { updateVersionParse } from '../../helpers/update-helpers';
 
 // import globalMessages from '../../i18n/globalMessages';
 

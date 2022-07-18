@@ -4,6 +4,8 @@ import { mdiInformation } from '@mdi/js';
 import InfoBar from './ui/InfoBar';
 import Icon from './ui/icon';
 
+import { onAuthGoToReleaseNotes } from '../helpers/update-helpers';
+
 const messages = defineMessages({
   updateAvailable: {
     id: 'infobar.updateAvailable',
@@ -45,9 +47,10 @@ const AppUpdateInfoBar = ({
         className="info-bar__inline-button"
         type="button"
         onClick={() => {
-          window.location.href = window.location.href.includes('#/auth')
-            ? `#/auth/releasenotes${updateVersionParsed}`
-            : `#/releasenotes${updateVersionParsed}`;
+          window.location.href = onAuthGoToReleaseNotes(
+            window.location.href,
+            updateVersionParsed,
+          );
         }}
       >
         <u>{intl.formatMessage(messages.changelog)}</u>

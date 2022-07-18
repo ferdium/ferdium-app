@@ -8,7 +8,7 @@ import { Outlet } from 'react-router-dom';
 import ErrorBoundary from '../util/ErrorBoundary';
 import Appear from '../ui/effects/Appear';
 import Icon from '../ui/icon';
-import { isEscKeyPress } from '../../../jsUtils';
+import { isEscKeyPress } from '../../jsUtils';
 
 const messages = defineMessages({
   closeSettings: {

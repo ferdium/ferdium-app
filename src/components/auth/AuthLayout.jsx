@@ -14,7 +14,7 @@ import {
   oneOrManyChildElements,
   globalError as globalErrorPropType,
 } from '../../prop-types';
-import updateVersionParse from '../../helpers/update-helpers';
+import { updateVersionParse } from '../../helpers/update-helpers';
 import globalMessages from '../../i18n/globalMessages';
 
 import { isWindows } from '../../environment';

@@ -40,6 +40,7 @@ import { workspaceStore } from '../features/workspaces/index';
 import { importExportURL, serverBase, serverName } from '../api/apiBase';
 import { openExternalUrl } from '../helpers/url-helpers';
 import globalMessages from '../i18n/globalMessages';
+import { onAuthGoToReleaseNotes } from '../helpers/update-helpers';
 
 // @ts-expect-error Cannot find module '../buildInfo.json' or its corresponding type declarations.
 import * as buildInfo from '../buildInfo.json';
@@ -582,9 +583,7 @@ const _titleBarTemplateFactory = (intl, locked) => [
       {
         label: intl.formatMessage(menuItems.changelog),
         click() {
-          window.location.href = window.location.href.includes('#/auth')
-            ? '#/auth/releasenotes'
-            : '#/releasenotes';
+          window.location.href = onAuthGoToReleaseNotes(window.location.href);
         },
       },
       {
