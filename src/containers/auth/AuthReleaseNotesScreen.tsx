@@ -1,33 +1,21 @@
 import { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 
-import { Octokit } from '@octokit/core';
 import { defineMessages, injectIntl } from 'react-intl';
 import Markdown from 'markdown-to-jsx';
 import { mdiArrowLeftCircle } from '@mdi/js';
 import { openExternalUrl } from '../../helpers/url-helpers';
 import Icon from '../../components/ui/icon';
 import { ferdiumVersion } from '../../environment-remote';
-import { getFerdiumVersion } from '../../helpers/update-helpers';
-
-const debug = require('../../preload-safe-debug')(
-  'Ferdium:AuthReleaseNotesDashboard',
-);
+import {
+  getFerdiumVersion,
+  getUpdateInfoFromGH,
+} from '../../helpers/update-helpers';
 
 const messages = defineMessages({
   headline: {
     id: 'settings.releasenotes.headline',
     defaultMessage: 'Release Notes',
-  },
-  connectionError: {
-    id: 'settings.releasenotes.connectionError',
-    defaultMessage:
-      'An error occured when connecting to Github, please try again later.',
-  },
-  connectionErrorPageMissing: {
-    id: 'settings.releasenotes.connectionErrorPageMissing',
-    defaultMessage:
-      'An error occured when connecting to Github, the page you are looking for is missing.',
   },
 });
 
@@ -51,35 +39,18 @@ class AuthReleaseNotesScreen extends Component<IProps> {
   async componentDidMount() {
     const { intl } = this.props;
 
-    const octokit = new Octokit();
-    try {
-      const response = await octokit.request(
-        'GET /repos/{owner}/{repo}/releases/tags/{tag}',
-        {
-          owner: 'ferdium',
-          repo: 'ferdium-app',
-          tag: getFerdiumVersion(window.location.href, ferdiumVersion),
-        },
-      );
+    const data = await getUpdateInfoFromGH(
+      window.location.href,
+      ferdiumVersion,
+      intl,
+    );
 
-      debug('GH Connection Status', response.status);
-      if (response.status === 200) {
-        const json = await response.data.body;
-        this.setState({ data: json });
-      } else {
-        this.setState({
-          data: `### ${intl.formatMessage(messages.connectionError)}`,
-        });
-      }
+    this.setState({
+      data,
+    });
 
-      for (const link of document.querySelectorAll('.releasenotes__body a')) {
-        link.addEventListener('click', this.handleClick.bind(this), false);
-      }
-    } catch (error) {
-      debug('GH Connection Error Status', error);
-      this.setState({
-        data: `### ${intl.formatMessage(messages.connectionErrorPageMissing)}`,
-      });
+    for (const link of document.querySelectorAll('.releasenotes__body a')) {
+      link.addEventListener('click', this.handleClick.bind(this), false);
     }
   }
 
