@@ -268,6 +268,7 @@
   "settings.app.headlineGeneral": "Ogólne",
   "settings.app.headlineLanguage": "Język",
   "settings.app.headlinePrivacy": "Prywatność",
+  "settings.app.headlineServices": "Services",
   "settings.app.headlineUpdates": "Aktualizacje",
   "settings.app.hibernateInfo": "Domyślnie Ferdium utrzyma wszystkie Twoje usługi otwarte i załadowane w tle, aby były gotowe kiedy chcesz je używać. Usługa Hibernacja rozładuje Twoje usługi po określonej ilości. Jest to przydatne do zaoszczędzenia RAM lub utrzymania usług przed spowolnieniem Twojego komputera.",
   "settings.app.inactivityLockInfo": "Minuty braku aktywności, po których Ferdium powinna automatycznie zablokować. Użyj 0 aby wyłączyć",
