@@ -268,6 +268,7 @@
   "settings.app.headlineGeneral": "Generelt",
   "settings.app.headlineLanguage": "Sprog",
   "settings.app.headlinePrivacy": "Privatliv",
+  "settings.app.headlineServices": "Services",
   "settings.app.headlineUpdates": "Opdateringer",
   "settings.app.hibernateInfo": "Som standard vil Ferdium holde alle dine tjenester åbne og indlæste i baggrunden, så de er klar, når du vil bruge dem. Du kan vælge at sætte dine tjenester i dvale efter en angivet mængde tid. Dette er nyttigt til at spare hukommelse eller forhindre tjenester i at bremse din computer.",
   "settings.app.inactivityLockInfo": "Minutter af inaktivitet, hvorefter Ferdium automatisk skal låse. Brug 0 for at deaktivere",
