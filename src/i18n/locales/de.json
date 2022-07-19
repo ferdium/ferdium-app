@@ -268,6 +268,7 @@
   "settings.app.headlineGeneral": "Allgemeines",
   "settings.app.headlineLanguage": "Sprache",
   "settings.app.headlinePrivacy": "Privatsphäre",
+  "settings.app.headlineServices": "Services",
   "settings.app.headlineUpdates": "Updates",
   "settings.app.hibernateInfo": "Standardmäßig öffnet Ferdium alle deine Dienste im Hintergrund, sodass diese bereit sind, wenn du sie verwenden möchtest. \"Service Hibernation\" wird deine Dienste nach einer bestimmten Zeitspanne schließen. Dies ist nützlich, um RAM zu sparen oder Dienste davon abzuhalten, deinen Computer zu verlangsamen.",
   "settings.app.inactivityLockInfo": "Minuten der Inaktivität, nach denen Ferdium automatisch sperren soll. Verwenden Sie 0, um dies zu deaktivieren",
