@@ -24,8 +24,6 @@ interface IProps {
 }
 
 class AuthReleaseNotesScreen extends Component<IProps> {
-  static propTypes = {};
-
   state = {
     data: '',
   };

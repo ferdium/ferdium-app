@@ -31,8 +31,6 @@ interface IProps {
 }
 
 class ReleaseNotesDashboard extends Component<IProps> {
-  static propTypes = {};
-
   state = {
     data: '',
   };
