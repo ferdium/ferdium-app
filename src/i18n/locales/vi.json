@@ -268,6 +268,7 @@
   "settings.app.headlineGeneral": "Chung",
   "settings.app.headlineLanguage": "Ngôn ngữ",
   "settings.app.headlinePrivacy": "Riêng tư",
+  "settings.app.headlineServices": "Services",
   "settings.app.headlineUpdates": "Cập nhật",
   "settings.app.hibernateInfo": "Theo mặc định, Ferdium sẽ giữ cho tất cả các dịch vụ của bạn luôn mở và được tải ở chế độ nền để chúng luôn sẵn sàng khi bạn muốn sử dụng. Service Hibernation sẽ dỡ bỏ các dịch vụ của bạn sau một khoảng thời gian cụ thể. Điều này rất hữu ích để tiết kiệm RAM hoặc giữ cho các dịch vụ không làm chậm máy tính của bạn.",
   "settings.app.inactivityLockInfo": "Vài phút không hoạt động, sau đó Ferdium sẽ tự động khóa. Sử dụng 0 để tắt",
