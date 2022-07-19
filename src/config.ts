@@ -300,5 +300,4 @@ export const DEFAULT_SERVICE_SETTINGS = {
   hasHostedOption: false,
   allowFavoritesDelineationInUnreadCount: false,
   disablewebsecurity: false,
-  autoHibernate: false,
 };
