@@ -46,6 +46,10 @@ const messages = defineMessages({
     id: 'settings.app.headlineGeneral',
     defaultMessage: 'General',
   },
+  headlineRecipes: {
+    id: 'settings.app.headlineRecipes',
+    defaultMessage: 'Recipes',
+  },
   hibernateInfo: {
     id: 'settings.app.hibernateInfo',
     defaultMessage:
@@ -416,6 +420,19 @@ class EditSettingsForm extends Component {
                 {intl.formatMessage(messages.headlineGeneral)}
               </H5>
               <H5
+                id="recipes"
+                className={
+                  this.state.activeSetttingsTab === 'recipes'
+                    ? 'badge badge--primary'
+                    : 'badge'
+                }
+                onClick={() => {
+                  this.setActiveSettingsTab('recipes');
+                }}
+              >
+                {intl.formatMessage(messages.headlineRecipes)}
+              </H5>
+              <H5
                 id="appearance"
                 className={
                   this.state.activeSetttingsTab === 'appearance'
@@ -594,8 +611,37 @@ class EditSettingsForm extends Component {
                 >
                   <span>{intl.formatMessage(messages.scheduledDNDInfo)}</span>
                 </p>
+              </div>
+            )}
 
-                <Hr />
+            {/* Recipes */}
+            {this.state.activeSetttingsTab === 'recipes' && (
+              <div>
+                <H2 className="settings__section_header">
+                  {intl.formatMessage(messages.sectionServiceIconsSettings)}
+                </H2>
+
+                <Toggle field={form.$('showDisabledServices')} />
+                <Toggle field={form.$('showServiceName')} />
+
+                {isUseGrayscaleServicesEnabled && <Hr />}
+
+                <Toggle field={form.$('useGrayscaleServices')} />
+
+                {isUseGrayscaleServicesEnabled && (
+                  <>
+                    <Slider
+                      type="number"
+                      onChange={e => this.submit(e)}
+                      field={form.$('grayscaleServicesDim')}
+                    />
+                    <Hr />
+                  </>
+                )}
+
+                <Toggle field={form.$('showMessageBadgeWhenMuted')} />
+                <Toggle field={form.$('enableLongPressServiceHint')} />
+                <Select field={form.$('iconSize')} />
 
                 <Select field={form.$('navigationBarBehaviour')} />
 
@@ -734,34 +780,6 @@ class EditSettingsForm extends Component {
                 <Toggle field={form.$('hideSettingsButton')} />
 
                 <Toggle field={form.$('alwaysShowWorkspaces')} />
-
-                <HrSections />
-
-                <H2 className="settings__section_header">
-                  {intl.formatMessage(messages.sectionServiceIconsSettings)}
-                </H2>
-
-                <Toggle field={form.$('showDisabledServices')} />
-                <Toggle field={form.$('showServiceName')} />
-
-                {isUseGrayscaleServicesEnabled && <Hr />}
-
-                <Toggle field={form.$('useGrayscaleServices')} />
-
-                {isUseGrayscaleServicesEnabled && (
-                  <>
-                    <Slider
-                      type="number"
-                      onChange={e => this.submit(e)}
-                      field={form.$('grayscaleServicesDim')}
-                    />
-                    <Hr />
-                  </>
-                )}
-
-                <Toggle field={form.$('showMessageBadgeWhenMuted')} />
-                <Toggle field={form.$('enableLongPressServiceHint')} />
-                <Select field={form.$('iconSize')} />
               </div>
             )}
 
