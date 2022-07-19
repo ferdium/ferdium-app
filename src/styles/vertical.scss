@@ -96,6 +96,31 @@ $tabitem-bias: 30px;
   }
 }
 
+.wrapper-workspaces-drawer-item {
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  width: 107%;
+
+  &__workspaces {
+    display: flex;
+    flex-basis: 100%;
+
+    & > div {
+      width: 100%;
+      overflow: auto;
+    }
+  }
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: 0;
+    right: 9%;
+    bottom: 0;
+  }
+}
+
 .theme__dark {
   .sidebar .sidebar__button--workspaces.is-active {
     background-color: #2d2f31;
