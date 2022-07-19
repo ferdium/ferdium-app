@@ -46,9 +46,9 @@ const messages = defineMessages({
     id: 'settings.app.headlineGeneral',
     defaultMessage: 'General',
   },
-  headlineRecipes: {
-    id: 'settings.app.headlineRecipes',
-    defaultMessage: 'Recipes',
+  headlineServices: {
+    id: 'settings.app.headlineServices',
+    defaultMessage: 'Services',
   },
   hibernateInfo: {
     id: 'settings.app.hibernateInfo',
@@ -420,17 +420,17 @@ class EditSettingsForm extends Component {
                 {intl.formatMessage(messages.headlineGeneral)}
               </H5>
               <H5
-                id="recipes"
+                id="services"
                 className={
-                  this.state.activeSetttingsTab === 'recipes'
+                  this.state.activeSetttingsTab === 'services'
                     ? 'badge badge--primary'
                     : 'badge'
                 }
                 onClick={() => {
-                  this.setActiveSettingsTab('recipes');
+                  this.setActiveSettingsTab('services');
                 }}
               >
-                {intl.formatMessage(messages.headlineRecipes)}
+                {intl.formatMessage(messages.headlineServices)}
               </H5>
               <H5
                 id="appearance"
@@ -614,8 +614,8 @@ class EditSettingsForm extends Component {
               </div>
             )}
 
-            {/* Recipes */}
-            {this.state.activeSetttingsTab === 'recipes' && (
+            {/* Services */}
+            {this.state.activeSetttingsTab === 'services' && (
               <div>
                 <H2 className="settings__section_header">
                   {intl.formatMessage(messages.sectionServiceIconsSettings)}
