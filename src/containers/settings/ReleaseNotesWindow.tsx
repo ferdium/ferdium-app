@@ -28,8 +28,6 @@ class SettingsContainer extends Component<StoresProps> {
   }
 
   render(): ReactPortal {
-    // const { closeSettings } = this.props.actions.ui;
-
     return ReactDOM.createPortal(
       <ErrorBoundary>
         <Layout {...this.props}>
