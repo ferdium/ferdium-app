@@ -268,6 +268,7 @@
   "settings.app.headlineGeneral": "Általános",
   "settings.app.headlineLanguage": "Nyelv",
   "settings.app.headlinePrivacy": "Biztonság",
+  "settings.app.headlineServices": "Services",
   "settings.app.headlineUpdates": "Frissítések",
   "settings.app.hibernateInfo": "By default, Ferdium will keep all your services open and loaded in the background so they are ready when you want to use them. Service Hibernation will unload your services after a specified amount. This is useful to save RAM or keeping services from slowing down your computer.",
   "settings.app.inactivityLockInfo": "Minutes of inactivity, after which Ferdium should automatically lock. Use 0 to disable",
