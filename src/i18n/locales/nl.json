@@ -268,6 +268,7 @@
   "settings.app.headlineGeneral": "Algemeen",
   "settings.app.headlineLanguage": "Taal",
   "settings.app.headlinePrivacy": "Privacy",
+  "settings.app.headlineServices": "Services",
   "settings.app.headlineUpdates": "Updates",
   "settings.app.hibernateInfo": "Ferdium houdt je services standaard open op de achtergrond, zodat ze klaarstaan wanneer je ze wilt gebruiken. Als je de slaapstand inschakelt, worden services na een bepaalde tijd gesloten. Zo kun je RAM besparen en voorkomen dat services je computer vertragen.",
   "settings.app.inactivityLockInfo": "Minuten van inactiviteit, waarna Ferdium automatisch vergrendelt. Gebruik 0 om uit te schakelen",
