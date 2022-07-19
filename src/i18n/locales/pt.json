@@ -268,6 +268,7 @@
   "settings.app.headlineGeneral": "Geral",
   "settings.app.headlineLanguage": "Idioma",
   "settings.app.headlinePrivacy": "Privacidade",
+  "settings.app.headlineServices": "Services",
   "settings.app.headlineUpdates": "Atualizações",
   "settings.app.hibernateInfo": "Por defeito, o Ferdium manterá todos os serviços abertos e carregados em segundo plano para que estejam prontos sempre que os quiser utilizar. A hibernação do serviço suspende os serviços após um determinado tempo. Isto é útil para conservar memória RAM ou impedir que os serviços afetem o desempenho do computador.",
   "settings.app.inactivityLockInfo": "Minutos de inatividade, após os quais Ferdium bloqueará automaticamente. Use 0 para desativar",
