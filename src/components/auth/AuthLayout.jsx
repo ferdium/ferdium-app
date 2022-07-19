@@ -14,6 +14,7 @@ import {
   oneOrManyChildElements,
   globalError as globalErrorPropType,
 } from '../../prop-types';
+import { updateVersionParse } from '../../helpers/update-helpers';
 import globalMessages from '../../i18n/globalMessages';
 
 import { isWindows } from '../../environment';
@@ -34,6 +35,7 @@ class AuthLayout extends Component {
     isFullScreen: PropTypes.bool.isRequired,
     installAppUpdate: PropTypes.func.isRequired,
     appUpdateIsDownloaded: PropTypes.bool.isRequired,
+    updateVersion: PropTypes.string.isRequired,
   };
 
   constructor() {
@@ -55,10 +57,10 @@ class AuthLayout extends Component {
       isFullScreen,
       installAppUpdate,
       appUpdateIsDownloaded,
+      updateVersion,
     } = this.props;
 
     const { intl } = this.props;
-
     let serverNameParse = serverName();
     serverNameParse =
       serverNameParse === 'Custom' ? 'your Custom Server' : serverNameParse;
@@ -81,6 +83,7 @@ class AuthLayout extends Component {
           {appUpdateIsDownloaded && this.state.shouldShowAppUpdateInfoBar && (
             <AppUpdateInfoBar
               onInstallUpdate={installAppUpdate}
+              updateVersionParsed={updateVersionParse(updateVersion)}
               onHide={() => {
                 this.setState({ shouldShowAppUpdateInfoBar: false });
               }}

@@ -1,14 +1,14 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 
 import { mdiClose } from '@mdi/js';
 import { Outlet } from 'react-router-dom';
-import ErrorBoundary from '../util/ErrorBoundary';
-import Appear from '../ui/effects/Appear';
-import Icon from '../ui/icon';
-import { isEscKeyPress } from '../../jsUtils';
+import { StoresProps } from '../../../@types/ferdium-components.types';
+import ErrorBoundary from '../../util/ErrorBoundary';
+import Appear from '../../ui/effects/Appear';
+import Icon from '../../ui/icon';
+import { isEscKeyPress } from '../../../jsUtils';
 
 const messages = defineMessages({
   closeSettings: {
@@ -17,12 +17,11 @@ const messages = defineMessages({
   },
 });
 
-class SettingsLayout extends Component {
-  static propTypes = {
-    navigation: PropTypes.element.isRequired,
-    closeSettings: PropTypes.func.isRequired,
-  };
+interface IProps extends StoresProps {
+  intl: any;
+}
 
+class ReleaseNotesLayout extends Component<IProps> {
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown.bind(this), false);
   }
@@ -38,12 +37,12 @@ class SettingsLayout extends Component {
 
   handleKeyDown(e) {
     if (isEscKeyPress(e.keyCode)) {
-      this.props.closeSettings();
+      this.props.actions.ui.closeSettings();
     }
   }
 
   render() {
-    const { navigation, closeSettings } = this.props;
+    const { closeSettings } = this.props.actions.ui;
 
     const { intl } = this.props;
 
@@ -58,8 +57,6 @@ class SettingsLayout extends Component {
               aria-label={intl.formatMessage(messages.closeSettings)}
             />
             <div className="settings franz-form">
-              {navigation}
-
               <Outlet />
               <button
                 type="button"
@@ -77,4 +74,6 @@ class SettingsLayout extends Component {
   }
 }
 
-export default injectIntl(observer(SettingsLayout));
+export default injectIntl<'intl', IProps>(
+  inject('stores', 'actions')(observer(ReleaseNotesLayout)),
+);

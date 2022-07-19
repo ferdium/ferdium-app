@@ -853,6 +853,7 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
     const { app } = this.props.stores;
     const {
       updateStatus,
+      updateVersion,
       updateStatusTypes,
       isClearingAllCache,
       lockingFeatureEnabled,
@@ -860,13 +861,13 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
     const { checkForUpdates, installUpdate, clearAllCache } =
       this.props.actions.app;
     const form = this.prepareForm();
-
     return (
       <ErrorBoundary>
         <EditSettingsForm
           form={form}
           checkForUpdates={checkForUpdates}
           installUpdate={installUpdate}
+          updateVersion={updateVersion}
           isCheckingForUpdates={updateStatus === updateStatusTypes.CHECKING}
           isUpdateAvailable={updateStatus === updateStatusTypes.AVAILABLE}
           noUpdateAvailable={updateStatus === updateStatusTypes.NOT_AVAILABLE}

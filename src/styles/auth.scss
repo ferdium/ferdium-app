@@ -61,6 +61,12 @@
     width: 350px;
 
     &.auth__container--signup { width: 450px; }
+
+    &.auth__container--releasenotes {
+      width: 90%;
+      height: -webkit-fill-available;
+      max-height: 80%;
+    }
   }
 
   .auth__logo {
@@ -89,6 +95,32 @@
     &.auth__button--skip {
       margin: 10px auto 0;
       width: 20%;
+    }
+  }
+
+  .releasenotes__body {
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+      background: none;
+      border-radius: 10px;
+      -webkit-border-radius: 10px;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: $theme-gray-lighter;
+      border-radius: 10px;
+      -webkit-border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb:window-inactive {
+      background: none;
     }
   }
 
@@ -135,6 +167,7 @@
     padding-top: 2%;
     padding-bottom: 2%;
     justify-content: center;
+    height: fit-content;
   }
 
   .auth__adlk {
@@ -167,4 +200,30 @@
     margin-top: 20px;
     text-align: center;
   }
+}
+
+.auth__main--releasenotes {
+  margin: 4% 2% 0% 4%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: -webkit-fill-available;
+}
+
+.auth__header {
+  font-size: x-large;
+  display: inline-flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: fit-content;
+
+  &-item__secondary {
+    padding-left: 5px
+  }
+}
+
+.auth__body {
+  margin-top: 2%;
 }

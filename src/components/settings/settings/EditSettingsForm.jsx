@@ -15,6 +15,13 @@ import Input from '../../ui/Input';
 import ColorPickerInput from '../../ui/ColorPickerInput';
 import Infobox from '../../ui/Infobox';
 import { H1, H2, H3, H5 } from '../../ui/headline';
+import {
+  ferdiumVersion,
+  userDataPath,
+  userDataRecipesPath,
+} from '../../../environment-remote';
+
+import { updateVersionParse } from '../../../helpers/update-helpers';
 
 import {
   DEFAULT_ACCENT_COLOR,
@@ -25,11 +32,6 @@ import {
   SPLIT_COLUMNS_MIN,
 } from '../../../config';
 import { isMac, isWindows, lockFerdiumShortcutKey } from '../../../environment';
-import {
-  ferdiumVersion,
-  userDataPath,
-  userDataRecipesPath,
-} from '../../../environment-remote';
 import { openExternalUrl, openPath } from '../../../helpers/url-helpers';
 import globalMessages from '../../../i18n/globalMessages';
 import Icon from '../../ui/icon';
@@ -213,6 +215,10 @@ const messages = defineMessages({
     id: 'settings.app.buttonInstallUpdate',
     defaultMessage: 'Restart & install update',
   },
+  buttonShowChangelog: {
+    id: 'settings.app.buttonShowChangelog',
+    defaultMessage: 'Show changelog',
+  },
   updateStatusSearching: {
     id: 'settings.app.updateStatusSearching',
     defaultMessage: 'Searching for updates...',
@@ -328,6 +334,7 @@ class EditSettingsForm extends Component {
       checkForUpdates,
       installUpdate,
       form,
+      updateVersion,
       isCheckingForUpdates,
       isAdaptableDarkModeEnabled,
       isUseGrayscaleServicesEnabled,
@@ -1002,6 +1009,20 @@ class EditSettingsForm extends Component {
                             loaded={!isCheckingForUpdates || !isUpdateAvailable}
                           />
                         )}
+                        {(isUpdateAvailable || updateIsReadyToInstall) && (
+                          <Button
+                            className="settings__updates__changelog-button"
+                            label={intl.formatMessage(
+                              messages.buttonShowChangelog,
+                            )}
+                            onClick={() => {
+                              window.location.href = `#/releasenotes${updateVersionParse(
+                                updateVersion,
+                              )}`;
+                            }}
+                          />
+                        )}
+                        <br />
                         <br />
                       </div>
                       <p>

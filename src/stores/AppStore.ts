@@ -82,6 +82,8 @@ export default class AppStore extends TypedStore {
 
   @observable updateStatus = '';
 
+  @observable updateVersion = '';
+
   @observable locale = ferdiumLocale;
 
   @observable isSystemMuteOverridden = false;
@@ -94,7 +96,8 @@ export default class AppStore extends TypedStore {
 
   @observable isFocused = true;
 
-  @observable lockingFeatureEnabled = DEFAULT_APP_SETTINGS.lockingFeatureEnabled;
+  @observable lockingFeatureEnabled =
+    DEFAULT_APP_SETTINGS.lockingFeatureEnabled;
 
   @observable launchInBackground = DEFAULT_APP_SETTINGS.autoLaunchInBackground;
 
@@ -181,6 +184,7 @@ export default class AppStore extends TypedStore {
     ipcRenderer.on('autoUpdate', (_, data) => {
       if (this.updateStatus !== this.updateStatusTypes.FAILED) {
         if (data.available) {
+          this.updateVersion = data.version;
           this.updateStatus = this.updateStatusTypes.AVAILABLE;
           if (isMac && this.stores.settings.app.automaticUpdates) {
             app.dock.bounce();
