@@ -268,6 +268,7 @@
   "settings.app.headlineGeneral": "Общие",
   "settings.app.headlineLanguage": "Язык",
   "settings.app.headlinePrivacy": "Конфиденциальность",
+  "settings.app.headlineServices": "Services",
   "settings.app.headlineUpdates": "Обновления",
   "settings.app.hibernateInfo": "По умолчанию, Ferdium оставит все ваши сервисы открытыми и загружеными в фоновом режиме, чтобы они были готовы к использованию. Спящий режим выгрузит ваши сервисы после заданного количества минут. Это полезно для экономии памяти и/или оптимальной работы компьютера.",
   "settings.app.inactivityLockInfo": "минут бездействия, после чего Ferdium будет автоматически блокироваться. Используйте 0, чтобы отключить",
