@@ -268,6 +268,7 @@
   "settings.app.headlineGeneral": "عام",
   "settings.app.headlineLanguage": "اللغة",
   "settings.app.headlinePrivacy": "الخصوصية",
+  "settings.app.headlineServices": "Services",
   "settings.app.headlineUpdates": "التحديثات",
   "settings.app.hibernateInfo": "بشكل افتراضي، سيبقي فيردي جميع خدماتك مفتوحة وتحميلها في الخلفية بحيث تكون جاهزة عندما ترغب في استخدامها. سيتم إلغاء تحميل الخدمات الخاصة بك بعد مبلغ معين. هذا مفيد لحفظ ذاكرة الوصول العشوائي أو الحفاظ على الخدمات من إبطاء الكمبيوتر.",
   "settings.app.inactivityLockInfo": "دقائق من عدم النشاط، بعدها يجب أن يقفل فيردي تلقائياً. استخدم 0 لتعطيل",
