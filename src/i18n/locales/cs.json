@@ -268,6 +268,7 @@
   "settings.app.headlineGeneral": "Obecné",
   "settings.app.headlineLanguage": "Jazyk",
   "settings.app.headlinePrivacy": "Soukromí",
+  "settings.app.headlineServices": "Services",
   "settings.app.headlineUpdates": "Aktualizace",
   "settings.app.hibernateInfo": "Ve výchozím nastavení si Ferdium ponechá všechny vaše služby otevřené a načtené na pozadí, takže jsou připraveny, když je chcete používat. Služba Hibernace uvolní vaše služby po zadané částce. To je užitečné pro úsporu RAM nebo zachování služeb před zpomalením vašeho počítače.",
   "settings.app.inactivityLockInfo": "Minut z nečinnosti, po kterém by měl Ferdium automaticky uzamknout. Použijte 0 pro vypnutí",
