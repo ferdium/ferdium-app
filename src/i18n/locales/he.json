@@ -268,6 +268,7 @@
   "settings.app.headlineGeneral": "כללי",
   "settings.app.headlineLanguage": "שפה",
   "settings.app.headlinePrivacy": "פרטיות",
+  "settings.app.headlineServices": "Services",
   "settings.app.headlineUpdates": "עדכונים",
   "settings.app.hibernateInfo": "כברירת מחדל, השירותים שלך יישארו פתוחים וטעונים ברקע על ידי Ferdium כדי שיהיו מוכנים לשימוש. הרדמת שירותים תפרוק את השירותים שלך לאחר זמן מסוים. עשוי לחסוך בזיכרון או למנוע משירותים להאט את המחשב שלך.",
   "settings.app.inactivityLockInfo": "דקות חוסר פעילות שלאחריהן Ferdium אמור להינעל אוטומטית. 0 כדי להשבית",
