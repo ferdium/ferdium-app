@@ -153,8 +153,6 @@ class EditServiceScreen extends Component<EditServicesScreenProps> {
 
     const { stores } = this.props;
 
-    const { action } = stores.router.pathValue;
-
     let defaultSpellcheckerLanguage =
       SPELLCHECKER_LOCALES[stores.settings.app.spellcheckerLanguage];
 
@@ -190,10 +188,7 @@ class EditServiceScreen extends Component<EditServicesScreenProps> {
         },
         isHibernationEnabled: {
           label: intl.formatMessage(messages.enableHibernation),
-          value:
-            action !== 'edit'
-              ? recipe.autoHibernate
-              : service?.isHibernationEnabled,
+          value: service?.isHibernationEnabled,
           default: DEFAULT_SERVICE_SETTINGS.isHibernationEnabled,
         },
         isWakeUpEnabled: {

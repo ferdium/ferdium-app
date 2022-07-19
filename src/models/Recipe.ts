@@ -21,7 +21,6 @@ interface RecipeData {
     urlInputPrefix?: string;
     urlInputSuffix?: string;
     disablewebsecurity?: boolean;
-    autoHibernate?: boolean;
     partition?: string;
     local?: boolean;
     message?: string;
@@ -47,7 +46,6 @@ export interface IRecipe {
   message: string;
   allowFavoritesDelineationInUnreadCount: boolean;
   disablewebsecurity: boolean;
-  autoHibernate: boolean;
   path: string;
   partition: string;
   local: boolean;
@@ -96,9 +94,6 @@ export default class Recipe implements IRecipe {
     DEFAULT_SERVICE_SETTINGS.allowFavoritesDelineationInUnreadCount;
 
   disablewebsecurity = DEFAULT_SERVICE_SETTINGS.disablewebsecurity;
-
-  // TODO: Is this even used?
-  autoHibernate = DEFAULT_SERVICE_SETTINGS.autoHibernate;
 
   path = '';
 
@@ -168,10 +163,6 @@ export default class Recipe implements IRecipe {
     this.disablewebsecurity = ifUndefined<boolean>(
       data.config.disablewebsecurity,
       this.disablewebsecurity,
-    );
-    this.autoHibernate = ifUndefined<boolean>(
-      data.config.autoHibernate,
-      this.autoHibernate,
     );
     this.local = ifUndefined<boolean>(data.config.local, this.local);
     this.message = ifUndefined<string>(data.config.message, this.message);
