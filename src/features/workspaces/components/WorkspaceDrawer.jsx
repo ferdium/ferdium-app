@@ -172,7 +172,9 @@ class WorkspaceDrawer extends Component {
                   name={workspace.name}
                   isActive={actualWorkspace === workspace}
                   onClick={() => {
-                    if (actualWorkspace === workspace) return;
+                    if (actualWorkspace === workspace) {
+                      return;
+                    }
                     workspaceActions.activate({ workspace });
                     workspaceActions.toggleWorkspaceDrawer();
                   }}
