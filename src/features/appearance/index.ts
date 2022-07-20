@@ -134,7 +134,7 @@ function generateServiceRibbonWidthStyle(
   sidebarServicesLocation,
   useGrayscaleServices,
   grayscaleServicesDim,
-  showDragArea,
+  shouldShowDragArea,
 ) {
   const width = Number(widthStr);
   const iconSize = Number(iconSizeStr) - iconSizeBias;
@@ -212,7 +212,7 @@ function generateServiceRibbonWidthStyle(
   const graysacleServices = `filter: grayscale(1);
   opacity: ${grayscaleServicesDim}%;`;
 
-  const sizeDragArea = showDragArea ? verticalStyleOffset : 0;
+  const sizeDragArea = shouldShowDragArea ? verticalStyleOffset : 0;
   return horizontal
     ? `
     .sidebar {
@@ -359,7 +359,7 @@ function generateOpenWorkspaceStyle() {
   `;
 }
 
-function generateStyle(settings) {
+function generateStyle(settings, app) {
   let style = '';
 
   const {
@@ -375,6 +375,10 @@ function generateStyle(settings) {
     showServiceName,
   } = settings;
 
+  const { isFullScreen } = app;
+
+  const shouldShowDragArea = showDragArea && !isFullScreen;
+
   if (
     accentColor.toLowerCase() !== DEFAULT_APP_SETTINGS.accentColor.toLowerCase()
   ) {
@@ -389,10 +393,10 @@ function generateStyle(settings) {
     sidebarServicesLocation,
     useGrayscaleServices,
     grayscaleServicesDim,
-    showDragArea,
+    shouldShowDragArea,
   );
 
-  if (showDragArea) {
+  if (shouldShowDragArea) {
     style += generateShowDragAreaStyle(accentColor);
   }
   if (useHorizontalStyle) {
@@ -420,14 +424,14 @@ function updateProgressbar(settings) {
   });
 }
 
-function updateStyle(settings) {
-  const style = generateStyle(settings);
+function updateStyle(settings, app) {
+  const style = generateStyle(settings, app);
   setAppearance(style);
   updateProgressbar(settings);
 }
 
 export default function initAppearance(stores) {
-  const { settings } = stores;
+  const { settings, app } = stores;
   createStyleElement();
   updateProgressbar(settings);
 
@@ -445,9 +449,10 @@ export default function initAppearance(stores) {
       settings.all.app.useHorizontalStyle,
       settings.all.app.alwaysShowWorkspaces,
       settings.all.app.showServiceName,
+      app.isFullScreen,
     ],
     () => {
-      updateStyle(settings.all.app);
+      updateStyle(settings.all.app, app);
     },
     { fireImmediately: true },
   );
