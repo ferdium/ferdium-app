@@ -1,3 +1,30 @@
+# [v6.0.0](https://github.com/ferdium/ferdium-app/compare/v6.0.0-nightly.97...v6.0.0) (2022-07-21)
+
+### Features
+
+- Handle both ferdi and ferdium servers for transferring from
+- Refactor the 'Welcome' screen and the 'SetupAssistant' for better UX
+- Create winget updater GH workflow (#484)
+- Feature: Add Release Notes
+- Add 'Services' tab to settings
+
+### Services
+
+### Bug fixes
+
+- Fix icons misalignment in horizontal mode
+- horizontal sidebar style on macOS
+- enable/disable todos menu
+- remove autoHibernate
+- draggable area on fullscreen (macOS)
+
+### Under the hood
+
+- Added more badges into 'README.md`
+- Fix prepare-code script
+- use global crowdin link and lint fixes
+- Use defaults defined in one place instead of hardcoding in multiple places
+
 # [v6.0.0-beta.3](https://github.com/ferdium/ferdium-app/compare/v6.0.0-nightly.77...v6.0.0-nightly.97) (2022-07-12)
 
 ### Features

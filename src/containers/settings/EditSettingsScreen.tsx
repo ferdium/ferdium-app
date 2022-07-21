@@ -199,8 +199,8 @@ const messages = defineMessages({
     id: 'settings.app.form.enableLongPressServiceHint',
     defaultMessage: 'Enable service shortcut hint on long press',
   },
-  useVerticalStyle: {
-    id: 'settings.app.form.useVerticalStyle',
+  useHorizontalStyle: {
+    id: 'settings.app.form.useHorizontalStyle',
     defaultMessage: 'Use horizontal style',
   },
   hideCollapseButton: {
@@ -377,7 +377,7 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
         enableLongPressServiceHint: Boolean(
           settingsData.enableLongPressServiceHint,
         ),
-        useVerticalStyle: Boolean(settingsData.useVerticalStyle),
+        useHorizontalStyle: Boolean(settingsData.useHorizontalStyle),
         hideCollapseButton: Boolean(settingsData.hideCollapseButton),
         hideRecipesButton: Boolean(settingsData.hideRecipesButton),
         hideSplitModeButton: Boolean(settingsData.hideSplitModeButton),
@@ -739,10 +739,10 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           value: settings.all.app.enableLongPressServiceHint,
           default: DEFAULT_APP_SETTINGS.enableLongPressServiceHint,
         },
-        useVerticalStyle: {
-          label: intl.formatMessage(messages.useVerticalStyle),
-          value: settings.all.app.useVerticalStyle,
-          default: DEFAULT_APP_SETTINGS.useVerticalStyle,
+        useHorizontalStyle: {
+          label: intl.formatMessage(messages.useHorizontalStyle),
+          value: settings.all.app.useHorizontalStyle,
+          default: DEFAULT_APP_SETTINGS.useHorizontalStyle,
         },
         hideCollapseButton: {
           label: intl.formatMessage(messages.hideCollapseButton),
@@ -853,6 +853,7 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
     const { app } = this.props.stores;
     const {
       updateStatus,
+      updateVersion,
       updateStatusTypes,
       isClearingAllCache,
       lockingFeatureEnabled,
@@ -860,13 +861,13 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
     const { checkForUpdates, installUpdate, clearAllCache } =
       this.props.actions.app;
     const form = this.prepareForm();
-
     return (
       <ErrorBoundary>
         <EditSettingsForm
           form={form}
           checkForUpdates={checkForUpdates}
           installUpdate={installUpdate}
+          updateVersion={updateVersion}
           isCheckingForUpdates={updateStatus === updateStatusTypes.CHECKING}
           isUpdateAvailable={updateStatus === updateStatusTypes.AVAILABLE}
           noUpdateAvailable={updateStatus === updateStatusTypes.NOT_AVAILABLE}

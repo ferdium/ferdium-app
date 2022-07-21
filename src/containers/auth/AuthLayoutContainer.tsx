@@ -49,6 +49,7 @@ class AuthLayoutContainer extends Component<AuthLayoutContainerProps> {
           appUpdateIsDownloaded={
             app.updateStatus === app.updateStatusTypes.DOWNLOADED
           }
+          updateVersion={app.updateVersion}
         >
           <Outlet />
         </AuthLayout>

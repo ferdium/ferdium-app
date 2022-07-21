@@ -157,6 +157,7 @@ class AppLayoutContainer extends Component<AppLayoutContainerProps> {
           areRequiredRequestsSuccessful={requests.areRequiredRequestsSuccessful}
           retryRequiredRequests={retryRequiredRequests}
           areRequiredRequestsLoading={requests.areRequiredRequestsLoading}
+          updateVersion={app.updateVersion}
         >
           <Outlet />
         </AppLayout>

@@ -32,11 +32,7 @@ import {
   nodeVersion,
   osArch,
 } from '../environment';
-import {
-  CUSTOM_WEBSITE_RECIPE_ID,
-  GITHUB_FERDIUM_URL,
-  LIVE_API_FERDIUM_WEBSITE,
-} from '../config';
+import { CUSTOM_WEBSITE_RECIPE_ID, LIVE_API_FERDIUM_WEBSITE } from '../config';
 import { ferdiumVersion } from '../environment-remote';
 import { todoActions } from '../features/todos/actions';
 import workspaceActions from '../features/workspaces/actions';
@@ -44,6 +40,7 @@ import { workspaceStore } from '../features/workspaces/index';
 import { importExportURL, serverBase, serverName } from '../api/apiBase';
 import { openExternalUrl } from '../helpers/url-helpers';
 import globalMessages from '../i18n/globalMessages';
+import { onAuthGoToReleaseNotes } from '../helpers/update-helpers';
 
 // @ts-expect-error Cannot find module '../buildInfo.json' or its corresponding type declarations.
 import * as buildInfo from '../buildInfo.json';
@@ -333,6 +330,10 @@ const menuItems = defineMessages({
     id: 'menu.todos.enableTodos',
     defaultMessage: 'Enable Todos',
   },
+  disableTodos: {
+    id: 'menu.todos.disableTodos',
+    defaultMessage: 'Disable Todos',
+  },
   serviceGoHome: {
     id: 'menu.services.goHome',
     defaultMessage: 'Home',
@@ -582,10 +583,7 @@ const _titleBarTemplateFactory = (intl, locked) => [
       {
         label: intl.formatMessage(menuItems.changelog),
         click() {
-          openExternalUrl(
-            `${GITHUB_FERDIUM_URL}/ferdium-app/releases/tag/v${ferdiumVersion}`,
-            true,
-          );
+          window.location.href = onAuthGoToReleaseNotes(window.location.href);
         },
       },
       {
@@ -1158,30 +1156,30 @@ class FranzMenu {
     const { intl } = window['ferdium'];
     const menu = [];
 
-    const drawerLabel = isTodosPanelVisible
-      ? menuItems.closeTodosDrawer
-      : menuItems.openTodosDrawer;
+    menu.push({
+      label: intl.formatMessage(
+        isFeatureEnabledByUser ? menuItems.disableTodos : menuItems.enableTodos,
+      ),
+      click: () => {
+        todoActions.toggleTodosFeatureVisibility();
+      },
+      enabled: this.stores.user.isLoggedIn,
+    });
 
     if (isFeatureEnabledByUser) {
-      menu.push({
-        label: intl.formatMessage(drawerLabel),
-        accelerator: `${todosToggleShortcutKey()}`,
-        click: () => {
-          todoActions.toggleTodosPanel();
-        },
-        enabled: this.stores.user.isLoggedIn && isFeatureEnabledByUser,
-      });
-    }
-
-    if (!isFeatureEnabledByUser) {
       menu.push(
         {
           type: 'separator',
         },
         {
-          label: intl.formatMessage(menuItems.enableTodos),
+          label: intl.formatMessage(
+            isTodosPanelVisible
+              ? menuItems.closeTodosDrawer
+              : menuItems.openTodosDrawer,
+          ),
+          accelerator: `${todosToggleShortcutKey()}`,
           click: () => {
-            todoActions.toggleTodosFeatureVisibility();
+            todoActions.toggleTodosPanel();
           },
           enabled: this.stores.user.isLoggedIn,
         },

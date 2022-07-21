@@ -53,14 +53,18 @@ export function importExportURL() {
 
 export function serverBase() {
   const serverType = (window as any).ferdium.stores.settings.all.app.server;
-  const noServer = 'You are using Ferdium without a server';
+  const noServerFerdi = 'You are using Ferdi without a server';
+  const noServerFerdium = 'You are using Ferdium without a server';
 
   let terms;
   switch (serverType) {
     case LIVE_FRANZ_API:
       terms = DEV_API_FRANZ_WEBSITE;
       break;
-    case noServer:
+    case noServerFerdi:
+      terms = LIVE_FERDIUM_API;
+      break;
+    case noServerFerdium:
       terms = LIVE_FERDIUM_API;
       break;
     default:
@@ -72,7 +76,8 @@ export function serverBase() {
 
 export function serverName(): string {
   const serverType = (window as any).ferdium.stores.settings.all.app.server;
-  const noServer = 'You are using Ferdium without a server';
+  const noServerFerdi = 'You are using Ferdi without a server';
+  const noServerFerdium = 'You are using Ferdium without a server';
 
   let nameServer;
   switch (serverType) {
@@ -82,7 +87,10 @@ export function serverName(): string {
     case LIVE_FERDIUM_API:
       nameServer = 'Ferdium';
       break;
-    case noServer:
+    case noServerFerdi:
+      nameServer = 'No';
+      break;
+    case noServerFerdium:
       nameServer = 'No';
       break;
     default:

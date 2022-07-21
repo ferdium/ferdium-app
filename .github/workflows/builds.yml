@@ -149,7 +149,7 @@ jobs:
       - name: Install node dependencies
         run: npm i
       - name: Package recipes
-        run: pnpm i && pnpm package
+        run: pnpm i && pnpm lint && pnpm reformat-files && pnpm package
         working-directory: ./recipes
       - name: Run linter and tests
         run: npm run lint && npm run test
@@ -239,7 +239,7 @@ jobs:
         run: echo "PACKAGE_VERSION=$(node -p 'require("./package.json").version')" >> $GITHUB_ENV
         shell: bash
       - name: Package recipes
-        run: pnpm i && pnpm package
+        run: pnpm i && pnpm lint && pnpm reformat-files && pnpm package
         working-directory: ./recipes
       - name: Run linter and tests
         run: npm run lint && npm run test
@@ -347,7 +347,7 @@ jobs:
           max_attempts: 3
           retry_on: error
       - name: Package recipes
-        run: pnpm i && pnpm package
+        run: pnpm i && pnpm lint && pnpm reformat-files && pnpm package
         working-directory: ./recipes
         shell: bash
       - name: Run linter and tests
