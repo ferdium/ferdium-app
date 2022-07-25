@@ -76,7 +76,7 @@ jobs:
             #   there were other changes coming from the 'develop' branch (or)
             #   this is a manual trigger with the key-phrase
             git checkout develop
-            npm version -m "%s [skip ci]" prerelease --preid=nightly
+            pnpm version -m "%s [skip ci]" prerelease --preid=nightly
             git commit --all --amend --no-edit --no-verify
             git push origin develop --no-verify
 
@@ -142,22 +142,20 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
-      - name: Install npm
-        run: npm i -gf "npm@$(node -p 'require("./package.json").engines.npm')" && npm -v
       - name: Install pnpm
-        run: npm i -gf "pnpm@$(node -p 'require("./recipes/package.json").engines.pnpm')" && pnpm -v
+        run: npm i -gf "pnpm@$(node -p 'require("./package.json").engines.pnpm')" && pnpm -v
       - name: Install node dependencies
-        run: npm i
+        run: pnpm i
       - name: Package recipes
         run: pnpm i && pnpm lint && pnpm reformat-files && pnpm package
         working-directory: ./recipes
       - name: Run linter and tests
-        run: npm run lint && npm run test
+        run: pnpm lint && pnpm test
       - name: Build Ferdium without publish for any branch not 'nightly' and not 'release'
         if: ${{ env.GIT_BRANCH_NAME != 'nightly' && env.GIT_BRANCH_NAME != 'release' }}
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: false
-        run: npm run build -- --publish never
+        run: pnpm build -- --publish never
         shell: bash
       - name: Build Ferdium with publish for 'nightly' branch
         if: ${{ env.GIT_BRANCH_NAME == 'nightly' }}
@@ -168,7 +166,7 @@ jobs:
           APPLEID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
           CSC_LINK: ${{ secrets.CSC_LINK }}
           CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
-        run: npm run build -- --publish always
+        run: pnpm build -- --publish always
         shell: bash
       - name: Build Ferdium with publish for 'release' branch
         if: ${{ env.GIT_BRANCH_NAME == 'release' }}
@@ -179,7 +177,7 @@ jobs:
           APPLEID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
           CSC_LINK: ${{ secrets.CSC_LINK }}
           CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
-        run: npm run build -- --publish always
+        run: pnpm build -- --publish always
         shell: bash
 
   build_linux:
@@ -229,12 +227,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
-      - name: Install npm
-        run: npm i -gf "npm@$(node -p 'require("./package.json").engines.npm')" && npm -v
       - name: Install pnpm
-        run: npm i -gf "pnpm@$(node -p 'require("./recipes/package.json").engines.pnpm')" && pnpm -v
+        run: npm i -gf "pnpm@$(node -p 'require("./package.json").engines.pnpm')" && pnpm -v
       - name: Install node dependencies
-        run: npm i
+        run: pnpm i
       - name: Figure out used package.json version
         run: echo "PACKAGE_VERSION=$(node -p 'require("./package.json").version')" >> $GITHUB_ENV
         shell: bash
@@ -242,13 +238,13 @@ jobs:
         run: pnpm i && pnpm lint && pnpm reformat-files && pnpm package
         working-directory: ./recipes
       - name: Run linter and tests
-        run: npm run lint && npm run test
+        run: pnpm lint && pnpm test
       - name: Build Ferdium without publish for any branch not 'nightly' and not 'release'
         if: ${{ env.GIT_BRANCH_NAME != 'nightly' && env.GIT_BRANCH_NAME != 'release' }}
-        run: npm run build -- --publish never
-        shell: bash
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: false
+        run: pnpm build -- --publish never
+        shell: bash
       - name: Build Ferdium with publish for 'nightly' branch
         if: ${{ env.GIT_BRANCH_NAME == 'nightly' }}
         env:
@@ -258,7 +254,7 @@ jobs:
         run: |
           sudo snap install snapcraft --channel=5.x/stable --classic
           echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
-          npm run build -- --publish always -c.snap.publish.repo=nightlies -c.snap.publish.channels=edge
+          pnpm build -- --publish always -c.snap.publish.repo=nightlies -c.snap.publish.channels=edge
           snapcraft logout
         shell: bash
       - name: Build Ferdium with publish for 'release' beta branch
@@ -270,7 +266,7 @@ jobs:
         run: |
           sudo snap install snapcraft --channel=5.x/stable --classic
           echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
-          npm run build -- --publish always -c.snap.publish.repo=ferdium -c.snap.publish.channels=beta
+          pnpm build -- --publish always -c.snap.publish.repo=ferdium -c.snap.publish.channels=beta
           snapcraft logout
         shell: bash
       - name: Build Ferdium with publish for 'release' stable branch
@@ -282,7 +278,7 @@ jobs:
         run: |
           sudo snap install snapcraft --channel=5.x/stable --classic
           echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
-          npm run build -- --publish always -c.snap.publish.repo=ferdium -c.snap.publish.channels=stable
+          pnpm build -- --publish always -c.snap.publish.repo=ferdium -c.snap.publish.channels=stable
           snapcraft logout
         shell: bash
 
@@ -335,14 +331,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
-      - name: Install npm
-        run: npm i -gf "npm@$(node -p 'require(\"./package.json\").engines.npm')" && npm -v
       - name: Install pnpm
-        run: npm i -gf "pnpm@$(node -p 'require(\"./recipes/package.json\").engines.pnpm')" && pnpm -v
+        run: npm i -gf "pnpm@$(node -p 'require(\"./package.json\").engines.pnpm')" && pnpm -v
       - name: Install node dependencies
         uses: nick-invision/retry@v2.4.0
         with:
-          command: npm i
+          command: pnpm i
           timeout_minutes: 15
           max_attempts: 3
           retry_on: error
@@ -351,14 +345,14 @@ jobs:
         working-directory: ./recipes
         shell: bash
       - name: Run linter and tests
-        run: npm run lint && npm run test
+        run: pnpm lint && pnpm test
         shell: bash
       - name: Build Ferdium without publish for any branch not 'nightly' and not 'release'
         if: ${{ env.GIT_BRANCH_NAME != 'nightly' && env.GIT_BRANCH_NAME != 'release' }}
-        run: npm run build -- --publish never
-        shell: bash
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: false
+        run: pnpm build -- --publish never
+        shell: bash
       - name: Build Ferdium with publish for 'nightly' branch
         if: ${{ env.GIT_BRANCH_NAME == 'nightly' }}
         env:
@@ -366,7 +360,7 @@ jobs:
           CSC_IDENTITY_AUTO_DISCOVERY: true
           WIN_CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
           WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
-        run: npm run build -- --publish always
+        run: pnpm build -- --publish always
         shell: bash
       - name: Build Ferdium with publish for 'release' branch
         if: ${{ env.GIT_BRANCH_NAME == 'release' }}
@@ -375,5 +369,5 @@ jobs:
           CSC_IDENTITY_AUTO_DISCOVERY: true
           WIN_CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
           WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
-        run: npm run build -- --publish always
+        run: pnpm build -- --publish always
         shell: bash

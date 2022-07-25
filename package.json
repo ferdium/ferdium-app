@@ -14,33 +14,33 @@
   "private": true,
   "engines": {
     "node": "16.15.1",
-    "npm": "8.13.2"
+    "pnpm": "7.5.0"
   },
   "engine-strict": true,
   "scripts": {
     "prepare": "is-ci || husky install",
     "start": "electron ./build",
-    "start:local": "cross-env USE_LOCAL_API=1 npm start",
-    "start:live": "cross-env USE_LIVE_API=1 npm start",
-    "start:all-dev": "concurrently \"npm run dev\" \"wait-on http://localhost:8080 && npm start\"",
+    "start:local": "cross-env USE_LOCAL_API=1 pnpm start",
+    "start:live": "cross-env USE_LIVE_API=1 pnpm start",
+    "start:all-dev": "concurrently \"pnpm dev\" \"wait-on http://localhost:8080 && pnpm start\"",
     "dev": "cross-env NODE_ENV=development gulp dev",
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "eslint \"{src,test,scripts}/**/*.{js,jsx,ts,tsx}\" --quiet",
-    "lint:fix": "npm run lint -- --fix",
+    "lint:fix": "pnpm lint -- --fix",
     "extract": "formatjs extract \"src/**/*.{js,jsx,ts,tsx}\" --out-file temp.json --flatten --id-interpolation-pattern '[sha512:contenthash:base64:6]' --preserve-whitespace",
     "compile": "formatjs compile \"temp.json\" --out-file src/i18n/locales/en-US.json",
-    "manage-translations": "npm run extract && npm run compile && rimraf temp.json",
+    "manage-translations": "pnpm extract && pnpm compile && rimraf temp.json",
     "build": "preval-build-info-cli && gulp build && electron-builder",
     "contributors": "all-contributors",
     "reformat-files": "prettier --ignore-path .eslintignore --write --require-pragma \"**/*.{js,jsx,scss}\"",
     "update-submodules": "git submodule update --init --recursive --remote --rebase --force",
-    "prepare-code": "npm run lint:fix && npm run reformat-files && npm run manage-translations",
+    "prepare-code": "pnpm lint:fix && pnpm reformat-files && pnpm manage-translations",
     "link-readme": "ts-node scripts/link-readme.ts",
     "minify-images": "./scripts/minify-images.sh",
     "start:server": "ts-node src/internal-server/test.ts",
     "add-crowdin-contributors": "ts-node scripts/add-crowdin-contributors.ts",
-    "debug": "cross-env-shell DEBUG_COLORS=1 DEBUG=Ferdium:* npm run start:all-dev"
+    "debug": "cross-env-shell DEBUG_COLORS=1 DEBUG=Ferdium:* pnpm start:all-dev"
   },
   "keywords": [],
   "dependencies": {
