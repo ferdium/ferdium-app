@@ -5,7 +5,7 @@ import injectSheet from 'react-jss';
 import { defineMessages, injectIntl } from 'react-intl';
 import ReactTooltip from 'react-tooltip';
 
-import { mdiPlusBox, mdiCog } from '@mdi/js';
+import { mdiPlusBox, mdiCog, mdiMenuUp, mdiMenuDown } from '@mdi/js';
 
 import { H1 } from '../../../components/ui/headline';
 import Icon from '../../../components/ui/icon';
@@ -64,7 +64,7 @@ const styles = theme => ({
   },
   workspaces: {
     height: 'auto',
-    overflowY: 'auto',
+    overflowY: 'visible',
   },
   addNewWorkspaceLabel: {
     height: 'auto',
@@ -101,6 +101,27 @@ class WorkspaceDrawer extends Component {
       getUserWorkspacesRequest.execute();
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  handleClick(e, workspaces, index) {
+    switch (e) {
+      case 'goUp':
+        if (index !== 0) {
+          const toIndex = index - 1;
+          const element = workspaces.splice(index, 1)[0];
+          workspaces.splice(toIndex, 0, element);
+        }
+        break;
+      case 'goDown':
+        if (index !== workspaces.length - 1) {
+          const toIndex = index + 1;
+          const element = workspaces.splice(index, 1)[0];
+          workspaces.splice(toIndex, 0, element);
+        }
+        break;
+      default:
+        break;
     }
   }
 
@@ -144,21 +165,53 @@ class WorkspaceDrawer extends Component {
             shortcutIndex={0}
           />
           {workspaces.map((workspace, index) => (
-            <WorkspaceDrawerItem
-              key={workspace.id}
-              name={workspace.name}
-              isActive={actualWorkspace === workspace}
-              onClick={() => {
-                if (actualWorkspace === workspace) return;
-                workspaceActions.activate({ workspace });
-                workspaceActions.toggleWorkspaceDrawer();
-              }}
-              onContextMenuEditClick={() =>
-                workspaceActions.edit({ workspace })
-              }
-              services={getServicesForWorkspace(workspace)}
-              shortcutIndex={index + 1}
-            />
+            <div className="wrapper-workspaces-drawer-item">
+              <div className="wrapper-workspaces-drawer-item__workspaces">
+                <WorkspaceDrawerItem
+                  key={workspace.id}
+                  name={workspace.name}
+                  isActive={actualWorkspace === workspace}
+                  onClick={() => {
+                    if (actualWorkspace === workspace) {
+                      return;
+                    }
+                    workspaceActions.activate({ workspace });
+                    workspaceActions.toggleWorkspaceDrawer();
+                  }}
+                  onContextMenuEditClick={() =>
+                    workspaceActions.edit({ workspace })
+                  }
+                  services={getServicesForWorkspace(workspace)}
+                  shortcutIndex={index + 1}
+                  workspaces={workspaces}
+                  className="wrapper-workspaces-drawer-item__workspace"
+                />
+              </div>
+              <div className="wrapper-workspaces-drawer-item__buttons">
+                {index !== 0 && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      this.handleClick('goUp', workspaces, index);
+                    }}
+                    className="button-up"
+                  >
+                    <Icon icon={mdiMenuUp} size={1.5} />
+                  </button>
+                )}
+                {index !== workspaces.length - 1 && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      this.handleClick('goDown', workspaces, index);
+                    }}
+                    className="button-down"
+                  >
+                    <Icon icon={mdiMenuDown} size={1.5} />
+                  </button>
+                )}
+              </div>
+            </div>
           ))}
           <div
             className={classes.addNewWorkspaceLabel}
