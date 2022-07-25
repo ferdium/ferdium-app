@@ -136,4 +136,4 @@ jobs:
 
           $command = ".\wingetcreate.exe update $package -v $($version.Trim('v')) -u $installerUrls -t $ghToken -o .\ -s"
           Write-Host $command
-          Invoke-Command $command
+          Invoke-Expression $command
