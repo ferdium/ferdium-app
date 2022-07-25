@@ -63,12 +63,15 @@ export const server = async (userPath: string, port: number, token: string) => {
         returned = true;
       }
     });
-    new Ignitor(fold).appRoot(__dirname).fireHttpServer().catch((error) => {
-      console.error(error);
-      if (!returned) {
-        returned = true;
-        reject(error);
-      }
-    });
+    new Ignitor(fold)
+      .appRoot(__dirname)
+      .fireHttpServer()
+      .catch(error => {
+        console.error(error);
+        if (!returned) {
+          returned = true;
+          reject(error);
+        }
+      });
   });
 };

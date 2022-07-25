@@ -39,7 +39,10 @@ export default (params: { mainWindow: BrowserWindow }) => {
           port += 1;
         }
         token = randomBytes(256 / 8).toString('base64url');
-        debug('Starting local server at', `http://localhost:${port}/token/${token}`);
+        debug(
+          'Starting local server at',
+          `http://localhost:${port}/token/${token}`,
+        );
         await server(userDataPath(), port, token);
         localServerStarted = true;
       }
@@ -49,7 +52,7 @@ export default (params: { mainWindow: BrowserWindow }) => {
         port,
         token,
       });
-    })().catch((error) => {
+    })().catch(error => {
       console.error('Error while starting local server', error);
     });
   });

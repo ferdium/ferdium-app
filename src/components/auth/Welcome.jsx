@@ -21,7 +21,8 @@ const messages = defineMessages({
   },
   changeServerMessage: {
     id: 'login.changeServerMessage',
-    defaultMessage: 'You are using {serverNameParse} Server, do you want to switch?'
+    defaultMessage:
+      'You are using {serverNameParse} Server, do you want to switch?',
   },
   changeServer: {
     id: 'login.changeServer',
@@ -78,7 +79,9 @@ class Welcome extends Component {
           </Link>
           <div className="welcome__text__change-server">
             <span>
-              {intl.formatMessage(messages.changeServerMessage, { serverNameParse })}
+              {intl.formatMessage(messages.changeServerMessage, {
+                serverNameParse,
+              })}
             </span>
             <Link to={changeServerRoute} className="button__change-server">
               <span>{intl.formatMessage(messages.changeServer)}</span>

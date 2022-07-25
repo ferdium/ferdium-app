@@ -1,7 +1,9 @@
 import { autorun, observable } from 'mobx';
 import { session } from '@electron/remote';
 
-const debug = require('../../preload-safe-debug')('Ferdium:feature:serviceProxy');
+const debug = require('../../preload-safe-debug')(
+  'Ferdium:feature:serviceProxy',
+);
 
 export const config = observable({
   isEnabled: true,

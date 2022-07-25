@@ -21,4 +21,4 @@ export const convertToJSON = (data: string | any | undefined | null) =>
 export const cleanseJSObject = (data: any | undefined | null) =>
   JSON.parse(JSON.stringify(data));
 
-export const isEscKeyPress = (keyCode : Number) => keyCode === 27;
+export const isEscKeyPress = (keyCode: Number) => keyCode === 27;

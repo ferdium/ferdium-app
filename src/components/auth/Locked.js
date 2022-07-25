@@ -54,17 +54,19 @@ class Locked extends Component {
 
   form = (() => {
     const { intl } = this.props;
-    return new Form({
-      fields: {
-        password: {
-          label: intl.formatMessage(messages.passwordLabel),
-          value: '',
-          type: 'password',
+    return new Form(
+      {
+        fields: {
+          password: {
+            label: intl.formatMessage(messages.passwordLabel),
+            value: '',
+            type: 'password',
+          },
         },
       },
-    },
-    intl,
-  )})();
+      intl,
+    );
+  })();
 
   submit(e) {
     e.preventDefault();

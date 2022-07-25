@@ -77,7 +77,8 @@ class ServiceView extends Component {
       isSpellcheckerEnabled,
     } = this.props;
 
-    const { navigationBarBehaviour, navigationBarManualActive } = stores.settings.app;
+    const { navigationBarBehaviour, navigationBarManualActive } =
+      stores.settings.app;
 
     const showNavBar =
       navigationBarBehaviour === 'always' ||
@@ -98,7 +99,11 @@ class ServiceView extends Component {
     }
 
     return (
-      <div className={webviewClasses} data-name={service.name} style={{order: service.order}}>
+      <div
+        className={webviewClasses}
+        data-name={service.name}
+        style={{ order: service.order }}
+      >
         {service.isActive && service.isEnabled && (
           <>
             {service.hasCrashed && (
@@ -115,9 +120,9 @@ class ServiceView extends Component {
               !service.isServiceAccessRestricted && (
                 <WebviewLoader loaded={false} name={service.name} />
               )}
-            {service.isProgressbarEnabled && service.isLoadingPage && !service.isFirstLoad && (
-              <TopBarProgress />
-            )}
+            {service.isProgressbarEnabled &&
+              service.isLoadingPage &&
+              !service.isFirstLoad && <TopBarProgress />}
             {service.isError && (
               <WebviewErrorHandler
                 name={service.recipe.name}
@@ -151,11 +156,26 @@ class ServiceView extends Component {
                 />
               </>
             ) : (
-              <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}>
-                <span role="img" aria-label="Sleeping Emoji" style={{fontSize: 42}}>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                }}
+              >
+                <span
+                  role="img"
+                  aria-label="Sleeping Emoji"
+                  style={{ fontSize: 42 }}
+                >
                   😴
-                </span><br/><br/>
-                This service is currently hibernating.<br/>
+                </span>
+                <br />
+                <br />
+                This service is currently hibernating.
+                <br />
                 Try switching services or reloading Ferdium.
               </div>
             )}

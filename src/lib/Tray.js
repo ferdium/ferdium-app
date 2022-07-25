@@ -224,15 +224,9 @@ export default class TrayIcon {
   _getAsset(type, asset) {
     let { platform } = process;
 
-    if (
-      isMac &&
-      macosVersion.isGreaterThanOrEqualTo('11')
-    ) {
+    if (isMac && macosVersion.isGreaterThanOrEqualTo('11')) {
       platform = `${platform}-20`;
-    } else if (
-      isMac &&
-      nativeTheme.shouldUseDarkColors
-    ) {
+    } else if (isMac && nativeTheme.shouldUseDarkColors) {
       platform = `${platform}-dark`;
     }
 

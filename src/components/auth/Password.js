@@ -50,17 +50,19 @@ class Password extends Component {
 
   form = (() => {
     const { intl } = this.props;
-    return new Form({
-      fields: {
-        email: {
-          label: intl.formatMessage(messages.emailLabel),
-          value: '',
-          validators: [required, email],
+    return new Form(
+      {
+        fields: {
+          email: {
+            label: intl.formatMessage(messages.emailLabel),
+            value: '',
+            validators: [required, email],
+          },
         },
       },
-    },
-    intl,
-  )})();
+      intl,
+    );
+  })();
 
   submit(e) {
     e.preventDefault();
@@ -80,7 +82,9 @@ class Password extends Component {
     return (
       <div className="auth__container">
         <form className="franz-form auth__form" onSubmit={e => this.submit(e)}>
-          <Link to='/auth/welcome'><img src="./assets/images/logo.svg" className="auth__logo" alt="" /></Link>
+          <Link to="/auth/welcome">
+            <img src="./assets/images/logo.svg" className="auth__logo" alt="" />
+          </Link>
           <H1>{intl.formatMessage(messages.headline)}</H1>
           {status.length > 0 && status.includes('sent') && (
             <Infobox type="success" icon="checkbox-marked-circle-outline">
