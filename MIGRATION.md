@@ -20,15 +20,15 @@ Depending on where you have your account, you have to visit separate sites to re
 
 1. Have Ferdi running on your system. (Even if you are on the initial "Get started" page, these instructions will work.)
 2. Go to `Help > Import/Export Configuration Data` which should open the corresponding url in your default browser.
-3. Click on `export your data to a ".ferdium-data" file`.
-4. Save the `export.fedi-data` file to anywhere you'd like for safe-keeping/backup.
+3. Click on `export your data to a ".ferdi-data" file`.
+4. Save the `export.ferdi-data` file to anywhere you'd like for safe-keeping/backup.
 
 ## Importing
 
-1. Have Ferdi running on your system.
+1. Have Ferdium running on your system.
 2. When you get to the screen that says "Get Started", go to `Help > Import/Export Configuration Data` which should open a local url in your default browser.
-3. Click on `import your data from a ".ferdium-data" file`.
-4. Using the File browser button, find the previously saved `export.fedi-data` file on your system and click the "Import data" button.
+3. Click on `import your data from a ".ferdium-data" or ".ferdi-data" file`.
+4. Using the File browser button, find the previously saved `export.ferdi-data` file on your system and click the "Import data" button.
 5. Restart your application.
 
 _Note:_
