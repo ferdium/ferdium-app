@@ -2873,6 +2873,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Rabattkarte",
+      "name": "Nils Fahldieck",
+      "avatar_url": "https://avatars.githubusercontent.com/u/16440184?v=4",
+      "profile": "https://nils.fahldieck.de",
+      "contributions": [
+        "doc"
+      ]
     }
   ]
 }
