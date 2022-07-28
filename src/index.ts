@@ -346,6 +346,7 @@ const createWindow = () => {
     debug('Window: maximize');
     // @ts-expect-error Property 'isMaximized' does not exist on type 'App'.
     app.isMaximized = true;
+    mainWindow?.setSkipTaskbar(false);
   });
 
   mainWindow.on('unmaximize', () => {
