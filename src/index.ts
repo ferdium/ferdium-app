@@ -119,9 +119,7 @@ if (!gotTheLock) {
         onDidLoad((window: BrowserWindow) => {
           // Keep only command line / deep linked arguments
           const url = argv.slice(1);
-          if (url) {
-            handleDeepLink(window, url.toString());
-          }
+          handleDeepLink(window, url.toString());
 
           if (argv.includes('--reset-window')) {
             // Needs to be delayed to not interfere with mainWindow.restore();
@@ -270,14 +268,7 @@ const createWindow = () => {
   if (isWindows) {
     onDidLoad((window: BrowserWindow) => {
       const url = process.argv.slice(1);
-      if (
-        url &&
-        // The next line is a workaround after this 71c5237 [chore: Mobx & React-Router upgrade (#406)].
-        // For some reason, the app won't start until because it's trying to route to './build'.
-        url.toString() !== './build'
-      ) {
-        handleDeepLink(window, url.toString());
-      }
+      handleDeepLink(window, url.toString());
     });
   }
 
