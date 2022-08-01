@@ -20,7 +20,7 @@
   "feature.quickSwitch.info": "Seleccione um serviço com TAB, ↑ e ↓. Abra um serviço com ENTER.",
   "feature.quickSwitch.search": "A procurar...",
   "feature.quickSwitch.title": "Troca Rápida",
-  "global.api.unhealthy": "Can't connect to {serverNameParse} online services",
+  "global.api.unhealthy": "Não foi possível conectar ao serviço online: {serverNameParse}",
   "global.cancel": "Cancelar",
   "global.edit": "Editar",
   "global.no": "Não",
