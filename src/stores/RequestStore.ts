@@ -44,12 +44,7 @@ export default class RequestStore extends TypedStore {
     this.servicesRequest = this.stores.services.allServicesRequest;
 
     ipcRenderer.on('localServerPort', (_, data) => {
-      if (data.port) {
-        this.localServerPort = data.port;
-      }
-      if (data.token) {
-        this.localServerToken = data.token;
-      }
+      this.setData(data);
     });
   }
 
@@ -68,6 +63,15 @@ export default class RequestStore extends TypedStore {
   @action _retryRequiredRequests(): void {
     this.userInfoRequest.reload();
     this.servicesRequest.reload();
+  }
+
+  @action setData(data: { port: number; token: string | undefined }): void {
+    if (data.port) {
+      this.localServerPort = data.port;
+    }
+    if (data.token) {
+      this.localServerToken = data.token;
+    }
   }
 
   // Reactions

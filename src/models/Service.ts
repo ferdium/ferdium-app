@@ -1,4 +1,4 @@
-import { autorun, computed, makeObservable, observable } from 'mobx';
+import { autorun, action, computed, makeObservable, observable } from 'mobx';
 import { ipcRenderer } from 'electron';
 import { webContents } from '@electron/remote';
 import normalizeUrl from 'normalize-url';
@@ -225,6 +225,10 @@ export default class Service {
     });
   }
 
+  @action _setIsError(value: boolean): void {
+    this.isError = value;
+  }
+
   @computed get shareWithWebview(): object {
     return {
       id: this.id,
@@ -423,7 +427,7 @@ export default class Service {
       this.hasCrashed = false;
       this.isLoading = true;
       this.isLoadingPage = true;
-      this.isError = false;
+      this._setIsError(false);
     });
 
     this.webview.addEventListener('did-stop-loading', event => {
@@ -453,7 +457,7 @@ export default class Service {
         event.errorCode !== -21 &&
         event.errorCode !== -3
       ) {
-        this.isError = true;
+        this._setIsError(true);
         this.errorMessage = event.errorDescription;
         this.isLoading = false;
         this.isLoadingPage = false;

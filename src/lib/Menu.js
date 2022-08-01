@@ -7,7 +7,7 @@ import {
   systemPreferences,
   getCurrentWindow,
 } from '@electron/remote';
-import { autorun, makeObservable, observable } from 'mobx';
+import { autorun, action, makeObservable, observable } from 'mobx';
 import { defineMessages } from 'react-intl';
 import osName from 'os-name';
 import { fromJS } from 'immutable';
@@ -635,6 +635,10 @@ class FranzMenu {
     }, 10);
   }
 
+  @action _setCurrentTemplate(tpl) {
+    this.currentTemplate = tpl;
+  }
+
   rebuild() {
     this._build();
   }
@@ -989,7 +993,7 @@ class FranzMenu {
         ...this.debugMenu(),
       );
     }
-    this.currentTemplate = tpl;
+    this._setCurrentTemplate(tpl);
     const menu = Menu.buildFromTemplate(tpl);
     Menu.setApplicationMenu(menu);
   }

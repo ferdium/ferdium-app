@@ -618,6 +618,10 @@ export default class ServicesStore extends TypedStore {
     await request._promise;
   }
 
+  @action _setIsActive(service: Service, state: boolean): void {
+    service.isActive = state;
+  }
+
   @action _setActive({ serviceId, keepActiveRoute = null }) {
     if (!keepActiveRoute) this.stores.router.push('/');
     const service = this.one(serviceId);
@@ -625,10 +629,10 @@ export default class ServicesStore extends TypedStore {
     for (const s of this.all) {
       if (s.isActive) {
         s.lastUsed = Date.now();
-        s.isActive = false;
+        this._setIsActive(s, false);
       }
     }
-    service.isActive = true;
+    this._setIsActive(service, true);
     this._awake({ serviceId: service.id });
 
     if (
@@ -650,7 +654,7 @@ export default class ServicesStore extends TypedStore {
   @action _blurActive() {
     const service = this.active;
     if (service) {
-      service.isActive = false;
+      this._setIsActive(service, false);
     } else {
       debug('No service is active');
     }
@@ -1194,13 +1198,14 @@ export default class ServicesStore extends TypedStore {
   _mapActiveServiceToServiceModelReaction() {
     const { activeService } = this.stores.settings.all.service;
     if (this.allDisplayed.length > 0) {
-      this.allDisplayed.map(service =>
-        Object.assign(service, {
-          isActive: activeService
+      for (const service of this.allDisplayed) {
+        this._setIsActive(
+          service,
+          activeService
             ? activeService === service.id
             : this.allDisplayed[0].id === service.id,
-        }),
-      );
+        );
+      }
     }
   }
 

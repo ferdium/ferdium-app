@@ -100,8 +100,11 @@ export default class SettingsStore extends TypedStore {
         });
       }
       debug('Get appSettings resolves', resp.type, resp.data);
-      Object.assign(this._fileSystemSettingsCache[resp.type], resp.data);
-      this.loaded = true;
+      this.actions.settings.update({
+        type: resp.type,
+        data: resp.data,
+      });
+      this.setLoaded();
       ipcRenderer.send('initialAppSettings', resp);
     });
 
@@ -146,6 +149,10 @@ export default class SettingsStore extends TypedStore {
       stats: this.stats,
       migration: this.migration,
     };
+  }
+
+  @action async setLoaded(): Promise<void> {
+    this.loaded = true;
   }
 
   @action async _update({ type, data }): Promise<void> {
