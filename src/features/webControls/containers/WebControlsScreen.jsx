@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import PropTypes from 'prop-types';
 
-import { autorun, makeObservable, observable } from 'mobx';
+import { autorun, action, makeObservable, observable } from 'mobx';
 import WebControls from '../components/WebControls';
 import ServicesStore from '../../../stores/ServicesStore';
 import Service from '../../../models/Service';
@@ -27,6 +27,18 @@ class WebControlsScreen extends Component {
 
   autorunDisposer = null;
 
+  @action _setCanGoBack() {
+    this.canGoBack = this.webview.canGoBack();
+  }
+
+  @action _setCanGoForward() {
+    this.canGoForward = this.webview.canGoForward();
+  }
+
+  @action _setUrl(value) {
+    this.url = value;
+  }
+
   constructor(props) {
     super(props);
 
@@ -39,15 +51,15 @@ class WebControlsScreen extends Component {
     this.autorunDisposer = autorun(() => {
       if (service.isAttached) {
         this.webview = service.webview;
-        this.url = this.webview.getURL();
+        this._setUrl(this.webview.getURL());
 
         for (const event of URL_EVENTS) {
           this.webview.addEventListener(event, e => {
             if (!e.isMainFrame) return;
 
-            this.url = e.url;
-            this.canGoBack = this.webview.canGoBack();
-            this.canGoForward = this.webview.canGoForward();
+            this._setUrl(e.url);
+            this._setCanGoBack();
+            this._setCanGoForward();
           });
         }
       }
@@ -101,7 +113,7 @@ class WebControlsScreen extends Component {
     }
 
     this.webview.loadURL(url);
-    this.url = url;
+    this._setUrl(url);
   }
 
   openInBrowser() {

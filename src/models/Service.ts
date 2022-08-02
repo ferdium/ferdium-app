@@ -229,6 +229,26 @@ export default class Service {
     this.isError = value;
   }
 
+  @action _setIsLoading(state: boolean): void {
+    this.isLoading = state;
+  }
+
+  @action _setIsFirstLoad(state: boolean): void {
+    this.isFirstLoad = state;
+  }
+
+  @action _setIsLoadingPage(state: boolean): void {
+    this.isLoadingPage = state;
+  }
+
+  @action _setHasCrashed(state: boolean): void {
+    this.hasCrashed = state;
+  }
+
+  @action _setErrorMessage(event: { errorDescription: string }): void {
+    this.errorMessage = event.errorDescription;
+  }
+
   @computed get shareWithWebview(): object {
     return {
       id: this.id,
@@ -424,26 +444,26 @@ export default class Service {
     this.webview.addEventListener('did-start-loading', event => {
       debug('Did start load', this.name, event);
 
-      this.hasCrashed = false;
-      this.isLoading = true;
-      this.isLoadingPage = true;
+      this._setHasCrashed(false);
+      this._setIsLoading(true);
+      this._setIsLoadingPage(true);
       this._setIsError(false);
     });
 
     this.webview.addEventListener('did-stop-loading', event => {
       debug('Did stop load', this.name, event);
 
-      this.isLoading = false;
-      this.isLoadingPage = false;
+      this._setIsLoading(false);
+      this._setIsLoadingPage(false);
     });
 
     // eslint-disable-next-line unicorn/consistent-function-scoping
     const didLoad = () => {
-      this.isLoading = false;
-      this.isLoadingPage = false;
+      this._setIsLoading(false);
+      this._setIsLoadingPage(false);
 
       if (!this.isError) {
-        this.isFirstLoad = false;
+        this._setIsFirstLoad(false);
       }
     };
 
@@ -458,15 +478,15 @@ export default class Service {
         event.errorCode !== -3
       ) {
         this._setIsError(true);
-        this.errorMessage = event.errorDescription;
-        this.isLoading = false;
-        this.isLoadingPage = false;
+        this._setErrorMessage(event);
+        this._setIsLoading(false);
+        this._setIsLoadingPage(false);
       }
     });
 
     this.webview.addEventListener('crashed', () => {
       debug('Service crashed', this.name);
-      this.hasCrashed = true;
+      this._setHasCrashed(true);
     });
 
     this.webview.addEventListener('found-in-page', ({ result }) => {
