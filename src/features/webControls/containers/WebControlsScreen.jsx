@@ -27,16 +27,14 @@ class WebControlsScreen extends Component {
 
   autorunDisposer = null;
 
-  @action _setCanGoBack() {
-    this.canGoBack = this.webview.canGoBack();
-  }
-
-  @action _setCanGoForward() {
-    this.canGoForward = this.webview.canGoForward();
-  }
-
   @action _setUrl(value) {
     this.url = value;
+  }
+
+  @action _setUrlAndHistory(value) {
+    this._setUrl(value);
+    this.canGoBack = this.webview.canGoBack();
+    this.canGoForward = this.webview.canGoForward();
   }
 
   constructor(props) {
@@ -57,9 +55,7 @@ class WebControlsScreen extends Component {
           this.webview.addEventListener(event, e => {
             if (!e.isMainFrame) return;
 
-            this._setUrl(e.url);
-            this._setCanGoBack();
-            this._setCanGoForward();
+            this._setUrlAndHistory(e.url);
           });
         }
       }

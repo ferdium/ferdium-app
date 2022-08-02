@@ -124,6 +124,19 @@ export default class Service {
 
   @observable proxy: string | null = null;
 
+  @action _setAutoRun() {
+    if (!this.isEnabled) {
+      this.webview = null;
+      this.isAttached = false;
+      this.unreadDirectMessageCount = 0;
+      this.unreadIndirectMessageCount = 0;
+    }
+
+    if (this.recipe.hasCustomUrl && this.customUrl) {
+      this.isUsingCustomUrl = true;
+    }
+  }
+
   constructor(data, recipe: IRecipe) {
     if (!data) {
       throw new Error('Service config not valid');
@@ -212,41 +225,40 @@ export default class Service {
     }
 
     autorun((): void => {
-      if (!this.isEnabled) {
-        this.webview = null;
-        this.isAttached = false;
-        this.unreadDirectMessageCount = 0;
-        this.unreadIndirectMessageCount = 0;
-      }
-
-      if (this.recipe.hasCustomUrl && this.customUrl) {
-        this.isUsingCustomUrl = true;
-      }
+      this._setAutoRun();
     });
   }
 
-  @action _setIsError(value: boolean): void {
-    this.isError = value;
+  @action _didStartLoading(): void {
+    this.hasCrashed = false;
+    this.isLoading = true;
+    this.isLoadingPage = true;
+    this.isError = false;
   }
 
-  @action _setIsLoading(state: boolean): void {
-    this.isLoading = state;
+  @action _didStopLoading(): void {
+    this.isLoading = false;
+    this.isLoadingPage = false;
   }
 
-  @action _setIsFirstLoad(state: boolean): void {
-    this.isFirstLoad = state;
+  @action _didLoad(): void {
+    this.isLoading = false;
+    this.isLoadingPage = false;
+
+    if (!this.isError) {
+      this.isFirstLoad = false;
+    }
   }
 
-  @action _setIsLoadingPage(state: boolean): void {
-    this.isLoadingPage = state;
-  }
-
-  @action _setHasCrashed(state: boolean): void {
-    this.hasCrashed = state;
-  }
-
-  @action _setErrorMessage(event: { errorDescription: string }): void {
+  @action _didFailLoad(event: { errorDescription: string }): void {
+    this.isError = false;
     this.errorMessage = event.errorDescription;
+    this.isLoading = false;
+    this.isLoadingPage = false;
+  }
+
+  @action _hasCrashed(): void {
+    this.hasCrashed = true;
   }
 
   @computed get shareWithWebview(): object {
@@ -444,27 +456,18 @@ export default class Service {
     this.webview.addEventListener('did-start-loading', event => {
       debug('Did start load', this.name, event);
 
-      this._setHasCrashed(false);
-      this._setIsLoading(true);
-      this._setIsLoadingPage(true);
-      this._setIsError(false);
+      this._didStartLoading();
     });
 
     this.webview.addEventListener('did-stop-loading', event => {
       debug('Did stop load', this.name, event);
 
-      this._setIsLoading(false);
-      this._setIsLoadingPage(false);
+      this._didStopLoading();
     });
 
     // eslint-disable-next-line unicorn/consistent-function-scoping
     const didLoad = () => {
-      this._setIsLoading(false);
-      this._setIsLoadingPage(false);
-
-      if (!this.isError) {
-        this._setIsFirstLoad(false);
-      }
+      this._didLoad();
     };
 
     this.webview.addEventListener('did-frame-finish-load', didLoad.bind(this));
@@ -477,16 +480,13 @@ export default class Service {
         event.errorCode !== -21 &&
         event.errorCode !== -3
       ) {
-        this._setIsError(true);
-        this._setErrorMessage(event);
-        this._setIsLoading(false);
-        this._setIsLoadingPage(false);
+        this._didFailLoad(event);
       }
     });
 
     this.webview.addEventListener('crashed', () => {
       debug('Service crashed', this.name);
-      this._setHasCrashed(true);
+      this._hasCrashed();
     });
 
     this.webview.addEventListener('found-in-page', ({ result }) => {
