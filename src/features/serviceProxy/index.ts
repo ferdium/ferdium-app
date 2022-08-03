@@ -1,4 +1,4 @@
-import { autorun, observable } from 'mobx';
+import { autorun, action, observable } from 'mobx';
 import { session } from '@electron/remote';
 
 const debug = require('../../preload-safe-debug')(
@@ -15,8 +15,12 @@ export default function init(stores: {
 }) {
   debug('Initializing `serviceProxy` feature');
 
+  const setIsEnabled = action((value: boolean) => {
+    config.isEnabled = value;
+  });
+
   autorun(() => {
-    config.isEnabled = true;
+    setIsEnabled(true);
 
     const services = stores.services.enabled;
     const proxySettings = stores.settings.proxy;

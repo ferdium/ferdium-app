@@ -503,6 +503,17 @@ export default class AppStore extends TypedStore {
     this.isClearingAllCache = false;
   }
 
+  @action _setLocale() {
+    if (this.stores.user?.isLoggedIn && this.stores.user?.data.locale) {
+      this.locale = this.stores.user.data.locale;
+    } else if (!this.locale) {
+      this.locale = this._getDefaultLocale();
+    }
+
+    moment.locale(this.locale);
+    debug(`Set locale to "${this.locale}"`);
+  }
+
   // Reactions
   _offlineCheck() {
     if (!this.isOnline) {
@@ -514,17 +525,6 @@ export default class AppStore extends TypedStore {
         this.actions.service.reloadAll();
       }
     }
-  }
-
-  _setLocale() {
-    if (this.stores.user?.isLoggedIn && this.stores.user?.data.locale) {
-      this.locale = this.stores.user.data.locale;
-    } else if (!this.locale) {
-      this.locale = this._getDefaultLocale();
-    }
-
-    moment.locale(this.locale);
-    debug(`Set locale to "${this.locale}"`);
   }
 
   _getDefaultLocale() {
