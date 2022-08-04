@@ -334,10 +334,7 @@ class RecipeController {
       isDarkModeStyleInjected,
     };
 
-    if (
-      this.settings.service.isDarkModeEnabled &&
-      this.settings.app.isDarkThemeActive !== false
-    ) {
+    if (this.settings.service.isDarkModeEnabled) {
       debug('Enable dark mode');
 
       // Check if recipe has a custom dark mode handler
