@@ -26,6 +26,64 @@ function matchesWord(string: string) {
   return string.match(regex);
 }
 
+function childOf(node, ancestor) {
+  let child = node;
+  while (child !== null) {
+    if (child === ancestor) return true;
+    child = child.parentNode;
+  }
+  return false;
+}
+
+function translatePopup(res, isError: boolean = false) {
+  const elementExists = document.querySelector('#container-ferdium-translator');
+  if (elementExists) {
+    return;
+  }
+
+  const para = document.createElement('p');
+  para.style.cssText = `
+    color: white;
+    margin: 10px;
+    text-align: justify;
+    `;
+
+  const node = document.createTextNode(res);
+  para.append(node);
+
+  const div = document.createElement('div');
+  div.setAttribute('id', 'container-ferdium-translator');
+
+  div.style.cssText = `
+    position: fixed;
+    opacity: 0.9;
+    z-index: 999999;
+    ${isError ? `background: rgb(255 37 37);` : `background: rgb(131 131 131);`}
+    border-radius: 8px;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, -5%);
+    display: flex;
+    flex-direction: row;
+    -webkit-box-shadow: 0px 10px 13px -7px #000000, 5px 5px 13px 9px rgba(0,0,0,0);
+    overflow: auto;
+    max-height: 95%;
+    max-width: 90%;
+    width: max-content;
+    height: max-content;
+    `;
+
+  div.append(para);
+
+  document.body.insertBefore(div, document.body.firstChild);
+
+  document.addEventListener('click', e => {
+    if (div !== e.target && !childOf(e.target, div)) {
+      div?.remove();
+    }
+  });
+}
+
 interface ContextMenuStringTable {
   lookUpDefinition: ({ word }: { word: string }) => string;
   cut: () => string;
@@ -421,11 +479,14 @@ export class ContextMenuBuilder {
           to: translateToLanguage,
         })
           .then(res => {
-            // eslint-disable-next-line no-alert
-            alert(res);
+            translatePopup(res);
           })
           .catch(error => {
-            console.error(error);
+            console.log(error);
+            translatePopup(
+              'FERDIUM ERROR: An error occured. Please select less text to translate or try again later.',
+              true,
+            );
           });
       },
     });
