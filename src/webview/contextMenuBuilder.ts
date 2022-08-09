@@ -38,7 +38,7 @@ function childOf(node, ancestor) {
 function translatePopup(res, isError: boolean = false) {
   const elementExists = document.querySelector('#container-ferdium-translator');
   if (elementExists) {
-    return;
+    elementExists.remove();
   }
 
   const para = document.createElement('p');
@@ -91,7 +91,17 @@ interface ContextMenuStringTable {
   paste: () => string;
   pasteAndMatchStyle: () => string;
   searchWith: ({ searchEngine }: { searchEngine: string }) => string;
-  translate: ({ translatorLanguage }: { translatorLanguage: string }) => string;
+  translate: () => string;
+  quickTranslate: ({
+    translatorLanguage,
+  }: {
+    translatorLanguage: string;
+  }) => string;
+  translateLanguage: ({
+    translatorLanguage,
+  }: {
+    translatorLanguage: string;
+  }) => string;
   openLinkUrl: () => string;
   openLinkInFerdiumUrl: () => string;
   openInBrowser: () => string;
@@ -116,7 +126,10 @@ const contextMenuStringTable: ContextMenuStringTable = {
   paste: () => 'Paste',
   pasteAndMatchStyle: () => 'Paste and match style',
   searchWith: ({ searchEngine }) => `Search with ${searchEngine}`,
-  translate: ({ translatorLanguage }) => `Translate to ${translatorLanguage}`,
+  translate: () => `Translate to ...`,
+  quickTranslate: ({ translatorLanguage }) =>
+    `Translate to ${translatorLanguage}`,
+  translateLanguage: ({ translatorLanguage }) => `${translatorLanguage}`,
   openLinkUrl: () => 'Open Link',
   openLinkInFerdiumUrl: () => 'Open Link in Ferdium',
   openInBrowser: () => 'Open in Browser',
@@ -465,33 +478,66 @@ export class ContextMenuBuilder {
       return menu;
     }
 
+    const generateTranslationItems = (translateToLanguage: string) => {
+      translate(menuInfo.selectionText, {
+        // from: 'en',
+        to: translateToLanguage,
+      })
+        .then((res: string) => {
+          translatePopup(res);
+        })
+        .catch(error => {
+          console.log(error);
+          translatePopup(
+            'FERDIUM ERROR: An error occured. Please select less text to translate or try again later.',
+            true,
+          );
+        });
+    };
+
+    const arrayLanguages = Object.keys(TRANSLATOR_LANGUAGES).map(
+      code => TRANSLATOR_LANGUAGES[code],
+    );
+
+    const menuLanguages = new Menu();
+
+    for (const language in arrayLanguages) {
+      if (arrayLanguages[language]) {
+        const languageItem = new MenuItem({
+          label: this.stringTable.translateLanguage({
+            translatorLanguage: arrayLanguages[language],
+          }),
+          click: () => {
+            generateTranslationItems(arrayLanguages[language]);
+          },
+        });
+        menuLanguages.append(languageItem);
+      }
+    }
+
     const translateToLanguage =
       // @ts-expect-error Property 'translatorLanguage' does not exist on type 'ContextMenuParams'.
       TRANSLATOR_LANGUAGES[menuInfo.translatorLanguage];
 
-    const translateItem = new MenuItem({
-      label: this.stringTable.translate({
+    const quickTranslateItem = new MenuItem({
+      label: this.stringTable.quickTranslate({
         translatorLanguage: translateToLanguage,
       }),
       click: () => {
-        translate(menuInfo.selectionText, {
-          // from: 'en',
-          to: translateToLanguage,
-        })
-          .then(res => {
-            translatePopup(res);
-          })
-          .catch(error => {
-            console.log(error);
-            translatePopup(
-              'FERDIUM ERROR: An error occured. Please select less text to translate or try again later.',
-              true,
-            );
-          });
+        generateTranslationItems(translateToLanguage);
+      },
+    });
+
+    const translateItem = new MenuItem({
+      label: this.stringTable.translate(),
+      submenu: menuLanguages,
+      click: () => {
+        generateTranslationItems(translateToLanguage);
       },
     });
 
     menu.append(translateItem);
+    menu.append(quickTranslateItem);
     this.addSeparator(menu);
 
     return menu;
