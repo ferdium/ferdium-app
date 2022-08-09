@@ -15,6 +15,7 @@ import {
   ICON_SIZES,
   NAVIGATION_BAR_BEHAVIOURS,
   SEARCH_ENGINE_NAMES,
+  TRANSLATOR_LANGUAGES,
   TODO_APPS,
   DEFAULT_SETTING_KEEP_ALL_WORKSPACES_LOADED,
   DEFAULT_IS_FEATURE_ENABLED_BY_USER,
@@ -102,6 +103,10 @@ const messages = defineMessages({
   searchEngine: {
     id: 'settings.app.form.searchEngine',
     defaultMessage: 'Search engine',
+  },
+  translatorLanguage: {
+    id: 'settings.app.form.translatorLanguage',
+    defaultMessage: 'Translator language',
   },
   hibernateOnStartup: {
     id: 'settings.app.form.hibernateOnStartup',
@@ -342,6 +347,7 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
         notifyTaskBarOnMessage: Boolean(settingsData.notifyTaskBarOnMessage),
         navigationBarBehaviour: settingsData.navigationBarBehaviour,
         searchEngine: settingsData.searchEngine,
+        translatorLanguage: settingsData.translatorLanguage,
         hibernateOnStartup: Boolean(settingsData.hibernateOnStartup),
         hibernationStrategy: Number(settingsData.hibernationStrategy),
         wakeUpStrategy: Number(settingsData.wakeUpStrategy),
@@ -448,6 +454,11 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
 
     const searchEngines = getSelectOptions({
       locales: SEARCH_ENGINE_NAMES,
+      sort: false,
+    });
+
+    const translatorLanguages = getSelectOptions({
+      locales: TRANSLATOR_LANGUAGES,
       sort: false,
     });
 
@@ -573,6 +584,12 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           value: settings.all.app.searchEngine,
           default: DEFAULT_APP_SETTINGS.searchEngine,
           options: searchEngines,
+        },
+        translatorLanguage: {
+          label: intl.formatMessage(messages.translatorLanguage),
+          value: settings.all.app.translatorLanguage,
+          default: DEFAULT_APP_SETTINGS.translatorLanguage,
+          options: translatorLanguages,
         },
         hibernateOnStartup: {
           label: intl.formatMessage(messages.hibernateOnStartup),

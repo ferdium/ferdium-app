@@ -188,6 +188,7 @@ class RecipeController {
       () => this.spellcheckerLanguage,
       () => this.settings.app.searchEngine,
       () => this.settings.app.clipboardNotifications,
+      () => this.settings.app.translatorLanguage,
     );
 
     autorun(() => this.update());
@@ -293,6 +294,7 @@ class RecipeController {
     );
     debug('darkReaderSettigs', this.settings.service.darkReaderSettings);
     debug('searchEngine', this.settings.app.searchEngine);
+    debug('translatorLanguage', this.settings.app.translatorLanguage);
 
     if (this.userscript && this.userscript.internal_setSettings) {
       this.userscript.internal_setSettings(this.settings);

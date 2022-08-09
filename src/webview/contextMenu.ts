@@ -9,6 +9,7 @@ export default async function setupContextMenu(
   getSpellcheckerLanguage: () => void,
   getSearchEngine: () => void,
   getClipboardNotifications: () => void,
+  getTranslatorLanguage: () => void,
 ) {
   const contextMenuBuilder = new ContextMenuBuilder(webContents);
 
@@ -19,6 +20,7 @@ export default async function setupContextMenu(
         ...props,
         searchEngine: getSearchEngine(),
         clipboardNotifications: getClipboardNotifications(),
+        translatorLanguage: getTranslatorLanguage(),
       },
       // @ts-expect-error Expected 1 arguments, but got 4.
       isSpellcheckEnabled(),

@@ -9,9 +9,14 @@
 
 import { clipboard, ipcRenderer, nativeImage, WebContents } from 'electron';
 import { Menu, MenuItem } from '@electron/remote';
+import translate from 'translate-google';
 import { cmdOrCtrlShortcutKey, isMac } from '../environment';
 
-import { SEARCH_ENGINE_NAMES, SEARCH_ENGINE_URLS } from '../config';
+import {
+  SEARCH_ENGINE_NAMES,
+  SEARCH_ENGINE_URLS,
+  TRANSLATOR_LANGUAGES,
+} from '../config';
 import { openExternalUrl } from '../helpers/url-helpers';
 
 function matchesWord(string: string) {
@@ -28,6 +33,7 @@ interface ContextMenuStringTable {
   paste: () => string;
   pasteAndMatchStyle: () => string;
   searchWith: ({ searchEngine }: { searchEngine: string }) => string;
+  translate: ({ translatorLanguage }: { translatorLanguage: string }) => string;
   openLinkUrl: () => string;
   openLinkInFerdiumUrl: () => string;
   openInBrowser: () => string;
@@ -52,6 +58,7 @@ const contextMenuStringTable: ContextMenuStringTable = {
   paste: () => 'Paste',
   pasteAndMatchStyle: () => 'Paste and match style',
   searchWith: ({ searchEngine }) => `Search with ${searchEngine}`,
+  translate: ({ translatorLanguage }) => `Translate to ${translatorLanguage}`,
   openLinkUrl: () => 'Open Link',
   openLinkInFerdiumUrl: () => 'Open Link in Ferdium',
   openInBrowser: () => 'Open in Browser',
@@ -171,6 +178,7 @@ export class ContextMenuBuilder {
 
     this.addSpellingItems(menu, menuInfo);
     this.addSearchItems(menu, menuInfo);
+    this.addTranslateItems(menu, menuInfo);
 
     this.addCut(menu, menuInfo);
     this.addCopy(menu, menuInfo);
@@ -262,6 +270,7 @@ export class ContextMenuBuilder {
     const menu = new Menu();
 
     this.addSearchItems(menu, menuInfo);
+    this.addTranslateItems(menu, menuInfo);
     this.addCopy(menu, menuInfo);
     this.addInspectElement(menu, menuInfo);
     // @ts-expect-error Expected 1 arguments, but got 2.
@@ -377,6 +386,51 @@ export class ContextMenuBuilder {
     });
 
     menu.append(search);
+    this.addSeparator(menu);
+
+    return menu;
+  }
+
+  /**
+   * Adds translate-related menu items.
+   */
+  addTranslateItems(
+    menu: Electron.CrossProcessExports.Menu,
+    menuInfo: Electron.ContextMenuParams,
+  ) {
+    if (!menuInfo.selectionText || menuInfo.selectionText.length === 0) {
+      return menu;
+    }
+
+    const match = matchesWord(menuInfo.selectionText);
+    if (!match || match.length === 0) {
+      return menu;
+    }
+
+    const translateToLanguage =
+      // @ts-expect-error Property 'translatorLanguage' does not exist on type 'ContextMenuParams'.
+      TRANSLATOR_LANGUAGES[menuInfo.translatorLanguage];
+
+    const translateItem = new MenuItem({
+      label: this.stringTable.translate({
+        translatorLanguage: translateToLanguage,
+      }),
+      click: () => {
+        translate(menuInfo.selectionText, {
+          // from: 'en',
+          to: translateToLanguage,
+        })
+          .then(res => {
+            // eslint-disable-next-line no-alert
+            alert(res);
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      },
+    });
+
+    menu.append(translateItem);
     this.addSeparator(menu);
 
     return menu;
@@ -609,6 +663,7 @@ export class ContextMenuBuilder {
    */
   goBack(menu: Electron.CrossProcessExports.Menu) {
     const webContents = this.getWebContents();
+
     menu.append(
       new MenuItem({
         label: this.stringTable.goBack(),

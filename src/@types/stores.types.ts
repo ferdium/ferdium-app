@@ -106,6 +106,7 @@ interface AppStore extends TypedStore {
   reloadAfterResume: boolean;
   reloadAfterResumeTime: number;
   searchEngine: string;
+  translatorLanguage: string;
   spellcheckerLanguage: string;
   splitMode: boolean;
   splitColumns: number;

@@ -870,6 +870,11 @@ class EditSettingsForm extends Component {
                     {intl.formatMessage(messages.spellCheckerLanguageInfo)}
                   </p>
                 )}
+
+                <Hr />
+
+                <Select field={form.$('translatorLanguage')} />
+
                 <p className="settings__help">
                   {intl.formatMessage(messages.appRestartRequired)}
                 </p>
