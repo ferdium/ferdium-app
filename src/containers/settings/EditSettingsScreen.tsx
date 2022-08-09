@@ -106,7 +106,7 @@ const messages = defineMessages({
   },
   translatorLanguage: {
     id: 'settings.app.form.translatorLanguage',
-    defaultMessage: 'Translator default language',
+    defaultMessage: 'Default Translator language',
   },
   hibernateOnStartup: {
     id: 'settings.app.form.hibernateOnStartup',
