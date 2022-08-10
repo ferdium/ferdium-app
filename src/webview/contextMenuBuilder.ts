@@ -9,7 +9,6 @@
 
 import { clipboard, ipcRenderer, nativeImage, WebContents } from 'electron';
 import { Menu, MenuItem } from '@electron/remote';
-import translate from 'translate-google';
 import { cmdOrCtrlShortcutKey, isMac } from '../environment';
 
 import {
@@ -478,21 +477,19 @@ export class ContextMenuBuilder {
       return menu;
     }
 
-    const generateTranslationItems = (translateToLanguage: string) => {
-      translate(menuInfo.selectionText, {
-        // from: 'en',
-        to: translateToLanguage,
-      })
-        .then((res: string) => {
-          translatePopup(res);
-        })
-        .catch(error => {
-          console.log(error);
-          translatePopup(
-            'FERDIUM ERROR: An error occured. Please select less text to translate or try again later.',
-            true,
-          );
-        });
+    const generateTranslationItems = async (
+      translateToLanguage: string,
+      translateEngine: string = 'LibreTranslate',
+    ) => {
+      translatePopup('Loading...', false);
+
+      const translatedText = await ipcRenderer.invoke('translate', {
+        text: menuInfo.selectionText,
+        translateToLanguage,
+        translateEngine,
+      });
+
+      translatePopup(translatedText.text, translatedText.error);
     };
 
     const arrayLanguages = Object.keys(TRANSLATOR_LANGUAGES).map(
