@@ -9,6 +9,7 @@ export default async function setupContextMenu(
   getSpellcheckerLanguage: () => void,
   getSearchEngine: () => void,
   getClipboardNotifications: () => void,
+  getTranslatorEngine: () => void,
   getTranslatorLanguage: () => void,
 ) {
   const contextMenuBuilder = new ContextMenuBuilder(webContents);
@@ -20,6 +21,7 @@ export default async function setupContextMenu(
         ...props,
         searchEngine: getSearchEngine(),
         clipboardNotifications: getClipboardNotifications(),
+        translatorEngine: getTranslatorEngine(),
         translatorLanguage: getTranslatorLanguage(),
       },
       // @ts-expect-error Expected 1 arguments, but got 4.

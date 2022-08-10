@@ -873,6 +873,7 @@ class EditSettingsForm extends Component {
 
                 <Hr />
 
+                <Select field={form.$('translatorEngine')} />
                 <Select field={form.$('translatorLanguage')} />
 
                 <p className="settings__help">

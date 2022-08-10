@@ -14,7 +14,10 @@ import { cmdOrCtrlShortcutKey, isMac } from '../environment';
 import {
   SEARCH_ENGINE_NAMES,
   SEARCH_ENGINE_URLS,
-  TRANSLATOR_LANGUAGES,
+  GOOGLE_TRANSLATOR_LANGUAGES,
+  TRANSLATOR_ENGINE_GOOGLE,
+  TRANSLATOR_ENGINE_LIBRETRANSLATE,
+  LIBRETRANSLATE_TRANSLATOR_LANGUAGES,
 } from '../config';
 import { openExternalUrl } from '../helpers/url-helpers';
 
@@ -468,6 +471,9 @@ export class ContextMenuBuilder {
     menu: Electron.CrossProcessExports.Menu,
     menuInfo: Electron.ContextMenuParams,
   ) {
+    // @ts-expect-error Property 'translatorEngine' does not exist on type 'ContextMenuParams'.
+    const { translatorEngine } = menuInfo;
+
     if (!menuInfo.selectionText || menuInfo.selectionText.length === 0) {
       return menu;
     }
@@ -479,24 +485,34 @@ export class ContextMenuBuilder {
 
     const generateTranslationItems = async (
       translateToLanguage: string,
-      translateEngine: string = 'LibreTranslate',
+      translatorEngine: string,
     ) => {
       translatePopup('Loading...', false);
 
       const translatedText = await ipcRenderer.invoke('translate', {
         text: menuInfo.selectionText,
         translateToLanguage,
-        translateEngine,
+        translatorEngine,
       });
 
       translatePopup(translatedText.text, translatedText.error);
     };
 
-    const arrayLanguages = Object.keys(TRANSLATOR_LANGUAGES).map(
-      code => TRANSLATOR_LANGUAGES[code],
+    let arrayLanguagesAfterEngine;
+    if (translatorEngine === TRANSLATOR_ENGINE_LIBRETRANSLATE) {
+      arrayLanguagesAfterEngine = LIBRETRANSLATE_TRANSLATOR_LANGUAGES;
+    } else if (translatorEngine === TRANSLATOR_ENGINE_GOOGLE) {
+      arrayLanguagesAfterEngine = GOOGLE_TRANSLATOR_LANGUAGES;
+    }
+
+    const arrayLanguages = Object.keys(arrayLanguagesAfterEngine).map(
+      code => arrayLanguagesAfterEngine[code],
     );
 
     const menuLanguages = new Menu();
+
+    const getLanguageCode = (obj, val): string =>
+      Object.keys(obj).find(key => obj[key] === val)!;
 
     for (const language in arrayLanguages) {
       if (arrayLanguages[language]) {
@@ -505,7 +521,11 @@ export class ContextMenuBuilder {
             translatorLanguage: arrayLanguages[language],
           }),
           click: () => {
-            generateTranslationItems(arrayLanguages[language]);
+            const translateToLanguageCode = getLanguageCode(
+              arrayLanguagesAfterEngine,
+              arrayLanguages[language],
+            );
+            generateTranslationItems(translateToLanguageCode, translatorEngine);
           },
         });
         menuLanguages.append(languageItem);
@@ -514,14 +534,18 @@ export class ContextMenuBuilder {
 
     const translateToLanguage =
       // @ts-expect-error Property 'translatorLanguage' does not exist on type 'ContextMenuParams'.
-      TRANSLATOR_LANGUAGES[menuInfo.translatorLanguage];
+      arrayLanguagesAfterEngine[menuInfo.translatorLanguage];
 
+    const translateToLanguageCode = getLanguageCode(
+      arrayLanguagesAfterEngine,
+      translateToLanguage,
+    );
     const quickTranslateItem = new MenuItem({
       label: this.stringTable.quickTranslate({
         translatorLanguage: translateToLanguage,
       }),
       click: () => {
-        generateTranslationItems(translateToLanguage);
+        generateTranslationItems(translateToLanguageCode, translatorEngine);
       },
     });
 
@@ -529,7 +553,7 @@ export class ContextMenuBuilder {
       label: this.stringTable.translate(),
       submenu: menuLanguages,
       click: () => {
-        generateTranslationItems(translateToLanguage);
+        generateTranslationItems(translateToLanguageCode, translatorEngine);
       },
     });
 

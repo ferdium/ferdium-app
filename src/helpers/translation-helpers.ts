@@ -1,15 +1,16 @@
 import fetch from 'node-fetch';
 import translateGoogle from 'translate-google';
+import { LIVE_API_FERDIUM_LIBRETRANSLE } from '../config';
 
 export async function translateTo(
   text: string,
   translateToLanguage: string,
-  translateEngine: string,
+  translatorEngine: string,
 ) {
   const errorText =
     'FERDIUM ERROR: An error occured. Please select less text to translate or try again later.';
 
-  if (translateEngine === 'Google') {
+  if (translatorEngine === 'Google') {
     try {
       const res = await translateGoogle(text, {
         // from: 'en',
@@ -20,14 +21,14 @@ export async function translateTo(
     } catch {
       return { text: errorText, error: true };
     }
-  } else if (translateEngine === 'LibreTranslate') {
+  } else if (translatorEngine === 'LibreTranslate') {
     try {
-      const res = await fetch('https://translate.argosopentech.com/translate', {
+      const res = await fetch(LIVE_API_FERDIUM_LIBRETRANSLE, {
         method: 'POST',
         body: JSON.stringify({
           q: text,
           source: 'auto',
-          target: 'pt',
+          target: translateToLanguage,
         }),
         headers: {
           'Content-Type': 'application/json',

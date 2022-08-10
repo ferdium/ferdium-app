@@ -24,6 +24,8 @@ export const LIVE_WS_API = 'wss://api.franzinfra.com';
 export const LOCAL_API_WEBSITE = 'http://localhost:3333';
 export const DEV_API_FRANZ_WEBSITE = 'https://meetfranz.com';
 export const LIVE_API_FERDIUM_WEBSITE = 'https://ferdium.org';
+export const LIVE_API_FERDIUM_LIBRETRANSLE =
+  'https://translator.ferdium.org/translate';
 
 export const STATS_API = 'https://stats.franzinfra.com';
 
@@ -84,7 +86,35 @@ export const SEARCH_ENGINE_NAMES = {
   [SEARCH_ENGINE_DDG]: 'DuckDuckGo',
 };
 
-export const TRANSLATOR_LANGUAGES = {
+export const TRANSLATOR_ENGINE_GOOGLE = 'Google';
+export const TRANSLATOR_ENGINE_LIBRETRANSLATE = 'LibreTranslate';
+export const TRANSLATOR_ENGINE_NAMES = {
+  [TRANSLATOR_ENGINE_LIBRETRANSLATE]:
+    'Ferdium Translator (Powered by LibreTranslate)',
+  [TRANSLATOR_ENGINE_GOOGLE]: 'Google',
+};
+
+export const LIBRETRANSLATE_TRANSLATOR_LANGUAGES = {
+  ar: 'Arabic',
+  zh: 'Chinese',
+  en: 'English',
+  fr: 'French',
+  de: 'German',
+  hi: 'Hindi',
+  id: 'Indonesian',
+  ga: 'Irish',
+  it: 'Italian',
+  ja: 'Japanese',
+  ko: 'Korean',
+  pl: 'Polish',
+  pt: 'Portuguese',
+  ru: 'Russian',
+  es: 'Spanish',
+  tr: 'Turkish',
+  vi: 'Vietnamese',
+};
+
+export const GOOGLE_TRANSLATOR_LANGUAGES = {
   af: 'Afrikaans',
   sq: 'Albanian',
   ar: 'Arabic',
@@ -368,6 +398,7 @@ export const DEFAULT_APP_SETTINGS = {
   navigationBarBehaviour: 'custom',
   searchEngine: SEARCH_ENGINE_STARTPAGE,
   translatorLanguage: 'en',
+  translatorEngine: TRANSLATOR_ENGINE_LIBRETRANSLATE,
   useHorizontalStyle: false,
   hideCollapseButton: false,
   isMenuCollapsed: false,

@@ -503,13 +503,12 @@ app.on('login', (event, _webContents, _request, authInfo, callback) => {
 
 ipcMain.handle(
   'translate',
-  async (_e, { text, translateToLanguage, translateEngine }) => {
+  async (_e, { text, translateToLanguage, translatorEngine }) => {
     const response = await translateTo(
       text,
       translateToLanguage,
-      translateEngine,
+      translatorEngine,
     );
-    console.log(response);
     return response;
   },
 );

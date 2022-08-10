@@ -207,6 +207,13 @@ export default class ServicesStore extends TypedStore {
     );
 
     reaction(
+      () => this.stores.settings.app.translatorEngine,
+      () => {
+        this._shareSettingsWithServiceProcess();
+      },
+    );
+
+    reaction(
       () => this.stores.settings.app.translatorLanguage,
       () => {
         this._shareSettingsWithServiceProcess();
