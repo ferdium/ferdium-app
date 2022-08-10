@@ -249,9 +249,14 @@ export class ContextMenuBuilder {
   ): Electron.CrossProcessExports.Menu {
     const menu = new Menu();
 
+    // @ts-expect-error Property 'enableTranslator' does not exist on type 'ContextMenuParams'.
+    const { enableTranslator } = menuInfo;
+
     this.addSpellingItems(menu, menuInfo);
     this.addSearchItems(menu, menuInfo);
-    this.addTranslateItems(menu, menuInfo);
+    if (enableTranslator) {
+      this.addTranslateItems(menu, menuInfo);
+    }
 
     this.addCut(menu, menuInfo);
     this.addCopy(menu, menuInfo);
@@ -342,8 +347,15 @@ export class ContextMenuBuilder {
   ): Electron.CrossProcessExports.Menu {
     const menu = new Menu();
 
+    // @ts-expect-error Property 'enableTranslator' does not exist on type 'ContextMenuParams'.
+    const { enableTranslator } = menuInfo;
+
+    console.log(enableTranslator);
+
     this.addSearchItems(menu, menuInfo);
-    this.addTranslateItems(menu, menuInfo);
+    if (enableTranslator) {
+      this.addTranslateItems(menu, menuInfo);
+    }
     this.addCopy(menu, menuInfo);
     this.addInspectElement(menu, menuInfo);
     // @ts-expect-error Expected 1 arguments, but got 2.

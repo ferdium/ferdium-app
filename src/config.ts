@@ -358,6 +358,7 @@ export const DEFAULT_APP_SETTINGS = {
   showMessageBadgeWhenMuted: true,
   showDragArea: false,
   enableSpellchecking: true,
+  enableTranslator: false,
   spellcheckerLanguage: 'en-us',
   darkMode: false,
   navigationBarManualActive: false,

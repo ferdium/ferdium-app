@@ -279,6 +279,10 @@ const messages = defineMessages({
     id: 'settings.app.form.enableSpellchecking',
     defaultMessage: 'Enable spell checking',
   },
+  enableTranslator: {
+    id: 'settings.app.form.enableTranslator',
+    defaultMessage: 'Enable Translator',
+  },
   enableGPUAcceleration: {
     id: 'settings.app.form.enableGPUAcceleration',
     defaultMessage: 'Enable GPU Acceleration',
@@ -408,6 +412,7 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
         ),
         showDragArea: Boolean(settingsData.showDragArea),
         enableSpellchecking: Boolean(settingsData.enableSpellchecking),
+        enableTranslator: Boolean(settingsData.enableTranslator),
         spellcheckerLanguage: settingsData.spellcheckerLanguage,
         userAgentPref: settingsData.userAgentPref,
         beta: Boolean(settingsData.beta), // we need this info in the main process as well
@@ -712,6 +717,11 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           label: intl.formatMessage(messages.enableSpellchecking),
           value: settings.all.app.enableSpellchecking,
           default: DEFAULT_APP_SETTINGS.enableSpellchecking,
+        },
+        enableTranslator: {
+          label: intl.formatMessage(messages.enableTranslator),
+          value: settings.all.app.enableTranslator,
+          default: DEFAULT_APP_SETTINGS.enableTranslator,
         },
         spellcheckerLanguage: {
           label: intl.formatMessage(globalMessages.spellcheckerLanguage),

@@ -9,6 +9,7 @@ export default async function setupContextMenu(
   getSpellcheckerLanguage: () => void,
   getSearchEngine: () => void,
   getClipboardNotifications: () => void,
+  getEnableTranslator: () => void,
   getTranslatorEngine: () => void,
   getTranslatorLanguage: () => void,
 ) {
@@ -21,6 +22,7 @@ export default async function setupContextMenu(
         ...props,
         searchEngine: getSearchEngine(),
         clipboardNotifications: getClipboardNotifications(),
+        enableTranslator: getEnableTranslator(),
         translatorEngine: getTranslatorEngine(),
         translatorLanguage: getTranslatorLanguage(),
       },

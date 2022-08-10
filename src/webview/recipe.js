@@ -188,6 +188,7 @@ class RecipeController {
       () => this.spellcheckerLanguage,
       () => this.settings.app.searchEngine,
       () => this.settings.app.clipboardNotifications,
+      () => this.settings.app.enableTranslator,
       () => this.settings.app.translatorEngine,
       () => this.settings.app.translatorLanguage,
     );
@@ -295,6 +296,7 @@ class RecipeController {
     );
     debug('darkReaderSettigs', this.settings.service.darkReaderSettings);
     debug('searchEngine', this.settings.app.searchEngine);
+    debug('enableTranslator', this.settings.app.enableTranslator);
     debug('translatorEngine', this.settings.app.translatorEngine);
     debug('translatorLanguage', this.settings.app.translatorLanguage);
 
