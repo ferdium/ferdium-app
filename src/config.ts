@@ -24,7 +24,7 @@ export const LIVE_WS_API = 'wss://api.franzinfra.com';
 export const LOCAL_API_WEBSITE = 'http://localhost:3333';
 export const DEV_API_FRANZ_WEBSITE = 'https://meetfranz.com';
 export const LIVE_API_FERDIUM_WEBSITE = 'https://ferdium.org';
-export const LIVE_API_FERDIUM_LIBRETRANSLE =
+export const LIVE_API_FERDIUM_LIBRETRANSLATE =
   'https://translator.ferdium.org/translate';
 
 export const STATS_API = 'https://stats.franzinfra.com';

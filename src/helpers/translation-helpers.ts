@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import translateGoogle from 'translate-google';
-import { LIVE_API_FERDIUM_LIBRETRANSLE } from '../config';
+import { LIVE_API_FERDIUM_LIBRETRANSLATE } from '../config';
 
 export async function translateTo(
   text: string,
@@ -23,7 +23,7 @@ export async function translateTo(
     }
   } else if (translatorEngine === 'LibreTranslate') {
     try {
-      const res = await fetch(LIVE_API_FERDIUM_LIBRETRANSLE, {
+      const res = await fetch(LIVE_API_FERDIUM_LIBRETRANSLATE, {
         method: 'POST',
         body: JSON.stringify({
           q: text,
