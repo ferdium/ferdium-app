@@ -44,37 +44,56 @@ function translatePopup(res, isError: boolean = false) {
     elementExists.remove();
   }
 
+  const style = document.createElement('style');
+  style.innerHTML = `
+    .container-ferdium-translator {
+      position: fixed;
+      opacity: 0.9;
+      z-index: 999999;
+      ${
+        isError
+          ? `background: rgb(255 37 37);`
+          : `background: rgb(131 131 131);`
+      }
+      border-radius: 8px;
+      top: 5%;
+      left: 50%;
+      transform: translate(-50%, -5%);
+      display: flex;
+      flex-direction: row;
+      -webkit-box-shadow: 0px 10px 13px -7px #000000, 5px 5px 13px 9px rgba(0,0,0,0);
+      overflow: auto;
+      max-height: 95%;
+      max-width: 90%;
+      width: max-content;
+      height: max-content;
+      -webkit-animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    }
+    .container-ferdium-translator > p {
+      color: white;
+      margin: 10px;
+      text-align: justify;
+    }
+
+    @-webkit-keyframes scale-up-center {
+      0% {
+        -webkit-transform: translate(-50%, -50%) scale(0.5);
+      }
+      100% {
+        -webkit-transform: translate(-50%, -50%) scale(1);
+      }
+    }
+  `;
+  document.head.append(style);
+
   const para = document.createElement('p');
-  para.style.cssText = `
-    color: white;
-    margin: 10px;
-    text-align: justify;
-    `;
 
   const node = document.createTextNode(res);
   para.append(node);
 
   const div = document.createElement('div');
   div.setAttribute('id', 'container-ferdium-translator');
-
-  div.style.cssText = `
-    position: fixed;
-    opacity: 0.9;
-    z-index: 999999;
-    ${isError ? `background: rgb(255 37 37);` : `background: rgb(131 131 131);`}
-    border-radius: 8px;
-    top: 5%;
-    left: 50%;
-    transform: translate(-50%, -5%);
-    display: flex;
-    flex-direction: row;
-    -webkit-box-shadow: 0px 10px 13px -7px #000000, 5px 5px 13px 9px rgba(0,0,0,0);
-    overflow: auto;
-    max-height: 95%;
-    max-width: 90%;
-    width: max-content;
-    height: max-content;
-    `;
+  div.setAttribute('class', 'container-ferdium-translator');
 
   div.append(para);
 
@@ -347,8 +366,6 @@ export class ContextMenuBuilder {
     const menu = new Menu();
 
     const { enableTranslator } = menuInfo;
-
-    console.log(enableTranslator);
 
     this.addSearchItems(menu, menuInfo);
     if (enableTranslator) {

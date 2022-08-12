@@ -4,4 +4,4 @@ export default interface IContextMenuParams extends Electron.ContextMenuParams {
   searchEngine: string;
   translatorEngine: string;
   translatorLanguage: string;
-};
+}
