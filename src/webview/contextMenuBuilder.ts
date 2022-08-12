@@ -20,6 +20,7 @@ import {
   LIBRETRANSLATE_TRANSLATOR_LANGUAGES,
 } from '../config';
 import { openExternalUrl } from '../helpers/url-helpers';
+import IContextMenuParams from '../models/IContextMenuParams';
 
 function matchesWord(string: string) {
   const regex =
@@ -207,7 +208,7 @@ export class ContextMenuBuilder {
    *
    * @param contextInfo The object returned from the 'context-menu' Electron event.
    */
-  async showPopupMenu(contextInfo: Electron.ContextMenuParams): Promise<void> {
+  async showPopupMenu(contextInfo: IContextMenuParams): Promise<void> {
     const menu = await this.buildMenuForElement(contextInfo);
     if (!menu) return;
     menu.popup();
@@ -219,7 +220,7 @@ export class ContextMenuBuilder {
    * the list but use most of the default behavior.
    */
   async buildMenuForElement(
-    info: Electron.ContextMenuParams,
+    info: IContextMenuParams,
   ): Promise<Electron.CrossProcessExports.Menu> {
     if (info.linkURL && info.linkURL.length > 0) {
       return this.buildMenuForLink(info);
@@ -245,11 +246,10 @@ export class ContextMenuBuilder {
    * @return {Menu}  The `Menu`
    */
   buildMenuForTextInput(
-    menuInfo: Electron.ContextMenuParams,
+    menuInfo: IContextMenuParams,
   ): Electron.CrossProcessExports.Menu {
     const menu = new Menu();
 
-    // @ts-expect-error Property 'enableTranslator' does not exist on type 'ContextMenuParams'.
     const { enableTranslator } = menuInfo;
 
     this.addSpellingItems(menu, menuInfo);
@@ -280,7 +280,7 @@ export class ContextMenuBuilder {
    * @return {Menu}  The `Menu`
    */
   buildMenuForLink(
-    menuInfo: Electron.ContextMenuParams,
+    menuInfo: IContextMenuParams,
   ): Electron.CrossProcessExports.Menu {
     const menu = new Menu();
     const isEmailAddress = menuInfo.linkURL.startsWith('mailto:');
@@ -294,7 +294,6 @@ export class ContextMenuBuilder {
         const url = isEmailAddress ? menuInfo.linkText : menuInfo.linkURL;
         clipboard.writeText(url);
         this._sendNotificationOnClipboardEvent(
-          // @ts-expect-error Property 'clipboardNotifications' does not exist on type 'ContextMenuParams'.
           menuInfo.clipboardNotifications,
           () => `Link URL copied: ${url}`,
         );
@@ -343,11 +342,10 @@ export class ContextMenuBuilder {
    * Builds a menu applicable to a text field.
    */
   buildMenuForText(
-    menuInfo: Electron.ContextMenuParams,
+    menuInfo: IContextMenuParams,
   ): Electron.CrossProcessExports.Menu {
     const menu = new Menu();
 
-    // @ts-expect-error Property 'enableTranslator' does not exist on type 'ContextMenuParams'.
     const { enableTranslator } = menuInfo;
 
     console.log(enableTranslator);
@@ -377,7 +375,7 @@ export class ContextMenuBuilder {
    * @return {Menu}  The `Menu`
    */
   buildMenuForImage(
-    menuInfo: Electron.ContextMenuParams,
+    menuInfo: IContextMenuParams,
   ): Electron.CrossProcessExports.Menu {
     const menu = new Menu();
 
@@ -397,7 +395,7 @@ export class ContextMenuBuilder {
    */
   addSpellingItems(
     menu: Electron.CrossProcessExports.Menu,
-    menuInfo: Electron.ContextMenuParams,
+    menuInfo: IContextMenuParams,
   ) {
     const webContents = this.getWebContents();
     // Add each spelling suggestion
@@ -432,7 +430,7 @@ export class ContextMenuBuilder {
    */
   addSearchItems(
     menu: Electron.CrossProcessExports.Menu,
-    menuInfo: Electron.ContextMenuParams,
+    menuInfo: IContextMenuParams,
   ) {
     if (!menuInfo.selectionText || menuInfo.selectionText.length === 0) {
       return menu;
@@ -458,11 +456,9 @@ export class ContextMenuBuilder {
 
     const search = new MenuItem({
       label: this.stringTable.searchWith({
-        // @ts-expect-error Property 'searchEngine' does not exist on type 'ContextMenuParams'.
         searchEngine: SEARCH_ENGINE_NAMES[menuInfo.searchEngine],
       }),
       click: () => {
-        // @ts-expect-error Property 'searchEngine' does not exist on type 'ContextMenuParams'.
         const url = SEARCH_ENGINE_URLS[menuInfo.searchEngine]({
           searchTerm: encodeURIComponent(menuInfo.selectionText),
         });
@@ -481,9 +477,8 @@ export class ContextMenuBuilder {
    */
   addTranslateItems(
     menu: Electron.CrossProcessExports.Menu,
-    menuInfo: Electron.ContextMenuParams,
+    menuInfo: IContextMenuParams,
   ) {
-    // @ts-expect-error Property 'translatorEngine' does not exist on type 'ContextMenuParams'.
     const { translatorEngine } = menuInfo;
 
     if (!menuInfo.selectionText || menuInfo.selectionText.length === 0) {
@@ -545,7 +540,6 @@ export class ContextMenuBuilder {
     }
 
     const translateToLanguage =
-      // @ts-expect-error Property 'translatorLanguage' does not exist on type 'ContextMenuParams'.
       arrayLanguagesAfterEngine[menuInfo.translatorLanguage];
 
     const translateToLanguageCode = getLanguageCode(
@@ -576,7 +570,7 @@ export class ContextMenuBuilder {
     return menu;
   }
 
-  isSrcUrlValid(menuInfo: Electron.ContextMenuParams) {
+  isSrcUrlValid(menuInfo: IContextMenuParams) {
     return menuInfo.srcURL && menuInfo.srcURL.length > 0;
   }
 
@@ -585,7 +579,7 @@ export class ContextMenuBuilder {
    */
   addImageItems(
     menu: Electron.CrossProcessExports.Menu,
-    menuInfo: Electron.ContextMenuParams,
+    menuInfo: IContextMenuParams,
   ) {
     const copyImage = new MenuItem({
       label: this.stringTable.copyImage(),
@@ -597,7 +591,6 @@ export class ContextMenuBuilder {
         );
 
         this._sendNotificationOnClipboardEvent(
-          // @ts-expect-error Property 'clipboardNotifications' does not exist on type 'ContextMenuParams'.
           menuInfo.clipboardNotifications,
           () => `Image copied from URL: ${menuInfo.srcURL}`,
         );
@@ -612,7 +605,6 @@ export class ContextMenuBuilder {
       click: () => {
         const result = clipboard.writeText(menuInfo.srcURL);
         this._sendNotificationOnClipboardEvent(
-          // @ts-expect-error Property 'clipboardNotifications' does not exist on type 'ContextMenuParams'.
           menuInfo.clipboardNotifications,
           () => `Image URL copied: ${menuInfo.srcURL}`,
         );
@@ -640,7 +632,6 @@ export class ContextMenuBuilder {
             });
           });
           this._sendNotificationOnClipboardEvent(
-            // @ts-expect-error Property 'clipboardNotifications' does not exist on type 'ContextMenuParams'.
             menuInfo.clipboardNotifications,
             () => `Image downloaded: ${urlWithoutBlob}`,
           );
@@ -658,7 +649,7 @@ export class ContextMenuBuilder {
    */
   addCut(
     menu: Electron.CrossProcessExports.Menu,
-    menuInfo: Electron.ContextMenuParams,
+    menuInfo: IContextMenuParams,
   ) {
     const webContents = this.getWebContents();
     menu.append(
@@ -678,7 +669,7 @@ export class ContextMenuBuilder {
    */
   addCopy(
     menu: Electron.CrossProcessExports.Menu,
-    menuInfo: Electron.ContextMenuParams,
+    menuInfo: IContextMenuParams,
   ) {
     const webContents = this.getWebContents();
     menu.append(
@@ -698,7 +689,7 @@ export class ContextMenuBuilder {
    */
   addPaste(
     menu: Electron.CrossProcessExports.Menu,
-    menuInfo: Electron.ContextMenuParams,
+    menuInfo: IContextMenuParams,
   ) {
     const webContents = this.getWebContents();
     menu.append(
@@ -715,7 +706,7 @@ export class ContextMenuBuilder {
 
   addPastePlain(
     menu: Electron.CrossProcessExports.Menu,
-    menuInfo: Electron.ContextMenuParams,
+    menuInfo: IContextMenuParams,
   ) {
     if (
       menuInfo.editFlags.canPaste &&
@@ -746,7 +737,7 @@ export class ContextMenuBuilder {
    */
   addInspectElement(
     menu: Electron.CrossProcessExports.Menu,
-    menuInfo: Electron.ContextMenuParams,
+    menuInfo: IContextMenuParams,
     needsSeparator = true,
   ) {
     const webContents = this.getWebContents();
@@ -838,7 +829,7 @@ export class ContextMenuBuilder {
    */
   copyPageUrl(
     menu: Electron.CrossProcessExports.Menu,
-    menuInfo: Electron.ContextMenuParams,
+    menuInfo: IContextMenuParams,
   ) {
     menu.append(
       new MenuItem({
@@ -847,7 +838,6 @@ export class ContextMenuBuilder {
         click: () => {
           clipboard.writeText(window.location.href);
           this._sendNotificationOnClipboardEvent(
-            // @ts-expect-error Property 'clipboardNotifications' does not exist on type 'ContextMenuParams'.
             menuInfo?.clipboardNotifications,
             () => `Page URL copied: ${window.location.href}`,
           );
@@ -863,7 +853,7 @@ export class ContextMenuBuilder {
    */
   goToHomePage(
     menu: Electron.CrossProcessExports.Menu,
-    menuInfo: Electron.ContextMenuParams,
+    menuInfo: IContextMenuParams,
   ) {
     const baseURL = new window.URL(menuInfo.pageURL);
     menu.append(
@@ -886,7 +876,7 @@ export class ContextMenuBuilder {
    */
   openInBrowser(
     menu: Electron.CrossProcessExports.Menu,
-    menuInfo: Electron.ContextMenuParams,
+    menuInfo: IContextMenuParams,
   ) {
     menu.append(
       new MenuItem({
