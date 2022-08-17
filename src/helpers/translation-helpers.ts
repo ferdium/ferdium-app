@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import translateGoogle from 'translate-google';
+import translateGoogle from 'google-translate-api-x';
 import { LIVE_API_FERDIUM_LIBRETRANSLATE } from '../config';
 
 export async function translateTo(
@@ -12,16 +12,17 @@ export async function translateTo(
     'FERDIUM ERROR: An error occured. Please select less text to translate or try again later.';
 
   if (translatorEngine === 'Google') {
-    try {
-      const res = await translateGoogle(text, {
-        to: translateToLanguage,
-      });
+    const translationResult = await translateGoogle(text, {
+      to: translateToLanguage,
+      autoCorrect: true,
+    })
+      .then(res => ({ text: res.text, error: false }))
+      .catch(() => ({ text: errorText, error: true }));
 
-      return { text: res, error: false };
-    } catch {
-      return { text: errorText, error: true };
-    }
-  } else if (translatorEngine === 'LibreTranslate') {
+    return translationResult;
+  }
+
+  if (translatorEngine === 'LibreTranslate') {
     try {
       const res = await fetch(LIVE_API_FERDIUM_LIBRETRANSLATE, {
         method: 'POST',
