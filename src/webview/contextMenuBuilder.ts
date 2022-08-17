@@ -511,6 +511,7 @@ export class ContextMenuBuilder {
       translateToLanguage: string,
       translatorEngine: string,
     ) => {
+      // TODO: Need to support i18n
       translatePopup('Loading...', false);
 
       const translatedText = await ipcRenderer.invoke('translate', {
