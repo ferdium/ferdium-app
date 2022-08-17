@@ -90,6 +90,7 @@ interface AppStore extends TypedStore {
   darkMode: boolean;
   dictionaries: [];
   enableSpellchecking: boolean;
+  enableTranslator: boolean;
   fetchDataInterval: 4;
   get(key: string): any;
   getAppCacheSizeRequest: () => void;
@@ -106,6 +107,8 @@ interface AppStore extends TypedStore {
   reloadAfterResume: boolean;
   reloadAfterResumeTime: number;
   searchEngine: string;
+  translatorEngine: string;
+  translatorLanguage: string;
   spellcheckerLanguage: string;
   splitMode: boolean;
   splitColumns: number;

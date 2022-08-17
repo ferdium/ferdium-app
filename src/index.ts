@@ -45,6 +45,7 @@ import './electron/exception';
 import { asarPath } from './helpers/asar-helpers';
 import { openExternalUrl } from './helpers/url-helpers';
 import userAgent from './helpers/userAgent-helpers';
+import { translateTo } from './helpers/translation-helpers';
 
 const debug = require('./preload-safe-debug')('Ferdium:App');
 
@@ -499,6 +500,18 @@ app.on('login', (event, _webContents, _request, authInfo, callback) => {
     basicAuthHandler(mainWindow!, authInfo);
   }
 });
+
+ipcMain.handle(
+  'translate',
+  async (_e, { text, translateToLanguage, translatorEngine }) => {
+    const response = await translateTo(
+      text,
+      translateToLanguage,
+      translatorEngine,
+    );
+    return response;
+  },
+);
 
 // TODO: evaluate if we need to store the authCallback for every service
 ipcMain.on('feature-basic-auth-credentials', (_e, { user, password }) => {

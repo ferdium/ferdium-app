@@ -117,6 +117,7 @@
     "semver": "7.3.7",
     "sqlite3": "5.0.8",
     "tar": "6.1.11",
+    "translate-google": "1.5.0",
     "tslib": "2.4.0",
     "useragent-generator": "1.1.1-amkt-22079-finish.0",
     "uuid": "8.3.2",

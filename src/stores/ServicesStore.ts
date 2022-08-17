@@ -158,6 +158,13 @@ export default class ServicesStore extends TypedStore {
     );
 
     reaction(
+      () => this.stores.settings.app.enableTranslator,
+      () => {
+        this._shareSettingsWithServiceProcess();
+      },
+    );
+
+    reaction(
       () => this.stores.settings.app.spellcheckerLanguage,
       () => {
         this._shareSettingsWithServiceProcess();
@@ -201,6 +208,20 @@ export default class ServicesStore extends TypedStore {
 
     reaction(
       () => this.stores.settings.app.searchEngine,
+      () => {
+        this._shareSettingsWithServiceProcess();
+      },
+    );
+
+    reaction(
+      () => this.stores.settings.app.translatorEngine,
+      () => {
+        this._shareSettingsWithServiceProcess();
+      },
+    );
+
+    reaction(
+      () => this.stores.settings.app.translatorLanguage,
       () => {
         this._shareSettingsWithServiceProcess();
       },
