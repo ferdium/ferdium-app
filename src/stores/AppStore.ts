@@ -503,11 +503,15 @@ export default class AppStore extends TypedStore {
     this.isClearingAllCache = false;
   }
 
-  @action _setLocale() {
+  @action _changeLocale(value: string) {
+    this.locale = value;
+  }
+
+  _setLocale() {
     if (this.stores.user?.isLoggedIn && this.stores.user?.data.locale) {
-      this.locale = this.stores.user.data.locale;
+      this._changeLocale(this.stores.user.data.locale);
     } else if (!this.locale) {
-      this.locale = this._getDefaultLocale();
+      this._changeLocale(this._getDefaultLocale());
     }
 
     moment.locale(this.locale);
