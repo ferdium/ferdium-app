@@ -19,6 +19,7 @@
   "feature.quickSwitch.info": "Vyberte službu s TAB, ýmem a <unk> . Otevřete službu s ENTER.",
   "feature.quickSwitch.search": "Hledat...",
   "feature.quickSwitch.title": "Rychlé přepnutí",
+  "global.api.unhealthy": "Nelze se připojit k online službám {serverNameParse}",
   "global.cancel": "Zrušit",
   "global.edit": "Upravit",
   "global.no": "Ne",
