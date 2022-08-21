@@ -1,4 +1,5 @@
 files:
   - source: /src/i18n/locales/en-US.json
     translation: /src/i18n/locales/%two_letters_code%.json
+    skip_untranslated_strings: true
 commit_message: "[skip ci]"
