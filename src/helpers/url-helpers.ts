@@ -24,7 +24,12 @@ export function isValidExternalURL(url: string | URL) {
 }
 
 export function fixUrl(url: string | URL) {
-  return url.toString().replaceAll('//', '/').replaceAll('http:/', 'http://').replaceAll('https:/', 'https://').replaceAll('file:/', 'file://');
+  return url
+    .toString()
+    .replaceAll('//', '/')
+    .replaceAll('http:/', 'http://')
+    .replaceAll('https:/', 'https://')
+    .replaceAll('file:/', 'file://');
 }
 
 export function isValidFileUrl(path: string) {

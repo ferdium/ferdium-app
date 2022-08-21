@@ -23,7 +23,7 @@ class FullscreenLoader extends Component {
     className: null,
     spinnerColor: null,
     children: null,
-    title: null
+    title: null,
   };
 
   render() {

@@ -7,15 +7,14 @@ import {
   systemPreferences,
   getCurrentWindow,
 } from '@electron/remote';
-import { autorun, makeObservable, observable } from 'mobx';
+import { autorun, action, makeObservable, observable } from 'mobx';
 import { defineMessages } from 'react-intl';
 import osName from 'os-name';
+import { fromJS } from 'immutable';
+import semver from 'semver';
+import os from 'os';
 import {
-  CUSTOM_WEBSITE_RECIPE_ID,
-  GITHUB_FERDIUM_URL,
-  LIVE_API_FERDIUM_WEBSITE,
-} from '../config';
-import {
+  isWindows,
   cmdOrCtrlShortcutKey,
   altKey,
   shiftKey,
@@ -32,14 +31,17 @@ import {
   chromeVersion,
   nodeVersion,
   osArch,
+  toggleFullScreenKey,
 } from '../environment';
+import { CUSTOM_WEBSITE_RECIPE_ID, LIVE_API_FERDIUM_WEBSITE } from '../config';
 import { ferdiumVersion } from '../environment-remote';
 import { todoActions } from '../features/todos/actions';
 import workspaceActions from '../features/workspaces/actions';
 import { workspaceStore } from '../features/workspaces/index';
-import apiBase, { serverBase, serverName } from '../api/apiBase';
+import { importExportURL, serverBase, serverName } from '../api/apiBase';
 import { openExternalUrl } from '../helpers/url-helpers';
 import globalMessages from '../i18n/globalMessages';
+import { onAuthGoToReleaseNotes } from '../helpers/update-helpers';
 
 // @ts-expect-error Cannot find module '../buildInfo.json' or its corresponding type declarations.
 import * as buildInfo from '../buildInfo.json';
@@ -329,6 +331,10 @@ const menuItems = defineMessages({
     id: 'menu.todos.enableTodos',
     defaultMessage: 'Enable Todos',
   },
+  disableTodos: {
+    id: 'menu.todos.disableTodos',
+    defaultMessage: 'Disable Todos',
+  },
   serviceGoHome: {
     id: 'menu.services.goHome',
     defaultMessage: 'Home',
@@ -345,6 +351,18 @@ const menuItems = defineMessages({
 
 function getActiveService() {
   return window['ferdium'].stores.services.active;
+}
+
+function _toggleFullScreen() {
+  const mainWindow = getCurrentWindow();
+
+  if (!mainWindow) return;
+
+  if (mainWindow.isFullScreen()) {
+    mainWindow.setFullScreen(false);
+  } else {
+    mainWindow.setFullScreen(true);
+  }
 }
 
 const _titleBarTemplateFactory = (intl, locked) => [
@@ -482,7 +500,10 @@ const _titleBarTemplateFactory = (intl, locked) => [
       },
       {
         label: intl.formatMessage(menuItems.toggleFullScreen),
-        role: 'toggleFullScreen',
+        click: () => {
+          _toggleFullScreen();
+        },
+        accelerator: toggleFullScreenKey(),
       },
       {
         label: intl.formatMessage(menuItems.toggleNavigationBar),
@@ -578,16 +599,13 @@ const _titleBarTemplateFactory = (intl, locked) => [
       {
         label: intl.formatMessage(menuItems.changelog),
         click() {
-          openExternalUrl(
-            `${GITHUB_FERDIUM_URL}/ferdium-app/releases/tag/v${ferdiumVersion}`,
-            true,
-          );
+          window.location.href = onAuthGoToReleaseNotes(window.location.href);
         },
       },
       {
         label: intl.formatMessage(menuItems.importExportData),
         click() {
-          openExternalUrl(apiBase(false), true);
+          openExternalUrl(importExportURL(), true);
         },
         enabled: !locked,
       },
@@ -633,12 +651,25 @@ class FranzMenu {
     }, 10);
   }
 
+  @action _setCurrentTemplate(tpl) {
+    this.currentTemplate = tpl;
+  }
+
   rebuild() {
     this._build();
   }
 
   get template() {
-    return JSON.parse(JSON.stringify(this.currentTemplate));
+    return fromJS(this.currentTemplate).toJS();
+  }
+
+  getOsName() {
+    let osNameParse = osName();
+    const isWin11 = semver.satisfies(os.release(), '>=10.0.22000');
+
+    osNameParse = isWindows && isWin11 ? 'Windows 11' : osNameParse;
+
+    return osNameParse;
   }
 
   _build() {
@@ -876,7 +907,7 @@ class FranzMenu {
       `Electron: ${electronVersion}`,
       `Chrome: ${chromeVersion}`,
       `Node.js: ${nodeVersion}`,
-      `Platform: ${osName()}`,
+      `Platform: ${this.getOsName()}`,
       `Arch: ${osArch}`,
       `Build date: ${new Date(Number(buildInfo.timestamp))}`,
       `Git SHA: ${buildInfo.gitHashShort}`,
@@ -892,7 +923,10 @@ class FranzMenu {
             title: 'Ferdium',
             message: 'Ferdium',
             detail: aboutAppDetails,
-            buttons: [intl.formatMessage(menuItems.ok), intl.formatMessage(menuItems.copyToClipboard)],
+            buttons: [
+              intl.formatMessage(menuItems.ok),
+              intl.formatMessage(menuItems.copyToClipboard),
+            ],
           })
           .then(result => {
             if (result.response === 1) {
@@ -975,7 +1009,7 @@ class FranzMenu {
         ...this.debugMenu(),
       );
     }
-    this.currentTemplate = tpl;
+    this._setCurrentTemplate(tpl);
     const menu = Menu.buildFromTemplate(tpl);
     Menu.setApplicationMenu(menu);
   }
@@ -1142,30 +1176,30 @@ class FranzMenu {
     const { intl } = window['ferdium'];
     const menu = [];
 
-    const drawerLabel = isTodosPanelVisible
-      ? menuItems.closeTodosDrawer
-      : menuItems.openTodosDrawer;
+    menu.push({
+      label: intl.formatMessage(
+        isFeatureEnabledByUser ? menuItems.disableTodos : menuItems.enableTodos,
+      ),
+      click: () => {
+        todoActions.toggleTodosFeatureVisibility();
+      },
+      enabled: this.stores.user.isLoggedIn,
+    });
 
     if (isFeatureEnabledByUser) {
-      menu.push({
-        label: intl.formatMessage(drawerLabel),
-        accelerator: `${todosToggleShortcutKey()}`,
-        click: () => {
-          todoActions.toggleTodosPanel();
-        },
-        enabled: this.stores.user.isLoggedIn && isFeatureEnabledByUser,
-      });
-    }
-
-    if (!isFeatureEnabledByUser) {
       menu.push(
         {
           type: 'separator',
         },
         {
-          label: intl.formatMessage(menuItems.enableTodos),
+          label: intl.formatMessage(
+            isTodosPanelVisible
+              ? menuItems.closeTodosDrawer
+              : menuItems.openTodosDrawer,
+          ),
+          accelerator: `${todosToggleShortcutKey()}`,
           click: () => {
-            todoActions.toggleTodosFeatureVisibility();
+            todoActions.toggleTodosPanel();
           },
           enabled: this.stores.user.isLoggedIn,
         },

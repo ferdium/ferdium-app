@@ -1,7 +1,10 @@
 import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
 
-import { StoresProps, GlobalError } from '../../@types/ferdium-components.types';
+import {
+  StoresProps,
+  GlobalError,
+} from '../../@types/ferdium-components.types';
 import Signup from '../../components/auth/Signup';
 
 interface SignUpScreenComponents extends StoresProps {

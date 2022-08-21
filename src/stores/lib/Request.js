@@ -18,6 +18,18 @@ export default class Request {
 
   @observable wasExecuted = false;
 
+  @action _reset() {
+    this.error = null;
+    this.result = null;
+    this.isExecuting = false;
+    this.isError = false;
+    this.wasExecuted = false;
+    this._isWaitingForResponse = false;
+    this._promise = Promise;
+
+    return this;
+  }
+
   _promise = Promise;
 
   _api = {};
@@ -139,15 +151,5 @@ export default class Request {
     for (const hook of Request._hooks) hook(this);
   }
 
-  reset = () => {
-    this.error = null;
-    this.result = null;
-    this.isExecuting = false;
-    this.isError = false;
-    this.wasExecuted = false;
-    this._isWaitingForResponse = false;
-    this._promise = Promise;
-
-    return this;
-  };
+  reset = () => this._reset();
 }

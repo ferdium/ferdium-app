@@ -24,5 +24,5 @@ export default createActionsFromDefinitions(
     openWorkspaceSettings: {},
     toggleKeepAllWorkspacesLoadedSetting: {},
   },
-  PropTypes.checkPropTypes
+  PropTypes.checkPropTypes,
 );

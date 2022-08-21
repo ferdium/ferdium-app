@@ -1,0 +1,139 @@
+# This workflow will automatically submit a PR on winget-pkgs in order to update the package corresponding to the release published.
+# This can be run by hand by giving the type of release (which defaults to stable if neither '[beta]' or '[nightly]' are present in the invokation)
+# Note: This requires a personal gh token to be setup as a secret named 'FERDIUM_WINGET_PAT'
+# TODO: refactor the jobs process in order to do the parsing of the json only in one place.
+
+name: Update Ferdium package on winget
+
+on:
+  workflow_dispatch:
+    inputs:
+      message:
+        description: "Channel to update"
+        required: false
+  release:
+    types: [published]
+
+env:
+  REPO_URL: https://api.github.com/repos/ferdium/ferdium-app/releases
+
+jobs:
+  manual_winget_update:
+    runs-on: windows-latest
+    name: "Manual winget update: ${{ github.event.inputs.message }}"
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    steps:
+      - name: "Install winget"
+      # cf https://github.com/actions/virtual-environments/issues/910#issuecomment-1009640391
+      # TODO: update urls to get more updated version
+        run: |
+          $ErrorActionPreference = 'Stop'
+
+          iwr $(iwr 'https://store.rg-adguard.net/api/GetFiles' -Method 'POST' -ContentType 'application/x-www-form-urlencoded' -Body 'type=PackageFamilyName&url=Microsoft.VCLibs.140.00_8wekyb3d8bbwe&ring=RP&lang=en-US' -UseBasicParsing | Foreach-Object Links | Where-Object outerHTML -match 'Microsoft.VCLibs.140.00_.+_x64__8wekyb3d8bbwe.appx' | Foreach-Object href) -OutFile $env:TEMP\vclibs.appx
+          iwr $(iwr 'https://store.rg-adguard.net/api/GetFiles' -Method 'POST' -ContentType 'application/x-www-form-urlencoded' -Body 'type=PackageFamilyName&url=Microsoft.VCLibs.140.00.UWPDesktop_8wekyb3d8bbwe&ring=RP&lang=en-US' -UseBasicParsing | Foreach-Object Links | Where-Object outerHTML -match 'Microsoft.VCLibs.140.00.UWPDesktop_.+_x64__8wekyb3d8bbwe.appx' | Foreach-Object href) -OutFile $env:TEMP\vclibsuwp.appx
+          iwr 'https://github.com/microsoft/winget-cli/releases/download/v1.1.12653/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle' -OutFile $env:TEMP\winget.msixbundle
+          iwr 'https://github.com/microsoft/winget-cli/releases/download/v1.1.12653/9c0fe2ce7f8e410eb4a8f417de74517e_License1.xml' -Outfile $env:TEMP\winget.license
+
+          Add-AppxProvisionedPackage -Online -PackagePath $env:TEMP\winget.msixbundle -LicensePath $env:TEMP\winget.license -DependencyPackagePath @("$env:TEMP\vclibs.appx", "$env:TEMP\vclibsuwp.appx")
+      - name: "Verify winget"
+        run: |
+          winget --info
+      - name: "Get release tag"
+        run: |
+          if ("${{ contains(github.event.inputs.message, '[nightly]') }}" -eq $True) {
+            $preRel = $True
+            $tagInc = "nightly"
+            $package = "Ferdium.Ferdium.Nightly"
+          }
+          elseif ("${{ contains(github.event.inputs.message, '[beta]') }}" -eq $True) {
+            $preRel = $True
+            $tagInc = "beta"
+            $package = "Ferdium.Ferdium.Beta"
+          }
+          else
+          {
+            $preRel = $False
+            $tagInc = ""
+            $package = "Ferdium.Ferdium"
+          }
+          $release=Invoke-RestMethod -Uri '${{ env.REPO_URL }}'
+          $lastCorrectTag = $release | Where-Object -Property prerelease -eq $preRel | Where-Object -Property tag_name -match $tagInc | Select -First 1 | Select -ExpandProperty tag_name
+          $lastVersion = $($lastCorrectTag.Trim('v'))
+
+          echo "last_tag=$lastCorrectTag" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+          echo "last_version=$lastVersion" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+          echo "PACKAGE_NAME=$package" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: "Verify if version already exist on winget"
+        run: |
+          $lastVersion = '${{ env.last_version }}'
+          $versions = winget show --id '${{ env.PACKAGE_NAME }}' --versions --accept-source-agreements
+          if ( $versions.Contains('${{ env.last_version }}') ) {
+            Write-Host "The last version already exists. Nothing to update."
+            echo "version_exists=true" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+          }
+
+      - name: "Publish update"
+        if: ${{ env.version_exists != 'true' }}
+        run: |
+          $release=Invoke-RestMethod -Uri '${{ env.REPO_URL }}'
+          $assets = $release | Where-Object -Property tag_name -match '${{ env.last_tag }}' | Select -First 1 | Select -ExpandProperty assets
+
+          $urlSetup64 = $assets | Where-Object -Property name -CLike '*-win-AutoSetup*-x64.exe' | Select -ExpandProperty browser_download_url
+          $urlSetup86 = $assets | Where-Object -Property name -CLike '*-win-AutoSetup*-ia32.exe' | Select -ExpandProperty browser_download_url
+          $urlSetupArm = $assets | Where-Object -Property name -CLike '*-win-AutoSetup*-arm64.exe' | Select -ExpandProperty browser_download_url
+
+          $installerUrls = "'$urlSetup64|x64' '$urlSetup86|x86' '$urlSetupArm|arm64'"
+          Write-Host "urls to use: $installerUrls"
+
+          $package = '${{ env.PACKAGE_NAME }}'
+          $ghToken = '${{ secrets.FERDIUM_WINGET_PAT }}'
+
+          iwr https://aka.ms/wingetcreate/latest -OutFile wingetcreate.exe
+
+          $command = ".\wingetcreate.exe update $package -v '${{ env.last_version }}' -u $installerUrls -t $ghToken -o .\ -s"
+          Write-Host $command
+          Invoke-Expression $command
+
+
+  winget_release:
+    name: "Update winget after publish: ${{ github.event.inputs.message }}"
+    if: ${{ github.event_name == 'release' }}
+    runs-on: windows-latest
+    steps:
+      - name: Check release type
+        run: |
+          PRERELEASE_VERSION="${{ github.event.release.prerelease }}"
+
+          if [[ $PRERELEASE_VERSION == "true" && ${{ contains(github.event.release.tag_name, 'nightly') }} ]]; then
+            # use the nightly version
+            PACKAGE_NAME="Ferdium.Ferdium.Nightly"
+          elif [[ $PRERELEASE_VERSION == "true" && ${{ contains(github.event.release.tag_name, 'beta') }} ]]; then
+            PACKAGE_NAME="Ferdium.Ferdium.Beta"
+          else
+            PACKAGE_NAME="Ferdium.Ferdium"
+          fi
+          echo "Using package $PACKAGE_NAME with pre-release $PRERELEASE_VERSION"
+          echo "PACKAGE_NAME=$PACKAGE_NAME" >> $GITHUB_ENV
+        shell: bash
+      - name: Send update to winget
+        run: |
+          iwr https://aka.ms/wingetcreate/latest -OutFile wingetcreate.exe
+
+          $ghobject = Get-Content '${{ github.event_path }}' | ConvertFrom-Json
+          $assets = $ghobject.release.assets
+
+          $urlSetup64 = $assets | Where-Object -Property name -CLike '*-win-AutoSetup*-x64.exe' | Select -ExpandProperty browser_download_url
+          $urlSetup86 = $assets | Where-Object -Property name -CLike '*-win-AutoSetup*-ia32.exe' | Select -ExpandProperty browser_download_url
+          $urlSetupArm = $assets | Where-Object -Property name -CLike '*-win-AutoSetup*-arm64.exe' | Select -ExpandProperty browser_download_url
+
+          $installerUrls = "'$urlSetup64|x64' '$urlSetup86|x86' '$urlSetupArm|arm64'"
+          Write-Host "urls to use: $installerUrls"
+
+          $version = $ghobject.release.tag_name
+          $package = '${{ env.PACKAGE_NAME }}'
+          $ghToken = '${{ secrets.FERDIUM_WINGET_PAT }}'
+
+          $command = ".\wingetcreate.exe update $package -v $($version.Trim('v')) -u $installerUrls -t $ghToken -o .\ -s"
+          Write-Host $command
+          Invoke-Expression $command

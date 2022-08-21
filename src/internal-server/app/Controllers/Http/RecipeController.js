@@ -4,7 +4,9 @@ const { validateAll } = use('Validator');
 const Env = use('Env');
 
 const fetch = require('node-fetch');
-const debug = require('../../../../preload-safe-debug')('Ferdium:internalServer:RecipeController');
+const debug = require('../../../../preload-safe-debug')(
+  'Ferdium:internalServer:RecipeController',
+);
 const { LIVE_FERDIUM_API } = require('../../../../config');
 const { convertToJSON } = require('../../../../jsUtils');
 const { API_VERSION } = require('../../../../environment-remote');
@@ -87,15 +89,11 @@ class RecipeController {
   }
 
   // Return an empty array
-  update({
-    response,
-  }) {
+  update({ response }) {
     return response.send([]);
   }
 
-  async popularRecipes({
-    response,
-  }) {
+  async popularRecipes({ response }) {
     const recipesUrlFetch = await fetch(`${RECIPES_URL}/popular`);
     const featuredRecipes = convertToJSON(await recipesUrlFetch.text());
     return response.send(featuredRecipes);

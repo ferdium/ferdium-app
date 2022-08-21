@@ -28,7 +28,7 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
             appEvents.emit('install-update');
 
             const openedWindows = BrowserWindow.getAllWindows();
-            for (const window of openedWindows)  window.close();
+            for (const window of openedWindows) window.close();
 
             autoUpdater.quitAndInstall();
           }

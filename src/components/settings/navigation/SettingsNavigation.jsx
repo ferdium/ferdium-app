@@ -5,7 +5,11 @@ import { inject, observer } from 'mobx-react';
 import { RouterStore } from '@superwf/mobx-react-router';
 
 import { NavLink } from 'react-router-dom';
-import { LOCAL_SERVER, LIVE_FERDIUM_API, LIVE_FRANZ_API } from '../../../config';
+import {
+  LOCAL_SERVER,
+  LIVE_FERDIUM_API,
+  LIVE_FRANZ_API,
+} from '../../../config';
 import UIStore from '../../../stores/UIStore';
 import SettingsStore from '../../../stores/SettingsStore';
 import UserStore from '../../../stores/UserStore';
@@ -31,6 +35,10 @@ const messages = defineMessages({
   team: {
     id: 'settings.navigation.team',
     defaultMessage: 'Manage Team',
+  },
+  releaseNotes: {
+    id: 'settings.navigation.releaseNotes',
+    defaultMessage: 'Release Notes',
   },
   supportFerdium: {
     id: 'settings.navigation.supportFerdium',
@@ -165,6 +173,16 @@ class SettingsNavigation extends Component {
             )}
         </NavLink>
         <NavLink
+          to="/settings/releasenotes"
+          className={({ isActive }) =>
+            isActive
+              ? 'settings-navigation__link is-active'
+              : 'settings-navigation__link'
+          }
+        >
+          {intl.formatMessage(messages.releaseNotes)}
+        </NavLink>
+        <NavLink
           to="/settings/support"
           className={({ isActive }) =>
             isActive
@@ -190,4 +208,6 @@ class SettingsNavigation extends Component {
   }
 }
 
-export default injectIntl(inject('stores', 'actions')(observer(SettingsNavigation)));
+export default injectIntl(
+  inject('stores', 'actions')(observer(SettingsNavigation)),
+);

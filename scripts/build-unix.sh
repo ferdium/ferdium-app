@@ -116,8 +116,7 @@ $BASE_CMD run prepare-code
 printf "\n*************** Building recipes ***************\n"
 # Note: 'recipes' is already using only pnpm - can switch to $BASE_CMD AFTER both repos are using pnpm
 pushd recipes
-pnpm i
-pnpm package
+pnpm i && pnpm lint && pnpm reformat-files && pnpm package
 popd
 
 # -----------------------------------------------------------------------------

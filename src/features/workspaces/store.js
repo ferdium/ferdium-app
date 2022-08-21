@@ -15,7 +15,9 @@ import { createActionBindings } from '../utils/ActionBinding';
 
 import { KEEP_WS_LOADED_USID } from '../../config';
 
-const debug = require('../../preload-safe-debug')('Ferdium:feature:workspaces:store');
+const debug = require('../../preload-safe-debug')(
+  'Ferdium:feature:workspaces:store',
+);
 
 export default class WorkspacesStore extends FeatureStore {
   @observable isFeatureActive = false;
@@ -88,7 +90,7 @@ export default class WorkspacesStore extends FeatureStore {
       [workspaceActions.create, this._create],
       [workspaceActions.delete, this._delete],
       [workspaceActions.update, this._update],
-      [workspaceActions.activate, this._setActiveWorkspace],
+      [workspaceActions.activate, this._setActivateWorkspace],
       [workspaceActions.deactivate, this._deactivateActiveWorkspace],
       [
         workspaceActions.toggleKeepAllWorkspacesLoadedSetting,
@@ -112,10 +114,10 @@ export default class WorkspacesStore extends FeatureStore {
   }
 
   @action reset() {
-    this.activeWorkspace = null;
-    this.nextWorkspace = null;
+    this._setActiveWorkspace(null);
+    this._setNextWorkspace(null);
     this.workspaceBeingEdited = null;
-    this.isSwitchingWorkspace = false;
+    this._setIsSwitchingWorkspace(false);
     this.isWorkspaceDrawerOpen = false;
   }
 
@@ -179,19 +181,31 @@ export default class WorkspacesStore extends FeatureStore {
     this.stores.router.push('/settings/workspaces');
   };
 
-  @action _setActiveWorkspace = ({ workspace }) => {
-    // Indicate that we are switching to another workspace
-    this.isSwitchingWorkspace = true;
+  @action _setNextWorkspace(workspace) {
     this.nextWorkspace = workspace;
+  }
+
+  @action _setIsSwitchingWorkspace(bool) {
+    this.isSwitchingWorkspace = bool;
+  }
+
+  @action _setActiveWorkspace(workspace) {
+    this.activeWorkspace = workspace;
+  }
+
+  @action _setActivateWorkspace = ({ workspace }) => {
+    // Indicate that we are switching to another workspace
+    this._setIsSwitchingWorkspace(true);
+    this._setNextWorkspace(workspace);
     // Delay switching to next workspace so that the services loading does not drag down UI
     setTimeout(() => {
-      this.activeWorkspace = workspace;
+      this._setActiveWorkspace(workspace);
       this._updateSettings({ lastActiveWorkspace: workspace.id });
     }, 100);
     // Indicate that we are done switching to the next workspace
     setTimeout(() => {
-      this.isSwitchingWorkspace = false;
-      this.nextWorkspace = null;
+      this._setIsSwitchingWorkspace(false);
+      this._setNextWorkspace(null);
       if (this.stores.settings.app.splitMode) {
         const serviceNames = new Set(
           this.getWorkspaceServices(workspace).map(service => service.name),
@@ -209,16 +223,16 @@ export default class WorkspacesStore extends FeatureStore {
 
   @action _deactivateActiveWorkspace = () => {
     // Indicate that we are switching to default workspace
-    this.isSwitchingWorkspace = true;
-    this.nextWorkspace = null;
+    this._setIsSwitchingWorkspace(true);
+    this._setNextWorkspace(null);
     this._updateSettings({ lastActiveWorkspace: null });
     // Delay switching to next workspace so that the services loading does not drag down UI
     setTimeout(() => {
-      this.activeWorkspace = null;
+      this._setActiveWorkspace(null);
     }, 100);
     // Indicate that we are done switching to the default workspace
     setTimeout(() => {
-      this.isSwitchingWorkspace = false;
+      this._setIsSwitchingWorkspace(false);
       if (this.stores.settings.app.splitMode) {
         for (const wrapper of document.querySelectorAll(
           '.services__webview-wrapper',
@@ -245,6 +259,37 @@ export default class WorkspacesStore extends FeatureStore {
     await updateWorkspaceRequest.execute(activeWorkspace);
   };
 
+  @action _setOpenDrawerWithSettings() {
+    const { router } = this.stores;
+    const isWorkspaceSettingsRoute = router.location.pathname.includes(
+      WORKSPACES_ROUTES.ROOT,
+    );
+    const isSwitchingToSettingsRoute =
+      !this.isSettingsRouteActive && isWorkspaceSettingsRoute;
+    const isLeavingSettingsRoute =
+      !isWorkspaceSettingsRoute && this.isSettingsRouteActive;
+
+    if (isSwitchingToSettingsRoute) {
+      this.isSettingsRouteActive = true;
+      this._wasDrawerOpenBeforeSettingsRoute = this.isWorkspaceDrawerOpen;
+      if (!this._wasDrawerOpenBeforeSettingsRoute) {
+        workspaceActions.toggleWorkspaceDrawer();
+      }
+    } else if (isLeavingSettingsRoute) {
+      this.isSettingsRouteActive = false;
+      if (
+        !this._wasDrawerOpenBeforeSettingsRoute &&
+        this.isWorkspaceDrawerOpen
+      ) {
+        workspaceActions.toggleWorkspaceDrawer();
+      }
+    }
+  }
+
+  @action _setWorkspaceBeingEdited(match) {
+    this.workspaceBeingEdited = this._getWorkspaceById(match.id);
+  }
+
   _toggleKeepAllWorkspacesLoadedSetting = async () => {
     this._updateSettings({
       keepAllWorkspacesLoaded: !this.settings.keepAllWorkspacesLoaded,
@@ -257,7 +302,7 @@ export default class WorkspacesStore extends FeatureStore {
     const { pathname } = this.stores.router.location;
     const match = matchRoute('/settings/workspaces/edit/:id', pathname);
     if (match) {
-      this.workspaceBeingEdited = this._getWorkspaceById(match.id);
+      this._setWorkspaceBeingEdited(match);
     }
   };
 
@@ -284,36 +329,13 @@ export default class WorkspacesStore extends FeatureStore {
       const { lastActiveWorkspace } = this.settings;
       if (lastActiveWorkspace) {
         const workspace = this._getWorkspaceById(lastActiveWorkspace);
-        if (workspace) this._setActiveWorkspace({ workspace });
+        if (workspace) this._setActivateWorkspace({ workspace });
       }
     }
   };
 
   _openDrawerWithSettingsReaction = () => {
-    const { router } = this.stores;
-    const isWorkspaceSettingsRoute = router.location.pathname.includes(
-      WORKSPACES_ROUTES.ROOT,
-    );
-    const isSwitchingToSettingsRoute =
-      !this.isSettingsRouteActive && isWorkspaceSettingsRoute;
-    const isLeavingSettingsRoute =
-      !isWorkspaceSettingsRoute && this.isSettingsRouteActive;
-
-    if (isSwitchingToSettingsRoute) {
-      this.isSettingsRouteActive = true;
-      this._wasDrawerOpenBeforeSettingsRoute = this.isWorkspaceDrawerOpen;
-      if (!this._wasDrawerOpenBeforeSettingsRoute) {
-        workspaceActions.toggleWorkspaceDrawer();
-      }
-    } else if (isLeavingSettingsRoute) {
-      this.isSettingsRouteActive = false;
-      if (
-        !this._wasDrawerOpenBeforeSettingsRoute &&
-        this.isWorkspaceDrawerOpen
-      ) {
-        workspaceActions.toggleWorkspaceDrawer();
-      }
-    }
+    this._setOpenDrawerWithSettings();
   };
 
   _cleanupInvalidServiceReferences = () => {

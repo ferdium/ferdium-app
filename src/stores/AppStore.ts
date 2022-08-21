@@ -70,7 +70,7 @@ export default class AppStore extends TypedStore {
 
   @observable clearAppCacheRequest = new Request(this.api.local, 'clearCache');
 
-  @observable autoLaunchOnStart = true;
+  @observable autoLaunchOnStart = DEFAULT_APP_SETTINGS.autoLaunchOnStart;
 
   @observable isOnline = navigator.onLine;
 
@@ -81,6 +81,8 @@ export default class AppStore extends TypedStore {
   @observable timeOfflineStart;
 
   @observable updateStatus = '';
+
+  @observable updateVersion = '';
 
   @observable locale = ferdiumLocale;
 
@@ -94,9 +96,10 @@ export default class AppStore extends TypedStore {
 
   @observable isFocused = true;
 
-  @observable lockingFeatureEnabled = false;
+  @observable lockingFeatureEnabled =
+    DEFAULT_APP_SETTINGS.lockingFeatureEnabled;
 
-  @observable launchInBackground = false;
+  @observable launchInBackground = DEFAULT_APP_SETTINGS.autoLaunchInBackground;
 
   dictionaries = [];
 
@@ -181,6 +184,7 @@ export default class AppStore extends TypedStore {
     ipcRenderer.on('autoUpdate', (_, data) => {
       if (this.updateStatus !== this.updateStatusTypes.FAILED) {
         if (data.available) {
+          this.updateVersion = data.version;
           this.updateStatus = this.updateStatusTypes.AVAILABLE;
           if (isMac && this.stores.settings.app.automaticUpdates) {
             app.dock.bounce();
@@ -220,6 +224,7 @@ export default class AppStore extends TypedStore {
       if (!url) return;
 
       url = url.replace(/\/$/, '');
+      url = url.replace(/\s?--(updated)/, '');
 
       this.stores.router.push(url);
     });
@@ -498,6 +503,21 @@ export default class AppStore extends TypedStore {
     this.isClearingAllCache = false;
   }
 
+  @action _changeLocale(value: string) {
+    this.locale = value;
+  }
+
+  _setLocale() {
+    if (this.stores.user?.isLoggedIn && this.stores.user?.data.locale) {
+      this._changeLocale(this.stores.user.data.locale);
+    } else if (!this.locale) {
+      this._changeLocale(this._getDefaultLocale());
+    }
+
+    moment.locale(this.locale);
+    debug(`Set locale to "${this.locale}"`);
+  }
+
   // Reactions
   _offlineCheck() {
     if (!this.isOnline) {
@@ -509,17 +529,6 @@ export default class AppStore extends TypedStore {
         this.actions.service.reloadAll();
       }
     }
-  }
-
-  _setLocale() {
-    if (this.stores.user?.isLoggedIn && this.stores.user?.data.locale) {
-      this.locale = this.stores.user.data.locale;
-    } else if (!this.locale) {
-      this.locale = this._getDefaultLocale();
-    }
-
-    moment.locale(this.locale);
-    debug(`Set locale to "${this.locale}"`);
   }
 
   _getDefaultLocale() {

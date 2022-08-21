@@ -1,8 +1,11 @@
+import { randomBytes } from 'crypto';
 import { ipcMain, BrowserWindow } from 'electron';
 import { createServer } from 'net';
 import { LOCAL_HOSTNAME, LOCAL_PORT } from '../../config';
 import { userDataPath } from '../../environment-remote';
 import { server } from '../../internal-server/start';
+
+const debug = require('../../preload-safe-debug')('Ferdium:LocalServer');
 
 const portInUse = (port: number): Promise<boolean> =>
   new Promise(resolve => {
@@ -22,26 +25,35 @@ const portInUse = (port: number): Promise<boolean> =>
   });
 
 let localServerStarted = false;
+let port = LOCAL_PORT;
+let token = '';
 
 export default (params: { mainWindow: BrowserWindow }) => {
   ipcMain.on('startLocalServer', () => {
-    if (!localServerStarted) {
-      // Find next unused port for server
-      let port = LOCAL_PORT;
-      (async () => {
+    (async () => {
+      if (!localServerStarted) {
+        // Find next unused port for server
+        port = LOCAL_PORT;
         // eslint-disable-next-line no-await-in-loop
         while ((await portInUse(port)) && port < LOCAL_PORT + 10) {
           port += 1;
         }
-        console.log('Starting local server on port', port);
+        token = randomBytes(256 / 8).toString('base64url');
+        debug(
+          'Starting local server at',
+          `http://localhost:${port}/token/${token}`,
+        );
+        await server(userDataPath(), port, token);
+        localServerStarted = true;
+      }
 
-        server(userDataPath(), port);
-
-        params.mainWindow.webContents.send('localServerPort', {
-          port,
-        });
-      })();
-      localServerStarted = true;
-    }
+      // Send local server parameters to the renderer even if the server is already running.
+      params.mainWindow.webContents.send('localServerPort', {
+        port,
+        token,
+      });
+    })().catch(error => {
+      console.error('Error while starting local server', error);
+    });
   });
 };
