@@ -4,7 +4,7 @@ export const APP_LOCALES = {
   'zh-HANT': '中文 (Chinese Traditional)',
   cs: 'Čeština',
   da: 'Dansk',
-  nl: 'Dutch',
+  nl: 'Nederlands',
   fr: 'Français',
   ka: 'ქართული (Georgian)',
   de: 'Deutsch',
