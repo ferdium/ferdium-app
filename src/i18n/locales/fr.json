@@ -212,6 +212,8 @@
   "settings.app.form.enableTodos": "Activer Ferdium Todos",
   "settings.app.form.hibernateOnStartup": "Garder les services en veille prolongée au démarrage",
   "settings.app.form.hibernationStrategy": "Stratégie d'hibernation",
+  "settings.app.form.hideRecipesButton": "Cache le bouton des recettes",
+  "settings.app.form.hideSettingsButton": "Cacher le bouton des paramètres",
   "settings.app.form.iconSize": "Taille de l'icône du service",
   "settings.app.form.inactivityLock": "Verrouiller après inactivité",
   "settings.app.form.keepAllWorkspacesLoaded": "Garder tous les espaces de travail charger",
