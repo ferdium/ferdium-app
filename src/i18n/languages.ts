@@ -29,6 +29,15 @@ export const APP_LOCALES = {
   no: 'Norsk (Norwegian)',
   be: 'белар (Belarusian)',
   et: 'Eestlane',
+  vi: 'Tiếng Việt (Vietnamese)',
+  ar: 'عربى (Arabic)',
+  fi: 'Suomalainen (Finnish)',
+  he: 'עִברִית (Hebrew)',
+  ko: '한글 (Korean)',
+  // nb: 'Bokmål (Norwegian)',
+  ro: 'Română (Romanian)',
+  si: 'සිංහල (Sinhala)',
+  sv: 'Svenska (Swedish)',
 };
 
 // Hunspell compatible keys
