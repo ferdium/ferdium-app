@@ -1,5 +1,5 @@
 pull_request_title: "feat(i18n): new Crowdin updates"
-commit_message: "feat(i18n): New Crowdin translations (%language%)"
+commit_message: "feat(i18n): New Crowdin translations (%language%) [skip ci]"
 append_commit_message: false
 
 files:
