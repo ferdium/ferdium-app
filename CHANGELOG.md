@@ -1,3 +1,38 @@
+# [v6.1.0](https://github.com/ferdium/ferdium-app/compare/v6.0.1-nightly.23...v6.1.0) (2022-08-27)
+
+### Features
+
+- Added native Ferdium Translator.
+- Added language support for Vietnamese, Arabic, Finnish, Hebrew, Korean, Norwegian, Romanian, Sinhala and Swedish. Note that the percentage of each translation can be found in: https://crowdin.com/project/ferdium-app
+- New translation updates (Crowdin)
+
+### Services
+- Added Grammarly recipe
+- Added warning to whatsapp theming
+- Added Tick recipe 
+
+### Bug fixes
+
+- Fix purple screen when trying to run a second instance of Ferdium
+- Fix for Windows not detecting Ferdium window after maximized with the tray icon
+- Fix for app dark mode handler replacing the dark mode recipe setting
+- Fix Toggle Full Screen not working on Menu bar
+
+### Under the hood
+
+- Add mailto to email in md files
+- Upgrade `electron` to `20.1.0`
+- docs: Update README badges
+- ci/cd: Make winget workflow ready for production
+- Update Ferdi/Ferdium names in Migration guide
+- Upgrade `npm` to `8.14.0`
+- Upgrade `nodejs` to `16.16.0`
+- Replace deprecated `react-addons-css-transition-group` with `react-transition-group`
+- chore: change values with mobx actions
+- Upgrade `electron-builder` to `23.3.3`
+- Fix bad conversion to action of reaction `_setLocale()`
+- Fix pnpm run create directions on recipes
+
 # [v6.0.0](https://github.com/ferdium/ferdium-app/compare/v6.0.0-nightly.97...v6.0.0) (2022-07-21)
 
 ### Features
