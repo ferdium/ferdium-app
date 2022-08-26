@@ -32,10 +32,12 @@ export default function apiBase(withVersion = true) {
       : (window as any).ferdium.stores.settings.all.app.server;
 
   return fixUrl(withVersion ? `${url}/${API_VERSION}` : url);
-};
+}
 
 export function needsToken(): boolean {
-  return (window as any).ferdium.stores.settings.all.app.server === LOCAL_SERVER;
+  return (
+    (window as any).ferdium.stores.settings.all.app.server === LOCAL_SERVER
+  );
 }
 
 export function localServerToken(): string | undefined {
@@ -46,9 +48,7 @@ export function localServerToken(): string | undefined {
 
 export function importExportURL() {
   const base = apiBase(false);
-  return needsToken()
-    ? `${base}/token/${localServerToken()}`
-    : base;
+  return needsToken() ? `${base}/token/${localServerToken()}` : base;
 }
 
 export function serverBase() {

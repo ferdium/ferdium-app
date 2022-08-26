@@ -1,3 +1,8 @@
+# This workflow will automatically submit a PR on winget-pkgs in order to update the package corresponding to the release published.
+# This can be run by hand by giving the type of release (which defaults to stable if neither '[beta]' or '[nightly]' are present in the invokation)
+# Note: This requires a personal gh token to be setup as a secret named 'FERDIUM_WINGET_PAT'
+# TODO: refactor the jobs process in order to do the parsing of the json only in one place.
+
 name: Update Ferdium package on winget
 
 on:
@@ -64,7 +69,8 @@ jobs:
           $lastVersion = '${{ env.last_version }}'
           $versions = winget show --id '${{ env.PACKAGE_NAME }}' --versions --accept-source-agreements
           if ( $versions.Contains('${{ env.last_version }}') ) {
-            echo "version_exists='true'" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+            Write-Host "The last version already exists. Nothing to update."
+            echo "version_exists=true" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
           }
 
       - name: "Publish update"
@@ -85,8 +91,7 @@ jobs:
 
           iwr https://aka.ms/wingetcreate/latest -OutFile wingetcreate.exe
 
-          # TODO: remove -o and add -s
-          $command = ".\wingetcreate.exe update $package -v '${{ env.last_version }}' -u $installerUrls -t $ghToken -o .\"
+          $command = ".\wingetcreate.exe update $package -v '${{ env.last_version }}' -u $installerUrls -t $ghToken -o .\ -s"
           Write-Host $command
           Invoke-Expression $command
 
@@ -98,7 +103,7 @@ jobs:
     steps:
       - name: Check release type
         run: |
-          PRERELEASE_VERSION="${{ github.event.release.prerelease == 'true' }}"
+          PRERELEASE_VERSION="${{ github.event.release.prerelease }}"
 
           if [[ $PRERELEASE_VERSION == "true" && ${{ contains(github.event.release.tag_name, 'nightly') }} ]]; then
             # use the nightly version
@@ -129,7 +134,6 @@ jobs:
           $package = '${{ env.PACKAGE_NAME }}'
           $ghToken = '${{ secrets.FERDIUM_WINGET_PAT }}'
 
-          # TODO: remove -o and add -s
-          $command = ".\wingetcreate.exe update $package -v $($version.Trim('v')) -u $installerUrls -t $ghToken -o .\"
+          $command = ".\wingetcreate.exe update $package -v $($version.Trim('v')) -u $installerUrls -t $ghToken -o .\ -s"
           Write-Host $command
-          Invoke-Command $command
+          Invoke-Expression $command

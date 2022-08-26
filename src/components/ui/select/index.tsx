@@ -463,6 +463,4 @@ class SelectComponent extends Component<IProps> {
   }
 }
 
-export default injectStyle(styles, { injectTheme: true })(
-  SelectComponent,
-);
+export default injectStyle(styles, { injectTheme: true })(SelectComponent);

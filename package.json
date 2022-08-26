@@ -3,7 +3,7 @@
   "productName": "Ferdium",
   "desktopName": "ferdium.desktop",
   "appId": "org.ferdium.ferdium-app",
-  "version": "6.0.0",
+  "version": "6.1.0",
   "description": "Messaging app for WhatsApp, Slack, Telegram, HipChat, Hangouts and many many more.",
   "author": "Ferdium Contributors <hello@ferdium.org> (https://ferdium.org/)",
   "license": "Apache-2.0",
@@ -13,8 +13,8 @@
   "repository": "https://github.com/ferdium/ferdium-app.git",
   "private": true,
   "engines": {
-    "node": "16.15.1",
-    "npm": "8.13.2"
+    "node": "16.16.0",
+    "npm": "8.14.0"
   },
   "engine-strict": true,
   "scripts": {
@@ -26,8 +26,8 @@
     "dev": "cross-env NODE_ENV=development gulp dev",
     "test": "jest",
     "test:watch": "jest --watch",
-    "lint": "eslint \"{src,test,scripts}/**/*.{js,jsx,ts,tsx}\" --quiet",
-    "lint:fix": "npm run lint -- --fix",
+    "lint": "npx eslint \"{src,test,scripts}/**/*.{js,jsx,ts,tsx}\"",
+    "lint:fix": "npx eslint --fix \"{src,test,scripts}/**/*.{js,jsx,ts,tsx}\"",
     "extract": "formatjs extract \"src/**/*.{js,jsx,ts,tsx}\" --out-file temp.json --flatten --id-interpolation-pattern '[sha512:contenthash:base64:6]' --preserve-whitespace",
     "compile": "formatjs compile \"temp.json\" --out-file src/i18n/locales/en-US.json",
     "manage-translations": "npm run extract && npm run compile && rimraf temp.json",
@@ -77,6 +77,7 @@
     "electron-window-state": "5.0.3",
     "fast-folder-size": "1.7.0",
     "fs-extra": "10.1.0",
+    "google-translate-api-x": "10.3.5",
     "immutable": "4.1.0",
     "jsonwebtoken": "8.5.1",
     "jss": "10.9.0",
@@ -98,7 +99,6 @@
     "pretty-bytes": "5.6.0",
     "prop-types": "15.8.1",
     "react": "17.0.2",
-    "react-addons-css-transition-group": "15.6.2",
     "react-color": "2.19.3",
     "react-confetti": "6.1.0",
     "react-dom": "17.0.2",
@@ -112,6 +112,7 @@
     "react-sortable-hoc": "2.0.0",
     "react-tooltip": "4.2.21",
     "react-topbar-progress-indicator": "4.1.1",
+    "react-transition-group": "1.2.1",
     "route-parser": "0.0.5",
     "sanitize-filename": "1.6.3",
     "semver": "7.3.7",
@@ -156,8 +157,8 @@
     "concurrently": "7.2.2",
     "cross-env": "7.0.3",
     "dotenv": "16.0.1",
-    "electron": "19.0.8",
-    "electron-builder": "23.3.1",
+    "electron": "20.1.0",
+    "electron-builder": "23.3.3",
     "electron-notarize": "1.2.1",
     "eslint": "8.19.0",
     "eslint-config-airbnb": "19.0.4",
@@ -201,7 +202,7 @@
     "webpack-dev-server": "4.9.3"
   },
   "optionalDependencies": {
-    "macos-notification-state": "github:ferdium/macos-notification-state#0a168f5b1f94c1fd3c08272b8348884efdc83b83",
+    "macos-notification-state": "github:nbashkankov/macos-notification-state#fix-monterey-detect",
     "node-mac-permissions": "2.2.1"
   },
   "browserslist": [

@@ -14,15 +14,14 @@
 [![Builds](https://github.com/ferdium/ferdium-app/actions/workflows/builds.yml/badge.svg)](https://github.com/ferdium/ferdium-app/actions/workflows/builds.yml)
 [![Crowdin](https://badges.crowdin.net/ferdium-app/localized.svg)](https://crowdin.com/project/ferdium-app)
 
-<!-- TODO: Uncomment when releasing for the first time -->
-<!-- ![GitHub release (latest by date)](https://img.shields.io/github/v/release/ferdium/ferdium-app) -->
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/ferdium/ferdium-app?label=Latest%20Release%20Version)](https://github.com/ferdium/ferdium-app/releases/latest)
+[![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/ferdium/ferdium-app?include_prereleases&label=Pre-release%20Version)](https://github.com/ferdium/ferdium-app/releases)
+![GitHub all releases downloads](https://img.shields.io/github/downloads/ferdium/ferdium-app/total?label=Total%20Releases%20Downloaded&color=ac72b0)
+![GitHub downloads (by tag)](https://img.shields.io/github/downloads/ferdium/ferdium-app/latest/total?color=blue)
 
-![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/ferdium/ferdium-app?include_prereleases&label=Pre-release%20Version)
-![GitHub all releases](https://img.shields.io/github/downloads/ferdium/ferdium-app/total?label=Total%20Releases)
-![GitHub release (by tag)](https://img.shields.io/github/downloads/ferdium/ferdium-app/v6.0.0-beta.3/total)
-
+[![Open Collective backers](https://img.shields.io/static/v1?label=Contribute%20on%20Open%20Collective&message=Donate%20to%20Ferdium&color=9cf&logo=open-collective)](https://opencollective.com/ferdium#category-CONTRIBUTE)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-306-default.svg?logo=github' alt='Contributors'/></a>
+<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-307-default.svg?logo=github&color=6c64e4' alt='Contributors'/></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 - [Ferdium](#ferdium)
@@ -469,6 +468,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href='http://cino.io' title='Ricardo Cino: infra, code'><img src='https://avatars.githubusercontent.com/u/2735602?v=4' alt='cino' style='width:100px;'/></a></td>
     <td align="center"><a href='https://mrksr.de' title='Markus Kaiser: infra'><img src='https://avatars.githubusercontent.com/u/5184063?v=4' alt='mrksr' style='width:100px;'/></a></td>
     <td align="center"><a href='https://github.com/victorbnl' title='Victor B.: code'><img src='https://avatars.githubusercontent.com/u/39555268?v=4' alt='victorbnl' style='width:100px;'/></a></td>
+    <td align="center"><a href='https://nils.fahldieck.de' title='Nils Fahldieck: doc'><img src='https://avatars.githubusercontent.com/u/16440184?v=4' alt='Rabattkarte' style='width:100px;'/></a></td>
   </tr>
 </table>
 

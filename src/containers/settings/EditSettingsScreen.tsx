@@ -15,6 +15,10 @@ import {
   ICON_SIZES,
   NAVIGATION_BAR_BEHAVIOURS,
   SEARCH_ENGINE_NAMES,
+  TRANSLATOR_ENGINE_NAMES,
+  GOOGLE_TRANSLATOR_LANGUAGES,
+  TRANSLATOR_ENGINE_GOOGLE,
+  LIBRETRANSLATE_TRANSLATOR_LANGUAGES,
   TODO_APPS,
   DEFAULT_SETTING_KEEP_ALL_WORKSPACES_LOADED,
   DEFAULT_IS_FEATURE_ENABLED_BY_USER,
@@ -102,6 +106,14 @@ const messages = defineMessages({
   searchEngine: {
     id: 'settings.app.form.searchEngine',
     defaultMessage: 'Search engine',
+  },
+  translatorEngine: {
+    id: 'settings.app.form.translatorEngine',
+    defaultMessage: 'Translator Engine',
+  },
+  translatorLanguage: {
+    id: 'settings.app.form.translatorLanguage',
+    defaultMessage: 'Default Translator language',
   },
   hibernateOnStartup: {
     id: 'settings.app.form.hibernateOnStartup',
@@ -267,6 +279,10 @@ const messages = defineMessages({
     id: 'settings.app.form.enableSpellchecking',
     defaultMessage: 'Enable spell checking',
   },
+  enableTranslator: {
+    id: 'settings.app.form.enableTranslator',
+    defaultMessage: 'Enable Translator',
+  },
   enableGPUAcceleration: {
     id: 'settings.app.form.enableGPUAcceleration',
     defaultMessage: 'Enable GPU Acceleration',
@@ -342,6 +358,8 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
         notifyTaskBarOnMessage: Boolean(settingsData.notifyTaskBarOnMessage),
         navigationBarBehaviour: settingsData.navigationBarBehaviour,
         searchEngine: settingsData.searchEngine,
+        translatorEngine: settingsData.translatorEngine,
+        translatorLanguage: settingsData.translatorLanguage,
         hibernateOnStartup: Boolean(settingsData.hibernateOnStartup),
         hibernationStrategy: Number(settingsData.hibernationStrategy),
         wakeUpStrategy: Number(settingsData.wakeUpStrategy),
@@ -394,6 +412,7 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
         ),
         showDragArea: Boolean(settingsData.showDragArea),
         enableSpellchecking: Boolean(settingsData.enableSpellchecking),
+        enableTranslator: Boolean(settingsData.enableTranslator),
         spellcheckerLanguage: settingsData.spellcheckerLanguage,
         userAgentPref: settingsData.userAgentPref,
         beta: Boolean(settingsData.beta), // we need this info in the main process as well
@@ -448,6 +467,16 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
 
     const searchEngines = getSelectOptions({
       locales: SEARCH_ENGINE_NAMES,
+      sort: false,
+    });
+
+    const translatorEngines = getSelectOptions({
+      locales: TRANSLATOR_ENGINE_NAMES,
+      sort: false,
+    });
+
+    const translatorLanguages = getSelectOptions({
+      locales: LIBRETRANSLATE_TRANSLATOR_LANGUAGES,
       sort: false,
     });
 
@@ -574,6 +603,18 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           default: DEFAULT_APP_SETTINGS.searchEngine,
           options: searchEngines,
         },
+        translatorEngine: {
+          label: intl.formatMessage(messages.translatorEngine),
+          value: settings.all.app.translatorEngine,
+          default: DEFAULT_APP_SETTINGS.translatorEngine,
+          options: translatorEngines,
+        },
+        translatorLanguage: {
+          label: intl.formatMessage(messages.translatorLanguage),
+          value: settings.all.app.translatorLanguage,
+          default: DEFAULT_APP_SETTINGS.translatorLanguage,
+          options: translatorLanguages,
+        },
         hibernateOnStartup: {
           label: intl.formatMessage(messages.hibernateOnStartup),
           value: settings.all.app.hibernateOnStartup,
@@ -676,6 +717,11 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           label: intl.formatMessage(messages.enableSpellchecking),
           value: settings.all.app.enableSpellchecking,
           default: DEFAULT_APP_SETTINGS.enableSpellchecking,
+        },
+        enableTranslator: {
+          label: intl.formatMessage(messages.enableTranslator),
+          value: settings.all.app.enableTranslator,
+          default: DEFAULT_APP_SETTINGS.enableTranslator,
         },
         spellcheckerLanguage: {
           label: intl.formatMessage(globalMessages.spellcheckerLanguage),
@@ -827,6 +873,14 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
         },
       },
     };
+
+    if (settings.app.translatorEngine === TRANSLATOR_ENGINE_GOOGLE) {
+      const translatorGoogleLanguages = getSelectOptions({
+        locales: GOOGLE_TRANSLATOR_LANGUAGES,
+        sort: false,
+      });
+      config.fields.translatorLanguage.options = translatorGoogleLanguages;
+    }
 
     if (workspaces.isFeatureActive) {
       config.fields.keepAllWorkspacesLoaded = {

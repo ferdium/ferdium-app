@@ -191,7 +191,9 @@ class RecipesDashboard extends Component {
             <NavLink
               to="/settings/recipes/all"
               className={({ isActive }) =>
-                isActive && recipeFilter === 'all' ? 'badge badge--primary' : 'badge'
+                isActive && recipeFilter === 'all'
+                  ? 'badge badge--primary'
+                  : 'badge'
               }
               onClick={() => resetSearch()}
             >

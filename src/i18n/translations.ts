@@ -13,4 +13,4 @@ export default function generatedTranslations() {
     }
   }
   return translations;
-};
+}

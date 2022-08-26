@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { makeObservable, observable, reaction } from 'mobx';
+import { action, makeObservable, observable, reaction } from 'mobx';
 import ElectronWebView from 'react-electron-web-view';
 import { join } from 'path';
 
@@ -69,6 +69,10 @@ class ServiceWebview extends Component {
     }
   };
 
+  @action _setWebview(webview) {
+    this.webview = webview;
+  }
+
   render() {
     const { service, setWebviewReference, isSpellcheckerEnabled } = this.props;
 
@@ -84,7 +88,7 @@ class ServiceWebview extends Component {
     return (
       <ElectronWebView
         ref={webview => {
-          this.webview = webview;
+          this._setWebview(webview);
           if (webview && webview.view) {
             webview.view.addEventListener(
               'did-stop-loading',

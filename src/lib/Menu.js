@@ -7,7 +7,7 @@ import {
   systemPreferences,
   getCurrentWindow,
 } from '@electron/remote';
-import { autorun, makeObservable, observable } from 'mobx';
+import { autorun, action, makeObservable, observable } from 'mobx';
 import { defineMessages } from 'react-intl';
 import osName from 'os-name';
 import { fromJS } from 'immutable';
@@ -31,6 +31,7 @@ import {
   chromeVersion,
   nodeVersion,
   osArch,
+  toggleFullScreenKey,
 } from '../environment';
 import { CUSTOM_WEBSITE_RECIPE_ID, LIVE_API_FERDIUM_WEBSITE } from '../config';
 import { ferdiumVersion } from '../environment-remote';
@@ -352,6 +353,18 @@ function getActiveService() {
   return window['ferdium'].stores.services.active;
 }
 
+function _toggleFullScreen() {
+  const mainWindow = getCurrentWindow();
+
+  if (!mainWindow) return;
+
+  if (mainWindow.isFullScreen()) {
+    mainWindow.setFullScreen(false);
+  } else {
+    mainWindow.setFullScreen(true);
+  }
+}
+
 const _titleBarTemplateFactory = (intl, locked) => [
   {
     label: intl.formatMessage(menuItems.edit),
@@ -487,7 +500,10 @@ const _titleBarTemplateFactory = (intl, locked) => [
       },
       {
         label: intl.formatMessage(menuItems.toggleFullScreen),
-        role: 'toggleFullScreen',
+        click: () => {
+          _toggleFullScreen();
+        },
+        accelerator: toggleFullScreenKey(),
       },
       {
         label: intl.formatMessage(menuItems.toggleNavigationBar),
@@ -633,6 +649,10 @@ class FranzMenu {
     setTimeout(() => {
       autorun(this._build.bind(this));
     }, 10);
+  }
+
+  @action _setCurrentTemplate(tpl) {
+    this.currentTemplate = tpl;
   }
 
   rebuild() {
@@ -989,7 +1009,7 @@ class FranzMenu {
         ...this.debugMenu(),
       );
     }
-    this.currentTemplate = tpl;
+    this._setCurrentTemplate(tpl);
     const menu = Menu.buildFromTemplate(tpl);
     Menu.setApplicationMenu(menu);
   }

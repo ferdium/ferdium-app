@@ -8,7 +8,7 @@ interface IProps {
   field: Field;
   className?: string;
   focus?: boolean;
-};
+}
 
 class ColorPickerInput extends Component<IProps> {
   static defaultProps = {
@@ -34,16 +34,13 @@ class ColorPickerInput extends Component<IProps> {
     this.inputElement?.focus();
   }
 
-  handleChangeComplete = (color: { hex: string; }) => {
+  handleChangeComplete = (color: { hex: string }) => {
     const { field } = this.props;
-    field.value = color.hex
+    field.value = color.hex;
   };
 
   render() {
-    const {
-      field,
-      className,
-    } = this.props;
+    const { field, className } = this.props;
 
     let { type } = field;
     type = 'text';
@@ -57,8 +54,8 @@ class ColorPickerInput extends Component<IProps> {
         })}
       >
         <SliderPicker
-          color={ field.value }
-          onChangeComplete={ this.handleChangeComplete }
+          color={field.value}
+          onChangeComplete={this.handleChangeComplete}
           id={field.id}
           type={type}
           className="franz-form__input"

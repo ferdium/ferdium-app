@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import { CSSTransitionGroup } from 'react-transition-group';
 
 type Props = {
   children: ReactNode;
@@ -22,7 +22,7 @@ const Appear = ({
   }
 
   return (
-    <ReactCSSTransitionGroup
+    <CSSTransitionGroup
       transitionName={transitionName}
       transitionAppear
       transitionLeave
@@ -32,7 +32,7 @@ const Appear = ({
       className={className}
     >
       {children}
-    </ReactCSSTransitionGroup>
+    </CSSTransitionGroup>
   );
 };
 

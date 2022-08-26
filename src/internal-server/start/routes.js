@@ -18,9 +18,13 @@ migrate();
 
 async function validateToken(clientToken, response, next) {
   const serverToken = process.env.FERDIUM_LOCAL_TOKEN;
-  const valid = serverToken &&
+  const valid =
+    serverToken &&
     clientToken &&
-    timingSafeEqual(Buffer.from(clientToken, 'utf8'), Buffer.from(serverToken, 'utf8'));
+    timingSafeEqual(
+      Buffer.from(clientToken, 'utf8'),
+      Buffer.from(serverToken, 'utf8'),
+    );
   if (valid) {
     await next();
     return true;
@@ -41,11 +45,11 @@ const OnlyAllowFerdium = async ({ request, response }, next) => {
 const RequireTokenInQS = async ({ request, response }, next) => {
   const clientToken = request.get().token;
   return validateToken(clientToken, response, next);
-}
+};
 
 const FERDIUM_LOCAL_TOKEN_COOKIE = 'ferdium-local-token';
 
-const RequireAuthenticatedBrowser = async({ request, response }, next) => {
+const RequireAuthenticatedBrowser = async ({ request, response }, next) => {
   const clientToken = request.cookie(FERDIUM_LOCAL_TOKEN_COOKIE);
   return validateToken(clientToken, response, next);
 };

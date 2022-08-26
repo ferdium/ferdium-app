@@ -78,7 +78,10 @@ describe('onAuthGoToReleaseNotes', () => {
   });
 
   it(`returns '#/releasenotes' string for empty string`, () => {
-    const result = update_helpers.onAuthGoToReleaseNotes('#/auth', '?version=6.0.0');
+    const result = update_helpers.onAuthGoToReleaseNotes(
+      '#/auth',
+      '?version=6.0.0',
+    );
     expect(result).toEqual('#/auth/releasenotes?version=6.0.0');
   });
 

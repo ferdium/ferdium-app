@@ -70,9 +70,7 @@ class Invite extends Component {
               fields: {
                 name: {
                   label: intl.formatMessage(messages.nameLabel),
-                  placeholder: intl.formatMessage(
-                    messages.nameLabel,
-                  ),
+                  placeholder: intl.formatMessage(messages.nameLabel),
                   onChange: () => {
                     this.setState({ showSuccessInfo: false });
                   },
@@ -80,9 +78,7 @@ class Invite extends Component {
                 },
                 email: {
                   label: intl.formatMessage(messages.emailLabel),
-                  placeholder: intl.formatMessage(
-                    messages.emailLabel,
-                  ),
+                  placeholder: intl.formatMessage(messages.emailLabel),
                   onChange: () => {
                     this.setState({ showSuccessInfo: false });
                   },

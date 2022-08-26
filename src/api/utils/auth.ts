@@ -31,15 +31,17 @@ export const prepareAuthRequest = (
   return request;
 };
 
-export const prepareLocalToken = async (
-  requestData: { method: string; headers?: any; body?: any },
-) => {
+export const prepareLocalToken = async (requestData: {
+  method: string;
+  headers?: any;
+  body?: any;
+}) => {
   await when(() => !needsToken() || !!localServerToken(), { timeout: 2000 });
   const token = localServerToken();
   if (token) {
     requestData.headers['X-Ferdium-Local-Token'] = token;
   }
-}
+};
 
 export const sendAuthRequest = async (
   url: RequestInfo,
