@@ -38,6 +38,7 @@ export const APP_LOCALES = {
   ro: 'Română (Romanian)',
   si: 'සිංහල (Sinhala)',
   sv: 'Svenska (Swedish)',
+  lv: 'Latviski (Latvian)',
 };
 
 // Hunspell compatible keys
