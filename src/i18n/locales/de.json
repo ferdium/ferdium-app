@@ -225,7 +225,7 @@
   "settings.app.form.hibernationStrategy": "\"Service Hibernation\"-Strategie",
   "settings.app.form.hideCollapseButton": "Schaltfläche „Ausklappen” ausblenden",
   "settings.app.form.hideNotificationsButton": "Schaltfläche „Benachrichtigungen und Töne” ausblenden",
-  "settings.app.form.hideRecipesButton": "Diese Schaltfläche ausblenden",
+  "settings.app.form.hideRecipesButton": "Schaltfläche „Neuen Dienst hinzufügen” ausblenden",
   "settings.app.form.hideSettingsButton": "Schaltfläche „Einstellungen” ausblenden",
   "settings.app.form.hideSplitModeButton": "Schaltfläche „Geteilter Modus” ausblenden",
   "settings.app.form.hideWorkspacesButton": "Schaltfläche „Arbeitsbereich” ausblenden",
