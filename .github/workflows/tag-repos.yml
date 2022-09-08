@@ -29,11 +29,12 @@ jobs:
         TAG_NAME=$(node -p 'require("./package.json").version')
         echo "TAG_NAME=v$TAG_NAME" >> $GITHUB_ENV
       shell: bash
-    - name: Tag the main repo
-      run: |
-        git tag -f $TAG_NAME
-        git push origin --tags --no-verify
-      shell: bash
+    # Note: commented out the tagging of the main repo - since that is auto-created when a new release is published
+    # - name: Tag the main repo
+    #   run: |
+    #     git tag -f $TAG_NAME
+    #     git push origin --tags --no-verify
+    #   shell: bash
     # Also tag the submodule so as to help identify which changes went into which release
     # TODO: Not working due to cross-repo access issues by the github-action bot
     # - name: Tag the submodule
