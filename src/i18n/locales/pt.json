@@ -266,6 +266,7 @@
   "settings.app.form.wakeUpHibernationSplay": "Reproduzir ciclos de hibernação/despertar para reduzir a carga",
   "settings.app.form.wakeUpHibernationStrategy": "Estratégia de hibernação após acordar automaticamente",
   "settings.app.form.wakeUpStrategy": "Estratégia de despertar",
+  "settings.app.form.webRTCIPHandlingPolicy": "Política de exposição do IP WebRTC",
   "settings.app.headlineAdvanced": "Avançado",
   "settings.app.headlineAppearance": "Aparência",
   "settings.app.headlineGeneral": "Geral",
