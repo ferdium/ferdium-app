@@ -266,6 +266,7 @@
   "settings.app.form.wakeUpHibernationSplay": "Splay Ruhe/Weckzyklen, um die Last zu reduzieren",
   "settings.app.form.wakeUpHibernationStrategy": "Ruhezustand Strategie nach automatischem Aufwachen",
   "settings.app.form.wakeUpStrategy": "Aufwachstrategie",
+  "settings.app.form.webRTCIPHandlingPolicy": "WebRTC IP-Handhabungsrichtlinie",
   "settings.app.headlineAdvanced": "Erweitert",
   "settings.app.headlineAppearance": "Darstellung",
   "settings.app.headlineGeneral": "Allgemeines",
