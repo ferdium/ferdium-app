@@ -798,6 +798,14 @@ class EditSettingsForm extends Component {
 
                 <Hr />
 
+                <Select field={form.$('webRTCIPHandlingPolicy')} />
+
+                <p className="settings__help">
+                  {intl.formatMessage(messages.appRestartRequired)}
+                </p>
+
+                <Hr />
+
                 <Select field={form.$('searchEngine')} />
 
                 <p className="settings__help">

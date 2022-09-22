@@ -1,3 +1,35 @@
+# [v6.2.0](https://github.com/ferdium/ferdium-app/compare/v6.1.0...v6.2.0) (2022-09-22)
+
+### :warning: BREAKING CHANGES :warning:
+
+- Added feature to set how Ferdium handles WebRTC IP Exposure (under `Settings` > `Privacy`)
+  - Services that depend on RTC can be affected by this change (eg. Discord). Please see @SpecialAro comment on the issue [#611](https://github.com/ferdium/ferdium-app/issues/611) to see a way to fix it.
+
+### Features
+
+- Added Latvian in the list of supported languages.
+- New Crowdin translation updates (Portuguese, French, German, Polish, Portuguese Brazilian, Japanese, Hebrew, Latvian)
+
+
+### Services
+- Added Magic Level recipe 
+- Added Mailfence recipe
+- Added Odysee recipe
+- Added OnMail recipe
+- Updated Proton Mail icon
+- Fixed Ferdium theme warning hijacking popups on WhatsApp
+
+
+### Bug fixes
+
+
+### Under the hood
+
+- Upgrade `electron` to `20.2.0`
+- Upgrade `electron-builder` to `23.5.1`
+- Upgrade `nodejs` to `16.17.0`
+- Upgrade `electron` to `20.1.2`
+
 # [v6.1.0](https://github.com/ferdium/ferdium-app/compare/v6.0.1-nightly.23...v6.1.0) (2022-08-27)
 
 ### Features

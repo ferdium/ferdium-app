@@ -26,6 +26,7 @@ import {
   WAKE_UP_HIBERNATION_STRATEGIES,
   SPLIT_COLUMNS_MIN,
   SPLIT_COLUMNS_MAX,
+  WEBRTC_IP_HANDLING_POLICY,
 } from '../../config';
 import { isMac } from '../../environment';
 
@@ -102,6 +103,10 @@ const messages = defineMessages({
   navigationBarBehaviour: {
     id: 'settings.app.form.navigationBarBehaviour',
     defaultMessage: 'Navigation bar behaviour',
+  },
+  webRTCIPHandlingPolicy: {
+    id: 'settings.app.form.webRTCIPHandlingPolicy',
+    defaultMessage: 'WebRTC IP Handling Policy',
   },
   searchEngine: {
     id: 'settings.app.form.searchEngine',
@@ -357,6 +362,7 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
         clipboardNotifications: Boolean(settingsData.clipboardNotifications),
         notifyTaskBarOnMessage: Boolean(settingsData.notifyTaskBarOnMessage),
         navigationBarBehaviour: settingsData.navigationBarBehaviour,
+        webRTCIPHandlingPolicy: settingsData.webRTCIPHandlingPolicy,
         searchEngine: settingsData.searchEngine,
         translatorEngine: settingsData.translatorEngine,
         translatorLanguage: settingsData.translatorLanguage,
@@ -462,6 +468,11 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
 
     const navigationBarBehaviours = getSelectOptions({
       locales: NAVIGATION_BAR_BEHAVIOURS,
+      sort: false,
+    });
+
+    const webRTCIPHandlingPolicies = getSelectOptions({
+      locales: WEBRTC_IP_HANDLING_POLICY,
       sort: false,
     });
 
@@ -596,6 +607,12 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           value: settings.all.app.navigationBarBehaviour,
           default: DEFAULT_APP_SETTINGS.navigationBarBehaviour,
           options: navigationBarBehaviours,
+        },
+        webRTCIPHandlingPolicy: {
+          label: intl.formatMessage(messages.webRTCIPHandlingPolicy),
+          value: settings.all.app.webRTCIPHandlingPolicy,
+          default: DEFAULT_APP_SETTINGS.webRTCIPHandlingPolicy,
+          options: webRTCIPHandlingPolicies,
         },
         searchEngine: {
           label: intl.formatMessage(messages.searchEngine),

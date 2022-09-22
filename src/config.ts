@@ -38,6 +38,21 @@ export const CDN_URL = 'https://cdn.franzinfra.com';
 
 export const KEEP_WS_LOADED_USID = '0a0aa000-0a0a-49a0-a000-a0a0a0a0a0a0';
 
+const defaultWebRTCIPHandlingPolicy = 'default';
+const publicWebRTCIPHandlingPolicy = 'default_public_interface_only';
+const publicPrivateWebRTCIPHandlingPolicy =
+  'default_public_and_private_interfaces';
+const disableWebRTCIPHandlingPolicy = 'disable_non_proxied_udp';
+
+export const WEBRTC_IP_HANDLING_POLICY = {
+  [defaultWebRTCIPHandlingPolicy]: 'Expose user public and local IPs',
+  [publicWebRTCIPHandlingPolicy]:
+    'Expose user public IP, but not expose user local IP',
+  [publicPrivateWebRTCIPHandlingPolicy]:
+    'Expose user public and local IPs (only use default route used by http)',
+  [disableWebRTCIPHandlingPolicy]: 'Do not expose public or local IPs',
+};
+
 // TODO: Need to convert many of these to i18n
 export const HIBERNATION_STRATEGIES = {
   10: 'Extremely Fast Hibernation (10sec)',
@@ -397,6 +412,7 @@ export const DEFAULT_APP_SETTINGS = {
   sidebarServicesLocation: SIDEBAR_SERVICES_LOCATION_TOPLEFT,
   iconSize: iconSizeBias,
   navigationBarBehaviour: 'custom',
+  webRTCIPHandlingPolicy: disableWebRTCIPHandlingPolicy,
   searchEngine: SEARCH_ENGINE_STARTPAGE,
   translatorLanguage: 'en',
   translatorEngine: TRANSLATOR_ENGINE_LIBRETRANSLATE,

@@ -90,8 +90,8 @@ if (isWindows) {
 const settings = new Settings('app', DEFAULT_APP_SETTINGS);
 const proxySettings = new Settings('proxy');
 
-const retrieveSettingValue = (key: string, defaultValue: boolean) =>
-  ifUndefined<boolean>(settings.get(key), defaultValue);
+const retrieveSettingValue = (key: string, defaultValue: boolean | string) =>
+  ifUndefined<boolean | string>(settings.get(key), defaultValue);
 
 const liftSingleInstanceLock = retrieveSettingValue(
   'liftSingleInstanceLock',
@@ -164,6 +164,15 @@ if (!retrieveSettingValue('enableGPUAcceleration', false)) {
   app.disableHardwareAcceleration();
 }
 
+const webRTCIPHandlingPolicy = retrieveSettingValue(
+  'webRTCIPHandlingPolicy',
+  DEFAULT_APP_SETTINGS.webRTCIPHandlingPolicy,
+) as
+  | 'disable_non_proxied_udp'
+  | 'default'
+  | 'default_public_interface_only'
+  | 'default_public_and_private_interfaces';
+
 const createWindow = () => {
   // Remember window size
   const mainWindowState = windowStateKeeper({
@@ -202,7 +211,7 @@ const createWindow = () => {
       spellcheck: retrieveSettingValue(
         'enableSpellchecking',
         DEFAULT_APP_SETTINGS.enableSpellchecking,
-      ),
+      ) as boolean | undefined,
       nodeIntegration: true,
       contextIsolation: false,
       webviewTag: true,
@@ -210,6 +219,7 @@ const createWindow = () => {
   });
 
   enableWebContents(mainWindow.webContents);
+  mainWindow.webContents.setWebRTCIPHandlingPolicy(webRTCIPHandlingPolicy);
 
   app.on('browser-window-created', (_, window) => {
     enableWebContents(window.webContents);
@@ -532,6 +542,7 @@ ipcMain.on('open-browser-window', (_e, { url, serviceId }) => {
     },
   });
   enableWebContents(child.webContents);
+  child.webContents.setWebRTCIPHandlingPolicy(webRTCIPHandlingPolicy);
   child.show();
   child.loadURL(url);
   debug('Received open-browser-window', url);
