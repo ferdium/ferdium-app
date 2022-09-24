@@ -1,6 +1,6 @@
 # Note: Before running this file, you should have already cloned the git repo + submodules on the host machine. This is used when actively developing on your local machine, but you want to build for a different architecture
 
-FROM docker.io/library/node:16.15.1-buster as builder
+FROM docker.io/library/node:16.17.0-buster as builder
 
 ENV PATH="/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/usr/local/lib:/usr/include:/usr/share"
 
@@ -30,8 +30,7 @@ WORKDIR /usr/src/ferdium/recipes
 
 RUN npm i -gf "pnpm@$(node -p 'require("./package.json").engines.pnpm')" && pnpm -v
 
-RUN pnpm i \
-  && pnpm package
+RUN pnpm i && pnpm lint && pnpm reformat-files && pnpm package
 
 WORKDIR /usr/src/ferdium
 

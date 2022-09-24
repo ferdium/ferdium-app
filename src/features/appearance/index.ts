@@ -129,11 +129,12 @@ function generateAccentStyle(accentColorStr) {
 function generateServiceRibbonWidthStyle(
   widthStr,
   iconSizeStr,
-  vertical,
+  horizontal,
   isLabelEnabled,
   sidebarServicesLocation,
   useGrayscaleServices,
   grayscaleServicesDim,
+  shouldShowDragArea,
 ) {
   const width = Number(widthStr);
   const iconSize = Number(iconSizeStr) - iconSizeBias;
@@ -141,6 +142,7 @@ function generateServiceRibbonWidthStyle(
   let tabItemHeightBias = -5;
   let sidebarSizeBias = 22;
   const tabItemWidthBias = 3;
+  const verticalStyleOffset = 29;
 
   switch (width) {
     case 35:
@@ -194,24 +196,24 @@ function generateServiceRibbonWidthStyle(
   let sidebarServicesAlignment;
   switch (sidebarServicesLocation) {
     case SIDEBAR_SERVICES_LOCATION_TOPLEFT:
-      sidebarServicesAlignment = vertical ? "left" : "start";
+      sidebarServicesAlignment = horizontal ? 'left' : 'start';
       break;
     case SIDEBAR_SERVICES_LOCATION_CENTER:
-      sidebarServicesAlignment = vertical ? "center" : "center";
+      sidebarServicesAlignment = horizontal ? 'center' : 'center';
       break;
     case SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT:
-      sidebarServicesAlignment = vertical ? "right" : "end";
+      sidebarServicesAlignment = horizontal ? 'right' : 'end';
       break;
     default:
-      sidebarServicesAlignment = vertical ? "left" : "start";
+      sidebarServicesAlignment = horizontal ? 'left' : 'start';
       break;
   }
 
-  const graysacleServices =
-  `filter: grayscale(1);
-  opacity: ${grayscaleServicesDim}%;`
+  const graysacleServices = `filter: grayscale(1);
+  opacity: ${grayscaleServicesDim}%;`;
 
-  return vertical
+  const sizeDragArea = shouldShowDragArea ? verticalStyleOffset : 0;
+  return horizontal
     ? `
     .sidebar {
       height: ${width}px !important;
@@ -247,7 +249,17 @@ function generateServiceRibbonWidthStyle(
       margin-top: -${width}px !important;
     }
     .darwin .sidebar {
-      height: ${width + sidebarSizeBias}px !important;
+      height: ${width + verticalStyleOffset - 3 - sizeDragArea}px !important;
+    }
+    .darwin .app .app__content {
+      padding-top: ${
+        width + sidebarSizeBias + (sizeDragArea !== 0 ? 4 - sizeDragArea : 4)
+      }px !important;
+    }
+    .darwin .workspaces-drawer {
+      margin-top: -${
+        width + verticalStyleOffset - 5 - sizeDragArea
+      }px !important;
     }
     .darwin .sidebar .sidebar__button--workspaces.is-active {
       height: ${width - sidebarSizeBias}px !important;
@@ -347,7 +359,7 @@ function generateOpenWorkspaceStyle() {
   `;
 }
 
-function generateStyle(settings) {
+function generateStyle(settings, app) {
   let style = '';
 
   const {
@@ -358,10 +370,14 @@ function generateStyle(settings) {
     grayscaleServicesDim,
     iconSize,
     showDragArea,
-    useVerticalStyle,
+    useHorizontalStyle,
     alwaysShowWorkspaces,
     showServiceName,
   } = settings;
+
+  const { isFullScreen } = app;
+
+  const shouldShowDragArea = showDragArea && !isFullScreen;
 
   if (
     accentColor.toLowerCase() !== DEFAULT_APP_SETTINGS.accentColor.toLowerCase()
@@ -372,17 +388,18 @@ function generateStyle(settings) {
   style += generateServiceRibbonWidthStyle(
     serviceRibbonWidth,
     iconSize,
-    useVerticalStyle,
+    useHorizontalStyle,
     showServiceName,
     sidebarServicesLocation,
     useGrayscaleServices,
     grayscaleServicesDim,
+    shouldShowDragArea,
   );
 
-  if (showDragArea) {
+  if (shouldShowDragArea) {
     style += generateShowDragAreaStyle(accentColor);
   }
-  if (useVerticalStyle) {
+  if (useHorizontalStyle) {
     style += generateVerticalStyle(serviceRibbonWidth, alwaysShowWorkspaces);
   } else if (document.querySelector('#vertical-style')) {
     const link = document.querySelector('#vertical-style');
@@ -403,18 +420,18 @@ function updateProgressbar(settings) {
     barColors: {
       '0': settings.progressbarAccentColor,
     },
-    shadowBlur: 5
+    shadowBlur: 5,
   });
 }
 
-function updateStyle(settings) {
-  const style = generateStyle(settings);
+function updateStyle(settings, app) {
+  const style = generateStyle(settings, app);
   setAppearance(style);
   updateProgressbar(settings);
 }
 
 export default function initAppearance(stores) {
-  const { settings } = stores;
+  const { settings, app } = stores;
   createStyleElement();
   updateProgressbar(settings);
 
@@ -429,12 +446,13 @@ export default function initAppearance(stores) {
       settings.all.app.sidebarServicesLocation,
       settings.all.app.useGrayscaleServices,
       settings.all.app.grayscaleServicesDim,
-      settings.all.app.useVerticalStyle,
+      settings.all.app.useHorizontalStyle,
       settings.all.app.alwaysShowWorkspaces,
       settings.all.app.showServiceName,
+      app.isFullScreen,
     ],
     () => {
-      updateStyle(settings.all.app);
+      updateStyle(settings.all.app, app);
     },
     { fireImmediately: true },
   );

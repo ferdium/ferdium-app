@@ -121,6 +121,4 @@ class TextareaComponent extends Component<IProps> {
   }
 }
 
-export default injectSheet(styles, { injectTheme: true })(
-  TextareaComponent,
-);
+export default injectSheet(styles, { injectTheme: true })(TextareaComponent);

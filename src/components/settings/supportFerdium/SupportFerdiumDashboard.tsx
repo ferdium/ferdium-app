@@ -1,4 +1,5 @@
 import { defineMessages, useIntl } from 'react-intl';
+import { FERDIUM_TRANSLATION } from '../../../config';
 
 const messages = defineMessages({
   headline: {
@@ -49,7 +50,7 @@ const SupportFerdiumDashboard = () => {
                 src="https://img.shields.io/github/stars/ferdium/ferdium-app?style=social"
               />
             </a>
-            <a target="_blank" href="https://crowdin.com/project/ferdium-app">
+            <a target="_blank" href={FERDIUM_TRANSLATION}>
               <img
                 src="https://badges.crowdin.net/ferdium-app/localized.svg"
                 alt="Crowdin"

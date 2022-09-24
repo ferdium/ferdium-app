@@ -2,6 +2,7 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
+import { mdiArrowLeftCircle } from '@mdi/js';
 import Form from '../../lib/Form';
 import Input from '../ui/Input';
 import Select from '../ui/Select';
@@ -12,6 +13,7 @@ import { url, required } from '../../helpers/validation-helpers';
 import { LIVE_FERDIUM_API, LIVE_FRANZ_API } from '../../config';
 import globalMessages from '../../i18n/globalMessages';
 import { H1 } from '../ui/headline';
+import Icon from '../ui/icon';
 
 const messages = defineMessages({
   headline: {
@@ -46,35 +48,36 @@ class ChangeServer extends Component {
 
   franzServer = LIVE_FRANZ_API;
 
-  defaultServers = [ this.ferdiumServer, this.franzServer ];
+  defaultServers = [this.ferdiumServer, this.franzServer];
 
   form = (() => {
     const { intl } = this.props;
-    return new Form({
-      fields: {
-        server: {
-          label: intl.formatMessage(messages.label),
-          value: this.props.server,
-          options: [
-            { value: this.ferdiumServer, label: 'Ferdium (Default)' },
-            { value: this.franzServer, label: 'Franz' },
-            {
-              value: this.defaultServers.includes(this.props.server)
-                ? ''
-                : this.props.server,
-              label: 'Custom',
-            },
-          ],
-        },
-        customServer: {
-          label: intl.formatMessage(messages.customServerLabel),
-          value: '',
-          validators: [url, required],
+    return new Form(
+      {
+        fields: {
+          server: {
+            label: intl.formatMessage(messages.label),
+            value: this.props.server,
+            options: [
+              { value: this.ferdiumServer, label: 'Ferdium (Default)' },
+              { value: this.franzServer, label: 'Franz' },
+              {
+                value: this.defaultServers.includes(this.props.server)
+                  ? ''
+                  : this.props.server,
+                label: 'Custom',
+              },
+            ],
+          },
+          customServer: {
+            label: intl.formatMessage(messages.customServerLabel),
+            value: '',
+            validators: [url, required],
+          },
         },
       },
-    },
-    intl,
-  );
+      intl,
+    );
   })();
 
   componentDidMount() {
@@ -109,9 +112,11 @@ class ChangeServer extends Component {
     return (
       <div className="auth__container">
         <form className="franz-form auth__form" onSubmit={e => this.submit(e)}>
-          <Link to='/auth/welcome'><img src="./assets/images/logo.svg" className="auth__logo" alt="" /></Link>
+          <Link to="/auth/welcome">
+            <img src="./assets/images/logo.svg" className="auth__logo" alt="" />
+          </Link>
           <H1>{intl.formatMessage(messages.headline)}</H1>
-          {(form.$('server').value === this.franzServer) && (
+          {form.$('server').value === this.franzServer && (
             <Infobox type="warning">
               {intl.formatMessage(messages.warning)}
             </Infobox>
@@ -121,8 +126,10 @@ class ChangeServer extends Component {
             <Input
               placeholder="Custom Server"
               onChange={e => {
-                this.form.$('customServer').value = this.form.$('customServer').value.replace(/\/$/, "");
-                this.submit(e)
+                this.form.$('customServer').value = this.form
+                  .$('customServer')
+                  .value.replace(/\/$/, '');
+                this.submit(e);
               }}
               field={form.$('customServer')}
             />
@@ -133,6 +140,11 @@ class ChangeServer extends Component {
             label={intl.formatMessage(globalMessages.submit)}
           />
         </form>
+        <div className="auth__help">
+          <Link to="/auth/welcome">
+            <Icon icon={mdiArrowLeftCircle} size={1.5} />
+          </Link>
+        </div>
       </div>
     );
   }

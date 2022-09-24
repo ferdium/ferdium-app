@@ -1,4 +1,10 @@
-import { computed, IReactionPublic, makeObservable, observable } from 'mobx';
+import {
+  action,
+  computed,
+  IReactionPublic,
+  makeObservable,
+  observable,
+} from 'mobx';
 import { Actions } from '../../actions/lib/actions';
 import { ApiInterface } from '../../api';
 import { Stores } from '../../@types/stores.types';
@@ -14,6 +20,10 @@ export default abstract class TypedStore {
   api: ApiInterface;
 
   actions: Actions;
+
+  @action _setResetStatus() {
+    this._status = null;
+  }
 
   @computed get actionStatus() {
     return this._status || [];
@@ -49,6 +59,6 @@ export default abstract class TypedStore {
   }
 
   resetStatus(): void {
-    this._status = null;
+    this._setResetStatus();
   }
 }

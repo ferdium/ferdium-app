@@ -7,7 +7,8 @@
     "target": "esnext",
     "lib": [
       "esnext",
-      "dom"
+      "dom",
+      "dom.iterable"
     ],
     "module": "CommonJS",
     "jsx": "react-jsx",

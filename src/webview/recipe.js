@@ -188,6 +188,9 @@ class RecipeController {
       () => this.spellcheckerLanguage,
       () => this.settings.app.searchEngine,
       () => this.settings.app.clipboardNotifications,
+      () => this.settings.app.enableTranslator,
+      () => this.settings.app.translatorEngine,
+      () => this.settings.app.translatorLanguage,
     );
 
     autorun(() => this.update());
@@ -293,6 +296,9 @@ class RecipeController {
     );
     debug('darkReaderSettigs', this.settings.service.darkReaderSettings);
     debug('searchEngine', this.settings.app.searchEngine);
+    debug('enableTranslator', this.settings.app.enableTranslator);
+    debug('translatorEngine', this.settings.app.translatorEngine);
+    debug('translatorLanguage', this.settings.app.translatorLanguage);
 
     if (this.userscript && this.userscript.internal_setSettings) {
       this.userscript.internal_setSettings(this.settings);
@@ -334,10 +340,7 @@ class RecipeController {
       isDarkModeStyleInjected,
     };
 
-    if (
-      this.settings.service.isDarkModeEnabled &&
-      this.settings.app.isDarkThemeActive !== false
-    ) {
+    if (this.settings.service.isDarkModeEnabled) {
       debug('Enable dark mode');
 
       // Check if recipe has a custom dark mode handler

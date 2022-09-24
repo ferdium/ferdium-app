@@ -6,7 +6,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const { API_VERSION } = require('../../environment-remote');
 
-const moveIcon = async (icon) => {
+const moveIcon = async icon => {
   const iconsPath = path.join(Env.get('USER_PATH'), 'icons');
   await fs.ensureDir(iconsPath);
 
@@ -24,6 +24,11 @@ const moveIcon = async (icon) => {
   return !icon.moved() ? '-1' : iconId;
 };
 
-const deduceIconUrl = (iconId) => iconId ? `http://${Env.get('HOST')}:${Env.get('PORT')}/${API_VERSION}/icon/${iconId}` : null
+const deduceIconUrl = iconId =>
+  iconId
+    ? `http://${Env.get('HOST')}:${Env.get(
+        'PORT',
+      )}/${API_VERSION}/icon/${iconId}`
+    : null;
 
 module.exports = { moveIcon, deduceIconUrl };

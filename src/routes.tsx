@@ -9,6 +9,7 @@ import {
 
 import AppLayoutContainer from './containers/layout/AppLayoutContainer';
 import SettingsWindow from './containers/settings/SettingsWindow';
+import ReleaseNotesWindow from './containers/settings/ReleaseNotesWindow';
 import RecipesScreen from './containers/settings/RecipesScreen';
 import ServicesScreen from './containers/settings/ServicesScreen';
 import EditServiceScreen from './containers/settings/EditServiceScreen';
@@ -18,8 +19,10 @@ import EditUserScreen from './containers/settings/EditUserScreen';
 import EditSettingsScreen from './containers/settings/EditSettingsScreen';
 import InviteSettingsScreen from './containers/settings/InviteScreen';
 import SupportFerdiumScreen from './containers/settings/SupportScreen';
+import ReleaseNotesScreen from './containers/settings/ReleaseNotesScreen';
 import WelcomeScreen from './containers/auth/WelcomeScreen';
 import LoginScreen from './containers/auth/LoginScreen';
+import AuthReleaseNotesScreen from './containers/auth/AuthReleaseNotesScreen';
 import PasswordScreen from './containers/auth/PasswordScreen';
 import ChangeServerScreen from './containers/auth/ChangeServerScreen';
 import SignupScreen from './containers/auth/SignupScreen';
@@ -100,9 +103,24 @@ class FerdiumRoutes extends Component<Props> {
               path="/auth/logout"
               element={<LoginScreen {...routeProps} {...errorProps} />}
             />
+            <Route
+              path="/auth/releasenotes"
+              element={
+                <AuthReleaseNotesScreen {...routeProps} {...errorProps} />
+              }
+            />
           </Route>
 
           <Route path="/" element={<AppLayoutContainer {...routeProps} />}>
+            <Route
+              path="/releasenotes"
+              element={<ReleaseNotesWindow {...this.props} />}
+            >
+              <Route
+                path="/releasenotes"
+                element={<ReleaseNotesScreen {...this.props} />}
+              />
+            </Route>
             <Route
               path="/settings"
               element={<SettingsWindow {...this.props} />}
@@ -154,6 +172,10 @@ class FerdiumRoutes extends Component<Props> {
               <Route
                 path="/settings/support"
                 element={<SupportFerdiumScreen {...this.props} />}
+              />
+              <Route
+                path="/settings/releasenotes"
+                element={<ReleaseNotesScreen {...this.props} />}
               />
             </Route>
           </Route>

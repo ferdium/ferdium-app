@@ -15,22 +15,24 @@ import Input from '../../ui/Input';
 import ColorPickerInput from '../../ui/ColorPickerInput';
 import Infobox from '../../ui/Infobox';
 import { H1, H2, H3, H5 } from '../../ui/headline';
-
-import {
-  DEFAULT_ACCENT_COLOR,
-  DEFAULT_APP_SETTINGS,
-  FRANZ_TRANSLATION,
-  GITHUB_FRANZ_URL,
-  SPLIT_COLUMNS_MAX,
-  SPLIT_COLUMNS_MIN,
-} from '../../../config';
-import { isMac, isWindows, lockFerdiumShortcutKey } from '../../../environment';
 import {
   ferdiumVersion,
   userDataPath,
   userDataRecipesPath,
 } from '../../../environment-remote';
-import { openPath } from '../../../helpers/url-helpers';
+
+import { updateVersionParse } from '../../../helpers/update-helpers';
+
+import {
+  DEFAULT_ACCENT_COLOR,
+  DEFAULT_APP_SETTINGS,
+  FERDIUM_TRANSLATION,
+  GITHUB_FRANZ_URL,
+  SPLIT_COLUMNS_MAX,
+  SPLIT_COLUMNS_MIN,
+} from '../../../config';
+import { isMac, isWindows, lockFerdiumShortcutKey } from '../../../environment';
+import { openExternalUrl, openPath } from '../../../helpers/url-helpers';
 import globalMessages from '../../../i18n/globalMessages';
 import Icon from '../../ui/icon';
 import Slider from '../../ui/Slider';
@@ -43,6 +45,10 @@ const messages = defineMessages({
   headlineGeneral: {
     id: 'settings.app.headlineGeneral',
     defaultMessage: 'General',
+  },
+  headlineServices: {
+    id: 'settings.app.headlineServices',
+    defaultMessage: 'Services',
   },
   hibernateInfo: {
     id: 'settings.app.hibernateInfo',
@@ -197,6 +203,14 @@ const messages = defineMessages({
     id: 'settings.app.buttonOpenFerdiumServiceRecipesFolder',
     defaultMessage: 'Open Service Recipes folder',
   },
+  buttonOpenImportExport: {
+    id: 'settings.app.buttonOpenImportExport',
+    defaultMessage: 'Import / Export',
+  },
+  serverHelp: {
+    id: 'settings.app.serverHelp',
+    defaultMessage: 'Connected to server at {serverURL}',
+  },
   buttonSearchForUpdate: {
     id: 'settings.app.buttonSearchForUpdate',
     defaultMessage: 'Check for updates',
@@ -204,6 +218,10 @@ const messages = defineMessages({
   buttonInstallUpdate: {
     id: 'settings.app.buttonInstallUpdate',
     defaultMessage: 'Restart & install update',
+  },
+  buttonShowChangelog: {
+    id: 'settings.app.buttonShowChangelog',
+    defaultMessage: 'Show changelog',
   },
   updateStatusSearching: {
     id: 'settings.app.updateStatusSearching',
@@ -274,6 +292,7 @@ class EditSettingsForm extends Component {
     openProcessManager: PropTypes.func.isRequired,
     isSplitModeEnabled: PropTypes.bool.isRequired,
     isOnline: PropTypes.bool.isRequired,
+    serverURL: PropTypes.string.isRequired,
   };
 
   constructor(props) {
@@ -300,11 +319,11 @@ class EditSettingsForm extends Component {
     this.props.form.submit({
       onSuccess: form => {
         const values = form.values();
-        const accentColor = values.accentColor;
+        const { accentColor } = values;
         if (accentColor.trim().length === 0) {
           values.accentColor = DEFAULT_ACCENT_COLOR;
         }
-        const progressbarAccentColor = values.progressbarAccentColor;
+        const { progressbarAccentColor } = values;
         if (progressbarAccentColor.trim().length === 0) {
           values.progressbarAccentColor = DEFAULT_ACCENT_COLOR;
         }
@@ -319,6 +338,7 @@ class EditSettingsForm extends Component {
       checkForUpdates,
       installUpdate,
       form,
+      updateVersion,
       isCheckingForUpdates,
       isAdaptableDarkModeEnabled,
       isUseGrayscaleServicesEnabled,
@@ -336,6 +356,7 @@ class EditSettingsForm extends Component {
       openProcessManager,
       isTodosActivated,
       isOnline,
+      serverURL,
     } = this.props;
     const { intl } = this.props;
 
@@ -397,6 +418,19 @@ class EditSettingsForm extends Component {
                 }}
               >
                 {intl.formatMessage(messages.headlineGeneral)}
+              </H5>
+              <H5
+                id="services"
+                className={
+                  this.state.activeSetttingsTab === 'services'
+                    ? 'badge badge--primary'
+                    : 'badge'
+                }
+                onClick={() => {
+                  this.setActiveSettingsTab('services');
+                }}
+              >
+                {intl.formatMessage(messages.headlineServices)}
               </H5>
               <H5
                 id="appearance"
@@ -577,8 +611,37 @@ class EditSettingsForm extends Component {
                 >
                   <span>{intl.formatMessage(messages.scheduledDNDInfo)}</span>
                 </p>
+              </div>
+            )}
 
-                <Hr />
+            {/* Services */}
+            {this.state.activeSetttingsTab === 'services' && (
+              <div>
+                <H2 className="settings__section_header">
+                  {intl.formatMessage(messages.sectionServiceIconsSettings)}
+                </H2>
+
+                <Toggle field={form.$('showDisabledServices')} />
+                <Toggle field={form.$('showServiceName')} />
+
+                {isUseGrayscaleServicesEnabled && <Hr />}
+
+                <Toggle field={form.$('useGrayscaleServices')} />
+
+                {isUseGrayscaleServicesEnabled && (
+                  <>
+                    <Slider
+                      type="number"
+                      onChange={e => this.submit(e)}
+                      field={form.$('grayscaleServicesDim')}
+                    />
+                    <Hr />
+                  </>
+                )}
+
+                <Toggle field={form.$('showMessageBadgeWhenMuted')} />
+                <Toggle field={form.$('enableLongPressServiceHint')} />
+                <Select field={form.$('iconSize')} />
 
                 <Select field={form.$('navigationBarBehaviour')} />
 
@@ -702,7 +765,7 @@ class EditSettingsForm extends Component {
 
                 <Select field={form.$('sidebarServicesLocation')} />
 
-                <Toggle field={form.$('useVerticalStyle')} />
+                <Toggle field={form.$('useHorizontalStyle')} />
 
                 <Toggle field={form.$('hideCollapseButton')} />
 
@@ -717,34 +780,6 @@ class EditSettingsForm extends Component {
                 <Toggle field={form.$('hideSettingsButton')} />
 
                 <Toggle field={form.$('alwaysShowWorkspaces')} />
-
-                <HrSections />
-
-                <H2 className="settings__section_header">
-                  {intl.formatMessage(messages.sectionServiceIconsSettings)}
-                </H2>
-
-                <Toggle field={form.$('showDisabledServices')} />
-                <Toggle field={form.$('showServiceName')} />
-
-                {isUseGrayscaleServicesEnabled && <Hr />}
-
-                <Toggle field={form.$('useGrayscaleServices')} />
-
-                {isUseGrayscaleServicesEnabled && (
-                  <>
-                    <Slider
-                      type="number"
-                      onChange={e => this.submit(e)}
-                      field={form.$('grayscaleServicesDim')}
-                    />
-                    <Hr />
-                  </>
-                )}
-
-                <Toggle field={form.$('showMessageBadgeWhenMuted')} />
-                <Toggle field={form.$('enableLongPressServiceHint')} />
-                <Select field={form.$('iconSize')} />
               </div>
             )}
 
@@ -760,6 +795,14 @@ class EditSettingsForm extends Component {
                 {(isWindows || isMac) && (
                   <Toggle field={form.$('notifyTaskBarOnMessage')} />
                 )}
+
+                <Hr />
+
+                <Select field={form.$('webRTCIPHandlingPolicy')} />
+
+                <p className="settings__help">
+                  {intl.formatMessage(messages.appRestartRequired)}
+                </p>
 
                 <Hr />
 
@@ -835,14 +878,26 @@ class EditSettingsForm extends Component {
                     {intl.formatMessage(messages.spellCheckerLanguageInfo)}
                   </p>
                 )}
+
                 <p className="settings__help">
                   {intl.formatMessage(messages.appRestartRequired)}
                 </p>
 
                 <Hr />
 
+                <Toggle field={form.$('enableTranslator')} />
+
+                {form.$('enableTranslator').value && (
+                  <Select field={form.$('translatorEngine')} />
+                )}
+                {form.$('enableTranslator').value && (
+                  <Select field={form.$('translatorLanguage')} />
+                )}
+
+                <Hr />
+
                 <a
-                  href={FRANZ_TRANSLATION}
+                  href={FERDIUM_TRANSLATION}
                   target="_blank"
                   className="link"
                   rel="noreferrer"
@@ -939,7 +994,20 @@ class EditSettingsForm extends Component {
                         className="settings__open-settings-file-button"
                         onClick={() => openPath(recipeFolder)}
                       />
+                      <Button
+                        buttonType="secondary"
+                        label={intl.formatMessage(
+                          messages.buttonOpenImportExport,
+                        )}
+                        className="settings__open-settings-file-button"
+                        onClick={() => openExternalUrl(serverURL, true)}
+                      />
                     </div>
+                  </p>
+                  <p className="settings__help">
+                    {intl.formatMessage(messages.serverHelp, {
+                      serverURL,
+                    })}
                   </p>
                 </div>
               </div>
@@ -979,6 +1047,20 @@ class EditSettingsForm extends Component {
                             loaded={!isCheckingForUpdates || !isUpdateAvailable}
                           />
                         )}
+                        {(isUpdateAvailable || updateIsReadyToInstall) && (
+                          <Button
+                            className="settings__updates__changelog-button"
+                            label={intl.formatMessage(
+                              messages.buttonShowChangelog,
+                            )}
+                            onClick={() => {
+                              window.location.href = `#/releasenotes${updateVersionParse(
+                                updateVersion,
+                              )}`;
+                            }}
+                          />
+                        )}
+                        <br />
                         <br />
                       </div>
                       <p>

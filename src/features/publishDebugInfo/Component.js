@@ -14,7 +14,9 @@ import { DEBUG_API } from '../../config';
 import AppStore from '../../stores/AppStore';
 import ServicesStore from '../../stores/ServicesStore';
 
-const debug = require('../../preload-safe-debug')('Ferdium:feature:publishDebugInfo');
+const debug = require('../../preload-safe-debug')(
+  'Ferdium:feature:publishDebugInfo',
+);
 
 const messages = defineMessages({
   title: {
@@ -89,7 +91,7 @@ class PublishDebugLogModal extends Component {
     this.setState({
       log: null,
       error: false,
-      isSendingLog: false
+      isSendingLog: false,
     });
   }
 
@@ -149,17 +151,15 @@ class PublishDebugLogModal extends Component {
         className={`${classes.modal} publish-debug`}
         close={() => this.close()}
       >
-        <H1 className={classes.headline}>{intl.formatMessage(messages.title)}</H1>
+        <H1 className={classes.headline}>
+          {intl.formatMessage(messages.title)}
+        </H1>
         {log && (
           <>
             <p className={classes.info}>
               {intl.formatMessage(messages.published)}
             </p>
-            <Input
-              showLabel={false}
-              value={`${DEBUG_API}/${log}`}
-              readonly
-            />
+            <Input showLabel={false} value={`${DEBUG_API}/${log}`} readonly />
           </>
         )}
 
@@ -169,9 +169,7 @@ class PublishDebugLogModal extends Component {
 
         {!log && !error && (
           <>
-            <p className={classes.info}>
-              {intl.formatMessage(messages.info)}
-            </p>
+            <p className={classes.info}>{intl.formatMessage(messages.info)}</p>
 
             <a
               href={`${DEBUG_API}/privacy.html`}

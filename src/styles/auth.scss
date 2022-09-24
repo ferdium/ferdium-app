@@ -49,6 +49,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: auto;
   }
 
   .auth__container {
@@ -60,6 +61,12 @@
     width: 350px;
 
     &.auth__container--signup { width: 450px; }
+
+    &.auth__container--releasenotes {
+      width: 90%;
+      height: -webkit-fill-available;
+      max-height: 80%;
+    }
   }
 
   .auth__logo {
@@ -85,7 +92,36 @@
   .auth__button {
     width: 100%;
 
-    &.auth__button--skip { margin: 10px auto 0; }
+    &.auth__button--skip {
+      margin: 10px auto 0;
+      width: 20%;
+    }
+  }
+
+  .releasenotes__body {
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    /* Track */
+    &::-webkit-scrollbar-track {
+      background: none;
+      border-radius: 10px;
+      -webkit-border-radius: 10px;
+    }
+
+    /* Handle */
+    &::-webkit-scrollbar-thumb {
+      background: $theme-gray-lighter;
+      border-radius: 10px;
+      -webkit-border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb:window-inactive {
+      background: none;
+    }
   }
 
   .touchid__button {
@@ -127,7 +163,11 @@
   }
 
   .auth__help {
-    padding: 5% 2%;
+    display: flex;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    justify-content: center;
+    height: fit-content;
   }
 
   .auth__adlk {
@@ -143,10 +183,8 @@
   .info-bar { position: absolute; }
 
   &__scroll-container {
-    max-height: 100vh;
-    padding: 80px 0;
-    overflow: auto;
     width: 100%;
+    height: fit-content;
   }
 
   .available-services { margin-bottom: 15px; }
@@ -162,4 +200,30 @@
     margin-top: 20px;
     text-align: center;
   }
+}
+
+.auth__main--releasenotes {
+  margin: 4% 2% 0% 4%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: -webkit-fill-available;
+}
+
+.auth__header {
+  font-size: x-large;
+  display: inline-flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: fit-content;
+
+  &-item__secondary {
+    padding-left: 5px
+  }
+}
+
+.auth__body {
+  margin-top: 2%;
 }

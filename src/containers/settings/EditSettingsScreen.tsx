@@ -15,6 +15,10 @@ import {
   ICON_SIZES,
   NAVIGATION_BAR_BEHAVIOURS,
   SEARCH_ENGINE_NAMES,
+  TRANSLATOR_ENGINE_NAMES,
+  GOOGLE_TRANSLATOR_LANGUAGES,
+  TRANSLATOR_ENGINE_GOOGLE,
+  LIBRETRANSLATE_TRANSLATOR_LANGUAGES,
   TODO_APPS,
   DEFAULT_SETTING_KEEP_ALL_WORKSPACES_LOADED,
   DEFAULT_IS_FEATURE_ENABLED_BY_USER,
@@ -22,6 +26,7 @@ import {
   WAKE_UP_HIBERNATION_STRATEGIES,
   SPLIT_COLUMNS_MIN,
   SPLIT_COLUMNS_MAX,
+  WEBRTC_IP_HANDLING_POLICY,
 } from '../../config';
 import { isMac } from '../../environment';
 
@@ -33,6 +38,7 @@ import EditSettingsForm from '../../components/settings/settings/EditSettingsFor
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 
 import globalMessages from '../../i18n/globalMessages';
+import { importExportURL } from '../../api/apiBase';
 
 const debug = require('../../preload-safe-debug')('Ferdium:EditSettingsScreen');
 
@@ -98,9 +104,21 @@ const messages = defineMessages({
     id: 'settings.app.form.navigationBarBehaviour',
     defaultMessage: 'Navigation bar behaviour',
   },
+  webRTCIPHandlingPolicy: {
+    id: 'settings.app.form.webRTCIPHandlingPolicy',
+    defaultMessage: 'WebRTC IP Handling Policy',
+  },
   searchEngine: {
     id: 'settings.app.form.searchEngine',
     defaultMessage: 'Search engine',
+  },
+  translatorEngine: {
+    id: 'settings.app.form.translatorEngine',
+    defaultMessage: 'Translator Engine',
+  },
+  translatorLanguage: {
+    id: 'settings.app.form.translatorLanguage',
+    defaultMessage: 'Default Translator language',
   },
   hibernateOnStartup: {
     id: 'settings.app.form.hibernateOnStartup',
@@ -198,8 +216,8 @@ const messages = defineMessages({
     id: 'settings.app.form.enableLongPressServiceHint',
     defaultMessage: 'Enable service shortcut hint on long press',
   },
-  useVerticalStyle: {
-    id: 'settings.app.form.useVerticalStyle',
+  useHorizontalStyle: {
+    id: 'settings.app.form.useHorizontalStyle',
     defaultMessage: 'Use horizontal style',
   },
   hideCollapseButton: {
@@ -265,6 +283,10 @@ const messages = defineMessages({
   enableSpellchecking: {
     id: 'settings.app.form.enableSpellchecking',
     defaultMessage: 'Enable spell checking',
+  },
+  enableTranslator: {
+    id: 'settings.app.form.enableTranslator',
+    defaultMessage: 'Enable Translator',
   },
   enableGPUAcceleration: {
     id: 'settings.app.form.enableGPUAcceleration',
@@ -340,7 +362,10 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
         clipboardNotifications: Boolean(settingsData.clipboardNotifications),
         notifyTaskBarOnMessage: Boolean(settingsData.notifyTaskBarOnMessage),
         navigationBarBehaviour: settingsData.navigationBarBehaviour,
+        webRTCIPHandlingPolicy: settingsData.webRTCIPHandlingPolicy,
         searchEngine: settingsData.searchEngine,
+        translatorEngine: settingsData.translatorEngine,
+        translatorLanguage: settingsData.translatorLanguage,
         hibernateOnStartup: Boolean(settingsData.hibernateOnStartup),
         hibernationStrategy: Number(settingsData.hibernationStrategy),
         wakeUpStrategy: Number(settingsData.wakeUpStrategy),
@@ -376,7 +401,7 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
         enableLongPressServiceHint: Boolean(
           settingsData.enableLongPressServiceHint,
         ),
-        useVerticalStyle: Boolean(settingsData.useVerticalStyle),
+        useHorizontalStyle: Boolean(settingsData.useHorizontalStyle),
         hideCollapseButton: Boolean(settingsData.hideCollapseButton),
         hideRecipesButton: Boolean(settingsData.hideRecipesButton),
         hideSplitModeButton: Boolean(settingsData.hideSplitModeButton),
@@ -393,6 +418,7 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
         ),
         showDragArea: Boolean(settingsData.showDragArea),
         enableSpellchecking: Boolean(settingsData.enableSpellchecking),
+        enableTranslator: Boolean(settingsData.enableTranslator),
         spellcheckerLanguage: settingsData.spellcheckerLanguage,
         userAgentPref: settingsData.userAgentPref,
         beta: Boolean(settingsData.beta), // we need this info in the main process as well
@@ -445,8 +471,23 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
       sort: false,
     });
 
+    const webRTCIPHandlingPolicies = getSelectOptions({
+      locales: WEBRTC_IP_HANDLING_POLICY,
+      sort: false,
+    });
+
     const searchEngines = getSelectOptions({
       locales: SEARCH_ENGINE_NAMES,
+      sort: false,
+    });
+
+    const translatorEngines = getSelectOptions({
+      locales: TRANSLATOR_ENGINE_NAMES,
+      sort: false,
+    });
+
+    const translatorLanguages = getSelectOptions({
+      locales: LIBRETRANSLATE_TRANSLATOR_LANGUAGES,
       sort: false,
     });
 
@@ -567,11 +608,29 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           default: DEFAULT_APP_SETTINGS.navigationBarBehaviour,
           options: navigationBarBehaviours,
         },
+        webRTCIPHandlingPolicy: {
+          label: intl.formatMessage(messages.webRTCIPHandlingPolicy),
+          value: settings.all.app.webRTCIPHandlingPolicy,
+          default: DEFAULT_APP_SETTINGS.webRTCIPHandlingPolicy,
+          options: webRTCIPHandlingPolicies,
+        },
         searchEngine: {
           label: intl.formatMessage(messages.searchEngine),
           value: settings.all.app.searchEngine,
           default: DEFAULT_APP_SETTINGS.searchEngine,
           options: searchEngines,
+        },
+        translatorEngine: {
+          label: intl.formatMessage(messages.translatorEngine),
+          value: settings.all.app.translatorEngine,
+          default: DEFAULT_APP_SETTINGS.translatorEngine,
+          options: translatorEngines,
+        },
+        translatorLanguage: {
+          label: intl.formatMessage(messages.translatorLanguage),
+          value: settings.all.app.translatorLanguage,
+          default: DEFAULT_APP_SETTINGS.translatorLanguage,
+          options: translatorLanguages,
         },
         hibernateOnStartup: {
           label: intl.formatMessage(messages.hibernateOnStartup),
@@ -676,6 +735,11 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           value: settings.all.app.enableSpellchecking,
           default: DEFAULT_APP_SETTINGS.enableSpellchecking,
         },
+        enableTranslator: {
+          label: intl.formatMessage(messages.enableTranslator),
+          value: settings.all.app.enableTranslator,
+          default: DEFAULT_APP_SETTINGS.enableTranslator,
+        },
         spellcheckerLanguage: {
           label: intl.formatMessage(globalMessages.spellcheckerLanguage),
           value: settings.all.app.spellcheckerLanguage,
@@ -738,10 +802,10 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           value: settings.all.app.enableLongPressServiceHint,
           default: DEFAULT_APP_SETTINGS.enableLongPressServiceHint,
         },
-        useVerticalStyle: {
-          label: intl.formatMessage(messages.useVerticalStyle),
-          value: settings.all.app.useVerticalStyle,
-          default: DEFAULT_APP_SETTINGS.useVerticalStyle,
+        useHorizontalStyle: {
+          label: intl.formatMessage(messages.useHorizontalStyle),
+          value: settings.all.app.useHorizontalStyle,
+          default: DEFAULT_APP_SETTINGS.useHorizontalStyle,
         },
         hideCollapseButton: {
           label: intl.formatMessage(messages.hideCollapseButton),
@@ -827,6 +891,14 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
       },
     };
 
+    if (settings.app.translatorEngine === TRANSLATOR_ENGINE_GOOGLE) {
+      const translatorGoogleLanguages = getSelectOptions({
+        locales: GOOGLE_TRANSLATOR_LANGUAGES,
+        sort: false,
+      });
+      config.fields.translatorLanguage.options = translatorGoogleLanguages;
+    }
+
     if (workspaces.isFeatureActive) {
       config.fields.keepAllWorkspacesLoaded = {
         label: intl.formatMessage(messages.keepAllWorkspacesLoaded),
@@ -852,6 +924,7 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
     const { app } = this.props.stores;
     const {
       updateStatus,
+      updateVersion,
       updateStatusTypes,
       isClearingAllCache,
       lockingFeatureEnabled,
@@ -859,13 +932,13 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
     const { checkForUpdates, installUpdate, clearAllCache } =
       this.props.actions.app;
     const form = this.prepareForm();
-
     return (
       <ErrorBoundary>
         <EditSettingsForm
           form={form}
           checkForUpdates={checkForUpdates}
           installUpdate={installUpdate}
+          updateVersion={updateVersion}
           isCheckingForUpdates={updateStatus === updateStatusTypes.CHECKING}
           isUpdateAvailable={updateStatus === updateStatusTypes.AVAILABLE}
           noUpdateAvailable={updateStatus === updateStatusTypes.NOT_AVAILABLE}
@@ -894,6 +967,7 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           }
           openProcessManager={() => this.openProcessManager()}
           isOnline={app.isOnline}
+          serverURL={importExportURL()}
         />
       </ErrorBoundary>
     );

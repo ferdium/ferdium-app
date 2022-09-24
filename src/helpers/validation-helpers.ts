@@ -13,7 +13,7 @@ const messages = defineMessages({
   },
   url: {
     id: 'validation.url',
-    defaultMessage: "{field} is not a valid URL",
+    defaultMessage: '{field} is not a valid URL',
   },
   minLength: {
     id: 'validation.minLength',

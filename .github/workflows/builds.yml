@@ -149,7 +149,7 @@ jobs:
       - name: Install node dependencies
         run: npm i
       - name: Package recipes
-        run: pnpm i && pnpm package
+        run: pnpm i && pnpm lint && pnpm reformat-files && pnpm package
         working-directory: ./recipes
       - name: Run linter and tests
         run: npm run lint && npm run test
@@ -239,16 +239,16 @@ jobs:
         run: echo "PACKAGE_VERSION=$(node -p 'require("./package.json").version')" >> $GITHUB_ENV
         shell: bash
       - name: Package recipes
-        run: pnpm i && pnpm package
+        run: pnpm i && pnpm lint && pnpm reformat-files && pnpm package
         working-directory: ./recipes
       - name: Run linter and tests
         run: npm run lint && npm run test
       - name: Build Ferdium without publish for any branch not 'nightly' and not 'release'
         if: ${{ env.GIT_BRANCH_NAME != 'nightly' && env.GIT_BRANCH_NAME != 'release' }}
-        run: npm run build -- --publish never
-        shell: bash
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: false
+        run: npm run build -- --publish never
+        shell: bash
       - name: Build Ferdium with publish for 'nightly' branch
         if: ${{ env.GIT_BRANCH_NAME == 'nightly' }}
         env:
@@ -347,7 +347,7 @@ jobs:
           max_attempts: 3
           retry_on: error
       - name: Package recipes
-        run: pnpm i && pnpm package
+        run: pnpm i && pnpm lint && pnpm reformat-files && pnpm package
         working-directory: ./recipes
         shell: bash
       - name: Run linter and tests
@@ -355,10 +355,10 @@ jobs:
         shell: bash
       - name: Build Ferdium without publish for any branch not 'nightly' and not 'release'
         if: ${{ env.GIT_BRANCH_NAME != 'nightly' && env.GIT_BRANCH_NAME != 'release' }}
-        run: npm run build -- --publish never
-        shell: bash
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: false
+        run: npm run build -- --publish never
+        shell: bash
       - name: Build Ferdium with publish for 'nightly' branch
         if: ${{ env.GIT_BRANCH_NAME == 'nightly' }}
         env:

@@ -1,4 +1,4 @@
-import { autorun, computed, makeObservable, observable } from 'mobx';
+import { autorun, action, computed, makeObservable, observable } from 'mobx';
 import { ipcRenderer } from 'electron';
 import { webContents } from '@electron/remote';
 import normalizeUrl from 'normalize-url';
@@ -11,6 +11,7 @@ import UserAgent from './UserAgent';
 import { DEFAULT_SERVICE_ORDER } from '../config';
 import { ifUndefined } from '../jsUtils';
 import { IRecipe } from './Recipe';
+import { needsToken } from '../api/apiBase';
 
 const debug = require('../preload-safe-debug')('Ferdium:Service');
 
@@ -123,6 +124,19 @@ export default class Service {
 
   @observable proxy: string | null = null;
 
+  @action _setAutoRun() {
+    if (!this.isEnabled) {
+      this.webview = null;
+      this.isAttached = false;
+      this.unreadDirectMessageCount = 0;
+      this.unreadIndirectMessageCount = 0;
+    }
+
+    if (this.recipe.hasCustomUrl && this.customUrl) {
+      this.isUsingCustomUrl = true;
+    }
+  }
+
   constructor(data, recipe: IRecipe) {
     if (!data) {
       throw new Error('Service config not valid');
@@ -211,17 +225,40 @@ export default class Service {
     }
 
     autorun((): void => {
-      if (!this.isEnabled) {
-        this.webview = null;
-        this.isAttached = false;
-        this.unreadDirectMessageCount = 0;
-        this.unreadIndirectMessageCount = 0;
-      }
-
-      if (this.recipe.hasCustomUrl && this.customUrl) {
-        this.isUsingCustomUrl = true;
-      }
+      this._setAutoRun();
     });
+  }
+
+  @action _didStartLoading(): void {
+    this.hasCrashed = false;
+    this.isLoading = true;
+    this.isLoadingPage = true;
+    this.isError = false;
+  }
+
+  @action _didStopLoading(): void {
+    this.isLoading = false;
+    this.isLoadingPage = false;
+  }
+
+  @action _didLoad(): void {
+    this.isLoading = false;
+    this.isLoadingPage = false;
+
+    if (!this.isError) {
+      this.isFirstLoad = false;
+    }
+  }
+
+  @action _didFailLoad(event: { errorDescription: string }): void {
+    this.isError = false;
+    this.errorMessage = event.errorDescription;
+    this.isLoading = false;
+    this.isLoadingPage = false;
+  }
+
+  @action _hasCrashed(): void {
+    this.hasCrashed = true;
   }
 
   @computed get shareWithWebview(): object {
@@ -295,6 +332,21 @@ export default class Service {
 
   @computed get icon(): string {
     if (this.iconUrl) {
+      if (needsToken()) {
+        let url: URL;
+        try {
+          url = new URL(this.iconUrl);
+        } catch (error) {
+          debug('Invalid url', this.iconUrl, error);
+          return this.iconUrl;
+        }
+        const requestStore = (window as any).ferdium.stores.requests;
+        // Make sure we only pass the token to the local server.
+        if (url.origin === requestStore.localServerOrigin) {
+          url.searchParams.set('token', requestStore.localServerToken);
+          return url.toString();
+        }
+      }
       return this.iconUrl;
     }
 
@@ -404,27 +456,18 @@ export default class Service {
     this.webview.addEventListener('did-start-loading', event => {
       debug('Did start load', this.name, event);
 
-      this.hasCrashed = false;
-      this.isLoading = true;
-      this.isLoadingPage = true;
-      this.isError = false;
+      this._didStartLoading();
     });
 
     this.webview.addEventListener('did-stop-loading', event => {
       debug('Did stop load', this.name, event);
 
-      this.isLoading = false;
-      this.isLoadingPage = false;
+      this._didStopLoading();
     });
 
     // eslint-disable-next-line unicorn/consistent-function-scoping
     const didLoad = () => {
-      this.isLoading = false;
-      this.isLoadingPage = false;
-
-      if (!this.isError) {
-        this.isFirstLoad = false;
-      }
+      this._didLoad();
     };
 
     this.webview.addEventListener('did-frame-finish-load', didLoad.bind(this));
@@ -437,16 +480,13 @@ export default class Service {
         event.errorCode !== -21 &&
         event.errorCode !== -3
       ) {
-        this.isError = true;
-        this.errorMessage = event.errorDescription;
-        this.isLoading = false;
-        this.isLoadingPage = false;
+        this._didFailLoad(event);
       }
     });
 
     this.webview.addEventListener('crashed', () => {
       debug('Service crashed', this.name);
-      this.hasCrashed = true;
+      this._hasCrashed();
     });
 
     this.webview.addEventListener('found-in-page', ({ result }) => {

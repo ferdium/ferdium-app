@@ -45,6 +45,7 @@ import './electron/exception';
 import { asarPath } from './helpers/asar-helpers';
 import { openExternalUrl } from './helpers/url-helpers';
 import userAgent from './helpers/userAgent-helpers';
+import { translateTo } from './helpers/translation-helpers';
 
 const debug = require('./preload-safe-debug')('Ferdium:App');
 
@@ -89,8 +90,8 @@ if (isWindows) {
 const settings = new Settings('app', DEFAULT_APP_SETTINGS);
 const proxySettings = new Settings('proxy');
 
-const retrieveSettingValue = (key: string, defaultValue: boolean) =>
-  ifUndefined<boolean>(settings.get(key), defaultValue);
+const retrieveSettingValue = (key: string, defaultValue: boolean | string) =>
+  ifUndefined<boolean | string>(settings.get(key), defaultValue);
 
 const liftSingleInstanceLock = retrieveSettingValue(
   'liftSingleInstanceLock',
@@ -119,9 +120,7 @@ if (!gotTheLock) {
         onDidLoad((window: BrowserWindow) => {
           // Keep only command line / deep linked arguments
           const url = argv.slice(1);
-          if (url) {
-            handleDeepLink(window, url.toString());
-          }
+          handleDeepLink(window, url.toString());
 
           if (argv.includes('--reset-window')) {
             // Needs to be delayed to not interfere with mainWindow.restore();
@@ -165,6 +164,15 @@ if (!retrieveSettingValue('enableGPUAcceleration', false)) {
   app.disableHardwareAcceleration();
 }
 
+const webRTCIPHandlingPolicy = retrieveSettingValue(
+  'webRTCIPHandlingPolicy',
+  DEFAULT_APP_SETTINGS.webRTCIPHandlingPolicy,
+) as
+  | 'disable_non_proxied_udp'
+  | 'default'
+  | 'default_public_interface_only'
+  | 'default_public_and_private_interfaces';
+
 const createWindow = () => {
   // Remember window size
   const mainWindowState = windowStateKeeper({
@@ -203,7 +211,7 @@ const createWindow = () => {
       spellcheck: retrieveSettingValue(
         'enableSpellchecking',
         DEFAULT_APP_SETTINGS.enableSpellchecking,
-      ),
+      ) as boolean | undefined,
       nodeIntegration: true,
       contextIsolation: false,
       webviewTag: true,
@@ -211,6 +219,7 @@ const createWindow = () => {
   });
 
   enableWebContents(mainWindow.webContents);
+  mainWindow.webContents.setWebRTCIPHandlingPolicy(webRTCIPHandlingPolicy);
 
   app.on('browser-window-created', (_, window) => {
     enableWebContents(window.webContents);
@@ -270,14 +279,7 @@ const createWindow = () => {
   if (isWindows) {
     onDidLoad((window: BrowserWindow) => {
       const url = process.argv.slice(1);
-      if (
-        url &&
-        // The next line is a workaround after this 71c5237 [chore: Mobx & React-Router upgrade (#406)].
-        // For some reason, the app won't start until because it's trying to route to './build'.
-        url.toString() !== './build'
-      ) {
-        handleDeepLink(window, url.toString());
-      }
+      handleDeepLink(window, url.toString());
     });
   }
 
@@ -346,6 +348,7 @@ const createWindow = () => {
     debug('Window: maximize');
     // @ts-expect-error Property 'isMaximized' does not exist on type 'App'.
     app.isMaximized = true;
+    mainWindow?.setSkipTaskbar(false);
   });
 
   mainWindow.on('unmaximize', () => {
@@ -508,6 +511,18 @@ app.on('login', (event, _webContents, _request, authInfo, callback) => {
   }
 });
 
+ipcMain.handle(
+  'translate',
+  async (_e, { text, translateToLanguage, translatorEngine }) => {
+    const response = await translateTo(
+      text,
+      translateToLanguage,
+      translatorEngine,
+    );
+    return response;
+  },
+);
+
 // TODO: evaluate if we need to store the authCallback for every service
 ipcMain.on('feature-basic-auth-credentials', (_e, { user, password }) => {
   debug('Received basic auth credentials', user, '********');
@@ -527,6 +542,7 @@ ipcMain.on('open-browser-window', (_e, { url, serviceId }) => {
     },
   });
   enableWebContents(child.webContents);
+  child.webContents.setWebRTCIPHandlingPolicy(webRTCIPHandlingPolicy);
   child.show();
   child.loadURL(url);
   debug('Received open-browser-window', url);
@@ -631,9 +647,11 @@ ipcMain.on('set-spellchecker-locales', (_e, { locale, serviceId }) => {
   serviceSession.setSpellCheckerLanguages(locales);
 });
 
-ipcMain.handle('get-desktop-capturer-sources', () => desktopCapturer.getSources({
-  types: ['screen', 'window'],
-}));
+ipcMain.handle('get-desktop-capturer-sources', () =>
+  desktopCapturer.getSources({
+    types: ['screen', 'window'],
+  }),
+);
 
 ipcMain.on('window.toolbar-double-clicked', () => {
   mainWindow?.isMaximized() ? mainWindow.unmaximize() : mainWindow?.maximize();

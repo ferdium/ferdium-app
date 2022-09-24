@@ -1,7 +1,9 @@
 import { ipcRenderer } from 'electron';
 import { IPC } from './constants';
 
-const debug = require('../../preload-safe-debug')('Ferdium:feature:todos:preload');
+const debug = require('../../preload-safe-debug')(
+  'Ferdium:feature:todos:preload',
+);
 
 debug('Preloading Todos Webview');
 

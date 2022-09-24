@@ -2,7 +2,9 @@ import { ipcMain } from 'electron';
 
 import LanguageDetect from 'languagedetect';
 
-const debug = require('../../preload-safe-debug')('Ferdium:ipcApi:languageDetect');
+const debug = require('../../preload-safe-debug')(
+  'Ferdium:ipcApi:languageDetect',
+);
 
 export default async () => {
   ipcMain.handle('detect-language', async (_event, { sample }) => {

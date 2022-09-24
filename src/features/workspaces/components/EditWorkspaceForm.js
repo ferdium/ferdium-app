@@ -170,10 +170,7 @@ class EditWorkspaceForm extends Component {
         </div>
         <div className="settings__body">
           {updateWorkspaceRequest.error && (
-            <Infobox
-              icon="alert"
-              type="danger"
-            >
+            <Infobox icon="alert" type="danger">
               Error while saving workspace
             </Infobox>
           )}

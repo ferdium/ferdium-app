@@ -2,7 +2,10 @@ const Service = use('App/Models/Service');
 const { validateAll } = use('Validator');
 
 const { v4: uuid } = require('uuid');
-const { DEFAULT_SERVICE_ORDER, DEFAULT_SERVICE_SETTINGS } = require('../../../../config');
+const {
+  DEFAULT_SERVICE_ORDER,
+  DEFAULT_SERVICE_SETTINGS,
+} = require('../../../../config');
 const { convertToJSON } = require('../../../../jsUtils');
 const { deduceIconUrl, moveIcon } = require('../../ImageHelper');
 
@@ -30,7 +33,8 @@ class ServiceController {
       serviceId = uuid();
     } while (
       // eslint-disable-next-line no-await-in-loop, unicorn/no-await-expression-member
-      (await Service.query().where('serviceId', serviceId).fetch()).rows.length > 0
+      (await Service.query().where('serviceId', serviceId).fetch()).rows
+        .length > 0
     );
 
     await Service.create({

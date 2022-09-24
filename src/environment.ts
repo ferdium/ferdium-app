@@ -6,8 +6,8 @@ export const isMac = process.platform === 'darwin';
 export const isWindows = process.platform === 'win32';
 export const isLinux = process.platform === 'linux';
 
-export const electronVersion: string = process.versions.electron;
-export const chromeVersion: string = process.versions.chrome;
+export const electronVersion: string = process.versions.electron ?? '';
+export const chromeVersion: string = process.versions.chrome ?? '';
 export const nodeVersion: string = process.versions.node;
 
 export const osArch: string = arch();
@@ -41,3 +41,5 @@ export const splitModeToggleShortcutKey = (isAccelerator = true) =>
   `${cmdOrCtrlShortcutKey(isAccelerator)}+${altKey(isAccelerator)}+S`;
 export const settingsShortcutKey = (isAccelerator = true) =>
   `${cmdOrCtrlShortcutKey(isAccelerator)}+${isMac ? ',' : 'P'}`;
+export const toggleFullScreenKey = () =>
+  isMac ? `CTRL + ${cmdKey} + F` : `F11`;
