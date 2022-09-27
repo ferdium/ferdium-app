@@ -165,7 +165,7 @@ interface RecipeStore extends TypedStore {
   all: Recipe[];
   one: (id: string) => Recipe;
   recipeIdForServices: () => void;
-  _install({ recipeId: string }): Promise<Recipe>;
+  _install({ recipeId }): Promise<Recipe>;
 }
 
 interface RequestsStore extends TypedStore {
