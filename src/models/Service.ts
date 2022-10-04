@@ -124,6 +124,8 @@ export default class Service {
 
   @observable proxy: string | null = null;
 
+  @observable isMediaPlaying: boolean = false;
+
   @action _setAutoRun() {
     if (!this.isEnabled) {
       this.webview = null;
@@ -259,6 +261,14 @@ export default class Service {
 
   @action _hasCrashed(): void {
     this.hasCrashed = true;
+  }
+
+  @action _didMediaPlaying(): void {
+    this.isMediaPlaying = true;
+  }
+
+  @action _didMediaPaused(): void {
+    this.isMediaPlaying = false;
   }
 
   @computed get shareWithWebview(): object {
@@ -492,6 +502,16 @@ export default class Service {
     this.webview.addEventListener('found-in-page', ({ result }) => {
       debug('Found in page', result);
       this.webview.send('found-in-page', result);
+    });
+
+    this.webview.addEventListener('media-started-playing', event => {
+      debug('Started Playing media', this.name, event);
+      this._didMediaPlaying();
+    });
+
+    this.webview.addEventListener('media-paused', event => {
+      debug('Stopped Playing media', this.name, event);
+      this._didMediaPaused();
     });
 
     webviewWebContents.on('login', (event, _, authInfo, callback) => {
