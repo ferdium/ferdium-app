@@ -352,9 +352,7 @@ class TabItem extends Component {
 
     let mediaBadge = null;
     if (service.isMediaPlaying) {
-      mediaBadge = (
-        <Icon icon={mdiVolumeSource} className="tab-item__icon" />
-      );
+      mediaBadge = <Icon icon={mdiVolumeSource} className="tab-item__icon" />;
     }
 
     return (
