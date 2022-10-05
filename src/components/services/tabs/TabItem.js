@@ -350,9 +350,10 @@ class TabItem extends Component {
       );
     }
 
-    const mediaBadge = service.isMediaPlaying ? (
+    const showMediaBadge = service.isMediaPlaying && service.isEnabled;
+    const mediaBadge = (
       <Icon icon={mdiVolumeSource} className="tab-item__icon" />
-    ) : null;
+    );
 
     return (
       <li
@@ -379,7 +380,7 @@ class TabItem extends Component {
         )}
         {notificationBadge}
         {errorBadge}
-        {mediaBadge}
+        {showMediaBadge && mediaBadge}
         {IS_SERVICE_DEBUGGING_ENABLED && (
           <>
             <div
