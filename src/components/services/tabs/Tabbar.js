@@ -43,6 +43,7 @@ class TabBar extends Component {
         serviceId,
         serviceData: {
           isEnabled,
+          isMediaPlaying: false,
         },
         redirect: false,
       });
