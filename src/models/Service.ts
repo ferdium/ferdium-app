@@ -291,7 +291,7 @@ export default class Service {
   }
 
   @computed get canHibernate(): boolean {
-    return this.isHibernationEnabled;
+    return this.isHibernationEnabled && !this.isMediaPlaying;
   }
 
   @computed get isHibernating(): boolean {
