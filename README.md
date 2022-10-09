@@ -8,6 +8,18 @@
       <img src="./branding/download.png" alt="Download" width="150"/>
     </a>
 </p>
+<p align="center">
+    Everything you like in one place
+    <br />
+    <a href="https://github.com/ferdium/ferdium-app"><strong>Explore the documents »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/ferdium/ferdium-app">See demo</a>
+    ·
+    <a href="https://github.com/ferdium/ferdium-app/issues/new?assignees=&labels=feature&template=bug_report.md&title=">Report a Bug</a>
+    ·
+    <a href="https://github.com/ferdium/ferdium-app/issues/new?assignees=&labels=feature&template=feature_request.md&title=">Request feature</a>
+</p>
 
 # Ferdium
 
