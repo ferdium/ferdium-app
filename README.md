@@ -14,11 +14,11 @@
     <a href="https://github.com/ferdium/ferdium-app"><strong>Explore the documents »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/ferdium/ferdium-app">See demo</a>
+    <a href="https://github.com/ferdium/ferdium-app/issues/new?assignees=&labels=feature&template=open_issue.yml&title=">Open Issue</a>
     ·
-    <a href="https://github.com/ferdium/ferdium-app/issues/new?assignees=&labels=feature&template=bug_report.md&title=">Report a Bug</a>
+    <a href="https://github.com/ferdium/ferdium-app/issues/new?assignees=&labels=feature&template=bug_report.yml&title=">Report a Bug</a>
     ·
-    <a href="https://github.com/ferdium/ferdium-app/issues/new?assignees=&labels=feature&template=feature_request.md&title=">Request feature</a>
+    <a href="https://github.com/ferdium/ferdium-app/issues/new?assignees=&labels=feature&template=feature_request.yml&title=">Request feature</a>
 </p>
 
 # Ferdium
