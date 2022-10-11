@@ -121,12 +121,6 @@ jobs:
         run: npm i -gf "pnpm@$(node -p 'require("./recipes/package.json").engines.pnpm')" && pnpm -v
       - name: Install node dependencies
         run: npm i
-      - name: Update submodules
-        run: |
-          rm -rf ./recipes
-          npm run update-submodules
-          git add .
-          echo "GIT_DIRTY=$(git status -s | wc -l)" >> $GITHUB_ENV
       - name: Update browserslist db
         run: |
           npx browserslist@latest --update-db
@@ -137,12 +131,12 @@ jobs:
         run: |
           npm run prepare-code
           npm run test
-      - name: Commit submodules, dependency-updates and linter changes
+      - name: Commit dependency-updates and linter changes
         if: ${{ env.GIT_DIRTY != '0' }}
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git commit -am "Update submodules, browserslist data updates and linter fixes [skip ci]" --no-verify || true
+          git commit -am "Update browserslist data updates and linter fixes [skip ci]" --no-verify || true
       - name: Push all changes
         if: ${{ env.GIT_DIRTY != '0' }}
         run: git push origin develop --no-verify
