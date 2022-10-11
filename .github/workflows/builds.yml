@@ -105,15 +105,12 @@ jobs:
         run: |
           echo "NPM_CACHE=$HOME/.npm" >> $GITHUB_ENV
           echo "PNPM_CACHE=$HOME/.pnpm-store" >> $GITHUB_ENV
-      - name: Checkout code along with submodules
+      - name: Checkout code along with submodules for the develop branch
         uses: actions/checkout@v3
         with:
+          ref: develop
           submodules: recursive
           fetch-depth: 0 # Note: Needed to be able to pull the 'develop' branch as well for merging
-      - name: Extract Git branch name and commit from the currently checked out branch (not from the branch where this run was kicked off)
-        run: |
-          echo "GIT_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
-        shell: bash
       - name: Use Node.js specified in the '.nvmrc' file
         uses: actions/setup-node@v3
         with:
@@ -148,7 +145,7 @@ jobs:
           git commit -am "Update submodules, browserslist data updates and linter fixes [skip ci]" --no-verify || true
       - name: Push all changes
         if: ${{ env.GIT_DIRTY != '0' }}
-        run: git push origin ${{ env.GIT_BRANCH_NAME }} --no-verify
+        run: git push origin develop --no-verify
 
   build_mac:
     name: "macos ${{ github.event.inputs.message }}"
