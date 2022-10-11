@@ -71,6 +71,29 @@ jobs:
           CHANGES_COUNT=$(git diff --shortstat origin/develop | wc -l)
           MANUAL_REBUILD="${{ github.event_name == 'workflow_dispatch' }}"
           VERSION_BUMP="${{ contains(github.event.inputs.message, '[version bump]') }}"
+          if [ $CHANGES_COUNT -gt 0 ]; then
+            # If there were any changes only in the submodules, then...
+
+            echo "Update browserslist db"
+            npx browserslist@latest --update-db
+            git add .
+            echo "GIT_DIRTY=$(git status -s | wc -l)" >> $GITHUB_ENV
+
+            echo "Run linter, reformatter, rebrander and tests"
+            npm run prepare-code
+            npm run test
+
+            echo "Commit dependency-updates and linter changes"
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+            git commit -am "Update browserslist data updates and linter fixes [skip ci]" --no-verify || true
+
+            echo "Push all changes"
+            git push origin develop --no-verify
+
+            git checkout nightly
+          fi
+
           if [ $CHANGES_COUNT -gt 0 ] || [[ $MANUAL_REBUILD == "true" && $VERSION_BUMP == "true" ]]; then
             # Do the version bump in the 'develop' branch ONLY if
             #   there were other changes coming from the 'develop' branch (or)
@@ -94,52 +117,6 @@ jobs:
             echo "Pushing rebased commits"
             git push origin $(git rev-parse --abbrev-ref HEAD) --no-verify
           fi
-
-  dependency_updates:
-    name: "Update dependencies"
-    runs-on: ubuntu-20.04
-    needs: check_updates
-    if: ${{ needs.check_updates.outputs.should_run != 'false' }}
-    steps:
-      - name: Set env vars
-        run: |
-          echo "NPM_CACHE=$HOME/.npm" >> $GITHUB_ENV
-          echo "PNPM_CACHE=$HOME/.pnpm-store" >> $GITHUB_ENV
-      - name: Checkout code along with submodules for the develop branch
-        uses: actions/checkout@v3
-        with:
-          ref: develop
-          submodules: recursive
-          fetch-depth: 0 # Note: Needed to be able to pull the 'develop' branch as well for merging
-      - name: Use Node.js specified in the '.nvmrc' file
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc'
-      - name: Install npm
-        run: npm i -gf "npm@$(node -p 'require("./package.json").engines.npm')" && npm -v
-      - name: Install pnpm
-        run: npm i -gf "pnpm@$(node -p 'require("./recipes/package.json").engines.pnpm')" && pnpm -v
-      - name: Install node dependencies
-        run: npm i
-      - name: Update browserslist db
-        run: |
-          npx browserslist@latest --update-db
-          git add .
-          echo "GIT_DIRTY=$(git status -s | wc -l)" >> $GITHUB_ENV
-      - name: Run linter, reformatter, rebrander and tests
-        if: ${{ env.GIT_DIRTY != '0' }}
-        run: |
-          npm run prepare-code
-          npm run test
-      - name: Commit dependency-updates and linter changes
-        if: ${{ env.GIT_DIRTY != '0' }}
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git commit -am "Update browserslist data updates and linter fixes [skip ci]" --no-verify || true
-      - name: Push all changes
-        if: ${{ env.GIT_DIRTY != '0' }}
-        run: git push origin develop --no-verify
 
   build_mac:
     name: "macos ${{ github.event.inputs.message }}"
