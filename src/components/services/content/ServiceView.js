@@ -137,7 +137,7 @@ class ServiceView extends Component {
           <>
             {service.isActive && (
               <ServiceDisabled
-                name={service.recipe.name}
+                name={service.name !== '' ? service.name : service.recipe.name}
                 webview={service.webview}
                 enable={enable}
               />
