@@ -80,8 +80,9 @@ jobs:
           CHANGES_COUNT=$(git diff --shortstat origin/develop | wc -l)
           MANUAL_REBUILD="${{ github.event_name == 'workflow_dispatch' }}"
           VERSION_BUMP="${{ contains(github.event.inputs.message, '[version bump]') }}"
+          # If there were any changes only in the submodules, then...
           if [ $CHANGES_COUNT -gt 0 ]; then
-            # If there were any changes only in the submodules, then...
+            git checkout develop
 
             echo "Update browserslist db"
             npx browserslist@latest --update-db
@@ -93,8 +94,6 @@ jobs:
             npm run test
 
             echo "Commit dependency-updates and linter changes"
-            git config user.name github-actions
-            git config user.email github-actions@github.com
             git commit -am "Update browserslist data updates and linter fixes [skip ci]" --no-verify || true
 
             echo "Push all changes"
