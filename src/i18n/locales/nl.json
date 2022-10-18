@@ -266,6 +266,7 @@
   "settings.app.form.wakeUpHibernationSplay": "Splay nijling/wake cycli om de belasting te verminderen",
   "settings.app.form.wakeUpHibernationStrategy": "Sluimerstrategie na automatisch ontwaken",
   "settings.app.form.wakeUpStrategy": "Wakker maken strategie",
+  "settings.app.form.webRTCIPHandlingPolicy": "WebRTC IP-verwerkingsbeleid",
   "settings.app.headlineAdvanced": "Geavanceerd",
   "settings.app.headlineAppearance": "Weergave",
   "settings.app.headlineGeneral": "Algemeen",
