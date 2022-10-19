@@ -196,7 +196,7 @@
   "settings.app.buttonSearchForUpdate": "Vérifier les mises à jour",
   "settings.app.buttonShowChangelog": "Afficher le journal des changements",
   "settings.app.cacheInfo": "Le cache de Ferdium occupe actuellement {size} en espace disque.",
-  "settings.app.cacheNotCleared": "Impossible de vider toute la cache",
+  "settings.app.cacheNotCleared": "Impossible de vider tout le cache",
   "settings.app.closeSettings": "Fermer les paramètres",
   "settings.app.currentVersion": "Version actuelle :",
   "settings.app.form.accentColor": "Couleur d'accentuation",
