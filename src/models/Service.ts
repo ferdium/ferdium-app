@@ -59,6 +59,8 @@ export default class Service {
 
   @observable isBadgeEnabled: boolean = true;
 
+  @observable isMediaBadgeEnabled: boolean = true;
+
   @observable trapLinkClicks: boolean = false;
 
   @observable isIndirectMessageBadgeEnabled: boolean = true;
@@ -168,6 +170,11 @@ export default class Service {
     this.isBadgeEnabled = ifUndefined<boolean>(
       data.isBadgeEnabled,
       this.isBadgeEnabled,
+    );
+
+    this.isMediaBadgeEnabled = ifUndefined<boolean>(
+      data.isMediaBadgeEnabled,
+      this.isMediaBadgeEnabled,
     );
     this.trapLinkClicks = ifUndefined<boolean>(
       data.trapLinkClicks,

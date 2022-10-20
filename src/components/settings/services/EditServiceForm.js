@@ -347,6 +347,7 @@ class EditServiceForm extends Component {
                   <p className="settings__help indented__help">
                     {intl.formatMessage(messages.isMutedInfo)}
                   </p>
+                  <Toggle field={form.$('isMediaBadgeEnabled')} />
                 </div>
 
                 <div className="settings__settings-group">
