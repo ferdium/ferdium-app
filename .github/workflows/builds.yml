@@ -26,7 +26,7 @@ on:
         description: "Message for build"
         required: true
   schedule:
-    - cron: "15 0 * * *" # every night at 12:15 am (to allow for dependency builds to complete)
+    - cron: '0 0 * * *' # every night at 12 am
 
 env:
   USE_HARD_LINKS: false
@@ -51,6 +51,15 @@ jobs:
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
         with:
           node-version-file: ".nvmrc"
+      - name: Install npm
+        if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
+        run: npm i -gf "npm@$(node -p 'require("./package.json").engines.npm')" && npm -v
+      - name: Install pnpm
+        if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
+        run: npm i -gf "pnpm@$(node -p 'require("./recipes/package.json").engines.pnpm')" && pnpm -v
+      - name: Install node dependencies
+        if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
+        run: npm i
       - id: should_run
         name: Check whether there are any commits since this run was last triggered and push them and/or set the output
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
@@ -71,6 +80,28 @@ jobs:
           CHANGES_COUNT=$(git diff --shortstat origin/develop | wc -l)
           MANUAL_REBUILD="${{ github.event_name == 'workflow_dispatch' }}"
           VERSION_BUMP="${{ contains(github.event.inputs.message, '[version bump]') }}"
+          # If there were any changes only in the submodules, then...
+          if [ $CHANGES_COUNT -gt 0 ]; then
+            git checkout develop
+
+            echo "Update browserslist db"
+            npx browserslist@latest --update-db
+            git add .
+            echo "GIT_DIRTY=$(git status -s | wc -l)" >> $GITHUB_ENV
+
+            echo "Run linter, reformatter, rebrander and tests"
+            npm run prepare-code
+            npm run test
+
+            echo "Commit dependency-updates and linter changes"
+            git commit -am "Update browserslist data updates and linter fixes [skip ci]" --no-verify || true
+
+            echo "Push all changes"
+            git push origin develop --no-verify
+
+            git checkout nightly
+          fi
+
           if [ $CHANGES_COUNT -gt 0 ] || [[ $MANUAL_REBUILD == "true" && $VERSION_BUMP == "true" ]]; then
             # Do the version bump in the 'develop' branch ONLY if
             #   there were other changes coming from the 'develop' branch (or)
@@ -159,19 +190,8 @@ jobs:
           CSC_IDENTITY_AUTO_DISCOVERY: false
         run: npm run build -- --publish never
         shell: bash
-      - name: Build Ferdium with publish for 'nightly' branch
-        if: ${{ env.GIT_BRANCH_NAME == 'nightly' }}
-        env:
-          GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
-          CSC_IDENTITY_AUTO_DISCOVERY: true
-          APPLEID: ${{ secrets.APPLEID }}
-          APPLEID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
-          CSC_LINK: ${{ secrets.CSC_LINK }}
-          CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
-        run: npm run build -- --publish always
-        shell: bash
-      - name: Build Ferdium with publish for 'release' branch
-        if: ${{ env.GIT_BRANCH_NAME == 'release' }}
+      - name: "Build Ferdium with publish for '${{ env.GIT_BRANCH_NAME }}' branch"
+        if: ${{ env.GIT_BRANCH_NAME == 'nightly' || env.GIT_BRANCH_NAME == 'release' }}
         env:
           GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: true
@@ -236,7 +256,23 @@ jobs:
       - name: Install node dependencies
         run: npm i
       - name: Figure out used package.json version
-        run: echo "PACKAGE_VERSION=$(node -p 'require("./package.json").version')" >> $GITHUB_ENV
+        run: |
+          PACKAGE_VERSION="$(node -p 'require("./package.json").version')"
+          echo "PACKAGE_VERSION=$PACKAGE_VERSION" >> $GITHUB_ENV
+          if [[ "$GIT_BRANCH_NAME" == "nightly" ]]; then
+            echo "SNAP_PUBLISH_REPO=nightlies" >> $GITHUB_ENV
+            echo "SNAP_PUBLISH_CHANNEL=edge" >> $GITHUB_ENV
+          elif [[ "$GIT_BRANCH_NAME" == "release" ]]; then
+            echo "SNAP_PUBLISH_REPO=ferdium" >> $GITHUB_ENV
+            if [[ "$PACKAGE_VERSION" =~ "beta" ]]; then
+              echo "SNAP_PUBLISH_CHANNEL=beta" >> $GITHUB_ENV
+            else
+              echo "SNAP_PUBLISH_CHANNEL=stable" >> $GITHUB_ENV
+            fi
+          else
+            echo "SNAP_PUBLISH_REPO=none" >> $GITHUB_ENV
+            echo "SNAP_PUBLISH_CHANNEL=none" >> $GITHUB_ENV
+          fi
         shell: bash
       - name: Package recipes
         run: pnpm i && pnpm lint && pnpm reformat-files && pnpm package
@@ -249,8 +285,8 @@ jobs:
           CSC_IDENTITY_AUTO_DISCOVERY: false
         run: npm run build -- --publish never
         shell: bash
-      - name: Build Ferdium with publish for 'nightly' branch
-        if: ${{ env.GIT_BRANCH_NAME == 'nightly' }}
+      - name: "Build Ferdium with publish for '${{ env.GIT_BRANCH_NAME }}' branch"
+        if: ${{ env.GIT_BRANCH_NAME == 'nightly' || env.GIT_BRANCH_NAME == 'release' }}
         env:
           GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
@@ -258,31 +294,7 @@ jobs:
         run: |
           sudo snap install snapcraft --channel=5.x/stable --classic
           echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
-          npm run build -- --publish always -c.snap.publish.repo=nightlies -c.snap.publish.channels=edge
-          snapcraft logout
-        shell: bash
-      - name: Build Ferdium with publish for 'release' beta branch
-        if: ${{ env.GIT_BRANCH_NAME == 'release' && contains(env.PACKAGE_VERSION, 'beta') }}
-        env:
-          GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
-          CSC_IDENTITY_AUTO_DISCOVERY: false
-          SNAPCRAFT_LOGIN: ${{ secrets.SNAPCRAFT_LOGIN }}
-        run: |
-          sudo snap install snapcraft --channel=5.x/stable --classic
-          echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
-          npm run build -- --publish always -c.snap.publish.repo=ferdium -c.snap.publish.channels=beta
-          snapcraft logout
-        shell: bash
-      - name: Build Ferdium with publish for 'release' stable branch
-        if: ${{ env.GIT_BRANCH_NAME == 'release' && !contains(env.PACKAGE_VERSION, 'beta') }}
-        env:
-          GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
-          CSC_IDENTITY_AUTO_DISCOVERY: false
-          SNAPCRAFT_LOGIN: ${{ secrets.SNAPCRAFT_LOGIN }}
-        run: |
-          sudo snap install snapcraft --channel=5.x/stable --classic
-          echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
-          npm run build -- --publish always -c.snap.publish.repo=ferdium -c.snap.publish.channels=stable
+          npm run build -- --publish always -c.snap.publish.repo=$SNAP_PUBLISH_REPO -c.snap.publish.channels=$SNAP_PUBLISH_CHANNEL
           snapcraft logout
         shell: bash
 
@@ -359,17 +371,8 @@ jobs:
           CSC_IDENTITY_AUTO_DISCOVERY: false
         run: npm run build -- --publish never
         shell: bash
-      - name: Build Ferdium with publish for 'nightly' branch
-        if: ${{ env.GIT_BRANCH_NAME == 'nightly' }}
-        env:
-          GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
-          CSC_IDENTITY_AUTO_DISCOVERY: true
-          WIN_CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
-          WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
-        run: npm run build -- --publish always
-        shell: bash
-      - name: Build Ferdium with publish for 'release' branch
-        if: ${{ env.GIT_BRANCH_NAME == 'release' }}
+      - name: "Build Ferdium with publish for '${{ env.GIT_BRANCH_NAME }}' branch"
+        if: ${{ env.GIT_BRANCH_NAME == 'nightly' || env.GIT_BRANCH_NAME == 'release' }}
         env:
           GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: true

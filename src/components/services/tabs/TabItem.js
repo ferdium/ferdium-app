@@ -9,7 +9,7 @@ import injectSheet from 'react-jss';
 import ms from 'ms';
 
 import { observable, autorun, reaction, makeObservable } from 'mobx';
-import { mdiExclamation } from '@mdi/js';
+import { mdiExclamation, mdiVolumeSource } from '@mdi/js';
 import ServiceModel from '../../../models/Service';
 import { cmdOrCtrlShortcutKey, shiftKey, altKey } from '../../../environment';
 import globalMessages from '../../../i18n/globalMessages';
@@ -350,6 +350,11 @@ class TabItem extends Component {
       );
     }
 
+    const showMediaBadge = service.isMediaPlaying && service.isEnabled;
+    const mediaBadge = (
+      <Icon icon={mdiVolumeSource} className="tab-item__icon" />
+    );
+
     return (
       <li
         className={classnames({
@@ -375,6 +380,7 @@ class TabItem extends Component {
         )}
         {notificationBadge}
         {errorBadge}
+        {showMediaBadge && mediaBadge}
         {IS_SERVICE_DEBUGGING_ENABLED && (
           <>
             <div

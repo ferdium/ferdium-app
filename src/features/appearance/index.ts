@@ -278,6 +278,7 @@ function generateServiceRibbonWidthStyle(
     .tab-item {
       width: ${width}px !important;
       height: ${width - tabItemWidthBias}px !important;
+      min-height: ${width - tabItemWidthBias}px !important;
     }
     .tab-item .tab-item__icon {
       width: ${minimumAdjustedIconSize}px !important;

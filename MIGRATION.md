@@ -10,9 +10,9 @@ The main advantage of using Ferdi with an account is that you have your configur
 
 **But**, if you use a Ferdi account, you need to reach their servers. If the servers are not accessible, you sadly have no other options for getting your data as there are no local copies. So it is advised to do this as soon as there's a chance - just to be safe.
 
-## Using Ferdi without an account ie Accountless
+## Using Ferdi without an account i.e. Accountless
 
-Accountless instances have all the same functionality as account-based ones with the exception of multi-machine syncronization. If you don't intend to use this app on multiple machines with regularly changing settings and lists of services, there's no benefit to having an online account. Having a backup of your `export.fedi-data` whenever you make changes to your setup, provides a similarly secure (albeit slower and manual alternative) to automatic syncing that doesn't rely on a server's constant availability.
+Accountless instances have all the same functionality as account-based ones with the exception of multi-machine syncronization. If you don't intend to use this app on multiple machines with regularly changing settings and lists of services, there's no benefit to having an online account. Having a backup of your `export.ferdi-data` whenever you make changes to your setup, provides a similarly secure (albeit slower and manual alternative) to automatic syncing that doesn't rely on a server's constant availability.
 
 ## Exporting
 
