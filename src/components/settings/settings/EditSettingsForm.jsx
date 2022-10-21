@@ -28,6 +28,7 @@ import {
   DEFAULT_APP_SETTINGS,
   FERDIUM_TRANSLATION,
   GITHUB_FRANZ_URL,
+  GITHUB_FERDIUM_URL,
   SPLIT_COLUMNS_MAX,
   SPLIT_COLUMNS_MIN,
 } from '../../../config';
@@ -1111,7 +1112,7 @@ class EditSettingsForm extends Component {
                   </a>
                   , a project published under the{' '}
                   <a
-                    href={`${GITHUB_FRANZ_URL}/franz/blob/master/LICENSE`}
+                    href={`${GITHUB_FERDIUM_URL}/ferdium-app/blob/master/LICENSE.md`}
                     target="_blank"
                     rel="noreferrer"
                   >
