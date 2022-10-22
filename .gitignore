@@ -353,3 +353,6 @@ server*.log
 /src/internal-server/public/privacy.html
 
 /src/internal-server/user_data/
+
+# env
+.envrc
