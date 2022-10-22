@@ -344,6 +344,7 @@
   "settings.service.form.editServiceHeadline": "Edit {name}",
   "settings.service.form.enableAudio": "Enable audio",
   "settings.service.form.enableBadge": "Show unread message badges",
+  "settings.service.form.enableMediaBadge": "Enable Media Play Indicator",
   "settings.service.form.enableDarkMode": "Enable Dark Mode",
   "settings.service.form.enableHibernation": "Enable hibernation",
   "settings.service.form.enableNotification": "Enable notifications",

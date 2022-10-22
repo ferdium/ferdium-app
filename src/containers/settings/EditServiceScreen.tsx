@@ -49,6 +49,10 @@ const messages = defineMessages({
     id: 'settings.service.form.enableBadge',
     defaultMessage: 'Show unread message badges',
   },
+  enableMediaBadge: {
+    id: 'settings.service.form.enableMediaBadge',
+    defaultMessage: 'Enable Media Play Indicator',
+  },
   enableAudio: {
     id: 'settings.service.form.enableAudio',
     defaultMessage: 'Enable audio',
@@ -205,6 +209,11 @@ class EditServiceScreen extends Component<EditServicesScreenProps> {
           label: intl.formatMessage(messages.enableBadge),
           value: service?.isBadgeEnabled,
           default: DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
+        },
+        isMediaBadgeEnabled: {
+          label: intl.formatMessage(messages.enableMediaBadge),
+          value: service?.isMediaBadgeEnabled,
+          default: DEFAULT_SERVICE_SETTINGS.isMediaBadgeEnabled,
         },
         trapLinkClicks: {
           label: intl.formatMessage(messages.trapLinkClicks),

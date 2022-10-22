@@ -441,6 +441,7 @@ export const DEFAULT_SERVICE_SETTINGS = {
   isWakeUpEnabled: true,
   isNotificationEnabled: true,
   isBadgeEnabled: true,
+  isMediaBadgeEnabled: false,
   trapLinkClicks: false,
   isMuted: false,
   customIcon: false,

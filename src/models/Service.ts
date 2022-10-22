@@ -8,7 +8,7 @@ import ElectronWebView from 'react-electron-web-view';
 import { todosStore } from '../features/todos';
 import { isValidExternalURL } from '../helpers/url-helpers';
 import UserAgent from './UserAgent';
-import { DEFAULT_SERVICE_ORDER } from '../config';
+import { DEFAULT_SERVICE_ORDER, DEFAULT_SERVICE_SETTINGS } from '../config';
 import { ifUndefined } from '../jsUtils';
 import { IRecipe } from './Recipe';
 import { needsToken } from '../api/apiBase';
@@ -58,6 +58,9 @@ export default class Service {
   @observable isNotificationEnabled: boolean = true;
 
   @observable isBadgeEnabled: boolean = true;
+
+  @observable isMediaBadgeEnabled: boolean =
+    DEFAULT_SERVICE_SETTINGS.isMediaBadgeEnabled;
 
   @observable trapLinkClicks: boolean = false;
 
@@ -168,6 +171,11 @@ export default class Service {
     this.isBadgeEnabled = ifUndefined<boolean>(
       data.isBadgeEnabled,
       this.isBadgeEnabled,
+    );
+
+    this.isMediaBadgeEnabled = ifUndefined<boolean>(
+      data.isMediaBadgeEnabled,
+      this.isMediaBadgeEnabled,
     );
     this.trapLinkClicks = ifUndefined<boolean>(
       data.trapLinkClicks,
