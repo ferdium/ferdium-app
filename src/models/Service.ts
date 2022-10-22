@@ -59,7 +59,7 @@ export default class Service {
 
   @observable isBadgeEnabled: boolean = true;
 
-  @observable isMediaBadgeEnabled: boolean = true;
+  @observable isMediaBadgeEnabled: boolean = false;
 
   @observable trapLinkClicks: boolean = false;
 
