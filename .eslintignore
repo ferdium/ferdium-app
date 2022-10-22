@@ -28,3 +28,7 @@ npm-debug.log.*
 /build/
 /out/
 /recipes/
+
+# package files
+package.json
+package-lock.json

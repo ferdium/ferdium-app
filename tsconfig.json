@@ -49,5 +49,6 @@
     "src",
     "scripts",
     "test",
+    "gulpfile.babel.ts",
   ],
 }
