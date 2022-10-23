@@ -217,7 +217,7 @@ function recipeInfo() {
     .pipe(gulp.dest(paths.recipeInfo.dest));
 }
 
-const build = gulp.series(
+export const build = gulp.series(
   clean,
   gulp.parallel(mvSrc, mvPackageJson, BuildInfo),
   gulp.parallel(
