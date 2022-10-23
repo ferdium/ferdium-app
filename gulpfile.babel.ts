@@ -7,7 +7,6 @@ import csso from 'gulp-csso';
 import terser from 'gulp-terser';
 import htmlMin from 'gulp-htmlmin';
 import connect from 'gulp-connect';
-import { exec } from 'child_process';
 import sassVariables from 'gulp-sass-variables';
 import { removeSync, outputJson } from 'fs-extra';
 import kebabCase from 'kebab-case';
@@ -17,7 +16,7 @@ import ts from 'gulp-typescript';
 import * as buildInfo from 'preval-build-info';
 import config from './package.json';
 
-import * as rawStyleConfig from './scripts/theme/default/legacy';
+import rawStyleConfig from './scripts/theme/default/legacy';
 
 import 'dotenv/config';
 
@@ -67,56 +66,34 @@ const paths = {
     dest: 'build/styles',
     watch: 'src/styles/**/*.scss',
   },
-  javascripts: {
+  javascript: {
     src: ['src/**/*.js', 'src/**/*.jsx'],
     dest: 'build/',
     watch: ['src/**/*.js', 'src/**/*.jsx'],
   },
-  typescripts: {
+  typescript: {
     src: ['src/**/*.ts', 'src/**/*.tsx'],
     dest: 'build/',
     watch: ['src/**/*.ts', 'src/**/*.tsx'],
   },
 };
 
-// eslint-disable-next-line no-unused-vars
-function _shell(cmd, cb) {
-  console.log('executing', cmd);
-  exec(
-    cmd,
-    {
-      cwd: paths.dest,
-    },
-    (error, stdout, stderr) => {
-      if (error) {
-        console.error(`exec error: ${error}`);
-        return;
-      }
-      console.log(`stdout: ${stdout}`);
-      console.log(`stderr: ${stderr}`);
-
-      cb();
-    },
-  );
-}
-
-const clean = done => {
+const clean: (done: any) => void = done => {
   removeSync(paths.tmp);
   removeSync(paths.dest);
   removeSync(paths.dist);
 
   done();
 };
-export { clean };
 
-export function mvSrc() {
+function mvSrc() {
   return gulp
     .src(
       [
         `${paths.src}/*`,
         `${paths.src}/*/**`,
-        `!${paths.javascripts.watch[0]}`,
-        `!${paths.typescripts.watch[0]}`,
+        `!${paths.javascript.watch[0]}`,
+        `!${paths.typescript.watch[0]}`,
         `!${paths.src}/styles/**`,
       ],
       { since: gulp.lastRun(mvSrc) },
@@ -124,11 +101,11 @@ export function mvSrc() {
     .pipe(gulp.dest(paths.dest));
 }
 
-export function mvPackageJson() {
+function mvPackageJson() {
   return gulp.src(['./package.json']).pipe(gulp.dest(paths.dest));
 }
 
-export function exportBuildInfo() {
+function BuildInfo() {
   const buildInfoData = {
     timestamp: buildInfo.timestamp,
     gitHashShort: buildInfo.gitHashShort,
@@ -137,7 +114,7 @@ export function exportBuildInfo() {
   return outputJson(paths.buildInfoDestFile, buildInfoData);
 }
 
-export function html() {
+function html() {
   return gulp
     .src(paths.html.src, { since: gulp.lastRun(html) })
     .pipe(
@@ -154,7 +131,7 @@ export function html() {
     .pipe(connect.reload());
 }
 
-export function styles() {
+function styles(): NodeJS.ReadWriteStream {
   return gulp
     .src(paths.styles.src)
     .pipe(
@@ -185,22 +162,22 @@ export function styles() {
     .pipe(connect.reload());
 }
 
-export function processJavascripts() {
+function processJavascript() {
   return gulp
-    .src(paths.javascripts.src, { since: gulp.lastRun(processJavascripts) })
+    .src(paths.javascript.src, { since: gulp.lastRun(processJavascript) })
     .pipe(
       babel({
         comments: false,
       }),
     )
     .pipe(gulpIf(!isDevBuild, terser())) // Only uglify in production to speed up dev builds
-    .pipe(gulp.dest(paths.javascripts.dest))
+    .pipe(gulp.dest(paths.javascript.dest))
     .pipe(connect.reload());
 }
 
-export function processTypescripts() {
+function processTypescript() {
   return gulp
-    .src(paths.typescripts.src, { since: gulp.lastRun(processTypescripts) })
+    .src(paths.typescript.src, { since: gulp.lastRun(processTypescript) })
     .pipe(tsProject())
     .js.pipe(
       babel({
@@ -208,55 +185,49 @@ export function processTypescripts() {
       }),
     )
     .pipe(gulpIf(!isDevBuild, terser())) // Only uglify in production to speed up dev builds
-    .pipe(gulp.dest(paths.typescripts.dest))
+    .pipe(gulp.dest(paths.typescript.dest))
     .pipe(connect.reload());
 }
 
-export function watch() {
+function watch() {
   gulp.watch(paths.styles.watch, styles);
 
   gulp.watch([paths.src], mvSrc);
 
-  gulp.watch(paths.javascripts.watch, processJavascripts);
-  gulp.watch(paths.typescripts.watch, processTypescripts);
+  gulp.watch(paths.javascript.watch, processJavascript);
+  gulp.watch(paths.typescript.watch, processTypescript);
 }
 
-export function webserver() {
+function webserver() {
   connect.server({
     root: paths.dest,
     livereload: true,
   });
 }
 
-export function recipes() {
+function recipes() {
   return gulp
     .src(paths.recipes.src, { since: gulp.lastRun(recipes) })
     .pipe(gulp.dest(paths.recipes.dest));
 }
 
-export function recipeInfo() {
+function recipeInfo() {
   return gulp
     .src(paths.recipeInfo.src, { since: gulp.lastRun(recipeInfo) })
     .pipe(gulp.dest(paths.recipeInfo.dest));
 }
 
-const build = gulp.series(
+export const build = gulp.series(
   clean,
-  gulp.parallel(
-    mvSrc,
-    mvPackageJson,
-    exportBuildInfo,
-  ),
+  gulp.parallel(mvSrc, mvPackageJson, BuildInfo),
   gulp.parallel(
     html,
-    processJavascripts,
-    processTypescripts,
+    processJavascript,
+    processTypescript,
     styles,
     recipes,
     recipeInfo,
   ),
 );
-export { build };
 
-const dev = gulp.series(build, gulp.parallel(webserver, watch));
-export { dev };
+export const dev = gulp.series(build, gulp.parallel(webserver, watch));
