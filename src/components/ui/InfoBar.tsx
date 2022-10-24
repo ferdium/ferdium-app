@@ -1,11 +1,11 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, MouseEventHandler, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import Loader from 'react-loader';
-import { defineMessages, injectIntl } from 'react-intl';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 
 import { mdiClose } from '@mdi/js';
+import { noop } from 'lodash';
 import Appear from './effects/Appear';
 import Icon from './icon';
 
@@ -16,51 +16,35 @@ const messages = defineMessages({
   },
 });
 
-// Should this file be converted into the coding style similar to './toggle/index.tsx'?
-class InfoBar extends Component {
-  static propTypes = {
-    // eslint-disable-next-line react/forbid-prop-types
-    children: PropTypes.any.isRequired,
-    onClick: PropTypes.func,
-    type: PropTypes.string,
-    className: PropTypes.string,
-    ctaLabel: PropTypes.string,
-    ctaLoading: PropTypes.bool,
-    position: PropTypes.string,
-    sticky: PropTypes.bool,
-    onHide: PropTypes.func,
-  };
+interface IProps extends WrappedComponentProps {
+  children: ReactNode;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+  type?: string;
+  className?: string;
+  ctaLabel?: string;
+  ctaLoading?: boolean;
+  position?: string;
+  sticky?: boolean;
+  onHide?: () => void;
+}
 
-  static defaultProps = {
-    onClick: () => null,
-    type: 'primary',
-    className: '',
-    ctaLabel: '',
-    ctaLoading: false,
-    position: 'bottom',
-    sticky: false,
-    onHide: () => null,
-  };
-
+@observer
+class InfoBar extends Component<IProps> {
   render() {
     const {
       children,
-      type,
-      className,
-      ctaLabel,
-      ctaLoading,
-      onClick,
-      position,
-      sticky,
-      onHide,
+      type = 'primary',
+      onClick = noop,
+      className = '',
+      ctaLabel = '',
+      ctaLoading = false,
+      position = 'bottom',
+      sticky = false,
+      onHide = noop,
+      intl,
     } = this.props;
 
-    const { intl } = this.props;
-
-    let transitionName = 'slideUp';
-    if (position === 'top') {
-      transitionName = 'slideDown';
-    }
+    const transitionName = position === 'top' ? 'slideDown' : 'slideUp';
 
     return (
       <Appear
@@ -102,4 +86,4 @@ class InfoBar extends Component {
   }
 }
 
-export default injectIntl(observer(InfoBar));
+export default injectIntl(InfoBar);

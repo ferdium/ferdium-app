@@ -3,14 +3,12 @@ import Icon from '@mdi/react';
 import classnames from 'classnames';
 import { Component, createRef, InputHTMLAttributes } from 'react';
 import injectSheet, { WithStylesProps } from 'react-jss';
-
+import { noop } from 'lodash';
 import { IFormField } from '../typings/generic';
-
 import Error from '../error';
 import Label from '../label';
 import Wrapper from '../wrapper';
 import { scorePasswordFunc } from './scorePassword';
-
 import styles from './styles';
 
 interface IData {
@@ -26,7 +24,7 @@ interface IProps
   suffix?: string;
   scorePassword?: boolean;
   showPasswordToggle?: boolean;
-  data: IData;
+  data?: IData;
   inputClassName?: string;
   onEnterKey?: Function;
 }
@@ -37,42 +35,31 @@ interface IState {
 }
 
 class InputComponent extends Component<IProps, IState> {
-  static defaultProps = {
-    focus: false,
-    onChange: () => {},
-    onBlur: () => {},
-    onFocus: () => {},
-    scorePassword: false,
-    showLabel: true,
-    showPasswordToggle: false,
-    type: 'text',
-    disabled: false,
-  };
-
-  state = {
-    passwordScore: 0,
-    showPassword: false,
-  };
-
   private inputRef = createRef<HTMLInputElement>();
 
-  componentDidMount() {
-    const { focus, data } = this.props;
+  constructor(props: IProps) {
+    super(props);
+
+    this.state = {
+      passwordScore: 0,
+      showPassword: false,
+    };
+  }
+
+  componentDidMount(): void {
+    const { focus, data = {} } = this.props;
 
     if (this.inputRef && this.inputRef.current) {
       if (focus) {
         this.inputRef.current.focus();
       }
 
-      if (data) {
-        Object.keys(data).map(
-          key => (this.inputRef.current!.dataset[key] = data[key]),
-        );
-      }
+      for (const key of Object.keys(data))
+        this.inputRef.current!.dataset[key] = data[key];
     }
   }
 
-  onChange(e: React.ChangeEvent<HTMLInputElement>) {
+  onChange(e: React.ChangeEvent<HTMLInputElement>): void {
     const { scorePassword, onChange } = this.props;
 
     if (onChange) {
@@ -97,28 +84,28 @@ class InputComponent extends Component<IProps, IState> {
     const {
       classes,
       className,
-      disabled,
       error,
       id,
       inputClassName,
       label,
       prefix,
-      scorePassword,
       suffix,
-      showLabel,
-      showPasswordToggle,
-      type,
       value,
       name,
       placeholder,
       spellCheck,
-      onBlur,
-      onFocus,
       min,
       max,
       step,
       required,
       noMargin,
+      onBlur = noop,
+      onFocus = noop,
+      scorePassword = false,
+      showLabel = true,
+      showPasswordToggle = false,
+      type = 'text',
+      disabled = false,
     } = this.props;
 
     const { showPassword, passwordScore } = this.state;
