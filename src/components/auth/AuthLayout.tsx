@@ -1,52 +1,53 @@
-import { cloneElement, Component } from 'react';
-import PropTypes from 'prop-types';
+import {
+  cloneElement,
+  Component,
+  MouseEventHandler,
+  ReactElement,
+} from 'react';
 import { observer } from 'mobx-react';
 import { TitleBar } from 'electron-react-titlebar/renderer';
-
-import { injectIntl } from 'react-intl';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { mdiFlash } from '@mdi/js';
+import { GlobalError } from 'src/@types/ferdium-components.types';
 import Link from '../ui/Link';
 import InfoBar from '../ui/InfoBar';
-
 import { Component as PublishDebugInfo } from '../../features/publishDebugInfo';
-
-import {
-  oneOrManyChildElements,
-  globalError as globalErrorPropType,
-} from '../../prop-types';
 import { updateVersionParse } from '../../helpers/update-helpers';
 import globalMessages from '../../i18n/globalMessages';
-
 import { isWindows } from '../../environment';
 import AppUpdateInfoBar from '../AppUpdateInfoBar';
 import { GITHUB_FERDIUM_URL } from '../../config';
 import Icon from '../ui/icon';
-
 import { serverName } from '../../api/apiBase';
 
-class AuthLayout extends Component {
-  static propTypes = {
-    children: oneOrManyChildElements.isRequired,
-    error: globalErrorPropType.isRequired,
-    isOnline: PropTypes.bool.isRequired,
-    isAPIHealthy: PropTypes.bool.isRequired,
-    retryHealthCheck: PropTypes.func.isRequired,
-    isHealthCheckLoading: PropTypes.bool.isRequired,
-    isFullScreen: PropTypes.bool.isRequired,
-    installAppUpdate: PropTypes.func.isRequired,
-    appUpdateIsDownloaded: PropTypes.bool.isRequired,
-    updateVersion: PropTypes.string.isRequired,
-  };
+export interface IProps extends WrappedComponentProps {
+  children: ReactElement;
+  error: GlobalError;
+  isOnline: boolean;
+  isAPIHealthy: boolean;
+  retryHealthCheck: MouseEventHandler<HTMLButtonElement>;
+  isHealthCheckLoading: boolean;
+  isFullScreen: boolean;
+  installAppUpdate: MouseEventHandler<HTMLButtonElement>;
+  appUpdateIsDownloaded: boolean;
+  updateVersion: string;
+}
 
-  constructor() {
-    super();
+interface IState {
+  shouldShowAppUpdateInfoBar: boolean;
+}
+
+@observer
+class AuthLayout extends Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
 
     this.state = {
       shouldShowAppUpdateInfoBar: true,
     };
   }
 
-  render() {
+  render(): ReactElement {
     const {
       children,
       error,
@@ -58,9 +59,9 @@ class AuthLayout extends Component {
       installAppUpdate,
       appUpdateIsDownloaded,
       updateVersion,
+      intl,
     } = this.props;
 
-    const { intl } = this.props;
     let serverNameParse = serverName();
     serverNameParse =
       serverNameParse === 'Custom' ? 'your Custom Server' : serverNameParse;
@@ -124,4 +125,4 @@ class AuthLayout extends Component {
   }
 }
 
-export default injectIntl(observer(AuthLayout));
+export default injectIntl(AuthLayout);
