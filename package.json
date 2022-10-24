@@ -149,8 +149,6 @@
     "@types/gulp-sass": "5.0.0",
     "@types/gulp-sass-variables": "1.2.2",
     "@types/gulp-terser": "1.2.1",
-    "@types/gulp-typescript": "2.13.0",
-    "@types/hex-rgb": "4.1.1",
     "@types/jest": "28.1.4",
     "@types/lodash": "4.14.186",
     "@types/mime-types": "2.1.1",
