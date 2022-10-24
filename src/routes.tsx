@@ -6,7 +6,7 @@ import {
   Routes,
   unstable_HistoryRouter as HistoryRouter,
 } from 'react-router-dom';
-
+import { HashHistory } from 'history';
 import AppLayoutContainer from './containers/layout/AppLayoutContainer';
 import SettingsWindow from './containers/settings/SettingsWindow';
 import ReleaseNotesWindow from './containers/settings/ReleaseNotesWindow';
@@ -33,25 +33,19 @@ import AuthLayoutContainer from './containers/auth/AuthLayoutContainer';
 import WorkspacesScreen from './features/workspaces/containers/WorkspacesScreen';
 import EditWorkspaceScreen from './features/workspaces/containers/EditWorkspaceScreen';
 import { WORKSPACES_ROUTES } from './features/workspaces/constants';
-import { Actions } from './actions/lib/actions';
-import { RealStores } from './stores';
+import { StoresProps } from './@types/ferdium-components.types';
 
-type Props = {
-  stores: RealStores;
-  actions: Actions;
-  history: any;
-};
+interface IProps extends StoresProps {
+  history: HashHistory;
+}
 
-class FerdiumRoutes extends Component<Props> {
+@inject('stores', 'actions')
+@observer
+class FerdiumRoutes extends Component<IProps> {
   render(): ReactElement {
-    const { history } = this.props;
-    const routeProps = {
-      stores: this.props.stores,
-      actions: this.props.actions,
-    };
-    const errorProps = {
-      error: this.props.stores.globalError.error || {},
-    };
+    const { history, stores, actions } = this.props;
+    const routeProps: StoresProps = { stores, actions };
+    const errorProps = { error: this.props.stores.globalError.error || {} };
 
     return (
       <HistoryRouter history={history}>
@@ -185,4 +179,4 @@ class FerdiumRoutes extends Component<Props> {
   }
 }
 
-export default inject('stores', 'actions')(observer(FerdiumRoutes));
+export default FerdiumRoutes;
