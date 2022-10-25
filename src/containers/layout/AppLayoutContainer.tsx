@@ -15,17 +15,8 @@ interface AppLayoutContainerProps extends StoresProps {}
 
 class AppLayoutContainer extends Component<AppLayoutContainerProps> {
   render(): ReactElement {
-    const {
-      app,
-      features,
-      services,
-      ui,
-      settings,
-      globalError,
-      requests,
-      user,
-      router,
-    } = this.props.stores;
+    const { app, features, services, ui, settings, requests, user, router } =
+      this.props.stores;
 
     /* HOTFIX for:
       [mobx] Encountered an uncaught exception that was thrown by a reaction or observer component, in: 'Reaction[bound ]' TypeError: Cannot read properties of null (reading 'push')
@@ -142,7 +133,6 @@ class AppLayoutContainer extends Component<AppLayoutContainerProps> {
         <AppLayout
           settings={settings}
           isFullScreen={app.isFullScreen}
-          isOnline={app.isOnline}
           showServicesUpdatedInfoBar={ui.showServicesUpdatedInfoBar}
           appUpdateIsDownloaded={
             app.updateStatus === app.updateStatusTypes.DOWNLOADED
@@ -152,7 +142,6 @@ class AppLayoutContainer extends Component<AppLayoutContainerProps> {
           workspacesDrawer={workspacesDrawer}
           services={servicesContainer}
           installAppUpdate={installUpdate}
-          globalError={globalError.error}
           showRequiredRequestsError={requests.showRequiredRequestsError}
           areRequiredRequestsSuccessful={requests.areRequiredRequestsSuccessful}
           retryRequiredRequests={retryRequiredRequests}
