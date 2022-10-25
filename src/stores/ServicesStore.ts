@@ -337,7 +337,7 @@ export default class ServicesStore extends TypedStore {
     return this.all.filter(service => service.isEnabled);
   }
 
-  @computed get allDisplayed() {
+  @computed get allDisplayed(): Service[] {
     const services = this.stores.settings.all.app.showDisabledServices
       ? this.all
       : this.enabled;
@@ -1031,9 +1031,7 @@ export default class ServicesStore extends TypedStore {
     this.reorderServicesRequest.execute(services);
     this.allServicesRequest.patch(data => {
       for (const s of data) {
-        const service = s;
-
-        service.order = services[s.id];
+        s.order = services[s.id];
       }
     });
   }

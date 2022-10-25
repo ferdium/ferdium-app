@@ -18,10 +18,10 @@ export interface Actions {
   };
 }
 
-export const createActionsFromDefinitions = (
+export const createActionsFromDefinitions = <T extends {}>(
   actionDefinitions: ActionDefinitions,
   validate: any,
-) => {
+): T => {
   const actions = {};
   // eslint-disable-next-line unicorn/no-array-for-each
   Object.keys(actionDefinitions).forEach(actionName => {
@@ -41,7 +41,7 @@ export const createActionsFromDefinitions = (
       // eslint-disable-next-line unicorn/no-array-for-each
       action.listeners.forEach(listener => listener(params));
   });
-  return actions;
+  return actions as T;
 };
 
 export default (definitions, validate) => {

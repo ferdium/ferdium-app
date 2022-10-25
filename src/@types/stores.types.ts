@@ -343,7 +343,7 @@ export interface WorkspacesStore extends TypedStore {
   create: ({ workspace }) => void;
   edit: ({ workspace }) => void;
   saving: boolean;
-  filterServicesByActiveWorkspace: () => void;
+  filterServicesByActiveWorkspace: (services: Service[]) => Service[];
   isFeatureActive: () => void;
   isAnyWorkspaceActive: boolean;
   isSettingsRouteActive: () => void;
