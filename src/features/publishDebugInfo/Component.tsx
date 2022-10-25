@@ -1,18 +1,15 @@
 import { inject, observer } from 'mobx-react';
-import PropTypes from 'prop-types';
-import { Component } from 'react';
-import { defineMessages, injectIntl } from 'react-intl';
-import injectSheet from 'react-jss';
+import { Component, ReactElement } from 'react';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
+import withStyles, { WithStylesProps } from 'react-jss';
+import { StoresProps } from '../../@types/ferdium-components.types';
 import { state as ModalState } from './store';
-
 import { H1 } from '../../components/ui/headline';
 import { sendAuthRequest } from '../../api/utils/auth';
 import Button from '../../components/ui/button';
 import Input from '../../components/ui/input/index';
 import Modal from '../../components/ui/Modal';
 import { DEBUG_API } from '../../config';
-import AppStore from '../../stores/AppStore';
-import ServicesStore from '../../stores/ServicesStore';
 
 const debug = require('../../preload-safe-debug')(
   'Ferdium:feature:publishDebugInfo',
@@ -78,30 +75,47 @@ const styles = theme => ({
   },
 });
 
-class PublishDebugLogModal extends Component {
-  state = {
-    log: null,
-    error: false,
-    isSendingLog: false,
-  };
+interface IProps
+  extends Partial<StoresProps>,
+    WithStylesProps<typeof styles>,
+    WrappedComponentProps {}
+
+interface IState {
+  log: null;
+  error: boolean;
+  isSendingLogs: boolean;
+}
+
+@inject('stores', 'actions')
+@observer
+class PublishDebugLogModal extends Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
+
+    this.state = {
+      log: null,
+      error: false,
+      isSendingLogs: false,
+    };
+  }
 
   // Close this modal
-  close() {
+  close(): void {
     ModalState.isModalVisible = false;
     this.setState({
       log: null,
       error: false,
-      isSendingLog: false,
+      isSendingLogs: false,
     });
   }
 
-  async publishDebugInfo() {
+  async publishDebugInfo(): Promise<void> {
     debug('debugInfo: starting publish');
     this.setState({
-      isSendingLog: true,
+      isSendingLogs: true,
     });
 
-    const debugInfo = JSON.stringify(this.props.stores.app.debugInfo);
+    const debugInfo = JSON.stringify(this.props.stores?.app?.debugInfo);
 
     const request = await sendAuthRequest(
       `${DEBUG_API}/create`,
@@ -118,31 +132,21 @@ class PublishDebugLogModal extends Component {
     if (request.status === 200) {
       const response = await request.json();
       if (response.id) {
-        this.setState({
-          log: response.id,
-        });
+        this.setState({ log: response.id });
       } else {
-        this.setState({
-          error: true,
-        });
+        this.setState({ error: true });
       }
     } else {
-      this.setState({
-        error: true,
-      });
+      this.setState({ error: true });
     }
 
     debug('debugInfo: finished publishing');
   }
 
-  render() {
+  render(): ReactElement {
     const { isModalVisible } = ModalState;
-
-    const { classes } = this.props;
-
-    const { log, error, isSendingLog } = this.state;
-
-    const { intl } = this.props;
+    const { classes, intl } = this.props;
+    const { log, error, isSendingLogs } = this.state;
 
     return (
       <Modal
@@ -159,18 +163,16 @@ class PublishDebugLogModal extends Component {
             <p className={classes.info}>
               {intl.formatMessage(messages.published)}
             </p>
-            <Input showLabel={false} value={`${DEBUG_API}/${log}`} readonly />
+            {/* TODO - [TS DEBT] need to check if <Input/> take readOnly and use it  */}
+            <Input showLabel={false} value={`${DEBUG_API}/${log}`} readOnly />
           </>
         )}
-
         {error && (
           <p className={classes.info}>{intl.formatMessage(messages.error)}</p>
         )}
-
         {!log && !error && (
           <>
             <p className={classes.info}>{intl.formatMessage(messages.info)}</p>
-
             <a
               href={`${DEBUG_API}/privacy.html`}
               target="_blank"
@@ -187,13 +189,12 @@ class PublishDebugLogModal extends Component {
             >
               {intl.formatMessage(messages.terms)}
             </a>
-
             <Button
               type="button"
               label={intl.formatMessage(messages.publish)}
               className={classes.button}
               onClick={() => this.publishDebugInfo()}
-              disabled={isSendingLog}
+              disabled={isSendingLogs}
             />
           </>
         )}
@@ -202,18 +203,6 @@ class PublishDebugLogModal extends Component {
   }
 }
 
-PublishDebugLogModal.propTypes = {
-  stores: PropTypes.shape({
-    app: PropTypes.instanceOf(AppStore).isRequired,
-  }).isRequired,
-  actions: PropTypes.shape({
-    service: PropTypes.instanceOf(ServicesStore).isRequired,
-  }).isRequired,
-  classes: PropTypes.object.isRequired,
-};
-
 export default injectIntl(
-  injectSheet(styles, { injectTheme: true })(
-    inject('stores', 'actions')(observer(PublishDebugLogModal)),
-  ),
+  withStyles(styles, { injectTheme: true })(PublishDebugLogModal),
 );

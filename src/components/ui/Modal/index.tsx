@@ -1,41 +1,33 @@
-import { Component, ReactChildren } from 'react';
+import { Component, ReactNode } from 'react';
 import ReactModal from 'react-modal';
 import classnames from 'classnames';
-import injectCSS from 'react-jss';
+import injectCSS, { WithStylesProps } from 'react-jss';
 import { mdiClose } from '@mdi/js';
 
 import Icon from '../icon';
 import styles from './styles';
 
-type Props = {
-  children: ReactChildren;
-  className: string;
-  classes: any;
+interface IProps extends WithStylesProps<typeof styles> {
+  children: ReactNode;
   isOpen: boolean;
-  portal: string;
   close: () => void;
-  shouldCloseOnOverlayClick: boolean;
-  showClose: boolean;
-};
+  className?: string | null;
+  portal?: string;
+  shouldCloseOnOverlayClick?: boolean;
+  showClose?: boolean;
+}
 
-class Modal extends Component<Props> {
-  static defaultProps = {
-    className: null,
-    portal: 'modal-portal',
-    shouldCloseOnOverlayClick: false,
-    showClose: true,
-  };
-
+class Modal extends Component<IProps> {
   render() {
     const {
       children,
-      className,
       classes,
       isOpen,
-      portal,
       close,
-      shouldCloseOnOverlayClick,
-      showClose,
+      className = null,
+      portal = 'modal-portal',
+      shouldCloseOnOverlayClick = false,
+      showClose = true,
     } = this.props;
 
     return (

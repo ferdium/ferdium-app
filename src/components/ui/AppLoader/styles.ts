@@ -1,8 +1,7 @@
-let sloganTransition = 'none';
-
-if (window && window.matchMedia('(prefers-reduced-motion: no-preference)')) {
-  sloganTransition = 'opacity 1s ease';
-}
+const sloganTransition =
+  window && window.matchMedia('(prefers-reduced-motion: no-preference)')
+    ? 'opacity 1s ease'
+    : 'none';
 
 export default {
   component: {
