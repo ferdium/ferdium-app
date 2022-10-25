@@ -1,7 +1,22 @@
 import PropTypes from 'prop-types';
+import { ReactElement } from 'react';
 import { createActionsFromDefinitions } from '../../actions/lib/actions';
 
-export const todoActions = createActionsFromDefinitions(
+interface TodoActionsType {
+  resize: (width: number) => void;
+  toggleTodosPanel: () => void;
+  toggleTodosFeatureVisibility: () => void;
+  setTodosWebview: (webview: ReactElement) => void;
+  handleHostMessage: (action: string, data: object) => void;
+  handleClientMessage: (
+    channel: string,
+    message: { action: string; data: object },
+  ) => void;
+  openDevTools: () => void;
+  reload: () => void;
+}
+
+export const todoActions = createActionsFromDefinitions<TodoActionsType>(
   {
     resize: {
       width: PropTypes.number.isRequired,

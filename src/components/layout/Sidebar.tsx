@@ -1,7 +1,6 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
 import ReactTooltip from 'react-tooltip';
-import { defineMessages, injectIntl } from 'react-intl';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { inject, observer } from 'mobx-react';
 import {
   mdiCheckAll,
@@ -29,10 +28,11 @@ import {
 } from '../../environment';
 import { todosStore } from '../../features/todos';
 import { todoActions } from '../../features/todos/actions';
-import AppStore from '../../stores/AppStore';
-import SettingsStore from '../../stores/SettingsStore';
 import globalMessages from '../../i18n/globalMessages';
 import Icon from '../ui/icon';
+import { Actions } from '../../actions/lib/actions';
+import { RealStores } from '../../stores';
+import Service from '../../models/Service';
 
 const messages = defineMessages({
   addNewService: {
@@ -73,40 +73,43 @@ const messages = defineMessages({
   },
 });
 
-class Sidebar extends Component {
-  static propTypes = {
-    openSettings: PropTypes.func.isRequired,
-    closeSettings: PropTypes.func.isRequired,
-    setActive: PropTypes.func.isRequired,
-    reorder: PropTypes.func.isRequired,
-    reload: PropTypes.func.isRequired,
-    toggleNotifications: PropTypes.func.isRequired,
-    toggleAudio: PropTypes.func.isRequired,
-    toggleDarkMode: PropTypes.func.isRequired,
-    showServicesUpdatedInfoBar: PropTypes.bool.isRequired,
-    showMessageBadgeWhenMutedSetting: PropTypes.bool.isRequired,
-    showServiceNameSetting: PropTypes.bool.isRequired,
-    showMessageBadgesEvenWhenMuted: PropTypes.bool.isRequired,
-    deleteService: PropTypes.func.isRequired,
-    updateService: PropTypes.func.isRequired,
-    hibernateService: PropTypes.func.isRequired,
-    wakeUpService: PropTypes.func.isRequired,
-    toggleMuteApp: PropTypes.func.isRequired,
-    isAppMuted: PropTypes.bool.isRequired,
-    toggleCollapseMenu: PropTypes.func.isRequired,
-    isMenuCollapsed: PropTypes.bool.isRequired,
-    isWorkspaceDrawerOpen: PropTypes.bool.isRequired,
-    toggleWorkspaceDrawer: PropTypes.func.isRequired,
-    isTodosServiceActive: PropTypes.bool.isRequired,
-    stores: PropTypes.shape({
-      app: PropTypes.instanceOf(AppStore).isRequired,
-      settings: PropTypes.instanceOf(SettingsStore).isRequired,
-    }).isRequired,
-    actions: PropTypes.shape({
-      settings: PropTypes.instanceOf(SettingsStore).isRequired,
-    }).isRequired,
-  };
+interface IProps extends WrappedComponentProps {
+  services: Service[];
+  showServicesUpdatedInfoBar: boolean;
+  showMessageBadgeWhenMutedSetting: boolean;
+  showServiceNameSetting: boolean;
+  showMessageBadgesEvenWhenMuted: boolean;
+  isAppMuted: boolean;
+  isMenuCollapsed: boolean;
+  isWorkspaceDrawerOpen: boolean;
+  isTodosServiceActive: boolean;
+  actions?: Actions;
+  stores?: RealStores;
 
+  deleteService: () => void;
+  updateService: () => void;
+  hibernateService: () => void;
+  wakeUpService: () => void;
+  toggleMuteApp: () => void;
+  toggleCollapseMenu: () => void;
+  toggleWorkspaceDrawer: () => void;
+  openSettings: (arg: { path: string }) => void;
+  closeSettings: () => void;
+  setActive: () => void;
+  reorder: () => void;
+  reload: () => void;
+  toggleNotifications: () => void;
+  toggleAudio: () => void;
+  toggleDarkMode: () => void;
+}
+
+interface IState {
+  tooltipEnabled: boolean;
+}
+
+@observer
+@inject('stores', 'actions')
+class Sidebar extends Component<IProps, IState> {
   constructor(props) {
     super(props);
 
@@ -153,7 +156,7 @@ class Sidebar extends Component {
       hideSplitModeButton,
       useHorizontalStyle,
       splitMode,
-    } = stores.settings.app;
+    } = stores!.settings.app;
     const { intl } = this.props;
     const todosToggleMessage = todosStore.isTodosPanelVisible
       ? messages.closeTodosDrawer
@@ -172,7 +175,7 @@ class Sidebar extends Component {
       todosStore.isFeatureEnabledByUser,
     ].filter(Boolean).length;
 
-    const { isMenuCollapsed } = stores.settings.all.app;
+    const { isMenuCollapsed } = stores!.settings.all.app;
 
     return (
       <div className="sidebar">
@@ -180,7 +183,7 @@ class Sidebar extends Component {
           {...this.props}
           enableToolTip={() => this.enableToolTip()}
           disableToolTip={() => this.disableToolTip()}
-          useHorizontalStyle={stores.settings.all.app.useHorizontalStyle}
+          useHorizontalStyle={stores!.settings.all.app.useHorizontalStyle}
         />
         <>
           {numberActiveButtons <= 1 || hideCollapseButton ? null : (
@@ -216,7 +219,7 @@ class Sidebar extends Component {
             <button
               type="button"
               onClick={() => {
-                actions.settings.update({
+                actions!.settings.update({
                   type: 'app',
                   data: {
                     splitMode: !splitMode,
@@ -283,12 +286,12 @@ class Sidebar extends Component {
               <Icon icon={mdiCheckAll} size={1.5} />
             </button>
           ) : null}
-          {stores.settings.all.app.lockingFeatureEnabled ? (
+          {stores!.settings.all.app.lockingFeatureEnabled ? (
             <button
               type="button"
               className="sidebar__button"
               onClick={() => {
-                actions.settings.update({
+                actions!.settings.update({
                   type: 'app',
                   data: {
                     locked: true,
@@ -316,11 +319,11 @@ class Sidebar extends Component {
             )} (${settingsShortcutKey(false)})`}
           >
             <Icon icon={mdiCog} size={1.5} />
-            {this.props.stores.settings.app.automaticUpdates &&
-              (this.props.stores.app.updateStatus ===
-                this.props.stores.app.updateStatusTypes.AVAILABLE ||
-                this.props.stores.app.updateStatus ===
-                  this.props.stores.app.updateStatusTypes.DOWNLOADED ||
+            {stores!.settings.app.automaticUpdates &&
+              (stores!.app.updateStatus ===
+                stores!.app.updateStatusTypes.AVAILABLE ||
+                stores!.app.updateStatus ===
+                  stores!.app.updateStatusTypes.DOWNLOADED ||
                 this.props.showServicesUpdatedInfoBar) && (
                 <span className="update-available">•</span>
               )}
@@ -331,4 +334,4 @@ class Sidebar extends Component {
   }
 }
 
-export default injectIntl(inject('stores', 'actions')(observer(Sidebar)));
+export default injectIntl(Sidebar);
