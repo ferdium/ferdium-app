@@ -4,8 +4,17 @@ import { StoresProps } from '../../@types/ferdium-components.types';
 import Locked from '../../components/auth/Locked';
 
 import { hash } from '../../helpers/password-helpers';
+import { Actions } from '../../actions/lib/actions';
+import { RealStores } from '../../stores';
 
-class LockedScreen extends Component<StoresProps> {
+interface IProps {
+  actions?: Actions;
+  stores?: RealStores;
+}
+
+@inject('stores', 'actions')
+@observer
+class LockedScreen extends Component<IProps> {
   state = {
     error: false,
   };
@@ -20,13 +29,13 @@ class LockedScreen extends Component<StoresProps> {
   onSubmit(values: any): void {
     const { password } = values;
 
-    let correctPassword = this.props.stores.settings.all.app.lockedPassword;
+    let correctPassword = this.props.stores!.settings.all.app.lockedPassword;
     if (!correctPassword) {
       correctPassword = '';
     }
 
     if (hash(String(password)) === String(correctPassword)) {
-      this.props.actions.settings.update({
+      this.props.actions!.settings.update({
         type: 'app',
         data: {
           locked: false,
@@ -42,7 +51,7 @@ class LockedScreen extends Component<StoresProps> {
   }
 
   unlock(): void {
-    this.props.actions.settings.update({
+    this.props.actions!.settings.update({
       type: 'app',
       data: {
         locked: false,
@@ -52,7 +61,7 @@ class LockedScreen extends Component<StoresProps> {
 
   render(): ReactElement {
     const { stores } = this.props;
-    const { useTouchIdToUnlock } = this.props.stores.settings.all.app;
+    const { useTouchIdToUnlock } = this.props.stores!.settings.all.app;
 
     return (
       <div className="auth">
@@ -61,7 +70,7 @@ class LockedScreen extends Component<StoresProps> {
             onSubmit={this.onSubmit}
             unlock={this.unlock}
             useTouchIdToUnlock={useTouchIdToUnlock}
-            isSubmitting={stores.user.loginRequest.isExecuting}
+            isSubmitting={stores!.user.loginRequest.isExecuting}
             error={this.state.error || {}}
           />
         </div>
@@ -70,4 +79,4 @@ class LockedScreen extends Component<StoresProps> {
   }
 }
 
-export default inject('stores', 'actions')(observer(LockedScreen));
+export default LockedScreen;

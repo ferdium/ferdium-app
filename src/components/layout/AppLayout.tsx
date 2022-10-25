@@ -1,9 +1,8 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { TitleBar } from 'electron-react-titlebar/renderer';
-import injectSheet from 'react-jss';
+import injectSheet, { WithStylesProps } from 'react-jss';
 import { ipcRenderer } from 'electron';
 
 import { mdiFlash, mdiPowerPlug } from '@mdi/js';
@@ -16,8 +15,7 @@ import ErrorBoundary from '../util/ErrorBoundary';
 import { updateVersionParse } from '../../helpers/update-helpers';
 
 // import globalMessages from '../../i18n/globalMessages';
-
-import { isWindows, isMac } from '../../environment';
+import { isMac, isWindows } from '../../environment';
 import WorkspaceSwitchingIndicator from '../../features/workspaces/components/WorkspaceSwitchingIndicator';
 import { workspaceStore } from '../../features/workspaces';
 import AppUpdateInfoBar from '../AppUpdateInfoBar';
@@ -25,6 +23,7 @@ import Todos from '../../features/todos/containers/TodosScreen';
 import Icon from '../ui/icon';
 
 import LockedScreen from '../../containers/auth/LockedScreen';
+import SettingsStore from '../../stores/SettingsStore';
 
 const messages = defineMessages({
   servicesUpdated: {
@@ -77,24 +76,30 @@ const toggleFullScreen = () => {
   ipcRenderer.send('window.toolbar-double-clicked');
 };
 
-class AppLayout extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    settings: PropTypes.object.isRequired,
-    isFullScreen: PropTypes.bool.isRequired,
-    sidebar: PropTypes.element.isRequired,
-    workspacesDrawer: PropTypes.element.isRequired,
-    services: PropTypes.element.isRequired,
-    showServicesUpdatedInfoBar: PropTypes.bool.isRequired,
-    appUpdateIsDownloaded: PropTypes.bool.isRequired,
-    authRequestFailed: PropTypes.bool.isRequired,
-    installAppUpdate: PropTypes.func.isRequired,
-    showRequiredRequestsError: PropTypes.bool.isRequired,
-    areRequiredRequestsSuccessful: PropTypes.bool.isRequired,
-    retryRequiredRequests: PropTypes.func.isRequired,
-    areRequiredRequestsLoading: PropTypes.bool.isRequired,
-  };
+interface IProps extends WrappedComponentProps, WithStylesProps<typeof styles> {
+  settings: SettingsStore;
+  updateVersion: string;
+  isFullScreen: boolean;
+  sidebar: React.ReactElement;
+  workspacesDrawer: React.ReactElement;
+  services: React.ReactElement;
+  showServicesUpdatedInfoBar: boolean;
+  appUpdateIsDownloaded: boolean;
+  authRequestFailed: boolean;
+  installAppUpdate: () => void;
+  showRequiredRequestsError: boolean;
+  areRequiredRequestsSuccessful: boolean;
+  retryRequiredRequests: () => void;
+  areRequiredRequestsLoading: boolean;
+}
 
+interface IState {
+  shouldShowAppUpdateInfoBar: boolean;
+  shouldShowServicesUpdatedInfoBar: boolean;
+}
+
+@observer
+class AppLayout extends Component<IProps, IState> {
   constructor(props) {
     super(props);
 
@@ -222,5 +227,5 @@ class AppLayout extends Component {
 }
 
 export default injectIntl(
-  injectSheet(styles, { injectTheme: true })(observer(AppLayout)),
+  injectSheet(styles, { injectTheme: true })(AppLayout),
 );
