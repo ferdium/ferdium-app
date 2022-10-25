@@ -8,7 +8,7 @@ import { observer } from 'mobx-react';
 import { TitleBar } from 'electron-react-titlebar/renderer';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { mdiFlash } from '@mdi/js';
-import { GlobalError } from 'src/@types/ferdium-components.types';
+import { GlobalError } from '../../@types/ferdium-components.types';
 import Link from '../ui/Link';
 import InfoBar from '../ui/InfoBar';
 import { Component as PublishDebugInfo } from '../../features/publishDebugInfo';

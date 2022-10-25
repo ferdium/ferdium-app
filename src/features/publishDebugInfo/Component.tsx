@@ -2,7 +2,7 @@ import { inject, observer } from 'mobx-react';
 import { Component, ReactElement } from 'react';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import withStyles, { WithStylesProps } from 'react-jss';
-import { StoresProps } from 'src/@types/ferdium-components.types';
+import { StoresProps } from '../../@types/ferdium-components.types';
 import { state as ModalState } from './store';
 import { H1 } from '../../components/ui/headline';
 import { sendAuthRequest } from '../../api/utils/auth';

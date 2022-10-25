@@ -1,7 +1,7 @@
 import { Component, ReactElement } from 'react';
 import classnames from 'classnames';
 import withStyles, { WithStylesProps } from 'react-jss';
-import { Theme } from 'src/themes';
+import { Theme } from '../../../themes';
 import FullscreenLoader from '../FullscreenLoader';
 import shuffleArray from '../../../helpers/array-helpers';
 
