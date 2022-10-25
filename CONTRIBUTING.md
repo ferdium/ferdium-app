@@ -89,7 +89,7 @@ dnf install libX11-devel libXext-devel libXScrnSaver-devel libxkbfile-devel rpm
 
 Please make sure you have the following installed:
 
-- Microsoft Visual Studio Build Tools (2019 or higher - with Windows 10 SDK selected).
+- Microsoft Visual Studio Build Tools (2017 or 2019 - with Windows 10 SDK selected).
 
 ### Clone repository with submodule
 

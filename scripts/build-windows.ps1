@@ -96,7 +96,7 @@ if ($env:CLEAN -eq "true")
 # Check MSVS Tools through MSVS_VERSION
 
 
-$EXPECTED_MSVST_VERSION = @("2019","2022")
+$EXPECTED_MSVST_VERSION = @("2017","2019")
 $NPM_CONFIG_MSVS_VERSION = npm config get msvs_version
 if((-not $NPM_CONFIG_MSVS_VERSION) -or -not ($EXPECTED_MSVST_VERSION -contains $NPM_CONFIG_MSVS_VERSION)){
   Write-Host "Your Microsoft Visual Studio Tools isn't set properly or it's not the right version!
@@ -133,7 +133,7 @@ if((-not $NPM_CONFIG_MSVS_VERSION) -or -not ($EXPECTED_MSVST_VERSION -contains $
 # Ensure that the system dependencies are at the correct version - recover if not
 # Check pnpm version
 $EXPECTED_PNPM_VERSION = (Get-Content package.json | ConvertFrom-Json).engines.pnpm
-$ACTUAL_PNPM_VERSION = Get-Command pnpm --version -ErrorAction SilentlyContinue  # in case the pnpm executable itself is not present
+$ACTUAL_PNPM_VERSION = pnpm --version -ErrorAction SilentlyContinue  # in case the pnpm executable itself is not present
 if ($ACTUAL_PNPM_VERSION -ne $EXPECTED_PNPM_VERSION) {
   npm i -gf pnpm@$EXPECTED_PNPM_VERSION
 }
