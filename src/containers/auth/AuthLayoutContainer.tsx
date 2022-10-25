@@ -40,7 +40,6 @@ class AuthLayoutContainer extends Component<IProps> {
       <ThemeProvider theme={stores.ui.theme}>
         <AuthLayout
           error={globalError.response}
-          // pathname={stores.router.location.pathname} // TODO - [TS DEBT] path name props is not used in AuthLayout
           isOnline={app.isOnline}
           isAPIHealthy={!app.healthCheckRequest.isError}
           retryHealthCheck={actions.app.healthCheck}
