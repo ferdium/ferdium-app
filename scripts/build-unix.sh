@@ -95,7 +95,7 @@ EXPECTED_RECIPES_PNPM_VERSION=$(node -p 'require("./recipes/package.json").engin
 if [[ "$EXPECTED_PNPM_VERSION" != "$EXPECTED_RECIPES_PNPM_VERSION" ]]; then
   fail_with_docs "The expected versions of pnpm are not the same in the main repo and in the recipes submodule, please sync them.
     expected in recipes  : [$EXPECTED_RECIPES_PNPM_VERSION]
-    expected in main repo: [$EXPECTED_RECIPES_PNPM_VERSION]
+    expected in main repo: [$EXPECTED_PNPM_VERSION]
     actual               : [$EXPECTED_PNPM_VERSION]"
 fi
 
