@@ -96,7 +96,7 @@ if ($env:CLEAN -eq "true")
 # Check MSVS Tools through MSVS_VERSION
 
 
-$EXPECTED_MSVST_VERSION = @("2017","2019")
+$EXPECTED_MSVST_VERSION = @("2017","2019","2022")
 $NPM_CONFIG_MSVS_VERSION = npm config get msvs_version
 if((-not $NPM_CONFIG_MSVS_VERSION) -or -not ($EXPECTED_MSVST_VERSION -contains $NPM_CONFIG_MSVS_VERSION)){
   Write-Host "Your Microsoft Visual Studio Tools isn't set properly or it's not the right version!
