@@ -1,9 +1,9 @@
 import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
-import { Route } from 'react-router';
 import {
   Navigate,
   Routes,
+  Route,
   unstable_HistoryRouter as HistoryRouter,
 } from 'react-router-dom';
 import { HashHistory } from 'history';

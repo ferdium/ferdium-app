@@ -25,10 +25,12 @@
 
 #### Checklist
 <!-- Remove items that do not apply. For completed items, change [ ] to [x]. -->
+
 - [ ] My pull request is properly named
-- [ ] The changes respect the code style of the project (`npm run prepare-code`)
-- [ ] `npm test` passes
+- [ ] The changes respect the code style of the project (`pnpm prepare-code`)
+- [ ] `pnpm test` passes
 - [ ] I tested/previewed my changes locally
 
 #### Release Notes
+
 <!-- Please add a one-line description for users of Ferdium to read in the release notes, or 'none' if no notes relevant to such users. Examples and help on special cases: https://github.com/electron/clerk/blob/master/README.md#examples -->
