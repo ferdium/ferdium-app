@@ -17,10 +17,10 @@ RUN apt-get update -y \
 
 WORKDIR /usr/src/ferdium
 
-RUN npm i -gf "pnpm@$(node -p 'require("./package.json").engines.pnpm')" && pnpm -v
-
 COPY package*.json ./
 COPY .npmrc ./
+
+RUN npm i -gf "pnpm@$(node -p 'require("./package.json").engines.pnpm')" && pnpm -v
 
 RUN pnpm i
 
