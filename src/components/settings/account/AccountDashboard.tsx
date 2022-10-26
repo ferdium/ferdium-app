@@ -1,14 +1,14 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
-import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
+import { observer } from 'mobx-react';
+import {defineMessages, injectIntl, WrappedComponentProps} from 'react-intl';
 import ReactTooltip from 'react-tooltip';
 import { H1, H2 } from '../../ui/headline';
 
 import Loader from '../../ui/Loader';
 import Button from '../../ui/button';
-import Infobox from '../../ui/Infobox';
+import Infobox from '../../ui/infobox';
 import { LOCAL_SERVER, LIVE_FRANZ_API } from '../../../config';
+import User from "../../../models/User";
 
 const messages = defineMessages({
   headline: {
@@ -64,19 +64,21 @@ const messages = defineMessages({
   },
 });
 
-class AccountDashboard extends Component {
-  static propTypes = {
-    user: MobxPropTypes.observableObject.isRequired,
-    isLoading: PropTypes.bool.isRequired,
-    userInfoRequestFailed: PropTypes.bool.isRequired,
-    retryUserInfoRequest: PropTypes.func.isRequired,
-    deleteAccount: PropTypes.func.isRequired,
-    isLoadingDeleteAccount: PropTypes.bool.isRequired,
-    isDeleteAccountSuccessful: PropTypes.bool.isRequired,
-    openEditAccount: PropTypes.func.isRequired,
-    openInvoices: PropTypes.func.isRequired,
-    server: PropTypes.string.isRequired,
-  };
+interface IProp extends WrappedComponentProps {
+  user: User;
+  isLoading: boolean;
+  userInfoRequestFailed: boolean;
+  isLoadingDeleteAccount: boolean;
+  isDeleteAccountSuccessful: boolean;
+  server: string;
+  retryUserInfoRequest: () => void;
+  deleteAccount: () => void;
+  openEditAccount: () => void;
+  openInvoices: () => void;
+}
+
+@observer
+class AccountDashboard extends Component<IProp> {
 
   render() {
     const {
@@ -131,7 +133,6 @@ class AccountDashboard extends Component {
                   ctaLabel={intl.formatMessage(
                     messages.tryReloadUserInfoRequest,
                   )}
-                  ctaLoading={isLoading}
                   ctaOnClick={retryUserInfoRequest}
                 >
                   {intl.formatMessage(messages.userInfoRequestFailed)}
@@ -221,4 +222,4 @@ class AccountDashboard extends Component {
   }
 }
 
-export default injectIntl(observer(AccountDashboard));
+export default injectIntl(AccountDashboard);

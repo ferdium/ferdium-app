@@ -1,19 +1,20 @@
-import { Component, ReactChildren } from 'react';
+import {Component, PropsWithChildren} from 'react';
 import { observer, inject } from 'mobx-react';
 import Loader from 'react-loader';
 
 import { FerdiumStores } from '../../@types/stores.types';
 
-type Props = {
-  children: ReactChildren;
-  loaded: boolean;
-  className: string;
-  color: string;
-  stores: FerdiumStores;
-};
+interface IProps {
+  className?: string;
+  color?: string;
+  loaded?: boolean;
+  stores?: FerdiumStores;
+}
 
 // Can this file be merged into the './loader/index.tsx' file?
-class LoaderComponent extends Component<Props> {
+@inject("stores")
+@observer
+class LoaderComponent extends Component<PropsWithChildren<IProps>> {
   static defaultProps = {
     loaded: false,
     color: 'ACCENT',
@@ -25,7 +26,7 @@ class LoaderComponent extends Component<Props> {
     const color =
       this.props.color !== 'ACCENT'
         ? this.props.color
-        : this.props.stores.settings.app.accentColor;
+        : this.props.stores!.settings.app.accentColor;
 
     return (
       <Loader
@@ -42,4 +43,4 @@ class LoaderComponent extends Component<Props> {
   }
 }
 
-export default inject('stores')(observer(LoaderComponent));
+export default LoaderComponent;

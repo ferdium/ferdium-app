@@ -7,15 +7,16 @@ import { Theme } from '../../../themes';
 import Icon from '../icon';
 
 interface IProps extends WithStylesProps<typeof styles> {
+  children: ReactNode;
   icon?: string;
   type?: string;
   dismissable?: boolean;
+  ctaLabel?: string;
+
+  className?: string;
   onDismiss?: () => void;
   onUnmount?: () => void;
   ctaOnClick?: () => void;
-  ctaLabel?: string;
-  children: ReactNode;
-  className: string;
 }
 
 interface IState {
@@ -114,6 +115,7 @@ class InfoboxComponent extends Component<IProps, IState> {
     ctaOnClick: () => {},
     onDismiss: () => {},
     ctaLabel: '',
+    className: '',
   };
 
   state = {
