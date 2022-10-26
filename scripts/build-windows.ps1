@@ -96,7 +96,7 @@ if ($env:CLEAN -eq "true")
 # Check MSVS Tools through MSVS_VERSION
 
 
-$EXPECTED_MSVST_VERSION = @("2019","2022")
+$EXPECTED_MSVST_VERSION = @("2017","2019","2022")
 $NPM_CONFIG_MSVS_VERSION = npm config get msvs_version
 if((-not $NPM_CONFIG_MSVS_VERSION) -or -not ($EXPECTED_MSVST_VERSION -contains $NPM_CONFIG_MSVS_VERSION)){
   Write-Host "Your Microsoft Visual Studio Tools isn't set properly or it's not the right version!
@@ -131,44 +131,30 @@ if((-not $NPM_CONFIG_MSVS_VERSION) -or -not ($EXPECTED_MSVST_VERSION -contains $
 
 # -----------------------------------------------------------------------------
 # Ensure that the system dependencies are at the correct version - recover if not
-# Check npm version
-$EXPECTED_NPM_VERSION = (Get-Content package.json | ConvertFrom-Json).engines.npm
-$ACTUAL_NPM_VERSION = (npm -v)
-if ($EXPECTED_NPM_VERSION -ne $ACTUAL_NPM_VERSION) {
-  Write-Host "You are not running the expected version of npm!
-    expected: [$EXPECTED_NPM_VERSION]
-    actual  : [$ACTUAL_NPM_VERSION]"
-  Write-Host "Changing version of npm to [$EXPECTED_NPM_VERSION]"
-  npm i -gf npm@$EXPECTED_NPM_VERSION
-}
-
 # Check pnpm version
-$EXPECTED_PNPM_VERSION = (Get-Content recipes\package.json | ConvertFrom-Json).engines.pnpm
-$ACTUAL_PNPM_VERSION = Get-Command pnpm --version -ErrorAction SilentlyContinue  # in case the pnpm executable itself is not present
+$EXPECTED_PNPM_VERSION = (Get-Content package.json | ConvertFrom-Json).engines.pnpm
+$ACTUAL_PNPM_VERSION = pnpm --version -ErrorAction SilentlyContinue  # in case the pnpm executable itself is not present
 if ($ACTUAL_PNPM_VERSION -ne $EXPECTED_PNPM_VERSION) {
   npm i -gf pnpm@$EXPECTED_PNPM_VERSION
 }
 
-# -----------------------------------------------------------------------------
-# This is useful if we move from 'npm' to 'pnpm' for the main repo as well
-if ((Test-Path -Path ".\pnpm-lock.yaml") -and (Get-Command -ErrorAction Ignore -Type Application pnpm))
-{
-  $BASE_CMD="pnpm"
-  $env:EXEC_CMD="pnpm dlx"
-}
-else
-{
-  $BASE_CMD="npm"
-  $env:EXEC_CMD="npx"
+# Check pnpm version of the recipes submodule
+$EXPECTED_RECIPES_PNPM_VERSION = (Get-Content .\recipes\package.json | ConvertFrom-Json).engines.pnpm
+if ($ACTUAL_PNPM_VERSION -ne $EXPECTED_RECIPES_PNPM_VERSION) {
+ fail_with_docs "The expected versions of pnpm are not the same in the main repo and in the recipes submodule, please sync them.
+    expected in recipes  : [$EXPECTED_RECIPES_PNPM_VERSION]
+    expected in main repo: [$EXPECTED_RECIPES_PNPM_VERSION]
+    actual               : [$EXPECTED_PNPM_VERSION]"
 }
 
+# -----------------------------------------------------------------------------
 # Now the meat.....
-& $BASE_CMD i
-& $BASE_CMD run prepare-code
+& pnpm i
+& pnpm prepare-code
+& pnpm test
 
 # -----------------------------------------------------------------------------
 Write-Host "*************** Building recipes ***************"
-# Note: 'recipes' is already using only pnpm - can switch to $BASE_CMD AFTER both repos are using pnpm
 Push-Location recipes
 pnpm i && pnpm lint && pnpm reformat-files && pnpm package
 Pop-Location
@@ -176,13 +162,13 @@ Pop-Location
 # -----------------------------------------------------------------------------
 Write-Host "*************** Building app ***************"
 if ($env:PROCESSOR_ARCHITECTURE -eq "ARM64") {
-    $TARGET_ARCH="arm64"
+  $TARGET_ARCH="arm64"
 }
 else
 {
-    $TARGET_ARCH="x64"
+  $TARGET_ARCH="x64"
 }
-& $BASE_CMD run build -- --$TARGET_ARCH --dir
+& pnpm build -- --$TARGET_ARCH --dir
 
 Write-Host "*************** App successfully built! ***************"
 

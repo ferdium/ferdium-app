@@ -13,7 +13,7 @@
   - [How can I contribute?](#how-can-i-contribute)
   - [Setting up your development machine](#setting-up-your-development-machine)
     - [Install system-level dependencies](#install-system-level-dependencies)
-      - [Node.js, npm, pnpm](#nodejs-npm-pnpm)
+      - [Node.js, pnpm](#nodejs-pnpm)
       - [Git](#git)
       - [On Debian/Ubuntu](#on-debianubuntu)
       - [On Fedora](#on-fedora)
@@ -52,7 +52,7 @@ If so, engage in the already existing discussion.
 
 _Note:_ This list can likely get outdated. If so, please refer to the specific version of the [electronuserland builder](https://hub.docker.com/r/electronuserland/builder) that we use in our [Dockerfile](./Dockerfile).
 
-#### Node.js, npm, pnpm
+#### Node.js, pnpm
 
 Please make sure you are conforming to the `engines` requirements used by the developers/contributors as specified in the [`package.json`](./package.json#engines) and [`recipes/package.json`](./recipes/package.json#engine) files.
 
@@ -63,12 +63,11 @@ Currently, these are the combinations of system dependencies that work for MacOS
 $ jq --null-input '[inputs.engines] | add' < ./package.json < ./recipes/package.json
 {
   "node": "16.18.0",
-  "npm": "8.19.2",
   "pnpm": "7.14.0"
 }
 ```
 
-_Note:_ You can choose any version manager to manage multiple versions of `node` and `npm`. For eg, [nvm](https://github.com/nvm-sh/nvm) or [asdf](https://github.com/asdf-vm/asdf).
+_Note:_ You can choose any version manager to manage multiple versions of `node` and `pnpm`. For eg, [nvm](https://github.com/nvm-sh/nvm) or [asdf](https://github.com/asdf-vm/asdf).
 
 #### Git
 
@@ -90,7 +89,7 @@ dnf install libX11-devel libXext-devel libXScrnSaver-devel libxkbfile-devel rpm
 
 Please make sure you have the following installed:
 
-- Microsoft Visual Studio Build Tools (2019 or higher - with Windows 10 SDK selected).
+- Microsoft Visual Studio Build Tools (2017, 2019 or 2022 - with Windows 10 SDK selected).
 
 ### Clone repository with submodule
 
@@ -147,7 +146,7 @@ mv /ferdium/latest-linux.yml /ferdium-out/latest-linux-$GIT_SHA.yml
 Run this command on the terminal:
 
 ```bash
-npm run debug
+pnpm debug
 ```
 
 Note: please prefer [`debug()`](https://github.com/visionmedia/debug) over `console.log()`.

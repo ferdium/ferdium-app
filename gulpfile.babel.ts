@@ -4,6 +4,7 @@ import babel from 'gulp-babel';
 import dartSass from 'sass';
 import gulpSass from 'gulp-sass';
 import csso from 'gulp-csso';
+import rename from 'gulp-rename';
 import terser from 'gulp-terser';
 import htmlMin from 'gulp-htmlmin';
 import connect from 'gulp-connect';
@@ -98,6 +99,13 @@ function mvSrc() {
       ],
       { since: gulp.lastRun(mvSrc) },
     )
+    .pipe(gulp.dest(paths.dest));
+}
+
+function mvElectronNpmrc() {
+  return gulp
+    .src(['electron-builder.npmrc'])
+    .pipe(rename('.npmrc'))
     .pipe(gulp.dest(paths.dest));
 }
 
@@ -219,7 +227,7 @@ function recipeInfo() {
 
 export const build = gulp.series(
   clean,
-  gulp.parallel(mvSrc, mvPackageJson, BuildInfo),
+  gulp.parallel(mvElectronNpmrc, mvSrc, mvPackageJson, BuildInfo),
   gulp.parallel(
     html,
     processJavascript,

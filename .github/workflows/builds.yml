@@ -51,15 +51,12 @@ jobs:
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
         with:
           node-version-file: ".nvmrc"
-      - name: Install npm
-        if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
-        run: npm i -gf "npm@$(node -p 'require("./package.json").engines.npm')" && npm -v
       - name: Install pnpm
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
-        run: npm i -gf "pnpm@$(node -p 'require("./recipes/package.json").engines.pnpm')" && pnpm -v
+        run: npm i -gf "pnpm@$(node -p 'require("./package.json").engines.pnpm')" && pnpm -v
       - name: Install node dependencies
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
-        run: npm i
+        run: pnpm i
       - id: should_run
         name: Check whether there are any commits since this run was last triggered and push them and/or set the output
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
@@ -90,8 +87,8 @@ jobs:
             echo "GIT_DIRTY=$(git status -s | wc -l)" >> $GITHUB_ENV
 
             echo "Run linter, reformatter, rebrander and tests"
-            npm run prepare-code
-            npm run test
+            pnpm prepare-code
+            pnpm test
 
             echo "Commit dependency-updates and linter changes"
             git commit -am "Update browserslist data updates and linter fixes [skip ci]" --no-verify || true
@@ -107,7 +104,7 @@ jobs:
             #   there were other changes coming from the 'develop' branch (or)
             #   this is a manual trigger with the key-phrase
             git checkout develop
-            npm version -m "%s [skip ci]" prerelease --preid=nightly
+            pnpm version -m "%s [skip ci]" prerelease --preid=nightly
             git commit --all --amend --no-edit --no-verify
             git push origin develop --no-verify
 
@@ -173,22 +170,20 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
-      - name: Install npm
-        run: npm i -gf "npm@$(node -p 'require("./package.json").engines.npm')" && npm -v
       - name: Install pnpm
-        run: npm i -gf "pnpm@$(node -p 'require("./recipes/package.json").engines.pnpm')" && pnpm -v
+        run: npm i -gf "pnpm@$(node -p 'require("./package.json").engines.pnpm')" && pnpm -v
       - name: Install node dependencies
-        run: npm i
+        run: pnpm i
       - name: Package recipes
         run: pnpm i && pnpm lint && pnpm reformat-files && pnpm package
         working-directory: ./recipes
       - name: Run linter and tests
-        run: npm run lint && npm run test
+        run: pnpm lint && pnpm test
       - name: Build Ferdium without publish for any branch not 'nightly' and not 'release'
         if: ${{ env.GIT_BRANCH_NAME != 'nightly' && env.GIT_BRANCH_NAME != 'release' }}
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: false
-        run: npm run build -- --publish never
+        run: pnpm build --publish never
         shell: bash
       - name: "Build Ferdium with publish for '${{ env.GIT_BRANCH_NAME }}' branch"
         if: ${{ env.GIT_BRANCH_NAME == 'nightly' || env.GIT_BRANCH_NAME == 'release' }}
@@ -199,7 +194,7 @@ jobs:
           APPLEID_PASSWORD: ${{ secrets.APPLEID_PASSWORD }}
           CSC_LINK: ${{ secrets.CSC_LINK }}
           CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
-        run: npm run build -- --publish always
+        run: pnpm build --publish always
         shell: bash
 
   build_linux:
@@ -249,12 +244,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
-      - name: Install npm
-        run: npm i -gf "npm@$(node -p 'require("./package.json").engines.npm')" && npm -v
       - name: Install pnpm
-        run: npm i -gf "pnpm@$(node -p 'require("./recipes/package.json").engines.pnpm')" && pnpm -v
+        run: npm i -gf "pnpm@$(node -p 'require("./package.json").engines.pnpm')" && pnpm -v
       - name: Install node dependencies
-        run: npm i
+        run: pnpm i
       - name: Figure out used package.json version
         run: |
           PACKAGE_VERSION="$(node -p 'require("./package.json").version')"
@@ -278,12 +271,12 @@ jobs:
         run: pnpm i && pnpm lint && pnpm reformat-files && pnpm package
         working-directory: ./recipes
       - name: Run linter and tests
-        run: npm run lint && npm run test
+        run: pnpm lint && pnpm test
       - name: Build Ferdium without publish for any branch not 'nightly' and not 'release'
         if: ${{ env.GIT_BRANCH_NAME != 'nightly' && env.GIT_BRANCH_NAME != 'release' }}
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: false
-        run: npm run build -- --publish never
+        run: pnpm build --publish never
         shell: bash
       - name: "Build Ferdium with publish for '${{ env.GIT_BRANCH_NAME }}' branch"
         if: ${{ env.GIT_BRANCH_NAME == 'nightly' || env.GIT_BRANCH_NAME == 'release' }}
@@ -294,7 +287,7 @@ jobs:
         run: |
           sudo snap install snapcraft --channel=5.x/stable --classic
           echo "$SNAPCRAFT_LOGIN" | snapcraft login --with -
-          npm run build -- --publish always -c.snap.publish.repo=$SNAP_PUBLISH_REPO -c.snap.publish.channels=$SNAP_PUBLISH_CHANNEL
+          pnpm build --publish always -c.snap.publish.repo=$SNAP_PUBLISH_REPO -c.snap.publish.channels=$SNAP_PUBLISH_CHANNEL
           snapcraft logout
         shell: bash
 
@@ -347,14 +340,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version-file: ".nvmrc"
-      - name: Install npm
-        run: npm i -gf "npm@$(node -p 'require(\"./package.json\").engines.npm')" && npm -v
       - name: Install pnpm
-        run: npm i -gf "pnpm@$(node -p 'require(\"./recipes/package.json\").engines.pnpm')" && pnpm -v
+        run: npm i -gf "pnpm@$(node -p 'require(\"./package.json\").engines.pnpm')" && pnpm -v
       - name: Install node dependencies
         uses: nick-invision/retry@v2.4.0
         with:
-          command: npm i
+          command: pnpm i
           timeout_minutes: 15
           max_attempts: 3
           retry_on: error
@@ -363,13 +354,13 @@ jobs:
         working-directory: ./recipes
         shell: bash
       - name: Run linter and tests
-        run: npm run lint && npm run test
+        run: pnpm lint && pnpm test && pnpm build:windows
         shell: bash
       - name: Build Ferdium without publish for any branch not 'nightly' and not 'release'
         if: ${{ env.GIT_BRANCH_NAME != 'nightly' && env.GIT_BRANCH_NAME != 'release' }}
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: false
-        run: npm run build -- --publish never
+        run: pnpm electron-builder --publish never
         shell: bash
       - name: "Build Ferdium with publish for '${{ env.GIT_BRANCH_NAME }}' branch"
         if: ${{ env.GIT_BRANCH_NAME == 'nightly' || env.GIT_BRANCH_NAME == 'release' }}
@@ -378,5 +369,5 @@ jobs:
           CSC_IDENTITY_AUTO_DISCOVERY: true
           WIN_CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
           WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
-        run: npm run build -- --publish always
+        run: pnpm electron-builder --publish always
         shell: bash
