@@ -125,6 +125,7 @@ interface AppStore extends TypedStore {
   universalDarkMode: boolean;
   cacheSize: () => void;
   debugInfo: () => void;
+  enableLongPressServiceHint: boolean;
 }
 
 interface CommunityRecipesStore extends TypedStore {

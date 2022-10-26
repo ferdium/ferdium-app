@@ -3,28 +3,28 @@ import ReactTooltip from 'react-tooltip';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { inject, observer } from 'mobx-react';
 import {
-  mdiCheckAll,
-  mdiViewGrid,
-  mdiPlusBox,
-  mdiCog,
-  mdiBellOff,
   mdiBell,
-  mdiLock,
-  mdiMenu,
+  mdiBellOff,
+  mdiCheckAll,
   mdiChevronDown,
   mdiChevronRight,
+  mdiCog,
+  mdiLock,
+  mdiMenu,
+  mdiPlusBox,
+  mdiViewGrid,
   mdiViewSplitVertical,
 } from '@mdi/js';
 
 import Tabbar from '../services/tabs/Tabbar';
 import {
-  settingsShortcutKey,
+  addNewServiceShortcutKey,
   lockFerdiumShortcutKey,
+  muteFerdiumShortcutKey,
+  settingsShortcutKey,
+  splitModeToggleShortcutKey,
   todosToggleShortcutKey,
   workspaceToggleShortcutKey,
-  addNewServiceShortcutKey,
-  splitModeToggleShortcutKey,
-  muteFerdiumShortcutKey,
 } from '../../environment';
 import { todosStore } from '../../features/todos';
 import { todoActions } from '../../features/todos/actions';
@@ -86,21 +86,25 @@ interface IProps extends WrappedComponentProps {
   actions?: Actions;
   stores?: RealStores;
 
-  deleteService: () => void;
-  updateService: () => void;
-  hibernateService: () => void;
-  wakeUpService: () => void;
   toggleMuteApp: () => void;
   toggleCollapseMenu: () => void;
   toggleWorkspaceDrawer: () => void;
-  openSettings: (arg: { path: string }) => void;
+  openSettings: (args: { path: string }) => void;
   closeSettings: () => void;
-  setActive: () => void;
-  reorder: () => void;
-  reload: () => void;
-  toggleNotifications: () => void;
-  toggleAudio: () => void;
-  toggleDarkMode: () => void;
+  setActive: (args: { serviceId: string }) => void;
+  reorder: (args: { oldIndex: number; newIndex: number }) => void;
+  reload: (args: { serviceId: string }) => void;
+  toggleNotifications: (args: { serviceId: string }) => void;
+  toggleAudio: (args: { serviceId: string }) => void;
+  toggleDarkMode: (args: { serviceId: string }) => void;
+  deleteService: (args: { serviceId: string }) => void;
+  hibernateService: (args: { serviceId: string }) => void;
+  wakeUpService: (args: { serviceId: string }) => void;
+  updateService: (args: {
+    serviceId: string;
+    serviceData: { isEnabled: boolean; isMediaPlaying: boolean };
+    redirect: boolean;
+  }) => void;
 }
 
 interface IState {
@@ -180,10 +184,28 @@ class Sidebar extends Component<IProps, IState> {
     return (
       <div className="sidebar">
         <Tabbar
-          {...this.props}
+          useHorizontalStyle={stores!.settings.all.app.useHorizontalStyle}
+          showMessageBadgeWhenMutedSetting={
+            this.props.showMessageBadgeWhenMutedSetting
+          }
+          showServiceNameSetting={this.props.showServiceNameSetting}
+          showMessageBadgesEvenWhenMuted={
+            this.props.showMessageBadgesEvenWhenMuted
+          }
+          services={this.props.services}
+          setActive={this.props.setActive}
+          openSettings={this.props.openSettings}
           enableToolTip={() => this.enableToolTip()}
           disableToolTip={() => this.disableToolTip()}
-          useHorizontalStyle={stores!.settings.all.app.useHorizontalStyle}
+          reorder={this.props.reorder}
+          reload={this.props.reload}
+          toggleNotifications={this.props.toggleNotifications}
+          toggleAudio={this.props.toggleAudio}
+          toggleDarkMode={this.props.toggleDarkMode}
+          deleteService={this.props.deleteService}
+          updateService={this.props.updateService}
+          hibernateService={this.props.hibernateService}
+          wakeUpService={this.props.wakeUpService}
         />
         <>
           {numberActiveButtons <= 1 || hideCollapseButton ? null : (
