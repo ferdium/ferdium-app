@@ -1,16 +1,16 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactElement, ReactNode, useEffect, useState } from 'react';
 import { CSSTransitionGroup } from 'react-transition-group';
 
-type Props = {
+interface IProps {
   children: ReactNode;
-  transitionName: string;
+  transitionName?: string;
   className?: string;
-};
+}
 const Appear = ({
   children,
   transitionName = 'fadeIn',
   className = '',
-}: Props) => {
+}: IProps): ReactElement | null => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -34,10 +34,6 @@ const Appear = ({
       {children}
     </CSSTransitionGroup>
   );
-};
-
-Appear.defaultProps = {
-  className: '',
 };
 
 export default Appear;

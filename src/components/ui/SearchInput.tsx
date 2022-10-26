@@ -1,43 +1,35 @@
-import { ChangeEvent, Component } from 'react';
+import { ChangeEvent, Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
-import { debounce } from 'lodash';
+import { debounce, noop } from 'lodash';
 import { mdiCloseCircleOutline, mdiMagnify } from '@mdi/js';
 import Icon from './icon';
 
-type Props = {
-  value: string;
+interface IProps {
+  value?: string;
   placeholder: string;
-  className: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  className?: string;
+  onChange?: (e: string) => void;
   onReset: () => void;
-  name: string;
-  throttle: boolean;
-  throttleDelay: number;
-  autoFocus: boolean;
-};
+  name?: string;
+  throttle?: boolean;
+  throttleDelay?: number;
+  autoFocus?: boolean;
+}
 
-// Should this file be converted into the coding style similar to './toggle/index.tsx'?
-class SearchInput extends Component<Props> {
-  static defaultProps = {
-    value: '',
-    placeholder: '',
-    className: '',
-    name: 'searchInput',
-    throttle: false,
-    throttleDelay: 250,
-    onChange: () => null,
-    onReset: () => null,
-    autoFocus: false,
-  };
+interface IState {
+  value: string;
+}
 
-  input = null;
+@observer
+class SearchInput extends Component<IProps, IState> {
+  input: HTMLInputElement | null = null;
 
-  constructor(props: Props) {
+  constructor(props: IProps) {
     super(props);
 
     this.state = {
-      value: props.value,
+      value: props.value || '',
     };
 
     this.throttledOnChange = debounce(
@@ -46,47 +38,47 @@ class SearchInput extends Component<Props> {
     );
   }
 
-  componentDidMount() {
-    const { autoFocus } = this.props;
+  componentDidMount(): void {
+    const { autoFocus = false } = this.props;
 
-    if (autoFocus) {
-      // @ts-expect-error Object is possibly 'null'.
+    if (autoFocus && this.input) {
       this.input.focus();
     }
   }
 
-  onChange(e: ChangeEvent<HTMLInputElement>) {
-    const { throttle, onChange } = this.props;
+  onChange(e: ChangeEvent<HTMLInputElement>): void {
+    const { throttle = false, onChange = noop } = this.props;
     const { value } = e.target;
     this.setState({ value });
 
     if (throttle) {
       e.persist();
-      // @ts-expect-error Argument of type 'string' is not assignable to parameter of type 'ChangeEvent<HTMLInputElement>'.
       this.throttledOnChange(value);
     } else {
-      // @ts-expect-error Argument of type 'string' is not assignable to parameter of type 'ChangeEvent<HTMLInputElement>'.
       onChange(value);
     }
   }
 
-  throttledOnChange(e: ChangeEvent<HTMLInputElement>) {
-    const { onChange } = this.props;
+  throttledOnChange(e: string): void {
+    const { onChange = noop } = this.props;
 
     onChange(e);
   }
 
-  reset() {
-    const { onReset } = this.props;
+  reset(): void {
+    const { onReset = noop } = this.props;
     this.setState({ value: '' });
 
     onReset();
   }
 
-  render() {
-    const { className, name, placeholder } = this.props;
-    // @ts-expect-error Property 'value' does not exist on type 'Readonly<{}>'.
-    const { value } = this.state;
+  render(): ReactElement {
+    const {
+      className = '',
+      name = 'searchInput',
+      placeholder = '',
+    } = this.props;
+    const { value = '' } = this.state;
 
     return (
       <div className={classnames([className, 'search-input'])}>
@@ -100,13 +92,12 @@ class SearchInput extends Component<Props> {
             value={value}
             onChange={e => this.onChange(e)}
             ref={ref => {
-              // @ts-expect-error Type 'HTMLInputElement | null' is not assignable to type 'null'.
               this.input = ref;
             }}
           />
         </label>
         {value.length > 0 && (
-          <span onClick={() => this.reset()}>
+          <span onClick={() => this.reset()} onKeyDown={noop}>
             <Icon icon={mdiCloseCircleOutline} />
           </span>
         )}
@@ -115,4 +106,4 @@ class SearchInput extends Component<Props> {
   }
 }
 
-export default observer(SearchInput);
+export default SearchInput;
