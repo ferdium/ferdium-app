@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { observer } from 'mobx-react';
-import {defineMessages, injectIntl, WrappedComponentProps} from 'react-intl';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import ReactTooltip from 'react-tooltip';
 import { H1, H2 } from '../../ui/headline';
 
@@ -8,7 +8,7 @@ import Loader from '../../ui/Loader';
 import Button from '../../ui/button';
 import Infobox from '../../ui/infobox';
 import { LOCAL_SERVER, LIVE_FRANZ_API } from '../../../config';
-import User from "../../../models/User";
+import User from '../../../models/User';
 
 const messages = defineMessages({
   headline: {
@@ -79,7 +79,6 @@ interface IProp extends WrappedComponentProps {
 
 @observer
 class AccountDashboard extends Component<IProp> {
-
   render() {
     const {
       user,

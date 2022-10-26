@@ -1,4 +1,4 @@
-import {Component, PropsWithChildren} from 'react';
+import { Component, PropsWithChildren } from 'react';
 import { observer, inject } from 'mobx-react';
 import Loader from 'react-loader';
 
@@ -12,7 +12,7 @@ interface IProps {
 }
 
 // Can this file be merged into the './loader/index.tsx' file?
-@inject("stores")
+@inject('stores')
 @observer
 class LoaderComponent extends Component<PropsWithChildren<IProps>> {
   static defaultProps = {
