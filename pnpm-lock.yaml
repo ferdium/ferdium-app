@@ -23,6 +23,7 @@ specifiers:
   '@babel/register': 7.18.9
   '@commitlint/cli': 17.1.2
   '@commitlint/config-conventional': 17.1.0
+  '@electron/notarize': 1.2.3
   '@electron/remote': 2.0.8
   '@formatjs/cli': 5.1.1
   '@krisdages/electron-process-manager': 3.0.0
@@ -73,7 +74,6 @@ specifiers:
   electron-builder: 23.6.0
   electron-dl: 3.4.0
   electron-find: 1.0.7
-  electron-notarize: 1.2.1
   electron-react-titlebar: 1.2.1
   electron-updater: 5.3.0
   electron-window-state: 5.0.3
@@ -267,6 +267,7 @@ devDependencies:
   '@babel/register': 7.18.9_@babel+core@7.19.3
   '@commitlint/cli': 17.1.2
   '@commitlint/config-conventional': 17.1.0
+  '@electron/notarize': 1.2.3
   '@formatjs/cli': 5.1.1
   '@types/color': 3.0.3
   '@types/expect.js': 0.3.29
@@ -301,7 +302,6 @@ devDependencies:
   dotenv: 16.0.3
   electron: 21.2.0
   electron-builder: 23.6.0
-  electron-notarize: 1.2.1
   eslint: 8.25.0
   eslint-config-airbnb: 19.0.4_ckxtnaoy67ewg7fa3hkinvzrqe
   eslint-config-airbnb-typescript: 17.0.0_e6lkwwwk2zm62qkewmlfeeak2e
@@ -2093,6 +2093,16 @@ packages:
       global-tunnel-ng: 2.7.1
     transitivePeerDependencies:
       - supports-color
+
+  /@electron/notarize/1.2.3:
+    resolution: {integrity: sha512-9oRzT56rKh5bspk3KpAVF8lPKHYQrBnRwcgiOeR0hdilVEQmszDaAu0IPCPrwwzJN0ugNs0rRboTreHMt/6mBQ==}
+    engines: {node: '>= 10.0.0'}
+    dependencies:
+      debug: 4.3.4
+      fs-extra: 9.1.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
 
   /@electron/remote/2.0.8_electron@21.2.0:
     resolution: {integrity: sha512-P10v3+iFCIvEPeYzTWWGwwHmqWnjoh8RYnbtZAb3RlQefy4guagzIwcWtfftABIfm6JJTNQf4WPSKWZOpLmHXw==}
@@ -6250,17 +6260,6 @@ packages:
   /electron-find/1.0.7:
     resolution: {integrity: sha512-C2FQJuk8567P2a2loBNwl5c8kwOTQVMB0capgHtPI7zKwZG16X0UxG+sNYZExQfnJ0PA+ecECA/4LcXxQa2TCA==}
     dev: false
-
-  /electron-notarize/1.2.1:
-    resolution: {integrity: sha512-u/ECWhIrhkSQpZM4cJzVZ5TsmkaqrRo5LDC/KMbGF0sPkm53Ng59+M0zp8QVaql0obfJy9vlVT+4iOkAi2UDlA==}
-    engines: {node: '>= 10.0.0'}
-    deprecated: Please use @electron/notarize moving forward.  There is no API change, just a package name change
-    dependencies:
-      debug: 4.3.4
-      fs-extra: 9.1.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
 
   /electron-osx-sign/0.6.0:
     resolution: {integrity: sha512-+hiIEb2Xxk6eDKJ2FFlpofCnemCbjbT5jz+BKGpVBrRNT3kWTGs4DfNX6IzGwgi33hUcXF+kFs9JW+r6Wc1LRg==}
