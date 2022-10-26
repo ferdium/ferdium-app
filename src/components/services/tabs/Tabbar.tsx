@@ -1,31 +1,36 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
-import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
+import { observer } from 'mobx-react';
 
 import TabBarSortableList from './TabBarSortableList';
+import Service from '../../../models/Service';
 
-class TabBar extends Component {
-  static propTypes = {
-    services: MobxPropTypes.arrayOrObservableArray.isRequired,
-    setActive: PropTypes.func.isRequired,
-    openSettings: PropTypes.func.isRequired,
-    enableToolTip: PropTypes.func.isRequired,
-    disableToolTip: PropTypes.func.isRequired,
-    reorder: PropTypes.func.isRequired,
-    reload: PropTypes.func.isRequired,
-    toggleNotifications: PropTypes.func.isRequired,
-    toggleAudio: PropTypes.func.isRequired,
-    toggleDarkMode: PropTypes.func.isRequired,
-    deleteService: PropTypes.func.isRequired,
-    updateService: PropTypes.func.isRequired,
-    hibernateService: PropTypes.func.isRequired,
-    wakeUpService: PropTypes.func.isRequired,
-    useHorizontalStyle: PropTypes.bool.isRequired,
-    showMessageBadgeWhenMutedSetting: PropTypes.bool.isRequired,
-    showServiceNameSetting: PropTypes.bool.isRequired,
-    showMessageBadgesEvenWhenMuted: PropTypes.bool.isRequired,
-  };
+interface IProps {
+  useHorizontalStyle: boolean;
+  showMessageBadgeWhenMutedSetting: boolean;
+  showServiceNameSetting: boolean;
+  showMessageBadgesEvenWhenMuted: boolean;
+  services: Service[];
+  setActive: (args: { serviceId: string }) => void;
+  openSettings: (args: { path: string }) => void;
+  enableToolTip: () => void;
+  disableToolTip: () => void;
+  reorder: (args: { oldIndex: number; newIndex: number }) => void;
+  reload: (args: { serviceId: string }) => void;
+  toggleNotifications: (args: { serviceId: string }) => void;
+  toggleAudio: (args: { serviceId: string }) => void;
+  toggleDarkMode: (args: { serviceId: string }) => void;
+  deleteService: (args: { serviceId: string }) => void;
+  hibernateService: (args: { serviceId: string }) => void;
+  wakeUpService: (args: { serviceId: string }) => void;
+  updateService: (args: {
+    serviceId: string;
+    serviceData: { isEnabled: boolean; isMediaPlaying: boolean };
+    redirect: boolean;
+  }) => void;
+}
 
+@observer
+class TabBar extends Component<IProps> {
   onSortEnd = ({ oldIndex, newIndex }) => {
     const { enableToolTip, reorder } = this.props;
 
@@ -35,14 +40,14 @@ class TabBar extends Component {
 
   shouldPreventSorting = event => event.target.tagName !== 'LI';
 
-  toggleService = ({ serviceId, isEnabled }) => {
+  toggleService = (args: { serviceId: string; isEnabled: boolean }) => {
     const { updateService } = this.props;
 
-    if (serviceId) {
+    if (args.serviceId) {
       updateService({
-        serviceId,
+        serviceId: args.serviceId,
         serviceData: {
-          isEnabled,
+          isEnabled: args.isEnabled,
           isMediaPlaying: false,
         },
         redirect: false,
@@ -120,4 +125,4 @@ class TabBar extends Component {
   }
 }
 
-export default observer(TabBar);
+export default TabBar;

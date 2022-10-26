@@ -1,20 +1,20 @@
-import { Menu, dialog, app } from '@electron/remote';
+import { app, dialog, Menu } from '@electron/remote';
 import { Component } from 'react';
-import { defineMessages, injectIntl } from 'react-intl';
-import PropTypes from 'prop-types';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { inject, observer } from 'mobx-react';
 import classnames from 'classnames';
 import { SortableElement } from 'react-sortable-hoc';
-import injectSheet from 'react-jss';
+import injectSheet, { WithStylesProps } from 'react-jss';
 import ms from 'ms';
 
-import { observable, autorun, reaction, makeObservable } from 'mobx';
+import { autorun, makeObservable, observable, reaction } from 'mobx';
 import { mdiExclamation, mdiVolumeSource } from '@mdi/js';
-import ServiceModel from '../../../models/Service';
-import { cmdOrCtrlShortcutKey, shiftKey, altKey } from '../../../environment';
+import Service from '../../../models/Service';
+import { altKey, cmdOrCtrlShortcutKey, shiftKey } from '../../../environment';
 import globalMessages from '../../../i18n/globalMessages';
-import SettingsStore from '../../../stores/SettingsStore';
 import Icon from '../../ui/icon';
+import { Stores } from '../../../@types/stores.types';
+import MenuItemConstructorOptions = Electron.MenuItemConstructorOptions;
 
 const IS_SERVICE_DEBUGGING_ENABLED = (
   localStorage.getItem('debug') || ''
@@ -114,30 +114,34 @@ const styles = {
   },
 };
 
-class TabItem extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    service: PropTypes.instanceOf(ServiceModel).isRequired,
-    clickHandler: PropTypes.func.isRequired,
-    shortcutIndex: PropTypes.number.isRequired,
-    reload: PropTypes.func.isRequired,
-    toggleNotifications: PropTypes.func.isRequired,
-    toggleAudio: PropTypes.func.isRequired,
-    toggleDarkMode: PropTypes.func.isRequired,
-    openSettings: PropTypes.func.isRequired,
-    deleteService: PropTypes.func.isRequired,
-    disableService: PropTypes.func.isRequired,
-    enableService: PropTypes.func.isRequired,
-    hibernateService: PropTypes.func.isRequired,
-    wakeUpService: PropTypes.func.isRequired,
-    showMessageBadgeWhenMutedSetting: PropTypes.bool.isRequired,
-    showServiceNameSetting: PropTypes.bool.isRequired,
-    showMessageBadgesEvenWhenMuted: PropTypes.bool.isRequired,
-    stores: PropTypes.shape({
-      settings: PropTypes.instanceOf(SettingsStore).isRequired,
-    }).isRequired,
-  };
+interface IProps extends WrappedComponentProps, WithStylesProps<typeof styles> {
+  showMessageBadgeWhenMutedSetting: boolean;
+  showServiceNameSetting: boolean;
+  showMessageBadgesEvenWhenMuted: boolean;
+  service: Service;
+  shortcutIndex: number;
+  stores?: Stores;
+  reload: () => void;
 
+  clickHandler: () => void;
+  toggleNotifications: () => void;
+  toggleAudio: () => void;
+  toggleDarkMode: () => void;
+  openSettings: (args: { path: string }) => void;
+  deleteService: () => void;
+  disableService: () => void;
+  enableService: () => void;
+  hibernateService: () => void;
+  wakeUpService: () => void;
+}
+
+interface IState {
+  showShortcutIndex: boolean;
+}
+
+@inject('stores')
+@observer
+class TabItem extends Component<IProps, IState> {
   @observable isPolled = false;
 
   @observable isPollAnswered = false;
@@ -152,10 +156,10 @@ class TabItem extends Component {
     };
 
     reaction(
-      () => this.props.stores.settings.app.enableLongPressServiceHint,
+      () => this.props.stores!.settings.app.enableLongPressServiceHint,
       () => {
         this.checkForLongPress(
-          this.props.stores.settings.app.enableLongPressServiceHint,
+          this.props.stores!.settings.app.enableLongPressServiceHint,
         );
       },
     );
@@ -202,7 +206,7 @@ class TabItem extends Component {
       });
     }
 
-    this.checkForLongPress(stores.settings.app.enableLongPressServiceHint);
+    this.checkForLongPress(stores!.settings.app.enableLongPressServiceHint);
   }
 
   render() {
@@ -227,7 +231,7 @@ class TabItem extends Component {
     } = this.props;
     const { intl } = this.props;
 
-    const menuTemplate = [
+    const menuTemplate: Array<MenuItemConstructorOptions> = [
       {
         label: service.name || service.recipe.name,
         enabled: false,
@@ -299,6 +303,7 @@ class TabItem extends Component {
       {
         label: intl.formatMessage(messages.deleteService),
         click: () => {
+          // @ts-ignore
           const selection = dialog.showMessageBoxSync(app.mainWindow, {
             type: 'question',
             message: intl.formatMessage(messages.deleteService),
@@ -318,37 +323,10 @@ class TabItem extends Component {
     ];
     const menu = Menu.buildFromTemplate(menuTemplate);
 
-    let notificationBadge = null;
-    if (
+    const showNotificationBadge =
       (showMessageBadgeWhenMutedSetting || service.isNotificationEnabled) &&
       showMessageBadgesEvenWhenMuted &&
-      service.isBadgeEnabled
-    ) {
-      notificationBadge = (
-        <>
-          {service.unreadDirectMessageCount > 0 && (
-            <span className="tab-item__message-count">
-              {service.unreadDirectMessageCount}
-            </span>
-          )}
-          {service.unreadIndirectMessageCount > 0 &&
-            service.unreadDirectMessageCount === 0 &&
-            service.isIndirectMessageBadgeEnabled && (
-              <span className="tab-item__message-count is-indirect">•</span>
-            )}
-          {service.isHibernating && (
-            <span className="tab-item__message-count hibernating">•</span>
-          )}
-        </>
-      );
-    }
-
-    let errorBadge = null;
-    if (service.isError) {
-      errorBadge = (
-        <Icon icon={mdiExclamation} className="tab-item__error-icon" />
-      );
-    }
+      service.isBadgeEnabled;
 
     const showMediaBadge =
       service.isMediaBadgeEnabled &&
@@ -381,8 +359,26 @@ class TabItem extends Component {
         {showServiceNameSetting && (
           <span className="tab-item__label">{service.name}</span>
         )}
-        {notificationBadge}
-        {errorBadge}
+        {showNotificationBadge && (
+          <>
+            {service.unreadDirectMessageCount > 0 && (
+              <span className="tab-item__message-count">
+                {service.unreadDirectMessageCount}
+              </span>
+            )}
+            {service.unreadIndirectMessageCount > 0 &&
+              service.unreadDirectMessageCount === 0 &&
+              service.isIndirectMessageBadgeEnabled && (
+                <span className="tab-item__message-count is-indirect">•</span>
+              )}
+            {service.isHibernating && (
+              <span className="tab-item__message-count hibernating">•</span>
+            )}
+          </>
+        )}
+        {service.isError && (
+          <Icon icon={mdiExclamation} className="tab-item__error-icon" />
+        )}
         {showMediaBadge && mediaBadge}
         {IS_SERVICE_DEBUGGING_ENABLED && (
           <>
@@ -411,9 +407,5 @@ class TabItem extends Component {
 }
 
 export default injectIntl(
-  SortableElement(
-    injectSheet(styles, { injectTheme: true })(
-      inject('stores')(observer(TabItem)),
-    ),
-  ),
+  SortableElement(injectSheet(styles, { injectTheme: true })(TabItem)),
 );
