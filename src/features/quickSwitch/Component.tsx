@@ -1,17 +1,16 @@
-import { Component, createRef } from 'react';
+import { ChangeEvent, Component, createRef, ReactElement } from 'react';
 import { getCurrentWindow } from '@electron/remote';
-import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react';
 import { reaction } from 'mobx';
-import injectSheet from 'react-jss';
-import { defineMessages, injectIntl } from 'react-intl';
-import { compact, invoke } from 'lodash';
-
+import withStyles, { WithStylesProps } from 'react-jss';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
+import { compact, invoke, noop } from 'lodash';
+import { StoresProps } from 'src/@types/ferdium-components.types';
+import Service from 'src/models/Service';
 import Input from '../../components/ui/input/index';
 import { H1 } from '../../components/ui/headline';
 import Modal from '../../components/ui/Modal';
 import { state as ModalState } from './store';
-import ServicesStore from '../../stores/ServicesStore';
 
 const messages = defineMessages({
   title: {
@@ -75,17 +74,20 @@ const styles = theme => ({
   },
 });
 
-class QuickSwitchModal extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-  };
+interface IProps
+  extends WithStylesProps<typeof styles>,
+    Partial<StoresProps>,
+    WrappedComponentProps {}
 
-  state = {
-    selected: 0,
-    search: '',
-    wasPrevVisible: false,
-  };
+interface IState {
+  selected: number;
+  search: string;
+  wasPrevVisible: boolean;
+}
 
+@inject('stores', 'actions')
+@observer
+class QuickSwitchModal extends Component<IProps, IState> {
   ARROW_DOWN = 40;
 
   ARROW_UP = 38;
@@ -94,12 +96,18 @@ class QuickSwitchModal extends Component {
 
   TAB = 9;
 
-  inputRef = createRef();
+  inputRef = createRef<HTMLDivElement>();
 
   serviceElements = {};
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      selected: 0,
+      search: '',
+      wasPrevVisible: false,
+    };
 
     this._handleKeyDown = this._handleKeyDown.bind(this);
     this._handleSearchUpdate = this._handleSearchUpdate.bind(this);
@@ -115,46 +123,46 @@ class QuickSwitchModal extends Component {
   }
 
   // Add global keydown listener when component mounts
-  componentDidMount() {
+  componentDidMount(): void {
     document.addEventListener('keydown', this._handleKeyDown);
   }
 
   // Remove global keydown listener when component unmounts
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     document.removeEventListener('keydown', this._handleKeyDown);
   }
 
   // Get currently shown services
-  services() {
-    let services = [];
+  services(): Service[] {
+    let services: Service[] = [];
     if (
       this.state.search &&
       compact(invoke(this.state.search, 'match', /^[\da-z]/i)).length > 0
     ) {
       // Apply simple search algorythm to list of all services
-      services = this.props.stores.services.allDisplayed;
+      services = this.props.stores!.services.allDisplayed;
       services = services.filter(
         service =>
           service.name.toLowerCase().search(this.state.search.toLowerCase()) !==
           -1,
       );
-    } else if (this.props.stores.services.allDisplayed.length > 0) {
+    } else if (this.props.stores!.services.allDisplayed.length > 0) {
       // Add the currently active service first
-      const currentService = this.props.stores.services.active;
+      const currentService = this.props.stores!.services.active;
       if (currentService) {
         services.push(currentService);
       }
 
       // Add last used services to services array
-      for (const service of this.props.stores.services.lastUsedServices) {
-        const tempService = this.props.stores.services.one(service);
+      for (const service of this.props.stores!.services.lastUsedServices) {
+        const tempService = this.props.stores!.services.one(service);
         if (tempService && !services.includes(tempService)) {
           services.push(tempService);
         }
       }
 
       // Add all other services in the default order
-      for (const service of this.props.stores.services.allDisplayed) {
+      for (const service of this.props.stores!.services.allDisplayed) {
         if (!services.includes(service)) {
           services.push(service);
         }
@@ -164,10 +172,10 @@ class QuickSwitchModal extends Component {
     return services;
   }
 
-  openService(index) {
+  openService(index): void {
     // Open service
     const service = this.services()[index];
-    this.props.actions.service.setActive({ serviceId: service.id });
+    this.props.actions!.service.setActive({ serviceId: service.id });
 
     // Reset and close modal
     this.setState({
@@ -179,7 +187,7 @@ class QuickSwitchModal extends Component {
 
   // Change the selected service
   // factor should be -1 or 1
-  changeSelected(factor) {
+  changeSelected(factor: number): any {
     this.setState(state => {
       let newSelected = state.selected + factor;
       const services = this.services().length;
@@ -204,7 +212,7 @@ class QuickSwitchModal extends Component {
   }
 
   // Handle global key presses to change the selection
-  _handleKeyDown(event) {
+  _handleKeyDown(event: KeyboardEvent): void {
     if (ModalState.isModalVisible) {
       switch (event.keyCode) {
         case this.ARROW_DOWN:
@@ -230,13 +238,13 @@ class QuickSwitchModal extends Component {
   }
 
   // Handle update of the search query
-  _handleSearchUpdate(evt) {
+  _handleSearchUpdate(event: ChangeEvent<HTMLInputElement>): void {
     this.setState({
-      search: evt.target.value,
+      search: event.target.value,
     });
   }
 
-  _handleVisibilityChange() {
+  _handleVisibilityChange(): void {
     const { isModalVisible } = ModalState;
 
     if (isModalVisible && !this.state.wasPrevVisible) {
@@ -273,20 +281,15 @@ class QuickSwitchModal extends Component {
   }
 
   // Close this modal
-  close() {
+  close(): void {
     ModalState.isModalVisible = false;
   }
 
-  render() {
+  render(): ReactElement {
     const { isModalVisible } = ModalState;
-
     const { openService } = this;
-
-    const { classes } = this.props;
-
+    const { classes, intl } = this.props;
     const services = this.services();
-
-    const { intl } = this.props;
 
     return (
       <Modal
@@ -316,6 +319,7 @@ class QuickSwitchModal extends Component {
                   : ''
               } service`}
               onClick={() => openService(index)}
+              onKeyDown={noop}
               key={service.id}
               ref={el => {
                 this.serviceElements[index] = el;
@@ -340,18 +344,6 @@ class QuickSwitchModal extends Component {
   }
 }
 
-QuickSwitchModal.propTypes = {
-  stores: PropTypes.shape({
-    services: PropTypes.instanceOf(ServicesStore).isRequired,
-  }).isRequired,
-  actions: PropTypes.shape({
-    service: PropTypes.instanceOf(ServicesStore).isRequired,
-  }).isRequired,
-  classes: PropTypes.object.isRequired,
-};
-
 export default injectIntl(
-  injectSheet(styles, { injectTheme: true })(
-    inject('stores', 'actions')(observer(QuickSwitchModal)),
-  ),
+  withStyles(styles, { injectTheme: true })(QuickSwitchModal),
 );
