@@ -73,6 +73,7 @@ module.exports = {
         // TODO - [TS DEBT] should remove below config once application converted to TS
         'react/default-props-match-prop-types': 0,
         'react/require-default-props': 0,
+        '@typescript-eslint/no-useless-constructor': 0,
         // eslint-plugin-react
         'react/destructuring-assignment': 0,
         'react/button-has-type': 0,

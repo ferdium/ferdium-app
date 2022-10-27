@@ -1,18 +1,13 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
-import { defineMessages, injectIntl } from 'react-intl';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { inject, observer } from 'mobx-react';
-import { RouterStore } from '@superwf/mobx-react-router';
-
 import { NavLink } from 'react-router-dom';
+import { StoresProps } from '../../../@types/ferdium-components.types';
 import {
   LOCAL_SERVER,
   LIVE_FERDIUM_API,
   LIVE_FRANZ_API,
 } from '../../../config';
-import UIStore from '../../../stores/UIStore';
-import SettingsStore from '../../../stores/SettingsStore';
-import UserStore from '../../../stores/UserStore';
 import globalMessages from '../../../i18n/globalMessages';
 
 const messages = defineMessages({
@@ -50,40 +45,37 @@ const messages = defineMessages({
   },
 });
 
-class SettingsNavigation extends Component {
-  static propTypes = {
-    stores: PropTypes.shape({
-      ui: PropTypes.instanceOf(UIStore).isRequired,
-      user: PropTypes.instanceOf(UserStore).isRequired,
-      settings: PropTypes.instanceOf(SettingsStore).isRequired,
-      router: PropTypes.instanceOf(RouterStore).isRequired,
-    }).isRequired,
-    actions: PropTypes.shape({
-      settings: PropTypes.instanceOf(SettingsStore).isRequired,
-    }).isRequired,
-    serviceCount: PropTypes.number.isRequired,
-    workspaceCount: PropTypes.number.isRequired,
-  };
+interface IProps extends Partial<StoresProps>, WrappedComponentProps {
+  serviceCount: number;
+  workspaceCount: number;
+}
 
-  handleLogout() {
+@inject('stores', 'actions')
+@observer
+class SettingsNavigation extends Component<IProps> {
+  constructor(props: IProps) {
+    super(props);
+  }
+
+  handleLogout(): void {
     const isUsingWithoutAccount =
-      this.props.stores.settings.app.server === LOCAL_SERVER;
+      this.props.stores!.settings.app.server === LOCAL_SERVER;
 
     // Remove current auth token
     localStorage.removeItem('authToken');
 
     if (isUsingWithoutAccount) {
       // Reset server back to Ferdium API
-      this.props.actions.settings.update({
+      this.props.actions!.settings.update({
         type: 'app',
         data: {
           server: LIVE_FERDIUM_API,
         },
       });
     }
-    this.props.stores.user.isLoggingOut = true;
+    this.props.stores!.user.isLoggingOut = true;
 
-    this.props.stores.router.push('/auth/welcome');
+    this.props.stores!.router.push('/auth/welcome');
 
     // Reload Ferdium, otherwise many settings won't sync correctly with the server
     // after logging into another account
@@ -91,10 +83,9 @@ class SettingsNavigation extends Component {
   }
 
   render() {
-    const { serviceCount, workspaceCount, stores } = this.props;
-    const { intl } = this.props;
-    const isUsingWithoutAccount = stores.settings.app.server === LOCAL_SERVER;
-    const isUsingFranzServer = stores.settings.app.server === LIVE_FRANZ_API;
+    const { serviceCount, workspaceCount, stores, intl } = this.props;
+    const isUsingWithoutAccount = stores!.settings.app.server === LOCAL_SERVER;
+    const isUsingFranzServer = stores!.settings.app.server === LIVE_FRANZ_API;
 
     return (
       <div className="settings-navigation">
@@ -163,12 +154,12 @@ class SettingsNavigation extends Component {
           }
         >
           {intl.formatMessage(globalMessages.settings)}
-          {stores.settings.app.automaticUpdates &&
-            (stores.ui.showServicesUpdatedInfoBar ||
-              stores.app.updateStatus ===
-                stores.app.updateStatusTypes.AVAILABLE ||
-              stores.app.updateStatus ===
-                stores.app.updateStatusTypes.DOWNLOADED) && (
+          {stores!.settings.app.automaticUpdates &&
+            (stores!.ui.showServicesUpdatedInfoBar ||
+              stores!.app.updateStatus ===
+                stores!.app.updateStatusTypes.AVAILABLE ||
+              stores!.app.updateStatus ===
+                stores!.app.updateStatusTypes.DOWNLOADED) && (
               <span className="update-available">•</span>
             )}
         </NavLink>
@@ -195,7 +186,8 @@ class SettingsNavigation extends Component {
         <span className="settings-navigation__expander" />
         <button
           type="button"
-          to="/auth/logout"
+          // @ts-ignore
+          to="/auth/logout" // TODO - [TS DEBT] Need to check if button take this prop
           className="settings-navigation__link"
           onClick={this.handleLogout.bind(this)}
         >
@@ -208,6 +200,4 @@ class SettingsNavigation extends Component {
   }
 }
 
-export default injectIntl(
-  inject('stores', 'actions')(observer(SettingsNavigation)),
-);
+export default injectIntl(SettingsNavigation);

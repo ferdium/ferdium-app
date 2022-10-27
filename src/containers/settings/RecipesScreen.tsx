@@ -16,27 +16,30 @@ import RecipePreview from '../../models/RecipePreview';
 import { openPath } from '../../helpers/url-helpers';
 import withParams from '../../components/util/WithParams';
 
-interface RecipesScreenProps extends StoresProps {
+interface IProps extends Partial<StoresProps> {
   params: Params;
 }
 
-class RecipesScreen extends Component<RecipesScreenProps> {
-  state: {
-    needle: string | null;
-    currentFilter: string;
-  } = {
-    needle: null,
-    currentFilter: 'featured',
-  };
+interface IState {
+  needle: string | null;
+  currentFilter: string;
+}
 
+@inject('stores', 'actions')
+@observer
+class RecipesScreen extends Component<IProps, IState> {
   autorunDisposer: IReactionDisposer | null = null;
 
   customRecipes: Recipe[] = [];
 
-  constructor(props: RecipesScreenProps) {
+  constructor(props: IProps) {
     super(props);
 
     this.customRecipes = readJsonSync(asarRecipesPath('all.json'));
+    this.state = {
+      needle: null,
+      currentFilter: 'featured',
+    };
   }
 
   componentDidMount(): void {
@@ -55,7 +58,7 @@ class RecipesScreen extends Component<RecipesScreenProps> {
   }
 
   componentWillUnmount(): void {
-    this.props.stores.services.resetStatus();
+    this.props.stores!.services.resetStatus();
 
     if (typeof this.autorunDisposer === 'function') {
       this.autorunDisposer();
@@ -66,7 +69,7 @@ class RecipesScreen extends Component<RecipesScreenProps> {
     if (needle === '') {
       this.resetSearch();
     } else {
-      const { search } = this.props.actions.recipePreview;
+      const { search } = this.props.actions!.recipePreview;
       this.setState({ needle });
       search({ needle });
     }
@@ -106,10 +109,8 @@ class RecipesScreen extends Component<RecipesScreenProps> {
   }
 
   render(): ReactElement {
-    const { recipePreviews, recipes, services } = this.props.stores;
-
-    const { app: appActions, service: serviceActions } = this.props.actions;
-
+    const { recipePreviews, recipes, services } = this.props.stores!;
+    const { app: appActions, service: serviceActions } = this.props.actions!;
     const filter = this.state.currentFilter;
 
     let recipeFilter;
@@ -163,7 +164,6 @@ class RecipesScreen extends Component<RecipesScreenProps> {
           recipes={allRecipes}
           customWebsiteRecipe={customWebsiteRecipe}
           isLoading={isLoading}
-          addedServiceCount={services.all.length}
           hasLoadedRecipes={
             recipePreviews.featuredRecipePreviewsRequest.wasExecuted
           }
@@ -184,4 +184,4 @@ class RecipesScreen extends Component<RecipesScreenProps> {
   }
 }
 
-export default withParams(inject('stores', 'actions')(observer(RecipesScreen)));
+export default withParams(RecipesScreen);

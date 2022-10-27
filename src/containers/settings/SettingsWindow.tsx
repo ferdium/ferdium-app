@@ -1,20 +1,23 @@
 import { inject, observer } from 'mobx-react';
-import { Component, ReactPortal } from 'react';
+import { Component, ReactElement, ReactPortal } from 'react';
 import ReactDOM from 'react-dom';
 import { Outlet } from 'react-router-dom';
-
 import { StoresProps } from '../../@types/ferdium-components.types';
 import Navigation from '../../components/settings/navigation/SettingsNavigation';
 import Layout from '../../components/settings/SettingsLayout';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 import { workspaceStore } from '../../features/workspaces';
 
-class SettingsContainer extends Component<StoresProps> {
-  portalRoot: any;
+interface IProps extends Partial<StoresProps> {}
+
+@inject('stores', 'actions')
+@observer
+class SettingsContainer extends Component<IProps> {
+  portalRoot: HTMLElement | null;
 
   el: HTMLDivElement;
 
-  constructor(props: StoresProps) {
+  constructor(props: IProps) {
     super(props);
 
     this.portalRoot = document.querySelector('#portalContainer');
@@ -22,7 +25,9 @@ class SettingsContainer extends Component<StoresProps> {
   }
 
   componentDidMount(): void {
-    this.portalRoot.append(this.el);
+    if (this.portalRoot) {
+      this.portalRoot.append(this.el);
+    }
   }
 
   componentWillUnmount(): void {
@@ -31,11 +36,11 @@ class SettingsContainer extends Component<StoresProps> {
 
   render(): ReactPortal {
     const { stores } = this.props;
-    const { closeSettings } = this.props.actions.ui;
+    const { closeSettings } = this.props.actions!.ui;
 
-    const navigation = (
+    const navigation: ReactElement = (
       <Navigation
-        serviceCount={stores.services.all.length}
+        serviceCount={stores!.services.all.length}
         workspaceCount={workspaceStore.workspaces.length}
       />
     );
@@ -51,4 +56,4 @@ class SettingsContainer extends Component<StoresProps> {
   }
 }
 
-export default inject('stores', 'actions')(observer(SettingsContainer));
+export default SettingsContainer;

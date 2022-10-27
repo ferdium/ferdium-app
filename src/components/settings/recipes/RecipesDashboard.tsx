@@ -1,17 +1,14 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
-import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
+import { observer } from 'mobx-react';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { NavLink } from 'react-router-dom';
-
-import injectSheet from 'react-jss';
-
+import withStyles, { WithStylesProps } from 'react-jss';
 import { mdiOpenInNew } from '@mdi/js';
 import Button from '../../ui/button';
 import Input from '../../ui/input/index';
 import { H1, H2, H3 } from '../../ui/headline';
 import SearchInput from '../../ui/SearchInput';
-import Infobox from '../../ui/Infobox';
+import Infobox from '../../ui/infobox';
 import RecipeItem from './RecipeItem';
 import Loader from '../../ui/Loader';
 import Appear from '../../ui/effects/Appear';
@@ -109,28 +106,32 @@ const styles = {
   },
 };
 
-class RecipesDashboard extends Component {
-  static propTypes = {
-    recipes: MobxPropTypes.arrayOrObservableArray.isRequired,
-    customWebsiteRecipe: PropTypes.instanceOf(RecipePreview).isRequired,
-    isLoading: PropTypes.bool.isRequired,
-    hasLoadedRecipes: PropTypes.bool.isRequired,
-    showAddServiceInterface: PropTypes.func.isRequired,
-    searchRecipes: PropTypes.func.isRequired,
-    resetSearch: PropTypes.func.isRequired,
-    serviceStatus: MobxPropTypes.arrayOrObservableArray.isRequired,
-    searchNeedle: PropTypes.string,
-    recipeFilter: PropTypes.string,
-    recipeDirectory: PropTypes.string.isRequired,
-    openRecipeDirectory: PropTypes.func.isRequired,
-    openDevDocs: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired,
-  };
+interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
+  recipes: RecipePreview[];
+  customWebsiteRecipe?: RecipePreview;
+  isLoading: boolean;
+  hasLoadedRecipes: boolean;
+  showAddServiceInterface: (...args: any[]) => void;
+  searchRecipes: (e: string | null) => void;
+  resetSearch: () => void;
+  serviceStatus: string[];
+  searchNeedle: string | null;
+  recipeFilter?: string;
+  recipeDirectory: string;
+  openRecipeDirectory: () => void;
+  openDevDocs: () => void;
+}
 
-  static defaultProps = {
-    searchNeedle: '',
-    recipeFilter: 'all',
-  };
+interface IState {
+  searchNeedle: string | null;
+  recipeFilter: string;
+}
+
+@observer
+class RecipesDashboard extends Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
+  }
 
   render() {
     const {
@@ -141,15 +142,15 @@ class RecipesDashboard extends Component {
       showAddServiceInterface,
       searchRecipes,
       resetSearch,
-      serviceStatus,
-      searchNeedle,
+      serviceStatus = 'all',
+      searchNeedle = '',
       recipeFilter,
       recipeDirectory,
       openRecipeDirectory,
       openDevDocs,
       classes,
+      intl,
     } = this.props;
-    const { intl } = this.props;
 
     const communityRecipes = recipes.filter(r => !r.isDevRecipe);
     const devRecipes = recipes.filter(r => r.isDevRecipe);
@@ -307,5 +308,5 @@ class RecipesDashboard extends Component {
 }
 
 export default injectIntl(
-  injectSheet(styles, { injectTheme: true })(observer(RecipesDashboard)),
+  withStyles(styles, { injectTheme: true })(RecipesDashboard),
 );
