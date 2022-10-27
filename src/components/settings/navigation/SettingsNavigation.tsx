@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { inject, observer } from 'mobx-react';
 import { NavLink } from 'react-router-dom';
-import { StoresProps } from 'src/@types/ferdium-components.types';
+import { StoresProps } from '../../../@types/ferdium-components.types';
 import {
   LOCAL_SERVER,
   LIVE_FERDIUM_API,
