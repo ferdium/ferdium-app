@@ -1,14 +1,14 @@
-/* eslint jsx-a11y/anchor-is-valid: 0 */
-import { Component } from 'react';
-import PropTypes from 'prop-types';
-import { observer, PropTypes as MobxPropTypes, inject } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
+import { Component, ReactElement } from 'react';
+import { observer, inject } from 'mobx-react';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
+import { noop } from 'lodash';
 import serverlessLogin from '../../helpers/serverless-helpers';
 import shuffleArray from '../../helpers/array-helpers';
 import { serverName } from '../../api/apiBase';
-
 import Link from '../ui/Link';
 import { H1 } from '../ui/headline';
+import { StoresProps } from '../../@types/ferdium-components.types';
+import RecipePreview from '../../models/RecipePreview';
 
 const messages = defineMessages({
   signupButton: {
@@ -34,24 +34,28 @@ const messages = defineMessages({
   },
 });
 
-class Welcome extends Component {
-  static propTypes = {
-    loginRoute: PropTypes.string.isRequired,
-    signupRoute: PropTypes.string.isRequired,
-    changeServerRoute: PropTypes.string.isRequired,
-    recipes: MobxPropTypes.arrayOrObservableArray.isRequired,
-    actions: PropTypes.object.isRequired,
-  };
+interface IProps extends Partial<StoresProps>, WrappedComponentProps {
+  loginRoute: string;
+  signupRoute: string;
+  changeServerRoute: string;
+  recipes: RecipePreview[];
+}
 
-  useLocalServer() {
+@inject('actions')
+@observer
+class Welcome extends Component<IProps> {
+  constructor(props: IProps) {
+    super(props);
+  }
+
+  useLocalServer(): void {
     serverlessLogin(this.props.actions);
   }
 
-  render() {
-    const { intl } = this.props;
-    const { loginRoute, signupRoute, changeServerRoute } = this.props;
+  render(): ReactElement {
+    const { loginRoute, signupRoute, changeServerRoute, intl } = this.props;
     let { recipes } = this.props;
-    recipes = shuffleArray(recipes);
+    recipes = shuffleArray<RecipePreview>(recipes);
     recipes.length = 8 * 2;
 
     let serverNameParse = serverName();
@@ -87,17 +91,22 @@ class Welcome extends Component {
               <span>{intl.formatMessage(messages.changeServer)}</span>
             </Link>
           </div>
-          <br />
-          <hr />
-          <br />
-          <a className="button" onClick={this.useLocalServer.bind(this)}>
+          <hr
+            className="settings__hr-sections"
+            style={{ marginTop: 24, marginBottom: 24, borderStyle: 'solid' }}
+          />
+          <button
+            className="button"
+            onClick={this.useLocalServer.bind(this)}
+            onKeyDown={noop}
+          >
             {intl.formatMessage(messages.serverless)}
-          </a>
+          </button>
         </div>
         <div className="welcome__featured-services">
           {recipes.map(recipe => (
             <div key={recipe.id} className="welcome__featured-service">
-              <img key={recipe.id} src={recipe.icons.svg} alt="" />
+              <img key={recipe.id} src={recipe.icons?.svg} alt="" />
             </div>
           ))}
         </div>
@@ -106,4 +115,4 @@ class Welcome extends Component {
   }
 }
 
-export default injectIntl(inject('actions')(observer(Welcome)));
+export default injectIntl(Welcome);

@@ -1,10 +1,10 @@
 import Icon from '@mdi/react';
 import classnames from 'classnames';
 import { Property } from 'csstype';
+import { noop } from 'lodash';
 import { Component, MouseEvent } from 'react';
 import withStyles, { WithStylesProps } from 'react-jss';
 import Loader from 'react-loader';
-
 import { Theme } from '../../../themes';
 import { IFormField } from '../typings/generic';
 
@@ -15,24 +15,6 @@ type ButtonType =
   | 'danger'
   | 'warning'
   | 'inverted';
-
-interface IProps extends IFormField, WithStylesProps<typeof styles> {
-  className?: string;
-  label?: string;
-  disabled?: boolean;
-  id?: string;
-  type?: 'button' | 'reset' | 'submit' | undefined;
-  onClick: (
-    event: MouseEvent<HTMLButtonElement> | MouseEvent<HTMLAnchorElement>,
-  ) => void;
-  buttonType?: ButtonType;
-  loaded?: boolean;
-  busy?: boolean;
-  icon?: string;
-  href?: string;
-  target?: string;
-  htmlForm?: string;
-}
 
 let buttonTransition: string = 'none';
 let loaderContainerTransition: string = 'none';
@@ -148,38 +130,38 @@ const styles = (theme: Theme) => ({
   },
 });
 
-class ButtonComponent extends Component<IProps> {
-  customDefaultProps: {
-    disabled: boolean;
-    type: 'button' | 'reset' | 'submit' | undefined;
-    onClick: (
-      event: MouseEvent<HTMLButtonElement> | MouseEvent<HTMLAnchorElement>,
-    ) => void;
-    buttonType: ButtonType;
-    busy: boolean;
-  } = {
-    type: 'button',
-    disabled: false,
-    onClick: () => null,
-    buttonType: 'primary' as ButtonType,
-    busy: false,
-  };
+interface IProps extends IFormField, WithStylesProps<typeof styles> {
+  className?: string;
+  label?: string;
+  disabled?: boolean;
+  id?: string;
+  type?: 'button' | 'reset' | 'submit' | undefined;
+  onClick: (event: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
+  buttonType?: ButtonType;
+  loaded?: boolean;
+  busy?: boolean;
+  icon?: string;
+  href?: string;
+  target?: string;
+  htmlForm?: string;
+}
 
-  state = {
-    busy: false,
-  };
+interface IState {
+  busy: boolean;
+}
 
+class ButtonComponent extends Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
     this.state = {
-      busy: props.busy || false,
+      busy: this.props.busy || false,
     };
   }
 
-  static getDerivedStateFromProps(nextProps: IProps) {
+  static getDerivedStateFromProps(nextProps: IProps): IState {
     return {
-      busy: nextProps.busy,
+      busy: nextProps.busy || false,
     };
   }
 
@@ -188,27 +170,29 @@ class ButtonComponent extends Component<IProps> {
       classes,
       className,
       // theme,
-      disabled,
       id,
       label,
-      type,
-      onClick,
-      buttonType,
       loaded,
       icon,
       href,
       target,
       htmlForm,
-    } = { ...this.customDefaultProps, ...this.props };
+      type = 'button',
+      disabled = false,
+      onClick = noop,
+      buttonType = 'primary' as ButtonType,
+    } = this.props;
 
     const { busy } = this.state;
     let showLoader = false;
+
     if (loaded) {
       showLoader = !loaded;
       console.warn(
         'Ferdium Button prop `loaded` will be deprecated in the future. Please use `busy` instead',
       );
     }
+
     if (busy) {
       showLoader = busy;
     }
