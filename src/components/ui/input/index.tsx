@@ -106,6 +106,7 @@ class InputComponent extends Component<IProps, IState> {
       showPasswordToggle = false,
       type = 'text',
       disabled = false,
+      readOnly,
     } = this.props;
 
     const { showPassword, passwordScore } = this.state;
@@ -152,6 +153,7 @@ class InputComponent extends Component<IProps, IState> {
               min={min}
               max={max}
               step={step}
+              readOnly={readOnly}
             />
             {suffix && <span className={classes.suffix}>{suffix}</span>}
             {showPasswordToggle && (
