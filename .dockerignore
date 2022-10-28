@@ -13,7 +13,8 @@
 **/*.tsbuildinfo
 **/build
 **/node_modules
-**/.pnpm-debug.log*
+**/npm-debug.log*
+**/.pnpm-debug.log
 **/server*.log
 **/yarn-error.log
 Dockerfile

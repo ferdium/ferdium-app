@@ -20,19 +20,21 @@ WORKDIR /usr/src/ferdium
 COPY package*.json ./
 COPY .npmrc ./
 
-RUN npm i -gf "pnpm@$(node -p 'require("./package.json").engines.pnpm')" && pnpm -v
+RUN npm i -gf "npm@$(node -p 'require("./package.json").engines.npm')" && npm -v
 
-RUN pnpm i
+RUN npm i
 
 COPY . .
 
 WORKDIR /usr/src/ferdium/recipes
 
+RUN npm i -gf "pnpm@$(node -p 'require("./package.json").engines.pnpm')" && pnpm -v
+
 RUN pnpm i && pnpm lint && pnpm reformat-files && pnpm package
 
 WORKDIR /usr/src/ferdium
 
-RUN pnpm build --dir
+RUN npm run build --dir
 
 # --------------------------------------------------------------------------------------------
 

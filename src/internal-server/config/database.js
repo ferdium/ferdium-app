@@ -23,7 +23,7 @@ module.exports = {
   | Sqlite is a flat file database and can be a good choice for a development
   | environment.
   |
-  | pnpm i --save sqlite3
+  | npm i --save sqlite3
   |
   */
   sqlite: {
@@ -43,7 +43,7 @@ module.exports = {
   |
   | Here we define connection settings for MySQL database.
   |
-  | pnpm i --save mysql
+  | npm i --save mysql
   |
   */
   mysql: {
@@ -65,7 +65,7 @@ module.exports = {
   |
   | Here we define connection settings for PostgreSQL database.
   |
-  | pnpm i --save pg
+  | npm i --save pg
   |
   */
   pg: {

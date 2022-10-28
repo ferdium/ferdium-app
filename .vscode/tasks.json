@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "type": "pnpm",
+            "type": "npm",
             "script": "dev",
             "group": {
                 "kind": "build",
@@ -10,7 +10,7 @@
             }
         },
         {
-            "type": "pnpm",
+            "type": "npm",
             "script": "lint",
             "group": "test"
         }

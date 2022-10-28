@@ -19,6 +19,7 @@ node_modules
 .DS_Store
 
 .idea
+npm-debug.log.*
 .pnpm-debug.log*
 *.css.d.ts
 *.sass.d.ts

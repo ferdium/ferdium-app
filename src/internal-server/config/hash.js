@@ -37,7 +37,7 @@ module.exports = {
   | Since argon is optional, you will have to install the dependency yourself
   |
   |============================================================================
-  | pnpm i argon2
+  | npm i argon2
   |============================================================================
   |
   */
