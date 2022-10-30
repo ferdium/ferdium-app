@@ -170,7 +170,7 @@ else
 Write-Host "*************** Building recipes ***************"
 # Note: 'recipes' is already using only pnpm - can switch to $BASE_CMD AFTER both repos are using pnpm
 Push-Location recipes
-pnpm i && pnpm lint && pnpm reformat-files && pnpm package
+pnpm i; pnpm lint; pnpm reformat-files; pnpm package
 Pop-Location
 
 # -----------------------------------------------------------------------------

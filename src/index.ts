@@ -3,6 +3,7 @@
 import {
   app,
   BrowserWindow,
+  components,
   globalShortcut,
   ipcMain,
   session,
@@ -417,6 +418,11 @@ const createWindow = () => {
         trayIcon._toggleWindow();
       });
     }
+
+    while (!components.whenReady()) {
+      debug('components status:', components.status());
+    }
+    debug('components ready:', components.status());
   });
 };
 
