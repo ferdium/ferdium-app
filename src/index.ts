@@ -406,7 +406,7 @@ const createWindow = () => {
     mainWindow.show();
   }
 
-  app.whenReady().then(() => {
+  app.whenReady().then(async () => {
     if (
       retrieveSettingValue(
         'enableGlobalHideShortcut',
@@ -419,9 +419,7 @@ const createWindow = () => {
       });
     }
 
-    while (!components.whenReady()) {
-      debug('components status:', components.status());
-    }
+    await components.whenReady();
     debug('components ready:', components.status());
   });
 };
