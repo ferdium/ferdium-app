@@ -1,7 +1,13 @@
 import { mdiEye, mdiEyeOff } from '@mdi/js';
 import Icon from '@mdi/react';
 import classnames from 'classnames';
-import { Component, createRef, InputHTMLAttributes } from 'react';
+import {
+  Component,
+  createRef,
+  InputHTMLAttributes,
+  ReactElement,
+  RefObject,
+} from 'react';
 import injectSheet, { WithStylesProps } from 'react-jss';
 import { noop } from 'lodash';
 import { IFormField } from '../typings/generic';
@@ -26,7 +32,7 @@ interface IProps
   showPasswordToggle?: boolean;
   data?: IData;
   inputClassName?: string;
-  onEnterKey?: Function;
+  onEnterKey?: () => {};
 }
 
 interface IState {
@@ -35,7 +41,7 @@ interface IState {
 }
 
 class InputComponent extends Component<IProps, IState> {
-  private inputRef = createRef<HTMLInputElement>();
+  private inputRef: RefObject<HTMLInputElement> = createRef<HTMLInputElement>();
 
   constructor(props: IProps) {
     super(props);
@@ -73,14 +79,14 @@ class InputComponent extends Component<IProps, IState> {
     }
   }
 
-  onInputKeyPress(e: React.KeyboardEvent) {
+  onInputKeyPress(e: React.KeyboardEvent): void {
     if (e.key === 'Enter') {
       const { onEnterKey } = this.props;
       onEnterKey && onEnterKey();
     }
   }
 
-  render() {
+  render(): ReactElement {
     const {
       classes,
       className,

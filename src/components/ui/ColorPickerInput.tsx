@@ -1,8 +1,8 @@
-import { ChangeEvent, Component } from 'react';
+import { ChangeEvent, Component, createRef, RefObject } from 'react';
 import { observer } from 'mobx-react';
-import { Field } from 'mobx-react-form';
 import classnames from 'classnames';
 import { SliderPicker } from 'react-color';
+import { Field } from '../../@types/mobx-form.types';
 
 interface IProps {
   field: Field;
@@ -11,27 +11,27 @@ interface IProps {
 }
 
 class ColorPickerInput extends Component<IProps> {
-  static defaultProps = {
-    className: null,
-    focus: false,
-  };
-
-  inputElement: HTMLInputElement | null | undefined;
+  private inputElement: RefObject<HTMLInputElement> =
+    createRef<HTMLInputElement>();
 
   componentDidMount() {
-    if (this.props.focus) {
+    const { focus = false } = this.props;
+    if (focus) {
       this.focus();
     }
   }
 
   onChange(e: ChangeEvent<HTMLInputElement>) {
     const { field } = this.props;
-
-    field.onChange(e);
+    if (field.onChange) {
+      field.onChange(e);
+    }
   }
 
   focus() {
-    this.inputElement?.focus();
+    if (this.inputElement && this.inputElement.current) {
+      this.inputElement.current.focus();
+    }
   }
 
   handleChangeComplete = (color: { hex: string }) => {
@@ -40,7 +40,7 @@ class ColorPickerInput extends Component<IProps> {
   };
 
   render() {
-    const { field, className } = this.props;
+    const { field, className = null } = this.props;
 
     let { type } = field;
     type = 'text';
@@ -64,9 +64,7 @@ class ColorPickerInput extends Component<IProps> {
           placeholder={field.placeholder}
           onBlur={field.onBlur}
           onFocus={field.onFocus}
-          ref={(element: HTMLInputElement | null | undefined) => {
-            this.inputElement = element;
-          }}
+          ref={this.inputElement}
           disabled={field.disabled}
         />
         <div className="franz-form__input-wrapper franz-form__input-wrapper__color-picker">
@@ -80,9 +78,7 @@ class ColorPickerInput extends Component<IProps> {
             onChange={e => this.onChange(e)}
             onBlur={field.onBlur}
             onFocus={field.onFocus}
-            ref={element => {
-              this.inputElement = element;
-            }}
+            ref={this.inputElement}
             disabled={field.disabled}
           />
         </div>

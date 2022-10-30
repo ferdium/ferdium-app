@@ -1,3 +1,6 @@
+import { ChangeEventHandler, FocusEventHandler } from 'react';
+import { GlobalError } from './ferdium-components.types';
+
 export interface FormFieldOptions {
   value?: string;
   label?: string;
@@ -17,4 +20,21 @@ export interface FormFields {
       validators?: any; // Not sure yet.
     };
   };
+}
+
+export interface Field extends Partial<Listeners> {
+  id?: string;
+  type?: string;
+  name?: string;
+  value: string;
+  label?: string;
+  placeholder?: string;
+  disabled?: boolean;
+  error?: GlobalError | string;
+}
+
+export interface Listeners {
+  onChange?: ChangeEventHandler<HTMLInputElement>;
+  onBlur?: FocusEventHandler<HTMLElement>;
+  onFocus?: FocusEventHandler<HTMLElement>;
 }
