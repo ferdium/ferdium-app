@@ -1,13 +1,11 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { ChangeEvent, Component, createRef, RefObject } from 'react';
 import { observer } from 'mobx-react';
-import { Field } from 'mobx-react-form';
 import classnames from 'classnames';
-import { defineMessages, injectIntl } from 'react-intl';
-
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { mdiEye, mdiEyeOff } from '@mdi/js';
 import { scorePassword as scorePasswordFunc } from '../../helpers/password-helpers';
 import Icon from './icon';
+import { Field } from '../../@types/mobx-form.types';
 
 const messages = defineMessages({
   passwordToggle: {
@@ -16,46 +14,50 @@ const messages = defineMessages({
   },
 });
 
+interface IProps extends WrappedComponentProps {
+  field: Field;
+  className?: string;
+  focus?: boolean;
+  showPasswordToggle?: boolean;
+  showLabel?: boolean;
+  scorePassword?: boolean;
+  prefix?: string;
+  suffix?: string;
+}
+
+interface IState {
+  showPassword: boolean;
+  passwordScore: number;
+}
+
 // Can this file be merged into the './input/index.tsx' file?
-class Input extends Component {
-  static propTypes = {
-    field: PropTypes.instanceOf(Field).isRequired,
-    className: PropTypes.string,
-    focus: PropTypes.bool,
-    showPasswordToggle: PropTypes.bool,
-    showLabel: PropTypes.bool,
-    scorePassword: PropTypes.bool,
-    prefix: PropTypes.string,
-    suffix: PropTypes.string,
-  };
+@observer
+class Input extends Component<IProps, IState> {
+  private inputElement: RefObject<HTMLInputElement> =
+    createRef<HTMLInputElement>();
 
-  static defaultProps = {
-    className: null,
-    focus: false,
-    showPasswordToggle: false,
-    showLabel: true,
-    scorePassword: false,
-    prefix: '',
-    suffix: '',
-  };
+  constructor(props: IProps) {
+    super(props);
 
-  state = {
-    showPassword: false,
-    passwordScore: 0,
-  };
+    this.state = {
+      showPassword: false,
+      passwordScore: 0,
+    };
+  }
 
-  inputElement;
-
-  componentDidMount() {
-    if (this.props.focus) {
+  componentDidMount(): void {
+    const { focus = false } = this.props;
+    if (focus) {
       this.focus();
     }
   }
 
-  onChange(e) {
+  onChange(e: ChangeEvent<HTMLInputElement>): void {
     const { field, scorePassword } = this.props;
 
-    field.onChange(e);
+    if (field.onChange) {
+      field.onChange(e);
+    }
 
     if (scorePassword) {
       this.setState({ passwordScore: scorePasswordFunc(field.value) });
@@ -63,23 +65,24 @@ class Input extends Component {
   }
 
   focus() {
-    this.inputElement.focus();
+    if (this.inputElement && this.inputElement.current) {
+      this.inputElement.current!.focus();
+    }
   }
 
   render() {
     const {
       field,
-      className,
-      showPasswordToggle,
-      showLabel,
-      scorePassword,
-      prefix,
-      suffix,
+      className = null,
+      showPasswordToggle = false,
+      showLabel = true,
+      scorePassword = false,
+      prefix = '',
+      suffix = '',
+      intl,
     } = this.props;
 
     const { passwordScore } = this.state;
-
-    const { intl } = this.props;
 
     let { type } = field;
     if (type === 'password' && this.state.showPassword) {
@@ -106,9 +109,7 @@ class Input extends Component {
             onChange={e => this.onChange(e)}
             onBlur={field.onBlur}
             onFocus={field.onFocus}
-            ref={element => {
-              this.inputElement = element;
-            }}
+            ref={this.inputElement}
             disabled={field.disabled}
           />
           {suffix && <span className="franz-form__input-suffix">{suffix}</span>}
@@ -153,4 +154,4 @@ class Input extends Component {
   }
 }
 
-export default injectIntl(observer(Input));
+export default injectIntl(Input);
