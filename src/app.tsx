@@ -24,6 +24,7 @@ window.addEventListener('load', () => {
   const api = apiFactory(serverApi, new LocalApi());
   const history = createHashHistory();
   const router = new RouterStore(history);
+  // @ts-ignore - Need to provide proper typings for actions
   const stores = storeFactory(api, actions, router);
   const menu = new MenuFactory(stores, actions);
   const touchBar = new TouchBarFactory(stores, actions);

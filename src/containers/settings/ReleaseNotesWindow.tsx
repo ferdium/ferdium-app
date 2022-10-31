@@ -6,8 +6,17 @@ import { Outlet } from 'react-router-dom';
 import { StoresProps } from '../../@types/ferdium-components.types';
 import Layout from '../../components/settings/releaseNotes/ReleaseNotesLayout';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
+import { Actions } from '../../actions/lib/actions';
+import { RealStores } from '../../stores';
 
-class SettingsContainer extends Component<StoresProps> {
+interface IProps {
+  actions?: Actions;
+  stores?: RealStores;
+}
+
+@inject('stores', 'actions')
+@observer
+class SettingsContainer extends Component<IProps> {
   portalRoot: any;
 
   el: HTMLDivElement;
@@ -30,7 +39,7 @@ class SettingsContainer extends Component<StoresProps> {
   render(): ReactPortal {
     return ReactDOM.createPortal(
       <ErrorBoundary>
-        <Layout {...this.props}>
+        <Layout>
           <Outlet />
         </Layout>
       </ErrorBoundary>,
@@ -39,4 +48,4 @@ class SettingsContainer extends Component<StoresProps> {
   }
 }
 
-export default inject('stores', 'actions')(observer(SettingsContainer));
+export default SettingsContainer;
