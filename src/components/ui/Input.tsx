@@ -92,6 +92,8 @@ class Input extends Component<IProps, IState> {
       scorePassword = false,
       prefix = '',
       suffix = '',
+      placeholder = '',
+
       intl,
     } = this.props;
 
@@ -118,7 +120,7 @@ class Input extends Component<IProps, IState> {
             className="franz-form__input"
             name={field.name}
             value={field.value}
-            placeholder={field.placeholder}
+            placeholder={placeholder || field.placeholder}
             onChange={e => this.onChange(e)}
             onBlur={field.onBlur}
             onFocus={field.onFocus}
