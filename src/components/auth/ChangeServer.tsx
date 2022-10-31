@@ -1,4 +1,4 @@
-import { ChangeEvent, Component, FormEvent, ReactElement } from 'react';
+import { Component, FormEvent, ReactElement } from 'react';
 import { observer } from 'mobx-react';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { mdiArrowLeftCircle } from '@mdi/js';
@@ -74,6 +74,9 @@ class ChangeServer extends Component<IProps> {
         },
         customServer: {
           label: this.props.intl.formatMessage(messages.customServerLabel),
+          placeholder: this.props.intl.formatMessage(
+            messages.customServerLabel,
+          ),
           value: '',
           validators: [url, required],
         },
@@ -125,16 +128,7 @@ class ChangeServer extends Component<IProps> {
           )}
           <Select field={form.$('server')} />
           {!this.defaultServers.includes(form.$('server').value) && (
-            <Input
-              placeholder="Custom Server"
-              onChange={(e: ChangeEvent<HTMLInputElement>): void => {
-                this.form.$('customServer').value = this.form
-                  .$('customServer')
-                  .value.replace(/\/$/, '');
-                this.submit(e);
-              }}
-              field={form.$('customServer')}
-            />
+            <Input placeholder="Custom Server" field={form.$('customServer')} />
           )}
           <Button
             type="submit"
