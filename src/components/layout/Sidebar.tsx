@@ -111,8 +111,8 @@ interface IState {
   tooltipEnabled: boolean;
 }
 
-@observer
 @inject('stores', 'actions')
+@observer
 class Sidebar extends Component<IProps, IState> {
   constructor(props) {
     super(props);
