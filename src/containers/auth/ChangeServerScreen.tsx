@@ -2,8 +2,17 @@ import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
 import { StoresProps } from '../../@types/ferdium-components.types';
 import ChangeServer from '../../components/auth/ChangeServer';
+import { Actions } from '../../actions/lib/actions';
+import { RealStores } from '../../stores';
 
-class ChangeServerScreen extends Component<StoresProps> {
+interface IProps {
+  stores?: RealStores;
+  actions?: Actions;
+}
+
+@inject('stores', 'actions')
+@observer
+class ChangeServerScreen extends Component<IProps> {
   constructor(props: StoresProps) {
     super(props);
 
@@ -13,21 +22,18 @@ class ChangeServerScreen extends Component<StoresProps> {
   onSubmit(values: any): void {
     const { server } = values;
 
-    this.props.actions.settings.update({
+    this.props.actions!.settings.update({
       type: 'app',
-      data: {
-        server,
-      },
+      data: { server },
     });
-    this.props.stores.router.push('/auth');
+    this.props.stores!.router.push('/auth');
   }
 
   render(): ReactElement {
-    const { stores } = this.props;
-    const { server } = stores.settings.all.app;
+    const { server } = this.props.stores!.settings.all.app;
 
     return <ChangeServer onSubmit={this.onSubmit} server={server} />;
   }
 }
 
-export default inject('stores', 'actions')(observer(ChangeServerScreen));
+export default ChangeServerScreen;
