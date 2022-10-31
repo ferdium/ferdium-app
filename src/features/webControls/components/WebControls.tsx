@@ -1,9 +1,7 @@
-import { createRef, Component } from 'react';
-import PropTypes from 'prop-types';
+import { createRef, Component, ReactElement, RefObject } from 'react';
 import { observer } from 'mobx-react';
-import injectSheet from 'react-jss';
-import { defineMessages, injectIntl } from 'react-intl';
-
+import withStyles, { WithStylesProps } from 'react-jss';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import {
   mdiReload,
   mdiArrowRight,
@@ -11,7 +9,6 @@ import {
   mdiHomeOutline,
   mdiEarth,
 } from '@mdi/js';
-
 import Icon from '../../../components/ui/icon';
 
 const messages = defineMessages({
@@ -37,11 +34,10 @@ const messages = defineMessages({
   },
 });
 
-let buttonTransition = 'none';
-
-if (window && window.matchMedia('(prefers-reduced-motion: no-preference)')) {
-  buttonTransition = 'opacity 0.25s';
-}
+const buttonTransition =
+  window && window.matchMedia('(prefers-reduced-motion: no-preference)')
+    ? 'opacity 0.25s'
+    : 'none';
 
 const styles = theme => ({
   root: {
@@ -94,40 +90,44 @@ const styles = theme => ({
   },
 });
 
-class WebControls extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    goHome: PropTypes.func.isRequired,
-    canGoBack: PropTypes.bool.isRequired,
-    goBack: PropTypes.func.isRequired,
-    canGoForward: PropTypes.bool.isRequired,
-    goForward: PropTypes.func.isRequired,
-    reload: PropTypes.func.isRequired,
-    openInBrowser: PropTypes.func.isRequired,
-    url: PropTypes.string.isRequired,
-    navigate: PropTypes.func.isRequired,
-  };
+interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
+  goHome: () => void;
+  canGoBack: boolean;
+  goBack: () => void;
+  canGoForward: boolean;
+  goForward: () => void;
+  reload: () => void;
+  openInBrowser: () => void;
+  url: string;
+  navigate: (url: string) => void;
+}
 
-  static getDerivedStateFromProps(props, state) {
-    const { url } = props;
+interface IState {
+  inputUrl: string;
+  editUrl: boolean;
+}
+
+@observer
+class WebControls extends Component<IProps, IState> {
+  inputRef: RefObject<HTMLInputElement> = createRef();
+
+  static getDerivedStateFromProps(props, state): IState | null {
+    const { url: inputUrl } = props;
     const { editUrl } = state;
 
-    if (!editUrl) {
-      return {
-        inputUrl: url,
-        editUrl: state.editUrl,
-      };
-    }
+    return !editUrl ? { inputUrl, editUrl } : null;
   }
 
-  inputRef = createRef();
+  constructor(props: IProps) {
+    super(props);
 
-  state = {
-    inputUrl: '',
-    editUrl: false,
-  };
+    this.state = {
+      inputUrl: '',
+      editUrl: false,
+    };
+  }
 
-  render() {
+  render(): ReactElement {
     const {
       classes,
       goHome,
@@ -139,11 +139,10 @@ class WebControls extends Component {
       openInBrowser,
       url,
       navigate,
+      intl,
     } = this.props;
 
     const { inputUrl, editUrl } = this.state;
-
-    const { intl } = this.props;
 
     return (
       <div className={classes.root}>
@@ -211,12 +210,14 @@ class WebControls extends Component {
                 editUrl: false,
               });
               navigate(inputUrl);
-              this.inputRef.current.blur();
             } else if (event.key === 'Escape') {
               this.setState({
                 editUrl: false,
                 inputUrl: url,
               });
+            }
+
+            if (this.inputRef && this.inputRef.current) {
               this.inputRef.current.blur();
             }
           }}
@@ -237,5 +238,5 @@ class WebControls extends Component {
 }
 
 export default injectIntl(
-  injectSheet(styles, { injectTheme: true })(observer(WebControls)),
+  withStyles(styles, { injectTheme: true })(WebControls),
 );
