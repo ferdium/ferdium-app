@@ -13,6 +13,8 @@ import { workspaceStore } from '../../features/workspaces';
 
 interface AppLayoutContainerProps extends StoresProps {}
 
+@inject('stores', 'actions')
+@observer
 class AppLayoutContainer extends Component<AppLayoutContainerProps> {
   render(): ReactElement {
     const { app, features, services, ui, settings, requests, user, router } =
@@ -155,4 +157,4 @@ class AppLayoutContainer extends Component<AppLayoutContainerProps> {
   }
 }
 
-export default inject('stores', 'actions')(observer(AppLayoutContainer));
+export default AppLayoutContainer;

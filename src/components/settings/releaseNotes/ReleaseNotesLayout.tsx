@@ -1,14 +1,15 @@
 import { Component } from 'react';
 import { inject, observer } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 
 import { mdiClose } from '@mdi/js';
 import { Outlet } from 'react-router-dom';
-import { StoresProps } from '../../../@types/ferdium-components.types';
 import ErrorBoundary from '../../util/ErrorBoundary';
 import Appear from '../../ui/effects/Appear';
 import Icon from '../../ui/icon';
 import { isEscKeyPress } from '../../../jsUtils';
+import { Actions } from '../../../actions/lib/actions';
+import { RealStores } from '../../../stores';
 
 const messages = defineMessages({
   closeSettings: {
@@ -17,10 +18,13 @@ const messages = defineMessages({
   },
 });
 
-interface IProps extends StoresProps {
-  intl: any;
+interface IProps extends WrappedComponentProps {
+  actions?: Actions;
+  stores?: RealStores;
 }
 
+@inject('stores', 'actions')
+@observer
 class ReleaseNotesLayout extends Component<IProps> {
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown.bind(this), false);
@@ -37,12 +41,12 @@ class ReleaseNotesLayout extends Component<IProps> {
 
   handleKeyDown(e) {
     if (isEscKeyPress(e.keyCode)) {
-      this.props.actions.ui.closeSettings();
+      this.props.actions!.ui.closeSettings();
     }
   }
 
   render() {
-    const { closeSettings } = this.props.actions.ui;
+    const { closeSettings } = this.props.actions!.ui;
 
     const { intl } = this.props;
 
@@ -74,6 +78,4 @@ class ReleaseNotesLayout extends Component<IProps> {
   }
 }
 
-export default injectIntl<'intl', IProps>(
-  inject('stores', 'actions')(observer(ReleaseNotesLayout)),
-);
+export default injectIntl<'intl', IProps>(ReleaseNotesLayout);
