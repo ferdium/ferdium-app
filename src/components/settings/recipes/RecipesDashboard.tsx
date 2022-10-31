@@ -8,7 +8,7 @@ import Button from '../../ui/button';
 import Input from '../../ui/input/index';
 import { H1, H2, H3 } from '../../ui/headline';
 import SearchInput from '../../ui/SearchInput';
-import Infobox from '../../ui/infobox';
+import Infobox from '../../ui/infobox/index';
 import RecipeItem from './RecipeItem';
 import Loader from '../../ui/Loader';
 import Appear from '../../ui/effects/Appear';
@@ -166,7 +166,7 @@ class RecipesDashboard extends Component<IProps, IState> {
               <Infobox
                 type="success"
                 icon="checkbox-marked-circle-outline"
-                dismissable
+                dismissible
               >
                 {intl.formatMessage(messages.servicesSuccessfulAddedInfo)}
               </Infobox>
