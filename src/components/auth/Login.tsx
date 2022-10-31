@@ -1,5 +1,5 @@
 import { Component, FormEvent, ReactElement } from 'react';
-import { observer, inject } from 'mobx-react';
+import { observer } from 'mobx-react';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { mdiArrowLeftCircle } from '@mdi/js';
 import { noop } from 'lodash';
@@ -13,10 +13,7 @@ import Input from '../ui/Input';
 import Button from '../ui/button';
 import Link from '../ui/Link';
 import { H1 } from '../ui/headline';
-import {
-  GlobalError,
-  StoresProps,
-} from '../../@types/ferdium-components.types';
+import { GlobalError } from '../../@types/ferdium-components.types';
 
 const messages = defineMessages({
   headline: {
@@ -65,7 +62,7 @@ const messages = defineMessages({
   },
 });
 
-interface IProps extends Partial<StoresProps>, WrappedComponentProps {
+interface IProps extends WrappedComponentProps {
   onSubmit: (...args: any[]) => void;
   isSubmitting: boolean;
   isTokenExpired: boolean;
@@ -76,7 +73,6 @@ interface IProps extends Partial<StoresProps>, WrappedComponentProps {
   error: GlobalError;
 }
 
-@inject('actions')
 @observer
 class Login extends Component<IProps> {
   form: Form;

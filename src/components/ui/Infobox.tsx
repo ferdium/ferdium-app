@@ -1,11 +1,11 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
-import { observer } from 'mobx-react';
+import { Component, MouseEventHandler, ReactElement, ReactNode } from 'react';
 import classnames from 'classnames';
 import Loader from 'react-loader';
-import { defineMessages, injectIntl } from 'react-intl';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { mdiAlert, mdiCheckboxMarkedCircleOutline, mdiClose } from '@mdi/js';
-import Icon from '../ui/icon';
+import { noop } from 'lodash';
+import { observer } from 'mobx-react';
+import Icon from './icon';
 
 const icons = {
   'checkbox-marked-circle-outline': mdiCheckboxMarkedCircleOutline,
@@ -19,54 +19,50 @@ const messages = defineMessages({
   },
 });
 
+interface IProps extends WrappedComponentProps {
+  children: ReactNode;
+  icon?: string;
+  type?: string;
+  ctaLabel?: string;
+  ctaLoading?: boolean;
+  dismissible?: boolean;
+  ctaOnClick?: MouseEventHandler<HTMLButtonElement>;
+  onDismiss?: () => void;
+  onSeen?: () => void;
+}
+
+interface IState {
+  dismissed: boolean;
+}
+
 // Can this file be merged into the './infobox/index.tsx' file?
-class Infobox extends Component {
-  static propTypes = {
-    // eslint-disable-next-line react/forbid-prop-types
-    children: PropTypes.any.isRequired,
-    icon: PropTypes.string,
-    type: PropTypes.string,
-    ctaOnClick: PropTypes.func,
-    ctaLabel: PropTypes.string,
-    ctaLoading: PropTypes.bool,
-    dismissable: PropTypes.bool,
-    onDismiss: PropTypes.func,
-    onSeen: PropTypes.func,
-  };
+@observer
+class Infobox extends Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
 
-  static defaultProps = {
-    icon: '',
-    type: 'primary',
-    dismissable: false,
-    ctaOnClick: () => null,
-    ctaLabel: '',
-    ctaLoading: false,
-    onDismiss: () => null,
-    onSeen: () => null,
-  };
-
-  state = {
-    dismissed: false,
-  };
-
-  componentDidMount() {
-    const { onSeen } = this.props;
-    if (onSeen) onSeen();
+    this.state = {
+      dismissed: false,
+    };
   }
 
-  render() {
+  componentDidMount(): void {
+    const { onSeen = noop } = this.props;
+    onSeen();
+  }
+
+  render(): ReactElement | null {
     const {
       children,
-      icon,
-      type,
-      ctaLabel,
-      ctaLoading,
-      ctaOnClick,
-      dismissable,
-      onDismiss,
+      icon = '',
+      type = 'primary',
+      dismissible = false,
+      ctaOnClick = noop,
+      ctaLabel = '',
+      ctaLoading = false,
+      onDismiss = noop,
+      intl,
     } = this.props;
-
-    const { intl } = this.props;
 
     if (this.state.dismissed) {
       return null;
@@ -94,7 +90,7 @@ class Infobox extends Component {
             {ctaLabel}
           </button>
         )}
-        {dismissable && (
+        {dismissible && (
           <button
             type="button"
             onClick={() => {
@@ -112,4 +108,4 @@ class Infobox extends Component {
   }
 }
 
-export default injectIntl(observer(Infobox));
+export default injectIntl(Infobox);

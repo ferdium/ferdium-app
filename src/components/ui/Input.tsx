@@ -1,8 +1,16 @@
-import { ChangeEvent, Component, createRef, RefObject } from 'react';
+import {
+  ChangeEvent,
+  ChangeEventHandler,
+  Component,
+  createRef,
+  ReactElement,
+  RefObject,
+} from 'react';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { mdiEye, mdiEyeOff } from '@mdi/js';
+import { noop } from 'lodash';
 import { scorePassword as scorePasswordFunc } from '../../helpers/password-helpers';
 import Icon from './icon';
 import { Field } from '../../@types/mobx-form.types';
@@ -23,6 +31,8 @@ interface IProps extends WrappedComponentProps {
   scorePassword?: boolean;
   prefix?: string;
   suffix?: string;
+  placeholder?: string;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
 }
 
 interface IState {
@@ -53,14 +63,17 @@ class Input extends Component<IProps, IState> {
   }
 
   onChange(e: ChangeEvent<HTMLInputElement>): void {
-    const { field, scorePassword } = this.props;
+    const { field, scorePassword, onChange = noop } = this.props;
 
     if (field.onChange) {
+      onChange();
       field.onChange(e);
     }
 
     if (scorePassword) {
-      this.setState({ passwordScore: scorePasswordFunc(field.value) });
+      this.setState({
+        passwordScore: scorePasswordFunc(field.value as string),
+      });
     }
   }
 
@@ -70,7 +83,7 @@ class Input extends Component<IProps, IState> {
     }
   }
 
-  render() {
+  render(): ReactElement {
     const {
       field,
       className = null,
@@ -79,6 +92,8 @@ class Input extends Component<IProps, IState> {
       scorePassword = false,
       prefix = '',
       suffix = '',
+      placeholder = '',
+
       intl,
     } = this.props;
 
@@ -105,7 +120,7 @@ class Input extends Component<IProps, IState> {
             className="franz-form__input"
             name={field.name}
             value={field.value}
-            placeholder={field.placeholder}
+            placeholder={placeholder || field.placeholder}
             onChange={e => this.onChange(e)}
             onBlur={field.onBlur}
             onFocus={field.onFocus}

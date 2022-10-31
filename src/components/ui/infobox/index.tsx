@@ -1,32 +1,14 @@
 import { mdiClose } from '@mdi/js';
 import classnames from 'classnames';
-import { Component, ReactNode } from 'react';
-import injectStyle, { WithStylesProps } from 'react-jss';
-
+import { noop } from 'lodash';
+import { Component, ReactElement, ReactNode } from 'react';
+import withStyles, { WithStylesProps } from 'react-jss';
 import { Theme } from '../../../themes';
 import Icon from '../icon';
 
-interface IProps extends WithStylesProps<typeof styles> {
-  children: ReactNode;
-  icon?: string;
-  type?: string;
-  dismissable?: boolean;
-  ctaLabel?: string;
-
-  className?: string;
-  onDismiss?: () => void;
-  onUnmount?: () => void;
-  ctaOnClick?: () => void;
-}
-
-interface IState {
-  isDismissing: boolean;
-  dismissed: boolean;
-}
-
 const buttonStyles = (theme: Theme) => {
   const styles = {};
-  Object.keys(theme.styleTypes).map(style => {
+  for (const style of Object.keys(theme.styleTypes)) {
     Object.assign(styles, {
       [style]: {
         background: theme.styleTypes[style].accent,
@@ -38,7 +20,7 @@ const buttonStyles = (theme: Theme) => {
         },
       },
     });
-  });
+  }
 
   return styles;
 };
@@ -108,23 +90,35 @@ const styles = (theme: Theme) => ({
   ...buttonStyles(theme),
 });
 
+interface IProps extends WithStylesProps<typeof styles> {
+  children: ReactNode;
+  icon?: string;
+  type?: string;
+  dismissible?: boolean;
+  ctaLabel?: string;
+  className?: string;
+  onDismiss?: () => void;
+  onUnmount?: () => void;
+  ctaOnClick?: () => void;
+}
+
+interface IState {
+  isDismissing: boolean;
+  dismissed: boolean;
+}
+
 class InfoboxComponent extends Component<IProps, IState> {
-  public static defaultProps = {
-    type: 'primary',
-    dismissable: false,
-    ctaOnClick: () => {},
-    onDismiss: () => {},
-    ctaLabel: '',
-    className: '',
-  };
+  constructor(props: IProps) {
+    super(props);
 
-  state = {
-    isDismissing: false,
-    dismissed: false,
-  };
+    this.state = {
+      isDismissing: false,
+      dismissed: false,
+    };
+  }
 
-  dismiss() {
-    const { onDismiss } = this.props;
+  dismiss(): void {
+    const { onDismiss = noop } = this.props;
 
     this.setState({
       isDismissing: true,
@@ -146,16 +140,16 @@ class InfoboxComponent extends Component<IProps, IState> {
     if (onUnmount) onUnmount();
   }
 
-  render() {
+  render(): ReactElement | null {
     const {
       classes,
       children,
       icon,
-      type,
-      ctaLabel,
-      ctaOnClick,
-      dismissable,
-      className,
+      type = 'primary',
+      dismissible = false,
+      ctaOnClick = noop,
+      ctaLabel = '',
+      className = '',
     } = this.props;
 
     const { isDismissing, dismissed } = this.state;
@@ -186,7 +180,7 @@ class InfoboxComponent extends Component<IProps, IState> {
               {ctaLabel}
             </button>
           )}
-          {dismissable && (
+          {dismissible && (
             <button
               type="button"
               onClick={this.dismiss.bind(this)}
@@ -201,4 +195,4 @@ class InfoboxComponent extends Component<IProps, IState> {
   }
 }
 
-export default injectStyle(styles, { injectTheme: true })(InfoboxComponent);
+export default withStyles(styles, { injectTheme: true })(InfoboxComponent);
