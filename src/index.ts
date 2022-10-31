@@ -3,6 +3,7 @@
 import {
   app,
   BrowserWindow,
+  components,
   globalShortcut,
   ipcMain,
   session,
@@ -405,7 +406,7 @@ const createWindow = () => {
     mainWindow.show();
   }
 
-  app.whenReady().then(() => {
+  app.whenReady().then(async () => {
     if (
       retrieveSettingValue(
         'enableGlobalHideShortcut',
@@ -417,6 +418,9 @@ const createWindow = () => {
         trayIcon._toggleWindow();
       });
     }
+
+    await components.whenReady();
+    debug('components ready:', components.status());
   });
 };
 
