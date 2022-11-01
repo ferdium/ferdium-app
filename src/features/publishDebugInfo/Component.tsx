@@ -163,7 +163,6 @@ class PublishDebugLogModal extends Component<IProps, IState> {
             <p className={classes.info}>
               {intl.formatMessage(messages.published)}
             </p>
-            {/* TODO - [TS DEBT] need to check if <Input/> take readOnly and use it  */}
             <Input showLabel={false} value={`${DEBUG_API}/${log}`} readOnly />
           </>
         )}

@@ -4,7 +4,7 @@ import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { mdiArrowLeftCircle } from '@mdi/js';
 import { noop } from 'lodash';
 import Form from '../../lib/Form';
-import Input from '../ui/Input';
+import Input from '../ui/input/index';
 import Select from '../ui/Select';
 import Button from '../ui/button';
 import Link from '../ui/Link';
@@ -128,7 +128,10 @@ class ChangeServer extends Component<IProps> {
           )}
           <Select field={form.$('server')} />
           {!this.defaultServers.includes(form.$('server').value) && (
-            <Input placeholder="Custom Server" field={form.$('customServer')} />
+            <Input
+              placeholder="Custom Server"
+              {...form.$('customServer').bind()}
+            />
           )}
           <Button
             type="submit"
