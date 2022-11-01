@@ -1,20 +1,18 @@
-/* eslint jsx-a11y/anchor-is-valid: 0 */
 import { Component } from 'react';
-import PropTypes from 'prop-types';
 import { observer, inject } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
-
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { mdiArrowLeftCircle } from '@mdi/js';
+import { noop } from 'lodash';
 import Form from '../../lib/Form';
 import { required, email, minLength } from '../../helpers/validation-helpers';
-import Input from '../ui/Input';
+import Input from '../ui/input/index';
 import Button from '../ui/button';
 import Link from '../ui/Link';
 import Icon from '../ui/icon';
-
-import { globalError as globalErrorPropType } from '../../prop-types';
 import { serverBase } from '../../api/apiBase';
 import { H1 } from '../ui/headline';
+import { GlobalError } from '../../@types/ferdium-components.types';
+import { Actions } from '../../actions/lib/actions';
 
 const messages = defineMessages({
   headline: {
@@ -33,10 +31,10 @@ const messages = defineMessages({
     id: 'signup.email.label',
     defaultMessage: 'Email address',
   },
-  // companyLabel: {
-  //   id: 'signup.company.label',
-  //   defaultMessage: 'Company',
-  // },
+  companyLabel: {
+    id: 'signup.company.label',
+    defaultMessage: 'Company',
+  },
   passwordLabel: {
     id: 'signup.password.label',
     defaultMessage: 'Password',
@@ -67,45 +65,48 @@ const messages = defineMessages({
   },
 });
 
-class Signup extends Component {
-  static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-    isSubmitting: PropTypes.bool.isRequired,
-    loginRoute: PropTypes.string.isRequired,
-    error: globalErrorPropType.isRequired,
-  };
+interface IProps extends WrappedComponentProps {
+  onSubmit: (...args: any[]) => void;
+  isSubmitting: boolean;
+  loginRoute: string;
+  error: GlobalError;
+  actions?: Actions;
+}
 
-  form = (() => {
-    const { intl } = this.props;
-    return new Form(
-      {
-        fields: {
-          firstname: {
-            label: intl.formatMessage(messages.firstnameLabel),
-            value: '',
-            validators: [required],
-          },
-          lastname: {
-            label: intl.formatMessage(messages.lastnameLabel),
-            value: '',
-            validators: [required],
-          },
-          email: {
-            label: intl.formatMessage(messages.emailLabel),
-            value: '',
-            validators: [required, email],
-          },
-          password: {
-            label: intl.formatMessage(messages.passwordLabel),
-            value: '',
-            validators: [required, minLength(6)],
-            type: 'password',
-          },
+@inject('actions')
+@observer
+class Signup extends Component<IProps> {
+  form: Form;
+
+  constructor(props: IProps) {
+    super(props);
+
+    this.form = new Form({
+      fields: {
+        firstname: {
+          label: this.props.intl.formatMessage(messages.firstnameLabel),
+          value: '',
+          validators: [required],
+        },
+        lastname: {
+          label: this.props.intl.formatMessage(messages.lastnameLabel),
+          value: '',
+          validators: [required],
+        },
+        email: {
+          label: this.props.intl.formatMessage(messages.emailLabel),
+          value: '',
+          validators: [required, email],
+        },
+        password: {
+          label: this.props.intl.formatMessage(messages.passwordLabel),
+          value: '',
+          validators: [required, minLength(6)],
+          type: 'password',
         },
       },
-      intl,
-    );
-  })();
+    });
+  }
 
   submit(e) {
     e.preventDefault();
@@ -138,12 +139,12 @@ class Signup extends Component {
             </Link>
             <H1>{intl.formatMessage(messages.headline)}</H1>
             <div className="grid__row">
-              <Input field={form.$('firstname')} focus />
-              <Input field={form.$('lastname')} />
+              <Input {...form.$('firstname').bind()} focus />
+              <Input {...form.$('lastname').bind()} />
             </div>
-            <Input field={form.$('email')} />
+            <Input {...form.$('email').bind()} />
             <Input
-              field={form.$('password')}
+              {...form.$('password').bind()}
               showPasswordToggle
               scorePassword
             />
@@ -158,12 +159,14 @@ class Signup extends Component {
                 label={`${intl.formatMessage(messages.submitButtonLabel)} ...`}
                 loaded={false}
                 disabled
+                onClick={noop}
               />
             ) : (
               <Button
                 type="submit"
                 className="auth__button"
                 label={intl.formatMessage(messages.submitButtonLabel)}
+                onClick={noop}
               />
             )}
             <p className="legal">
@@ -203,4 +206,4 @@ class Signup extends Component {
   }
 }
 
-export default injectIntl(inject('actions')(observer(Signup)));
+export default injectIntl(Signup);

@@ -9,7 +9,7 @@ import { API_VERSION } from '../../environment-remote';
 import { serverBase } from '../../api/apiBase'; // TODO: Remove this line after fixing password recovery in-app
 import Form from '../../lib/Form';
 import { required, email } from '../../helpers/validation-helpers';
-import Input from '../ui/Input';
+import Input from '../ui/input/index';
 import Button from '../ui/button';
 import Link from '../ui/Link';
 import { H1 } from '../ui/headline';
@@ -136,8 +136,8 @@ class Login extends Component<IProps> {
               {intl.formatMessage(messages.serverLogout)}
             </p>
           )}
-          <Input field={form.$('email')} focus />
-          <Input field={form.$('password')} showPasswordToggle />
+          <Input {...form.$('email').bind()} focus />
+          <Input {...form.$('password').bind()} showPasswordToggle />
           {error.code === 'invalid-credentials' && (
             <>
               <p className="error-message center">
