@@ -6,7 +6,7 @@ import { H1, H2 } from '../../ui/headline';
 
 import Loader from '../../ui/Loader';
 import Button from '../../ui/button';
-import Infobox from '../../ui/infobox';
+import Infobox from '../../ui/infobox/index';
 import { LOCAL_SERVER, LIVE_FRANZ_API } from '../../../config';
 import User from '../../../models/User';
 

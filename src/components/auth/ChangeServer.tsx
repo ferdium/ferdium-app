@@ -1,8 +1,8 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, FormEvent, ReactElement } from 'react';
 import { observer } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { mdiArrowLeftCircle } from '@mdi/js';
+import { noop } from 'lodash';
 import Form from '../../lib/Form';
 import Input from '../ui/Input';
 import Select from '../ui/Select';
@@ -38,49 +38,53 @@ const messages = defineMessages({
   },
 });
 
-class ChangeServer extends Component {
-  static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-    server: PropTypes.string.isRequired,
-  };
+interface IProps extends WrappedComponentProps {
+  onSubmit: (...args: any[]) => void;
+  server: string;
+}
 
-  ferdiumServer = LIVE_FERDIUM_API;
+@observer
+class ChangeServer extends Component<IProps> {
+  ferdiumServer: string = LIVE_FERDIUM_API;
 
-  franzServer = LIVE_FRANZ_API;
+  franzServer: string = LIVE_FRANZ_API;
 
-  defaultServers = [this.ferdiumServer, this.franzServer];
+  defaultServers: string[] = [LIVE_FERDIUM_API, LIVE_FRANZ_API];
 
-  form = (() => {
-    const { intl } = this.props;
-    return new Form(
-      {
-        fields: {
-          server: {
-            label: intl.formatMessage(messages.label),
-            value: this.props.server,
-            options: [
-              { value: this.ferdiumServer, label: 'Ferdium (Default)' },
-              { value: this.franzServer, label: 'Franz' },
-              {
-                value: this.defaultServers.includes(this.props.server)
-                  ? ''
-                  : this.props.server,
-                label: 'Custom',
-              },
-            ],
-          },
-          customServer: {
-            label: intl.formatMessage(messages.customServerLabel),
-            value: '',
-            validators: [url, required],
-          },
+  form: Form;
+
+  constructor(props: IProps) {
+    super(props);
+
+    this.form = new Form({
+      fields: {
+        server: {
+          label: this.props.intl.formatMessage(messages.label),
+          value: this.props.server,
+          options: [
+            { value: this.ferdiumServer, label: 'Ferdium (Default)' },
+            { value: this.franzServer, label: 'Franz' },
+            {
+              value: this.defaultServers.includes(this.props.server)
+                ? ''
+                : this.props.server,
+              label: 'Custom',
+            },
+          ],
+        },
+        customServer: {
+          label: this.props.intl.formatMessage(messages.customServerLabel),
+          placeholder: this.props.intl.formatMessage(
+            messages.customServerLabel,
+          ),
+          value: '',
+          validators: [url, required],
         },
       },
-      intl,
-    );
-  })();
+    });
+  }
 
-  componentDidMount() {
+  componentDidMount(): void {
     if (this.defaultServers.includes(this.props.server)) {
       this.form.$('server').value = this.props.server;
     } else {
@@ -89,7 +93,7 @@ class ChangeServer extends Component {
     }
   }
 
-  submit(e) {
+  submit(e: FormEvent<HTMLElement>): void {
     e.preventDefault();
     this.form.submit({
       onSuccess: form => {
@@ -106,9 +110,10 @@ class ChangeServer extends Component {
     });
   }
 
-  render() {
+  render(): ReactElement {
     const { form } = this;
     const { intl } = this.props;
+
     return (
       <div className="auth__container">
         <form className="franz-form auth__form" onSubmit={e => this.submit(e)}>
@@ -123,21 +128,13 @@ class ChangeServer extends Component {
           )}
           <Select field={form.$('server')} />
           {!this.defaultServers.includes(form.$('server').value) && (
-            <Input
-              placeholder="Custom Server"
-              onChange={e => {
-                this.form.$('customServer').value = this.form
-                  .$('customServer')
-                  .value.replace(/\/$/, '');
-                this.submit(e);
-              }}
-              field={form.$('customServer')}
-            />
+            <Input placeholder="Custom Server" field={form.$('customServer')} />
           )}
           <Button
             type="submit"
             className="auth__button"
             label={intl.formatMessage(globalMessages.submit)}
+            onClick={noop}
           />
         </form>
         <div className="auth__help">
@@ -150,4 +147,4 @@ class ChangeServer extends Component {
   }
 }
 
-export default injectIntl(observer(ChangeServer));
+export default injectIntl(ChangeServer);

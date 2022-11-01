@@ -39,7 +39,6 @@ import { RealStores } from './stores';
 
 interface IProps {
   history: HashHistory;
-
   actions?: Actions;
   stores?: RealStores;
 }

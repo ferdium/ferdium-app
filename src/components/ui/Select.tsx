@@ -1,40 +1,41 @@
-import { createRef, Component } from 'react';
-import PropTypes from 'prop-types';
+import {
+  createRef,
+  Component,
+  ReactElement,
+  RefObject,
+  ChangeEvent,
+} from 'react';
 import { observer } from 'mobx-react';
-import { Field } from 'mobx-react-form';
 import classnames from 'classnames';
+import { Field } from '../../@types/mobx-form.types';
+
+interface IProps {
+  field: Field;
+  className?: string;
+  showLabel?: boolean;
+  disabled?: boolean;
+  multiple?: boolean;
+}
 
 // Can this file be merged into the './select/index.tsx' file?
-class Select extends Component {
-  static propTypes = {
-    field: PropTypes.instanceOf(Field).isRequired,
-    className: PropTypes.string,
-    showLabel: PropTypes.bool,
-    disabled: PropTypes.bool,
-    multiple: PropTypes.bool,
-  };
+@observer
+class Select extends Component<IProps> {
+  private element: RefObject<HTMLSelectElement> =
+    createRef<HTMLSelectElement>();
 
-  static defaultProps = {
-    className: null,
-    showLabel: true,
-    disabled: false,
-    multiple: false,
-  };
-
-  constructor(props) {
+  constructor(props: IProps) {
     super(props);
-
-    this.element = createRef();
   }
 
-  multipleChange() {
-    const element = this.element.current;
-
-    const result = [];
-    const options = element && element.options;
-
+  multipleChange(e: ChangeEvent<HTMLSelectElement>): void {
+    e.preventDefault();
+    if (!this.element.current) {
+      return;
+    }
+    const result: string[] = [];
+    const { options } = this.element.current;
     for (const option of options) {
-      if (option.selected) {
+      if (option.selected && (option.value || option.text)) {
         result.push(option.value || option.text);
       }
     }
@@ -43,8 +44,14 @@ class Select extends Component {
     field.value = result;
   }
 
-  render() {
-    const { field, className, showLabel, disabled, multiple } = this.props;
+  render(): ReactElement {
+    const {
+      field,
+      className = null,
+      showLabel = true,
+      disabled = false,
+      multiple = false,
+    } = this.props;
 
     let selected = field.value;
 
@@ -74,7 +81,11 @@ class Select extends Component {
           </label>
         )}
         <select
-          onChange={multiple ? e => this.multipleChange(e) : field.onChange}
+          onChange={
+            multiple
+              ? (e: ChangeEvent<HTMLSelectElement>) => this.multipleChange(e)
+              : field.onChange
+          }
           id={field.id}
           defaultValue={selected}
           className="franz-form__select"
@@ -82,7 +93,7 @@ class Select extends Component {
           multiple={multiple}
           ref={this.element}
         >
-          {field.options.map(type => (
+          {field.options!.map(type => (
             <option
               key={type.value}
               value={type.value}
@@ -98,4 +109,4 @@ class Select extends Component {
   }
 }
 
-export default observer(Select);
+export default Select;
