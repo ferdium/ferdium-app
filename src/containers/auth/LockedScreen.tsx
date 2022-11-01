@@ -12,16 +12,19 @@ interface IProps {
   stores?: RealStores;
 }
 
+interface IState {
+  error: boolean;
+}
+
 @inject('stores', 'actions')
 @observer
-class LockedScreen extends Component<IProps> {
-  state = {
-    error: false,
-  };
-
+class LockedScreen extends Component<IProps, IState> {
   constructor(props: StoresProps) {
     super(props);
 
+    this.state = {
+      error: false,
+    };
     this.onSubmit = this.onSubmit.bind(this);
     this.unlock = this.unlock.bind(this);
   }
@@ -43,9 +46,7 @@ class LockedScreen extends Component<IProps> {
       });
     } else {
       this.setState({
-        error: {
-          code: 'invalid-credentials',
-        },
+        error: true,
       });
     }
   }
@@ -71,7 +72,7 @@ class LockedScreen extends Component<IProps> {
             unlock={this.unlock}
             useTouchIdToUnlock={useTouchIdToUnlock}
             isSubmitting={stores!.user.loginRequest.isExecuting}
-            error={this.state.error || {}}
+            error={this.state.error}
           />
         </div>
       </div>
