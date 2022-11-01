@@ -210,15 +210,19 @@ class WebControls extends Component<IProps, IState> {
                 editUrl: false,
               });
               navigate(inputUrl);
+
+              if (this.inputRef && this.inputRef.current) {
+                this.inputRef.current.blur();
+              }
             } else if (event.key === 'Escape') {
               this.setState({
                 editUrl: false,
                 inputUrl: url,
               });
-            }
 
-            if (this.inputRef && this.inputRef.current) {
-              this.inputRef.current.blur();
+              if (this.inputRef && this.inputRef.current) {
+                this.inputRef.current.blur();
+              }
             }
           }}
           ref={this.inputRef}
