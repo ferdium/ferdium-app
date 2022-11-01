@@ -1,17 +1,14 @@
 import { systemPreferences } from '@electron/remote';
 import { Component } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import prettyBytes from 'pretty-bytes';
-import { defineMessages, injectIntl } from 'react-intl';
-
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { mdiGithub, mdiOpenInNew, mdiPowerPlug } from '@mdi/js';
-
 import Form from '../../../lib/Form';
 import Button from '../../ui/button';
-import Toggle from '../../ui/Toggle';
+import Toggle from '../../ui/Toggle.js';
 import Select from '../../ui/Select';
-import Input from '../../ui/Input';
+import Input from '../../ui/input/index';
 import ColorPickerInput from '../../ui/ColorPickerInput';
 import Infobox from '../../ui/Infobox';
 import { H1, H2, H3, H5 } from '../../ui/headline';
@@ -20,9 +17,7 @@ import {
   userDataPath,
   userDataRecipesPath,
 } from '../../../environment-remote';
-
 import { updateVersionParse } from '../../../helpers/update-helpers';
-
 import {
   DEFAULT_ACCENT_COLOR,
   DEFAULT_APP_SETTINGS,
@@ -264,6 +259,7 @@ const Hr = () => (
     style={{ marginBottom: 20, borderStyle: 'dashed' }}
   />
 );
+
 const HrSections = () => (
   <hr
     className="settings__hr-sections"
@@ -271,32 +267,41 @@ const HrSections = () => (
   />
 );
 
-class EditSettingsForm extends Component {
-  static propTypes = {
-    checkForUpdates: PropTypes.func.isRequired,
-    installUpdate: PropTypes.func.isRequired,
-    form: PropTypes.instanceOf(Form).isRequired,
-    onSubmit: PropTypes.func.isRequired,
-    isCheckingForUpdates: PropTypes.bool.isRequired,
-    isUpdateAvailable: PropTypes.bool.isRequired,
-    noUpdateAvailable: PropTypes.bool.isRequired,
-    updateIsReadyToInstall: PropTypes.bool.isRequired,
-    updateFailed: PropTypes.bool.isRequired,
-    isClearingAllCache: PropTypes.bool.isRequired,
-    onClearAllCache: PropTypes.func.isRequired,
-    getCacheSize: PropTypes.func.isRequired,
-    isTodosActivated: PropTypes.bool.isRequired,
-    automaticUpdates: PropTypes.bool.isRequired,
-    isDarkmodeEnabled: PropTypes.bool.isRequired,
-    isAdaptableDarkModeEnabled: PropTypes.bool.isRequired,
-    isUseGrayscaleServicesEnabled: PropTypes.bool.isRequired,
-    openProcessManager: PropTypes.func.isRequired,
-    isSplitModeEnabled: PropTypes.bool.isRequired,
-    isOnline: PropTypes.bool.isRequired,
-    serverURL: PropTypes.string.isRequired,
-  };
+interface IProps extends WrappedComponentProps {
+  form: Form;
+  isCheckingForUpdates: boolean;
+  isUpdateAvailable: boolean;
+  noUpdateAvailable: boolean;
+  updateIsReadyToInstall: boolean;
+  updateFailed: boolean;
+  isClearingAllCache: boolean;
+  isTodosActivated: boolean;
+  automaticUpdates: boolean;
+  isDarkmodeEnabled: boolean;
+  isAdaptableDarkModeEnabled: boolean;
+  isUseGrayscaleServicesEnabled: boolean;
+  lockingFeatureEnabled: boolean;
+  isSplitModeEnabled: boolean;
+  isOnline: boolean;
+  showServicesUpdatedInfoBar: boolean;
+  updateVersion: string;
+  serverURL: string;
+  onClearAllCache: () => void;
+  getCacheSize: () => void;
+  checkForUpdates: () => void;
+  installUpdate: () => void;
+  openProcessManager: () => void;
+  onSubmit: (...args: any[]) => void;
+}
 
-  constructor(props) {
+interface IState {
+  activeSetttingsTab: string;
+  clearCacheButtonClicked: boolean;
+}
+
+@observer
+class EditSettingsForm extends Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
 
     this.state = {
@@ -358,8 +363,8 @@ class EditSettingsForm extends Component {
       isTodosActivated,
       isOnline,
       serverURL,
+      intl,
     } = this.props;
-    const { intl } = this.props;
 
     let updateButtonLabelMessage = messages.buttonSearchForUpdate;
     if (isCheckingForUpdates) {
@@ -520,7 +525,7 @@ class EditSettingsForm extends Component {
                 <Toggle field={form.$('reloadAfterResume')} />
                 {reloadAfterResume && (
                   <div>
-                    <Input field={form.$('reloadAfterResumeTime')} />
+                    <Input {...form.$('reloadAfterResumeTime').bind()} />
                     <Hr />
                   </div>
                 )}
@@ -541,7 +546,7 @@ class EditSettingsForm extends Component {
                         <Input
                           placeholder="Todo Server"
                           onChange={e => this.submit(e)}
-                          field={form.$('customTodoServer')}
+                          {...form.$('customTodoServer').bind()}
                         />
                         <p
                           className="settings__message"
@@ -580,7 +585,7 @@ class EditSettingsForm extends Component {
                         <Input
                           placeholder="17:00"
                           onChange={e => this.submit(e)}
-                          field={form.$('scheduledDNDStart')}
+                          {...form.$('scheduledDNDStart').bind()}
                           type="time"
                         />
                       </div>
@@ -593,7 +598,7 @@ class EditSettingsForm extends Component {
                         <Input
                           placeholder="09:00"
                           onChange={e => this.submit(e)}
-                          field={form.$('scheduledDNDEnd')}
+                          {...form.$('scheduledDNDEnd').bind()}
                           type="time"
                         />
                       </div>
@@ -711,7 +716,7 @@ class EditSettingsForm extends Component {
                     max={SPLIT_COLUMNS_MAX}
                     placeholder={`${SPLIT_COLUMNS_MIN}-${SPLIT_COLUMNS_MAX}`}
                     onChange={e => this.submit(e)}
-                    field={form.$('splitColumns')}
+                    {...form.$('splitColumns').bind()}
                   />
                 )}
 
@@ -825,7 +830,7 @@ class EditSettingsForm extends Component {
                     <Input
                       placeholder={intl.formatMessage(messages.lockedPassword)}
                       onChange={e => this.submit(e)}
-                      field={form.$('lockedPassword')}
+                      {...form.$('lockedPassword')}
                       type="password"
                       scorePassword
                       showPasswordToggle
@@ -835,7 +840,7 @@ class EditSettingsForm extends Component {
                     <Input
                       placeholder="Lock after inactivity"
                       onChange={e => this.submit(e)}
-                      field={form.$('inactivityLock')}
+                      {...form.$('inactivityLock')}
                       autoFocus
                     />
                     <p>{intl.formatMessage(messages.inactivityLockInfo)}</p>
@@ -927,7 +932,7 @@ class EditSettingsForm extends Component {
                 <Input
                   placeholder="User Agent"
                   onChange={e => this.submit(e)}
-                  field={form.$('userAgentPref')}
+                  {...form.$('userAgentPref').bind()}
                 />
                 <p className="settings__help">
                   {intl.formatMessage(globalMessages.userAgentHelp)}
@@ -1128,4 +1133,4 @@ class EditSettingsForm extends Component {
   }
 }
 
-export default injectIntl(observer(EditSettingsForm));
+export default injectIntl(EditSettingsForm);

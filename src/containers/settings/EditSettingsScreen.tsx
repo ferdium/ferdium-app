@@ -1,7 +1,7 @@
 import { ipcRenderer } from 'electron';
 import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 
 import { FormFields } from '../../@types/mobx-form.types';
 import { StoresProps } from '../../@types/ferdium-components.types';
@@ -314,10 +314,10 @@ const messages = defineMessages({
   },
 });
 
-interface EditSettingsScreenProps extends StoresProps {
-  intl: any;
-}
+interface EditSettingsScreenProps extends StoresProps, WrappedComponentProps {}
 
+@inject('stores', 'actions')
+@observer
 class EditSettingsScreen extends Component<EditSettingsScreenProps> {
   state = {
     lockedPassword: '',
@@ -962,9 +962,6 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           }
           isSplitModeEnabled={this.props.stores.settings.app.splitMode}
           isTodosActivated={this.props.stores.todos.isFeatureEnabledByUser}
-          isUsingCustomTodoService={
-            this.props.stores.todos.isUsingCustomTodoService
-          }
           openProcessManager={() => this.openProcessManager()}
           isOnline={app.isOnline}
           serverURL={importExportURL()}
@@ -974,6 +971,4 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
   }
 }
 
-export default injectIntl(
-  inject('stores', 'actions')(observer(EditSettingsScreen)),
-);
+export default injectIntl(EditSettingsScreen);
