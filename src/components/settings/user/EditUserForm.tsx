@@ -1,9 +1,8 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
-import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
+import { Component, FormEvent, FormEventHandler, ReactElement } from 'react';
+import { observer } from 'mobx-react';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Link } from 'react-router-dom';
-
+import { noop } from 'lodash';
 import Input from '../../ui/input/index';
 import Form from '../../../lib/Form';
 import Button from '../../ui/button';
@@ -38,15 +37,16 @@ const messages = defineMessages({
   },
 });
 
-class EditUserForm extends Component {
-  static propTypes = {
-    status: MobxPropTypes.observableArray.isRequired,
-    form: PropTypes.instanceOf(Form).isRequired,
-    onSubmit: PropTypes.func.isRequired,
-    isSaving: PropTypes.bool.isRequired,
-  };
+interface IProps extends WrappedComponentProps {
+  status: string[];
+  form: Form;
+  onSubmit: FormEventHandler<HTMLFormElement>;
+  isSaving: boolean;
+}
 
-  submit(e) {
+@observer
+class EditUserForm extends Component<IProps> {
+  submit(e: FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     this.props.form.submit({
       onSuccess: form => {
@@ -57,14 +57,14 @@ class EditUserForm extends Component {
     });
   }
 
-  render() {
+  render(): ReactElement {
     const {
       // user,
       status,
       form,
       isSaving,
+      intl,
     } = this.props;
-    const { intl } = this.props;
 
     return (
       <div className="settings__main">
@@ -92,9 +92,9 @@ class EditUserForm extends Component {
               <Input {...form.$('lastname').bind()} />
             </div>
             <Input {...form.$('email').bind()} />
-            <Radio field={form.$('accountType')} />
+            <Radio field={form.$('accountType')} className="" />
             {form.$('accountType').value === 'company' && (
-              <Input field={form.$('organization')} />
+              <Input {...form.$('organization').bind()} />
             )}
             <H2>{intl.formatMessage(messages.headlinePassword)}</H2>
             <Input {...form.$('oldPassword').bind()} showPasswordToggle />
@@ -114,12 +114,14 @@ class EditUserForm extends Component {
               loaded={!isSaving}
               buttonType="secondary"
               disabled
+              onClick={noop}
             />
           ) : (
             <Button
               type="submit"
               label={intl.formatMessage(messages.buttonSave)}
               htmlForm="form"
+              onClick={noop}
             />
           )}
         </div>
@@ -128,4 +130,4 @@ class EditUserForm extends Component {
   }
 }
 
-export default injectIntl(observer(EditUserForm));
+export default injectIntl(EditUserForm);
