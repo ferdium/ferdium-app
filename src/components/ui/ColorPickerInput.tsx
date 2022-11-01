@@ -1,15 +1,25 @@
-import { ChangeEvent, Component, createRef, RefObject } from 'react';
+import {
+  ChangeEvent,
+  ChangeEventHandler,
+  Component,
+  createRef,
+  RefObject,
+} from 'react';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import { SliderPicker } from 'react-color';
+import { noop } from 'lodash';
 import { Field } from '../../@types/mobx-form.types';
 
 interface IProps {
   field: Field;
   className?: string;
   focus?: boolean;
+  onChange: ChangeEventHandler<HTMLInputElement>;
 }
 
+// TODO - [TS DEBT] check if field can be spread instead of having it single field attribute in interface
+@observer
 class ColorPickerInput extends Component<IProps> {
   private inputElement: RefObject<HTMLInputElement> =
     createRef<HTMLInputElement>();
@@ -22,7 +32,9 @@ class ColorPickerInput extends Component<IProps> {
   }
 
   onChange(e: ChangeEvent<HTMLInputElement>) {
-    const { field } = this.props;
+    const { field, onChange = noop } = this.props;
+
+    onChange(e);
     if (field.onChange) {
       field.onChange(e);
     }
@@ -87,4 +99,4 @@ class ColorPickerInput extends Component<IProps> {
   }
 }
 
-export default observer(ColorPickerInput);
+export default ColorPickerInput;
