@@ -60,7 +60,6 @@
   "locked.password.label": "Пароль",
   "locked.submit.label": "Разблокировать",
   "locked.touchId": "Разблокировать с Touch ID",
-  "locked.touchIdPrompt": "разблокировать через Touch ID",
   "locked.unlockWithPassword": "Разблокировать паролем",
   "login.email.label": "Адрес электронной почты",
   "login.headline": "Вход",
