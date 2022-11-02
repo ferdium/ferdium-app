@@ -61,7 +61,6 @@
   "locked.password.label": "비밀번호",
   "locked.submit.label": "잠금 해제",
   "locked.touchId": "Touch ID로 잠금 해제",
-  "locked.touchIdPrompt": "Touch ID로 잠금 해제",
   "locked.unlockWithPassword": "비밀번호로 열기",
   "login.email.label": "이메일 주소",
   "login.headline": "로그인",
