@@ -11,7 +11,7 @@ import Recipe from '../../../models/Recipe';
 import Service from '../../../models/Service';
 import Tabs from '../../ui/Tabs/Tabs';
 import TabItem from '../../ui/Tabs/TabItem';
-import Input from '../../ui/Input';
+import Input from '../../ui/input/index';
 import Toggle from '../../ui/Toggle';
 import Slider from '../../ui/Slider';
 import Button from '../../ui/button';
@@ -292,7 +292,7 @@ class EditServiceForm extends Component {
         <div className="settings__body">
           <form onSubmit={e => this.submit(e)} id="form">
             <div className="service-name">
-              <Input field={form.$('name')} focus />
+              <Input {...form.$('name').bind()} focus />
             </div>
             {(recipe.hasTeamId || recipe.hasCustomUrl) && (
               <Tabs active={activeTabIndex}>
@@ -314,7 +314,7 @@ class EditServiceForm extends Component {
                 )}
                 {recipe.hasCustomUrl && (
                   <TabItem title={intl.formatMessage(messages.tabOnPremise)}>
-                    <Input field={form.$('customUrl')} />
+                    <Input {...form.$('customUrl').bind()} />
                     {form.error === 'url-validation-error' && (
                       <p className="franz-form__error">
                         {intl.formatMessage(messages.customUrlValidationError, {
@@ -435,17 +435,17 @@ class EditServiceForm extends Component {
                     <div className="grid">
                       <div className="grid__row">
                         <Input
-                          field={form.$('proxy.host')}
+                          {...form.$('proxy.host').bind()}
                           className="proxyHost"
                         />
-                        <Input field={form.$('proxy.port')} />
+                        <Input {...form.$('proxy.port').bind()} />
                       </div>
                     </div>
                     <div className="grid">
                       <div className="grid__row">
-                        <Input field={form.$('proxy.user')} />
+                        <Input {...form.$('proxy.user').bind()} />
                         <Input
-                          field={form.$('proxy.password')}
+                          {...form.$('proxy.password').bind()}
                           showPasswordToggle
                         />
                       </div>
@@ -464,7 +464,7 @@ class EditServiceForm extends Component {
             )}
 
             <div className="user-agent">
-              <Input field={form.$('userAgentPref')} />
+              <Input {...form.$('userAgentPref').bind()} />
               <p className="settings__help">
                 {intl.formatMessage(globalMessages.userAgentHelp)}
               </p>

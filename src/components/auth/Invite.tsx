@@ -1,15 +1,14 @@
-import { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
+import { Component } from 'react';
 import { observer } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
-
+import { noop } from 'lodash';
 import Infobox from '../ui/Infobox';
 import Appear from '../ui/effects/Appear';
 import Form from '../../lib/Form';
-import { email } from '../../helpers/validation-helpers';
-import Input from '../ui/Input';
+import { email, required } from '../../helpers/validation-helpers';
+import Input from '../ui/input/index';
 import Button from '../ui/button';
 import { H1 } from '../ui/headline';
 
@@ -44,55 +43,61 @@ const messages = defineMessages({
   },
 });
 
-class Invite extends Component {
-  static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-    embed: PropTypes.bool,
-    isInviteSuccessful: PropTypes.bool,
-    isLoadingInvite: PropTypes.bool,
-  };
+interface IProps extends WrappedComponentProps {
+  onSubmit: (...args: any[]) => void;
+  embed?: boolean;
+  isInviteSuccessful?: boolean;
+  isLoadingInvite?: boolean;
+}
 
-  static defaultProps = {
-    embed: false,
-    isInviteSuccessful: false,
-    isLoadingInvite: false,
-  };
+interface IState {
+  showSuccessInfo: boolean;
+}
 
-  state = { showSuccessInfo: false };
+@observer
+class Invite extends Component<IProps, IState> {
+  form: Form;
+
+  constructor(props: IProps) {
+    super(props);
+
+    this.state = { showSuccessInfo: false };
+    this.form = new Form({
+      fields: {
+        invite: [
+          ...Array.from({ length: 3 }).fill({
+            fields: {
+              name: {
+                label: this.props.intl.formatMessage(messages.nameLabel),
+                placeholder: this.props.intl.formatMessage(messages.nameLabel),
+                onChange: () => {
+                  this.setState({ showSuccessInfo: false });
+                },
+                validators: [required],
+                // related: ['invite.0.email'], // path accepted but does not work
+              },
+              email: {
+                label: this.props.intl.formatMessage(messages.emailLabel),
+                placeholder: this.props.intl.formatMessage(messages.emailLabel),
+                onChange: () => {
+                  this.setState({ showSuccessInfo: false });
+                },
+                validators: [email],
+              },
+            },
+          }),
+          // TODO - [TS DEBT] need to fix this type once mobx-react-form is updated to next version
+        ] as any,
+      },
+    });
+  }
 
   componentDidMount() {
-    const { intl } = this.props;
-    this.form = new Form(
-      {
-        fields: {
-          invite: [
-            ...Array.from({ length: 3 }).fill({
-              fields: {
-                name: {
-                  label: intl.formatMessage(messages.nameLabel),
-                  placeholder: intl.formatMessage(messages.nameLabel),
-                  onChange: () => {
-                    this.setState({ showSuccessInfo: false });
-                  },
-                  // related: ['invite.0.email'], // path accepted but does not work
-                },
-                email: {
-                  label: intl.formatMessage(messages.emailLabel),
-                  placeholder: intl.formatMessage(messages.emailLabel),
-                  onChange: () => {
-                    this.setState({ showSuccessInfo: false });
-                  },
-                  validators: [email],
-                },
-              },
-            }),
-          ],
-        },
-      },
-      intl,
-    );
-
-    document.querySelector('input:first-child')?.focus();
+    const selector: HTMLElement | null =
+      document.querySelector('input:first-child');
+    if (selector) {
+      selector.focus();
+    }
   }
 
   submit(e) {
@@ -101,10 +106,15 @@ class Invite extends Component {
     this.form?.submit({
       onSuccess: form => {
         this.props.onSubmit({ invites: form.values().invite });
-
         this.form?.clear();
         // this.form.$('invite.0.name').focus(); // path accepted but does not focus ;(
-        document.querySelector('input:first-child')?.focus();
+
+        const selector: HTMLElement | null =
+          document.querySelector('input:first-child');
+        if (selector) {
+          selector.focus();
+        }
+
         this.setState({ showSuccessInfo: true });
       },
       onError: () => {},
@@ -114,7 +124,11 @@ class Invite extends Component {
   render() {
     const { form } = this;
     const { intl } = this.props;
-    const { embed, isInviteSuccessful, isLoadingInvite } = this.props;
+    const {
+      embed = false,
+      isInviteSuccessful = false,
+      isLoadingInvite = false,
+    } = this.props;
 
     const atLeastOneEmailAddress = form
       .$('invite')
@@ -133,7 +147,7 @@ class Invite extends Component {
             <Infobox
               type="success"
               icon="checkbox-marked-circle-outline"
-              dismissable
+              dismissible
             >
               {intl.formatMessage(messages.inviteSuccessInfo)}
             </Infobox>
@@ -144,14 +158,14 @@ class Invite extends Component {
           {!embed && (
             <img src="./assets/images/logo.svg" className="auth__logo" alt="" />
           )}
-          <H1 className={embed && 'invite__embed'}>
+          <H1 className={embed ? 'invite__embed' : ''}>
             {intl.formatMessage(messages.headline)}
           </H1>
           {form.$('invite').map(invite => (
             <div className="grid" key={invite.key}>
               <div className="grid__row">
-                <Input field={invite.$('name')} showLabel={false} />
-                <Input field={invite.$('email')} showLabel={false} />
+                <Input {...invite.$('name').bind()} showLabel={false} />
+                <Input {...invite.$('email').bind()} showLabel={false} />
               </div>
             </div>
           ))}
@@ -161,6 +175,7 @@ class Invite extends Component {
             disabled={!atLeastOneEmailAddress}
             label={intl.formatMessage(messages.submitButtonLabel)}
             loaded={!isLoadingInvite}
+            onClick={noop}
           />
           {!embed && (
             <Link
@@ -195,4 +210,4 @@ class Invite extends Component {
   }
 }
 
-export default injectIntl(observer(Invite));
+export default injectIntl(Invite);

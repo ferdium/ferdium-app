@@ -3,7 +3,17 @@ import { ipcRenderer } from 'electron';
 
 const debug = require('../../preload-safe-debug')('Ferdium:feature:basicAuth');
 
-const defaultState = {
+interface IAuthInfo {
+  host: string;
+  port: number;
+}
+interface IDefaultState {
+  isModalVisible: boolean;
+  service: null;
+  authInfo: IAuthInfo | null;
+}
+
+const defaultState: IDefaultState = {
   isModalVisible: true,
   service: null,
   authInfo: null,

@@ -1,17 +1,14 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
-import injectSheet from 'react-jss';
+import { Component, FormEvent, ReactElement } from 'react';
+import injectSheet, { WithStylesProps } from 'react-jss';
 import { observer } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import classnames from 'classnames';
-
+import { noop } from 'lodash';
 import Modal from '../../components/ui/Modal';
-import Input from '../../components/ui/Input';
+import Input from '../../components/ui/input/index';
 import Button from '../../components/ui/button';
-
 import { state, resetState, sendCredentials, cancelLogin } from './store';
 import Form from './Form';
-
 import styles from './styles';
 import globalMessages from '../../i18n/globalMessages';
 import { H1 } from '../../components/ui/headline';
@@ -23,33 +20,31 @@ const messages = defineMessages({
   },
 });
 
-class BasicAuthModal extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-  };
+interface IProps
+  extends WithStylesProps<typeof styles>,
+    WrappedComponentProps {}
 
-  submit(e) {
+@observer
+class BasicAuthModal extends Component<IProps> {
+  submit(e: FormEvent<HTMLFormElement>): void {
     e.preventDefault();
-
     const values = Form.values();
-
     sendCredentials(values.user, values.password);
     resetState();
   }
 
-  cancel() {
+  cancel(): void {
     cancelLogin();
     this.close();
   }
 
-  close() {
+  close(): void {
     resetState();
     state.isModalVisible = false;
   }
 
-  render() {
+  render(): ReactElement | null {
     const { classes } = this.props;
-
     const { isModalVisible, authInfo } = state;
 
     if (!authInfo) {
@@ -76,9 +71,9 @@ class BasicAuthModal extends Component {
           onSubmit={this.submit.bind(this)}
           className={classnames('franz-form', classes.form)}
         >
-          <Input field={Form.$('user')} showLabel={false} />
+          <Input {...Form.$('user').bind()} showLabel={false} />
           <Input
-            field={Form.$('password')}
+            {...Form.$('password').bind()}
             showLabel={false}
             showPasswordToggle
           />
@@ -89,7 +84,11 @@ class BasicAuthModal extends Component {
               buttonType="secondary"
               onClick={this.cancel.bind(this)}
             />
-            <Button type="submit" label={intl.formatMessage(messages.signIn)} />
+            <Button
+              type="submit"
+              label={intl.formatMessage(messages.signIn)}
+              onClick={noop}
+            />
           </div>
         </form>
       </Modal>
@@ -97,5 +96,5 @@ class BasicAuthModal extends Component {
   }
 }
 export default injectIntl(
-  injectSheet(styles, { injectTheme: true })(observer(BasicAuthModal)),
+  injectSheet(styles, { injectTheme: true })(BasicAuthModal),
 );

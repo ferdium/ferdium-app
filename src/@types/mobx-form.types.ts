@@ -9,29 +9,22 @@ export interface FormFieldOptions {
 
 export interface FormFields {
   fields: {
-    [key: string]: {
-      label?: string;
-      placeholder?: string;
-      options?: FormFieldOptions[];
-      value?: string | boolean | number | null;
-      default?: string | boolean | number | null;
-      type?: string; // todo specifiy probably
-      disabled?: boolean;
-      validators?: any; // Not sure yet.
-    };
+    [key: string]: Field;
   };
 }
 
-export interface Field extends Partial<Listeners> {
+export interface Field extends Listeners {
   id?: string;
-  type?: string;
+  type?: string; // todo specifiy probably
   name?: string;
-  value: string | string[];
+  value?: any;
   label?: string;
   placeholder?: string;
   disabled?: boolean;
   error?: GlobalError | string;
   options?: SelectOptions[];
+  default?: string | boolean | number | null;
+  validators?: any; // Not sure yet.
 }
 
 export interface SelectOptions {

@@ -49,7 +49,6 @@ export default (theme: Theme) => ({
   },
   passwordScore: {
     background: theme.inputScorePasswordBackground,
-    border: theme.inputBorder,
     borderTopWidth: 0,
     borderBottomLeftRadius: theme.borderRadiusSmall,
     borderBottomRightRadius: theme.borderRadiusSmall,

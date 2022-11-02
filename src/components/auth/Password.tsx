@@ -1,11 +1,11 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
-import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
+import { Component, FormEvent } from 'react';
+import { observer } from 'mobx-react';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 
+import { noop } from 'lodash';
 import Form from '../../lib/Form';
 import { required, email } from '../../helpers/validation-helpers';
-import Input from '../ui/Input';
+import Input from '../ui/input/index';
 import Button from '../ui/button';
 import Link from '../ui/Link';
 import Infobox from '../ui/Infobox';
@@ -39,32 +39,33 @@ const messages = defineMessages({
   },
 });
 
-class Password extends Component {
-  static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-    isSubmitting: PropTypes.bool.isRequired,
-    signupRoute: PropTypes.string.isRequired,
-    loginRoute: PropTypes.string.isRequired,
-    status: MobxPropTypes.arrayOrObservableArray.isRequired,
-  };
+interface IProps extends WrappedComponentProps {
+  onSubmit: (...args: any[]) => void;
+  isSubmitting: boolean;
+  signupRoute: string;
+  loginRoute: string;
+  status: string[];
+}
 
-  form = (() => {
-    const { intl } = this.props;
-    return new Form(
-      {
-        fields: {
-          email: {
-            label: intl.formatMessage(messages.emailLabel),
-            value: '',
-            validators: [required, email],
-          },
+@observer
+class Password extends Component<IProps> {
+  form: Form;
+
+  constructor(props: IProps) {
+    super(props);
+
+    this.form = new Form({
+      fields: {
+        email: {
+          label: this.props.intl.formatMessage(messages.emailLabel),
+          value: '',
+          validators: [required, email],
         },
       },
-      intl,
-    );
-  })();
+    });
+  }
 
-  submit(e) {
+  submit(e: FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     this.form.submit({
       onSuccess: form => {
@@ -76,8 +77,7 @@ class Password extends Component {
 
   render() {
     const { form } = this;
-    const { intl } = this.props;
-    const { isSubmitting, signupRoute, loginRoute, status } = this.props;
+    const { isSubmitting, signupRoute, loginRoute, status, intl } = this.props;
 
     return (
       <div className="auth__container">
@@ -91,7 +91,7 @@ class Password extends Component {
               {intl.formatMessage(messages.successInfo)}
             </Infobox>
           )}
-          <Input field={form.$('email')} focus />
+          <Input {...form.$('email').bind()} focus />
           {status.length > 0 && status.includes('no-user') && (
             <p className="error-message center">
               {intl.formatMessage(messages.noUser)}
@@ -103,6 +103,7 @@ class Password extends Component {
               buttonType="secondary"
               label={`${intl.formatMessage(globalMessages.submit)} ...`}
               loaded={false}
+              onClick={noop}
               disabled
             />
           ) : (
@@ -110,6 +111,7 @@ class Password extends Component {
               type="submit"
               className="auth__button"
               label={intl.formatMessage(globalMessages.submit)}
+              onClick={noop}
             />
           )}
         </form>
@@ -124,4 +126,4 @@ class Password extends Component {
   }
 }
 
-export default injectIntl(observer(Password));
+export default injectIntl(Password);

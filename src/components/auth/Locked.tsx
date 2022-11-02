@@ -1,16 +1,13 @@
 import { systemPreferences } from '@electron/remote';
 import { Component } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
-
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
+import { noop } from 'lodash';
 import Form from '../../lib/Form';
-import Input from '../ui/Input';
+import Input from '../ui/input/index';
 import Button from '../ui/button';
 import { H1 } from '../ui/headline';
 import { isMac } from '../../environment';
-
-import { globalError as globalErrorPropType } from '../../prop-types';
 
 const messages = defineMessages({
   headline: {
@@ -23,7 +20,7 @@ const messages = defineMessages({
   },
   touchIdPrompt: {
     id: 'locked.touchIdPrompt',
-    defaultMessage: 'unlock via Touch ID',
+    defaultMessage: 'Unlock with Touch ID',
   },
   passwordLabel: {
     id: 'locked.password.label',
@@ -43,30 +40,31 @@ const messages = defineMessages({
   },
 });
 
-class Locked extends Component {
-  static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-    unlock: PropTypes.func.isRequired,
-    isSubmitting: PropTypes.bool.isRequired,
-    useTouchIdToUnlock: PropTypes.bool.isRequired,
-    error: globalErrorPropType.isRequired,
-  };
+interface IProps extends WrappedComponentProps {
+  onSubmit: (...args: any[]) => void;
+  unlock: () => void;
+  isSubmitting: boolean;
+  useTouchIdToUnlock: boolean;
+  error: boolean;
+}
 
-  form = (() => {
-    const { intl } = this.props;
-    return new Form(
-      {
-        fields: {
-          password: {
-            label: intl.formatMessage(messages.passwordLabel),
-            value: '',
-            type: 'password',
-          },
+@observer
+class Locked extends Component<IProps> {
+  form: Form;
+
+  constructor(props: IProps) {
+    super(props);
+
+    this.form = new Form({
+      fields: {
+        password: {
+          label: this.props.intl.formatMessage(messages.passwordLabel),
+          value: '',
+          type: 'password',
         },
       },
-      intl,
-    );
-  })();
+    });
+  }
 
   submit(e) {
     e.preventDefault();
@@ -90,8 +88,7 @@ class Locked extends Component {
 
   render() {
     const { form } = this;
-    const { intl } = this.props;
-    const { isSubmitting, error, useTouchIdToUnlock } = this.props;
+    const { isSubmitting, error, useTouchIdToUnlock, intl } = this.props;
 
     const touchIdEnabled = isMac
       ? useTouchIdToUnlock && systemPreferences.canPromptTouchID()
@@ -118,8 +115,8 @@ class Locked extends Component {
             </>
           )}
 
-          <Input field={form.$('password')} showPasswordToggle focus />
-          {error.code === 'invalid-credentials' && (
+          <Input {...form.$('password').bind()} showPasswordToggle focus />
+          {error && (
             <p className="error-message center">
               {intl.formatMessage(messages.invalidCredentials)}
             </p>
@@ -130,6 +127,7 @@ class Locked extends Component {
               buttonType="secondary"
               label={`${submitButtonLabel} ...`}
               loaded={false}
+              onClick={noop}
               disabled
             />
           ) : (
@@ -137,6 +135,7 @@ class Locked extends Component {
               type="submit"
               className="auth__button"
               label={submitButtonLabel}
+              onClick={noop}
             />
           )}
         </form>
@@ -145,4 +144,4 @@ class Locked extends Component {
   }
 }
 
-export default injectIntl(observer(Locked));
+export default injectIntl(Locked);
