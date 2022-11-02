@@ -11,7 +11,7 @@ import Recipe from '../../../models/Recipe';
 import Service from '../../../models/Service';
 import Tabs from '../../ui/Tabs/Tabs';
 import TabItem from '../../ui/Tabs/TabItem';
-import Input from '../../ui/Input';
+import Input from '../../ui/input/index';
 import Toggle from '../../ui/Toggle';
 import Slider from '../../ui/Slider';
 import Button from '../../ui/button';
