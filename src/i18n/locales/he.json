@@ -62,7 +62,6 @@
   "locked.password.label": "סיסמה",
   "locked.submit.label": "שחרור נעילה",
   "locked.touchId": "שחרור נעילה עם Touch ID",
-  "locked.touchIdPrompt": "שחרור נעילה עם Touch ID",
   "locked.unlockWithPassword": "שחרור נעילה עם סיסמה",
   "login.changeServer": "החלפה מכאן!",
   "login.changeServerMessage": "בחרת להשתמש בשרת {serverNameParse}, להחליף?",
