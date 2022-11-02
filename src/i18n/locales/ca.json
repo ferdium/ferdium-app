@@ -48,7 +48,6 @@
   "locked.password.label": "Contrasenya",
   "locked.submit.label": "Desbloqueja",
   "locked.touchId": "Desbloqueja amb Touch ID",
-  "locked.touchIdPrompt": "desbloqueja amb Touch ID",
   "locked.unlockWithPassword": "Desbloqueja amb contrasenya",
   "login.email.label": "Correu electrònic",
   "login.headline": "Accedir-hi",
