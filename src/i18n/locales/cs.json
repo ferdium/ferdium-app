@@ -60,7 +60,6 @@
   "locked.password.label": "Heslo",
   "locked.submit.label": "Odemknout",
   "locked.touchId": "Odemknout pomocí Touch ID",
-  "locked.touchIdPrompt": "odemknout pomocí Touch ID",
   "locked.unlockWithPassword": "Odemknout pomocí hesla",
   "login.email.label": "E-mailová adresa",
   "login.headline": "Přihlásit se",
