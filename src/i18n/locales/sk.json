@@ -59,7 +59,6 @@
   "locked.password.label": "Heslo",
   "locked.submit.label": "Odomknúť",
   "locked.touchId": "Odomknúť s Touch ID",
-  "locked.touchIdPrompt": "odomknúť s Touch ID",
   "locked.unlockWithPassword": "Odomknúť heslom",
   "login.email.label": "E-mailová adresa",
   "login.headline": "Prihlásiť sa",
