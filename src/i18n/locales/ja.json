@@ -62,7 +62,6 @@
   "locked.password.label": "パスワード",
   "locked.submit.label": "ロック解除",
   "locked.touchId": "Touch IDを使用する",
-  "locked.touchIdPrompt": "Touch IDでロック解除",
   "locked.unlockWithPassword": "パスワードでロック解除",
   "login.changeServer": "ここで変更！",
   "login.changeServerMessage": "{serverNameParse}サーバーを使用しています。切り替えますか？",
