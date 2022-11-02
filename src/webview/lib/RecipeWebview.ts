@@ -39,7 +39,7 @@ class RecipeWebview {
 
   loopFunc = () => null;
 
-  darkModeHandler = false;
+  darkModeHandler: ((darkMode: boolean, config: any) => void) | null = null;
 
   // TODO Remove this once we implement a proper wrapper.
   get ipcRenderer() {

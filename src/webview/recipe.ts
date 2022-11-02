@@ -1,19 +1,14 @@
 /* eslint-disable global-require */
+/* eslint-disable import/no-dynamic-require */
 /* eslint-disable import/first */
 import { contextBridge, ipcRenderer } from 'electron';
 import { join } from 'path';
 import { autorun, computed, makeObservable, observable } from 'mobx';
 import { pathExistsSync, readFileSync } from 'fs-extra';
 import { debounce } from 'lodash';
-
-// For some services darkreader tries to use the chrome extension message API
-// This will cause the service to fail loading
-// As the message API is not actually needed, we'll add this shim sendMessage
-// function in order for darkreader to continue working
-window.chrome.runtime.sendMessage = () => {};
 import {
-  enable as enableDarkMode,
   disable as disableDarkMode,
+  enable as enableDarkMode,
 } from 'darkreader';
 
 import { existsSync } from 'fs';
@@ -35,8 +30,8 @@ import {
 } from './darkmode';
 import FindInPage from './find';
 import {
-  NotificationsHandler,
   notificationsClassDefinition,
+  NotificationsHandler,
 } from './notifications';
 import {
   getDisplayMediaSelector,
@@ -44,12 +39,20 @@ import {
   screenShareJs,
 } from './screenshare';
 import {
-  switchDict,
   getSpellcheckerLocaleByFuzzyIdentifier,
+  switchDict,
 } from './spellchecker';
 
-import { DEFAULT_APP_SETTINGS } from '../config';
 import { ifUndefinedString } from '../jsUtils';
+import { AppStore } from '../@types/stores.types';
+import Service from '../models/Service';
+
+// For some services darkreader tries to use the chrome extension message API
+// This will cause the service to fail loading
+// As the message API is not actually needed, we'll add this shim sendMessage
+// function in order for darkreader to continue working
+// @ts-ignore
+window.chrome.runtime.sendMessage = () => {};
 
 const debug = require('../preload-safe-debug')('Ferdium:Plugin');
 
@@ -64,7 +67,7 @@ const notificationsHandler = new NotificationsHandler();
 // Patching window.open
 const originalWindowOpen = window.open;
 
-window.open = (url, frameName, features) => {
+window.open = (url, frameName, features): WindowProxy | null => {
   debug('window.open', url, frameName, features);
   if (!url) {
     // The service hasn't yet supplied a URL (as used in Skype).
@@ -93,17 +96,19 @@ window.open = (url, frameName, features) => {
       clearInterval(checkInterval);
     }, 1000);
 
-    return newWindow;
+    return newWindow as Window;
   }
 
   // We need to differentiate if the link should be opened in a popup or in the systems default browser
   if (!frameName && !features && typeof features !== 'string') {
-    return ipcRenderer.sendToHost('new-window', url);
+    ipcRenderer.sendToHost('new-window', url);
+    return null;
   }
 
   if (url) {
     return originalWindowOpen(url, frameName, features);
   }
+  return null;
 };
 
 // We can't override APIs here, so we first expose functions via 'window.ferdium',
@@ -126,16 +131,14 @@ ipcRenderer.sendToHost(
 );
 
 class RecipeController {
-  @observable settings = {
+  // @ts-ignore
+  @observable settings: {
+    overrideSpellcheckerLanguage: boolean;
+    app: AppStore;
+    service: Service;
+  } = {
     overrideSpellcheckerLanguage: false,
-    app: DEFAULT_APP_SETTINGS,
-    service: {
-      isDarkModeEnabled: false,
-      spellcheckerLanguage: '',
-    },
   };
-
-  spellcheckProvider = null;
 
   ipcEvents = {
     'initialize-recipe': 'loadRecipeModule',
@@ -147,9 +150,9 @@ class RecipeController {
 
   universalDarkModeInjected = false;
 
-  recipe = null;
+  recipe: RecipeWebview | null = null;
 
-  userscript = null;
+  userscript: Userscript | null = null;
 
   hasUpdatedBeforeRecipeLoaded = false;
 
@@ -166,9 +169,7 @@ class RecipeController {
     );
   }
 
-  cldIdentifier = null;
-
-  findInPage = null;
+  findInPage: FindInPage | null = null;
 
   async initialize() {
     for (const channel of Object.keys(this.ipcEvents)) {
@@ -181,7 +182,6 @@ class RecipeController {
     debug('Send "hello" to host');
     setTimeout(() => ipcRenderer.sendToHost('hello'), 100);
 
-    this.spellcheckingProvider = null;
     contextMenu(
       () => this.settings.app.enableSpellchecking,
       () => this.settings.app.spellcheckerLanguage,
@@ -216,7 +216,7 @@ class RecipeController {
     });
   }
 
-  loadRecipeModule(event, config, recipe) {
+  loadRecipeModule(_event, config, recipe) {
     debug('loadRecipeModule');
     const modulePath = join(recipe.path, 'webview.js');
     debug('module path', modulePath);
@@ -230,7 +230,6 @@ class RecipeController {
         sessionHandler,
       );
       if (existsSync(modulePath)) {
-        // eslint-disable-next-line import/no-dynamic-require
         require(modulePath)(this.recipe, { ...config, recipe });
         debug('Initialize Recipe', config, recipe);
       }
@@ -255,12 +254,11 @@ class RecipeController {
       const data = readFileSync(userCss);
       styles.innerHTML += data.toString();
     }
-    document.querySelector('head').append(styles);
+    document.querySelector('head')?.append(styles);
 
     const userJs = join(recipe.path, 'user.js');
     if (pathExistsSync(userJs)) {
       const loadUserJs = () => {
-        // eslint-disable-next-line import/no-dynamic-require
         const userJsModule = require(userJs);
 
         if (typeof userJsModule === 'function') {
@@ -280,7 +278,7 @@ class RecipeController {
   }
 
   openFindInPage() {
-    this.findInPage.openFindWindow();
+    this.findInPage?.openFindWindow();
   }
 
   update() {
@@ -328,6 +326,7 @@ class RecipeController {
       'Darkmode enabled?',
       this.settings.service.isDarkModeEnabled,
       'Dark theme active?',
+      // @ts-ignore
       this.settings.app.isDarkThemeActive,
     );
 
@@ -375,6 +374,10 @@ class RecipeController {
           { brightness, contrast, sepia },
           {
             css: customDarkModeCss[window.location.host] || '',
+            invert: [],
+            ignoreImageAnalysis: [],
+            ignoreInlineStyle: [],
+            disableStyleSheetsProxy: false,
           },
         );
         this.universalDarkModeInjected = true;
@@ -415,11 +418,11 @@ class RecipeController {
     }
   }
 
-  updateAppSettings(event, data) {
+  updateAppSettings(_event, data) {
     this.settings.app = Object.assign(this.settings.app, data);
   }
 
-  updateServiceSettings(event, data) {
+  updateServiceSettings(_event, data) {
     this.settings.service = Object.assign(this.settings.service, data);
   }
 
@@ -470,4 +473,3 @@ class RecipeController {
 
 /* eslint-disable no-new */
 new RecipeController();
-/* eslint-enable no-new */
