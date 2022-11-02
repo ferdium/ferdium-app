@@ -78,7 +78,7 @@ interface TypedStore {
   resetStatus: () => void;
 }
 
-interface AppStore extends TypedStore {
+export interface AppStore extends TypedStore {
   accentColor: string;
   adaptableDarkMode: boolean;
   progressbarAccentColor: string;
@@ -102,7 +102,7 @@ interface AppStore extends TypedStore {
   isOnline: boolean;
   isSystemDarkModeEnabled: () => void;
   isSystemMuteOverridden: () => void;
-  locale: () => void;
+  locale: string;
   lockedPassword: string;
   reloadAfterResume: boolean;
   reloadAfterResumeTime: number;
