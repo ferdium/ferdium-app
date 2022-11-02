@@ -60,7 +60,6 @@
   "locked.password.label": "Şifre",
   "locked.submit.label": "Kilidi aç",
   "locked.touchId": "Kilidi parmak iziyle aç",
-  "locked.touchIdPrompt": "kilidi parmak iziyle aç",
   "locked.unlockWithPassword": "Kilidi parola ile aç",
   "login.email.label": "E-posta adresi",
   "login.headline": "Oturum Aç",
