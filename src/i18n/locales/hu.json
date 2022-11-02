@@ -50,7 +50,6 @@
   "locked.password.label": "Jelszó",
   "locked.submit.label": "Feloldás",
   "locked.touchId": "Feloldás ujjlenyomattal",
-  "locked.touchIdPrompt": "feloldás ujjlenyomattal",
   "locked.unlockWithPassword": "Feloldás jelszóval",
   "login.email.label": "Email cím",
   "login.headline": "Bejelentkezés",
