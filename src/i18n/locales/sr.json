@@ -35,7 +35,6 @@
   "locked.password.label": "Лозинка",
   "locked.submit.label": "Откључај",
   "locked.touchId": "Откључајте са Touch ID",
-  "locked.touchIdPrompt": "откључајте помоћу Touch ID",
   "locked.unlockWithPassword": "Откључајте лозинком",
   "login.email.label": "Vaša e-adresa",
   "login.headline": "Prijavite se",
