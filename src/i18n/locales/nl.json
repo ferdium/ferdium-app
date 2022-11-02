@@ -62,7 +62,6 @@
   "locked.password.label": "Wachtwoord",
   "locked.submit.label": "Ontgrendelen",
   "locked.touchId": "Ontgrendelen met Touch ID",
-  "locked.touchIdPrompt": "ontgrendelen met Touch ID",
   "locked.unlockWithPassword": "Ontgrendelen met wachtwoord",
   "login.changeServer": "Wijzig hier!",
   "login.changeServerMessage": "U gebruikt {serverNameParse} Server, wilt u wisselen?",
