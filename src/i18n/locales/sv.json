@@ -59,7 +59,6 @@
   "locked.password.label": "Lösenord",
   "locked.submit.label": "Lås upp",
   "locked.touchId": "Lås upp med Touch ID",
-  "locked.touchIdPrompt": "lås upp med Touch ID",
   "locked.unlockWithPassword": "Lås upp med lösenord",
   "login.email.label": "E-postadress",
   "login.headline": "Logga in",
