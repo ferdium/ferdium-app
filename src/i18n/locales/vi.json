@@ -54,7 +54,6 @@
   "locked.password.label": "Mật khẩu",
   "locked.submit.label": "Mở khoá",
   "locked.touchId": "Mở khoá bằng vân tay",
-  "locked.touchIdPrompt": "mở khoá bằng vân tay",
   "locked.unlockWithPassword": "Mở khoá bằng mật khẩu",
   "login.email.label": "Địa chỉ E-mail",
   "login.headline": "Đăng nhập",
