@@ -60,7 +60,6 @@
   "locked.password.label": "Salasana",
   "locked.submit.label": "Avaa lukitus",
   "locked.touchId": "Avaa lukitusTouch ID:llä",
-  "locked.touchIdPrompt": "avaa lukitusTouch ID:llä",
   "locked.unlockWithPassword": "Avaa salasanalla",
   "login.email.label": "Sähköpostiosoite",
   "login.headline": "Kirjaudu sisään",
