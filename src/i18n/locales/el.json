@@ -60,7 +60,6 @@
   "locked.password.label": "Κωδικός",
   "locked.submit.label": "Ξεκλείδωμα",
   "locked.touchId": "Ξεκλείδωμα με αναγνωριστικό αφής",
-  "locked.touchIdPrompt": "ξεκλείδωμα μέσω του Touch ID",
   "locked.unlockWithPassword": "Ξεκλείδωμα με κωδικό πρόσβασης",
   "login.email.label": "Διεύθυνση ηλεκτρονικού ταχυδρομείου",
   "login.headline": "Σύνδεση",
