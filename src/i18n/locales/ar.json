@@ -61,7 +61,6 @@
   "locked.password.label": "كلمة المرور",
   "locked.submit.label": "فتح القفل",
   "locked.touchId": "فتح باستخدام بصمة الإصبع",
-  "locked.touchIdPrompt": "فتح عبر بصمة الإصبع",
   "locked.unlockWithPassword": "فتح بكلمة المرور",
   "login.email.label": "البريد الإلكتروني",
   "login.headline": "تسجيل الدخول",
