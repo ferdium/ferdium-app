@@ -59,7 +59,6 @@
   "locked.password.label": "Parolă",
   "locked.submit.label": "Deblocare",
   "locked.touchId": "Deblocare cu Touch ID",
-  "locked.touchIdPrompt": "deblochează prin Touch ID",
   "locked.unlockWithPassword": "Deblocare cu parolă",
   "login.email.label": "Adresa de e-mail",
   "login.headline": "Autentificare",
