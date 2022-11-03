@@ -112,6 +112,10 @@ const messages = defineMessages({
     id: 'settings.app.form.searchEngine',
     defaultMessage: 'Search engine',
   },
+  sentry: {
+    id: 'settings.app.form.sentry',
+    defaultMessage: 'Send telemetry data',
+  },
   translatorEngine: {
     id: 'settings.app.form.translatorEngine',
     defaultMessage: 'Translator Engine',
@@ -366,6 +370,7 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
         searchEngine: settingsData.searchEngine,
         translatorEngine: settingsData.translatorEngine,
         translatorLanguage: settingsData.translatorLanguage,
+        sentry: Boolean(settingsData.sentry),
         hibernateOnStartup: Boolean(settingsData.hibernateOnStartup),
         hibernationStrategy: Number(settingsData.hibernationStrategy),
         wakeUpStrategy: Number(settingsData.wakeUpStrategy),
@@ -631,6 +636,11 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           value: settings.all.app.translatorLanguage,
           default: DEFAULT_APP_SETTINGS.translatorLanguage,
           options: translatorLanguages,
+        },
+        sentry: {
+          label: intl.formatMessage(messages.sentry),
+          value: settings.all.app.sentry,
+          default: DEFAULT_APP_SETTINGS.sentry,
         },
         hibernateOnStartup: {
           label: intl.formatMessage(messages.hibernateOnStartup),

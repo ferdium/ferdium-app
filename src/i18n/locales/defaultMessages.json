@@ -2916,6 +2916,19 @@
         }
       },
       {
+        "defaultMessage": "!!!Sending telemetry data allows us to find errors in Ferdium - we will not send any personal information like your message data! Changing this option requires you to restart Ferdium.",
+        "end": {
+          "column": 3,
+          "line": 34
+        },
+        "file": "src/components/settings/settings/EditSettingsForm.js",
+        "id": "settings.app.sentryInfo",
+        "start": {
+          "column": 14,
+          "line": 31
+        }
+      },
+      {
         "defaultMessage": "!!!By default, Ferdium will keep all your services open and loaded in the background so they are ready when you want to use them. Service Hibernation will unload your services after a specified amount. This is useful to save RAM or keeping services from slowing down your computer.",
         "end": {
           "column": 3,
@@ -4377,6 +4390,19 @@
         "start": {
           "column": 16,
           "line": 82
+        }
+      },
+      {
+        "defaultMessage": "!!!Send telemetry data",
+        "end": {
+          "column": 3,
+          "line": 89
+        },
+        "file": "src/containers/settings/EditSettingsScreen.js",
+        "id": "settings.app.form.sentry",
+        "start": {
+          "column": 10,
+          "line": 86
         }
       },
       {
