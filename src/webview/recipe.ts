@@ -43,6 +43,7 @@ import {
   switchDict,
 } from './spellchecker';
 
+import { DEFAULT_APP_SETTINGS } from '../config';
 import { ifUndefinedString } from '../jsUtils';
 import { AppStore } from '../@types/stores.types';
 import Service from '../models/Service';
@@ -131,13 +132,19 @@ ipcRenderer.sendToHost(
 );
 
 class RecipeController {
-  // @ts-ignore
   @observable settings: {
     overrideSpellcheckerLanguage: boolean;
     app: AppStore;
     service: Service;
   } = {
     overrideSpellcheckerLanguage: false,
+    // @ts-ignore
+    app: DEFAULT_APP_SETTINGS,
+    // @ts-ignore
+    service: {
+      isDarkModeEnabled: false,
+      spellcheckerLanguage: '',
+    },
   };
 
   ipcEvents = {
