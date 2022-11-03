@@ -61,6 +61,7 @@
     "@mdi/js": "6.9.96",
     "@mdi/react": "1.6.1",
     "@octokit/core": "4.1.0",
+    "@sentry/electron": "4.1.0",
     "@superwf/mobx-react-router": "7.4.0",
     "auto-launch": "5.0.5",
     "btoa": "1.2.1",

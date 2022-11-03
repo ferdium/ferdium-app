@@ -93,6 +93,11 @@ const proxySettings = new Settings('proxy');
 const retrieveSettingValue = (key: string, defaultValue: boolean | string) =>
   ifUndefined<boolean | string>(settings.get(key), defaultValue);
 
+if (retrieveSettingValue('sentry', DEFAULT_APP_SETTINGS.sentry)) {
+  // eslint-disable-next-line global-require
+  require('./sentry');
+}
+
 const liftSingleInstanceLock = retrieveSettingValue(
   'liftSingleInstanceLock',
   false,
