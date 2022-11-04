@@ -120,7 +120,7 @@ jobs:
           echo "Number of changes: $CHANGES_COUNT"
           if [ $CHANGES_COUNT -eq 0 ] && [ $MANUAL_REBUILD != "true" ]; then
             echo "No changes found - terminating the build"
-            echo "::set-output name=should_run::false"
+            echo "should_run=false" >> $GITHUB_OUTPUT
           else   # changes > 0 (or) MANUAL_REBUILD=true
             echo "Pushing rebased commits"
             git push origin $(git rev-parse --abbrev-ref HEAD) --no-verify
