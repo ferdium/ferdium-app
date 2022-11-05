@@ -33,7 +33,7 @@ import { ifUndefined } from './jsUtils';
 
 import { mainIpcHandler as basicAuthHandler } from './features/basicAuth';
 import ipcApi from './electron/ipc-api';
-import Tray from './lib/Tray';
+import TrayIcon from './lib/Tray';
 import DBus from './lib/DBus';
 import Settings from './electron/Settings';
 import handleDeepLink from './electron/deepLinking';
@@ -251,7 +251,7 @@ const createWindow = () => {
   });
 
   // Initialize System Tray
-  const trayIcon: Tray = new Tray();
+  const trayIcon: TrayIcon = new TrayIcon();
 
   // Initialize DBus interface
   const dbus = new DBus(trayIcon);

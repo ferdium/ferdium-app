@@ -1,17 +1,20 @@
 import { MessageBus, sessionBus } from 'dbus-next';
 import { isLinux } from '../environment';
+import TrayIcon from './Tray';
 
 export default class DBus {
   bus: MessageBus | null = null;
 
-  trayIcon: any;
+  trayIcon: TrayIcon;
 
-  constructor(trayIcon: any) {
+  constructor(trayIcon: TrayIcon) {
     this.trayIcon = trayIcon;
   }
 
   start() {
-    if (!isLinux || this.bus) return;
+    if (!isLinux || this.bus) {
+      return;
+    }
 
     try {
       this.bus = sessionBus();
@@ -47,7 +50,9 @@ export default class DBus {
   }
 
   stop() {
-    if (!this.bus) return;
+    if (!this.bus) {
+      return;
+    }
 
     this.bus.disconnect();
     this.bus = null;
