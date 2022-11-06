@@ -176,7 +176,7 @@ class EditWorkspaceForm extends Component {
           )}
           <div className={classes.nameInput}>
             <Input {...form.$('name').bind()} />
-            <Toggle field={form.$('keepLoaded')} />
+            <Toggle {...form.$('keepLoaded').bind()} />
             <p className={`${classes.keepLoadedInfo} franz-form__label`}>
               {intl.formatMessage(messages.keepLoadedInfo)}
             </p>
