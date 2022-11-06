@@ -6,7 +6,7 @@ import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { mdiGithub, mdiOpenInNew, mdiPowerPlug } from '@mdi/js';
 import Form from '../../../lib/Form';
 import Button from '../../ui/button';
-import Toggle from '../../ui/Toggle.js';
+import Toggle from '../../ui/toggle';
 import Select from '../../ui/Select';
 import Input from '../../ui/input/index';
 import ColorPickerInput from '../../ui/ColorPickerInput';
@@ -522,26 +522,30 @@ class EditSettingsForm extends Component<IProps, IState> {
                 <H2 className="settings__section_header">
                   {intl.formatMessage(messages.sectionMain)}
                 </H2>
-                <Toggle field={form.$('autoLaunchOnStart')} />
-                <Toggle field={form.$('runInBackground')} />
-                <Toggle field={form.$('confirmOnQuit')} />
-                <Toggle field={form.$('enableSystemTray')} />
+                <Toggle {...form.$('autoLaunchOnStart').bind()} />
+                <Toggle {...form.$('runInBackground').bind()} />
+                <Toggle {...form.$('confirmOnQuit').bind()} />
+                <Toggle {...form.$('enableSystemTray').bind()} />
                 {reloadAfterResume && <Hr />}
-                <Toggle field={form.$('reloadAfterResume')} />
+                <Toggle {...form.$('reloadAfterResume').bind()} />
                 {reloadAfterResume && (
                   <div>
                     <Input {...form.$('reloadAfterResumeTime').bind()} />
                     <Hr />
                   </div>
                 )}
-                <Toggle field={form.$('startMinimized')} />
-                {isWindows && <Toggle field={form.$('minimizeToSystemTray')} />}
-                {isWindows && <Toggle field={form.$('closeToSystemTray')} />}
+                <Toggle {...form.$('startMinimized').bind()} />
+                {isWindows && (
+                  <Toggle {...form.$('minimizeToSystemTray').bind()} />
+                )}
+                {isWindows && (
+                  <Toggle {...form.$('closeToSystemTray').bind()} />
+                )}
 
-                <Toggle field={form.$('keepAllWorkspacesLoaded')} />
+                <Toggle {...form.$('keepAllWorkspacesLoaded').bind()} />
 
                 {isTodosActivated && <Hr />}
-                <Toggle field={form.$('enableTodos')} />
+                <Toggle {...form.$('enableTodos').bind()} />
                 {isTodosActivated && (
                   <div>
                     <Select field={form.$('predefinedTodoServer')} />
@@ -571,7 +575,7 @@ class EditSettingsForm extends Component<IProps, IState> {
                 {isTodosActivated && <Hr />}
 
                 {scheduledDNDEnabled && <Hr />}
-                <Toggle field={form.$('scheduledDNDEnabled')} />
+                <Toggle {...form.$('scheduledDNDEnabled').bind()} />
 
                 {scheduledDNDEnabled && (
                   <>
@@ -632,12 +636,12 @@ class EditSettingsForm extends Component<IProps, IState> {
                   {intl.formatMessage(messages.sectionServiceIconsSettings)}
                 </H2>
 
-                <Toggle field={form.$('showDisabledServices')} />
-                <Toggle field={form.$('showServiceName')} />
+                <Toggle {...form.$('showDisabledServices').bind()} />
+                <Toggle {...form.$('showServiceName').bind()} />
 
                 {isUseGrayscaleServicesEnabled && <Hr />}
 
-                <Toggle field={form.$('useGrayscaleServices')} />
+                <Toggle {...form.$('useGrayscaleServices').bind()} />
 
                 {isUseGrayscaleServicesEnabled && (
                   <>
@@ -650,8 +654,8 @@ class EditSettingsForm extends Component<IProps, IState> {
                   </>
                 )}
 
-                <Toggle field={form.$('showMessageBadgeWhenMuted')} />
-                <Toggle field={form.$('enableLongPressServiceHint')} />
+                <Toggle {...form.$('showMessageBadgeWhenMuted').bind()} />
+                <Toggle {...form.$('enableLongPressServiceHint').bind()} />
                 <Select field={form.$('iconSize')} />
 
                 <Select field={form.$('navigationBarBehaviour')} />
@@ -662,7 +666,7 @@ class EditSettingsForm extends Component<IProps, IState> {
                   {intl.formatMessage(messages.sectionHibernation)}
                 </H2>
                 <Select field={form.$('hibernationStrategy')} />
-                <Toggle field={form.$('hibernateOnStartup')} />
+                <Toggle {...form.$('hibernateOnStartup').bind()} />
                 <p
                   className="settings__message"
                   style={{
@@ -677,7 +681,7 @@ class EditSettingsForm extends Component<IProps, IState> {
 
                 <Select field={form.$('wakeUpStrategy')} />
                 <Select field={form.$('wakeUpHibernationStrategy')} />
-                <Toggle field={form.$('wakeUpHibernationSplay')} />
+                <Toggle {...form.$('wakeUpHibernationSplay').bind()} />
               </div>
             )}
 
@@ -687,15 +691,15 @@ class EditSettingsForm extends Component<IProps, IState> {
                 <H2 className="settings__section_header">
                   {intl.formatMessage(messages.sectionGeneralUi)}
                 </H2>
-                {isMac && <Toggle field={form.$('showDragArea')} />}
+                {isMac && <Toggle {...form.$('showDragArea').bind()} />}
 
-                <Toggle field={form.$('adaptableDarkMode')} />
+                <Toggle {...form.$('adaptableDarkMode').bind()} />
                 {!isAdaptableDarkModeEnabled && (
-                  <Toggle field={form.$('darkMode')} />
+                  <Toggle {...form.$('darkMode').bind()} />
                 )}
                 {(isDarkmodeEnabled || isAdaptableDarkModeEnabled) && (
                   <>
-                    <Toggle field={form.$('universalDarkMode')} />
+                    <Toggle {...form.$('universalDarkMode').bind()} />
                     <p
                       className="settings__message"
                       style={{
@@ -713,7 +717,7 @@ class EditSettingsForm extends Component<IProps, IState> {
                 )}
 
                 {isSplitModeEnabled && <Hr />}
-                <Toggle field={form.$('splitMode')} />
+                <Toggle {...form.$('splitMode').bind()} />
                 {isSplitModeEnabled && (
                   <Input
                     type="number"
@@ -776,21 +780,21 @@ class EditSettingsForm extends Component<IProps, IState> {
 
                 <Select field={form.$('sidebarServicesLocation')} />
 
-                <Toggle field={form.$('useHorizontalStyle')} />
+                <Toggle {...form.$('useHorizontalStyle').bind()} />
 
-                <Toggle field={form.$('hideCollapseButton')} />
+                <Toggle {...form.$('hideCollapseButton').bind()} />
 
-                <Toggle field={form.$('hideRecipesButton')} />
+                <Toggle {...form.$('hideRecipesButton').bind()} />
 
-                <Toggle field={form.$('hideSplitModeButton')} />
+                <Toggle {...form.$('hideSplitModeButton').bind()} />
 
-                <Toggle field={form.$('hideWorkspacesButton')} />
+                <Toggle {...form.$('hideWorkspacesButton').bind()} />
 
-                <Toggle field={form.$('hideNotificationsButton')} />
+                <Toggle {...form.$('hideNotificationsButton').bind()} />
 
-                <Toggle field={form.$('hideSettingsButton')} />
+                <Toggle {...form.$('hideSettingsButton').bind()} />
 
-                <Toggle field={form.$('alwaysShowWorkspaces')} />
+                <Toggle {...form.$('alwaysShowWorkspaces').bind()} />
               </div>
             )}
 
@@ -801,17 +805,17 @@ class EditSettingsForm extends Component<IProps, IState> {
                   {intl.formatMessage(messages.sectionPrivacy)}
                 </H2>
 
-                <Toggle field={form.$('privateNotifications')} />
-                <Toggle field={form.$('clipboardNotifications')} />
+                <Toggle {...form.$('privateNotifications').bind()} />
+                <Toggle {...form.$('clipboardNotifications').bind()} />
                 {(isWindows || isMac) && (
-                  <Toggle field={form.$('notifyTaskBarOnMessage')} />
+                  <Toggle {...form.$('notifyTaskBarOnMessage').bind()} />
                 )}
 
                 <Hr />
 
                 <Select field={form.$('webRTCIPHandlingPolicy')} />
 
-                <Toggle field={form.$('sentry')} />
+                <Toggle {...form.$('sentry').bind()} />
                 <p className="settings__help">
                   {intl.formatMessage(messages.sentryInfo)}
                 </p>
@@ -830,11 +834,11 @@ class EditSettingsForm extends Component<IProps, IState> {
 
                 <Hr />
 
-                <Toggle field={form.$('lockingFeatureEnabled')} />
+                <Toggle {...form.$('lockingFeatureEnabled').bind()} />
                 {lockingFeatureEnabled && (
                   <>
                     {isMac && systemPreferences.canPromptTouchID() && (
-                      <Toggle field={form.$('useTouchIdToUnlock')} />
+                      <Toggle {...form.$('useTouchIdToUnlock').bind()} />
                     )}
 
                     <Input
@@ -885,7 +889,7 @@ class EditSettingsForm extends Component<IProps, IState> {
 
                 <Hr />
 
-                <Toggle field={form.$('enableSpellchecking')} />
+                <Toggle {...form.$('enableSpellchecking').bind()} />
                 {!isMac && form.$('enableSpellchecking').value && (
                   <Select field={form.$('spellcheckerLanguage')} />
                 )}
@@ -901,7 +905,7 @@ class EditSettingsForm extends Component<IProps, IState> {
 
                 <Hr />
 
-                <Toggle field={form.$('enableTranslator')} />
+                <Toggle {...form.$('enableTranslator').bind()} />
 
                 {form.$('enableTranslator').value && (
                   <Select field={form.$('translatorEngine')} />
@@ -931,8 +935,8 @@ class EditSettingsForm extends Component<IProps, IState> {
                   {intl.formatMessage(messages.sectionAdvanced)}
                 </H2>
 
-                <Toggle field={form.$('enableGPUAcceleration')} />
-                <Toggle field={form.$('enableGlobalHideShortcut')} />
+                <Toggle {...form.$('enableGPUAcceleration').bind()} />
+                <Toggle {...form.$('enableGlobalHideShortcut').bind()} />
                 <p className="settings__help indented__help">
                   {intl.formatMessage(messages.appRestartRequired)}
                 </p>
@@ -1036,12 +1040,12 @@ class EditSettingsForm extends Component<IProps, IState> {
                   {intl.formatMessage(messages.sectionUpdates)}
                 </H2>
 
-                <Toggle field={form.$('automaticUpdates')} />
+                <Toggle {...form.$('automaticUpdates').bind()} />
                 {automaticUpdates && (
                   <>
                     <>
                       <div>
-                        <Toggle field={form.$('beta')} />
+                        <Toggle {...form.$('beta').bind()} />
                         {updateIsReadyToInstall ? (
                           <Button
                             label={intl.formatMessage(

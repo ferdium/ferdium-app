@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
 import injectSheet from 'react-jss';
-
 import Infobox from '../../../components/ui/infobox/index';
 import Input from '../../../components/ui/input/index';
 import Button from '../../../components/ui/button';
@@ -14,10 +13,8 @@ import Form from '../../../lib/Form';
 import { required } from '../../../helpers/validation-helpers';
 import WorkspaceServiceListItem from './WorkspaceServiceListItem';
 import Request from '../../../stores/lib/Request';
-
 import { KEEP_WS_LOADED_USID } from '../../../config';
-
-import Toggle from '../../../components/ui/Toggle';
+import Toggle from '../../../components/ui/toggle';
 import { H2 } from '../../../components/ui/headline';
 
 const messages = defineMessages({
@@ -176,7 +173,7 @@ class EditWorkspaceForm extends Component {
           )}
           <div className={classes.nameInput}>
             <Input {...form.$('name').bind()} />
-            <Toggle field={form.$('keepLoaded')} />
+            <Toggle {...form.$('keepLoaded').bind()} />
             <p className={`${classes.keepLoadedInfo} franz-form__label`}>
               {intl.formatMessage(messages.keepLoadedInfo)}
             </p>
