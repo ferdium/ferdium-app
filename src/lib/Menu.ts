@@ -42,7 +42,8 @@ import { importExportURL, serverBase, serverName } from '../api/apiBase';
 import { openExternalUrl } from '../helpers/url-helpers';
 import globalMessages from '../i18n/globalMessages';
 import { onAuthGoToReleaseNotes } from '../helpers/update-helpers';
-import * as buildInfo from '../buildInfo.json';
+// @ts-expect-error Cannot find module '../buildInfo.json' or its corresponding type declarations.
+import { timestamp, gitHashShort, gitBranch } from '../buildInfo.json';
 import Service from '../models/Service';
 import { StoresProps } from '../@types/ferdium-components.types';
 import { RealStores } from '../stores';
@@ -933,9 +934,9 @@ class FranzMenu implements StoresProps {
       `Node.js: ${nodeVersion}`,
       `Platform: ${this.getOsName()}`,
       `Arch: ${osArch}`,
-      `Build date: ${new Date(Number(buildInfo.timestamp))}`,
-      `Git SHA: ${buildInfo.gitHashShort}`,
-      `Git branch: ${buildInfo.gitBranch}`,
+      `Build date: ${new Date(Number(timestamp))}`,
+      `Git SHA: ${gitHashShort}`,
+      `Git branch: ${gitBranch}`,
     ].join('\n');
 
     const about = {
