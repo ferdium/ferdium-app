@@ -2,7 +2,7 @@ import Icon from '@mdi/react';
 import classnames from 'classnames';
 import { Property } from 'csstype';
 import { noop } from 'lodash';
-import { Component, MouseEvent } from 'react';
+import { Component, MouseEventHandler } from 'react';
 import withStyles, { WithStylesProps } from 'react-jss';
 import Loader from 'react-loader';
 import { Theme } from '../../../themes';
@@ -136,7 +136,7 @@ interface IProps extends IFormField, WithStylesProps<typeof styles> {
   disabled?: boolean;
   id?: string;
   type?: 'button' | 'reset' | 'submit' | undefined;
-  onClick: (event: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
+  onClick?: MouseEventHandler<HTMLInputElement>;
   buttonType?: ButtonType;
   loaded?: boolean;
   busy?: boolean;

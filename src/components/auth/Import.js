@@ -4,9 +4,8 @@ import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
-
 import Form from '../../lib/Form';
-import Toggle from '../ui/Toggle';
+import Toggle from '../ui/toggle';
 import Button from '../ui/button';
 import { H1 } from '../ui/headline';
 
@@ -97,7 +96,7 @@ class Import extends Component {
                 {this.form.$('import').map((service, i) => (
                   <tr key={service.id} className="service-table__row">
                     <td className="service-table__toggle">
-                      <Toggle field={service.$('add')} showLabel={false} />
+                      <Toggle {...service.$('add').bind()} showLabel={false} />
                     </td>
                     <td className="service-table__column-icon">
                       <img
