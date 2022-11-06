@@ -1,4 +1,4 @@
-import { clipboard } from 'electron';
+import { clipboard, MenuItemConstructorOptions } from 'electron';
 import {
   app,
   Menu,
@@ -8,7 +8,7 @@ import {
   getCurrentWindow,
 } from '@electron/remote';
 import { autorun, action, makeObservable, observable } from 'mobx';
-import { defineMessages } from 'react-intl';
+import { defineMessages, IntlShape } from 'react-intl';
 import osName from 'os-name';
 import { fromJS } from 'immutable';
 import semver from 'semver';
@@ -42,9 +42,11 @@ import { importExportURL, serverBase, serverName } from '../api/apiBase';
 import { openExternalUrl } from '../helpers/url-helpers';
 import globalMessages from '../i18n/globalMessages';
 import { onAuthGoToReleaseNotes } from '../helpers/update-helpers';
-
 // @ts-expect-error Cannot find module '../buildInfo.json' or its corresponding type declarations.
-import * as buildInfo from '../buildInfo.json';
+import { timestamp, gitHashShort, gitBranch } from '../buildInfo.json';
+import Service from '../models/Service';
+import { StoresProps } from '../@types/ferdium-components.types';
+import { RealStores } from '../stores';
 
 const menuItems = defineMessages({
   edit: {
@@ -349,11 +351,11 @@ const menuItems = defineMessages({
   },
 });
 
-function getActiveService() {
+function getActiveService(): Service | undefined {
   return window['ferdium'].stores.services.active;
 }
 
-function _toggleFullScreen() {
+function toggleFullScreen(): void {
   const mainWindow = getCurrentWindow();
 
   if (!mainWindow) return;
@@ -365,314 +367,337 @@ function _toggleFullScreen() {
   }
 }
 
-const _titleBarTemplateFactory = (intl, locked) => [
-  {
-    label: intl.formatMessage(menuItems.edit),
-    accelerator: `${altKey()}+E`,
-    submenu: [
-      {
-        label: intl.formatMessage(menuItems.undo),
-        role: 'undo',
-      },
-      {
-        label: intl.formatMessage(menuItems.redo),
-        role: 'redo',
-      },
-      {
-        type: 'separator',
-      },
-      {
-        label: intl.formatMessage(menuItems.cut),
-        accelerator: `${cmdOrCtrlShortcutKey()}+X`,
-        role: 'cut',
-      },
-      {
-        label: intl.formatMessage(menuItems.copy),
-        accelerator: `${cmdOrCtrlShortcutKey()}+C`,
-        role: 'copy',
-      },
-      {
-        label: intl.formatMessage(menuItems.paste),
-        accelerator: `${cmdOrCtrlShortcutKey()}+V`,
-        role: 'paste',
-      },
-      {
-        label: intl.formatMessage(menuItems.pasteAndMatchStyle),
-        accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+V`, // Override the accelerator since this adds new key combo in macos
-        role: 'pasteAndMatchStyle',
-      },
-      {
-        label: intl.formatMessage(menuItems.delete),
-        role: 'delete',
-      },
-      {
-        label: intl.formatMessage(menuItems.selectAll),
-        accelerator: `${cmdOrCtrlShortcutKey()}+A`,
-        role: 'selectall',
-      },
-    ],
-  },
-  {
-    label: intl.formatMessage(menuItems.view),
-    accelerator: `${altKey()}+V`,
-    visible: !locked,
-    submenu: [
-      {
-        type: 'separator',
-      },
-      {
-        label: intl.formatMessage(menuItems.openQuickSwitch),
-        accelerator: `${cmdOrCtrlShortcutKey()}+S`,
-        click() {
-          window['ferdium'].features.quickSwitch.state.isModalVisible = true;
+function titleBarTemplateFactory(
+  intl: IntlShape,
+  locked: boolean,
+): MenuItemConstructorOptions[] {
+  return [
+    {
+      label: intl.formatMessage(menuItems.edit),
+      accelerator: `${altKey()}+E`,
+      submenu: [
+        {
+          label: intl.formatMessage(menuItems.undo),
+          role: 'undo',
         },
-      },
-      {
-        type: 'separator',
-      },
-      {
-        label: intl.formatMessage(menuItems.findInPage),
-        accelerator: `${cmdOrCtrlShortcutKey()}+F`,
-        click() {
-          const service = getActiveService();
-          // Check if there is a service active
-          if (service) {
-            // Focus webview so find in page popup gets focused
-            service.webview.focus();
-
+        {
+          label: intl.formatMessage(menuItems.redo),
+          role: 'redo',
+        },
+        {
+          type: 'separator',
+        },
+        {
+          label: intl.formatMessage(menuItems.cut),
+          accelerator: `${cmdOrCtrlShortcutKey()}+X`,
+          role: 'cut',
+        },
+        {
+          label: intl.formatMessage(menuItems.copy),
+          accelerator: `${cmdOrCtrlShortcutKey()}+C`,
+          role: 'copy',
+        },
+        {
+          label: intl.formatMessage(menuItems.paste),
+          accelerator: `${cmdOrCtrlShortcutKey()}+V`,
+          role: 'paste',
+        },
+        {
+          label: intl.formatMessage(menuItems.pasteAndMatchStyle),
+          accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+V`, // Override the accelerator since this adds new key combo in macos
+          role: 'pasteAndMatchStyle',
+        },
+        {
+          label: intl.formatMessage(menuItems.delete),
+          role: 'delete',
+        },
+        {
+          label: intl.formatMessage(menuItems.selectAll),
+          accelerator: `${cmdOrCtrlShortcutKey()}+A`,
+          role: 'selectAll',
+        },
+      ],
+    },
+    {
+      label: intl.formatMessage(menuItems.view),
+      accelerator: `${altKey()}+V`,
+      visible: !locked,
+      submenu: [
+        {
+          type: 'separator',
+        },
+        {
+          label: intl.formatMessage(menuItems.openQuickSwitch),
+          accelerator: `${cmdOrCtrlShortcutKey()}+S`,
+          click() {
+            window['ferdium'].features.quickSwitch.state.isModalVisible = true;
+          },
+        },
+        {
+          type: 'separator',
+        },
+        {
+          label: intl.formatMessage(menuItems.findInPage),
+          accelerator: `${cmdOrCtrlShortcutKey()}+F`,
+          click() {
+            const activeService = getActiveService();
+            if (!activeService) {
+              return;
+            }
+            activeService.webview.focus();
             window['ferdium'].actions.service.sendIPCMessage({
-              serviceId: service.id,
+              serviceId: activeService.id,
               channel: 'find-in-page',
               args: {},
             });
-          }
+          },
         },
-      },
-      {
-        type: 'separator',
-      },
-      {
-        label: intl.formatMessage(menuItems.back),
-        accelerator: `${!isMac ? altKey() : cmdOrCtrlShortcutKey()}+Left`,
-        click() {
-          getActiveService().webview.goBack();
+        {
+          type: 'separator',
         },
-      },
-      {
-        label: intl.formatMessage(menuItems.forward),
-        accelerator: `${!isMac ? altKey() : cmdOrCtrlShortcutKey()}+Right`,
-        click() {
-          getActiveService().webview.goForward();
+        {
+          label: intl.formatMessage(menuItems.back),
+          accelerator: `${!isMac ? altKey() : cmdOrCtrlShortcutKey()}+Left`,
+          click() {
+            const activeService = getActiveService();
+            if (!activeService) {
+              return;
+            }
+            activeService.webview.goBack();
+          },
         },
-      },
-      {
-        type: 'separator',
-      },
-      {
-        label: intl.formatMessage(menuItems.resetZoom),
-        accelerator: `${cmdOrCtrlShortcutKey()}+0`,
-        click() {
-          getActiveService().webview.setZoomLevel(0);
+        {
+          label: intl.formatMessage(menuItems.forward),
+          accelerator: `${!isMac ? altKey() : cmdOrCtrlShortcutKey()}+Right`,
+          click() {
+            const activeService = getActiveService();
+            if (!activeService) {
+              return;
+            }
+            activeService.webview.goForward();
+          },
         },
-      },
-      {
-        label: intl.formatMessage(menuItems.zoomIn),
-        accelerator: `${cmdOrCtrlShortcutKey()}+plus`,
-        click() {
-          const activeService = getActiveService().webview;
-          const level = activeService.getZoomLevel();
+        {
+          type: 'separator',
+        },
+        {
+          label: intl.formatMessage(menuItems.resetZoom),
+          accelerator: `${cmdOrCtrlShortcutKey()}+0`,
+          click() {
+            const activeService = getActiveService();
+            if (!activeService) {
+              return;
+            }
+            activeService.webview.setZoomLevel(0);
+          },
+        },
+        {
+          label: intl.formatMessage(menuItems.zoomIn),
+          accelerator: `${cmdOrCtrlShortcutKey()}+plus`,
+          click() {
+            const activeService = getActiveService();
+            if (!activeService) {
+              return;
+            }
+            const { webview } = activeService;
+            const level = webview.getZoomLevel();
+            webview.setZoomLevel(level + 0.5);
+          },
+        },
+        {
+          label: intl.formatMessage(menuItems.zoomOut),
+          accelerator: `${cmdOrCtrlShortcutKey()}+-`,
+          click() {
+            const activeService = getActiveService();
+            if (!activeService) {
+              return;
+            }
+            const { webview } = activeService;
+            const level = webview.getZoomLevel();
+            webview.setZoomLevel(level - 0.5);
+          },
+        },
+        {
+          type: 'separator',
+        },
+        {
+          label: intl.formatMessage(menuItems.toggleFullScreen),
+          click: () => {
+            toggleFullScreen();
+          },
+          accelerator: toggleFullScreenKey(),
+        },
+        {
+          label: intl.formatMessage(menuItems.toggleNavigationBar),
+          accelerator: `${cmdOrCtrlShortcutKey()}+B`,
+          // role: 'toggleNavigationBar',
+          type: 'checkbox',
+          checked:
+            window['ferdium'].stores.settings.app.navigationBarManualActive,
+          click: () => {
+            window['ferdium'].actions.settings.update({
+              type: 'app',
+              data: {
+                navigationBarManualActive:
+                  !window['ferdium'].stores.settings.app
+                    .navigationBarManualActive,
+              },
+            });
+          },
+        },
+        {
+          label: intl.formatMessage(menuItems.splitModeToggle),
+          accelerator: `${splitModeToggleShortcutKey()}`,
+          // role: 'splitModeToggle',
+          type: 'checkbox',
+          checked: window['ferdium'].stores.settings.app.splitMode,
+          click: () => {
+            window['ferdium'].actions.settings.update({
+              type: 'app',
+              data: {
+                splitMode: !window['ferdium'].stores.settings.app.splitMode,
+              },
+            });
+          },
+        },
+        {
+          label: intl.formatMessage(menuItems.toggleDarkMode),
+          type: 'checkbox',
+          accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+D`,
+          checked: window['ferdium'].stores.settings.app.darkMode,
+          click: () => {
+            window['ferdium'].actions.settings.update({
+              type: 'app',
+              data: {
+                darkMode: !window['ferdium'].stores.settings.app.darkMode,
+              },
+            });
+          },
+        },
+      ],
+    },
+    {
+      label: intl.formatMessage(menuItems.services),
+      accelerator: `${altKey()}+S`,
+      visible: !locked,
+      submenu: [],
+    },
+    {
+      label: intl.formatMessage(menuItems.workspaces),
+      accelerator: `${altKey()}+W`,
+      submenu: [],
+      visible: !locked,
+    },
+    {
+      label: intl.formatMessage(menuItems.todos),
+      submenu: [],
+      visible: !locked,
+    },
+    {
+      label: intl.formatMessage(menuItems.window),
+      role: 'window',
+      submenu: [
+        {
+          label: intl.formatMessage(menuItems.minimize),
+          role: 'minimize',
+        },
+        {
+          label: intl.formatMessage(menuItems.close),
+          role: 'close',
+        },
+      ],
+    },
+    {
+      label: intl.formatMessage(menuItems.help),
+      accelerator: `${altKey()}+H`,
+      role: 'help',
+      submenu: [
+        {
+          label: intl.formatMessage(menuItems.learnMore),
+          click() {
+            openExternalUrl(LIVE_API_FERDIUM_WEBSITE, true);
+          },
+        },
+        {
+          label: intl.formatMessage(menuItems.changelog),
+          click() {
+            window.location.href = onAuthGoToReleaseNotes(window.location.href);
+          },
+        },
+        {
+          label: intl.formatMessage(menuItems.importExportData),
+          click() {
+            openExternalUrl(importExportURL(), true);
+          },
+          enabled: !locked,
+        },
+        {
+          type: 'separator',
+        },
+        {
+          label: intl.formatMessage(menuItems.support),
+          click() {
+            openExternalUrl(`${LIVE_API_FERDIUM_WEBSITE}/contact`, true);
+          },
+        },
+        {
+          type: 'separator',
+        },
+        {
+          label: intl.formatMessage(menuItems.tos),
+          click() {
+            openExternalUrl(`${serverBase()}/terms`, true);
+          },
+        },
+        {
+          label: intl.formatMessage(menuItems.privacy),
+          click() {
+            openExternalUrl(`${serverBase()}/privacy`, true);
+          },
+        },
+      ],
+    },
+  ];
+}
 
-          activeService.setZoomLevel(level + 0.5);
-        },
-      },
-      {
-        label: intl.formatMessage(menuItems.zoomOut),
-        accelerator: `${cmdOrCtrlShortcutKey()}+-`,
-        click() {
-          const activeService = getActiveService().webview;
-          const level = activeService.getZoomLevel();
+class FranzMenu implements StoresProps {
+  @observable currentTemplate: MenuItemConstructorOptions[];
 
-          activeService.setZoomLevel(level - 0.5);
-        },
-      },
-      {
-        type: 'separator',
-      },
-      {
-        label: intl.formatMessage(menuItems.toggleFullScreen),
-        click: () => {
-          _toggleFullScreen();
-        },
-        accelerator: toggleFullScreenKey(),
-      },
-      {
-        label: intl.formatMessage(menuItems.toggleNavigationBar),
-        accelerator: `${cmdOrCtrlShortcutKey()}+B`,
-        role: 'toggleNavigationBar',
-        type: 'checkbox',
-        checked:
-          window['ferdium'].stores.settings.app.navigationBarManualActive,
-        click: () => {
-          window['ferdium'].actions.settings.update({
-            type: 'app',
-            data: {
-              navigationBarManualActive:
-                !window['ferdium'].stores.settings.app
-                  .navigationBarManualActive,
-            },
-          });
-        },
-      },
-      {
-        label: intl.formatMessage(menuItems.splitModeToggle),
-        accelerator: `${splitModeToggleShortcutKey()}`,
-        role: 'splitModeToggle',
-        type: 'checkbox',
-        checked: window['ferdium'].stores.settings.app.splitMode,
-        click: () => {
-          window['ferdium'].actions.settings.update({
-            type: 'app',
-            data: {
-              splitMode: !window['ferdium'].stores.settings.app.splitMode,
-            },
-          });
-        },
-      },
-      {
-        label: intl.formatMessage(menuItems.toggleDarkMode),
-        type: 'checkbox',
-        accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+D`,
-        checked: window['ferdium'].stores.settings.app.darkMode,
-        click: () => {
-          window['ferdium'].actions.settings.update({
-            type: 'app',
-            data: {
-              darkMode: !window['ferdium'].stores.settings.app.darkMode,
-            },
-          });
-        },
-      },
-    ],
-  },
-  {
-    label: intl.formatMessage(menuItems.services),
-    accelerator: `${altKey()}+S`,
-    visible: !locked,
-    submenu: [],
-  },
-  {
-    label: intl.formatMessage(menuItems.workspaces),
-    accelerator: `${altKey()}+W`,
-    submenu: [],
-    visible: !locked,
-  },
-  {
-    label: intl.formatMessage(menuItems.todos),
-    submenu: [],
-    visible: !locked,
-  },
-  {
-    label: intl.formatMessage(menuItems.window),
-    role: 'window',
-    submenu: [
-      {
-        label: intl.formatMessage(menuItems.minimize),
-        role: 'minimize',
-      },
-      {
-        label: intl.formatMessage(menuItems.close),
-        role: 'close',
-      },
-    ],
-  },
-  {
-    label: intl.formatMessage(menuItems.help),
-    accelerator: `${altKey()}+H`,
-    role: 'help',
-    submenu: [
-      {
-        label: intl.formatMessage(menuItems.learnMore),
-        click() {
-          openExternalUrl(LIVE_API_FERDIUM_WEBSITE, true);
-        },
-      },
-      {
-        label: intl.formatMessage(menuItems.changelog),
-        click() {
-          window.location.href = onAuthGoToReleaseNotes(window.location.href);
-        },
-      },
-      {
-        label: intl.formatMessage(menuItems.importExportData),
-        click() {
-          openExternalUrl(importExportURL(), true);
-        },
-        enabled: !locked,
-      },
-      {
-        type: 'separator',
-      },
-      {
-        label: intl.formatMessage(menuItems.support),
-        click() {
-          openExternalUrl(`${LIVE_API_FERDIUM_WEBSITE}/contact`, true);
-        },
-      },
-      {
-        type: 'separator',
-      },
-      {
-        label: intl.formatMessage(menuItems.tos),
-        click() {
-          openExternalUrl(`${serverBase()}/terms`, true);
-        },
-      },
-      {
-        label: intl.formatMessage(menuItems.privacy),
-        click() {
-          openExternalUrl(`${serverBase()}/privacy`, true);
-        },
-      },
-    ],
-  },
-];
+  actions: any;
 
-class FranzMenu {
-  @observable currentTemplate = [];
+  stores: RealStores;
 
-  constructor(stores, actions) {
+  constructor(stores: RealStores, actions: any) {
     this.stores = stores;
     this.actions = actions;
+    this.currentTemplate = [];
 
     makeObservable(this);
 
-    setTimeout(() => {
-      autorun(this._build.bind(this));
-    }, 10);
+    setTimeout(() => autorun(this._build.bind(this)), 10);
   }
 
-  @action _setCurrentTemplate(tpl) {
+  @action _setCurrentTemplate(tpl: MenuItemConstructorOptions[]): void {
     this.currentTemplate = tpl;
   }
 
-  rebuild() {
+  rebuild(): void {
     this._build();
   }
 
-  get template() {
+  get template(): any {
     return fromJS(this.currentTemplate).toJS();
   }
 
-  getOsName() {
+  getOsName(): string {
     let osNameParse = osName();
     const isWin11 = semver.satisfies(os.release(), '>=10.0.22000');
-
     osNameParse = isWindows && isWin11 ? 'Windows 11' : osNameParse;
 
     return osNameParse;
   }
 
-  _build() {
+  _build(): void {
     // need to clone object so we don't modify computed (cached) object
     const serviceTpl = Object.assign([], this.serviceTpl());
 
@@ -687,11 +712,11 @@ class FranzMenu {
       this.stores.settings.app.locked &&
       this.stores.settings.app.lockingFeatureEnabled &&
       this.stores.user.isLoggedIn;
-    const tpl = _titleBarTemplateFactory(intl, locked);
     const { actions } = this;
+    const tpl = titleBarTemplateFactory(intl, locked);
 
     if (!isMac) {
-      tpl[1].submenu.push({
+      (tpl[1].submenu as MenuItemConstructorOptions[]).push({
         label: intl.formatMessage(menuItems.autohideMenuBar),
         type: 'checkbox',
         checked: window['ferdium'].stores.settings.app.autohideMenuBar,
@@ -708,7 +733,7 @@ class FranzMenu {
     }
 
     if (!locked) {
-      tpl[1].submenu.push(
+      (tpl[1].submenu as MenuItemConstructorOptions[]).push(
         {
           type: 'separator',
         },
@@ -740,7 +765,7 @@ class FranzMenu {
       );
 
       if (this.stores.todos.isFeatureEnabledByUser) {
-        tpl[1].submenu.push({
+        (tpl[1].submenu as MenuItemConstructorOptions[]).push({
           label: intl.formatMessage(menuItems.toggleTodosDevTools),
           accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+${altKey()}+O`,
           click: () => {
@@ -750,7 +775,7 @@ class FranzMenu {
         });
       }
 
-      tpl[1].submenu.unshift(
+      (tpl[1].submenu as MenuItemConstructorOptions[]).unshift(
         {
           label: intl.formatMessage(menuItems.reloadService),
           accelerator: `${cmdOrCtrlShortcutKey()}+R`,
@@ -759,8 +784,8 @@ class FranzMenu {
               this.stores.user.isLoggedIn &&
               this.stores.services.enabled.length > 0
             ) {
-              if (getActiveService().recipe.id === CUSTOM_WEBSITE_RECIPE_ID) {
-                getActiveService().webview.reload();
+              if (getActiveService()?.recipe.id === CUSTOM_WEBSITE_RECIPE_ID) {
+                getActiveService()?.webview.reload();
               } else {
                 this.actions.service.reloadActive();
               }
@@ -816,7 +841,7 @@ class FranzMenu {
           systemPreferences.canPromptTouchID()
         : false;
 
-      tpl[0].submenu.unshift(
+      (tpl[0].submenu as MenuItemConstructorOptions[]).unshift(
         {
           label: intl.formatMessage(menuItems.touchId),
           accelerator: `${lockFerdiumShortcutKey()}`,
@@ -909,9 +934,9 @@ class FranzMenu {
       `Node.js: ${nodeVersion}`,
       `Platform: ${this.getOsName()}`,
       `Arch: ${osArch}`,
-      `Build date: ${new Date(Number(buildInfo.timestamp))}`,
-      `Git SHA: ${buildInfo.gitHashShort}`,
-      `Git branch: ${buildInfo.gitBranch}`,
+      `Build date: ${new Date(Number(timestamp))}`,
+      `Git SHA: ${gitHashShort}`,
+      `Git branch: ${gitBranch}`,
     ].join('\n');
 
     const about = {
@@ -940,7 +965,7 @@ class FranzMenu {
 
     if (isMac) {
       // Edit menu.
-      tpl[1].submenu.push(
+      (tpl[1].submenu as MenuItemConstructorOptions[]).push(
         {
           type: 'separator',
         },
@@ -949,17 +974,17 @@ class FranzMenu {
           submenu: [
             {
               label: intl.formatMessage(menuItems.startSpeaking),
-              role: 'startspeaking',
+              role: 'startSpeaking',
             },
             {
               label: intl.formatMessage(menuItems.stopSpeaking),
-              role: 'stopspeaking',
+              role: 'stopSpeaking',
             },
           ],
         },
       );
 
-      tpl[0].submenu.unshift(about, {
+      (tpl[0].submenu as MenuItemConstructorOptions[]).unshift(about, {
         type: 'separator',
       });
     } else {
@@ -985,7 +1010,7 @@ class FranzMenu {
         },
       ];
 
-      tpl[tpl.length - 1].submenu.push(
+      (tpl[tpl.length - 1].submenu as MenuItemConstructorOptions[]).push(
         {
           type: 'separator',
         },
@@ -1002,7 +1027,7 @@ class FranzMenu {
 
       tpl[5].submenu = this.todosMenu();
 
-      tpl[tpl.length - 1].submenu.push(
+      (tpl[tpl.length - 1].submenu as MenuItemConstructorOptions[]).push(
         {
           type: 'separator',
         },
@@ -1014,13 +1039,15 @@ class FranzMenu {
     Menu.setApplicationMenu(menu);
   }
 
-  serviceTpl() {
+  serviceTpl(): MenuItemConstructorOptions[] {
     const { intl } = window['ferdium'];
     const { user, services, settings } = this.stores;
-    if (!user.isLoggedIn) return [];
-    const menu = [];
-    const cmdAltShortcutsVisibile = !isLinux;
+    if (!user.isLoggedIn) {
+      return [];
+    }
 
+    const cmdAltShortcutsVisibile = !isLinux;
+    const menu: MenuItemConstructorOptions[] = [];
     menu.push(
       {
         label: intl.formatMessage(menuItems.addNewService),
@@ -1075,7 +1102,7 @@ class FranzMenu {
     for (const [i, service] of services.allDisplayed.entries()) {
       menu.push({
         label: this._getServiceName(service),
-        accelerator: i < 9 ? `${cmdOrCtrlShortcutKey()}+${i + 1}` : null,
+        accelerator: i < 9 ? `${cmdOrCtrlShortcutKey()}+${i + 1}` : undefined,
         type: 'radio',
         checked: service.isActive,
         click: () => {
@@ -1108,12 +1135,12 @@ class FranzMenu {
     return menu;
   }
 
-  workspacesMenu() {
+  workspacesMenu(): MenuItemConstructorOptions[] {
     const { workspaces, activeWorkspace, isWorkspaceDrawerOpen } =
       workspaceStore;
     const { intl } = window['ferdium'];
-    const menu = [];
 
+    const menu: MenuItemConstructorOptions[] = [];
     // Add new workspace item:
     menu.push({
       label: intl.formatMessage(menuItems.addNewWorkspace),
@@ -1159,7 +1186,7 @@ class FranzMenu {
       menu.push({
         label: workspace.name,
         accelerator:
-          i < 9 ? `${cmdOrCtrlShortcutKey()}+${altKey()}+${i + 1}` : null,
+          i < 9 ? `${cmdOrCtrlShortcutKey()}+${altKey()}+${i + 1}` : undefined,
         type: 'radio',
         checked: activeWorkspace ? workspace.id === activeWorkspace.id : false,
         click: () => {
@@ -1171,11 +1198,11 @@ class FranzMenu {
     return menu;
   }
 
-  todosMenu() {
+  todosMenu(): MenuItemConstructorOptions[] {
     const { isTodosPanelVisible, isFeatureEnabledByUser } = this.stores.todos;
     const { intl } = window['ferdium'];
-    const menu = [];
 
+    const menu: MenuItemConstructorOptions[] = [];
     menu.push({
       label: intl.formatMessage(
         isFeatureEnabledByUser ? menuItems.disableTodos : menuItems.enableTodos,
@@ -1209,7 +1236,7 @@ class FranzMenu {
     return menu;
   }
 
-  debugMenu() {
+  debugMenu(): MenuItemConstructorOptions[] {
     const { intl } = window['ferdium'];
 
     return [
@@ -1233,9 +1260,8 @@ class FranzMenu {
       {
         label: intl.formatMessage(menuItems.publishDebugInfo),
         click: () => {
-          window[
-            'ferdium'
-          ].features.publishDebugInfo.state.isModalVisible = true;
+          window['ferdium'].features.publishDebugInfo.state.isModalVisible =
+            true;
         },
       },
     ];
@@ -1246,15 +1272,14 @@ class FranzMenu {
       return service.name;
     }
 
-    let { name } = service.recipe;
-
+    let { name: serviceName } = service.recipe;
     if (service.team) {
-      name = `${name} (${service.team})`;
+      serviceName = `${serviceName} (${service.team})`;
     } else if (service.customUrl) {
-      name = `${name} (${service.customUrl})`;
+      serviceName = `${serviceName} (${service.customUrl})`;
     }
 
-    return name;
+    return serviceName;
   }
 }
 

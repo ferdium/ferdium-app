@@ -7,6 +7,7 @@ import {
   Tray,
   ipcMain,
   BrowserWindow,
+  NativeImage,
 } from 'electron';
 import { join } from 'path';
 import macosVersion from 'macos-version';
@@ -19,56 +20,30 @@ const INDICATOR_TRAY_INDIRECT = 'tray-indirect';
 
 // TODO: Need to support i18n for a lot of the hard-coded strings in this file
 export default class TrayIcon {
-  trayIcon = null;
+  trayIcon: Tray | null = null;
 
-  indicator = 0;
+  indicator: string | number = 0;
 
-  themeChangeSubscriberId = null;
+  themeChangeSubscriberId: number | null = null;
 
-  trayMenu = null;
+  trayMenu: Menu | null = null;
 
   visible = false;
 
   isAppMuted = false;
 
-  mainWindow = null;
-
-  trayMenuTemplate = tray => [
-    {
-      label:
-        tray.mainWindow.isVisible() && tray.mainWindow.isFocused()
-          ? 'Hide Ferdium'
-          : 'Show Ferdium',
-      click() {
-        tray._toggleWindow();
-      },
-    },
-    {
-      label: tray.isAppMuted
-        ? 'Enable Notifications && Audio'
-        : 'Disable Notifications && Audio',
-      click() {
-        if (!tray.mainWindow) return;
-        tray.mainWindow.webContents.send('muteApp');
-      },
-    },
-    {
-      label: 'Quit Ferdium',
-      click() {
-        app.quit();
-      },
-    },
-  ];
+  mainWindow: BrowserWindow | null = null;
 
   constructor() {
-    ipcMain.on('initialAppSettings', (event, appSettings) => {
+    ipcMain.on('initialAppSettings', (_, appSettings) => {
       this._updateTrayMenu(appSettings);
     });
-    ipcMain.on('updateAppSettings', (event, appSettings) => {
+    ipcMain.on('updateAppSettings', (_, appSettings) => {
       this._updateTrayMenu(appSettings);
     });
 
-    this.mainWindow = BrowserWindow.getAllWindows()[0];
+    const [firstWindow] = BrowserWindow.getAllWindows();
+    this.mainWindow = firstWindow;
 
     // listen to window events to be able to set correct string
     // to tray menu ('Hide Ferdium' / 'Show Ferdium')
@@ -92,7 +67,36 @@ export default class TrayIcon {
     });
   }
 
-  _updateTrayMenu(appSettings) {
+  trayMenuTemplate(tray) {
+    return [
+      {
+        label:
+          tray.mainWindow.isVisible() && tray.mainWindow.isFocused()
+            ? 'Hide Ferdium'
+            : 'Show Ferdium',
+        click() {
+          tray._toggleWindow();
+        },
+      },
+      {
+        label: tray.isAppMuted
+          ? 'Enable Notifications && Audio'
+          : 'Disable Notifications && Audio',
+        click() {
+          if (!tray.mainWindow) return;
+          tray.mainWindow.webContents.send('muteApp');
+        },
+      },
+      {
+        label: 'Quit Ferdium',
+        click() {
+          app.quit();
+        },
+      },
+    ];
+  }
+
+  _updateTrayMenu(appSettings): void {
     if (!this.trayIcon) return;
 
     if (appSettings && appSettings.type === 'app') {
@@ -105,13 +109,15 @@ export default class TrayIcon {
     }
   }
 
-  show() {
+  show(): void {
     this.visible = true;
     this._show();
   }
 
-  _show() {
-    if (this.trayIcon) return;
+  _show(): void {
+    if (this.trayIcon) {
+      return;
+    }
 
     this.trayIcon = new Tray(this._getAsset('tray', INDICATOR_TRAY_PLAIN));
     this.trayIcon.setToolTip('Ferdium');
@@ -127,7 +133,9 @@ export default class TrayIcon {
 
     if (isMac || isWindows) {
       this.trayIcon.on('right-click', () => {
-        this.trayIcon.popUpContextMenu(this.trayMenu);
+        if (this.trayIcon && this.trayMenu) {
+          this.trayIcon.popUpContextMenu(this.trayMenu);
+        }
       });
     }
 
@@ -141,9 +149,11 @@ export default class TrayIcon {
     }
   }
 
-  _toggleWindow() {
-    const mainWindow = BrowserWindow.getAllWindows()[0];
-    if (!mainWindow) return;
+  _toggleWindow(): void {
+    const [mainWindow] = BrowserWindow.getAllWindows();
+    if (!mainWindow) {
+      return;
+    }
 
     if (mainWindow.isMinimized()) {
       mainWindow.restore();
@@ -161,12 +171,12 @@ export default class TrayIcon {
     }
   }
 
-  hide() {
+  hide(): void {
     this.visible = false;
     this._hide();
   }
 
-  _hide() {
+  _hide(): void {
     if (!this.trayIcon) return;
 
     this.trayIcon.destroy();
@@ -178,7 +188,7 @@ export default class TrayIcon {
     }
   }
 
-  recreateIfVisible() {
+  recreateIfVisible(): void {
     if (this.visible) {
       this._hide();
       setTimeout(() => {
@@ -189,23 +199,26 @@ export default class TrayIcon {
     }
   }
 
-  setIndicator(indicator) {
+  setIndicator(indicator: string | number): void {
     this.indicator = indicator;
     this._refreshIcon();
   }
 
-  _getAssetFromIndicator(indicator) {
+  _getAssetFromIndicator(indicator: string | number): string {
+    let assetFromIndicator = INDICATOR_TRAY_PLAIN;
     if (indicator === '•') {
-      return INDICATOR_TRAY_INDIRECT;
+      assetFromIndicator = INDICATOR_TRAY_INDIRECT;
     }
     if (indicator !== 0) {
-      return INDICATOR_TRAY_UNREAD;
+      assetFromIndicator = INDICATOR_TRAY_UNREAD;
     }
-    return INDICATOR_TRAY_PLAIN;
+    return assetFromIndicator;
   }
 
-  _refreshIcon() {
-    if (!this.trayIcon) return;
+  _refreshIcon(): void {
+    if (!this.trayIcon) {
+      return;
+    }
 
     this.trayIcon.setImage(
       this._getAsset('tray', this._getAssetFromIndicator(this.indicator)),
@@ -221,13 +234,14 @@ export default class TrayIcon {
     }
   }
 
-  _getAsset(type, asset) {
-    let { platform } = process;
+  _getAsset(type, asset): NativeImage {
+    const { platform } = process;
+    let platformPath: string = platform;
 
     if (isMac && macosVersion.isGreaterThanOrEqualTo('11')) {
-      platform = `${platform}-20`;
+      platformPath = `${platform}-20`;
     } else if (isMac && nativeTheme.shouldUseDarkColors) {
-      platform = `${platform}-dark`;
+      platformPath = `${platform}-dark`;
     }
 
     const trayImg = nativeImage.createFromPath(
@@ -237,7 +251,7 @@ export default class TrayIcon {
         'assets',
         'images',
         type,
-        platform,
+        platformPath,
         `${asset}.${FILE_EXTENSION}`,
       ),
     );

@@ -84,11 +84,6 @@ class Input extends Component<IProps, IState> {
     onChange(e);
 
     if (scorePassword) {
-      console.log(
-        '--->',
-        e.target.value,
-        scorePasswordFunc(e.target.value as string),
-      );
       this.setState({
         passwordScore: scorePasswordFunc(e.target.value),
       });

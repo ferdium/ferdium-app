@@ -2,7 +2,14 @@ import PropTypes from 'prop-types';
 import Workspace from './models/Workspace';
 import { createActionsFromDefinitions } from '../../actions/lib/actions';
 
-export default createActionsFromDefinitions(
+export interface WorkspaceActions {
+  openWorkspaceSettings: () => void;
+  toggleWorkspaceDrawer: () => void;
+  deactivate: () => void;
+  activate: (options: any) => void;
+}
+
+export default createActionsFromDefinitions<WorkspaceActions>(
   {
     edit: {
       workspace: PropTypes.instanceOf(Workspace).isRequired,

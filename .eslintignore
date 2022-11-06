@@ -32,3 +32,10 @@ npm-debug.log.*
 # package files
 package.json
 package-lock.json
+
+# Json
+*.json
+
+# Build
+build
+out

@@ -1,4 +1,4 @@
-import { BrowserWindow, Tray } from 'electron';
+import { BrowserWindow } from 'electron';
 import autoUpdate from './autoUpdate';
 import settings from './settings';
 import sessionStorage from './sessionStorage';
@@ -9,11 +9,12 @@ import localServer from './localServer';
 import languageDetect from './languageDetect';
 import dnd from './dnd';
 import focusState from './focusState';
+import TrayIcon from '../../lib/Tray';
 
 export default (params: {
   mainWindow: BrowserWindow;
   settings: any;
-  trayIcon: Tray;
+  trayIcon: TrayIcon;
 }) => {
   settings(params);
   sessionStorage();
