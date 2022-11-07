@@ -97,7 +97,7 @@ class Import extends Component {
                 {this.form.$('import').map((service, i) => (
                   <tr key={service.id} className="service-table__row">
                     <td className="service-table__toggle">
-                      <Toggle field={service.$('add')} showLabel={false} />
+                      <Toggle {...service.$('add').bind()} showLabel={false} />
                     </td>
                     <td className="service-table__column-icon">
                       <img
