@@ -342,22 +342,22 @@ class EditServiceForm extends Component {
               <div className="settings__options">
                 <div className="settings__settings-group">
                   <H3>{intl.formatMessage(messages.headlineNotifications)}</H3>
-                  <Toggle {...form.$('isNotificationEnabled').bind()} />
-                  <Toggle {...form.$('isMuted').bind()} />
+                  <Toggle field={form.$('isNotificationEnabled')} />
+                  <Toggle field={form.$('isMuted')} />
                   <p className="settings__help indented__help">
                     {intl.formatMessage(messages.isMutedInfo)}
                   </p>
-                  <Toggle {...form.$('isMediaBadgeEnabled').bind()} />
+                  <Toggle field={form.$('isMediaBadgeEnabled')} />
                 </div>
 
                 <div className="settings__settings-group">
                   <H3>{intl.formatMessage(messages.headlineBadges)}</H3>
-                  <Toggle {...form.$('isBadgeEnabled').bind()} />
+                  <Toggle field={form.$('isBadgeEnabled')} />
                   {recipe.hasIndirectMessages &&
                     form.$('isBadgeEnabled').value && (
                       <>
                         <Toggle
-                          {...form.$('isIndirectMessageBadgeEnabled').bind()}
+                          field={form.$('isIndirectMessageBadgeEnabled')}
                         />
                         <p className="settings__help indented__help">
                           {intl.formatMessage(messages.indirectMessageInfo)}
@@ -365,21 +365,19 @@ class EditServiceForm extends Component {
                       </>
                     )}
                   {recipe.allowFavoritesDelineationInUnreadCount && (
-                    <Toggle
-                      {...form.$('onlyShowFavoritesInUnreadCount').bind()}
-                    />
+                    <Toggle field={form.$('onlyShowFavoritesInUnreadCount')} />
                   )}
                 </div>
 
                 <div className="settings__settings-group">
                   <H3>{intl.formatMessage(messages.headlineGeneral)}</H3>
-                  <Toggle {...form.$('isEnabled').bind()} />
-                  <Toggle {...form.$('isHibernationEnabled').bind()} />
+                  <Toggle field={form.$('isEnabled')} />
+                  <Toggle field={form.$('isHibernationEnabled')} />
                   <p className="settings__help indented__help">
                     {intl.formatMessage(messages.isHibernationEnabledInfo)}
                   </p>
-                  <Toggle {...form.$('isWakeUpEnabled').bind()} />
-                  <Toggle {...form.$('trapLinkClicks').bind()} />
+                  <Toggle field={form.$('isWakeUpEnabled')} />
+                  <Toggle field={form.$('trapLinkClicks')} />
                   {/* TODO: Need to figure out how to effect this change without a reload of the recipe */}
                   <p className="settings__help indented__help">
                     {intl.formatMessage(messages.serviceReloadRequired)}
@@ -388,7 +386,7 @@ class EditServiceForm extends Component {
 
                 <div className="settings__settings-group">
                   <H3>{intl.formatMessage(messages.headlineAppearance)}</H3>
-                  <Toggle {...form.$('isDarkModeEnabled').bind()} />
+                  <Toggle field={form.$('isDarkModeEnabled')} />
                   {form.$('isDarkModeEnabled').value && (
                     <>
                       <H3>
@@ -401,7 +399,7 @@ class EditServiceForm extends Component {
                       <Slider field={form.$('darkReaderSepia')} />
                     </>
                   )}
-                  <Toggle {...form.$('isProgressbarEnabled').bind()} />
+                  <Toggle field={form.$('isProgressbarEnabled')} />
                 </div>
               </div>
               <div className="service-icon">
@@ -431,7 +429,7 @@ class EditServiceForm extends Component {
                   {intl.formatMessage(messages.headlineProxy)}
                   <span className="badge badge--success">beta</span>
                 </H3>
-                <Toggle {...form.$('proxy.isEnabled').bind()} />
+                <Toggle field={form.$('proxy.isEnabled')} />
                 {form.$('proxy.isEnabled').value && (
                   <>
                     <div className="grid">

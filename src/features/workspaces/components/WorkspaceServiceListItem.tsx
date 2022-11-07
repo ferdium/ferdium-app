@@ -1,10 +1,10 @@
-import { Component, ReactElement } from 'react';
+import { Component } from 'react';
 import { observer } from 'mobx-react';
-import withStyles, { WithStylesProps } from 'react-jss';
+import injectSheet from 'react-jss';
 import classnames from 'classnames';
-import Toggle from '../../../components/ui/toggle';
+
+import Toggle from '../../../components/ui/toggle/index';
 import ServiceIcon from '../../../components/ui/ServiceIcon';
-import Service from '../../../models/Service';
 
 const styles = theme => ({
   listItem: {
@@ -29,15 +29,15 @@ const styles = theme => ({
   },
 });
 
-interface IProps extends WithStylesProps<typeof styles> {
+type Props = {
+  classes: any;
   isInWorkspace: boolean;
   onToggle: () => void;
-  service: Service;
-}
+  service: any;
+};
 
-@observer
-class WorkspaceServiceListItem extends Component<IProps> {
-  render(): ReactElement {
+class WorkspaceServiceListItem extends Component<Props> {
+  render() {
     const { classes, isInWorkspace, onToggle, service } = this.props;
 
     return (
@@ -53,7 +53,7 @@ class WorkspaceServiceListItem extends Component<IProps> {
         </span>
         <Toggle
           className={classes.toggle}
-          value={isInWorkspace}
+          checked={isInWorkspace}
           onChange={onToggle}
         />
       </div>
@@ -61,6 +61,6 @@ class WorkspaceServiceListItem extends Component<IProps> {
   }
 }
 
-export default withStyles(styles, { injectTheme: true })(
-  WorkspaceServiceListItem,
+export default injectSheet(styles, { injectTheme: true })(
+  observer(WorkspaceServiceListItem),
 );
