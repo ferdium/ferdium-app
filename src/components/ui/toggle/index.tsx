@@ -1,26 +1,27 @@
 import classnames from 'classnames';
 import { Property } from 'csstype';
-import { noop } from 'lodash';
 import { Component, InputHTMLAttributes } from 'react';
-import withStyles, { WithStylesProps } from 'react-jss';
+import injectStyle, { WithStylesProps } from 'react-jss';
+
 import { Theme } from '../../../themes';
+import { IFormField } from '../typings/generic';
+
 import Error from '../error';
 import Label from '../label';
-import { IFormField } from '../typings/generic';
 import Wrapper from '../wrapper';
 
 interface IProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'value'>,
+  extends InputHTMLAttributes<HTMLInputElement>,
     IFormField,
     WithStylesProps<typeof styles> {
   className?: string;
-  value: boolean | undefined; // due to type capability between InputHTMLAttributes and mobx-react-form
 }
 
-const buttonTransition: string =
-  window && window.matchMedia('(prefers-reduced-motion: no-preference)')
-    ? 'all .5s'
-    : 'none';
+let buttonTransition: string = 'none';
+
+if (window && window.matchMedia('(prefers-reduced-motion: no-preference)')) {
+  buttonTransition = 'all .5s';
+}
 
 const styles = (theme: Theme) => ({
   toggle: {
@@ -63,18 +64,25 @@ const styles = (theme: Theme) => ({
 });
 
 class ToggleComponent extends Component<IProps> {
+  public static defaultProps = {
+    onChange: () => {},
+    showLabel: true,
+    disabled: false,
+    error: '',
+  };
+
   render() {
     const {
       classes,
       className,
-      id = '',
-      name = '',
-      label = '',
-      error = '',
-      value = false,
-      showLabel = true,
-      disabled = false,
-      onChange = noop,
+      disabled,
+      error,
+      id,
+      label,
+      showLabel,
+      checked,
+      value,
+      onChange,
     } = this.props;
 
     return (
@@ -94,24 +102,24 @@ class ToggleComponent extends Component<IProps> {
             <div
               className={classnames({
                 [`${classes.button}`]: true,
-                [`${classes.buttonActive}`]: value,
+                [`${classes.buttonActive}`]: checked,
               })}
             />
             <input
-              type="checkbox"
-              id={id}
-              name={name}
-              checked={value as boolean | undefined}
               className={classes.input}
+              id={id}
+              type="checkbox"
+              checked={checked}
+              value={value}
               onChange={onChange}
               disabled={disabled}
             />
           </div>
         </Label>
-        {error ? <Error message={error as string} /> : null}
+        {error && <Error message={error} />}
       </Wrapper>
     );
   }
 }
 
-export default withStyles(styles, { injectTheme: true })(ToggleComponent);
+export default injectStyle(styles, { injectTheme: true })(ToggleComponent);

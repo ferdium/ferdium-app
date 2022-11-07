@@ -20,7 +20,7 @@ const INDICATOR_TRAY_INDIRECT = 'tray-indirect';
 
 // TODO: Need to support i18n for a lot of the hard-coded strings in this file
 export default class TrayIcon {
-  tray: Tray | null = null;
+  trayIcon: Tray | null = null;
 
   indicator: string | number = 0;
 
@@ -97,9 +97,7 @@ export default class TrayIcon {
   }
 
   _updateTrayMenu(appSettings): void {
-    if (!this.tray) {
-      return;
-    }
+    if (!this.trayIcon) return;
 
     if (appSettings && appSettings.type === 'app') {
       this.isAppMuted = appSettings.data.isAppMuted; // save current state after a change
@@ -107,7 +105,7 @@ export default class TrayIcon {
 
     this.trayMenu = Menu.buildFromTemplate(this.trayMenuTemplate(this));
     if (isLinux) {
-      this.tray.setContextMenu(this.trayMenu);
+      this.trayIcon.setContextMenu(this.trayMenu);
     }
   }
 
@@ -117,26 +115,26 @@ export default class TrayIcon {
   }
 
   _show(): void {
-    if (this.tray) {
+    if (this.trayIcon) {
       return;
     }
 
-    this.tray = new Tray(this._getAsset('tray', INDICATOR_TRAY_PLAIN));
-    this.tray.setToolTip('Ferdium');
+    this.trayIcon = new Tray(this._getAsset('tray', INDICATOR_TRAY_PLAIN));
+    this.trayIcon.setToolTip('Ferdium');
 
     this.trayMenu = Menu.buildFromTemplate(this.trayMenuTemplate(this));
     if (isLinux) {
-      this.tray.setContextMenu(this.trayMenu);
+      this.trayIcon.setContextMenu(this.trayMenu);
     }
 
-    this.tray.on('click', () => {
+    this.trayIcon.on('click', () => {
       this._toggleWindow();
     });
 
     if (isMac || isWindows) {
-      this.tray.on('right-click', () => {
-        if (this.tray && this.trayMenu) {
-          this.tray.popUpContextMenu(this.trayMenu);
+      this.trayIcon.on('right-click', () => {
+        if (this.trayIcon && this.trayMenu) {
+          this.trayIcon.popUpContextMenu(this.trayMenu);
         }
       });
     }
@@ -179,10 +177,10 @@ export default class TrayIcon {
   }
 
   _hide(): void {
-    if (!this.tray) return;
+    if (!this.trayIcon) return;
 
-    this.tray.destroy();
-    this.tray = null;
+    this.trayIcon.destroy();
+    this.trayIcon = null;
 
     if (isMac && this.themeChangeSubscriberId) {
       systemPreferences.unsubscribeNotification(this.themeChangeSubscriberId);
@@ -218,16 +216,16 @@ export default class TrayIcon {
   }
 
   _refreshIcon(): void {
-    if (!this.tray) {
+    if (!this.trayIcon) {
       return;
     }
 
-    this.tray.setImage(
+    this.trayIcon.setImage(
       this._getAsset('tray', this._getAssetFromIndicator(this.indicator)),
     );
 
     if (isMac && !macosVersion.isGreaterThanOrEqualTo('11')) {
-      this.tray.setPressedImage(
+      this.trayIcon.setPressedImage(
         this._getAsset(
           'tray',
           `${this._getAssetFromIndicator(this.indicator)}-active`,
