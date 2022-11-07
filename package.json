@@ -214,7 +214,7 @@
     "webpack-dev-server": "4.11.1"
   },
   "optionalDependencies": {
-    "macos-notification-state": "github:ferdium/macos-notification-state#0a168f5b1f94c1fd3c08272b8348884efdc83b83",
+    "macos-notification-state": "github:ferdium/macos-notification-state#394f33c2546960391bde2519aa30180dd3506492",
     "node-mac-permissions": "2.2.1"
   },
   "browserslist": [
