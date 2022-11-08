@@ -53,7 +53,7 @@ class WorkspaceServiceListItem extends Component<IProps> {
         </span>
         <Toggle
           className={classes.toggle}
-          value={isInWorkspace}
+          checked={isInWorkspace}
           onChange={onToggle}
         />
       </div>

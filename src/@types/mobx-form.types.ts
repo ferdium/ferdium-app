@@ -1,3 +1,4 @@
+import { File } from 'electron-dl';
 import { ChangeEventHandler, FocusEventHandler } from 'react';
 import { GlobalError } from './ferdium-components.types';
 
@@ -25,6 +26,8 @@ export interface Field extends Listeners {
   options?: SelectOptions[];
   default?: string | boolean | number | null;
   validators?: any; // Not sure yet.
+  set?: (value: any) => void;
+  [key: string]: any;
 }
 
 export interface SelectOptions {
@@ -37,4 +40,5 @@ export interface Listeners {
   onChange?: ChangeEventHandler<HTMLInputElement | HTMLSelectElement>;
   onBlur?: FocusEventHandler<HTMLElement>;
   onFocus?: FocusEventHandler<HTMLElement>;
+  onDrop?: (file: File) => void;
 }
