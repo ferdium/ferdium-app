@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import { Property } from 'csstype';
 import { noop } from 'lodash';
-import { Component, InputHTMLAttributes } from 'react';
+import { Component, InputHTMLAttributes, ReactElement } from 'react';
 import withStyles, { WithStylesProps } from 'react-jss';
 import { Theme } from '../../../themes';
 import Error from '../error';
@@ -10,11 +10,10 @@ import { IFormField } from '../typings/generic';
 import Wrapper from '../wrapper';
 
 interface IProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'value'>,
+  extends InputHTMLAttributes<HTMLInputElement>,
     IFormField,
     WithStylesProps<typeof styles> {
   className?: string;
-  value: boolean | undefined; // due to type capability between InputHTMLAttributes and mobx-react-form
 }
 
 const buttonTransition: string =
@@ -62,8 +61,8 @@ const styles = (theme: Theme) => ({
   },
 });
 
-class ToggleComponent extends Component<IProps> {
-  render() {
+class Toggle extends Component<IProps> {
+  render(): ReactElement {
     const {
       classes,
       className,
@@ -71,7 +70,7 @@ class ToggleComponent extends Component<IProps> {
       name = '',
       label = '',
       error = '',
-      value = false,
+      checked = false,
       showLabel = true,
       disabled = false,
       onChange = noop,
@@ -94,14 +93,14 @@ class ToggleComponent extends Component<IProps> {
             <div
               className={classnames({
                 [`${classes.button}`]: true,
-                [`${classes.buttonActive}`]: value,
+                [`${classes.buttonActive}`]: checked,
               })}
             />
             <input
               type="checkbox"
               id={id}
               name={name}
-              checked={value as boolean | undefined}
+              checked={checked}
               className={classes.input}
               onChange={onChange}
               disabled={disabled}
@@ -114,4 +113,4 @@ class ToggleComponent extends Component<IProps> {
   }
 }
 
-export default withStyles(styles, { injectTheme: true })(ToggleComponent);
+export default withStyles(styles, { injectTheme: true })(Toggle);

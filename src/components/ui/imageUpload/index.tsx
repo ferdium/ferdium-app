@@ -1,15 +1,15 @@
-import { Component } from 'react';
+import { Component, InputHTMLAttributes } from 'react';
 import { observer } from 'mobx-react';
-import { Field } from 'mobx-react-form';
 import classnames from 'classnames';
 import Dropzone from 'react-dropzone';
 import { mdiDelete, mdiFileImage } from '@mdi/js';
 import prettyBytes from 'pretty-bytes';
-import { isWindows } from '../../environment';
-import Icon from './icon';
+import { noop } from 'lodash';
+import { isWindows } from '../../../environment';
+import Icon from '../icon';
+import { IFormField } from '../typings/generic';
 
-type Props = {
-  field: typeof Field;
+interface IProps extends InputHTMLAttributes<HTMLInputElement>, IFormField {
   className: string;
   multiple: boolean;
   textDelete: string;
@@ -19,39 +19,43 @@ type Props = {
   maxSize?: number;
   maxFiles?: number;
   messages: any;
-};
+  set?: (value: string) => void;
+}
 
-// Should this file be converted into the coding style similar to './toggle/index.tsx'?
-class ImageUpload extends Component<Props> {
-  static defaultProps = {
-    multiple: false,
-    maxSize: Number.POSITIVE_INFINITY,
-    maxFiles: 0,
-  };
+interface IState {
+  path: string | null;
+  errorState: boolean;
+  errorMessage: { message: string };
+}
 
-  state = {
-    path: null,
-    errorState: false,
-  };
+// TODO - drag and drop image for recipe add/edit not working from 6.2.0 need to look at it
+@observer
+class ImageUpload extends Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
 
-  errorMessage = {
-    message: '',
-  };
+    this.state = {
+      path: null,
+      errorState: false,
+      errorMessage: {
+        message: '',
+      },
+    };
+  }
 
-  onDropAccepted(acceptedFiles) {
-    const { field } = this.props;
+  onDropAccepted(acceptedFiles): void {
+    const { onDrop = noop, set = noop } = this.props;
     this.setState({ errorState: false });
 
     for (const file of acceptedFiles) {
-      const imgPath = isWindows ? file.path.replace(/\\/g, '/') : file.path;
-      this.setState({
-        path: imgPath,
-      });
-
-      this.props.field.onDrop(file);
+      const imgPath: string = isWindows
+        ? file.path.replace(/\\/g, '/')
+        : file.path;
+      this.setState({ path: imgPath });
+      onDrop(file);
     }
 
-    field.set('');
+    set('');
   }
 
   onDropRejected(rejectedFiles): void {
@@ -59,11 +63,11 @@ class ImageUpload extends Component<Props> {
       for (const error of file.errors) {
         if (error.code === 'file-too-large') {
           this.setState({ errorState: true });
-          this.setState(
-            (this.errorMessage = {
+          this.setState({
+            errorMessage: {
               message: this.props.textMaxFileSizeError,
-            }),
-          );
+            },
+          });
         }
       }
     }
@@ -71,14 +75,16 @@ class ImageUpload extends Component<Props> {
 
   render() {
     const {
-      field,
       className,
-      multiple,
+      multiple = false,
       textDelete,
       textUpload,
       textMaxFileSize,
-      maxSize,
-      maxFiles,
+      value,
+      maxSize = Number.POSITIVE_INFINITY,
+      maxFiles = 0,
+      label = '',
+      set = noop,
     } = this.props;
 
     const cssClasses = classnames({
@@ -94,27 +100,25 @@ class ImageUpload extends Component<Props> {
     return (
       <div className="image-upload-wrapper">
         <label className="franz-form__label" htmlFor="iconUpload">
-          {field.label}
+          {label}
         </label>
         <div className="image-upload">
-          {(field.value && field.value !== 'delete') || this.state.path ? (
+          {(value && value !== 'delete') || this.state.path ? (
             <>
               <div
                 className="image-upload__preview"
                 style={{
-                  backgroundImage: `url("${this.state.path || field.value}")`,
+                  backgroundImage: `url("${this.state.path || value}")`,
                 }}
               />
               <div className="image-upload__action">
                 <button
                   type="button"
                   onClick={() => {
-                    if (field.value) {
-                      field.set('delete');
+                    if (value) {
+                      set('delete');
                     } else {
-                      this.setState({
-                        path: null,
-                      });
+                      this.setState({ path: null });
                     }
                   }}
                 >
@@ -152,7 +156,7 @@ class ImageUpload extends Component<Props> {
         )}
         {this.state.errorState && (
           <span className="image-upload-wrapper__file-size-error">
-            {this.errorMessage.message}
+            {this.state.errorMessage.message}
           </span>
         )}
       </div>
@@ -160,4 +164,4 @@ class ImageUpload extends Component<Props> {
   }
 }
 
-export default observer(ImageUpload);
+export default ImageUpload;
