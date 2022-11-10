@@ -188,50 +188,52 @@ class EditServiceScreen extends Component<IProps> {
         },
         isEnabled: {
           label: intl.formatMessage(messages.enableService),
-          value: service?.isEnabled,
-          default: DEFAULT_SERVICE_SETTINGS.isEnabled,
+          value: service?.isEnabled || DEFAULT_SERVICE_SETTINGS.isEnabled,
           type: 'checkbox',
         },
         isHibernationEnabled: {
           label: intl.formatMessage(messages.enableHibernation),
-          value: service?.isHibernationEnabled,
-          default: DEFAULT_SERVICE_SETTINGS.isHibernationEnabled,
+          value:
+            service?.isHibernationEnabled ||
+            DEFAULT_SERVICE_SETTINGS.isHibernationEnabled,
           type: 'checkbox',
         },
         isWakeUpEnabled: {
           label: intl.formatMessage(messages.enableWakeUp),
-          value: service?.isWakeUpEnabled,
-          default: DEFAULT_SERVICE_SETTINGS.isWakeUpEnabled,
+          value:
+            service?.isWakeUpEnabled ||
+            DEFAULT_SERVICE_SETTINGS.isWakeUpEnabled,
           type: 'checkbox',
         },
         isNotificationEnabled: {
           label: intl.formatMessage(messages.enableNotification),
-          value: service?.isNotificationEnabled,
-          default: DEFAULT_SERVICE_SETTINGS.isNotificationEnabled,
+          value:
+            service?.isNotificationEnabled ||
+            DEFAULT_SERVICE_SETTINGS.isNotificationEnabled,
           type: 'checkbox',
         },
         isBadgeEnabled: {
           label: intl.formatMessage(messages.enableBadge),
-          value: service?.isBadgeEnabled,
-          default: DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
+          value:
+            service?.isBadgeEnabled || DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
           type: 'checkbox',
         },
         isMediaBadgeEnabled: {
           label: intl.formatMessage(messages.enableMediaBadge),
-          value: service?.isMediaBadgeEnabled,
-          default: DEFAULT_SERVICE_SETTINGS.isMediaBadgeEnabled,
+          value:
+            service?.isMediaBadgeEnabled ||
+            DEFAULT_SERVICE_SETTINGS.isMediaBadgeEnabled,
           type: 'checkbox',
         },
         trapLinkClicks: {
           label: intl.formatMessage(messages.trapLinkClicks),
-          value: service?.trapLinkClicks,
-          default: DEFAULT_SERVICE_SETTINGS.trapLinkClicks,
+          value:
+            service?.trapLinkClicks || DEFAULT_SERVICE_SETTINGS.trapLinkClicks,
           type: 'checkbox',
         },
         isMuted: {
           label: intl.formatMessage(messages.enableAudio),
-          value: !service?.isMuted,
-          default: DEFAULT_SERVICE_SETTINGS.isMuted,
+          value: !service?.isMuted || DEFAULT_SERVICE_SETTINGS.isMuted,
           type: 'checkbox',
         },
         customIcon: {
@@ -242,8 +244,7 @@ class EditServiceScreen extends Component<IProps> {
         },
         isDarkModeEnabled: {
           label: intl.formatMessage(messages.enableDarkMode),
-          value: service?.isDarkModeEnabled,
-          default: stores.settings.app.darkMode,
+          value: service?.isDarkModeEnabled || stores.settings.app.darkMode,
           type: 'checkbox',
         },
         darkReaderBrightness: {
@@ -269,8 +270,9 @@ class EditServiceScreen extends Component<IProps> {
         },
         isProgressbarEnabled: {
           label: intl.formatMessage(messages.enableProgressbar),
-          value: service?.isProgressbarEnabled,
-          default: DEFAULT_SERVICE_SETTINGS.isProgressbarEnabled,
+          value:
+            service?.isProgressbarEnabled ||
+            DEFAULT_SERVICE_SETTINGS.isProgressbarEnabled,
           type: 'checkbox',
         },
         spellcheckerLanguage: {
@@ -325,20 +327,28 @@ class EditServiceScreen extends Component<IProps> {
     }
 
     if (recipe.hasIndirectMessages) {
-      config.fields.isIndirectMessageBadgeEnabled = {
-        label: intl.formatMessage(messages.indirectMessages),
-        value: service?.isIndirectMessageBadgeEnabled,
-        default: DEFAULT_SERVICE_SETTINGS.hasIndirectMessages,
-        type: 'checkbox',
+      config.fields = {
+        ...config.fields,
+        isIndirectMessageBadgeEnabled: {
+          label: intl.formatMessage(messages.indirectMessages),
+          value:
+            service?.isIndirectMessageBadgeEnabled ||
+            DEFAULT_SERVICE_SETTINGS.hasIndirectMessages,
+          type: 'checkbox',
+        },
       };
     }
 
     if (recipe.allowFavoritesDelineationInUnreadCount) {
-      config.fields.onlyShowFavoritesInUnreadCount = {
-        label: intl.formatMessage(messages.onlyShowFavoritesInUnreadCount),
-        value: service?.onlyShowFavoritesInUnreadCount,
-        default: DEFAULT_APP_SETTINGS.onlyShowFavoritesInUnreadCount,
-        type: 'checkbox',
+      config.fields = {
+        ...config.fields,
+        onlyShowFavoritesInUnreadCount: {
+          label: intl.formatMessage(messages.onlyShowFavoritesInUnreadCount),
+          value:
+            service?.onlyShowFavoritesInUnreadCount ||
+            DEFAULT_APP_SETTINGS.onlyShowFavoritesInUnreadCount,
+          type: 'checkbox',
+        },
       };
     }
 
@@ -347,42 +357,44 @@ class EditServiceScreen extends Component<IProps> {
         ? /*
           TODO - [TS DEBT] find out why sometimes proxy[service.id] gives undefined
           Note in proxy service id exist as key but value is undefined rather that proxy empty object
-
-          Temp fix - or-ed {} (to stores.settings.proxy[service.id] ) to avoid undefined proxy in settingStore throw error
           */
-          stores.settings.proxy[service.id] || {}
-        : {};
+         stores.settings.proxy[service.id] || {}
+       : {};
 
-      config.fields.proxy = {
-        name: 'proxy',
-        label: 'proxy',
-        fields: {
-          isEnabled: {
-            label: intl.formatMessage(messages.enableProxy),
-            value: serviceProxyConfig.isEnabled,
-            default: DEFAULT_APP_SETTINGS.proxyFeatureEnabled,
-            type: 'checkbox',
-          },
-          host: {
-            label: intl.formatMessage(messages.proxyHost),
-            value: serviceProxyConfig.host,
-            default: '',
-          },
-          port: {
-            label: intl.formatMessage(messages.proxyPort),
-            value: serviceProxyConfig.port,
-            default: '',
-          },
-          user: {
-            label: intl.formatMessage(messages.proxyUser),
-            value: serviceProxyConfig.user,
-            default: '',
-          },
-          password: {
-            label: intl.formatMessage(messages.proxyPassword),
-            value: serviceProxyConfig.password,
-            default: '',
-            type: 'password',
+      config.fields = {
+        ...config.fields,
+        proxy: {
+          name: 'proxy',
+          label: 'proxy',
+          fields: {
+            isEnabled: {
+              label: intl.formatMessage(messages.enableProxy),
+              value:
+                serviceProxyConfig.isEnabled ||
+                DEFAULT_APP_SETTINGS.proxyFeatureEnabled,
+              type: 'checkbox',
+            },
+            host: {
+              label: intl.formatMessage(messages.proxyHost),
+              value: serviceProxyConfig.host,
+              default: '',
+            },
+            port: {
+              label: intl.formatMessage(messages.proxyPort),
+              value: serviceProxyConfig.port,
+              default: '',
+            },
+            user: {
+              label: intl.formatMessage(messages.proxyUser),
+              value: serviceProxyConfig.user,
+              default: '',
+            },
+            password: {
+              label: intl.formatMessage(messages.proxyPassword),
+              value: serviceProxyConfig.password,
+              default: '',
+              type: 'password',
+            },
           },
         },
       };
