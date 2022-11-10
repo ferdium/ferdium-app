@@ -1,5 +1,5 @@
 import { systemPreferences } from '@electron/remote';
-import { Component } from 'react';
+import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
 import prettyBytes from 'pretty-bytes';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
@@ -9,7 +9,7 @@ import Button from '../../ui/button';
 import Toggle from '../../ui/toggle';
 import Select from '../../ui/Select';
 import Input from '../../ui/input/index';
-import ColorPickerInput from '../../ui/ColorPickerInput';
+import ColorPickerInput from '../../ui/colorPickerInput';
 import Infobox from '../../ui/Infobox';
 import { H1, H2, H3, H5 } from '../../ui/headline';
 import {
@@ -258,14 +258,14 @@ const messages = defineMessages({
   },
 });
 
-const Hr = () => (
+const Hr = (): ReactElement => (
   <hr
     className="settings__hr"
     style={{ marginBottom: 20, borderStyle: 'dashed' }}
   />
 );
 
-const HrSections = () => (
+const HrSections = (): ReactElement => (
   <hr
     className="settings__hr-sections"
     style={{ marginTop: 20, marginBottom: 40, borderStyle: 'solid' }}
@@ -325,8 +325,11 @@ class EditSettingsForm extends Component<IProps, IState> {
     this.setState({ clearCacheButtonClicked: true });
   };
 
-  submit(e) {
-    e.preventDefault();
+  submit(e): void {
+    if (e) {
+      e.preventDefault();
+    }
+
     this.props.form.submit({
       onSuccess: form => {
         const values = form.values();
@@ -344,7 +347,7 @@ class EditSettingsForm extends Component<IProps, IState> {
     });
   }
 
-  render() {
+  render(): ReactElement {
     const {
       checkForUpdates,
       installUpdate,
@@ -742,8 +745,8 @@ class EditSettingsForm extends Component<IProps, IState> {
                   {intl.formatMessage(messages.overallTheme)}
                   <div className="settings__settings-group__apply-color">
                     <ColorPickerInput
-                      onChange={e => this.submit(e)}
-                      field={form.$('accentColor')}
+                      {...form.$('accentColor').bind()}
+                      onColorChange={this.submit.bind(this)}
                       className="color-picker-input"
                     />
                   </div>
@@ -752,8 +755,8 @@ class EditSettingsForm extends Component<IProps, IState> {
                   {intl.formatMessage(messages.progressbarTheme)}
                   <div className="settings__settings-group__apply-color">
                     <ColorPickerInput
-                      onChange={e => this.submit(e)}
-                      field={form.$('progressbarAccentColor')}
+                      {...form.$('progressbarAccentColor').bind()}
+                      onColorChange={this.submit.bind(this)}
                       className="color-picker-input"
                     />
                   </div>
