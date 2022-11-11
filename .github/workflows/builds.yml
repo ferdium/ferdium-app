@@ -75,9 +75,9 @@ jobs:
           git push origin develop --no-verify
           git checkout -
 
-          git submodule update --init --recursive --remote --rebase --force
+          git rebase develop
 
-          CHANGES_COUNT=$(git diff --shortstat origin/develop | wc -l)
+          CHANGES_COUNT=$(git log @{u}.. | wc -l)
           MANUAL_REBUILD="${{ github.event_name == 'workflow_dispatch' }}"
           VERSION_BUMP="${{ contains(github.event.inputs.message, '[version bump]') }}"
           # If there were any changes only in the submodules, then...
