@@ -1,10 +1,8 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
-import injectSheet from 'react-jss';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
+import withStyles, { WithStylesProps } from 'react-jss';
 import classnames from 'classnames';
-
 import Input from '../ui/input/index';
 import Button from '../ui/button';
 import Badge from '../ui/badge';
@@ -12,7 +10,6 @@ import Modal from '../ui/Modal';
 import Infobox from '../ui/Infobox';
 import Appear from '../ui/effects/Appear';
 import globalMessages from '../../i18n/globalMessages';
-
 import { CDN_URL } from '../../config';
 import { H1, H2 } from '../ui/headline';
 
@@ -42,11 +39,10 @@ const messages = defineMessages({
   },
 });
 
-let transition = 'none';
-
-if (window && window.matchMedia('(prefers-reduced-motion: no-preference)')) {
-  transition = 'all 0.25s';
-}
+const transition =
+  window && window.matchMedia('(prefers-reduced-motion: no-preference)')
+    ? 'all 0.25s'
+    : 'none';
 
 const styles = theme => ({
   root: {
@@ -136,39 +132,41 @@ const styles = theme => ({
   },
 });
 
-class SetupAssistant extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    onSubmit: PropTypes.func.isRequired,
-    isInviteSuccessful: PropTypes.bool,
-    services: PropTypes.object.isRequired,
-    isSettingUpServices: PropTypes.bool.isRequired,
-  };
+interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
+  onSubmit: (...args: any[]) => void;
+  isInviteSuccessful?: boolean;
+  services: any[]; //  TODO - [TS DEBT] check legacy services type
+  isSettingUpServices: boolean;
+}
 
-  static defaultProps = {
-    isInviteSuccessful: false,
-  };
+interface IState {
+  services: any[];
+  isSlackModalOpen: boolean;
+  slackWorkspace: string;
+  showSuccessInfo: boolean;
+}
 
-  constructor() {
-    super();
+@observer
+class SetupAssistant extends Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
 
     this.state = {
       services: [],
       isSlackModalOpen: false,
+      showSuccessInfo: false,
       slackWorkspace: '',
     };
   }
 
-  slackWorkspaceHandler() {
+  slackWorkspaceHandler(): void {
     const { slackWorkspace = '', services } = this.state;
-
     const sanitizedWorkspace = slackWorkspace
       .trim()
       .replace(/^https?:\/\//, '');
 
     if (sanitizedWorkspace) {
       const index = services.findIndex(s => s.id === SLACK_ID);
-
       if (index === -1) {
         const newServices = services;
         newServices.push({ id: SLACK_ID, team: sanitizedWorkspace });
@@ -183,13 +181,13 @@ class SetupAssistant extends Component {
   }
 
   render() {
-    const { intl } = this.props;
     const {
       classes,
-      isInviteSuccessful,
+      isInviteSuccessful = false,
       onSubmit,
       services,
       isSettingUpServices,
+      intl,
     } = this.props;
     const {
       isSlackModalOpen,
@@ -204,7 +202,7 @@ class SetupAssistant extends Component {
             <Infobox
               type="success"
               icon="checkbox-marked-circle-outline"
-              dismissable
+              dismissible
             >
               {intl.formatMessage(messages.inviteSuccessInfo)}
             </Infobox>
@@ -300,11 +298,14 @@ class SetupAssistant extends Component {
                   label={intl.formatMessage(globalMessages.save)}
                 />
                 <Button
-                  type="link"
+                  type="button"
                   buttonType="secondary"
                   label={intl.formatMessage(globalMessages.cancel)}
                   className={classes.ctaCancel}
-                  onClick={() => this.setState({ slackWorkspace: '' })}
+                  onClick={e => {
+                    e.preventDefault();
+                    this.setState({ slackWorkspace: '' });
+                  }}
                 />
               </div>
             </form>
@@ -332,5 +333,5 @@ class SetupAssistant extends Component {
 }
 
 export default injectIntl(
-  injectSheet(styles, { injectTheme: true })(observer(SetupAssistant)),
+  withStyles(styles, { injectTheme: true })(SetupAssistant),
 );
