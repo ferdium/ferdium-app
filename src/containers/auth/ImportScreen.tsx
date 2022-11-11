@@ -3,7 +3,11 @@ import { inject, observer } from 'mobx-react';
 import { StoresProps } from '../../@types/ferdium-components.types';
 import Import from '../../components/auth/Import';
 
-class ImportScreen extends Component<StoresProps> {
+interface IProps extends StoresProps {}
+
+@inject('stores', 'actions')
+@observer
+class ImportScreen extends Component<IProps> {
   render(): ReactElement {
     const { actions, stores } = this.props;
 
@@ -22,4 +26,4 @@ class ImportScreen extends Component<StoresProps> {
   }
 }
 
-export default inject('stores', 'actions')(observer(ImportScreen));
+export default ImportScreen;
