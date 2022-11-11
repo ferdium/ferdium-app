@@ -1,7 +1,6 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
-import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
+import { Component, ReactElement } from 'react';
+import { observer } from 'mobx-react';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import Form from '../../lib/Form';
@@ -28,16 +27,21 @@ const messages = defineMessages({
   },
 });
 
-class Import extends Component {
-  static propTypes = {
-    services: MobxPropTypes.arrayOrObservableArray.isRequired,
-    onSubmit: PropTypes.func.isRequired,
-    isSubmitting: PropTypes.bool.isRequired,
-    inviteRoute: PropTypes.string.isRequired,
-  };
+interface IProps extends WrappedComponentProps {
+  services: any[]; //  TODO - [TS DEBT] check legacy services type
+  onSubmit: (...args: any[]) => void;
+  isSubmitting: boolean;
+  inviteRoute: string;
+}
 
-  componentDidMount() {
-    const config = {
+@observer
+class Import extends Component<IProps> {
+  form: Form;
+
+  constructor(props: IProps) {
+    super(props);
+
+    this.form = new Form({
       fields: {
         import: [
           ...this.props.services
@@ -52,12 +56,10 @@ class Import extends Component {
             })),
         ],
       },
-    };
-
-    this.form = new Form(config, this.props.intl);
+    });
   }
 
-  submit(e) {
+  submit(e): void {
     const { services } = this.props;
     e.preventDefault();
     this.form.submit({
@@ -75,9 +77,8 @@ class Import extends Component {
     });
   }
 
-  render() {
-    const { intl } = this.props;
-    const { services, isSubmitting, inviteRoute } = this.props;
+  render(): ReactElement {
+    const { services, isSubmitting, inviteRoute, intl } = this.props;
 
     const availableServices = services.filter(s => s.recipe);
     const unavailableServices = services.filter(s => !s.recipe);
@@ -165,4 +166,4 @@ class Import extends Component {
   }
 }
 
-export default injectIntl(observer(Import));
+export default injectIntl(Import);
