@@ -5,6 +5,7 @@ import Import from '../../components/auth/Import';
 
 interface IProps extends StoresProps {}
 
+//  TODO - [TECH DEBT][NOT TESTED][PROPER UI NAVIGATION NOT FOUND] Need to verify if this page is still working.
 @inject('stores', 'actions')
 @observer
 class ImportScreen extends Component<IProps> {

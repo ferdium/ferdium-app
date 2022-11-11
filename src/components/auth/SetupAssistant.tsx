@@ -135,7 +135,7 @@ const styles = theme => ({
 interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
   onSubmit: (...args: any[]) => void;
   isInviteSuccessful?: boolean;
-  services: any[]; //  TODO - [TS DEBT] check legacy services type
+  services: any; //  TODO - [TS DEBT] check legacy services type
   isSettingUpServices: boolean;
 }
 

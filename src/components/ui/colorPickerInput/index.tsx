@@ -34,7 +34,6 @@ class ColorPickerInput extends Component<IProps> {
     const { onColorChange = noop, onChange = noop } = this.props;
     onColorChange();
     onChange(hex);
-    console.log(hex);
   }
 
   render(): ReactElement {
