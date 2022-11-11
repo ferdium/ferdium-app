@@ -1,18 +1,18 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
-import injectSheet from 'react-jss';
-import { defineMessages, injectIntl } from 'react-intl';
+import withStyles, { WithStylesProps } from 'react-jss';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import ReactTooltip from 'react-tooltip';
-
 import { mdiPlusBox, mdiCog } from '@mdi/js';
-
+import { noop } from 'lodash';
 import { H1 } from '../../../components/ui/headline';
 import Icon from '../../../components/ui/icon';
 import WorkspaceDrawerItem from './WorkspaceDrawerItem';
 import workspaceActions from '../actions';
 import { workspaceStore } from '../index';
 import { getUserWorkspacesRequest } from '../api';
+import Service from '../../../models/Service';
+import Workspace from '../models/Workspace';
 
 const messages = defineMessages({
   headline: {
@@ -89,22 +89,22 @@ const styles = theme => ({
   },
 });
 
-class WorkspaceDrawer extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    getServicesForWorkspace: PropTypes.func.isRequired,
-  };
+interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
+  getServicesForWorkspace: (workspace: Workspace | null) => Service[];
+}
 
-  componentDidMount() {
-    ReactTooltip.rebuild();
+@observer
+class WorkspaceDrawer extends Component<IProps> {
+  componentDidMount(): void {
     try {
+      ReactTooltip.rebuild();
       getUserWorkspacesRequest.execute();
     } catch (error) {
       console.log(error);
     }
   }
 
-  render() {
+  render(): ReactElement {
     const { classes, getServicesForWorkspace } = this.props;
     const { intl } = this.props;
     const { activeWorkspace, isSwitchingWorkspace, nextWorkspace, workspaces } =
@@ -118,6 +118,7 @@ class WorkspaceDrawer extends Component {
           {intl.formatMessage(messages.headline)}
           <span
             className={classes.workspacesSettingsButton}
+            onKeyDown={noop}
             onClick={() => {
               workspaceActions.openWorkspaceSettings();
             }}
@@ -165,6 +166,7 @@ class WorkspaceDrawer extends Component {
             onClick={() => {
               workspaceActions.openWorkspaceSettings();
             }}
+            onKeyDown={noop}
           >
             <Icon
               icon={mdiPlusBox}
@@ -180,5 +182,5 @@ class WorkspaceDrawer extends Component {
 }
 
 export default injectIntl(
-  injectSheet(styles, { injectTheme: true })(observer(WorkspaceDrawer)),
+  withStyles(styles, { injectTheme: true })(WorkspaceDrawer),
 );

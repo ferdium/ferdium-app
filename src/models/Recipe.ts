@@ -29,6 +29,7 @@ interface RecipeData {
 }
 
 export interface IRecipe {
+  icons: any;
   id: string;
   name: string;
   description: string;
