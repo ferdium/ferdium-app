@@ -26,7 +26,6 @@ import AuthReleaseNotesScreen from './containers/auth/AuthReleaseNotesScreen';
 import PasswordScreen from './containers/auth/PasswordScreen';
 import ChangeServerScreen from './containers/auth/ChangeServerScreen';
 import SignupScreen from './containers/auth/SignupScreen';
-import ImportScreen from './containers/auth/ImportScreen';
 import SetupAssistantScreen from './containers/auth/SetupAssistantScreen';
 import InviteScreen from './containers/auth/InviteScreen';
 import AuthLayoutContainer from './containers/auth/AuthLayoutContainer';
@@ -79,10 +78,6 @@ class FerdiumRoutes extends Component<IProps> {
               <Route
                 path="/auth/signup/form"
                 element={<SignupScreen {...routeProps} {...errorProps} />}
-              />
-              <Route
-                path="/auth/signup/import"
-                element={<ImportScreen {...routeProps} />}
               />
               <Route
                 path="/auth/signup/setup"
