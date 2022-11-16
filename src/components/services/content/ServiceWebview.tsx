@@ -1,26 +1,31 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
 import { action, makeObservable, observable, reaction } from 'mobx';
 import ElectronWebView from 'react-electron-web-view';
 import { join } from 'path';
-
 import ServiceModel from '../../../models/Service';
 
 const debug = require('../../../preload-safe-debug')('Ferdium:Services');
 
-class ServiceWebview extends Component {
-  static propTypes = {
-    service: PropTypes.instanceOf(ServiceModel).isRequired,
-    setWebviewReference: PropTypes.func.isRequired,
-    detachService: PropTypes.func.isRequired,
-    isSpellcheckerEnabled: PropTypes.bool.isRequired,
-  };
+interface IProps {
+  service: ServiceModel;
+  setWebviewReference: (options: {
+    serviceId: string;
+    webview: ElectronWebView | null;
+  }) => void;
+  detachService: (options: { service: ServiceModel }) => void;
+  isSpellcheckerEnabled: boolean;
+}
 
-  @observable webview = null;
+@observer
+class ServiceWebview extends Component<IProps> {
+  @observable webview: ElectronWebView | null = null;
 
-  constructor(props) {
+  constructor(props: IProps) {
     super(props);
+
+    this.refocusWebview = this.refocusWebview.bind(this);
+    this._setWebview = this._setWebview.bind(this);
 
     makeObservable(this);
 
@@ -45,15 +50,18 @@ class ServiceWebview extends Component {
     );
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     const { service, detachService } = this.props;
     detachService({ service });
   }
 
-  refocusWebview = () => {
+  refocusWebview(): void {
     const { webview } = this;
     debug('Refocus Webview is called', this.props.service);
-    if (!webview) return;
+    if (!webview) {
+      return;
+    }
+
     if (this.props.service.isActive) {
       webview.view.blur();
       webview.view.focus();
@@ -67,13 +75,13 @@ class ServiceWebview extends Component {
     } else {
       debug('Refocus not required - Not active service');
     }
-  };
+  }
 
-  @action _setWebview(webview) {
+  @action _setWebview(webview): void {
     this.webview = webview;
   }
 
-  render() {
+  render(): ReactElement {
     const { service, setWebviewReference, isSpellcheckerEnabled } = this.props;
 
     const preloadScript = join(
@@ -114,7 +122,7 @@ class ServiceWebview extends Component {
             });
           }, 0);
         }}
-        onUpdateTargetUrl={this.updateTargetUrl}
+        // onUpdateTargetUrl={this.updateTargetUrl} // TODO - [TS DEBT] need to check where its from
         useragent={service.userAgent}
         disablewebsecurity={
           service.recipe.disablewebsecurity ? true : undefined
@@ -129,4 +137,4 @@ class ServiceWebview extends Component {
   }
 }
 
-export default observer(ServiceWebview);
+export default ServiceWebview;

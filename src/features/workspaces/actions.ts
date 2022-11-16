@@ -7,6 +7,7 @@ export interface WorkspaceActions {
   toggleWorkspaceDrawer: () => void;
   deactivate: () => void;
   activate: (options: any) => void;
+  edit: ({ workspace }: { workspace: Workspace }) => void;
 }
 
 export default createActionsFromDefinitions<WorkspaceActions>(

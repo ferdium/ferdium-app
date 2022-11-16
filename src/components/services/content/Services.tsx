@@ -1,14 +1,13 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
-import { observer, PropTypes as MobxPropTypes, inject } from 'mobx-react';
+import { Component, ReactElement } from 'react';
+import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
-import { defineMessages, injectIntl } from 'react-intl';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import Confetti from 'react-confetti';
 import ms from 'ms';
-import injectSheet from 'react-jss';
-
+import withStyles, { WithStylesProps } from 'react-jss';
 import ServiceView from './ServiceView';
 import Appear from '../../ui/effects/Appear';
+import Service from '../../../models/Service';
 
 const messages = defineMessages({
   getStarted: {
@@ -39,37 +38,40 @@ const styles = {
   },
 };
 
-class Services extends Component {
-  static propTypes = {
-    services: MobxPropTypes.arrayOrObservableArray,
-    setWebviewReference: PropTypes.func.isRequired,
-    detachService: PropTypes.func.isRequired,
-    handleIPCMessage: PropTypes.func.isRequired,
-    openWindow: PropTypes.func.isRequired,
-    reload: PropTypes.func.isRequired,
-    openSettings: PropTypes.func.isRequired,
-    update: PropTypes.func.isRequired,
-    userHasCompletedSignup: PropTypes.bool.isRequired,
-    // eslint-disable-next-line react/forbid-prop-types
-    classes: PropTypes.object.isRequired,
-    isSpellcheckerEnabled: PropTypes.bool.isRequired,
-  };
+interface IProps extends WrappedComponentProps, WithStylesProps<typeof styles> {
+  services?: Service[];
+  setWebviewReference: () => void;
+  detachService: () => void;
+  handleIPCMessage: () => void;
+  openWindow: () => void;
+  reload: (options: { serviceId: string }) => void;
+  openSettings: (options: { path: string }) => void;
+  update: (options: {
+    serviceId: string;
+    serviceData: { isEnabled: boolean };
+    redirect: boolean;
+  }) => void;
+  userHasCompletedSignup: boolean;
+  isSpellcheckerEnabled: boolean;
+}
 
-  static defaultProps = {
-    services: [],
-  };
+interface IState {
+  showConfetti: boolean;
+}
 
-  _confettiTimeout = null;
+@observer
+class Services extends Component<IProps, IState> {
+  _confettiTimeout: number | null = null;
 
-  constructor() {
-    super();
+  constructor(props: IProps) {
+    super(props);
 
     this.state = {
       showConfetti: true,
     };
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     this._confettiTimeout = window.setTimeout(() => {
       this.setState({
         showConfetti: false,
@@ -77,15 +79,15 @@ class Services extends Component {
     }, ms('8s'));
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     if (this._confettiTimeout) {
       clearTimeout(this._confettiTimeout);
     }
   }
 
-  render() {
+  render(): ReactElement {
     const {
-      services,
+      services = [],
       handleIPCMessage,
       setWebviewReference,
       detachService,
@@ -96,32 +98,31 @@ class Services extends Component {
       userHasCompletedSignup,
       classes,
       isSpellcheckerEnabled,
+      intl,
     } = this.props;
 
     const { showConfetti } = this.state;
-
-    const { intl } = this.props;
 
     return (
       <div className="services">
         {userHasCompletedSignup && (
           <div className={classes.confettiContainer}>
             <Confetti
-              width={window.width}
-              height={window.height}
+              width={window.innerWidth}
+              height={window.innerHeight}
               numberOfPieces={showConfetti ? 200 : 0}
             />
           </div>
         )}
         {services.length === 0 && (
-          <Appear timeout={1500} transitionName="slideUp">
+          <Appear transitionName="slideUp">
             <div className="services__no-service">
               <img
                 src="./assets/images/logo-beard-only.svg"
                 alt="Logo"
                 style={{ maxHeight: '50vh' }}
               />
-              <Appear timeout={300} transitionName="slideUp">
+              <Appear transitionName="slideUp">
                 <Link to="/settings/recipes" className="button">
                   {intl.formatMessage(messages.getStarted)}
                 </Link>
@@ -158,8 +159,4 @@ class Services extends Component {
   }
 }
 
-export default injectIntl(
-  injectSheet(styles, { injectTheme: true })(
-    inject('actions')(observer(Services)),
-  ),
-);
+export default injectIntl(withStyles(styles, { injectTheme: true })(Services));

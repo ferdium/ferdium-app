@@ -1,8 +1,6 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
-
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { mdiClose } from '@mdi/js';
 import { Outlet } from 'react-router-dom';
 import ErrorBoundary from '../util/ErrorBoundary';
@@ -17,35 +15,35 @@ const messages = defineMessages({
   },
 });
 
-class SettingsLayout extends Component {
-  static propTypes = {
-    navigation: PropTypes.element.isRequired,
-    closeSettings: PropTypes.func.isRequired,
-  };
+interface IProps extends WrappedComponentProps {
+  navigation: ReactElement;
+  closeSettings: () => void;
+}
 
-  componentDidMount() {
-    document.addEventListener('keydown', this.handleKeyDown.bind(this), false);
+@observer
+class SettingsLayout extends Component<IProps> {
+  constructor(props: IProps) {
+    super(props);
+
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
-  componentWillUnmount() {
-    document.removeEventListener(
-      'keydown',
-      // eslint-disable-next-line unicorn/no-invalid-remove-event-listener
-      this.handleKeyDown.bind(this),
-      false,
-    );
+  componentDidMount(): void {
+    document.addEventListener('keydown', this.handleKeyDown, false);
   }
 
-  handleKeyDown(e) {
+  componentWillUnmount(): void {
+    document.removeEventListener('keydown', this.handleKeyDown, false);
+  }
+
+  handleKeyDown(e: KeyboardEvent): void {
     if (isEscKeyPress(e.keyCode)) {
       this.props.closeSettings();
     }
   }
 
-  render() {
-    const { navigation, closeSettings } = this.props;
-
-    const { intl } = this.props;
+  render(): ReactElement {
+    const { navigation, closeSettings, intl } = this.props;
 
     return (
       <Appear transitionName="fadeIn-fast">
@@ -59,7 +57,6 @@ class SettingsLayout extends Component {
             />
             <div className="settings franz-form">
               {navigation}
-
               <Outlet />
               <button
                 type="button"
@@ -77,4 +74,4 @@ class SettingsLayout extends Component {
   }
 }
 
-export default injectIntl(observer(SettingsLayout));
+export default injectIntl(SettingsLayout);

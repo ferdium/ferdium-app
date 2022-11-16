@@ -60,6 +60,7 @@ export interface IRecipe {
   author?: string[];
   hasDarkMode?: boolean;
   validateUrl?: (url: string) => boolean;
+  icons?: any;
 }
 
 export default class Recipe implements IRecipe {
