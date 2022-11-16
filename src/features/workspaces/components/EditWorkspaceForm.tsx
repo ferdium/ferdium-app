@@ -1,11 +1,10 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Link } from 'react-router-dom';
-import injectSheet from 'react-jss';
+import withStyles, { WithStylesProps } from 'react-jss';
 import Infobox from '../../../components/ui/infobox/index';
-import Input from '../../../components/ui/input/index';
+import Input from '../../../components/ui/input';
 import Button from '../../../components/ui/button';
 import Workspace from '../models/Workspace';
 import Service from '../../../models/Service';
@@ -69,30 +68,36 @@ const styles = {
   },
 };
 
-class EditWorkspaceForm extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    onDelete: PropTypes.func.isRequired,
-    onSave: PropTypes.func.isRequired,
-    services: PropTypes.arrayOf(PropTypes.instanceOf(Service)).isRequired,
-    workspace: PropTypes.instanceOf(Workspace).isRequired,
-    updateWorkspaceRequest: PropTypes.instanceOf(Request).isRequired,
-    deleteWorkspaceRequest: PropTypes.instanceOf(Request).isRequired,
-  };
+interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
+  onDelete: () => void;
+  onSave: (...args: any[]) => void;
+  services: Service[];
+  workspace: Workspace;
+  updateWorkspaceRequest: Request;
+  deleteWorkspaceRequest: Request;
+}
 
-  form = this.prepareWorkspaceForm(this.props.workspace);
+@observer
+class EditWorkspaceForm extends Component<IProps> {
+  form: Form;
 
-  // eslint-disable-next-line react/no-deprecated
-  componentWillReceiveProps(nextProps) {
+  constructor(props: IProps) {
+    super(props);
+
+    this.form = this.prepareWorkspaceForm(this.props.workspace);
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps): void {
     const { workspace } = this.props;
     if (workspace.id !== nextProps.workspace.id) {
       this.form = this.prepareWorkspaceForm(nextProps.workspace);
     }
   }
 
-  prepareWorkspaceForm(workspace) {
+  prepareWorkspaceForm(workspace: Workspace): Form {
     const { intl, updateWorkspaceRequest } = this.props;
     updateWorkspaceRequest.reset();
+
     return new Form({
       fields: {
         name: {
@@ -105,6 +110,7 @@ class EditWorkspaceForm extends Component {
           label: intl.formatMessage(messages.keepLoaded),
           value: workspace.services.includes(KEEP_WS_LOADED_USID),
           default: false,
+          type: 'checkbox',
         },
         services: {
           value: [...workspace.services],
@@ -113,7 +119,7 @@ class EditWorkspaceForm extends Component {
     });
   }
 
-  save(form) {
+  save(form): void {
     this.props.updateWorkspaceRequest.reset();
     form.submit({
       onSuccess: async f => {
@@ -125,12 +131,12 @@ class EditWorkspaceForm extends Component {
     });
   }
 
-  delete() {
+  delete(): void {
     const { onDelete } = this.props;
     onDelete();
   }
 
-  toggleService(service) {
+  toggleService(service: Service): void {
     const servicesField = this.form.$('services');
     const serviceIds = servicesField.value;
     if (serviceIds.includes(service.id)) {
@@ -141,19 +147,20 @@ class EditWorkspaceForm extends Component {
     servicesField.set(serviceIds);
   }
 
-  render() {
-    const { intl } = this.props;
+  render(): ReactElement {
     const {
       classes,
       workspace,
       services,
       deleteWorkspaceRequest,
       updateWorkspaceRequest,
+      intl,
     } = this.props;
     const { form } = this;
     const workspaceServices = form.$('services').value;
     const isDeleting = deleteWorkspaceRequest.isExecuting;
     const isSaving = updateWorkspaceRequest.isExecuting;
+
     return (
       <div className="settings__main">
         <div className="settings__header">
@@ -195,12 +202,12 @@ class EditWorkspaceForm extends Component {
               </div>
             ) : (
               <>
-                {services.map(s => (
+                {services.map(service => (
                   <WorkspaceServiceListItem
-                    key={s.id}
-                    service={s}
-                    isInWorkspace={workspaceServices.includes(s.id)}
-                    onToggle={() => this.toggleService(s)}
+                    key={service.id}
+                    service={service}
+                    isInWorkspace={workspaceServices.includes(service.id)}
+                    onToggle={() => this.toggleService(service)}
                   />
                 ))}
               </>
@@ -236,5 +243,5 @@ class EditWorkspaceForm extends Component {
 }
 
 export default injectIntl(
-  injectSheet(styles, { injectTheme: true })(observer(EditWorkspaceForm)),
+  withStyles(styles, { injectTheme: true })(EditWorkspaceForm),
 );

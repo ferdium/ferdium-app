@@ -11,7 +11,6 @@ import WorkspaceDrawerItem from './WorkspaceDrawerItem';
 import workspaceActions from '../actions';
 import { workspaceStore } from '../index';
 import { getUserWorkspacesRequest } from '../api';
-import Service from '../../../models/Service';
 import Workspace from '../models/Workspace';
 
 const messages = defineMessages({
@@ -90,7 +89,7 @@ const styles = theme => ({
 });
 
 interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
-  getServicesForWorkspace: (workspace: Workspace | null) => Service[];
+  getServicesForWorkspace: (workspace: Workspace | null) => string[];
 }
 
 @observer
@@ -150,7 +149,9 @@ class WorkspaceDrawer extends Component<IProps> {
               name={workspace.name}
               isActive={actualWorkspace === workspace}
               onClick={() => {
-                if (actualWorkspace === workspace) return;
+                if (actualWorkspace === workspace) {
+                  return;
+                }
                 workspaceActions.activate({ workspace });
                 workspaceActions.toggleWorkspaceDrawer();
               }}

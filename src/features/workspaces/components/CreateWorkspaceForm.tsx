@@ -1,9 +1,7 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
-import injectSheet from 'react-jss';
-
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
+import withStyles, { WithStylesProps } from 'react-jss';
 import Input from '../../../components/ui/input/index';
 import Button from '../../../components/ui/button';
 import Form from '../../../lib/Form';
@@ -34,47 +32,49 @@ const styles = {
   },
 };
 
-class CreateWorkspaceForm extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    isSubmitting: PropTypes.bool.isRequired,
-    onSubmit: PropTypes.func.isRequired,
-  };
+interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
+  isSubmitting: boolean;
+  onSubmit: (...args: any[]) => void;
+}
 
-  form = (() => {
-    const { intl } = this.props;
-    return new Form({
+@observer
+class CreateWorkspaceForm extends Component<IProps> {
+  form: Form;
+
+  constructor(props: IProps) {
+    super(props);
+
+    this.form = new Form({
       fields: {
         name: {
-          label: intl.formatMessage(messages.name),
-          placeholder: intl.formatMessage(messages.name),
+          label: this.props.intl.formatMessage(messages.name),
+          placeholder: this.props.intl.formatMessage(messages.name),
           value: '',
           validators: [required],
         },
       },
     });
-  })();
+  }
 
-  submitForm() {
-    const { form } = this;
-    form.submit({
-      onSuccess: async f => {
+  submitForm(): void {
+    this.form.submit({
+      onSuccess: async form => {
         const { onSubmit } = this.props;
-        const values = f.values();
+        const values = form.values();
         onSubmit(values);
       },
     });
   }
 
-  render() {
-    const { intl } = this.props;
-    const { classes, isSubmitting } = this.props;
+  render(): ReactElement {
+    const { classes, isSubmitting, intl } = this.props;
     const { form } = this;
+
     return (
       <div className={classes.form}>
         <Input
-          className={classes.input}
           {...form.$('name').bind()}
+          className={classes.input}
           showLabel={false}
           onEnterKey={this.submitForm.bind(this, form)}
           focus={workspaceStore.isUserAllowedToUseFeature}
@@ -93,5 +93,5 @@ class CreateWorkspaceForm extends Component {
 }
 
 export default injectIntl(
-  injectSheet(styles, { injectTheme: true })(observer(CreateWorkspaceForm)),
+  withStyles(styles, { injectTheme: true })(CreateWorkspaceForm),
 );

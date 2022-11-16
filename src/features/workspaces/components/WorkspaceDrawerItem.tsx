@@ -1,10 +1,11 @@
-import { Menu } from '@electron/remote';
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, MouseEventHandler, ReactElement } from 'react';
 import { observer } from 'mobx-react';
-import injectSheet from 'react-jss';
+import withStyles, { WithStylesProps } from 'react-jss';
 import classnames from 'classnames';
-import { defineMessages, injectIntl } from 'react-intl';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
+import { noop } from 'lodash';
+import { Menu } from '@electron/remote';
+import { MenuItemConstructorOptions } from 'electron';
 import { altKey, cmdOrCtrlShortcutKey } from '../../../environment';
 
 const messages = defineMessages({
@@ -18,11 +19,10 @@ const messages = defineMessages({
   },
 });
 
-let itemTransition = 'none';
-
-if (window && window.matchMedia('(prefers-reduced-motion: no-preference)')) {
-  itemTransition = 'background-color 300ms ease-out';
-}
+const itemTransition =
+  window && window.matchMedia('(prefers-reduced-motion: no-preference)')
+    ? 'background-color 300ms ease-out'
+    : 'none';
 
 const styles = theme => ({
   item: {
@@ -65,35 +65,30 @@ const styles = theme => ({
   },
 });
 
-class WorkspaceDrawerItem extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    isActive: PropTypes.bool.isRequired,
-    name: PropTypes.string.isRequired,
-    onClick: PropTypes.func.isRequired,
-    services: PropTypes.arrayOf(PropTypes.string).isRequired,
-    onContextMenuEditClick: PropTypes.func,
-    shortcutIndex: PropTypes.number.isRequired,
-  };
+interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
+  isActive: boolean;
+  name: string;
+  onClick: MouseEventHandler<HTMLInputElement>;
+  services: string[];
+  onContextMenuEditClick?: () => void | null;
+  shortcutIndex: number;
+}
 
-  static defaultProps = {
-    onContextMenuEditClick: null,
-  };
-
-  render() {
+@observer
+class WorkspaceDrawerItem extends Component<IProps> {
+  render(): ReactElement {
     const {
       classes,
       isActive,
       name,
       onClick,
-      onContextMenuEditClick,
+      onContextMenuEditClick = null,
       services,
       shortcutIndex,
+      intl,
     } = this.props;
 
-    const { intl } = this.props;
-
-    const contextMenuTemplate = [
+    const contextMenuTemplate: MenuItemConstructorOptions[] = [
       {
         label: name,
         enabled: false,
@@ -103,7 +98,7 @@ class WorkspaceDrawerItem extends Component {
       },
       {
         label: intl.formatMessage(messages.contextMenuEdit),
-        click: onContextMenuEditClick,
+        click: onContextMenuEditClick || noop,
       },
     ];
 
@@ -116,7 +111,12 @@ class WorkspaceDrawerItem extends Component {
           isActive ? classes.isActiveItem : null,
         ])}
         onClick={onClick}
-        onContextMenu={() => onContextMenuEditClick && contextMenu.popup()}
+        onContextMenu={() => {
+          if (onContextMenuEditClick) {
+            contextMenu.popup();
+          }
+        }}
+        onKeyDown={noop}
         data-tip={`${
           shortcutIndex <= 9
             ? `(${cmdOrCtrlShortcutKey(false)}+${altKey(
@@ -149,5 +149,5 @@ class WorkspaceDrawerItem extends Component {
 }
 
 export default injectIntl(
-  injectSheet(styles, { injectTheme: true })(observer(WorkspaceDrawerItem)),
+  withStyles(styles, { injectTheme: true })(WorkspaceDrawerItem),
 );
