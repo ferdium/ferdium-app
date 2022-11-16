@@ -1,16 +1,18 @@
 import { observable, action, computed, makeObservable } from 'mobx';
 import { isEqual } from 'lodash/fp';
 
-export default class Request {
-  static _hooks = [];
+type Hook = (request: Request) => void;
 
-  static registerHook(hook) {
+export default class Request {
+  static _hooks: Hook[] = [];
+
+  static registerHook(hook: Hook) {
     Request._hooks.push(hook);
   }
 
-  @observable result = null;
+  @observable result: any = null;
 
-  @observable error = null;
+  @observable error: any = null;
 
   @observable isExecuting = false;
 
@@ -18,43 +20,47 @@ export default class Request {
 
   @observable wasExecuted = false;
 
-  @action _reset() {
+  promise: any = Promise;
+
+  protected api: any = {};
+
+  method = '';
+
+  protected isWaitingForResponse = false;
+
+  protected currentApiCall: any = null;
+
+  retry = () => this.reload();
+
+  reset = () => this._reset();
+
+  constructor(api, method) {
+    makeObservable(this);
+
+    this.api = api;
+    this.method = method;
+  }
+
+  @action _reset(): this {
     this.error = null;
     this.result = null;
     this.isExecuting = false;
     this.isError = false;
     this.wasExecuted = false;
-    this._isWaitingForResponse = false;
-    this._promise = Promise;
+    this.isWaitingForResponse = false;
+    this.promise = Promise;
 
     return this;
   }
 
-  _promise = Promise;
-
-  _api = {};
-
-  _method = '';
-
-  _isWaitingForResponse = false;
-
-  _currentApiCall = null;
-
-  constructor(api, method) {
-    makeObservable(this);
-
-    this._api = api;
-    this._method = method;
-  }
-
-  execute(...callArgs) {
+  execute(...callArgs: any[]): this {
     // Do not continue if this request is already loading
-    if (this._isWaitingForResponse) return this;
+    if (this.isWaitingForResponse) return this;
 
-    if (!this._api[this._method]) {
+    if (!this.api[this.method]) {
       throw new Error(
-        `Missing method <${this._method}> on api object:`,
-        this._api,
+        `Missing method <${this.method}> on api object:`,
+        this.api,
       );
     }
 
@@ -68,18 +74,18 @@ export default class Request {
     );
 
     // Issue api call & save it as promise that is handled to update the results of the operation
-    this._promise = new Promise((resolve, reject) => {
-      this._api[this._method](...callArgs)
+    this.promise = new Promise((resolve, reject) => {
+      this.api[this.method](...callArgs)
         .then(result => {
           setTimeout(
             action(() => {
               this.error = null;
               this.result = result;
-              if (this._currentApiCall) this._currentApiCall.result = result;
+              if (this.currentApiCall) this.currentApiCall.result = result;
               this.isExecuting = false;
               this.isError = false;
               this.wasExecuted = true;
-              this._isWaitingForResponse = false;
+              this.isWaitingForResponse = false;
               this._triggerHooks();
               resolve(result);
             }),
@@ -95,7 +101,7 @@ export default class Request {
                 this.isExecuting = false;
                 this.isError = true;
                 this.wasExecuted = true;
-                this._isWaitingForResponse = false;
+                this.isWaitingForResponse = false;
                 this._triggerHooks();
                 reject(error);
               }),
@@ -105,51 +111,49 @@ export default class Request {
         );
     });
 
-    this._isWaitingForResponse = true;
-    this._currentApiCall = { args: callArgs, result: null };
+    this.isWaitingForResponse = true;
+    this.currentApiCall = { args: callArgs, result: null };
     return this;
   }
 
-  reload() {
-    const args = this._currentApiCall ? this._currentApiCall.args : [];
+  reload(): this {
+    const args = this.currentApiCall ? this.currentApiCall.args : [];
     this.error = null;
     return this.execute(...args);
   }
 
-  retry = () => this.reload();
-
-  isExecutingWithArgs(...args) {
+  isExecutingWithArgs(...args: any[]): boolean {
     return (
       this.isExecuting &&
-      this._currentApiCall &&
-      isEqual(this._currentApiCall.args, args)
+      this.currentApiCall &&
+      isEqual(this.currentApiCall.args, args)
     );
   }
 
-  @computed get isExecutingFirstTime() {
+  @computed get isExecutingFirstTime(): boolean {
     return !this.wasExecuted && this.isExecuting;
   }
 
   /* eslint-disable unicorn/no-thenable */
-  then(...args) {
-    if (!this._promise)
+  then(...args: any[]) {
+    if (!this.promise)
       throw new Error(
         'You have to call Request::execute before you can access it as promise',
       );
-    return this._promise.then(...args);
+    return this.promise.then(...args);
   }
 
-  catch(...args) {
-    if (!this._promise)
+  catch(...args: any[]) {
+    if (!this.promise)
       throw new Error(
         'You have to call Request::execute before you can access it as promise',
       );
-    return this._promise.catch(...args);
+    return this.promise.catch(...args);
   }
 
-  _triggerHooks() {
-    for (const hook of Request._hooks) hook(this);
+  _triggerHooks(): void {
+    for (const hook of Request._hooks) {
+      hook(this);
+    }
   }
-
-  reset = () => this._reset();
 }
