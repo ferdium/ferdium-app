@@ -1,4 +1,5 @@
 import { observable, action, makeObservable } from 'mobx';
+import { Response } from 'electron';
 import { Actions } from '../actions/lib/actions';
 import { ApiInterface } from '../api';
 import { Stores } from '../@types/stores.types';
@@ -11,12 +12,8 @@ interface Message {
     message?: string;
     status?: number;
   };
-  request?: {
-    result: any;
-    wasExecuted: any;
-    method: any;
-  };
-  response?: any;
+  request?: Request;
+  response?: Response;
   server?: any;
   info?: any;
   url?: string;
@@ -28,7 +25,7 @@ export default class GlobalErrorStore extends TypedStore {
 
   @observable messages: Message[] = [];
 
-  @observable response: object = {};
+  @observable response: Response = {} as Response;
 
   // TODO: Get rid of the @ts-ignores in this function.
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
@@ -85,21 +82,15 @@ export default class GlobalErrorStore extends TypedStore {
     }
   }
 
-  @action _handleRequests = async (request: {
-    isError: any;
-    error: { json: () => object | PromiseLike<object> };
-    result: any;
-    wasExecuted: any;
-    _method: any;
-  }): Promise<void> => {
+  @action _handleRequests = async (request: Request): Promise<void> => {
     if (request.isError) {
       this.error = request.error;
 
-      if (request.error.json) {
+      if (request.error && request.error.json) {
         try {
           this.response = await request.error.json();
         } catch {
-          this.response = {};
+          this.response = {} as Response;
         }
         if (this.error?.status === 401) {
           window['ferdium'].stores.app.authRequestFailed = true;
@@ -111,8 +102,8 @@ export default class GlobalErrorStore extends TypedStore {
         request: {
           result: request.result,
           wasExecuted: request.wasExecuted,
-          method: request._method,
-        },
+          method: request.method,
+        } as Request,
         error: this.error,
         response: this.response,
         server: window['ferdium'].stores.settings.app.server,
