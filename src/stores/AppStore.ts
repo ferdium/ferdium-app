@@ -494,7 +494,7 @@ export default class AppStore extends TypedStore {
       ),
     );
 
-    await clearAppCache._promise;
+    await clearAppCache.promise;
 
     await sleep(ms('1s'));
 

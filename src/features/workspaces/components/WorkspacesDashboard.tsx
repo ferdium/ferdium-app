@@ -1,18 +1,16 @@
 /* eslint-disable react/jsx-no-useless-fragment */
-import { Component } from 'react';
-import PropTypes from 'prop-types';
-import { observer, PropTypes as MobxPropTypes, inject } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
-import injectSheet from 'react-jss';
-
+import { Component, ReactElement } from 'react';
+import { observer } from 'mobx-react';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
+import withStyles, { WithStylesProps } from 'react-jss';
 import Infobox from '../../../components/ui/infobox/index';
 import Loader from '../../../components/ui/Loader';
 import WorkspaceItem from './WorkspaceItem';
 import CreateWorkspaceForm from './CreateWorkspaceForm';
 import Request from '../../../stores/lib/Request';
 import Appear from '../../../components/ui/effects/Appear';
-import UIStore from '../../../stores/UIStore';
 import { H1 } from '../../../components/ui/headline';
+import Workspace from '../models/Workspace';
 
 const messages = defineMessages({
   headline: {
@@ -70,19 +68,19 @@ const styles = {
   },
 };
 
-class WorkspacesDashboard extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    getUserWorkspacesRequest: PropTypes.instanceOf(Request).isRequired,
-    createWorkspaceRequest: PropTypes.instanceOf(Request).isRequired,
-    deleteWorkspaceRequest: PropTypes.instanceOf(Request).isRequired,
-    updateWorkspaceRequest: PropTypes.instanceOf(Request).isRequired,
-    onCreateWorkspaceSubmit: PropTypes.func.isRequired,
-    onWorkspaceClick: PropTypes.func.isRequired,
-    workspaces: MobxPropTypes.arrayOrObservableArray.isRequired,
-  };
+interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
+  getUserWorkspacesRequest: Request;
+  createWorkspaceRequest: Request;
+  deleteWorkspaceRequest: Request;
+  updateWorkspaceRequest: Request;
+  onCreateWorkspaceSubmit: (workspace: Workspace) => void;
+  onWorkspaceClick: (workspace: Workspace) => void;
+  workspaces: Workspace[];
+}
 
-  render() {
+@observer
+class WorkspacesDashboard extends Component<IProps> {
+  render(): ReactElement {
     const {
       classes,
       getUserWorkspacesRequest,
@@ -108,7 +106,7 @@ class WorkspacesDashboard extends Component {
               <Infobox
                 type="success"
                 icon="checkbox-marked-circle-outline"
-                dismissable
+                dismissible
                 onUnmount={updateWorkspaceRequest.reset}
               >
                 {intl.formatMessage(messages.updatedInfo)}
@@ -122,7 +120,7 @@ class WorkspacesDashboard extends Component {
               <Infobox
                 type="success"
                 icon="checkbox-marked-circle-outline"
-                dismissable
+                dismissible
                 onUnmount={deleteWorkspaceRequest.reset}
               >
                 {intl.formatMessage(messages.deletedInfo)}
@@ -147,7 +145,7 @@ class WorkspacesDashboard extends Component {
                   icon="alert"
                   type="danger"
                   ctaLabel={intl.formatMessage(messages.tryReloadWorkspaces)}
-                  ctaLoading={getUserWorkspacesRequest.isExecuting}
+                  // ctaLoading={getUserWorkspacesRequest.isExecuting} //  TODO - [TECH DEBT][PROP NOT USED IN COMPONENT] need to check and update
                   ctaOnClick={getUserWorkspacesRequest.retry}
                 >
                   {intl.formatMessage(messages.workspacesRequestFailed)}
@@ -165,7 +163,7 @@ class WorkspacesDashboard extends Component {
                       </p>
                     </div>
                   ) : (
-                    <table className={classes.table}>
+                    <table className={classes.table} role="grid">
                       {/* ===== Workspaces list ===== */}
                       <tbody>
                         {workspaces.map(workspace => (
@@ -189,13 +187,5 @@ class WorkspacesDashboard extends Component {
 }
 
 export default injectIntl(
-  inject('stores')(
-    injectSheet(styles, { injectTheme: true })(observer(WorkspacesDashboard)),
-  ),
+  withStyles(styles, { injectTheme: true })(WorkspacesDashboard),
 );
-
-WorkspacesDashboard.propTypes = {
-  stores: PropTypes.shape({
-    ui: PropTypes.instanceOf(UIStore).isRequired,
-  }).isRequired,
-};

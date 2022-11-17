@@ -2,6 +2,7 @@ import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
 import withStyles, { WithStylesProps } from 'react-jss';
 import classnames from 'classnames';
+import { noop } from 'lodash';
 import Toggle from '../../../components/ui/toggle';
 import ServiceIcon from '../../../components/ui/ServiceIcon';
 import Service from '../../../models/Service';
@@ -39,9 +40,9 @@ interface IProps extends WithStylesProps<typeof styles> {
 class WorkspaceServiceListItem extends Component<IProps> {
   render(): ReactElement {
     const { classes, isInWorkspace, onToggle, service } = this.props;
-
     return (
-      <div className={classes.listItem}>
+      // onclick in below div used to fix bug raised under toggle duplicate component removal
+      <div className={classes.listItem} onClick={onToggle} onKeyDown={noop}>
         <ServiceIcon className={classes.serviceIcon} service={service} />
         <span
           className={classnames([

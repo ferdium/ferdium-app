@@ -74,8 +74,8 @@ export default class RecipesStore extends TypedStore {
 
   // Actions
   async _install({ recipeId }): Promise<Recipe> {
-    const recipe = await this.installRecipeRequest.execute(recipeId)._promise;
-    await this.allRecipesRequest.invalidate({ immediately: true })._promise;
+    const recipe = await this.installRecipeRequest.execute(recipeId).promise;
+    await this.allRecipesRequest.invalidate({ immediately: true }).promise;
 
     return recipe;
   }
@@ -128,7 +128,7 @@ export default class RecipesStore extends TypedStore {
       const update = updates[i];
 
       this.actions.recipe.install({ recipeId: update });
-      await this.installRecipeRequest._promise;
+      await this.installRecipeRequest.promise;
 
       this.installRecipeRequest.reset();
 
@@ -158,10 +158,10 @@ export default class RecipesStore extends TypedStore {
         debug(`Recipe ${recipeId} is not installed, trying to install it`);
 
         const recipe = await this.installRecipeRequest.execute(recipeId)
-          ._promise;
+          .promise;
         if (recipe) {
           await this.allRecipesRequest.invalidate({ immediately: true })
-            ._promise;
+            .promise;
           router.push(`/settings/services/add/${recipeId}`);
         } else {
           router.push('/settings/recipes');

@@ -8,7 +8,7 @@ import { observer } from 'mobx-react';
 import { TitleBar } from 'electron-react-titlebar/renderer';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { mdiFlash } from '@mdi/js';
-import { GlobalError } from '../../@types/ferdium-components.types';
+import { Response } from 'electron';
 import Link from '../ui/Link';
 import InfoBar from '../ui/InfoBar';
 import { Component as PublishDebugInfo } from '../../features/publishDebugInfo';
@@ -22,7 +22,7 @@ import { serverName } from '../../api/apiBase';
 
 export interface IProps extends WrappedComponentProps {
   children: ReactElement;
-  error: GlobalError;
+  error: Response;
   isOnline: boolean;
   isAPIHealthy: boolean;
   retryHealthCheck: MouseEventHandler<HTMLButtonElement>;
@@ -106,9 +106,7 @@ class AuthLayout extends Component<IProps, IState> {
           )}
           <div className="auth__layout">
             {/* Inject globalError into children  */}
-            {cloneElement(children, {
-              error,
-            })}
+            {cloneElement(children, { error })}
           </div>
           {/* </div> */}
           <Link

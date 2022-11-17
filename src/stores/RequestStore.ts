@@ -37,6 +37,9 @@ export default class RequestStore extends TypedStore {
     );
 
     this.registerReactions([this._autoRetry.bind(this)]);
+
+    this.userInfoRequest = {} as CachedRequest;
+    this.servicesRequest = {} as CachedRequest;
   }
 
   async setup(): Promise<void> {

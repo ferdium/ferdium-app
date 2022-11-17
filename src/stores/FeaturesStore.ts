@@ -45,7 +45,7 @@ export default class FeaturesStore extends TypedStore {
       this._monitorLoginStatus.bind(this),
     ]);
 
-    await this.featuresRequest._promise;
+    await this.featuresRequest.promise;
     setTimeout(this._setupFeatures.bind(this), 1);
   }
 

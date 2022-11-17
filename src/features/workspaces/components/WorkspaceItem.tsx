@@ -1,6 +1,8 @@
-import { Component } from 'react';
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */ // TODO - [TS DEBT] Need to check and remove it
+import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
-import injectSheet from 'react-jss';
+import withStyles, { WithStylesProps } from 'react-jss';
+import { noop } from 'lodash';
 import Workspace from '../models/Workspace';
 
 const styles = theme => ({
@@ -14,24 +16,24 @@ const styles = theme => ({
   columnName: {},
 });
 
-type Props = {
-  classes: any;
-  workspace: typeof Workspace;
-  onItemClick: (workspace) => void;
-};
+interface IProps extends WithStylesProps<typeof styles> {
+  workspace: Workspace;
+  onItemClick: (workspace: Workspace) => void;
+}
 
-class WorkspaceItem extends Component<Props> {
-  render() {
+@observer
+class WorkspaceItem extends Component<IProps> {
+  render(): ReactElement {
     const { classes, workspace, onItemClick } = this.props;
 
     return (
       <tr className={classes.row}>
-        <td onClick={() => onItemClick(workspace)}>{workspace.name}</td>
+        <td onClick={() => onItemClick(workspace)} onKeyDown={noop}>
+          {workspace.name}
+        </td>
       </tr>
     );
   }
 }
 
-export default injectSheet(styles, { injectTheme: true })(
-  observer(WorkspaceItem),
-);
+export default withStyles(styles, { injectTheme: true })(WorkspaceItem);

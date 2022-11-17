@@ -187,7 +187,7 @@ export default class UserStore extends TypedStore {
 
   // Actions
   @action async _login({ email, password }): Promise<void> {
-    const authToken = await this.loginRequest.execute(email, password)._promise;
+    const authToken = await this.loginRequest.execute(email, password).promise;
     this._setUserData(authToken);
 
     this.stores.router.push('/');
@@ -209,6 +209,8 @@ export default class UserStore extends TypedStore {
     plan,
     currency,
   }): Promise<void> {
+    // TODO - [TS DEBT] Need to find a way proper to implement promise's then and catch in request class
+    // @ts-ignore
     const authToken = await this.signupRequest.execute({
       firstname,
       lastname,
@@ -231,14 +233,14 @@ export default class UserStore extends TypedStore {
   @action async _retrievePassword({ email }): Promise<void> {
     const request = this.passwordRequest.execute(email);
 
-    await request._promise;
+    await request.promise;
     this.actionStatus = request.result.status || [];
   }
 
   @action async _invite({ invites }): Promise<void> {
     const data = invites.filter(invite => invite.email !== '');
 
-    const response = await this.inviteRequest.execute(data)._promise;
+    const response = await this.inviteRequest.execute(data).promise;
 
     this.actionStatus = response.status || [];
 
@@ -251,8 +253,7 @@ export default class UserStore extends TypedStore {
   @action async _update({ userData }): Promise<void> {
     if (!this.isLoggedIn) return;
 
-    const response = await this.updateUserInfoRequest.execute(userData)
-      ._promise;
+    const response = await this.updateUserInfoRequest.execute(userData).promise;
 
     this.getUserInfoRequest.patch(() => response.data);
     this.actionStatus = response.status || [];
@@ -299,7 +300,7 @@ export default class UserStore extends TypedStore {
         data: service,
       });
       // eslint-disable-next-line no-await-in-loop
-      await this.stores.services.createServiceRequest._promise;
+      await this.stores.services.createServiceRequest.promise;
     }
 
     this.isImportLegacyServicesExecuting = false;
@@ -349,7 +350,7 @@ export default class UserStore extends TypedStore {
     if (this.isLoggedIn) {
       let data;
       try {
-        data = await this.getUserInfoRequest.execute()._promise;
+        data = await this.getUserInfoRequest.execute().promise;
       } catch {
         return;
       }
@@ -406,7 +407,7 @@ export default class UserStore extends TypedStore {
 
   async _migrateUserLocale(): Promise<void> {
     try {
-      await this.getUserInfoRequest._promise;
+      await this.getUserInfoRequest.promise;
     } catch {
       return;
     }

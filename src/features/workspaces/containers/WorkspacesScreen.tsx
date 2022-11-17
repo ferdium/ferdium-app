@@ -10,8 +10,13 @@ import {
   getUserWorkspacesRequest,
   updateWorkspaceRequest,
 } from '../api';
+import Workspace from '../models/Workspace';
 
-class WorkspacesScreen extends Component<StoresProps> {
+interface IProps extends StoresProps {}
+
+@inject('stores', 'actions')
+@observer
+class WorkspacesScreen extends Component<IProps> {
   render() {
     const { actions } = this.props;
     return (
@@ -23,11 +28,13 @@ class WorkspacesScreen extends Component<StoresProps> {
           deleteWorkspaceRequest={deleteWorkspaceRequest}
           updateWorkspaceRequest={updateWorkspaceRequest}
           onCreateWorkspaceSubmit={data => actions.workspaces.create(data)}
-          onWorkspaceClick={w => actions.workspaces.edit({ workspace: w })}
+          onWorkspaceClick={(workspace: Workspace) =>
+            actions.workspaces.edit({ workspace })
+          }
         />
       </ErrorBoundary>
     );
   }
 }
 
-export default inject('stores', 'actions')(observer(WorkspacesScreen));
+export default WorkspacesScreen;
