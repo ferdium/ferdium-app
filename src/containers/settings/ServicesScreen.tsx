@@ -1,39 +1,48 @@
 import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
-
 import { StoresProps } from '../../@types/ferdium-components.types';
 import ServicesDashboard from '../../components/settings/services/ServicesDashboard';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 
-class ServicesScreen extends Component<StoresProps> {
+interface IProps extends StoresProps {}
+
+@inject('stores', 'actions')
+@observer
+class ServicesScreen extends Component<IProps> {
   componentWillUnmount(): void {
     this.props.actions.service.resetFilter();
     this.props.actions.service.resetStatus();
   }
 
-  deleteService(): void {
-    this.props.actions.service.deleteService();
-    this.props.actions.service.resetFilter();
-  }
+  // TODO - [TECH DEBT] need to check it
+  // deleteService(): void {
+  //   this.props.actions.service.deleteService();
+  //   this.props.actions.service.resetFilter();
+  // }
 
   render(): ReactElement {
-    const { user, services, router } = this.props.stores;
-    const { toggleService, filter, resetFilter } = this.props.actions.service;
+    const {
+      // user,
+      services,
+      router,
+    } = this.props.stores;
+    const {
+      // toggleService,
+      filter,
+      resetFilter,
+    } = this.props.actions.service;
     const isLoading = services.allServicesRequest.isExecuting;
-
-    let allServices = services.all;
-    if (services.filterNeedle !== null) {
-      allServices = services.filtered;
-    }
+    const allServices =
+      services.filterNeedle !== null ? services.filtered : services.all;
 
     return (
       <ErrorBoundary>
         <ServicesDashboard
-          user={user.data}
+          // user={user.data} //  TODO - [TECH DEBT][PROPS NOT EXIST IN COMPONENT] check it later
           services={allServices}
           status={services.actionStatus}
-          deleteService={() => this.deleteService()}
-          toggleService={toggleService}
+          // deleteService={() => this.deleteService()} //  TODO - [TECH DEBT][PROPS NOT EXIST IN COMPONENT] check it later
+          // toggleService={toggleService} //  TODO - [TECH DEBT][PROPS NOT USED IN COMPONENT] check it later
           isLoading={isLoading}
           filterServices={filter}
           resetFilter={resetFilter}
@@ -50,4 +59,4 @@ class ServicesScreen extends Component<StoresProps> {
   }
 }
 
-export default inject('stores', 'actions')(observer(ServicesScreen));
+export default ServicesScreen;

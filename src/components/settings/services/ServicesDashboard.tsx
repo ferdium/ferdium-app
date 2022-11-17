@@ -1,9 +1,8 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
-import { observer, PropTypes as MobxPropTypes } from 'mobx-react';
+import { Component, ReactElement } from 'react';
+import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
-import { defineMessages, injectIntl } from 'react-intl';
-
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
+import { To } from 'history';
 import SearchInput from '../../ui/SearchInput';
 import Infobox from '../../ui/Infobox';
 import Loader from '../../ui/Loader';
@@ -11,6 +10,7 @@ import FAB from '../../ui/FAB';
 import ServiceItem from './ServiceItem';
 import Appear from '../../ui/effects/Appear';
 import { H1 } from '../../ui/headline';
+import Service from '../../../models/Service';
 
 const messages = defineMessages({
   headline: {
@@ -51,38 +51,35 @@ const messages = defineMessages({
   },
 });
 
-class ServicesDashboard extends Component {
-  static propTypes = {
-    services: MobxPropTypes.arrayOrObservableArray.isRequired,
-    isLoading: PropTypes.bool.isRequired,
-    toggleService: PropTypes.func.isRequired,
-    filterServices: PropTypes.func.isRequired,
-    resetFilter: PropTypes.func.isRequired,
-    goTo: PropTypes.func.isRequired,
-    servicesRequestFailed: PropTypes.bool.isRequired,
-    retryServicesRequest: PropTypes.func.isRequired,
-    status: MobxPropTypes.arrayOrObservableArray.isRequired,
-    searchNeedle: PropTypes.string,
-  };
+interface IProps extends WrappedComponentProps {
+  services: Service[];
+  isLoading: boolean;
+  // toggleService: any; // TODO - - [TECH DEBT] check it later
+  filterServices: any;
+  resetFilter: () => void;
+  goTo: (to: To, state?: any) => void;
+  servicesRequestFailed: boolean;
+  retryServicesRequest: () => void;
+  status: any;
+  searchNeedle: string | null;
+}
 
-  static defaultProps = {
-    searchNeedle: '',
-  };
-
-  render() {
+@observer
+class ServicesDashboard extends Component<IProps> {
+  render(): ReactElement {
     const {
       services,
       isLoading,
-      toggleService,
+      // toggleService, // TODO - - [TECH DEBT] check it later
       filterServices,
       resetFilter,
       goTo,
       servicesRequestFailed,
       retryServicesRequest,
       status,
-      searchNeedle,
+      searchNeedle = '',
+      intl,
     } = this.props;
-    const { intl } = this.props;
 
     return (
       <div className="settings__main">
@@ -115,7 +112,7 @@ class ServicesDashboard extends Component {
               <Infobox
                 type="success"
                 icon="checkbox-marked-circle-outline"
-                dismissable
+                dismissible
               >
                 {intl.formatMessage(messages.updatedInfo)}
               </Infobox>
@@ -127,7 +124,7 @@ class ServicesDashboard extends Component {
               <Infobox
                 type="success"
                 icon="checkbox-marked-circle-outline"
-                dismissable
+                dismissible
               >
                 {intl.formatMessage(messages.deletedInfo)}
               </Infobox>
@@ -160,15 +157,16 @@ class ServicesDashboard extends Component {
           {isLoading ? (
             <Loader />
           ) : (
-            <table className="service-table">
+            <table className="service-table" role="grid">
               <tbody>
                 {services.map(service => (
                   <ServiceItem
                     key={service.id}
                     service={service}
-                    toggleAction={() =>
-                      toggleService({ serviceId: service.id })
-                    }
+                    // TODO -  - [TECH DEBT][PROPS NOT USED IN COMPONENT] check it later
+                    // toggleAction={() =>
+                    //   toggleService({ serviceId: service.id })
+                    // }
                     goToServiceForm={() =>
                       goTo(`/settings/services/edit/${service.id}`)
                     }
@@ -178,7 +176,7 @@ class ServicesDashboard extends Component {
             </table>
           )}
 
-          <FAB>
+          <FAB className="FAB-class">
             <Link to="/settings/recipes">+</Link>
           </FAB>
         </div>
@@ -187,4 +185,4 @@ class ServicesDashboard extends Component {
   }
 }
 
-export default injectIntl(observer(ServicesDashboard));
+export default injectIntl(ServicesDashboard);

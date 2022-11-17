@@ -11,11 +11,11 @@ import AppLoader from '../../components/ui/AppLoader';
 import WorkspaceDrawer from '../../features/workspaces/components/WorkspaceDrawer';
 import { workspaceStore } from '../../features/workspaces';
 
-interface AppLayoutContainerProps extends StoresProps {}
+interface IProps extends StoresProps {}
 
 @inject('stores', 'actions')
 @observer
-class AppLayoutContainer extends Component<AppLayoutContainerProps> {
+class AppLayoutContainer extends Component<IProps> {
   render(): ReactElement {
     const { app, features, services, ui, settings, requests, user, router } =
       this.props.stores;
@@ -31,10 +31,10 @@ class AppLayoutContainer extends Component<AppLayoutContainerProps> {
 
     const {
       setActive,
-      handleIPCMessage,
+      // handleIPCMessage,
       setWebviewReference,
       detachService,
-      openWindow,
+      // openWindow,
       reorder,
       reload,
       toggleNotifications,
@@ -118,10 +118,10 @@ class AppLayoutContainer extends Component<AppLayoutContainerProps> {
     const servicesContainer = (
       <Services
         services={services.allDisplayedUnordered}
-        handleIPCMessage={handleIPCMessage}
+        // handleIPCMessage={handleIPCMessage} // TODO - - [TECH DEBT] check it later
         setWebviewReference={setWebviewReference}
         detachService={detachService}
-        openWindow={openWindow}
+        // openWindow={openWindow} // TODO - - [TECH DEBT] check it later
         reload={reload}
         openSettings={openSettings}
         update={updateService}

@@ -1,13 +1,9 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
-import injectSheet from 'react-jss';
-
-import Button from '../../../ui/button';
-
-import styles from './styles';
-import { H1 } from '../../../ui/headline';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
+import withStyles, { WithStylesProps } from 'react-jss';
+import Button from '../../ui/button';
+import { H1 } from '../../ui/headline';
 
 const messages = defineMessages({
   headline: {
@@ -32,18 +28,43 @@ const messages = defineMessages({
   },
 });
 
-class WebviewErrorHandler extends Component {
-  static propTypes = {
-    name: PropTypes.string.isRequired,
-    reload: PropTypes.func.isRequired,
-    edit: PropTypes.func.isRequired,
-    errorMessage: PropTypes.string.isRequired,
-    classes: PropTypes.object.isRequired,
-  };
+const styles = theme => ({
+  component: {
+    left: 0,
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    zIndex: 0,
+    alignItems: 'center',
+    background: theme.colorWebviewErrorHandlerBackground,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    textAlign: 'center',
+  },
+  buttonContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    height: 'auto',
+    margin: [40, 0, 20],
 
-  render() {
-    const { name, reload, edit, errorMessage, classes } = this.props;
-    const { intl } = this.props;
+    '& button': {
+      margin: [0, 10, 0, 10],
+    },
+  },
+});
+
+interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
+  name: string;
+  reload: () => void;
+  edit: () => void;
+  errorMessage: string;
+}
+
+@observer
+class WebviewErrorHandler extends Component<IProps> {
+  render(): ReactElement {
+    const { name, reload, edit, errorMessage, classes, intl } = this.props;
 
     return (
       <div className={classes.component}>
@@ -71,5 +92,5 @@ class WebviewErrorHandler extends Component {
 }
 
 export default injectIntl(
-  injectSheet(styles, { injectTheme: true })(observer(WebviewErrorHandler)),
+  withStyles(styles, { injectTheme: true })(WebviewErrorHandler),
 );
