@@ -1,8 +1,6 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
-
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import Button from '../../ui/button';
 import { H1 } from '../../ui/headline';
 
@@ -17,15 +15,15 @@ const messages = defineMessages({
   },
 });
 
-class ServiceDisabled extends Component {
-  static propTypes = {
-    name: PropTypes.string.isRequired,
-    enable: PropTypes.func.isRequired,
-  };
+interface IProps extends WrappedComponentProps {
+  name: string;
+  enable: () => void;
+}
 
-  render() {
-    const { name, enable } = this.props;
-    const { intl } = this.props;
+@observer
+class ServiceDisabled extends Component<IProps> {
+  render(): ReactElement {
+    const { name, enable, intl } = this.props;
 
     return (
       <div className="services__info-layer">
@@ -40,4 +38,4 @@ class ServiceDisabled extends Component {
   }
 }
 
-export default injectIntl(observer(ServiceDisabled));
+export default injectIntl(ServiceDisabled);

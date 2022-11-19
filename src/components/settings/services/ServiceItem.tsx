@@ -1,10 +1,8 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
-import { defineMessages, injectIntl } from 'react-intl';
+import { Component, ReactElement } from 'react';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import ReactTooltip from 'react-tooltip';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
-
 import { mdiBellOff, mdiMessageBulletedOff, mdiPower } from '@mdi/js';
 import ServiceModel from '../../../models/Service';
 import Icon from '../../ui/icon';
@@ -24,16 +22,17 @@ const messages = defineMessages({
   },
 });
 
-class ServiceItem extends Component {
-  static propTypes = {
-    service: PropTypes.instanceOf(ServiceModel).isRequired,
-    goToServiceForm: PropTypes.func.isRequired,
-  };
+interface IProps extends WrappedComponentProps {
+  service: ServiceModel;
+  goToServiceForm: () => void;
+}
 
-  render() {
+@observer
+class ServiceItem extends Component<IProps> {
+  render(): ReactElement {
     const {
       service,
-      // toggleAction,
+      // toggleAction, //  TODO - [TECH DEBT][PROP NOT USED IN COMPONENT] check it later
       goToServiceForm,
     } = this.props;
     const { intl } = this.props;
@@ -45,7 +44,11 @@ class ServiceItem extends Component {
           'service-table__row--disabled': !service.isEnabled,
         })}
       >
-        <td className="service-table__column-icon" onClick={goToServiceForm}>
+        <td
+          className="service-table__column-icon"
+          onClick={goToServiceForm}
+          role="gridcell"
+        >
           <img
             src={service.icon}
             className={classnames({
@@ -55,10 +58,18 @@ class ServiceItem extends Component {
             alt=""
           />
         </td>
-        <td className="service-table__column-name" onClick={goToServiceForm}>
+        <td
+          className="service-table__column-name"
+          onClick={goToServiceForm}
+          role="gridcell"
+        >
           {service.name !== '' ? service.name : service.recipe.name}
         </td>
-        <td className="service-table__column-info" onClick={goToServiceForm}>
+        <td
+          className="service-table__column-info"
+          onClick={goToServiceForm}
+          role="gridcell"
+        >
           {service.isMuted && (
             <Icon
               icon={mdiBellOff}
@@ -66,7 +77,11 @@ class ServiceItem extends Component {
             />
           )}
         </td>
-        <td className="service-table__column-info" onClick={goToServiceForm}>
+        <td
+          className="service-table__column-info"
+          onClick={goToServiceForm}
+          role="gridcell"
+        >
           {!service.isEnabled && (
             <Icon
               icon={mdiPower}
@@ -74,7 +89,11 @@ class ServiceItem extends Component {
             />
           )}
         </td>
-        <td className="service-table__column-info" onClick={goToServiceForm}>
+        <td
+          className="service-table__column-info"
+          onClick={goToServiceForm}
+          role="gridcell"
+        >
           {!service.isNotificationEnabled && (
             <Icon
               icon={mdiMessageBulletedOff}
@@ -90,4 +109,4 @@ class ServiceItem extends Component {
   }
 }
 
-export default injectIntl(observer(ServiceItem));
+export default injectIntl(ServiceItem);

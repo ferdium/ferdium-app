@@ -1,9 +1,7 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import ms from 'ms';
-
 import Button from '../../ui/button';
 import { H1 } from '../../ui/headline';
 
@@ -27,21 +25,30 @@ const messages = defineMessages({
   },
 });
 
-class WebviewCrashHandler extends Component {
-  static propTypes = {
-    name: PropTypes.string.isRequired,
-    reload: PropTypes.func.isRequired,
-  };
+interface IProps extends WrappedComponentProps {
+  name: string;
+  reload: () => void;
+}
 
-  state = {
-    countdown: ms('10s'),
-  };
+interface IState {
+  countdown: number;
+}
 
-  countdownInterval = null;
+@observer
+class WebviewCrashHandler extends Component<IProps, IState> {
+  countdownInterval: NodeJS.Timer | undefined;
 
   countdownIntervalTimeout = ms('1s');
 
-  componentDidMount() {
+  constructor(props: IProps) {
+    super(props);
+
+    this.state = {
+      countdown: ms('10s'),
+    };
+  }
+
+  componentDidMount(): void {
     const { reload } = this.props;
 
     this.countdownInterval = setInterval(() => {
@@ -51,14 +58,13 @@ class WebviewCrashHandler extends Component {
 
       if (this.state.countdown <= 0) {
         reload();
-        clearInterval(this.countdownInterval);
+        clearInterval(this.countdownInterval!);
       }
     }, this.countdownIntervalTimeout);
   }
 
-  render() {
-    const { name, reload } = this.props;
-    const { intl } = this.props;
+  render(): ReactElement {
+    const { name, reload, intl } = this.props;
 
     return (
       <div className="services__info-layer">
@@ -81,4 +87,4 @@ class WebviewCrashHandler extends Component {
   }
 }
 
-export default injectIntl(observer(WebviewCrashHandler));
+export default injectIntl(WebviewCrashHandler);

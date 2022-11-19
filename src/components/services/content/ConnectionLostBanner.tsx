@@ -1,9 +1,7 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
-import injectSheet from 'react-jss';
-import { defineMessages, injectIntl } from 'react-intl';
-
+import withStyles, { WithStylesProps } from 'react-jss';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { mdiAlert } from '@mdi/js';
 import { LIVE_API_FERDIUM_WEBSITE } from '../../../config';
 import Icon from '../../ui/icon';
@@ -23,11 +21,10 @@ const messages = defineMessages({
   },
 });
 
-let buttonTransition = 'none';
-
-if (window && window.matchMedia('(prefers-reduced-motion: no-preference)')) {
-  buttonTransition = 'opacity 0.25s';
-}
+const buttonTransition =
+  window && window.matchMedia('(prefers-reduced-motion: no-preference)')
+    ? 'opacity 0.25s'
+    : 'none';
 
 const styles = theme => ({
   root: {
@@ -68,17 +65,15 @@ const styles = theme => ({
   },
 });
 
-class ConnectionLostBanner extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    name: PropTypes.string.isRequired,
-    reload: PropTypes.func.isRequired,
-  };
+interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
+  name: string;
+  reload: () => void;
+}
 
-  render() {
-    const { classes, name, reload } = this.props;
-
-    const { intl } = this.props;
+@observer
+class ConnectionLostBanner extends Component<IProps> {
+  render(): ReactElement {
+    const { classes, name, reload, intl } = this.props;
 
     return (
       <div className={classes.root}>
@@ -101,4 +96,4 @@ class ConnectionLostBanner extends Component {
   }
 }
 
-export default injectIntl(injectSheet(styles)(observer(ConnectionLostBanner)));
+export default injectIntl(withStyles(styles)(ConnectionLostBanner));

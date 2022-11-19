@@ -1,8 +1,7 @@
-import { Component } from 'react';
+import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
-import { defineMessages, injectIntl } from 'react-intl';
-
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import Infobox from '../../ui/Infobox';
 import Button from '../../ui/button';
 
@@ -25,8 +24,11 @@ const messages = defineMessages({
   },
 });
 
-class ServiceError extends Component {
-  render() {
+interface IProps extends WrappedComponentProps {}
+
+@observer
+class ServiceError extends Component<IProps> {
+  render(): ReactElement {
     const { intl } = this.props;
 
     return (
@@ -59,4 +61,4 @@ class ServiceError extends Component {
   }
 }
 
-export default injectIntl(observer(ServiceError));
+export default injectIntl(ServiceError);

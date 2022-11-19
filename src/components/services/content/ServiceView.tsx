@@ -1,52 +1,55 @@
-/* eslint-disable react/jsx-no-useless-fragment */
 import { Component } from 'react';
-import PropTypes from 'prop-types';
-import { autorun } from 'mobx';
+import { autorun, IReactionDisposer } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import classnames from 'classnames';
 import TopBarProgress from 'react-topbar-progress-indicator';
-
 import ServiceModel from '../../../models/Service';
 import StatusBarTargetUrl from '../../ui/StatusBarTargetUrl';
 import WebviewLoader from '../../ui/WebviewLoader';
 import WebviewCrashHandler from './WebviewCrashHandler';
-import WebviewErrorHandler from './ErrorHandlers/WebviewErrorHandler';
+import WebviewErrorHandler from './WebviewErrorHandler';
 import ServiceDisabled from './ServiceDisabled';
 import ServiceWebview from './ServiceWebview';
-import SettingsStore from '../../../stores/SettingsStore';
 import WebControlsScreen from '../../../features/webControls/containers/WebControlsScreen';
 import { CUSTOM_WEBSITE_RECIPE_ID } from '../../../config';
+import { RealStores } from '../../../stores';
 
-class ServiceView extends Component {
-  static propTypes = {
-    service: PropTypes.instanceOf(ServiceModel).isRequired,
-    setWebviewReference: PropTypes.func.isRequired,
-    detachService: PropTypes.func.isRequired,
-    reload: PropTypes.func.isRequired,
-    edit: PropTypes.func.isRequired,
-    enable: PropTypes.func.isRequired,
-    isActive: PropTypes.bool,
-    stores: PropTypes.shape({
-      settings: PropTypes.instanceOf(SettingsStore).isRequired,
-    }).isRequired,
-    isSpellcheckerEnabled: PropTypes.bool.isRequired,
-  };
+interface IProps {
+  service: ServiceModel;
+  setWebviewRef: () => void;
+  detachService: () => void;
+  reload: () => void;
+  edit: () => void;
+  enable: () => void;
+  // isActive?: boolean; // TODO - [TECH DEBT][PROP NOT USED IN COMPONENT] check it
+  stores?: RealStores;
+  isSpellcheckerEnabled: boolean;
+}
 
-  static defaultProps = {
-    isActive: false,
-  };
+interface IState {
+  forceRepaint: boolean;
+  targetUrl: string;
+  statusBarVisible: boolean;
+}
 
-  state = {
-    forceRepaint: false,
-    targetUrl: '',
-    statusBarVisible: false,
-  };
+@inject('stores', 'actions')
+@observer
+class ServiceView extends Component<IProps, IState> {
+  // hibernationTimer = null; //  TODO - [TS DEBT] class property not reassigned, need to find its purpose
 
-  hibernationTimer = null;
+  autorunDisposer: IReactionDisposer | undefined;
 
-  autorunDisposer = null;
+  forceRepaintTimeout: NodeJS.Timeout | undefined;
 
-  forceRepaintTimeout = null;
+  constructor(props: IProps) {
+    super(props);
+
+    this.state = {
+      forceRepaint: false,
+      targetUrl: '',
+      statusBarVisible: false,
+    };
+  }
 
   componentDidMount() {
     this.autorunDisposer = autorun(() => {
@@ -60,16 +63,16 @@ class ServiceView extends Component {
   }
 
   componentWillUnmount() {
-    this.autorunDisposer();
-    clearTimeout(this.forceRepaintTimeout);
-    clearTimeout(this.hibernationTimer);
+    this.autorunDisposer!();
+    clearTimeout(this.forceRepaintTimeout!);
+    // clearTimeout(this.hibernationTimer); //  TODO - [TS DEBT] class property not reassigned, need to find its purpose
   }
 
   render() {
     const {
       detachService,
       service,
-      setWebviewReference,
+      setWebviewRef,
       reload,
       edit,
       enable,
@@ -78,7 +81,7 @@ class ServiceView extends Component {
     } = this.props;
 
     const { navigationBarBehaviour, navigationBarManualActive } =
-      stores.settings.app;
+      stores!.settings.app;
 
     const showNavBar =
       navigationBarBehaviour === 'always' ||
@@ -93,10 +96,9 @@ class ServiceView extends Component {
       'services__webview--force-repaint': this.state.forceRepaint,
     });
 
-    let statusBar = null;
-    if (this.state.statusBarVisible) {
-      statusBar = <StatusBarTargetUrl text={this.state.targetUrl} />;
-    }
+    const statusBar = this.state.statusBarVisible ? (
+      <StatusBarTargetUrl text={this.state.targetUrl} />
+    ) : null;
 
     return (
       <div
@@ -109,7 +111,7 @@ class ServiceView extends Component {
             {service.hasCrashed && (
               <WebviewCrashHandler
                 name={service.recipe.name}
-                webview={service.webview}
+                // webview={service.webview} //  TODO - [TECH DEBT][PROPS NOT EXIST IN COMPONENT] check it
                 reload={reload}
               />
             )}
@@ -138,7 +140,7 @@ class ServiceView extends Component {
             {service.isActive && (
               <ServiceDisabled
                 name={service.name !== '' ? service.name : service.recipe.name}
-                webview={service.webview}
+                // webview={service.webview} //  TODO - [TECH DEBT][PROPS NOT EXIST IN COMPONENT] check it
                 enable={enable}
               />
             )}
@@ -150,7 +152,7 @@ class ServiceView extends Component {
                 {showNavBar && <WebControlsScreen service={service} />}
                 <ServiceWebview
                   service={service}
-                  setWebviewReference={setWebviewReference}
+                  setWebviewReference={setWebviewRef}
                   detachService={detachService}
                   isSpellcheckerEnabled={isSpellcheckerEnabled}
                 />
@@ -187,4 +189,4 @@ class ServiceView extends Component {
   }
 }
 
-export default inject('stores', 'actions')(observer(ServiceView));
+export default ServiceView;
