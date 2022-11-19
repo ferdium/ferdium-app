@@ -650,7 +650,7 @@ class EditSettingsForm extends Component<IProps, IState> {
                   <>
                     <Slider
                       type="number"
-                      onChange={e => this.submit(e)}
+                      onSliderChange={e => this.submit(e)}
                       field={form.$('grayscaleServicesDim')}
                     />
                     <Hr />

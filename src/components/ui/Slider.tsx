@@ -1,32 +1,34 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { ChangeEvent, Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
-import { Field } from 'mobx-react-form';
+import { noop } from 'lodash';
 
-// Should this file be converted into the coding style similar to './toggle/index.tsx'?
-class Slider extends Component {
-  static propTypes = {
-    field: PropTypes.instanceOf(Field).isRequired,
-    className: PropTypes.string,
-    showLabel: PropTypes.bool,
-    disabled: PropTypes.bool,
-  };
+interface IProps {
+  field: any;
+  className?: string;
+  showLabel?: boolean;
+  disabled?: boolean;
+  type?: 'range' | 'number';
+  onSliderChange?: (e: ChangeEvent) => void;
+}
 
-  static defaultProps = {
-    className: '',
-    showLabel: true,
-    disabled: false,
-  };
-
-  onChange(e) {
-    const { field } = this.props;
-
+// TODO - [TS DEBT] Should this file be converted into the coding style similar to './toggle/index.tsx'?
+@observer
+class Slider extends Component<IProps> {
+  onChange(e: ChangeEvent<HTMLInputElement>): void {
+    const { field, onSliderChange = noop } = this.props;
     field.onChange(e);
+    onSliderChange(e);
   }
 
-  render() {
-    const { field, className, showLabel, disabled } = this.props;
+  render(): ReactElement {
+    const {
+      field,
+      className = '',
+      showLabel = true,
+      disabled = false,
+      type = 'range',
+    } = this.props;
 
     if (field.value === '' && field.default !== '') {
       field.value = field.default;
@@ -43,7 +45,7 @@ class Slider extends Component {
         <div className="slider-container">
           <input
             className="slider"
-            type="range"
+            type={type}
             id={field.id}
             name={field.name}
             value={field.value}
@@ -64,4 +66,4 @@ class Slider extends Component {
   }
 }
 
-export default observer(Slider);
+export default Slider;
