@@ -1,24 +1,18 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
-
 import Appear from './effects/Appear';
 
-// Should this file be converted into the coding style similar to './toggle/index.tsx'?
-class StatusBarTargetUrl extends Component {
-  static propTypes = {
-    className: PropTypes.string,
-    text: PropTypes.string,
-  };
+interface IProps {
+  className?: string;
+  text?: string;
+}
 
-  static defaultProps = {
-    className: '',
-    text: '',
-  };
-
+// TODO - [TS DEBT] Should this file be converted into the coding style similar to './toggle/index.tsx'?
+@observer
+class StatusBarTargetUrl extends Component<IProps> {
   render() {
-    const { className, text } = this.props;
+    const { className = '', text = '' } = this.props;
 
     return (
       <Appear
@@ -33,4 +27,4 @@ class StatusBarTargetUrl extends Component {
   }
 }
 
-export default observer(StatusBarTargetUrl);
+export default StatusBarTargetUrl;
