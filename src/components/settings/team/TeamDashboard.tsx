@@ -1,11 +1,9 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import ReactTooltip from 'react-tooltip';
-import injectSheet from 'react-jss';
+import withStyles, { WithStylesProps } from 'react-jss';
 import classnames from 'classnames';
-
 import Loader from '../../ui/Loader';
 import Button from '../../ui/button';
 import Infobox from '../../ui/Infobox';
@@ -99,17 +97,17 @@ const styles = {
   },
 };
 
-class TeamDashboard extends Component {
-  static propTypes = {
-    isLoading: PropTypes.bool.isRequired,
-    userInfoRequestFailed: PropTypes.bool.isRequired,
-    retryUserInfoRequest: PropTypes.func.isRequired,
-    openTeamManagement: PropTypes.func.isRequired,
-    classes: PropTypes.object.isRequired,
-    server: PropTypes.string.isRequired,
-  };
+interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
+  isLoading: boolean;
+  userInfoRequestFailed: boolean;
+  retryUserInfoRequest: () => void;
+  openTeamManagement: () => void;
+  server: string;
+}
 
-  render() {
+@observer
+class TeamDashboard extends Component<IProps> {
+  render(): ReactElement {
     const {
       isLoading,
       userInfoRequestFailed,
@@ -117,68 +115,65 @@ class TeamDashboard extends Component {
       openTeamManagement,
       classes,
       server,
+      intl,
     } = this.props;
-    const { intl } = this.props;
 
-    if (server === LIVE_FRANZ_API) {
-      return (
-        <div className="settings__main">
-          <div className="settings__header">
-            <span className="settings__header-item">
-              {intl.formatMessage(messages.headline)}
-            </span>
-          </div>
-          <div className="settings__body">
-            {isLoading && <Loader />}
-
-            {!isLoading && userInfoRequestFailed && (
-              <Infobox
-                icon="alert"
-                type="danger"
-                ctaLabel={intl.formatMessage(messages.tryReloadUserInfoRequest)}
-                ctaLoading={isLoading}
-                ctaOnClick={retryUserInfoRequest}
-              >
-                {intl.formatMessage(messages.userInfoRequestFailed)}
-              </Infobox>
-            )}
-
-            {!userInfoRequestFailed && !isLoading && (
-              <>
-                <H1
-                  className={classnames({
-                    [classes.headline]: true,
-                    [classes.headlineWithSpacing]: true,
-                  })}
-                >
-                  {intl.formatMessage(messages.contentHeadline)}
-                </H1>
-                <div className={classes.container}>
-                  <div className={classes.content}>
-                    <p>{intl.formatMessage(messages.intro)}</p>
-                    <p>{intl.formatMessage(messages.copy)}</p>
-                  </div>
-                  <img
-                    className={classes.image}
-                    src="https://cdn.franzinfra.com/announcements/assets/teams.png"
-                    alt="Ferdium for Teams"
-                  />
-                </div>
-                <div className={classes.buttonContainer}>
-                  <Button
-                    label={intl.formatMessage(messages.manageButton)}
-                    onClick={openTeamManagement}
-                    className={classes.cta}
-                  />
-                </div>
-              </>
-            )}
-          </div>
-          <ReactTooltip place="right" type="dark" effect="solid" />
+    return server === LIVE_FRANZ_API ? (
+      <div className="settings__main">
+        <div className="settings__header">
+          <span className="settings__header-item">
+            {intl.formatMessage(messages.headline)}
+          </span>
         </div>
-      );
-    }
-    return (
+        <div className="settings__body">
+          {isLoading && <Loader />}
+
+          {!isLoading && userInfoRequestFailed && (
+            <Infobox
+              icon="alert"
+              type="danger"
+              ctaLabel={intl.formatMessage(messages.tryReloadUserInfoRequest)}
+              ctaLoading={isLoading}
+              ctaOnClick={retryUserInfoRequest}
+            >
+              {intl.formatMessage(messages.userInfoRequestFailed)}
+            </Infobox>
+          )}
+
+          {!userInfoRequestFailed && !isLoading && (
+            <>
+              <H1
+                className={classnames({
+                  [classes.headline]: true,
+                  [classes.headlineWithSpacing]: true,
+                })}
+              >
+                {intl.formatMessage(messages.contentHeadline)}
+              </H1>
+              <div className={classes.container}>
+                <div className={classes.content}>
+                  <p>{intl.formatMessage(messages.intro)}</p>
+                  <p>{intl.formatMessage(messages.copy)}</p>
+                </div>
+                <img
+                  className={classes.image}
+                  src="https://cdn.franzinfra.com/announcements/assets/teams.png"
+                  alt="Ferdium for Teams"
+                />
+              </div>
+              <div className={classes.buttonContainer}>
+                <Button
+                  label={intl.formatMessage(messages.manageButton)}
+                  onClick={openTeamManagement}
+                  className={classes.cta}
+                />
+              </div>
+            </>
+          )}
+        </div>
+        <ReactTooltip place="right" type="dark" effect="solid" />
+      </div>
+    ) : (
       <div className="settings__main">
         <div className="settings__header">
           <span className="settings__header-item">
@@ -205,5 +200,5 @@ class TeamDashboard extends Component {
 }
 
 export default injectIntl(
-  injectSheet(styles, { injectTheme: true })(observer(TeamDashboard)),
+  withStyles(styles, { injectTheme: true })(TeamDashboard),
 );
