@@ -1,11 +1,10 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, createRef, ReactElement, MouseEvent } from 'react';
 import { observer } from 'mobx-react';
-import injectSheet from 'react-jss';
+import withStyles, { WithStylesProps } from 'react-jss';
 import Webview from 'react-electron-web-view';
 import classnames from 'classnames';
-
 import { TODOS_PARTITION_ID } from '../../../config';
+import { TodoClientMessage } from '../actions';
 
 const styles = theme => ({
   root: {
@@ -48,51 +47,71 @@ const styles = theme => ({
   },
 });
 
-class TodosWebview extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    isTodosServiceActive: PropTypes.bool.isRequired,
-    isVisible: PropTypes.bool.isRequired,
-    handleClientMessage: PropTypes.func.isRequired,
-    setTodosWebview: PropTypes.func.isRequired,
-    resize: PropTypes.func.isRequired,
-    width: PropTypes.number.isRequired,
-    minWidth: PropTypes.number.isRequired,
-    userAgent: PropTypes.string.isRequired,
-    todoUrl: PropTypes.string.isRequired,
-    isTodoUrlValid: PropTypes.bool.isRequired,
-  };
+interface IProps extends WithStylesProps<typeof styles> {
+  isTodosServiceActive: boolean;
+  isVisible: boolean;
+  handleClientMessage: (channel: string, message: TodoClientMessage) => void;
+  setTodosWebview: (webView: Webview) => void;
+  resize: (newWidth: number) => void;
+  width: number;
+  minWidth: number;
+  userAgent: string;
+  todoUrl: string;
+  isTodoUrlValid: boolean;
+}
 
-  state = {
-    isDragging: false,
-    width: 300,
-  };
+interface IState {
+  isDragging: boolean;
+  width: number;
+  initialPos: number;
+  delta: number;
+}
+
+@observer
+class TodosWebview extends Component<IProps, IState> {
+  private node = createRef<HTMLDivElement>();
+
+  private webview: Webview;
+
+  constructor(props: IProps) {
+    super(props);
+
+    this.state = {
+      isDragging: false,
+      width: 300,
+      initialPos: 0,
+      delta: 0,
+    };
+    this.resizePanel = this.resizePanel.bind(this);
+    this.stopResize = this.stopResize.bind(this);
+  }
 
   componentDidMount() {
     this.setState({
       width: this.props.width,
     });
 
-    this.node.addEventListener('mousemove', this.resizePanel.bind(this));
-    this.node.addEventListener('mouseup', this.stopResize.bind(this));
-    this.node.addEventListener('mouseleave', this.stopResize.bind(this));
+    if (this.node.current) {
+      this.node.current.addEventListener('mousemove', this.resizePanel);
+      this.node.current.addEventListener('mouseup', this.stopResize);
+      this.node.current.addEventListener('mouseleave', this.stopResize);
+    }
   }
 
-  startResize = event => {
+  startResize(e: MouseEvent<HTMLDivElement>): void {
     this.setState({
       isDragging: true,
-      initialPos: event.clientX,
+      initialPos: e.clientX,
       delta: 0,
     });
-  };
+  }
 
-  resizePanel(e) {
+  resizePanel(e: MouseEventInit): void {
     const { minWidth } = this.props;
-
     const { isDragging, initialPos } = this.state;
 
-    if (isDragging && Math.abs(e.clientX - window.innerWidth) > minWidth) {
-      const delta = e.clientX - initialPos;
+    if (isDragging && Math.abs(e.clientX! - window.innerWidth) > minWidth) {
+      const delta = e.clientX! - initialPos;
 
       this.setState({
         delta,
@@ -100,9 +119,8 @@ class TodosWebview extends Component {
     }
   }
 
-  stopResize() {
+  stopResize(): void {
     const { resize, minWidth } = this.props;
-
     const { isDragging, delta, width } = this.state;
 
     if (isDragging) {
@@ -123,14 +141,17 @@ class TodosWebview extends Component {
   }
 
   startListeningToIpcMessages() {
+    if (!this.webview) {
+      return;
+    }
+
     const { handleClientMessage } = this.props;
-    if (!this.webview) return;
     this.webview.addEventListener('ipc-message', e => {
-      handleClientMessage({ channel: e.channel, message: e.args[0] });
+      handleClientMessage(e.channel, e.args[0]);
     });
   }
 
-  render() {
+  render(): ReactElement {
     const {
       classes,
       isTodosServiceActive,
@@ -141,10 +162,9 @@ class TodosWebview extends Component {
     } = this.props;
 
     const { width, delta, isDragging } = this.state;
-
     let displayedWidth = isVisible ? width : 0;
     if (isTodosServiceActive) {
-      displayedWidth = null;
+      displayedWidth = 0;
     }
 
     return (
@@ -157,9 +177,7 @@ class TodosWebview extends Component {
         })}
         style={{ width: displayedWidth }}
         onMouseUp={() => this.stopResize()}
-        ref={node => {
-          this.node = node;
-        }}
+        ref={this.node}
         id="todos-panel"
       >
         <div
@@ -168,7 +186,7 @@ class TodosWebview extends Component {
             left: delta,
             ...(isDragging ? { width: 600, marginLeft: -200 } : {}),
           }} // This hack is required as resizing with webviews beneath behaves quite bad
-          onMouseDown={e => this.startResize(e)}
+          onMouseDown={this.startResize}
         />
         {isDragging && (
           <div
@@ -178,7 +196,7 @@ class TodosWebview extends Component {
         )}
         {isTodoUrlValid && (
           <Webview
-            className={classes.webview}
+            // className={classes.webview} // TODO - [TS DEBT] style not found
             onDidAttach={() => {
               const { setTodosWebview } = this.props;
               setTodosWebview(this.webview);
@@ -198,6 +216,4 @@ class TodosWebview extends Component {
   }
 }
 
-export default injectSheet(styles, { injectTheme: true })(
-  observer(TodosWebview),
-);
+export default withStyles(styles, { injectTheme: true })(TodosWebview);

@@ -1,22 +1,26 @@
-import { Component } from 'react';
+import { Component, ReactElement } from 'react';
 import { observer, inject } from 'mobx-react';
-import PropTypes from 'prop-types';
-
-import FeaturesStore from '../../../stores/FeaturesStore';
 import TodosWebview from '../components/TodosWebview';
 import ErrorBoundary from '../../../components/util/ErrorBoundary';
 import { todosStore } from '..';
 import { TODOS_MIN_WIDTH } from '../../../config';
 import { todoActions } from '../actions';
-import ServicesStore from '../../../stores/ServicesStore';
+import { RealStores } from '../../../stores';
 
-class TodosScreen extends Component {
-  render() {
-    if (
+interface IProps {
+  stores?: RealStores;
+}
+
+@inject('stores', 'actions')
+@observer
+class TodosScreen extends Component<IProps> {
+  render(): ReactElement | null {
+    const showTodoScreen =
       !todosStore ||
       !todosStore.isFeatureActive ||
-      todosStore.isTodosPanelForceHidden
-    ) {
+      todosStore.isTodosPanelForceHidden;
+
+    if (showTodoScreen) {
       return null;
     }
 
@@ -24,15 +28,15 @@ class TodosScreen extends Component {
       <ErrorBoundary>
         <TodosWebview
           isTodosServiceActive={
-            this.props.stores.services.isTodosServiceActive || false
+            this.props.stores!.services.isTodosServiceActive || false
           }
           isVisible={todosStore.isTodosPanelVisible}
-          togglePanel={todoActions.toggleTodosPanel}
+          // togglePanel={todoActions.toggleTodosPanel} // TODO - [TECH DEBT][PROP NOT USED IN COMPONENT] check it later
           handleClientMessage={todoActions.handleClientMessage}
-          setTodosWebview={webview => todoActions.setTodosWebview({ webview })}
+          setTodosWebview={webview => todoActions.setTodosWebview(webview)}
           width={todosStore.width}
           minWidth={TODOS_MIN_WIDTH}
-          resize={width => todoActions.resize({ width })}
+          resize={width => todoActions.resize(width)}
           userAgent={todosStore.userAgent}
           todoUrl={todosStore.todoUrl}
           isTodoUrlValid={todosStore.isTodoUrlValid}
@@ -42,11 +46,4 @@ class TodosScreen extends Component {
   }
 }
 
-export default inject('stores', 'actions')(observer(TodosScreen));
-
-TodosScreen.propTypes = {
-  stores: PropTypes.shape({
-    features: PropTypes.instanceOf(FeaturesStore).isRequired,
-    services: PropTypes.instanceOf(ServicesStore).isRequired,
-  }).isRequired,
-};
+export default TodosScreen;
