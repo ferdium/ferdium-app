@@ -1,9 +1,7 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, ReactNode } from 'react';
 import { observer } from 'mobx-react';
-import injectSheet from 'react-jss';
+import withStyles, { WithStylesProps } from 'react-jss';
 import classnames from 'classnames';
-
 import ServiceModel from '../../models/Service';
 
 const styles = theme => ({
@@ -24,20 +22,16 @@ const styles = theme => ({
   },
 });
 
-// Should this file be converted into the coding style similar to './toggle/index.tsx'?
-class ServiceIcon extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    service: PropTypes.instanceOf(ServiceModel).isRequired,
-    className: PropTypes.string,
-  };
+interface IProps extends WithStylesProps<typeof styles> {
+  service: ServiceModel;
+  className?: string;
+}
 
-  static defaultProps = {
-    className: '',
-  };
-
-  render() {
-    const { classes, className, service } = this.props;
+// TODO - [TS DEBT] Should this file be converted into the coding style similar to './toggle/index.tsx'?
+@observer
+class ServiceIcon extends Component<IProps> {
+  render(): ReactNode {
+    const { classes, className = '', service } = this.props;
 
     return (
       <div className={classnames([classes.root, className])}>
@@ -55,6 +49,4 @@ class ServiceIcon extends Component {
   }
 }
 
-export default injectSheet(styles, { injectTheme: true })(
-  observer(ServiceIcon),
-);
+export default withStyles(styles, { injectTheme: true })(ServiceIcon);

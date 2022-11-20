@@ -1,4 +1,4 @@
-import { Component, PropsWithChildren } from 'react';
+import { Component, ReactElement, ReactNode } from 'react';
 import { observer, inject } from 'mobx-react';
 import Loader from 'react-loader';
 
@@ -9,31 +9,30 @@ interface IProps {
   color?: string;
   loaded?: boolean;
   stores?: FerdiumStores;
+  children?: ReactNode;
 }
 
 // Can this file be merged into the './loader/index.tsx' file?
 @inject('stores')
 @observer
-class LoaderComponent extends Component<PropsWithChildren<IProps>> {
-  static defaultProps = {
-    loaded: false,
-    color: 'ACCENT',
-  };
+class LoaderComponent extends Component<IProps> {
+  render(): ReactElement {
+    const {
+      loaded = false,
+      color = 'ACCENT',
+      className,
+      children,
+    } = this.props;
 
-  render() {
-    const { children, loaded, className } = this.props;
-
-    const color =
-      this.props.color !== 'ACCENT'
-        ? this.props.color
-        : this.props.stores!.settings.app.accentColor;
+    const loaderColor =
+      color !== 'ACCENT' ? color : this.props.stores!.settings.app.accentColor;
 
     return (
       <Loader
         loaded={loaded}
         width={4}
         scale={0.6}
-        color={color}
+        color={loaderColor}
         component="span"
         className={className}
       >

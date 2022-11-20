@@ -1,12 +1,11 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
-import injectSheet from 'react-jss';
+import withStyles, { WithStylesProps } from 'react-jss';
 import classnames from 'classnames';
-import { defineMessages, injectIntl } from 'react-intl';
-
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import Loader from '../../../components/ui/loader/index';
 import { workspaceStore } from '../index';
+import { Theme } from '../../../themes';
 
 const messages = defineMessages({
   switchingTo: {
@@ -15,11 +14,10 @@ const messages = defineMessages({
   },
 });
 
-let wrapperTransition = 'none';
-
-if (window && window.matchMedia('(prefers-reduced-motion: no-preference)')) {
-  wrapperTransition = 'width 0.5s ease';
-}
+const wrapperTransition =
+  window && window.matchMedia('(prefers-reduced-motion: no-preference)')
+    ? 'width 0.5s ease'
+    : 'none';
 
 const styles = theme => ({
   wrapper: {
@@ -53,26 +51,30 @@ const styles = theme => ({
   },
 });
 
-class WorkspaceSwitchingIndicator extends Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired,
-  };
+interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
+  theme?: Theme;
+}
 
-  render() {
-    const { classes, theme } = this.props;
-    const { intl } = this.props;
+@observer
+class WorkspaceSwitchingIndicator extends Component<IProps> {
+  render(): ReactElement | null {
+    const { classes, intl, theme } = this.props;
     const { isSwitchingWorkspace, nextWorkspace } = workspaceStore;
-    if (!isSwitchingWorkspace) return null;
+
+    if (!isSwitchingWorkspace) {
+      return null;
+    }
+
     const nextWorkspaceName = nextWorkspace
       ? nextWorkspace.name
       : 'All services';
+
     return (
       <div className={classnames([classes.wrapper])}>
         <div className={classes.component}>
           <Loader
             className={classes.spinner}
-            color={theme.workspaces.switchingIndicator.spinnerColor}
+            color={theme?.workspaces.switchingIndicator.spinnerColor}
           />
           <p className={classes.message}>
             {`${intl.formatMessage(messages.switchingTo)} ${nextWorkspaceName}`}
@@ -84,7 +86,5 @@ class WorkspaceSwitchingIndicator extends Component {
 }
 
 export default injectIntl(
-  injectSheet(styles, { injectTheme: true })(
-    observer(WorkspaceSwitchingIndicator),
-  ),
+  withStyles(styles, { injectTheme: true })(WorkspaceSwitchingIndicator),
 );
