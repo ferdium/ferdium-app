@@ -288,27 +288,20 @@ class EditServiceScreen extends Component<IProps> {
     };
 
     if (recipe.hasTeamId) {
-      config.fields = {
-        ...config.fields,
-
-        team: {
-          label: intl.formatMessage(messages.team),
-          placeholder: intl.formatMessage(messages.team),
-          value: service?.team,
-          validators: [required],
-        },
+      config.fields.team = {
+        label: intl.formatMessage(messages.team),
+        placeholder: intl.formatMessage(messages.team),
+        value: service?.team,
+        validators: [required],
       };
     }
 
     if (recipe.hasCustomUrl) {
-      config.fields = {
-        ...config.fields,
-        customUrl: {
-          label: intl.formatMessage(messages.customUrl),
-          placeholder: "'http://' or 'https://' or 'file:///'",
-          value: service?.customUrl || recipe.serviceURL,
-          validators: [required, url],
-        },
+      config.fields.customUrl = {
+        label: intl.formatMessage(messages.customUrl),
+        placeholder: "'http://' or 'https://' or 'file:///'",
+        value: service?.customUrl || recipe.serviceURL,
+        validators: [required, url],
       };
     }
 
@@ -332,82 +325,71 @@ class EditServiceScreen extends Component<IProps> {
     }
 
     if (recipe.hasIndirectMessages) {
-      config.fields = {
-        ...config.fields,
-        isIndirectMessageBadgeEnabled: {
-          label: intl.formatMessage(messages.indirectMessages),
-          value: service?.isIndirectMessageBadgeEnabled,
-          default: DEFAULT_SERVICE_SETTINGS.hasIndirectMessages,
-          type: 'checkbox',
-        },
+      config.fields.isIndirectMessageBadgeEnabled = {
+        label: intl.formatMessage(messages.indirectMessages),
+        value: service?.isIndirectMessageBadgeEnabled,
+        default: DEFAULT_SERVICE_SETTINGS.hasIndirectMessages,
+        type: 'checkbox',
       };
     }
 
     if (recipe.allowFavoritesDelineationInUnreadCount) {
-      config.fields = {
-        ...config.fields,
-        onlyShowFavoritesInUnreadCount: {
-          label: intl.formatMessage(messages.onlyShowFavoritesInUnreadCount),
-          value: service?.onlyShowFavoritesInUnreadCount,
-          default: DEFAULT_APP_SETTINGS.onlyShowFavoritesInUnreadCount,
-          type: 'checkbox',
-        },
+      config.fields.onlyShowFavoritesInUnreadCount = {
+        label: intl.formatMessage(messages.onlyShowFavoritesInUnreadCount),
+        value: service?.onlyShowFavoritesInUnreadCount,
+        default: DEFAULT_APP_SETTINGS.onlyShowFavoritesInUnreadCount,
+        type: 'checkbox',
       };
     }
 
     if (proxy.isEnabled) {
-      let serviceProxyConfig: IProxyConfig = {};
-      if (service) {
-        serviceProxyConfig = stores.settings.proxy[service.id] || {};
-      }
+      const serviceProxyConfig: IProxyConfig = service
+        ? stores.settings.proxy[service.id]
+        : {};
 
-      config.fields = {
-        ...config.fields,
-        proxy: {
-          name: 'proxy',
-          label: 'proxy',
-          fields: {
-            isEnabled: {
-              label: intl.formatMessage(messages.enableProxy),
-              value: serviceProxyConfig.isEnabled,
-              default: DEFAULT_APP_SETTINGS.proxyFeatureEnabled,
-              type: 'checkbox',
-            },
-            host: {
-              label: intl.formatMessage(messages.proxyHost),
-              value: serviceProxyConfig.host,
-              default: '',
-            },
-            port: {
-              label: intl.formatMessage(messages.proxyPort),
-              value: serviceProxyConfig.port,
-              default: '',
-            },
-            user: {
-              label: intl.formatMessage(messages.proxyUser),
-              value: serviceProxyConfig.user,
-              default: '',
-            },
-            password: {
-              label: intl.formatMessage(messages.proxyPassword),
-              value: serviceProxyConfig.password,
-              default: '',
-              type: 'password',
-            },
+      config.fields.proxy = {
+        name: 'proxy',
+        label: 'proxy',
+        fields: {
+          isEnabled: {
+            label: intl.formatMessage(messages.enableProxy),
+            value: serviceProxyConfig.isEnabled,
+            default: DEFAULT_APP_SETTINGS.proxyFeatureEnabled,
+            type: 'checkbox',
+          },
+          host: {
+            label: intl.formatMessage(messages.proxyHost),
+            value: serviceProxyConfig.host,
+            default: '',
+          },
+          port: {
+            label: intl.formatMessage(messages.proxyPort),
+            value: serviceProxyConfig.port,
+            default: '',
+          },
+          user: {
+            label: intl.formatMessage(messages.proxyUser),
+            value: serviceProxyConfig.user,
+            default: '',
+          },
+          password: {
+            label: intl.formatMessage(messages.proxyPassword),
+            value: serviceProxyConfig.password,
+            default: '',
+            type: 'password',
           },
         },
       };
     }
 
-    // @ts-ignore: Remove this ignore once mobx-react-form v4 with typescript
     return new Form(config);
   }
 
   deleteService(): void {
-    const { deleteService } = this.props.actions.service;
     const { action } = this.props.params;
 
     if (action === 'edit') {
+      const { deleteService } = this.props.actions.service;
       const { activeSettings: service } = this.props.stores.services;
       deleteService({
         serviceId: service?.id,
@@ -437,8 +419,8 @@ class EditServiceScreen extends Component<IProps> {
     } = this.props.stores;
     const { action } = this.props.params;
 
-    let recipe: null | IRecipe = null;
-    let service: null | Service = null;
+    let recipe: IRecipe | null = null;
+    let service: Service | null = null;
     let isLoading = false;
 
     if (action === 'add') {

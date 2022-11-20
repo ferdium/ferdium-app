@@ -293,18 +293,14 @@ class EditServiceForm extends Component<IProps, IState> {
             {(recipe.hasTeamId || recipe.hasCustomUrl) && (
               <Tabs active={activeTabIndex}>
                 {recipe.hasHostedOption && (
-                  <TabItem
-                  // title={recipe.name} // TODO - [TS DEBT] property not used inside TabItem need to check it
-                  >
+                  <TabItem title={recipe.name}>
                     {intl.formatMessage(messages.useHostedService, {
                       name: recipe.name,
                     })}
                   </TabItem>
                 )}
                 {recipe.hasTeamId && (
-                  <TabItem
-                  // title={intl.formatMessage(messages.tabHosted)} // TODO - [TS DEBT] property not used inside TabItem need to check it
-                  >
+                  <TabItem title={intl.formatMessage(messages.tabHosted)}>
                     <Input
                       {...form.$('team').bind()}
                       prefix={recipe.urlInputPrefix}
@@ -313,9 +309,7 @@ class EditServiceForm extends Component<IProps, IState> {
                   </TabItem>
                 )}
                 {recipe.hasCustomUrl && (
-                  <TabItem
-                  // title={intl.formatMessage(messages.tabOnPremise)} // TODO - [TS DEBT] property not used inside TabItem need to check it
-                  >
+                  <TabItem title={intl.formatMessage(messages.tabOnPremise)}>
                     <Input {...form.$('customUrl').bind()} />
                     {form.error === 'url-validation-error' && (
                       <p className="franz-form__error">
