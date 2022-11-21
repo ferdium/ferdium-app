@@ -344,7 +344,13 @@ class EditServiceScreen extends Component<IProps> {
 
     if (proxy.isEnabled) {
       const serviceProxyConfig: IProxyConfig = service
-        ? stores.settings.proxy[service.id]
+        ? /*
+          TODO - [TS DEBT] find out why sometimes proxy[service.id] gives undefined
+          Note in proxy service id exist as key but value is undefined rather that proxy empty object
+
+          Temp fix - or-ed {} (to stores.settings.proxy[service.id] ) to avoid undefined proxy in settingStore throw error
+          */
+          stores.settings.proxy[service.id] || {}
         : {};
 
       config.fields.proxy = {
