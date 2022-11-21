@@ -933,6 +933,7 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           label: intl.formatMessage(messages.beta),
           value: user.data.beta,
           default: DEFAULT_APP_SETTINGS.beta,
+          type: 'checkbox',
         },
         automaticUpdates: {
           label: intl.formatMessage(messages.automaticUpdates),

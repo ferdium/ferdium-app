@@ -1,32 +1,36 @@
-import { Children, Component } from 'react';
-import PropTypes from 'prop-types';
+import { Children, Component, ReactElement, ReactPortal } from 'react';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
+import { IProps as TabItemProps } from './TabItem';
 
-import { oneOrManyChildElements } from '../../../prop-types';
+interface IProps {
+  children:
+    | ReactElement<TabItemProps>
+    | (boolean | ReactElement<TabItemProps>)[];
+  active?: number;
+}
 
-class Tab extends Component {
-  constructor(props) {
+interface IState {
+  active: number;
+}
+
+@observer
+class Tab extends Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
-    this.state = { active: this.props.active };
+
+    this.state = {
+      active: this.props.active || 0,
+    };
   }
 
-  static propTypes = {
-    children: oneOrManyChildElements.isRequired,
-    active: PropTypes.number,
-  };
-
-  static defaultProps = {
-    active: 0,
-  };
-
-  switchTab(index) {
+  switchTab(index: number): void {
     this.setState({ active: index });
   }
 
-  render() {
+  render(): ReactElement {
     const { children: childElements } = this.props;
-    const children = childElements.filter(c => !!c);
+    const children = Children.toArray(childElements); // removes all null values
 
     if (children.length === 1) {
       return <div>{children}</div>;
@@ -37,7 +41,7 @@ class Tab extends Component {
         <div className="content-tabs__tabs">
           {Children.map(children, (child, i) => (
             <button
-              key="{i}"
+              key={i}
               className={classnames({
                 'content-tabs__item': true,
                 'is-active': this.state.active === i,
@@ -45,19 +49,19 @@ class Tab extends Component {
               onClick={() => this.switchTab(i)}
               type="button"
             >
-              {child.props.title}
+              {(child as ReactPortal).props.title}
             </button>
           ))}
         </div>
         <div className="content-tabs__content">
           {Children.map(children, (child, i) => (
             <div
-              key="{i}"
+              key={i}
               className={classnames({
                 'content-tabs__item': true,
                 'is-active': this.state.active === i,
               })}
-              type="button"
+              // type="button"
             >
               {child}
             </div>
@@ -68,4 +72,4 @@ class Tab extends Component {
   }
 }
 
-export default observer(Tab);
+export default Tab;
