@@ -2,12 +2,17 @@ import PropTypes from 'prop-types';
 import Workspace from './models/Workspace';
 import { createActionsFromDefinitions } from '../../actions/lib/actions';
 
+type WorkspaceArg = { workspace: Workspace };
 export interface WorkspaceActions {
   openWorkspaceSettings: () => void;
   toggleWorkspaceDrawer: () => void;
   deactivate: () => void;
   activate: (options: any) => void;
-  edit: ({ workspace }: { workspace: Workspace }) => void;
+  edit: (workspaceArg: WorkspaceArg) => void;
+  create: ({ name }: { name: string }) => void;
+  delete: (workspaceArg: WorkspaceArg) => void;
+  update: (workspaceArg: WorkspaceArg) => void;
+  toggleKeepAllWorkspacesLoadedSetting: () => void;
 }
 
 export default createActionsFromDefinitions<WorkspaceActions>(

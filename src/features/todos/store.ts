@@ -1,5 +1,7 @@
+import { Webview } from 'react-electron-web-view';
 import { computed, action, observable, makeObservable } from 'mobx';
 import localStorage from 'mobx-localstorage';
+import { Actions } from '../../actions/lib/actions';
 
 import { ThemeType } from '../../themes';
 import { todoActions } from './actions';
@@ -13,7 +15,7 @@ import {
 } from '../../config';
 import { isValidExternalURL } from '../../helpers/url-helpers';
 import FeatureStore from '../utils/FeatureStore';
-import { createReactions } from '../../stores/lib/Reaction';
+import Reaction, { createReactions } from '../../stores/lib/Reaction';
 import { createActionBindings } from '../utils/ActionBinding';
 import { IPC, TODOS_ROUTES } from './constants';
 import UserAgent from '../../models/UserAgent';
@@ -23,15 +25,19 @@ const debug = require('../../preload-safe-debug')(
 );
 
 export default class TodoStore extends FeatureStore {
-  @observable stores = null;
+  @observable stores: any = null;
 
   @observable isFeatureActive = false;
 
-  @observable webview = null;
+  @observable webview: Webview | undefined;
 
   @observable userAgentModel = new UserAgent();
 
   isInitialized = false;
+
+  actions: Actions | undefined;
+
+  _allReactions: Reaction[] | undefined;
 
   constructor() {
     super();
@@ -142,7 +148,7 @@ export default class TodoStore extends FeatureStore {
   @action stop() {
     super.stop();
     debug('TodoStore::stop');
-    this.reset();
+    // this.reset(); // TODO - [TECH DEBT][PROP NOT IN CLASS] check it later
     this.isFeatureActive = false;
   }
 
@@ -184,7 +190,10 @@ export default class TodoStore extends FeatureStore {
     }
   };
 
-  @action _handleClientMessage = ({ channel, message = {} }) => {
+  @action _handleClientMessage = ({
+    channel,
+    message = { action: '', data: { url: '', serviceId: '' } },
+  }) => {
     debug('_handleClientMessage', channel, message);
     switch (message.action) {
       case 'todos:initialized':
@@ -195,7 +204,7 @@ export default class TodoStore extends FeatureStore {
         break;
       default:
         debug('Other message received', channel, message);
-        if (this.stores.services.isTodosServiceAdded) {
+        if (this.stores.services.isTodosServiceAdded && this.actions) {
           this.actions.service.handleIPCMessage({
             serviceId: this.stores.services.isTodosServiceAdded.id,
             channel,
@@ -206,6 +215,9 @@ export default class TodoStore extends FeatureStore {
   };
 
   _handleNewWindowEvent = ({ url }) => {
+    if (!this.actions) {
+      return;
+    }
     this.actions.app.openExternalUrl({ url });
   };
 
@@ -222,15 +234,19 @@ export default class TodoStore extends FeatureStore {
   _openDevTools = () => {
     debug('_openDevTools');
 
-    const webview = document.querySelector('#todos-panel webview');
-    if (webview) webview.openDevTools();
+    const webview = document.querySelector<Webview>('#todos-panel webview');
+    if (webview) {
+      webview.openDevTools();
+    }
   };
 
   _reload = () => {
     debug('_reload');
 
-    const webview = document.querySelector('#todos-panel webview');
-    if (webview) webview.reload();
+    const webview = document.querySelector<Webview>('#todos-panel webview');
+    if (webview) {
+      webview.reload();
+    }
   };
 
   // Todos client message handlers
@@ -260,7 +276,9 @@ export default class TodoStore extends FeatureStore {
     if (url) {
       this.stores.services.one(serviceId).webview.loadURL(url);
     }
-    this.actions.service.setActive({ serviceId });
+    if (this.actions) {
+      this.actions.service.setActive({ serviceId });
+    }
   };
 
   // Reactions
