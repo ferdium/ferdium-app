@@ -14,6 +14,8 @@ import { createReactions } from '../../stores/lib/Reaction';
 import { createActionBindings } from '../utils/ActionBinding';
 
 import { KEEP_WS_LOADED_USID } from '../../config';
+import Workspace from './models/Workspace';
+import { Actions } from '../../actions/lib/actions';
 
 const debug = require('../../preload-safe-debug')(
   'Ferdium:feature:workspaces:store',
@@ -22,17 +24,21 @@ const debug = require('../../preload-safe-debug')(
 export default class WorkspacesStore extends FeatureStore {
   @observable isFeatureActive = false;
 
-  @observable activeWorkspace = null;
+  @observable activeWorkspace: Workspace | undefined;
 
-  @observable nextWorkspace = null;
+  @observable nextWorkspace: Workspace | undefined;
 
-  @observable workspaceBeingEdited = null;
+  @observable workspaceBeingEdited: any = null; // TODO - [TS DEBT] fix type later
 
   @observable isSwitchingWorkspace = false;
 
   @observable isWorkspaceDrawerOpen = false;
 
-  @observable isSettingsRouteActive = null;
+  @observable isSettingsRouteActive = false;
+
+  stores: any; // TODO - [TS DEBT] fix type later
+
+  actions: Actions | undefined;
 
   constructor() {
     super();
@@ -68,7 +74,7 @@ export default class WorkspacesStore extends FeatureStore {
 
   // ========== PRIVATE PROPERTIES ========= //
 
-  _wasDrawerOpenBeforeSettingsRoute = null;
+  _wasDrawerOpenBeforeSettingsRoute = false;
 
   _allActions = [];
 
@@ -159,13 +165,13 @@ export default class WorkspacesStore extends FeatureStore {
   };
 
   @action _create = async ({ name }) => {
-    const workspace = await createWorkspaceRequest.execute(name);
+    const workspace = await createWorkspaceRequest.execute(name).promise;
     await getUserWorkspacesRequest.result.push(workspace);
     this._edit({ workspace });
   };
 
   @action _delete = async ({ workspace }) => {
-    await deleteWorkspaceRequest.execute(workspace);
+    await deleteWorkspaceRequest.execute(workspace).promise;
     await getUserWorkspacesRequest.result.remove(workspace);
     this.stores.router.push('/settings/workspaces');
     if (this.activeWorkspace === workspace) {
@@ -174,7 +180,7 @@ export default class WorkspacesStore extends FeatureStore {
   };
 
   @action _update = async ({ workspace }) => {
-    await updateWorkspaceRequest.execute(workspace);
+    await updateWorkspaceRequest.execute(workspace).promise;
     // Path local result optimistically
     const localWorkspace = this._getWorkspaceById(workspace.id);
     Object.assign(localWorkspace, workspace);
@@ -210,7 +216,7 @@ export default class WorkspacesStore extends FeatureStore {
         const serviceNames = new Set(
           this.getWorkspaceServices(workspace).map(service => service.name),
         );
-        for (const wrapper of document.querySelectorAll(
+        for (const wrapper of document.querySelectorAll<HTMLDivElement>(
           '.services__webview-wrapper',
         )) {
           wrapper.style.display = serviceNames.has(wrapper.dataset.name)
@@ -234,7 +240,7 @@ export default class WorkspacesStore extends FeatureStore {
     setTimeout(() => {
       this._setIsSwitchingWorkspace(false);
       if (this.stores.settings.app.splitMode) {
-        for (const wrapper of document.querySelectorAll(
+        for (const wrapper of document.querySelectorAll<HTMLDivElement>(
           '.services__webview-wrapper',
         )) {
           wrapper.style.display = '';
@@ -248,15 +254,21 @@ export default class WorkspacesStore extends FeatureStore {
   };
 
   @action _openWorkspaceSettings = () => {
+    if (!this.actions) {
+      return;
+    }
     this.actions.ui.openSettings({ path: 'workspaces' });
   };
 
   @action reorderServicesOfActiveWorkspace = async ({ oldIndex, newIndex }) => {
-    const { activeWorkspace } = this;
-    const { services } = activeWorkspace;
+    if (!this.activeWorkspace) {
+      return;
+    }
+
+    const { services = [] } = this.activeWorkspace;
     // Move services from the old to the new position
     services.splice(newIndex, 0, services.splice(oldIndex, 1)[0]);
-    await updateWorkspaceRequest.execute(activeWorkspace);
+    await updateWorkspaceRequest.execute(this.activeWorkspace).promise;
   };
 
   @action _setOpenDrawerWithSettings() {
@@ -314,7 +326,7 @@ export default class WorkspacesStore extends FeatureStore {
       if (workspaceServices.length <= 0) return;
       const isActiveServiceInWorkspace =
         workspaceServices.includes(activeService);
-      if (!isActiveServiceInWorkspace) {
+      if (!isActiveServiceInWorkspace && this.actions) {
         this.actions.service.setActive({
           serviceId: workspaceServices[0].id,
           keepActiveRoute: true,
