@@ -4,6 +4,8 @@ directories:
 
 appId: "org.ferdium.ferdium-app"
 
+beforePack: './electron-builder-fix-env.js'
+
 publish:
   provider: github
 

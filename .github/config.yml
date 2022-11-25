@@ -5,7 +5,7 @@ newPRWelcomeComment: |
   Things that will help get your PR across the finish line:
 
   - Follow the JavaScript [coding style](https://github.com/electron/electron/blob/master/docs/development/coding-style.md) as recommended by the Electron project.
-  - Run `npm run lint` locally to catch formatting errors earlier.
+  - Run `pnpm lint` locally to catch formatting errors earlier.
   - Document any user-facing changes you've made by including screenshots and animated GIFs whenever possible.
 
   We get a lot of pull requests on this repo, so please be patient and we will get back to you as soon as we can.
