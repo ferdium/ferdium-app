@@ -1,7 +1,7 @@
-import { Component } from 'react';
+import { Component, ReactElement } from 'react';
 import classnames from 'classnames';
-
-import injectStyle from 'react-jss';
+import withStyles, { WithStylesProps } from 'react-jss';
+import { Theme } from '../../../themes';
 import FullscreenLoader from '../FullscreenLoader';
 import shuffleArray from '../../../helpers/array-helpers';
 
@@ -18,24 +18,27 @@ const textList = shuffleArray([
   'Fixing bugs',
 ]);
 
-type Props = {
-  classes: typeof styles;
-  theme: any;
-  texts: string[];
-};
+interface IProps extends WithStylesProps<typeof styles> {
+  theme: Theme;
+  texts?: string[];
+}
 
-class AppLoader extends Component<Props> {
-  static defaultProps = {
-    texts: textList,
-  };
+interface IState {
+  step: number;
+}
 
-  state = {
-    step: 0,
-  };
-
+class AppLoader extends Component<IProps, IState> {
   interval: NodeJS.Timeout | null = null;
 
-  componentDidMount() {
+  constructor(props: IProps) {
+    super(props);
+
+    this.state = {
+      step: 0,
+    };
+  }
+
+  componentDidMount(): void {
     this.interval = setInterval(() => {
       this.setState((prevState: { step: number }) => ({
         step: prevState.step === textList.length - 1 ? 0 : prevState.step + 1,
@@ -43,14 +46,14 @@ class AppLoader extends Component<Props> {
     }, 2500);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     if (this.interval) {
       clearInterval(this.interval);
     }
   }
 
-  render() {
-    const { classes, theme, texts } = this.props;
+  render(): ReactElement {
+    const { classes, theme, texts = textList } = this.props;
     const { step } = this.state;
 
     return (
@@ -58,20 +61,21 @@ class AppLoader extends Component<Props> {
         className={classes.component}
         spinnerColor={theme.colorAppLoaderSpinner}
       >
-        {texts.map((text, i) => (
-          <span
-            key={text}
-            className={classnames({
-              [`${classes.slogan}`]: true,
-              [`${classes.visible}`]: step === i,
-            })}
-          >
-            {text}
-          </span>
-        ))}
+        {texts &&
+          texts.map((text, i) => (
+            <span
+              key={text}
+              className={classnames({
+                [`${classes.slogan}`]: true,
+                [`${classes.visible}`]: step === i,
+              })}
+            >
+              {text}
+            </span>
+          ))}
       </FullscreenLoader>
     );
   }
 }
 
-export default injectStyle(styles, { injectTheme: true })(AppLoader);
+export default withStyles(styles, { injectTheme: true })(AppLoader);

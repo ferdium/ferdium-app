@@ -411,6 +411,7 @@ export const DEFAULT_APP_SETTINGS = {
   serviceRibbonWidth: 68,
   sidebarServicesLocation: SIDEBAR_SERVICES_LOCATION_TOPLEFT,
   iconSize: iconSizeBias,
+  sentry: true,
   navigationBarBehaviour: 'custom',
   webRTCIPHandlingPolicy: disableWebRTCIPHandlingPolicy,
   searchEngine: SEARCH_ENGINE_STARTPAGE,
@@ -441,6 +442,7 @@ export const DEFAULT_SERVICE_SETTINGS = {
   isWakeUpEnabled: true,
   isNotificationEnabled: true,
   isBadgeEnabled: true,
+  isMediaBadgeEnabled: false,
   trapLinkClicks: false,
   isMuted: false,
   customIcon: false,
@@ -455,4 +457,5 @@ export const DEFAULT_SERVICE_SETTINGS = {
   hasHostedOption: false,
   allowFavoritesDelineationInUnreadCount: false,
   disablewebsecurity: false,
+  spellcheckerLanguage: false,
 };

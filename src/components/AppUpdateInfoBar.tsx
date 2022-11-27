@@ -1,6 +1,7 @@
 import { defineMessages, useIntl } from 'react-intl';
 
 import { mdiInformation } from '@mdi/js';
+import { MouseEventHandler } from 'react';
 import InfoBar from './ui/InfoBar';
 import Icon from './ui/icon';
 
@@ -21,17 +22,14 @@ const messages = defineMessages({
   },
 });
 
-type Props = {
-  onInstallUpdate: () => void;
+export interface IProps {
+  onInstallUpdate: MouseEventHandler<HTMLButtonElement>;
   onHide: () => void;
   updateVersionParsed: string;
-};
+}
 
-const AppUpdateInfoBar = ({
-  onInstallUpdate,
-  updateVersionParsed,
-  onHide,
-}: Props) => {
+const AppUpdateInfoBar = (props: IProps) => {
+  const { onInstallUpdate, updateVersionParsed, onHide } = props;
   const intl = useIntl();
 
   return (

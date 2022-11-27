@@ -8,7 +8,7 @@ import ElectronWebView from 'react-electron-web-view';
 import { todosStore } from '../features/todos';
 import { isValidExternalURL } from '../helpers/url-helpers';
 import UserAgent from './UserAgent';
-import { DEFAULT_SERVICE_ORDER } from '../config';
+import { DEFAULT_SERVICE_ORDER, DEFAULT_SERVICE_SETTINGS } from '../config';
 import { ifUndefined } from '../jsUtils';
 import { IRecipe } from './Recipe';
 import { needsToken } from '../api/apiBase';
@@ -47,19 +47,23 @@ export default class Service {
 
   @observable order: number = DEFAULT_SERVICE_ORDER;
 
-  @observable isEnabled: boolean = true;
+  @observable isEnabled: boolean = DEFAULT_SERVICE_SETTINGS.isEnabled;
 
-  @observable isMuted: boolean = false;
+  @observable isMuted: boolean = DEFAULT_SERVICE_SETTINGS.isMuted;
 
   @observable team: string = '';
 
   @observable customUrl: string = '';
 
-  @observable isNotificationEnabled: boolean = true;
+  @observable isNotificationEnabled: boolean =
+    DEFAULT_SERVICE_SETTINGS.isNotificationEnabled;
 
-  @observable isBadgeEnabled: boolean = true;
+  @observable isBadgeEnabled: boolean = DEFAULT_SERVICE_SETTINGS.isBadgeEnabled;
 
-  @observable trapLinkClicks: boolean = false;
+  @observable isMediaBadgeEnabled: boolean =
+    DEFAULT_SERVICE_SETTINGS.isMediaBadgeEnabled;
+
+  @observable trapLinkClicks: boolean = DEFAULT_SERVICE_SETTINGS.trapLinkClicks;
 
   @observable isIndirectMessageBadgeEnabled: boolean = true;
 
@@ -71,9 +75,11 @@ export default class Service {
 
   @observable hasCrashed: boolean = false;
 
-  @observable isDarkModeEnabled: boolean = false;
+  @observable isDarkModeEnabled: boolean =
+    DEFAULT_SERVICE_SETTINGS.isDarkModeEnabled;
 
-  @observable isProgressbarEnabled: boolean = true;
+  @observable isProgressbarEnabled: boolean =
+    DEFAULT_SERVICE_SETTINGS.isProgressbarEnabled;
 
   @observable darkReaderSettings: DarkReaderInterface = {
     brightness: 100,
@@ -97,12 +103,14 @@ export default class Service {
 
   @observable isServiceAccessRestricted: boolean = false;
 
-  // todo is this used?
+  // TODO: is this used?
   @observable restrictionType = null;
 
-  @observable isHibernationEnabled: boolean = false;
+  @observable isHibernationEnabled: boolean =
+    DEFAULT_SERVICE_SETTINGS.isHibernationEnabled;
 
-  @observable isWakeUpEnabled: boolean = true;
+  @observable isWakeUpEnabled: boolean =
+    DEFAULT_SERVICE_SETTINGS.isWakeUpEnabled;
 
   @observable isHibernationRequested: boolean = false;
 
@@ -168,6 +176,11 @@ export default class Service {
     this.isBadgeEnabled = ifUndefined<boolean>(
       data.isBadgeEnabled,
       this.isBadgeEnabled,
+    );
+
+    this.isMediaBadgeEnabled = ifUndefined<boolean>(
+      data.isMediaBadgeEnabled,
+      this.isMediaBadgeEnabled,
     );
     this.trapLinkClicks = ifUndefined<boolean>(
       data.trapLinkClicks,

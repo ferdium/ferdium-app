@@ -1,7 +1,12 @@
 import Form from 'mobx-react-form';
 import vjf from 'mobx-react-form/lib/validators/VJF';
+import { FormFields } from '../@types/mobx-form.types';
 
 export default class DefaultForm extends Form {
+  constructor(fields: FormFields) {
+    super(fields);
+  }
+
   bindings() {
     return {
       default: {

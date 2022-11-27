@@ -337,7 +337,7 @@ export default class ServicesStore extends TypedStore {
     return this.all.filter(service => service.isEnabled);
   }
 
-  @computed get allDisplayed() {
+  @computed get allDisplayed(): Service[] {
     const services = this.stores.settings.all.app.showDisabledServices
       ? this.all
       : this.enabled;
@@ -460,6 +460,7 @@ export default class ServicesStore extends TypedStore {
       isWakeUpEnabled: DEFAULT_SERVICE_SETTINGS.isWakeUpEnabled,
       isNotificationEnabled: DEFAULT_SERVICE_SETTINGS.isNotificationEnabled,
       isBadgeEnabled: DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
+      isMediaBadgeEnabled: DEFAULT_SERVICE_SETTINGS.isMediaBadgeEnabled,
       trapLinkClicks: DEFAULT_SERVICE_SETTINGS.trapLinkClicks,
       isMuted: DEFAULT_SERVICE_SETTINGS.isMuted,
       customIcon: DEFAULT_SERVICE_SETTINGS.customIcon,
@@ -476,7 +477,7 @@ export default class ServicesStore extends TypedStore {
       : this._cleanUpTeamIdAndCustomUrl(recipeId, serviceData);
 
     const response = await this.createServiceRequest.execute(recipeId, data)
-      ._promise;
+      .promise;
 
     this.allServicesRequest.patch(result => {
       if (!result) return;
@@ -535,7 +536,7 @@ export default class ServicesStore extends TypedStore {
 
     const newData = serviceData;
     if (serviceData.iconFile) {
-      await request._promise;
+      await request.promise;
 
       newData.iconUrl = request.result.data.iconUrl;
       newData.hasCustomUploadedIcon = true;
@@ -561,7 +562,7 @@ export default class ServicesStore extends TypedStore {
       );
     });
 
-    await request._promise;
+    await request.promise;
     this.actionStatus = request.result.status;
 
     if (service.isEnabled) {
@@ -595,7 +596,7 @@ export default class ServicesStore extends TypedStore {
       remove(result, (c: Service) => c.id === serviceId);
     });
 
-    await request._promise;
+    await request.promise;
     this.actionStatus = request.result.status;
   }
 
@@ -636,7 +637,7 @@ export default class ServicesStore extends TypedStore {
   @action async _clearCache({ serviceId }) {
     this.clearCacheRequest.reset();
     const request = this.clearCacheRequest.execute(serviceId);
-    await request._promise;
+    await request.promise;
   }
 
   @action _setIsActive(service: Service, state: boolean): void {
@@ -1030,9 +1031,7 @@ export default class ServicesStore extends TypedStore {
     this.reorderServicesRequest.execute(services);
     this.allServicesRequest.patch(data => {
       for (const s of data) {
-        const service = s;
-
-        service.order = services[s.id];
+        s.order = services[s.id];
       }
     });
   }

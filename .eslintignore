@@ -19,7 +19,6 @@ node_modules
 .DS_Store
 
 .idea
-npm-debug.log.*
 .pnpm-debug.log*
 *.css.d.ts
 *.sass.d.ts
@@ -28,3 +27,14 @@ npm-debug.log.*
 /build/
 /out/
 /recipes/
+
+# package files
+package.json
+package-lock.json
+
+# Json
+*.json
+
+# Build
+build
+out

@@ -11,21 +11,14 @@ import AppLoader from '../../components/ui/AppLoader';
 import WorkspaceDrawer from '../../features/workspaces/components/WorkspaceDrawer';
 import { workspaceStore } from '../../features/workspaces';
 
-interface AppLayoutContainerProps extends StoresProps {}
+interface IProps extends StoresProps {}
 
-class AppLayoutContainer extends Component<AppLayoutContainerProps> {
+@inject('stores', 'actions')
+@observer
+class AppLayoutContainer extends Component<IProps> {
   render(): ReactElement {
-    const {
-      app,
-      features,
-      services,
-      ui,
-      settings,
-      globalError,
-      requests,
-      user,
-      router,
-    } = this.props.stores;
+    const { app, features, services, ui, settings, requests, user, router } =
+      this.props.stores;
 
     /* HOTFIX for:
       [mobx] Encountered an uncaught exception that was thrown by a reaction or observer component, in: 'Reaction[bound ]' TypeError: Cannot read properties of null (reading 'push')
@@ -38,10 +31,10 @@ class AppLayoutContainer extends Component<AppLayoutContainerProps> {
 
     const {
       setActive,
-      handleIPCMessage,
+      // handleIPCMessage,
       setWebviewReference,
       detachService,
-      openWindow,
+      // openWindow,
       reorder,
       reload,
       toggleNotifications,
@@ -125,10 +118,10 @@ class AppLayoutContainer extends Component<AppLayoutContainerProps> {
     const servicesContainer = (
       <Services
         services={services.allDisplayedUnordered}
-        handleIPCMessage={handleIPCMessage}
+        // handleIPCMessage={handleIPCMessage} // TODO - - [TECH DEBT] check it later
         setWebviewReference={setWebviewReference}
         detachService={detachService}
-        openWindow={openWindow}
+        // openWindow={openWindow} // TODO - - [TECH DEBT] check it later
         reload={reload}
         openSettings={openSettings}
         update={updateService}
@@ -142,7 +135,6 @@ class AppLayoutContainer extends Component<AppLayoutContainerProps> {
         <AppLayout
           settings={settings}
           isFullScreen={app.isFullScreen}
-          isOnline={app.isOnline}
           showServicesUpdatedInfoBar={ui.showServicesUpdatedInfoBar}
           appUpdateIsDownloaded={
             app.updateStatus === app.updateStatusTypes.DOWNLOADED
@@ -152,7 +144,6 @@ class AppLayoutContainer extends Component<AppLayoutContainerProps> {
           workspacesDrawer={workspacesDrawer}
           services={servicesContainer}
           installAppUpdate={installUpdate}
-          globalError={globalError.error}
           showRequiredRequestsError={requests.showRequiredRequestsError}
           areRequiredRequestsSuccessful={requests.areRequiredRequestsSuccessful}
           retryRequiredRequests={retryRequiredRequests}
@@ -166,4 +157,4 @@ class AppLayoutContainer extends Component<AppLayoutContainerProps> {
   }
 }
 
-export default inject('stores', 'actions')(observer(AppLayoutContainer));
+export default AppLayoutContainer;

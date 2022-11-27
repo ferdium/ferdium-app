@@ -1,88 +1,93 @@
-/* eslint-disable no-await-in-loop */
 import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
-
 import { StoresProps } from '../../@types/ferdium-components.types';
 import sleep from '../../helpers/async-helpers';
 import SetupAssistant from '../../components/auth/SetupAssistant';
+import { ILegacyServices } from '../../@types/legacy-types';
 
-class SetupAssistantScreen extends Component<StoresProps> {
-  state = {
-    isSettingUpServices: false,
-  };
+interface IProps extends StoresProps {}
 
-  // TODO: Why are these hardcoded here? Do they need to conform to specific services in the packaged recipes? If so, its more important to fix this
-  services = {
-    whatsapp: {
-      name: 'WhatsApp',
-      hasTeamId: false,
-    },
-    messenger: {
-      name: 'Messenger',
-      hasTeamId: false,
-    },
-    gmail: {
-      name: 'Gmail',
-      hasTeamId: false,
-    },
-    skype: {
-      name: 'Skype',
-      hasTeamId: false,
-    },
-    telegram: {
-      name: 'Telegram',
-      hasTeamId: false,
-    },
-    instagram: {
-      name: 'Instagram',
-      hasTeamId: false,
-    },
-    slack: {
-      name: 'Slack',
-      hasTeamId: true,
-    },
-    hangouts: {
-      name: 'Hangouts',
-      hasTeamId: false,
-    },
-    linkedin: {
-      name: 'LinkedIn',
-      hasTeamId: false,
-    },
-  };
+interface IState {
+  isSettingUpServices: boolean;
+}
+
+@inject('stores', 'actions')
+@observer
+class SetupAssistantScreen extends Component<IProps, IState> {
+  services: ILegacyServices;
+
+  constructor(props: IProps) {
+    super(props);
+
+    this.state = {
+      isSettingUpServices: false,
+    };
+
+    // TODO: Why are these hardcoded here? Do they need to conform to specific services in the packaged recipes? If so, its more important to fix this
+    this.services = {
+      whatsapp: {
+        name: 'WhatsApp',
+        hasTeamId: false,
+      },
+      messenger: {
+        name: 'Messenger',
+        hasTeamId: false,
+      },
+      gmail: {
+        name: 'Gmail',
+        hasTeamId: false,
+      },
+      skype: {
+        name: 'Skype',
+        hasTeamId: false,
+      },
+      telegram: {
+        name: 'Telegram',
+        hasTeamId: false,
+      },
+      instagram: {
+        name: 'Instagram',
+        hasTeamId: false,
+      },
+      slack: {
+        name: 'Slack',
+        hasTeamId: true,
+      },
+      hangouts: {
+        name: 'Hangouts',
+        hasTeamId: false,
+      },
+      linkedin: {
+        name: 'LinkedIn',
+        hasTeamId: false,
+      },
+    };
+  }
 
   async setupServices(serviceConfig: any): Promise<void> {
-    const {
-      stores: { services, router },
-    } = this.props;
+    const { services, router } = this.props.stores;
 
-    this.setState({
-      isSettingUpServices: true,
-    });
+    this.setState({ isSettingUpServices: true });
 
     // The store requests are not build for parallel requests so we need to finish one request after another
     for (const config of serviceConfig) {
-      const serviceData = {
-        name: this.services[config.id].name,
-        team: config.team,
-      };
-
+      // eslint-disable-next-line no-await-in-loop
       await services._createService({
         recipeId: config.id,
-        serviceData,
+        serviceData: {
+          name: this.services[config.id].name,
+          team: config.team,
+        },
         redirect: false,
         skipCleanup: true,
       });
 
+      // eslint-disable-next-line no-await-in-loop
       await sleep(100);
     }
 
-    this.setState({
-      isSettingUpServices: false,
-    });
-
+    this.setState({ isSettingUpServices: false });
     await sleep(100);
-
     router.push('/');
   }
 
@@ -91,11 +96,11 @@ class SetupAssistantScreen extends Component<StoresProps> {
       <SetupAssistant
         onSubmit={config => this.setupServices(config)}
         services={this.services}
-        embed={false}
+        // embed={false} //  TODO - [TS DEBT][PROP NOT USED IN COMPONENT] check legacy services type
         isSettingUpServices={this.state.isSettingUpServices}
       />
     );
   }
 }
 
-export default inject('stores', 'actions')(observer(SetupAssistantScreen));
+export default SetupAssistantScreen;

@@ -7,7 +7,7 @@ exports.default = async function notarizing(context) {
   const appName = context.packager.appInfo.productFilename;
 
   // @ts-ignore global-require
-  const { notarize } = require('electron-notarize');
+  const { notarize } = require('@electron/notarize');
 
   await notarize({
     tool: 'notarytool',

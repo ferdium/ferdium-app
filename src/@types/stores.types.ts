@@ -2,8 +2,8 @@ import Workspace from '../features/workspaces/models/Workspace';
 import Recipe from '../models/Recipe';
 import Service from '../models/Service';
 import User from '../models/User';
-import { Request } from '../stores/lib/Request';
-import { CachedRequest } from '../stores/lib/CachedRequest';
+import Request from '../stores/lib/Request';
+import CachedRequest from '../stores/lib/CachedRequest';
 import Reaction from '../stores/lib/Reaction';
 
 // TODO: This file will be removed in the future when all stores are
@@ -78,7 +78,7 @@ interface TypedStore {
   resetStatus: () => void;
 }
 
-interface AppStore extends TypedStore {
+export interface AppStore extends TypedStore {
   accentColor: string;
   adaptableDarkMode: boolean;
   progressbarAccentColor: string;
@@ -102,7 +102,7 @@ interface AppStore extends TypedStore {
   isOnline: boolean;
   isSystemDarkModeEnabled: () => void;
   isSystemMuteOverridden: () => void;
-  locale: () => void;
+  locale: string;
   lockedPassword: string;
   reloadAfterResume: boolean;
   reloadAfterResumeTime: number;
@@ -125,6 +125,7 @@ interface AppStore extends TypedStore {
   universalDarkMode: boolean;
   cacheSize: () => void;
   debugInfo: () => void;
+  enableLongPressServiceHint: boolean;
 }
 
 interface CommunityRecipesStore extends TypedStore {
@@ -343,7 +344,7 @@ export interface WorkspacesStore extends TypedStore {
   create: ({ workspace }) => void;
   edit: ({ workspace }) => void;
   saving: boolean;
-  filterServicesByActiveWorkspace: () => void;
+  filterServicesByActiveWorkspace: (services: Service[]) => Service[];
   isFeatureActive: () => void;
   isAnyWorkspaceActive: boolean;
   isSettingsRouteActive: () => void;

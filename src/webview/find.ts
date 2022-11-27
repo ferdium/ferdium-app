@@ -24,4 +24,8 @@ export default class FindInPage extends ElectronFindInPage {
   constructor(options = {}) {
     super(webContentsShim, options);
   }
+
+  openFindWindow() {
+    super.openFindWindow();
+  }
 }

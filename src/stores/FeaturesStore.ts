@@ -5,7 +5,6 @@ import {
   observable,
   runInAction,
 } from 'mobx';
-
 import { Stores } from '../@types/stores.types';
 import { ApiInterface } from '../api';
 import { Actions } from '../actions/lib/actions';
@@ -21,6 +20,14 @@ import appearance from '../features/appearance';
 import TypedStore from './lib/TypedStore';
 
 export default class FeaturesStore extends TypedStore {
+  @observable features = {};
+
+  constructor(stores: Stores, api: ApiInterface, actions: Actions) {
+    super(stores, api, actions);
+
+    makeObservable(this);
+  }
+
   @observable defaultFeaturesRequest = new CachedRequest(
     this.api.features,
     'default',
@@ -31,21 +38,13 @@ export default class FeaturesStore extends TypedStore {
     'features',
   );
 
-  @observable features = {};
-
-  constructor(stores: Stores, api: ApiInterface, actions: Actions) {
-    super(stores, api, actions);
-
-    makeObservable(this);
-  }
-
   async setup(): Promise<void> {
     this.registerReactions([
       this._updateFeatures,
       this._monitorLoginStatus.bind(this),
     ]);
 
-    await this.featuresRequest._promise;
+    await this.featuresRequest.promise;
     setTimeout(this._setupFeatures.bind(this), 1);
   }
 

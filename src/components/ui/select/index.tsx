@@ -5,46 +5,14 @@ import {
 } from '@mdi/js';
 import Icon from '@mdi/react';
 import classnames from 'classnames';
-import { ChangeEvent, Component, createRef } from 'react';
-import injectStyle, { WithStylesProps } from 'react-jss';
-
+import { ChangeEvent, Component, createRef, ReactElement } from 'react';
+import withStyles, { WithStylesProps } from 'react-jss';
+import { noop } from 'lodash';
 import { Theme } from '../../../themes';
 import { IFormField } from '../typings/generic';
-
 import Error from '../error';
 import Label from '../label';
 import Wrapper from '../wrapper';
-
-interface IOptions {
-  [index: string]: string;
-}
-
-interface IData {
-  [index: string]: string;
-}
-
-interface IProps extends IFormField, WithStylesProps<typeof styles> {
-  actionText: string;
-  className?: string;
-  inputClassName?: string;
-  defaultValue?: string;
-  disabled?: boolean;
-  id?: string;
-  name: string;
-  options: IOptions;
-  value: string;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  showSearch: boolean;
-  data: IData;
-}
-
-interface IState {
-  open: boolean;
-  value: string;
-  needle: string;
-  selected: number;
-  options: IOptions;
-}
 
 let popupTransition: string = 'none';
 let toggleTransition: string = 'none';
@@ -149,22 +117,38 @@ const styles = (theme: Theme) => ({
   input: {},
 });
 
-class SelectComponent extends Component<IProps> {
-  public static defaultProps = {
-    onChange: () => {},
-    showLabel: true,
-    disabled: false,
-    error: '',
-  };
+interface IOptions {
+  [index: string]: string;
+}
 
-  state = {
-    open: false,
-    value: '',
-    needle: '',
-    selected: 0,
-    options: null,
-  };
+interface IData {
+  [index: string]: string;
+}
 
+interface IProps extends IFormField, WithStylesProps<typeof styles> {
+  actionText: string;
+  className?: string;
+  inputClassName?: string;
+  defaultValue?: string;
+  disabled?: boolean;
+  id?: string;
+  name: string;
+  options: IOptions;
+  value: string;
+  onChange: (event: ChangeEvent<HTMLInputElement> | string) => void;
+  showSearch: boolean;
+  data: IData;
+}
+
+interface IState {
+  open: boolean;
+  value: string;
+  needle: string;
+  selected: number;
+  options: IOptions | null;
+}
+
+class SelectComponent extends Component<IProps, IState> {
   private componentRef = createRef<HTMLDivElement>();
 
   private inputRef = createRef<HTMLInputElement>();
@@ -175,9 +159,12 @@ class SelectComponent extends Component<IProps> {
 
   private activeOptionRef = createRef<HTMLDivElement>();
 
-  private keyListener: any;
+  private keyListener: (e: KeyboardEvent) => void;
 
-  static getDerivedStateFromProps(nextProps: IProps, prevState: IProps) {
+  static getDerivedStateFromProps(
+    nextProps: IProps,
+    prevState: IProps,
+  ): Partial<IState> {
     if (nextProps.value && nextProps.value !== prevState.value) {
       return {
         value: nextProps.value,
@@ -189,7 +176,22 @@ class SelectComponent extends Component<IProps> {
     };
   }
 
-  componentDidUpdate() {
+  constructor(props: IProps) {
+    super(props);
+
+    this.state = {
+      open: false,
+      value: '',
+      needle: '',
+      selected: 0,
+      options: null,
+    };
+
+    this.keyListener = noop;
+    this.arrowKeysHandler = this.arrowKeysHandler.bind(this);
+  }
+
+  componentDidUpdate(): void {
     const { open } = this.state;
 
     if (this.searchInputRef && this.searchInputRef.current && open) {
@@ -197,22 +199,20 @@ class SelectComponent extends Component<IProps> {
     }
   }
 
-  componentDidMount() {
+  componentDidMount(): void {
     if (this.inputRef && this.inputRef.current) {
       const { data } = this.props;
 
       if (data) {
-        Object.keys(data).map(
-          // eslint-disable-next-line no-return-assign
-          key => (this.inputRef.current!.dataset[key] = data[key]),
-        );
+        for (const key of Object.keys(data))
+          this.inputRef.current!.dataset[key] = data[key];
       }
     }
 
-    window.addEventListener('keydown', this.arrowKeysHandler.bind(this), false);
+    window.addEventListener('keydown', this.arrowKeysHandler, false);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount(): void {
     const { value } = this.props;
 
     if (this.componentRef && this.componentRef.current) {
@@ -231,17 +231,16 @@ class SelectComponent extends Component<IProps> {
     this.setFilter();
   }
 
-  componentWillUnmount() {
-    // eslint-disable-next-line unicorn/no-invalid-remove-event-listener
-    window.removeEventListener('keydown', this.arrowKeysHandler.bind(this));
+  componentWillUnmount(): void {
+    window.removeEventListener('keydown', this.arrowKeysHandler);
   }
 
-  setFilter(needle = '') {
+  setFilter(needle = ''): void {
     const { options } = this.props;
 
     let filteredOptions = {};
     if (needle) {
-      Object.keys(options).map(key => {
+      for (const key of Object.keys(options)) {
         if (
           key.toLocaleLowerCase().startsWith(needle.toLocaleLowerCase()) ||
           options[key]
@@ -252,7 +251,7 @@ class SelectComponent extends Component<IProps> {
             [`${key}`]: options[key],
           });
         }
-      });
+      }
     } else {
       filteredOptions = options;
     }
@@ -264,7 +263,7 @@ class SelectComponent extends Component<IProps> {
     });
   }
 
-  select(key: string) {
+  select(key: string): void {
     this.setState(() => ({
       value: key,
       open: false,
@@ -273,11 +272,11 @@ class SelectComponent extends Component<IProps> {
     this.setFilter();
 
     if (this.props.onChange) {
-      this.props.onChange(key as any);
+      this.props.onChange(key);
     }
   }
 
-  arrowKeysHandler(e: KeyboardEvent) {
+  arrowKeysHandler(e: KeyboardEvent): void {
     const { selected, open, options } = this.state;
 
     if (!open) return;
@@ -329,22 +328,22 @@ class SelectComponent extends Component<IProps> {
     }
   }
 
-  render() {
+  render(): ReactElement {
     const {
       actionText,
       classes,
       className,
       defaultValue,
-      disabled,
-      error,
       id,
       inputClassName,
       name,
       label,
-      showLabel,
       showSearch,
-      onChange,
       required,
+      onChange = noop,
+      showLabel = true,
+      disabled = false,
+      error = '',
     } = this.props;
 
     const { open, needle, value, selected, options } = this.state;
@@ -440,6 +439,8 @@ class SelectComponent extends Component<IProps> {
                   })}
                   onMouseOver={() => this.setState({ selected: i })}
                   ref={selected === i ? this.activeOptionRef : null}
+                  onKeyUp={noop}
+                  onFocus={noop}
                 >
                   {options![key]}
                 </div>
@@ -463,4 +464,4 @@ class SelectComponent extends Component<IProps> {
   }
 }
 
-export default injectStyle(styles, { injectTheme: true })(SelectComponent);
+export default withStyles(styles, { injectTheme: true })(SelectComponent);

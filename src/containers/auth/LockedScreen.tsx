@@ -4,15 +4,27 @@ import { StoresProps } from '../../@types/ferdium-components.types';
 import Locked from '../../components/auth/Locked';
 
 import { hash } from '../../helpers/password-helpers';
+import { Actions } from '../../actions/lib/actions';
+import { RealStores } from '../../stores';
 
-class LockedScreen extends Component<StoresProps> {
-  state = {
-    error: false,
-  };
+interface IProps {
+  actions?: Actions;
+  stores?: RealStores;
+}
 
+interface IState {
+  error: boolean;
+}
+
+@inject('stores', 'actions')
+@observer
+class LockedScreen extends Component<IProps, IState> {
   constructor(props: StoresProps) {
     super(props);
 
+    this.state = {
+      error: false,
+    };
     this.onSubmit = this.onSubmit.bind(this);
     this.unlock = this.unlock.bind(this);
   }
@@ -20,13 +32,13 @@ class LockedScreen extends Component<StoresProps> {
   onSubmit(values: any): void {
     const { password } = values;
 
-    let correctPassword = this.props.stores.settings.all.app.lockedPassword;
+    let correctPassword = this.props.stores!.settings.all.app.lockedPassword;
     if (!correctPassword) {
       correctPassword = '';
     }
 
     if (hash(String(password)) === String(correctPassword)) {
-      this.props.actions.settings.update({
+      this.props.actions!.settings.update({
         type: 'app',
         data: {
           locked: false,
@@ -34,15 +46,13 @@ class LockedScreen extends Component<StoresProps> {
       });
     } else {
       this.setState({
-        error: {
-          code: 'invalid-credentials',
-        },
+        error: true,
       });
     }
   }
 
   unlock(): void {
-    this.props.actions.settings.update({
+    this.props.actions!.settings.update({
       type: 'app',
       data: {
         locked: false,
@@ -52,7 +62,7 @@ class LockedScreen extends Component<StoresProps> {
 
   render(): ReactElement {
     const { stores } = this.props;
-    const { useTouchIdToUnlock } = this.props.stores.settings.all.app;
+    const { useTouchIdToUnlock } = this.props.stores!.settings.all.app;
 
     return (
       <div className="auth">
@@ -61,8 +71,8 @@ class LockedScreen extends Component<StoresProps> {
             onSubmit={this.onSubmit}
             unlock={this.unlock}
             useTouchIdToUnlock={useTouchIdToUnlock}
-            isSubmitting={stores.user.loginRequest.isExecuting}
-            error={this.state.error || {}}
+            isSubmitting={stores!.user.loginRequest.isExecuting}
+            error={this.state.error}
           />
         </div>
       </div>
@@ -70,4 +80,4 @@ class LockedScreen extends Component<StoresProps> {
   }
 }
 
-export default inject('stores', 'actions')(observer(LockedScreen));
+export default LockedScreen;

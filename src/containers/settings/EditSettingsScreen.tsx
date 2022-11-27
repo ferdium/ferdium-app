@@ -1,7 +1,7 @@
 import { ipcRenderer } from 'electron';
 import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
+import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 
 import { FormFields } from '../../@types/mobx-form.types';
 import { StoresProps } from '../../@types/ferdium-components.types';
@@ -111,6 +111,10 @@ const messages = defineMessages({
   searchEngine: {
     id: 'settings.app.form.searchEngine',
     defaultMessage: 'Search engine',
+  },
+  sentry: {
+    id: 'settings.app.form.sentry',
+    defaultMessage: 'Send telemetry data',
   },
   translatorEngine: {
     id: 'settings.app.form.translatorEngine',
@@ -314,10 +318,10 @@ const messages = defineMessages({
   },
 });
 
-interface EditSettingsScreenProps extends StoresProps {
-  intl: any;
-}
+interface EditSettingsScreenProps extends StoresProps, WrappedComponentProps {}
 
+@inject('stores', 'actions')
+@observer
 class EditSettingsScreen extends Component<EditSettingsScreenProps> {
   state = {
     lockedPassword: '',
@@ -366,6 +370,7 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
         searchEngine: settingsData.searchEngine,
         translatorEngine: settingsData.translatorEngine,
         translatorLanguage: settingsData.translatorLanguage,
+        sentry: Boolean(settingsData.sentry),
         hibernateOnStartup: Boolean(settingsData.hibernateOnStartup),
         hibernationStrategy: Number(settingsData.hibernationStrategy),
         wakeUpStrategy: Number(settingsData.wakeUpStrategy),
@@ -539,26 +544,31 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           label: intl.formatMessage(messages.autoLaunchOnStart),
           value: app.autoLaunchOnStart,
           default: DEFAULT_APP_SETTINGS.autoLaunchOnStart,
+          type: 'checkbox',
         },
         autoLaunchInBackground: {
           label: intl.formatMessage(messages.autoLaunchInBackground),
           value: app.launchInBackground,
           default: DEFAULT_APP_SETTINGS.autoLaunchInBackground,
+          type: 'checkbox',
         },
         runInBackground: {
           label: intl.formatMessage(messages.runInBackground),
           value: settings.all.app.runInBackground,
           default: DEFAULT_APP_SETTINGS.runInBackground,
+          type: 'checkbox',
         },
         startMinimized: {
           label: intl.formatMessage(messages.startMinimized),
           value: settings.all.app.startMinimized,
           default: DEFAULT_APP_SETTINGS.startMinimized,
+          type: 'checkbox',
         },
         confirmOnQuit: {
           label: intl.formatMessage(messages.confirmOnQuit),
           value: settings.all.app.confirmOnQuit,
           default: DEFAULT_APP_SETTINGS.confirmOnQuit,
+          type: 'checkbox',
         },
         enableSystemTray: {
           label: intl.formatMessage(
@@ -566,11 +576,13 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           ),
           value: settings.all.app.enableSystemTray,
           default: DEFAULT_APP_SETTINGS.enableSystemTray,
+          type: 'checkbox',
         },
         reloadAfterResume: {
           label: intl.formatMessage(messages.reloadAfterResume),
           value: settings.all.app.reloadAfterResume,
           default: DEFAULT_APP_SETTINGS.reloadAfterResume,
+          type: 'checkbox',
         },
         reloadAfterResumeTime: {
           label: intl.formatMessage(messages.reloadAfterResumeTime),
@@ -581,26 +593,31 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           label: intl.formatMessage(messages.minimizeToSystemTray),
           value: settings.all.app.minimizeToSystemTray,
           default: DEFAULT_APP_SETTINGS.minimizeToSystemTray,
+          type: 'checkbox',
         },
         closeToSystemTray: {
           label: intl.formatMessage(messages.closeToSystemTray),
           value: settings.all.app.closeToSystemTray,
           default: DEFAULT_APP_SETTINGS.closeToSystemTray,
+          type: 'checkbox',
         },
         privateNotifications: {
           label: intl.formatMessage(messages.privateNotifications),
           value: settings.all.app.privateNotifications,
           default: DEFAULT_APP_SETTINGS.privateNotifications,
+          type: 'checkbox',
         },
         clipboardNotifications: {
           label: intl.formatMessage(messages.clipboardNotifications),
           value: settings.all.app.clipboardNotifications,
           default: DEFAULT_APP_SETTINGS.clipboardNotifications,
+          type: 'checkbox',
         },
         notifyTaskBarOnMessage: {
           label: intl.formatMessage(messages.notifyTaskBarOnMessage),
           value: settings.all.app.notifyTaskBarOnMessage,
           default: DEFAULT_APP_SETTINGS.notifyTaskBarOnMessage,
+          type: 'checkbox',
         },
         navigationBarBehaviour: {
           label: intl.formatMessage(messages.navigationBarBehaviour),
@@ -613,6 +630,7 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           value: settings.all.app.webRTCIPHandlingPolicy,
           default: DEFAULT_APP_SETTINGS.webRTCIPHandlingPolicy,
           options: webRTCIPHandlingPolicies,
+          type: 'checkbox',
         },
         searchEngine: {
           label: intl.formatMessage(messages.searchEngine),
@@ -632,10 +650,17 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           default: DEFAULT_APP_SETTINGS.translatorLanguage,
           options: translatorLanguages,
         },
+        sentry: {
+          label: intl.formatMessage(messages.sentry),
+          value: settings.all.app.sentry,
+          default: DEFAULT_APP_SETTINGS.sentry,
+          type: 'checkbox',
+        },
         hibernateOnStartup: {
           label: intl.formatMessage(messages.hibernateOnStartup),
           value: settings.all.app.hibernateOnStartup,
           default: DEFAULT_APP_SETTINGS.hibernateOnStartup,
+          type: 'checkbox',
         },
         hibernationStrategy: {
           label: intl.formatMessage(messages.hibernationStrategy),
@@ -659,6 +684,7 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           label: intl.formatMessage(messages.wakeUpHibernationSplay),
           value: settings.all.app.wakeUpHibernationSplay,
           default: DEFAULT_APP_SETTINGS.wakeUpHibernationSplay,
+          type: 'checkbox',
         },
         predefinedTodoServer: {
           label: intl.formatMessage(messages.predefinedTodoServer),
@@ -675,6 +701,7 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           label: intl.formatMessage(messages.enableLock),
           value: settings.all.app.lockingFeatureEnabled || false,
           default: DEFAULT_APP_SETTINGS.lockingFeatureEnabled,
+          type: 'checkbox',
         },
         lockedPassword: {
           label: intl.formatMessage(messages.lockPassword),
@@ -686,6 +713,7 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           label: intl.formatMessage(messages.useTouchIdToUnlock),
           value: settings.all.app.useTouchIdToUnlock,
           default: DEFAULT_APP_SETTINGS.useTouchIdToUnlock,
+          type: 'checkbox',
         },
         inactivityLock: {
           label: intl.formatMessage(messages.inactivityLock),
@@ -697,6 +725,7 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           label: intl.formatMessage(messages.scheduledDNDEnabled),
           value: settings.all.app.scheduledDNDEnabled || false,
           default: DEFAULT_APP_SETTINGS.scheduledDNDEnabled,
+          type: 'checkbox',
         },
         scheduledDNDStart: {
           label: intl.formatMessage(messages.scheduledDNDStart),
@@ -714,31 +743,37 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           label: intl.formatMessage(messages.showDisabledServices),
           value: settings.all.app.showDisabledServices,
           default: DEFAULT_APP_SETTINGS.showDisabledServices,
+          type: 'checkbox',
         },
         showServiceName: {
           label: intl.formatMessage(messages.showServiceName),
           value: settings.all.app.showServiceName,
           default: DEFAULT_APP_SETTINGS.showServiceName,
+          type: 'checkbox',
         },
         showMessageBadgeWhenMuted: {
           label: intl.formatMessage(messages.showMessageBadgeWhenMuted),
           value: settings.all.app.showMessageBadgeWhenMuted,
           default: DEFAULT_APP_SETTINGS.showMessageBadgeWhenMuted,
+          type: 'checkbox',
         },
         showDragArea: {
           label: intl.formatMessage(messages.showDragArea),
           value: settings.all.app.showDragArea,
           default: DEFAULT_APP_SETTINGS.showDragArea,
+          type: 'checkbox',
         },
         enableSpellchecking: {
           label: intl.formatMessage(messages.enableSpellchecking),
           value: settings.all.app.enableSpellchecking,
           default: DEFAULT_APP_SETTINGS.enableSpellchecking,
+          type: 'checkbox',
         },
         enableTranslator: {
           label: intl.formatMessage(messages.enableTranslator),
           value: settings.all.app.enableTranslator,
           default: DEFAULT_APP_SETTINGS.enableTranslator,
+          type: 'checkbox',
         },
         spellcheckerLanguage: {
           label: intl.formatMessage(globalMessages.spellcheckerLanguage),
@@ -756,21 +791,25 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           label: intl.formatMessage(messages.darkMode),
           value: settings.all.app.darkMode,
           default: DEFAULT_APP_SETTINGS.darkMode,
+          type: 'checkbox',
         },
         adaptableDarkMode: {
           label: intl.formatMessage(messages.adaptableDarkMode),
           value: settings.all.app.adaptableDarkMode,
           default: DEFAULT_APP_SETTINGS.adaptableDarkMode,
+          type: 'checkbox',
         },
         universalDarkMode: {
           label: intl.formatMessage(messages.universalDarkMode),
           value: settings.all.app.universalDarkMode,
           default: DEFAULT_APP_SETTINGS.universalDarkMode,
+          type: 'checkbox',
         },
         splitMode: {
           label: intl.formatMessage(messages.splitMode),
           value: settings.all.app.splitMode,
           default: DEFAULT_APP_SETTINGS.splitMode,
+          type: 'checkbox',
         },
         splitColumns: {
           label: `${intl.formatMessage(
@@ -801,31 +840,37 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           label: intl.formatMessage(messages.enableLongPressServiceHint),
           value: settings.all.app.enableLongPressServiceHint,
           default: DEFAULT_APP_SETTINGS.enableLongPressServiceHint,
+          type: 'checkbox',
         },
         useHorizontalStyle: {
           label: intl.formatMessage(messages.useHorizontalStyle),
           value: settings.all.app.useHorizontalStyle,
           default: DEFAULT_APP_SETTINGS.useHorizontalStyle,
+          type: 'checkbox',
         },
         hideCollapseButton: {
           label: intl.formatMessage(messages.hideCollapseButton),
           value: settings.all.app.hideCollapseButton,
           default: DEFAULT_APP_SETTINGS.hideCollapseButton,
+          type: 'checkbox',
         },
         hideRecipesButton: {
           label: intl.formatMessage(messages.hideRecipesButton),
           value: settings.all.app.hideRecipesButton,
           default: DEFAULT_APP_SETTINGS.hideRecipesButton,
+          type: 'checkbox',
         },
         hideSplitModeButton: {
           label: intl.formatMessage(messages.hideSplitModeButton),
           value: settings.all.app.hideSplitModeButton,
           default: DEFAULT_APP_SETTINGS.hideSplitModeButton,
+          type: 'checkbox',
         },
         useGrayscaleServices: {
           label: intl.formatMessage(messages.useGrayscaleServices),
           value: settings.all.app.useGrayscaleServices,
           default: DEFAULT_APP_SETTINGS.useGrayscaleServices,
+          type: 'checkbox',
         },
         grayscaleServicesDim: {
           label: intl.formatMessage(messages.grayscaleServicesDim),
@@ -836,21 +881,25 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           label: intl.formatMessage(messages.hideWorkspacesButton),
           value: settings.all.app.hideWorkspacesButton,
           default: DEFAULT_APP_SETTINGS.hideWorkspacesButton,
+          type: 'checkbox',
         },
         hideNotificationsButton: {
           label: intl.formatMessage(messages.hideNotificationsButton),
           value: settings.all.app.hideNotificationsButton,
           default: DEFAULT_APP_SETTINGS.hideNotificationsButton,
+          type: 'checkbox',
         },
         hideSettingsButton: {
           label: intl.formatMessage(messages.hideSettingsButton),
           value: settings.all.app.hideSettingsButton,
           default: DEFAULT_APP_SETTINGS.hideSettingsButton,
+          type: 'checkbox',
         },
         alwaysShowWorkspaces: {
           label: intl.formatMessage(messages.alwaysShowWorkspaces),
           value: settings.all.app.alwaysShowWorkspaces,
           default: DEFAULT_APP_SETTINGS.alwaysShowWorkspaces,
+          type: 'checkbox',
         },
         accentColor: {
           label: intl.formatMessage(messages.accentColor),
@@ -866,11 +915,13 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           label: intl.formatMessage(messages.enableGPUAcceleration),
           value: settings.all.app.enableGPUAcceleration,
           default: DEFAULT_APP_SETTINGS.enableGPUAcceleration,
+          type: 'checkbox',
         },
         enableGlobalHideShortcut: {
           label: intl.formatMessage(messages.enableGlobalHideShortcut),
           value: settings.all.app.enableGlobalHideShortcut,
           default: DEFAULT_APP_SETTINGS.enableGlobalHideShortcut,
+          type: 'checkbox',
         },
         locale: {
           label: intl.formatMessage(messages.language),
@@ -882,11 +933,13 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           label: intl.formatMessage(messages.beta),
           value: user.data.beta,
           default: DEFAULT_APP_SETTINGS.beta,
+          type: 'checkbox',
         },
         automaticUpdates: {
           label: intl.formatMessage(messages.automaticUpdates),
           value: settings.app.automaticUpdates,
           default: DEFAULT_APP_SETTINGS.automaticUpdates,
+          type: 'checkbox',
         },
       },
     };
@@ -904,6 +957,7 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
         label: intl.formatMessage(messages.keepAllWorkspacesLoaded),
         value: workspaces.settings.keepAllWorkspacesLoaded,
         default: DEFAULT_SETTING_KEEP_ALL_WORKSPACES_LOADED,
+        type: 'checkbox',
       };
     }
 
@@ -912,6 +966,7 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
         label: intl.formatMessage(messages.enableTodos),
         value: todos.settings.isFeatureEnabledByUser,
         default: DEFAULT_IS_FEATURE_ENABLED_BY_USER,
+        type: 'checkbox',
       };
     }
 
@@ -962,9 +1017,6 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           }
           isSplitModeEnabled={this.props.stores.settings.app.splitMode}
           isTodosActivated={this.props.stores.todos.isFeatureEnabledByUser}
-          isUsingCustomTodoService={
-            this.props.stores.todos.isUsingCustomTodoService
-          }
           openProcessManager={() => this.openProcessManager()}
           isOnline={app.isOnline}
           serverURL={importExportURL()}
@@ -974,6 +1026,4 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
   }
 }
 
-export default injectIntl(
-  inject('stores', 'actions')(observer(EditSettingsScreen)),
-);
+export default injectIntl(EditSettingsScreen);
