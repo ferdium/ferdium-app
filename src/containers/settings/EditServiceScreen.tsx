@@ -193,6 +193,7 @@ class EditServiceScreen extends Component<IProps> {
             service?.isEnabled,
             DEFAULT_SERVICE_SETTINGS.isEnabled,
           ),
+          default: DEFAULT_SERVICE_SETTINGS.isEnabled,
           type: 'checkbox',
         },
         isHibernationEnabled: {
@@ -201,6 +202,7 @@ class EditServiceScreen extends Component<IProps> {
             service?.isHibernationEnabled,
             DEFAULT_SERVICE_SETTINGS.isHibernationEnabled,
           ),
+          default: DEFAULT_SERVICE_SETTINGS.isHibernationEnabled,
           type: 'checkbox',
         },
         isWakeUpEnabled: {
@@ -209,6 +211,7 @@ class EditServiceScreen extends Component<IProps> {
             service?.isWakeUpEnabled,
             DEFAULT_SERVICE_SETTINGS.isWakeUpEnabled,
           ),
+          default: DEFAULT_SERVICE_SETTINGS.isWakeUpEnabled,
           type: 'checkbox',
         },
         isNotificationEnabled: {
@@ -217,6 +220,7 @@ class EditServiceScreen extends Component<IProps> {
             service?.isNotificationEnabled,
             DEFAULT_SERVICE_SETTINGS.isNotificationEnabled,
           ),
+          default: DEFAULT_SERVICE_SETTINGS.isNotificationEnabled,
           type: 'checkbox',
         },
         isBadgeEnabled: {
@@ -225,6 +229,7 @@ class EditServiceScreen extends Component<IProps> {
             service?.isBadgeEnabled,
             DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
           ),
+          default: DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
           type: 'checkbox',
         },
         isMediaBadgeEnabled: {
@@ -233,6 +238,7 @@ class EditServiceScreen extends Component<IProps> {
             service?.isMediaBadgeEnabled,
             DEFAULT_SERVICE_SETTINGS.isMediaBadgeEnabled,
           ),
+          default: DEFAULT_SERVICE_SETTINGS.isMediaBadgeEnabled,
           type: 'checkbox',
         },
         trapLinkClicks: {
@@ -241,6 +247,7 @@ class EditServiceScreen extends Component<IProps> {
             service?.trapLinkClicks,
             DEFAULT_SERVICE_SETTINGS.trapLinkClicks,
           ),
+          default: DEFAULT_SERVICE_SETTINGS.trapLinkClicks,
           type: 'checkbox',
         },
         isMuted: {
@@ -249,6 +256,7 @@ class EditServiceScreen extends Component<IProps> {
             service?.isMuted,
             DEFAULT_SERVICE_SETTINGS.isMuted,
           ),
+          default: DEFAULT_SERVICE_SETTINGS.isMuted,
           type: 'checkbox',
         },
         customIcon: {
@@ -262,6 +270,7 @@ class EditServiceScreen extends Component<IProps> {
             service?.isDarkModeEnabled,
             stores.settings.app.darkMode,
           ),
+          default: stores.settings.app.darkMode,
           type: 'checkbox',
         },
         darkReaderBrightness: {
@@ -269,18 +278,21 @@ class EditServiceScreen extends Component<IProps> {
           value: service?.darkReaderSettings
             ? service?.darkReaderSettings.brightness
             : 100,
+          default: 100,
         },
         darkReaderContrast: {
           label: intl.formatMessage(messages.darkReaderContrast),
           value: service?.darkReaderSettings
             ? service?.darkReaderSettings.contrast
             : 90,
+          default: 90,
         },
         darkReaderSepia: {
           label: intl.formatMessage(messages.darkReaderSepia),
           value: service?.darkReaderSettings
             ? service?.darkReaderSettings.sepia
             : 10,
+          default: 10,
         },
         isProgressbarEnabled: {
           label: intl.formatMessage(messages.enableProgressbar),
@@ -288,6 +300,7 @@ class EditServiceScreen extends Component<IProps> {
             service?.isProgressbarEnabled,
             DEFAULT_SERVICE_SETTINGS.isProgressbarEnabled,
           ),
+          default: DEFAULT_SERVICE_SETTINGS.isProgressbarEnabled,
           type: 'checkbox',
         },
         spellcheckerLanguage: {
@@ -299,7 +312,8 @@ class EditServiceScreen extends Component<IProps> {
         userAgentPref: {
           label: intl.formatMessage(globalMessages.userAgentPref),
           placeholder: service?.defaultUserAgent,
-          value: service?.userAgentPref || '',
+          value: ifUndefined<string>(service?.userAgentPref, ''),
+          default: '',
         },
       },
     };
@@ -350,6 +364,7 @@ class EditServiceScreen extends Component<IProps> {
             service?.isIndirectMessageBadgeEnabled,
             DEFAULT_SERVICE_SETTINGS.hasIndirectMessages,
           ),
+          default: DEFAULT_SERVICE_SETTINGS.hasIndirectMessages,
           type: 'checkbox',
         },
       };
@@ -364,6 +379,7 @@ class EditServiceScreen extends Component<IProps> {
             service?.onlyShowFavoritesInUnreadCount,
             DEFAULT_APP_SETTINGS.onlyShowFavoritesInUnreadCount,
           ),
+          default: DEFAULT_APP_SETTINGS.onlyShowFavoritesInUnreadCount,
           type: 'checkbox',
         },
       };
@@ -374,6 +390,8 @@ class EditServiceScreen extends Component<IProps> {
         ? /*
           TODO - [TS DEBT] find out why sometimes proxy[service.id] gives undefined
           Note in proxy service id exist as key but value is undefined rather that proxy empty object
+
+          Temp fix - or-ed {} (to stores.settings.proxy[service.id] ) to avoid undefined proxy in settingStore throw error
           */
           stores.settings.proxy[service.id] || {}
         : {};
@@ -390,23 +408,28 @@ class EditServiceScreen extends Component<IProps> {
                 serviceProxyConfig.isEnabled,
                 DEFAULT_APP_SETTINGS.proxyFeatureEnabled,
               ),
+              default: DEFAULT_APP_SETTINGS.proxyFeatureEnabled,
               type: 'checkbox',
             },
             host: {
               label: intl.formatMessage(messages.proxyHost),
               value: ifUndefined<string>(serviceProxyConfig.host, ''),
+              default: '',
             },
             port: {
               label: intl.formatMessage(messages.proxyPort),
               value: ifUndefined<number>(serviceProxyConfig.port, 0),
+              default: 0,
             },
             user: {
               label: intl.formatMessage(messages.proxyUser),
               value: ifUndefined<string>(serviceProxyConfig.user, ''),
+              default: '',
             },
             password: {
               label: intl.formatMessage(messages.proxyPassword),
               value: ifUndefined<string>(serviceProxyConfig.password, ''),
+              default: '',
               type: 'password',
             },
           },
