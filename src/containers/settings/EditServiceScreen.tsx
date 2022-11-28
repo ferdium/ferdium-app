@@ -252,7 +252,7 @@ class EditServiceScreen extends Component<IProps> {
         },
         isMuted: {
           label: intl.formatMessage(messages.enableAudio),
-          value: ifUndefined<boolean>(
+          value: !ifUndefined<boolean>(
             service?.isMuted,
             DEFAULT_SERVICE_SETTINGS.isMuted,
           ),
