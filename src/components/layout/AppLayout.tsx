@@ -157,18 +157,19 @@ class AppLayout extends Component<IProps, IState> {
               {sidebar}
               <div className="app__service">
                 <WorkspaceSwitchingIndicator />
-                {!areRequiredRequestsSuccessful && showRequiredRequestsError && (
-                  <InfoBar
-                    type="danger"
-                    ctaLabel="Try again"
-                    ctaLoading={areRequiredRequestsLoading}
-                    sticky
-                    onClick={retryRequiredRequests}
-                  >
-                    <Icon icon={mdiFlash} />
-                    {intl.formatMessage(messages.requiredRequestsFailed)}
-                  </InfoBar>
-                )}
+                {!areRequiredRequestsSuccessful &&
+                  showRequiredRequestsError && (
+                    <InfoBar
+                      type="danger"
+                      ctaLabel="Try again"
+                      ctaLoading={areRequiredRequestsLoading}
+                      sticky
+                      onClick={retryRequiredRequests}
+                    >
+                      <Icon icon={mdiFlash} />
+                      {intl.formatMessage(messages.requiredRequestsFailed)}
+                    </InfoBar>
+                  )}
                 {authRequestFailed && (
                   <InfoBar
                     type="danger"
