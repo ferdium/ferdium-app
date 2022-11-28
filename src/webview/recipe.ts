@@ -44,7 +44,7 @@ import {
 } from './spellchecker';
 
 import { DEFAULT_APP_SETTINGS } from '../config';
-import { ifUndefinedString } from '../jsUtils';
+import { ifUndefined } from '../jsUtils';
 import { AppStore } from '../@types/stores.types';
 import Service from '../models/Service';
 
@@ -170,7 +170,7 @@ class RecipeController {
   }
 
   @computed get spellcheckerLanguage() {
-    return ifUndefinedString(
+    return ifUndefined<string>(
       this.settings.service.spellcheckerLanguage,
       this.settings.app.spellcheckerLanguage,
     );

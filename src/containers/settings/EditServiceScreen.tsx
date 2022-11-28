@@ -17,6 +17,7 @@ import { SPELLCHECKER_LOCALES } from '../../i18n/languages';
 import globalMessages from '../../i18n/globalMessages';
 import { DEFAULT_APP_SETTINGS, DEFAULT_SERVICE_SETTINGS } from '../../config';
 import withParams from '../../components/util/WithParams';
+import { ifUndefined } from '../../jsUtils';
 
 const messages = defineMessages({
   name: {
@@ -188,91 +189,105 @@ class EditServiceScreen extends Component<IProps> {
         },
         isEnabled: {
           label: intl.formatMessage(messages.enableService),
-          value: service?.isEnabled || DEFAULT_SERVICE_SETTINGS.isEnabled,
+          value: ifUndefined<boolean>(
+            service?.isEnabled,
+            DEFAULT_SERVICE_SETTINGS.isEnabled,
+          ),
           type: 'checkbox',
         },
         isHibernationEnabled: {
           label: intl.formatMessage(messages.enableHibernation),
-          value:
-            service?.isHibernationEnabled ||
+          value: ifUndefined<boolean>(
+            service?.isHibernationEnabled,
             DEFAULT_SERVICE_SETTINGS.isHibernationEnabled,
+          ),
           type: 'checkbox',
         },
         isWakeUpEnabled: {
           label: intl.formatMessage(messages.enableWakeUp),
-          value:
-            service?.isWakeUpEnabled ||
+          value: ifUndefined<boolean>(
+            service?.isWakeUpEnabled,
             DEFAULT_SERVICE_SETTINGS.isWakeUpEnabled,
+          ),
           type: 'checkbox',
         },
         isNotificationEnabled: {
           label: intl.formatMessage(messages.enableNotification),
-          value:
-            service?.isNotificationEnabled ||
+          value: ifUndefined<boolean>(
+            service?.isNotificationEnabled,
             DEFAULT_SERVICE_SETTINGS.isNotificationEnabled,
+          ),
           type: 'checkbox',
         },
         isBadgeEnabled: {
           label: intl.formatMessage(messages.enableBadge),
-          value:
-            service?.isBadgeEnabled || DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
+          value: ifUndefined<boolean>(
+            service?.isBadgeEnabled,
+            DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
+          ),
           type: 'checkbox',
         },
         isMediaBadgeEnabled: {
           label: intl.formatMessage(messages.enableMediaBadge),
-          value:
-            service?.isMediaBadgeEnabled ||
+          value: ifUndefined<boolean>(
+            service?.isMediaBadgeEnabled,
             DEFAULT_SERVICE_SETTINGS.isMediaBadgeEnabled,
+          ),
           type: 'checkbox',
         },
         trapLinkClicks: {
           label: intl.formatMessage(messages.trapLinkClicks),
-          value:
-            service?.trapLinkClicks || DEFAULT_SERVICE_SETTINGS.trapLinkClicks,
+          value: ifUndefined<boolean>(
+            service?.trapLinkClicks,
+            DEFAULT_SERVICE_SETTINGS.trapLinkClicks,
+          ),
           type: 'checkbox',
         },
         isMuted: {
           label: intl.formatMessage(messages.enableAudio),
-          value: !service?.isMuted || DEFAULT_SERVICE_SETTINGS.isMuted,
+          value: ifUndefined<boolean>(
+            service?.isMuted,
+            DEFAULT_SERVICE_SETTINGS.isMuted,
+          ),
           type: 'checkbox',
         },
         customIcon: {
           label: intl.formatMessage(messages.icon),
           value: service?.hasCustomUploadedIcon ? service?.icon : false,
-          default: null,
           type: 'file',
         },
         isDarkModeEnabled: {
           label: intl.formatMessage(messages.enableDarkMode),
-          value: service?.isDarkModeEnabled || stores.settings.app.darkMode,
+          value: ifUndefined<boolean>(
+            service?.isDarkModeEnabled,
+            stores.settings.app.darkMode,
+          ),
           type: 'checkbox',
         },
         darkReaderBrightness: {
           label: intl.formatMessage(messages.darkReaderBrightness),
           value: service?.darkReaderSettings
             ? service?.darkReaderSettings.brightness
-            : undefined,
-          default: 100,
+            : 100,
         },
         darkReaderContrast: {
           label: intl.formatMessage(messages.darkReaderContrast),
           value: service?.darkReaderSettings
             ? service?.darkReaderSettings.contrast
-            : undefined,
-          default: 90,
+            : 90,
         },
         darkReaderSepia: {
           label: intl.formatMessage(messages.darkReaderSepia),
           value: service?.darkReaderSettings
             ? service?.darkReaderSettings.sepia
-            : undefined,
-          default: 10,
+            : 10,
         },
         isProgressbarEnabled: {
           label: intl.formatMessage(messages.enableProgressbar),
-          value:
-            service?.isProgressbarEnabled ||
+          value: ifUndefined<boolean>(
+            service?.isProgressbarEnabled,
             DEFAULT_SERVICE_SETTINGS.isProgressbarEnabled,
+          ),
           type: 'checkbox',
         },
         spellcheckerLanguage: {
@@ -331,9 +346,10 @@ class EditServiceScreen extends Component<IProps> {
         ...config.fields,
         isIndirectMessageBadgeEnabled: {
           label: intl.formatMessage(messages.indirectMessages),
-          value:
-            service?.isIndirectMessageBadgeEnabled ||
+          value: ifUndefined<boolean>(
+            service?.isIndirectMessageBadgeEnabled,
             DEFAULT_SERVICE_SETTINGS.hasIndirectMessages,
+          ),
           type: 'checkbox',
         },
       };
@@ -344,9 +360,10 @@ class EditServiceScreen extends Component<IProps> {
         ...config.fields,
         onlyShowFavoritesInUnreadCount: {
           label: intl.formatMessage(messages.onlyShowFavoritesInUnreadCount),
-          value:
-            service?.onlyShowFavoritesInUnreadCount ||
+          value: ifUndefined<boolean>(
+            service?.onlyShowFavoritesInUnreadCount,
             DEFAULT_APP_SETTINGS.onlyShowFavoritesInUnreadCount,
+          ),
           type: 'checkbox',
         },
       };
@@ -358,8 +375,8 @@ class EditServiceScreen extends Component<IProps> {
           TODO - [TS DEBT] find out why sometimes proxy[service.id] gives undefined
           Note in proxy service id exist as key but value is undefined rather that proxy empty object
           */
-         stores.settings.proxy[service.id] || {}
-       : {};
+          stores.settings.proxy[service.id] || {}
+        : {};
 
       config.fields = {
         ...config.fields,
@@ -369,30 +386,27 @@ class EditServiceScreen extends Component<IProps> {
           fields: {
             isEnabled: {
               label: intl.formatMessage(messages.enableProxy),
-              value:
-                serviceProxyConfig.isEnabled ||
+              value: ifUndefined<boolean>(
+                serviceProxyConfig.isEnabled,
                 DEFAULT_APP_SETTINGS.proxyFeatureEnabled,
+              ),
               type: 'checkbox',
             },
             host: {
               label: intl.formatMessage(messages.proxyHost),
-              value: serviceProxyConfig.host,
-              default: '',
+              value: ifUndefined<string>(serviceProxyConfig.host, ''),
             },
             port: {
               label: intl.formatMessage(messages.proxyPort),
-              value: serviceProxyConfig.port,
-              default: '',
+              value: ifUndefined<number>(serviceProxyConfig.port, 0),
             },
             user: {
               label: intl.formatMessage(messages.proxyUser),
-              value: serviceProxyConfig.user,
-              default: '',
+              value: ifUndefined<string>(serviceProxyConfig.user, ''),
             },
             password: {
               label: intl.formatMessage(messages.proxyPassword),
-              value: serviceProxyConfig.password,
-              default: '',
+              value: ifUndefined<string>(serviceProxyConfig.password, ''),
               type: 'password',
             },
           },
