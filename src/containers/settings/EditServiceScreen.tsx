@@ -277,22 +277,22 @@ class EditServiceScreen extends Component<IProps> {
           label: intl.formatMessage(messages.darkReaderBrightness),
           value: service?.darkReaderSettings
             ? service?.darkReaderSettings.brightness
-            : DEFAULT_APP_SETTINGS.darkReaderBrightness,
-          default: DEFAULT_APP_SETTINGS.darkReaderBrightness,
+            : DEFAULT_SERVICE_SETTINGS.darkReaderBrightness,
+          default: DEFAULT_SERVICE_SETTINGS.darkReaderBrightness,
         },
         darkReaderContrast: {
           label: intl.formatMessage(messages.darkReaderContrast),
           value: service?.darkReaderSettings
             ? service?.darkReaderSettings.contrast
-            : DEFAULT_APP_SETTINGS.darkReaderContrast,
-          default: DEFAULT_APP_SETTINGS.darkReaderContrast,
+            : DEFAULT_SERVICE_SETTINGS.darkReaderContrast,
+          default: DEFAULT_SERVICE_SETTINGS.darkReaderContrast,
         },
         darkReaderSepia: {
           label: intl.formatMessage(messages.darkReaderSepia),
           value: service?.darkReaderSettings
             ? service?.darkReaderSettings.sepia
-            : DEFAULT_APP_SETTINGS.darkReaderSepia,
-          default: DEFAULT_APP_SETTINGS.darkReaderSepia,
+            : DEFAULT_SERVICE_SETTINGS.darkReaderSepia,
+          default: DEFAULT_SERVICE_SETTINGS.darkReaderSepia,
         },
         isProgressbarEnabled: {
           label: intl.formatMessage(messages.enableProgressbar),
@@ -380,9 +380,9 @@ class EditServiceScreen extends Component<IProps> {
           label: intl.formatMessage(messages.onlyShowFavoritesInUnreadCount),
           value: ifUndefined<boolean>(
             service?.onlyShowFavoritesInUnreadCount,
-            DEFAULT_APP_SETTINGS.onlyShowFavoritesInUnreadCount,
+            DEFAULT_SERVICE_SETTINGS.onlyShowFavoritesInUnreadCount,
           ),
-          default: DEFAULT_APP_SETTINGS.onlyShowFavoritesInUnreadCount,
+          default: DEFAULT_SERVICE_SETTINGS.onlyShowFavoritesInUnreadCount,
           type: 'checkbox',
         },
       };
@@ -409,42 +409,42 @@ class EditServiceScreen extends Component<IProps> {
               label: intl.formatMessage(messages.enableProxy),
               value: ifUndefined<boolean>(
                 serviceProxyConfig.isEnabled,
-                DEFAULT_APP_SETTINGS.proxyFeatureEnabled,
+                DEFAULT_SERVICE_SETTINGS.proxyFeatureEnabled,
               ),
-              default: DEFAULT_APP_SETTINGS.proxyFeatureEnabled,
+              default: DEFAULT_SERVICE_SETTINGS.proxyFeatureEnabled,
               type: 'checkbox',
             },
             host: {
               label: intl.formatMessage(messages.proxyHost),
               value: ifUndefined<string>(
                 serviceProxyConfig.host,
-                DEFAULT_APP_SETTINGS.proxyHost,
+                DEFAULT_SERVICE_SETTINGS.proxyHost,
               ),
-              default: DEFAULT_APP_SETTINGS.proxyHost,
+              default: DEFAULT_SERVICE_SETTINGS.proxyHost,
             },
             port: {
               label: intl.formatMessage(messages.proxyPort),
               value: ifUndefined<number>(
                 serviceProxyConfig.port,
-                DEFAULT_APP_SETTINGS.proxyPort,
+                DEFAULT_SERVICE_SETTINGS.proxyPort,
               ),
-              default: DEFAULT_APP_SETTINGS.proxyPort,
+              default: DEFAULT_SERVICE_SETTINGS.proxyPort,
             },
             user: {
               label: intl.formatMessage(messages.proxyUser),
               value: ifUndefined<string>(
                 serviceProxyConfig.user,
-                DEFAULT_APP_SETTINGS.proxyUser,
+                DEFAULT_SERVICE_SETTINGS.proxyUser,
               ),
-              default: DEFAULT_APP_SETTINGS.proxyUser,
+              default: DEFAULT_SERVICE_SETTINGS.proxyUser,
             },
             password: {
               label: intl.formatMessage(messages.proxyPassword),
               value: ifUndefined<string>(
                 serviceProxyConfig.password,
-                DEFAULT_APP_SETTINGS.proxyPassword,
+                DEFAULT_SERVICE_SETTINGS.proxyPassword,
               ),
-              default: DEFAULT_APP_SETTINGS.proxyPassword,
+              default: DEFAULT_SERVICE_SETTINGS.proxyPassword,
               type: 'password',
             },
           },

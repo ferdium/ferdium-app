@@ -1165,9 +1165,9 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
         label: intl.formatMessage(messages.enableTodos),
         value: ifUndefined<boolean>(
           todos.settings.isFeatureEnabledByUser,
-          DEFAULT_APP_SETTINGS.isFeatureEnabledByUser,
+          DEFAULT_APP_SETTINGS.isTodosFeatureEnabled,
         ),
-        default: DEFAULT_APP_SETTINGS.isFeatureEnabledByUser,
+        default: DEFAULT_APP_SETTINGS.isTodosFeatureEnabled,
         type: 'checkbox',
       };
     }
