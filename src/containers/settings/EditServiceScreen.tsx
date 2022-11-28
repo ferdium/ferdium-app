@@ -277,22 +277,22 @@ class EditServiceScreen extends Component<IProps> {
           label: intl.formatMessage(messages.darkReaderBrightness),
           value: service?.darkReaderSettings
             ? service?.darkReaderSettings.brightness
-            : 100,
-          default: 100,
+            : DEFAULT_APP_SETTINGS.darkReaderBrightness,
+          default: DEFAULT_APP_SETTINGS.darkReaderBrightness,
         },
         darkReaderContrast: {
           label: intl.formatMessage(messages.darkReaderContrast),
           value: service?.darkReaderSettings
             ? service?.darkReaderSettings.contrast
-            : 90,
-          default: 90,
+            : DEFAULT_APP_SETTINGS.darkReaderContrast,
+          default: DEFAULT_APP_SETTINGS.darkReaderContrast,
         },
         darkReaderSepia: {
           label: intl.formatMessage(messages.darkReaderSepia),
           value: service?.darkReaderSettings
             ? service?.darkReaderSettings.sepia
-            : 10,
-          default: 10,
+            : DEFAULT_APP_SETTINGS.darkReaderSepia,
+          default: DEFAULT_APP_SETTINGS.darkReaderSepia,
         },
         isProgressbarEnabled: {
           label: intl.formatMessage(messages.enableProgressbar),
@@ -312,8 +312,11 @@ class EditServiceScreen extends Component<IProps> {
         userAgentPref: {
           label: intl.formatMessage(globalMessages.userAgentPref),
           placeholder: service?.defaultUserAgent,
-          value: ifUndefined<string>(service?.userAgentPref, ''),
-          default: '',
+          value: ifUndefined<string>(
+            service?.userAgentPref,
+            DEFAULT_APP_SETTINGS.userAgentPref,
+          ),
+          default: DEFAULT_APP_SETTINGS.userAgentPref,
         },
       },
     };
@@ -413,23 +416,35 @@ class EditServiceScreen extends Component<IProps> {
             },
             host: {
               label: intl.formatMessage(messages.proxyHost),
-              value: ifUndefined<string>(serviceProxyConfig.host, ''),
-              default: '',
+              value: ifUndefined<string>(
+                serviceProxyConfig.host,
+                DEFAULT_APP_SETTINGS.proxyHost,
+              ),
+              default: DEFAULT_APP_SETTINGS.proxyHost,
             },
             port: {
               label: intl.formatMessage(messages.proxyPort),
-              value: ifUndefined<number>(serviceProxyConfig.port, 0),
-              default: 0,
+              value: ifUndefined<number>(
+                serviceProxyConfig.port,
+                DEFAULT_APP_SETTINGS.proxyPort,
+              ),
+              default: DEFAULT_APP_SETTINGS.proxyPort,
             },
             user: {
               label: intl.formatMessage(messages.proxyUser),
-              value: ifUndefined<string>(serviceProxyConfig.user, ''),
-              default: '',
+              value: ifUndefined<string>(
+                serviceProxyConfig.user,
+                DEFAULT_APP_SETTINGS.proxyUser,
+              ),
+              default: DEFAULT_APP_SETTINGS.proxyUser,
             },
             password: {
               label: intl.formatMessage(messages.proxyPassword),
-              value: ifUndefined<string>(serviceProxyConfig.password, ''),
-              default: '',
+              value: ifUndefined<string>(
+                serviceProxyConfig.password,
+                DEFAULT_APP_SETTINGS.proxyPassword,
+              ),
+              default: DEFAULT_APP_SETTINGS.proxyPassword,
               type: 'password',
             },
           },

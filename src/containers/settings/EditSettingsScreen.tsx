@@ -20,8 +20,6 @@ import {
   TRANSLATOR_ENGINE_GOOGLE,
   LIBRETRANSLATE_TRANSLATOR_LANGUAGES,
   TODO_APPS,
-  DEFAULT_SETTING_KEEP_ALL_WORKSPACES_LOADED,
-  DEFAULT_IS_FEATURE_ENABLED_BY_USER,
   WAKE_UP_STRATEGIES,
   WAKE_UP_HIBERNATION_STRATEGIES,
   SPLIT_COLUMNS_MIN,
@@ -787,8 +785,11 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
         },
         lockedPassword: {
           label: intl.formatMessage(messages.lockPassword),
-          value: ifUndefined<string>(lockedPassword, ''),
-          default: '',
+          value: ifUndefined<string>(
+            lockedPassword,
+            DEFAULT_APP_SETTINGS.lockedPassword,
+          ),
+          default: DEFAULT_APP_SETTINGS.lockedPassword,
           type: 'password',
         },
         useTouchIdToUnlock: {
@@ -802,8 +803,11 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
         },
         inactivityLock: {
           label: intl.formatMessage(messages.inactivityLock),
-          value: ifUndefined<number>(settings.all.app.inactivityLock, 0),
-          default: 0,
+          value: ifUndefined<number>(
+            settings.all.app.inactivityLock,
+            DEFAULT_APP_SETTINGS.inactivityLock,
+          ),
+          default: DEFAULT_APP_SETTINGS.inactivityLock,
           type: 'number',
         },
         scheduledDNDEnabled: {
@@ -819,15 +823,18 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           label: intl.formatMessage(messages.scheduledDNDStart),
           value: ifUndefined<string>(
             settings.all.app.scheduledDNDStart,
-            '17:00',
+            DEFAULT_APP_SETTINGS.scheduledDNDStart,
           ),
-          default: '17:00',
+          default: DEFAULT_APP_SETTINGS.scheduledDNDStart,
           type: 'time',
         },
         scheduledDNDEnd: {
           label: intl.formatMessage(messages.scheduledDNDEnd),
-          value: ifUndefined<string>(settings.all.app.scheduledDNDEnd, '09:00'),
-          default: '09:00',
+          value: ifUndefined<string>(
+            settings.all.app.scheduledDNDEnd,
+            DEFAULT_APP_SETTINGS.scheduledDNDEnd,
+          ),
+          default: DEFAULT_APP_SETTINGS.scheduledDNDEnd,
           type: 'time',
         },
         showDisabledServices: {
@@ -1146,9 +1153,9 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
         label: intl.formatMessage(messages.keepAllWorkspacesLoaded),
         value: ifUndefined<boolean>(
           workspaces.settings.keepAllWorkspacesLoaded,
-          DEFAULT_SETTING_KEEP_ALL_WORKSPACES_LOADED,
+          DEFAULT_APP_SETTINGS.keepAllWorkspacesLoaded,
         ),
-        default: DEFAULT_SETTING_KEEP_ALL_WORKSPACES_LOADED,
+        default: DEFAULT_APP_SETTINGS.keepAllWorkspacesLoaded,
         type: 'checkbox',
       };
     }
@@ -1158,9 +1165,9 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
         label: intl.formatMessage(messages.enableTodos),
         value: ifUndefined<boolean>(
           todos.settings.isFeatureEnabledByUser,
-          DEFAULT_IS_FEATURE_ENABLED_BY_USER,
+          DEFAULT_APP_SETTINGS.isFeatureEnabledByUser,
         ),
-        default: DEFAULT_IS_FEATURE_ENABLED_BY_USER,
+        default: DEFAULT_APP_SETTINGS.isFeatureEnabledByUser,
         type: 'checkbox',
       };
     }
