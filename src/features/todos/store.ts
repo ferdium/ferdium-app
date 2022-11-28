@@ -19,6 +19,7 @@ import Reaction, { createReactions } from '../../stores/lib/Reaction';
 import { createActionBindings } from '../utils/ActionBinding';
 import { IPC, TODOS_ROUTES } from './constants';
 import UserAgent from '../../models/UserAgent';
+import { ifUndefined } from '../../jsUtils';
 
 const debug = require('../../preload-safe-debug')(
   'Ferdium:feature:todos:store',
@@ -46,7 +47,7 @@ export default class TodoStore extends FeatureStore {
   }
 
   @computed get width() {
-    const width = this.settings.width || DEFAULT_TODOS_WIDTH;
+    const width = ifUndefined<number>(this.settings.width, DEFAULT_TODOS_WIDTH);
 
     return width < TODOS_MIN_WIDTH ? TODOS_MIN_WIDTH : width;
   }
@@ -56,10 +57,10 @@ export default class TodoStore extends FeatureStore {
   }
 
   @computed get isTodosPanelVisible() {
-    if (this.settings.isTodosPanelVisible === undefined) {
-      return DEFAULT_TODOS_VISIBLE;
-    }
-    return this.settings.isTodosPanelVisible;
+    return ifUndefined<boolean>(
+      this.settings.isTodosPanelVisible,
+      DEFAULT_TODOS_VISIBLE,
+    );
   }
 
   @computed get isFeatureEnabledByUser() {

@@ -20,8 +20,6 @@ import {
   TRANSLATOR_ENGINE_GOOGLE,
   LIBRETRANSLATE_TRANSLATOR_LANGUAGES,
   TODO_APPS,
-  DEFAULT_SETTING_KEEP_ALL_WORKSPACES_LOADED,
-  DEFAULT_IS_FEATURE_ENABLED_BY_USER,
   WAKE_UP_STRATEGIES,
   WAKE_UP_HIBERNATION_STRATEGIES,
   SPLIT_COLUMNS_MIN,
@@ -39,6 +37,7 @@ import ErrorBoundary from '../../components/util/ErrorBoundary';
 
 import globalMessages from '../../i18n/globalMessages';
 import { importExportURL } from '../../api/apiBase';
+import { ifUndefined } from '../../jsUtils';
 
 const debug = require('../../preload-safe-debug')('Ferdium:EditSettingsScreen');
 
@@ -542,31 +541,46 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
       fields: {
         autoLaunchOnStart: {
           label: intl.formatMessage(messages.autoLaunchOnStart),
-          value: app.autoLaunchOnStart,
+          value: ifUndefined<boolean>(
+            app.autoLaunchOnStart,
+            DEFAULT_APP_SETTINGS.autoLaunchOnStart,
+          ),
           default: DEFAULT_APP_SETTINGS.autoLaunchOnStart,
           type: 'checkbox',
         },
         autoLaunchInBackground: {
           label: intl.formatMessage(messages.autoLaunchInBackground),
-          value: app.launchInBackground,
+          value: ifUndefined<boolean>(
+            app.launchInBackground,
+            DEFAULT_APP_SETTINGS.autoLaunchInBackground,
+          ),
           default: DEFAULT_APP_SETTINGS.autoLaunchInBackground,
           type: 'checkbox',
         },
         runInBackground: {
           label: intl.formatMessage(messages.runInBackground),
-          value: settings.all.app.runInBackground,
+          value: ifUndefined<boolean>(
+            settings.all.app.runInBackground,
+            DEFAULT_APP_SETTINGS.runInBackground,
+          ),
           default: DEFAULT_APP_SETTINGS.runInBackground,
           type: 'checkbox',
         },
         startMinimized: {
           label: intl.formatMessage(messages.startMinimized),
-          value: settings.all.app.startMinimized,
+          value: ifUndefined<boolean>(
+            settings.all.app.startMinimized,
+            DEFAULT_APP_SETTINGS.startMinimized,
+          ),
           default: DEFAULT_APP_SETTINGS.startMinimized,
           type: 'checkbox',
         },
         confirmOnQuit: {
           label: intl.formatMessage(messages.confirmOnQuit),
-          value: settings.all.app.confirmOnQuit,
+          value: ifUndefined<boolean>(
+            settings.all.app.confirmOnQuit,
+            DEFAULT_APP_SETTINGS.confirmOnQuit,
+          ),
           default: DEFAULT_APP_SETTINGS.confirmOnQuit,
           type: 'checkbox',
         },
@@ -574,240 +588,359 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           label: intl.formatMessage(
             isMac ? messages.enableMenuBar : messages.enableSystemTray,
           ),
-          value: settings.all.app.enableSystemTray,
+          value: ifUndefined<boolean>(
+            settings.all.app.enableSystemTray,
+            DEFAULT_APP_SETTINGS.enableSystemTray,
+          ),
           default: DEFAULT_APP_SETTINGS.enableSystemTray,
           type: 'checkbox',
         },
         reloadAfterResume: {
           label: intl.formatMessage(messages.reloadAfterResume),
-          value: settings.all.app.reloadAfterResume,
+          value: ifUndefined<boolean>(
+            settings.all.app.reloadAfterResume,
+            DEFAULT_APP_SETTINGS.reloadAfterResume,
+          ),
           default: DEFAULT_APP_SETTINGS.reloadAfterResume,
           type: 'checkbox',
         },
         reloadAfterResumeTime: {
           label: intl.formatMessage(messages.reloadAfterResumeTime),
-          value: settings.all.app.reloadAfterResumeTime,
+          value: ifUndefined<number>(
+            settings.all.app.reloadAfterResumeTime,
+            DEFAULT_APP_SETTINGS.reloadAfterResumeTime,
+          ),
           default: DEFAULT_APP_SETTINGS.reloadAfterResumeTime,
         },
         minimizeToSystemTray: {
           label: intl.formatMessage(messages.minimizeToSystemTray),
-          value: settings.all.app.minimizeToSystemTray,
+          value: ifUndefined<boolean>(
+            settings.all.app.minimizeToSystemTray,
+            DEFAULT_APP_SETTINGS.minimizeToSystemTray,
+          ),
           default: DEFAULT_APP_SETTINGS.minimizeToSystemTray,
           type: 'checkbox',
         },
         closeToSystemTray: {
           label: intl.formatMessage(messages.closeToSystemTray),
-          value: settings.all.app.closeToSystemTray,
+          value: ifUndefined<boolean>(
+            settings.all.app.closeToSystemTray,
+            DEFAULT_APP_SETTINGS.closeToSystemTray,
+          ),
           default: DEFAULT_APP_SETTINGS.closeToSystemTray,
           type: 'checkbox',
         },
         privateNotifications: {
           label: intl.formatMessage(messages.privateNotifications),
-          value: settings.all.app.privateNotifications,
+          value: ifUndefined<boolean>(
+            settings.all.app.privateNotifications,
+            DEFAULT_APP_SETTINGS.privateNotifications,
+          ),
           default: DEFAULT_APP_SETTINGS.privateNotifications,
           type: 'checkbox',
         },
         clipboardNotifications: {
           label: intl.formatMessage(messages.clipboardNotifications),
-          value: settings.all.app.clipboardNotifications,
+          value: ifUndefined<boolean>(
+            settings.all.app.clipboardNotifications,
+            DEFAULT_APP_SETTINGS.clipboardNotifications,
+          ),
           default: DEFAULT_APP_SETTINGS.clipboardNotifications,
           type: 'checkbox',
         },
         notifyTaskBarOnMessage: {
           label: intl.formatMessage(messages.notifyTaskBarOnMessage),
-          value: settings.all.app.notifyTaskBarOnMessage,
+          value: ifUndefined<boolean>(
+            settings.all.app.notifyTaskBarOnMessage,
+            DEFAULT_APP_SETTINGS.notifyTaskBarOnMessage,
+          ),
           default: DEFAULT_APP_SETTINGS.notifyTaskBarOnMessage,
           type: 'checkbox',
         },
         navigationBarBehaviour: {
           label: intl.formatMessage(messages.navigationBarBehaviour),
-          value: settings.all.app.navigationBarBehaviour,
+          value: ifUndefined<string>(
+            settings.all.app.navigationBarBehaviour,
+            DEFAULT_APP_SETTINGS.navigationBarBehaviour,
+          ),
           default: DEFAULT_APP_SETTINGS.navigationBarBehaviour,
           options: navigationBarBehaviours,
         },
         webRTCIPHandlingPolicy: {
           label: intl.formatMessage(messages.webRTCIPHandlingPolicy),
-          value: settings.all.app.webRTCIPHandlingPolicy,
+          value: ifUndefined<string>(
+            settings.all.app.webRTCIPHandlingPolicy,
+            DEFAULT_APP_SETTINGS.webRTCIPHandlingPolicy,
+          ),
           default: DEFAULT_APP_SETTINGS.webRTCIPHandlingPolicy,
           options: webRTCIPHandlingPolicies,
           type: 'checkbox',
         },
         searchEngine: {
           label: intl.formatMessage(messages.searchEngine),
-          value: settings.all.app.searchEngine,
+          value: ifUndefined<string>(
+            settings.all.app.searchEngine,
+            DEFAULT_APP_SETTINGS.searchEngine,
+          ),
           default: DEFAULT_APP_SETTINGS.searchEngine,
           options: searchEngines,
         },
         translatorEngine: {
           label: intl.formatMessage(messages.translatorEngine),
-          value: settings.all.app.translatorEngine,
+          value: ifUndefined<string>(
+            settings.all.app.translatorEngine,
+            DEFAULT_APP_SETTINGS.translatorEngine,
+          ),
           default: DEFAULT_APP_SETTINGS.translatorEngine,
           options: translatorEngines,
         },
         translatorLanguage: {
           label: intl.formatMessage(messages.translatorLanguage),
-          value: settings.all.app.translatorLanguage,
+          value: ifUndefined<string>(
+            settings.all.app.translatorLanguage,
+            DEFAULT_APP_SETTINGS.translatorLanguage,
+          ),
           default: DEFAULT_APP_SETTINGS.translatorLanguage,
           options: translatorLanguages,
         },
         sentry: {
           label: intl.formatMessage(messages.sentry),
-          value: settings.all.app.sentry,
+          value: ifUndefined<boolean>(
+            settings.all.app.sentry,
+            DEFAULT_APP_SETTINGS.sentry,
+          ),
           default: DEFAULT_APP_SETTINGS.sentry,
           type: 'checkbox',
         },
         hibernateOnStartup: {
           label: intl.formatMessage(messages.hibernateOnStartup),
-          value: settings.all.app.hibernateOnStartup,
+          value: ifUndefined<boolean>(
+            settings.all.app.hibernateOnStartup,
+            DEFAULT_APP_SETTINGS.hibernateOnStartup,
+          ),
           default: DEFAULT_APP_SETTINGS.hibernateOnStartup,
           type: 'checkbox',
         },
         hibernationStrategy: {
           label: intl.formatMessage(messages.hibernationStrategy),
-          value: settings.all.app.hibernationStrategy,
-          options: hibernationStrategies,
+          value: ifUndefined<string>(
+            settings.all.app.hibernationStrategy,
+            DEFAULT_APP_SETTINGS.hibernationStrategy,
+          ),
           default: DEFAULT_APP_SETTINGS.hibernationStrategy,
+          options: hibernationStrategies,
         },
         wakeUpStrategy: {
           label: intl.formatMessage(messages.wakeUpStrategy),
-          value: settings.all.app.wakeUpStrategy,
-          options: wakeUpStrategies,
+          value: ifUndefined<string>(
+            settings.all.app.wakeUpStrategy,
+            DEFAULT_APP_SETTINGS.wakeUpStrategy,
+          ),
           default: DEFAULT_APP_SETTINGS.wakeUpStrategy,
+          options: wakeUpStrategies,
         },
         wakeUpHibernationStrategy: {
           label: intl.formatMessage(messages.wakeUpHibernationStrategy),
-          value: settings.all.app.wakeUpHibernationStrategy,
-          options: wakeUpHibernationStrategies,
+          value: ifUndefined<string>(
+            settings.all.app.wakeUpHibernationStrategy,
+            DEFAULT_APP_SETTINGS.wakeUpHibernationStrategy,
+          ),
           default: DEFAULT_APP_SETTINGS.wakeUpHibernationStrategy,
+          options: wakeUpHibernationStrategies,
         },
         wakeUpHibernationSplay: {
           label: intl.formatMessage(messages.wakeUpHibernationSplay),
-          value: settings.all.app.wakeUpHibernationSplay,
+          value: ifUndefined<boolean>(
+            settings.all.app.wakeUpHibernationSplay,
+            DEFAULT_APP_SETTINGS.wakeUpHibernationSplay,
+          ),
           default: DEFAULT_APP_SETTINGS.wakeUpHibernationSplay,
           type: 'checkbox',
         },
         predefinedTodoServer: {
           label: intl.formatMessage(messages.predefinedTodoServer),
-          value: settings.all.app.predefinedTodoServer,
+          value: ifUndefined<string>(
+            settings.all.app.predefinedTodoServer,
+            DEFAULT_APP_SETTINGS.predefinedTodoServer,
+          ),
           default: DEFAULT_APP_SETTINGS.predefinedTodoServer,
           options: todoApp,
         },
         customTodoServer: {
           label: intl.formatMessage(messages.customTodoServer),
-          value: settings.all.app.customTodoServer,
+          value: ifUndefined<string>(
+            settings.all.app.customTodoServer,
+            DEFAULT_APP_SETTINGS.customTodoServer,
+          ),
           default: DEFAULT_APP_SETTINGS.customTodoServer,
         },
         lockingFeatureEnabled: {
           label: intl.formatMessage(messages.enableLock),
-          value: settings.all.app.lockingFeatureEnabled || false,
+          value: ifUndefined<boolean>(
+            settings.all.app.lockingFeatureEnabled,
+            DEFAULT_APP_SETTINGS.lockingFeatureEnabled,
+          ),
           default: DEFAULT_APP_SETTINGS.lockingFeatureEnabled,
           type: 'checkbox',
         },
         lockedPassword: {
           label: intl.formatMessage(messages.lockPassword),
-          value: lockedPassword,
-          default: '',
+          value: ifUndefined<string>(
+            lockedPassword,
+            DEFAULT_APP_SETTINGS.lockedPassword,
+          ),
+          default: DEFAULT_APP_SETTINGS.lockedPassword,
           type: 'password',
         },
         useTouchIdToUnlock: {
           label: intl.formatMessage(messages.useTouchIdToUnlock),
-          value: settings.all.app.useTouchIdToUnlock,
+          value: ifUndefined<boolean>(
+            settings.all.app.useTouchIdToUnlock,
+            DEFAULT_APP_SETTINGS.useTouchIdToUnlock,
+          ),
           default: DEFAULT_APP_SETTINGS.useTouchIdToUnlock,
           type: 'checkbox',
         },
         inactivityLock: {
           label: intl.formatMessage(messages.inactivityLock),
-          value: settings.all.app.inactivityLock,
-          default: 0,
+          value: ifUndefined<number>(
+            settings.all.app.inactivityLock,
+            DEFAULT_APP_SETTINGS.inactivityLock,
+          ),
+          default: DEFAULT_APP_SETTINGS.inactivityLock,
           type: 'number',
         },
         scheduledDNDEnabled: {
           label: intl.formatMessage(messages.scheduledDNDEnabled),
-          value: settings.all.app.scheduledDNDEnabled || false,
+          value: ifUndefined<boolean>(
+            settings.all.app.scheduledDNDEnabled,
+            DEFAULT_APP_SETTINGS.scheduledDNDEnabled,
+          ),
           default: DEFAULT_APP_SETTINGS.scheduledDNDEnabled,
           type: 'checkbox',
         },
         scheduledDNDStart: {
           label: intl.formatMessage(messages.scheduledDNDStart),
-          value: settings.all.app.scheduledDNDStart,
-          default: '17:00',
+          value: ifUndefined<string>(
+            settings.all.app.scheduledDNDStart,
+            DEFAULT_APP_SETTINGS.scheduledDNDStart,
+          ),
+          default: DEFAULT_APP_SETTINGS.scheduledDNDStart,
           type: 'time',
         },
         scheduledDNDEnd: {
           label: intl.formatMessage(messages.scheduledDNDEnd),
-          value: settings.all.app.scheduledDNDEnd,
-          default: '09:00',
+          value: ifUndefined<string>(
+            settings.all.app.scheduledDNDEnd,
+            DEFAULT_APP_SETTINGS.scheduledDNDEnd,
+          ),
+          default: DEFAULT_APP_SETTINGS.scheduledDNDEnd,
           type: 'time',
         },
         showDisabledServices: {
           label: intl.formatMessage(messages.showDisabledServices),
-          value: settings.all.app.showDisabledServices,
+          value: ifUndefined<boolean>(
+            settings.all.app.showDisabledServices,
+            DEFAULT_APP_SETTINGS.showDisabledServices,
+          ),
           default: DEFAULT_APP_SETTINGS.showDisabledServices,
           type: 'checkbox',
         },
         showServiceName: {
           label: intl.formatMessage(messages.showServiceName),
-          value: settings.all.app.showServiceName,
+          value: ifUndefined<boolean>(
+            settings.all.app.showServiceName,
+            DEFAULT_APP_SETTINGS.showServiceName,
+          ),
           default: DEFAULT_APP_SETTINGS.showServiceName,
-          type: 'checkbox',
         },
         showMessageBadgeWhenMuted: {
           label: intl.formatMessage(messages.showMessageBadgeWhenMuted),
-          value: settings.all.app.showMessageBadgeWhenMuted,
+          value: ifUndefined<boolean>(
+            settings.all.app.showMessageBadgeWhenMuted,
+            DEFAULT_APP_SETTINGS.showMessageBadgeWhenMuted,
+          ),
           default: DEFAULT_APP_SETTINGS.showMessageBadgeWhenMuted,
           type: 'checkbox',
         },
         showDragArea: {
           label: intl.formatMessage(messages.showDragArea),
-          value: settings.all.app.showDragArea,
+          value: ifUndefined<boolean>(
+            settings.all.app.showDragArea,
+            DEFAULT_APP_SETTINGS.showDragArea,
+          ),
           default: DEFAULT_APP_SETTINGS.showDragArea,
           type: 'checkbox',
         },
         enableSpellchecking: {
           label: intl.formatMessage(messages.enableSpellchecking),
-          value: settings.all.app.enableSpellchecking,
+          value: ifUndefined<boolean>(
+            settings.all.app.enableSpellchecking,
+            DEFAULT_APP_SETTINGS.enableSpellchecking,
+          ),
           default: DEFAULT_APP_SETTINGS.enableSpellchecking,
           type: 'checkbox',
         },
         enableTranslator: {
           label: intl.formatMessage(messages.enableTranslator),
-          value: settings.all.app.enableTranslator,
+          value: ifUndefined<boolean>(
+            settings.all.app.enableTranslator,
+            DEFAULT_APP_SETTINGS.enableTranslator,
+          ),
           default: DEFAULT_APP_SETTINGS.enableTranslator,
           type: 'checkbox',
         },
         spellcheckerLanguage: {
           label: intl.formatMessage(globalMessages.spellcheckerLanguage),
-          value: settings.all.app.spellcheckerLanguage,
-          options: spellcheckingLanguages,
+          value: ifUndefined<string>(
+            settings.all.app.spellcheckerLanguage,
+            DEFAULT_APP_SETTINGS.spellcheckerLanguage,
+          ),
           default: DEFAULT_APP_SETTINGS.spellcheckerLanguage,
+          options: spellcheckingLanguages,
         },
         userAgentPref: {
           label: intl.formatMessage(globalMessages.userAgentPref),
-          value: settings.all.app.userAgentPref,
+          value: ifUndefined<string>(
+            settings.all.app.userAgentPref,
+            DEFAULT_APP_SETTINGS.userAgentPref,
+          ),
           default: DEFAULT_APP_SETTINGS.userAgentPref,
           placeholder: defaultUserAgent(),
         },
         darkMode: {
           label: intl.formatMessage(messages.darkMode),
-          value: settings.all.app.darkMode,
+          value: ifUndefined<boolean>(
+            settings.all.app.darkMode,
+            DEFAULT_APP_SETTINGS.darkMode,
+          ),
           default: DEFAULT_APP_SETTINGS.darkMode,
           type: 'checkbox',
         },
         adaptableDarkMode: {
           label: intl.formatMessage(messages.adaptableDarkMode),
-          value: settings.all.app.adaptableDarkMode,
+          value: ifUndefined<boolean>(
+            settings.all.app.adaptableDarkMode,
+            DEFAULT_APP_SETTINGS.adaptableDarkMode,
+          ),
           default: DEFAULT_APP_SETTINGS.adaptableDarkMode,
           type: 'checkbox',
         },
         universalDarkMode: {
           label: intl.formatMessage(messages.universalDarkMode),
-          value: settings.all.app.universalDarkMode,
+          value: ifUndefined<boolean>(
+            settings.all.app.universalDarkMode,
+            DEFAULT_APP_SETTINGS.universalDarkMode,
+          ),
           default: DEFAULT_APP_SETTINGS.universalDarkMode,
           type: 'checkbox',
         },
         splitMode: {
           label: intl.formatMessage(messages.splitMode),
-          value: settings.all.app.splitMode,
+          value: ifUndefined<boolean>(
+            settings.all.app.splitMode,
+            DEFAULT_APP_SETTINGS.splitMode,
+          ),
           default: DEFAULT_APP_SETTINGS.splitMode,
           type: 'checkbox',
         },
@@ -815,129 +948,192 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           label: `${intl.formatMessage(
             messages.splitColumns,
           )} (${SPLIT_COLUMNS_MIN}-${SPLIT_COLUMNS_MAX})`,
-          value: settings.all.app.splitColumns,
+          value: ifUndefined<number>(
+            settings.all.app.splitColumns,
+            DEFAULT_APP_SETTINGS.splitColumns,
+          ),
           default: DEFAULT_APP_SETTINGS.splitColumns,
         },
         serviceRibbonWidth: {
           label: intl.formatMessage(messages.serviceRibbonWidth),
-          value: settings.all.app.serviceRibbonWidth,
+          value: ifUndefined<number>(
+            settings.all.app.serviceRibbonWidth,
+            DEFAULT_APP_SETTINGS.serviceRibbonWidth,
+          ),
           default: DEFAULT_APP_SETTINGS.serviceRibbonWidth,
           options: sidebarWidth,
         },
         sidebarServicesLocation: {
           label: intl.formatMessage(messages.sidebarServicesLocation),
-          value: settings.all.app.sidebarServicesLocation,
+          value: ifUndefined<number>(
+            settings.all.app.sidebarServicesLocation,
+            DEFAULT_APP_SETTINGS.sidebarServicesLocation,
+          ),
           default: DEFAULT_APP_SETTINGS.sidebarServicesLocation,
           options: sidebarServicesLocation,
         },
         iconSize: {
           label: intl.formatMessage(messages.iconSize),
-          value: settings.all.app.iconSize,
+          value: ifUndefined<number>(
+            settings.all.app.iconSize,
+            DEFAULT_APP_SETTINGS.iconSize,
+          ),
           default: DEFAULT_APP_SETTINGS.iconSize,
           options: iconSizes,
         },
         enableLongPressServiceHint: {
           label: intl.formatMessage(messages.enableLongPressServiceHint),
-          value: settings.all.app.enableLongPressServiceHint,
+          value: ifUndefined<boolean>(
+            settings.all.app.enableLongPressServiceHint,
+            DEFAULT_APP_SETTINGS.enableLongPressServiceHint,
+          ),
           default: DEFAULT_APP_SETTINGS.enableLongPressServiceHint,
           type: 'checkbox',
         },
         useHorizontalStyle: {
           label: intl.formatMessage(messages.useHorizontalStyle),
-          value: settings.all.app.useHorizontalStyle,
+          value: ifUndefined<boolean>(
+            settings.all.app.useHorizontalStyle,
+            DEFAULT_APP_SETTINGS.useHorizontalStyle,
+          ),
           default: DEFAULT_APP_SETTINGS.useHorizontalStyle,
           type: 'checkbox',
         },
         hideCollapseButton: {
           label: intl.formatMessage(messages.hideCollapseButton),
-          value: settings.all.app.hideCollapseButton,
+          value: ifUndefined<boolean>(
+            settings.all.app.hideCollapseButton,
+            DEFAULT_APP_SETTINGS.hideCollapseButton,
+          ),
           default: DEFAULT_APP_SETTINGS.hideCollapseButton,
           type: 'checkbox',
         },
         hideRecipesButton: {
           label: intl.formatMessage(messages.hideRecipesButton),
-          value: settings.all.app.hideRecipesButton,
+          value: ifUndefined<boolean>(
+            settings.all.app.hideRecipesButton,
+            DEFAULT_APP_SETTINGS.hideRecipesButton,
+          ),
           default: DEFAULT_APP_SETTINGS.hideRecipesButton,
           type: 'checkbox',
         },
         hideSplitModeButton: {
           label: intl.formatMessage(messages.hideSplitModeButton),
-          value: settings.all.app.hideSplitModeButton,
+          value: ifUndefined<boolean>(
+            settings.all.app.hideSplitModeButton,
+            DEFAULT_APP_SETTINGS.hideSplitModeButton,
+          ),
           default: DEFAULT_APP_SETTINGS.hideSplitModeButton,
           type: 'checkbox',
         },
         useGrayscaleServices: {
           label: intl.formatMessage(messages.useGrayscaleServices),
-          value: settings.all.app.useGrayscaleServices,
+          value: ifUndefined<boolean>(
+            settings.all.app.useGrayscaleServices,
+            DEFAULT_APP_SETTINGS.useGrayscaleServices,
+          ),
           default: DEFAULT_APP_SETTINGS.useGrayscaleServices,
           type: 'checkbox',
         },
         grayscaleServicesDim: {
           label: intl.formatMessage(messages.grayscaleServicesDim),
-          value: settings.all.app.grayscaleServicesDim,
+          value: ifUndefined<number>(
+            settings.all.app.grayscaleServicesDim,
+            DEFAULT_APP_SETTINGS.grayscaleServicesDim,
+          ),
           default: DEFAULT_APP_SETTINGS.grayscaleServicesDim,
         },
         hideWorkspacesButton: {
           label: intl.formatMessage(messages.hideWorkspacesButton),
-          value: settings.all.app.hideWorkspacesButton,
+          value: ifUndefined<boolean>(
+            settings.all.app.hideWorkspacesButton,
+            DEFAULT_APP_SETTINGS.hideWorkspacesButton,
+          ),
           default: DEFAULT_APP_SETTINGS.hideWorkspacesButton,
           type: 'checkbox',
         },
         hideNotificationsButton: {
           label: intl.formatMessage(messages.hideNotificationsButton),
-          value: settings.all.app.hideNotificationsButton,
+          value: ifUndefined<boolean>(
+            settings.all.app.hideNotificationsButton,
+            DEFAULT_APP_SETTINGS.hideNotificationsButton,
+          ),
           default: DEFAULT_APP_SETTINGS.hideNotificationsButton,
           type: 'checkbox',
         },
         hideSettingsButton: {
           label: intl.formatMessage(messages.hideSettingsButton),
-          value: settings.all.app.hideSettingsButton,
+          value: ifUndefined<boolean>(
+            settings.all.app.hideSettingsButton,
+            DEFAULT_APP_SETTINGS.hideSettingsButton,
+          ),
           default: DEFAULT_APP_SETTINGS.hideSettingsButton,
           type: 'checkbox',
         },
         alwaysShowWorkspaces: {
           label: intl.formatMessage(messages.alwaysShowWorkspaces),
-          value: settings.all.app.alwaysShowWorkspaces,
+          value: ifUndefined<boolean>(
+            settings.all.app.alwaysShowWorkspaces,
+            DEFAULT_APP_SETTINGS.alwaysShowWorkspaces,
+          ),
           default: DEFAULT_APP_SETTINGS.alwaysShowWorkspaces,
           type: 'checkbox',
         },
         accentColor: {
           label: intl.formatMessage(messages.accentColor),
-          value: settings.all.app.accentColor,
+          value: ifUndefined<string>(
+            settings.all.app.accentColor,
+            DEFAULT_APP_SETTINGS.accentColor,
+          ),
           default: DEFAULT_APP_SETTINGS.accentColor,
         },
         progressbarAccentColor: {
           label: intl.formatMessage(messages.progressbarAccentColor),
-          value: settings.all.app.progressbarAccentColor,
+          value: ifUndefined<string>(
+            settings.all.app.progressbarAccentColor,
+            DEFAULT_APP_SETTINGS.progressbarAccentColor,
+          ),
           default: DEFAULT_APP_SETTINGS.progressbarAccentColor,
         },
         enableGPUAcceleration: {
           label: intl.formatMessage(messages.enableGPUAcceleration),
-          value: settings.all.app.enableGPUAcceleration,
+          value: ifUndefined<boolean>(
+            settings.all.app.enableGPUAcceleration,
+            DEFAULT_APP_SETTINGS.enableGPUAcceleration,
+          ),
           default: DEFAULT_APP_SETTINGS.enableGPUAcceleration,
           type: 'checkbox',
         },
         enableGlobalHideShortcut: {
           label: intl.formatMessage(messages.enableGlobalHideShortcut),
-          value: settings.all.app.enableGlobalHideShortcut,
+          value: ifUndefined<boolean>(
+            settings.all.app.enableGlobalHideShortcut,
+            DEFAULT_APP_SETTINGS.enableGlobalHideShortcut,
+          ),
           default: DEFAULT_APP_SETTINGS.enableGlobalHideShortcut,
           type: 'checkbox',
         },
         locale: {
           label: intl.formatMessage(messages.language),
-          value: app.locale,
-          options: locales,
+          value: ifUndefined<string>(app.locale, DEFAULT_APP_SETTINGS.locale),
           default: DEFAULT_APP_SETTINGS.locale,
+          options: locales,
         },
         beta: {
           label: intl.formatMessage(messages.beta),
-          value: user.data.beta,
+          value: ifUndefined<boolean>(
+            user.data.beta,
+            DEFAULT_APP_SETTINGS.beta,
+          ),
           default: DEFAULT_APP_SETTINGS.beta,
           type: 'checkbox',
         },
         automaticUpdates: {
           label: intl.formatMessage(messages.automaticUpdates),
-          value: settings.app.automaticUpdates,
+          value: ifUndefined<boolean>(
+            settings.app.automaticUpdates,
+            DEFAULT_APP_SETTINGS.automaticUpdates,
+          ),
           default: DEFAULT_APP_SETTINGS.automaticUpdates,
           type: 'checkbox',
         },
@@ -955,8 +1151,11 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
     if (workspaces.isFeatureActive) {
       config.fields.keepAllWorkspacesLoaded = {
         label: intl.formatMessage(messages.keepAllWorkspacesLoaded),
-        value: workspaces.settings.keepAllWorkspacesLoaded,
-        default: DEFAULT_SETTING_KEEP_ALL_WORKSPACES_LOADED,
+        value: ifUndefined<boolean>(
+          workspaces.settings.keepAllWorkspacesLoaded,
+          DEFAULT_APP_SETTINGS.keepAllWorkspacesLoaded,
+        ),
+        default: DEFAULT_APP_SETTINGS.keepAllWorkspacesLoaded,
         type: 'checkbox',
       };
     }
@@ -964,8 +1163,11 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
     if (todos.isFeatureActive) {
       config.fields.enableTodos = {
         label: intl.formatMessage(messages.enableTodos),
-        value: todos.settings.isFeatureEnabledByUser,
-        default: DEFAULT_IS_FEATURE_ENABLED_BY_USER,
+        value: ifUndefined<boolean>(
+          todos.settings.isFeatureEnabledByUser,
+          DEFAULT_APP_SETTINGS.isFeatureEnabledByUser,
+        ),
+        default: DEFAULT_APP_SETTINGS.isFeatureEnabledByUser,
         type: 'checkbox',
       };
     }
