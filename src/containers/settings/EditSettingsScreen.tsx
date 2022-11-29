@@ -674,7 +674,6 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
           ),
           default: DEFAULT_APP_SETTINGS.webRTCIPHandlingPolicy,
           options: webRTCIPHandlingPolicies,
-          type: 'checkbox',
         },
         searchEngine: {
           label: intl.formatMessage(messages.searchEngine),
