@@ -853,6 +853,7 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
             DEFAULT_APP_SETTINGS.showServiceName,
           ),
           default: DEFAULT_APP_SETTINGS.showServiceName,
+          type: 'checkbox',
         },
         showMessageBadgeWhenMuted: {
           label: intl.formatMessage(messages.showMessageBadgeWhenMuted),
