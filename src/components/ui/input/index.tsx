@@ -42,7 +42,7 @@ interface IProps
   showPasswordToggle?: boolean;
   data?: IData;
   inputClassName?: string;
-  onEnterKey?: () => {};
+  onEnterKey?: () => void;
 }
 
 interface IState {

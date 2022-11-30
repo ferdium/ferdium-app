@@ -386,7 +386,7 @@ class SelectComponent extends Component<IProps, IState> {
                       this.setState((state: IState) => ({
                         open: !state.open,
                       }))
-                  : () => {}
+                  : noop
               }
             >
               {selection}
