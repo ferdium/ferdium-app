@@ -80,7 +80,7 @@ class ServiceController {
       // TODO: Remove duplication
       return {
         customRecipe: false,
-        hasCustomIcon: false,
+        hasCustomIcon: DEFAULT_SERVICE_SETTINGS.hasCustomIcon,
         isBadgeEnabled: DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
         trapLinkClicks: DEFAULT_SERVICE_SETTINGS.trapLinkClicks,
         isDarkModeEnabled: '', // TODO: This should ideally be a boolean (false). But, changing it caused the sidebar toggle to not work.
