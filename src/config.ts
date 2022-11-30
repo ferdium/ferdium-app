@@ -338,12 +338,9 @@ export const SERVER_NOT_LOADED = 'Ferdium::SERVER_NOT_LOADED';
 
 export const ALLOWED_PROTOCOLS = ['https:', 'http:', 'ftp:', 'ferdium:'];
 
-export const DEFAULT_SETTING_KEEP_ALL_WORKSPACES_LOADED = false;
-
 export const DEFAULT_TODOS_WIDTH = 300;
 export const TODOS_MIN_WIDTH = 200;
 export const DEFAULT_TODOS_VISIBLE = false;
-export const DEFAULT_IS_FEATURE_ENABLED_BY_USER = true;
 export const DEFAULT_IS_TODO_FEATURE_ENABLED_BY_USER = false;
 export const TODOS_PARTITION_ID = 'persist:todos';
 
@@ -430,10 +427,10 @@ export const DEFAULT_APP_SETTINGS = {
   alwaysShowWorkspaces: false,
   liftSingleInstanceLock: false,
   enableLongPressServiceHint: false,
-  proxyFeatureEnabled: false,
-  onlyShowFavoritesInUnreadCount: false,
+  isTodosFeatureEnabled: true,
   customTodoServer: '',
   locale: 'en-US',
+  keepAllWorkspacesLoaded: false,
 };
 
 export const DEFAULT_SERVICE_SETTINGS = {
@@ -458,4 +455,13 @@ export const DEFAULT_SERVICE_SETTINGS = {
   allowFavoritesDelineationInUnreadCount: false,
   disablewebsecurity: false,
   spellcheckerLanguage: false,
+  onlyShowFavoritesInUnreadCount: false,
+  proxyFeatureEnabled: false,
+  proxyHost: '',
+  proxyPort: 0,
+  proxyUser: '',
+  proxyPassword: '',
+  darkReaderBrightness: 100,
+  darkReaderContrast: 90,
+  darkReaderSepia: 10,
 };

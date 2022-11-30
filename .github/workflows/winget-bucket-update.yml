@@ -105,10 +105,10 @@ jobs:
         run: |
           PRERELEASE_VERSION="${{ github.event.release.prerelease }}"
 
-          if [[ $PRERELEASE_VERSION == "true" && ${{ contains(github.event.release.tag_name, 'nightly') }} ]]; then
+          if [ $PRERELEASE_VERSION == "true" ] && ${{ contains(github.event.release.tag_name, 'nightly') }}; then
             # use the nightly version
             PACKAGE_NAME="Ferdium.Ferdium.Nightly"
-          elif [[ $PRERELEASE_VERSION == "true" && ${{ contains(github.event.release.tag_name, 'beta') }} ]]; then
+          elif [ $PRERELEASE_VERSION == "true" ] && ${{ contains(github.event.release.tag_name, 'beta') }} ; then
             PACKAGE_NAME="Ferdium.Ferdium.Beta"
           else
             PACKAGE_NAME="Ferdium.Ferdium"

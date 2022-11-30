@@ -101,32 +101,34 @@ class WorkspacesDashboard extends Component<IProps> {
         </div>
         <div className="settings__body">
           {/* ===== Workspace updated info ===== */}
-          {updateWorkspaceRequest.wasExecuted && updateWorkspaceRequest.result && (
-            <Appear className={classes.appear}>
-              <Infobox
-                type="success"
-                icon="checkbox-marked-circle-outline"
-                dismissible
-                onUnmount={updateWorkspaceRequest.reset}
-              >
-                {intl.formatMessage(messages.updatedInfo)}
-              </Infobox>
-            </Appear>
-          )}
+          {updateWorkspaceRequest.wasExecuted &&
+            updateWorkspaceRequest.result && (
+              <Appear className={classes.appear}>
+                <Infobox
+                  type="success"
+                  icon="checkbox-marked-circle-outline"
+                  dismissible
+                  onUnmount={updateWorkspaceRequest.reset}
+                >
+                  {intl.formatMessage(messages.updatedInfo)}
+                </Infobox>
+              </Appear>
+            )}
 
           {/* ===== Workspace deleted info ===== */}
-          {deleteWorkspaceRequest.wasExecuted && deleteWorkspaceRequest.result && (
-            <Appear className={classes.appear}>
-              <Infobox
-                type="success"
-                icon="checkbox-marked-circle-outline"
-                dismissible
-                onUnmount={deleteWorkspaceRequest.reset}
-              >
-                {intl.formatMessage(messages.deletedInfo)}
-              </Infobox>
-            </Appear>
-          )}
+          {deleteWorkspaceRequest.wasExecuted &&
+            deleteWorkspaceRequest.result && (
+              <Appear className={classes.appear}>
+                <Infobox
+                  type="success"
+                  icon="checkbox-marked-circle-outline"
+                  dismissible
+                  onUnmount={deleteWorkspaceRequest.reset}
+                >
+                  {intl.formatMessage(messages.deletedInfo)}
+                </Infobox>
+              </Appear>
+            )}
 
           {/* ===== Create workspace form ===== */}
           <div className={classes.createForm}>

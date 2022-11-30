@@ -1,23 +1,6 @@
 import * as jsUtils from '../src/jsUtils';
 
 describe('jsUtils', () => {
-  describe('ifUndefinedString', () => {
-    it('returns the default value for undefined input', () => {
-      const result = jsUtils.ifUndefinedString(undefined, 'abc');
-      expect(result).toEqual('abc');
-    });
-
-    it('returns the default value for null input', () => {
-      const result = jsUtils.ifUndefinedString(null, 'abc');
-      expect(result).toEqual('abc');
-    });
-
-    it('returns the non-default input value for regular string input', () => {
-      const result = jsUtils.ifUndefinedString('some random string', 'abc');
-      expect(result).toEqual('some random string');
-    });
-  });
-
   describe('ifUndefined<string>', () => {
     it('returns the default value for undefined input', () => {
       const result = jsUtils.ifUndefined<string>(undefined, 'abc');

@@ -17,6 +17,7 @@ import { SPELLCHECKER_LOCALES } from '../../i18n/languages';
 import globalMessages from '../../i18n/globalMessages';
 import { DEFAULT_APP_SETTINGS, DEFAULT_SERVICE_SETTINGS } from '../../config';
 import withParams from '../../components/util/WithParams';
+import { ifUndefined } from '../../jsUtils';
 
 const messages = defineMessages({
   name: {
@@ -188,61 +189,87 @@ class EditServiceScreen extends Component<IProps> {
         },
         isEnabled: {
           label: intl.formatMessage(messages.enableService),
-          value: service?.isEnabled,
+          value: ifUndefined<boolean>(
+            service?.isEnabled,
+            DEFAULT_SERVICE_SETTINGS.isEnabled,
+          ),
           default: DEFAULT_SERVICE_SETTINGS.isEnabled,
           type: 'checkbox',
         },
         isHibernationEnabled: {
           label: intl.formatMessage(messages.enableHibernation),
-          value: service?.isHibernationEnabled,
+          value: ifUndefined<boolean>(
+            service?.isHibernationEnabled,
+            DEFAULT_SERVICE_SETTINGS.isHibernationEnabled,
+          ),
           default: DEFAULT_SERVICE_SETTINGS.isHibernationEnabled,
           type: 'checkbox',
         },
         isWakeUpEnabled: {
           label: intl.formatMessage(messages.enableWakeUp),
-          value: service?.isWakeUpEnabled,
+          value: ifUndefined<boolean>(
+            service?.isWakeUpEnabled,
+            DEFAULT_SERVICE_SETTINGS.isWakeUpEnabled,
+          ),
           default: DEFAULT_SERVICE_SETTINGS.isWakeUpEnabled,
           type: 'checkbox',
         },
         isNotificationEnabled: {
           label: intl.formatMessage(messages.enableNotification),
-          value: service?.isNotificationEnabled,
+          value: ifUndefined<boolean>(
+            service?.isNotificationEnabled,
+            DEFAULT_SERVICE_SETTINGS.isNotificationEnabled,
+          ),
           default: DEFAULT_SERVICE_SETTINGS.isNotificationEnabled,
           type: 'checkbox',
         },
         isBadgeEnabled: {
           label: intl.formatMessage(messages.enableBadge),
-          value: service?.isBadgeEnabled,
+          value: ifUndefined<boolean>(
+            service?.isBadgeEnabled,
+            DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
+          ),
           default: DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
           type: 'checkbox',
         },
         isMediaBadgeEnabled: {
           label: intl.formatMessage(messages.enableMediaBadge),
-          value: service?.isMediaBadgeEnabled,
+          value: ifUndefined<boolean>(
+            service?.isMediaBadgeEnabled,
+            DEFAULT_SERVICE_SETTINGS.isMediaBadgeEnabled,
+          ),
           default: DEFAULT_SERVICE_SETTINGS.isMediaBadgeEnabled,
           type: 'checkbox',
         },
         trapLinkClicks: {
           label: intl.formatMessage(messages.trapLinkClicks),
-          value: service?.trapLinkClicks,
+          value: ifUndefined<boolean>(
+            service?.trapLinkClicks,
+            DEFAULT_SERVICE_SETTINGS.trapLinkClicks,
+          ),
           default: DEFAULT_SERVICE_SETTINGS.trapLinkClicks,
           type: 'checkbox',
         },
         isMuted: {
           label: intl.formatMessage(messages.enableAudio),
-          value: !service?.isMuted,
+          value: !ifUndefined<boolean>(
+            service?.isMuted,
+            DEFAULT_SERVICE_SETTINGS.isMuted,
+          ),
           default: DEFAULT_SERVICE_SETTINGS.isMuted,
           type: 'checkbox',
         },
         customIcon: {
           label: intl.formatMessage(messages.icon),
           value: service?.hasCustomUploadedIcon ? service?.icon : false,
-          default: null,
           type: 'file',
         },
         isDarkModeEnabled: {
           label: intl.formatMessage(messages.enableDarkMode),
-          value: service?.isDarkModeEnabled,
+          value: ifUndefined<boolean>(
+            service?.isDarkModeEnabled,
+            stores.settings.app.darkMode,
+          ),
           default: stores.settings.app.darkMode,
           type: 'checkbox',
         },
@@ -250,26 +277,29 @@ class EditServiceScreen extends Component<IProps> {
           label: intl.formatMessage(messages.darkReaderBrightness),
           value: service?.darkReaderSettings
             ? service?.darkReaderSettings.brightness
-            : undefined,
-          default: 100,
+            : DEFAULT_SERVICE_SETTINGS.darkReaderBrightness,
+          default: DEFAULT_SERVICE_SETTINGS.darkReaderBrightness,
         },
         darkReaderContrast: {
           label: intl.formatMessage(messages.darkReaderContrast),
           value: service?.darkReaderSettings
             ? service?.darkReaderSettings.contrast
-            : undefined,
-          default: 90,
+            : DEFAULT_SERVICE_SETTINGS.darkReaderContrast,
+          default: DEFAULT_SERVICE_SETTINGS.darkReaderContrast,
         },
         darkReaderSepia: {
           label: intl.formatMessage(messages.darkReaderSepia),
           value: service?.darkReaderSettings
             ? service?.darkReaderSettings.sepia
-            : undefined,
-          default: 10,
+            : DEFAULT_SERVICE_SETTINGS.darkReaderSepia,
+          default: DEFAULT_SERVICE_SETTINGS.darkReaderSepia,
         },
         isProgressbarEnabled: {
           label: intl.formatMessage(messages.enableProgressbar),
-          value: service?.isProgressbarEnabled,
+          value: ifUndefined<boolean>(
+            service?.isProgressbarEnabled,
+            DEFAULT_SERVICE_SETTINGS.isProgressbarEnabled,
+          ),
           default: DEFAULT_SERVICE_SETTINGS.isProgressbarEnabled,
           type: 'checkbox',
         },
@@ -282,7 +312,11 @@ class EditServiceScreen extends Component<IProps> {
         userAgentPref: {
           label: intl.formatMessage(globalMessages.userAgentPref),
           placeholder: service?.defaultUserAgent,
-          value: service?.userAgentPref || '',
+          value: ifUndefined<string>(
+            service?.userAgentPref,
+            DEFAULT_APP_SETTINGS.userAgentPref,
+          ),
+          default: DEFAULT_APP_SETTINGS.userAgentPref,
         },
       },
     };
@@ -325,20 +359,32 @@ class EditServiceScreen extends Component<IProps> {
     }
 
     if (recipe.hasIndirectMessages) {
-      config.fields.isIndirectMessageBadgeEnabled = {
-        label: intl.formatMessage(messages.indirectMessages),
-        value: service?.isIndirectMessageBadgeEnabled,
-        default: DEFAULT_SERVICE_SETTINGS.hasIndirectMessages,
-        type: 'checkbox',
+      config.fields = {
+        ...config.fields,
+        isIndirectMessageBadgeEnabled: {
+          label: intl.formatMessage(messages.indirectMessages),
+          value: ifUndefined<boolean>(
+            service?.isIndirectMessageBadgeEnabled,
+            DEFAULT_SERVICE_SETTINGS.hasIndirectMessages,
+          ),
+          default: DEFAULT_SERVICE_SETTINGS.hasIndirectMessages,
+          type: 'checkbox',
+        },
       };
     }
 
     if (recipe.allowFavoritesDelineationInUnreadCount) {
-      config.fields.onlyShowFavoritesInUnreadCount = {
-        label: intl.formatMessage(messages.onlyShowFavoritesInUnreadCount),
-        value: service?.onlyShowFavoritesInUnreadCount,
-        default: DEFAULT_APP_SETTINGS.onlyShowFavoritesInUnreadCount,
-        type: 'checkbox',
+      config.fields = {
+        ...config.fields,
+        onlyShowFavoritesInUnreadCount: {
+          label: intl.formatMessage(messages.onlyShowFavoritesInUnreadCount),
+          value: ifUndefined<boolean>(
+            service?.onlyShowFavoritesInUnreadCount,
+            DEFAULT_SERVICE_SETTINGS.onlyShowFavoritesInUnreadCount,
+          ),
+          default: DEFAULT_SERVICE_SETTINGS.onlyShowFavoritesInUnreadCount,
+          type: 'checkbox',
+        },
       };
     }
 
@@ -353,36 +399,54 @@ class EditServiceScreen extends Component<IProps> {
           stores.settings.proxy[service.id] || {}
         : {};
 
-      config.fields.proxy = {
-        name: 'proxy',
-        label: 'proxy',
-        fields: {
-          isEnabled: {
-            label: intl.formatMessage(messages.enableProxy),
-            value: serviceProxyConfig.isEnabled,
-            default: DEFAULT_APP_SETTINGS.proxyFeatureEnabled,
-            type: 'checkbox',
-          },
-          host: {
-            label: intl.formatMessage(messages.proxyHost),
-            value: serviceProxyConfig.host,
-            default: '',
-          },
-          port: {
-            label: intl.formatMessage(messages.proxyPort),
-            value: serviceProxyConfig.port,
-            default: '',
-          },
-          user: {
-            label: intl.formatMessage(messages.proxyUser),
-            value: serviceProxyConfig.user,
-            default: '',
-          },
-          password: {
-            label: intl.formatMessage(messages.proxyPassword),
-            value: serviceProxyConfig.password,
-            default: '',
-            type: 'password',
+      config.fields = {
+        ...config.fields,
+        proxy: {
+          name: 'proxy',
+          label: 'proxy',
+          fields: {
+            isEnabled: {
+              label: intl.formatMessage(messages.enableProxy),
+              value: ifUndefined<boolean>(
+                serviceProxyConfig.isEnabled,
+                DEFAULT_SERVICE_SETTINGS.proxyFeatureEnabled,
+              ),
+              default: DEFAULT_SERVICE_SETTINGS.proxyFeatureEnabled,
+              type: 'checkbox',
+            },
+            host: {
+              label: intl.formatMessage(messages.proxyHost),
+              value: ifUndefined<string>(
+                serviceProxyConfig.host,
+                DEFAULT_SERVICE_SETTINGS.proxyHost,
+              ),
+              default: DEFAULT_SERVICE_SETTINGS.proxyHost,
+            },
+            port: {
+              label: intl.formatMessage(messages.proxyPort),
+              value: ifUndefined<number>(
+                serviceProxyConfig.port,
+                DEFAULT_SERVICE_SETTINGS.proxyPort,
+              ),
+              default: DEFAULT_SERVICE_SETTINGS.proxyPort,
+            },
+            user: {
+              label: intl.formatMessage(messages.proxyUser),
+              value: ifUndefined<string>(
+                serviceProxyConfig.user,
+                DEFAULT_SERVICE_SETTINGS.proxyUser,
+              ),
+              default: DEFAULT_SERVICE_SETTINGS.proxyUser,
+            },
+            password: {
+              label: intl.formatMessage(messages.proxyPassword),
+              value: ifUndefined<string>(
+                serviceProxyConfig.password,
+                DEFAULT_SERVICE_SETTINGS.proxyPassword,
+              ),
+              default: DEFAULT_SERVICE_SETTINGS.proxyPassword,
+              type: 'password',
+            },
           },
         },
       };
