@@ -1,34 +1,32 @@
-import { Component, InputHTMLAttributes } from 'react';
+import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import Dropzone from 'react-dropzone';
 import { mdiDelete, mdiFileImage } from '@mdi/js';
 import prettyBytes from 'pretty-bytes';
-import { noop } from 'lodash';
-import { isWindows } from '../../../environment';
 import Icon from '../icon';
-import { IFormField } from '../typings/generic';
+import { isWindows } from '../../../environment';
 
-interface IProps extends InputHTMLAttributes<HTMLInputElement>, IFormField {
-  className: string;
-  multiple: boolean;
+interface IProps {
+  field: any;
   textDelete: string;
   textUpload: string;
   textMaxFileSize: string;
   textMaxFileSizeError: string;
+  className?: string;
+  multiple?: boolean;
   maxSize?: number;
   maxFiles?: number;
-  messages: any;
-  set?: (value: string) => void;
 }
 
 interface IState {
   path: string | null;
   errorState: boolean;
-  errorMessage: { message: string };
+  errorMessage: {
+    message: string;
+  };
 }
 
-// TODO - drag and drop image for recipe add/edit not working from 6.2.0 need to look at it
 @observer
 class ImageUpload extends Component<IProps, IState> {
   constructor(props: IProps) {
@@ -43,27 +41,28 @@ class ImageUpload extends Component<IProps, IState> {
     };
   }
 
-  onDropAccepted(acceptedFiles): void {
-    const { onDrop = noop, set = noop } = this.props;
+  onDropAccepted(acceptedFiles) {
+    const { field } = this.props;
     this.setState({ errorState: false });
 
     for (const file of acceptedFiles) {
-      const imgPath: string = isWindows
-        ? file.path.replace(/\\/g, '/')
-        : file.path;
-      this.setState({ path: imgPath });
-      onDrop(file);
+      const imgPath = isWindows ? file.path.replace(/\\/g, '/') : file.path;
+      this.setState({
+        path: imgPath,
+      });
+
+      this.props.field.onDrop(file);
     }
 
-    set('');
+    field.set('');
   }
 
   onDropRejected(rejectedFiles): void {
     for (const file of rejectedFiles) {
       for (const error of file.errors) {
         if (error.code === 'file-too-large') {
-          this.setState({ errorState: true });
           this.setState({
+            errorState: true,
             errorMessage: {
               message: this.props.textMaxFileSizeError,
             },
@@ -73,18 +72,16 @@ class ImageUpload extends Component<IProps, IState> {
     }
   }
 
-  render() {
+  render(): ReactElement {
     const {
-      className,
-      multiple = false,
+      field,
       textDelete,
       textUpload,
       textMaxFileSize,
-      value,
+      className = '',
+      multiple = false,
       maxSize = Number.POSITIVE_INFINITY,
       maxFiles = 0,
-      label = '',
-      set = noop,
     } = this.props;
 
     const cssClasses = classnames({
@@ -100,25 +97,27 @@ class ImageUpload extends Component<IProps, IState> {
     return (
       <div className="image-upload-wrapper">
         <label className="franz-form__label" htmlFor="iconUpload">
-          {label}
+          {field.label}
         </label>
         <div className="image-upload">
-          {(value && value !== 'delete') || this.state.path ? (
+          {(field.value && field.value !== 'delete') || this.state.path ? (
             <>
               <div
                 className="image-upload__preview"
                 style={{
-                  backgroundImage: `url("${this.state.path || value}")`,
+                  backgroundImage: `url("${this.state.path || field.value}")`,
                 }}
               />
               <div className="image-upload__action">
                 <button
                   type="button"
                   onClick={() => {
-                    if (value) {
-                      set('delete');
+                    if (field.value) {
+                      field.set('delete');
                     } else {
-                      this.setState({ path: null });
+                      this.setState({
+                        path: null,
+                      });
                     }
                   }}
                 >

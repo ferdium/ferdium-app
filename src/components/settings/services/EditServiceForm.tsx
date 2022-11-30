@@ -402,7 +402,7 @@ class EditServiceForm extends Component<IProps, IState> {
               </div>
               <div className="service-icon">
                 <ImageUpload
-                  {...form.$('customIcon').bind()}
+                  field={form.$('customIcon')}
                   textDelete={intl.formatMessage(messages.iconDelete)}
                   textUpload={intl.formatMessage(messages.iconUpload)}
                   maxSize={2_097_152}
