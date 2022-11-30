@@ -72,7 +72,7 @@ class Locked extends Component<IProps> {
       onSuccess: form => {
         this.props.onSubmit(form.values());
       },
-      onError: () => {},
+      onError: noop,
     });
   }
 

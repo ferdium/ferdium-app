@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import normalizeUrl from 'normalize-url';
 import { mdiInformation } from '@mdi/js';
+import { noop } from 'lodash';
 import Form from '../../../lib/Form';
 import Tabs from '../../ui/Tabs/Tabs';
 import TabItem from '../../ui/Tabs/TabItem';
@@ -213,7 +214,7 @@ class EditServiceForm extends Component<IProps, IState> {
 
         this.setState({ isValidatingCustomUrl: false });
       },
-      onError: () => {},
+      onError: noop,
     });
   }
 

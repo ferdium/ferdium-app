@@ -117,7 +117,7 @@ class Invite extends Component<IProps, IState> {
 
         this.setState({ showSuccessInfo: true });
       },
-      onError: () => {},
+      onError: noop,
     });
   }
 

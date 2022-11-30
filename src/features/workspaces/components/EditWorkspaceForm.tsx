@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Link } from 'react-router-dom';
 import withStyles, { WithStylesProps } from 'react-jss';
+import { noop } from 'lodash';
 import Infobox from '../../../components/ui/infobox/index';
 import Input from '../../../components/ui/input';
 import Button from '../../../components/ui/button';
@@ -127,7 +128,7 @@ class EditWorkspaceForm extends Component<IProps> {
         const values = f.values();
         onSave(values);
       },
-      onError: async () => {},
+      onError: noop,
     });
   }
 

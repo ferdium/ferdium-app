@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import { Component, createRef, TextareaHTMLAttributes } from 'react';
 import injectSheet, { WithStylesProps } from 'react-jss';
 
+import { noop } from 'lodash';
 import { IFormField } from '../typings/generic';
 
 import Error from '../error';
@@ -24,9 +25,9 @@ interface IProps
 
 class TextareaComponent extends Component<IProps> {
   static defaultProps = {
-    onChange: () => {},
-    onBlur: () => {},
-    onFocus: () => {},
+    onChange: noop,
+    onBlur: noop,
+    onFocus: noop,
     showLabel: true,
     disabled: false,
     rows: 5,
