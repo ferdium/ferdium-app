@@ -8,8 +8,6 @@
   "global.quit": "გამოსვლა",
   "global.settings": "პარამეტრები",
   "global.submit": "დადასტურება",
-  "import.headline": "შემოიტანე Ferdium 4-ის სერვისები",
-  "import.notSupportedHeadline": "სერვისები ჯერ არ არის მხარდაჭერილი Ferdium 5-ში",
   "infobar.buttonInstallUpdate": "გადატვირთეთ და დააყენეთ განახლება",
   "infobar.buttonReloadServices": "სერვისების გადატვირთვა",
   "infobar.requiredRequestsFailed": "სერვისებისა და მომხმარებლის ინფორმაციის ჩატვირთვა ვერ მოხერხდა",
