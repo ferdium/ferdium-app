@@ -5,7 +5,7 @@ import { createActionsFromDefinitions } from '../../../src/actions/lib/actions';
 import { createActionBindings } from '../../../src/features/utils/ActionBinding';
 import { createReactions } from '../../../src/stores/lib/Reaction';
 
-const actions = createActionsFromDefinitions(
+const actions: any = createActionsFromDefinitions(
   {
     countUp: {},
   },
@@ -34,7 +34,7 @@ class TestFeatureStore extends FeatureStore {
 }
 
 describe('FeatureStore', () => {
-  let store = null;
+  let store: any = null;
 
   beforeEach(() => {
     store = new TestFeatureStore();
