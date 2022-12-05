@@ -1,11 +1,11 @@
 /* eslint-disable global-require */
 /* eslint-disable import/no-dynamic-require */
 /* eslint-disable import/first */
+import { noop, debounce } from 'lodash';
 import { contextBridge, ipcRenderer } from 'electron';
 import { join } from 'path';
 import { autorun, computed, makeObservable, observable } from 'mobx';
 import { pathExistsSync, readFileSync } from 'fs-extra';
-import { debounce } from 'lodash';
 import {
   disable as disableDarkMode,
   enable as enableDarkMode,
@@ -53,7 +53,7 @@ import Service from '../models/Service';
 // As the message API is not actually needed, we'll add this shim sendMessage
 // function in order for darkreader to continue working
 // @ts-ignore
-window.chrome.runtime.sendMessage = () => {};
+window.chrome.runtime.sendMessage = noop;
 
 const debug = require('../preload-safe-debug')('Ferdium:Plugin');
 

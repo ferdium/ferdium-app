@@ -53,7 +53,7 @@ class EditUserForm extends Component<IProps> {
         const values = form.values();
         this.props.onSubmit(values);
       },
-      onError: () => {},
+      onError: noop,
     });
   }
 

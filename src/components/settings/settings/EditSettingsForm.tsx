@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import prettyBytes from 'pretty-bytes';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { mdiGithub, mdiOpenInNew, mdiPowerPlug } from '@mdi/js';
+import { noop } from 'lodash';
 import Form from '../../../lib/Form';
 import Button from '../../ui/button';
 import Toggle from '../../ui/toggle';
@@ -343,7 +344,7 @@ class EditSettingsForm extends Component<IProps, IState> {
         }
         this.props.onSubmit(values);
       },
-      onError: () => {},
+      onError: noop,
     });
   }
 

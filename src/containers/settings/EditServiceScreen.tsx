@@ -261,7 +261,7 @@ class EditServiceScreen extends Component<IProps> {
         },
         customIcon: {
           label: intl.formatMessage(messages.icon),
-          value: service?.hasCustomUploadedIcon ? service?.icon : false,
+          value: service?.hasCustomUploadedIcon ? service?.icon : null,
           type: 'file',
         },
         isDarkModeEnabled: {
