@@ -106,6 +106,7 @@ command_exists asdf && asdf reshim nodejs
 # Now the meat.....
 pnpm i
 pnpm prepare-code
+pnpm lint
 pnpm test
 
 # -----------------------------------------------------------------------------

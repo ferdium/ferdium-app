@@ -51,6 +51,7 @@ class FerdiumRoutes extends Component<IProps> {
     const errorProps = { error: routeProps.stores.globalError.error || {} };
 
     return (
+      // @ts-expect-error Property 'encodeLocation' is missing in type 'HashHistory' but required in type 'History'.
       <HistoryRouter history={history}>
         <Routes>
           <Route path="/auth" element={<AuthLayoutContainer {...routeProps} />}>

@@ -151,6 +151,7 @@ if ($ACTUAL_PNPM_VERSION -ne $EXPECTED_RECIPES_PNPM_VERSION) {
 # Now the meat.....
 & pnpm i
 & pnpm prepare-code
+& pnpm lint
 & pnpm test
 
 # -----------------------------------------------------------------------------
