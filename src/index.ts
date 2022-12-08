@@ -233,8 +233,9 @@ const createWindow = () => {
   app.on('web-contents-created', (_e, contents) => {
     if (contents.getType() === 'webview') {
       enableWebContents(contents);
-      contents.on('new-window', event => {
-        event.preventDefault();
+      contents.setWindowOpenHandler(({ url }) => {
+        openExternalUrl(url);
+        return { action: 'deny' };
       });
     }
   });
@@ -397,9 +398,9 @@ const createWindow = () => {
   // @ts-expect-error Property 'isMaximized' does not exist on type 'App'.
   app.isMaximized = mainWindow.isMaximized();
 
-  mainWindow.webContents.on('new-window', (e, url) => {
-    e.preventDefault();
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
     openExternalUrl(url);
+    return { action: 'deny' };
   });
 
   if (
@@ -718,9 +719,9 @@ app.on('activate', () => {
 });
 
 app.on('web-contents-created', (_createdEvent, contents) => {
-  contents.on('new-window', (event, _url, _frameNme, disposition) => {
-    if (disposition === 'foreground-tab') event.preventDefault();
-  });
+  contents.setWindowOpenHandler(({ disposition }) =>
+    disposition === 'foreground-tab' ? { action: 'deny' } : { action: 'allow' },
+  );
 });
 
 app.on('will-finish-launching', () => {
