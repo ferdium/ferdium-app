@@ -5,6 +5,7 @@
     "baseUrl": ".",
     "strict": true,
     "target": "esnext",
+    "incremental": true,
     "lib": [
       "esnext",
       "dom",
@@ -43,7 +44,7 @@
     "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
-    "useDefineForClassFields": true,
+    "useDefineForClassFields": true
   },
   "include": [
     "src",

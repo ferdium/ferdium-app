@@ -25,7 +25,8 @@ const apiRequest = (url, route, method, auth) =>
       })
         .then(data => data.json())
         .then(json => resolve(json));
-    } catch {
+    } catch (error) {
+      console.log(error);
       reject();
     }
   });
@@ -255,7 +256,8 @@ class UserController {
     let file;
     try {
       file = JSON.parse(request.input('file'));
-    } catch {
+    } catch (error) {
+      console.log(error);
       return response.send(
         'Could not import: Invalid file, could not read file',
       );
