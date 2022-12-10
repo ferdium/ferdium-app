@@ -1,4 +1,12 @@
 {
+  "include": [
+    "**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "build",
+    "recipes"
+  ],
   "compilerOptions": {
     "outDir": ".tmp",
     "rootDir": "./",
@@ -46,10 +54,4 @@
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": true
   },
-  "include": [
-    "src",
-    "scripts",
-    "test",
-    "gulpfile.babel.ts",
-  ],
 }

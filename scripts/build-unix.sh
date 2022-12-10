@@ -103,19 +103,18 @@ fi
 command_exists asdf && asdf reshim nodejs
 
 # -----------------------------------------------------------------------------
-# Now the meat.....
-pnpm i
-pnpm prepare-code
-pnpm lint
-pnpm test
-
-# -----------------------------------------------------------------------------
 printf "\n*************** Building recipes ***************\n"
 pushd recipes
 pnpm i && pnpm lint && pnpm reformat-files && pnpm package
 popd
 
 # -----------------------------------------------------------------------------
+# Now the meat.....
+pnpm i
+pnpm prepare-code
+pnpm lint
+pnpm test
+
 printf "\n*************** Building app ***************\n"
 if [[ "$(uname -m)" =~ "arm" ]]; then
   TARGET_ARCH=arm64

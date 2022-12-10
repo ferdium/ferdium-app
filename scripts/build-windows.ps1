@@ -127,8 +127,6 @@ if((-not $NPM_CONFIG_MSVS_VERSION) -or -not ($EXPECTED_MSVST_VERSION -contains $
 }
 
 
-
-
 # -----------------------------------------------------------------------------
 # Ensure that the system dependencies are at the correct version - recover if not
 # Check pnpm version
@@ -148,19 +146,18 @@ if ($ACTUAL_PNPM_VERSION -ne $EXPECTED_RECIPES_PNPM_VERSION) {
 }
 
 # -----------------------------------------------------------------------------
-# Now the meat.....
-& pnpm i
-& pnpm prepare-code
-& pnpm lint
-& pnpm test
-
-# -----------------------------------------------------------------------------
 Write-Host "*************** Building recipes ***************"
 Push-Location recipes
 pnpm i && pnpm lint && pnpm reformat-files && pnpm package
 Pop-Location
 
 # -----------------------------------------------------------------------------
+# Now the meat.....
+& pnpm i
+& pnpm prepare-code
+& pnpm lint
+& pnpm test
+
 Write-Host "*************** Building app ***************"
 if ($env:PROCESSOR_ARCHITECTURE -eq "ARM64") {
   $TARGET_ARCH="arm64"

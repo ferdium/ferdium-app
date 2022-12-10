@@ -30,7 +30,7 @@ node_modules
 
 # package files
 package.json
-package-lock.json
+pnpm-lock.yaml
 
 # Json
 *.json
