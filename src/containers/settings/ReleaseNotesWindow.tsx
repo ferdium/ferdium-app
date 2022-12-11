@@ -6,13 +6,8 @@ import { Outlet } from 'react-router-dom';
 import { StoresProps } from '../../@types/ferdium-components.types';
 import Layout from '../../components/settings/releaseNotes/ReleaseNotesLayout';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
-import { Actions } from '../../actions/lib/actions';
-import { RealStores } from '../../stores';
 
-interface IProps {
-  actions?: Actions;
-  stores?: RealStores;
-}
+interface IProps {}
 
 @inject('stores', 'actions')
 @observer
