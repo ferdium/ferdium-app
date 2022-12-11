@@ -34,7 +34,3 @@ pnpm-lock.yaml
 
 # Json
 *.json
-
-# Build
-build
-out
