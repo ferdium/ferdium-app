@@ -93,10 +93,11 @@ const proxySettings = new Settings('proxy');
 const retrieveSettingValue = (key: string, defaultValue: boolean | string) =>
   ifUndefined<boolean | string>(settings.get(key), defaultValue);
 
-if (retrieveSettingValue('sentry', DEFAULT_APP_SETTINGS.sentry)) {
-  // eslint-disable-next-line global-require
-  require('./sentry');
-}
+// TODO: Commenting out sentry to fix https://github.com/ferdium/ferdium-app/issues/814
+// if (retrieveSettingValue('sentry', DEFAULT_APP_SETTINGS.sentry)) {
+//   // eslint-disable-next-line global-require
+//   require('./sentry');
+// }
 
 const liftSingleInstanceLock = retrieveSettingValue(
   'liftSingleInstanceLock',
