@@ -8,6 +8,7 @@ declare global {
       GITHUB_AUTH_TOKEN: string;
       NODE_ENV: 'development' | 'production';
       FERDIUM_APPDATA_DIR?: string;
+      PORTABLE_EXECUTABLE_FILE?: string;
       PORTABLE_EXECUTABLE_DIR?: string;
       ELECTRON_IS_DEV?: string;
       APPDATA?: string;

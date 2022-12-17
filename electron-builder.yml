@@ -21,6 +21,7 @@ nsis:
 
 portable:
   artifactName: "${productName}-${os}-Portable-${version}-${arch}.${ext}"
+  unpackDirName: "Ferdium-Unpacked"
 
 dmg:
   background: ./build-helpers/images/dmgInstaller.tiff
