@@ -5,6 +5,7 @@ import { arch, release } from 'os';
 export const isMac = process.platform === 'darwin';
 export const isWindows = process.platform === 'win32';
 export const isLinux = process.platform === 'linux';
+export const isWinPortable = process.env.PORTABLE_EXECUTABLE_FILE != null;
 
 export const electronVersion: string = process.versions.electron ?? '';
 export const chromeVersion: string = process.versions.chrome ?? '';

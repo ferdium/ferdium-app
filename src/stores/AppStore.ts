@@ -21,7 +21,12 @@ import TypedStore from './lib/TypedStore';
 import Request from './lib/Request';
 import { CHECK_INTERVAL, DEFAULT_APP_SETTINGS } from '../config';
 import { cleanseJSObject } from '../jsUtils';
-import { isMac, electronVersion, osRelease } from '../environment';
+import {
+  isMac,
+  isWinPortable,
+  electronVersion,
+  osRelease,
+} from '../environment';
 import {
   ferdiumVersion,
   userDataPath,
@@ -41,7 +46,11 @@ const debug = require('../preload-safe-debug')('Ferdium:AppStore');
 
 const mainWindow = getCurrentWindow();
 
-const executablePath = isMac ? remoteProcess.execPath : process.execPath;
+const executablePath = isMac
+  ? remoteProcess.execPath
+  : isWinPortable
+  ? process.env.PORTABLE_EXECUTABLE_FILE
+  : process.execPath;
 const autoLauncher = new AutoLaunch({
   name: 'Ferdium',
   path: executablePath,
@@ -279,7 +288,7 @@ export default class AppStore extends TypedStore {
     if (isMac && !localStorage.getItem(CATALINA_NOTIFICATION_HACK_KEY)) {
       debug('Triggering macOS Catalina notification permission trigger');
       // eslint-disable-next-line no-new
-      new window.Notification('Welcome to Ferdium 5', {
+      new window.Notification('Welcome to Ferdium 6', {
         body: 'Have a wonderful day & happy messaging.',
       });
 
