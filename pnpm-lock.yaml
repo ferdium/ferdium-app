@@ -91,7 +91,7 @@ specifiers:
   jss: 10.9.2
   languagedetect: 2.0.0
   lodash: 4.17.21
-  macos-notification-state: github:ferdium/macos-notification-state#394f33c2546960391bde2519aa30180dd3506492
+  macos-notification-state: github:ferdium/macos-notification-state#27a024c367c6eef71047a3c7b30a845839c96c67
   macos-version: 5.2.1
   markdown-to-jsx: 7.1.8
   mime-types: 2.1.35
@@ -225,7 +225,7 @@ dependencies:
   ws: 8.11.0
 
 optionalDependencies:
-  macos-notification-state: github.com/ferdium/macos-notification-state/394f33c2546960391bde2519aa30180dd3506492
+  macos-notification-state: github.com/ferdium/macos-notification-state/27a024c367c6eef71047a3c7b30a845839c96c67
   node-mac-permissions: 2.2.1
 
 devDependencies:
@@ -12359,8 +12359,8 @@ packages:
       stack-trace: 0.0.10
     dev: false
 
-  github.com/ferdium/macos-notification-state/394f33c2546960391bde2519aa30180dd3506492:
-    resolution: {tarball: https://codeload.github.com/ferdium/macos-notification-state/tar.gz/394f33c2546960391bde2519aa30180dd3506492}
+  github.com/ferdium/macos-notification-state/27a024c367c6eef71047a3c7b30a845839c96c67:
+    resolution: {tarball: https://codeload.github.com/ferdium/macos-notification-state/tar.gz/27a024c367c6eef71047a3c7b30a845839c96c67}
     name: macos-notification-state
     version: 2.0.2
     requiresBuild: true
