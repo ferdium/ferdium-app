@@ -1,10 +1,19 @@
 {
+  "include": [
+    "**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "build",
+    "recipes"
+  ],
   "compilerOptions": {
     "outDir": ".tmp",
     "rootDir": "./",
     "baseUrl": ".",
     "strict": true,
     "target": "esnext",
+    "incremental": true,
     "lib": [
       "esnext",
       "dom",
@@ -43,12 +52,6 @@
     "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true,
-    "useDefineForClassFields": true,
+    "useDefineForClassFields": true
   },
-  "include": [
-    "src",
-    "scripts",
-    "test",
-    "gulpfile.babel.ts",
-  ],
 }

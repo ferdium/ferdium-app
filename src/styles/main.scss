@@ -1,6 +1,7 @@
-@import './node_modules/electron-react-titlebar/assets/style';
+@import '../../node_modules/electron-react-titlebar/assets/style';
 
 // modules
+@import './globals.scss';
 @import './reset.scss';
 @import './util.scss';
 @import './layout.scss';

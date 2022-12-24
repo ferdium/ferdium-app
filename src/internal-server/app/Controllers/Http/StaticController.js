@@ -12,8 +12,6 @@ class StaticController {
       isSettingsWSEnabled: false,
       isMagicBarEnabled: true,
       isTodosEnabled: true,
-      subscribeURL: 'https://ferdium.org',
-      hasInlineCheckout: true,
     });
   }
 

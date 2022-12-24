@@ -19,7 +19,8 @@ class ImageController {
 
     try {
       await fs.access(iconPath);
-    } catch {
+    } catch (error) {
+      console.log(error);
       // File not available.
       return response.status(404).send({
         status: "Icon doesn't exist",

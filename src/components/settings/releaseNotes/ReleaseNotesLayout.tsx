@@ -9,7 +9,6 @@ import Appear from '../../ui/effects/Appear';
 import Icon from '../../ui/icon';
 import { isEscKeyPress } from '../../../jsUtils';
 import { Actions } from '../../../actions/lib/actions';
-import { RealStores } from '../../../stores';
 
 const messages = defineMessages({
   closeSettings: {
@@ -20,7 +19,6 @@ const messages = defineMessages({
 
 interface IProps extends WrappedComponentProps {
   actions?: Actions;
-  stores?: RealStores;
 }
 
 @inject('stores', 'actions')

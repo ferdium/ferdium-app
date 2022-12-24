@@ -93,10 +93,11 @@ const proxySettings = new Settings('proxy');
 const retrieveSettingValue = (key: string, defaultValue: boolean | string) =>
   ifUndefined<boolean | string>(settings.get(key), defaultValue);
 
-if (retrieveSettingValue('sentry', DEFAULT_APP_SETTINGS.sentry)) {
-  // eslint-disable-next-line global-require
-  require('./sentry');
-}
+// TODO: Commenting out sentry to fix https://github.com/ferdium/ferdium-app/issues/814
+// if (retrieveSettingValue('sentry', DEFAULT_APP_SETTINGS.sentry)) {
+//   // eslint-disable-next-line global-require
+//   require('./sentry');
+// }
 
 const liftSingleInstanceLock = retrieveSettingValue(
   'liftSingleInstanceLock',
@@ -233,8 +234,9 @@ const createWindow = () => {
   app.on('web-contents-created', (_e, contents) => {
     if (contents.getType() === 'webview') {
       enableWebContents(contents);
-      contents.on('new-window', event => {
-        event.preventDefault();
+      contents.setWindowOpenHandler(({ url }) => {
+        openExternalUrl(url);
+        return { action: 'deny' };
       });
     }
   });
@@ -397,9 +399,9 @@ const createWindow = () => {
   // @ts-expect-error Property 'isMaximized' does not exist on type 'App'.
   app.isMaximized = mainWindow.isMaximized();
 
-  mainWindow.webContents.on('new-window', (e, url) => {
-    e.preventDefault();
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
     openExternalUrl(url);
+    return { action: 'deny' };
   });
 
   if (
@@ -718,9 +720,9 @@ app.on('activate', () => {
 });
 
 app.on('web-contents-created', (_createdEvent, contents) => {
-  contents.on('new-window', (event, _url, _frameNme, disposition) => {
-    if (disposition === 'foreground-tab') event.preventDefault();
-  });
+  contents.setWindowOpenHandler(({ disposition }) =>
+    disposition === 'foreground-tab' ? { action: 'deny' } : { action: 'allow' },
+  );
 });
 
 app.on('will-finish-launching', () => {

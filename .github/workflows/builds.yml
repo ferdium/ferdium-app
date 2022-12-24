@@ -56,7 +56,12 @@ jobs:
         run: npm i -gf "pnpm@$(node -p 'require("./package.json").engines.pnpm')" && pnpm -v
       - name: Install node dependencies
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
-        run: pnpm i
+        uses: nick-fields/retry@v2.8.2
+        with:
+          command: pnpm i
+          timeout_minutes: 15
+          max_attempts: 3
+          retry_on: error
       - id: should_run
         name: Check whether there are any commits since this run was last triggered and push them and/or set the output
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
@@ -173,7 +178,12 @@ jobs:
       - name: Install pnpm
         run: npm i -gf "pnpm@$(node -p 'require("./package.json").engines.pnpm')" && pnpm -v
       - name: Install node dependencies
-        run: pnpm i
+        uses: nick-fields/retry@v2.8.2
+        with:
+          command: pnpm i
+          timeout_minutes: 15
+          max_attempts: 3
+          retry_on: error
       - name: Package recipes
         run: pnpm i && pnpm lint && pnpm reformat-files && pnpm package
         working-directory: ./recipes
@@ -247,7 +257,12 @@ jobs:
       - name: Install pnpm
         run: npm i -gf "pnpm@$(node -p 'require("./package.json").engines.pnpm')" && pnpm -v
       - name: Install node dependencies
-        run: pnpm i
+        uses: nick-fields/retry@v2.8.2
+        with:
+          command: pnpm i
+          timeout_minutes: 15
+          max_attempts: 3
+          retry_on: error
       - name: Figure out used package.json version
         run: |
           PACKAGE_VERSION="$(node -p 'require("./package.json").version')"
@@ -343,7 +358,7 @@ jobs:
       - name: Install pnpm
         run: npm i -gf "pnpm@$(node -p 'require(\"./package.json\").engines.pnpm')" && pnpm -v
       - name: Install node dependencies
-        uses: nick-invision/retry@v2.4.0
+        uses: nick-fields/retry@v2.8.2
         with:
           command: pnpm i
           timeout_minutes: 15

@@ -127,8 +127,6 @@ if((-not $NPM_CONFIG_MSVS_VERSION) -or -not ($EXPECTED_MSVST_VERSION -contains $
 }
 
 
-
-
 # -----------------------------------------------------------------------------
 # Ensure that the system dependencies are at the correct version - recover if not
 # Check pnpm version
@@ -143,15 +141,9 @@ $EXPECTED_RECIPES_PNPM_VERSION = (Get-Content .\recipes\package.json | ConvertFr
 if ($ACTUAL_PNPM_VERSION -ne $EXPECTED_RECIPES_PNPM_VERSION) {
  fail_with_docs "The expected versions of pnpm are not the same in the main repo and in the recipes submodule, please sync them.
     expected in recipes  : [$EXPECTED_RECIPES_PNPM_VERSION]
-    expected in main repo: [$EXPECTED_RECIPES_PNPM_VERSION]
+    expected in main repo: [$EXPECTED_PNPM_VERSION]
     actual               : [$EXPECTED_PNPM_VERSION]"
 }
-
-# -----------------------------------------------------------------------------
-# Now the meat.....
-& pnpm i
-& pnpm prepare-code
-& pnpm test
 
 # -----------------------------------------------------------------------------
 Write-Host "*************** Building recipes ***************"
@@ -160,6 +152,12 @@ pnpm i && pnpm lint && pnpm reformat-files && pnpm package
 Pop-Location
 
 # -----------------------------------------------------------------------------
+# Now the meat.....
+& pnpm i
+& pnpm prepare-code
+& pnpm lint
+& pnpm test
+
 Write-Host "*************** Building app ***************"
 if ($env:PROCESSOR_ARCHITECTURE -eq "ARM64") {
   $TARGET_ARCH="arm64"

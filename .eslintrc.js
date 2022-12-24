@@ -2,7 +2,6 @@
 
 module.exports = {
   root: true,
-  parser: '@babel/eslint-parser',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -11,6 +10,7 @@ module.exports = {
     sourceType: 'module',
     project: './tsconfig.json',
   },
+  ignorePatterns: ['node_modules', 'build', 'recipes', '.eslintrc.js'],
   extends: ['airbnb', 'plugin:unicorn/recommended', 'prettier'],
   plugins: ['jest', 'prettier'],
   settings: {
@@ -20,7 +20,6 @@ module.exports = {
     },
   },
   globals: {
-    // TODO: can be removed once adonisj migration is done
     use: true,
   },
   env: {
