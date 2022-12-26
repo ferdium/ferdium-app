@@ -1,6 +1,7 @@
 import { ipcRenderer } from 'electron';
 import { BrowserWindow } from '@electron/remote';
 import { pathExistsSync, readFileSync, existsSync } from 'fs-extra';
+import { safeParseInt } from '../../jsUtils';
 
 const debug = require('../../preload-safe-debug')(
   'Ferdium:Plugin:RecipeWebview',
@@ -91,7 +92,7 @@ class RecipeWebview {
    * @param  {string | number | undefined | null} text to be parsed
    */
   safeParseInt(text) {
-    return this.badgeHandler.safeParseInt(text);
+    return safeParseInt(text);
   }
 
   /**

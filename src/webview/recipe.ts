@@ -44,7 +44,7 @@ import {
 } from './spellchecker';
 
 import { DEFAULT_APP_SETTINGS } from '../config';
-import { ifUndefined } from '../jsUtils';
+import { ifUndefined, safeParseInt } from '../jsUtils';
 import { AppStore } from '../@types/stores.types';
 import Service from '../models/Service';
 
@@ -116,10 +116,15 @@ window.open = (url, frameName, features): WindowProxy | null => {
 // then overwrite the corresponding field of the window object by injected JS.
 contextBridge.exposeInMainWorld('ferdium', {
   open: window.open,
-  setBadge: (direct, indirect) => badgeHandler.setBadge(direct, indirect),
-  safeParseInt: text => badgeHandler.safeParseInt(text),
-  setDialogTitle: title => dialogTitleHandler.setDialogTitle(title),
-  displayNotification: (title, options) =>
+  setBadge: (
+    direct: string | number | null | undefined,
+    indirect: string | number | null | undefined,
+  ) => badgeHandler.setBadge(direct, indirect),
+  safeParseInt: (text: string | number | null | undefined) =>
+    safeParseInt(text),
+  setDialogTitle: (title: string | null | undefined) =>
+    dialogTitleHandler.setDialogTitle(title),
+  displayNotification: (title: string, options: any) =>
     notificationsHandler.displayNotification(title, options),
   getDisplayMediaSelector,
 });
