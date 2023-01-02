@@ -14,7 +14,7 @@
   "private": true,
   "engines": {
     "node": "16.19.0",
-    "pnpm": "7.19.0"
+    "pnpm": "7.21.0"
   },
   "engine-strict": true,
   "scripts": {
@@ -152,7 +152,7 @@
     "concurrently": "7.6.0",
     "cross-env": "7.0.3",
     "electron": "21.3.3",
-    "electron-builder": "24.0.0-alpha.4",
+    "electron-builder": "23.6.0",
     "esbuild": "0.16.8",
     "esbuild-plugin-copy": "2.0.1",
     "esbuild-runner": "2.2.2",
