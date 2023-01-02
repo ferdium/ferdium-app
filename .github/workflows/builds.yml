@@ -357,6 +357,10 @@ jobs:
           node-version-file: ".nvmrc"
       - name: Install pnpm
         run: npm i -gf "pnpm@$(node -p 'require(\"./package.json\").engines.pnpm')" && pnpm -v
+      #TODO - Remove this once https://github.com/electron-userland/electron-builder/issues/6933#issuecomment-1213438889 is resolved
+      - name: Tweak pnpm.cjs
+        run: sed -i 's/\/usr\/bin\/env node/node/g' /c/npm/prefix/node_modules/pnpm/bin/pnpm.cjs
+        shell: bash
       - name: Install node dependencies
         uses: nick-fields/retry@v2.8.2
         with:
