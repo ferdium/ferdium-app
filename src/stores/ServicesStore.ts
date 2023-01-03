@@ -1,4 +1,4 @@
-import { shell } from 'electron';
+import { ipcRenderer, shell } from 'electron';
 import { action, reaction, computed, observable, makeObservable } from 'mobx';
 import { debounce, remove } from 'lodash';
 import ms from 'ms';
@@ -23,6 +23,7 @@ import { cleanseJSObject } from '../jsUtils';
 import { SPELLCHECKER_LOCALES } from '../i18n/languages';
 import { ferdiumVersion } from '../environment-remote';
 import TypedStore from './lib/TypedStore';
+import type { UnreadServices } from '../lib/dbus/Ferdium';
 
 const debug = require('../preload-safe-debug')('Ferdium:ServiceStore');
 
@@ -1230,26 +1231,29 @@ export default class ServicesStore extends TypedStore {
     const { showMessageBadgeWhenMuted } = this.stores.settings.all.app;
     const { showMessageBadgesEvenWhenMuted } = this.stores.ui;
 
-    const unreadDirectMessageCount = this.allDisplayed
-      .filter(
-        s =>
-          (showMessageBadgeWhenMuted || s.isNotificationEnabled) &&
-          showMessageBadgesEvenWhenMuted &&
-          s.isBadgeEnabled,
-      )
-      .map(s => s.unreadDirectMessageCount)
-      .reduce((a, b) => a + b, 0);
+    const unreadServices: UnreadServices = [];
+    let unreadDirectMessageCount = 0;
+    let unreadIndirectMessageCount = 0;
 
-    const unreadIndirectMessageCount = this.allDisplayed
-      .filter(
-        s =>
-          showMessageBadgeWhenMuted &&
-          showMessageBadgesEvenWhenMuted &&
-          s.isBadgeEnabled &&
-          s.isIndirectMessageBadgeEnabled,
-      )
-      .map(s => s.unreadIndirectMessageCount)
-      .reduce((a, b) => a + b, 0);
+    if (showMessageBadgesEvenWhenMuted) {
+      for (const s of this.allDisplayed) {
+        if (s.isBadgeEnabled) {
+          const direct =
+            showMessageBadgeWhenMuted || s.isNotificationEnabled
+              ? s.unreadDirectMessageCount
+              : 0;
+          const indirect =
+            showMessageBadgeWhenMuted && s.isIndirectMessageBadgeEnabled
+              ? s.unreadIndirectMessageCount
+              : 0;
+          unreadDirectMessageCount += direct;
+          unreadIndirectMessageCount += indirect;
+          if (direct > 0 || indirect > 0) {
+            unreadServices.push([s.name, direct, indirect]);
+          }
+        }
+      }
+    }
 
     // We can't just block this earlier, otherwise the mobx reaction won't be aware of the vars to watch in some cases
     if (showMessageBadgesEvenWhenMuted) {
@@ -1257,6 +1261,12 @@ export default class ServicesStore extends TypedStore {
         unreadDirectMessageCount,
         unreadIndirectMessageCount,
       });
+      ipcRenderer.send(
+        'updateDBusUnread',
+        unreadDirectMessageCount,
+        unreadIndirectMessageCount,
+        unreadServices,
+      );
     }
   }
 
