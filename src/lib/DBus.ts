@@ -1,4 +1,5 @@
 import { ipcMain } from 'electron';
+import { comparer } from 'mobx';
 
 import { MessageBus, sessionBus } from 'dbus-next';
 import { isLinux } from '../environment';
@@ -46,8 +47,11 @@ export default class DBus {
   }
 
   private updateSettings(appSettings): void {
-    this.muted = !!appSettings.data.isAppMuted;
-    this.ferdium?.emitMutedChanged();
+    const muted = !!appSettings.data.isAppMuted;
+    if (this.muted !== muted) {
+      this.muted = muted;
+      this.ferdium?.emitMutedChanged();
+    }
   }
 
   private setUnread(
@@ -55,10 +59,16 @@ export default class DBus {
     unreadIndirectMessageCount: number,
     unreadServices: UnreadServices,
   ): void {
-    this.unreadDirectMessageCount = unreadDirectMessageCount;
-    this.unreadIndirectMessageCount = unreadIndirectMessageCount;
-    this.unreadServices = unreadServices;
-    this.ferdium?.emitUnreadChanged();
+    if (
+      this.unreadDirectMessageCount !== unreadDirectMessageCount ||
+      this.unreadIndirectMessageCount !== unreadIndirectMessageCount ||
+      !comparer.structural(this.unreadServices, unreadServices)
+    ) {
+      this.unreadDirectMessageCount = unreadDirectMessageCount;
+      this.unreadIndirectMessageCount = unreadIndirectMessageCount;
+      this.unreadServices = unreadServices;
+      this.ferdium?.emitUnreadChanged();
+    }
   }
 
   async start() {
