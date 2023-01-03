@@ -1,0 +1,13 @@
+{
+  "layer": "top",
+  "position": "top",
+  "modules-left": [
+    "custom/ferdium"
+  ],
+  "custom/ferdium": {
+    "exec": "/home/kris/urandom/ferdium-app/docs/dbus/ferdium_waybar.py status",
+    "return-type": "json",
+    "on-click": "/home/kris/urandom/ferdium-app/docs/dbus/ferdium_waybar.py toggle-window",
+    "on-click-right": "/home/kris/urandom/ferdium-app/docs/dbus/ferdium_waybar.py toggle-mute"
+  }
+}
