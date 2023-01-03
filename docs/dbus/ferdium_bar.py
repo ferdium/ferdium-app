@@ -78,7 +78,7 @@ async def main():
     subparsers = argparser.add_subparsers(dest="command")
     # Unread command
     argparser_unread = subparsers.add_parser("unread", help=unread.__doc__)
-    argparser_unread.add_argument("-s", "--services", default="total", help="Which services to get notifications from {total, all, <name>}")
+    argparser_unread.add_argument("-s", "--services", default="total", help="Which services to get notifications from {total, all, <name>} (the name can be a comma-separated list)")
     argparser_unread.add_argument("-d", "--direct", action="store_true", default=False, help="Get only direct (mentions or DM) messages")
     argparser_unread.add_argument("-t", "--tail", action="store_true", default=False, help="Keep running and print on change")
     # Toggle mute and toggle window commands
