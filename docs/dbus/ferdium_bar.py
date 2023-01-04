@@ -2,7 +2,7 @@ import asyncio
 import argparse
 import html
 
-from ferdium_client import FerdiumClient
+from ferdium_dbus import Client
 
 
 async def toggle_window(client, args):
@@ -88,7 +88,7 @@ async def main():
     args = argparser.parse_args()
 
     # Initialise ferdium client
-    client = FerdiumClient()
+    client = Client()
     await client.connect()
     if not client.running:
         print("not running")
