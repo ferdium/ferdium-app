@@ -75,7 +75,7 @@ async def main():
 
     # Arguments parser
     argparser = argparse.ArgumentParser(description="Script to interact with Ferdium on your bar")
-    subparsers = argparser.add_subparsers(dest="command")
+    subparsers = argparser.add_subparsers(dest="command", required=True)
     # Unread command
     argparser_unread = subparsers.add_parser("unread", help=unread.__doc__)
     argparser_unread.add_argument("-s", "--services", default="total", help="Which services to get notifications from {total, all, <name>} (the name can be a comma-separated list)")
