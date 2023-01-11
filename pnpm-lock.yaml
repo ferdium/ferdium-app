@@ -56,7 +56,6 @@ specifiers:
   darkreader: 4.9.58
   dbus-next: 0.10.2
   debug: 4.3.4
-  dotenv: 16.0.3
   electron: 22.0.1
   electron-builder: 23.6.0
   electron-dl: 3.5.0
@@ -255,7 +254,6 @@ devDependencies:
   chalk: 5.2.0
   concurrently: 7.6.0
   cross-env: 7.0.3
-  dotenv: 16.0.3
   electron: 22.0.1
   electron-builder: 23.6.0
   esbuild: 0.16.8
@@ -4547,11 +4545,6 @@ packages:
 
   /dotenv-expand/5.1.0:
     resolution: {integrity: sha512-YXQl1DSa4/PQyRfgrv6aoNjhasp/p4qs9FjJ4q4cQk+8m4r6k4ZSiEyytKG8f8W9gi8WsQtIObNmKd+tMzNTmA==}
-    dev: true
-
-  /dotenv/16.0.3:
-    resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
-    engines: {node: '>=12'}
     dev: true
 
   /dotenv/6.2.0:
