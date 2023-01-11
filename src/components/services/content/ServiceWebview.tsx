@@ -128,6 +128,7 @@ class ServiceWebview extends Component<IProps> {
           service.recipe.disablewebsecurity ? true : undefined
         }
         allowpopups
+        nodeintegration
         webpreferences={`spellcheck=${
           isSpellcheckerEnabled ? 1 : 0
         }, contextIsolation=1`}
