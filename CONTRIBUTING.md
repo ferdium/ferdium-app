@@ -62,8 +62,8 @@ Currently, these are the combinations of system dependencies that work for MacOS
 # Note: 'jq' is not a required system dependency; its only here to show the combined output of versions needed
 $ jq --null-input '[inputs.engines] | add' < ./package.json < ./recipes/package.json
 {
-  "node": "16.19.0",
-  "pnpm": "7.19.0"
+  "node": "18.13.0",
+  "pnpm": "7.21.0"
 }
 ```
 
