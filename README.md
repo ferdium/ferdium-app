@@ -68,8 +68,10 @@ If you are a pre-existing user of Ferdi, and are thinking of switching to Ferdiu
 
 You can style Ferdium's UI with the `USER_DATA/Ferdium/config/custom.css` file.
 
-> **Note**  
+> **Note**
+>
 > `USER_DATA`'s location depends on your platform:
+>
 > - **Windows**: `%APPDATA%`
 > - **Linux**: `$XDG_CONFIG_HOME` or `~/.config/`
 > - **MacOS**: `~/Library/Application Support`
