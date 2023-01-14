@@ -1,5 +1,4 @@
-import { readFileSync } from 'fs';
-import { pathExistsSync } from 'fs-extra';
+import { pathExistsSync, readFileSync } from 'fs-extra';
 import { userDataPath } from '../environment-remote';
 
 export default function loadCustomCSS() {
