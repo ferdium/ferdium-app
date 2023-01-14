@@ -1,4 +1,4 @@
-import { webFrame } from 'electron';
+import { ipcRenderer, webFrame } from 'electron';
 
 import { render } from 'react-dom';
 import { Provider } from 'mobx-react';
@@ -47,6 +47,14 @@ window.addEventListener('load', () => {
       render(preparedApp, document.querySelector('#root'));
     },
   };
+
+  // Inject CSS
+  ipcRenderer.on('inject-css', (_, content) => {
+    const styleElement = document.createElement('style');
+    styleElement.textContent = content;
+    document.head.append(styleElement);
+  });
+
   window['ferdium'].render();
 });
 
