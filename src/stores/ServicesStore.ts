@@ -826,8 +826,6 @@ export default class ServicesStore extends TypedStore {
         break;
       }
       case 'notification': {
-        const { options } = args[0];
-
         // Check if we are in scheduled Do-not-Disturb time
         const { scheduledDNDEnabled, scheduledDNDStart, scheduledDNDEnd } =
           this.stores.settings.all.app;
@@ -839,30 +837,29 @@ export default class ServicesStore extends TypedStore {
           return;
         }
 
-        if (
-          service.recipe.hasNotificationSound ||
-          service.isMuted ||
-          this.stores.settings.all.app.isAppMuted
-        ) {
+        const { notificationId, options } = args[0];
+
+        if (service.isMuted || this.stores.settings.all.app.isAppMuted) {
           Object.assign(options, {
             silent: true,
           });
         }
 
         if (service.isNotificationEnabled) {
-          let title = `Notification from ${service.name}`;
-          if (!this.stores.settings.all.app.privateNotifications) {
+          let title: string;
+          options.icon = service.iconUrl;
+          if (this.stores.settings.all.app.privateNotifications === true) {
+            // Remove message data from notification in private mode
+            options.body = '';
+            title = `Notification from ${service.name}`;
+          } else {
             options.body = typeof options.body === 'string' ? options.body : '';
             title =
               typeof args[0].title === 'string' ? args[0].title : service.name;
-          } else {
-            // Remove message data from notification in private mode
-            options.body = '';
-            options.icon = '/assets/img/notification-badge.gif';
           }
 
           this.actions.app.notify({
-            notificationId: args[0].notificationId,
+            notificationId,
             title,
             options,
             serviceId,
