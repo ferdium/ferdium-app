@@ -89,7 +89,6 @@ jobs:
             echo "Update browserslist db"
             npx browserslist@latest --update-db
             git add .
-            echo "GIT_DIRTY=$(git status -s | wc -l)" >> $GITHUB_ENV
 
             echo "Run linter, reformatter, rebrander and tests"
             pnpm prepare-code
