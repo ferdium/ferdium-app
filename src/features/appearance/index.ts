@@ -135,6 +135,7 @@ function generateServiceRibbonWidthStyle(
   useGrayscaleServices,
   grayscaleServicesDim,
   shouldShowDragArea,
+  isFullScreen,
 ) {
   const width = Number(widthStr);
   const iconSize = Number(iconSizeStr) - iconSizeBias;
@@ -249,11 +250,18 @@ function generateServiceRibbonWidthStyle(
       margin-top: -${width}px !important;
     }
     .darwin .sidebar {
-      height: ${width + verticalStyleOffset - 3 - sizeDragArea}px !important;
+      height: ${
+        isFullScreen ? width : width + verticalStyleOffset - 3 - sizeDragArea
+      }px !important;
+      ${isFullScreen ? `padding-top: ${2}px !important` : null}
     }
     .darwin .app .app__content {
       padding-top: ${
-        width + sidebarSizeBias + (sizeDragArea !== 0 ? 4 - sizeDragArea : 4)
+        isFullScreen
+          ? width
+          : width +
+            sidebarSizeBias +
+            (sizeDragArea !== 0 ? 4 - sizeDragArea : 4)
       }px !important;
     }
     .darwin .workspaces-drawer {
@@ -395,6 +403,7 @@ function generateStyle(settings, app) {
     useGrayscaleServices,
     grayscaleServicesDim,
     shouldShowDragArea,
+    isFullScreen,
   );
 
   if (shouldShowDragArea) {
