@@ -2919,6 +2919,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "abacao",
+      "name": "André Bação",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17479246?v=4",
+      "profile": "http://blog.bacao.pt",
+      "contributions": [
+        "security"
+      ]
     }
   ]
 }
