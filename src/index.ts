@@ -36,7 +36,6 @@ import ipcApi from './electron/ipc-api';
 import TrayIcon from './lib/Tray';
 import DBus from './lib/DBus';
 import Settings from './electron/Settings';
-import loadCustomCSS from './electron/customCSS';
 import handleDeepLink from './electron/deepLinking';
 import isPositionValid from './electron/windowUtils';
 // @ts-expect-error Cannot find module './package.json' or its corresponding type declarations.
@@ -262,11 +261,6 @@ const createWindow = () => {
     for (const fn of fns) {
       fn(mainWindow);
     }
-  });
-
-  // Inject custom CSS
-  mainWindow.webContents.on('dom-ready', () => {
-    mainWindow?.webContents.send('inject-css', loadCustomCSS());
   });
 
   // Initialize System Tray

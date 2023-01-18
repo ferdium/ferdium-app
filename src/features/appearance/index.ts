@@ -10,6 +10,7 @@ import {
   SIDEBAR_SERVICES_LOCATION_CENTER,
   SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT,
 } from '../../config';
+import loadCustomCSS from '../../electron/customCSS';
 
 const STYLE_ELEMENT_ID = 'custom-appearance-style';
 
@@ -18,6 +19,15 @@ function createStyleElement() {
   styles.id = STYLE_ELEMENT_ID;
 
   document.querySelector('head')?.appendChild(styles);
+}
+
+function injectUserCustomCSS() {
+  const contentToInject = loadCustomCSS();
+  if (contentToInject !== '') {
+    const styleElement = document.createElement('style');
+    styleElement.textContent = contentToInject;
+    document.head.append(styleElement);
+  }
 }
 
 function setAppearance(style) {
@@ -444,6 +454,7 @@ export default function initAppearance(stores) {
   const { settings, app } = stores;
   createStyleElement();
   updateProgressbar(settings);
+  injectUserCustomCSS();
 
   // Update style when settings change
   reaction(
