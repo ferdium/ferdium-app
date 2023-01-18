@@ -56,7 +56,7 @@ specifiers:
   darkreader: 4.9.58
   dbus-next: 0.10.2
   debug: 4.3.4
-  electron: 22.0.2
+  electron: 22.0.3
   electron-builder: 23.6.0
   electron-dl: 3.5.0
   electron-find: 1.0.7
@@ -154,8 +154,8 @@ dependencies:
   '@adonisjs/session': 1.1.0
   '@adonisjs/shield': 1.1.0
   '@adonisjs/validator': 5.1.0
-  '@electron/remote': 2.0.9_electron@22.0.2
-  '@krisdages/electron-process-manager': 3.0.0_j5js5cyaki6ts5zckcnmgxteiu
+  '@electron/remote': 2.0.9_electron@22.0.3
+  '@krisdages/electron-process-manager': 3.0.0_fr5lwztdfxisfcpylfgurqcy6m
   '@mdi/js': 6.9.96
   '@mdi/react': 1.6.1
   '@octokit/core': 4.1.0
@@ -254,7 +254,7 @@ devDependencies:
   chalk: 5.2.0
   concurrently: 7.6.0
   cross-env: 7.0.3
-  electron: 22.0.2
+  electron: 22.0.3
   electron-builder: 23.6.0
   esbuild: 0.16.17
   esbuild-plugin-copy: 2.0.1_esbuild@0.16.17
@@ -1093,12 +1093,12 @@ packages:
       - supports-color
     dev: true
 
-  /@electron/remote/2.0.9_electron@22.0.2:
+  /@electron/remote/2.0.9_electron@22.0.3:
     resolution: {integrity: sha512-LR0W0ID6WAKHaSs0x5LX9aiG+5pFBNAJL6eQAJfGkCuZPUa6nZz+czZLdlTDETG45CgF/0raSvCtYOYUpr6c+A==}
     peerDependencies:
       electron: '>= 13.0.0'
     dependencies:
-      electron: 22.0.2
+      electron: 22.0.3
     dev: false
 
   /@electron/universal/1.2.1:
@@ -1756,15 +1756,15 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.14
     dev: true
 
-  /@krisdages/electron-process-manager/3.0.0_j5js5cyaki6ts5zckcnmgxteiu:
+  /@krisdages/electron-process-manager/3.0.0_fr5lwztdfxisfcpylfgurqcy6m:
     resolution: {integrity: sha512-Gs8McOVC6BVdfP4SeF+l5nx85eFooarm37K5mxs1PESI59a7oLwRf5Yd2tsZ6Ye14bCG0eTJGDv3yPuixBg3OQ==}
     peerDependencies:
       '@electron/remote': '>= 1.2.0'
       electron: '>= 10'
       rxjs: '>= 7'
     dependencies:
-      '@electron/remote': 2.0.9_electron@22.0.2
-      electron: 22.0.2
+      '@electron/remote': 2.0.9_electron@22.0.3
+      electron: 22.0.3
       electron-process-reporter: /@krisdages/electron-process-reporter/2.0.0-rxjs7-1.4.0
     dev: false
 
@@ -4661,8 +4661,8 @@ packages:
       mkdirp: 0.5.6
     dev: false
 
-  /electron/22.0.2:
-    resolution: {integrity: sha512-NdJlA2+FMgDJBhQFKMPyWJY8ng/tWpFlrRsW2JkZgSzYPXOnIu9muO3b83YHGoDn+GTyS8ghPsgcAwPMXtxirA==}
+  /electron/22.0.3:
+    resolution: {integrity: sha512-eETrJTINTzlXgQrnJSrKiF2Xdt5EHpxZ6Kk+WUjFCE0zUztdVm+hrngUecqhj8TPFlYScTANzPwRwUIjOChl+g==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     requiresBuild: true
