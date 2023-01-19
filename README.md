@@ -28,6 +28,7 @@
   - [Screenshots](#screenshots)
   - [Download](#download)
   - [Migrating from Ferdi](#migrating-from-ferdi)
+  - [Styling](#styling)
   - [Contributing](#contributing)
   - [Contributors ✨](#contributors-)
 
@@ -62,6 +63,18 @@ _Find answers to frequently asked questions on [ferdium.org/faq](https://ferdium
 ## Migrating from Ferdi
 
 If you are a pre-existing user of Ferdi, and are thinking of switching to Ferdium, you might want to run [the following scripts](./scripts/migration) to migrate your existing Ferdi profile such that Ferdium can pick up the configurations. (.ps1 for PowerShell/Windows users and .sh for UNIX (Linux and MacOS users). For a more detailed explanation, please see [MIGRATION.md](MIGRATION.md)
+
+## Styling
+
+You can style Ferdium's UI with the `USER_DATA/Ferdium/config/custom.css` file.
+
+> **Note**
+>
+> `USER_DATA`'s location depends on your platform:
+>
+> - **Windows**: `%APPDATA%`
+> - **Linux**: `$XDG_CONFIG_HOME` or `~/.config/`
+> - **MacOS**: `~/Library/Application Support`
 
 ## Contributing
 
