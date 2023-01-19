@@ -2,6 +2,7 @@ import color from 'color';
 import { reaction } from 'mobx';
 import TopBarProgress from 'react-topbar-progress-indicator';
 
+import { pathExistsSync, readFileSync } from 'fs-extra';
 import { isWindows, isLinux } from '../../environment';
 import {
   DEFAULT_APP_SETTINGS,
@@ -10,7 +11,7 @@ import {
   SIDEBAR_SERVICES_LOCATION_CENTER,
   SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT,
 } from '../../config';
-import loadCustomCSS from '../../electron/customCSS';
+import { userDataPath } from '../../environment-remote';
 
 const STYLE_ELEMENT_ID = 'custom-appearance-style';
 
@@ -19,15 +20,6 @@ function createStyleElement() {
   styles.id = STYLE_ELEMENT_ID;
 
   document.querySelector('head')?.appendChild(styles);
-}
-
-function injectUserCustomCSS() {
-  const contentToInject = loadCustomCSS();
-  if (contentToInject !== '') {
-    const styleElement = document.createElement('style');
-    styleElement.textContent = contentToInject;
-    document.head.append(styleElement);
-  }
 }
 
 function setAppearance(style) {
@@ -42,6 +34,11 @@ function setAppearance(style) {
 function darkenAbsolute(originalColor, absoluteChange) {
   const originalLightness = originalColor.lightness();
   return originalColor.lightness(originalLightness - absoluteChange);
+}
+
+function generateUserCustomCSS() {
+  const path = userDataPath('config', 'custom.css');
+  return pathExistsSync(path) ? readFileSync(path).toString() : '';
 }
 
 function generateAccentStyle(accentColorStr) {
@@ -431,6 +428,8 @@ function generateStyle(settings, app) {
     style += generateOpenWorkspaceStyle();
   }
 
+  style += generateUserCustomCSS();
+
   return style;
 }
 
@@ -454,7 +453,6 @@ export default function initAppearance(stores) {
   const { settings, app } = stores;
   createStyleElement();
   updateProgressbar(settings);
-  injectUserCustomCSS();
 
   // Update style when settings change
   reaction(
