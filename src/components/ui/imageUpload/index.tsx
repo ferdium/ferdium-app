@@ -132,7 +132,11 @@ class ImageUpload extends Component<IProps, IState> {
               onDropAccepted={this.onDropAccepted.bind(this)}
               onDropRejected={this.onDropRejected.bind(this)}
               multiple={multiple}
-              accept="image/jpeg, image/png, image/svg+xml"
+              accept={{
+                'image/jpeg': ['.jpeg', '.jpg'],
+                'image/png': ['.png'],
+                'image/svg+xml': ['.svg'],
+              }}
               minSize={0}
               maxSize={maxSize}
               maxFiles={maxFiles}
