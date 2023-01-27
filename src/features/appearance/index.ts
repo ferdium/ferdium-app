@@ -2,6 +2,7 @@ import color from 'color';
 import { reaction } from 'mobx';
 import TopBarProgress from 'react-topbar-progress-indicator';
 
+import { pathExistsSync, readFileSync } from 'fs-extra';
 import { isWindows, isLinux } from '../../environment';
 import {
   DEFAULT_APP_SETTINGS,
@@ -10,6 +11,7 @@ import {
   SIDEBAR_SERVICES_LOCATION_CENTER,
   SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT,
 } from '../../config';
+import { userDataPath } from '../../environment-remote';
 
 const STYLE_ELEMENT_ID = 'custom-appearance-style';
 
@@ -32,6 +34,11 @@ function setAppearance(style) {
 function darkenAbsolute(originalColor, absoluteChange) {
   const originalLightness = originalColor.lightness();
   return originalColor.lightness(originalLightness - absoluteChange);
+}
+
+function generateUserCustomCSS() {
+  const path = userDataPath('config', 'custom.css');
+  return pathExistsSync(path) ? readFileSync(path).toString() : '';
 }
 
 function generateAccentStyle(accentColorStr) {
@@ -135,6 +142,7 @@ function generateServiceRibbonWidthStyle(
   useGrayscaleServices,
   grayscaleServicesDim,
   shouldShowDragArea,
+  isFullScreen,
 ) {
   const width = Number(widthStr);
   const iconSize = Number(iconSizeStr) - iconSizeBias;
@@ -249,11 +257,18 @@ function generateServiceRibbonWidthStyle(
       margin-top: -${width}px !important;
     }
     .darwin .sidebar {
-      height: ${width + verticalStyleOffset - 3 - sizeDragArea}px !important;
+      height: ${
+        isFullScreen ? width : width + verticalStyleOffset - 3 - sizeDragArea
+      }px !important;
+      ${isFullScreen ? `padding-top: ${2}px !important` : null}
     }
     .darwin .app .app__content {
       padding-top: ${
-        width + sidebarSizeBias + (sizeDragArea !== 0 ? 4 - sizeDragArea : 4)
+        isFullScreen
+          ? width
+          : width +
+            sidebarSizeBias +
+            (sizeDragArea !== 0 ? 4 - sizeDragArea : 4)
       }px !important;
     }
     .darwin .workspaces-drawer {
@@ -395,6 +410,7 @@ function generateStyle(settings, app) {
     useGrayscaleServices,
     grayscaleServicesDim,
     shouldShowDragArea,
+    isFullScreen,
   );
 
   if (shouldShowDragArea) {
@@ -411,6 +427,8 @@ function generateStyle(settings, app) {
   if (alwaysShowWorkspaces) {
     style += generateOpenWorkspaceStyle();
   }
+
+  style += generateUserCustomCSS();
 
   return style;
 }

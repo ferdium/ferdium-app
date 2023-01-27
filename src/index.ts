@@ -101,7 +101,7 @@ const retrieveSettingValue = (key: string, defaultValue: boolean | string) =>
 
 const liftSingleInstanceLock = retrieveSettingValue(
   'liftSingleInstanceLock',
-  false,
+  DEFAULT_APP_SETTINGS.liftSingleInstanceLock,
 );
 
 // Force single window
@@ -165,7 +165,12 @@ if (
 }
 
 // Disable GPU acceleration
-if (!retrieveSettingValue('enableGPUAcceleration', false)) {
+if (
+  !retrieveSettingValue(
+    'enableGPUAcceleration',
+    DEFAULT_APP_SETTINGS.enableGPUAcceleration,
+  )
+) {
   debug('Disable GPU Acceleration');
   app.disableHardwareAcceleration();
 }
@@ -198,9 +203,15 @@ const createWindow = () => {
   }
 
   // Create the browser window.
-  const backgroundColor = retrieveSettingValue('darkMode', false)
+  const backgroundColor = retrieveSettingValue(
+    'darkMode',
+    DEFAULT_APP_SETTINGS.darkMode,
+  )
     ? '#1E1E1E'
-    : settings.get('accentColor');
+    : (retrieveSettingValue(
+        'accentColor',
+        DEFAULT_APP_SETTINGS.accentColor,
+      ) as string);
 
   mainWindow = new BrowserWindow({
     x: posX,
@@ -217,7 +228,7 @@ const createWindow = () => {
       spellcheck: retrieveSettingValue(
         'enableSpellchecking',
         DEFAULT_APP_SETTINGS.enableSpellchecking,
-      ) as boolean | undefined,
+      ) as boolean,
       nodeIntegration: true,
       contextIsolation: false,
       webviewTag: true,

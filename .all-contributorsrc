@@ -2871,7 +2871,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/39555268?v=4",
       "profile": "https://github.com/victorbnl",
       "contributions": [
-        "code"
+        "code",
+        "security"
       ]
     },
     {
@@ -2917,6 +2918,15 @@
       "profile": "https://github.com/balajiv113",
       "contributions": [
         "code"
+      ]
+    },
+    {
+      "login": "abacao",
+      "name": "André Bação",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17479246?v=4",
+      "profile": "http://blog.bacao.pt",
+      "contributions": [
+        "security"
       ]
     }
   ]

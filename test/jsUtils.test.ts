@@ -105,4 +105,26 @@ describe('jsUtils', () => {
       expect(result).toEqual(false);
     });
   });
+
+  describe('safeParseInt', () => {
+    it('returns zero for undefined', () => {
+      expect(jsUtils.safeParseInt(undefined)).toEqual(0);
+    });
+
+    it('returns zero for null', () => {
+      expect(jsUtils.safeParseInt(null)).toEqual(0);
+    });
+
+    it('parses integer number correctly in beginning of string input', () => {
+      expect(jsUtils.safeParseInt('47.45G')).toEqual(47);
+    });
+
+    it('returns 0 for string input whose starting characters are non-numeric', () => {
+      expect(jsUtils.safeParseInt('G47.45')).toEqual(0);
+    });
+
+    it('parses integer number correctly', () => {
+      expect(jsUtils.safeParseInt(47.45)).toEqual(47);
+    });
+  });
 });
