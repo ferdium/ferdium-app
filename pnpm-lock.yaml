@@ -114,7 +114,7 @@ specifiers:
   react-color: 2.19.3
   react-confetti: 6.1.0
   react-dom: 17.0.2
-  react-dropzone: 11.7.1
+  react-dropzone: 14.2.3
   react-electron-web-view: 2.0.1
   react-intl: 6.2.6
   react-jss: 10.9.2
@@ -202,7 +202,7 @@ dependencies:
   react-color: 2.19.3_react@17.0.2
   react-confetti: 6.1.0_react@17.0.2
   react-dom: 17.0.2_react@17.0.2
-  react-dropzone: 11.7.1_react@17.0.2
+  react-dropzone: 14.2.3_react@17.0.2
   react-electron-web-view: 2.0.1_sfoxds7t5ydpegc3knd667wn6m
   react-intl: 6.2.6_j5wiu4n3r332he5vjh7engy24e
   react-jss: 10.9.2_react@17.0.2
@@ -5886,9 +5886,9 @@ packages:
       flat-cache: 3.0.4
     dev: true
 
-  /file-selector/0.4.0:
-    resolution: {integrity: sha512-iACCiXeMYOvZqlF1kTiYINzgepRBymz1wwjiuup9u9nayhb6g4fSwiyJ/6adli+EPwrWtpgQAh2PoS7HukEGEg==}
-    engines: {node: '>= 10'}
+  /file-selector/0.6.0:
+    resolution: {integrity: sha512-QlZ5yJC0VxHxQQsQhXvBaC7VRJ2uaxTf+Tfpu4Z/OcVQJVpZO+DGU0rkoVW5ce2SccxugvpBJoMvUs59iILYdw==}
+    engines: {node: '>= 12'}
     dependencies:
       tslib: 2.5.0
     dev: false
@@ -9762,14 +9762,14 @@ packages:
       scheduler: 0.20.2
     dev: false
 
-  /react-dropzone/11.7.1_react@17.0.2:
-    resolution: {integrity: sha512-zxCMwhfPy1olUEbw3FLNPLhAm/HnaYH5aELIEglRbqabizKAdHs0h+WuyOpmA+v1JXn0++fpQDdNfUagWt5hJQ==}
+  /react-dropzone/14.2.3_react@17.0.2:
+    resolution: {integrity: sha512-O3om8I+PkFKbxCukfIR3QAGftYXDZfOE2N1mr/7qebQJHs7U+/RSL/9xomJNpRg9kM5h9soQSdf0Gc7OHF5Fug==}
     engines: {node: '>= 10.13'}
     peerDependencies:
-      react: '>= 16.8'
+      react: '>= 16.8 || 18.0.0'
     dependencies:
       attr-accept: 2.2.2
-      file-selector: 0.4.0
+      file-selector: 0.6.0
       prop-types: 15.8.1
       react: 17.0.2
     dev: false
