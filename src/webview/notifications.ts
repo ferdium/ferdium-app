@@ -1,6 +1,6 @@
 import { ipcRenderer } from 'electron';
 
-import { v1 as uuidV1 } from 'uuid';
+import { v4 as uuidV4 } from 'uuid';
 
 const debug = require('../preload-safe-debug')('Ferdium:Notifications');
 
@@ -12,7 +12,7 @@ export class NotificationsHandler {
     return new Promise(resolve => {
       debug('New notification', title, options);
 
-      const notificationId = uuidV1();
+      const notificationId = uuidV4();
 
       ipcRenderer.sendToHost(
         'notification',
