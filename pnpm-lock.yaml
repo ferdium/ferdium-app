@@ -40,7 +40,7 @@ specifiers:
   '@types/route-parser': 0.1.4
   '@types/sass': 1.43.1
   '@types/tar': 6.1.3
-  '@types/uuid': 8.3.4
+  '@types/uuid': 9.0.0
   '@types/validator': 13.7.11
   '@typescript-eslint/eslint-plugin': 5.49.0
   '@typescript-eslint/parser': 5.49.0
@@ -136,7 +136,7 @@ specifiers:
   tslib: 2.5.0
   typescript: 4.9.4
   useragent-generator: 1.1.1-amkt-22079-finish.0
-  uuid: 8.3.2
+  uuid: 9.0.0
   validator: 13.7.0
   wait-on: 6.0.1
   ws: 8.12.0
@@ -220,7 +220,7 @@ dependencies:
   tar: 6.1.13
   tslib: 2.5.0
   useragent-generator: 1.1.1-amkt-22079-finish.0
-  uuid: 8.3.2
+  uuid: 9.0.0
   validator: 13.7.0
   ws: 8.12.0
 
@@ -246,7 +246,7 @@ devDependencies:
   '@types/route-parser': 0.1.4
   '@types/sass': 1.43.1
   '@types/tar': 6.1.3
-  '@types/uuid': 8.3.4
+  '@types/uuid': 9.0.0
   '@types/validator': 13.7.11
   '@typescript-eslint/eslint-plugin': 5.49.0_iu322prlnwsygkcra5kbpy22si
   '@typescript-eslint/parser': 5.49.0_7uibuqfxkfaozanbtbziikiqje
@@ -2341,8 +2341,8 @@ packages:
       minipass: 3.3.5
     dev: true
 
-  /@types/uuid/8.3.4:
-    resolution: {integrity: sha512-c/I8ZRb51j+pYGAu5CrFMRxqZ2ke4y2grEBO5AUjgSkSk+qT2Ea+OdWElz/OiMf5MNpn2b17kuVBwZLQJXzihw==}
+  /@types/uuid/9.0.0:
+    resolution: {integrity: sha512-kr90f+ERiQtKWMz5rP32ltJ/BtULDI5RVO0uavn1HQUOwjx0R1h0rnDYNL0CepF1zL5bSY6FISAfd9tOdDhU5Q==}
     dev: true
 
   /@types/validator/13.7.11:
@@ -11677,6 +11677,11 @@ packages:
 
   /uuid/8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    hasBin: true
+    dev: false
+
+  /uuid/9.0.0:
+    resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
     hasBin: true
     dev: false
 
