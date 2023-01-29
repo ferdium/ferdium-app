@@ -14,7 +14,7 @@
   "private": true,
   "engines": {
     "node": "18.13.0",
-    "pnpm": "7.25.1"
+    "pnpm": "7.26.1"
   },
   "engine-strict": true,
   "scripts": {
