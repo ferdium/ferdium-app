@@ -161,8 +161,8 @@ dependencies:
     specifier: 2.6.11
     version: 2.6.11
   normalize-url:
-    specifier: 6.1.0
-    version: 6.1.0
+    specifier: 8.0.0
+    version: 8.0.0
   os-name:
     specifier: 4.0.1
     version: 4.0.1
@@ -9099,6 +9099,11 @@ packages:
   /normalize-url@6.1.0:
     resolution: {integrity: sha512-DlL+XwOy3NxAQ8xuC0okPgK46iuVNAK01YN7RueYBqqFeGsBjV9XmCAzAdgt+667bCl5kPh9EqKKDwnaPG1I7A==}
     engines: {node: '>=10'}
+
+  /normalize-url@8.0.0:
+    resolution: {integrity: sha512-uVFpKhj5MheNBJRTiMZ9pE/7hD1QTeEvugSJW/OmLzAp78PB5O6adfMNTvmfKhXBkvCzC+rqifWcVYpGFwTjnw==}
+    engines: {node: '>=14.16'}
+    dev: false
 
   /normalize-version@1.0.5:
     resolution: {integrity: sha512-gnPd21y/zdWO76ye7gP2eFO1tEUczd5DC6syABM25OLtS5MgsS3ZRB/vaaHz2Ir4x6SMzIrP0QZUpxs3VYPzKA==}
