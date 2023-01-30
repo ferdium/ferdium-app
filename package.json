@@ -113,7 +113,7 @@
     "react-sortable-hoc": "2.0.0",
     "react-tooltip": "4.5.1",
     "react-topbar-progress-indicator": "4.1.1",
-    "react-transition-group": "1.2.1",
+    "react-transition-group": "4.4.5",
     "route-parser": "0.0.5",
     "sanitize-filename": "1.6.3",
     "semver": "7.5.1",
