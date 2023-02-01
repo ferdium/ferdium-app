@@ -58,7 +58,6 @@
   "locked.password.label": "密码",
   "locked.submit.label": "解锁",
   "locked.touchId": "使用 Touch ID 解锁",
-  "locked.touchIdPrompt": "使用 Touch ID 解锁",
   "locked.unlockWithPassword": "使用密码解锁",
   "login.changeServer": "在这儿更改！",
   "login.changeServerMessage": "您正在使用 {serverNameParse} 服务器，想要切换吗？",

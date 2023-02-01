@@ -53,7 +53,6 @@
   "locked.password.label": "Kata Sandi",
   "locked.submit.label": "Buka",
   "locked.touchId": "Membuka kunci dengan Touch ID",
-  "locked.touchIdPrompt": "Membuka kunci dengan Touch ID",
   "locked.unlockWithPassword": "Buka kunci dengan Kata Sandi",
   "login.changeServer": "Ubah disini!",
   "login.changeServerMessage": "Kamu menggunakan server {serverNameParse}, Apakah anda ingin beralih?",

@@ -58,7 +58,6 @@
   "locked.password.label": "Parole",
   "locked.submit.label": "Atbloķēt",
   "locked.touchId": "Atbloķēt ar Touch ID",
-  "locked.touchIdPrompt": "Atslēgt ar Touch ID",
   "locked.unlockWithPassword": "Atbloķēt ar Paroli",
   "login.changeServer": "Maini šeit!",
   "login.changeServerMessage": "Tu izmanto {serverNameParse} Serveri. Vai vēlies to mainīt?",
