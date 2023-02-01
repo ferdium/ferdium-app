@@ -19,10 +19,12 @@ export function darkModeStyleExists(recipePath: string) {
 
 export function injectDarkModeStyle(recipePath: string) {
   if (darkModeStyleExists(recipePath)) {
-    const data = readFileSync(darkModeFilePath(recipePath));
+    const darkmodeCss = darkModeFilePath(recipePath);
+    const data = readFileSync(darkmodeCss);
     const styles = document.createElement('style');
     styles.id = ID;
     styles.innerHTML = data.toString();
+    debug('Loaded darkmode.css from: ', darkmodeCss);
 
     document.querySelector('head')?.appendChild(styles);
 
