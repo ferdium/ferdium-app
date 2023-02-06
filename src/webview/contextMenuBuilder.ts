@@ -633,27 +633,45 @@ export class ContextMenuBuilder {
     menu.append(copyImageUrl);
 
     // TODO: This doesn't seem to work on linux, so, limiting to Mac for now
-    if (isMac && menuInfo.srcURL.startsWith('blob:')) {
-      const downloadImage = new MenuItem({
-        label: this.stringTable.downloadImage(),
-        click: () => {
-          const urlWithoutBlob = menuInfo.srcURL.slice(5);
-          this.convertImageToBase64(menuInfo.srcURL, (dataURL: any) => {
-            const url = new window.URL(urlWithoutBlob);
+    if (isMac) {
+      const clickHandler = menuInfo.srcURL.startsWith('blob:')
+        ? () => {
+            const urlWithoutBlob = menuInfo.srcURL.slice(5);
+            this.convertImageToBase64(menuInfo.srcURL, (dataURL: any) => {
+              const url = new window.URL(urlWithoutBlob);
+              const fileName = url.pathname.slice(1);
+              ipcRenderer.send('download-file', {
+                content: dataURL,
+                fileOptions: {
+                  name: fileName,
+                  mime: 'image/png',
+                },
+              });
+            });
+            this._sendNotificationOnClipboardEvent(
+              menuInfo.clipboardNotifications,
+              () => `Image downloaded: ${urlWithoutBlob}`,
+            );
+          }
+        : () => {
+            const url = new window.URL(menuInfo.srcURL);
+            // TODO: Need to figure out the correct fileName and extension
             const fileName = url.pathname.slice(1);
             ipcRenderer.send('download-file', {
-              content: dataURL,
+              content: menuInfo.srcURL,
               fileOptions: {
                 name: fileName,
-                mime: 'image/png',
+                mime: 'image/png', // TODO: How do we handle jpeg, and other extensions?
               },
             });
-          });
-          this._sendNotificationOnClipboardEvent(
-            menuInfo.clipboardNotifications,
-            () => `Image downloaded: ${urlWithoutBlob}`,
-          );
-        },
+            this._sendNotificationOnClipboardEvent(
+              menuInfo.clipboardNotifications,
+              () => `Image downloaded: ${menuInfo.srcURL}`,
+            );
+          };
+      const downloadImage = new MenuItem({
+        label: this.stringTable.downloadImage(),
+        click: clickHandler,
       });
 
       menu.append(downloadImage);
