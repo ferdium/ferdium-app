@@ -321,19 +321,6 @@
         }
       },
       {
-        "defaultMessage": "!!!unlock via Touch ID",
-        "end": {
-          "column": 3,
-          "line": 31
-        },
-        "file": "src/components/auth/Locked.js",
-        "id": "locked.touchIdPrompt",
-        "start": {
-          "column": 17,
-          "line": 28
-        }
-      },
-      {
         "defaultMessage": "!!!Password",
         "end": {
           "column": 3,
@@ -6360,19 +6347,6 @@
         "start": {
           "column": 11,
           "line": 183
-        }
-      },
-      {
-        "defaultMessage": "!!!unlock via Touch ID",
-        "end": {
-          "column": 3,
-          "line": 190
-        },
-        "file": "src/lib/Menu.js",
-        "id": "locked.touchIdPrompt",
-        "start": {
-          "column": 17,
-          "line": 187
         }
       },
       {

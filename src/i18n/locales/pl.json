@@ -58,7 +58,6 @@
   "locked.password.label": "Hasło",
   "locked.submit.label": "Odblokuj",
   "locked.touchId": "Odblokuj przez Touch ID",
-  "locked.touchIdPrompt": "Odblokuj za pomocą Touch ID",
   "locked.unlockWithPassword": "Odblokuj hasłem",
   "login.changeServer": "Zmień tutaj!",
   "login.changeServerMessage": "Używasz serwera {serverNameParse}, czy chcesz przełączyć?",

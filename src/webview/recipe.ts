@@ -265,6 +265,7 @@ class RecipeController {
     if (pathExistsSync(userCss)) {
       const data = readFileSync(userCss);
       styles.innerHTML += data.toString();
+      debug('Loaded user.css from: ', userCss);
     }
     document.querySelector('head')?.append(styles);
 

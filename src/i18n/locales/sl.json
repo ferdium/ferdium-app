@@ -62,7 +62,6 @@
   "locked.password.label": "Password",
   "locked.submit.label": "Unlock",
   "locked.touchId": "Unlock with Touch ID",
-  "locked.touchIdPrompt": "unlock via Touch ID",
   "locked.unlockWithPassword": "Unlock with Password",
   "login.changeServer": "Change server",
   "login.customServerQuestion": "Using a custom Ferdium server?",

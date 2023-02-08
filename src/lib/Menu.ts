@@ -221,10 +221,6 @@ const menuItems = defineMessages({
     id: 'locked.touchId',
     defaultMessage: 'Unlock with Touch ID',
   },
-  touchIdPrompt: {
-    id: 'locked.touchIdPrompt',
-    defaultMessage: 'unlock via Touch ID',
-  },
   tos: {
     id: 'menu.help.tos',
     defaultMessage: 'Terms of Service',
@@ -848,7 +844,7 @@ class FranzMenu implements StoresProps {
           visible: touchIdEnabled,
           click() {
             systemPreferences
-              .promptTouchID(intl.formatMessage(menuItems.touchIdPrompt))
+              .promptTouchID(intl.formatMessage(menuItems.touchId))
               .then(() => {
                 actions.settings.update({
                   type: 'app',

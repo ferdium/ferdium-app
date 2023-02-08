@@ -58,7 +58,6 @@
   "locked.password.label": "Пароль",
   "locked.submit.label": "Розблокувати",
   "locked.touchId": "Розблокувати за допомогою Touch ID",
-  "locked.touchIdPrompt": "Розблокувати за допомогою Touch ID",
   "locked.unlockWithPassword": "Розблокування паролем",
   "login.changeServer": "Змінити тут!",
   "login.changeServerMessage": "Ви використовуєте {serverNameParse} сервер, бажаєте перемкнутися?",

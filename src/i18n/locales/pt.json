@@ -58,7 +58,6 @@
   "locked.password.label": "Palavra-passe",
   "locked.submit.label": "Desbloquear",
   "locked.touchId": "Desbloquear com Touch ID",
-  "locked.touchIdPrompt": "Desbloquear com Touch ID",
   "locked.unlockWithPassword": "Desbloquear com palavra-passe",
   "login.changeServer": "Mude aqui!",
   "login.changeServerMessage": "Você está usando o Servidor {serverNameParse}, deseja mudar?",

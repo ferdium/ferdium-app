@@ -58,7 +58,6 @@
   "locked.password.label": "Mot de passe",
   "locked.submit.label": "Déverrouiller",
   "locked.touchId": "Déverrouiller avec Touch ID",
-  "locked.touchIdPrompt": "Déverrouiller avec Touch ID",
   "locked.unlockWithPassword": "Déverrouiller avec le mot de passe",
   "login.changeServer": "Changez ici !",
   "login.changeServerMessage": "Vous utilisez le serveur {serverNameParse}, voulez-vous changer ?",
