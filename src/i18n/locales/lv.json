@@ -237,7 +237,7 @@
   "settings.app.form.privateNotifications": "Nerādīt ziņas saturu paziņojumos",
   "settings.app.form.progressbarAccentColor": "Progresa joslas Akcenta krāsa",
   "settings.app.form.reloadAfterResume": "Pārlādēt Ferdium pēc sistēmas atsākšanas",
-  "settings.app.form.reloadAfterResumeTime": "Laiks lidz sistēma ir dīkstāvē/apturēta (minūtēs)",
+  "settings.app.form.reloadAfterResumeTime": "Laika posms, pēc kura uzskatīt, ka sistēma ir dīkstāvē/apturēta (minūtēs)",
   "settings.app.form.runInBackground": "Paturēt Ferdium fonā, aizverot logu",
   "settings.app.form.scheduledDNDEnabled": "Iespējot ieplānotu Netraucēt režīmu",
   "settings.app.form.scheduledDNDEnd": "Uz",
