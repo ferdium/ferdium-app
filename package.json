@@ -22,7 +22,7 @@
     "start": "electron ./build",
     "start:local": "cross-env USE_LOCAL_API=1 pnpm start",
     "start:live": "cross-env USE_LIVE_API=1 pnpm start",
-    "start:all-dev": "concurrently \"pnpm dev\" \"wait-on http-get://localhost:8080 && pnpm start\"",
+    "start:all-dev": "concurrently \"pnpm dev\" \"wait-on http-get://127.0.0.1:8080 && pnpm start\"",
     "dev": "node esbuild.mjs --watch",
     "test": "jest",
     "test:watch": "jest --watch",
