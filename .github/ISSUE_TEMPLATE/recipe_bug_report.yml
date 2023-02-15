@@ -1,7 +1,7 @@
-name: Bug Report
-description: Report an Ferdium bug
+name: Recipes - Bug Report
+description: Report a bug in a Ferdium Recipe for a particular service
 title: "[Bug]: "
-labels: ["bug :beetle:"]
+labels: ["bug :beetle:", "recipe :bookmark_tabs:"]
 body:
 - type: markdown
   attributes:
