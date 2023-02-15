@@ -5,15 +5,15 @@ body:
   - type: markdown
     attributes:
       value: |
-        Before creating a new recipe request, please check if you can add it yourself.
-        If you add a recipe yourself it will be added faster than having to go through other contributors to do this job for you.
+        Before creating a new recipe request, **please check if you can add it yourself**.
+        If you add a recipe yourself, it will be added faster than having to go through other contributors to do this job for you.
 
-        As a first option to adding a service we recommend you search if someone already created such a recipe. For this, please search for your service name plus "Ferdium" or "Ferdi" on Github (e.g "WhatsApp Ferdium"), optionally you can also add "recipe" to the search query (e.g. "WhatsApp Ferdium recipe").
-        If you find a recipe (e.g. https://github.com/meetfranz/recipe-whatsapp), please check that its license allows us to add it to the repository. For this, open the `package.json`` file of the project and look at the specified license. In most cases this will be `"license": "MIT"``: The MIT License allows us to add the recipe! Please also check that the recipe is working (e.g. by adding it as a dev recipe to your Ferdium installation or looking if there are existing issues on the repository) and that it contains your desired features (e.g. look at the README). Another good indicator for if the recipe supports notifications is if there is code inside the `webview.js`` file.
+        As a first option to adding a service, we recommend you search if someone already created such a recipe. For this, please search for your service name plus "Ferdium" or "Ferdi" on Github (e.g "WhatsApp Ferdium"), optionally you can also add "recipe" to the search query (e.g. "WhatsApp Ferdium recipe").
+        If you find a recipe (e.g. https://github.com/meetfranz/recipe-whatsapp), please check that its license allows us to add it to the repository. For this, open the `package.json` file of the project and look at the specified license. In most cases this will be `"license": "MIT"`: The MIT License allows us to add the recipe! Please also check that the recipe is working (e.g. by adding it as a dev recipe to your Ferdium installation or looking if there are existing issues on the repository) and that it contains your desired features (e.g. look at the README). Another good indicator for if the recipe supports notifications is if there is code inside the `webview.js` file.
 
         If there is no existing recipe, you can also create one yourself - this often only takes 10-20 minutes and makes it much more likely that your service will get added! To create a recipe please look at [our guide](https://github.com/ferdium/ferdium-recipes/blob/main/docs/integration.md).
 
-        IF YOU ARE NOT FAMILIAR WITH JAVASCRIPT: Please still search for a recipe using the guide above and add it to your request.
+        **If you are not familiar with JavaScript:** Please still search for a recipe using the guide above and add it to your request.
   - type: checkboxes
     attributes:
       label: Preflight Checklist
