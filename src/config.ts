@@ -327,7 +327,7 @@ export const DEFAULT_WINDOW_OPTIONS = {
 
 export const GITHUB_FRANZ_URL = 'https://github.com/meetfranz';
 export const GITHUB_FERDIUM_URL = 'https://github.com/ferdium';
-export const FERDIUM_SERVICE_REQUEST = `${GITHUB_FERDIUM_URL}/ferdium-recipes/issues`;
+export const FERDIUM_SERVICE_REQUEST = `${GITHUB_FERDIUM_URL}/ferdium-app/issues`;
 export const FERDIUM_TRANSLATION = 'https://crowdin.com/project/ferdium-app';
 export const FRANZ_DEV_DOCS = 'http://bit.ly/franz-dev-hub';
 
