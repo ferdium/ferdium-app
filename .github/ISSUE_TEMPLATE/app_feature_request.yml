@@ -1,16 +1,14 @@
-name: Feature Request
-description: Suggest an idea for Ferdium
-title: "Feature: "
+name: App - Feature Request
+description: Suggest an idea for the Ferdium app
+title: "[Feature]: "
 labels: ["enhancement :sparkles:"]
 body:
   - type: markdown
     attributes:
       value: |
-        1. Please remember that if you are logging a bug for some service that has *stopped working*, please log the bug [here](https://github.com/ferdium/ferdium-recipes/issues)
-        2. If you are requesting support for a new service in Ferdium, please log it [here](https://github.com/ferdium/ferdium-recipes/pulls)
-        3. Please remember to read the [self-help documentation](https://github.com/ferdium/ferdium-app#troubleshooting-recipes-self-help) - in case it helps you unblock yourself for issues related to old recipes.
-        4. If you are adding screenshots and/or videos, please do add it in English so that a wider group of people can understand and help with resolution.
-        5. Please fill our form below, this way we can analyse and fix the problem as fast as possible.
+        1. Please remember to read the [self-help documentation](https://github.com/ferdium/ferdium-app#troubleshooting-recipes-self-help) - in case it helps you unblock yourself for issues related to old recipes.
+        2. If you are adding screenshots and/or videos, please do add it in English so that a wider group of people can understand and help with resolution.
+        3. Please fill our form below, this way we can analyse and fix the problem as fast as possible.
   - type: checkboxes
     attributes:
       label: Preflight Checklist
@@ -25,7 +23,8 @@ body:
   - type: textarea
     attributes:
       label: Problem Description
-      description: A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
+      description: A clear and concise description of what the problem is.
+      placeholder: Ex. I'm always frustrated when [...]
     validations:
       required: true
   - type: textarea

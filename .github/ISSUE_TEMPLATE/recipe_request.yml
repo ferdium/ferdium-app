@@ -1,7 +1,7 @@
-name: New Service-recipe Request
-description: Suggest a service that we should add to Ferdium
+name: Recipes - New Service Request
+description: Suggest a service that we should add to Ferdium Recipes
 title: "[Recipe Request]: "
-labels: ["recipe request :sparkles:"]
+labels: ["recipe request :sparkles:", "recipe :bookmark_tabs:"]
 body:
 - type: markdown
   attributes:
@@ -16,20 +16,17 @@ body:
 
       IF YOU ARE NOT FAMILIAR WITH JAVASCRIPT: Please still search for a recipe using the guide above and add it to your request.
 
-      1. Please remember that if you are logging a bug for some service that has *stopped working*, please log the bug [here](https://github.com/ferdium/ferdium-recipes/issues)
-      2. If you are requesting support for a new service in Ferdium, please log it [here](https://github.com/ferdium/ferdium-recipes/issues/new/choose)
-      3. Please remember to read the [self-help documentation](https://github.com/ferdium/ferdium-app#troubleshooting-recipes-self-help) - in case it helps you unblock yourself for issues related to old recipes.
-      4. Please fill our form below, this way we can analyse and fix the problem as fast as possible.
+      1. Please remember to read the [self-help documentation](https://github.com/ferdium/ferdium-app#troubleshooting-recipes-self-help) - in case it helps you unblock yourself for issues related to old recipes.
 - type: checkboxes
   attributes:
     label: Preflight Checklist
     description: Please ensure you've completed all of the following.
     options:
-      - label: I have read the [Contributing Guidelines](https://github.com/ferdium/ferdium-recipes/blob/develop/CONTRIBUTING.md) for this project.
+      - label: I have read the [Contributing Guidelines](https://github.com/ferdium/ferdium-recipes/blob/develop/CONTRIBUTING.md) for Ferdium Recipes.
         required: true
-      - label: I agree to follow the [Code of Conduct](https://github.com/ferdium/ferdium-recipes/blob/develop/CODE_OF_CONDUCT.md) that this project adheres to.
+      - label: I agree to follow the [Code of Conduct](https://github.com/ferdium/ferdium-recipes/blob/develop/CODE_OF_CONDUCT.md) that Ferdium Recipes adheres to.
         required: true
-      - label: I have searched the [issue tracker](https://github.com/ferdium/ferdium-recipes/issues) for a feature request that matches the one I want to file, without success.
+      - label: I have searched the [issue tracker](https://github.com/ferdium/ferdium-app/issues) for a recipes request that matches the one I want to file, without success.
         required: true
 - type: input
   attributes:
