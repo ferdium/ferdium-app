@@ -5,20 +5,16 @@ body:
 - type: markdown
   attributes:
     value: |
-      1. Please remember that if you are logging a bug for some service that has *stopped working*, please log the bug [here](https://github.com/ferdium/ferdium-recipes/issues)
-      2. If you are requesting support for a new service in Ferdium, please log it [here](https://github.com/ferdium/ferdium-recipes/issues/new/choose)
-      3. Please remember to read the [self-help documentation](https://github.com/ferdium/ferdium-app#troubleshooting-recipes-self-help) - in case it helps you unblock yourself for issues related to old recipes.
-      4. Please fill our form below, this way we can analyse and fix the problem as fast as possible.
+      1. Please fill our form below, this way we can analyse and fix the problem as fast as possible.
+      2. If you are adding screenshots and/or videos, please do add it in English so that a wider group of people can understand and help with resolution.
 - type: checkboxes
   attributes:
     label: Preflight Checklist
     description: Please ensure you've completed all of the following.
     options:
-      - label: I have read the [Contributing Guidelines](https://github.com/ferdium/ferdium-app/blob/develop/CONTRIBUTING.md) for this project.
+      - label: I agree to follow the [Code of Conduct](https://github.com/ferdium/ferdium-recipes/blob/HEAD/CODE_OF_CONDUCT.md) that Ferdium Recipes adheres to.
         required: true
-      - label: I agree to follow the [Code of Conduct](https://github.com/ferdium/ferdium-recipes/blob/main/CODE_OF_CONDUCT.md) that this project adheres to.
-        required: true
-      - label: I have searched the [issue tracker](https://github.com/ferdium/ferdium-recipes/issues) for a feature request that matches the one I want to file, without success.
+      - label: I have searched the [issue tracker](https://github.com/ferdium/ferdium-app/issues?q=is%3Aopen+is%3Aissue+label%3A%22recipe+%3Abookmark_tabs%3A%22+label%3A%22bug+%3Abeetle%3A%22+) for a bug report that matches the one I want to file, without success.
         required: true
 - type: input
   attributes:
@@ -31,7 +27,7 @@ body:
   attributes:
     label: Recipe Name
     description: What is the name of the specific recipe you are using?
-    placeholder: 1.0.0
+    placeholder: WhatsApp
   validations:
     required: true
 - type: input

@@ -5,15 +5,16 @@ body:
   - type: markdown
     attributes:
       value: |
-        1. Please remember to read the [self-help documentation](https://github.com/ferdium/ferdium-app#troubleshooting-recipes-self-help) - in case it helps you unblock yourself for issues related to old recipes.
+        1. Please fill our form below, this way we can analyse and fix the problem as fast as possible.
         2. If you are adding screenshots and/or videos, please do add it in English so that a wider group of people can understand and help with resolution.
-        3. Please fill our form below, this way we can analyse and fix the problem as fast as possible.
   - type: checkboxes
     attributes:
       label: Avoid duplicates
       description: Please ensure you've completed the following
       options:
-        - label: I have searched the [issues tracker](https://github.com/ferdium/ferdium-app/issues) for a bug report similar to mine, in vain
+        - label: I agree to follow the [Code of Conduct](https://github.com/ferdium/ferdium-app/blob/HEAD/CODE_OF_CONDUCT.md) that this project adheres to.
+          required: true
+        - label: I have searched the [issues tracker](https://github.com/ferdium/ferdium-app/issues?q=is%3Aopen+is%3Aissue+label%3A%22bug+%3Abeetle%3A%22) for a bug report similar to mine, in vain
           required: true
   - type: input
     attributes:
