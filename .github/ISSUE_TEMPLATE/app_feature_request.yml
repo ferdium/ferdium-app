@@ -1,6 +1,5 @@
 name: App - Feature Request
 description: Suggest an idea for the Ferdium app
-title: "[Feature]: "
 labels: ["enhancement :sparkles:"]
 body:
   - type: markdown
