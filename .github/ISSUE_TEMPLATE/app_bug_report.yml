@@ -1,5 +1,5 @@
-name: Bug report
-description: Report a bug in Ferdium
+name: App Bug report
+description: Report a bug in the Ferdium App
 title: "Bug: "
 labels: ["bug :beetle:"]
 body:
