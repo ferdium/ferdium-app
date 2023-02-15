@@ -1,6 +1,5 @@
 name: Recipes - New Service Request
 description: Suggest a service that we should add to Ferdium Recipes
-title: "[Recipe Request]: "
 labels: ["recipe request :sparkles:", "recipe :bookmark_tabs:"]
 body:
 - type: markdown
