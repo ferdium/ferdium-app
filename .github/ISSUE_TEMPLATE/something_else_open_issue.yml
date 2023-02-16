@@ -1,4 +1,4 @@
-name: Open empty an issue
+name: Open an empty issue
 description: For everything that's neither a feature request, nor a bug
 body:
   - type: markdown
