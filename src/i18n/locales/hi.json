@@ -1,1 +1,4 @@
-{}
+{
+  "app.errorHandler.action": "पुनः लोड करें",
+  "app.errorHandler.headline": "कुछ गलत हो गया।"
+}
