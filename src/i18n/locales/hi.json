@@ -1,4 +1,18 @@
 {
   "app.errorHandler.action": "पुनः लोड करें",
-  "app.errorHandler.headline": "कुछ गलत हो गया।"
+  "app.errorHandler.headline": "कुछ गलत हो गया",
+  "changeserver.customServerLabel": "कस्टम सर्वर",
+  "changeserver.headline": "सर्वर बदलें",
+  "changeserver.label": "सर्वर",
+  "changeserver.urlError": "एक मान्य URL दर्ज करें",
+  "changeserver.warning": "फ्रीडियम द्वारा दिए गए अतिरिक्त सेटिंग्स सेव नहीं किये जायेंगे",
+  "connectionLostBanner.cta": "सर्विस रीलोड करे",
+  "connectionLostBanner.informationLink": "क्या हुआ ?",
+  "feature.publishDebugInfo.terms": "सेवा की शर्तें",
+  "feature.publishDebugInfo.title": "जानकारी प्रकाशित करे",
+  "feature.quickSwitch.search": "खोजे ...",
+  "settings.account.account.editButton": "अकाउंट संशोधन",
+  "settings.account.accountUnavailableInfo": "आप फेर्डियम बिना अकाउंट के इस्तेमाल कर रहे है।  यदि आप फेर्डियम अकाउंट के सहित इस्तेमाल करते है, उसके विभिन्न प्रतिस्थापित प्रतियों के मध्य ताल-मेल बनाया जा सकता है।  कृपया एक सर्वर का दिया गया विकल्प को सेटिंग्स टैब से चुन कर लॉगिन करिये",
+  "settings.account.buttonSave": "प्रोफ़ाइल को नवीनतम बनाओ",
+  "settings.account.deleteAccount": "खाते को हटाएं"
 }
