@@ -1,0 +1,15 @@
+name: Open an empty issue
+description: For everything that's neither a feature request, nor a bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        1. Please remember that if you are logging a bug for some service that has *stopped working*, please log the bug [here](https://github.com/ferdium/ferdium-app/issues) by selecting the related issue category
+        2. If you are requesting support for a new service in Ferdium, please log it [here](https://github.com/ferdium/ferdium-app/issues) by selecting the related issue category
+        3. If you are adding screenshots and/or videos, please do add it in English so that a wider group of people can understand and help with resolution.
+  - type: textarea
+    attributes:
+      label: "Your issue"
+      description: "Describe your issue"
+    validations:
+      required: true

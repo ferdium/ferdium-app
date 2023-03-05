@@ -1,4 +1,5 @@
 // Note: This list should match the locale files present in 'src/i18n/locales/' folder
+// When updating this list, you can use https://www.loc.gov/standards/iso639-2/php/code_list.php to get the full name
 export const APP_LOCALES = {
   af: 'Afrikaans',
   ar: 'عربى (Arabic)',

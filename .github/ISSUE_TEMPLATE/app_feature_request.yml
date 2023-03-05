@@ -1,0 +1,43 @@
+name: App - Feature Request
+description: Suggest an idea for the Ferdium app
+labels: ["enhancement :sparkles:"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        1. Please fill our form below, this way we can analyse and fix the problem as fast as possible.
+        2. If you are adding screenshots and/or videos, please do add it in English so that a wider group of people can understand and help with resolution.
+  - type: checkboxes
+    attributes:
+      label: Preflight Checklist
+      description: Please ensure you've completed all of the following.
+      options:
+        - label: I have read the [Contributing Guidelines](https://github.com/ferdium/ferdium-app/blob/HEAD/CONTRIBUTING.md) for this project.
+          required: true
+        - label: I agree to follow the [Code of Conduct](https://github.com/ferdium/ferdium-app/blob/HEAD/CODE_OF_CONDUCT.md) that this project adheres to.
+          required: true
+        - label: I have searched the [issue tracker](https://github.com/ferdium/ferdium-app/issues?q=is%3Aopen+is%3Aissue+label%3A%22enhancement+%3Asparkles%3A%22) for a feature request that matches the one I want to file, without success.
+          required: true
+  - type: textarea
+    attributes:
+      label: Problem Description
+      description: A clear and concise description of what the problem is.
+      placeholder: Ex. I'm always frustrated when [...]
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Proposed Solution
+      description: A clear and concise description of what you want to happen.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Alternatives Considered
+      description: A clear and concise description of any alternative solutions or features you've considered.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Additional Information
+      description: Add any other context or screenshots about the feature request here.

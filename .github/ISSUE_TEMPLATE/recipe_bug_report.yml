@@ -1,0 +1,75 @@
+name: Recipes - Bug Report
+description: Report a bug in a Ferdium Recipe for a particular service
+labels: ["bug :beetle:", "recipe :bookmark_tabs:"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        1. Please fill our form below, this way we can analyse and fix the problem as fast as possible.
+        2. If you are adding screenshots and/or videos, please do add it in English so that a wider group of people can understand and help with resolution.
+  - type: checkboxes
+    attributes:
+      label: Preflight Checklist
+      description: Please ensure you've completed all of the following.
+      options:
+        - label: I agree to follow the [Code of Conduct](https://github.com/ferdium/ferdium-app/blob/HEAD/CODE_OF_CONDUCT.md) that Ferdium Recipes adheres to.
+          required: true
+        - label: I have searched the [issue tracker](https://github.com/ferdium/ferdium-app/issues?q=is%3Aopen+is%3Aissue+label%3A%22recipe+%3Abookmark_tabs%3A%22+label%3A%22bug+%3Abeetle%3A%22+) for a bug report that matches the one I want to file, without success.
+          required: true
+  - type: input
+    attributes:
+      label: Ferdium Version
+      description: What version of Ferdium are you using?
+      placeholder: 5.6.3
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Recipe Name
+      description: What is the name of the specific recipe you are using?
+      placeholder: WhatsApp
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Recipe Version
+      description: What version of the specific recipe are you using?
+      placeholder: 1.0.0
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Last Known working version of the recipe
+      description: What is the last version of the recipe this worked in, if applicable?
+      placeholder: 1.0.0
+  - type: textarea
+    attributes:
+      label: Steps to reproduce
+      description: Explain to us how we can reproduce your bug on our computer
+      placeholder: |
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: A clear and concise description of what you expected to happen.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Actual Behavior
+      description: A clear description of what actually happens.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots to help explain your problem. You can simply drag and drop any image file into the editor to add it to the report
+  - type: textarea
+    attributes:
+      label: Additional Information
+      description: If your problem needs further explanation, or if the issue you're seeing cannot be reproduced in a gist, please add more information here.

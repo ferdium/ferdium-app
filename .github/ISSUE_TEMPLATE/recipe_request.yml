@@ -1,0 +1,48 @@
+name: Recipes - New Service Request
+description: Suggest a service that we should add to Ferdium Recipes
+labels: ["recipe request :sparkles:", "recipe :bookmark_tabs:"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before creating a new recipe request, **please check if you can add it yourself**.
+        If you add a recipe yourself, it will be added faster than having to go through other contributors to do this job for you.
+
+        As a first option to adding a service, we recommend you search if someone already created such a recipe. For this, please search for your service name plus "Ferdium" or "Ferdi" on Github (e.g "WhatsApp Ferdium"), optionally you can also add "recipe" to the search query (e.g. "WhatsApp Ferdium recipe").
+        If you find a recipe (e.g. https://github.com/meetfranz/recipe-whatsapp), please check that its license allows us to add it to the repository. For this, open the `package.json` file of the project and look at the specified license. In most cases this will be `"license": "MIT"`: The MIT License allows us to add the recipe! Please also check that the recipe is working (e.g. by adding it as a dev recipe to your Ferdium installation or looking if there are existing issues on the repository) and that it contains your desired features (e.g. look at the README). Another good indicator for if the recipe supports notifications is if there is code inside the `webview.js` file.
+
+        If there is no existing recipe, you can also create one yourself - this often only takes 10-20 minutes and makes it much more likely that your service will get added! To create a recipe please look at [our guide](https://github.com/ferdium/ferdium-recipes/blob/main/docs/integration.md).
+
+        **If you are not familiar with JavaScript:** Please still search for a recipe using the guide above and add it to your request.
+  - type: checkboxes
+    attributes:
+      label: Preflight Checklist
+      description: Please ensure you've completed all of the following.
+      options:
+        - label: I agree to follow the [Code of Conduct](https://github.com/ferdium/ferdium-app/blob/HEAD/CODE_OF_CONDUCT.md) that Ferdium Recipes adheres to.
+          required: true
+        - label: I have searched the [issue tracker](https://github.com/ferdium/ferdium-app/issues?q=is%3Aopen+is%3Aissue+label%3A%22recipe+request+%3Asparkles%3A%22) for a recipe request that matches the one I want to file, without success.
+          required: true
+  - type: input
+    attributes:
+      label: Name of the service
+      description: What is the name of the service you are requesting?
+      placeholder: WhatsApp
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: URL of the service
+      description: What is the URL of the service you are requesting?
+      placeholder: https://web.whatsapp.com
+  - type: input
+    attributes:
+      label: GitHub URL to a recipe that has already been created by someone else or you
+      description: What is the URL of the service-recipe?
+      placeholder: https://github.com/...
+  - type: textarea
+    attributes:
+      label: Features you want implemented
+      description: A clear and concise description of what features you want implemented eg Notification support
+    validations:
+      required: true
