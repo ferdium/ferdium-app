@@ -152,7 +152,7 @@
     "concurrently": "7.6.0",
     "cross-env": "7.0.3",
     "electron": "23.1.2",
-    "electron-builder": "24.0.0",
+    "electron-builder": "23.6.0",
     "esbuild": "0.16.17",
     "esbuild-plugin-copy": "2.0.2",
     "esbuild-runner": "2.2.2",
