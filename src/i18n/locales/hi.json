@@ -61,6 +61,8 @@
   "locked.unlockWithPassword": "पासवर्ड से अनलॉक करें",
   "login.changeServer": "यहाँ बदलें!",
   "login.changeServerMessage": "आप {serverNameParse} सर्वर का उपयोग कर रहे हैं, क्या आप बदलना चाहते हैं?",
+  "login.email.label": "ई-मेल",
+  "login.link.signup": "एक निः शुल्क खाता बनाएं।",
   "menu.services.goHome": "मुखपृष्ठ",
   "menu.services.setNextServiceActive": "अगला सेवा सक्रिय करें",
   "menu.todos": "काम-सूची",
