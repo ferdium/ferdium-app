@@ -74,4 +74,8 @@ export default defineMessages({
     id: 'global.edit',
     defaultMessage: 'Edit',
   },
+  clearCache: {
+    id: 'global.clearCache',
+    defaultMessage: 'Clear cache',
+  },
 });
