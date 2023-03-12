@@ -42,6 +42,7 @@ class AppLayoutContainer extends Component<IProps> {
       toggleDarkMode,
       deleteService,
       updateService,
+      clearCache,
       hibernate,
       awake,
     } = this.props.actions.service;
@@ -97,6 +98,7 @@ class AppLayoutContainer extends Component<IProps> {
         toggleDarkMode={toggleDarkMode}
         deleteService={deleteService}
         updateService={updateService}
+        clearCache={clearCache}
         hibernateService={hibernate}
         wakeUpService={awake}
         toggleMuteApp={toggleMuteApp}

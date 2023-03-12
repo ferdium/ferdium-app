@@ -98,6 +98,7 @@ interface IProps extends WrappedComponentProps {
   toggleAudio: (args: { serviceId: string }) => void;
   toggleDarkMode: (args: { serviceId: string }) => void;
   deleteService: (args: { serviceId: string }) => void;
+  clearCache: (args: { serviceId: string }) => void;
   hibernateService: (args: { serviceId: string }) => void;
   wakeUpService: (args: { serviceId: string }) => void;
   updateService: (args: {
@@ -204,6 +205,7 @@ class Sidebar extends Component<IProps, IState> {
           toggleDarkMode={this.props.toggleDarkMode}
           deleteService={this.props.deleteService}
           updateService={this.props.updateService}
+          clearCache={this.props.clearCache}
           hibernateService={this.props.hibernateService}
           wakeUpService={this.props.wakeUpService}
         />
