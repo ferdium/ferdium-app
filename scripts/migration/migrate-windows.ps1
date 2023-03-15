@@ -39,7 +39,7 @@ if (-not (Test-Path -Path $FERDIUM_PATH/server.sqlite)) {
     Write-Host ""
     Write-Host "It was detected that your account is using Ferdi servers to sync your data."
     Write-Host "Please, check this guide on how to export and import your data manually:"
-    Write-Host "https://github.com/ferdium/ferdi/blob/main/MIGRATION.md"
+    Write-Host "https://github.com/ferdium/ferdi/blob/main/docs/MIGRATION.md"
     Write-Host ""
     Write-Host "********************************************"
 

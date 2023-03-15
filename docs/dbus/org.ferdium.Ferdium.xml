@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+"http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <!--
+    org.ferdium.Ferdium:
+    @short_description: Control Ferdium from the desktop
+
+    Interface for accessing Ferdium notification state, allowing notification
+    counts to be displayed in the desktop (e.g., on a status bar) and updating
+    the muted state of notifications.
+
+    The #org.ferdium.UnreadDirectMessageCount,
+    #org.ferdium.UnreadIndirectMessageCount, and #org.ferdium.UnreadServices
+    are affected by notification muting and hiding settings of Ferdium.
+    In particular, they are not updated if #org.ferdium.Muted is #TRUE.
+    Moreover, services with muted notifications or hidden indirect message
+    counts will not appear in the respective counts.
+    This behavior is consistent with the behavior of the Ferdium tray icon.
+  -->
+  <interface name="org.ferdium.Ferdium">
+    <!--
+      ToggleMute:
+
+      Toggles the muted state of notifcations.
+
+      Use the #org.ferdium.Ferdium.Muted property to get or set the current
+      muted state.
+    -->
+    <method name="ToggleMute" />
+    <!--
+      ToggleWindow:
+
+      Brings the Ferdium window into the foreground if it is not currently
+      focused. Hides the Ferdium window if is is currently focused.
+
+      Calling this method is equivalent to clicking on the Ferdium tray icon.
+    -->
+    <method name="ToggleWindow" />
+    <!--
+      Muted:
+
+      Gets or sets the current muted state of notifications.
+
+      #TRUE if notifications are currently muted, #FALSE otherwise.
+    -->
+    <property name="Muted" type="b" access="readwrite" />
+    <!--
+      UnreadDirectMessageCount:
+
+      The number of unread direct messages.
+    -->
+    <property name="UnreadDirectMessageCount" type="u" access="read" />
+    <!--
+      UnreadIndirectMessageCount:
+
+      The number of unread indirect messages.
+    -->
+    <property name="UnreadIndirectMessageCount" type="u" access="read" />
+    <!--
+      UnreadServices:
+
+      The list of services with unread messages.
+
+      The value of this property is an array of structs corresponding to each
+      service with unread messages.
+      The elements of a struct are the following:
+
+      1. The name of the service.
+
+      2. The number of unread direct messages of the service.
+
+      3. The number of unread indirect messages of the service.
+
+      Services with no unread direct or indirect messages (i.e., structs with
+      the second and third element set to 0) are omitted from the array.
+    -->
+    <property name="UnreadServices" type="a(suu)" access="read" />
+  </interface>
+</node>

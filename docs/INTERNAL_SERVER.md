@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./src/internal-server/public/images/logo.png" alt="" width="300"/>
+    <img src="../src/internal-server/public/images/logo.png" alt="" width="300"/>
 </p>
 
 # ferdium-internal-server
