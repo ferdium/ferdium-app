@@ -3510,7 +3510,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001475
+      caniuse-lite: 1.0.30001477
       electron-to-chromium: 1.4.284
       node-releases: 2.0.6
       update-browserslist-db: 1.0.10_browserslist@4.21.4
@@ -3734,8 +3734,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /caniuse-lite/1.0.30001475:
-    resolution: {integrity: sha512-6xvTuQbEjQvvdknKCA/B6w6edEG9OMrkTY3M2sre8Iau/5f9stnJA3RfnzUMZlVhcsp1Lyl2KsM8T2R8B3P0Kg==}
+  /caniuse-lite/1.0.30001477:
+    resolution: {integrity: sha512-lZim4iUHhGcy5p+Ri/G7m84hJwncj+Kz7S5aD4hoQfslKZJgt0tHc/hafVbqHC5bbhHb+mrW2JOUHkI5KH7toQ==}
     dev: true
 
   /caseless/0.12.0:
