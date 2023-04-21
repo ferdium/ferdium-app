@@ -98,13 +98,13 @@ class TodosWebview extends Component<IProps, IState> {
     }
   }
 
-  startResize(e: MouseEvent<HTMLDivElement>): void {
+  startResize = (e: MouseEvent<HTMLDivElement>): void => {
     this.setState({
       isDragging: true,
       initialPos: e.clientX,
       delta: 0,
     });
-  }
+  };
 
   resizePanel(e: MouseEventInit): void {
     const { minWidth } = this.props;
