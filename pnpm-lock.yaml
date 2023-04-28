@@ -1801,7 +1801,7 @@ packages:
       memoizee: 0.4.15
       pidtree: 0.3.1
       pidusage: 2.0.16
-      rxjs: 7.8.0
+      rxjs: 7.8.1
     dev: false
 
   /@kwsites/file-exists/1.1.1:
@@ -10267,8 +10267,8 @@ packages:
       tslib: 2.5.0
     dev: true
 
-  /rxjs/7.8.0:
-    resolution: {integrity: sha512-F2+gxDshqmIub1KdvZkaEfGDwLNpPvk9Fs6LD/MyQxNgMds/WH9OdDDXOmxUZpME+iSK3rQCctkL0DYyytUqMg==}
+  /rxjs/7.8.1:
+    resolution: {integrity: sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==}
     dependencies:
       tslib: 2.5.0
     dev: false
@@ -11436,7 +11436,7 @@ packages:
   /typed-emitter/2.1.0:
     resolution: {integrity: sha512-g/KzbYKbH5C2vPkaXGu8DJlHrGKHLsM25Zg9WuC9pMGfuvT+X25tZQWo5fK1BjBm8+UrVE9LDCvaY0CQk+fXDA==}
     optionalDependencies:
-      rxjs: 7.8.0
+      rxjs: 7.8.1
     dev: false
 
   /typescript/4.9.5:
