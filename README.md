@@ -21,7 +21,7 @@
 
 [![Open Collective backers](https://img.shields.io/static/v1?label=Contribute%20on%20Open%20Collective&message=Donate%20to%20Ferdium&color=9cf&logo=open-collective)](https://opencollective.com/ferdium#category-CONTRIBUTE)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-312-default.svg?logo=github&color=6c64e4' alt='Contributors'/></a>
+<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-313-default.svg?logo=github&color=6c64e4' alt='Contributors'/></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 - [Ferdium](#ferdium)
@@ -490,6 +490,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href='https://github.com/muhamedsalih-tw' title='muhamedsalih-tw: code'><img src='https://avatars.githubusercontent.com/u/104364298?v=4' alt='muhamedsalih-tw' style='width:100px;'/></a></td>
       <td align="center" valign="top" width="14.28%"><a href='https://github.com/balajiv113' title='Balaji Vijayakumar: code'><img src='https://avatars.githubusercontent.com/u/13016475?v=4' alt='balajiv113' style='width:100px;'/></a></td>
       <td align="center" valign="top" width="14.28%"><a href='http://blog.bacao.pt' title='André Bação: security'><img src='https://avatars.githubusercontent.com/u/17479246?v=4' alt='abacao' style='width:100px;'/></a></td>
+      <td align="center" valign="top" width="14.28%"><a href='https://blog.wikichoon.com' title='Cole Robinson: doc'><img src='https://avatars.githubusercontent.com/u/1437464?v=4' alt='crobinso' style='width:100px;'/></a></td>
     </tr>
   </tbody>
 </table>
