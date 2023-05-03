@@ -2928,6 +2928,15 @@
       "contributions": [
         "security"
       ]
+    },
+    {
+      "login": "crobinso",
+      "name": "Cole Robinson",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1437464?v=4",
+      "profile": "https://blog.wikichoon.com",
+      "contributions": [
+        "doc"
+      ]
     }
   ]
 }
