@@ -736,15 +736,18 @@ class FranzMenu implements StoresProps {
         {
           label: intl.formatMessage(menuItems.toggleDevTools),
           accelerator: `${cmdOrCtrlShortcutKey()}+${altKey()}+I`,
+          enabled: webContents.fromId(1) !== undefined,
           click: () => {
             const windowWebContents = webContents.fromId(1);
-            const { isDevToolsOpened, openDevTools, closeDevTools } =
-              windowWebContents;
+            if (windowWebContents) {
+              const { isDevToolsOpened, openDevTools, closeDevTools } =
+                windowWebContents;
 
-            if (isDevToolsOpened()) {
-              closeDevTools();
-            } else {
-              openDevTools({ mode: 'right' });
+              if (isDevToolsOpened()) {
+                closeDevTools();
+              } else {
+                openDevTools({ mode: 'right' });
+              }
             }
           },
         },

@@ -527,27 +527,29 @@ export default class Service {
       this._didMediaPaused();
     });
 
-    webviewWebContents.on('login', (event, _, authInfo, callback) => {
-      // const authCallback = callback;
-      debug('browser login event', authInfo);
-      event.preventDefault();
+    if (webviewWebContents) {
+      webviewWebContents.on('login', (event, _, authInfo, callback) => {
+        // const authCallback = callback;
+        debug('browser login event', authInfo);
+        event.preventDefault();
 
-      if (authInfo.isProxy && authInfo.scheme === 'basic') {
-        debug('Sending service echo ping');
-        webviewWebContents.send('get-service-id');
+        if (authInfo.isProxy && authInfo.scheme === 'basic') {
+          debug('Sending service echo ping');
+          webviewWebContents.send('get-service-id');
 
-        debug('Received service id', this.id);
+          debug('Received service id', this.id);
 
-        const ps = stores.settings.proxy[this.id];
+          const ps = stores.settings.proxy[this.id];
 
-        if (ps) {
-          debug('Sending proxy auth callback for service', this.id);
-          callback(ps.user, ps.password);
-        } else {
-          debug('No proxy auth config found for', this.id);
+          if (ps) {
+            debug('Sending proxy auth callback for service', this.id);
+            callback(ps.user, ps.password);
+          } else {
+            debug('No proxy auth config found for', this.id);
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   initializeWebViewListener(): void {
