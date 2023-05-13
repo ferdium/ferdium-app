@@ -150,7 +150,7 @@
     "chalk": "5.2.0",
     "concurrently": "7.6.0",
     "cross-env": "7.0.3",
-    "electron": "24.2.0",
+    "electron": "24.3.0",
     "electron-builder": "23.6.0",
     "esbuild": "0.16.17",
     "esbuild-plugin-copy": "2.1.1",
