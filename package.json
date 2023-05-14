@@ -13,8 +13,8 @@
   "repository": "https://github.com/ferdium/ferdium-app.git",
   "private": true,
   "engines": {
-    "node": "18.15.0",
-    "pnpm": "7.30.0"
+    "node": "18.16.0",
+    "pnpm": "8.5.0"
   },
   "engine-strict": true,
   "scripts": {
@@ -77,7 +77,7 @@
     "electron-window-state": "5.0.3",
     "fast-folder-size": "1.7.1",
     "fs-extra": "11.1.1",
-    "google-translate-api-x": "10.5.4",
+    "google-translate-api-x": "10.6.4",
     "history": "5.3.0",
     "immutable": "4.3.0",
     "jsonwebtoken": "8.5.1",
@@ -88,7 +88,7 @@
     "markdown-to-jsx": "7.2.0",
     "mime-types": "2.1.35",
     "minimist": "1.2.8",
-    "mobx": "6.8.0",
+    "mobx": "6.9.0",
     "mobx-localstorage": "1.2.0",
     "mobx-react": "7.6.0",
     "mobx-react-form": "3.2.0",
@@ -105,7 +105,7 @@
     "react-dom": "17.0.2",
     "react-dropzone": "14.2.3",
     "react-electron-web-view": "2.0.1",
-    "react-intl": "6.3.1",
+    "react-intl": "6.4.2",
     "react-jss": "10.10.0",
     "react-loader": "2.4.7",
     "react-modal": "3.16.1",
@@ -155,8 +155,8 @@
     "esbuild": "0.16.17",
     "esbuild-plugin-copy": "2.1.1",
     "esbuild-runner": "2.2.2",
-    "esbuild-sass-plugin": "2.7.0",
-    "eslint": "8.36.0",
+    "esbuild-sass-plugin": "2.9.0",
+    "eslint": "8.39.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-airbnb-typescript": "17.0.0",
     "eslint-config-prettier": "8.8.0",
