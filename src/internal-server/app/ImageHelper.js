@@ -21,7 +21,7 @@ const moveIcon = async icon => {
     name: iconId,
     overwrite: true,
   });
-  return !icon.moved() ? '-1' : iconId;
+  return icon.moved() ? iconId : '-1';
 };
 
 const deduceIconUrl = iconId =>

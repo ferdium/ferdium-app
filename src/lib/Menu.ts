@@ -453,7 +453,7 @@ function titleBarTemplateFactory(
         },
         {
           label: intl.formatMessage(menuItems.back),
-          accelerator: `${!isMac ? altKey() : cmdOrCtrlShortcutKey()}+Left`,
+          accelerator: `${isMac ? cmdOrCtrlShortcutKey() : altKey()}+Left`,
           click() {
             const activeService = getActiveService();
             if (!activeService) {
@@ -464,7 +464,7 @@ function titleBarTemplateFactory(
         },
         {
           label: intl.formatMessage(menuItems.forward),
-          accelerator: `${!isMac ? altKey() : cmdOrCtrlShortcutKey()}+Right`,
+          accelerator: `${isMac ? cmdOrCtrlShortcutKey() : altKey()}+Right`,
           click() {
             const activeService = getActiveService();
             if (!activeService) {
@@ -728,7 +728,36 @@ class FranzMenu implements StoresProps {
       });
     }
 
-    if (!locked) {
+    if (locked) {
+      const touchIdEnabled = isMac
+        ? this.stores.settings.app.useTouchIdToUnlock &&
+          systemPreferences.canPromptTouchID()
+        : false;
+
+      (tpl[0].submenu as MenuItemConstructorOptions[]).unshift(
+        {
+          label: intl.formatMessage(menuItems.touchId),
+          accelerator: `${lockFerdiumShortcutKey()}`,
+          visible: touchIdEnabled,
+          click() {
+            systemPreferences
+              .promptTouchID(intl.formatMessage(menuItems.touchId))
+              .then(() => {
+                actions.settings.update({
+                  type: 'app',
+                  data: {
+                    locked: false,
+                  },
+                });
+              });
+          },
+        },
+        {
+          type: 'separator',
+          visible: touchIdEnabled,
+        },
+      );
+    } else {
       (tpl[1].submenu as MenuItemConstructorOptions[]).push(
         {
           type: 'separator',
@@ -834,35 +863,6 @@ class FranzMenu implements StoresProps {
       tpl[3].submenu = this.workspacesMenu();
 
       tpl[4].submenu = this.todosMenu();
-    } else {
-      const touchIdEnabled = isMac
-        ? this.stores.settings.app.useTouchIdToUnlock &&
-          systemPreferences.canPromptTouchID()
-        : false;
-
-      (tpl[0].submenu as MenuItemConstructorOptions[]).unshift(
-        {
-          label: intl.formatMessage(menuItems.touchId),
-          accelerator: `${lockFerdiumShortcutKey()}`,
-          visible: touchIdEnabled,
-          click() {
-            systemPreferences
-              .promptTouchID(intl.formatMessage(menuItems.touchId))
-              .then(() => {
-                actions.settings.update({
-                  type: 'app',
-                  data: {
-                    locked: false,
-                  },
-                });
-              });
-          },
-        },
-        {
-          type: 'separator',
-          visible: touchIdEnabled,
-        },
-      );
     }
 
     tpl.unshift({

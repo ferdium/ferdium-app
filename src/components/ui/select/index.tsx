@@ -321,10 +321,12 @@ class SelectComponent extends Component<IProps, IState> {
       case 39:
       case 38:
       case 40: // Arrow keys
-      case 32:
-        break; // Space
-      default:
-        break; // do not block other keys
+      case 32: {
+        break;
+      } // Space
+      default: {
+        break;
+      } // do not block other keys
     }
   }
 
@@ -381,12 +383,12 @@ class SelectComponent extends Component<IProps, IState> {
                 [`${classes.hasError}`]: error,
               })}
               onClick={
-                !disabled
-                  ? () =>
+                disabled
+                  ? noop
+                  : () =>
                       this.setState((state: IState) => ({
                         open: !state.open,
                       }))
-                  : noop
               }
             >
               {selection}

@@ -135,29 +135,9 @@ class ServiceView extends Component<IProps, IState> {
             )}
           </>
         )}
-        {!service.isEnabled ? (
+        {service.isEnabled ? (
           <>
-            {service.isActive && (
-              <ServiceDisabled
-                name={service.name !== '' ? service.name : service.recipe.name}
-                // webview={service.webview} //  TODO - [TECH DEBT][PROPS NOT EXIST IN COMPONENT] check it
-                enable={enable}
-              />
-            )}
-          </>
-        ) : (
-          <>
-            {!service.isHibernating ? (
-              <>
-                {showNavBar && <WebControlsScreen service={service} />}
-                <ServiceWebview
-                  service={service}
-                  setWebviewReference={setWebviewRef}
-                  detachService={detachService}
-                  isSpellcheckerEnabled={isSpellcheckerEnabled}
-                />
-              </>
-            ) : (
+            {service.isHibernating ? (
               <div
                 style={{
                   display: 'flex',
@@ -180,6 +160,26 @@ class ServiceView extends Component<IProps, IState> {
                 <br />
                 Try switching services or reloading Ferdium.
               </div>
+            ) : (
+              <>
+                {showNavBar && <WebControlsScreen service={service} />}
+                <ServiceWebview
+                  service={service}
+                  setWebviewReference={setWebviewRef}
+                  detachService={detachService}
+                  isSpellcheckerEnabled={isSpellcheckerEnabled}
+                />
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            {service.isActive && (
+              <ServiceDisabled
+                name={service.name === '' ? service.recipe.name : service.name}
+                // webview={service.webview} //  TODO - [TECH DEBT][PROPS NOT EXIST IN COMPONENT] check it
+                enable={enable}
+              />
             )}
           </>
         )}

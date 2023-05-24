@@ -175,9 +175,9 @@ class EditServiceScreen extends Component<IProps> {
         { default: defaultSpellcheckerLanguage },
       ),
       automaticDetectionText:
-        stores.settings.app.spellcheckerLanguage !== 'automatic'
-          ? intl.formatMessage(globalMessages.spellcheckerAutomaticDetection)
-          : '',
+        stores.settings.app.spellcheckerLanguage === 'automatic'
+          ? ''
+          : intl.formatMessage(globalMessages.spellcheckerAutomaticDetection),
     });
 
     const config: FormFields = {

@@ -5,7 +5,7 @@ const debug = require('../preload-safe-debug')('Ferdium:DarkMode');
 
 const chars = [...'abcdefghijklmnopqrstuvwxyz'];
 
-const ID = [...Array.from({ length: 20 })]
+const ID = Array.from({ length: 20 })
   .map(() => chars[Math.trunc(Math.random() * chars.length)])
   .join('');
 
@@ -26,7 +26,7 @@ export function injectDarkModeStyle(recipePath: string) {
     styles.innerHTML = data.toString();
     debug('Loaded darkmode.css from: ', darkmodeCss);
 
-    document.querySelector('head')?.appendChild(styles);
+    document.querySelector('head')?.append(styles);
 
     debug('Injected Dark Mode style with ID', ID);
   }

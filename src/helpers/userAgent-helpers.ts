@@ -16,7 +16,7 @@ function macOS() {
   if (cpuName && /\(/.test(cpuName)) {
     cpuName = cpuName.split('(')[0];
   }
-  return `Macintosh; ${cpuName} Mac OS X ${version.replace(/\./g, '_')}`;
+  return `Macintosh; ${cpuName} Mac OS X ${version.replaceAll('.', '_')}`;
 }
 
 function windows() {

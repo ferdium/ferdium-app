@@ -33,7 +33,7 @@ class ServicesScreen extends Component<IProps> {
     } = this.props.actions.service;
     const isLoading = services.allServicesRequest.isExecuting;
     const allServices =
-      services.filterNeedle !== null ? services.filtered : services.all;
+      services.filterNeedle === null ? services.all : services.filtered;
 
     return (
       <ErrorBoundary>

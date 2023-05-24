@@ -13,7 +13,7 @@ export function getFerdiumVersion(
 }
 
 export function updateVersionParse(updateVersion: string): string {
-  return updateVersion !== '' ? `?version=${updateVersion}` : '';
+  return updateVersion === '' ? '' : `?version=${updateVersion}`;
 }
 
 export function onAuthGoToReleaseNotes(

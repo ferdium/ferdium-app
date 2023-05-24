@@ -19,7 +19,7 @@ function createStyleElement() {
   const styles = document.createElement('style');
   styles.id = STYLE_ELEMENT_ID;
 
-  document.querySelector('head')?.appendChild(styles);
+  document.querySelector('head')?.append(styles);
 }
 
 function setAppearance(style) {
@@ -153,40 +153,47 @@ function generateServiceRibbonWidthStyle(
   const verticalStyleOffset = 29;
 
   switch (width) {
-    case 35:
+    case 35: {
       fontSize = 9;
       tabItemHeightBias = 25;
       sidebarSizeBias = 48;
       break;
-    case 45:
+    }
+    case 45: {
       fontSize = 10;
       tabItemHeightBias = 21;
       sidebarSizeBias = 44;
       break;
-    case 55:
+    }
+    case 55: {
       fontSize = 11;
       tabItemHeightBias = 13;
       sidebarSizeBias = 37;
       break;
-    case 80:
+    }
+    case 80: {
       fontSize = 11;
       tabItemHeightBias = 3;
       sidebarSizeBias = 27;
       break;
-    case 90:
+    }
+    case 90: {
       fontSize = 12;
       tabItemHeightBias = 0;
       sidebarSizeBias = 25;
       break;
-    case 100:
+    }
+    case 100: {
       fontSize = 13;
       tabItemHeightBias = 2;
       sidebarSizeBias = 25;
       break;
-    default:
+    }
+    default: {
       fontSize = 11;
       tabItemHeightBias = 13;
       sidebarSizeBias = 37;
+    }
   }
 
   if (!isLabelEnabled) {
@@ -203,18 +210,22 @@ function generateServiceRibbonWidthStyle(
 
   let sidebarServicesAlignment;
   switch (sidebarServicesLocation) {
-    case SIDEBAR_SERVICES_LOCATION_TOPLEFT:
+    case SIDEBAR_SERVICES_LOCATION_TOPLEFT: {
       sidebarServicesAlignment = horizontal ? 'left' : 'start';
       break;
-    case SIDEBAR_SERVICES_LOCATION_CENTER:
+    }
+    case SIDEBAR_SERVICES_LOCATION_CENTER: {
       sidebarServicesAlignment = horizontal ? 'center' : 'center';
       break;
-    case SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT:
+    }
+    case SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT: {
       sidebarServicesAlignment = horizontal ? 'right' : 'end';
       break;
-    default:
+    }
+    default: {
       sidebarServicesAlignment = horizontal ? 'left' : 'start';
       break;
+    }
   }
 
   const graysacleServices = `filter: grayscale(1);
@@ -268,7 +279,7 @@ function generateServiceRibbonWidthStyle(
           ? width
           : width +
             sidebarSizeBias +
-            (sizeDragArea !== 0 ? 4 - sizeDragArea : 4)
+            (sizeDragArea === 0 ? 4 : 4 - sizeDragArea)
       }px !important;
     }
     .darwin .workspaces-drawer {

@@ -23,12 +23,7 @@ export default (params: { mainWindow: BrowserWindow }) => {
       const win = BrowserWindow.getFocusedWindow();
 
       try {
-        if (!content) {
-          const dl = await download(win!, url, {
-            saveAs: true,
-          });
-          debug('File saved to', dl.savePath);
-        } else {
+        if (content) {
           const extension = mime.extension(fileOptions.mime);
           const filename = `${fileOptions.name}.${extension}`;
 
@@ -50,6 +45,11 @@ export default (params: { mainWindow: BrowserWindow }) => {
           } catch (error) {
             console.error(error);
           }
+        } else {
+          const dl = await download(win!, url, {
+            saveAs: true,
+          });
+          debug('File saved to', dl.savePath);
         }
       } catch (error) {
         console.error(error);

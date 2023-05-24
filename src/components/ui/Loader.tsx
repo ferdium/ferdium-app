@@ -25,7 +25,7 @@ class LoaderComponent extends Component<IProps> {
     } = this.props;
 
     const loaderColor =
-      color !== 'ACCENT' ? color : this.props.stores!.settings.app.accentColor;
+      color === 'ACCENT' ? this.props.stores!.settings.app.accentColor : color;
 
     return (
       <Loader

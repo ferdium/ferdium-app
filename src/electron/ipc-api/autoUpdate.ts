@@ -7,10 +7,7 @@ const debug = require('../../preload-safe-debug')('Ferdium:ipcApi:autoUpdate');
 export default (params: { mainWindow: BrowserWindow; settings: any }) => {
   const enableUpdate = Boolean(params.settings.app.get('automaticUpdates'));
 
-  if (!enableUpdate) {
-    autoUpdater.autoInstallOnAppQuit = false;
-    autoUpdater.autoDownload = false;
-  } else {
+  if (enableUpdate) {
     ipcMain.on('autoUpdate', (event, args) => {
       if (enableUpdate) {
         try {
@@ -71,5 +68,8 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
       debug('update-error');
       params.mainWindow.webContents.send('autoUpdate', { error });
     });
+  } else {
+    autoUpdater.autoInstallOnAppQuit = false;
+    autoUpdater.autoDownload = false;
   }
 };

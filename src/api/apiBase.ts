@@ -58,17 +58,21 @@ export function serverBase() {
 
   let terms;
   switch (serverType) {
-    case LIVE_FRANZ_API:
+    case LIVE_FRANZ_API: {
       terms = DEV_API_FRANZ_WEBSITE;
       break;
-    case noServerFerdi:
+    }
+    case noServerFerdi: {
       terms = LIVE_FERDIUM_API;
       break;
-    case noServerFerdium:
+    }
+    case noServerFerdium: {
       terms = LIVE_FERDIUM_API;
       break;
-    default:
+    }
+    default: {
       terms = serverType;
+    }
   }
 
   return fixUrl(terms);
@@ -81,20 +85,25 @@ export function serverName(): string {
 
   let nameServer;
   switch (serverType) {
-    case LIVE_FRANZ_API:
+    case LIVE_FRANZ_API: {
       nameServer = 'Franz';
       break;
-    case LIVE_FERDIUM_API:
+    }
+    case LIVE_FERDIUM_API: {
       nameServer = 'Ferdium';
       break;
-    case noServerFerdi:
+    }
+    case noServerFerdi: {
       nameServer = 'No';
       break;
-    case noServerFerdium:
+    }
+    case noServerFerdium: {
       nameServer = 'No';
       break;
-    default:
+    }
+    default: {
       nameServer = 'Custom';
+    }
   }
 
   return nameServer;
