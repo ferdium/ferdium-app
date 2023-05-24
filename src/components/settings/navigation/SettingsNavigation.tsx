@@ -191,9 +191,9 @@ class SettingsNavigation extends Component<IProps> {
           className="settings-navigation__link"
           onClick={this.handleLogout.bind(this)}
         >
-          {!isUsingWithoutAccount
-            ? intl.formatMessage(messages.logout)
-            : 'Exit session'}
+          {isUsingWithoutAccount
+            ? 'Exit session'
+            : intl.formatMessage(messages.logout)}
         </button>
       </div>
     );

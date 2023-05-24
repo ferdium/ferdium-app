@@ -101,13 +101,13 @@ class RecipeWebview {
    * @param  {string | number | undefined | null} text to be parsed
    */
   isImage(link): boolean {
-    if (typeof link === 'undefined') {
+    if (link === undefined) {
       return false;
     }
 
     const { role } = link.dataset;
 
-    if (typeof role !== 'undefined') {
+    if (role !== undefined) {
       const roles = ['img'];
       return roles.includes(role);
     }

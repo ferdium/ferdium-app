@@ -280,12 +280,12 @@ class RecipeController {
         }
       };
 
-      if (document.readyState !== 'loading') {
-        loadUserJs();
-      } else {
+      if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
           loadUserJs();
         });
+      } else {
+        loadUserJs();
       }
     }
   }

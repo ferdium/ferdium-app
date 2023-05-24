@@ -51,7 +51,7 @@ class Slider extends Component<IProps> {
             value={field.value}
             min="1"
             max="100"
-            onChange={e => (!disabled ? this.onChange(e) : null)}
+            onChange={e => (disabled ? null : this.onChange(e))}
           />
         </div>
 

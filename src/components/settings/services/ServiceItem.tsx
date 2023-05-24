@@ -63,7 +63,7 @@ class ServiceItem extends Component<IProps> {
           onClick={goToServiceForm}
           role="gridcell"
         >
-          {service.name !== '' ? service.name : service.recipe.name}
+          {service.name === '' ? service.recipe.name : service.name}
         </td>
         <td
           className="service-table__column-info"

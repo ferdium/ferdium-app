@@ -21,13 +21,13 @@ module.exports = async () => {
 
   const user = await User.find(1);
   let settings;
-  if (!user) {
+  if (user) {
+    settings = convertToJSON(user.settings);
+  } else {
     migrateLog("🎩  Migrating from old Ferdium version as user doesn't exist");
 
     // Create new user
     await Database.raw('INSERT INTO  "users" ("id") VALUES (\'1\');');
-  } else {
-    settings = convertToJSON(user.settings);
   }
 
   if (

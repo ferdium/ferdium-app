@@ -1065,25 +1065,20 @@ const list: any[] = [
 ];
 
 const infoPath = path.join(__dirname, '..', '.all-contributorsrc');
-
-(async () => {
-  const info = await fs.readJSON(infoPath);
-
-  for (const user of list) {
-    // eslint-disable-next-line no-await-in-loop
-    if (user.login) {
-      info.contributors = await allContributors.addContributorWithDetails({
-        ...user,
-        contributions: ['translation'],
-        profile: `https://crowdin.com/profile/${user.login}`,
-        options: {
-          contributors: info.contributors,
-        },
-      });
-    }
+const info = fs.readJSONSync(infoPath);
+for (const user of list) {
+  if (user.login) {
+    info.contributors = allContributors.addContributorWithDetails({
+      ...user,
+      contributions: ['translation'],
+      profile: `https://crowdin.com/profile/${user.login}`,
+      options: {
+        contributors: info.contributors,
+      },
+    });
   }
+}
 
-  fs.writeJSON(infoPath, info, {
-    spaces: 2,
-  });
-})();
+fs.writeJSONSync(infoPath, info, {
+  spaces: 2,
+});

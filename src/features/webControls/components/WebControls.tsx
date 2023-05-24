@@ -115,7 +115,7 @@ class WebControls extends Component<IProps, IState> {
     const { url: inputUrl } = props;
     const { editUrl } = state;
 
-    return !editUrl ? { inputUrl, editUrl } : null;
+    return editUrl ? null : { inputUrl, editUrl };
   }
 
   constructor(props: IProps) {

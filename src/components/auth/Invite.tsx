@@ -192,7 +192,7 @@ class Invite extends Component<IProps, IState> {
     return (
       <div
         className={
-          !embed ? 'auth__container auth__container--signup' : 'settings__main'
+          embed ? 'settings__main' : 'auth__container auth__container--signup'
         }
       >
         {embed && (
@@ -200,10 +200,10 @@ class Invite extends Component<IProps, IState> {
             <H1>{intl.formatMessage(messages.settingsHeadline)}</H1>
           </div>
         )}
-        {!embed ? (
-          <div>{renderForm}</div>
-        ) : (
+        {embed ? (
           <div className="settings__body invite__form">{renderForm}</div>
+        ) : (
+          <div>{renderForm}</div>
         )}
       </div>
     );

@@ -197,13 +197,15 @@ export default class TodoStore extends FeatureStore {
   }) => {
     debug('_handleClientMessage', channel, message);
     switch (message.action) {
-      case 'todos:initialized':
+      case 'todos:initialized': {
         this._onTodosClientInitialized();
         break;
-      case 'todos:goToService':
+      }
+      case 'todos:goToService': {
         this._goToService(message.data);
         break;
-      default:
+      }
+      default: {
         debug('Other message received', channel, message);
         if (this.stores.services.isTodosServiceAdded && this.actions) {
           this.actions.service.handleIPCMessage({
@@ -212,6 +214,7 @@ export default class TodoStore extends FeatureStore {
             args: message,
           });
         }
+      }
     }
   };
 

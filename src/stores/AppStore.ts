@@ -529,14 +529,14 @@ export default class AppStore extends TypedStore {
 
   // Reactions
   _offlineCheck() {
-    if (!this.isOnline) {
-      this.timeOfflineStart = moment();
-    } else {
+    if (this.isOnline) {
       const deltaTime = moment().diff(this.timeOfflineStart);
 
       if (deltaTime > ms('30m')) {
         this.actions.service.reloadAll();
       }
+    } else {
+      this.timeOfflineStart = moment();
     }
   }
 

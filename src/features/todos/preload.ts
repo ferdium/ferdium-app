@@ -9,9 +9,10 @@ debug('Preloading Todos Webview');
 
 let hostMessageListener = ({ action }) => {
   switch (action) {
-    case 'todos:initialize-as-service':
+    case 'todos:initialize-as-service': {
       ipcRenderer.sendToHost('hello');
       break;
+    }
     default:
   }
 };

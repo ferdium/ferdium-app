@@ -22,7 +22,7 @@ let replacements = 0;
 // Regex matches strings that don't begin with a "[", i.e. are not already linked
 // followed by a "franz#" and digits to indicate
 // a GitHub issue, and not ending with a "]"
-readme = readme.replace(/(?<!\[)franz#\d+(?![\d\]])/gi, match => {
+readme = readme.replaceAll(/(?<!\[)franz#\d+(?![\d\]])/gi, match => {
   const issueNr = match.replace('franz#', '');
   replacements += 1;
   return `[franz#${issueNr}](https://github.com/meetfranz/franz/issues/${issueNr})`;
@@ -31,9 +31,9 @@ readme = readme.replace(/(?<!\[)franz#\d+(?![\d\]])/gi, match => {
 // Replace external issues
 // Regex matches strings that don't begin with a "[", followed a repo name in the format "user/repo"
 // followed by a "#" and digits to indicate a GitHub issue, and not ending with a "]"
-readme = readme.replace(/(?<!\[)\w+\/\w+#\d+(?![\d\]])/gi, match => {
-  const issueNr = match.replace(/\D/g, '');
-  const repo = match.replace(/#\d+/g, '');
+readme = readme.replaceAll(/(?<!\[)\w+\/\w+#\d+(?![\d\]])/gi, match => {
+  const issueNr = match.replaceAll(/\D/g, '');
+  const repo = match.replaceAll(/#\d+/g, '');
   replacements += 1;
   return `[${repo}#${issueNr}](https://github.com/${repo}/issues/${issueNr})`;
 });
@@ -42,7 +42,7 @@ readme = readme.replace(/(?<!\[)\w+\/\w+#\d+(?![\d\]])/gi, match => {
 // Regex matches strings that don't begin with a "[", i.e. are not already linked and
 // don't begin with "franz", i.e. are not Franz issues, followed by a "#" and digits to indicate
 // a GitHub issue, and not ending with a "]"
-readme = readme.replace(/(?<!\[|franz)#\d+(?![\d\]])/gi, match => {
+readme = readme.replaceAll(/(?<!\[|franz)#\d+(?![\d\]])/gi, match => {
   const issueNr = match.replace('#', '');
   replacements += 1;
   return `[#${issueNr}](https://github.com/ferdium/ferdium-app/issues/${issueNr})`;
@@ -51,7 +51,7 @@ readme = readme.replace(/(?<!\[|franz)#\d+(?![\d\]])/gi, match => {
 // Link GitHub users
 // Regex matches strings that don't begin with a "[", i.e. are not already linked
 // followed by a "@" and at least one word character and not ending with a "]"
-readme = readme.replace(/(?<!\[)@\w+(?!])/gi, match => {
+readme = readme.replaceAll(/(?<!\[)@\w+(?!])/gi, match => {
   const username = match.replace('@', '');
   replacements += 1;
   return `[@${username}](https://github.com/${username})`;

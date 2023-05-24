@@ -108,9 +108,7 @@ const liftSingleInstanceLock = retrieveSettingValue(
 const gotTheLock = liftSingleInstanceLock
   ? true
   : app.requestSingleInstanceLock();
-if (!gotTheLock) {
-  app.quit();
-} else {
+if (gotTheLock) {
   app.on('second-instance', (_event, argv) => {
     // Someone tried to run a second instance, we should focus our window.
     if (mainWindow) {
@@ -152,6 +150,8 @@ if (!gotTheLock) {
       }
     }
   });
+} else {
+  app.quit();
 }
 
 // Fix Unity indicator issue

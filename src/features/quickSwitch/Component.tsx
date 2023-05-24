@@ -215,24 +215,29 @@ class QuickSwitchModal extends Component<IProps, IState> {
   _handleKeyDown(event: KeyboardEvent): void {
     if (ModalState.isModalVisible) {
       switch (event.keyCode) {
-        case this.ARROW_DOWN:
+        case this.ARROW_DOWN: {
           this.changeSelected(1);
           break;
-        case this.TAB:
+        }
+        case this.TAB: {
           if (event.shiftKey) {
             this.changeSelected(-1);
           } else {
             this.changeSelected(1);
           }
           break;
-        case this.ARROW_UP:
+        }
+        case this.ARROW_UP: {
           this.changeSelected(-1);
           break;
-        case this.ENTER:
+        }
+        case this.ENTER: {
           this.openService(this.state.selected);
           break;
-        default:
+        }
+        default: {
           break;
+        }
       }
     }
   }
