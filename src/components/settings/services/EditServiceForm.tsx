@@ -2,7 +2,6 @@ import { Component, FormEvent, ReactElement } from 'react';
 import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
-import normalizeUrl from 'normalize-url';
 import { mdiInformation } from '@mdi/js';
 import { noop } from 'lodash';
 import Form from '../../../lib/Form';
@@ -20,6 +19,7 @@ import Icon from '../../ui/icon';
 import { H3 } from '../../ui/headline';
 import { IRecipe } from '../../../models/Recipe';
 import Service from '../../../models/Service';
+import { normalizedUrl } from '../../../helpers/url-helpers';
 
 const messages = defineMessages({
   saveService: {
@@ -194,11 +194,7 @@ class EditServiceForm extends Component<IProps, IState> {
         if (recipe.validateUrl && values.customUrl) {
           this.setState({ isValidatingCustomUrl: true });
           try {
-            values.customUrl = normalizeUrl(values.customUrl, {
-              stripAuthentication: false,
-              stripWWW: false,
-              removeTrailingSlash: false,
-            });
+            values.customUrl = normalizedUrl(values.customUrl);
             isValid = await recipe.validateUrl(values.customUrl);
           } catch (error) {
             console.warn('ValidateURL', error);

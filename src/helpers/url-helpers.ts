@@ -2,6 +2,7 @@
 import { URL } from 'url';
 import { ensureDirSync, existsSync } from 'fs-extra';
 import { shell } from 'electron';
+import normalizeUrl from 'normalize-url';
 import { ALLOWED_PROTOCOLS } from '../config';
 
 const debug = require('../preload-safe-debug')('Ferdium:Helpers:url');
@@ -48,4 +49,12 @@ export function openExternalUrl(
   if (skipValidityCheck || isValidExternalURL(fixedUrl)) {
     shell.openExternal(fixedUrl.toString());
   }
+}
+
+export function normalizedUrl(url: string) {
+  return normalizeUrl(url, {
+    stripAuthentication: false,
+    stripWWW: false,
+    removeTrailingSlash: false,
+  });
 }
