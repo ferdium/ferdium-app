@@ -20,6 +20,7 @@ const messages = defineMessages({
 
 interface ErrorBoundaryProps extends WithStylesProps<typeof styles> {
   intl: IntlShape;
+  children?: React.ReactNode;
 }
 
 class ErrorBoundary extends Component<ErrorBoundaryProps> {

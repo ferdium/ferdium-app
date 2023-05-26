@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropsWithChildren } from 'react';
 import { observer } from 'mobx-react';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { TitleBar } from 'electron-react-titlebar/renderer';
@@ -99,7 +99,7 @@ interface IState {
 }
 
 @observer
-class AppLayout extends Component<IProps, IState> {
+class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
   constructor(props) {
     super(props);
 

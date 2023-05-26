@@ -1,4 +1,4 @@
-import { Component, ReactElement } from 'react';
+import { Component, PropsWithChildren, ReactElement } from 'react';
 import { observer } from 'mobx-react';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { mdiClose } from '@mdi/js';
@@ -21,7 +21,7 @@ interface IProps extends WrappedComponentProps {
 }
 
 @observer
-class SettingsLayout extends Component<IProps> {
+class SettingsLayout extends Component<PropsWithChildren<IProps>> {
   constructor(props: IProps) {
     super(props);
 

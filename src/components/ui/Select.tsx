@@ -4,6 +4,7 @@ import {
   ReactElement,
   RefObject,
   ChangeEvent,
+  ReactNode,
 } from 'react';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
@@ -103,7 +104,9 @@ class Select extends Component<IProps> {
             </option>
           ))}
         </select>
-        {field.error && <div className="franz-form__error">{field.error}</div>}
+        {field.error && (
+          <div className="franz-form__error">{field.error as ReactNode}</div>
+        )}
       </div>
     );
   }
