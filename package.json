@@ -134,7 +134,7 @@
     "@types/expect.js": "0.3.29",
     "@types/fs-extra": "11.0.1",
     "@types/jest": "29.5.1",
-    "@types/lodash": "4.14.194",
+    "@types/lodash": "4.14.195",
     "@types/mime-types": "2.1.1",
     "@types/ms": "0.7.31",
     "@types/node": "18.15.3",
@@ -174,7 +174,7 @@
     "prettier": "2.8.8",
     "preval-build-info": "1.0.3",
     "rimraf": "5.0.1",
-    "simple-git": "3.18.0",
+    "simple-git": "3.19.0",
     "tiny-glob": "0.2.9",
     "typescript": "5.0.4",
     "wait-on": "7.0.1"
