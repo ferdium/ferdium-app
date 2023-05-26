@@ -282,8 +282,8 @@ devDependencies:
     specifier: 29.5.1
     version: 29.5.1
   '@types/lodash':
-    specifier: 4.14.194
-    version: 4.14.194
+    specifier: 4.14.195
+    version: 4.14.195
   '@types/mime-types':
     specifier: 2.1.1
     version: 2.1.1
@@ -402,8 +402,8 @@ devDependencies:
     specifier: 5.0.1
     version: 5.0.1
   simple-git:
-    specifier: 3.18.0
-    version: 3.18.0
+    specifier: 3.19.0
+    version: 3.19.0
   tiny-glob:
     specifier: 0.2.9
     version: 0.2.9
@@ -2459,8 +2459,8 @@ packages:
     dependencies:
       '@types/node': 18.15.3
 
-  /@types/lodash@4.14.194:
-    resolution: {integrity: sha512-r22s9tAS7imvBt2lyHC9B8AGwWnXaYb1tY09oyLkXDs4vArpYJzw09nj8MLx5VfciBPGIb+ZwG0ssYnEPJxn/g==}
+  /@types/lodash@4.14.195:
+    resolution: {integrity: sha512-Hwx9EUgdwf2GLarOjQp5ZH8ZmblzcbTBC2wtQWNKARBSxM9ezRIAUpeDTgoQRAFB0+8CNWXVA9+MaSOzOF3nPg==}
     dev: true
 
   /@types/mime-types@2.1.1:
@@ -10885,8 +10885,8 @@ packages:
       scmp: 2.0.0
     dev: false
 
-  /simple-git@3.18.0:
-    resolution: {integrity: sha512-Yt0GJ5aYrpPci3JyrYcsPz8Xc05Hi4JPSOb+Sgn/BmPX35fn/6Fp9Mef8eMBCrL2siY5w4j49TA5Q+bxPpri1Q==}
+  /simple-git@3.19.0:
+    resolution: {integrity: sha512-hyH2p9Ptxjf/xPuL7HfXbpYt9gKhC1yWDh3KYIAYJJePAKV7AEjLN4xhp7lozOdNiaJ9jlVvAbBymVlcS2jRiA==}
     dependencies:
       '@kwsites/file-exists': 1.1.1
       '@kwsites/promise-deferred': 1.1.1
