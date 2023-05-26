@@ -10,7 +10,6 @@ interface IProps {
   showServiceNameSetting: boolean;
   showMessageBadgesEvenWhenMuted: boolean;
   services: Service[];
-
   setActive: (args: { serviceId: string }) => void;
   openSettings: (args: { path: string }) => void;
   reload: (args: { serviceId: string }) => void;
@@ -50,6 +49,7 @@ class TabBarSortableList extends Component<IProps> {
         {services.map((service, index) => (
           <TabItem
             key={service.id}
+            // @ts-ignore
             clickHandler={() => setActive({ serviceId: service.id })}
             service={service}
             index={index}

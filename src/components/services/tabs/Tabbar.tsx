@@ -97,6 +97,7 @@ class TabBar extends Component<IProps> {
     return (
       <div>
         <TabBarSortableList
+          // @ts-ignore
           services={services}
           setActive={setActive}
           onSortEnd={this.onSortEnd}

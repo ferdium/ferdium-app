@@ -1,4 +1,5 @@
 import { app, dialog, Menu } from '@electron/remote';
+import { noop } from 'lodash';
 import { Component } from 'react';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { inject, observer } from 'mobx-react';
@@ -6,7 +7,6 @@ import classnames from 'classnames';
 import { SortableElement } from 'react-sortable-hoc';
 import injectSheet, { WithStylesProps } from 'react-jss';
 import ms from 'ms';
-
 import { autorun, makeObservable, observable, reaction } from 'mobx';
 import { mdiExclamation, mdiVolumeSource } from '@mdi/js';
 import Service from '../../../models/Service';
@@ -348,6 +348,8 @@ class TabItem extends Component<IProps, IState> {
           'is-label-enabled': showServiceNameSetting,
         })}
         onClick={clickHandler}
+        onKeyDown={noop}
+        role="presentation"
         onContextMenu={() => menu.popup()}
         data-tip={`${service.name} ${
           shortcutIndex <= 9
@@ -407,5 +409,6 @@ class TabItem extends Component<IProps, IState> {
 }
 
 export default injectIntl(
+  // @ts-ignore
   SortableElement(injectSheet(styles, { injectTheme: true })(TabItem)),
 );
