@@ -153,7 +153,6 @@
   "settings.account.tryReloadServices": "Próbáld újra",
   "settings.account.tryReloadUserInfoRequest": "Próbáld újra",
   "settings.account.userInfoRequestFailed": "A felhasználói adatok betöltése sikertelen",
-  "settings.app.buttonClearAllCache": "Gyorsítótár törlése",
   "settings.app.buttonInstallUpdate": "Újraindítás és frissítés telepítése",
   "settings.app.buttonSearchForUpdate": "Frissítések keresése",
   "settings.app.cacheInfo": "A Ferdium gyorsítótár jelenleg {size} lemezterületet használ.",
