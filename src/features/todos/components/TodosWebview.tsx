@@ -106,7 +106,7 @@ class TodosWebview extends Component<IProps, IState> {
     });
   };
 
-  resizePanel(e: MouseEventInit): void {
+  resizePanel = (e: MouseEventInit): void => {
     const { minWidth } = this.props;
     const { isDragging, initialPos } = this.state;
 
@@ -117,9 +117,9 @@ class TodosWebview extends Component<IProps, IState> {
         delta,
       });
     }
-  }
+  };
 
-  stopResize(): void {
+  stopResize = (): void => {
     const { resize, minWidth } = this.props;
     const { isDragging, delta, width } = this.state;
 
@@ -138,9 +138,9 @@ class TodosWebview extends Component<IProps, IState> {
 
       resize(newWidth);
     }
-  }
+  };
 
-  startListeningToIpcMessages() {
+  startListeningToIpcMessages = (): void => {
     if (!this.webview) {
       return;
     }
@@ -149,7 +149,7 @@ class TodosWebview extends Component<IProps, IState> {
     this.webview.addEventListener('ipc-message', e => {
       handleClientMessage(e.channel, e.args[0]);
     });
-  }
+  };
 
   render(): ReactElement {
     const {
