@@ -183,7 +183,6 @@
   "settings.account.userInfoRequestFailed": "Neizdevās ielādēt lietotāja informāciju",
   "settings.account.yourLicense": "Tava Ferdium licence:",
   "settings.app.accentColorInfo": "Ieraksti savu krāsu CSS-atbalstītā formātā. (Noklusējuma: {defaultAccentColor} vai notīri ievades lauku)",
-  "settings.app.buttonClearAllCache": "Iztīrīt kešatmiņu",
   "settings.app.buttonInstallUpdate": "Pārsāknēt un uzstādīt atjauninājumu",
   "settings.app.buttonOpenFerdiumProfileFolder": "Parādīt profila mapi",
   "settings.app.buttonOpenFerdiumServiceRecipesFolder": "Atvērt Pakalpojumu Recepšu mapi",
