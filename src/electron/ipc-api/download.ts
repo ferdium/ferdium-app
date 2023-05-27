@@ -1,6 +1,5 @@
 import { ipcMain, dialog, BrowserWindow } from 'electron';
 import { download } from 'electron-dl';
-import mime from 'mime-types';
 import { writeFileSync } from 'fs-extra';
 import { PathLike } from 'fs';
 
@@ -24,12 +23,9 @@ export default (params: { mainWindow: BrowserWindow }) => {
 
       try {
         if (content) {
-          const extension = mime.extension(fileOptions.mime);
-          const filename = `${fileOptions.name}.${extension}`;
-
           try {
             const saveDialog = await dialog.showSaveDialog(params.mainWindow, {
-              defaultPath: filename,
+              defaultPath: fileOptions.name,
             });
 
             if (saveDialog.canceled) return;
