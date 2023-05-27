@@ -183,7 +183,6 @@
   "settings.account.userInfoRequestFailed": "No se pudo cargar la información de usuario",
   "settings.account.yourLicense": "Su Licencia Ferdium:",
   "settings.app.accentColorInfo": "Escribe tu elección de color en un formato compatible con CSS. (Predeterminado: {defaultAccentColor} o elimina el campo de entrada)",
-  "settings.app.buttonClearAllCache": "Limpiar caché",
   "settings.app.buttonInstallUpdate": "Reiniciar e instalar actualización",
   "settings.app.buttonOpenFerdiumProfileFolder": "Abrir Carpeta de Perfil",
   "settings.app.buttonOpenFerdiumServiceRecipesFolder": "Abrir carpeta de recetas de servicio",
