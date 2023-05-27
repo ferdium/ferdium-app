@@ -161,7 +161,6 @@
   "settings.account.tryReloadUserInfoRequest": "Încercați din nou",
   "settings.account.userInfoRequestFailed": "Nu s-au putut încărca informațiile utilizatorului",
   "settings.account.yourLicense": "Licența dvs. Ferdium:",
-  "settings.app.buttonClearAllCache": "Golește memoria cache",
   "settings.app.buttonInstallUpdate": "Repornire & instalare actualizare",
   "settings.app.buttonOpenFerdiumProfileFolder": "Deschide dosarul cu profil",
   "settings.app.buttonOpenFerdiumServiceRecipesFolder": "Dosar cu rețete de serviciu deschis",
