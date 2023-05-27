@@ -643,8 +643,7 @@ export class ContextMenuBuilder {
               ipcRenderer.send('download-file', {
                 content: dataURL,
                 fileOptions: {
-                  name: fileName,
-                  mime: 'image/png',
+                  name: `${fileName}.png`,
                 },
               });
             });
@@ -655,13 +654,11 @@ export class ContextMenuBuilder {
           }
         : () => {
             const url = new window.URL(menuInfo.srcURL);
-            // TODO: Need to figure out the correct fileName and extension
             const fileName = url.pathname.slice(1);
             ipcRenderer.send('download-file', {
-              content: menuInfo.srcURL,
+              url: menuInfo.srcURL,
               fileOptions: {
                 name: fileName,
-                mime: 'image/png', // TODO: How do we handle jpeg, and other extensions?
               },
             });
             this._sendNotificationOnClipboardEvent(

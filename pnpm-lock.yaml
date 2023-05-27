@@ -133,9 +133,6 @@ dependencies:
   markdown-to-jsx:
     specifier: 7.2.0
     version: 7.2.0(react@18.2.0)
-  mime-types:
-    specifier: 2.1.35
-    version: 2.1.35
   minimist:
     specifier: 1.2.8
     version: 1.2.8
@@ -284,9 +281,6 @@ devDependencies:
   '@types/lodash':
     specifier: 4.14.195
     version: 4.14.195
-  '@types/mime-types':
-    specifier: 2.1.1
-    version: 2.1.1
   '@types/ms':
     specifier: 0.7.31
     version: 0.7.31
@@ -2461,10 +2455,6 @@ packages:
 
   /@types/lodash@4.14.195:
     resolution: {integrity: sha512-Hwx9EUgdwf2GLarOjQp5ZH8ZmblzcbTBC2wtQWNKARBSxM9ezRIAUpeDTgoQRAFB0+8CNWXVA9+MaSOzOF3nPg==}
-    dev: true
-
-  /@types/mime-types@2.1.1:
-    resolution: {integrity: sha512-vXOTGVSLR2jMw440moWTC7H19iUyLtP3Z1YTj7cSsubOICinjMxFeb/V57v9QdyyPGbbWolUFSSmSiRSn94tFw==}
     dev: true
 
   /@types/minimist@1.2.2:
