@@ -183,7 +183,6 @@
   "settings.account.userInfoRequestFailed": "Не вдалося завантажити інформацію користувача",
   "settings.account.yourLicense": "Ваша ліцензія Ferdium:",
   "settings.app.accentColorInfo": "Впишіть вибраний вами колір у форматі, сумісному з CSS. (За промовчуванням: {defaultAccentColor} або залиште пустим поле введення)",
-  "settings.app.buttonClearAllCache": "Очистити кеш",
   "settings.app.buttonInstallUpdate": "Перезавантажити і встановити оновлення",
   "settings.app.buttonOpenFerdiumProfileFolder": "Відкрити папку профілю",
   "settings.app.buttonOpenFerdiumServiceRecipesFolder": "Відкрити папку сервісних протоколів",
