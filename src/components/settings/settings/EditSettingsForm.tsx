@@ -189,10 +189,6 @@ const messages = defineMessages({
     id: 'settings.app.cacheNotCleared',
     defaultMessage: "Couldn't clear all cache",
   },
-  buttonClearAllCache: {
-    id: 'settings.app.buttonClearAllCache',
-    defaultMessage: 'Clear cache',
-  },
   subheadlineFerdiumProfile: {
     id: 'settings.app.subheadlineFerdiumProfile',
     defaultMessage: 'Ferdium Profile',
@@ -974,7 +970,7 @@ class EditSettingsForm extends Component<IProps, IState> {
                     <div className="settings__open-settings-cache-container">
                       <Button
                         buttonType="secondary"
-                        label={intl.formatMessage(messages.buttonClearAllCache)}
+                        label={intl.formatMessage(globalMessages.clearCache)}
                         className="settings__open-settings-cache-button"
                         onClick={() => {
                           onClearAllCache();

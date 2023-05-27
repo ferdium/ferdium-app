@@ -129,6 +129,7 @@ interface IProps extends WrappedComponentProps, WithStylesProps<typeof styles> {
   toggleDarkMode: () => void;
   openSettings: (args: { path: string }) => void;
   deleteService: () => void;
+  clearCache: () => void;
   disableService: () => void;
   enableService: () => void;
   hibernateService: () => void;
@@ -220,6 +221,7 @@ class TabItem extends Component<IProps, IState> {
       toggleAudio,
       toggleDarkMode,
       deleteService,
+      clearCache,
       disableService,
       enableService,
       hibernateService,
@@ -296,6 +298,11 @@ class TabItem extends Component<IProps, IState> {
         click: () =>
           service.isHibernating ? wakeUpService() : hibernateService(),
         enabled: service.isEnabled && service.canHibernate,
+      },
+      {
+        label: intl.formatMessage(globalMessages.clearCache),
+        click: () => clearCache(),
+        enabled: service.isEnabled,
       },
       {
         type: 'separator',

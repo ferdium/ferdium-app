@@ -156,6 +156,7 @@ interface IProps extends WrappedComponentProps {
   form: Form;
   onSubmit: (...args: any[]) => void;
   onDelete: () => void;
+  onClearCache: () => void;
   openRecipeFile: (recipeFile: string) => void;
   isSaving: boolean;
   isDeleting: boolean;
@@ -223,6 +224,7 @@ class EditServiceForm extends Component<IProps, IState> {
       isSaving,
       isDeleting,
       onDelete,
+      onClearCache,
       openRecipeFile,
       isProxyFeatureEnabled,
       intl,
@@ -243,6 +245,15 @@ class EditServiceForm extends Component<IProps, IState> {
         label={intl.formatMessage(messages.deleteService)}
         className="settings__delete-button"
         onClick={onDelete}
+      />
+    );
+
+    const clearCacheButton = (
+      <Button
+        buttonType="secondary"
+        label={intl.formatMessage(globalMessages.clearCache)}
+        className="settings__open-settings-cache-button"
+        onClick={onClearCache}
       />
     );
 
@@ -502,6 +513,7 @@ class EditServiceForm extends Component<IProps, IState> {
         <div className="settings__controls">
           {/* Delete Button */}
           <div>{action === 'edit' && deleteButton}</div>
+          <div>{action === 'edit' && clearCacheButton}</div>
 
           {/* Save Button */}
           {isSaving || isValidatingCustomUrl ? (

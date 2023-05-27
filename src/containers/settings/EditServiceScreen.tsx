@@ -468,6 +468,16 @@ class EditServiceScreen extends Component<IProps> {
     }
   }
 
+  clearCache(): void {
+    const { action } = this.props.params;
+
+    if (action === 'edit') {
+      const { clearCache } = this.props.actions.service;
+      const { activeSettings: service } = this.props.stores.services;
+      clearCache({ serviceId: service?.id });
+    }
+  }
+
   openRecipeFile(file: any): void {
     const { openRecipeFile } = this.props.actions.service;
     const { action } = this.props.params;
@@ -534,6 +544,7 @@ class EditServiceScreen extends Component<IProps> {
           isDeleting={services.deleteServiceRequest.isExecuting}
           onSubmit={d => this.onSubmit(d)}
           onDelete={() => this.deleteService()}
+          onClearCache={() => this.clearCache()}
           openRecipeFile={file => this.openRecipeFile(file)}
           isProxyFeatureEnabled={proxyFeature.isEnabled}
         />
