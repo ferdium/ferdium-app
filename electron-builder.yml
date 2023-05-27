@@ -13,7 +13,7 @@ snap:
     provider: snapStore
 
 nsis:
-  perMachine: false
+  perMachine: true
   oneClick: true
   artifactName: "${productName}-${os}-AutoSetup-${version}-${arch}.${ext}"
 
