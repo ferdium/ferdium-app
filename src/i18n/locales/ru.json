@@ -172,7 +172,6 @@
   "settings.account.tryReloadUserInfoRequest": "Попробовать снова",
   "settings.account.userInfoRequestFailed": "Невозможно загрузить информацию пользователя",
   "settings.account.yourLicense": "Ваша лицензия Ferdium:",
-  "settings.app.buttonClearAllCache": "Очистить кэш",
   "settings.app.buttonInstallUpdate": "Перезапустить и установить обновления",
   "settings.app.buttonOpenFerdiumProfileFolder": "Открыть папку профиля",
   "settings.app.buttonOpenFerdiumServiceRecipesFolder": "Открыть папку сервисных протоколов",
