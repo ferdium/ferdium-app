@@ -111,7 +111,6 @@
   "settings.account.tryReloadServices": "Probeer opnieuw",
   "settings.account.tryReloadUserInfoRequest": "Probeer opnieuw",
   "settings.account.userInfoRequestFailed": "Kon gebruikersinformatie niet laden",
-  "settings.app.buttonClearAllCache": "Cache wissen",
   "settings.app.buttonInstallUpdate": "Opnieuw opstarten & update installeren",
   "settings.app.buttonSearchForUpdate": "Controleer op updates",
   "settings.app.cacheInfo": "Ferdium cache gebruikt momenteel {size} schijfruimte.",
