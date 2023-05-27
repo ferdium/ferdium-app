@@ -359,7 +359,8 @@ class TabItem extends Component<IProps, IState> {
         onKeyDown={noop}
         role="presentation"
         onContextMenu={() => menu.popup()}
-        data-tip={`${service.name} ${acceleratorString(
+        data-tooltip-id="tooltip-sidebar-button"
+        data-tooltip-content={`${service.name} ${acceleratorString(
           shortcutIndex,
           cmdOrCtrlShortcutKey(false),
         )}`}
