@@ -62,7 +62,6 @@
   "settings.account.tryReloadServices": "Pokušajte ponovno",
   "settings.account.tryReloadUserInfoRequest": "Pokušajte ponovno",
   "settings.account.userInfoRequestFailed": "Nije moguće učitati informacije o korisniku",
-  "settings.app.buttonClearAllCache": "Očisti memoriju",
   "settings.app.buttonInstallUpdate": "Ponovo pokreni i instaliraj ažuriranje",
   "settings.app.buttonSearchForUpdate": "Potraži ažuriranja",
   "settings.app.cacheInfo": "Ferdium predmemorija trenutno koristi {size} prostora na disku.",
