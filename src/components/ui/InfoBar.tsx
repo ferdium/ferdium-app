@@ -56,7 +56,14 @@ class InfoBar extends Component<IProps> {
           [`${className}`]: true,
         })}
       >
-        <div className="info-bar__content">
+        <div
+          className={classnames({
+            'info-bar': true,
+            [`info-bar--${type}`]: true,
+            [`info-bar--${position}`]: true,
+            [`${className}`]: true,
+          })}
+        >
           {children}
           {ctaLabel && (
             <button type="button" className="info-bar__cta" onClick={onClick}>
@@ -70,17 +77,17 @@ class InfoBar extends Component<IProps> {
               {ctaLabel}
             </button>
           )}
+          {!sticky && (
+            <button
+              type="button"
+              className="info-bar__close"
+              onClick={onHide}
+              aria-label={intl.formatMessage(messages.hide)}
+            >
+              <Icon icon={mdiClose} />
+            </button>
+          )}
         </div>
-        {!sticky && (
-          <button
-            type="button"
-            className="info-bar__close"
-            onClick={onHide}
-            aria-label={intl.formatMessage(messages.hide)}
-          >
-            <Icon icon={mdiClose} />
-          </button>
-        )}
       </Appear>
     );
   }
