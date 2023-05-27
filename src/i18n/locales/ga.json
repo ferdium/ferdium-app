@@ -102,7 +102,6 @@
   "settings.account.tryReloadServices": "Atriail",
   "settings.account.tryReloadUserInfoRequest": "Atriail",
   "settings.account.userInfoRequestFailed": "Ní féidir eolas úsáideora a lódáil",
-  "settings.app.buttonClearAllCache": "Glan taisce",
   "settings.app.buttonInstallUpdate": "Atosaigh ⁊ suiteáil nuashonrú",
   "settings.app.buttonSearchForUpdate": "Cuardaigh le nuashonruithe",
   "settings.app.cacheInfo": "Tá taisce Ferdium ag baint úsáid as {size} den spás diosca.",
