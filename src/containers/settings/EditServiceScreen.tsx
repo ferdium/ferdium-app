@@ -474,7 +474,7 @@ class EditServiceScreen extends Component<IProps> {
     if (action === 'edit') {
       const { clearCache } = this.props.actions.service;
       const { activeSettings: service } = this.props.stores.services;
-      clearCache(service?.id);
+      clearCache({ serviceId: service?.id });
     }
   }
 
