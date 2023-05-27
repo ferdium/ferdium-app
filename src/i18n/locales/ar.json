@@ -172,7 +172,6 @@
   "settings.account.tryReloadUserInfoRequest": "حاول مجددًا",
   "settings.account.userInfoRequestFailed": "تعذر تحميل معلومات المستخدم",
   "settings.account.yourLicense": "رخصة فردي الخاصة بك:",
-  "settings.app.buttonClearAllCache": "مسح ذاكرة التخزين المؤقت",
   "settings.app.buttonInstallUpdate": "إعادة التشغيل وتثبيت التحديث",
   "settings.app.buttonOpenFerdiumProfileFolder": "فتح مجلد الملف الشخصي",
   "settings.app.buttonOpenFerdiumServiceRecipesFolder": "فتح مجلد وصلات الخدمة",

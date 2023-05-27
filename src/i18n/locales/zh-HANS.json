@@ -183,7 +183,6 @@
   "settings.account.userInfoRequestFailed": "无法加载用户信息",
   "settings.account.yourLicense": "Your Ferdium License",
   "settings.app.accentColorInfo": "以 CSS 的兼容格式填入您选择的颜色。(默认： {defaultAccentColor} 或清除输入字段)",
-  "settings.app.buttonClearAllCache": "清除缓存",
   "settings.app.buttonInstallUpdate": "重启并安装更新",
   "settings.app.buttonOpenFerdiumProfileFolder": "打开配置文件所在目录",
   "settings.app.buttonOpenFerdiumServiceRecipesFolder": "打开服务配件文件夹",

@@ -169,7 +169,6 @@
   "settings.account.tryReloadUserInfoRequest": "Försök igen",
   "settings.account.userInfoRequestFailed": "Kunde inte ladda användarinformation",
   "settings.account.yourLicense": "Din Ferdium-licens:",
-  "settings.app.buttonClearAllCache": "Rensa cache",
   "settings.app.buttonInstallUpdate": "Starta om & installera uppdatering",
   "settings.app.buttonOpenFerdiumProfileFolder": "Öppna profilmapp",
   "settings.app.buttonOpenFerdiumServiceRecipesFolder": "Öppna Service Recept mapp",

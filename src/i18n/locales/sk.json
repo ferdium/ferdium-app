@@ -183,7 +183,6 @@
   "settings.account.userInfoRequestFailed": "Nebolo možné načítať informácie o používateľovi",
   "settings.account.yourLicense": "Vaša Ferdium licencia:",
   "settings.app.accentColorInfo": "Napíšte zvolenú farbu vo formáte kompatibilnom s CSS. (Predvolené: {defaultAccentColor} alebo vymažte pole)",
-  "settings.app.buttonClearAllCache": "Vyčistiť vyrovnávaciu pamäť",
   "settings.app.buttonInstallUpdate": "Reštartovať a nainštalovať aktualizáciu",
   "settings.app.buttonOpenFerdiumProfileFolder": "Otvoriť priečinok s profilom",
   "settings.app.buttonOpenFerdiumServiceRecipesFolder": "Otvoriť priečinok s receptami",

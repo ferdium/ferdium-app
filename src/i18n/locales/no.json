@@ -167,7 +167,6 @@
   "settings.account.tryReloadUserInfoRequest": "Prøv igjen",
   "settings.account.userInfoRequestFailed": "Kunne ikke laste brukerinformasjonen",
   "settings.account.yourLicense": "Din Ferdium Lisens:",
-  "settings.app.buttonClearAllCache": "Tøm hurtiglager",
   "settings.app.buttonInstallUpdate": "Start på nytt og installer oppdatering",
   "settings.app.buttonOpenFerdiumProfileFolder": "Åpne profilmappen",
   "settings.app.buttonOpenFerdiumServiceRecipesFolder": "Åpne Service Oppskrift-mappen",

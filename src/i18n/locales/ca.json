@@ -148,7 +148,6 @@
   "settings.account.tryReloadServices": "Torna a provar-ho",
   "settings.account.tryReloadUserInfoRequest": "Torna a provar-ho",
   "settings.account.userInfoRequestFailed": "No s'ha pogut carregar la informació de l'usuari",
-  "settings.app.buttonClearAllCache": "Buida la memòria cau",
   "settings.app.buttonInstallUpdate": "Reinicia i instal·la l'actualització",
   "settings.app.buttonSearchForUpdate": "Comprova si hi ha actualitzacions",
   "settings.app.cacheInfo": "La memòria cau de Ferdium està utilitzant {size} d'espai al disc",

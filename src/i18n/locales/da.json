@@ -165,7 +165,6 @@
   "settings.account.tryReloadUserInfoRequest": "Prøv igen",
   "settings.account.userInfoRequestFailed": "Kunne ikke indlæse brugerinformation",
   "settings.account.yourLicense": "Din Ferdium Licens:",
-  "settings.app.buttonClearAllCache": "Ryd cache",
   "settings.app.buttonInstallUpdate": "Genstart og installer opdatering",
   "settings.app.buttonOpenFerdiumProfileFolder": "Åbn profilmappe",
   "settings.app.buttonOpenFerdiumServiceRecipesFolder": "Åbn servicemappe til opskrifter",

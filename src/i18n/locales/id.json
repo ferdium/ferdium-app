@@ -149,7 +149,6 @@
   "settings.account.tryReloadServices": "Coba lagi",
   "settings.account.tryReloadUserInfoRequest": "Coba lagi",
   "settings.account.userInfoRequestFailed": "Gagal memuat informasi pengguna",
-  "settings.app.buttonClearAllCache": "Bersihkan singgahan",
   "settings.app.buttonInstallUpdate": "Mulai ulang & instal pembaruan",
   "settings.app.buttonSearchForUpdate": "Periksa versi baru",
   "settings.app.cacheInfo": "Singgahan Ferdium sedang menggunakan ruang disk {size}.",

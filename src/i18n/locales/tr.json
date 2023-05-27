@@ -183,7 +183,6 @@
   "settings.account.userInfoRequestFailed": "Kullanıcı bilgisi yüklenemedi",
   "settings.account.yourLicense": "Ferdium Lisansınız:",
   "settings.app.accentColorInfo": "Renk seçimini CSS-uyumlu formatta yaz. (Varsayılan: {defaultAccentColor} veya girdi alanını temizle)",
-  "settings.app.buttonClearAllCache": "Önbelleği temizle",
   "settings.app.buttonInstallUpdate": "Yeniden Başlat ve Güncelleştirmeleri Kur",
   "settings.app.buttonOpenFerdiumProfileFolder": "Profil Dizinini aç",
   "settings.app.buttonOpenFerdiumServiceRecipesFolder": "Servisler klasörünü açın",

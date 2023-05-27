@@ -165,7 +165,6 @@
   "settings.account.tryReloadUserInfoRequest": "Thử lại",
   "settings.account.userInfoRequestFailed": "Không thể tải được thông tin người dùng",
   "settings.account.yourLicense": "Giấy phép Ferdium của bạn:",
-  "settings.app.buttonClearAllCache": "Xóa bộ nhớ cache",
   "settings.app.buttonInstallUpdate": "Khởi động lại và cài đặt bản cập nhật",
   "settings.app.buttonOpenFerdiumProfileFolder": "Mở thư mục Hồ sơ",
   "settings.app.buttonOpenFerdiumServiceRecipesFolder": "Mở thư mục Công thức dịch vụ",
