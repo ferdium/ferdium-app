@@ -119,7 +119,7 @@ class WorkspaceDrawerItem extends Component<IProps> {
           }
         }}
         onKeyDown={noop}
-        data-tip={acceleratorString(
+        data-tooltip-content={acceleratorString(
           shortcutIndex,
           `${cmdOrCtrlShortcutKey(false)}+${altKey(false)}`,
         )}

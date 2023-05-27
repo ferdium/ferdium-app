@@ -3,7 +3,7 @@
 import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
-import ReactTooltip from 'react-tooltip';
+import { Tooltip as ReactTooltip } from 'react-tooltip';
 import withStyles, { WithStylesProps } from 'react-jss';
 import classnames from 'classnames';
 import Loader from '../../ui/Loader';
@@ -173,7 +173,7 @@ class TeamDashboard extends Component<IProps> {
             </>
           )}
         </div>
-        <ReactTooltip place="right" type="dark" effect="solid" />
+        <ReactTooltip place="right" variant="dark" float />
       </div>
     ) : (
       <div className="settings__main">

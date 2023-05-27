@@ -1,5 +1,5 @@
 import { ReactElement, ReactNode, useEffect, useState } from 'react';
-import { CSSTransitionGroup } from 'react-transition-group';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 interface IProps {
   children: ReactNode;
@@ -33,17 +33,22 @@ const Appear = ({
   }
 
   return (
-    <CSSTransitionGroup
-      transitionName={transitionName}
-      transitionAppear={transitionAppear}
-      transitionLeave={transitionLeave}
+    <TransitionGroup
+      classNames={transitionName}
+      appear={transitionAppear}
+      exit={transitionLeave}
       transitionAppearTimeout={transitionAppearTimeout}
-      transitionEnterTimeout={transitionEnterTimeout}
-      transitionLeaveTimeout={transitionLeaveTimeout}
       className={className}
     >
-      {children}
-    </CSSTransitionGroup>
+      <CSSTransition
+        timeout={{
+          enter: transitionEnterTimeout,
+          exit: transitionLeaveTimeout,
+        }}
+      >
+        {children}
+      </CSSTransition>
+    </TransitionGroup>
   );
 };
 

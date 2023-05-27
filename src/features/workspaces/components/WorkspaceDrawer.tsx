@@ -2,7 +2,7 @@ import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
 import withStyles, { WithStylesProps } from 'react-jss';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
-import ReactTooltip from 'react-tooltip';
+import { Tooltip as ReactTooltip } from 'react-tooltip';
 import { mdiPlusBox, mdiCog } from '@mdi/js';
 import { noop } from 'lodash';
 import { H1 } from '../../../components/ui/headline';
@@ -96,7 +96,6 @@ interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
 class WorkspaceDrawer extends Component<IProps> {
   componentDidMount(): void {
     try {
-      ReactTooltip.rebuild();
       getUserWorkspacesRequest.execute();
     } catch (error) {
       console.log(error);
@@ -121,7 +120,7 @@ class WorkspaceDrawer extends Component<IProps> {
             onClick={() => {
               workspaceActions.openWorkspaceSettings();
             }}
-            data-tip={`${intl.formatMessage(
+            data-tooltip-content={`${intl.formatMessage(
               messages.workspacesSettingsTooltip,
             )}`}
           >
@@ -176,7 +175,7 @@ class WorkspaceDrawer extends Component<IProps> {
             <span>{intl.formatMessage(messages.addNewWorkspaceLabel)}</span>
           </div>
         </div>
-        <ReactTooltip place="right" type="dark" effect="solid" />
+        <ReactTooltip place="right" variant="dark" float />
       </div>
     );
   }

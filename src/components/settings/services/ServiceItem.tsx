@@ -1,6 +1,6 @@
 import { Component, ReactElement } from 'react';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
-import ReactTooltip from 'react-tooltip';
+import { Tooltip as ReactTooltip } from 'react-tooltip';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import { mdiBellOff, mdiMessageBulletedOff, mdiPower } from '@mdi/js';
@@ -73,7 +73,7 @@ class ServiceItem extends Component<IProps> {
           {service.isMuted && (
             <Icon
               icon={mdiBellOff}
-              data-tip={intl.formatMessage(messages.tooltipIsMuted)}
+              data-tooltip-content={intl.formatMessage(messages.tooltipIsMuted)}
             />
           )}
         </td>
@@ -85,7 +85,9 @@ class ServiceItem extends Component<IProps> {
           {!service.isEnabled && (
             <Icon
               icon={mdiPower}
-              data-tip={intl.formatMessage(messages.tooltipIsDisabled)}
+              data-tooltip-content={intl.formatMessage(
+                messages.tooltipIsDisabled,
+              )}
             />
           )}
         </td>
@@ -97,12 +99,12 @@ class ServiceItem extends Component<IProps> {
           {!service.isNotificationEnabled && (
             <Icon
               icon={mdiMessageBulletedOff}
-              data-tip={intl.formatMessage(
+              data-tooltip-content={intl.formatMessage(
                 messages.tooltipNotificationsDisabled,
               )}
             />
           )}
-          <ReactTooltip place="top" type="dark" effect="solid" />
+          <ReactTooltip place="top" variant="dark" float />
         </td>
       </tr>
     );
