@@ -28,7 +28,7 @@ import {
   SPLIT_COLUMNS_MAX,
   SPLIT_COLUMNS_MIN,
 } from '../../../config';
-import { isMac, isWindows, lockFerdiumShortcutKey } from '../../../environment';
+import { isMac, isWinPortable, isWindows, lockFerdiumShortcutKey } from '../../../environment';
 import { openExternalUrl, openPath } from '../../../helpers/url-helpers';
 import globalMessages from '../../../i18n/globalMessages';
 import Icon from '../../ui/icon';
@@ -1040,7 +1040,7 @@ class EditSettingsForm extends Component<IProps, IState> {
                 </H2>
 
                 <Toggle {...form.$('automaticUpdates').bind()} />
-                {automaticUpdates && (
+                {automaticUpdates && !isWinPortable && (
                   <>
                     <>
                       <div>
