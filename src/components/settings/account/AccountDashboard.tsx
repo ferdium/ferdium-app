@@ -215,7 +215,12 @@ class AccountDashboard extends Component<IProp> {
             </>
           )}
         </div>
-        <ReactTooltip place="right" variant="dark" float />
+        <ReactTooltip
+          place="right"
+          variant="dark"
+          float
+          style={{ height: 'auto' }}
+        />
       </div>
     );
   }

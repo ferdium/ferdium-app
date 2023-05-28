@@ -120,6 +120,7 @@ class WorkspaceDrawer extends Component<IProps> {
             onClick={() => {
               workspaceActions.openWorkspaceSettings();
             }}
+            data-tooltip-id="tooltip-workspaces-drawer"
             data-tooltip-content={`${intl.formatMessage(
               messages.workspacesSettingsTooltip,
             )}`}
@@ -175,7 +176,12 @@ class WorkspaceDrawer extends Component<IProps> {
             <span>{intl.formatMessage(messages.addNewWorkspaceLabel)}</span>
           </div>
         </div>
-        <ReactTooltip place="right" variant="dark" float />
+        <ReactTooltip
+          id="tooltip-workspaces-drawer"
+          place="right"
+          variant="dark"
+          style={{ height: 'auto', zIndex: 210 }}
+        />
       </div>
     );
   }

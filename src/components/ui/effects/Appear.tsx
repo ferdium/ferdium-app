@@ -7,7 +7,6 @@ interface IProps {
   className?: string;
   transitionAppear?: boolean;
   transitionLeave?: boolean;
-  transitionAppearTimeout?: number;
   transitionEnterTimeout?: number;
   transitionLeaveTimeout?: number;
 }
@@ -18,7 +17,6 @@ const Appear = ({
   className = '',
   transitionAppear = true,
   transitionLeave = true,
-  transitionAppearTimeout = 1500,
   transitionEnterTimeout = 1500,
   transitionLeaveTimeout = 1500,
 }: IProps): ReactElement | null => {
@@ -34,13 +32,12 @@ const Appear = ({
 
   return (
     <TransitionGroup
-      classNames={transitionName}
       appear={transitionAppear}
       exit={transitionLeave}
-      transitionAppearTimeout={transitionAppearTimeout}
       className={className}
     >
       <CSSTransition
+        classNames={transitionName}
         timeout={{
           enter: transitionEnterTimeout,
           exit: transitionLeaveTimeout,

@@ -73,6 +73,7 @@ class ServiceItem extends Component<IProps> {
           {service.isMuted && (
             <Icon
               icon={mdiBellOff}
+              data-tooltip-id="tooltip-service-item"
               data-tooltip-content={intl.formatMessage(messages.tooltipIsMuted)}
             />
           )}
@@ -85,6 +86,7 @@ class ServiceItem extends Component<IProps> {
           {!service.isEnabled && (
             <Icon
               icon={mdiPower}
+              data-tooltip-id="tooltip-service-item"
               data-tooltip-content={intl.formatMessage(
                 messages.tooltipIsDisabled,
               )}
@@ -99,12 +101,18 @@ class ServiceItem extends Component<IProps> {
           {!service.isNotificationEnabled && (
             <Icon
               icon={mdiMessageBulletedOff}
+              data-tooltip-id="tooltip-service-item"
               data-tooltip-content={intl.formatMessage(
                 messages.tooltipNotificationsDisabled,
               )}
             />
           )}
-          <ReactTooltip place="top" variant="dark" float />
+          <ReactTooltip
+            id="tooltip-service-item"
+            place="right"
+            variant="dark"
+            style={{ height: 'auto' }}
+          />
         </td>
       </tr>
     );

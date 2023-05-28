@@ -228,6 +228,7 @@ class Sidebar extends Component<IProps, IState> {
               type="button"
               onClick={() => openSettings({ path: 'recipes' })}
               className="sidebar__button sidebar__button--new-service"
+              data-tooltip-id="tooltip-sidebar-button"
               data-tooltip-content={`${intl.formatMessage(
                 messages.addNewService,
               )} (${addNewServiceShortcutKey(false)})`}
@@ -247,6 +248,7 @@ class Sidebar extends Component<IProps, IState> {
                 });
               }}
               className="sidebar__button sidebar__button--split-mode-toggle"
+              data-tooltip-id="tooltip-sidebar-button"
               data-tooltip-content={`${intl.formatMessage(
                 messages.splitModeToggle,
               )} (${splitModeToggleShortcutKey(false)})`}
@@ -264,6 +266,7 @@ class Sidebar extends Component<IProps, IState> {
               className={`sidebar__button sidebar__button--workspaces ${
                 isWorkspaceDrawerOpen ? 'is-active' : ''
               }`}
+              data-tooltip-id="tooltip-sidebar-button"
               data-tooltip-content={`${intl.formatMessage(
                 workspaceToggleMessage,
               )} (${workspaceToggleShortcutKey(false)})`}
@@ -281,6 +284,7 @@ class Sidebar extends Component<IProps, IState> {
               className={`sidebar__button sidebar__button--audio ${
                 isAppMuted ? 'is-muted' : ''
               }`}
+              data-tooltip-id="tooltip-sidebar-button"
               data-tooltip-content={`${intl.formatMessage(
                 isAppMuted ? messages.unmute : messages.mute,
               )} (${muteFerdiumShortcutKey(false)})`}
@@ -299,6 +303,7 @@ class Sidebar extends Component<IProps, IState> {
               className={`sidebar__button sidebar__button--todos ${
                 todosStore.isTodosPanelVisible ? 'is-active' : ''
               }`}
+              data-tooltip-id="tooltip-sidebar-button"
               data-tooltip-content={`${intl.formatMessage(
                 todosToggleMessage,
               )} (${todosToggleShortcutKey(false)})`}
@@ -318,6 +323,7 @@ class Sidebar extends Component<IProps, IState> {
                   },
                 });
               }}
+              data-tooltip-id="tooltip-sidebar-button"
               data-tooltip-content={`${intl.formatMessage(
                 messages.lockFerdium,
               )} (${lockFerdiumShortcutKey(false)})`}
@@ -327,13 +333,19 @@ class Sidebar extends Component<IProps, IState> {
           ) : null}
         </>
         {this.state.tooltipEnabled && (
-          <ReactTooltip place="right" variant="dark" float />
+          <ReactTooltip
+            id="tooltip-sidebar-button"
+            place="right"
+            variant="dark"
+            style={{ height: 'auto', overflowY: 'unset' }}
+          />
         )}
         {!hideSettingsButton && !isMenuCollapsed ? (
           <button
             type="button"
             onClick={() => openSettings({ path: 'app' })}
             className="sidebar__button sidebar__button--settings"
+            data-tooltip-id="tooltip-sidebar-button"
             data-tooltip-content={`${intl.formatMessage(
               globalMessages.settings,
             )} (${settingsShortcutKey(false)})`}

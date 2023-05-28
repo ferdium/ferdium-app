@@ -173,7 +173,12 @@ class TeamDashboard extends Component<IProps> {
             </>
           )}
         </div>
-        <ReactTooltip place="right" variant="dark" float />
+        <ReactTooltip
+          place="right"
+          variant="dark"
+          float
+          style={{ height: 'auto' }}
+        />
       </div>
     ) : (
       <div className="settings__main">
