@@ -23,3 +23,10 @@ export const safeParseInt = (text: string | number | undefined | null) => {
   const adjustedNumber = Number.isNaN(parsedNumber) ? 0 : parsedNumber;
   return Math.max(adjustedNumber, 0);
 };
+
+export const acceleratorString = (
+  index: number,
+  keyCombo: string,
+  prefix: string = '(',
+  suffix: string = ')',
+) => (index <= 10 ? `${prefix}${keyCombo}+${index % 10}${suffix}` : undefined);
