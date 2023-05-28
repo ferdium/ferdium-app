@@ -15,6 +15,7 @@ import globalMessages from '../../../i18n/globalMessages';
 import Icon from '../../ui/icon';
 import { Stores } from '../../../@types/stores.types';
 import MenuItemConstructorOptions = Electron.MenuItemConstructorOptions;
+import { acceleratorString } from '../../../jsUtils';
 
 const IS_SERVICE_DEBUGGING_ENABLED = (
   localStorage.getItem('debug') || ''
@@ -358,11 +359,10 @@ class TabItem extends Component<IProps, IState> {
         onKeyDown={noop}
         role="presentation"
         onContextMenu={() => menu.popup()}
-        data-tip={`${service.name} ${
-          shortcutIndex <= 9
-            ? `(${cmdOrCtrlShortcutKey(false)}+${shortcutIndex})`
-            : ''
-        }`}
+        data-tip={`${service.name} ${acceleratorString(
+          shortcutIndex,
+          cmdOrCtrlShortcutKey(false),
+        )}`}
       >
         <img src={service.icon} className="tab-item__icon" alt="" />
         {showServiceNameSetting && (
@@ -407,8 +407,8 @@ class TabItem extends Component<IProps, IState> {
             />
           </>
         )}
-        {shortcutIndex <= 9 && this.state.showShortcutIndex && (
-          <span className="tab-item__shortcut-index">{shortcutIndex}</span>
+        {shortcutIndex <= 10 && this.state.showShortcutIndex && (
+          <span className="tab-item__shortcut-index">{shortcutIndex % 10}</span>
         )}
       </li>
     );

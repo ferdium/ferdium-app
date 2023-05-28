@@ -47,6 +47,7 @@ import { timestamp, gitHashShort, gitBranch } from '../buildInfo.json';
 import Service from '../models/Service';
 import { StoresProps } from '../@types/ferdium-components.types';
 import { RealStores } from '../stores';
+import { acceleratorString } from '../jsUtils';
 
 const menuItems = defineMessages({
   edit: {
@@ -1101,7 +1102,7 @@ class FranzMenu implements StoresProps {
     for (const [i, service] of services.allDisplayed.entries()) {
       menu.push({
         label: this._getServiceName(service),
-        accelerator: i < 9 ? `${cmdOrCtrlShortcutKey()}+${i + 1}` : undefined,
+        accelerator: acceleratorString(i + 1, cmdOrCtrlShortcutKey(), '', ''),
         type: 'radio',
         checked: service.isActive,
         click: () => {
