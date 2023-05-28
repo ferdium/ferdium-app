@@ -6,6 +6,7 @@ import InfoBar from './ui/InfoBar';
 import Icon from './ui/icon';
 
 import { onAuthGoToReleaseNotes } from '../helpers/update-helpers';
+import { isWinPortable } from '../environment';
 
 const messages = defineMessages({
   updateAvailable: {
@@ -36,7 +37,9 @@ const AppUpdateInfoBar = (props: IProps) => {
     <InfoBar
       type="primary"
       ctaLabel={intl.formatMessage(messages.buttonInstallUpdate)}
-      onClick={onInstallUpdate}
+      onClick={event => {
+        !isWinPortable && onInstallUpdate(event);
+      }}
       onHide={onHide}
     >
       <Icon icon={mdiInformation} />
