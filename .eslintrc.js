@@ -69,7 +69,7 @@ module.exports = {
         'import/no-unresolved': 0,
         'import/prefer-default-export': 0,
         // eslint-plugin-react
-        // TODO - [TS DEBT] should remove below config once application converted to TS
+        // TODO: [TS DEBT] should remove below config once application converted to TS
         'react/default-props-match-prop-types': 0,
         'react/require-default-props': 0,
         '@typescript-eslint/no-useless-constructor': 0,

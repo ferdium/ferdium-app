@@ -21,10 +21,11 @@ const messages = defineMessages({
   },
 });
 
-const buttonTransition =
-  window && window.matchMedia('(prefers-reduced-motion: no-preference)')
-    ? 'opacity 0.25s'
-    : 'none';
+const buttonTransition = window?.matchMedia(
+  '(prefers-reduced-motion: no-preference)',
+)
+  ? 'opacity 0.25s'
+  : 'none';
 
 const styles = theme => ({
   root: {

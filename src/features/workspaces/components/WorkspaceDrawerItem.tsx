@@ -19,10 +19,11 @@ const messages = defineMessages({
   },
 });
 
-const itemTransition =
-  window && window.matchMedia('(prefers-reduced-motion: no-preference)')
-    ? 'background-color 300ms ease-out'
-    : 'none';
+const itemTransition = window?.matchMedia(
+  '(prefers-reduced-motion: no-preference)',
+)
+  ? 'background-color 300ms ease-out'
+  : 'none';
 
 const styles = theme => ({
   item: {

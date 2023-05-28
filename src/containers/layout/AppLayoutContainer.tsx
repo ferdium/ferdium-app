@@ -120,10 +120,10 @@ class AppLayoutContainer extends Component<IProps> {
     const servicesContainer = (
       <Services
         services={services.allDisplayedUnordered}
-        // handleIPCMessage={handleIPCMessage} // TODO - - [TECH DEBT] check it later
+        // handleIPCMessage={handleIPCMessage} // TODO: [TECH DEBT] check it later
         setWebviewReference={setWebviewReference}
         detachService={detachService}
-        // openWindow={openWindow} // TODO - - [TECH DEBT] check it later
+        // openWindow={openWindow} // TODO: [TECH DEBT] check it later
         reload={reload}
         openSettings={openSettings}
         update={updateService}

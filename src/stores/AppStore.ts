@@ -212,7 +212,7 @@ export default class AppStore extends TypedStore {
         }
 
         if (data.error) {
-          if (data.error.message && data.error.message.startsWith('404')) {
+          if (data.error.message?.startsWith('404')) {
             this.updateStatus = this.updateStatusTypes.NOT_AVAILABLE;
             console.warn(
               'Updater warning: there seems to be unpublished pre-release(s) available on GitHub',
@@ -350,7 +350,7 @@ export default class AppStore extends TypedStore {
     if (this.stores.settings.all.app.isAppMuted) return;
 
     // TODO: is there a simple way to use blobs for notifications without storing them on disk?
-    if (options.icon && options.icon.startsWith('blob:')) {
+    if (options.icon?.startsWith('blob:')) {
       delete options.icon;
     }
 

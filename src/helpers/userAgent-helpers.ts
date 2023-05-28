@@ -11,7 +11,7 @@ import {
 } from '../environment';
 
 function macOS() {
-  const version = macosVersion() || '';
+  const version = macosVersion() ?? '';
   let cpuName = cpus()[0].model.split(' ')[0];
   if (cpuName && /\(/.test(cpuName)) {
     cpuName = cpuName.split('(')[0];

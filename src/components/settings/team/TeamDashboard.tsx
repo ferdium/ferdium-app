@@ -1,3 +1,5 @@
+// TODO: Is this feature even being used? If not, then we can cleanup this code
+
 import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';

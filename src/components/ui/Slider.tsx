@@ -12,7 +12,7 @@ interface IProps {
   onSliderChange?: (e: ChangeEvent) => void;
 }
 
-// TODO - [TS DEBT] Should this file be converted into the coding style similar to './toggle/index.tsx'?
+// TODO: [TS DEBT] Should this file be converted into the coding style similar to './toggle/index.tsx'?
 @observer
 class Slider extends Component<IProps> {
   onChange(e: ChangeEvent<HTMLInputElement>): void {

@@ -28,7 +28,12 @@ import {
   SPLIT_COLUMNS_MAX,
   SPLIT_COLUMNS_MIN,
 } from '../../../config';
-import { isMac, isWinPortable, isWindows, lockFerdiumShortcutKey } from '../../../environment';
+import {
+  isMac,
+  isWinPortable,
+  isWindows,
+  lockFerdiumShortcutKey,
+} from '../../../environment';
 import { openExternalUrl, openPath } from '../../../helpers/url-helpers';
 import globalMessages from '../../../i18n/globalMessages';
 import Icon from '../../ui/icon';
@@ -376,8 +381,6 @@ class EditSettingsForm extends Component<IProps, IState> {
       updateButtonLabelMessage = messages.updateStatusSearching;
     } else if (isUpdateAvailable) {
       updateButtonLabelMessage = messages.updateStatusAvailable;
-    } else {
-      updateButtonLabelMessage = messages.buttonSearchForUpdate;
     }
 
     const { lockingFeatureEnabled, scheduledDNDEnabled, reloadAfterResume } =

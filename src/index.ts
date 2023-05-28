@@ -32,6 +32,7 @@ import {
 import { ifUndefined } from './jsUtils';
 
 import { mainIpcHandler as basicAuthHandler } from './features/basicAuth';
+// eslint-disable-next-line import/no-cycle
 import ipcApi from './electron/ipc-api';
 import TrayIcon from './lib/Tray';
 import DBus from './lib/DBus';

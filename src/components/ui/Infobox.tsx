@@ -35,7 +35,7 @@ interface IState {
   dismissed: boolean;
 }
 
-// Can this file be merged into the './infobox/index.tsx' file?
+// TODO: Can this file be merged into the './infobox/index.tsx' file?
 @observer
 class Infobox extends Component<IProps, IState> {
   constructor(props: IProps) {

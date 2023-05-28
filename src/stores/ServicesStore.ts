@@ -425,12 +425,12 @@ export default class ServicesStore extends TypedStore {
     return (
       this.allDisplayed.find(
         service => service.isTodosService && service.isEnabled,
-      ) || false
+      ) ?? false
     );
   }
 
   @computed get isTodosServiceActive() {
-    return this.active && this.active.isTodosService;
+    return this.active?.isTodosService;
   }
 
   // TODO: This can actually return undefined as well

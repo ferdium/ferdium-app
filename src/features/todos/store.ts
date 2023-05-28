@@ -149,7 +149,7 @@ export default class TodoStore extends FeatureStore {
   @action stop() {
     super.stop();
     debug('TodoStore::stop');
-    // this.reset(); // TODO - [TECH DEBT][PROP NOT IN CLASS] check it later
+    // this.reset(); // TODO: [TECH DEBT][PROP NOT IN CLASS] check it later
     this.isFeatureActive = false;
   }
 

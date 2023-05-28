@@ -209,7 +209,7 @@ export default class UserStore extends TypedStore {
     plan,
     currency,
   }): Promise<void> {
-    // TODO - [TS DEBT] Need to find a way proper to implement promise's then and catch in request class
+    // TODO: [TS DEBT] Need to find a way proper to implement promise's then and catch in request class
     // @ts-ignore
     const authToken = await this.signupRequest.execute({
       firstname,

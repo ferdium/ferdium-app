@@ -96,7 +96,7 @@ class SetupAssistantScreen extends Component<IProps, IState> {
       <SetupAssistant
         onSubmit={config => this.setupServices(config)}
         services={this.services}
-        // embed={false} //  TODO - [TS DEBT][PROP NOT USED IN COMPONENT] check legacy services type
+        // embed={false} // TODO: [TS DEBT][PROP NOT USED IN COMPONENT] check legacy services type
         isSettingUpServices={this.state.isSettingUpServices}
       />
     );

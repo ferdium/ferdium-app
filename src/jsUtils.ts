@@ -1,7 +1,7 @@
 export const ifUndefined = <T>(
   source: undefined | null | T,
   defaultValue: T,
-): T => (source !== undefined && source !== null ? source : defaultValue);
+): T => source ?? defaultValue;
 
 export const convertToJSON = (data: string | any | undefined | null) =>
   data && typeof data === 'string' && data.length > 0 ? JSON.parse(data) : data;

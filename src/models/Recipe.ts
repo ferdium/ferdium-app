@@ -56,7 +56,7 @@ export interface IRecipe {
   readonly knownCertificateHosts?: null | Function;
   readonly events?: null | { (key: string): string };
 
-  // TODO - [TS DEBT] Need to check if below properties are needed and where is inherited / implemented from
+  // TODO: [TS DEBT] Need to check if below properties are needed and where is inherited / implemented from
   author?: string[];
   hasDarkMode?: boolean;
   validateUrl?: (url: string) => boolean;
@@ -108,7 +108,7 @@ export default class Recipe implements IRecipe {
   // TODO: Is this being used?
   local = false;
 
-  // TODO - [TS DEBT] introduced to address missing function but need to check how validateUrl is inherited / implemented in recipe
+  // TODO: [TS DEBT] introduced to address missing function but need to check how validateUrl is inherited / implemented in recipe
   validateUrl?: (url: string) => boolean;
 
   // TODO: Need to reconcile which of these are optional/mandatory

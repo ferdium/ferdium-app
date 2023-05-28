@@ -12,7 +12,7 @@ interface IProps {
   children?: ReactNode;
 }
 
-// Can this file be merged into the './loader/index.tsx' file?
+// TODO: Can this file be merged into the './loader/index.tsx' file?
 @inject('stores')
 @observer
 class LoaderComponent extends Component<IProps> {

@@ -196,7 +196,7 @@ class TodosWebview extends Component<IProps, IState> {
         )}
         {isTodoUrlValid && (
           <Webview
-            // className={classes.webview} // TODO - [TS DEBT] style not found
+            // className={classes.webview} // TODO: [TS DEBT] style not found
             onDidAttach={() => {
               const { setTodosWebview } = this.props;
               setTodosWebview(this.webview);

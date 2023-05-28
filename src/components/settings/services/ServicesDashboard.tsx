@@ -54,7 +54,7 @@ const messages = defineMessages({
 interface IProps extends WrappedComponentProps {
   services: Service[];
   isLoading: boolean;
-  // toggleService: any; // TODO - - [TECH DEBT] check it later
+  // toggleService: any; // TODO: [TECH DEBT] check it later
   filterServices: any;
   resetFilter: () => void;
   goTo: (to: To, state?: any) => void;
@@ -70,7 +70,7 @@ class ServicesDashboard extends Component<IProps> {
     const {
       services,
       isLoading,
-      // toggleService, // TODO - - [TECH DEBT] check it later
+      // toggleService, // TODO: [TECH DEBT] check it later
       filterServices,
       resetFilter,
       goTo,
@@ -163,7 +163,7 @@ class ServicesDashboard extends Component<IProps> {
                   <ServiceItem
                     key={service.id}
                     service={service}
-                    // TODO -  - [TECH DEBT][PROPS NOT USED IN COMPONENT] check it later
+                    // TODO: [TECH DEBT][PROPS NOT USED IN COMPONENT] check it later
                     // toggleAction={() =>
                     //   toggleService({ serviceId: service.id })
                     // }

@@ -32,7 +32,7 @@ class ServiceItem extends Component<IProps> {
   render(): ReactElement {
     const {
       service,
-      // toggleAction, //  TODO - [TECH DEBT][PROP NOT USED IN COMPONENT] check it later
+      // toggleAction, // TODO: [TECH DEBT][PROP NOT USED IN COMPONENT] check it later
       goToServiceForm,
     } = this.props;
     const { intl } = this.props;

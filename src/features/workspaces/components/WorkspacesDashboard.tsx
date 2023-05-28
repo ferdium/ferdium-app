@@ -147,7 +147,7 @@ class WorkspacesDashboard extends Component<IProps> {
                   icon="alert"
                   type="danger"
                   ctaLabel={intl.formatMessage(messages.tryReloadWorkspaces)}
-                  // ctaLoading={getUserWorkspacesRequest.isExecuting} //  TODO - [TECH DEBT][PROP NOT USED IN COMPONENT] need to check and update
+                  // ctaLoading={getUserWorkspacesRequest.isExecuting} // TODO: [TECH DEBT][PROP NOT USED IN COMPONENT] need to check and update
                   ctaOnClick={getUserWorkspacesRequest.retry}
                 >
                   {intl.formatMessage(messages.workspacesRequestFailed)}

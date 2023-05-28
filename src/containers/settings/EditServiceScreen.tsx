@@ -391,7 +391,7 @@ class EditServiceScreen extends Component<IProps> {
     if (proxy.isEnabled) {
       const serviceProxyConfig: IProxyConfig = service
         ? /*
-          TODO - [TS DEBT] find out why sometimes proxy[service.id] gives undefined
+          TODO: [TS DEBT] find out why sometimes proxy[service.id] gives undefined
           Note in proxy service id exist as key but value is undefined rather that proxy empty object
 
           Temp fix - or-ed {} (to stores.settings.proxy[service.id] ) to avoid undefined proxy in settingStore throw error
@@ -534,9 +534,9 @@ class EditServiceScreen extends Component<IProps> {
           action={action}
           recipe={recipe}
           service={service}
-          // user={user.data} // TODO - [TS DEBT] Need to check why its passed as its not used inside EditServiceForm
+          // user={user.data} // TODO: [TS DEBT] Need to check why its passed as its not used inside EditServiceForm
           form={form}
-          // status={services.actionStatus} // TODO - [TS DEBT] Need to check why its passed as its not used inside EditServiceForm
+          // status={services.actionStatus} // TODO: [TS DEBT] Need to check why its passed as its not used inside EditServiceForm
           isSaving={
             services.updateServiceRequest.isExecuting ||
             services.createServiceRequest.isExecuting

@@ -165,12 +165,6 @@ function generateServiceRibbonWidthStyle(
       sidebarSizeBias = 44;
       break;
     }
-    case 55: {
-      fontSize = 11;
-      tabItemHeightBias = 13;
-      sidebarSizeBias = 37;
-      break;
-    }
     case 80: {
       fontSize = 11;
       tabItemHeightBias = 3;

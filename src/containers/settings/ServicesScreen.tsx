@@ -14,7 +14,7 @@ class ServicesScreen extends Component<IProps> {
     this.props.actions.service.resetStatus();
   }
 
-  // TODO - [TECH DEBT] need to check it
+  // TODO: [TECH DEBT] need to check it
   // deleteService(): void {
   //   this.props.actions.service.deleteService();
   //   this.props.actions.service.resetFilter();
@@ -38,11 +38,11 @@ class ServicesScreen extends Component<IProps> {
     return (
       <ErrorBoundary>
         <ServicesDashboard
-          // user={user.data} //  TODO - [TECH DEBT][PROPS NOT EXIST IN COMPONENT] check it later
+          // user={user.data} // TODO: [TECH DEBT][PROPS NOT EXIST IN COMPONENT] check it later
           services={allServices}
           status={services.actionStatus}
-          // deleteService={() => this.deleteService()} //  TODO - [TECH DEBT][PROPS NOT EXIST IN COMPONENT] check it later
-          // toggleService={toggleService} //  TODO - [TECH DEBT][PROPS NOT USED IN COMPONENT] check it later
+          // deleteService={() => this.deleteService()} // TODO: [TECH DEBT][PROPS NOT EXIST IN COMPONENT] check it later
+          // toggleService={toggleService} // TODO: [TECH DEBT][PROPS NOT USED IN COMPONENT] check it later
           isLoading={isLoading}
           filterServices={filter}
           resetFilter={resetFilter}

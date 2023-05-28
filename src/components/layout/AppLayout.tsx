@@ -14,7 +14,6 @@ import { Component as PublishDebugInfo } from '../../features/publishDebugInfo';
 import ErrorBoundary from '../util/ErrorBoundary';
 import { updateVersionParse } from '../../helpers/update-helpers';
 
-// import globalMessages from '../../i18n/globalMessages';
 import { isMac, isWindows } from '../../environment';
 import WorkspaceSwitchingIndicator from '../../features/workspaces/components/WorkspaceSwitchingIndicator';
 import { workspaceStore } from '../../features/workspaces';
@@ -45,13 +44,11 @@ const messages = defineMessages({
   },
 });
 
-let transition = 'none';
+const transition = window?.matchMedia('(prefers-reduced-motion: no-preference)')
+  ? 'transform 0.5s ease'
+  : 'none';
 
-if (window && window.matchMedia('(prefers-reduced-motion: no-preference)')) {
-  transition = 'transform 0.5s ease';
-}
-
-const styles = theme => ({
+const styles = (theme: { workspaces: { drawer: { width: any } } }) => ({
   appContent: {
     // width: `calc(100% + ${theme.workspaces.drawer.width}px)`,
     width: '100%',

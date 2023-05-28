@@ -18,7 +18,7 @@ interface IProps {
   multiple?: boolean;
 }
 
-// Can this file be merged into the './select/index.tsx' file?
+// TODO: Can this file be merged into the './select/index.tsx' file?
 @observer
 class Select extends Component<IProps> {
   private element: RefObject<HTMLSelectElement> =
@@ -57,7 +57,7 @@ class Select extends Component<IProps> {
     let selected = field.value;
 
     if (multiple) {
-      if (typeof field.value === 'string' && field.value.slice(0, 1) === '[') {
+      if (typeof field.value === 'string' && field.value.startsWith('[')) {
         // Value is JSON encoded
         selected = JSON.parse(field.value);
       } else if (typeof field.value === 'object') {

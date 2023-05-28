@@ -17,7 +17,7 @@ import Wrapper from '../wrapper';
 let popupTransition: string = 'none';
 let toggleTransition: string = 'none';
 
-if (window && window.matchMedia('(prefers-reduced-motion: no-preference)')) {
+if (window?.matchMedia('(prefers-reduced-motion: no-preference)')) {
   popupTransition = 'all 0.3s';
   toggleTransition = 'transform 0.3s';
 }
@@ -194,13 +194,13 @@ class SelectComponent extends Component<IProps, IState> {
   componentDidUpdate(): void {
     const { open } = this.state;
 
-    if (this.searchInputRef && this.searchInputRef.current && open) {
+    if (this.searchInputRef?.current && open) {
       this.searchInputRef.current.focus();
     }
   }
 
   componentDidMount(): void {
-    if (this.inputRef && this.inputRef.current) {
+    if (this.inputRef?.current) {
       const { data } = this.props;
 
       if (data) {
@@ -215,7 +215,7 @@ class SelectComponent extends Component<IProps, IState> {
   UNSAFE_componentWillMount(): void {
     const { value } = this.props;
 
-    if (this.componentRef && this.componentRef.current) {
+    if (this.componentRef?.current) {
       this.componentRef.current.removeEventListener(
         'keydown',
         this.keyListener,
@@ -285,7 +285,7 @@ class SelectComponent extends Component<IProps, IState> {
       e.preventDefault();
     }
 
-    if (this.componentRef && this.componentRef.current) {
+    if (this.componentRef?.current) {
       if (e.keyCode === 38 && selected > 0) {
         this.setState((state: IState) => ({
           selected: state.selected - 1,
@@ -302,8 +302,7 @@ class SelectComponent extends Component<IProps, IState> {
       }
 
       if (
-        this.activeOptionRef &&
-        this.activeOptionRef.current &&
+        this.activeOptionRef?.current &&
         this.scrollContainerRef &&
         this.scrollContainerRef.current
       ) {
@@ -350,13 +349,11 @@ class SelectComponent extends Component<IProps, IState> {
 
     const { open, needle, value, selected, options } = this.state;
 
-    let selection = '';
+    let selection = actionText;
     if (!value && defaultValue && options![defaultValue]) {
       selection = options![defaultValue];
     } else if (value && options![value]) {
       selection = options![value];
-    } else {
-      selection = actionText;
     }
 
     return (
