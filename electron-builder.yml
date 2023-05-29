@@ -14,7 +14,8 @@ snap:
 
 nsis:
   perMachine: false
-  oneClick: true
+  oneClick: false
+  allowToChangeInstallationDirectory: true
   artifactName: "${productName}-${os}-AutoSetup-${version}-${arch}.${ext}"
 
 portable:
