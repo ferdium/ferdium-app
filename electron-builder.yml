@@ -13,8 +13,9 @@ snap:
     provider: snapStore
 
 nsis:
-  perMachine: true
-  oneClick: true
+  perMachine: false
+  oneClick: false
+  allowToChangeInstallationDirectory: true
   artifactName: "${productName}-${os}-AutoSetup-${version}-${arch}.${ext}"
 
 portable:
