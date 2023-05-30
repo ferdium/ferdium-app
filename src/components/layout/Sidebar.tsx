@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Tooltip as ReactTooltip } from 'react-tooltip';
+import ReactTooltip from 'react-tooltip';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { inject, observer } from 'mobx-react';
 import {
@@ -123,6 +123,10 @@ class Sidebar extends Component<IProps, IState> {
     };
   }
 
+  componentDidUpdate() {
+    ReactTooltip.rebuild();
+  }
+
   enableToolTip() {
     this.setState({ tooltipEnabled: true });
   }
@@ -228,8 +232,7 @@ class Sidebar extends Component<IProps, IState> {
               type="button"
               onClick={() => openSettings({ path: 'recipes' })}
               className="sidebar__button sidebar__button--new-service"
-              data-tooltip-id="tooltip-sidebar-button"
-              data-tooltip-content={`${intl.formatMessage(
+              data-tip={`${intl.formatMessage(
                 messages.addNewService,
               )} (${addNewServiceShortcutKey(false)})`}
             >
@@ -248,8 +251,7 @@ class Sidebar extends Component<IProps, IState> {
                 });
               }}
               className="sidebar__button sidebar__button--split-mode-toggle"
-              data-tooltip-id="tooltip-sidebar-button"
-              data-tooltip-content={`${intl.formatMessage(
+              data-tip={`${intl.formatMessage(
                 messages.splitModeToggle,
               )} (${splitModeToggleShortcutKey(false)})`}
             >
@@ -266,8 +268,7 @@ class Sidebar extends Component<IProps, IState> {
               className={`sidebar__button sidebar__button--workspaces ${
                 isWorkspaceDrawerOpen ? 'is-active' : ''
               }`}
-              data-tooltip-id="tooltip-sidebar-button"
-              data-tooltip-content={`${intl.formatMessage(
+              data-tip={`${intl.formatMessage(
                 workspaceToggleMessage,
               )} (${workspaceToggleShortcutKey(false)})`}
             >
@@ -284,8 +285,7 @@ class Sidebar extends Component<IProps, IState> {
               className={`sidebar__button sidebar__button--audio ${
                 isAppMuted ? 'is-muted' : ''
               }`}
-              data-tooltip-id="tooltip-sidebar-button"
-              data-tooltip-content={`${intl.formatMessage(
+              data-tip={`${intl.formatMessage(
                 isAppMuted ? messages.unmute : messages.mute,
               )} (${muteFerdiumShortcutKey(false)})`}
             >
@@ -303,8 +303,7 @@ class Sidebar extends Component<IProps, IState> {
               className={`sidebar__button sidebar__button--todos ${
                 todosStore.isTodosPanelVisible ? 'is-active' : ''
               }`}
-              data-tooltip-id="tooltip-sidebar-button"
-              data-tooltip-content={`${intl.formatMessage(
+              data-tip={`${intl.formatMessage(
                 todosToggleMessage,
               )} (${todosToggleShortcutKey(false)})`}
             >
@@ -323,8 +322,7 @@ class Sidebar extends Component<IProps, IState> {
                   },
                 });
               }}
-              data-tooltip-id="tooltip-sidebar-button"
-              data-tooltip-content={`${intl.formatMessage(
+              data-tip={`${intl.formatMessage(
                 messages.lockFerdium,
               )} (${lockFerdiumShortcutKey(false)})`}
             >
@@ -333,20 +331,14 @@ class Sidebar extends Component<IProps, IState> {
           ) : null}
         </>
         {this.state.tooltipEnabled && (
-          <ReactTooltip
-            id="tooltip-sidebar-button"
-            place="right"
-            variant="dark"
-            style={{ height: 'auto', overflowY: 'unset' }}
-          />
+          <ReactTooltip place="right" type="dark" effect="solid" />
         )}
         {!hideSettingsButton && !isMenuCollapsed ? (
           <button
             type="button"
             onClick={() => openSettings({ path: 'app' })}
             className="sidebar__button sidebar__button--settings"
-            data-tooltip-id="tooltip-sidebar-button"
-            data-tooltip-content={`${intl.formatMessage(
+            data-tip={`${intl.formatMessage(
               globalMessages.settings,
             )} (${settingsShortcutKey(false)})`}
           >
