@@ -359,10 +359,11 @@ class TabItem extends Component<IProps, IState> {
         onKeyDown={noop}
         role="presentation"
         onContextMenu={() => menu.popup()}
-        data-tip={`${service.name} ${acceleratorString(
-          shortcutIndex,
-          cmdOrCtrlShortcutKey(false),
-        )}`}
+        data-tip={`${service.name} ${
+          shortcutIndex <= 10
+            ? `(${acceleratorString(shortcutIndex, cmdOrCtrlShortcutKey(false))})`
+            : ''
+        }`}
       >
         <img src={service.icon} className="tab-item__icon" alt="" />
         {showServiceNameSetting && (
