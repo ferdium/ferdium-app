@@ -146,7 +146,7 @@ describe('jsUtils', () => {
     });
 
     it('handles index = 11', () => {
-      expect(jsUtils.acceleratorString(11, 'abc')).toEqual(undefined);
+      expect(jsUtils.acceleratorString(11, 'abc')).toEqual('');
     });
   });
 });

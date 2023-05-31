@@ -29,4 +29,4 @@ export const acceleratorString = (
   keyCombo: string,
   prefix: string = '(',
   suffix: string = ')',
-) => (index <= 10 ? `${prefix}${keyCombo}+${index % 10}${suffix}` : undefined);
+) => (index <= 10 ? `${prefix}${keyCombo}+${index % 10}${suffix}` : '');
