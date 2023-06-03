@@ -57,7 +57,7 @@ export default (
 
   // Initialize all stores
   for (const name of Object.keys(stores)) {
-    if (stores[name] && stores[name].initialize) {
+    if (stores[name]?.initialize) {
       stores[name].initialize();
     }
   }

@@ -183,7 +183,6 @@
   "settings.account.userInfoRequestFailed": "לא ניתן לטעון את פרטי המשתמש",
   "settings.account.yourLicense": "רישיון ה־Ferdium שלך:",
   "settings.app.accentColorInfo": "יש לציין את הצבע שלך באופן שתואם ל־CSS (ברירת המחדל: {defaultAccentColor} או להשאיר את שדה הקלט פנוי)",
-  "settings.app.buttonClearAllCache": "ניקוי המטמון",
   "settings.app.buttonInstallUpdate": "להפעיל מחדש ולהתקין עדכונים",
   "settings.app.buttonOpenFerdiumProfileFolder": "פתיחת תיקיית הפרופיל",
   "settings.app.buttonOpenFerdiumServiceRecipesFolder": "פתיחת תיקיית מתכוני השירותים",

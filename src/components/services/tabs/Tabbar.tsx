@@ -20,6 +20,7 @@ interface IProps {
   toggleAudio: (args: { serviceId: string }) => void;
   toggleDarkMode: (args: { serviceId: string }) => void;
   deleteService: (args: { serviceId: string }) => void;
+  clearCache: (args: { serviceId: string }) => void;
   hibernateService: (args: { serviceId: string }) => void;
   wakeUpService: (args: { serviceId: string }) => void;
   updateService: (args: {
@@ -86,6 +87,7 @@ class TabBar extends Component<IProps> {
       toggleAudio,
       toggleDarkMode,
       deleteService,
+      clearCache,
       useHorizontalStyle,
       showMessageBadgeWhenMutedSetting,
       showServiceNameSetting,
@@ -97,6 +99,7 @@ class TabBar extends Component<IProps> {
     return (
       <div>
         <TabBarSortableList
+          // @ts-ignore
           services={services}
           setActive={setActive}
           onSortEnd={this.onSortEnd}
@@ -107,6 +110,7 @@ class TabBar extends Component<IProps> {
           toggleAudio={toggleAudio}
           toggleDarkMode={toggleDarkMode}
           deleteService={deleteService}
+          clearCache={clearCache}
           disableService={args => this.disableService(args)}
           enableService={args => this.enableService(args)}
           hibernateService={args => this.hibernateService(args)}

@@ -1,7 +1,7 @@
 export const ifUndefined = <T>(
   source: undefined | null | T,
   defaultValue: T,
-): T => (source !== undefined && source !== null ? source : defaultValue);
+): T => source ?? defaultValue;
 
 export const convertToJSON = (data: string | any | undefined | null) =>
   data && typeof data === 'string' && data.length > 0 ? JSON.parse(data) : data;
@@ -23,3 +23,10 @@ export const safeParseInt = (text: string | number | undefined | null) => {
   const adjustedNumber = Number.isNaN(parsedNumber) ? 0 : parsedNumber;
   return Math.max(adjustedNumber, 0);
 };
+
+export const acceleratorString = (
+  index: number,
+  keyCombo: string,
+  prefix: string = '(',
+  suffix: string = ')',
+) => (index <= 10 ? `${prefix}${keyCombo}+${index % 10}${suffix}` : '');

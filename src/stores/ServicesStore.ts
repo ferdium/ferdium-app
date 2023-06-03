@@ -294,19 +294,20 @@ export default class ServicesStore extends TypedStore {
         service.lastPoll - service.lastPollAnswer > ms('1m')
       ) {
         // If service did not reply for more than 1m try to reload.
-        if (!service.isActive) {
-          if (this.stores.app.isOnline && service.lostRecipeReloadAttempt < 3) {
-            debug(
-              `Reloading service: ${service.name} (${service.id}). Attempt: ${service.lostRecipeReloadAttempt}`,
-            );
-            // service.webview.reload();
-            service.lostRecipeReloadAttempt += 1;
-
-            service.lostRecipeConnection = false;
-          }
-        } else {
+        if (service.isActive) {
           debug(`Service lost connection: ${service.name} (${service.id}).`);
           service.lostRecipeConnection = true;
+        } else if (
+          this.stores.app.isOnline &&
+          service.lostRecipeReloadAttempt < 3
+        ) {
+          debug(
+            `Reloading service: ${service.name} (${service.id}). Attempt: ${service.lostRecipeReloadAttempt}`,
+          );
+          // service.webview.reload();
+          service.lostRecipeReloadAttempt += 1;
+
+          service.lostRecipeConnection = false;
         }
       } else {
         service.lostRecipeConnection = false;
@@ -424,12 +425,12 @@ export default class ServicesStore extends TypedStore {
     return (
       this.allDisplayed.find(
         service => service.isTodosService && service.isEnabled,
-      ) || false
+      ) ?? false
     );
   }
 
   @computed get isTodosServiceActive() {
-    return this.active && this.active.isTodosService;
+    return this.active?.isTodosService;
   }
 
   // TODO: This can actually return undefined as well
@@ -512,11 +513,11 @@ export default class ServicesStore extends TypedStore {
     }
 
     if (data.team) {
-      if (!data.customURL) {
-        serviceData.team = data.team;
-      } else {
+      if (data.customURL) {
         // TODO: Is this correct?
         serviceData.customUrl = data.team;
+      } else {
+        serviceData.team = data.team;
       }
     }
 
@@ -893,9 +894,7 @@ export default class ServicesStore extends TypedStore {
         break;
       }
       case 'set-service-spellchecker-language': {
-        if (!args) {
-          console.warn('Did not receive locale');
-        } else {
+        if (args) {
           this.actions.service.updateService({
             serviceId,
             serviceData: {
@@ -903,6 +902,8 @@ export default class ServicesStore extends TypedStore {
             },
             redirect: false,
           });
+        } else {
+          console.warn('Did not receive locale');
         }
 
         break;
@@ -1176,13 +1177,13 @@ export default class ServicesStore extends TypedStore {
       service.lastPoll = Date.now();
     };
 
-    if (!serviceId) {
-      for (const service of this.allDisplayed) resetTimer(service);
-    } else {
+    if (serviceId) {
       const service = this.one(serviceId);
       if (service) {
         resetTimer(service);
       }
+    } else {
+      for (const service of this.allDisplayed) resetTimer(service);
     }
   }
 

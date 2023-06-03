@@ -14,10 +14,11 @@ const messages = defineMessages({
   },
 });
 
-const wrapperTransition =
-  window && window.matchMedia('(prefers-reduced-motion: no-preference)')
-    ? 'width 0.5s ease'
-    : 'none';
+const wrapperTransition = window?.matchMedia(
+  '(prefers-reduced-motion: no-preference)',
+)
+  ? 'width 0.5s ease'
+  : 'none';
 
 const styles = theme => ({
   wrapper: {

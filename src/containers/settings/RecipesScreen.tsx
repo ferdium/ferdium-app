@@ -129,8 +129,9 @@ class RecipesScreen extends Component<IProps, IState> {
 
     const { needle } = this.state;
     const allRecipes =
-      needle !== null
-        ? this.prepareRecipes([
+      needle === null
+        ? recipeFilter
+        : this.prepareRecipes([
             // All search recipes from server
             ...recipePreviews.searchResults,
             // All search recipes from local recipes
@@ -143,8 +144,7 @@ class RecipesScreen extends Component<IProps, IState> {
                   ),
               ),
             ),
-          ]).sort(this._sortByName)
-        : recipeFilter;
+          ]).sort(this._sortByName);
 
     const customWebsiteRecipe = recipePreviews.all.find(
       service => service.id === CUSTOM_WEBSITE_RECIPE_ID,

@@ -31,7 +31,7 @@ class TodosScreen extends Component<IProps> {
             this.props.stores!.services.isTodosServiceActive || false
           }
           isVisible={todosStore.isTodosPanelVisible}
-          // togglePanel={todoActions.toggleTodosPanel} // TODO - [TECH DEBT][PROP NOT USED IN COMPONENT] check it later
+          // togglePanel={todoActions.toggleTodosPanel} // TODO: [TECH DEBT][PROP NOT USED IN COMPONENT] check it later
           handleClientMessage={todoActions.handleClientMessage}
           setTodosWebview={webview => todoActions.setTodosWebview(webview)}
           width={todosStore.width}

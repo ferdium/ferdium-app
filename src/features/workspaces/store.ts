@@ -28,7 +28,7 @@ export default class WorkspacesStore extends FeatureStore {
 
   @observable nextWorkspace: Workspace | undefined;
 
-  @observable workspaceBeingEdited: any = null; // TODO - [TS DEBT] fix type later
+  @observable workspaceBeingEdited: any = null; // TODO: [TS DEBT] fix type later
 
   @observable isSwitchingWorkspace = false;
 
@@ -36,7 +36,7 @@ export default class WorkspacesStore extends FeatureStore {
 
   @observable isSettingsRouteActive = false;
 
-  stores: any; // TODO - [TS DEBT] fix type later
+  stores: any; // TODO: [TS DEBT] fix type later
 
   actions: Actions | undefined;
 

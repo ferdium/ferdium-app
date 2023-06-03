@@ -165,7 +165,6 @@
   "settings.account.tryReloadUserInfoRequest": "Δοκιμάστε ξανά",
   "settings.account.userInfoRequestFailed": "Δεν ήταν δυνατή η φόρτωση πληροφοριών χρήστη",
   "settings.account.yourLicense": "Άδεια Ferdium Σου:",
-  "settings.app.buttonClearAllCache": "Καθαρισμός λανθάνουσας μνήμης",
   "settings.app.buttonInstallUpdate": "Επανεκκίνηση & εγκατάσταση ενημερώσεων",
   "settings.app.buttonOpenFerdiumProfileFolder": "Άνοιγμα φακέλου προφίλ",
   "settings.app.buttonOpenFerdiumServiceRecipesFolder": "Άνοιγμα φακέλου Συνταγών υπηρεσιών",

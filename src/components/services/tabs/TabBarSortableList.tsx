@@ -10,7 +10,6 @@ interface IProps {
   showServiceNameSetting: boolean;
   showMessageBadgesEvenWhenMuted: boolean;
   services: Service[];
-
   setActive: (args: { serviceId: string }) => void;
   openSettings: (args: { path: string }) => void;
   reload: (args: { serviceId: string }) => void;
@@ -18,6 +17,7 @@ interface IProps {
   toggleAudio: (args: { serviceId: string }) => void;
   toggleDarkMode: (args: { serviceId: string }) => void;
   deleteService: (args: { serviceId: string }) => void;
+  clearCache: (args: { serviceId: string }) => void;
   disableService: (args: { serviceId: string }) => void;
   enableService: (args: { serviceId: string }) => void;
   hibernateService: (args: { serviceId: string }) => void;
@@ -35,6 +35,7 @@ class TabBarSortableList extends Component<IProps> {
       toggleAudio,
       toggleDarkMode,
       deleteService,
+      clearCache,
       disableService,
       enableService,
       hibernateService,
@@ -50,6 +51,7 @@ class TabBarSortableList extends Component<IProps> {
         {services.map((service, index) => (
           <TabItem
             key={service.id}
+            // @ts-ignore
             clickHandler={() => setActive({ serviceId: service.id })}
             service={service}
             index={index}
@@ -61,6 +63,7 @@ class TabBarSortableList extends Component<IProps> {
             toggleAudio={() => toggleAudio({ serviceId: service.id })}
             toggleDarkMode={() => toggleDarkMode({ serviceId: service.id })}
             deleteService={() => deleteService({ serviceId: service.id })}
+            clearCache={() => clearCache({ serviceId: service.id })}
             disableService={() => disableService({ serviceId: service.id })}
             enableService={() => enableService({ serviceId: service.id })}
             hibernateService={() => hibernateService({ serviceId: service.id })}

@@ -297,7 +297,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
-          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_LOGIN }} # Note: Login no longer required https://forum.snapcraft.io/t/snapcraft-authentication-options/30473/21 
+          SNAPCRAFT_STORE_CREDENTIALS: ${{ secrets.SNAPCRAFT_LOGIN }} # Note: Login no longer required https://forum.snapcraft.io/t/snapcraft-authentication-options/30473/21
         run: |
           sudo snap install snapcraft --channel=7.x/stable --classic
           pnpm build --publish always -c.snap.publish.repo=$SNAP_PUBLISH_REPO -c.snap.publish.channels=$SNAP_PUBLISH_CHANNEL
@@ -355,7 +355,7 @@ jobs:
           node-version-file: ".nvmrc"
       - name: Install pnpm
         run: npm i -gf "pnpm@$(node -p 'require(\"./package.json\").engines.pnpm')" && pnpm -v
-      #TODO - Remove this once https://github.com/electron-userland/electron-builder/issues/6933#issuecomment-1213438889 is resolved
+      # TODO: Remove this once https://github.com/electron-userland/electron-builder/issues/6933#issuecomment-1213438889 is resolved
       - name: Tweak pnpm.cjs
         run: sed -i 's/\/usr\/bin\/env node/node/g' /c/npm/prefix/node_modules/pnpm/bin/pnpm.cjs
         shell: bash

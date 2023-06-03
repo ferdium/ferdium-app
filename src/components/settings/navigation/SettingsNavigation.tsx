@@ -187,13 +187,13 @@ class SettingsNavigation extends Component<IProps> {
         <button
           type="button"
           // @ts-ignore
-          to="/auth/logout" // TODO - [TS DEBT] Need to check if button take this prop
+          to="/auth/logout" // TODO: [TS DEBT] Need to check if button take this prop
           className="settings-navigation__link"
           onClick={this.handleLogout.bind(this)}
         >
-          {!isUsingWithoutAccount
-            ? intl.formatMessage(messages.logout)
-            : 'Exit session'}
+          {isUsingWithoutAccount
+            ? 'Exit session'
+            : intl.formatMessage(messages.logout)}
         </button>
       </div>
     );

@@ -98,15 +98,15 @@ class TodosWebview extends Component<IProps, IState> {
     }
   }
 
-  startResize(e: MouseEvent<HTMLDivElement>): void {
+  startResize = (e: MouseEvent<HTMLDivElement>): void => {
     this.setState({
       isDragging: true,
       initialPos: e.clientX,
       delta: 0,
     });
-  }
+  };
 
-  resizePanel(e: MouseEventInit): void {
+  resizePanel = (e: MouseEventInit): void => {
     const { minWidth } = this.props;
     const { isDragging, initialPos } = this.state;
 
@@ -117,9 +117,9 @@ class TodosWebview extends Component<IProps, IState> {
         delta,
       });
     }
-  }
+  };
 
-  stopResize(): void {
+  stopResize = (): void => {
     const { resize, minWidth } = this.props;
     const { isDragging, delta, width } = this.state;
 
@@ -138,9 +138,9 @@ class TodosWebview extends Component<IProps, IState> {
 
       resize(newWidth);
     }
-  }
+  };
 
-  startListeningToIpcMessages() {
+  startListeningToIpcMessages = (): void => {
     if (!this.webview) {
       return;
     }
@@ -149,7 +149,7 @@ class TodosWebview extends Component<IProps, IState> {
     this.webview.addEventListener('ipc-message', e => {
       handleClientMessage(e.channel, e.args[0]);
     });
-  }
+  };
 
   render(): ReactElement {
     const {
@@ -196,7 +196,7 @@ class TodosWebview extends Component<IProps, IState> {
         )}
         {isTodoUrlValid && (
           <Webview
-            // className={classes.webview} // TODO - [TS DEBT] style not found
+            // className={classes.webview} // TODO: [TS DEBT] style not found
             onDidAttach={() => {
               const { setTodosWebview } = this.props;
               setTodosWebview(this.webview);

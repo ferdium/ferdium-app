@@ -1,6 +1,6 @@
 import { webFrame } from 'electron';
 
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'mobx-react';
 import { RouterStore } from '@superwf/mobx-react-router';
 import { createHashHistory } from 'history';
@@ -44,7 +44,9 @@ window.addEventListener('load', () => {
           </I18N>
         </Provider>
       );
-      render(preparedApp, document.querySelector('#root'));
+      const container = document.querySelector('#root');
+      const root = createRoot(container!);
+      root.render(preparedApp);
     },
   };
   window['ferdium'].render();

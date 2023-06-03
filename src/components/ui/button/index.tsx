@@ -117,12 +117,12 @@ const styles = (theme: Theme) => ({
     zIndex: 9999,
   },
   loaderContainer: {
-    width: (props: IProps): string => (!props.busy ? '0' : '40px'),
+    width: (props: IProps): string => (props.busy ? '40px' : '0'),
     height: 20,
     overflow: 'hidden',
     transition: loaderContainerTransition,
-    marginLeft: (props: IProps): number => (!props.busy ? 10 : 20),
-    marginRight: (props: IProps): number => (!props.busy ? -10 : -20),
+    marginLeft: (props: IProps): number => (props.busy ? 20 : 10),
+    marginRight: (props: IProps): number => (props.busy ? -20 : -10),
     position: (): Property.Position => 'inherit',
   },
   icon: {
@@ -217,7 +217,22 @@ class ButtonComponent extends Component<IProps, IState> {
       </>
     );
 
-    const wrapperComponent = !href ? (
+    const wrapperComponent = href ? (
+      <a
+        href={href}
+        target={target}
+        onClick={onClick}
+        className={classnames({
+          [`${classes.button}`]: true,
+          [`${classes[buttonType as ButtonType]}`]: true,
+          [`${className}`]: className,
+        })}
+        rel={target === '_blank' ? 'noopener' : ''}
+        data-type="franz-button"
+      >
+        {content}
+      </a>
+    ) : (
       <button
         id={id}
         type={type}
@@ -234,21 +249,6 @@ class ButtonComponent extends Component<IProps, IState> {
       >
         {content}
       </button>
-    ) : (
-      <a
-        href={href}
-        target={target}
-        onClick={onClick}
-        className={classnames({
-          [`${classes.button}`]: true,
-          [`${classes[buttonType as ButtonType]}`]: true,
-          [`${className}`]: className,
-        })}
-        rel={target === '_blank' ? 'noopener' : ''}
-        data-type="franz-button"
-      >
-        {content}
-      </a>
     );
 
     return wrapperComponent;

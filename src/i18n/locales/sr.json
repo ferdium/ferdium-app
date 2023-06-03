@@ -113,7 +113,6 @@
   "settings.account.tryReloadServices": "Pokušajte ponovno",
   "settings.account.tryReloadUserInfoRequest": "Pokušajte ponovno",
   "settings.account.userInfoRequestFailed": "Nije moguće učitati informacije o korisniku",
-  "settings.app.buttonClearAllCache": "Очисти кеш",
   "settings.app.buttonInstallUpdate": "Ponovo pokreni i instaliraj ažuriranje",
   "settings.app.buttonSearchForUpdate": "Potraži ažuriranja",
   "settings.app.cacheInfo": "Франз кеш тренутно користи {size} простора на диску.",

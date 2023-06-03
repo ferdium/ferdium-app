@@ -183,7 +183,6 @@
   "settings.account.userInfoRequestFailed": "Kon gebruikersinformatie niet laden",
   "settings.account.yourLicense": "Uw Ferdium licentie:",
   "settings.app.accentColorInfo": "Schrijf uw kleurkeuze in een CSS-compatibel formaat (standaard: {defaultAccentColor} of wis het invoerveld)",
-  "settings.app.buttonClearAllCache": "Cache legen",
   "settings.app.buttonInstallUpdate": "Opnieuw opstarten en update installeren",
   "settings.app.buttonOpenFerdiumProfileFolder": "Profielmap openen",
   "settings.app.buttonOpenFerdiumServiceRecipesFolder": "Open de map servicerecepten",

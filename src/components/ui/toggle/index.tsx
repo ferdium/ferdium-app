@@ -16,10 +16,11 @@ interface IProps
   className?: string;
 }
 
-const buttonTransition: string =
-  window && window.matchMedia('(prefers-reduced-motion: no-preference)')
-    ? 'all .5s'
-    : 'none';
+const buttonTransition: string = window?.matchMedia(
+  '(prefers-reduced-motion: no-preference)',
+)
+  ? 'all .5s'
+  : 'none';
 
 const styles = (theme: Theme) => ({
   toggle: {

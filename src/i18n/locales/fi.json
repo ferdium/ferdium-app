@@ -172,7 +172,6 @@
   "settings.account.tryReloadUserInfoRequest": "Yritä uudelleen",
   "settings.account.userInfoRequestFailed": "Käyttäjätietoja ei voitu ladata",
   "settings.account.yourLicense": "Ferdium-lisenssisi:",
-  "settings.app.buttonClearAllCache": "Tyhjennä välimuisti",
   "settings.app.buttonInstallUpdate": "Käynnistä uudelleen ja asenna päivitys",
   "settings.app.buttonOpenFerdiumProfileFolder": "Avaa profiilikansio",
   "settings.app.buttonOpenFerdiumServiceRecipesFolder": "Avaa palvelun ohjekansio",

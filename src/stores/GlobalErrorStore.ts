@@ -86,7 +86,7 @@ export default class GlobalErrorStore extends TypedStore {
     if (request.isError) {
       this.error = request.error;
 
-      if (request.error && request.error.json) {
+      if (request.error?.json) {
         try {
           this.response = await request.error.json();
         } catch {

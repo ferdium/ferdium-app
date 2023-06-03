@@ -1,12 +1,11 @@
 import { autorun, action, computed, makeObservable, observable } from 'mobx';
 import { ipcRenderer } from 'electron';
 import { webContents } from '@electron/remote';
-import normalizeUrl from 'normalize-url';
 import { join } from 'path';
 import ElectronWebView from 'react-electron-web-view';
 
 import { todosStore } from '../features/todos';
-import { isValidExternalURL } from '../helpers/url-helpers';
+import { isValidExternalURL, normalizedUrl } from '../helpers/url-helpers';
 import UserAgent from './UserAgent';
 import { DEFAULT_SERVICE_ORDER, DEFAULT_SERVICE_SETTINGS } from '../config';
 import { ifUndefined } from '../jsUtils';
@@ -327,11 +326,7 @@ export default class Service {
     if (this.recipe.hasCustomUrl && this.customUrl) {
       let url: string = '';
       try {
-        url = normalizeUrl(this.customUrl, {
-          stripAuthentication: false,
-          stripWWW: false,
-          removeTrailingSlash: false,
-        });
+        url = normalizedUrl(this.customUrl);
       } catch {
         console.error(
           `Service (${this.recipe.name}): '${this.customUrl}' is not a valid Url.`,

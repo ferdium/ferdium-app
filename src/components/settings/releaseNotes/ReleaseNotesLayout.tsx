@@ -19,6 +19,7 @@ const messages = defineMessages({
 
 interface IProps extends WrappedComponentProps {
   actions?: Actions;
+  children?: React.ReactNode;
 }
 
 @inject('stores', 'actions')

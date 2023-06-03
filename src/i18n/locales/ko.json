@@ -170,7 +170,6 @@
   "settings.account.tryReloadUserInfoRequest": "다시 시도하세요.",
   "settings.account.userInfoRequestFailed": "사용자 정보를 불러올 수 없습니다.",
   "settings.account.yourLicense": "Ferdium 라이센스:",
-  "settings.app.buttonClearAllCache": "캐시 지우기",
   "settings.app.buttonInstallUpdate": "재시작 후 업데이트 설치",
   "settings.app.buttonOpenFerdiumProfileFolder": "프로파일 폴더 열기",
   "settings.app.buttonOpenFerdiumServiceRecipesFolder": "서비스 레시피 폴더 열기",

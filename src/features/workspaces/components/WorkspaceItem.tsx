@@ -1,4 +1,4 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */ // TODO - [TS DEBT] Need to check and remove it
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
 import withStyles, { WithStylesProps } from 'react-jss';

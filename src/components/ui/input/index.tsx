@@ -67,7 +67,7 @@ class Input extends Component<IProps, IState> {
   componentDidMount(): void {
     const { focus = false, data = {} } = this.props;
 
-    if (this.inputElement && this.inputElement.current) {
+    if (this.inputElement?.current) {
       if (focus) {
         this.inputElement.current.focus();
       }

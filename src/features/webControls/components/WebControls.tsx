@@ -34,10 +34,11 @@ const messages = defineMessages({
   },
 });
 
-const buttonTransition =
-  window && window.matchMedia('(prefers-reduced-motion: no-preference)')
-    ? 'opacity 0.25s'
-    : 'none';
+const buttonTransition = window?.matchMedia(
+  '(prefers-reduced-motion: no-preference)',
+)
+  ? 'opacity 0.25s'
+  : 'none';
 
 const styles = theme => ({
   root: {
@@ -115,7 +116,7 @@ class WebControls extends Component<IProps, IState> {
     const { url: inputUrl } = props;
     const { editUrl } = state;
 
-    return !editUrl ? { inputUrl, editUrl } : null;
+    return editUrl ? null : { inputUrl, editUrl };
   }
 
   constructor(props: IProps) {
@@ -211,7 +212,7 @@ class WebControls extends Component<IProps, IState> {
               });
               navigate(inputUrl);
 
-              if (this.inputRef && this.inputRef.current) {
+              if (this.inputRef?.current) {
                 this.inputRef.current.blur();
               }
             } else if (event.key === 'Escape') {
@@ -220,7 +221,7 @@ class WebControls extends Component<IProps, IState> {
                 inputUrl: url,
               });
 
-              if (this.inputRef && this.inputRef.current) {
+              if (this.inputRef?.current) {
                 this.inputRef.current.blur();
               }
             }

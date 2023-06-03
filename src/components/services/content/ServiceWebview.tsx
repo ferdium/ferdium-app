@@ -32,7 +32,7 @@ class ServiceWebview extends Component<IProps> {
     reaction(
       () => this.webview,
       () => {
-        if (this.webview && this.webview.view) {
+        if (this.webview?.view) {
           this.webview.view.addEventListener('console-message', e => {
             debug('Service logged a message:', e.message);
           });
@@ -97,7 +97,7 @@ class ServiceWebview extends Component<IProps> {
       <ElectronWebView
         ref={webview => {
           this._setWebview(webview);
-          if (webview && webview.view) {
+          if (webview?.view) {
             webview.view.addEventListener(
               'did-stop-loading',
               this.refocusWebview,
@@ -122,7 +122,7 @@ class ServiceWebview extends Component<IProps> {
             });
           }, 0);
         }}
-        // onUpdateTargetUrl={this.updateTargetUrl} // TODO - [TS DEBT] need to check where its from
+        // onUpdateTargetUrl={this.updateTargetUrl} // TODO: [TS DEBT] need to check where its from
         useragent={service.userAgent}
         disablewebsecurity={
           service.recipe.disablewebsecurity ? true : undefined

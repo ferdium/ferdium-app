@@ -18,10 +18,10 @@ export default class Settings {
     this.store = defaultState;
     this.defaultState = defaultState;
 
-    if (!pathExistsSync(this.settingsFile)) {
-      this._writeFile();
-    } else {
+    if (pathExistsSync(this.settingsFile)) {
       this._hydrate();
+    } else {
+      this._writeFile();
     }
   }
 

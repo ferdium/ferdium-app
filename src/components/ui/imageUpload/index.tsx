@@ -46,7 +46,7 @@ class ImageUpload extends Component<IProps, IState> {
     this.setState({ errorState: false });
 
     for (const file of acceptedFiles) {
-      const imgPath = isWindows ? file.path.replace(/\\/g, '/') : file.path;
+      const imgPath = isWindows ? file.path.replaceAll('\\', '/') : file.path;
       this.setState({
         path: imgPath,
       });

@@ -183,7 +183,6 @@
   "settings.account.userInfoRequestFailed": "ユーザ情報を読み込めませんでした",
   "settings.account.yourLicense": "ご利用中のFerdiumライセンス:",
   "settings.app.accentColorInfo": "CSSのフォーマットで色を入力してください。(デフォルト: {defaultAccentColor}と入力するか入力欄を空にします)",
-  "settings.app.buttonClearAllCache": "キャッシュを消去する",
   "settings.app.buttonInstallUpdate": "再起動して更新をインストールする",
   "settings.app.buttonOpenFerdiumProfileFolder": "プロファイルフォルダを開く",
   "settings.app.buttonOpenFerdiumServiceRecipesFolder": "サービスレシピフォルダを開く",

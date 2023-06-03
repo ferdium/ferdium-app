@@ -42,6 +42,7 @@ class AppLayoutContainer extends Component<IProps> {
       toggleDarkMode,
       deleteService,
       updateService,
+      clearCache,
       hibernate,
       awake,
     } = this.props.actions.service;
@@ -97,6 +98,7 @@ class AppLayoutContainer extends Component<IProps> {
         toggleDarkMode={toggleDarkMode}
         deleteService={deleteService}
         updateService={updateService}
+        clearCache={clearCache}
         hibernateService={hibernate}
         wakeUpService={awake}
         toggleMuteApp={toggleMuteApp}
@@ -118,10 +120,10 @@ class AppLayoutContainer extends Component<IProps> {
     const servicesContainer = (
       <Services
         services={services.allDisplayedUnordered}
-        // handleIPCMessage={handleIPCMessage} // TODO - - [TECH DEBT] check it later
+        // handleIPCMessage={handleIPCMessage} // TODO: [TECH DEBT] check it later
         setWebviewReference={setWebviewReference}
         detachService={detachService}
-        // openWindow={openWindow} // TODO - - [TECH DEBT] check it later
+        // openWindow={openWindow} // TODO: [TECH DEBT] check it later
         reload={reload}
         openSettings={openSettings}
         update={updateService}

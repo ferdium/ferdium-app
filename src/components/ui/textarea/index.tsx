@@ -38,7 +38,7 @@ class TextareaComponent extends Component<IProps> {
   componentDidMount() {
     const { data } = this.props;
 
-    if (this.textareaRef && this.textareaRef.current && data) {
+    if (this.textareaRef?.current && data) {
       Object.keys(data).map(
         key => (this.textareaRef.current!.dataset[key] = data[key]),
       );

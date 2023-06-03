@@ -98,7 +98,7 @@ export default class UIStore extends TypedStore {
 
   // Actions
   @action _openSettings({ path = '/settings' }): void {
-    const settingsPath = path !== '/settings' ? `/settings/${path}` : path;
+    const settingsPath = path === '/settings' ? path : `/settings/${path}`;
     this.stores.router.push(settingsPath);
   }
 
@@ -116,19 +116,19 @@ export default class UIStore extends TypedStore {
 
   // Reactions
   _setupThemeInDOM(): void {
-    if (!this.isDarkThemeActive) {
-      document.body.classList.remove('theme__dark');
-    } else {
+    if (this.isDarkThemeActive) {
       document.body.classList.add('theme__dark');
+    } else {
+      document.body.classList.remove('theme__dark');
     }
   }
 
   _setupModeInDOM(): void {
-    if (!this.isSplitModeActive) {
-      document.body.classList.remove('mode__split');
-    } else {
+    if (this.isSplitModeActive) {
       document.body.classList.add('mode__split');
       document.body.dataset.columns = this.splitColumnsNo.toString();
+    } else {
+      document.body.classList.remove('mode__split');
     }
   }
 

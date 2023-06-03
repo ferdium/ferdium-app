@@ -32,6 +32,7 @@ import {
 import { ifUndefined } from './jsUtils';
 
 import { mainIpcHandler as basicAuthHandler } from './features/basicAuth';
+// eslint-disable-next-line import/no-cycle
 import ipcApi from './electron/ipc-api';
 import TrayIcon from './lib/Tray';
 import DBus from './lib/DBus';
@@ -108,9 +109,7 @@ const liftSingleInstanceLock = retrieveSettingValue(
 const gotTheLock = liftSingleInstanceLock
   ? true
   : app.requestSingleInstanceLock();
-if (!gotTheLock) {
-  app.quit();
-} else {
+if (gotTheLock) {
   app.on('second-instance', (_event, argv) => {
     // Someone tried to run a second instance, we should focus our window.
     if (mainWindow) {
@@ -152,6 +151,8 @@ if (!gotTheLock) {
       }
     }
   });
+} else {
+  app.quit();
 }
 
 // Fix Unity indicator issue

@@ -21,7 +21,7 @@ interface IProps {
   reload: () => void;
   edit: () => void;
   enable: () => void;
-  // isActive?: boolean; // TODO - [TECH DEBT][PROP NOT USED IN COMPONENT] check it
+  // isActive?: boolean; // TODO: [TECH DEBT][PROP NOT USED IN COMPONENT] check it
   stores?: RealStores;
   isSpellcheckerEnabled: boolean;
 }
@@ -35,7 +35,7 @@ interface IState {
 @inject('stores', 'actions')
 @observer
 class ServiceView extends Component<IProps, IState> {
-  // hibernationTimer = null; //  TODO - [TS DEBT] class property not reassigned, need to find its purpose
+  // hibernationTimer = null; // TODO: [TS DEBT] class property not reassigned, need to find its purpose
 
   autorunDisposer: IReactionDisposer | undefined;
 
@@ -65,7 +65,7 @@ class ServiceView extends Component<IProps, IState> {
   componentWillUnmount() {
     this.autorunDisposer!();
     clearTimeout(this.forceRepaintTimeout!);
-    // clearTimeout(this.hibernationTimer); //  TODO - [TS DEBT] class property not reassigned, need to find its purpose
+    // clearTimeout(this.hibernationTimer); // TODO: [TS DEBT] class property not reassigned, need to find its purpose
   }
 
   render() {
@@ -111,7 +111,7 @@ class ServiceView extends Component<IProps, IState> {
             {service.hasCrashed && (
               <WebviewCrashHandler
                 name={service.recipe.name}
-                // webview={service.webview} //  TODO - [TECH DEBT][PROPS NOT EXIST IN COMPONENT] check it
+                // webview={service.webview} // TODO: [TECH DEBT][PROPS NOT EXIST IN COMPONENT] check it
                 reload={reload}
               />
             )}
@@ -135,29 +135,9 @@ class ServiceView extends Component<IProps, IState> {
             )}
           </>
         )}
-        {!service.isEnabled ? (
+        {service.isEnabled ? (
           <>
-            {service.isActive && (
-              <ServiceDisabled
-                name={service.name !== '' ? service.name : service.recipe.name}
-                // webview={service.webview} //  TODO - [TECH DEBT][PROPS NOT EXIST IN COMPONENT] check it
-                enable={enable}
-              />
-            )}
-          </>
-        ) : (
-          <>
-            {!service.isHibernating ? (
-              <>
-                {showNavBar && <WebControlsScreen service={service} />}
-                <ServiceWebview
-                  service={service}
-                  setWebviewReference={setWebviewRef}
-                  detachService={detachService}
-                  isSpellcheckerEnabled={isSpellcheckerEnabled}
-                />
-              </>
-            ) : (
+            {service.isHibernating ? (
               <div
                 style={{
                   display: 'flex',
@@ -180,6 +160,26 @@ class ServiceView extends Component<IProps, IState> {
                 <br />
                 Try switching services or reloading Ferdium.
               </div>
+            ) : (
+              <>
+                {showNavBar && <WebControlsScreen service={service} />}
+                <ServiceWebview
+                  service={service}
+                  setWebviewReference={setWebviewRef}
+                  detachService={detachService}
+                  isSpellcheckerEnabled={isSpellcheckerEnabled}
+                />
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            {service.isActive && (
+              <ServiceDisabled
+                name={service.name === '' ? service.recipe.name : service.name}
+                // webview={service.webview} // TODO: [TECH DEBT][PROPS NOT EXIST IN COMPONENT] check it
+                enable={enable}
+              />
             )}
           </>
         )}

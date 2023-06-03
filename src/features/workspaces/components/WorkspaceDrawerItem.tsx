@@ -7,6 +7,7 @@ import { noop } from 'lodash';
 import { Menu } from '@electron/remote';
 import { MenuItemConstructorOptions } from 'electron';
 import { altKey, cmdOrCtrlShortcutKey } from '../../../environment';
+import { acceleratorString } from '../../../jsUtils';
 
 const messages = defineMessages({
   noServicesAddedYet: {
@@ -19,10 +20,11 @@ const messages = defineMessages({
   },
 });
 
-const itemTransition =
-  window && window.matchMedia('(prefers-reduced-motion: no-preference)')
-    ? 'background-color 300ms ease-out'
-    : 'none';
+const itemTransition = window?.matchMedia(
+  '(prefers-reduced-motion: no-preference)',
+)
+  ? 'background-color 300ms ease-out'
+  : 'none';
 
 const styles = theme => ({
   item: {
@@ -117,13 +119,10 @@ class WorkspaceDrawerItem extends Component<IProps> {
           }
         }}
         onKeyDown={noop}
-        data-tip={`${
-          shortcutIndex <= 9
-            ? `(${cmdOrCtrlShortcutKey(false)}+${altKey(
-                false,
-              )}+${shortcutIndex})`
-            : ''
-        }`}
+        data-tip={acceleratorString(
+          shortcutIndex,
+          `${cmdOrCtrlShortcutKey(false)}+${altKey(false)}`,
+        )}
       >
         <span
           className={classnames([

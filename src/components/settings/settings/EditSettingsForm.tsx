@@ -28,7 +28,12 @@ import {
   SPLIT_COLUMNS_MAX,
   SPLIT_COLUMNS_MIN,
 } from '../../../config';
-import { isMac, isWindows, lockFerdiumShortcutKey } from '../../../environment';
+import {
+  isMac,
+  isWinPortable,
+  isWindows,
+  lockFerdiumShortcutKey,
+} from '../../../environment';
 import { openExternalUrl, openPath } from '../../../helpers/url-helpers';
 import globalMessages from '../../../i18n/globalMessages';
 import Icon from '../../ui/icon';
@@ -188,10 +193,6 @@ const messages = defineMessages({
   cacheNotCleared: {
     id: 'settings.app.cacheNotCleared',
     defaultMessage: "Couldn't clear all cache",
-  },
-  buttonClearAllCache: {
-    id: 'settings.app.buttonClearAllCache',
-    defaultMessage: 'Clear cache',
   },
   subheadlineFerdiumProfile: {
     id: 'settings.app.subheadlineFerdiumProfile',
@@ -380,8 +381,6 @@ class EditSettingsForm extends Component<IProps, IState> {
       updateButtonLabelMessage = messages.updateStatusSearching;
     } else if (isUpdateAvailable) {
       updateButtonLabelMessage = messages.updateStatusAvailable;
-    } else {
-      updateButtonLabelMessage = messages.buttonSearchForUpdate;
     }
 
     const { lockingFeatureEnabled, scheduledDNDEnabled, reloadAfterResume } =
@@ -974,7 +973,7 @@ class EditSettingsForm extends Component<IProps, IState> {
                     <div className="settings__open-settings-cache-container">
                       <Button
                         buttonType="secondary"
-                        label={intl.formatMessage(messages.buttonClearAllCache)}
+                        label={intl.formatMessage(globalMessages.clearCache)}
                         className="settings__open-settings-cache-button"
                         onClick={() => {
                           onClearAllCache();
@@ -1044,7 +1043,7 @@ class EditSettingsForm extends Component<IProps, IState> {
                 </H2>
 
                 <Toggle {...form.$('automaticUpdates').bind()} />
-                {automaticUpdates && (
+                {automaticUpdates && !isWinPortable && (
                   <>
                     <>
                       <div>

@@ -130,7 +130,6 @@
   "settings.account.tryReloadServices": "再試一次",
   "settings.account.tryReloadUserInfoRequest": "再試一次",
   "settings.account.userInfoRequestFailed": "無法載入帳戶資訊",
-  "settings.app.buttonClearAllCache": "清除緩存",
   "settings.app.buttonInstallUpdate": "重新啟動並且更新",
   "settings.app.buttonSearchForUpdate": "檢查更新",
   "settings.app.closeSettings": "關閉設定",

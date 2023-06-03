@@ -1,4 +1,5 @@
 import { app, dialog, Menu } from '@electron/remote';
+import { noop } from 'lodash';
 import { Component } from 'react';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { inject, observer } from 'mobx-react';
@@ -6,7 +7,6 @@ import classnames from 'classnames';
 import { SortableElement } from 'react-sortable-hoc';
 import injectSheet, { WithStylesProps } from 'react-jss';
 import ms from 'ms';
-
 import { autorun, makeObservable, observable, reaction } from 'mobx';
 import { mdiExclamation, mdiVolumeSource } from '@mdi/js';
 import Service from '../../../models/Service';
@@ -15,6 +15,7 @@ import globalMessages from '../../../i18n/globalMessages';
 import Icon from '../../ui/icon';
 import { Stores } from '../../../@types/stores.types';
 import MenuItemConstructorOptions = Electron.MenuItemConstructorOptions;
+import { acceleratorString } from '../../../jsUtils';
 
 const IS_SERVICE_DEBUGGING_ENABLED = (
   localStorage.getItem('debug') || ''
@@ -129,6 +130,7 @@ interface IProps extends WrappedComponentProps, WithStylesProps<typeof styles> {
   toggleDarkMode: () => void;
   openSettings: (args: { path: string }) => void;
   deleteService: () => void;
+  clearCache: () => void;
   disableService: () => void;
   enableService: () => void;
   hibernateService: () => void;
@@ -220,6 +222,7 @@ class TabItem extends Component<IProps, IState> {
       toggleAudio,
       toggleDarkMode,
       deleteService,
+      clearCache,
       disableService,
       enableService,
       hibernateService,
@@ -298,6 +301,11 @@ class TabItem extends Component<IProps, IState> {
         enabled: service.isEnabled && service.canHibernate,
       },
       {
+        label: intl.formatMessage(globalMessages.clearCache),
+        click: () => clearCache(),
+        enabled: service.isEnabled,
+      },
+      {
         type: 'separator',
       },
       {
@@ -348,12 +356,13 @@ class TabItem extends Component<IProps, IState> {
           'is-label-enabled': showServiceNameSetting,
         })}
         onClick={clickHandler}
+        onKeyDown={noop}
+        role="presentation"
         onContextMenu={() => menu.popup()}
-        data-tip={`${service.name} ${
-          shortcutIndex <= 9
-            ? `(${cmdOrCtrlShortcutKey(false)}+${shortcutIndex})`
-            : ''
-        }`}
+        data-tip={`${service.name} ${acceleratorString(
+          shortcutIndex,
+          cmdOrCtrlShortcutKey(false),
+        )}`}
       >
         <img src={service.icon} className="tab-item__icon" alt="" />
         {showServiceNameSetting && (
@@ -398,8 +407,8 @@ class TabItem extends Component<IProps, IState> {
             />
           </>
         )}
-        {shortcutIndex <= 9 && this.state.showShortcutIndex && (
-          <span className="tab-item__shortcut-index">{shortcutIndex}</span>
+        {shortcutIndex <= 10 && this.state.showShortcutIndex && (
+          <span className="tab-item__shortcut-index">{shortcutIndex % 10}</span>
         )}
       </li>
     );
@@ -407,5 +416,6 @@ class TabItem extends Component<IProps, IState> {
 }
 
 export default injectIntl(
+  // @ts-ignore
   SortableElement(injectSheet(styles, { injectTheme: true })(TabItem)),
 );

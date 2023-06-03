@@ -35,9 +35,9 @@ if (process.env.FERDIUM_APPDATA_DIR != null) {
 }
 
 export const isDevMode: boolean =
-  process.env.ELECTRON_IS_DEV !== undefined
-    ? Number.parseInt(process.env.ELECTRON_IS_DEV, 10) === 1
-    : !app.isPackaged;
+  process.env.ELECTRON_IS_DEV === undefined
+    ? !app.isPackaged
+    : Number.parseInt(process.env.ELECTRON_IS_DEV, 10) === 1;
 if (isDevMode) {
   app.setPath('userData', join(app.getPath('appData'), `${app.name}Dev`));
 }

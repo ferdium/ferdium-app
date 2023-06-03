@@ -8,7 +8,7 @@ interface IProps {
   text?: string;
 }
 
-// TODO - [TS DEBT] Should this file be converted into the coding style similar to './toggle/index.tsx'?
+// TODO: [TS DEBT] Should this file be converted into the coding style similar to './toggle/index.tsx'?
 @observer
 class StatusBarTargetUrl extends Component<IProps> {
   render() {

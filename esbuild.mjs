@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { build, serve } from 'esbuild';
+import * as esbuild from 'esbuild';
 import { sassPlugin } from 'esbuild-sass-plugin';
 import { copy } from 'esbuild-plugin-copy';
 import glob from 'tiny-glob';
@@ -60,7 +60,7 @@ const staticAssets = () => [
   }),
 ];
 
-const copyManualAssets = async () => {
+const copyManualAssets = () => {
   if (!fs.existsSync(outDir)) {
     fs.mkdirSync(outDir);
   }
@@ -72,27 +72,21 @@ const copyManualAssets = async () => {
     gitHashShort: buildInfo.gitHashShort,
     gitBranch: buildInfo.gitBranch,
   };
-  await fsPkg.outputJson(`${outDir}/buildInfo.json`, buildInfoData);
+  fsPkg.outputJsonSync(`${outDir}/buildInfo.json`, buildInfoData);
 };
 
 const runEsbuild = async () => {
   const startTime = performance.now();
 
-  let watch = false;
-  let isDev = false;
-
   const myArgs = process.argv.slice(2);
-  if (myArgs.includes('--watch')) {
-    watch = true;
-    isDev = true;
-  }
+  const isDev = myArgs.includes('--watch');
   log(chalk.blue(`Starting with args`), myArgs);
 
   if (fs.existsSync(outDir)) {
     fs.rmSync(outDir, { force: true, recursive: true });
     log(chalk.blue(`Cleaning`), outDir);
   }
-  await copyManualAssets();
+  copyManualAssets();
 
   // Source files
   const entryPoints = await glob('./src/**/*.{ts,tsx,js,jsx}');
@@ -105,7 +99,7 @@ const runEsbuild = async () => {
   );
 
   // Run build
-  await build({
+  await esbuild.build({
     entryPoints,
     format: 'cjs',
     minify: false,
@@ -113,23 +107,22 @@ const runEsbuild = async () => {
     minifyIdentifiers: true,
     keepNames: true,
     outdir: outDir,
-    watch: isDev &&
-      watch && {
-        onRebuild(error, result) {
-          if (error) {
-            log(chalk.red(`watch build failed: ${error}`));
-          } else {
-            log(chalk.blue(`watch build success:`), result);
-            livereload.reload();
-          }
-        },
+    watch: isDev && {
+      onRebuild(error, result) {
+        if (error) {
+          log(chalk.red(`watch build failed: ${error}`));
+        } else {
+          log(chalk.blue(`watch build success:`), result);
+          livereload.reload();
+        }
       },
-    incremental: isDev && watch,
+    },
+    incremental: isDev,
     plugins: [sassPlugin(), ...staticAssets()],
   });
 
-  if (watch) {
-    const serveResult = await serve(
+  if (isDev) {
+    const serveResult = await esbuild.serve(
       {
         servedir: outDir,
         port: 8080,

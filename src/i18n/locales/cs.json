@@ -165,7 +165,6 @@
   "settings.account.tryReloadUserInfoRequest": "Zkusit opět",
   "settings.account.userInfoRequestFailed": "Nelze načíst informace o uživateli.",
   "settings.account.yourLicense": "Vaše Ferdium licence:",
-  "settings.app.buttonClearAllCache": "Vyprázdnit mezipaměti",
   "settings.app.buttonInstallUpdate": "Restartovat a nainstalovat aktualizace",
   "settings.app.buttonOpenFerdiumProfileFolder": "Otevřít složku profilu",
   "settings.app.buttonOpenFerdiumServiceRecipesFolder": "Složka Open Service Recipes",

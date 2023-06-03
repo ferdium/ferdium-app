@@ -42,8 +42,8 @@ interface IProps extends WrappedComponentProps, WithStylesProps<typeof styles> {
   services?: Service[];
   setWebviewReference: () => void;
   detachService: () => void;
-  // handleIPCMessage: () => void; // TODO - [TECH DEBT] later check it
-  // openWindow: () => void; // TODO - [TECH DEBT] later check it
+  // handleIPCMessage: () => void; // TODO: [TECH DEBT] later check it
+  // openWindow: () => void; // TODO: [TECH DEBT] later check it
   reload: (options: { serviceId: string }) => void;
   openSettings: (options: { path: string }) => void;
   update: (options: {
@@ -88,10 +88,10 @@ class Services extends Component<IProps, IState> {
   render(): ReactElement {
     const {
       services = [],
-      // handleIPCMessage, // TODO - [TECH DEBT] later check it
+      // handleIPCMessage, // TODO: [TECH DEBT] later check it
       setWebviewReference,
       detachService,
-      // openWindow, // TODO - [TECH DEBT] later check it
+      // openWindow, // TODO: [TECH DEBT] later check it
       reload,
       openSettings,
       update,
@@ -136,10 +136,10 @@ class Services extends Component<IProps, IState> {
             <ServiceView
               key={service.id}
               service={service}
-              // handleIPCMessage={handleIPCMessage} //  TODO - [TECH DEBT][PROPS NOT EXIST IN COMPONENT] later check it
+              // handleIPCMessage={handleIPCMessage} //  TODO: [TECH DEBT][PROPS NOT EXIST IN COMPONENT] later check it
               setWebviewRef={setWebviewReference}
               detachService={detachService}
-              // openWindow={openWindow} //  TODO - [TECH DEBT][PROPS NOT EXIST IN COMPONENT] later check it
+              // openWindow={openWindow} //  TODO: [TECH DEBT][PROPS NOT EXIST IN COMPONENT] later check it
               reload={() => reload({ serviceId: service.id })}
               edit={() => openSettings({ path: `services/edit/${service.id}` })}
               enable={() =>

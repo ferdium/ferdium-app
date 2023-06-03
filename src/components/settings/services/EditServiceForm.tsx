@@ -2,7 +2,6 @@ import { Component, FormEvent, ReactElement } from 'react';
 import { observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
-import normalizeUrl from 'normalize-url';
 import { mdiInformation } from '@mdi/js';
 import { noop } from 'lodash';
 import Form from '../../../lib/Form';
@@ -20,6 +19,7 @@ import Icon from '../../ui/icon';
 import { H3 } from '../../ui/headline';
 import { IRecipe } from '../../../models/Recipe';
 import Service from '../../../models/Service';
+import { normalizedUrl } from '../../../helpers/url-helpers';
 
 const messages = defineMessages({
   saveService: {
@@ -156,6 +156,7 @@ interface IProps extends WrappedComponentProps {
   form: Form;
   onSubmit: (...args: any[]) => void;
   onDelete: () => void;
+  onClearCache: () => void;
   openRecipeFile: (recipeFile: string) => void;
   isSaving: boolean;
   isDeleting: boolean;
@@ -194,11 +195,7 @@ class EditServiceForm extends Component<IProps, IState> {
         if (recipe.validateUrl && values.customUrl) {
           this.setState({ isValidatingCustomUrl: true });
           try {
-            values.customUrl = normalizeUrl(values.customUrl, {
-              stripAuthentication: false,
-              stripWWW: false,
-              removeTrailingSlash: false,
-            });
+            values.customUrl = normalizedUrl(values.customUrl);
             isValid = await recipe.validateUrl(values.customUrl);
           } catch (error) {
             console.warn('ValidateURL', error);
@@ -227,6 +224,7 @@ class EditServiceForm extends Component<IProps, IState> {
       isSaving,
       isDeleting,
       onDelete,
+      onClearCache,
       openRecipeFile,
       isProxyFeatureEnabled,
       intl,
@@ -247,6 +245,15 @@ class EditServiceForm extends Component<IProps, IState> {
         label={intl.formatMessage(messages.deleteService)}
         className="settings__delete-button"
         onClick={onDelete}
+      />
+    );
+
+    const clearCacheButton = (
+      <Button
+        buttonType="secondary"
+        label={intl.formatMessage(globalMessages.clearCache)}
+        className="settings__open-settings-cache-button"
+        onClick={onClearCache}
       />
     );
 
@@ -506,6 +513,7 @@ class EditServiceForm extends Component<IProps, IState> {
         <div className="settings__controls">
           {/* Delete Button */}
           <div>{action === 'edit' && deleteButton}</div>
+          <div>{action === 'edit' && clearCacheButton}</div>
 
           {/* Save Button */}
           {isSaving || isValidatingCustomUrl ? (

@@ -12,7 +12,7 @@ interface IProps {
   onSliderChange?: (e: ChangeEvent) => void;
 }
 
-// TODO - [TS DEBT] Should this file be converted into the coding style similar to './toggle/index.tsx'?
+// TODO: [TS DEBT] Should this file be converted into the coding style similar to './toggle/index.tsx'?
 @observer
 class Slider extends Component<IProps> {
   onChange(e: ChangeEvent<HTMLInputElement>): void {
@@ -51,7 +51,7 @@ class Slider extends Component<IProps> {
             value={field.value}
             min="1"
             max="100"
-            onChange={e => (!disabled ? this.onChange(e) : null)}
+            onChange={e => (disabled ? null : this.onChange(e))}
           />
         </div>
 

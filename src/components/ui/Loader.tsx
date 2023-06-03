@@ -12,7 +12,7 @@ interface IProps {
   children?: ReactNode;
 }
 
-// Can this file be merged into the './loader/index.tsx' file?
+// TODO: Can this file be merged into the './loader/index.tsx' file?
 @inject('stores')
 @observer
 class LoaderComponent extends Component<IProps> {
@@ -25,7 +25,7 @@ class LoaderComponent extends Component<IProps> {
     } = this.props;
 
     const loaderColor =
-      color !== 'ACCENT' ? color : this.props.stores!.settings.app.accentColor;
+      color === 'ACCENT' ? this.props.stores!.settings.app.accentColor : color;
 
     return (
       <Loader
