@@ -30,6 +30,10 @@ const messages = defineMessages({
     id: 'settings.workspace.form.name',
     defaultMessage: 'Name',
   },
+  iconUrl: {
+    id: 'settings.workspace.form.iconUrl',
+    defaultMessage: 'Icon',
+  },
   yourWorkspaces: {
     id: 'settings.workspace.form.yourWorkspaces',
     defaultMessage: 'Your workspaces',
@@ -107,6 +111,12 @@ class EditWorkspaceForm extends Component<IProps> {
           value: workspace.name,
           validators: [required],
         },
+        iconUrl: {
+          label: intl.formatMessage(messages.iconUrl),
+          placeholder: intl.formatMessage(messages.iconUrl),
+          value: workspace.iconUrl || '',
+          validators: [],
+        },
         keepLoaded: {
           label: intl.formatMessage(messages.keepLoaded),
           value: workspace.services.includes(KEEP_WS_LOADED_USID),
@@ -181,6 +191,7 @@ class EditWorkspaceForm extends Component<IProps> {
           )}
           <div className={classes.nameInput}>
             <Input {...form.$('name').bind()} />
+            <Input {...form.$('iconUrl').bind()} />
             <Toggle {...form.$('keepLoaded').bind()} />
             <p className={`${classes.keepLoadedInfo} franz-form__label`}>
               {intl.formatMessage(messages.keepLoadedInfo)}

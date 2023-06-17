@@ -381,6 +381,15 @@ function generateOpenWorkspaceStyle() {
   `;
 }
 
+function generateWorkspaceWidthStyle(widthStr) {
+  const width = Number(widthStr);
+  return `
+    .drawerWithIconWidth {
+      width: ${width}
+    }
+  `;
+}
+
 function generateStyle(settings, app) {
   let style = '';
 
@@ -418,6 +427,8 @@ function generateStyle(settings, app) {
     shouldShowDragArea,
     isFullScreen,
   );
+
+  style += generateWorkspaceWidthStyle(serviceRibbonWidth);
 
   if (shouldShowDragArea) {
     style += generateShowDragAreaStyle(accentColor);

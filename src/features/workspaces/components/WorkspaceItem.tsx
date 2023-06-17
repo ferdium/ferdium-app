@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import withStyles, { WithStylesProps } from 'react-jss';
 import { noop } from 'lodash';
 import Workspace from '../models/Workspace';
+import WorkspaceIcon from '../../../components/ui/WorkspaceIcon';
 
 const styles = theme => ({
   row: {
@@ -12,7 +13,10 @@ const styles = theme => ({
       background: theme.workspaces.settings.listItems.hoverBgColor,
     },
   },
-  columnName: {},
+  columnName: {
+    width: '60px',
+    borderCollapse: 'separate',
+  },
 });
 
 interface IProps extends WithStylesProps<typeof styles> {
@@ -27,6 +31,13 @@ class WorkspaceItem extends Component<IProps> {
 
     return (
       <tr className={classes.row}>
+        <td
+          className={classes.columnName}
+          onClick={() => onItemClick(workspace)}
+          onKeyDown={noop}
+        >
+          <WorkspaceIcon name={workspace.name} iconUrl={workspace.iconUrl} />
+        </td>
         <td onClick={() => onItemClick(workspace)} onKeyDown={noop}>
           {workspace.name}
         </td>

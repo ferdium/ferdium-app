@@ -8,6 +8,7 @@ import { Menu } from '@electron/remote';
 import { MenuItemConstructorOptions } from 'electron';
 import { altKey, cmdOrCtrlShortcutKey } from '../../../environment';
 import { acceleratorString } from '../../../jsUtils';
+import WorkspaceIcon from '../../../components/ui/WorkspaceIcon';
 
 const messages = defineMessages({
   noServicesAddedYet: {
@@ -49,6 +50,11 @@ const styles = theme => ({
     marginTop: '4px',
     color: theme.workspaces.drawer.listItem.name.color,
   },
+  icon: {
+    maxWidth: '30px',
+    maxHeight: '30px',
+    margin: 'auto',
+  },
   activeName: {
     color: theme.workspaces.drawer.listItem.name.activeColor,
   },
@@ -70,6 +76,8 @@ const styles = theme => ({
 interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
   isActive: boolean;
   name: string;
+  iconUrl: string;
+  useIconDisplayStyle: boolean;
   onClick: MouseEventHandler<HTMLInputElement>;
   services: string[];
   onContextMenuEditClick?: (() => void) | null;
@@ -83,6 +91,8 @@ class WorkspaceDrawerItem extends Component<IProps> {
       classes,
       isActive,
       name,
+      iconUrl,
+      useIconDisplayStyle,
       onClick,
       onContextMenuEditClick = null,
       services,
@@ -125,24 +135,30 @@ class WorkspaceDrawerItem extends Component<IProps> {
           `${cmdOrCtrlShortcutKey(false)}+${altKey(false)}`,
         )}
       >
-        <span
-          className={classnames([
-            classes.name,
-            isActive ? classes.activeName : null,
-          ])}
-        >
-          {name}
-        </span>
-        <span
-          className={classnames([
-            classes.services,
-            isActive ? classes.activeServices : null,
-          ])}
-        >
-          {services.length > 0
-            ? services.join(', ')
-            : intl.formatMessage(messages.noServicesAddedYet)}
-        </span>
+        {useIconDisplayStyle === true ? (
+          <WorkspaceIcon name={name} iconUrl={iconUrl} />
+        ) : (
+          <>
+            <span
+              className={classnames([
+                classes.name,
+                isActive ? classes.activeName : null,
+              ])}
+            >
+              {name}
+            </span>
+            <span
+              className={classnames([
+                classes.services,
+                isActive ? classes.activeServices : null,
+              ])}
+            >
+              {services.length > 0
+                ? services.join(', ')
+                : intl.formatMessage(messages.noServicesAddedYet)}
+            </span>
+          </>
+        )}
       </div>
     );
   }
