@@ -84,6 +84,8 @@ win:
       arch: [x64, ia32, arm64]
   # The name of the CN appearing in the certificate must be present in the publisherName list below
   publisherName: ["Ferdium Contributors", "Ambroise Grau"]
+  # Remove the verification for a signature to allow auto-update without signed certificate
+  verifyUpdateCodeSignature: false
 
 linux:
   icon: ./build-helpers/images/icons
