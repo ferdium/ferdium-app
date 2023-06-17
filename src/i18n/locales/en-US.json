@@ -265,6 +265,7 @@
   "settings.app.form.useHorizontalStyle": "Use horizontal style",
   "settings.app.form.useSelfSignedCertificates": "Enable self-signed certificates",
   "settings.app.form.useTouchIdToUnlock": "Allow using TouchID to unlock Ferdium",
+  "settings.app.form.useWorkspaceDrawerIconStyle": "Use workspace drawer icon style",
   "settings.app.form.wakeUpHibernationSplay": "Splay hibernate/wake cycles to reduce load",
   "settings.app.form.wakeUpHibernationStrategy": "Hibernation strategy after automatic wake up",
   "settings.app.form.wakeUpStrategy": "Wake up strategy",

@@ -263,6 +263,10 @@ const messages = defineMessages({
     id: 'settings.app.form.alwaysShowWorkspaces',
     defaultMessage: 'Always show workspace drawer',
   },
+  useWorkspaceDrawerIconStyle: {
+    id: 'settings.app.form.useWorkspaceDrawerIconStyle',
+    defaultMessage: 'Use workspace drawer icon style',
+  },
   accentColor: {
     id: 'settings.app.form.accentColor',
     defaultMessage: 'Accent color',
@@ -435,6 +439,9 @@ class EditSettingsScreen extends Component<
         hideSettingsButton: Boolean(settingsData.hideSettingsButton),
         hideDownloadButton: Boolean(settingsData.hideDownloadButton),
         alwaysShowWorkspaces: Boolean(settingsData.alwaysShowWorkspaces),
+        useWorkspaceDrawerIconStyle: Boolean(
+          settingsData.useWorkspaceDrawerIconStyle,
+        ),
         accentColor: settingsData.accentColor,
         progressbarAccentColor: settingsData.progressbarAccentColor,
         showMessageBadgeWhenMuted: Boolean(
@@ -1118,6 +1125,15 @@ class EditSettingsScreen extends Component<
             DEFAULT_APP_SETTINGS.alwaysShowWorkspaces,
           ),
           default: DEFAULT_APP_SETTINGS.alwaysShowWorkspaces,
+          type: 'checkbox',
+        },
+        useWorkspaceDrawerIconStyle: {
+          label: intl.formatMessage(messages.useWorkspaceDrawerIconStyle),
+          value: ifUndefined<boolean>(
+            settings.all.app.useWorkspaceDrawerIconStyle,
+            DEFAULT_APP_SETTINGS.useWorkspaceDrawerIconStyle,
+          ),
+          default: DEFAULT_APP_SETTINGS.useWorkspaceDrawerIconStyle,
           type: 'checkbox',
         },
         accentColor: {
