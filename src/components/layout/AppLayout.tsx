@@ -53,10 +53,19 @@ const styles = (theme: { workspaces: { drawer: { width: any } } }) => ({
     // width: `calc(100% + ${theme.workspaces.drawer.width}px)`,
     width: '100%',
     transition,
+  },
+  appContentTransformTextWorkspace: {
     transform() {
       return workspaceStore.isWorkspaceDrawerOpen
         ? 'translateX(0)'
         : `translateX(-${theme.workspaces.drawer.width}px)`;
+    },
+  },
+  appContentTransformIconWorkspace: {
+    transform() {
+      return workspaceStore.isWorkspaceDrawerOpen
+        ? 'translateX(0)'
+        : `translateX(-75px)`;
     },
   },
   titleBar: {
@@ -149,7 +158,13 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                 className={classes.titleBar}
               />
             )}
-            <div className={`app__content ${classes.appContent}`}>
+            <div
+              className={`app__content ${classes.appContent} ${
+                settings.all.app.useWorkspaceDrawerIconStyle
+                  ? classes.appContentTransformIconWorkspace
+                  : classes.appContentTransformTextWorkspace
+              }`}
+            >
               {workspacesDrawer}
               {sidebar}
               <div className="app__service">

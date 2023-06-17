@@ -46,6 +46,9 @@ const styles = theme => ({
   drawerWithText: {
     width: `${theme.workspaces.drawer.width}px`,
   },
+  drawerWithIcon: {
+    width: '75px',
+  },
   headline: {
     fontSize: '24px',
     marginTop: '38px',
@@ -121,7 +124,7 @@ class WorkspaceDrawer extends Component<IProps> {
       : activeWorkspace;
 
     const drawerWithClass = useIconDisplayStyle
-      ? 'drawerWithIconWidth'
+      ? classes.drawerWithIcon
       : classes.drawerWithText;
     return (
       <div className={`${classes.drawer} ${drawerWithClass} workspaces-drawer`}>
