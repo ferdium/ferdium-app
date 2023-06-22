@@ -2,7 +2,6 @@ import { Component } from 'react';
 import { observer } from 'mobx-react';
 import { defineMessages, injectIntl } from 'react-intl';
 import Markdown from 'markdown-to-jsx';
-import { openExternalUrl } from '../../../helpers/url-helpers';
 import { ferdiumVersion } from '../../../environment-remote';
 import {
   getFerdiumVersion,
@@ -53,25 +52,12 @@ class ReleaseNotesDashboard extends Component<IProps> {
     this.setState({
       data,
     });
-
-    for (const link of document.querySelectorAll('.releasenotes__body a')) {
-      link.addEventListener('click', this.handleClick.bind(this), false);
-    }
   }
 
-  handleClick(e) {
-    e.preventDefault();
-    openExternalUrl(e.target.href);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener(
-      'click',
-      // eslint-disable-next-line unicorn/no-invalid-remove-event-listener
-      this.handleClick.bind(this),
-      false,
-    );
-  }
+  overrideAnchor = props => (
+    // eslint-disable-next-line jsx-a11y/anchor-has-content
+    <a {...props} target="_blank" rel="noopener noreferrer" />
+  );
 
   render() {
     const { intl } = this.props;
@@ -89,7 +75,14 @@ class ReleaseNotesDashboard extends Component<IProps> {
           </span>
         </div>
         <div className="settings__body releasenotes__body">
-          <Markdown options={{ wrapper: 'article' }}>{data}</Markdown>
+          <Markdown
+            options={{
+              wrapper: 'article',
+              overrides: { a: this.overrideAnchor },
+            }}
+          >
+            {data}
+          </Markdown>
         </div>
       </div>
     );
