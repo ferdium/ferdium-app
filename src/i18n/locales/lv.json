@@ -22,6 +22,7 @@
   "feature.quickSwitch.title": "ĀtrāPārslēgšanās",
   "global.api.unhealthy": "Nevarēja savienoties ar {serverNameParse} online pakalpojumiem",
   "global.cancel": "Atcelt",
+  "global.clearCache": "Iztīrīt kešatmiņu",
   "global.edit": "Labot",
   "global.no": "Nē",
   "global.notConnectedToTheInternet": "Jūs neesat savienojies ar internetu.",
