@@ -383,8 +383,6 @@ jobs:
         if: ${{ env.GIT_BRANCH_NAME == 'nightly' || env.GIT_BRANCH_NAME == 'release' }}
         env:
           GH_TOKEN: ${{ secrets.FERDIUM_PUBLISH_TOKEN }}
-          CSC_IDENTITY_AUTO_DISCOVERY: true
-          WIN_CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
-          WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
+          CSC_IDENTITY_AUTO_DISCOVERY: false
         run: pnpm build --publish always
         shell: bash
