@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { observer } from 'mobx-react';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
-import { Tooltip as ReactTooltip } from 'react-tooltip';
+import ReactTooltip from 'react-tooltip';
 import { H1, H2 } from '../../ui/headline';
 
 import Loader from '../../ui/Loader';
@@ -215,12 +215,7 @@ class AccountDashboard extends Component<IProp> {
             </>
           )}
         </div>
-        <ReactTooltip
-          place="right"
-          variant="dark"
-          float
-          style={{ height: 'auto' }}
-        />
+        <ReactTooltip place="right" type="dark" effect="solid" />
       </div>
     );
   }

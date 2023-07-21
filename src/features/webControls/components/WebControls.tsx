@@ -9,7 +9,6 @@ import {
   mdiHomeOutline,
   mdiEarth,
 } from '@mdi/js';
-import { Tooltip as ReactTooltip } from 'react-tooltip';
 import Icon from '../../../components/ui/icon';
 
 const messages = defineMessages({
@@ -152,8 +151,7 @@ class WebControls extends Component<IProps, IState> {
           onClick={goHome}
           type="button"
           className={classes.button}
-          data-tooltip-id="tooltip-web-controls"
-          data-tooltip-content={intl.formatMessage(messages.goHome)}
+          data-tip={intl.formatMessage(messages.goHome)}
           data-place="bottom"
         >
           <Icon icon={mdiHomeOutline} className={classes.icon} />
@@ -163,8 +161,7 @@ class WebControls extends Component<IProps, IState> {
           type="button"
           className={classes.button}
           disabled={!canGoBack}
-          data-tooltip-id="tooltip-web-controls"
-          data-tooltip-content={intl.formatMessage(messages.back)}
+          data-tip={intl.formatMessage(messages.back)}
           data-place="bottom"
         >
           <Icon icon={mdiArrowLeft} className={classes.icon} />
@@ -174,8 +171,7 @@ class WebControls extends Component<IProps, IState> {
           type="button"
           className={classes.button}
           disabled={!canGoForward}
-          data-tooltip-id="tooltip-web-controls"
-          data-tooltip-content={intl.formatMessage(messages.forward)}
+          data-tip={intl.formatMessage(messages.forward)}
           data-place="bottom"
         >
           <Icon icon={mdiArrowRight} className={classes.icon} />
@@ -184,8 +180,7 @@ class WebControls extends Component<IProps, IState> {
           onClick={reload}
           type="button"
           className={classes.button}
-          data-tooltip-id="tooltip-web-controls"
-          data-tooltip-content={intl.formatMessage(messages.reload)}
+          data-tip={intl.formatMessage(messages.reload)}
           data-place="bottom"
         >
           <Icon icon={mdiReload} className={classes.icon} />
@@ -237,18 +232,11 @@ class WebControls extends Component<IProps, IState> {
           onClick={openInBrowser}
           type="button"
           className={classes.button}
-          data-tooltip-id="tooltip-web-controls"
-          data-tooltip-content={intl.formatMessage(messages.openInBrowser)}
+          data-tip={intl.formatMessage(messages.openInBrowser)}
           data-place="bottom"
         >
           <Icon icon={mdiEarth} className={classes.icon} />
         </button>
-        <ReactTooltip
-          id="tooltip-web-controls"
-          place="bottom"
-          variant="dark"
-          style={{ height: 'auto' }}
-        />
       </div>
     );
   }
