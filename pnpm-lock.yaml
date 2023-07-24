@@ -5362,7 +5362,7 @@ packages:
   /esbuild-sass-plugin@2.10.0(esbuild@0.16.17):
     resolution: {integrity: sha512-STv849QGT8g77RRFmroSt4VBVKjv+dypKcO4aWz8IP4G5JbRH0KC0+B8ODuzlUNu9R5MbkGcev/62RDP/JcZ2Q==}
     peerDependencies:
-      esbuild: ^0.18.0
+      esbuild: ^0.18.0 || ^0.16.7
     dependencies:
       esbuild: 0.16.17
       resolve: 1.22.2
@@ -10388,8 +10388,8 @@ packages:
   /react-electron-web-view@2.0.1(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-C/mrvzvLzu/2j/ZFXkv1INNs7Sxv4EmySnAG/L24NRM8zW2Ij0aIbr0rNSLpg43RlAESKfM6TklMZu/UqPDFaA==}
     peerDependencies:
-      react: ^15.0.0
-      react-dom: ^15.0.0
+      react: ^15.0.0 || ^18.0.0
+      react-dom: ^15.0.0 || ^18.0.0
     dependencies:
       lodash.camelcase: 4.3.0
       react: 18.2.0
@@ -10452,8 +10452,8 @@ packages:
   /react-loader@2.4.7(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-pNW5xoSt0Q7HdmQh/EaIeeFbG0Ii74y6Le8gPdDyWyEFNgCiY1NcreQxMioQGjQ4Jo4EenQGKN/qMbxW+dpZkQ==}
     peerDependencies:
-      react: ^0.14.0 || ^15.0.0 || ^16.0.0
-      react-dom: ^0.14.0 || ^15.0.0 || ^16.0.0
+      react: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^18.0.0
+      react-dom: ^0.14.0 || ^15.0.0 || ^16.0.0 || ^18.0.0
     dependencies:
       create-react-class: 15.7.0
       prop-types: 15.8.1
@@ -10504,8 +10504,8 @@ packages:
     resolution: {integrity: sha512-JZUw7hBsAHXK7PTyErJyI7SopSBFRcFHDjWW5SWjcugY0i6iH7f+eJkY8cJmGMlZ1C9xz1J3Vjz0plFpavVeRg==}
     peerDependencies:
       prop-types: ^15.5.7
-      react: ^16.3.0 || ^17.0.0
-      react-dom: ^16.3.0 || ^17.0.0
+      react: ^16.3.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.3.0 || ^17.0.0 || ^18.0.0
     dependencies:
       '@babel/runtime': 7.20.1
       invariant: 2.2.4
