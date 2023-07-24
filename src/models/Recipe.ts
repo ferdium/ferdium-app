@@ -50,11 +50,15 @@ export interface IRecipe {
   partition: string;
   local: boolean;
 
+  // eslint-disable-next-line @typescript-eslint/ban-types
   readonly overrideUserAgent?: null | Function;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   readonly buildUrl?: null | Function;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   readonly modifyRequestHeaders?: null | Function;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   readonly knownCertificateHosts?: null | Function;
-  readonly events?: null | { (key: string): string };
+  readonly events?: null | ((key: string) => string);
 
   // TODO: [TS DEBT] Need to check if below properties are needed and where is inherited / implemented from
   author?: string[];
@@ -132,7 +136,7 @@ export default class Recipe implements IRecipe {
     this.id = ifUndefined<string>(data.id, this.id);
     this.name = ifUndefined<string>(data.name, this.name);
     this.version = ifUndefined<string>(data.version, this.version);
-    this.aliases = ifUndefined<Array<string>>(data.aliases, this.aliases);
+    this.aliases = ifUndefined<string[]>(data.aliases, this.aliases);
     this.serviceURL = ifUndefined<string>(
       data.config.serviceURL,
       this.serviceURL,

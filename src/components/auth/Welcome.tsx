@@ -44,10 +44,6 @@ interface IProps extends Partial<StoresProps>, WrappedComponentProps {
 @inject('actions')
 @observer
 class Welcome extends Component<IProps> {
-  constructor(props: IProps) {
-    super(props);
-  }
-
   useLocalServer(): void {
     serverlessLogin(this.props.actions);
   }

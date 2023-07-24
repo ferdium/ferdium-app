@@ -1172,8 +1172,6 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
       };
     }
 
-    // @ts-ignore: Remove this ignore once mobx-react-form v4 with typescript
-    // support has been released.
     return new Form(config);
   }
 

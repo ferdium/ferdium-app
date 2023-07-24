@@ -507,7 +507,7 @@ export default class ServerApi {
   async _mapServiceModels(services: any[]) {
     const recipes = services.map((s: { recipeId: string }) => s.recipeId);
     await this._bulkRecipeCheck(recipes);
-    /* eslint-disable no-return-await */
+
     return Promise.all(
       services.map(async (service: any) => this._prepareServiceModel(service)),
     );

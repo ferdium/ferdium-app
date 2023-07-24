@@ -234,7 +234,7 @@ class TabItem extends Component<IProps, IState> {
     } = this.props;
     const { intl } = this.props;
 
-    const menuTemplate: Array<MenuItemConstructorOptions> = [
+    const menuTemplate: MenuItemConstructorOptions[] = [
       {
         label: service.name || service.recipe.name,
         enabled: false,
@@ -295,7 +295,7 @@ class TabItem extends Component<IProps, IState> {
             ? messages.wakeUpService
             : messages.hibernateService,
         ),
-        // eslint-disable-next-line no-confusing-arrow
+
         click: () =>
           service.isHibernating ? wakeUpService() : hibernateService(),
         enabled: service.isEnabled && service.canHibernate,
@@ -311,7 +311,7 @@ class TabItem extends Component<IProps, IState> {
       {
         label: intl.formatMessage(messages.deleteService),
         click: () => {
-          // @ts-ignore
+          // @ts-expect-error Fix me
           const selection = dialog.showMessageBoxSync(app.mainWindow, {
             type: 'question',
             message: intl.formatMessage(messages.deleteService),
@@ -417,6 +417,6 @@ class TabItem extends Component<IProps, IState> {
 }
 
 export default injectIntl(
-  // @ts-ignore
+  // @ts-expect-error Fix me
   SortableElement(injectSheet(styles, { injectTheme: true })(TabItem)),
 );

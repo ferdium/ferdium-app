@@ -8,10 +8,6 @@ interface IProps extends Partial<StoresProps> {}
 @inject('stores', 'actions')
 @observer
 class WelcomeScreen extends Component<IProps> {
-  constructor(props: IProps) {
-    super(props);
-  }
-
   render(): ReactElement {
     const { user, recipePreviews } = this.props.stores!;
 

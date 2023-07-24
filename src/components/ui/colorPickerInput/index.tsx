@@ -25,7 +25,7 @@ class ColorPickerInput extends Component<IProps> {
 
   componentDidMount(): void {
     const { focus = false } = this.props;
-    if (focus && this.inputElement && this.inputElement.current) {
+    if (focus && this.inputElement?.current) {
       this.inputElement.current.focus();
     }
   }

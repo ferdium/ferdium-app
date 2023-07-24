@@ -351,6 +351,7 @@ export default class AppStore extends TypedStore {
 
     // TODO: is there a simple way to use blobs for notifications without storing them on disk?
     if (options.icon?.startsWith('blob:')) {
+      // eslint-disable-next-line no-param-reassign
       delete options.icon;
     }
 
@@ -493,6 +494,7 @@ export default class AppStore extends TypedStore {
         allOrphanedServiceIds.map(id => removeServicePartitionDirectory(id)),
       );
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log('Error while deleting service partition directory -', error);
     }
     await Promise.all(

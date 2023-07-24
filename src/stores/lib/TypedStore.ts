@@ -41,7 +41,7 @@ export default abstract class TypedStore {
     this.actions = actions;
   }
 
-  registerReactions(reactions: { (r: IReactionPublic): void }[]): void {
+  registerReactions(reactions: ((r: IReactionPublic) => void)[]): void {
     for (const reaction of reactions) {
       this._reactions.push(new Reaction(reaction));
     }

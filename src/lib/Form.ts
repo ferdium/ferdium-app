@@ -3,6 +3,7 @@ import vjf from 'mobx-react-form/lib/validators/VJF';
 import { FormFields } from '../@types/mobx-form.types';
 
 export default class DefaultForm extends Form {
+  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
   constructor(fields: FormFields) {
     super(fields);
   }

@@ -205,133 +205,131 @@ class Sidebar extends Component<IProps, IState> {
           hibernateService={this.props.hibernateService}
           wakeUpService={this.props.wakeUpService}
         />
-        <>
-          {numberActiveButtons <= 1 || hideCollapseButton ? null : (
-            <button
-              type="button"
-              onClick={() => toggleCollapseMenu()}
-              className="sidebar__button sidebar__button--hamburger-menu"
-            >
-              {isMenuCollapsed ? <Icon icon={mdiMenu} size={1.5} /> : null}
+        {numberActiveButtons <= 1 || hideCollapseButton ? null : (
+          <button
+            type="button"
+            onClick={() => toggleCollapseMenu()}
+            className="sidebar__button sidebar__button--hamburger-menu"
+          >
+            {isMenuCollapsed ? <Icon icon={mdiMenu} size={1.5} /> : null}
 
-              {!isMenuCollapsed && !useHorizontalStyle ? (
-                <Icon icon={mdiChevronDown} size={1.5} />
-              ) : null}
+            {!isMenuCollapsed && !useHorizontalStyle ? (
+              <Icon icon={mdiChevronDown} size={1.5} />
+            ) : null}
 
-              {!isMenuCollapsed && useHorizontalStyle ? (
-                <Icon icon={mdiChevronRight} size={1.5} />
-              ) : null}
-            </button>
-          )}
-          {!hideRecipesButton && !isMenuCollapsed ? (
-            <button
-              type="button"
-              onClick={() => openSettings({ path: 'recipes' })}
-              className="sidebar__button sidebar__button--new-service"
-              data-tooltip-id="tooltip-sidebar-button"
-              data-tooltip-content={`${intl.formatMessage(
-                messages.addNewService,
-              )} (${addNewServiceShortcutKey(false)})`}
-            >
-              <Icon icon={mdiPlusBox} size={1.5} />
-            </button>
-          ) : null}
-          {!hideSplitModeButton && !isMenuCollapsed ? (
-            <button
-              type="button"
-              onClick={() => {
-                actions!.settings.update({
-                  type: 'app',
-                  data: {
-                    splitMode: !splitMode,
-                  },
-                });
-              }}
-              className="sidebar__button sidebar__button--split-mode-toggle"
-              data-tooltip-id="tooltip-sidebar-button"
-              data-tooltip-content={`${intl.formatMessage(
-                messages.splitModeToggle,
-              )} (${splitModeToggleShortcutKey(false)})`}
-            >
-              <Icon icon={mdiViewSplitVertical} size={1.5} />
-            </button>
-          ) : null}
-          {!hideWorkspacesButton && !isMenuCollapsed ? (
-            <button
-              type="button"
-              onClick={() => {
-                toggleWorkspaceDrawer();
-                this.updateToolTip();
-              }}
-              className={`sidebar__button sidebar__button--workspaces ${
-                isWorkspaceDrawerOpen ? 'is-active' : ''
-              }`}
-              data-tooltip-id="tooltip-sidebar-button"
-              data-tooltip-content={`${intl.formatMessage(
-                workspaceToggleMessage,
-              )} (${workspaceToggleShortcutKey(false)})`}
-            >
-              <Icon icon={mdiViewGrid} size={1.5} />
-            </button>
-          ) : null}
-          {!hideNotificationsButton && !isMenuCollapsed ? (
-            <button
-              type="button"
-              onClick={() => {
-                toggleMuteApp();
-                this.updateToolTip();
-              }}
-              className={`sidebar__button sidebar__button--audio ${
-                isAppMuted ? 'is-muted' : ''
-              }`}
-              data-tooltip-id="tooltip-sidebar-button"
-              data-tooltip-content={`${intl.formatMessage(
-                isAppMuted ? messages.unmute : messages.mute,
-              )} (${muteFerdiumShortcutKey(false)})`}
-            >
-              <Icon icon={isAppMuted ? mdiBellOff : mdiBell} size={1.5} />
-            </button>
-          ) : null}
-          {todosStore.isFeatureEnabledByUser && !isMenuCollapsed ? (
-            <button
-              type="button"
-              onClick={() => {
-                todoActions.toggleTodosPanel();
-                this.updateToolTip();
-              }}
-              disabled={isTodosServiceActive}
-              className={`sidebar__button sidebar__button--todos ${
-                todosStore.isTodosPanelVisible ? 'is-active' : ''
-              }`}
-              data-tooltip-id="tooltip-sidebar-button"
-              data-tooltip-content={`${intl.formatMessage(
-                todosToggleMessage,
-              )} (${todosToggleShortcutKey(false)})`}
-            >
-              <Icon icon={mdiCheckAll} size={1.5} />
-            </button>
-          ) : null}
-          {stores!.settings.all.app.lockingFeatureEnabled ? (
-            <button
-              type="button"
-              className="sidebar__button"
-              onClick={() => {
-                actions!.settings.update({
-                  type: 'app',
-                  data: {
-                    locked: true,
-                  },
-                });
-              }}
-              data-tooltip-id="tooltip-sidebar-button"
-              data-tooltip-content={`${intl.formatMessage(
-                messages.lockFerdium,
-              )} (${lockFerdiumShortcutKey(false)})`}
-            >
-              <Icon icon={mdiLock} size={1.5} />
-            </button>
-          ) : null}
-        </>
+            {!isMenuCollapsed && useHorizontalStyle ? (
+              <Icon icon={mdiChevronRight} size={1.5} />
+            ) : null}
+          </button>
+        )}
+        {!hideRecipesButton && !isMenuCollapsed ? (
+          <button
+            type="button"
+            onClick={() => openSettings({ path: 'recipes' })}
+            className="sidebar__button sidebar__button--new-service"
+            data-tooltip-id="tooltip-sidebar-button"
+            data-tooltip-content={`${intl.formatMessage(
+              messages.addNewService,
+            )} (${addNewServiceShortcutKey(false)})`}
+          >
+            <Icon icon={mdiPlusBox} size={1.5} />
+          </button>
+        ) : null}
+        {!hideSplitModeButton && !isMenuCollapsed ? (
+          <button
+            type="button"
+            onClick={() => {
+              actions!.settings.update({
+                type: 'app',
+                data: {
+                  splitMode: !splitMode,
+                },
+              });
+            }}
+            className="sidebar__button sidebar__button--split-mode-toggle"
+            data-tooltip-id="tooltip-sidebar-button"
+            data-tooltip-content={`${intl.formatMessage(
+              messages.splitModeToggle,
+            )} (${splitModeToggleShortcutKey(false)})`}
+          >
+            <Icon icon={mdiViewSplitVertical} size={1.5} />
+          </button>
+        ) : null}
+        {!hideWorkspacesButton && !isMenuCollapsed ? (
+          <button
+            type="button"
+            onClick={() => {
+              toggleWorkspaceDrawer();
+              this.updateToolTip();
+            }}
+            className={`sidebar__button sidebar__button--workspaces ${
+              isWorkspaceDrawerOpen ? 'is-active' : ''
+            }`}
+            data-tooltip-id="tooltip-sidebar-button"
+            data-tooltip-content={`${intl.formatMessage(
+              workspaceToggleMessage,
+            )} (${workspaceToggleShortcutKey(false)})`}
+          >
+            <Icon icon={mdiViewGrid} size={1.5} />
+          </button>
+        ) : null}
+        {!hideNotificationsButton && !isMenuCollapsed ? (
+          <button
+            type="button"
+            onClick={() => {
+              toggleMuteApp();
+              this.updateToolTip();
+            }}
+            className={`sidebar__button sidebar__button--audio ${
+              isAppMuted ? 'is-muted' : ''
+            }`}
+            data-tooltip-id="tooltip-sidebar-button"
+            data-tooltip-content={`${intl.formatMessage(
+              isAppMuted ? messages.unmute : messages.mute,
+            )} (${muteFerdiumShortcutKey(false)})`}
+          >
+            <Icon icon={isAppMuted ? mdiBellOff : mdiBell} size={1.5} />
+          </button>
+        ) : null}
+        {todosStore.isFeatureEnabledByUser && !isMenuCollapsed ? (
+          <button
+            type="button"
+            onClick={() => {
+              todoActions.toggleTodosPanel();
+              this.updateToolTip();
+            }}
+            disabled={isTodosServiceActive}
+            className={`sidebar__button sidebar__button--todos ${
+              todosStore.isTodosPanelVisible ? 'is-active' : ''
+            }`}
+            data-tooltip-id="tooltip-sidebar-button"
+            data-tooltip-content={`${intl.formatMessage(
+              todosToggleMessage,
+            )} (${todosToggleShortcutKey(false)})`}
+          >
+            <Icon icon={mdiCheckAll} size={1.5} />
+          </button>
+        ) : null}
+        {stores!.settings.all.app.lockingFeatureEnabled ? (
+          <button
+            type="button"
+            className="sidebar__button"
+            onClick={() => {
+              actions!.settings.update({
+                type: 'app',
+                data: {
+                  locked: true,
+                },
+              });
+            }}
+            data-tooltip-id="tooltip-sidebar-button"
+            data-tooltip-content={`${intl.formatMessage(
+              messages.lockFerdium,
+            )} (${lockFerdiumShortcutKey(false)})`}
+          >
+            <Icon icon={mdiLock} size={1.5} />
+          </button>
+        ) : null}
         {this.state.tooltipEnabled && (
           <ReactTooltip
             id="tooltip-sidebar-button"

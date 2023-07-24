@@ -70,14 +70,17 @@ export default class SettingsStore extends TypedStore {
         this.all.app.lockingFeatureEnabled &&
         this.all.app.inactivityLock !== 0
       ) {
-        inactivityTimer = setTimeout(() => {
-          this.actions.settings.update({
-            type: 'app',
-            data: {
-              locked: true,
-            },
-          });
-        }, this.all.app.inactivityLock * 1000 * 60);
+        inactivityTimer = setTimeout(
+          () => {
+            this.actions.settings.update({
+              type: 'app',
+              data: {
+                locked: true,
+              },
+            });
+          },
+          this.all.app.inactivityLock * 1000 * 60,
+        );
       }
     });
     getCurrentWindow().on('focus', () => {
@@ -176,6 +179,7 @@ export default class SettingsStore extends TypedStore {
 
     const appSettings = this.all[type];
     if (Object.hasOwnProperty.call(appSettings, key)) {
+      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
       delete appSettings[key];
 
       this.actions.settings.update({
@@ -185,6 +189,7 @@ export default class SettingsStore extends TypedStore {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/ban-types
   _ensureMigrationAndMarkDone(migrationName: string, callback: Function): void {
     if (!this.all.migration[migrationName]) {
       callback();

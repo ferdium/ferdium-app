@@ -3,6 +3,7 @@ declare global {
     ferdium: any;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NodeJS {
     interface ProcessEnv {
       GITHUB_AUTH_TOKEN: string;

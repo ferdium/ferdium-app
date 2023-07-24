@@ -74,7 +74,6 @@ class AppLayoutContainer extends Component<IProps> {
 
     const workspacesDrawer = (
       <WorkspaceDrawer
-        // eslint-disable-next-line no-confusing-arrow
         getServicesForWorkspace={workspace =>
           workspace
             ? workspaceStore.getWorkspaceServices(workspace).map(s => s.name)

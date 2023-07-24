@@ -12,20 +12,20 @@ describe('getFerdiumVersion', () => {
     expect(result).toEqual(`v${baseVersion}`);
   });
 
-  it(`returns v6.0.0-beta.3`, () => {
+  it('returns v6.0.0-beta.3', () => {
     const result = update_helpers.getFerdiumVersion(
       '?version=6.0.0-beta.3',
       baseVersion,
     );
-    expect(result).toEqual(`v6.0.0-beta.3`);
+    expect(result).toEqual('v6.0.0-beta.3');
   });
 
-  it(`returns v6.0.0`, () => {
+  it('returns v6.0.0', () => {
     const result = update_helpers.getFerdiumVersion(
       '?version=6.0.0',
       baseVersion,
     );
-    expect(result).toEqual(`v6.0.0`);
+    expect(result).toEqual('v6.0.0');
   });
 
   it(`returns ${baseVersion}`, () => {
@@ -46,38 +46,42 @@ describe('getFerdiumVersion', () => {
 });
 
 describe('updateVersionParse', () => {
-  it(`returns empty string for empty string`, () => {
+  it('returns empty string for empty string', () => {
     const result = update_helpers.updateVersionParse('');
     expect(result).toEqual('');
   });
-  it(`returns '?version=x.x for x.x`, () => {
+  it("returns '?version=x.x for x.x", () => {
     const result = update_helpers.updateVersionParse('6.0.0');
     expect(result).toEqual('?version=6.0.0');
   });
 });
 
 describe('onAuthGoToReleaseNotes', () => {
-  it(`returns '#/releasenotes' string for empty string`, () => {
+  it("returns '#/releasenotes' string for empty string", () => {
     const result = update_helpers.onAuthGoToReleaseNotes('', '');
     expect(result).toEqual('#/releasenotes');
   });
 
-  it(`returns '#/releasenotes' string for empty string`, () => {
+  // eslint-disable-next-line jest/no-identical-title
+  it("returns '#/releasenotes' string for empty string", () => {
     const result = update_helpers.onAuthGoToReleaseNotes('', '?version=6.0.0');
     expect(result).toEqual('#/releasenotes?version=6.0.0');
   });
 
-  it(`returns '#/releasenotes' string for empty string`, () => {
+  // eslint-disable-next-line jest/no-identical-title
+  it("returns '#/releasenotes' string for empty string", () => {
     const result = update_helpers.onAuthGoToReleaseNotes('');
     expect(result).toEqual('#/releasenotes');
   });
 
-  it(`returns '#/releasenotes' string for empty string`, () => {
+  // eslint-disable-next-line jest/no-identical-title
+  it("returns '#/releasenotes' string for empty string", () => {
     const result = update_helpers.onAuthGoToReleaseNotes('#/auth', '');
     expect(result).toEqual('#/auth/releasenotes');
   });
 
-  it(`returns '#/releasenotes' string for empty string`, () => {
+  // eslint-disable-next-line jest/no-identical-title
+  it("returns '#/releasenotes' string for empty string", () => {
     const result = update_helpers.onAuthGoToReleaseNotes(
       '#/auth',
       '?version=6.0.0',
@@ -85,7 +89,8 @@ describe('onAuthGoToReleaseNotes', () => {
     expect(result).toEqual('#/auth/releasenotes?version=6.0.0');
   });
 
-  it(`returns '#/releasenotes' string for empty string`, () => {
+  // eslint-disable-next-line jest/no-identical-title
+  it("returns '#/releasenotes' string for empty string", () => {
     const result = update_helpers.onAuthGoToReleaseNotes('#/auth');
     expect(result).toEqual('#/auth/releasenotes');
   });

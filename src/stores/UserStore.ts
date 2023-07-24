@@ -210,7 +210,7 @@ export default class UserStore extends TypedStore {
     currency,
   }): Promise<void> {
     // TODO: [TS DEBT] Need to find a way proper to implement promise's then and catch in request class
-    // @ts-ignore
+    // @ts-expect-error Fix me
     const authToken = await this.signupRequest.execute({
       firstname,
       lastname,
@@ -400,7 +400,7 @@ export default class UserStore extends TypedStore {
     const params = new URLSearchParams(parsedUrl.search.slice(1));
 
     // TODO: Remove the neccesity for `as string`
-    params.append('authToken', this.authToken as string);
+    params.append('authToken', this.authToken!);
 
     return `${parsedUrl.origin}${parsedUrl.pathname}?${params.toString()}`;
   }
