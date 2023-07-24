@@ -60,6 +60,7 @@ let mainWindow: BrowserWindow | undefined;
 let willQuitApp = false;
 let overrideAppQuitForUpdate = false;
 
+// eslint-disable-next-line unicorn/prefer-event-target
 export const appEvents = new EventEmitter();
 
 // Register methods to be called once the window has been loaded.
@@ -673,6 +674,7 @@ ipcMain.handle('get-desktop-capturer-sources', () =>
 );
 
 ipcMain.on('window.toolbar-double-clicked', () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   mainWindow?.isMaximized() ? mainWindow.unmaximize() : mainWindow?.maximize();
 });
 

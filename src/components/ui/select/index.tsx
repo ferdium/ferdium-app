@@ -301,11 +301,7 @@ class SelectComponent extends Component<IProps, IState> {
         this.select(Object.keys(options!)[selected]);
       }
 
-      if (
-        this.activeOptionRef?.current &&
-        this.scrollContainerRef &&
-        this.scrollContainerRef.current
-      ) {
+      if (this.activeOptionRef?.current && this.scrollContainerRef?.current) {
         const containerTopOffset = this.scrollContainerRef.current.offsetTop;
         const optionTopOffset = this.activeOptionRef.current.offsetTop;
 

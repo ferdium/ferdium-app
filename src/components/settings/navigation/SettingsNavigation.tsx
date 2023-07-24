@@ -53,10 +53,6 @@ interface IProps extends Partial<StoresProps>, WrappedComponentProps {
 @inject('stores', 'actions')
 @observer
 class SettingsNavigation extends Component<IProps> {
-  constructor(props: IProps) {
-    super(props);
-  }
-
   handleLogout(): void {
     const isUsingWithoutAccount =
       this.props.stores!.settings.app.server === LOCAL_SERVER;
@@ -186,7 +182,7 @@ class SettingsNavigation extends Component<IProps> {
         <span className="settings-navigation__expander" />
         <button
           type="button"
-          // @ts-ignore
+          // @ts-expect-error  Fix me
           to="/auth/logout" // TODO: [TS DEBT] Need to check if button take this prop
           className="settings-navigation__link"
           onClick={this.handleLogout.bind(this)}

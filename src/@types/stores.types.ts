@@ -59,6 +59,7 @@ interface Actions {
 interface Api {
   app: AppStore;
   features: FeaturesStore;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   local: {};
   recipePreviews: RecipePreviewsStore;
   recipes: RecipeStore;

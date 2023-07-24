@@ -99,7 +99,7 @@ class TabBar extends Component<IProps> {
     return (
       <div>
         <TabBarSortableList
-          // @ts-ignore
+          // @ts-expect-error Fix me
           services={services}
           setActive={setActive}
           onSortEnd={this.onSortEnd}

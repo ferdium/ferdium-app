@@ -15,6 +15,7 @@ export function loadRecipeConfig(recipeId: string) {
   try {
     const configPath = `${recipeId}/package.json`;
     // Delete module from cache
+    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
     delete require.cache[require.resolve(configPath)];
 
     // eslint-disable-next-line import/no-dynamic-require

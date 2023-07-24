@@ -700,6 +700,7 @@ class FranzMenu implements StoresProps {
 
     // Don't initialize when window['ferdium'] is undefined
     if (window['ferdium'] === undefined) {
+      // eslint-disable-next-line no-console
       console.log('skipping menu init');
       return;
     }
@@ -1010,6 +1011,7 @@ class FranzMenu implements StoresProps {
         },
       ];
 
+      // eslint-disable-next-line unicorn/prefer-at
       (tpl[tpl.length - 1].submenu as MenuItemConstructorOptions[]).push(
         {
           type: 'separator',
@@ -1027,6 +1029,7 @@ class FranzMenu implements StoresProps {
 
       tpl[5].submenu = this.todosMenu();
 
+      // eslint-disable-next-line unicorn/prefer-at
       (tpl[tpl.length - 1].submenu as MenuItemConstructorOptions[]).push(
         {
           type: 'separator',

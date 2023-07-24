@@ -41,6 +41,7 @@ class Tab extends Component<IProps, IState> {
         <div className="content-tabs__tabs">
           {Children.map(children, (child, i) => (
             <button
+              // eslint-disable-next-line react/no-array-index-key
               key={i}
               className={classnames({
                 'content-tabs__item': true,
@@ -56,6 +57,7 @@ class Tab extends Component<IProps, IState> {
         <div className="content-tabs__content">
           {Children.map(children, (child, i) => (
             <div
+              // eslint-disable-next-line react/no-array-index-key
               key={i}
               className={classnames({
                 'content-tabs__item': true,

@@ -68,7 +68,6 @@ interface IProps extends WrappedComponentProps {
   isTokenExpired: boolean;
   isServerLogout: boolean;
   signupRoute: string;
-  // eslint-disable-next-line react/no-unused-prop-types
   passwordRoute: string; // TODO: Uncomment this line after fixing password recovery in-app
   error: GlobalError;
 }

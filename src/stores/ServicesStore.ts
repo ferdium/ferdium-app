@@ -435,7 +435,7 @@ export default class ServicesStore extends TypedStore {
 
   // TODO: This can actually return undefined as well
   one(id: string): Service {
-    return this.all.find(service => service.id === id) as Service;
+    return this.all.find(service => service.id === id)!;
   }
 
   async _showAddServiceInterface({ recipeId }) {

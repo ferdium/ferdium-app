@@ -26,6 +26,7 @@ const apiRequest = (url, route, method, auth) =>
         .then(data => data.json())
         .then(json => resolve(json));
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
       reject();
     }
@@ -197,7 +198,7 @@ class UserController {
       const services = await apiRequest(server, 'me/services', 'GET', token);
 
       for (const service of services) {
-        await this._createAndCacheService(service, serviceIdTranslation); // eslint-disable-line no-await-in-loop
+        await this._createAndCacheService(service, serviceIdTranslation);
       }
     } catch (error) {
       const errorMessage = `Could not import your services into our system.\nError: ${error}`;
@@ -209,7 +210,7 @@ class UserController {
       const workspaces = await apiRequest(server, 'workspace', 'GET', token);
 
       for (const workspace of workspaces) {
-        await this._createWorkspace(workspace, serviceIdTranslation); // eslint-disable-line no-await-in-loop
+        await this._createWorkspace(workspace, serviceIdTranslation);
       }
     } catch (error) {
       const errorMessage = `Could not import your workspaces into our system.\nError: ${error}`;
@@ -257,6 +258,7 @@ class UserController {
     try {
       file = JSON.parse(request.input('file'));
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
       return response.send(
         'Could not import: Invalid file, could not read file',
@@ -272,7 +274,7 @@ class UserController {
     // Import services
     try {
       for (const service of file.services) {
-        await this._createAndCacheService(service, serviceIdTranslation); // eslint-disable-line no-await-in-loop
+        await this._createAndCacheService(service, serviceIdTranslation);
       }
     } catch (error) {
       const errorMessage = `Could not import your services into our system.\nError: ${error}`;
@@ -282,7 +284,7 @@ class UserController {
     // Import workspaces
     try {
       for (const workspace of file.workspaces) {
-        await this._createWorkspace(workspace, serviceIdTranslation); // eslint-disable-line no-await-in-loop
+        await this._createWorkspace(workspace, serviceIdTranslation);
       }
     } catch (error) {
       const errorMessage = `Could not import your workspaces into our system.\nError: ${error}`;
@@ -302,6 +304,7 @@ class UserController {
     );
 
     if (workspace.services) {
+      // eslint-disable-next-line no-param-reassign
       workspace.services = convertToJSON(workspace.services);
     }
     const services =
@@ -311,6 +314,7 @@ class UserController {
           )
         : [];
     if (workspace.data) {
+      // eslint-disable-next-line no-param-reassign
       workspace.data = convertToJSON(workspace.data);
     }
 
@@ -334,9 +338,11 @@ class UserController {
     );
 
     // store the old serviceId as the key for future lookup
+    // eslint-disable-next-line no-param-reassign
     serviceIdTranslation[service.serviceId] = newServiceId;
 
     if (service.settings) {
+      // eslint-disable-next-line no-param-reassign
       service.settings = convertToJSON(service.settings);
     }
 

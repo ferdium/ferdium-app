@@ -8,8 +8,6 @@
   // "editor.fontFamily": "Fira Code",
   // "editor.fontLigatures": true,
   "editor.detectIndentation": false,
-  "editor.bracketPairColorization.enabled": true,
-  "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
   "editor.guides.bracketPairs": "active",
   "editor.codeActionsOnSave": {
     "source.fixAll": true,
@@ -19,21 +17,17 @@
   // "explorer.confirmDelete": false,
   // "explorer.confirmDragAndDrop": false,
 
-  "eslint.enable": true,
   "eslint.runtime": "node",
   "eslint.format.enable": true,
-  "eslint.alwaysShowStatus": true,
-  "eslint.workingDirectories": [ { "mode": "auto" } ],
+  "eslint.workingDirectories": [{ "mode": "auto" }],
   // "eslint.packageManager": "npm",
-  "eslint.validate": ["javascript","javascriptreact","typescript","typescriptreact"],
-  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-  "[javascript]": { "editor.defaultFormatter": "dbaeumer.vscode-eslint" },
-  "[javascriptreact]": { "editor.defaultFormatter": "dbaeumer.vscode-eslint" },
-  "[typescript]": { "editor.defaultFormatter": "dbaeumer.vscode-eslint" },
-  "[typescriptreact]": { "editor.defaultFormatter": "dbaeumer.vscode-eslint" },
-  "[json]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
-  "[jsonc]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
-
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
 
   // "workbench.colorTheme": "Visual Studio Dark",
   // "workbench.iconTheme": "material-icon-theme",
@@ -42,15 +36,12 @@
   // "terminal.integrated.copyOnSelection": true,
   "terminal.integrated.defaultProfile.osx": "zsh",
   "terminal.integrated.cursorBlinking": true,
-  "terminal.integrated.cursorStyle": "block",
-  "terminal.integrated.shellIntegration.enabled":true,
 
-  "git.mergeEditor": false,
   "git.enableSmartCommit": true,
   "diffEditor.ignoreTrimWhitespace": false,
 
   // "formatFiles.runOrganizeImports": true,
 
   "javascript.preferences.importModuleSpecifier": "relative",
-  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.importModuleSpecifier": "relative"
 }

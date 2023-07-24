@@ -8,6 +8,7 @@ export interface Actions {
   [key: string]: {
     [key: string]: {
       (...args: any[]): void;
+      // eslint-disable-next-line @typescript-eslint/ban-types
       listeners: Function[];
       notify: (params: any) => void;
       listen: (listener: (params: any) => void) => void;

@@ -52,8 +52,8 @@ function translatePopup(res, isError: boolean = false) {
       z-index: 999999;
       ${
         isError
-          ? `background: rgb(255 37 37);`
-          : `background: rgb(131 131 131);`
+          ? 'background: rgb(255 37 37);'
+          : 'background: rgb(131 131 131);'
       }
       border-radius: 8px;
       top: 5%;
@@ -148,7 +148,7 @@ const contextMenuStringTable: ContextMenuStringTable = {
   paste: () => 'Paste',
   pasteAndMatchStyle: () => 'Paste and match style',
   searchWith: ({ searchEngine }) => `Search with ${searchEngine}`,
-  translate: () => `Translate to ...`,
+  translate: () => 'Translate to ...',
   quickTranslate: ({ translatorLanguage }) =>
     `Translate to ${translatorLanguage}`,
   translateLanguage: ({ translatorLanguage }) => `${translatorLanguage}`,
@@ -798,6 +798,7 @@ export class ContextMenuBuilder {
     callback: {
       (dataURL: any): void;
       (dataURL: any): void;
+      // eslint-disable-next-line @typescript-eslint/unified-signatures
       (arg0: string): void;
     },
     outputFormat: string = 'image/png',

@@ -24,10 +24,6 @@ class Select extends Component<IProps> {
   private element: RefObject<HTMLSelectElement> =
     createRef<HTMLSelectElement>();
 
-  constructor(props: IProps) {
-    super(props);
-  }
-
   multipleChange(e: ChangeEvent<HTMLSelectElement>): void {
     e.preventDefault();
     if (!this.element.current) {

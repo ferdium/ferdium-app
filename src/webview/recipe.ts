@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
 /* eslint-disable import/no-dynamic-require */
-/* eslint-disable import/first */
+
 import { noop, debounce } from 'lodash';
 import { contextBridge, ipcRenderer } from 'electron';
 import { join } from 'path';
@@ -52,7 +52,7 @@ import Service from '../models/Service';
 // This will cause the service to fail loading
 // As the message API is not actually needed, we'll add this shim sendMessage
 // function in order for darkreader to continue working
-// @ts-ignore
+// @ts-expect-error Fix this
 window.chrome.runtime.sendMessage = noop;
 
 const debug = require('../preload-safe-debug')('Ferdium:Plugin');
@@ -143,9 +143,9 @@ class RecipeController {
     service: Service;
   } = {
     overrideSpellcheckerLanguage: false,
-    // @ts-ignore
+    // @ts-expect-error Fix this
     app: DEFAULT_APP_SETTINGS,
-    // @ts-ignore
+    // @ts-expect-error Fix this
     service: {
       isDarkModeEnabled: false,
       spellcheckerLanguage: '',
@@ -233,6 +233,7 @@ class RecipeController {
     const modulePath = join(recipe.path, 'webview.js');
     debug('module path', modulePath);
     // Delete module from cache
+    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
     delete require.cache[require.resolve(modulePath)];
     try {
       this.recipe = new RecipeWebview(
@@ -311,7 +312,7 @@ class RecipeController {
     debug('translatorEngine', this.settings.app.translatorEngine);
     debug('translatorLanguage', this.settings.app.translatorLanguage);
 
-    if (this.userscript && this.userscript.internal_setSettings) {
+    if (this.userscript?.internal_setSettings) {
       this.userscript.internal_setSettings(this.settings);
     }
 
@@ -339,7 +340,7 @@ class RecipeController {
       'Darkmode enabled?',
       this.settings.service.isDarkModeEnabled,
       'Dark theme active?',
-      // @ts-ignore
+      // @ts-expect-error Fix this
       this.settings.app.isDarkThemeActive,
     );
 
@@ -356,7 +357,7 @@ class RecipeController {
       debug('Enable dark mode');
 
       // Check if recipe has a custom dark mode handler
-      if (this.recipe && this.recipe.darkModeHandler) {
+      if (this.recipe?.darkModeHandler) {
         debug('Using custom dark mode handler');
 
         // Remove other dark mode styles if they were already loaded
@@ -399,7 +400,7 @@ class RecipeController {
       debug('Remove dark mode');
       debug('DarkMode disabled - removing remaining styles');
 
-      if (this.recipe && this.recipe.darkModeHandler) {
+      if (this.recipe?.darkModeHandler) {
         // Remove other dark mode styles if they were already loaded
         if (this.hasUpdatedBeforeRecipeLoaded) {
           this.hasUpdatedBeforeRecipeLoaded = false;

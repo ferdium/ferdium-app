@@ -51,7 +51,7 @@ class FerdiumRoutes extends Component<IProps> {
     const errorProps = { error: routeProps.stores.globalError.error || {} };
 
     return (
-      // @ts-expect-error
+      // @ts-expect-error Fix me
       <HistoryRouter history={history}>
         <Routes>
           <Route path="/auth" element={<AuthLayoutContainer {...routeProps} />}>
@@ -129,7 +129,7 @@ class FerdiumRoutes extends Component<IProps> {
               />
               <Route
                 path="/settings/services"
-                /* @ts-ignore */
+                // @ts-expect-error Fix me
                 element={<ServicesScreen {...this.props} />}
               />
               <Route
@@ -138,37 +138,37 @@ class FerdiumRoutes extends Component<IProps> {
               />
               <Route
                 path={WORKSPACES_ROUTES.ROOT}
-                /* @ts-ignore */
+                // @ts-expect-error Fix me
                 element={<WorkspacesScreen {...this.props} />}
               />
               <Route
                 path={WORKSPACES_ROUTES.EDIT}
-                /* @ts-ignore */
+                // @ts-expect-error Fix me
                 element={<EditWorkspaceScreen {...this.props} />}
               />
               <Route
                 path="/settings/user"
-                /* @ts-ignore */
+                // @ts-expect-error Fix me
                 element={<AccountScreen {...this.props} />}
               />
               <Route
                 path="/settings/user/edit"
-                /* @ts-ignore */
+                // @ts-expect-error Fix me
                 element={<EditUserScreen {...this.props} />}
               />
               <Route
                 path="/settings/team"
-                /* @ts-ignore */
+                // @ts-expect-error Fix me
                 element={<TeamScreen {...this.props} />}
               />
               <Route
                 path="/settings/app"
-                /* @ts-ignore */
+                // @ts-expect-error Fix me
                 element={<EditSettingsScreen {...this.props} />}
               />
               <Route
                 path="/settings/invite"
-                /* @ts-ignore */
+                // @ts-expect-error Fix me
                 element={<InviteSettingsScreen {...this.props} />}
               />
               <Route

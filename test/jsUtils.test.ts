@@ -78,12 +78,14 @@ describe('jsUtils', () => {
   });
 
   describe('cleanseJSObject', () => {
-    xit('throws error for undefined input', () => {
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip('throws error for undefined input', () => {
       const result = jsUtils.cleanseJSObject(undefined);
       expect(result).toThrow();
     });
 
-    xit('throws error for null input', () => {
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip('throws error for null input', () => {
       const result = jsUtils.cleanseJSObject(null);
       expect(result).toThrow();
     });

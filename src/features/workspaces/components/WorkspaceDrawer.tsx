@@ -98,6 +98,7 @@ class WorkspaceDrawer extends Component<IProps> {
     try {
       getUserWorkspacesRequest.execute();
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error);
     }
   }
@@ -121,9 +122,9 @@ class WorkspaceDrawer extends Component<IProps> {
               workspaceActions.openWorkspaceSettings();
             }}
             data-tooltip-id="tooltip-workspaces-drawer"
-            data-tooltip-content={`${intl.formatMessage(
+            data-tooltip-content={intl.formatMessage(
               messages.workspacesSettingsTooltip,
-            )}`}
+            )}
           >
             <Icon
               icon={mdiCog}
