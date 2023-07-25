@@ -5,18 +5,20 @@
 
   .auth__container {
     background: $dark-theme-gray-darker;
-    box-shadow: 0 0 50px rgba($dark-theme-black, .2);
+    box-shadow: 0 0 50px rgba($dark-theme-black, 0.2);
   }
 
   .auth__logo.auth__logo--sm {
     border: none;
-    box-shadow: 0 0 6px rgba($dark-theme-black, .5);
+    box-shadow: 0 0 6px rgba($dark-theme-black, 0.5);
   }
 
   .auth__links {
     background: $dark-theme-gray-dark;
 
-    a { color: $dark-theme-text-color; }
+    a {
+      color: $dark-theme-text-color;
+    }
   }
 
   .welcome__featured-services {
@@ -26,7 +28,9 @@
   .legal {
     color: $dark-theme-text-color;
 
-    a { color: $dark-theme-gray-lightest; }
+    a {
+      color: $dark-theme-gray-lightest;
+    }
   }
 
   .locked__or_line {
@@ -53,14 +57,16 @@
   }
 
   .auth__container {
-    background: #FFF;
+    background: #fff;
     border-radius: $theme-border-radius;
     height: auto;
     margin: 40px auto 0;
     position: relative;
     width: 350px;
 
-    &.auth__container--signup { width: 450px; }
+    &.auth__container--signup {
+      width: 450px;
+    }
 
     &.auth__container--releasenotes {
       width: 90%;
@@ -77,16 +83,18 @@
     width: 150px;
 
     &.auth__logo--sm {
-      border: 4px solid #FFF;
+      border: 4px solid #fff;
       border-radius: 100%;
-      box-shadow: 0 0 6px rgba(black, .5);
+      box-shadow: 0 0 6px rgba(black, 0.5);
     }
   }
 
   .auth__form {
     padding: 20px;
 
-    h1 { text-align: center; }
+    h1 {
+      text-align: center;
+    }
   }
 
   .auth__button {
@@ -138,11 +146,11 @@
     margin-bottom: 20px;
 
     &:after {
-        background: #FFF;
-        content: 'or';
-        padding: 0 10px;
-        position: relative;
-        top: -9px;
+      background: #fff;
+      content: 'or';
+      padding: 0 10px;
+      position: relative;
+      top: -9px;
     }
   }
 
@@ -158,7 +166,9 @@
       margin-bottom: 8px;
       text-align: center;
 
-      &:last-of-type { margin-bottom: 0; }
+      &:last-of-type {
+        margin-bottom: 0;
+      }
     }
   }
 
@@ -175,24 +185,37 @@
     position: absolute;
     right: 25px;
 
-    img { width: 65px; }
+    img {
+      width: 65px;
+    }
   }
 
-  .auth__letter { margin-bottom: 30px; text-align: left; }
-  .scroll-container { z-index: 10; }
-  .info-bar { position: absolute; }
+  .auth__letter {
+    margin-bottom: 30px;
+    text-align: left;
+  }
+  .scroll-container {
+    z-index: 10;
+  }
+  .info-bar {
+    position: absolute;
+  }
 
   &__scroll-container {
     width: 100%;
     height: fit-content;
   }
 
-  .available-services { margin-bottom: 15px; }
+  .available-services {
+    margin-bottom: 15px;
+  }
 
   .unavailable-services {
     margin: 15px 0;
 
-    p { text-transform: capitalize; }
+    p {
+      text-transform: capitalize;
+    }
   }
 
   .legal {
@@ -220,7 +243,7 @@
   height: fit-content;
 
   &-item__secondary {
-    padding-left: 5px
+    padding-left: 5px;
   }
 }
 

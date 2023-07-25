@@ -1,8 +1,8 @@
-/** @type {import('@jest/types').Config.InitialOptions} */
 /*
  * For a detailed explanation regarding each configuration property and type check, visit:
  * https://jestjs.io/docs/configuration
  */
+/** @type {import('@jest/types').Config.InitialOptions} */
 module.exports = {
   // Automatically clear mock calls, instances and results before every test
   clearMocks: true,
@@ -31,8 +31,8 @@ module.exports = {
     '/src/internal-server',
   ],
 
-  "transform": {
-    "^.+\\.tsx?$": "esbuild-runner/jest",
-    "^.+\\.ts?$": "esbuild-runner/jest"
-  }
+  transform: {
+    '^.+\\.tsx?$': 'esbuild-runner/jest',
+    '^.+\\.ts?$': 'esbuild-runner/jest',
+  },
 };

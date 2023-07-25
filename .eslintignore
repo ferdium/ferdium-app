@@ -31,6 +31,3 @@ node_modules
 # package files
 package.json
 pnpm-lock.yaml
-
-# Json
-*.json

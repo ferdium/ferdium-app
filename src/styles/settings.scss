@@ -23,7 +23,6 @@
 }
 
 .theme__dark {
-
   .settings__hr {
     color: rgba($dark-theme-gray, 0.8);
   }
@@ -236,7 +235,7 @@
       @extend %headline;
 
       &__secondary {
-        padding-left: 5px
+        padding-left: 5px;
       }
     }
 
@@ -416,17 +415,20 @@
     }
   }
 
-  .settings__open-recipe-file-button, .settings__open-settings-file-button {
+  .settings__open-recipe-file-button,
+  .settings__open-settings-file-button {
     cursor: pointer;
     margin-right: 10px;
   }
-  .settings__open-recipe-file-container, .settings__open-settings-file-container {
+  .settings__open-recipe-file-container,
+  .settings__open-settings-file-container {
     margin-top: 20px;
     display: flex;
     height: auto !important;
   }
 
-  .settings__open-settings-cache-button, .settings__open-settings-cache-container {
+  .settings__open-settings-cache-button,
+  .settings__open-settings-cache-container {
     cursor: pointer;
     margin-right: 10px;
   }
@@ -586,7 +588,8 @@
     padding: 0 20px;
     text-decoration: none;
     @media (prefers-reduced-motion: no-preference) {
-      transition: background $theme-transition-time,
+      transition:
+        background $theme-transition-time,
         color $theme-transition-time;
     }
     border-bottom: 1px solid darken($theme-gray-lightest, 3%);
@@ -613,7 +616,8 @@
   .badge {
     display: initial;
     @media (prefers-reduced-motion: no-preference) {
-      transition: background $theme-transition-time,
+      transition:
+        background $theme-transition-time,
         color $theme-transition-time;
     }
   }
@@ -642,86 +646,86 @@
 .releasenotes__body {
   line-height: 150%;
 
-    h1 {
-      margin-top: 0;
-      font-weight: 400;
-      font-size: xx-large;
-      text-align: center;
-    }
+  h1 {
+    margin-top: 0;
+    font-weight: 400;
+    font-size: xx-large;
+    text-align: center;
+  }
 
-    h2 {
-      margin-top: 10%;
-      font-weight: 400;
-      font-size: x-large;
-      text-align: center;
-      margin-bottom: 2%;
-    }
+  h2 {
+    margin-top: 10%;
+    font-weight: 400;
+    font-size: x-large;
+    text-align: center;
+    margin-bottom: 2%;
+  }
 
-    h3 {
-      margin-top: 5%;
-      font-weight: 400;
-      font-size: large;
-      text-align: center;
-      margin-bottom: 2%;
-    }
+  h3 {
+    margin-top: 5%;
+    font-weight: 400;
+    font-size: large;
+    text-align: center;
+    margin-bottom: 2%;
+  }
 
-    h4 {
-      margin-top: 5%;
-      font-weight: 400;
-      font-size: medium;
-      text-align: center;
-      margin-bottom: 2%;
-    }
+  h4 {
+    margin-top: 5%;
+    font-weight: 400;
+    font-size: medium;
+    text-align: center;
+    margin-bottom: 2%;
+  }
 
-    h5 {
-      margin-top: 5%;
-      font-weight: 400;
-      text-align: center;
-      margin-bottom: 2%;
-    }
+  h5 {
+    margin-top: 5%;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 2%;
+  }
 
-    p {
-      margin-top: 4%;
-      margin-bottom: 4%;
-      user-select: text;
-    }
+  p {
+    margin-top: 4%;
+    margin-bottom: 4%;
+    user-select: text;
+  }
 
-    a {
-      color: rgb(0, 102, 255) !important;
-      user-select: text;
-    }
+  a {
+    color: rgb(0, 102, 255) !important;
+    user-select: text;
+  }
 
-    code {
-      background: #f4f4f4;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      padding: 0.2em 0.4em;
-      font-size: 85%;
-      color: #666;
-      font-family: monospace;
-      margin-bottom: 1.6em;
-      max-width: 100%;
-      overflow: auto;
-      user-select: text;
-    }
+  code {
+    background: #f4f4f4;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 0.2em 0.4em;
+    font-size: 85%;
+    color: #666;
+    font-family: monospace;
+    margin-bottom: 1.6em;
+    max-width: 100%;
+    overflow: auto;
+    user-select: text;
+  }
 
-    ul {
-      padding-left: 2rem;
-    }
+  ul {
+    padding-left: 2rem;
+  }
 
-    li {
-      margin-top: 2%;
-      list-style-type: disc;
-      user-select: text;
-    }
+  li {
+    margin-top: 2%;
+    list-style-type: disc;
+    user-select: text;
+  }
 
-    img {
-      max-width: 100%;
-      margin-top: 2%;
-      margin-bottom: 2%;
-      align-items: center;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
+  img {
+    max-width: 100%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    align-items: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
