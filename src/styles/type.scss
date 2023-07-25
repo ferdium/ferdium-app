@@ -59,7 +59,9 @@ button {
     position: relative;
     text-align: center;
     @media (prefers-reduced-motion: no-preference) {
-      transition: background 0.5s, color 0.5s;
+      transition:
+        background 0.5s,
+        color 0.5s;
     }
     cursor: pointer;
 

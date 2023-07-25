@@ -34,6 +34,7 @@ class LoaderComponent extends Component<IProps> {
           width={4}
           scale={0.75}
           color={color || classes.color}
+          // @ts-expect-error Property 'parentClassName' does not exist on type 'IntrinsicAttributes & IntrinsicClassAttributes<ReactLoader> & Readonly<LoaderProps></LoaderProps>
           parentClassName={classes.loader}
         />
       </div>

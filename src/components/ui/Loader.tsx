@@ -28,6 +28,7 @@ class LoaderComponent extends Component<IProps> {
       color === 'ACCENT' ? this.props.stores!.settings.app.accentColor : color;
 
     return (
+      // @ts-expect-error Property 'children' does not exist on type 'IntrinsicAttributes & IntrinsicClassAttributes<ReactLoader> & Readonly<LoaderProps>'
       <Loader
         loaded={loaded}
         width={4}

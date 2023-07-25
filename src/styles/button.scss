@@ -130,7 +130,9 @@
     color: $theme-brand-primary;
     padding: 10px 20px;
     @media (prefers-reduced-motion: no-preference) {
-      transition: background 0.5s, color 0.5s;
+      transition:
+        background 0.5s,
+        color 0.5s;
     }
     &:hover {
       background: darken($theme-brand-primary, 5%);

@@ -72,6 +72,7 @@ class InfoBar extends Component<IProps> {
                 lines={10}
                 scale={0.3}
                 color="#FFF"
+                // @ts-expect-error Property 'component' does not exist on type 'IntrinsicAttributes & IntrinsicClassAttributes<ReactLoader> & Readonly<LoaderProps>
                 component="span"
               />
               {ctaLabel}

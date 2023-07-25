@@ -3,7 +3,7 @@
 .info-bar {
   align-items: center;
   background: $theme-brand-primary;
-  box-shadow: 0 0 8px rgba(black, .2);
+  box-shadow: 0 0 8px rgba(black, 0.2);
   display: flex;
   height: 50px;
   justify-content: center;
@@ -15,21 +15,23 @@
   .info-bar__content {
     height: auto;
 
-    .mdi { margin-right: 5px; }
+    .mdi {
+      margin-right: 5px;
+    }
   }
 
   .info-bar__close {
-    color: #FFF;
+    color: #fff;
     position: absolute;
     right: 10px;
   }
 
   .info-bar__cta {
-    border-color: #FFF;
+    border-color: #fff;
     border-radius: $theme-border-radius-small;
     border-style: solid;
     border-width: 2px;
-    color: #FFF;
+    color: #fff;
     margin-left: 15px;
     padding: 3px 8px;
 
@@ -47,26 +49,34 @@
     color: white;
   }
 
-  &.info-bar--bottom { order: 10; }
+  &.info-bar--bottom {
+    order: 10;
+  }
 
   &.info-bar--primary {
     background: $theme-brand-primary;
-    color: #FFF;
+    color: #fff;
 
-    a { color: #FFF; }
+    a {
+      color: #fff;
+    }
   }
 
   &.info-bar--warning {
     background: $theme-brand-warning;
-    color: #FFF;
+    color: #fff;
 
-    a { color: #FFF; }
+    a {
+      color: #fff;
+    }
   }
 
   &.info-bar--danger {
     background: $theme-brand-danger;
-    color: #FFF;
+    color: #fff;
 
-    a { color: #FFF; }
+    a {
+      color: #fff;
+    }
   }
 }

@@ -206,6 +206,7 @@ class ButtonComponent extends Component<IProps, IState> {
               width={4}
               scale={0.45}
               // color={theme.buttonLoaderColor[buttonType!]}
+              // @ts-expect-error Property 'parentClassName' does not exist on type 'IntrinsicAttributes & IntrinsicClassAttributes<ReactLoader> & Readonly<LoaderProps>
               parentClassName={classes.loader}
             />
           )}

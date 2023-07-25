@@ -2,7 +2,9 @@
 @import './mixins.scss';
 
 .theme__dark .franz-form {
-  .franz-form__label { color: $dark-theme-text-color; }
+  .franz-form__label {
+    color: $dark-theme-text-color;
+  }
 
   .franz-form__input-wrapper {
     background: $dark-theme-gray-dark;
@@ -12,7 +14,9 @@
   .franz-form__input {
     color: $dark-theme-gray-lightest;
 
-    &::placeholder { color: $dark-theme-gray-lighter; }
+    &::placeholder {
+      color: $dark-theme-gray-lighter;
+    }
   }
 
   .franz-form__input-prefix,
@@ -26,7 +30,9 @@
     color: $dark-theme-gray-lighter;
   }
 
-  .franz-form__password-score { background: $dark-theme-gray-dark; }
+  .franz-form__password-score {
+    background: $dark-theme-gray-dark;
+  }
 }
 
 .franz-form {
@@ -38,11 +44,15 @@
 
     &.has-error {
       .franz-form__input-wrapper,
-      .franz-form__input-modifier { border-color: $theme-brand-danger; }
+      .franz-form__input-modifier {
+        border-color: $theme-brand-danger;
+      }
     }
   }
 
-  .franz-form__label { @include formLabel(); }
+  .franz-form__label {
+    @include formLabel();
+  }
 
   .franz-form__error {
     color: $theme-brand-danger;
@@ -68,7 +78,9 @@
     padding: 8px;
     width: 100%;
 
-    &::placeholder { color: lighten($theme-gray-light, 10%); }
+    &::placeholder {
+      color: lighten($theme-gray-light, 10%);
+    }
   }
 
   .franz-form__input-prefix,
@@ -101,10 +113,18 @@
       overflow: hidden;
       width: 100%;
 
-      &::-webkit-meter-bar { background: none; }
-      &::-webkit-meter-even-less-good-value { background: $theme-brand-danger; }
-      &::-webkit-meter-suboptimum-value { background: $theme-brand-warning; }
-      &::-webkit-meter-optimum-value { background: $theme-brand-success; }
+      &::-webkit-meter-bar {
+        background: none;
+      }
+      &::-webkit-meter-even-less-good-value {
+        background: $theme-brand-danger;
+      }
+      &::-webkit-meter-suboptimum-value {
+        background: $theme-brand-warning;
+      }
+      &::-webkit-meter-optimum-value {
+        background: $theme-brand-success;
+      }
     }
   }
 }

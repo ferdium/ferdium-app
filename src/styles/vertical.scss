@@ -23,8 +23,8 @@ $tabitem-bias: 30px;
     clip-path: inset(10px 10px 0 10px);
   }
 
-  >div:first-of-type {
-    overflow-x: scroll!important;
+  > div:first-of-type {
+    overflow-x: scroll !important;
     width: 100%;
   }
 
@@ -32,7 +32,6 @@ $tabitem-bias: 30px;
     flex-direction: row;
 
     .tab-item {
-
       &.is-active {
         border-left-width: 0px !important;
         border-top-width: 4px;
@@ -45,7 +44,7 @@ $tabitem-bias: 30px;
         padding-top: 4px;
       }
 
-      &.is-label-enabled{
+      &.is-label-enabled {
         min-width: 70px;
         max-width: 140px;
         height: $sidebar-width + 10;
@@ -61,7 +60,7 @@ $tabitem-bias: 30px;
       }
     }
   }
-  div{
+  div {
     overflow: hidden !important;
   }
 
@@ -92,8 +91,9 @@ $tabitem-bias: 30px;
     z-index: 1000;
     pointer-events: none;
     clip-path: inset(10px 0 10px 10px);
-    box-shadow: inset 0 0 15px 0 rgba(0, 0, 0, .12),
-                inset 0 0 2px 0 rgba(0, 0, 0, 0.36);
+    box-shadow:
+      inset 0 0 15px 0 rgba(0, 0, 0, 0.12),
+      inset 0 0 2px 0 rgba(0, 0, 0, 0.36);
   }
 }
 
@@ -103,8 +103,9 @@ $tabitem-bias: 30px;
   }
 
   .workspaces-drawer::after {
-    box-shadow: inset 0 0 10px 0 $dark-theme-black,
-                inset 0 0 2px 0 rgba(0, 0, 0, 0.4);
+    box-shadow:
+      inset 0 0 10px 0 $dark-theme-black,
+      inset 0 0 2px 0 rgba(0, 0, 0, 0.4);
   }
 }
 
@@ -114,7 +115,7 @@ $tabitem-bias: 30px;
   .sidebar__button--workspaces.is-active {
     height: $sidebar-width - $sidebar-bias;
   }
-  .tab-item .is-label-enabled{
+  .tab-item .is-label-enabled {
     height: $sidebar-width + $tabitem-bias;
   }
 }
