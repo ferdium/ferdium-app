@@ -182,7 +182,9 @@ git checkout nightly && git pull -r
 git checkout release
 git merge --no-ff nightly --no-verify
 # <manually resolve conflicts>
-# <manually bump version with 'beta' name (if beta) in `package.json` and `package-lock.json`>
+# <manually bump version with 'beta' name (if beta) in `package.json`>
+# <run the build script for your OS from the `scripts` folder>
+# <add all pertinent changes to git>
 # <create commit>
 # <create tag>
 git push
