@@ -309,7 +309,7 @@ jobs:
     name: 'windows ${{ github.event.inputs.message }}'
     needs: check_updates
     if: ${{ (needs.check_updates.outputs.should_run != 'false') && (github.event_name != 'workflow_dispatch' || (github.event_name == 'workflow_dispatch' && (contains(github.event.inputs.message, '[Windows]') || (!contains(github.event.inputs.message, '[macOS]') && !contains(github.event.inputs.message, '[Linux]') && !contains(github.event.inputs.message, '[Windows]'))))) }}
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
       - name: Set env vars
         run: |
@@ -356,10 +356,6 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
-      # TODO: Remove this once https://github.com/electron-userland/electron-builder/issues/6933#issuecomment-1213438889 is resolved
-      - name: Tweak pnpm.cjs
-        run: sed -i 's/\/usr\/bin\/env node/node/g' /c/npm/prefix/node_modules/pnpm/bin/pnpm.cjs
-        shell: bash
       - name: Install node dependencies
         uses: nick-fields/retry@v2.8.3
         with:
