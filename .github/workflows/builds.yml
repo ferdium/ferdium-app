@@ -23,7 +23,7 @@ on:
   workflow_dispatch:
     inputs:
       message:
-        description: "Message for build"
+        description: 'Message for build'
         required: true
   schedule:
     - cron: '0 0 * * *' # every night at 12 am
@@ -34,8 +34,8 @@ env:
 
 jobs:
   check_updates:
-    runs-on: ubuntu-20.04
-    name: "Check latest commit: ${{ github.event.inputs.message }}"
+    runs-on: ubuntu-22.04
+    name: 'Check latest commit: ${{ github.event.inputs.message }}'
     outputs:
       should_run: ${{ steps.should_run.outputs.should_run }}
     steps:
@@ -46,17 +46,18 @@ jobs:
           ref: nightly
           submodules: recursive
           fetch-depth: 0 # Note: Needed to be able to pull the 'develop' branch as well for merging
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
       - name: Use Node.js specified in the '.nvmrc' file
         uses: actions/setup-node@v3
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
         with:
-          node-version-file: ".nvmrc"
-      - name: Install pnpm
-        if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
-        run: npm i -gf "pnpm@$(node -p 'require("./package.json").engines.pnpm')" && pnpm -v
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
       - name: Install node dependencies
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
-        uses: nick-fields/retry@v2.8.2
+        uses: nick-fields/retry@v2.8.3
         with:
           command: pnpm i
           timeout_minutes: 15
@@ -128,7 +129,7 @@ jobs:
           fi
 
   build_mac:
-    name: "macos ${{ github.event.inputs.message }}"
+    name: 'macos ${{ github.event.inputs.message }}'
     needs: check_updates
     if: ${{ (needs.check_updates.outputs.should_run != 'false') && (github.event_name != 'workflow_dispatch' || (github.event_name == 'workflow_dispatch' && (contains(github.event.inputs.message, '[macOS]') || (!contains(github.event.inputs.message, '[macOS]') && !contains(github.event.inputs.message, '[Linux]') && !contains(github.event.inputs.message, '[Windows]'))))) }}
     runs-on: macos-12
@@ -136,7 +137,6 @@ jobs:
       - name: Set env vars
         run: |
           echo "NPM_CACHE=$HOME/.npm" >> $GITHUB_ENV
-          echo "PNPM_CACHE=$HOME/.pnpm-store" >> $GITHUB_ENV
           echo "ELECTRON_CACHE=$HOME/.cache/electron" >> $GITHUB_ENV
           echo "ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder" >> $GITHUB_ENV
           echo "MANUAL_REBUILD_ON_NIGHTLY=${{ github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]') }}" >> $GITHUB_ENV
@@ -161,23 +161,24 @@ jobs:
         env:
           cache-name: cache-electron-modules
         with:
-          key: ${{ runner.os }}-${{ env.cache-name }}-${{ secrets.CACHE_VERSION }}-${{ hashFiles('./package-lock.json') }}
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ secrets.CACHE_VERSION }}-${{ hashFiles('./pnpm-lock.yaml') }}
           path: ${{ env.ELECTRON_CACHE }}
       - name: Cache electron-builder modules
         uses: actions/cache@v3
         env:
           cache-name: cache-electron-builder-modules
         with:
-          key: ${{ runner.os }}-${{ env.cache-name }}-${{ secrets.CACHE_VERSION }}-${{ hashFiles('./package-lock.json') }}
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ secrets.CACHE_VERSION }}-${{ hashFiles('./pnpm-lock.yaml') }}
           path: ${{ env.ELECTRON_BUILDER_CACHE }}
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
       - name: Use Node.js specified in the '.nvmrc' file
         uses: actions/setup-node@v3
         with:
-          node-version-file: ".nvmrc"
-      - name: Install pnpm
-        run: npm i -gf "pnpm@$(node -p 'require("./package.json").engines.pnpm')" && pnpm -v
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
       - name: Install node dependencies
-        uses: nick-fields/retry@v2.8.2
+        uses: nick-fields/retry@v2.8.3
         with:
           command: pnpm i
           timeout_minutes: 15
@@ -207,15 +208,14 @@ jobs:
         shell: bash
 
   build_linux:
-    name: "ubuntu ${{ github.event.inputs.message }}"
+    name: 'ubuntu ${{ github.event.inputs.message }}'
     needs: check_updates
     if: ${{ (needs.check_updates.outputs.should_run != 'false') && (github.event_name != 'workflow_dispatch' || (github.event_name == 'workflow_dispatch' && (contains(github.event.inputs.message, '[Linux]') || (!contains(github.event.inputs.message, '[macOS]') && !contains(github.event.inputs.message, '[Linux]') && !contains(github.event.inputs.message, '[Windows]'))))) }}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Set env vars
         run: |
           echo "NPM_CACHE=$HOME/.npm" >> $GITHUB_ENV
-          echo "PNPM_CACHE=$HOME/.pnpm-store" >> $GITHUB_ENV
           echo "ELECTRON_CACHE=$HOME/.cache/electron" >> $GITHUB_ENV
           echo "ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder" >> $GITHUB_ENV
           echo "MANUAL_REBUILD_ON_NIGHTLY=${{ github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]') }}" >> $GITHUB_ENV
@@ -240,23 +240,24 @@ jobs:
         env:
           cache-name: cache-electron-modules
         with:
-          key: ${{ runner.os }}-${{ env.cache-name }}-${{ secrets.CACHE_VERSION }}-${{ hashFiles('./package-lock.json') }}
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ secrets.CACHE_VERSION }}-${{ hashFiles('./pnpm-lock.yaml') }}
           path: ${{ env.ELECTRON_CACHE }}
       - name: Cache electron-builder modules
         uses: actions/cache@v3
         env:
           cache-name: cache-electron-builder-modules
         with:
-          key: ${{ runner.os }}-${{ env.cache-name }}-${{ secrets.CACHE_VERSION }}-${{ hashFiles('./package-lock.json') }}
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ secrets.CACHE_VERSION }}-${{ hashFiles('./pnpm-lock.yaml') }}
           path: ${{ env.ELECTRON_BUILDER_CACHE }}
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
       - name: Use Node.js specified in the '.nvmrc' file
         uses: actions/setup-node@v3
         with:
-          node-version-file: ".nvmrc"
-      - name: Install pnpm
-        run: npm i -gf "pnpm@$(node -p 'require("./package.json").engines.pnpm')" && pnpm -v
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
       - name: Install node dependencies
-        uses: nick-fields/retry@v2.8.2
+        uses: nick-fields/retry@v2.8.3
         with:
           command: pnpm i
           timeout_minutes: 15
@@ -305,16 +306,15 @@ jobs:
         shell: bash
 
   build_windows:
-    name: "windows ${{ github.event.inputs.message }}"
+    name: 'windows ${{ github.event.inputs.message }}'
     needs: check_updates
     if: ${{ (needs.check_updates.outputs.should_run != 'false') && (github.event_name != 'workflow_dispatch' || (github.event_name == 'workflow_dispatch' && (contains(github.event.inputs.message, '[Windows]') || (!contains(github.event.inputs.message, '[macOS]') && !contains(github.event.inputs.message, '[Linux]') && !contains(github.event.inputs.message, '[Windows]'))))) }}
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
       - name: Set env vars
         run: |
           echo "HOME=$USERPROFILE" >> $GITHUB_ENV
           echo "NPM_CACHE=$USERPROFILE/.npm" >> $GITHUB_ENV
-          echo "PNPM_CACHE=$USERPROFILE/.pnpm-store" >> $GITHUB_ENV
           echo "ELECTRON_CACHE=$USERPROFILE/.cache/electron" >> $GITHUB_ENV
           echo "ELECTRON_BUILDER_CACHE=$USERPROFILE/.cache/electron-builder" >> $GITHUB_ENV
           echo "MANUAL_REBUILD_ON_NIGHTLY=${{ github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]') }}" >> $GITHUB_ENV
@@ -340,27 +340,24 @@ jobs:
         env:
           cache-name: cache-electron-modules
         with:
-          key: ${{ runner.os }}-${{ env.cache-name }}-${{ secrets.CACHE_VERSION }}-${{ hashFiles('./package-lock.json') }}
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ secrets.CACHE_VERSION }}-${{ hashFiles('./pnpm-lock.yaml') }}
           path: ${{ env.ELECTRON_CACHE }}
       - name: Cache electron-builder modules
         uses: actions/cache@v3
         env:
           cache-name: cache-electron-builder-modules
         with:
-          key: ${{ runner.os }}-${{ env.cache-name }}-${{ secrets.CACHE_VERSION }}-${{ hashFiles('./package-lock.json') }}
+          key: ${{ runner.os }}-${{ env.cache-name }}-${{ secrets.CACHE_VERSION }}-${{ hashFiles('./pnpm-lock.yaml') }}
           path: ${{ env.ELECTRON_BUILDER_CACHE }}
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
       - name: Use Node.js specified in the '.nvmrc' file
         uses: actions/setup-node@v3
         with:
-          node-version-file: ".nvmrc"
-      - name: Install pnpm
-        run: npm i -gf "pnpm@$(node -p 'require(\"./package.json\").engines.pnpm')" && pnpm -v
-      # TODO: Remove this once https://github.com/electron-userland/electron-builder/issues/6933#issuecomment-1213438889 is resolved
-      - name: Tweak pnpm.cjs
-        run: sed -i 's/\/usr\/bin\/env node/node/g' /c/npm/prefix/node_modules/pnpm/bin/pnpm.cjs
-        shell: bash
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
       - name: Install node dependencies
-        uses: nick-fields/retry@v2.8.2
+        uses: nick-fields/retry@v2.8.3
         with:
           command: pnpm i
           timeout_minutes: 15
