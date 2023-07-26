@@ -249,6 +249,10 @@ export class ContextMenuBuilder {
       return this.buildMenuForImage(info);
     }
 
+    if (info.mediaType === 'video') {
+      return this.buildMenuForVideo(info);
+    }
+
     if (
       info.isEditable ||
       (info.inputFieldType && info.inputFieldType !== 'none')
@@ -402,6 +406,40 @@ export class ContextMenuBuilder {
     this.addInspectElement(menu, menuInfo);
     // @ts-expect-error Expected 1 arguments, but got 2.
     this.processMenu(menu, menuInfo);
+
+    return menu;
+  }
+
+  /**
+   * Builds a menu applicable to a video.
+   *
+   * @return {Menu}  The `Menu`
+   */
+  buildMenuForVideo(
+    menuInfo: IContextMenuParams,
+  ): Electron.CrossProcessExports.Menu {
+    const menu = new Menu();
+    const video = document.querySelectorAll('video')[0];
+
+    if (
+      document.pictureInPictureEnabled &&
+      !video.disablePictureInPicture &&
+      this.isSrcUrlValid(menuInfo)
+    ) {
+      menu.append(
+        new MenuItem({
+          type: 'checkbox',
+          label: 'Picture in picture',
+          enabled: true,
+          checked: !!document.pictureInPictureElement,
+          click: async () => {
+            await (document.pictureInPictureElement
+              ? document.exitPictureInPicture()
+              : video.requestPictureInPicture());
+          },
+        }),
+      );
+    }
 
     return menu;
   }
