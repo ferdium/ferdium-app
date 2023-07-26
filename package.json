@@ -21,6 +21,7 @@
     "node": "18.15.0",
     "pnpm": "8.6.2"
   },
+  "packageManager": "pnpm@8.6.2",
   "scripts": {
     "prepare": "is-ci || husky install",
     "start": "electron ./build",
