@@ -86,8 +86,7 @@ class Invite extends Component<IProps, IState> {
               },
             },
           }),
-          // TODO: [TS DEBT] need to fix this type once mobx-react-form is updated to next version
-        ] as any,
+        ],
       },
     });
   }
