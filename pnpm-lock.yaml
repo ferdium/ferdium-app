@@ -150,8 +150,8 @@ dependencies:
     specifier: 7.6.0
     version: 7.6.0(mobx@6.10.0)(react-dom@18.2.0)(react@18.2.0)
   mobx-react-form:
-    specifier: 3.2.0
-    version: 3.2.0(mobx@6.10.0)
+    specifier: 6.3.5
+    version: 6.3.5(mobx@6.10.0)
   moment:
     specifier: 2.29.4
     version: 2.29.4
@@ -9096,8 +9096,8 @@ packages:
       reactive-localstorage: 0.0.2
     dev: false
 
-  /mobx-react-form@3.2.0(mobx@6.10.0):
-    resolution: {integrity: sha512-7ddOvBulXW5VSMpxrok0A1VGZuWgn1cSvQ2HFXK2uMg631/37Anck7ASWEqK3AzKOaaP9/0kr7VCChqvhyotzQ==}
+  /mobx-react-form@6.3.5(mobx@6.10.0):
+    resolution: {integrity: sha512-AsnfL1MC9Jm2wcF6hr7ayZjmqwrYw37LHMRFcjvXkmCSFEXM0/qKPA3/Ex3TOL4gmCEoBVoV/XhhfIuj5csUgQ==}
     engines: {node: '>=8.0.0'}
     peerDependencies:
       mobx: ^6.0.0
