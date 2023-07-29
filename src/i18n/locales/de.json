@@ -22,6 +22,7 @@
   "feature.quickSwitch.title": "Schnellauswahl",
   "global.api.unhealthy": "Verbindung zu {serverNameParse} Online-Diensten kann nicht hergestellt werden",
   "global.cancel": "Abbrechen",
+  "global.clearCache": "Cache leeren",
   "global.edit": "Bearbeiten",
   "global.no": "Nein",
   "global.notConnectedToTheInternet": "Du bist nicht mit dem Internet verbunden.",

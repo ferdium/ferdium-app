@@ -22,6 +22,7 @@
   "feature.quickSwitch.title": "Changement rapide",
   "global.api.unhealthy": "Impossible de se connecter aux services en ligne de {serverNameParse}",
   "global.cancel": "Annuler",
+  "global.clearCache": "Vider le cache",
   "global.edit": "Éditer",
   "global.no": "Non",
   "global.notConnectedToTheInternet": "Vous n'êtes pas connecté à Internet.",
