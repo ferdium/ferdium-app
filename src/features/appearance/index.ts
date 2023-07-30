@@ -146,11 +146,12 @@ function generateServiceRibbonWidthStyle(
 ) {
   const width = Number(widthStr);
   const iconSize = Number(iconSizeStr) - iconSizeBias;
-  let fontSize = 11;
-  let tabItemHeightBias = -5;
-  let sidebarSizeBias = 22;
   const tabItemWidthBias = 3;
   const verticalStyleOffset = 29;
+
+  let fontSize: number;
+  let tabItemHeightBias: number;
+  let sidebarSizeBias: number;
 
   switch (width) {
     case 35: {

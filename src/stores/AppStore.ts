@@ -11,7 +11,7 @@ import { action, computed, makeObservable, observable } from 'mobx';
 import moment from 'moment';
 import AutoLaunch from 'auto-launch';
 import ms from 'ms';
-import { URL } from 'url';
+import { URL } from 'node:url';
 import { readJsonSync } from 'fs-extra';
 
 import { Stores } from '../@types/stores.types';

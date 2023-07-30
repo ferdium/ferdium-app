@@ -54,7 +54,7 @@ describe('jsUtils', () => {
 
   describe('convertToJSON', () => {
     it('returns undefined for undefined input', () => {
-      const result = jsUtils.convertToJSON(undefined);
+      const result = jsUtils.convertToJSON();
       expect(result).toEqual(undefined);
     });
 
@@ -80,7 +80,7 @@ describe('jsUtils', () => {
   describe('cleanseJSObject', () => {
     // eslint-disable-next-line jest/no-disabled-tests
     it.skip('throws error for undefined input', () => {
-      const result = jsUtils.cleanseJSObject(undefined);
+      const result = jsUtils.cleanseJSObject();
       expect(result).toThrow();
     });
 
@@ -110,7 +110,7 @@ describe('jsUtils', () => {
 
   describe('safeParseInt', () => {
     it('returns zero for undefined', () => {
-      expect(jsUtils.safeParseInt(undefined)).toEqual(0);
+      expect(jsUtils.safeParseInt()).toEqual(0);
     });
 
     it('returns zero for null', () => {

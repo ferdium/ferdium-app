@@ -1,5 +1,5 @@
 // This is taken from: https://benjamin-altpeter.de/shell-openexternal-dangers/
-import { URL } from 'url';
+import { URL } from 'node:url';
 import { ensureDirSync, existsSync } from 'fs-extra';
 import { shell } from 'electron';
 import normalizeUrl from 'normalize-url';

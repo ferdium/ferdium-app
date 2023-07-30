@@ -12,8 +12,8 @@ export interface IProps {
   title?: string; // it is used on Tabs.tsx
 }
 
-function TabItem({ children, title = '' }: IProps): ReactElement {
+const TabItem = ({ children, title = '' }: IProps): ReactElement => {
   return <Fragment key={title}>{children}</Fragment>;
-}
+};
 
 export default TabItem;

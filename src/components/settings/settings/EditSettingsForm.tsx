@@ -386,8 +386,8 @@ class EditSettingsForm extends Component<IProps, IState> {
     const { lockingFeatureEnabled, scheduledDNDEnabled, reloadAfterResume } =
       window['ferdium'].stores.settings.all.app;
 
-    let cacheSize: string;
-    let notCleared: boolean;
+    let cacheSize;
+    let notCleared;
 
     if (this.state.activeSetttingsTab === 'advanced') {
       const cacheSizeBytes = getCacheSize();

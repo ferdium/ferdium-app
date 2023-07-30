@@ -5,15 +5,17 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 2018,
+    ecmaVersion: 'latest',
     sourceType: 'module',
     project: './tsconfig.json',
   },
   ignorePatterns: ['node_modules', 'build', 'recipes'],
   extends: [
     'airbnb',
+    'plugin:react/jsx-runtime',
     'plugin:jest/recommended',
     'plugin:unicorn/recommended',
+    'plugin:sonar/recommended',
     'plugin:prettier/recommended',
   ],
   plugins: ['jest'],
@@ -28,7 +30,7 @@ module.exports = {
   },
   env: {
     browser: true,
-    es6: true,
+    es2024: true,
     node: true,
     jest: true,
   },
@@ -66,7 +68,7 @@ module.exports = {
         '@typescript-eslint/no-empty-interface': 0,
 
         // eslint-plugin-import
-        'import/no-extraneous-dependencies': 0, // various false positives, re-enable at some point
+        'import/no-extraneous-dependencies': 0,
       },
     },
   ],
@@ -75,8 +77,6 @@ module.exports = {
     'array-callback-return': 1,
     'class-methods-use-this': 0,
     'consistent-return': 1,
-    // TODO: Turn this rule on once the js to ts conversions are over
-    // This is necessary as workaround for window.ferdium vs window['ferdium']
     'no-await-in-loop': 1,
     'no-return-assign': 1,
     'no-console': [
@@ -94,26 +94,20 @@ module.exports = {
     'import/prefer-default-export': 0,
     'import/no-unresolved': 0,
     'import/no-cycle': 1,
-    'import/no-extraneous-dependencies': 0, // various false positives, re-enable at some point
+    'import/no-extraneous-dependencies': 0,
     // eslint-plugin-react
     'react/forbid-prop-types': 1,
     'react/destructuring-assignment': 0,
-    'react/react-in-jsx-scope': 0,
     'react/jsx-filename-extension': 1,
-    'react/jsx-one-expression-per-line': 0,
     'react/jsx-no-bind': 1,
     'react/jsx-props-no-spreading': 0,
     'react/prefer-stateless-function': 1,
-    'react/prop-types': 0,
     'react/static-property-placement': 0,
     'react/state-in-constructor': 1,
     'react/sort-comp': 0,
     'react/function-component-definition': 0,
-    'react/jsx-no-useless-fragment': 0,
-    // TODO: [TS DEBT] should remove below config once application converted to TS
     'react/default-props-match-prop-types': 0,
     'react/require-default-props': 0,
-    'react/button-has-type': 0,
     'react/no-unused-prop-types': 1,
     'react/no-deprecated': 1,
     // eslint-plugin-jsx-a11y
@@ -133,10 +127,8 @@ module.exports = {
     // eslint-plugin-unicorn
     'unicorn/filename-case': 0,
     'unicorn/no-null': 0,
-    'unicorn/no-useless-undefined': 0,
     'unicorn/prefer-module': 0,
     'unicorn/prevent-abbreviations': 0,
-    'unicorn/prefer-node-protocol': 0,
     'unicorn/import-style': [
       2,
       {
@@ -148,7 +140,7 @@ module.exports = {
       },
     ],
     'unicorn/consistent-destructuring': 0,
-    // INFO: Turned off due to src/internal-server/database/factory.js
-    'unicorn/no-empty-file': 0,
+    // eslint-plugin-sonar
+    'sonar/function-name': 0,
   },
 };

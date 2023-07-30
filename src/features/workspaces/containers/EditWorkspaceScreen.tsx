@@ -9,11 +9,10 @@ import { workspaceStore } from '../index';
 import { deleteWorkspaceRequest, updateWorkspaceRequest } from '../api';
 
 class EditWorkspaceScreen extends Component<StoresProps> {
-  // @ts-expect-error Not all code paths return a value.
   onDelete = () => {
     const { workspaceBeingEdited } = workspaceStore;
     const { actions } = this.props;
-    if (!workspaceBeingEdited) return null;
+    if (!workspaceBeingEdited) return;
     actions.workspaces.delete({ workspace: workspaceBeingEdited });
   };
 

@@ -91,6 +91,7 @@ class Welcome extends Component<IProps> {
             className="settings__hr-sections"
             style={{ marginTop: 24, marginBottom: 24, borderStyle: 'solid' }}
           />
+          {/* eslint-disable-next-line react/button-has-type */}
           <button
             className="button"
             onClick={this.useLocalServer.bind(this)}

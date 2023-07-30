@@ -6,7 +6,7 @@ const { validateAll } = use('Validator');
 
 const fetch = require('node-fetch');
 const { v4: uuid } = require('uuid');
-const crypto = require('crypto');
+const crypto = require('node:crypto');
 const { DEFAULT_APP_SETTINGS } = require('../../../../config');
 const { convertToJSON } = require('../../../../jsUtils');
 const { API_VERSION } = require('../../../../environment-remote');
@@ -224,11 +224,7 @@ class UserController {
   }
 
   // Account import/export
-  async export({
-    // eslint-disable-next-line no-unused-vars
-    auth,
-    response,
-  }) {
+  async export({ _auth, response }) {
     const allServices = await Service.all();
     const services = allServices.toJSON();
     const allWorkspaces = await Workspace.all();

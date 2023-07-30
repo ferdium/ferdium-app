@@ -9,7 +9,7 @@ import {
   BrowserWindow,
   NativeImage,
 } from 'electron';
-import { join } from 'path';
+import { join } from 'node:path';
 import macosVersion from 'macos-version';
 import { isMac, isWindows, isLinux } from '../environment';
 
