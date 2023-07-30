@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import Icon from '@mdi/react';
 import classnames from 'classnames';
 import { Property } from 'csstype';
@@ -135,7 +136,7 @@ interface IProps extends IFormField, WithStylesProps<typeof styles> {
   label?: string;
   disabled?: boolean;
   id?: string;
-  type?: 'button' | 'reset' | 'submit' | undefined;
+  type?: 'button' | 'reset' | 'submit';
   onClick?: MouseEventHandler<HTMLInputElement>;
   buttonType?: ButtonType;
   loaded?: boolean;

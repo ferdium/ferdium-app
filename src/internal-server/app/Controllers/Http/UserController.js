@@ -4,7 +4,6 @@ const Service = use('App/Models/Service');
 const Workspace = use('App/Models/Workspace');
 const { validateAll } = use('Validator');
 
-const btoa = require('btoa');
 const fetch = require('node-fetch');
 const { v4: uuid } = require('uuid');
 const crypto = require('crypto');
@@ -152,7 +151,9 @@ class UserController {
     // Try to get an authentication token
     let token;
     try {
-      const basicToken = btoa(`${email}:${hashedPassword}`);
+      const basicToken = Buffer.from(`${email}:${hashedPassword}`).toString(
+        'base64',
+      );
 
       const rawResponse = await fetch(`${server}/${API_VERSION}/auth/login`, {
         method: 'POST',

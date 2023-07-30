@@ -7,13 +7,6 @@ import { Theme } from '../../../themes';
 import Icon from '../icon';
 import Badge from './index';
 
-interface IProps extends WithStylesProps<typeof styles> {
-  badgeClasses?: string;
-  iconClasses?: string;
-  inverted?: boolean;
-  className?: string;
-}
-
 const styles = (theme: Theme) => ({
   badge: {
     height: 'auto',
@@ -31,6 +24,13 @@ const styles = (theme: Theme) => ({
     fill: theme.styleTypes.primary.accent,
   },
 });
+
+interface IProps extends WithStylesProps<typeof styles> {
+  badgeClasses?: string;
+  iconClasses?: string;
+  inverted?: boolean;
+  className?: string;
+}
 
 class ProBadgeComponent extends Component<IProps> {
   render() {

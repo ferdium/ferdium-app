@@ -11,14 +11,6 @@ import injectStyle, { WithStylesProps } from 'react-jss';
 import { Theme } from '../../../themes';
 import { Omit } from '../typings/generic';
 
-interface IProps extends WithStylesProps<typeof styles> {
-  children: ReactNode;
-  level?: number;
-  className?: string;
-  id?: string;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
-}
-
 const styles = (theme: Theme) => ({
   headline: {
     fontWeight: 'lighter',
@@ -44,6 +36,14 @@ const styles = (theme: Theme) => ({
     fontSize: theme.uiFontSize - 1,
   },
 });
+
+interface IProps extends WithStylesProps<typeof styles> {
+  children: ReactNode;
+  level?: number;
+  className?: string;
+  id?: string;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+}
 
 class HeadlineComponent extends Component<IProps> {
   render(): ReactElement {

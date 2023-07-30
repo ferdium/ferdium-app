@@ -333,7 +333,7 @@ class EditSettingsForm extends Component<IProps, IState> {
     }
 
     this.props.form.submit({
-      onSuccess: form => {
+      onSuccess: (form: Form) => {
         const values = form.values();
         const { accentColor } = values;
         if (accentColor.trim().length === 0) {
@@ -386,8 +386,9 @@ class EditSettingsForm extends Component<IProps, IState> {
     const { lockingFeatureEnabled, scheduledDNDEnabled, reloadAfterResume } =
       window['ferdium'].stores.settings.all.app;
 
-    let cacheSize;
-    let notCleared;
+    let cacheSize: string;
+    let notCleared: boolean;
+
     if (this.state.activeSetttingsTab === 'advanced') {
       const cacheSizeBytes = getCacheSize();
       debug('cacheSizeBytes:', cacheSizeBytes);
@@ -740,38 +741,35 @@ class EditSettingsForm extends Component<IProps, IState> {
                     defaultAccentColor: DEFAULT_APP_SETTINGS.accentColor,
                   })}
                 </p>
-                <p>
-                  {intl.formatMessage(messages.overallTheme)}
-                  <div className="settings__settings-group__apply-color">
-                    <ColorPickerInput
-                      {...form.$('accentColor').bind()}
-                      onColorChange={this.submit.bind(this)}
-                      className="color-picker-input"
-                    />
-                  </div>
-                </p>
-                <p>
-                  {intl.formatMessage(messages.progressbarTheme)}
-                  <div className="settings__settings-group__apply-color">
-                    <ColorPickerInput
-                      {...form.$('progressbarAccentColor').bind()}
-                      onColorChange={this.submit.bind(this)}
-                      className="color-picker-input"
-                    />
-                  </div>
-                </p>
-                <p>
-                  <div className="settings__settings-group__apply-color">
-                    <Button
-                      buttonType="secondary"
-                      className="settings__settings-group__apply-color__button"
-                      label="Apply color"
-                      onClick={e => {
-                        this.submit(e);
-                      }}
-                    />
-                  </div>
-                </p>
+                <p>{intl.formatMessage(messages.overallTheme)}</p>
+                <div className="settings__settings-group__apply-color">
+                  <ColorPickerInput
+                    {...form.$('accentColor').bind()}
+                    name="accentColor"
+                    onColorChange={e => this.submit(e)}
+                    className="color-picker-input"
+                  />
+                </div>
+                <p>{intl.formatMessage(messages.progressbarTheme)}</p>
+                <div className="settings__settings-group__apply-color">
+                  <ColorPickerInput
+                    {...form.$('progressbarAccentColor').bind()}
+                    name="progressbarAccentColor"
+                    onColorChange={e => this.submit(e)}
+                    className="color-picker-input"
+                  />
+                </div>
+
+                <div className="settings__settings-group__apply-color">
+                  <Button
+                    buttonType="secondary"
+                    className="settings__settings-group__apply-color__button"
+                    label="Apply color"
+                    onClick={e => {
+                      this.submit(e);
+                    }}
+                  />
+                </div>
                 <HrSections />
 
                 <H2 className="settings__section_header">

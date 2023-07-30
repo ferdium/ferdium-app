@@ -675,7 +675,7 @@ export class ContextMenuBuilder {
       const clickHandler = menuInfo.srcURL.startsWith('blob:')
         ? () => {
             const urlWithoutBlob = menuInfo.srcURL.slice(5);
-            this.convertImageToBase64(menuInfo.srcURL, (dataURL: any) => {
+            this.convertImageToBase64(menuInfo.srcURL, (dataURL: string) => {
               const url = new window.URL(urlWithoutBlob);
               const fileName = url.pathname.slice(1);
               ipcRenderer.send('download-file', {
@@ -834,9 +834,8 @@ export class ContextMenuBuilder {
   convertImageToBase64(
     url: string,
     callback: {
-      (dataURL: any): void;
-      (dataURL: any): void;
-      // eslint-disable-next-line @typescript-eslint/unified-signatures
+      (dataURL: string): void;
+      (dataURL: string): void;
       (arg0: string): void;
     },
     outputFormat: string = 'image/png',

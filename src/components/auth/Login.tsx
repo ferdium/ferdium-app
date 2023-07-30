@@ -99,7 +99,7 @@ class Login extends Component<IProps> {
   submit(e: FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     this.form.submit({
-      onSuccess: form => {
+      onSuccess: (form: Form) => {
         this.props.onSubmit(form.values());
       },
       onError: noop,

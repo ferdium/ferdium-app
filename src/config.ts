@@ -92,9 +92,9 @@ export const NAVIGATION_BAR_BEHAVIOURS = {
   never: 'Never show navigation bar',
 };
 
-export const SEARCH_ENGINE_STARTPAGE = 'startPage';
-export const SEARCH_ENGINE_GOOGLE = 'google';
-export const SEARCH_ENGINE_DDG = 'duckDuckGo';
+const SEARCH_ENGINE_STARTPAGE = 'startPage';
+const SEARCH_ENGINE_GOOGLE = 'google';
+const SEARCH_ENGINE_DDG = 'duckDuckGo';
 export const SEARCH_ENGINE_NAMES = {
   [SEARCH_ENGINE_STARTPAGE]: 'Startpage',
   [SEARCH_ENGINE_GOOGLE]: 'Google',

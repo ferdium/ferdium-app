@@ -156,16 +156,6 @@ if (gotTheLock) {
   app.quit();
 }
 
-// Fix Unity indicator issue
-// https://github.com/electron/electron/issues/9046
-if (
-  isLinux &&
-  process.env.XDG_CURRENT_DESKTOP &&
-  ['Pantheon', 'Unity:Unity7'].includes(process.env.XDG_CURRENT_DESKTOP)
-) {
-  process.env.XDG_CURRENT_DESKTOP = 'Unity';
-}
-
 // Disable GPU acceleration
 if (
   !retrieveSettingValue(
@@ -674,8 +664,11 @@ ipcMain.handle('get-desktop-capturer-sources', () =>
 );
 
 ipcMain.on('window.toolbar-double-clicked', () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  mainWindow?.isMaximized() ? mainWindow.unmaximize() : mainWindow?.maximize();
+  if (mainWindow?.isMaximized()) {
+    mainWindow.unmaximize();
+  } else {
+    mainWindow?.maximize();
+  }
 });
 
 // Quit when all windows are closed.

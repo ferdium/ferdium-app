@@ -37,5 +37,3 @@ export class CommunityRecipesStore extends FeatureStore {
     );
   }
 }
-
-export default CommunityRecipesStore;

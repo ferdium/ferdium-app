@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import { mdiClose } from '@mdi/js';
 import classnames from 'classnames';
 import { noop } from 'lodash';
