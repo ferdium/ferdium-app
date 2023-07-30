@@ -224,7 +224,7 @@ class UserController {
   }
 
   // Account import/export
-  async export({ _auth, response }) {
+  async export({ response }) {
     const allServices = await Service.all();
     const services = allServices.toJSON();
     const allWorkspaces = await Workspace.all();
