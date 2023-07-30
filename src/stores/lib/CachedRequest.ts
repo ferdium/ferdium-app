@@ -1,5 +1,5 @@
 import { action } from 'mobx';
-import { isEqual, remove } from 'lodash';
+import { isEqual } from 'lodash';
 import Request from './Request';
 
 export default class CachedRequest extends Request {
@@ -108,10 +108,6 @@ export default class CachedRequest extends Request {
         0,
       );
     });
-  }
-
-  removeCacheForCallWith(...args: any): void {
-    remove(this._apiCalls, c => isEqual(c.args, args));
   }
 
   _addApiCall(args: any) {

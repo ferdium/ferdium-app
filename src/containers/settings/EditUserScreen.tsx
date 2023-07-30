@@ -1,6 +1,6 @@
 import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
+import { IntlShape, defineMessages, injectIntl } from 'react-intl';
 
 import { StoresProps } from '../../@types/ferdium-components.types';
 import { FormFields } from '../../@types/mobx-form.types';
@@ -50,7 +50,7 @@ const messages = defineMessages({
 });
 
 interface EditUserScreenProps extends StoresProps {
-  intl: any;
+  intl: IntlShape;
 }
 
 class EditUserScreen extends Component<EditUserScreenProps> {

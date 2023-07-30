@@ -5,17 +5,17 @@ import injectStyle, { WithStylesProps } from 'react-jss';
 
 import { Theme } from '../../../themes';
 
-interface IProps extends WithStylesProps<typeof styles> {
-  icon: string;
-  size?: number;
-  className?: string;
-}
-
 const styles = (theme: Theme) => ({
   icon: {
     fill: theme.colorText,
   },
 });
+
+interface IProps extends WithStylesProps<typeof styles> {
+  icon: string;
+  size?: number;
+  className?: string;
+}
 
 class IconComponent extends Component<IProps> {
   render(): ReactElement {

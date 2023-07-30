@@ -68,9 +68,6 @@ dependencies:
   auto-launch:
     specifier: 5.0.6
     version: 5.0.6
-  btoa:
-    specifier: 1.2.1
-    version: 1.2.1
   classnames:
     specifier: 2.3.2
     version: 2.3.2
@@ -276,9 +273,6 @@ devDependencies:
   '@types/color':
     specifier: 3.0.3
     version: 3.0.3
-  '@types/expect.js':
-    specifier: 0.3.29
-    version: 0.3.29
   '@types/fs-extra':
     specifier: 11.0.1
     version: 11.0.1
@@ -312,6 +306,9 @@ devDependencies:
   '@types/route-parser':
     specifier: 0.1.4
     version: 0.1.4
+  '@types/semver':
+    specifier: 7.5.0
+    version: 7.5.0
   '@types/tar':
     specifier: 6.1.5
     version: 6.1.5
@@ -417,6 +414,9 @@ devDependencies:
   tiny-glob:
     specifier: 0.2.9
     version: 0.2.9
+  ts-node:
+    specifier: 10.9.1
+    version: 10.9.1(@types/node@18.15.3)(typescript@5.0.4)
   typescript:
     specifier: 5.0.4
     version: 5.0.4
@@ -2421,10 +2421,6 @@ packages:
       '@types/ms': 0.7.31
     dev: true
 
-  /@types/expect.js@0.3.29:
-    resolution: {integrity: sha512-zLlr7lW52PKk7GAMJc2v8zaVJUgkrOJBa+6/aGbzq/TYsrqrNT719kkf/98lrgCiV+VO/uwJM0E328NGtcB5yQ==}
-    dev: true
-
   /@types/fs-extra@11.0.1:
     resolution: {integrity: sha512-MxObHvNl4A69ofaTRU8DFqvgzzv8s9yRtaPPm5gud9HDNvpB3GPQFvNuTWAI59B9huVGV5jXYJwbCsmBsOGYWA==}
     dependencies:
@@ -2568,13 +2564,8 @@ packages:
   /@types/scheduler@0.16.2:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
 
-  /@types/semver@7.3.13:
-    resolution: {integrity: sha512-21cFJr9z3g5dW8B0CVI9g2O9beqaThGQ6ZFBqHfwhzLDKUxaqTIy3vnfah/UPkfOiF2pLq+tGz+W8RyCskuslw==}
-    dev: false
-
   /@types/semver@7.5.0:
     resolution: {integrity: sha512-G8hZ6XJiHnuhQKR7ZmysCeJWE08o8T0AXtk5darsCaTVsYZhhgUrq53jizaR2FvsoeCwJhlmwTjkXBY5Pn/ZHw==}
-    dev: true
 
   /@types/stack-trace@0.0.29:
     resolution: {integrity: sha512-TgfOX+mGY/NyNxJLIbDWrO9DjGoVSW9+aB8H2yy1fy32jsvxijhmyJI9fDFgvz3YP4lvJaq9DzdR/M1bOgVc9g==}
@@ -3769,12 +3760,6 @@ packages:
   /bson@1.1.6:
     resolution: {integrity: sha512-EvVNVeGo4tHxwi8L6bPj3y3itEvStdwvvlojVxxbyYfoaxJ6keLgrTuKdyfEAszFK+H3olzBuafE0yoh0D1gdg==}
     engines: {node: '>=0.6.19'}
-    dev: false
-
-  /btoa@1.2.1:
-    resolution: {integrity: sha512-SB4/MIGlsiVkMcHmT+pSmIPoNDoHg+7cMzmt3Uxt628MTz2487DKSqK/fuhFBrkuqrYv5UCEnACpF4dTFNKc/g==}
-    engines: {node: '>= 0.4.0'}
-    hasBin: true
     dev: false
 
   /buffer-alloc-unsafe@1.1.0:
@@ -5106,7 +5091,7 @@ packages:
   /electron-updater@5.3.0:
     resolution: {integrity: sha512-iKEr7yQBcvnQUPnSDYGSWC9t0eF2YbZWeYYYZzYxdl+HiRejXFENjYMnYjoOm2zxyD6Cr2JTHZhp9pqxiXuCOw==}
     dependencies:
-      '@types/semver': 7.3.13
+      '@types/semver': 7.5.0
       builder-util-runtime: 9.1.1
       fs-extra: 10.1.0
       js-yaml: 4.1.0

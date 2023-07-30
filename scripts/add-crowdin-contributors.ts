@@ -53,7 +53,7 @@ console.log(JSON.stringify(members));
  * 5. Regenerate the README table using the CLI ('all-contributors generate')
  * Please check if the generated data is ok and no data is lost.
 */
-const list: any[] = [
+const list: { name: string; login: string; avatar_url: string }[] = [
   {
     name: 'vantezzen_',
     login: 'vantezzen_',
@@ -1064,21 +1064,27 @@ const list: any[] = [
   },
 ];
 
-const infoPath = path.join(__dirname, '..', '.all-contributorsrc');
-const info = fs.readJSONSync(infoPath);
-for (const user of list) {
-  if (user.login) {
-    info.contributors = allContributors.addContributorWithDetails({
-      ...user,
-      contributions: ['translation'],
-      profile: `https://crowdin.com/profile/${user.login}`,
-      options: {
-        contributors: info.contributors,
-      },
-    });
-  }
-}
+const allContributorsFile = path.join(__dirname, '..', '.all-contributorsrc');
+const allContributorsJSON = fs.readJSONSync(allContributorsFile);
 
-fs.writeJSONSync(infoPath, info, {
-  spaces: 2,
-});
+// eslint-disable-next-line unicorn/prefer-top-level-await
+(async () => {
+  allContributorsJSON.contributors = await Promise.all(
+    list
+      .filter(user => user.login)
+      .map(user => {
+        return allContributors.addContributorWithDetails({
+          ...user,
+          contributions: ['translation'],
+          profile: `https://crowdin.com/profile/${user.login}`,
+          options: {
+            contributors: allContributorsJSON.contributors,
+          },
+        });
+      }),
+  );
+
+  fs.writeJSONSync(allContributorsFile, allContributorsJSON, {
+    spaces: 2,
+  });
+})();

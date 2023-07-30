@@ -9,13 +9,6 @@ import Label from '../label';
 import { IFormField } from '../typings/generic';
 import Wrapper from '../wrapper';
 
-interface IProps
-  extends InputHTMLAttributes<HTMLInputElement>,
-    IFormField,
-    WithStylesProps<typeof styles> {
-  className?: string;
-}
-
 const buttonTransition: string = window?.matchMedia(
   '(prefers-reduced-motion: no-preference)',
 )
@@ -61,6 +54,13 @@ const styles = (theme: Theme) => ({
     },
   },
 });
+
+interface IProps
+  extends InputHTMLAttributes<HTMLInputElement>,
+    IFormField,
+    WithStylesProps<typeof styles> {
+  className?: string;
+}
 
 class Toggle extends Component<IProps> {
   render(): ReactElement {

@@ -47,6 +47,9 @@ module.exports = {
       parser: '@typescript-eslint/parser',
       plugins: [],
       rules: {
+        // eslint
+        'no-use-before-define': 2,
+
         // @typescript-eslint
         // This is necessary as workaround for window.ferdium vs window['ferdium']
         '@typescript-eslint/dot-notation': 0,

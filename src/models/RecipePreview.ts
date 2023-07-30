@@ -1,4 +1,4 @@
-interface IRecipePreview {
+export interface IRecipePreview {
   id: string;
   name: string;
   icon: string;

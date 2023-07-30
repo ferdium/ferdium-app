@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 
-import { defineMessages, injectIntl } from 'react-intl';
+import { IntlShape, defineMessages, injectIntl } from 'react-intl';
 import Markdown from 'markdown-to-jsx';
 import { mdiArrowLeftCircle } from '@mdi/js';
 import { openExternalUrl } from '../../helpers/url-helpers';
@@ -20,14 +20,14 @@ const messages = defineMessages({
 });
 
 interface IProps {
-  intl: any;
+  intl: IntlShape;
 }
 
-class AuthReleaseNotesScreen extends Component<IProps> {
-  state = {
-    data: '',
-  };
+interface IState {
+  data: string;
+}
 
+class AuthReleaseNotesScreen extends Component<IProps, IState> {
   constructor(props) {
     super(props);
 

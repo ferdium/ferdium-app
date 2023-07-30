@@ -2,13 +2,9 @@ import classnames from 'classnames';
 import { Component } from 'react';
 import injectStyle, { WithStylesProps } from 'react-jss';
 import ReactLoader from 'react-loader';
+import { Theme } from '../../../themes';
 
-interface IProps extends WithStylesProps<typeof styles> {
-  className?: string;
-  color?: string;
-}
-
-const styles = theme => ({
+const styles = (theme: Theme) => ({
   container: {
     position: 'relative',
     height: 60,
@@ -16,6 +12,11 @@ const styles = theme => ({
   loader: {},
   color: theme.colorText,
 });
+
+interface IProps extends WithStylesProps<typeof styles> {
+  className?: string;
+  color?: string;
+}
 
 class LoaderComponent extends Component<IProps> {
   render() {

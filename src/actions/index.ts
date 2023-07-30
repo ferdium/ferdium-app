@@ -10,7 +10,7 @@ import user from './user';
 import settings from './settings';
 import requests from './requests';
 import workspaces from '../features/workspaces/actions';
-import todos from '../features/todos/actions';
+import { todoActions } from '../features/todos/actions';
 
 const actions = {
   service,
@@ -26,5 +26,5 @@ const actions = {
 export default Object.assign(
   defineActions(actions, PropTypes.checkPropTypes),
   { workspaces },
-  { todos },
+  { todos: todoActions },
 );
