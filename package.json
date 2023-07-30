@@ -143,6 +143,7 @@
     "@types/node": "18.15.3",
     "@types/prop-types": "15.7.5",
     "@types/react": "18.2.12",
+    "@types/react-color": "3.0.6",
     "@types/react-dom": "18.2.5",
     "@types/react-loader": "2.4.5",
     "@types/react-transition-group": "4.4.6",

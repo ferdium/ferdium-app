@@ -1,21 +1,18 @@
 import {
+  ChangeEvent,
   Component,
   createRef,
   InputHTMLAttributes,
-  ReactElement,
   RefObject,
 } from 'react';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
-import { SliderPicker } from 'react-color';
+import { Color, ColorResult, SliderPicker } from 'react-color';
 import { noop } from 'lodash';
 import { FormFields } from '../../../@types/mobx-form.types';
 
 interface IProps extends InputHTMLAttributes<HTMLInputElement>, FormFields {
-  className?: string;
-  focus?: boolean;
-  onColorChange?: () => void;
-  error: string;
+  onColorChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 @observer
@@ -23,20 +20,13 @@ class ColorPickerInput extends Component<IProps> {
   private inputElement: RefObject<HTMLInputElement> =
     createRef<HTMLInputElement>();
 
-  componentDidMount(): void {
-    const { focus = false } = this.props;
-    if (focus && this.inputElement?.current) {
-      this.inputElement.current.focus();
-    }
+  onChange(color: ColorResult, event: ChangeEvent<HTMLInputElement>): void {
+    const { onColorChange, onChange = noop } = this.props;
+    onColorChange(event);
+    onChange(color.hex);
   }
 
-  onChange({ hex }: { hex: string }): void {
-    const { onColorChange = noop, onChange = noop } = this.props;
-    onColorChange();
-    onChange(hex);
-  }
-
-  render(): ReactElement {
+  render() {
     const {
       id,
       name,
@@ -45,7 +35,6 @@ class ColorPickerInput extends Component<IProps> {
       disabled = false,
       className = null,
       type = 'text',
-      error = '',
       onChange = noop,
     } = this.props;
 
@@ -53,20 +42,14 @@ class ColorPickerInput extends Component<IProps> {
       <div
         className={classnames({
           'franz-form__field': true,
-          'has-error': error,
           [`${className}`]: className,
         })}
         ref={this.inputElement}
       >
         <SliderPicker
-          color={value}
-          onChange={this.onChange.bind(this)}
-          id={`${id}-SliderPicker`}
-          type={type}
+          color={value as Color}
+          onChange={(color, event) => this.onChange(color, event)}
           className="franz-form__input"
-          name={name}
-          placeholder={placeholder}
-          disabled={disabled}
         />
         <div className="franz-form__input-wrapper franz-form__input-wrapper__color-picker">
           <input

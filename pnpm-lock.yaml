@@ -294,6 +294,9 @@ devDependencies:
   '@types/react':
     specifier: 18.2.12
     version: 18.2.12
+  '@types/react-color':
+    specifier: 3.0.6
+    version: 3.0.6
   '@types/react-dom':
     specifier: 18.2.5
     version: 18.2.5
@@ -2527,6 +2530,13 @@ packages:
   /@types/prop-types@15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
 
+  /@types/react-color@3.0.6:
+    resolution: {integrity: sha512-OzPIO5AyRmLA7PlOyISlgabpYUa3En74LP8mTMa0veCA719SvYQov4WLMsHvCgXP+L+KI9yGhYnqZafVGG0P4w==}
+    dependencies:
+      '@types/react': 18.2.12
+      '@types/reactcss': 1.2.6
+    dev: true
+
   /@types/react-dom@18.2.5:
     resolution: {integrity: sha512-sRQsOS/sCLnpQhR4DSKGTtWFE3FZjpQa86KPVbhUqdYMRZ9FEFcfAytKhR/vUG2rH1oFbOOej6cuD7MFSobDRQ==}
     dependencies:
@@ -2551,6 +2561,12 @@ packages:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
       csstype: 3.1.2
+
+  /@types/reactcss@1.2.6:
+    resolution: {integrity: sha512-qaIzpCuXNWomGR1Xq8SCFTtF4v8V27Y6f+b9+bzHiv087MylI/nTCqqdChNeWS7tslgROmYB7yeiruWX7WnqNg==}
+    dependencies:
+      '@types/react': 18.2.12
+    dev: true
 
   /@types/responselike@1.0.0:
     resolution: {integrity: sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==}
