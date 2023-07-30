@@ -9,8 +9,7 @@ export default async () => {
       return false;
     }
 
-    // eslint-disable-next-line global-require
-    const { getDoNotDisturb } = require('macos-notification-state');
+    const { getDoNotDisturb } = await import('macos-notification-state');
 
     if (!getDoNotDisturb) {
       debug("Could not load 'macos-notification-state' module");

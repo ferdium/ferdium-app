@@ -16,6 +16,7 @@ import windowStateKeeper from 'electron-window-state';
 import minimist from 'minimist';
 import ms from 'ms';
 import { EventEmitter } from 'node:events';
+import { initialize } from 'electron-react-titlebar/main';
 import { enableWebContents, initializeRemote } from './electron-util';
 import enforceMacOSAppLocation from './enforce-macos-app-location';
 
@@ -47,6 +48,7 @@ import { asarPath } from './helpers/asar-helpers';
 import { openExternalUrl } from './helpers/url-helpers';
 import userAgent from './helpers/userAgent-helpers';
 import { translateTo } from './helpers/translation-helpers';
+import { darkThemeGrayDarkest } from './themes/legacy';
 
 const debug = require('./preload-safe-debug')('Ferdium:App');
 
@@ -199,7 +201,7 @@ const createWindow = () => {
     'darkMode',
     DEFAULT_APP_SETTINGS.darkMode,
   )
-    ? '#1E1E1E'
+    ? darkThemeGrayDarkest
     : (retrieveSettingValue(
         'accentColor',
         DEFAULT_APP_SETTINGS.accentColor,
@@ -389,9 +391,11 @@ const createWindow = () => {
   });
 
   if (isMac) {
-    // eslint-disable-next-line global-require
-    const { askFormacOSPermissions } = require('./electron/macOSPermissions');
-    setTimeout(() => askFormacOSPermissions(mainWindow), ms('30s'));
+    import('./electron/macOSPermissions').then(macOSPermissions => {
+      const { askFormacOSPermissions } = macOSPermissions;
+
+      setTimeout(() => askFormacOSPermissions(mainWindow!), ms('30s'));
+    });
   }
 
   mainWindow.on('show', () => {
@@ -498,8 +502,7 @@ app.on('ready', () => {
     ]);
   }
 
-  // eslint-disable-next-line global-require
-  require('electron-react-titlebar/main').initialize();
+  initialize();
 
   createWindow();
 });
