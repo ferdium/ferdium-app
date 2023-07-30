@@ -197,6 +197,7 @@
     },
     "peerDependencyRules": {
       "allowedVersions": {
+        "@typescript-eslint/parser": "^6.0.0",
         "esbuild-sass-plugin>esbuild": "^0.16.7",
         "react-electron-web-view>react": "^18.0.0",
         "react-electron-web-view>react-dom": "^18.0.0",
