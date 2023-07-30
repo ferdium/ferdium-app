@@ -1,6 +1,6 @@
 // Note: This file has now become devoid of all references to values deduced from the remote process - all those now live in the `environment-remote.js` file
 
-import { arch, release } from 'os';
+import { arch, release } from 'node:os';
 
 export const isMac = process.platform === 'darwin';
 export const isWindows = process.platform === 'win32';

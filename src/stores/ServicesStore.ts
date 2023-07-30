@@ -3,7 +3,7 @@ import { action, reaction, computed, observable, makeObservable } from 'mobx';
 import { debounce, remove } from 'lodash';
 import ms from 'ms';
 import { ensureFileSync, pathExistsSync, writeFileSync } from 'fs-extra';
-import { join } from 'path';
+import { join } from 'node:path';
 
 import { Stores } from '../@types/stores.types';
 import { ApiInterface } from '../api';

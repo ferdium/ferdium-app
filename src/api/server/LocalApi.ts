@@ -1,4 +1,4 @@
-import { ExecException } from 'child_process';
+import { ExecException } from 'node:child_process';
 import { ipcRenderer } from 'electron';
 import fastFolderSize from 'fast-folder-size';
 

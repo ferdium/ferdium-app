@@ -191,27 +191,6 @@ class SelectComponent extends Component<IProps, IState> {
     this.arrowKeysHandler = this.arrowKeysHandler.bind(this);
   }
 
-  componentDidUpdate(): void {
-    const { open } = this.state;
-
-    if (this.searchInputRef?.current && open) {
-      this.searchInputRef.current.focus();
-    }
-  }
-
-  componentDidMount(): void {
-    if (this.inputRef?.current) {
-      const { data } = this.props;
-
-      if (data) {
-        for (const key of Object.keys(data))
-          this.inputRef.current!.dataset[key] = data[key];
-      }
-    }
-
-    window.addEventListener('keydown', this.arrowKeysHandler, false);
-  }
-
   UNSAFE_componentWillMount(): void {
     const { value } = this.props;
 
@@ -229,6 +208,27 @@ class SelectComponent extends Component<IProps, IState> {
     }
 
     this.setFilter();
+  }
+
+  componentDidMount(): void {
+    if (this.inputRef?.current) {
+      const { data } = this.props;
+
+      if (data) {
+        for (const key of Object.keys(data))
+          this.inputRef.current!.dataset[key] = data[key];
+      }
+    }
+
+    window.addEventListener('keydown', this.arrowKeysHandler, false);
+  }
+
+  componentDidUpdate(): void {
+    const { open } = this.state;
+
+    if (this.searchInputRef?.current && open) {
+      this.searchInputRef.current.focus();
+    }
   }
 
   componentWillUnmount(): void {

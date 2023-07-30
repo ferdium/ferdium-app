@@ -3,7 +3,7 @@
 
 import { noop, debounce } from 'lodash';
 import { contextBridge, ipcRenderer } from 'electron';
-import { join } from 'path';
+import { join } from 'node:path';
 import { autorun, computed, makeObservable, observable } from 'mobx';
 import { pathExistsSync, readFileSync } from 'fs-extra';
 import {
@@ -11,7 +11,7 @@ import {
   enable as enableDarkMode,
 } from 'darkreader';
 
-import { existsSync } from 'fs';
+import { existsSync } from 'node:fs';
 import ignoreList from './darkmode/ignore';
 import customDarkModeCss from './darkmode/custom';
 

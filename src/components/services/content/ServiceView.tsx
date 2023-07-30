@@ -136,6 +136,7 @@ class ServiceView extends Component<IProps, IState> {
           </>
         )}
         {service.isEnabled ? (
+          // eslint-disable-next-line react/jsx-no-useless-fragment
           <>
             {service.isHibernating ? (
               <div
@@ -173,6 +174,7 @@ class ServiceView extends Component<IProps, IState> {
             )}
           </>
         ) : (
+          // eslint-disable-next-line react/jsx-no-useless-fragment
           <>
             {service.isActive && (
               <ServiceDisabled

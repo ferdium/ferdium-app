@@ -1,4 +1,4 @@
-import { BinaryLike } from 'crypto';
+import { BinaryLike } from 'node:crypto';
 import { hash } from '../helpers/password-helpers';
 
 export default class UserApi {

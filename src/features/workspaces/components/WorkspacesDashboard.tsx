@@ -152,6 +152,7 @@ class WorkspacesDashboard extends Component<IProps> {
                   {intl.formatMessage(messages.workspacesRequestFailed)}
                 </Infobox>
               ) : (
+                // eslint-disable-next-line react/jsx-no-useless-fragment
                 <>
                   {workspaces.length === 0 ? (
                     <div className="align-middle settings__empty-state">

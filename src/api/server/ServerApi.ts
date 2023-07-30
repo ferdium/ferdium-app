@@ -1,6 +1,6 @@
 /* eslint-disable import/no-import-module-exports */
 /* eslint-disable global-require */
-import { join } from 'path';
+import { join } from 'node:path';
 import tar from 'tar';
 import {
   readdirSync,

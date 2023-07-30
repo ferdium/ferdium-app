@@ -12,7 +12,7 @@ import { defineMessages, IntlShape } from 'react-intl';
 import osName from 'os-name';
 import { fromJS } from 'immutable';
 import semver from 'semver';
-import os from 'os';
+import os from 'node:os';
 import {
   isWindows,
   cmdOrCtrlShortcutKey,

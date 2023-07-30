@@ -11,11 +11,11 @@ import {
 } from 'electron';
 
 import { emptyDirSync, ensureFileSync } from 'fs-extra';
-import { join } from 'path';
+import { join } from 'node:path';
 import windowStateKeeper from 'electron-window-state';
 import minimist from 'minimist';
 import ms from 'ms';
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import { enableWebContents, initializeRemote } from './electron-util';
 import enforceMacOSAppLocation from './enforce-macos-app-location';
 

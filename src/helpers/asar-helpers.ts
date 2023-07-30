@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { join } from 'node:path';
 
 export function asarPath(dir: string = '') {
   return dir.replace('app.asar', 'app.asar.unpacked');

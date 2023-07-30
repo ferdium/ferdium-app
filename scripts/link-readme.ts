@@ -7,7 +7,7 @@
  */
 
 import fs from 'fs-extra';
-import path from 'path';
+import path from 'node:path';
 
 console.log('Linking issues and PRs in README.md');
 

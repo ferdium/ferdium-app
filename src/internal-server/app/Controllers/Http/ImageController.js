@@ -1,6 +1,6 @@
 const Env = use('Env');
 
-const path = require('path');
+const path = require('node:path');
 const fs = require('fs-extra');
 const sanitize = require('sanitize-filename');
 

@@ -5,7 +5,7 @@
 |
 */
 
-const { timingSafeEqual } = require('crypto');
+const { timingSafeEqual } = require('node:crypto');
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route');
