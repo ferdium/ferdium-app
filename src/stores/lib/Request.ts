@@ -1,6 +1,7 @@
 import { observable, action, computed, makeObservable } from 'mobx';
 import { isEqual } from 'lodash/fp';
 
+// eslint-disable-next-line no-use-before-define
 type Hook = (request: Request) => void;
 
 export default class Request {

@@ -36,6 +36,7 @@ export default class RecipesStore extends TypedStore {
 
   async setup(): Promise<void> {
     // Initially load all recipes
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     this.all;
   }
 

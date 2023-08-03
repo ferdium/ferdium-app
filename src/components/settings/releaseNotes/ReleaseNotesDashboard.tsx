@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { observer } from 'mobx-react';
-import { defineMessages, injectIntl } from 'react-intl';
+import { IntlShape, defineMessages, injectIntl } from 'react-intl';
 import Markdown from 'markdown-to-jsx';
 import { ferdiumVersion } from '../../../environment-remote';
 import {
@@ -26,14 +26,14 @@ const messages = defineMessages({
 });
 
 interface IProps {
-  intl: any;
+  intl: IntlShape;
 }
 
-class ReleaseNotesDashboard extends Component<IProps> {
-  state = {
-    data: '',
-  };
+interface IState {
+  data: string;
+}
 
+class ReleaseNotesDashboard extends Component<IProps, IState> {
   constructor(props) {
     super(props);
 

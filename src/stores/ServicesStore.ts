@@ -3,7 +3,7 @@ import { action, reaction, computed, observable, makeObservable } from 'mobx';
 import { debounce, remove } from 'lodash';
 import ms from 'ms';
 import { ensureFileSync, pathExistsSync, writeFileSync } from 'fs-extra';
-import { join } from 'path';
+import { join } from 'node:path';
 
 import { Stores } from '../@types/stores.types';
 import { ApiInterface } from '../api';
@@ -435,7 +435,7 @@ export default class ServicesStore extends TypedStore {
 
   // TODO: This can actually return undefined as well
   one(id: string): Service {
-    return this.all.find(service => service.id === id) as Service;
+    return this.all.find(service => service.id === id)!;
   }
 
   async _showAddServiceInterface({ recipeId }) {
@@ -594,7 +594,7 @@ export default class ServicesStore extends TypedStore {
       this.stores.router.push(redirect);
     }
 
-    this.allServicesRequest.patch(result => {
+    this.allServicesRequest.patch((result: Service[]) => {
       remove(result, (c: Service) => c.id === serviceId);
     });
 
@@ -606,7 +606,7 @@ export default class ServicesStore extends TypedStore {
     // Get directory for recipe
     const normalDirectory = getRecipeDirectory(recipe);
     const devDirectory = getDevRecipeDirectory(recipe);
-    let directory;
+    let directory: string;
 
     if (pathExistsSync(normalDirectory)) {
       directory = normalDirectory;
@@ -1028,7 +1028,7 @@ export default class ServicesStore extends TypedStore {
     }
 
     this.reorderServicesRequest.execute(services);
-    this.allServicesRequest.patch(data => {
+    this.allServicesRequest.patch((data: Service[]) => {
       for (const s of data) {
         s.order = services[s.id];
       }
@@ -1172,7 +1172,7 @@ export default class ServicesStore extends TypedStore {
     );
 
     // eslint-disable-next-line unicorn/consistent-function-scoping
-    const resetTimer = service => {
+    const resetTimer = (service: Service) => {
       service.lastPollAnswer = Date.now();
       service.lastPoll = Date.now();
     };
@@ -1306,7 +1306,7 @@ export default class ServicesStore extends TypedStore {
     });
   }
 
-  _cleanUpTeamIdAndCustomUrl(recipeId, data): any {
+  _cleanUpTeamIdAndCustomUrl(recipeId: string, data: Service): any {
     const serviceData = data;
     const recipe = this.stores.recipes.one(recipeId);
 
@@ -1318,6 +1318,7 @@ export default class ServicesStore extends TypedStore {
       data.team &&
       data.customUrl
     ) {
+      // @ts-expect-error The operand of a 'delete' operator must be optional.
       delete serviceData.team;
     }
 
@@ -1343,7 +1344,7 @@ export default class ServicesStore extends TypedStore {
   }
 
   // Helper
-  _initializeServiceRecipeInWebview(serviceId) {
+  _initializeServiceRecipeInWebview(serviceId: string) {
     const service = this.one(serviceId);
 
     if (service.webview) {
@@ -1362,7 +1363,7 @@ export default class ServicesStore extends TypedStore {
     }
   }
 
-  _initRecipePolling(serviceId) {
+  _initRecipePolling(serviceId: string) {
     const service = this.one(serviceId);
 
     const delay = ms('2s');
@@ -1385,7 +1386,7 @@ export default class ServicesStore extends TypedStore {
     }
   }
 
-  _wrapIndex(index, delta, size) {
+  _wrapIndex(index: number, delta: number, size: number) {
     return (((index + delta) % size) + size) % size;
   }
 }

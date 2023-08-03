@@ -32,7 +32,7 @@ export default class Userscript {
    *
    * @param {*} settings
    */
-  // eslint-disable-next-line camelcase
+
   internal_setSettings(settings: any) {
     // This is needed to get a clean JS object from the settings itself to provide better accessibility
     // Otherwise this will be a mobX instance
@@ -45,7 +45,7 @@ export default class Userscript {
    * @param {number} indirect Indirect messages
    */
   setBadge(direct: number = 0, indirect: number = 0) {
-    if (this.recipe && this.recipe.setBadge) {
+    if (this.recipe?.setBadge) {
       this.recipe.setBadge(direct, indirect);
     }
   }
@@ -55,7 +55,7 @@ export default class Userscript {
    * @param {*} title Dialog title
    */
   setDialogTitle(title: string) {
-    if (this.recipe && this.recipe.setDialogTitle) {
+    if (this.recipe?.setDialogTitle) {
       this.recipe.setDialogTitle(title);
     }
   }
@@ -66,7 +66,7 @@ export default class Userscript {
    * @param  {...string} files
    */
   injectCSSFiles(...files: string[]) {
-    if (this.recipe && this.recipe.injectCSS) {
+    if (this.recipe?.injectCSS) {
       // @ts-expect-error A spread argument must either have a tuple type or be passed to a rest parameter.
       this.recipe.injectCSS(...files);
     }
@@ -99,6 +99,7 @@ export default class Userscript {
    * @param {string} key
    * @return Value of the key
    */
+  // eslint-disable-next-line consistent-return
   get(key: string) {
     const ferdiumUserKey = window.localStorage.getItem(`ferdium-user-${key}`);
 

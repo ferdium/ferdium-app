@@ -1,6 +1,6 @@
 /* eslint-disable import/no-import-module-exports */
 /* eslint-disable global-require */
-import { parse } from 'path';
+import { parse } from 'node:path';
 import { userDataRecipesPath } from '../environment-remote';
 
 export function getRecipeDirectory(id: string = ''): string {
@@ -15,6 +15,7 @@ export function loadRecipeConfig(recipeId: string) {
   try {
     const configPath = `${recipeId}/package.json`;
     // Delete module from cache
+    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
     delete require.cache[require.resolve(configPath)];
 
     // eslint-disable-next-line import/no-dynamic-require

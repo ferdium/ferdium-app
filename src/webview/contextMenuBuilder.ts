@@ -52,8 +52,8 @@ function translatePopup(res, isError: boolean = false) {
       z-index: 999999;
       ${
         isError
-          ? `background: rgb(255 37 37);`
-          : `background: rgb(131 131 131);`
+          ? 'background: rgb(255 37 37);'
+          : 'background: rgb(131 131 131);'
       }
       border-radius: 8px;
       top: 5%;
@@ -148,7 +148,7 @@ const contextMenuStringTable: ContextMenuStringTable = {
   paste: () => 'Paste',
   pasteAndMatchStyle: () => 'Paste and match style',
   searchWith: ({ searchEngine }) => `Search with ${searchEngine}`,
-  translate: () => `Translate to ...`,
+  translate: () => 'Translate to ...',
   quickTranslate: ({ translatorLanguage }) =>
     `Translate to ${translatorLanguage}`,
   translateLanguage: ({ translatorLanguage }) => `${translatorLanguage}`,
@@ -247,6 +247,10 @@ export class ContextMenuBuilder {
 
     if (info.hasImageContents && info.srcURL && info.srcURL.length > 1) {
       return this.buildMenuForImage(info);
+    }
+
+    if (info.mediaType === 'video') {
+      return this.buildMenuForVideo(info);
     }
 
     if (
@@ -402,6 +406,40 @@ export class ContextMenuBuilder {
     this.addInspectElement(menu, menuInfo);
     // @ts-expect-error Expected 1 arguments, but got 2.
     this.processMenu(menu, menuInfo);
+
+    return menu;
+  }
+
+  /**
+   * Builds a menu applicable to a video.
+   *
+   * @return {Menu}  The `Menu`
+   */
+  buildMenuForVideo(
+    menuInfo: IContextMenuParams,
+  ): Electron.CrossProcessExports.Menu {
+    const menu = new Menu();
+    const video = document.querySelectorAll('video')[0];
+
+    if (
+      document.pictureInPictureEnabled &&
+      !video.disablePictureInPicture &&
+      this.isSrcUrlValid(menuInfo)
+    ) {
+      menu.append(
+        new MenuItem({
+          type: 'checkbox',
+          label: 'Picture in picture',
+          enabled: true,
+          checked: !!document.pictureInPictureElement,
+          click: async () => {
+            await (document.pictureInPictureElement
+              ? document.exitPictureInPicture()
+              : video.requestPictureInPicture());
+          },
+        }),
+      );
+    }
 
     return menu;
   }
@@ -637,7 +675,7 @@ export class ContextMenuBuilder {
       const clickHandler = menuInfo.srcURL.startsWith('blob:')
         ? () => {
             const urlWithoutBlob = menuInfo.srcURL.slice(5);
-            this.convertImageToBase64(menuInfo.srcURL, (dataURL: any) => {
+            this.convertImageToBase64(menuInfo.srcURL, (dataURL: string) => {
               const url = new window.URL(urlWithoutBlob);
               const fileName = url.pathname.slice(1);
               ipcRenderer.send('download-file', {
@@ -796,8 +834,8 @@ export class ContextMenuBuilder {
   convertImageToBase64(
     url: string,
     callback: {
-      (dataURL: any): void;
-      (dataURL: any): void;
+      (dataURL: string): void;
+      (dataURL: string): void;
       (arg0: string): void;
     },
     outputFormat: string = 'image/png',

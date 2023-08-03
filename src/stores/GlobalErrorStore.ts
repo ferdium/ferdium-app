@@ -27,34 +27,36 @@ export default class GlobalErrorStore extends TypedStore {
 
   @observable response: Response = {} as Response;
 
-  // TODO: Get rid of the @ts-ignores in this function.
+  // TODO: Get rid of the @ts-expect-errors in this function.
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
 
     makeObservable(this);
 
     window.addEventListener('error', (...errorArgs: any[]): void => {
-      // @ts-ignore ts-message: Expected 5 arguments, but got 2.
+      // @ts-expect-error ts-message: Expected 5 arguments, but got 2.
       this._handleConsoleError.call(this, ['error', ...errorArgs]);
     });
 
     const origConsoleError = console.error;
     window.console.error = (...errorArgs: any[]) => {
-      // @ts-ignore ts-message: Expected 5 arguments, but got 2.
+      // @ts-expect-error ts-message: Expected 5 arguments, but got 2.
       this._handleConsoleError.call(this, ['error', ...errorArgs]);
       origConsoleError.apply(this, errorArgs);
     };
 
+    // eslint-disable-next-line no-console
     const origConsoleLog = console.log;
     window.console.log = (...logArgs: any[]) => {
-      // @ts-ignore ts-message: Expected 5 arguments, but got 2.
+      // @ts-expect-error ts-message: Expected 5 arguments, but got 2.
       this._handleConsoleError.call(this, ['log', ...logArgs]);
       origConsoleLog.apply(this, logArgs);
     };
 
+    // eslint-disable-next-line no-console
     const origConsoleInfo = console.info;
     window.console.info = (...infoArgs: any[]) => {
-      // @ts-ignore ts-message: Expected 5 arguments, but got 2.
+      // @ts-expect-error ts-message: Expected 5 arguments, but got 2.
       this._handleConsoleError.call(this, ['info', ...infoArgs]);
       origConsoleInfo.apply(this, infoArgs);
     };

@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { join } from 'node:path';
 import { api as electronApi } from './electron-util';
 import {
   LIVE_FERDIUM_API,

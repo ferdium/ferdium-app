@@ -4,23 +4,17 @@ import injectStyle, { WithStylesProps } from 'react-jss';
 
 import { Theme } from '../../../themes';
 
-interface IProps extends WithStylesProps<typeof styles> {
-  type: string;
-  className?: string;
-  children: ReactNode;
-}
-
 const badgeStyles = (theme: Theme) => {
   const styles = {};
-  Object.keys(theme.styleTypes).map(style => {
+  Object.keys(theme.styleTypes).map(style =>
     Object.assign(styles, {
       [style]: {
         background: theme.styleTypes[style].accent,
         color: theme.styleTypes[style].contrast,
         border: theme.styleTypes[style].border,
       },
-    });
-  });
+    }),
+  );
 
   return styles;
 };
@@ -43,6 +37,12 @@ const styles = (theme: Theme) => ({
   },
   ...badgeStyles(theme),
 });
+
+interface IProps extends WithStylesProps<typeof styles> {
+  type: string;
+  className?: string;
+  children: ReactNode;
+}
 
 class BadgeComponent extends Component<IProps> {
   public static defaultProps = {

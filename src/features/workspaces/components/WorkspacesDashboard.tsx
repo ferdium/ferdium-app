@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-useless-fragment */
 import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
@@ -153,6 +152,7 @@ class WorkspacesDashboard extends Component<IProps> {
                   {intl.formatMessage(messages.workspacesRequestFailed)}
                 </Infobox>
               ) : (
+                // eslint-disable-next-line react/jsx-no-useless-fragment
                 <>
                   {workspaces.length === 0 ? (
                     <div className="align-middle settings__empty-state">

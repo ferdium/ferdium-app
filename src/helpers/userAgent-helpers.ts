@@ -1,4 +1,4 @@
-import { cpus } from 'os';
+import { cpus } from 'node:os';
 import macosVersion from 'macos-version';
 import { chrome } from 'useragent-generator';
 import {
@@ -14,6 +14,7 @@ function macOS() {
   const version = macosVersion() ?? '';
   let cpuName = cpus()[0].model.split(' ')[0];
   if (cpuName && /\(/.test(cpuName)) {
+    // eslint-disable-next-line prefer-destructuring
     cpuName = cpuName.split('(')[0];
   }
   return `Macintosh; ${cpuName} Mac OS X ${version.replaceAll('.', '_')}`;

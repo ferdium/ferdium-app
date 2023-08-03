@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import Workspace from '../features/workspaces/models/Workspace';
 import Recipe from '../models/Recipe';
 import Service from '../models/Service';
@@ -59,6 +60,7 @@ interface Actions {
 interface Api {
   app: AppStore;
   features: FeaturesStore;
+  // eslint-disable-next-line @typescript-eslint/ban-types
   local: {};
   recipePreviews: RecipePreviewsStore;
   recipes: RecipeStore;
@@ -200,7 +202,7 @@ interface RouterStore {
   replace: () => void;
 }
 
-export interface ServicesStore extends TypedStore {
+interface ServicesStore extends TypedStore {
   clearCacheRequest: () => void;
   createServiceRequest: CachedRequest;
   deleteServiceRequest: () => void;
@@ -226,7 +228,7 @@ interface ISettings {
   [key: string]: any;
 }
 
-export interface SettingsStore extends TypedStore {
+interface SettingsStore extends TypedStore {
   update: (value: any) => void;
   remove: (value: any) => void;
   fileSystemSettingsTypes: any[];
@@ -287,7 +289,7 @@ interface UIStore extends TypedStore {
   theme: () => void;
 }
 
-export interface UserStore extends TypedStore {
+interface UserStore extends TypedStore {
   BASE_ROUTE: '/auth';
   CHANGE_SERVER_ROUTE: '/auth/server';
   IMPORT_ROUTE: '/auth/signup/import';
@@ -337,7 +339,7 @@ export interface UserStore extends TypedStore {
   team: () => void;
 }
 
-export interface WorkspacesStore extends TypedStore {
+interface WorkspacesStore extends TypedStore {
   activeWorkspace: () => void;
   delete: ({ workspace }) => void;
   update: ({ workspace }) => void;

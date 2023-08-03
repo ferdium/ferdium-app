@@ -319,12 +319,23 @@ const messages = defineMessages({
 
 interface EditSettingsScreenProps extends StoresProps, WrappedComponentProps {}
 
+interface EditSettingsScreenState {
+  lockedPassword: string;
+}
+
 @inject('stores', 'actions')
 @observer
-class EditSettingsScreen extends Component<EditSettingsScreenProps> {
-  state = {
-    lockedPassword: '',
-  };
+class EditSettingsScreen extends Component<
+  EditSettingsScreenProps,
+  EditSettingsScreenState
+> {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      lockedPassword: '',
+    };
+  }
 
   onSubmit(settingsData) {
     const { todos, workspaces } = this.props.stores;
@@ -1172,8 +1183,6 @@ class EditSettingsScreen extends Component<EditSettingsScreenProps> {
       };
     }
 
-    // @ts-ignore: Remove this ignore once mobx-react-form v4 with typescript
-    // support has been released.
     return new Form(config);
   }
 

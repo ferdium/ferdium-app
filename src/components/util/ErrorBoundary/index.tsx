@@ -23,10 +23,18 @@ interface ErrorBoundaryProps extends WithStylesProps<typeof styles> {
   children?: React.ReactNode;
 }
 
-class ErrorBoundary extends Component<ErrorBoundaryProps> {
-  state = {
-    hasError: false,
-  };
+interface ErrorBoundaryState {
+  hasError: boolean;
+}
+
+class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      hasError: false,
+    };
+  }
 
   componentDidCatch(): void {
     this.setState({ hasError: true });

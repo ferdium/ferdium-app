@@ -11,14 +11,6 @@ import injectStyle, { WithStylesProps } from 'react-jss';
 import { Theme } from '../../../themes';
 import { Omit } from '../typings/generic';
 
-interface IProps extends WithStylesProps<typeof styles> {
-  children: ReactNode;
-  level?: number;
-  className?: string;
-  id?: string;
-  onClick?: MouseEventHandler<HTMLButtonElement>;
-}
-
 const styles = (theme: Theme) => ({
   headline: {
     fontWeight: 'lighter',
@@ -45,6 +37,14 @@ const styles = (theme: Theme) => ({
   },
 });
 
+interface IProps extends WithStylesProps<typeof styles> {
+  children: ReactNode;
+  level?: number;
+  className?: string;
+  id?: string;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+}
+
 class HeadlineComponent extends Component<IProps> {
   render(): ReactElement {
     const { classes, level, className, children, id, onClick } = this.props;
@@ -67,12 +67,11 @@ class HeadlineComponent extends Component<IProps> {
 }
 
 const Headline = injectStyle(styles, { injectTheme: true })(HeadlineComponent);
-const createH = (level: number) => (props: Omit<IProps, 'classes'>) =>
-  (
-    <Headline level={level} {...props}>
-      {props.children}
-    </Headline>
-  );
+const createH = (level: number) => (props: Omit<IProps, 'classes'>) => (
+  <Headline level={level} {...props}>
+    {props.children}
+  </Headline>
+);
 
 export const H1 = createH(1);
 export const H2 = createH(2);

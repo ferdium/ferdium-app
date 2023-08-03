@@ -51,7 +51,7 @@ class TabBarSortableList extends Component<IProps> {
         {services.map((service, index) => (
           <TabItem
             key={service.id}
-            // @ts-ignore
+            // @ts-expect-error Fix me
             clickHandler={() => setActive({ serviceId: service.id })}
             service={service}
             index={index}

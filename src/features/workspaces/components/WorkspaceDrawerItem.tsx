@@ -72,6 +72,7 @@ interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
   name: string;
   onClick: MouseEventHandler<HTMLInputElement>;
   services: string[];
+  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
   onContextMenuEditClick?: () => void | null;
   shortcutIndex: number;
 }
@@ -119,7 +120,8 @@ class WorkspaceDrawerItem extends Component<IProps> {
           }
         }}
         onKeyDown={noop}
-        data-tip={acceleratorString(
+        data-tooltip-id="tooltip-workspaces-drawer"
+        data-tooltip-content={acceleratorString(
           shortcutIndex,
           `${cmdOrCtrlShortcutKey(false)}+${altKey(false)}`,
         )}

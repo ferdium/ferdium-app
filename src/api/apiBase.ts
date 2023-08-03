@@ -14,12 +14,7 @@ import { fixUrl } from '../helpers/url-helpers';
 
 // Note: This cannot be used from the internal-server since we are not running within the context of a browser window
 export default function apiBase(withVersion = true) {
-  if (
-    !(window as any).ferdium ||
-    !(window as any).ferdium.stores.settings ||
-    !(window as any).ferdium.stores.settings.all ||
-    !(window as any).ferdium.stores.settings.all.app.server
-  ) {
+  if (!(window as any).ferdium?.stores.settings?.all?.app.server) {
     // Stores have not yet been loaded - return SERVER_NOT_LOADED to force a retry when stores are loaded
     return SERVER_NOT_LOADED;
   }

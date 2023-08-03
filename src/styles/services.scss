@@ -3,7 +3,9 @@
 .theme__dark .services {
   background: $dark-theme-gray-darkest;
 
-  .services__webview-wrapper { background: $dark-theme-gray-darkest; }
+  .services__webview-wrapper {
+    background: $dark-theme-gray-darkest;
+  }
 
   .services__webview,
   .services__info-layer {
@@ -14,7 +16,9 @@
   .services__info-layer {
     background: $dark-theme-gray-darkest;
 
-    h1 { color: $dark-theme-gray-lightest; }
+    h1 {
+      color: $dark-theme-gray-lightest;
+    }
   }
 }
 
@@ -31,21 +35,23 @@
   }
 
   @for $i from $split-columns-min through $split-columns-max {
-    &[data-columns="#{$i}"] .services .services__webview {
+    &[data-columns='#{$i}'] .services .services__webview {
       flex-basis: calc(100% / $i);
     }
   }
 }
 
 .services {
-  background: #FFF;
+  background: #fff;
   flex: 1;
   height: 100%;
   order: 5;
   overflow: hidden;
   position: relative;
 
-  .services__webview-wrapper { background: $theme-gray-lighter; }
+  .services__webview-wrapper {
+    background: $theme-gray-lighter;
+  }
 
   .services__webview,
   .services__info-layer {
@@ -66,9 +72,13 @@
       z-index: 100;
     }
 
-    &--force-repaint webview { z-index: 5; }
+    &--force-repaint webview {
+      z-index: 5;
+    }
 
-    &.is-loading webview { background: #FFF }
+    &.is-loading webview {
+      background: #fff;
+    }
   }
 
   .services__no-service,
@@ -86,12 +96,13 @@
     }
 
     .button,
-    button { margin: 40px 0 20px; }
+    button {
+      margin: 40px 0 20px;
+    }
   }
 
   .services__info-layer {
     position: absolute;
     z-index: 110;
   }
-
 }

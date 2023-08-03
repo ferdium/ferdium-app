@@ -10,7 +10,6 @@
   }
 }
 
-
 .badge {
   background: $theme-gray-lighter;
   border-radius: $theme-border-radius;
@@ -21,12 +20,11 @@
 
   &.badge--primary {
     background: $theme-brand-primary;
-    color: #FFF;
+    color: #fff;
   }
 
   &.badge--success {
     background: $theme-brand-success;
-    color: #FFF;
+    color: #fff;
   }
-
 }

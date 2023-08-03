@@ -11,11 +11,12 @@ import {
 } from 'electron';
 
 import { emptyDirSync, ensureFileSync } from 'fs-extra';
-import { join } from 'path';
+import { join } from 'node:path';
 import windowStateKeeper from 'electron-window-state';
 import minimist from 'minimist';
 import ms from 'ms';
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
+import { initialize } from 'electron-react-titlebar/main';
 import { enableWebContents, initializeRemote } from './electron-util';
 import enforceMacOSAppLocation from './enforce-macos-app-location';
 
@@ -47,6 +48,7 @@ import { asarPath } from './helpers/asar-helpers';
 import { openExternalUrl } from './helpers/url-helpers';
 import userAgent from './helpers/userAgent-helpers';
 import { translateTo } from './helpers/translation-helpers';
+import { darkThemeGrayDarkest } from './themes/legacy';
 
 const debug = require('./preload-safe-debug')('Ferdium:App');
 
@@ -60,6 +62,7 @@ let mainWindow: BrowserWindow | undefined;
 let willQuitApp = false;
 let overrideAppQuitForUpdate = false;
 
+// eslint-disable-next-line unicorn/prefer-event-target
 export const appEvents = new EventEmitter();
 
 // Register methods to be called once the window has been loaded.
@@ -155,16 +158,6 @@ if (gotTheLock) {
   app.quit();
 }
 
-// Fix Unity indicator issue
-// https://github.com/electron/electron/issues/9046
-if (
-  isLinux &&
-  process.env.XDG_CURRENT_DESKTOP &&
-  ['Pantheon', 'Unity:Unity7'].includes(process.env.XDG_CURRENT_DESKTOP)
-) {
-  process.env.XDG_CURRENT_DESKTOP = 'Unity';
-}
-
 // Disable GPU acceleration
 if (
   !retrieveSettingValue(
@@ -208,7 +201,7 @@ const createWindow = () => {
     'darkMode',
     DEFAULT_APP_SETTINGS.darkMode,
   )
-    ? '#1E1E1E'
+    ? darkThemeGrayDarkest
     : (retrieveSettingValue(
         'accentColor',
         DEFAULT_APP_SETTINGS.accentColor,
@@ -398,9 +391,11 @@ const createWindow = () => {
   });
 
   if (isMac) {
-    // eslint-disable-next-line global-require
-    const { askFormacOSPermissions } = require('./electron/macOSPermissions');
-    setTimeout(() => askFormacOSPermissions(mainWindow), ms('30s'));
+    import('./electron/macOSPermissions').then(macOSPermissions => {
+      const { askFormacOSPermissions } = macOSPermissions;
+
+      setTimeout(() => askFormacOSPermissions(mainWindow!), ms('30s'));
+    });
   }
 
   mainWindow.on('show', () => {
@@ -507,8 +502,7 @@ app.on('ready', () => {
     ]);
   }
 
-  // eslint-disable-next-line global-require
-  require('electron-react-titlebar/main').initialize();
+  initialize();
 
   createWindow();
 });
@@ -673,7 +667,11 @@ ipcMain.handle('get-desktop-capturer-sources', () =>
 );
 
 ipcMain.on('window.toolbar-double-clicked', () => {
-  mainWindow?.isMaximized() ? mainWindow.unmaximize() : mainWindow?.maximize();
+  if (mainWindow?.isMaximized()) {
+    mainWindow.unmaximize();
+  } else {
+    mainWindow?.maximize();
+  }
 });
 
 // Quit when all windows are closed.

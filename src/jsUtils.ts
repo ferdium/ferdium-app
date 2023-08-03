@@ -3,15 +3,15 @@ export const ifUndefined = <T>(
   defaultValue: T,
 ): T => source ?? defaultValue;
 
-export const convertToJSON = (data: string | any | undefined | null) =>
+export const convertToJSON = (data?: string | any | null) =>
   data && typeof data === 'string' && data.length > 0 ? JSON.parse(data) : data;
 
-export const cleanseJSObject = (data: any | undefined | null) =>
+export const cleanseJSObject = (data?: any | null) =>
   JSON.parse(JSON.stringify(data));
 
 export const isEscKeyPress = (keyCode: number) => keyCode === 27;
 
-export const safeParseInt = (text: string | number | undefined | null) => {
+export const safeParseInt = (text?: string | number | null) => {
   if (text === undefined || text === null) {
     return 0;
   }

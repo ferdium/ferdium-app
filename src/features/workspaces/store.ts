@@ -64,6 +64,7 @@ export default class WorkspacesStore extends FeatureStore {
     return getUserWorkspacesRequest.wasExecuted && this.workspaces.length > 0;
   }
 
+  // eslint-disable-next-line @typescript-eslint/class-literal-property-style
   @computed get isUserAllowedToUseFeature() {
     return true;
   }

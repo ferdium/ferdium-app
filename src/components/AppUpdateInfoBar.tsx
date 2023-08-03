@@ -38,6 +38,7 @@ const AppUpdateInfoBar = (props: IProps) => {
       type="primary"
       ctaLabel={intl.formatMessage(messages.buttonInstallUpdate)}
       onClick={event => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         !isWinPortable && onInstallUpdate(event);
       }}
       onHide={onHide}

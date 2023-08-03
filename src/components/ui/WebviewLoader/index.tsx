@@ -32,7 +32,7 @@ class WebviewLoader extends Component<IProps> {
     return (
       <FullscreenLoader
         className={classes.component}
-        title={`${intl.formatMessage(messages.loading, { service: name })}`}
+        title={intl.formatMessage(messages.loading, { service: name })}
         loaded={loaded}
       />
     );

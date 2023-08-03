@@ -33,11 +33,7 @@ export default function init(stores: {
       if (config.isEnabled) {
         const serviceProxyConfig = proxySettings[service.id];
 
-        if (
-          serviceProxyConfig &&
-          serviceProxyConfig.isEnabled &&
-          serviceProxyConfig.host
-        ) {
+        if (serviceProxyConfig?.isEnabled && serviceProxyConfig.host) {
           const proxyHost = `${serviceProxyConfig.host}${
             serviceProxyConfig.port ? `:${serviceProxyConfig.port}` : ''
           }`;

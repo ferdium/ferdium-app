@@ -44,5 +44,3 @@ export const todoActions = createActionsFromDefinitions<TodoActionsType>(
   },
   PropTypes.checkPropTypes,
 );
-
-export default todoActions;

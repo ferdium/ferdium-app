@@ -145,5 +145,3 @@ export const SPELLCHECKER_LOCALES = {
   uk: 'Українська (Ukrainian)',
   vi: 'Tiếng Việt',
 };
-
-export default APP_LOCALES;

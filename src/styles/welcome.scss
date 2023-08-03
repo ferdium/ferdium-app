@@ -122,7 +122,9 @@
       margin: 0 10px 15px;
       height: 35px;
       @media (prefers-reduced-motion: no-preference) {
-        transition: 0.5s filter, 0.5s opacity;
+        transition:
+          0.5s filter,
+          0.5s opacity;
       }
       width: 35px;
 

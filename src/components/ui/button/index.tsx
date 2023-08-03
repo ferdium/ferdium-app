@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import Icon from '@mdi/react';
 import classnames from 'classnames';
 import { Property } from 'csstype';
@@ -135,7 +136,7 @@ interface IProps extends IFormField, WithStylesProps<typeof styles> {
   label?: string;
   disabled?: boolean;
   id?: string;
-  type?: 'button' | 'reset' | 'submit' | undefined;
+  type?: 'button' | 'reset' | 'submit';
   onClick?: MouseEventHandler<HTMLInputElement>;
   buttonType?: ButtonType;
   loaded?: boolean;
@@ -206,6 +207,7 @@ class ButtonComponent extends Component<IProps, IState> {
               width={4}
               scale={0.45}
               // color={theme.buttonLoaderColor[buttonType!]}
+              // @ts-expect-error Property 'parentClassName' does not exist on type 'IntrinsicAttributes & IntrinsicClassAttributes<ReactLoader> & Readonly<LoaderProps>
               parentClassName={classes.loader}
             />
           )}
@@ -235,6 +237,7 @@ class ButtonComponent extends Component<IProps, IState> {
     ) : (
       <button
         id={id}
+        // eslint-disable-next-line react/button-has-type
         type={type}
         onClick={onClick}
         className={classnames({

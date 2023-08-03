@@ -61,18 +61,17 @@ class AppLoader extends Component<IProps, IState> {
         className={classes.component}
         spinnerColor={theme.colorAppLoaderSpinner}
       >
-        {texts &&
-          texts.map((text, i) => (
-            <span
-              key={text}
-              className={classnames({
-                [`${classes.slogan}`]: true,
-                [`${classes.visible}`]: step === i,
-              })}
-            >
-              {text}
-            </span>
-          ))}
+        {texts?.map((text, i) => (
+          <span
+            key={text}
+            className={classnames({
+              [`${classes.slogan}`]: true,
+              [`${classes.visible}`]: step === i,
+            })}
+          >
+            {text}
+          </span>
+        ))}
       </FullscreenLoader>
     );
   }

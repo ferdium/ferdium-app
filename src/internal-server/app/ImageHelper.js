@@ -2,7 +2,7 @@ const Env = use('Env');
 
 const { v4: uuid } = require('uuid');
 
-const path = require('path');
+const path = require('node:path');
 const fs = require('fs-extra');
 const { API_VERSION } = require('../../environment-remote');
 

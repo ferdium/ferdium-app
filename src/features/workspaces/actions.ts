@@ -3,7 +3,8 @@ import Workspace from './models/Workspace';
 import { createActionsFromDefinitions } from '../../actions/lib/actions';
 
 type WorkspaceArg = { workspace: Workspace };
-export interface WorkspaceActions {
+
+interface WorkspaceActions {
   openWorkspaceSettings: () => void;
   toggleWorkspaceDrawer: () => void;
   deactivate: () => void;

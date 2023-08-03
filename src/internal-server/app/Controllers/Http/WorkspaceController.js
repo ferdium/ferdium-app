@@ -92,12 +92,7 @@ class WorkspaceController {
     });
   }
 
-  async delete({
-    // eslint-disable-next-line no-unused-vars
-    request,
-    response,
-    params,
-  }) {
+  async delete({ response, params }) {
     // Validate user input
     const validation = await validateAll(params, {
       id: 'required',

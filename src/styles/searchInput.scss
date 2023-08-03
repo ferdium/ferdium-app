@@ -8,7 +8,9 @@
   border-radius: $theme-border-radius;
   color: $dark-theme-gray-lightest;
 
-  input { color: $dark-theme-gray-lightest; }
+  input {
+    color: $dark-theme-gray-lightest;
+  }
 }
 
 .search-input {

@@ -1,6 +1,6 @@
 /* eslint-disable import/no-import-module-exports */
 /* eslint-disable global-require */
-import { join } from 'path';
+import { join } from 'node:path';
 import tar from 'tar';
 import {
   readdirSync,
@@ -15,8 +15,8 @@ import {
 } from 'fs-extra';
 
 import ServiceModel from '../../models/Service';
-import RecipePreviewModel from '../../models/RecipePreview';
-import RecipeModel from '../../models/Recipe';
+import RecipePreviewModel, { IRecipePreview } from '../../models/RecipePreview';
+import RecipeModel, { IRecipe } from '../../models/Recipe';
 import UserModel from '../../models/User';
 
 import sleep from '../../helpers/async-helpers';
@@ -44,9 +44,9 @@ const debug = require('../../preload-safe-debug')('Ferdium:ServerApi');
 module.paths.unshift(getDevRecipeDirectory(), getRecipeDirectory());
 
 export default class ServerApi {
-  recipePreviews: any[] = [];
+  recipePreviews: IRecipePreview[] = [];
 
-  recipes: any[] = [];
+  recipes: IRecipe[] = [];
 
   // User
   async login(email: string, passwordHash: string) {
@@ -55,7 +55,9 @@ export default class ServerApi {
       {
         method: 'POST',
         headers: {
-          Authorization: `Basic ${window.btoa(`${email}:${passwordHash}`)}`,
+          Authorization: `Basic ${Buffer.from(
+            `${email}:${passwordHash}`,
+          ).toString('base64')}`,
         },
       },
       false,
@@ -346,6 +348,7 @@ export default class ServerApi {
       })
       .filter(recipe => recipe.id);
 
+    // @ts-expect-error Type 'boolean' is not assignable to type 'ConcatArray<IRecipe>'.
     // eslint-disable-next-line unicorn/prefer-spread
     this.recipes = this.recipes.concat(this._getDevRecipes());
 
@@ -507,7 +510,7 @@ export default class ServerApi {
   async _mapServiceModels(services: any[]) {
     const recipes = services.map((s: { recipeId: string }) => s.recipeId);
     await this._bulkRecipeCheck(recipes);
-    /* eslint-disable no-return-await */
+
     return Promise.all(
       services.map(async (service: any) => this._prepareServiceModel(service)),
     );
@@ -515,9 +518,8 @@ export default class ServerApi {
   }
 
   async _prepareServiceModel(service: { recipeId: string }) {
-    let recipe: undefined;
     try {
-      recipe = this.recipes.find(r => r.id === service.recipeId);
+      const recipe = this.recipes.find(r => r.id === service.recipeId);
 
       if (!recipe) {
         console.warn(`Recipe ${service.recipeId} not loaded`);
@@ -531,11 +533,10 @@ export default class ServerApi {
     }
   }
 
-  async _bulkRecipeCheck(unfilteredRecipes: any[]) {
+  async _bulkRecipeCheck(unfilteredRecipes: string[]) {
     // Filter recipe duplicates as we don't need to download 3 Slack recipes
     const recipes = unfilteredRecipes.filter(
-      (elem: any, pos: number, arr: string | any[]) =>
-        arr.indexOf(elem) === pos,
+      (elem: string, pos: number, arr: string[]) => arr.indexOf(elem) === pos,
     );
 
     return Promise.all(
@@ -565,7 +566,7 @@ export default class ServerApi {
     ).catch(error => console.error("Can't load recipe", error));
   }
 
-  _mapRecipePreviewModel(recipes: any[]) {
+  _mapRecipePreviewModel(recipes: IRecipePreview[]) {
     return recipes
       .map(recipe => {
         try {
@@ -575,7 +576,7 @@ export default class ServerApi {
           return null;
         }
       })
-      .filter(recipe => recipe !== null);
+      .filter(Boolean);
   }
 
   _getDevRecipes() {
@@ -589,15 +590,14 @@ export default class ServerApi {
 
       const recipes = paths
         .map(id => {
-          let Recipe;
           try {
             // eslint-disable-next-line import/no-dynamic-require
-            Recipe = require(id)(RecipeModel);
+            const Recipe = require(id)(RecipeModel);
+
             return new Recipe(loadRecipeConfig(id));
           } catch (error) {
             console.error(error);
           }
-
           return false;
         })
         .filter(recipe => recipe.id)

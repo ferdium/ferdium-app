@@ -68,7 +68,6 @@ interface IProps extends WrappedComponentProps {
   isTokenExpired: boolean;
   isServerLogout: boolean;
   signupRoute: string;
-  // eslint-disable-next-line react/no-unused-prop-types
   passwordRoute: string; // TODO: Uncomment this line after fixing password recovery in-app
   error: GlobalError;
 }
@@ -100,7 +99,7 @@ class Login extends Component<IProps> {
   submit(e: FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     this.form.submit({
-      onSuccess: form => {
+      onSuccess: (form: Form) => {
         this.props.onSubmit(form.values());
       },
       onError: noop,

@@ -20,10 +20,6 @@ interface IProps extends Partial<StoresProps> {
 @inject('stores')
 @observer
 class Link extends Component<IProps> {
-  constructor(props: IProps) {
-    super(props);
-  }
-
   onClick(e: MouseEvent<HTMLAnchorElement>): void {
     const { disabled = false, target = '', to } = this.props;
     if (disabled) {

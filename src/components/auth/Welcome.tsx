@@ -44,10 +44,6 @@ interface IProps extends Partial<StoresProps>, WrappedComponentProps {
 @inject('actions')
 @observer
 class Welcome extends Component<IProps> {
-  constructor(props: IProps) {
-    super(props);
-  }
-
   useLocalServer(): void {
     serverlessLogin(this.props.actions);
   }
@@ -95,6 +91,7 @@ class Welcome extends Component<IProps> {
             className="settings__hr-sections"
             style={{ marginTop: 24, marginBottom: 24, borderStyle: 'solid' }}
           />
+          {/* eslint-disable-next-line react/button-has-type */}
           <button
             className="button"
             onClick={this.useLocalServer.bind(this)}
