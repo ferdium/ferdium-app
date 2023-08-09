@@ -46,10 +46,10 @@ dependencies:
     version: 5.1.0
   '@electron/remote':
     specifier: 2.0.10
-    version: 2.0.10(electron@25.4.0)
+    version: 2.0.10(electron@25.5.0)
   '@krisdages/electron-process-manager':
     specifier: 3.0.0
-    version: 3.0.0(@electron/remote@2.0.10)(electron@25.4.0)(rxjs@7.8.1)
+    version: 3.0.0(@electron/remote@2.0.10)(electron@25.5.0)(rxjs@7.8.1)
   '@mdi/js':
     specifier: 7.2.96
     version: 7.2.96
@@ -346,8 +346,8 @@ devDependencies:
     specifier: 7.0.3
     version: 7.0.3
   electron:
-    specifier: 25.4.0
-    version: 25.4.0
+    specifier: 25.5.0
+    version: 25.5.0
   electron-builder:
     specifier: 24.4.0
     version: 24.4.0
@@ -1480,12 +1480,12 @@ packages:
       - supports-color
     dev: true
 
-  /@electron/remote@2.0.10(electron@25.4.0):
+  /@electron/remote@2.0.10(electron@25.5.0):
     resolution: {integrity: sha512-3SFKKaQXcyWgwmibud+UqJl/XlHOgLcI3fwtB9pNelPSJAcTxocOJrF6FaxBIQaj1+R05Di6xuAswZpXAW7xhA==}
     peerDependencies:
       electron: '>= 13.0.0'
     dependencies:
-      electron: 25.4.0
+      electron: 25.5.0
     dev: false
 
   /@electron/universal@1.3.4:
@@ -2203,15 +2203,15 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@krisdages/electron-process-manager@3.0.0(@electron/remote@2.0.10)(electron@25.4.0)(rxjs@7.8.1):
+  /@krisdages/electron-process-manager@3.0.0(@electron/remote@2.0.10)(electron@25.5.0)(rxjs@7.8.1):
     resolution: {integrity: sha512-Gs8McOVC6BVdfP4SeF+l5nx85eFooarm37K5mxs1PESI59a7oLwRf5Yd2tsZ6Ye14bCG0eTJGDv3yPuixBg3OQ==}
     peerDependencies:
       '@electron/remote': '>= 1.2.0'
       electron: '>= 10'
       rxjs: '>= 7'
     dependencies:
-      '@electron/remote': 2.0.10(electron@25.4.0)
-      electron: 25.4.0
+      '@electron/remote': 2.0.10(electron@25.5.0)
+      electron: 25.5.0
       electron-process-reporter: /@krisdages/electron-process-reporter@2.0.0-rxjs7-1.4.0(rxjs@7.8.1)
       rxjs: 7.8.1
     dev: false
@@ -5495,8 +5495,8 @@ packages:
       mkdirp: 0.5.6
     dev: false
 
-  /electron@25.4.0:
-    resolution: {integrity: sha512-VLTRxDhL4UvQbqM7pTNENnJo62cdAPZT92N+B7BZQ5Xfok1wuVPEewIjBot4K7U3EpLUuHn1veeLzho3ihiP+Q==}
+  /electron@25.5.0:
+    resolution: {integrity: sha512-w1DNj1LuAk0Vaas1rQ0pAkTe2gZ5YG75J27mC2m88y0G6Do5b5YoFDaF84fOGQHeQ4j8tC5LngSgWhbwmqDlrw==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     requiresBuild: true
