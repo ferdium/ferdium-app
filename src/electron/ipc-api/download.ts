@@ -1,7 +1,7 @@
+import { PathLike } from 'node:fs';
 import { ipcMain, dialog, BrowserWindow } from 'electron';
 import { download } from 'electron-dl';
 import { writeFileSync } from 'fs-extra';
-import { PathLike } from 'node:fs';
 
 const debug = require('../../preload-safe-debug')('Ferdium:ipcApi:download');
 

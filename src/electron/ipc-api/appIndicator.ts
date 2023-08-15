@@ -1,5 +1,5 @@
-import { app, ipcMain, BrowserWindow } from 'electron';
 import { join } from 'node:path';
+import { app, ipcMain, BrowserWindow } from 'electron';
 import { autorun } from 'mobx';
 import { isMac, isWindows, isLinux } from '../../environment';
 import TrayIcon from '../../lib/Tray';

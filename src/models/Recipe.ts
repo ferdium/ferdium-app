@@ -1,6 +1,6 @@
+import { join } from 'node:path';
 import semver from 'semver';
 import { pathExistsSync } from 'fs-extra';
-import { join } from 'node:path';
 import { DEFAULT_SERVICE_SETTINGS } from '../config';
 import { ifUndefined } from '../jsUtils';
 

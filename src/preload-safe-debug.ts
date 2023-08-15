@@ -8,7 +8,7 @@
  * We disable the `debug` package in context isolated renderers,
  * because they correspond to preload scripts.
  */
-// eslint-disable-next-line unicorn/no-empty-file
+
 module.exports = function debug(namespace: string): (...params: any[]) => void {
   if (
     typeof process === 'object' &&

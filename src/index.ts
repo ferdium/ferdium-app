@@ -1,5 +1,7 @@
 /* eslint-disable import/first */
 
+import { join } from 'node:path';
+import { EventEmitter } from 'node:events';
 import {
   app,
   BrowserWindow,
@@ -11,11 +13,9 @@ import {
 } from 'electron';
 
 import { emptyDirSync, ensureFileSync } from 'fs-extra';
-import { join } from 'node:path';
 import windowStateKeeper from 'electron-window-state';
 import minimist from 'minimist';
 import ms from 'ms';
-import { EventEmitter } from 'node:events';
 import { initialize } from 'electron-react-titlebar/main';
 import { enableWebContents, initializeRemote } from './electron-util';
 import enforceMacOSAppLocation from './enforce-macos-app-location';
