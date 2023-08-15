@@ -1,7 +1,7 @@
+import { join } from 'node:path';
 import { autorun, action, computed, makeObservable, observable } from 'mobx';
 import { ipcRenderer } from 'electron';
 import { webContents } from '@electron/remote';
-import { join } from 'node:path';
 import ElectronWebView from 'react-electron-web-view';
 
 import { todosStore } from '../features/todos';
