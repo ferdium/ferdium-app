@@ -14,7 +14,7 @@
   "private": true,
   "engines": {
     "node": "18.15.0",
-    "pnpm": "8.6.2"
+    "pnpm": "8.6.10"
   },
   "engine-strict": true,
   "volta": {
@@ -103,6 +103,7 @@
     "os-name": "4.0.1",
     "pretty-bytes": "5.6.0",
     "prop-types": "15.8.1",
+    "rc-progress": "3.5.1",
     "react": "18.2.0",
     "react-color": "2.19.3",
     "react-confetti": "6.1.0",

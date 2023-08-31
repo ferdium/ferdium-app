@@ -4,6 +4,7 @@ import { ipcRenderer } from 'electron';
 import { webContents } from '@electron/remote';
 import ElectronWebView from 'react-electron-web-view';
 
+import { uniqueId } from 'lodash';
 import { todosStore } from '../features/todos';
 import { isValidExternalURL, normalizedUrl } from '../helpers/url-helpers';
 import UserAgent from './UserAgent';
@@ -523,6 +524,72 @@ export default class Service {
     });
 
     if (webviewWebContents) {
+      webviewWebContents.session.on('will-download', (event, item) => {
+        event.preventDefault();
+
+        debug('will-download', event, item, item.getFilename());
+        const downloadId = uniqueId(`${this.id}: `);
+
+        ipcRenderer.send('download-started', {
+          serviceId: this.id,
+          downloadId,
+          item: {
+            filename: item.getFilename(),
+            url: item.getURL(),
+            savePath: item.getSavePath(),
+          },
+        });
+
+        item.addListener('updated', (event, state) => {
+          debug('download updated', event, state);
+          if (state === 'interrupted') {
+            debug('Download is interrupted but can be resumed');
+          } else if (state === 'progressing') {
+            if (item.isPaused()) {
+              debug('Download is paused');
+            } else {
+              debug(`Received bytes: ${item.getReceivedBytes()}`);
+              ipcRenderer.send('download-progress', {
+                serviceId: this.id,
+                downloadId,
+                item: {
+                  filename: item.getFilename(),
+                  url: item.getURL(),
+                  receivedBytes: item.getReceivedBytes(),
+                  totalBytes: item.getTotalBytes(),
+                  state,
+                },
+              });
+            }
+          }
+        });
+        item.addListener('done', (event, state) => {
+          debug('download done', event, state);
+          if (state === 'completed') {
+            debug('Download successfully');
+          } else {
+            debug(`Download failed: ${state}`);
+          }
+          ipcRenderer.send('download-done', {
+            serviceId: this.id,
+            downloadId,
+            item: {
+              filename: item.getFilename(),
+              url: item.getURL(),
+              state,
+            },
+          });
+        });
+
+        ipcRenderer.on('cancel-download', (event, { downloadId: id }) => {
+          // next line, testing
+          item.cancel();
+
+          if (downloadId === id) {
+            item.cancel();
+          }
+        });
+      });
       webviewWebContents.on('login', (event, _, authInfo, callback) => {
         // const authCallback = callback;
         debug('browser login event', authInfo);

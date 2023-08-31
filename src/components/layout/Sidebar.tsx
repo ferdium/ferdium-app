@@ -1,3 +1,4 @@
+import { ipcRenderer } from 'electron';
 import { Component } from 'react';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
@@ -14,8 +15,10 @@ import {
   mdiPlusBox,
   mdiViewGrid,
   mdiViewSplitVertical,
+  mdiCancel,
 } from '@mdi/js';
 
+import { Circle } from 'rc-progress';
 import Tabbar from '../services/tabs/Tabbar';
 import {
   addNewServiceShortcutKey,
@@ -112,6 +115,10 @@ interface IProps extends WrappedComponentProps {
 
 interface IState {
   tooltipEnabled: boolean;
+  downloadProgress: {
+    progress: number;
+    total: number;
+  } | null;
 }
 
 @inject('stores', 'actions')
@@ -122,7 +129,33 @@ class Sidebar extends Component<IProps, IState> {
 
     this.state = {
       tooltipEnabled: true,
+      downloadProgress: null,
     };
+
+    ipcRenderer.on('download-progress', this.handleDownloadProgress);
+    ipcRenderer.on('download-done', this.handleDownloadDone);
+  }
+
+  handleDownloadProgress = (_event, data) => {
+    this.setState({
+      downloadProgress: {
+        progress: data.item.receivedBytes,
+        total: data.item.totalBytes,
+      },
+    });
+  };
+
+  handleDownloadDone = (_event, _data) => {
+    this.setState({
+      downloadProgress: null,
+    });
+  };
+
+  componentWillUnmount() {
+    ipcRenderer.removeListener(
+      'download-progress',
+      this.handleDownloadProgress,
+    );
   }
 
   enableToolTip() {
@@ -179,6 +212,13 @@ class Sidebar extends Component<IProps, IState> {
     ].filter(Boolean).length;
 
     const { isMenuCollapsed } = stores!.settings.all.app;
+
+    const { downloadProgress } = this.state;
+
+    const downloadPercentage =
+      downloadProgress === null
+        ? 0
+        : (downloadProgress.progress / downloadProgress.total) * 100;
 
     return (
       <div className="sidebar">
@@ -361,6 +401,49 @@ class Sidebar extends Component<IProps, IState> {
               )}
           </button>
         ) : null}
+        {downloadProgress !== null && (
+          <div
+            className="download-progress"
+            style={{
+              width: '-webkit-fill-available',
+              height: 'fit-content',
+              display: 'flex',
+              justifyContent: 'center',
+              margin: 5,
+            }}
+          >
+            <Circle
+              percent={downloadPercentage}
+              strokeWidth={10}
+              strokeColor="#008000"
+              trailColor="grey"
+            />
+          </div>
+        )}
+        <button
+          type="button"
+          onClick={() => {
+            ipcRenderer.send('stop-download');
+            this.setState({
+              downloadProgress: null,
+            });
+          }}
+          className="sidebar__button sidebar__button--settings"
+          data-tooltip-id="tooltip-sidebar-button"
+          data-tooltip-content={`${intl.formatMessage(
+            globalMessages.settings,
+          )} (${settingsShortcutKey(false)})`}
+        >
+          <Icon icon={mdiCancel} size={1.5} />
+          {stores!.settings.app.automaticUpdates &&
+            (stores!.app.updateStatus ===
+              stores!.app.updateStatusTypes.AVAILABLE ||
+              stores!.app.updateStatus ===
+                stores!.app.updateStatusTypes.DOWNLOADED ||
+              this.props.showServicesUpdatedInfoBar) && (
+              <span className="update-available">•</span>
+            )}
+        </button>
       </div>
     );
   }
