@@ -28,4 +28,7 @@ export default <ActionDefinitions>{
   toggleMuteApp: {},
   toggleCollapseMenu: {},
   clearAllCache: {},
+  addDownload: {},
+  updateDownload: {},
+  endDownload: {},
 };

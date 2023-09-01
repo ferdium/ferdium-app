@@ -61,6 +61,22 @@ const CATALINA_NOTIFICATION_HACK_KEY =
 
 const locales = generatedTranslations();
 
+interface Download {
+  id: string;
+  serviceId: string;
+  filename: string;
+  url: string;
+  savePath?: string;
+  state?: string;
+  paused?: boolean;
+  canResume?: boolean;
+  progress?: number;
+  totalBytes?: number;
+  receivedBytes?: number;
+  startTime?: number;
+  endTime?: number;
+}
+
 export default class AppStore extends TypedStore {
   updateStatusTypes = {
     CHECKING: 'CHECKING',
@@ -114,6 +130,8 @@ export default class AppStore extends TypedStore {
 
   fetchDataInterval: null | NodeJS.Timer = null;
 
+  @observable downloads: Download[] = [];
+
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
 
@@ -136,6 +154,9 @@ export default class AppStore extends TypedStore {
       this._toggleCollapseMenu.bind(this),
     );
     this.actions.app.clearAllCache.listen(this._clearAllCache.bind(this));
+    this.actions.app.addDownload.listen(this._addDownload.bind(this));
+    this.actions.app.updateDownload.listen(this._updateDownload.bind(this));
+    this.actions.app.endDownload.listen(this._endDownload.bind(this));
 
     this.registerReactions([
       this._offlineCheck.bind(this),
@@ -253,6 +274,21 @@ export default class AppStore extends TypedStore {
     ipcRenderer.on('isWindowFocused', (_, isFocused) => {
       debug('Setting is focused to', isFocused);
       this.isFocused = isFocused;
+    });
+
+    ipcRenderer.on('download-progress', (_e, data) => {
+      debug('Download in progress', data.item.state);
+      // this._updateDownload(data as Download);
+    });
+
+    ipcRenderer.on('download-done', (_e, data) => {
+      debug('Download done', data.item.state);
+      // this._endDownload(data as Download)
+    });
+
+    ipcRenderer.on('stop-download', (_e, data) => {
+      debug('Download canceled by user', data.item.state);
+      // this._stopDownload(data as Download),
     });
 
     powerMonitor.on('suspend', () => {
@@ -516,6 +552,29 @@ export default class AppStore extends TypedStore {
 
   @action _changeLocale(value: string) {
     this.locale = value;
+  }
+
+  @action _addDownload(download: Download) {
+    this.downloads.unshift(download);
+    debug('Download added', this.downloads);
+  }
+
+  @action _updateDownload(download: Download) {
+    const index = this.downloads.findIndex(item => item.id === download.id);
+    if (index !== -1) {
+      this.downloads[index] = download;
+    }
+
+    debug('Download updated', this.downloads[index]);
+  }
+
+  @action _endDownload(download: Download) {
+    const index = this.downloads.findIndex(item => item.id === download.id);
+    if (index !== -1) {
+      this.downloads[index] = { ...this.downloads[index], ...download };
+    }
+
+    debug('Download ended', this.downloads[index]);
   }
 
   _setLocale() {

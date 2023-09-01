@@ -674,25 +674,9 @@ ipcMain.on('window.toolbar-double-clicked', () => {
   }
 });
 
-ipcMain.on('download-started', (_e, data) => {
-  debug(`download-started from main process ${data.item.url}`);
-});
-
-ipcMain.on('download-progress', (_e, data) => {
-  mainWindow?.webContents.send('download-progress', data);
-  debug(
-    `Receiving bytes: (${data.item.receivedBytes}/${data.item.totalBytes})`,
-  );
-});
-
-ipcMain.on('download-done', (_e, data) => {
-  debug(`download-done from main process ${data}`);
-  mainWindow?.webContents.send('download-done', {});
-});
-
 ipcMain.on('stop-download', (_e, data) => {
   debug(`stopping download from main process ${data}`);
-  mainWindow?.webContents.send('cancel-download', {});
+  mainWindow?.webContents.send('cancel-download', data);
 });
 
 // Quit when all windows are closed.

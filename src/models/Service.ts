@@ -530,14 +530,12 @@ export default class Service {
         debug('will-download', event, item, item.getFilename());
         const downloadId = uniqueId(`${this.id}: `);
 
-        ipcRenderer.send('download-started', {
+        window['ferdium'].actions.app.addDownload({
+          id: downloadId,
           serviceId: this.id,
-          downloadId,
-          item: {
-            filename: item.getFilename(),
-            url: item.getURL(),
-            savePath: item.getSavePath(),
-          },
+          filename: item.getFilename(),
+          url: item.getURL(),
+          savePath: item.getSavePath(),
         });
 
         item.addListener('updated', (event, state) => {
@@ -549,16 +547,14 @@ export default class Service {
               debug('Download is paused');
             } else {
               debug(`Received bytes: ${item.getReceivedBytes()}`);
-              ipcRenderer.send('download-progress', {
+              window['ferdium'].actions.app.updateDownload({
+                id: downloadId,
                 serviceId: this.id,
-                downloadId,
-                item: {
-                  filename: item.getFilename(),
-                  url: item.getURL(),
-                  receivedBytes: item.getReceivedBytes(),
-                  totalBytes: item.getTotalBytes(),
-                  state,
-                },
+                filename: item.getFilename(),
+                url: item.getURL(),
+                receivedBytes: item.getReceivedBytes(),
+                totalBytes: item.getTotalBytes(),
+                state,
               });
             }
           }
@@ -570,22 +566,20 @@ export default class Service {
           } else {
             debug(`Download failed: ${state}`);
           }
-          ipcRenderer.send('download-done', {
+
+          window['ferdium'].actions.app.endDownload({
+            id: downloadId,
             serviceId: this.id,
-            downloadId,
-            item: {
-              filename: item.getFilename(),
-              url: item.getURL(),
-              state,
-            },
+            filename: item.getFilename(),
+            url: item.getURL(),
+            receivedBytes: item.getReceivedBytes(),
+            totalBytes: item.getTotalBytes(),
+            state,
           });
         });
 
-        ipcRenderer.on('cancel-download', (event, { downloadId: id }) => {
-          // next line, testing
-          item.cancel();
-
-          if (downloadId === id) {
+        ipcRenderer.on('cancel-download', (event, data) => {
+          if (data === undefined || downloadId === data.downloadId) {
             item.cancel();
           }
         });

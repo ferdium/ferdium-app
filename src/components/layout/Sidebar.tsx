@@ -401,6 +401,46 @@ class Sidebar extends Component<IProps, IState> {
               )}
           </button>
         ) : null}
+        {stores?.app.downloads.length > 0 && (
+          <div
+            className="download-progress"
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '-webkit-fill-available',
+              height: 'fit-content',
+              display: 'flex',
+              justifyContent: 'center',
+              flexDirection: 'column',
+              background: 'white',
+              margin: 5,
+            }}
+          >
+            {stores?.app.downloads.map(download => {
+              return (
+                <div>
+                  <span>{download.filename}</span>
+                  <span>
+                    {download.receivedBytes?.toString()}/
+                    {download.totalBytes?.toString()}
+                  </span>
+                  <span>{download.state}</span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      ipcRenderer.send('stop-download', {
+                        downloadId: download.id,
+                      });
+                    }}
+                  >
+                    <Icon icon={mdiCancel} size={1.5} />
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        )}
         {downloadProgress !== null && (
           <div
             className="download-progress"
@@ -435,14 +475,6 @@ class Sidebar extends Component<IProps, IState> {
           )} (${settingsShortcutKey(false)})`}
         >
           <Icon icon={mdiCancel} size={1.5} />
-          {stores!.settings.app.automaticUpdates &&
-            (stores!.app.updateStatus ===
-              stores!.app.updateStatusTypes.AVAILABLE ||
-              stores!.app.updateStatus ===
-                stores!.app.updateStatusTypes.DOWNLOADED ||
-              this.props.showServicesUpdatedInfoBar) && (
-              <span className="update-available">•</span>
-            )}
         </button>
       </div>
     );
