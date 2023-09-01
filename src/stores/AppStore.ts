@@ -155,6 +155,7 @@ export default class AppStore extends TypedStore {
     );
     this.actions.app.clearAllCache.listen(this._clearAllCache.bind(this));
     this.actions.app.addDownload.listen(this._addDownload.bind(this));
+    this.actions.app.removeDownload.listen(this._removeDownload.bind(this));
     this.actions.app.updateDownload.listen(this._updateDownload.bind(this));
     this.actions.app.endDownload.listen(this._endDownload.bind(this));
 
@@ -274,21 +275,6 @@ export default class AppStore extends TypedStore {
     ipcRenderer.on('isWindowFocused', (_, isFocused) => {
       debug('Setting is focused to', isFocused);
       this.isFocused = isFocused;
-    });
-
-    ipcRenderer.on('download-progress', (_e, data) => {
-      debug('Download in progress', data.item.state);
-      // this._updateDownload(data as Download);
-    });
-
-    ipcRenderer.on('download-done', (_e, data) => {
-      debug('Download done', data.item.state);
-      // this._endDownload(data as Download)
-    });
-
-    ipcRenderer.on('stop-download', (_e, data) => {
-      debug('Download canceled by user', data.item.state);
-      // this._stopDownload(data as Download),
     });
 
     powerMonitor.on('suspend', () => {
@@ -557,6 +543,35 @@ export default class AppStore extends TypedStore {
   @action _addDownload(download: Download) {
     this.downloads.unshift(download);
     debug('Download added', this.downloads);
+  }
+
+  @action _removeDownload(id: string | null) {
+    debug(`Removed download ${id}`);
+    if (id === null) {
+      const indexesToRemove: number[] = [];
+      this.downloads.map(item => {
+        if (!item.state) return;
+        if (item.state === 'completed' || item.state === 'cancelled') {
+          indexesToRemove.push(this.downloads.indexOf(item));
+        }
+      });
+
+      if (indexesToRemove.length === 0) return;
+
+      indexesToRemove.map(index => {
+        this.downloads.splice(index, 1);
+      });
+
+      debug('Removed all completed downloads');
+      return;
+    }
+
+    const index = this.downloads.findIndex(item => item.id === id);
+    if (index !== -1) {
+      this.downloads.splice(index, 1);
+    }
+
+    debug(`Removed download ${id}`);
   }
 
   @action _updateDownload(download: Download) {

@@ -72,7 +72,7 @@ class DownloadManagerDashboard extends Component<IProps, IState> {
               >
                 <ListItemButton
                   onClick={() => {
-                    // TODO: Add clear all completed downloads from list
+                    actions?.app.removeDownload(null);
                   }}
                 >
                   <ListItemIcon>
@@ -180,7 +180,7 @@ class DownloadManagerDashboard extends Component<IProps, IState> {
                     <IconButton
                       color="error"
                       onClick={() => {
-                        // TODO: action remove from list
+                        actions?.app.removeDownload(id);
                       }}
                       size="small"
                     >
@@ -211,23 +211,3 @@ class DownloadManagerDashboard extends Component<IProps, IState> {
 }
 
 export default injectIntl(observer(DownloadManagerDashboard));
-
-// {downloadProgress !== null && (
-//   <div
-//     className="download-progress"
-//     style={{
-//       width: '-webkit-fill-available',
-//       height: 'fit-content',
-//       display: 'flex',
-//       justifyContent: 'center',
-//       margin: 5,
-//     }}
-//   >
-//     <Circle
-//       percent={downloadPercentage}
-//       strokeWidth={10}
-//       strokeColor="#008000"
-//       trailColor="grey"
-//     />
-//   </div>
-// )}

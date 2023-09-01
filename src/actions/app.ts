@@ -29,6 +29,7 @@ export default <ActionDefinitions>{
   toggleCollapseMenu: {},
   clearAllCache: {},
   addDownload: {},
+  removeDownload: {},
   updateDownload: {},
   endDownload: {},
 };
