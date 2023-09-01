@@ -19,6 +19,7 @@ import FolderIcon from '@mui/icons-material/Folder';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ClearAllIcon from '@mui/icons-material/ClearAll';
 import { RealStores } from '../../stores';
+import { Actions } from '../../actions/lib/actions';
 
 const messages = defineMessages({
   headline: {
@@ -30,6 +31,7 @@ const messages = defineMessages({
 interface IProps {
   intl: IntlShape;
   stores?: RealStores;
+  actions?: Actions;
 }
 
 interface IState {
@@ -39,8 +41,9 @@ interface IState {
 // eslint-disable-next-line react/prefer-stateless-function
 class DownloadManagerDashboard extends Component<IProps, IState> {
   render() {
-    const { intl, stores } = this.props;
+    const { intl, stores, actions } = this.props;
 
+    console.log('IAMHERE', actions);
     const downloads = stores?.app.downloads ?? [];
 
     return (

@@ -67,7 +67,7 @@ interface Download {
   filename: string;
   url: string;
   savePath?: string;
-  state?: string;
+  state?: 'progressing' | 'interrupted' | 'completed' | 'cancelled';
   paused?: boolean;
   canResume?: boolean;
   progress?: number;
