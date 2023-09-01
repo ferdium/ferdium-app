@@ -125,6 +125,7 @@ export interface AppStore extends TypedStore {
     FAILED: 'FAILED';
   };
   universalDarkMode: boolean;
+  isDownloading: () => boolean;
   cacheSize: () => void;
   debugInfo: () => void;
   enableLongPressServiceHint: boolean;

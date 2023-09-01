@@ -322,6 +322,10 @@ export default class AppStore extends TypedStore {
     return this.getAppCacheSizeRequest.execute().result;
   }
 
+  @computed get isDownloading() {
+    return this.downloads.some(download => download.state === 'progressing');
+  }
+
   @computed get debugInfo() {
     const settings = cleanseJSObject(this.stores.settings.app);
     settings.lockedPassword = '******';
