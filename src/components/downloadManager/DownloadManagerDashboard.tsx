@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { observer } from 'mobx-react';
 import { IntlShape, defineMessages, injectIntl } from 'react-intl';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, shell } from 'electron';
 import prettyBytes from 'pretty-bytes';
 import {
   Typography,
@@ -43,7 +43,6 @@ class DownloadManagerDashboard extends Component<IProps, IState> {
   render() {
     const { intl, stores, actions } = this.props;
 
-    console.log('IAMHERE', actions);
     const downloads = stores?.app.downloads ?? [];
 
     return (
@@ -126,14 +125,31 @@ class DownloadManagerDashboard extends Component<IProps, IState> {
                         display: 'flex',
                       }}
                     >
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          textDecoration: stateParse ? 'line-through' : null,
+                      <button
+                        type="button"
+                        disabled={state !== 'completed'}
+                        style={{
+                          pointerEvents:
+                            state === 'completed' ? undefined : 'none',
+                        }}
+                        onClick={() => {
+                          if (savePath) shell.openPath(savePath);
                         }}
                       >
-                        {filename}
-                      </Typography>
+                        <Typography
+                          variant="h6"
+                          color={state === 'completed' ? 'primary' : undefined}
+                          sx={{
+                            textDecoration: stateParse
+                              ? 'line-through'
+                              : state === 'completed'
+                              ? 'underline'
+                              : null,
+                          }}
+                        >
+                          {filename}
+                        </Typography>
+                      </button>
                       <Typography variant="h6">
                         {stateParse ? `, ${stateParse}` : null}
                       </Typography>
@@ -191,9 +207,7 @@ class DownloadManagerDashboard extends Component<IProps, IState> {
                     <IconButton
                       color="primary"
                       onClick={() => {
-                        ipcRenderer.send('open-file', {
-                          filePath: savePath,
-                        });
+                        if (savePath) shell.showItemInFolder(savePath);
                       }}
                       size="small"
                     >

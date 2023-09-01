@@ -1,4 +1,4 @@
-import { join } from 'node:path';
+import { join, basename } from 'node:path';
 import { autorun, action, computed, makeObservable, observable } from 'mobx';
 import { ipcRenderer } from 'electron';
 import { webContents } from '@electron/remote';
@@ -527,7 +527,6 @@ export default class Service {
       webviewWebContents.session.on('will-download', (event, item) => {
         event.preventDefault();
 
-        debug('will-download', event, item, item.getFilename());
         const downloadId = uniqueId(`${this.id}: `);
 
         window['ferdium'].actions.app.addDownload({
@@ -550,8 +549,9 @@ export default class Service {
               window['ferdium'].actions.app.updateDownload({
                 id: downloadId,
                 serviceId: this.id,
-                filename: item.getFilename(),
+                filename: basename(item.getSavePath()),
                 url: item.getURL(),
+                savePath: item.getSavePath(),
                 receivedBytes: item.getReceivedBytes(),
                 totalBytes: item.getTotalBytes(),
                 state,
@@ -564,14 +564,16 @@ export default class Service {
           if (state === 'completed') {
             debug('Download successfully');
           } else {
+            if (state === 'cancelled' && item.getSavePath() === '') {
+              window['ferdium'].actions.app.removeDownload(downloadId);
+              debug('Download is cancelled');
+            }
             debug(`Download failed: ${state}`);
           }
 
           window['ferdium'].actions.app.endDownload({
             id: downloadId,
             serviceId: this.id,
-            filename: item.getFilename(),
-            url: item.getURL(),
             receivedBytes: item.getReceivedBytes(),
             totalBytes: item.getTotalBytes(),
             state,
