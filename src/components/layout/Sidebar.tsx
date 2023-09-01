@@ -1,4 +1,3 @@
-import { ipcRenderer } from 'electron';
 import { Component } from 'react';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
@@ -15,13 +14,12 @@ import {
   mdiPlusBox,
   mdiViewGrid,
   mdiViewSplitVertical,
-  mdiCancel,
+  mdiDownload,
 } from '@mdi/js';
-
-import { Circle } from 'rc-progress';
 import Tabbar from '../services/tabs/Tabbar';
 import {
   addNewServiceShortcutKey,
+  downloadsShortcutKey,
   lockFerdiumShortcutKey,
   muteFerdiumShortcutKey,
   settingsShortcutKey,
@@ -94,6 +92,7 @@ interface IProps extends WrappedComponentProps {
   toggleCollapseMenu: () => void;
   toggleWorkspaceDrawer: () => void;
   openSettings: (args: { path: string }) => void;
+  openDownloads: (args: { path: string }) => void;
   // eslint-disable-next-line react/no-unused-prop-types
   closeSettings: () => void;
   setActive: (args: { serviceId: string }) => void;
@@ -115,10 +114,6 @@ interface IProps extends WrappedComponentProps {
 
 interface IState {
   tooltipEnabled: boolean;
-  downloadProgress: {
-    progress: number;
-    total: number;
-  } | null;
 }
 
 @inject('stores', 'actions')
@@ -129,33 +124,7 @@ class Sidebar extends Component<IProps, IState> {
 
     this.state = {
       tooltipEnabled: true,
-      downloadProgress: null,
     };
-
-    ipcRenderer.on('download-progress', this.handleDownloadProgress);
-    ipcRenderer.on('download-done', this.handleDownloadDone);
-  }
-
-  handleDownloadProgress = (_event, data) => {
-    this.setState({
-      downloadProgress: {
-        progress: data.item.receivedBytes,
-        total: data.item.totalBytes,
-      },
-    });
-  };
-
-  handleDownloadDone = (_event, _data) => {
-    this.setState({
-      downloadProgress: null,
-    });
-  };
-
-  componentWillUnmount() {
-    ipcRenderer.removeListener(
-      'download-progress',
-      this.handleDownloadProgress,
-    );
   }
 
   enableToolTip() {
@@ -174,6 +143,7 @@ class Sidebar extends Component<IProps, IState> {
   render() {
     const {
       openSettings,
+      openDownloads,
       toggleMuteApp,
       toggleCollapseMenu,
       isAppMuted,
@@ -212,13 +182,6 @@ class Sidebar extends Component<IProps, IState> {
     ].filter(Boolean).length;
 
     const { isMenuCollapsed } = stores!.settings.all.app;
-
-    const { downloadProgress } = this.state;
-
-    const downloadPercentage =
-      downloadProgress === null
-        ? 0
-        : (downloadProgress.progress / downloadProgress.total) * 100;
 
     return (
       <div className="sidebar">
@@ -380,6 +343,20 @@ class Sidebar extends Component<IProps, IState> {
             style={{ height: 'auto', overflowY: 'unset' }}
           />
         )}
+
+        {/* TODO : ADD HIDE DOWNLOADS BUTTON */}
+        <button
+          type="button"
+          onClick={() => openDownloads({ path: '/downloadmanager' })}
+          className="sidebar__button"
+          data-tooltip-id="tooltip-sidebar-button"
+          data-tooltip-content={`${intl.formatMessage(
+            globalMessages.downloads,
+          )} (${downloadsShortcutKey(false)})`}
+        >
+          <Icon icon={mdiDownload} size={1.8} />
+        </button>
+
         {!hideSettingsButton && !isMenuCollapsed ? (
           <button
             type="button"
@@ -401,81 +378,6 @@ class Sidebar extends Component<IProps, IState> {
               )}
           </button>
         ) : null}
-        {stores?.app.downloads.length > 0 && (
-          <div
-            className="download-progress"
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              width: '-webkit-fill-available',
-              height: 'fit-content',
-              display: 'flex',
-              justifyContent: 'center',
-              flexDirection: 'column',
-              background: 'white',
-              margin: 5,
-            }}
-          >
-            {stores?.app.downloads.map(download => {
-              return (
-                <div>
-                  <span>{download.filename}</span>
-                  <span>
-                    {download.receivedBytes?.toString()}/
-                    {download.totalBytes?.toString()}
-                  </span>
-                  <span>{download.state}</span>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      ipcRenderer.send('stop-download', {
-                        downloadId: download.id,
-                      });
-                    }}
-                  >
-                    <Icon icon={mdiCancel} size={1.5} />
-                  </button>
-                </div>
-              );
-            })}
-          </div>
-        )}
-        {downloadProgress !== null && (
-          <div
-            className="download-progress"
-            style={{
-              width: '-webkit-fill-available',
-              height: 'fit-content',
-              display: 'flex',
-              justifyContent: 'center',
-              margin: 5,
-            }}
-          >
-            <Circle
-              percent={downloadPercentage}
-              strokeWidth={10}
-              strokeColor="#008000"
-              trailColor="grey"
-            />
-          </div>
-        )}
-        <button
-          type="button"
-          onClick={() => {
-            ipcRenderer.send('stop-download');
-            this.setState({
-              downloadProgress: null,
-            });
-          }}
-          className="sidebar__button sidebar__button--settings"
-          data-tooltip-id="tooltip-sidebar-button"
-          data-tooltip-content={`${intl.formatMessage(
-            globalMessages.settings,
-          )} (${settingsShortcutKey(false)})`}
-        >
-          <Icon icon={mdiCancel} size={1.5} />
-        </button>
       </div>
     );
   }

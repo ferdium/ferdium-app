@@ -35,6 +35,8 @@ import { WORKSPACES_ROUTES } from './features/workspaces/constants';
 import { StoresProps } from './@types/ferdium-components.types';
 import { Actions } from './actions/lib/actions';
 import { RealStores } from './stores';
+import DownloadManagerScreen from './containers/download-manager/DownloadManagerScreen';
+import DownloadManagerWindow from './containers/download-manager/DownloadManagerWindow';
 
 interface IProps {
   history: HashHistory;
@@ -113,6 +115,15 @@ class FerdiumRoutes extends Component<IProps> {
               <Route
                 path="/releasenotes"
                 element={<ReleaseNotesScreen {...this.props} />}
+              />
+            </Route>
+            <Route
+              path="/downloadmanager"
+              element={<DownloadManagerWindow {...this.props} />}
+            >
+              <Route
+                path="/downloadmanager"
+                element={<DownloadManagerScreen {...this.props} />}
               />
             </Route>
             <Route
