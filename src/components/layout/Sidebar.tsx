@@ -159,6 +159,7 @@ class Sidebar extends Component<IProps, IState> {
       hideWorkspacesButton,
       hideNotificationsButton,
       hideSettingsButton,
+      hideDownloadButton,
       hideSplitModeButton,
       useHorizontalStyle,
       splitMode,
@@ -346,22 +347,23 @@ class Sidebar extends Component<IProps, IState> {
           />
         )}
 
-        {/* TODO : ADD HIDE DOWNLOADS BUTTON */}
-        <button
-          type="button"
-          onClick={() => openDownloads({ path: '/downloadmanager' })}
-          className={
-            'sidebar__button' +
-            `${isDownloading ? ' sidebar__button--downloading' : ''}` +
-            `${justFinishedDownloading ? ' sidebar__button--done' : ''}`
-          }
-          data-tooltip-id="tooltip-sidebar-button"
-          data-tooltip-content={`${intl.formatMessage(
-            globalMessages.downloads,
-          )} (${downloadsShortcutKey(false)})`}
-        >
-          <Icon icon={mdiDownload} size={1.8} />
-        </button>
+        {!hideDownloadButton && !isMenuCollapsed ? (
+          <button
+            type="button"
+            onClick={() => openDownloads({ path: '/downloadmanager' })}
+            className={
+              'sidebar__button' +
+              `${isDownloading ? ' sidebar__button--downloading' : ''}` +
+              `${justFinishedDownloading ? ' sidebar__button--done' : ''}`
+            }
+            data-tooltip-id="tooltip-sidebar-button"
+            data-tooltip-content={`${intl.formatMessage(
+              globalMessages.downloads,
+            )} (${downloadsShortcutKey(false)})`}
+          >
+            <Icon icon={mdiDownload} size={1.8} />
+          </button>
+        ) : null}
 
         {!hideSettingsButton && !isMenuCollapsed ? (
           <button

@@ -568,9 +568,9 @@ export default class AppStore extends TypedStore {
 
       if (indexesToRemove.length === 0) return;
 
-      indexesToRemove.map(index => {
-        this.downloads.splice(index, 1);
-      });
+      this.downloads = this.downloads.filter(
+        (_, index) => !indexesToRemove.includes(index),
+      );
 
       debug('Removed all completed downloads');
       return;

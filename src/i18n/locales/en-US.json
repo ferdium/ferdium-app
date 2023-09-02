@@ -225,6 +225,7 @@
   "settings.app.form.hideNotificationsButton": "Hide Notifications & Sound button",
   "settings.app.form.hideRecipesButton": "Hide Recipes button",
   "settings.app.form.hideSettingsButton": "Hide Settings button",
+  "settings.app.form.hideDownloadButton": "Hide Downloads button",
   "settings.app.form.hideSplitModeButton": "Hide Split Mode button",
   "settings.app.form.hideWorkspacesButton": "Hide Workspace Drawer button",
   "settings.app.form.iconSize": "Service icon size",
