@@ -47,6 +47,12 @@ dependencies:
   '@electron/remote':
     specifier: 2.0.10
     version: 2.0.10(electron@25.5.0)
+  '@emotion/react':
+    specifier: 11.11.1
+    version: 11.11.1(@types/react@18.2.20)(react@18.2.0)
+  '@emotion/styled':
+    specifier: 11.11.0
+    version: 11.11.0(@emotion/react@11.11.1)(@types/react@18.2.20)(react@18.2.0)
   '@krisdages/electron-process-manager':
     specifier: 3.0.0
     version: 3.0.0(@electron/remote@2.0.10)(electron@25.5.0)(rxjs@7.8.1)
@@ -1448,7 +1454,7 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@babel/runtime': 7.21.5
+      '@babel/runtime': 7.22.11
       '@emotion/babel-plugin': 11.11.0
       '@emotion/cache': 11.11.0
       '@emotion/serialize': 1.1.2
@@ -1484,7 +1490,7 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@babel/runtime': 7.21.5
+      '@babel/runtime': 7.22.11
       '@emotion/babel-plugin': 11.11.0
       '@emotion/is-prop-valid': 1.2.1
       '@emotion/react': 11.11.1(@types/react@18.2.20)(react@18.2.0)
