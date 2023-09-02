@@ -255,6 +255,10 @@ const messages = defineMessages({
     id: 'settings.app.form.hideSettingsButton',
     defaultMessage: 'Hide Settings button',
   },
+  hideDownloadButton: {
+    id: 'settings.app.form.hideDownloadButton',
+    defaultMessage: 'Hide Downloads button',
+  },
   alwaysShowWorkspaces: {
     id: 'settings.app.form.alwaysShowWorkspaces',
     defaultMessage: 'Always show workspace drawer',
@@ -425,6 +429,7 @@ class EditSettingsScreen extends Component<
         hideWorkspacesButton: Boolean(settingsData.hideWorkspacesButton),
         hideNotificationsButton: Boolean(settingsData.hideNotificationsButton),
         hideSettingsButton: Boolean(settingsData.hideSettingsButton),
+        hideDownloadButton: Boolean(settingsData.hideDownloadButton),
         alwaysShowWorkspaces: Boolean(settingsData.alwaysShowWorkspaces),
         accentColor: settingsData.accentColor,
         progressbarAccentColor: settingsData.progressbarAccentColor,
@@ -1079,6 +1084,15 @@ class EditSettingsScreen extends Component<
             DEFAULT_APP_SETTINGS.hideSettingsButton,
           ),
           default: DEFAULT_APP_SETTINGS.hideSettingsButton,
+          type: 'checkbox',
+        },
+        hideDownloadButton: {
+          label: intl.formatMessage(messages.hideDownloadButton),
+          value: ifUndefined<boolean>(
+            settings.all.app.hideDownloadButton,
+            DEFAULT_APP_SETTINGS.hideDownloadButton,
+          ),
+          default: DEFAULT_APP_SETTINGS.hideDownloadButton,
           type: 'checkbox',
         },
         alwaysShowWorkspaces: {

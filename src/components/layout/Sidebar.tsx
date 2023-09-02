@@ -14,11 +14,12 @@ import {
   mdiPlusBox,
   mdiViewGrid,
   mdiViewSplitVertical,
+  mdiDownload,
 } from '@mdi/js';
-
 import Tabbar from '../services/tabs/Tabbar';
 import {
   addNewServiceShortcutKey,
+  downloadsShortcutKey,
   lockFerdiumShortcutKey,
   muteFerdiumShortcutKey,
   settingsShortcutKey,
@@ -91,6 +92,7 @@ interface IProps extends WrappedComponentProps {
   toggleCollapseMenu: () => void;
   toggleWorkspaceDrawer: () => void;
   openSettings: (args: { path: string }) => void;
+  openDownloads: (args: { path: string }) => void;
   // eslint-disable-next-line react/no-unused-prop-types
   closeSettings: () => void;
   setActive: (args: { serviceId: string }) => void;
@@ -141,6 +143,7 @@ class Sidebar extends Component<IProps, IState> {
   render() {
     const {
       openSettings,
+      openDownloads,
       toggleMuteApp,
       toggleCollapseMenu,
       isAppMuted,
@@ -156,6 +159,7 @@ class Sidebar extends Component<IProps, IState> {
       hideWorkspacesButton,
       hideNotificationsButton,
       hideSettingsButton,
+      hideDownloadButton,
       hideSplitModeButton,
       useHorizontalStyle,
       splitMode,
@@ -179,6 +183,8 @@ class Sidebar extends Component<IProps, IState> {
     ].filter(Boolean).length;
 
     const { isMenuCollapsed } = stores!.settings.all.app;
+
+    const { isDownloading, justFinishedDownloading } = stores!.app;
 
     return (
       <div className="sidebar">
@@ -340,6 +346,25 @@ class Sidebar extends Component<IProps, IState> {
             style={{ height: 'auto', overflowY: 'unset' }}
           />
         )}
+
+        {!hideDownloadButton && !isMenuCollapsed ? (
+          <button
+            type="button"
+            onClick={() => openDownloads({ path: '/downloadmanager' })}
+            className={
+              'sidebar__button' +
+              `${isDownloading ? ' sidebar__button--downloading' : ''}` +
+              `${justFinishedDownloading ? ' sidebar__button--done' : ''}`
+            }
+            data-tooltip-id="tooltip-sidebar-button"
+            data-tooltip-content={`${intl.formatMessage(
+              globalMessages.downloads,
+            )} (${downloadsShortcutKey(false)})`}
+          >
+            <Icon icon={mdiDownload} size={1.8} />
+          </button>
+        ) : null}
+
         {!hideSettingsButton && !isMenuCollapsed ? (
           <button
             type="button"

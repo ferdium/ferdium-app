@@ -28,4 +28,10 @@ export default <ActionDefinitions>{
   toggleMuteApp: {},
   toggleCollapseMenu: {},
   clearAllCache: {},
+  addDownload: {},
+  removeDownload: {},
+  updateDownload: {},
+  endedDownload: {},
+  stopDownload: {},
+  togglePauseDownload: {},
 };

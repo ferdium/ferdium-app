@@ -52,7 +52,8 @@ class AppLayoutContainer extends Component<IProps> {
     const { installUpdate, toggleMuteApp, toggleCollapseMenu } =
       this.props.actions.app;
 
-    const { openSettings, closeSettings } = this.props.actions.ui;
+    const { openSettings, closeSettings, openDownloads } =
+      this.props.actions.ui;
 
     const isLoadingFeatures =
       features.featuresRequest.isExecuting &&
@@ -89,6 +90,7 @@ class AppLayoutContainer extends Component<IProps> {
         isAppMuted={settings.all.app.isAppMuted}
         isMenuCollapsed={settings.all.app.isMenuCollapsed}
         openSettings={openSettings}
+        openDownloads={openDownloads}
         closeSettings={closeSettings}
         reorder={reorder}
         reload={reload}

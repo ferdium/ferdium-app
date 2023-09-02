@@ -674,6 +674,16 @@ ipcMain.on('window.toolbar-double-clicked', () => {
   }
 });
 
+ipcMain.on('stop-download', (_e, data) => {
+  debug(`stopping download from main process ${data}`);
+  mainWindow?.webContents.send('stop-download', data);
+});
+
+ipcMain.on('toggle-pause-download', (_e, data) => {
+  debug(`stopping download from main process ${data}`);
+  mainWindow?.webContents.send('toggle-pause-download', data);
+});
+
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
   // On OS X it is common for applications and their menu bar

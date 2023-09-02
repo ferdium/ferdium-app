@@ -794,6 +794,8 @@ class EditSettingsForm extends Component<IProps, IState> {
 
                 <Toggle {...form.$('hideSettingsButton').bind()} />
 
+                <Toggle {...form.$('hideDownloadButton').bind()} />
+
                 <Toggle {...form.$('alwaysShowWorkspaces').bind()} />
               </div>
             )}
