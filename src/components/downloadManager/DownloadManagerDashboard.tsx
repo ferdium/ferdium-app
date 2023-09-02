@@ -58,9 +58,17 @@ class DownloadManagerDashboard extends Component<IProps, IState> {
       <div className="settings__main">
         <div className="settings__header">
           <span className="settings__header-item">
-            <Box sx={{ display: 'flex', justifyContent: 'center' }} gap={1}>
-              <Icon icon={mdiDownload} size={1.8} />
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              gap={1.5}
+            >
+              <Icon icon={mdiDownload} size={1.5} />
               {intl.formatMessage(messages.headline)}
+              <span className="badge badge--success">beta</span>
             </Box>
           </span>
         </div>
