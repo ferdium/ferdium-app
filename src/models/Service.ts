@@ -538,7 +538,6 @@ export default class Service {
         });
 
         item.addListener('updated', (event, state) => {
-          debug('download updated', event, state);
           if (state === 'interrupted') {
             debug('Download is interrupted but can be resumed');
           } else if (state === 'progressing') {
@@ -546,18 +545,19 @@ export default class Service {
               debug('Download is paused');
             } else {
               debug(`Received bytes: ${item.getReceivedBytes()}`);
-              window['ferdium'].actions.app.updateDownload({
-                id: downloadId,
-                serviceId: this.id,
-                filename: basename(item.getSavePath()),
-                url: item.getURL(),
-                savePath: item.getSavePath(),
-                receivedBytes: item.getReceivedBytes(),
-                totalBytes: item.getTotalBytes(),
-                state,
-              });
             }
           }
+          window['ferdium'].actions.app.updateDownload({
+            id: downloadId,
+            serviceId: this.id,
+            filename: basename(item.getSavePath()),
+            url: item.getURL(),
+            savePath: item.getSavePath(),
+            receivedBytes: item.getReceivedBytes(),
+            totalBytes: item.getTotalBytes(),
+            state,
+          });
+          debug('download updated', event, state);
         });
         item.addListener('done', (event, state) => {
           debug('download done', event, state);
@@ -571,7 +571,7 @@ export default class Service {
             debug(`Download failed: ${state}`);
           }
 
-          window['ferdium'].actions.app.endDownload({
+          window['ferdium'].actions.app.endedDownload({
             id: downloadId,
             serviceId: this.id,
             receivedBytes: item.getReceivedBytes(),
@@ -580,7 +580,23 @@ export default class Service {
           });
         });
 
-        ipcRenderer.on('cancel-download', (event, data) => {
+        ipcRenderer.on('toggle-pause-download', (event, data) => {
+          debug('toggle-pause-download', item.isPaused(), item.getState());
+          if (data.downloadId === downloadId || data.downloadId === undefined) {
+            if (item.isPaused()) {
+              item.resume();
+            } else {
+              item.pause();
+            }
+          }
+          debug('toggle-pause-download', item.isPaused(), item.getState());
+          window['ferdium'].actions.app.updateDownload({
+            id: downloadId,
+            paused: item.isPaused(),
+          });
+        });
+
+        ipcRenderer.on('stop-download', (event, data) => {
           if (data === undefined || downloadId === data.downloadId) {
             item.cancel();
           }

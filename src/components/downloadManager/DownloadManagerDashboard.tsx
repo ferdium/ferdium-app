@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { observer } from 'mobx-react';
 import { IntlShape, defineMessages, injectIntl } from 'react-intl';
-import { ipcRenderer, shell } from 'electron';
+import { shell } from 'electron';
 import prettyBytes from 'pretty-bytes';
 import {
   Typography,
@@ -14,17 +14,26 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material';
+import { mdiDownload } from '@mdi/js';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import PauseIcon from '@mui/icons-material/Pause';
 import CancelIcon from '@mui/icons-material/Cancel';
 import FolderIcon from '@mui/icons-material/Folder';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ClearAllIcon from '@mui/icons-material/ClearAll';
+import { round } from 'lodash';
 import { RealStores } from '../../stores';
 import { Actions } from '../../actions/lib/actions';
+import Icon from '../ui/icon';
 
 const messages = defineMessages({
   headline: {
     id: 'downloadManager.headline',
     defaultMessage: 'Download Manager',
+  },
+  empty: {
+    id: 'downloadManager.empty',
+    defaultMessage: 'Your download list is empty.',
   },
 });
 
@@ -49,12 +58,28 @@ class DownloadManagerDashboard extends Component<IProps, IState> {
       <div className="settings__main">
         <div className="settings__header">
           <span className="settings__header-item">
-            {intl.formatMessage(messages.headline)}
+            <Box sx={{ display: 'flex', justifyContent: 'center' }} gap={1}>
+              <Icon icon={mdiDownload} size={1.8} />
+              {intl.formatMessage(messages.headline)}
+            </Box>
           </span>
         </div>
         <div className="settings__body">
           {downloads.length === 0 ? (
-            <Typography variant="h6">Your download list is empty</Typography>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              gap={4}
+            >
+              <Icon icon={mdiDownload} size={1.8} />
+              <Typography variant="h4">
+                {intl.formatMessage(messages.empty)}
+              </Typography>
+            </Box>
           ) : (
             <Box
               sx={{
@@ -91,20 +116,23 @@ class DownloadManagerDashboard extends Component<IProps, IState> {
               savePath,
               state,
               id,
+              paused,
             } = download;
 
             const downloadPercentage =
               receivedBytes !== undefined && totalBytes !== undefined
-                ? Math.round((receivedBytes / totalBytes) * 100)
+                ? round((receivedBytes / totalBytes) * 100, 2)
                 : null;
 
             const stateParse =
-              state === 'progressing' || state === 'completed'
-                ? null
-                : state === 'interrupted'
-                ? 'Paused'
+              state === 'progressing'
+                ? paused === false || paused === undefined
+                  ? null
+                  : 'Paused'
                 : state === 'cancelled'
                 ? 'Cancelled'
+                : state === 'completed'
+                ? null
                 : 'Error';
 
             return (
@@ -124,6 +152,7 @@ class DownloadManagerDashboard extends Component<IProps, IState> {
                       sx={{
                         display: 'flex',
                       }}
+                      gap={2}
                     >
                       <button
                         type="button"
@@ -140,18 +169,26 @@ class DownloadManagerDashboard extends Component<IProps, IState> {
                           variant="h6"
                           color={state === 'completed' ? 'primary' : undefined}
                           sx={{
-                            textDecoration: stateParse
-                              ? 'line-through'
-                              : state === 'completed'
-                              ? 'underline'
-                              : null,
+                            textDecoration:
+                              stateParse !== null && stateParse !== 'Paused'
+                                ? 'line-through'
+                                : state === 'completed'
+                                ? 'underline'
+                                : null,
                           }}
                         >
                           {filename}
                         </Typography>
                       </button>
-                      <Typography variant="h6">
-                        {stateParse ? `, ${stateParse}` : null}
+                      <Typography
+                        variant="h6"
+                        color={stateParse === 'Paused' ? '#ed6c02' : undefined}
+                      >
+                        {stateParse !== null && stateParse !== 'Paused'
+                          ? stateParse
+                          : stateParse === 'Paused'
+                          ? stateParse
+                          : null}
                       </Typography>
                     </Box>
                     <Typography variant="body2">{url}</Typography>
@@ -184,12 +221,28 @@ class DownloadManagerDashboard extends Component<IProps, IState> {
                       color="error"
                       size="small"
                       onClick={() => {
-                        ipcRenderer.send('stop-download', {
-                          downloadId: id,
-                        });
+                        actions?.app.stopDownload(id);
                       }}
                     >
                       <CancelIcon />
+                    </IconButton>
+                  )}
+                  {state === 'progressing' && (
+                    <IconButton
+                      color={
+                        paused === false || paused === undefined
+                          ? 'warning'
+                          : 'success'
+                      }
+                      size="small"
+                      onClick={() => {
+                        actions?.app.togglePauseDownload(id);
+                      }}
+                    >
+                      {(paused === false || paused === undefined) && (
+                        <PauseIcon />
+                      )}
+                      {paused && <PlayArrowIcon />}
                     </IconButton>
                   )}
                   {(state === 'cancelled' || state === 'completed') && (

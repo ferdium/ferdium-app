@@ -183,7 +183,7 @@ class Sidebar extends Component<IProps, IState> {
 
     const { isMenuCollapsed } = stores!.settings.all.app;
 
-    const { isDownloading } = stores!.app;
+    const { isDownloading, justFinishedDownloading } = stores!.app;
 
     return (
       <div className="sidebar">
@@ -350,9 +350,11 @@ class Sidebar extends Component<IProps, IState> {
         <button
           type="button"
           onClick={() => openDownloads({ path: '/downloadmanager' })}
-          className={`sidebar__button ${
-            isDownloading ? 'sidebar__button--downloading' : ''
-          }`}
+          className={
+            'sidebar__button' +
+            `${isDownloading ? ' sidebar__button--downloading' : ''}` +
+            `${justFinishedDownloading ? ' sidebar__button--done' : ''}`
+          }
           data-tooltip-id="tooltip-sidebar-button"
           data-tooltip-content={`${intl.formatMessage(
             globalMessages.downloads,

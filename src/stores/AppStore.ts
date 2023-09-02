@@ -132,6 +132,8 @@ export default class AppStore extends TypedStore {
 
   @observable downloads: Download[] = [];
 
+  @observable justFinishedDownloading: boolean = false;
+
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
 
@@ -157,7 +159,11 @@ export default class AppStore extends TypedStore {
     this.actions.app.addDownload.listen(this._addDownload.bind(this));
     this.actions.app.removeDownload.listen(this._removeDownload.bind(this));
     this.actions.app.updateDownload.listen(this._updateDownload.bind(this));
-    this.actions.app.endDownload.listen(this._endDownload.bind(this));
+    this.actions.app.endedDownload.listen(this._endedDownload.bind(this));
+    this.actions.app.stopDownload.listen(this._stopDownload.bind(this));
+    this.actions.app.togglePauseDownload.listen(
+      this._togglePauseDownload.bind(this),
+    );
 
     this.registerReactions([
       this._offlineCheck.bind(this),
@@ -581,19 +587,39 @@ export default class AppStore extends TypedStore {
   @action _updateDownload(download: Download) {
     const index = this.downloads.findIndex(item => item.id === download.id);
     if (index !== -1) {
-      this.downloads[index] = download;
+      this.downloads[index] = { ...this.downloads[index], ...download };
     }
 
     debug('Download updated', this.downloads[index]);
   }
 
-  @action _endDownload(download: Download) {
+  @action _endedDownload(download: Download) {
     const index = this.downloads.findIndex(item => item.id === download.id);
     if (index !== -1) {
       this.downloads[index] = { ...this.downloads[index], ...download };
     }
 
     debug('Download ended', this.downloads[index]);
+
+    if (!this.isDownloading && download.state === 'completed') {
+      this.justFinishedDownloading = true;
+
+      setTimeout(() => {
+        this.justFinishedDownloading = false;
+      }, ms('2s'));
+    }
+  }
+
+  @action _stopDownload(downloadId: string | undefined) {
+    ipcRenderer.send('stop-download', {
+      downloadId,
+    });
+  }
+
+  @action _togglePauseDownload(downloadId: string | undefined) {
+    ipcRenderer.send('toggle-pause-download', {
+      downloadId,
+    });
   }
 
   _setLocale() {

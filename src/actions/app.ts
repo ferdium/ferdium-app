@@ -31,5 +31,7 @@ export default <ActionDefinitions>{
   addDownload: {},
   removeDownload: {},
   updateDownload: {},
-  endDownload: {},
+  endedDownload: {},
+  stopDownload: {},
+  togglePauseDownload: {},
 };

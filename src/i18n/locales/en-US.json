@@ -167,6 +167,7 @@
   "services.serverInfo": "Optionally, you can change your Ferdium server by clicking the cog in the bottom left corner. If you are switching over (from one of the hosted servers) to using Ferdium without an account, please be informed that you can export your data from that server and subsequently import it using the Help menu to resurrect all your workspaces and configured services!",
   "services.serverless": "Use Ferdium without an Account",
   "downloadManager.headline": "Download Manager",
+  "downloadManager.empty": "Your download list is empty.",
   "settings.account.account.editButton": "Edit account",
   "settings.account.accountUnavailable": "Account is unavailable",
   "settings.account.accountUnavailableInfo": "You are using Ferdium without an account. If you want to use Ferdium with an account and keep your services synchronized across installations, please select a server in the Settings tab then login.",
