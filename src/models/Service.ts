@@ -4,7 +4,7 @@ import { ipcRenderer } from 'electron';
 import { webContents } from '@electron/remote';
 import ElectronWebView from 'react-electron-web-view';
 
-import { uniqueId } from 'lodash';
+import { v4 as uuidV4 } from 'uuid';
 import { todosStore } from '../features/todos';
 import { isValidExternalURL, normalizedUrl } from '../helpers/url-helpers';
 import UserAgent from './UserAgent';
@@ -527,7 +527,7 @@ export default class Service {
       webviewWebContents.session.on('will-download', (event, item) => {
         event.preventDefault();
 
-        const downloadId = uniqueId(`${this.id}: `);
+        const downloadId = uuidV4();
 
         window['ferdium'].actions.app.addDownload({
           id: downloadId,
