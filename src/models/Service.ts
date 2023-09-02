@@ -580,7 +580,7 @@ export default class Service {
           });
         });
 
-        ipcRenderer.on('toggle-pause-download', (event, data) => {
+        ipcRenderer.on('toggle-pause-download', (_, data) => {
           debug('toggle-pause-download', item.isPaused(), item.getState());
           if (data.downloadId === downloadId || data.downloadId === undefined) {
             if (item.isPaused()) {
@@ -596,7 +596,7 @@ export default class Service {
           });
         });
 
-        ipcRenderer.on('stop-download', (event, data) => {
+        ipcRenderer.on('stop-download', (_, data) => {
           if (data === undefined || downloadId === data.downloadId) {
             item.cancel();
           }
