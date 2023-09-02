@@ -43,6 +43,6 @@ export const splitModeToggleShortcutKey = (isAccelerator = true) =>
 export const settingsShortcutKey = (isAccelerator = true) =>
   `${cmdOrCtrlShortcutKey(isAccelerator)}+${isMac ? ',' : 'P'}`;
 export const downloadsShortcutKey = (isAccelerator = true) =>
-  `${cmdOrCtrlShortcutKey(isAccelerator)}+${isMac ? ',' : 'J'}`;
+  `${cmdOrCtrlShortcutKey(isAccelerator)}+J`;
 export const toggleFullScreenKey = () =>
   isMac ? `CTRL + ${cmdKey} + F` : 'F11';
