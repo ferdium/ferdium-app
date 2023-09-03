@@ -1,4 +1,5 @@
 import { BrowserWindow } from 'electron';
+import { protocolClient } from '../environment-remote';
 
 export default function handleDeepLink(
   window: BrowserWindow,
@@ -8,7 +9,7 @@ export default function handleDeepLink(
     return;
   }
 
-  const url = rawUrl.replace('ferdium://', '');
+  const url = rawUrl.replace(`${protocolClient}://`, '');
 
   // The next line is a workaround after this 71c5237 [chore: Mobx & React-Router upgrade (#406)].
   // For some reason, the app won't start until because it's trying to route to './build'.

@@ -263,6 +263,20 @@ export default class AppStore extends TypedStore {
       url = url.replace(/\/$/, '');
       url = url.replace(/\s?--(updated)/, '');
 
+      if (url.startsWith('service/')) {
+        const pattern = /service\/([^/]+)/;
+        // Use the exec method to extract the id from the URL
+        const match = pattern.exec(url);
+
+        if (match) {
+          const id = match[1]; // The id is captured in the first capture group
+          this.actions.service.setActive({
+            serviceId: id,
+          });
+        }
+        return;
+      }
+
       this.stores.router.push(url);
     });
 
