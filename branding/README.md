@@ -10,4 +10,4 @@ Ferdium uses a custom branding, inspired by Franz's.
 ## Gradient
 <img src="gradient.png" alt="Gradient" width="200"/>
 
-Ferdium's Gradient is rotated by 45°. It goes from `#CE9FFC` in the top left to `#7367F0` in the bottom right.
+Ferdium's Gradient is rotated by 45°. It goes from `#7266f0` in the bottom left to `#734ed3` in the top right.
