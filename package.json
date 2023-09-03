@@ -166,7 +166,7 @@
     "concurrently": "8.2.1",
     "cross-env": "7.0.3",
     "electron": "25.5.0",
-    "electron-builder": "24.6.4",
+    "electron-builder": "24.4.0",
     "esbuild": "0.16.17",
     "esbuild-plugin-copy": "2.1.1",
     "esbuild-runner": "2.2.2",
