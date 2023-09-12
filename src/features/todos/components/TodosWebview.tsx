@@ -209,6 +209,7 @@ class TodosWebview extends Component<IProps, IState> {
             }}
             useragent={userAgent}
             src={todoUrl}
+            allowpopups
           />
         )}
       </div>
