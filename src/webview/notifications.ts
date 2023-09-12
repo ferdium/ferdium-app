@@ -46,7 +46,7 @@ export const notificationsClassDefinition = `(() => {
           });
       } catch(error) {
 	        this.options.onClick = null;
-          window.ferdium.displayNotification(this.title, this.options)
+          window.ferdium.displayNotification(title, options)
             .then(() => {
               if (typeof (this.onClick) === 'function') {
                 this.onClick();
