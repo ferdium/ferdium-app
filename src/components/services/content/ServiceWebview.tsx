@@ -57,7 +57,7 @@ class ServiceWebview extends Component<IProps> {
 
   refocusWebview(): void {
     const { webview } = this;
-    debug('Refocus Webview is called', this.props.service);
+
     if (!webview) {
       return;
     }
@@ -72,8 +72,6 @@ class ServiceWebview extends Component<IProps> {
             : ''
         } ${`- ${this.props.service._webview.getTitle()}`}`;
       }, 100);
-    } else {
-      debug('Refocus not required - Not active service');
     }
   }
 

@@ -293,7 +293,6 @@ export default class AppStore extends TypedStore {
     this.isSystemDarkModeEnabled = nativeTheme.shouldUseDarkColors;
 
     ipcRenderer.on('isWindowFocused', (_, isFocused) => {
-      debug('Setting is focused to', isFocused);
       this.isFocused = isFocused;
     });
 
@@ -472,7 +471,6 @@ export default class AppStore extends TypedStore {
 
   @action _checkForUpdates() {
     if (this.isOnline && this.stores.settings.app.automaticUpdates) {
-      debug('_checkForUpdates: sending event to autoUpdate:check');
       this.updateStatus = this.updateStatusTypes.CHECKING;
       ipcRenderer.send('autoUpdate', {
         action: 'check',
@@ -723,9 +721,8 @@ export default class AppStore extends TypedStore {
   }
 
   async _systemDND() {
-    debug('Checking if Do Not Disturb Mode is on');
     const dnd = await ipcRenderer.invoke('get-dnd');
-    debug('Do not disturb mode is', dnd);
+
     if (
       dnd !== this.stores.settings.all.app.isAppMuted &&
       !this.isSystemMuteOverridden

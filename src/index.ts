@@ -54,7 +54,6 @@ import { darkThemeGrayDarkest } from './themes/legacy';
 const debug = require('./preload-safe-debug')('Ferdium:App');
 
 // Globally set useragent to fix user agent override in service workers
-debug('Set userAgent to ', userAgent());
 app.userAgentFallback = userAgent();
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -358,25 +357,21 @@ const createWindow = () => {
   });
 
   mainWindow.on('maximize', () => {
-    debug('Window: maximize');
     // @ts-expect-error Property 'isMaximized' does not exist on type 'App'.
     app.isMaximized = true;
     mainWindow?.setSkipTaskbar(false);
   });
 
   mainWindow.on('unmaximize', () => {
-    debug('Window: unmaximize');
     // @ts-expect-error Property 'isMaximized' does not exist on type 'App'.
     app.isMaximized = false;
   });
 
   mainWindow.on('restore', () => {
-    debug('Window: restore');
     mainWindow?.setSkipTaskbar(false);
 
     // @ts-expect-error Property 'wasMaximized' does not exist on type 'App'.
     if (app.wasMaximized) {
-      debug('Window: was maximized before, maximize window');
       mainWindow?.maximize();
     }
 
@@ -400,7 +395,6 @@ const createWindow = () => {
   }
 
   mainWindow.on('show', () => {
-    debug('Skip taskbar: true');
     mainWindow?.setSkipTaskbar(false);
   });
 
@@ -653,10 +647,8 @@ ipcMain.on('set-spellchecker-locales', (_e, { locale, serviceId }) => {
 
   const serviceSession = session.fromPartition(`persist:service-${serviceId}`);
   const [defaultLocale] = serviceSession.getSpellCheckerLanguages();
-  debug(`Spellchecker default locale is: ${defaultLocale}`);
 
   const locales = [locale, defaultLocale, DEFAULT_APP_SETTINGS.fallbackLocale];
-  debug(`Setting spellchecker locales to: ${locales}`);
   serviceSession.setSpellCheckerLanguages(locales);
 });
 

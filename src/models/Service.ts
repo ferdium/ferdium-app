@@ -472,15 +472,11 @@ export default class Service {
       },
     );
 
-    this.webview.addEventListener('did-start-loading', event => {
-      debug('Did start load', this.name, event);
-
+    this.webview.addEventListener('did-start-loading', () => {
       this._didStartLoading();
     });
 
-    this.webview.addEventListener('did-stop-loading', event => {
-      debug('Did stop load', this.name, event);
-
+    this.webview.addEventListener('did-stop-loading', () => {
       this._didStopLoading();
     });
 

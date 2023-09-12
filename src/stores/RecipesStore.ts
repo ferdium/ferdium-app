@@ -85,9 +85,6 @@ export default class RecipesStore extends TypedStore {
     const recipeIds = this.recipeIdForServices;
     const recipes = {};
 
-    // Hackfix, reference this.all to fetch services
-    debug(`Check Recipe updates for ${this.all.map(recipe => recipe.id)}`);
-
     for (const r of recipeIds) {
       const recipe = this.one(r);
       if (recipe) {

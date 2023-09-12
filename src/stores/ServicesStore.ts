@@ -253,7 +253,6 @@ export default class ServicesStore extends TypedStore {
   _serviceMaintenanceTicker() {
     this._serviceMaintenance();
     this.serviceMaintenanceTick();
-    debug('Service maintenance tick');
   }
 
   /**
@@ -791,8 +790,6 @@ export default class ServicesStore extends TypedStore {
     // eslint-disable-next-line default-case
     switch (channel) {
       case 'hello': {
-        debug('Received hello event from', serviceId);
-
         this._initRecipePolling(service.id);
         this._initializeServiceRecipeInWebview(serviceId);
         this._shareSettingsWithServiceProcess();
@@ -805,8 +802,6 @@ export default class ServicesStore extends TypedStore {
         break;
       }
       case 'message-counts': {
-        debug(`Received unread message info from '${serviceId}'`, args[0]);
-
         this.actions.service.setUnreadMessageCount({
           serviceId,
           count: {
@@ -818,8 +813,6 @@ export default class ServicesStore extends TypedStore {
         break;
       }
       case 'active-dialog-title': {
-        debug(`Received active dialog title from '${serviceId}'`, args[0]);
-
         this.actions.service.setDialogTitle({
           serviceId,
           dialogTitle: args[0],
@@ -1111,10 +1104,6 @@ export default class ServicesStore extends TypedStore {
   }) {
     const now = Date.now();
     const service = this.one(serviceId);
-    const automaticTag = automatic ? ' automatically ' : ' ';
-    debug(
-      `Waking up${automaticTag}from service hibernation for ${service.name}`,
-    );
 
     if (automatic) {
       // if this is an automatic wake up, use the wakeUpHibernationStrategy
@@ -1155,11 +1144,6 @@ export default class ServicesStore extends TypedStore {
     } else {
       service.lastUsed = now;
     }
-    debug(
-      `Setting service.lastUsed to ${service.lastUsed} (${
-        (now - service.lastUsed) / 1000
-      }s ago)`,
-    );
     service.isHibernationRequested = false;
     service.lastHibernated = null;
   }

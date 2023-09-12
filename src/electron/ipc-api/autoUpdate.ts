@@ -17,7 +17,6 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
           );
 
           if (args.action === 'check') {
-            debug('checking for update');
             autoUpdater.checkForUpdates();
           } else if (args.action === 'install') {
             debug('installing update');
