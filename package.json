@@ -230,7 +230,7 @@
     "usocket": "_EXCLUDED_"
   },
   "optionalDependencies": {
-    "macos-notification-state": "github:ferdium/macos-notification-state#130bb2602795b65ae2dea74d823027b185eaf0ae",
+    "macos-notification-state": "github:ferdium/macos-notification-state#e0465373b0aed12ea4ce30522e82aaa8706cdf40",
     "node-mac-permissions": "2.3.0"
   },
   "browserslist": [
