@@ -330,7 +330,11 @@ function generateShowDragAreaStyle(accentColor) {
   `;
 }
 
-function generateVerticalStyle(widthStr, alwaysShowWorkspaces) {
+function generateVerticalStyle(
+  widthStr,
+  alwaysShowWorkspaces,
+  useWorkspaceDrawerIconStyle,
+) {
   if (!document.querySelector('#vertical-style')) {
     const link = document.createElement('link');
     link.id = 'vertical-style';
@@ -343,13 +347,14 @@ function generateVerticalStyle(widthStr, alwaysShowWorkspaces) {
   const width = Number(widthStr);
   const sidebarWidth = width - 4;
   const verticalStyleOffset = 29;
+  const drawerWidth = useWorkspaceDrawerIconStyle ? '75px' : '300px';
 
   return `
   .sidebar {
   ${
-    alwaysShowWorkspaces
+    alwaysShowWorkspaces || useWorkspaceDrawerIconStyle
       ? `
-    width: calc(100% - 300px) !important;
+    width: calc(100% - ${drawerWidth}) !important;
   `
       : ''
   }
@@ -395,6 +400,7 @@ function generateStyle(settings, app) {
     useHorizontalStyle,
     alwaysShowWorkspaces,
     showServiceName,
+    useWorkspaceDrawerIconStyle,
   } = settings;
 
   const { isFullScreen } = app;
@@ -423,7 +429,11 @@ function generateStyle(settings, app) {
     style += generateShowDragAreaStyle(accentColor);
   }
   if (useHorizontalStyle) {
-    style += generateVerticalStyle(serviceRibbonWidth, alwaysShowWorkspaces);
+    style += generateVerticalStyle(
+      serviceRibbonWidth,
+      alwaysShowWorkspaces,
+      useWorkspaceDrawerIconStyle,
+    );
   } else if (document.querySelector('#vertical-style')) {
     const link = document.querySelector('#vertical-style');
     if (link) {

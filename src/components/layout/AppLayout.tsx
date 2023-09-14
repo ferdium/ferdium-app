@@ -65,7 +65,7 @@ const styles = (theme: { workspaces: { drawer: { width: any } } }) => ({
     transform() {
       return workspaceStore.isWorkspaceDrawerOpen
         ? 'translateX(0)'
-        : `translateX(-75px)`;
+        : 'translateX(-75px)';
     },
   },
   titleBar: {
