@@ -66,15 +66,17 @@ class WorkspaceController {
       });
     }
 
-    const data = request.all();
+    const toUpdate = request.all();
     const { id } = params;
+    const { name, services, iconUrl } = toUpdate;
 
     // Update data in database
     await Workspace.query()
       .where('workspaceId', id)
       .update({
-        name: data.name,
-        services: JSON.stringify(data.services),
+        name,
+        services: JSON.stringify(services),
+        data: JSON.stringify({ iconUrl }),
       });
 
     // Get updated row
@@ -82,13 +84,22 @@ class WorkspaceController {
       .where('workspaceId', id)
       .fetch();
     const workspace = workspaceQuery.rows[0];
-
+    let data = {};
+    try {
+      data = JSON.parse(workspace.data);
+    } catch (error) {
+      console.warn(
+        `[WorkspaceController] edit ${workspace.workspaceId}. Error parsing data JSON`,
+        error,
+      );
+    }
     return response.send({
       id: workspace.workspaceId,
       name: data.name,
       order: workspace.order,
       services: data.services,
       userId: 1,
+      iconUrl: data?.iconUrl || '',
     });
   }
 
@@ -122,13 +133,25 @@ class WorkspaceController {
     // Convert to array with all data Franz wants
     let workspacesArray = [];
     if (workspaces) {
-      workspacesArray = workspaces.map(workspace => ({
-        id: workspace.workspaceId,
-        name: workspace.name,
-        order: workspace.order,
-        services: convertToJSON(workspace.services),
-        userId: 1,
-      }));
+      workspacesArray = workspaces.map(workspace => {
+        let data = {};
+        try {
+          data = JSON.parse(workspace.data);
+        } catch (error) {
+          console.warn(
+            `[WorkspaceController] list ${workspace.workspaceId}. Error parsing data JSON`,
+            error,
+          );
+        }
+        return {
+          id: workspace.workspaceId,
+          name: workspace.name,
+          iconUrl: data?.iconUrl || '',
+          order: workspace.order,
+          services: convertToJSON(workspace.services),
+          userId: 1,
+        };
+      });
     }
 
     return response.send(workspacesArray);
