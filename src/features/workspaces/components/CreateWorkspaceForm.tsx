@@ -76,6 +76,7 @@ class CreateWorkspaceForm extends Component<IProps> {
           {...form.$('name').bind()}
           className={classes.input}
           showLabel={false}
+          // @ts-expect-error Expected 1 arguments, but got 2.
           onEnterKey={this.submitForm.bind(this, form)}
           focus={workspaceStore.isUserAllowedToUseFeature}
         />
@@ -83,6 +84,7 @@ class CreateWorkspaceForm extends Component<IProps> {
           className={`${classes.submitButton} franz-form__button`}
           type="submit"
           label={intl.formatMessage(messages.submitButton)}
+          // @ts-expect-error Expected 1 arguments, but got 2.
           onClick={this.submitForm.bind(this, form)}
           busy={isSubmitting}
           buttonType={isSubmitting ? 'secondary' : 'primary'}
