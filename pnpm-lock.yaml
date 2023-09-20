@@ -46,7 +46,7 @@ dependencies:
     version: 5.1.0
   '@electron/remote':
     specifier: 2.0.11
-    version: 2.0.11(electron@25.5.0)
+    version: 2.0.11(electron@25.8.1)
   '@emotion/react':
     specifier: 11.11.1
     version: 11.11.1(@types/react@18.2.22)(react@18.2.0)
@@ -55,7 +55,7 @@ dependencies:
     version: 11.11.0(@emotion/react@11.11.1)(@types/react@18.2.22)(react@18.2.0)
   '@krisdages/electron-process-manager':
     specifier: 3.0.0
-    version: 3.0.0(@electron/remote@2.0.11)(electron@25.5.0)(rxjs@7.8.1)
+    version: 3.0.0(@electron/remote@2.0.11)(electron@25.8.1)(rxjs@7.8.1)
   '@mdi/js':
     specifier: 7.2.96
     version: 7.2.96
@@ -361,8 +361,8 @@ devDependencies:
     specifier: 7.0.3
     version: 7.0.3
   electron:
-    specifier: 25.5.0
-    version: 25.5.0
+    specifier: 25.8.1
+    version: 25.8.1
   electron-builder:
     specifier: 24.4.0
     version: 24.4.0
@@ -1345,12 +1345,12 @@ packages:
       - supports-color
     dev: true
 
-  /@electron/remote@2.0.11(electron@25.5.0):
+  /@electron/remote@2.0.11(electron@25.8.1):
     resolution: {integrity: sha512-PYEs7W3GrQNuhgiMHjFEvL5MbAL6C7m1AwSAHGqC+xc33IdP7rcGtJSdTP2eg1ssyB3oI00KwTsiSlsQbAoXpA==}
     peerDependencies:
       electron: '>= 13.0.0'
     dependencies:
-      electron: 25.5.0
+      electron: 25.8.1
     dev: false
 
   /@electron/universal@1.3.4:
@@ -2159,15 +2159,15 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@krisdages/electron-process-manager@3.0.0(@electron/remote@2.0.11)(electron@25.5.0)(rxjs@7.8.1):
+  /@krisdages/electron-process-manager@3.0.0(@electron/remote@2.0.11)(electron@25.8.1)(rxjs@7.8.1):
     resolution: {integrity: sha512-Gs8McOVC6BVdfP4SeF+l5nx85eFooarm37K5mxs1PESI59a7oLwRf5Yd2tsZ6Ye14bCG0eTJGDv3yPuixBg3OQ==}
     peerDependencies:
       '@electron/remote': '>= 1.2.0'
       electron: '>= 10'
       rxjs: '>= 7'
     dependencies:
-      '@electron/remote': 2.0.11(electron@25.5.0)
-      electron: 25.5.0
+      '@electron/remote': 2.0.11(electron@25.8.1)
+      electron: 25.8.1
       electron-process-reporter: /@krisdages/electron-process-reporter@2.0.0-rxjs7-1.4.0(rxjs@7.8.1)
       rxjs: 7.8.1
     dev: false
@@ -5692,8 +5692,8 @@ packages:
       mkdirp: 0.5.6
     dev: false
 
-  /electron@25.5.0:
-    resolution: {integrity: sha512-w1DNj1LuAk0Vaas1rQ0pAkTe2gZ5YG75J27mC2m88y0G6Do5b5YoFDaF84fOGQHeQ4j8tC5LngSgWhbwmqDlrw==}
+  /electron@25.8.1:
+    resolution: {integrity: sha512-GtcP1nMrROZfFg0+mhyj1hamrHvukfF6of2B/pcWxmWkd5FVY1NJib0tlhiorFZRzQN5Z+APLPr7aMolt7i2AQ==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     requiresBuild: true
