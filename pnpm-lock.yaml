@@ -2915,8 +2915,8 @@ packages:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
     dev: false
 
-  /@types/plist@3.0.2:
-    resolution: {integrity: sha512-ULqvZNGMv0zRFvqn8/4LSPtnmN4MfhlPNtJCTpKuIIxGVGZ2rYWzFXrvEBoh9CVyqSE7D6YFRJ1hydLHI6kbWw==}
+  /@types/plist@3.0.3:
+    resolution: {integrity: sha512-DXkBoKc7jwUR0p439icInmXXMJNhoImdpOrrgA5/nDFK7LVtcJ9MyQNKhJEKpEztnHGWnNWMWLOIR62By0Ln0A==}
     requiresBuild: true
     dependencies:
       '@types/node': 18.15.3
@@ -5505,7 +5505,7 @@ packages:
     hasBin: true
     requiresBuild: true
     dependencies:
-      '@types/plist': 3.0.2
+      '@types/plist': 3.0.3
       '@types/verror': 1.10.6
       ajv: 6.12.6
       crc: 3.8.0
