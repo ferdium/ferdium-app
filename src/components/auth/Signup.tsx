@@ -148,10 +148,10 @@ class Signup extends Component<IProps> {
               showPasswordToggle
               scorePassword
             />
-            {error.code === 'email-duplicate' && (
-              <p className="error-message center">
+            {error.status === 401 && (
+              <h2 className="error-message center">
                 {intl.formatMessage(messages.emailDuplicate)}
-              </p>
+              </h2>
             )}
             {isSubmitting ? (
               <Button

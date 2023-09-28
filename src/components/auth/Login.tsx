@@ -139,26 +139,30 @@ class Login extends Component<IProps> {
           <Input {...form.$('password').bind()} showPasswordToggle />
           {error.code === 'invalid-credentials' && (
             <>
-              <p className="error-message center">
+              <h2 className="error-message center">
                 {intl.formatMessage(messages.invalidCredentials)}
-              </p>
+              </h2>
               {window['ferdium'].stores.settings.all.app.server !==
                 LIVE_FRANZ_API && (
-                <p className="error-message center">
-                  {intl.formatMessage(messages.customServerQuestion)}{' '}
-                  <Link
-                    to={`${window[
-                      'ferdium'
-                    ].stores.settings.all.app.server.replace(
-                      API_VERSION,
-                      '',
-                    )}/import`}
-                    target="_blank"
-                    style={{ cursor: 'pointer', textDecoration: 'underline' }}
-                  >
-                    {intl.formatMessage(messages.customServerSuggestion)}
-                  </Link>
-                </p>
+                <>
+                  <p className="error-message center">
+                    {intl.formatMessage(messages.customServerQuestion)}{' '}
+                  </p>
+                  <p className="error-message center">
+                    <Link
+                      to={`${window[
+                        'ferdium'
+                      ].stores.settings.all.app.server.replace(
+                        API_VERSION,
+                        '',
+                      )}/import`}
+                      target="_blank"
+                      style={{ cursor: 'pointer', textDecoration: 'underline' }}
+                    >
+                      {intl.formatMessage(messages.customServerSuggestion)}
+                    </Link>
+                  </p>
+                </>
               )}
             </>
           )}
