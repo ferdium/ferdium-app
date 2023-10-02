@@ -264,7 +264,7 @@ dependencies:
 optionalDependencies:
   macos-notification-state:
     specifier: github:ferdium/macos-notification-state#e0465373b0aed12ea4ce30522e82aaa8706cdf40
-    version: github.com/ferdium/macos-notification-state/e0465373b0aed12ea4ce30522e82aaa8706cdf40
+    version: git@github.com+ferdium/macos-notification-state/e0465373b0aed12ea4ce30522e82aaa8706cdf40
   node-mac-permissions:
     specifier: 2.3.0
     version: 2.3.0
@@ -5337,8 +5337,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /decode-uri-component@0.2.0:
-    resolution: {integrity: sha512-hjf+xovcEn31w/EUYdTXQh/8smFL/dzYjohQGEIgjyNavaJfBY2p5F527Bo1VPATxv0VYTUC2bOcXvqFwk78Og==}
+  /decode-uri-component@0.2.2:
+    resolution: {integrity: sha512-FqUYQ+8o158GyGTrMFJms9qh3CqTKvAqgqsTnkLI8sKu0028orqBhxNMFkFen0zGyg6epACD32pjVk58ngIErQ==}
     engines: {node: '>=0.10'}
     dev: false
 
@@ -12228,7 +12228,7 @@ packages:
     deprecated: See https://github.com/lydell/source-map-resolve#deprecated
     dependencies:
       atob: 2.1.2
-      decode-uri-component: 0.2.0
+      decode-uri-component: 0.2.2
       resolve-url: 0.2.1
       source-map-url: 0.4.1
       urix: 0.1.0
@@ -13728,8 +13728,8 @@ packages:
       stack-trace: 0.0.10
     dev: false
 
-  github.com/ferdium/macos-notification-state/e0465373b0aed12ea4ce30522e82aaa8706cdf40:
-    resolution: {tarball: https://codeload.github.com/ferdium/macos-notification-state/tar.gz/e0465373b0aed12ea4ce30522e82aaa8706cdf40}
+  git@github.com+ferdium/macos-notification-state/e0465373b0aed12ea4ce30522e82aaa8706cdf40:
+    resolution: {commit: e0465373b0aed12ea4ce30522e82aaa8706cdf40, repo: git@github.com:ferdium/macos-notification-state.git, type: git}
     name: macos-notification-state
     version: 3.0.0
     requiresBuild: true
