@@ -395,7 +395,7 @@ export default class UserStore extends TypedStore {
   }
 
   _requestNewToken(): void {
-    // Logic to request new token (use a enpoint for that)
+    // Logic to request new token (use an endpoint for that)
     const data = this.requestNewTokenRequest.execute().result;
     if (data) {
       this.authToken = data.token;
