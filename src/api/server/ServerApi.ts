@@ -162,7 +162,7 @@ export default class ServerApi {
     }
     const data = await request.json();
 
-    debug('ServerApi::authToken new authToken received');
+    debug('ServerApi::requestNewToken new authToken received');
 
     return data;
   }
