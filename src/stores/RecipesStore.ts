@@ -158,8 +158,8 @@ export default class RecipesStore extends TypedStore {
         router.push('/settings/recipes');
         debug(`Recipe ${recipeId} is not installed, trying to install it`);
 
-        const recipe = await this.installRecipeRequest.execute(recipeId)
-          .promise;
+        const recipe =
+          await this.installRecipeRequest.execute(recipeId).promise;
         if (recipe) {
           await this.allRecipesRequest.invalidate({ immediately: true })
             .promise;

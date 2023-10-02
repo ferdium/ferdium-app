@@ -1,7 +1,7 @@
+import { dirname } from 'node:path';
 import { systemPreferences, BrowserWindow, dialog } from 'electron';
 import { pathExistsSync, mkdirSync, writeFileSync } from 'fs-extra';
 import macosVersion from 'macos-version';
-import { dirname } from 'node:path';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
 // @ts-ignore
 import { askForScreenCaptureAccess } from 'node-mac-permissions';

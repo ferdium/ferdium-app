@@ -1,3 +1,4 @@
+import { join } from 'node:path';
 import {
   app,
   Menu,
@@ -9,7 +10,6 @@ import {
   BrowserWindow,
   NativeImage,
 } from 'electron';
-import { join } from 'node:path';
 import macosVersion from 'macos-version';
 import { isMac, isWindows, isLinux } from '../environment';
 

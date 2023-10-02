@@ -1,3 +1,4 @@
+import os from 'node:os';
 import { clipboard, MenuItemConstructorOptions } from 'electron';
 import {
   app,
@@ -12,7 +13,6 @@ import { defineMessages, IntlShape } from 'react-intl';
 import osName from 'os-name';
 import { fromJS } from 'immutable';
 import semver from 'semver';
-import os from 'node:os';
 import {
   isWindows,
   cmdOrCtrlShortcutKey,
@@ -32,6 +32,7 @@ import {
   nodeVersion,
   osArch,
   toggleFullScreenKey,
+  downloadsShortcutKey,
 } from '../environment';
 import { CUSTOM_WEBSITE_RECIPE_ID, LIVE_API_FERDIUM_WEBSITE } from '../config';
 import { ferdiumVersion } from '../environment-remote';
@@ -875,6 +876,15 @@ class FranzMenu implements StoresProps {
           type: 'separator',
         },
         {
+          label: intl.formatMessage(globalMessages.downloads),
+          accelerator: `${downloadsShortcutKey()}`,
+          click: () => {
+            this.actions.ui.openDownloads({ path: '/downloadmanager' });
+          },
+          enabled: this.stores.user.isLoggedIn,
+          visible: !locked,
+        },
+        {
           label: intl.formatMessage(globalMessages.settings),
           accelerator: `${settingsShortcutKey()}`,
           click: () => {
@@ -990,6 +1000,15 @@ class FranzMenu implements StoresProps {
       });
     } else {
       tpl[0].submenu = [
+        {
+          label: intl.formatMessage(globalMessages.downloads),
+          accelerator: `${downloadsShortcutKey()}`,
+          click: () => {
+            this.actions.ui.openDownloads({ path: '/downloadmanager' });
+          },
+          enabled: this.stores.user.isLoggedIn,
+          visible: !locked,
+        },
         {
           label: intl.formatMessage(globalMessages.settings),
           accelerator: `${settingsShortcutKey()}`,

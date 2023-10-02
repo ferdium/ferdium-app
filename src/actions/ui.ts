@@ -5,6 +5,9 @@ export default <ActionDefinitions>{
   openSettings: {
     path: PropTypes.string,
   },
+  openDownloads: {
+    path: PropTypes.string,
+  },
   closeSettings: {},
   toggleServiceUpdatedInfoBar: {
     visible: PropTypes.bool,

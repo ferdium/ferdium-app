@@ -204,6 +204,27 @@ body.win32:not(.isFullScreen) .app .app__content {
   }
 }
 
+@keyframes isDownloadingFade {
+  50% {
+    color: $theme-brand-primary;
+  }
+}
+
+@keyframes isDownloadingDoneFade {
+  50% {
+    color: green;
+  }
+}
+
+.sidebar__button--downloading {
+  animation: isDownloadingFade 1s cubic-bezier(0.755, 0.05, 0.855, 0.06)
+    infinite;
+}
+
+.sidebar__button--done {
+  animation: isDownloadingDoneFade 0.2s linear infinite;
+}
+
 .grid .grid__row {
   display: flex;
   flex-direction: row;

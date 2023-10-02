@@ -1,8 +1,8 @@
+import { join } from 'node:path';
 import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
 import { action, makeObservable, observable, reaction } from 'mobx';
 import ElectronWebView from 'react-electron-web-view';
-import { join } from 'node:path';
 import ServiceModel from '../../../models/Service';
 
 const debug = require('../../../preload-safe-debug')('Ferdium:Services');

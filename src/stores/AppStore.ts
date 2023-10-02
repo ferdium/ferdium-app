@@ -1,3 +1,4 @@
+import { URL } from 'node:url';
 import { ipcRenderer } from 'electron';
 import {
   app,
@@ -11,7 +12,6 @@ import { action, computed, makeObservable, observable } from 'mobx';
 import moment from 'moment';
 import AutoLaunch from 'auto-launch';
 import ms from 'ms';
-import { URL } from 'node:url';
 import { readJsonSync } from 'fs-extra';
 
 import { Stores } from '../@types/stores.types';
@@ -60,6 +60,22 @@ const CATALINA_NOTIFICATION_HACK_KEY =
   '_temp_askedForCatalinaNotificationPermissions';
 
 const locales = generatedTranslations();
+
+interface Download {
+  id: string;
+  serviceId: string;
+  filename: string;
+  url: string;
+  savePath?: string;
+  state?: 'progressing' | 'interrupted' | 'completed' | 'cancelled';
+  paused?: boolean;
+  canResume?: boolean;
+  progress?: number;
+  totalBytes?: number;
+  receivedBytes?: number;
+  startTime?: number;
+  endTime?: number;
+}
 
 export default class AppStore extends TypedStore {
   updateStatusTypes = {
@@ -114,6 +130,10 @@ export default class AppStore extends TypedStore {
 
   fetchDataInterval: null | NodeJS.Timer = null;
 
+  @observable downloads: Download[] = [];
+
+  @observable justFinishedDownloading: boolean = false;
+
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
 
@@ -136,6 +156,14 @@ export default class AppStore extends TypedStore {
       this._toggleCollapseMenu.bind(this),
     );
     this.actions.app.clearAllCache.listen(this._clearAllCache.bind(this));
+    this.actions.app.addDownload.listen(this._addDownload.bind(this));
+    this.actions.app.removeDownload.listen(this._removeDownload.bind(this));
+    this.actions.app.updateDownload.listen(this._updateDownload.bind(this));
+    this.actions.app.endedDownload.listen(this._endedDownload.bind(this));
+    this.actions.app.stopDownload.listen(this._stopDownload.bind(this));
+    this.actions.app.togglePauseDownload.listen(
+      this._togglePauseDownload.bind(this),
+    );
 
     this.registerReactions([
       this._offlineCheck.bind(this),
@@ -235,6 +263,20 @@ export default class AppStore extends TypedStore {
       url = url.replace(/\/$/, '');
       url = url.replace(/\s?--(updated)/, '');
 
+      if (url.startsWith('service/')) {
+        const pattern = /service\/([^/]+)/;
+        // Use the exec method to extract the id from the URL
+        const match = pattern.exec(url);
+
+        if (match) {
+          const id = match[1]; // The id is captured in the first capture group
+          this.actions.service.setActive({
+            serviceId: id,
+          });
+        }
+        return;
+      }
+
       this.stores.router.push(url);
     });
 
@@ -298,6 +340,10 @@ export default class AppStore extends TypedStore {
 
   @computed get cacheSize() {
     return this.getAppCacheSizeRequest.execute().result;
+  }
+
+  @computed get isDownloading() {
+    return this.downloads.some(download => download.state === 'progressing');
   }
 
   @computed get debugInfo() {
@@ -516,6 +562,78 @@ export default class AppStore extends TypedStore {
 
   @action _changeLocale(value: string) {
     this.locale = value;
+  }
+
+  @action _addDownload(download: Download) {
+    this.downloads.unshift(download);
+    debug('Download added', this.downloads);
+  }
+
+  @action _removeDownload(id: string | null) {
+    debug(`Removed download ${id}`);
+    if (id === null) {
+      const indexesToRemove: number[] = [];
+      this.downloads.map(item => {
+        if (!item.state) return;
+        if (item.state === 'completed' || item.state === 'cancelled') {
+          indexesToRemove.push(this.downloads.indexOf(item));
+        }
+      });
+
+      if (indexesToRemove.length === 0) return;
+
+      this.downloads = this.downloads.filter(
+        (_, index) => !indexesToRemove.includes(index),
+      );
+
+      debug('Removed all completed downloads');
+      return;
+    }
+
+    const index = this.downloads.findIndex(item => item.id === id);
+    if (index !== -1) {
+      this.downloads.splice(index, 1);
+    }
+
+    debug(`Removed download ${id}`);
+  }
+
+  @action _updateDownload(download: Download) {
+    const index = this.downloads.findIndex(item => item.id === download.id);
+    if (index !== -1) {
+      this.downloads[index] = { ...this.downloads[index], ...download };
+    }
+
+    debug('Download updated', this.downloads[index]);
+  }
+
+  @action _endedDownload(download: Download) {
+    const index = this.downloads.findIndex(item => item.id === download.id);
+    if (index !== -1) {
+      this.downloads[index] = { ...this.downloads[index], ...download };
+    }
+
+    debug('Download ended', this.downloads[index]);
+
+    if (!this.isDownloading && download.state === 'completed') {
+      this.justFinishedDownloading = true;
+
+      setTimeout(() => {
+        this.justFinishedDownloading = false;
+      }, ms('2s'));
+    }
+  }
+
+  @action _stopDownload(downloadId: string | undefined) {
+    ipcRenderer.send('stop-download', {
+      downloadId,
+    });
+  }
+
+  @action _togglePauseDownload(downloadId: string | undefined) {
+    ipcRenderer.send('toggle-pause-download', {
+      downloadId,
+    });
   }
 
   _setLocale() {

@@ -1,5 +1,7 @@
 /* eslint-disable import/first */
 
+import { join } from 'node:path';
+import { EventEmitter } from 'node:events';
 import {
   app,
   BrowserWindow,
@@ -11,11 +13,9 @@ import {
 } from 'electron';
 
 import { emptyDirSync, ensureFileSync } from 'fs-extra';
-import { join } from 'node:path';
 import windowStateKeeper from 'electron-window-state';
 import minimist from 'minimist';
 import ms from 'ms';
-import { EventEmitter } from 'node:events';
 import { initialize } from 'electron-react-titlebar/main';
 import { enableWebContents, initializeRemote } from './electron-util';
 import enforceMacOSAppLocation from './enforce-macos-app-location';
@@ -29,6 +29,7 @@ import {
   isDevMode,
   userDataRecipesPath,
   userDataPath,
+  protocolClient,
 } from './environment-remote';
 import { ifUndefined } from './jsUtils';
 
@@ -469,7 +470,6 @@ app.on('ready', () => {
   enforceMacOSAppLocation();
 
   // Register App URL
-  const protocolClient = isDevMode ? 'ferdium-dev' : 'ferdium';
   if (!app.isDefaultProtocolClient(protocolClient, process.execPath)) {
     app.setAsDefaultProtocolClient(protocolClient, process.execPath);
   }
@@ -672,6 +672,16 @@ ipcMain.on('window.toolbar-double-clicked', () => {
   } else {
     mainWindow?.maximize();
   }
+});
+
+ipcMain.on('stop-download', (_e, data) => {
+  debug(`stopping download from main process ${data}`);
+  mainWindow?.webContents.send('stop-download', data);
+});
+
+ipcMain.on('toggle-pause-download', (_e, data) => {
+  debug(`stopping download from main process ${data}`);
+  mainWindow?.webContents.send('toggle-pause-download', data);
 });
 
 // Quit when all windows are closed.

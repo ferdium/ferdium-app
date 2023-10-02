@@ -15,10 +15,10 @@
 |     Make sure to pass a relative path from the project root.
 */
 
+import { join } from 'node:path';
 import fold from '@adonisjs/fold';
 import { Ignitor, hooks } from '@adonisjs/ignitor';
 import { readFile, stat, chmod, writeFile } from 'fs-extra';
-import { join } from 'node:path';
 import { LOCAL_HOSTNAME } from '../config';
 import { isWindows } from '../environment';
 

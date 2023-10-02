@@ -18,6 +18,7 @@ export default class UIStore extends TypedStore {
     makeObservable(this);
 
     // Register action handlers
+    this.actions.ui.openDownloads.listen(this._openDownloads.bind(this));
     this.actions.ui.openSettings.listen(this._openSettings.bind(this));
     this.actions.ui.closeSettings.listen(this._closeSettings.bind(this));
     this.actions.ui.toggleServiceUpdatedInfoBar.listen(
@@ -97,6 +98,12 @@ export default class UIStore extends TypedStore {
   }
 
   // Actions
+  @action _openDownloads({ path = '/downloadmanager' }): void {
+    const downloadsPath =
+      path === '/downloadmanager' ? path : `/downloadmanager/${path}`;
+    this.stores.router.push(downloadsPath);
+  }
+
   @action _openSettings({ path = '/settings' }): void {
     const settingsPath = path === '/settings' ? path : `/settings/${path}`;
     this.stores.router.push(settingsPath);

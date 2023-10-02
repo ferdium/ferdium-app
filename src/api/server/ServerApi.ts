@@ -62,13 +62,19 @@ export default class ServerApi {
       },
       false,
     );
-    if (!request.ok) {
-      throw new Error(request.statusText);
-    }
-    const u = await request.json();
+    try {
+      const responseJson = await request.json();
 
-    debug('ServerApi::login resolves', u);
-    return u.token;
+      if (!request.ok) {
+        throw responseJson;
+      }
+
+      debug('ServerApi::login resolves', responseJson);
+      return responseJson.token;
+    } catch (error) {
+      debug('ServerApi::login ERROR:', error);
+      throw error;
+    }
   }
 
   async signup(data: any) {
@@ -80,13 +86,19 @@ export default class ServerApi {
       },
       false,
     );
-    if (!request.ok) {
-      throw new Error(request.statusText);
-    }
-    const u = await request.json();
+    try {
+      const responseJson = await request.json();
 
-    debug('ServerApi::signup resolves', u);
-    return u.token;
+      if (!request.ok) {
+        throw responseJson;
+      }
+
+      debug('ServerApi::signup resolves', responseJson);
+      return responseJson.token;
+    } catch (error) {
+      debug('ServerApi::signup ERROR:', error);
+      throw error;
+    }
   }
 
   async inviteUser(data: any) {

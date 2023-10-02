@@ -6,8 +6,8 @@
  * and "@abc" => "[@abc](https://github.com/abc)"
  */
 
-import fs from 'fs-extra';
 import path from 'node:path';
+import fs from 'fs-extra';
 
 console.log('Linking issues and PRs in README.md');
 

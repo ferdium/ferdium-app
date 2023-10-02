@@ -91,7 +91,7 @@ linux:
   icon: ./build-helpers/images/icons
   category: Network;InstantMessaging;
   executableName: ferdium
-  synopsis: "Messaging app for WhatsApp, Slack, Telegram, Gmail, Hangouts and many many more."
+  synopsis: "Messaging app for WhatsApp, Slack, Telegram, Gmail, Google Chat, and many more."
   # Note: Please keep the description as a single-line string, as this will become the Comment in the ferdium.desktop Linux launcher file, which requires a single line.
   description: 'Desktop app bringing all your messaging services into one installable'
   artifactName: "${productName}-${os}-${version}.${ext}"
