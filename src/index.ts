@@ -29,7 +29,6 @@ import {
   isDevMode,
   userDataRecipesPath,
   userDataPath,
-  protocolClient,
 } from './environment-remote';
 import { ifUndefined } from './jsUtils';
 
@@ -470,6 +469,7 @@ app.on('ready', () => {
   enforceMacOSAppLocation();
 
   // Register App URL
+  const protocolClient = isDevMode ? 'ferdium-dev' : 'ferdium';
   if (!app.isDefaultProtocolClient(protocolClient, process.execPath)) {
     app.setAsDefaultProtocolClient(protocolClient, process.execPath);
   }
