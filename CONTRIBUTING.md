@@ -186,8 +186,15 @@ git merge --no-ff nightly --no-verify
 # <run the build script for your OS from the `scripts` folder>
 # <add all pertinent changes to git>
 # <create commit>
-# <create tag>
-git push
+git push upstream release
+# Note: Do NOT allow the GHA release process to create the tag automatically, since that will be at the SHA in the develop branch and not on the release branch - which is logically incorrect
+git tag v$(node -p 'require("./package.json").version')
+git push upstream --tags
+# Note: GHA will automatically build with publish since its the release branch
+# Note: Once the GHA action is completed, verify the builds (there should be 32 assets before publishing)
+gco develop
+# <If its a public release, manually bump to next nightly.0 version in package.json>
+# <If its a public release, manually fix homebrew-ferdium PR>
 ```
 
 This will automatically trigger the build, as part of which, a new, draft release will be created [here](https://github.com/ferdium/ferdium-app/releases/). Once all the assets are uploaded (19 assets in total), publish the release (you will need elevated permissions in GitHub for doing this). The last commit of the `release` branch will be tagged.
