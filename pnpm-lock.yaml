@@ -263,8 +263,8 @@ dependencies:
 
 optionalDependencies:
   macos-notification-state:
-    specifier: github:ferdium/macos-notification-state#e0465373b0aed12ea4ce30522e82aaa8706cdf40
-    version: github.com/ferdium/macos-notification-state/e0465373b0aed12ea4ce30522e82aaa8706cdf40
+    specifier: github:ferdium/macos-notification-state#130bb2602795b65ae2dea74d823027b185eaf0ae
+    version: github.com/ferdium/macos-notification-state/130bb2602795b65ae2dea74d823027b185eaf0ae
   node-mac-permissions:
     specifier: 2.3.0
     version: 2.3.0
@@ -9989,12 +9989,6 @@ packages:
     dev: true
     optional: true
 
-  /node-addon-api@3.0.0:
-    resolution: {integrity: sha512-sSHCgWfJ+Lui/u+0msF3oyCgvdkhxDbkCS6Q8uiJquzOimkJBvX6hl5aSSA7DR1XbMpdM8r7phjcF63sF4rkKg==}
-    requiresBuild: true
-    dev: false
-    optional: true
-
   /node-addon-api@3.2.1:
     resolution: {integrity: sha512-mmcei9JghVNDYydghQmeDX8KoAm0FAiYyIcUt/N4nhyAipB17pllZQDOJD2fotxABnt4Mdz+dKTO7eftLg4d0A==}
     requiresBuild: true
@@ -13728,13 +13722,12 @@ packages:
       stack-trace: 0.0.10
     dev: false
 
-  github.com/ferdium/macos-notification-state/e0465373b0aed12ea4ce30522e82aaa8706cdf40:
-    resolution: {tarball: https://codeload.github.com/ferdium/macos-notification-state/tar.gz/e0465373b0aed12ea4ce30522e82aaa8706cdf40}
+  github.com/ferdium/macos-notification-state/130bb2602795b65ae2dea74d823027b185eaf0ae:
+    resolution: {tarball: https://codeload.github.com/ferdium/macos-notification-state/tar.gz/130bb2602795b65ae2dea74d823027b185eaf0ae}
     name: macos-notification-state
-    version: 3.0.0
+    version: 2.0.2
     requiresBuild: true
     dependencies:
       bindings: 1.5.0
-      node-addon-api: 3.0.0
     dev: false
     optional: true
