@@ -3,6 +3,7 @@ import { observer } from 'mobx-react';
 import withStyles, { WithStylesProps } from 'react-jss';
 import classnames from 'classnames';
 import Loader from '../Loader';
+
 import styles from './styles';
 import { H1 } from '../headline';
 import { Theme } from '../../../themes';

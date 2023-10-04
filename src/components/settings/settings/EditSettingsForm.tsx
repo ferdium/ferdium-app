@@ -1041,7 +1041,6 @@ class EditSettingsForm extends Component<IProps, IState> {
                 <H2 className="settings__section_header">
                   {intl.formatMessage(messages.sectionUpdates)}
                 </H2>
-
                 <Toggle {...form.$('automaticUpdates').bind()} />
                 {automaticUpdates && !isWinPortable && (
                   <>

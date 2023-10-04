@@ -13,12 +13,12 @@
   "repository": "https://github.com/ferdium/ferdium-app.git",
   "private": true,
   "engines": {
-    "node": "18.18.0",
+    "node": "18.15.0",
     "pnpm": "8.7.6"
   },
   "engine-strict": true,
   "volta": {
-    "node": "18.18.0",
+    "node": "18.15.0",
     "pnpm": "8.7.6"
   },
   "packageManager": "pnpm@8.7.6",
@@ -117,6 +117,7 @@
     "react-intl": "6.4.7",
     "react-jss": "10.10.0",
     "react-loader": "2.4.7",
+    "react-loader-spinner": "5.4.5",
     "react-modal": "3.16.1",
     "react-router-dom": "6.15.0",
     "react-sortable-hoc": "2.0.0",
