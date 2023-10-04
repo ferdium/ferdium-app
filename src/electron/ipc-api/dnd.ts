@@ -19,7 +19,7 @@ export default async () => {
     try {
       const isDND = getDoNotDisturb();
       debug('Fetching DND state, set to', isDND);
-      return isDND;
+      return await isDND;
     } catch (error) {
       console.error(error);
       return false;
