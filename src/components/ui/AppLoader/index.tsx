@@ -4,7 +4,6 @@ import withStyles, { WithStylesProps } from 'react-jss';
 import { Theme } from '../../../themes';
 import FullscreenLoader from '../FullscreenLoader';
 import shuffleArray from '../../../helpers/array-helpers';
-
 import styles from './styles';
 
 // TODO: Need to externalize for i18n
@@ -57,6 +56,9 @@ class AppLoader extends Component<IProps, IState> {
     const { step } = this.state;
 
     return (
+      /*       <div style={{ display: 'flex' }}>
+        <Loader className={classes.component} />
+      </div> */
       <FullscreenLoader
         className={classes.component}
         spinnerColor={theme.colorAppLoaderSpinner}

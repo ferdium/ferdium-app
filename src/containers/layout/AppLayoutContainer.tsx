@@ -64,7 +64,7 @@ class AppLayoutContainer extends Component<IProps> {
       services.allServicesRequest.isExecutingFirstTime;
 
     const isLoadingSettings = !settings.loaded;
-
+    //TODO: change it b
     if (isLoadingSettings || isLoadingFeatures || isLoadingServices) {
       return (
         <ThemeProvider theme={ui.theme}>

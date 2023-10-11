@@ -2,7 +2,7 @@ import { Component, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import withStyles, { WithStylesProps } from 'react-jss';
 import classnames from 'classnames';
-import Loader from '../Loader';
+import Loader from '../loader/index';
 
 import styles from './styles';
 import { H1 } from '../headline';
@@ -45,6 +45,7 @@ class FullscreenLoader extends Component<IProps> {
             }
             loaded={loaded}
           />
+
           {children && <div className={classes.content}>{children}</div>}
         </div>
       </div>
