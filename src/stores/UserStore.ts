@@ -50,6 +50,11 @@ export default class UserStore extends TypedStore {
     'getInfo',
   );
 
+  @observable requestNewTokenRequest: CachedRequest = new CachedRequest(
+    this.api.user,
+    'requestNewToken',
+  );
+
   @observable updateUserInfoRequest: Request = new Request(
     this.api.user,
     'updateInfo',
@@ -173,6 +178,11 @@ export default class UserStore extends TypedStore {
 
   @computed get data() {
     if (!this.isLoggedIn) return {};
+
+    const newTokenNeeded = this._shouldRequestNewToken(this.authToken);
+    if (newTokenNeeded) {
+      this._requestNewToken();
+    }
 
     return this.getUserInfoRequest.execute().result || {};
   }
@@ -367,6 +377,32 @@ export default class UserStore extends TypedStore {
   }
 
   // Helpers
+  _shouldRequestNewToken(authToken): boolean {
+    try {
+      const decoded = jwt.decode(authToken);
+      if (!decoded) {
+        throw new Error('Invalid token');
+      }
+
+      if (decoded.uid) {
+        return true;
+      }
+
+      return false;
+    } catch {
+      return true;
+    }
+  }
+
+  _requestNewToken(): void {
+    // Logic to request new token (use an endpoint for that)
+    const data = this.requestNewTokenRequest.execute().result;
+    if (data) {
+      this.authToken = data.token;
+      localStorage.setItem('authToken', data.token);
+    }
+  }
+
   _parseToken(authToken) {
     try {
       const decoded = jwt.decode(authToken);

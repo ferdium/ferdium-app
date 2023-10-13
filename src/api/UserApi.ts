@@ -38,6 +38,10 @@ export default class UserApi {
     return this.server.userInfo();
   }
 
+  requestNewToken() {
+    return this.server.requestNewToken();
+  }
+
   updateInfo(data: { oldPassword: string; newPassword: string }) {
     const userData = data;
     if (userData.oldPassword && userData.newPassword) {
