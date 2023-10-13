@@ -9,6 +9,7 @@
   "connectionLostBanner.cta": "Dienst neu laden",
   "connectionLostBanner.informationLink": "Was ist passiert?",
   "connectionLostBanner.message": "Oh nein! Ferdium hat die Verbindung zu „{name}” verloren.",
+  "downloadManager.headline": "Download-Manager",
   "feature.basicAuth.signIn": "Anmelden",
   "feature.publishDebugInfo.error": "Beim Veröffentlichen der Debug-Informationen ist ein Fehler aufgetreten. Bitte versuche es später noch einmal oder sehe dir die Konsole für weitere Informationen an.",
   "feature.publishDebugInfo.info": "Die Veröffentlichung deiner Debug-Informationen hilft uns, Probleme und Fehler in Ferdium zu finden. Indem du deine Debug-Informationen veröffentlichst, akzeptierst du die Datenschutzbestimmungen und Nutzungsbedingungen vom Ferdium Debugger",
