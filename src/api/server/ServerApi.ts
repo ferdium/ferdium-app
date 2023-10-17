@@ -151,6 +151,22 @@ export default class ServerApi {
     return user;
   }
 
+  async requestNewToken() {
+    if (apiBase() === SERVER_NOT_LOADED) {
+      throw new Error('Server not loaded');
+    }
+
+    const request = await sendAuthRequest(`${apiBase()}/me/newtoken`);
+    if (!request.ok) {
+      throw new Error(request.statusText);
+    }
+    const data = await request.json();
+
+    debug('ServerApi::requestNewToken new authToken received');
+
+    return data;
+  }
+
   async updateUserInfo(data: any) {
     const request = await sendAuthRequest(`${apiBase()}/me`, {
       method: 'PUT',

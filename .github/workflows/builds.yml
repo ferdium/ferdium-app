@@ -356,6 +356,14 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
+      #TODO - Remove this once https://github.com/electron-userland/electron-builder/issues/6933#issuecomment-1213438889 is resolved
+      - name: Tweak pnpm.cjs
+        run: |
+          # Run the command to get the pnpm store path and store it in a variable
+          PNPM_BASEDIR=$(dirname "$(echo "$PNPM_HOME" | sed -e 's/\\/\//g' -e 's/^\([A-Za-z]\):/\/\1/')")
+
+          sed -i 's/\/usr\/bin\/env node/node/g' "$PNPM_BASEDIR/pnpm/bin/pnpm.cjs"
+        shell: bash
       - name: Install node dependencies
         uses: nick-fields/retry@v2.8.3
         with:
