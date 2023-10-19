@@ -44,7 +44,9 @@ const AppUpdateInfoBar = (props: IProps) => {
       onHide={onHide}
     >
       <Icon icon={mdiInformation} />
-      {intl.formatMessage(messages.updateAvailable)}{' '}
+      <p style={{ padding: '0 0.5rem 0 1rem' }}>
+        {intl.formatMessage(messages.updateAvailable)}
+      </p>
       <button
         className="info-bar__inline-button"
         type="button"
