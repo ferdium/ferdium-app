@@ -194,7 +194,7 @@ class ButtonComponent extends Component<IProps, IState> {
       <>
         {showLoader && (
           <div className={classes.loaderContainer}>
-            <Loader size="18" />
+            <Loader size={18} />
           </div>
         )}
         <div className={classes.label}>

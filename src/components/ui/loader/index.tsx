@@ -18,7 +18,7 @@ const styles = () => ({
 interface IProps extends WithStylesProps<typeof styles> {
   className?: string;
   color?: string;
-  size?: number | string;
+  size?: number;
   loaded?: boolean;
   stores?: FerdiumStores;
 }
@@ -34,9 +34,7 @@ class LoaderComponent extends Component<IProps> {
       loaded = false,
     } = this.props;
     const loaderColor =
-      color === 'brandColor'
-        ? this.props.stores!.settings.app.accentColor
-        : color;
+      color === 'primary' ? this.props.stores?.settings.app.accentColor : color;
     return (
       <div
         className={classnames({
@@ -45,7 +43,6 @@ class LoaderComponent extends Component<IProps> {
         })}
         data-type="franz-loader"
       >
-        {/* loaded = true === visible = false */}
         <Oval
           strokeWidth={5}
           color={loaderColor}

@@ -3,9 +3,8 @@ import { observer } from 'mobx-react';
 import withStyles, { WithStylesProps } from 'react-jss';
 import classnames from 'classnames';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
-import Loader from '../../../components/ui/loader/index';
+import Loader from '../../../components/ui/loader';
 import { workspaceStore } from '../index';
-import { Theme } from '../../../themes';
 
 const messages = defineMessages({
   switchingTo: {
@@ -41,25 +40,23 @@ const styles = theme => ({
     zIndex: 200,
   },
   spinner: {
-    width: 40,
-    height: 40,
     marginRight: 10,
   },
   message: {
     fontSize: 16,
     whiteSpace: 'nowrap',
-    color: theme.colorAppLoaderSpinner,
+    color: '#FFFFFF',
   },
 });
 
-interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
-  theme?: Theme;
-}
+interface IProps
+  extends WithStylesProps<typeof styles>,
+    WrappedComponentProps {}
 
 @observer
 class WorkspaceSwitchingIndicator extends Component<IProps> {
   render(): ReactElement | null {
-    const { classes, intl, theme } = this.props;
+    const { classes, intl } = this.props;
     const { isSwitchingWorkspace, nextWorkspace } = workspaceStore;
 
     if (!isSwitchingWorkspace) {
@@ -73,10 +70,7 @@ class WorkspaceSwitchingIndicator extends Component<IProps> {
     return (
       <div className={classnames([classes.wrapper])}>
         <div className={classes.component}>
-          <Loader
-            className={classes.spinner}
-            color={theme?.workspaces.switchingIndicator.spinnerColor}
-          />
+          <Loader className={classes.spinner} />
           <p className={classes.message}>
             {`${intl.formatMessage(messages.switchingTo)} ${nextWorkspaceName}`}
           </p>

@@ -6,7 +6,7 @@ import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import withStyles, { WithStylesProps } from 'react-jss';
 import classnames from 'classnames';
-import Loader from '../../ui/loader/index';
+import Loader from '../../ui/loader';
 import Button from '../../ui/button';
 import Infobox from '../../ui/Infobox';
 import { H1 } from '../../ui/headline';

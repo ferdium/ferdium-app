@@ -71,7 +71,7 @@ class InfoBar extends Component<IProps> {
                 className="contentWrapper"
                 style={{ display: 'flex', gap: '8px' }}
               >
-                <Loader size={20} color="#FFF" loaded={!ctaLoading} />
+                <Loader size={18} loaded={!ctaLoading} />
                 {ctaLabel}
               </div>
             </button>
