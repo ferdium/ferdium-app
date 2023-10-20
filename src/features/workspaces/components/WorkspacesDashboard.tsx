@@ -137,7 +137,7 @@ class WorkspacesDashboard extends Component<IProps> {
             />
           </div>
           {getUserWorkspacesRequest.isExecuting ? (
-            <Loader color="brandColor" />
+            <Loader color="primary" />
           ) : (
             <>
               {/* ===== Workspace could not be loaded error ===== */}

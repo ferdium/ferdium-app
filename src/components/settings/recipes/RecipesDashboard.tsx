@@ -221,7 +221,7 @@ class RecipesDashboard extends Component<IProps, IState> {
           </div>
           {/* )} */}
           {isLoading ? (
-            <Loader color="brandColor" />
+            <Loader color="primary" />
           ) : (
             <>
               {recipeFilter === 'dev' && (
