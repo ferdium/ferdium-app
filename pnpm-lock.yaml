@@ -4384,7 +4384,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001550
+      caniuse-lite: 1.0.30001551
       electron-to-chromium: 1.4.490
       node-releases: 2.0.13
       update-browserslist-db: 1.0.11(browserslist@4.21.10)
@@ -4615,8 +4615,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /caniuse-lite@1.0.30001550:
-    resolution: {integrity: sha512-p82WjBYIypO0ukTsd/FG3Xxs+4tFeaY9pfT4amQL8KWtYH7H9nYwReGAbMTJ0hsmRO8IfDtsS6p3ZWj8+1c2RQ==}
+  /caniuse-lite@1.0.30001551:
+    resolution: {integrity: sha512-vtBAez47BoGMMzlbYhfXrMV1kvRF2WP/lqiMuDu1Sb4EE4LKEgjopFDSRtZfdVnslNRpOqV/woE+Xgrwj6VQlg==}
     dev: true
 
   /caseless@0.12.0:
@@ -11834,7 +11834,7 @@ packages:
   /semver-closest@0.1.2:
     resolution: {integrity: sha512-Q6qk0bPNlK5zG62mWFC8L0Qc6OJX76XRWxiPgZyrh98IZTL3HPErgUlPfCyrAPsHVpU+YP4lf5Mz+LzpId91Og==}
     dependencies:
-      semver: 5.7.2
+      semver: 5.7.1
     dev: false
 
   /semver-compare@1.0.0:
