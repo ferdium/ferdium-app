@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import withStyles, { WithStylesProps } from 'react-jss';
 import Infobox from '../../../components/ui/infobox/index';
-import Loader from '../../../components/ui/Loader';
+import Loader from '../../../components/ui/loader/index';
 import WorkspaceItem from './WorkspaceItem';
 import CreateWorkspaceForm from './CreateWorkspaceForm';
 import Request from '../../../stores/lib/Request';
@@ -137,7 +137,7 @@ class WorkspacesDashboard extends Component<IProps> {
             />
           </div>
           {getUserWorkspacesRequest.isExecuting ? (
-            <Loader />
+            <Loader color="brandColor" />
           ) : (
             <>
               {/* ===== Workspace could not be loaded error ===== */}

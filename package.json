@@ -116,7 +116,7 @@
     "react-electron-web-view": "2.0.1",
     "react-intl": "6.4.7",
     "react-jss": "10.10.0",
-    "react-loader": "2.4.7",
+    "react-loader-spinner": "5.4.5",
     "react-modal": "3.16.1",
     "react-router-dom": "6.15.0",
     "react-sortable-hoc": "2.0.0",
