@@ -70,7 +70,7 @@ class WorkspaceSwitchingIndicator extends Component<IProps> {
     return (
       <div className={classnames([classes.wrapper])}>
         <div className={classes.component}>
-          <Loader className={classes.spinner} />
+          <Loader className={classes.spinner} color="#FFFFFF" />
           <p className={classes.message}>
             {`${intl.formatMessage(messages.switchingTo)} ${nextWorkspaceName}`}
           </p>
