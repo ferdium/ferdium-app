@@ -30,11 +30,11 @@ class LoaderComponent extends Component<IProps> {
       classes,
       className,
       size = 36,
-      color = '#FFF',
+      color = this.props.stores?.settings.app.accentColor,
       loaded = false,
     } = this.props;
-    const loaderColor =
-      color === 'primary' ? this.props.stores?.settings.app.accentColor : color;
+    const loaderColor = color || '#FFFFFF';
+
     return (
       <div
         className={classnames({

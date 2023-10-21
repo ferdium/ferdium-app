@@ -21,7 +21,7 @@ class FullscreenLoader extends Component<IProps> {
   render(): ReactElement {
     const {
       classes,
-      theme = '',
+      theme,
       className = '',
       spinnerColor = '',
       children = null,
@@ -39,9 +39,7 @@ class FullscreenLoader extends Component<IProps> {
         >
           <H1 className={classes.title}>{title}</H1>
           <Loader
-            color={
-              spinnerColor || (theme && theme.colorFullscreenLoaderSpinner)
-            }
+            color={spinnerColor || theme?.colorFullscreenLoaderSpinner}
             loaded={loaded}
           />
           {children && <div className={classes.content}>{children}</div>}

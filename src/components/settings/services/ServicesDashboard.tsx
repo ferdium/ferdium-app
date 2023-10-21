@@ -155,7 +155,7 @@ class ServicesDashboard extends Component<IProps> {
             </div>
           )}
           {isLoading ? (
-            <Loader color="primary" />
+            <Loader />
           ) : (
             <table className="service-table" role="grid">
               <tbody>

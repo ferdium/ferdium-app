@@ -123,7 +123,7 @@ class AccountDashboard extends Component<IProp> {
           )}
           {!isUsingWithoutAccount && (
             <>
-              {isLoading && <Loader />}
+              {isLoading && <Loader color="#FFFFFF" />}
 
               {!isLoading && userInfoRequestFailed && (
                 <Infobox

@@ -84,7 +84,7 @@ class Infobox extends Component<IProps, IState> {
               className="contentWrapper"
               style={{ display: 'flex', gap: '8px' }}
             >
-              <Loader size={18} loaded={!ctaLoading} />
+              <Loader size={18} loaded={!ctaLoading} color="#FFFFFF" />
               {ctaLabel}
             </div>
           </button>

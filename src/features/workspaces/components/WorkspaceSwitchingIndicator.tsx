@@ -45,7 +45,7 @@ const styles = theme => ({
   message: {
     fontSize: 16,
     whiteSpace: 'nowrap',
-    color: '#FFFFFF',
+    color: theme.colorAppLoaderSpinner,
   },
 });
 

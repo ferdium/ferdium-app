@@ -128,7 +128,7 @@ class TeamDashboard extends Component<IProps> {
           </span>
         </div>
         <div className="settings__body">
-          {isLoading && <Loader />}
+          {isLoading && <Loader color="#FFFFFF" />}
 
           {!isLoading && userInfoRequestFailed && (
             <Infobox
