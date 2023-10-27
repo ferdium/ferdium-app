@@ -10,7 +10,7 @@ import { H1, H2, H3 } from '../../ui/headline';
 import SearchInput from '../../ui/SearchInput';
 import Infobox from '../../ui/infobox/index';
 import RecipeItem from './RecipeItem';
-import Loader from '../../ui/Loader';
+import Loader from '../../ui/loader';
 import Appear from '../../ui/effects/Appear';
 import { FERDIUM_SERVICE_REQUEST } from '../../../config';
 import RecipePreview from '../../../models/RecipePreview';
@@ -219,7 +219,7 @@ class RecipesDashboard extends Component<IProps, IState> {
               <Icon icon={mdiOpenInNew} />
             </a>
           </div>
-          {/* )} */}
+
           {isLoading ? (
             <Loader />
           ) : (

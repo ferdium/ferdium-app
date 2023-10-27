@@ -226,9 +226,6 @@ export default (brandPrimary: string) => {
           },
         },
       },
-      switchingIndicator: {
-        spinnerColor: 'white',
-      },
     },
 
     // Todos

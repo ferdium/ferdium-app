@@ -41,6 +41,7 @@ deb:
   artifactName: "${productName}-${os}-${version}-${arch}.${ext}"
 
 rpm:
+  artifactName: "${productName}-${os}-${version}-${arch}.${ext}"
   # Prevent creation of symlinks in /usr/lib/.build_id to avoid conflicts with other electron-based app having the symlink to chrome-sandbox
   fpm: ["--rpm-rpmbuild-define=_build_id_links none"]
 
@@ -101,5 +102,6 @@ linux:
       arch: [x64, arm64, armv7l]
     - target: tar.gz
     - target: rpm
+      arch: [x64, arm64]
     - target: freebsd
     - target: snap

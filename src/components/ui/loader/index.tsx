@@ -1,26 +1,39 @@
 import classnames from 'classnames';
 import { Component } from 'react';
 import injectStyle, { WithStylesProps } from 'react-jss';
-import ReactLoader from 'react-loader';
-import { Theme } from '../../../themes';
+import { Oval } from 'react-loader-spinner';
+import { inject } from 'mobx-react';
+import { FerdiumStores } from '../../../@types/stores.types';
 
-const styles = (theme: Theme) => ({
+const styles = () => ({
   container: {
     position: 'relative',
-    height: 60,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 'inherit',
   },
-  loader: {},
-  color: theme.colorText,
 });
 
 interface IProps extends WithStylesProps<typeof styles> {
   className?: string;
   color?: string;
+  size?: number;
+  loaded?: boolean;
+  stores?: FerdiumStores;
 }
 
+@inject('stores')
 class LoaderComponent extends Component<IProps> {
   render() {
-    const { classes, className, color } = this.props;
+    const {
+      classes,
+      className,
+      size = 36,
+      color = this.props.stores?.settings.app.accentColor,
+      loaded = false,
+    } = this.props;
+    const loaderColor = color || '#FFFFFF';
 
     return (
       <div
@@ -30,13 +43,13 @@ class LoaderComponent extends Component<IProps> {
         })}
         data-type="franz-loader"
       >
-        <ReactLoader
-          loaded={false}
-          width={4}
-          scale={0.75}
-          color={color || classes.color}
-          // @ts-expect-error Property 'parentClassName' does not exist on type 'IntrinsicAttributes & IntrinsicClassAttributes<ReactLoader> & Readonly<LoaderProps></LoaderProps>
-          parentClassName={classes.loader}
+        <Oval
+          strokeWidth={5}
+          color={loaderColor}
+          secondaryColor={loaderColor}
+          height={size}
+          width={size}
+          visible={!loaded}
         />
       </div>
     );
