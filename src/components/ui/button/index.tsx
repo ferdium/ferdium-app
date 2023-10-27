@@ -5,7 +5,7 @@ import { Property } from 'csstype';
 import { noop } from 'lodash';
 import { Component, MouseEventHandler } from 'react';
 import withStyles, { WithStylesProps } from 'react-jss';
-import Loader from 'react-loader';
+import Loader from '../loader/index';
 import { Theme } from '../../../themes';
 import { IFormField } from '../typings/generic';
 
@@ -111,16 +111,8 @@ const styles = (theme: Theme) => ({
   disabled: {
     opacity: theme.inputDisabledOpacity,
   },
-  loader: {
-    position: 'relative' as Property.Position,
-    width: 20,
-    height: 18,
-    zIndex: 9999,
-  },
   loaderContainer: {
-    width: (props: IProps): string => (props.busy ? '40px' : '0'),
     height: 20,
-    overflow: 'hidden',
     transition: loaderContainerTransition,
     marginLeft: (props: IProps): number => (props.busy ? 20 : 10),
     marginRight: (props: IProps): number => (props.busy ? -20 : -10),
@@ -200,18 +192,11 @@ class ButtonComponent extends Component<IProps, IState> {
 
     const content = (
       <>
-        <div className={classes.loaderContainer}>
-          {showLoader && (
-            <Loader
-              loaded={false}
-              width={4}
-              scale={0.45}
-              // color={theme.buttonLoaderColor[buttonType!]}
-              // @ts-expect-error Property 'parentClassName' does not exist on type 'IntrinsicAttributes & IntrinsicClassAttributes<ReactLoader> & Readonly<LoaderProps>
-              parentClassName={classes.loader}
-            />
-          )}
-        </div>
+        {showLoader && (
+          <div className={classes.loaderContainer}>
+            <Loader size={18} color="#FFFFFF" />
+          </div>
+        )}
         <div className={classes.label}>
           {icon && <Icon path={icon} size={0.8} className={classes.icon} />}
           {label}

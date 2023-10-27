@@ -2,7 +2,7 @@ import { Component, ReactElement, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import withStyles, { WithStylesProps } from 'react-jss';
 import classnames from 'classnames';
-import Loader from '../Loader';
+import Loader from '../loader/index';
 import styles from './styles';
 import { H1 } from '../headline';
 import { Theme } from '../../../themes';
@@ -21,7 +21,7 @@ class FullscreenLoader extends Component<IProps> {
   render(): ReactElement {
     const {
       classes,
-      theme = '',
+      theme,
       className = '',
       spinnerColor = '',
       children = null,
@@ -39,9 +39,7 @@ class FullscreenLoader extends Component<IProps> {
         >
           <H1 className={classes.title}>{title}</H1>
           <Loader
-            color={
-              spinnerColor || (theme && theme.colorFullscreenLoaderSpinner)
-            }
+            color={spinnerColor || theme?.colorFullscreenLoaderSpinner}
             loaded={loaded}
           />
           {children && <div className={classes.content}>{children}</div>}

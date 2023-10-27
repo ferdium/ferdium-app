@@ -1,11 +1,11 @@
 import { Component, MouseEventHandler, ReactNode } from 'react';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
-import Loader from 'react-loader';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 
 import { mdiClose } from '@mdi/js';
 import { noop } from 'lodash';
+import Loader from './loader/index';
 import Appear from './effects/Appear';
 import Icon from './icon';
 
@@ -67,15 +67,13 @@ class InfoBar extends Component<IProps> {
           {children}
           {ctaLabel && (
             <button type="button" className="info-bar__cta" onClick={onClick}>
-              <Loader
-                loaded={!ctaLoading}
-                lines={10}
-                scale={0.3}
-                color="#FFF"
-                // @ts-expect-error Property 'component' does not exist on type 'IntrinsicAttributes & IntrinsicClassAttributes<ReactLoader> & Readonly<LoaderProps>
-                component="span"
-              />
-              {ctaLabel}
+              <div
+                className="contentWrapper"
+                style={{ display: 'flex', gap: '8px' }}
+              >
+                <Loader size={18} loaded={!ctaLoading} color="#FFFFFF" />
+                {ctaLabel}
+              </div>
             </button>
           )}
           {!sticky && (
