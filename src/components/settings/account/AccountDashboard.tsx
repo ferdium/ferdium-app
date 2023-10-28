@@ -4,7 +4,7 @@ import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import { H1, H2 } from '../../ui/headline';
 
-import Loader from '../../ui/Loader';
+import Loader from '../../ui/loader';
 import Button from '../../ui/button';
 import Infobox from '../../ui/infobox/index';
 import { LOCAL_SERVER, LIVE_FRANZ_API } from '../../../config';
@@ -123,7 +123,7 @@ class AccountDashboard extends Component<IProp> {
           )}
           {!isUsingWithoutAccount && (
             <>
-              {isLoading && <Loader />}
+              {isLoading && <Loader color="#FFFFFF" />}
 
               {!isLoading && userInfoRequestFailed && (
                 <Infobox

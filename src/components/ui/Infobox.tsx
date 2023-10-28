@@ -1,10 +1,10 @@
 import { Component, MouseEventHandler, ReactElement, ReactNode } from 'react';
 import classnames from 'classnames';
-import Loader from 'react-loader';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { mdiAlert, mdiCheckboxMarkedCircleOutline, mdiClose } from '@mdi/js';
 import { noop } from 'lodash';
 import { observer } from 'mobx-react';
+import Loader from './loader/index';
 import Icon from './icon';
 
 const icons = {
@@ -80,15 +80,13 @@ class Infobox extends Component<IProps, IState> {
         <div className="infobox__content">{children}</div>
         {ctaLabel && (
           <button className="infobox__cta" onClick={ctaOnClick} type="button">
-            <Loader
-              loaded={!ctaLoading}
-              lines={10}
-              scale={0.3}
-              color="#FFF"
-              // @ts-expect-error Property 'component' does not exist on type 'IntrinsicAttributes & IntrinsicClassAttributes<ReactLoader> & Readonly<LoaderProps>
-              component="span"
-            />
-            {ctaLabel}
+            <div
+              className="contentWrapper"
+              style={{ display: 'flex', gap: '8px' }}
+            >
+              <Loader size={18} loaded={!ctaLoading} color="#FFFFFF" />
+              {ctaLabel}
+            </div>
           </button>
         )}
         {dismissible && (

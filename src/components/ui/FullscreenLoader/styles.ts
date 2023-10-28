@@ -12,6 +12,7 @@ export default {
     alignItems: 'center',
     textAlign: 'center',
     height: 'auto',
+    gap: 8,
   },
   title: {
     fontSize: 35,
