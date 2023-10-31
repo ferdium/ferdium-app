@@ -35,8 +35,6 @@ export async function translateTo(
         },
       });
 
-      console.log(2222, res);
-
       const response = await res.json();
 
       return { text: response.translatedText, error: false };
