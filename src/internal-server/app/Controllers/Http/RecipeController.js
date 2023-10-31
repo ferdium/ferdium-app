@@ -3,7 +3,6 @@ const Drive = use('Drive');
 const { validateAll } = use('Validator');
 const Env = use('Env');
 
-const fetch = require('node-fetch');
 const debug = require('../../../../preload-safe-debug')(
   'Ferdium:internalServer:RecipeController',
 );

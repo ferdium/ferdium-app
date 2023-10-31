@@ -1,4 +1,3 @@
-import fetch from 'node-fetch';
 import translateGoogle from 'google-translate-api-x';
 import { LIVE_API_FERDIUM_LIBRETRANSLATE } from '../config';
 
@@ -35,6 +34,8 @@ export async function translateTo(
           'Content-Type': 'application/json',
         },
       });
+
+      console.log(2222, res);
 
       const response = await res.json();
 

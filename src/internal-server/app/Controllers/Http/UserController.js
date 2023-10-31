@@ -5,7 +5,6 @@ const Workspace = use('App/Models/Workspace');
 const { validateAll } = use('Validator');
 
 const crypto = require('node:crypto');
-const fetch = require('node-fetch');
 const { v4: uuid } = require('uuid');
 const { DEFAULT_APP_SETTINGS } = require('../../../../config');
 const { convertToJSON } = require('../../../../jsUtils');
