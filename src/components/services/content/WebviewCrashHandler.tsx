@@ -36,7 +36,7 @@ interface IState {
 
 @observer
 class WebviewCrashHandler extends Component<IProps, IState> {
-  countdownInterval: NodeJS.Timer | undefined;
+  countdownInterval: NodeJS.Timeout | undefined;
 
   countdownIntervalTimeout = ms('1s');
 
@@ -58,7 +58,7 @@ class WebviewCrashHandler extends Component<IProps, IState> {
 
       if (this.state.countdown <= 0) {
         reload();
-        clearInterval(this.countdownInterval!);
+        clearInterval(this.countdownInterval);
       }
     }, this.countdownIntervalTimeout);
   }
