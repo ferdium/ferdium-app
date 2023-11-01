@@ -1,12 +1,9 @@
-pull_request_title: "feat(i18n): new Crowdin updates"
-commit_message: "feat(i18n): New Crowdin translations (%language%) [skip ci]"
-append_commit_message: false
-
+pull_request_title: 'feat(i18n): new Crowdin updates'
+commit_message: 'feat(i18n): New Crowdin translations (%language%) [skip ci]'
+append_commit_message: 
 files:
   - source: /src/i18n/locales/en-US.json
     translation: /src/i18n/locales/%two_letters_code%.json
-    skip_untranslated_strings: true
-    automatically_fill_in_regional_dialects: true
     languages_mapping:
       two_letters_code:
         nl-BE: nl-BE
