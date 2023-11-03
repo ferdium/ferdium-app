@@ -325,7 +325,7 @@
   "settings.recipes.ferdiumPicks": "Ferdiums Favorieten",
   "settings.recipes.headline": "Beschikbare services",
   "settings.recipes.missingService": "Mist u een dienst?",
-  "settings.recipes.nothingFound": "Sorry, geen enkele service komt overeen met uw zoekterm - maar u kunt deze waarschijnlijk nog toevoegen met behulp van de optie \"Aangepaste Website\". Houd er rekening mee dat de website meer diensten kan tonen die zijn toegevoegd aan Ferdium sinds de versie waar u momenteel mee bezig bent. Overweeg een upgrade naar een nieuwere versie van Ferdium om deze nieuwe diensten te krijgen.",
+  "settings.recipes.nothingFound": "Sorry, geen enkele dienst komt overeen met uw zoekterm - maar u kunt deze waarschijnlijk nog toevoegen met behulp van de optie \"Aangepaste Website\". Houd er rekening mee dat de website meer diensten kan tonen die zijn toegevoegd aan Ferdium sinds de versie die u momenteel gebruikt. Overweeg een upgrade naar een nieuwere versie van Ferdium om deze nieuwe diensten te krijgen.",
   "settings.recipes.servicesSuccessfulAddedInfo": "Dienst succesvol toegevoegd",
   "settings.releasenotes.connectionError": "Er is een fout opgetreden tijdens het verbinden met Github, probeer het later nog eens.",
   "settings.releasenotes.connectionErrorPageMissing": "Er is een fout opgetreden tijdens het verbinden met Github, de pagina die u zoekt ontbreekt.",
@@ -434,7 +434,7 @@
   "settings.workspaces.tryReloadWorkspaces": "Probeer opnieuw",
   "settings.workspaces.updatedInfo": "Je wijzigingen zijn opgeslagen",
   "settings.workspaces.workspaceFeatureHeadline": "Less is More: Zie hier Ferdium Werkruimtes",
-  "settings.workspaces.workspaceFeatureInfo": "Ferdium Workspaces laten u focussen op wat er op dit moment belangrijk is. Stel verschillende soorten diensten in en schakel er op elk moment eenvoudig tussen in. Je bepaalt welke diensten je nodig hebt wanneer en waar zodat we je kunnen helpen om aan je spel te blijven - of eenvoudig uit te schakelen van werk wanneer je maar wilt.",
+  "settings.workspaces.workspaceFeatureInfo": "Ferdium Werkruimtes laat u focussen op wat er nu belangrijk is. Stel verschillende groepen van diensten in en schakel er op elk moment eenvoudig tussen. U bepaalt welke diensten u wanneer en waar nodig hebt, zodat we u kunnen helpen uw zaken op orde te houden - of leg gewoon uw werk terzijde wanneer u maar wilt.",
   "settings.workspaces.workspacesRequestFailed": "Kan uw werkruimtes niet laden",
   "setupAssistant.headline": "Laten we beginnen",
   "setupAssistant.skip.label": "Overslaan",
@@ -491,7 +491,7 @@
   "workspaceDrawer.headline": "Werkruimtes",
   "workspaceDrawer.item.contextMenuEdit": "bewerken",
   "workspaceDrawer.item.noServicesAddedYet": "Nog geen diensten toegevoegd",
-  "workspaceDrawer.workspaceFeatureInfo": "<p>Ferdium Workspaces laten je concentreren op wat op dit moment belangrijk is. Stel verschillende sets diensten in en schakel er op elk moment gemakkelijk tussen uit.</p><p>Je bepaalt welke diensten je nodig hebt wanneer en waar zodat we je kunnen helpen om aan je spel te blijven - of eenvoudig uit te schakelen van werk wanneer je maar wilt.</p>",
+  "workspaceDrawer.workspaceFeatureInfo": "<p>Ferdium Werkruimtes laat u focussen op wat er nu belangrijk is. Stel verschillende groepen van diensten in en schakel er op elk moment eenvoudig tussen.</p><p>U bepaalt welke diensten u wanneer en waar nodig hebt, zodat we u kunnen helpen uw zaken op orde te houden - of leg gewoon uw werk terzijde wanneer u maar wilt</p>",
   "workspaceDrawer.workspacesSettingsTooltip": "Werkruimte-instellingen aanpassen",
   "workspaces.switchingIndicator.switchingTo": "Overschakelen naar"
 }
