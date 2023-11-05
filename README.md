@@ -21,7 +21,7 @@
 
 [![Open Collective backers](https://img.shields.io/static/v1?label=Contribute%20on%20Open%20Collective&message=Donate%20to%20Ferdium&color=9cf&logo=open-collective)](https://opencollective.com/ferdium#category-CONTRIBUTE)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-315-default.svg?logo=github&color=6c64e4' alt='Contributors'/></a>
+<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-316-default.svg?logo=github&color=6c64e4' alt='Contributors'/></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 - [Ferdium](#ferdium)
@@ -493,6 +493,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href='https://blog.wikichoon.com' title='Cole Robinson: doc'><img src='https://avatars.githubusercontent.com/u/1437464?v=4' alt='crobinso' style='width:100px;'/></a></td>
       <td align="center" valign="top" width="14.28%"><a href='https://github.com/deadmeu' title='deadmeu: code'><img src='https://avatars.githubusercontent.com/u/12111013?v=4' alt='deadmeu' style='width:100px;'/></a></td>
       <td align="center" valign="top" width="14.28%"><a href='https://github.com/MentorPK' title='Pawel Kowalski: code'><img src='https://avatars.githubusercontent.com/u/25907418?v=4' alt='MentorPK' style='width:100px;'/></a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href='https://github.com/mcmxcdev' title='MCMXC: code, infra'><img src='https://avatars.githubusercontent.com/u/16797721?v=4' alt='mcmxcdev' style='width:100px;'/></a></td>
     </tr>
   </tbody>
 </table>
