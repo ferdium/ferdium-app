@@ -128,7 +128,7 @@ export default class AppStore extends TypedStore {
 
   dictionaries = [];
 
-  fetchDataInterval: null | NodeJS.Timer = null;
+  fetchDataInterval: NodeJS.Timeout | null = null;
 
   @observable downloads: Download[] = [];
 

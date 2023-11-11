@@ -2955,6 +2955,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "mcmxcdev",
+      "name": "MCMXC",
+      "avatar_url": "https://avatars.githubusercontent.com/u/16797721?v=4",
+      "profile": "https://github.com/mcmxcdev",
+      "contributions": [
+        "code",
+        "infra"
+      ]
     }
   ],
   "commitType": "docs"
