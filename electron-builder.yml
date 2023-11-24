@@ -9,6 +9,7 @@ publish:
 
 snap:
   plugs: ["default", "camera", "audio-record", "removable-media"]
+  allowNativeWayland: true
   publish:
     provider: snapStore
   description: 'Ferdium is your cross-platform messaging app / former heir to the throne of Austria-Hungary which brings your chat & messaging services together into one application. For enabling webcam access you need to connect "camera" plug to snap, and for microphone with PulseAudio the "audio-record" plug. This can be done in Snap GUI or via command: `snap connect ferdium:camera; snap connect ferdium:audio-record`.'
