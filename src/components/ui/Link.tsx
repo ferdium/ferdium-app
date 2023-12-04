@@ -54,6 +54,7 @@ class Link extends Component<IProps> {
     });
 
     return (
+      // biome-ignore lint/a11y/useValidAnchor: <explanation>
       <a
         href={router.history.createHref(to)}
         className={linkClasses}

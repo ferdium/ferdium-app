@@ -126,10 +126,9 @@ class ServiceController {
       const newSettings = {
         ...settings,
         iconId,
-        customIconVersion:
-          settings && settings.customIconVersion
-            ? settings.customIconVersion + 1
-            : 1,
+        customIconVersion: settings?.customIconVersion
+          ? settings.customIconVersion + 1
+          : 1,
       };
 
       // Update data in database

@@ -14,6 +14,7 @@ import { observer } from 'mobx-react';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import Icon from '../icon';
 import { IFormField } from '../typings/generic';
+// biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
 import Error from '../error';
 import Label from '../label';
 import Wrapper from '../wrapper';

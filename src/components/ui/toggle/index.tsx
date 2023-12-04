@@ -4,6 +4,7 @@ import { noop } from 'lodash';
 import { Component, InputHTMLAttributes, ReactElement } from 'react';
 import withStyles, { WithStylesProps } from 'react-jss';
 import { Theme } from '../../../themes';
+// biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
 import Error from '../error';
 import Label from '../label';
 import { IFormField } from '../typings/generic';

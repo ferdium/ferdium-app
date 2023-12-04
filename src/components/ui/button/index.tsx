@@ -205,6 +205,7 @@ class ButtonComponent extends Component<IProps, IState> {
     );
 
     const wrapperComponent = href ? (
+      // biome-ignore lint/a11y/useValidAnchor: <explanation>
       <a
         href={href}
         target={target}
