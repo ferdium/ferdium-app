@@ -10,6 +10,7 @@ import withStyles, { WithStylesProps } from 'react-jss';
 import { noop } from 'lodash';
 import { Theme } from '../../../themes';
 import { IFormField } from '../typings/generic';
+// biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
 import Error from '../error';
 import Label from '../label';
 import Wrapper from '../wrapper';

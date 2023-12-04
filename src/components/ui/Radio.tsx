@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import FieldInterface from 'mobx-react-form/lib/models/FieldInterface';
+// biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
 import Error from './error';
 
 type Props = {

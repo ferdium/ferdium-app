@@ -39,10 +39,9 @@ const messages = defineMessages({
   },
 });
 
-const transition =
-  window && window.matchMedia('(prefers-reduced-motion: no-preference)')
-    ? 'all 0.25s'
-    : 'none';
+const transition = window?.matchMedia('(prefers-reduced-motion: no-preference)')
+  ? 'all 0.25s'
+  : 'none';
 
 const styles = theme => ({
   root: {

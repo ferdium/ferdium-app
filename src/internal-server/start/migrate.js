@@ -35,8 +35,7 @@ module.exports = async () => {
     !settings.db_version ||
     settings.db_version !== ferdiumVersion
   ) {
-    const srcVersion =
-      settings && settings.db_version ? settings.db_version : '5.4.0-beta.2';
+    const srcVersion = settings?.db_version || '5.4.0-beta.2';
     migrateLog(`🔮  Migrating table from ${srcVersion} to ${ferdiumVersion}`);
 
     // Migrate database to current Ferdium version
