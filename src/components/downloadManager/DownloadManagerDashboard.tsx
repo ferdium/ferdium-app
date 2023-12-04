@@ -138,10 +138,10 @@ class DownloadManagerDashboard extends Component<IProps, IState> {
                   ? null
                   : 'Paused'
                 : state === 'cancelled'
-                ? 'Cancelled'
-                : state === 'completed'
-                ? null
-                : 'Error';
+                  ? 'Cancelled'
+                  : state === 'completed'
+                    ? null
+                    : 'Error';
 
             return (
               <Card
@@ -181,8 +181,8 @@ class DownloadManagerDashboard extends Component<IProps, IState> {
                               stateParse !== null && stateParse !== 'Paused'
                                 ? 'line-through'
                                 : state === 'completed'
-                                ? 'underline'
-                                : null,
+                                  ? 'underline'
+                                  : null,
                           }}
                         >
                           {filename}
@@ -195,8 +195,8 @@ class DownloadManagerDashboard extends Component<IProps, IState> {
                         {stateParse !== null && stateParse !== 'Paused'
                           ? stateParse
                           : stateParse === 'Paused'
-                          ? stateParse
-                          : null}
+                            ? stateParse
+                            : null}
                       </Typography>
                     </Box>
                     <Typography variant="body2">{url}</Typography>

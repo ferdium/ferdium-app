@@ -124,6 +124,7 @@ module.exports = {
         allowChildren: false,
       },
     ],
+    'jsx-a11y/control-has-associated-label': 0,
     // eslint-plugin-unicorn
     'unicorn/filename-case': 0,
     'unicorn/no-null': 0,
