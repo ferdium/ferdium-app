@@ -164,7 +164,7 @@ export default class TodoStore extends FeatureStore {
 
   // Actions
 
-  @action _resize = ({ width }) => {
+  @action _resize = (width: number) => {
     this._updateSettings({
       width,
     });
