@@ -282,23 +282,23 @@ class SelectComponent extends Component<IProps, IState> {
 
     if (!open) return;
 
-    if (e.keyCode === 38 || e.keyCode === 40) {
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
       e.preventDefault();
     }
 
     if (this.componentRef?.current) {
-      if (e.keyCode === 38 && selected > 0) {
+      if (e.key === 'ArrowUp' && selected > 0) {
         this.setState((state: IState) => ({
           selected: state.selected - 1,
         }));
       } else if (
-        e.keyCode === 40 &&
+        e.key === 'ArrowDown' &&
         selected < Object.keys(options!).length - 1
       ) {
         this.setState((state: IState) => ({
           selected: state.selected + 1,
         }));
-      } else if (e.keyCode === 13) {
+      } else if (e.key === 'Enter') {
         this.select(Object.keys(options!)[selected]);
       }
 
@@ -310,19 +310,6 @@ class SelectComponent extends Component<IProps, IState> {
 
         this.scrollContainerRef.current.scrollTop = topOffset - 35;
       }
-    }
-
-    switch (e.keyCode) {
-      case 37:
-      case 39:
-      case 38:
-      case 40: // Arrow keys
-      case 32: {
-        break;
-      } // Space
-      default: {
-        break;
-      } // do not block other keys
     }
   }
 

@@ -506,7 +506,7 @@ export default class ServerApi {
     try {
       const config = readJsonSync(file);
 
-      if (Object.prototype.hasOwnProperty.call(config, 'services')) {
+      if (Object.hasOwn(config, 'services')) {
         const services = await Promise.all(
           config.services.map(async (s: { service: any }) => {
             const service = s;

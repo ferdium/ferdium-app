@@ -10,8 +10,8 @@
   "editor.detectIndentation": false,
   "editor.guides.bracketPairs": "active",
   "editor.codeActionsOnSave": {
-    "source.fixAll": true,
-    "source.fixAll.eslint": true
+    "source.fixAll": "explicit",
+    "source.fixAll.eslint": "explicit"
   },
 
   // "explorer.confirmDelete": false,

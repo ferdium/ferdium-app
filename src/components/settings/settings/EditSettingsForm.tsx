@@ -397,7 +397,7 @@ class EditSettingsForm extends Component<IProps, IState> {
         debug('cacheSize:', cacheSize);
         notCleared =
           this.state.clearCacheButtonClicked &&
-          isClearingAllCache === false &&
+          !isClearingAllCache &&
           cacheSizeBytes !== 0;
       } else {
         cacheSize = '…';
