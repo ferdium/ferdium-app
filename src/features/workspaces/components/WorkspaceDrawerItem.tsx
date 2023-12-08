@@ -72,8 +72,7 @@ interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
   name: string;
   onClick: MouseEventHandler<HTMLInputElement>;
   services: string[];
-  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-  onContextMenuEditClick?: () => void | null;
+  onContextMenuEditClick?: (() => void) | null;
   shortcutIndex: number;
 }
 

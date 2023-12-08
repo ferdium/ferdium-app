@@ -44,11 +44,7 @@ class ServiceItem extends Component<IProps> {
           'service-table__row--disabled': !service.isEnabled,
         })}
       >
-        <td
-          className="service-table__column-icon"
-          onClick={goToServiceForm}
-          role="gridcell"
-        >
+        <td className="service-table__column-icon" onClick={goToServiceForm}>
           <img
             src={service.icon}
             className={classnames({
@@ -58,18 +54,10 @@ class ServiceItem extends Component<IProps> {
             alt=""
           />
         </td>
-        <td
-          className="service-table__column-name"
-          onClick={goToServiceForm}
-          role="gridcell"
-        >
+        <td className="service-table__column-name" onClick={goToServiceForm}>
           {service.name === '' ? service.recipe.name : service.name}
         </td>
-        <td
-          className="service-table__column-info"
-          onClick={goToServiceForm}
-          role="gridcell"
-        >
+        <td className="service-table__column-info" onClick={goToServiceForm}>
           {service.isMuted && (
             <Icon
               icon={mdiBellOff}
@@ -78,11 +66,7 @@ class ServiceItem extends Component<IProps> {
             />
           )}
         </td>
-        <td
-          className="service-table__column-info"
-          onClick={goToServiceForm}
-          role="gridcell"
-        >
+        <td className="service-table__column-info" onClick={goToServiceForm}>
           {!service.isEnabled && (
             <Icon
               icon={mdiPower}
@@ -93,11 +77,7 @@ class ServiceItem extends Component<IProps> {
             />
           )}
         </td>
-        <td
-          className="service-table__column-info"
-          onClick={goToServiceForm}
-          role="gridcell"
-        >
+        <td className="service-table__column-info" onClick={goToServiceForm}>
           {!service.isNotificationEnabled && (
             <Icon
               icon={mdiMessageBulletedOff}
