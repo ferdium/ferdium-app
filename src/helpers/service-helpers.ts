@@ -12,7 +12,7 @@ export function removeServicePartitionDirectory(
   const servicePartition = getServicePartitionsDirectory(
     `${addServicePrefix ? 'service-' : ''}${id}`,
   );
-  return removeSync(servicePartition);
+  removeSync(servicePartition);
 }
 
 export async function getServiceIdsFromPartitions() {

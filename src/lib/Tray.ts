@@ -153,16 +153,13 @@ export default class TrayIcon {
 
   _toggleWindow(): void {
     const [mainWindow] = BrowserWindow.getAllWindows();
-    if (!mainWindow) {
-      return;
-    }
 
     if (mainWindow.isMinimized()) {
       mainWindow.restore();
     } else if (mainWindow.isVisible() && mainWindow.isFocused()) {
       if (isMac && mainWindow.isFullScreen()) {
-        mainWindow.once('show', () => mainWindow?.setFullScreen(true));
-        mainWindow.once('leave-full-screen', () => mainWindow?.hide());
+        mainWindow.once('show', () => mainWindow.setFullScreen(true));
+        mainWindow.once('leave-full-screen', () => mainWindow.hide());
         mainWindow.setFullScreen(false);
       } else {
         mainWindow.hide();
