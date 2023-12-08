@@ -61,7 +61,7 @@ class AppLoader extends Component<IProps, IState> {
         className={classes.component}
         spinnerColor={theme.colorAppLoaderSpinner}
       >
-        {texts?.map((text, i) => (
+        {texts.map((text, i) => (
           <span
             key={text}
             className={classnames({

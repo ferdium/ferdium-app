@@ -88,14 +88,6 @@ interface IState {
 @inject('stores', 'actions')
 @observer
 class QuickSwitchModal extends Component<IProps, IState> {
-  ARROW_DOWN = 40;
-
-  ARROW_UP = 38;
-
-  ENTER = 13;
-
-  TAB = 9;
-
   inputRef = createRef<HTMLDivElement>();
 
   serviceElements = {};
@@ -214,12 +206,12 @@ class QuickSwitchModal extends Component<IProps, IState> {
   // Handle global key presses to change the selection
   _handleKeyDown(event: KeyboardEvent): void {
     if (ModalState.isModalVisible) {
-      switch (event.keyCode) {
-        case this.ARROW_DOWN: {
+      switch (event.key) {
+        case 'ArrowDown': {
           this.changeSelected(1);
           break;
         }
-        case this.TAB: {
+        case 'Tab': {
           if (event.shiftKey) {
             this.changeSelected(-1);
           } else {
@@ -227,11 +219,11 @@ class QuickSwitchModal extends Component<IProps, IState> {
           }
           break;
         }
-        case this.ARROW_UP: {
+        case 'ArrowUp': {
           this.changeSelected(-1);
           break;
         }
-        case this.ENTER: {
+        case 'Enter': {
           this.openService(this.state.selected);
           break;
         }

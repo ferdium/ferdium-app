@@ -966,7 +966,8 @@ export default class ServicesStore extends TypedStore {
     service.lostRecipeConnection = false;
 
     if (service.isTodosService) {
-      return this.actions.todos.reload();
+      this.actions.todos.reload();
+      return;
     }
 
     if (!service.webview) return;

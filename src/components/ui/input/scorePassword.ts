@@ -33,7 +33,7 @@ export function scorePasswordFunc(password: string): number {
 
   let variationCount = 0;
   for (const key of Object.keys(variations)) {
-    variationCount += variations[key] === true ? 1 : 0;
+    variationCount += variations[key] ? 1 : 0;
   }
 
   score += (variationCount - 1) * 10;
