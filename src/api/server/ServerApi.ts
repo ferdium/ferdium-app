@@ -22,7 +22,7 @@ import UserModel from '../../models/User';
 import sleep from '../../helpers/async-helpers';
 
 import { SERVER_NOT_LOADED } from '../../config';
-import { userDataRecipesPath, userDataPath } from '../../environment-remote';
+import { userDataRecipesPath } from '../../environment-remote';
 import { asarRecipesPath } from '../../helpers/asar-helpers';
 import apiBase from '../apiBase';
 import {
@@ -498,40 +498,6 @@ export default class ServerApi {
       throw new Error(request.statusText);
     }
     debug('ServerApi::healthCheck resolves');
-  }
-
-  async getLegacyServices() {
-    const file = userDataPath('settings', 'services.json');
-
-    try {
-      const config = readJsonSync(file);
-
-      if (Object.hasOwn(config, 'services')) {
-        const services = await Promise.all(
-          config.services.map(async (s: { service: any }) => {
-            const service = s;
-            const request = await sendAuthRequest(
-              `${apiBase()}/recipes/${s.service}`,
-            );
-
-            if (request.status === 200) {
-              const data = await request.json();
-              // @ts-expect-error Property 'recipe' does not exist on type '{ service: any; }'.
-              service.recipe = new RecipePreviewModel(data);
-            }
-
-            return service;
-          }),
-        );
-
-        debug('ServerApi::getLegacyServices resolves', services);
-        return services;
-      }
-    } catch {
-      console.error('ServerApi::getLegacyServices no config found');
-    }
-
-    return [];
   }
 
   // Helper

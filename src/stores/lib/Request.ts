@@ -1,5 +1,4 @@
 import { observable, action, computed, makeObservable } from 'mobx';
-import { isEqual } from 'lodash/fp';
 
 // eslint-disable-next-line no-use-before-define
 type Hook = (request: Request) => void;
@@ -121,14 +120,6 @@ export default class Request {
     const args = this.currentApiCall ? this.currentApiCall.args : [];
     this.error = null;
     return this.execute(...args);
-  }
-
-  isExecutingWithArgs(...args: any[]): boolean {
-    return (
-      this.isExecuting &&
-      this.currentApiCall &&
-      isEqual(this.currentApiCall.args, args)
-    );
   }
 
   @computed get isExecutingFirstTime(): boolean {

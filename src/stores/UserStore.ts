@@ -60,11 +60,6 @@ export default class UserStore extends TypedStore {
     'updateInfo',
   );
 
-  @observable getLegacyServicesRequest: CachedRequest = new CachedRequest(
-    this.api.user,
-    'getLegacyServices',
-  );
-
   @observable deleteAccountRequest: CachedRequest = new CachedRequest(
     this.api.user,
     'delete',
@@ -92,8 +87,6 @@ export default class UserStore extends TypedStore {
   };
 
   @observable logoutReason: string | null = null;
-
-  fetchUserInfoInterval = null;
 
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
@@ -132,24 +125,8 @@ export default class UserStore extends TypedStore {
     return this.LOGIN_ROUTE;
   }
 
-  get logoutRoute(): string {
-    return this.LOGOUT_ROUTE;
-  }
-
   get signupRoute(): string {
     return this.SIGNUP_ROUTE;
-  }
-
-  get setupRoute(): string {
-    return this.SETUP_ROUTE;
-  }
-
-  get inviteRoute(): string {
-    return this.INVITE_ROUTE;
-  }
-
-  get importRoute(): string {
-    return this.IMPORT_ROUTE;
   }
 
   get passwordRoute(): string {
@@ -189,10 +166,6 @@ export default class UserStore extends TypedStore {
 
   @computed get team(): any {
     return this.data.team || null;
-  }
-
-  @computed get legacyServices(): any {
-    return this.getLegacyServicesRequest.execute() || {};
   }
 
   // Actions
