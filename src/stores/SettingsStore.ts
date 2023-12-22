@@ -11,17 +11,11 @@ import {
   LOCAL_SERVER,
 } from '../config';
 import { hash } from '../helpers/password-helpers';
-import Request from './lib/Request';
 import TypedStore from './lib/TypedStore';
 
 const debug = require('../preload-safe-debug')('Ferdium:SettingsStore');
 
 export default class SettingsStore extends TypedStore {
-  @observable updateAppSettingsRequest = new Request(
-    this.api.local,
-    'updateAppSettings',
-  );
-
   @observable loaded: boolean = false;
 
   fileSystemSettingsTypes = FILE_SYSTEM_SETTINGS_TYPES;

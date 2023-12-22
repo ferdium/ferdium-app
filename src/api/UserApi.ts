@@ -52,10 +52,6 @@ export default class UserApi {
     return this.server.updateUserInfo(userData);
   }
 
-  getLegacyServices() {
-    return this.server.getLegacyServices();
-  }
-
   delete() {
     return this.server.deleteAccount();
   }
