@@ -82,6 +82,7 @@ class SearchInput extends Component<IProps, IState> {
 
     return (
       <div className={classnames([className, 'search-input'])}>
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label htmlFor={name}>
           <Icon icon={mdiMagnify} />
           <input

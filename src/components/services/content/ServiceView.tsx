@@ -64,7 +64,7 @@ class ServiceView extends Component<IProps, IState> {
 
   componentWillUnmount() {
     this.autorunDisposer!();
-    clearTimeout(this.forceRepaintTimeout!);
+    clearTimeout(this.forceRepaintTimeout);
     // clearTimeout(this.hibernationTimer); // TODO: [TS DEBT] class property not reassigned, need to find its purpose
   }
 

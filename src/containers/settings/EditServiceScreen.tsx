@@ -261,7 +261,7 @@ class EditServiceScreen extends Component<IProps> {
         },
         customIcon: {
           label: intl.formatMessage(messages.icon),
-          value: service?.hasCustomUploadedIcon ? service?.icon : null,
+          value: service?.hasCustomUploadedIcon ? service.icon : null,
           type: 'file',
         },
         isDarkModeEnabled: {
@@ -276,21 +276,21 @@ class EditServiceScreen extends Component<IProps> {
         darkReaderBrightness: {
           label: intl.formatMessage(messages.darkReaderBrightness),
           value: service?.darkReaderSettings
-            ? service?.darkReaderSettings.brightness
+            ? service.darkReaderSettings.brightness
             : DEFAULT_SERVICE_SETTINGS.darkReaderBrightness,
           default: DEFAULT_SERVICE_SETTINGS.darkReaderBrightness,
         },
         darkReaderContrast: {
           label: intl.formatMessage(messages.darkReaderContrast),
           value: service?.darkReaderSettings
-            ? service?.darkReaderSettings.contrast
+            ? service.darkReaderSettings.contrast
             : DEFAULT_SERVICE_SETTINGS.darkReaderContrast,
           default: DEFAULT_SERVICE_SETTINGS.darkReaderContrast,
         },
         darkReaderSepia: {
           label: intl.formatMessage(messages.darkReaderSepia),
           value: service?.darkReaderSettings
-            ? service?.darkReaderSettings.sepia
+            ? service.darkReaderSettings.sepia
             : DEFAULT_SERVICE_SETTINGS.darkReaderSepia,
           default: DEFAULT_SERVICE_SETTINGS.darkReaderSepia,
         },

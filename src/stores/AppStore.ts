@@ -49,8 +49,8 @@ const mainWindow = getCurrentWindow();
 const executablePath = isMac
   ? remoteProcess.execPath
   : isWinPortable
-  ? process.env.PORTABLE_EXECUTABLE_FILE
-  : process.execPath;
+    ? process.env.PORTABLE_EXECUTABLE_FILE
+    : process.execPath;
 const autoLauncher = new AutoLaunch({
   name: 'Ferdium',
   path: executablePath,
@@ -128,7 +128,7 @@ export default class AppStore extends TypedStore {
 
   dictionaries = [];
 
-  fetchDataInterval: null | NodeJS.Timer = null;
+  fetchDataInterval: NodeJS.Timeout | null = null;
 
   @observable downloads: Download[] = [];
 

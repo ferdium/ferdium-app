@@ -352,6 +352,7 @@ class Sidebar extends Component<IProps, IState> {
             type="button"
             onClick={() => openDownloads({ path: '/downloadmanager' })}
             className={
+              // biome-ignore lint/style/useTemplate: <explanation>
               'sidebar__button' +
               `${isDownloading ? ' sidebar__button--downloading' : ''}` +
               `${justFinishedDownloading ? ' sidebar__button--done' : ''}`

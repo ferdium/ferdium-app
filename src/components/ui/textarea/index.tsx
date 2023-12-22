@@ -5,6 +5,7 @@ import injectSheet, { WithStylesProps } from 'react-jss';
 import { noop } from 'lodash';
 import { IFormField } from '../typings/generic';
 
+// biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
 import Error from '../error';
 import Label from '../label';
 import Wrapper from '../wrapper';
@@ -40,6 +41,7 @@ class TextareaComponent extends Component<IProps> {
 
     if (this.textareaRef?.current && data) {
       Object.keys(data).map(
+        // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
         key => (this.textareaRef.current!.dataset[key] = data[key]),
       );
     }

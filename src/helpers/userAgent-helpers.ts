@@ -13,7 +13,7 @@ import {
 function macOS() {
   const version = macosVersion() ?? '';
   let cpuName = cpus()[0].model.split(' ')[0];
-  if (cpuName && /\(/.test(cpuName)) {
+  if (cpuName.includes('(')) {
     // eslint-disable-next-line prefer-destructuring
     cpuName = cpuName.split('(')[0];
   }

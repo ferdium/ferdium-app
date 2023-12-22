@@ -1,4 +1,3 @@
-import fetch from 'node-fetch';
 import translateGoogle from 'google-translate-api-x';
 import { LIVE_API_FERDIUM_LIBRETRANSLATE } from '../config';
 

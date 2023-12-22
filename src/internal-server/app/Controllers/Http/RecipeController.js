@@ -3,7 +3,6 @@ const Drive = use('Drive');
 const { validateAll } = use('Validator');
 const Env = use('Env');
 
-const fetch = require('node-fetch');
 const debug = require('../../../../preload-safe-debug')(
   'Ferdium:internalServer:RecipeController',
 );
@@ -60,8 +59,8 @@ class RecipeController {
       }));
     } else {
       let remoteResults = [];
-      // eslint-disable-next-line eqeqeq
-      if (Env.get('CONNECT_WITH_FRANZ') == 'true') {
+
+      if (Env.get('CONNECT_WITH_FRANZ') === 'true') {
         const recipesUrlFetch = await fetch(
           `${RECIPES_URL}/search?needle=${encodeURIComponent(needle)}`,
         );
@@ -124,8 +123,8 @@ class RecipeController {
     if (await Drive.exists(`${service}.tar.gz`)) {
       return response.send(await Drive.get(`${service}.tar.gz`));
     }
-    // eslint-disable-next-line eqeqeq
-    if (Env.get('CONNECT_WITH_FRANZ') == 'true') {
+
+    if (Env.get('CONNECT_WITH_FRANZ') === 'true') {
       return response.redirect(`${RECIPES_URL}/download/${service}`);
     }
     return response.status(400).send({

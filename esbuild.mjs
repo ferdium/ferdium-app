@@ -4,11 +4,11 @@ import { sassPlugin } from 'esbuild-sass-plugin';
 import { copy } from 'esbuild-plugin-copy';
 import glob from 'tiny-glob';
 import livereload from 'gulp-livereload';
-import * as fs from 'fs';
+import * as fs from 'node:fs';
 import * as buildInfo from 'preval-build-info';
 import fsPkg from 'fs-extra';
 import chalk from 'chalk';
-import { performance } from 'perf_hooks';
+import { performance } from 'node:perf_hooks';
 import moment from 'moment';
 
 const { log } = console;
@@ -80,11 +80,11 @@ const runEsbuild = async () => {
 
   const myArgs = process.argv.slice(2);
   const isDev = myArgs.includes('--watch');
-  log(chalk.blue(`Starting with args`), myArgs);
+  log(chalk.blue('Starting with args'), myArgs);
 
   if (fs.existsSync(outDir)) {
     fs.rmSync(outDir, { force: true, recursive: true });
-    log(chalk.blue(`Cleaning`), outDir);
+    log(chalk.blue('Cleaning'), outDir);
   }
   copyManualAssets();
 
@@ -112,7 +112,7 @@ const runEsbuild = async () => {
         if (error) {
           log(chalk.red(`watch build failed: ${error}`));
         } else {
-          log(chalk.blue(`watch build success:`), result);
+          log(chalk.blue('watch build success:'), result);
           livereload.reload();
         }
       },

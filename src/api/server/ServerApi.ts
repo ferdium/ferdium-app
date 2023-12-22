@@ -506,7 +506,7 @@ export default class ServerApi {
     try {
       const config = readJsonSync(file);
 
-      if (Object.prototype.hasOwnProperty.call(config, 'services')) {
+      if (Object.hasOwn(config, 'services')) {
         const services = await Promise.all(
           config.services.map(async (s: { service: any }) => {
             const service = s;
@@ -542,7 +542,6 @@ export default class ServerApi {
     return Promise.all(
       services.map(async (service: any) => this._prepareServiceModel(service)),
     );
-    /* eslint-enable no-return-await */
   }
 
   async _prepareServiceModel(service: { recipeId: string }) {

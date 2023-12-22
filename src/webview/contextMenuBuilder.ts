@@ -101,7 +101,7 @@ function translatePopup(res, isError: boolean = false) {
 
   document.addEventListener('click', e => {
     if (div !== e.target && !childOf(e.target, div)) {
-      div?.remove();
+      div.remove();
     }
   });
 }
@@ -253,10 +253,7 @@ export class ContextMenuBuilder {
       return this.buildMenuForVideo(info);
     }
 
-    if (
-      info.isEditable ||
-      (info.inputFieldType && info.inputFieldType !== 'none')
-    ) {
+    if (info.isEditable || info.inputFieldType !== 'none') {
       return this.buildMenuForTextInput(info);
     }
 

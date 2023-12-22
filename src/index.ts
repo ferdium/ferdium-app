@@ -455,12 +455,8 @@ if (argv['auth-negotiate-delegate-whitelist']) {
   );
 }
 
-// Disable Chromium's poor MPRIS implementation
-// and apply workaround for https://github.com/electron/electron/pull/26432
-app.commandLine.appendSwitch(
-  'disable-features',
-  'HardwareMediaKeyHandling,MediaSessionService,CrossOriginOpenerPolicy',
-);
+// Apply workaround for https://github.com/electron/electron/pull/26432
+app.commandLine.appendSwitch('disable-features', 'CrossOriginOpenerPolicy');
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
