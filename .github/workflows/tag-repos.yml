@@ -8,27 +8,27 @@ on:
 
 jobs:
   tag-repos:
-    runs-on: macos-latest
+    runs-on: macos-12
     steps:
-    - name: Checkout code along with submodules for the 'nightly' branch if the trigger event is 'release'
-      uses: actions/checkout@v3
-      if: ${{ contains(github.event.release.tag_name, 'nightly') || (github.event_name == 'workflow_dispatch') }}
-      with:
-        ref: nightly
-        submodules: recursive
-        fetch-depth: 0 # Note: Needed to be able to pull the 'develop' branch as well for merging
-    - name: Checkout code along with submodules for the 'release' branch if the trigger event is 'release'
-      uses: actions/checkout@v3
-      if: ${{ !contains(github.event.release.tag_name, 'nightly') }}
-      with:
-        ref: release
-        submodules: recursive
-        fetch-depth: 0 # Note: Needed to be able to pull the 'develop' branch as well for merging
-    - name: Extract Git tag name from the currently checked out branch (not from the branch where this run was kicked off)
-      run: |
-        TAG_NAME=$(node -p 'require("./package.json").version')
-        echo "TAG_NAME=v$TAG_NAME" >> $GITHUB_ENV
-      shell: bash
+      - name: Checkout code along with submodules for the 'nightly' branch if the trigger event is 'release'
+        uses: actions/checkout@v4
+        if: ${{ contains(github.event.release.tag_name, 'nightly') || (github.event_name == 'workflow_dispatch') }}
+        with:
+          ref: nightly
+          submodules: recursive
+          fetch-depth: 0 # Note: Needed to be able to pull the 'develop' branch as well for merging
+      - name: Checkout code along with submodules for the 'release' branch if the trigger event is 'release'
+        uses: actions/checkout@v4
+        if: ${{ !contains(github.event.release.tag_name, 'nightly') }}
+        with:
+          ref: release
+          submodules: recursive
+          fetch-depth: 0 # Note: Needed to be able to pull the 'develop' branch as well for merging
+      - name: Extract Git tag name from the currently checked out branch (not from the branch where this run was kicked off)
+        run: |
+          TAG_NAME=$(node -p 'require("./package.json").version')
+          echo "TAG_NAME=v$TAG_NAME" >> $GITHUB_ENV
+        shell: bash
     # Note: commented out the tagging of the main repo - since that is auto-created when a new release is published
     # - name: Tag the main repo
     #   run: |

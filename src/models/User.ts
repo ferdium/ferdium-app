@@ -27,8 +27,6 @@ export default class User {
 
   @observable accountType: string | null = null;
 
-  @observable emailIsConfirmed = true;
-
   // Note: Kept around to be able to handle the response from Franz server
   // better assume it's confirmed to avoid noise
   @observable subscription = {};

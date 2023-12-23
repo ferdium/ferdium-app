@@ -8,7 +8,7 @@ import Recipe from '../../models/Recipe';
 import { StoresProps } from '../../@types/ferdium-components.types';
 import RecipesDashboard from '../../components/settings/recipes/RecipesDashboard';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
-import { CUSTOM_WEBSITE_RECIPE_ID, FRANZ_DEV_DOCS } from '../../config';
+import { CUSTOM_WEBSITE_RECIPE_ID, FERDIUM_DEV_DOCS } from '../../config';
 import { userDataRecipesPath } from '../../environment-remote';
 import { asarRecipesPath } from '../../helpers/asar-helpers';
 import { communityRecipesStore } from '../../features/communityRecipes';
@@ -176,7 +176,7 @@ class RecipesScreen extends Component<IProps, IState> {
           recipeDirectory={recipeDirectory}
           openRecipeDirectory={() => openPath(recipeDirectory)}
           openDevDocs={() =>
-            appActions.openExternalUrl({ url: FRANZ_DEV_DOCS })
+            appActions.openExternalUrl({ url: FERDIUM_DEV_DOCS })
           }
         />
       </ErrorBoundary>
