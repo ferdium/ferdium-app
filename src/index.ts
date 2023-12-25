@@ -220,6 +220,7 @@ const createWindow = () => {
     titleBarStyle: isMac ? 'hidden' : 'default',
     frame: isLinux,
     backgroundColor,
+    icon: join(__dirname, 'build-helpers/images/icons/16x16.png'),
     webPreferences: {
       spellcheck: retrieveSettingValue(
         'enableSpellchecking',
