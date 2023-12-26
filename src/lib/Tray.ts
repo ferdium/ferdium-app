@@ -208,7 +208,7 @@ export default class TrayIcon {
     if (indicator === '•') {
       assetFromIndicator = INDICATOR_TRAY_INDIRECT;
     }
-    if (indicator !== 0) {
+    if (indicator !== 0 && indicator !== '•') {
       assetFromIndicator = INDICATOR_TRAY_UNREAD;
     }
     return assetFromIndicator;
