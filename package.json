@@ -14,7 +14,7 @@
   "private": true,
   "engines": {
     "node": "20.9.0",
-    "pnpm": "8.10.0"
+    "pnpm": "^8.10.0"
   },
   "engine-strict": true,
   "volta": {
