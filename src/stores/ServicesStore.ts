@@ -65,6 +65,8 @@ export default class ServicesStore extends TypedStore {
   // No service ID should be in the list multiple times, not all service IDs have to be in the list
   @observable lastUsedServices: string[] = [];
 
+  private toggleToTalkCallback = () => this.active?.toggleToTalk();
+
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
 
@@ -239,12 +241,16 @@ export default class ServicesStore extends TypedStore {
   initialize() {
     super.initialize();
 
+    ipcRenderer.on('toggle-to-talk', this.toggleToTalkCallback);
+
     // Check services to become hibernated
     this.serviceMaintenanceTick();
   }
 
   teardown() {
     super.teardown();
+
+    ipcRenderer.off('toggle-to-talk', this.toggleToTalkCallback);
 
     // Stop checking services for hibernation
     this.serviceMaintenanceTick.cancel();

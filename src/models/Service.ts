@@ -641,4 +641,8 @@ export default class Service {
     this.unreadDirectMessageCount = 0;
     this.unreadIndirectMessageCount = 0;
   }
+
+  toggleToTalk(): void {
+    this.webview?.send('toggle-to-talk');
+  }
 }

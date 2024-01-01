@@ -31,6 +31,10 @@ export default class Ferdium extends dbus.interface.Interface {
     this.dbus.trayIcon._toggleWindow();
   }
 
+  ToggleToTalk(): void {
+    this.dbus.trayIcon.mainWindow?.webContents.send('toggle-to-talk');
+  }
+
   emitUnreadChanged(): void {
     Ferdium.emitPropertiesChanged(
       this,
@@ -63,6 +67,10 @@ Ferdium.configureMembers({
       outSignature: '',
     },
     ToggleWindow: {
+      inSignature: '',
+      outSignature: '',
+    },
+    ToggleToTalk: {
       inSignature: '',
       outSignature: '',
     },
