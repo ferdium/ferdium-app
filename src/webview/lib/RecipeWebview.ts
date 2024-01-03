@@ -40,6 +40,8 @@ class RecipeWebview {
 
   loopFunc = () => null;
 
+  toggleToTalkFunc = () => null;
+
   darkModeHandler: ((darkMode: boolean, config: any) => void) | null = null;
 
   // TODO Remove this once we implement a proper wrapper.
@@ -198,6 +200,10 @@ class RecipeWebview {
 
   openNewWindow(url) {
     ipcRenderer.sendToHost('new-window', url);
+  }
+
+  toggleToTalk(fn) {
+    this.toggleToTalkFunc = fn;
   }
 }
 

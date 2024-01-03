@@ -38,6 +38,13 @@
     -->
     <method name="ToggleWindow" />
     <!--
+      ToggleToTalk:
+
+      Toggles the microphone in the active service if supported and currently
+      applicable.
+    -->
+    <method name="ToggleToTalk" />
+    <!--
       Muted:
 
       Gets or sets the current muted state of notifications.

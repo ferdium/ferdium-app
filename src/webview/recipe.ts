@@ -158,6 +158,7 @@ class RecipeController {
     'service-settings-update': 'updateServiceSettings',
     'get-service-id': 'serviceIdEcho',
     'find-in-page': 'openFindInPage',
+    'toggle-to-talk': 'toggleToTalk',
   };
 
   universalDarkModeInjected = false;
@@ -482,6 +483,10 @@ class RecipeController {
         }
       }, 225),
     );
+  }
+
+  toggleToTalk() {
+    this.recipe?.toggleToTalkFunc?.();
   }
 }
 
