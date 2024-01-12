@@ -2965,6 +2965,15 @@
         "code",
         "infra"
       ]
+    },
+    {
+      "login": "xduugu",
+      "name": "xduugu",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1039174?v=4",
+      "profile": "https://github.com/xduugu",
+      "contributions": [
+        "infra"
+      ]
     }
   ],
   "commitType": "docs"
