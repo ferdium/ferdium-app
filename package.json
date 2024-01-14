@@ -132,8 +132,7 @@
     "tslib": "2.6.2",
     "useragent-generator": "1.1.1-amkt-22079-finish.0",
     "uuid": "9.0.1",
-    "validator": "13.11.0",
-    "ws": "8.14.2"
+    "validator": "13.11.0"
   },
   "devDependencies": {
     "@biomejs/biome": "1.4.1",
