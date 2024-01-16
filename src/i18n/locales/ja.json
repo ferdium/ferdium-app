@@ -296,6 +296,7 @@
   "settings.app.sectionUpdates": "アプリのアップデート設定",
   "settings.app.sentryInfo": "統計情報を送信すると開発者がFerdiumのエラーを発見するのに役立ちます。メッセージのデータのような個人情報は一切送信しません。",
   "settings.app.serverHelp": "{serverURL}でサーバーに接続しました",
+  "settings.app.servicesUpdateStatusUpToDate": "サービスは最新です",
   "settings.app.spellCheckerLanguageInfo": "FerdiumはスペルチェックにmacOSシステムのスペルチェッカーを使用しています。スペルチェッカーでチェックする言語を変更するには、macOSのシステム環境設定から行ってください。",
   "settings.app.subheadlineCache": "キャッシュ",
   "settings.app.subheadlineFerdiumProfile": "Ferdiumプロフィール",
