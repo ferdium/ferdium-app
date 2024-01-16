@@ -238,6 +238,10 @@ const messages = defineMessages({
     id: 'settings.app.updateStatusUpToDate',
     defaultMessage: 'You are using the latest version of Ferdium',
   },
+  servicesUpdateStatusUpToDate: {
+    id: 'settings.app.servicesUpdateStatusUpToDate',
+    defaultMessage: 'Your services are up-to-date',
+  },
   currentVersion: {
     id: 'settings.app.currentVersion',
     defaultMessage: 'Current version:',
@@ -1117,7 +1121,10 @@ class EditSettingsForm extends Component<IProps, IState> {
                     ) : (
                       <p>
                         <Icon icon={mdiPowerPlug} />
-                        &nbsp;Your services are up-to-date.
+                        &nbsp;
+                        {intl.formatMessage(
+                          messages.servicesUpdateStatusUpToDate,
+                        )}
                       </p>
                     )}
                   </>

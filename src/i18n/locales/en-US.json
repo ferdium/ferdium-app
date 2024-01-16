@@ -296,6 +296,7 @@
   "settings.app.sectionUpdates": "App Updates Settings",
   "settings.app.sentryInfo": "Sending telemetry data allows us to find errors in Ferdium - we will not send any personal information like your message data!",
   "settings.app.serverHelp": "Connected to server at {serverURL}",
+  "settings.app.servicesUpdateStatusUpToDate": "Your services are up-to-date",
   "settings.app.spellCheckerLanguageInfo": "Ferdium uses your Mac's build-in spellchecker to check for typos. If you want to change the languages the spellchecker checks for, you can do so in your Mac's System Preferences.",
   "settings.app.subheadlineCache": "Cache",
   "settings.app.subheadlineFerdiumProfile": "Ferdium Profile",
