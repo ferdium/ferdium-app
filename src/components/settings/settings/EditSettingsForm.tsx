@@ -15,6 +15,7 @@ import Infobox from '../../ui/Infobox';
 import { H1, H2, H3, H5 } from '../../ui/headline';
 import {
   ferdiumVersion,
+  userDataCertsPath,
   userDataPath,
   userDataRecipesPath,
 } from '../../../environment-remote';
@@ -262,6 +263,20 @@ const messages = defineMessages({
     id: 'settings.app.form.splitColumns',
     defaultMessage: 'Number of columns',
   },
+  warningSelfSignedCertificates: {
+    id: 'settings.app.warningSelfSignedCertificates',
+    defaultMessage:
+      'WARNING: Only enable this feature if you know what you are doing. Enabling this is a security risk and should only be used for testing purposes.',
+  },
+  infoOpenCertificatesFolder: {
+    id: 'settings.app.infoOpenCertificatesFolder',
+    defaultMessage:
+      'To install a certificate, click the button below to open the certificates folder and copy it into the folder. After that you can refresh the service (CTRL/CMD + R). To remove/uninstall, simply delete the certificate file and restart Ferdium.',
+  },
+  buttonOpenFerdiumCertsFolder: {
+    id: 'settings.app.buttonOpenFerdiumCertsFolder',
+    defaultMessage: 'Open certificates folder',
+  },
 });
 
 const Hr = (): ReactElement => (
@@ -387,8 +402,12 @@ class EditSettingsForm extends Component<IProps, IState> {
       updateButtonLabelMessage = messages.updateStatusAvailable;
     }
 
-    const { lockingFeatureEnabled, scheduledDNDEnabled, reloadAfterResume } =
-      window['ferdium'].stores.settings.all.app;
+    const {
+      lockingFeatureEnabled,
+      scheduledDNDEnabled,
+      reloadAfterResume,
+      useSelfSignedCertificates,
+    } = window['ferdium'].stores.settings.all.app;
 
     let cacheSize;
     let notCleared;
@@ -411,6 +430,7 @@ class EditSettingsForm extends Component<IProps, IState> {
 
     const profileFolder = userDataPath();
     const recipeFolder = userDataRecipesPath();
+    const certsFolder = userDataCertsPath();
 
     return (
       <div className="settings__main">
@@ -945,6 +965,43 @@ class EditSettingsForm extends Component<IProps, IState> {
                 <Toggle {...form.$('enableGlobalHideShortcut').bind()} />
                 <p className="settings__help indented__help">
                   {intl.formatMessage(messages.appRestartRequired)}
+                </p>
+
+                <Toggle {...form.$('useSelfSignedCertificates').bind()} />
+
+                {useSelfSignedCertificates && (
+                  <div className="settings__settings-group">
+                    <p
+                      style={{
+                        padding: '0rem 0rem 1rem 0rem',
+                        textAlign: 'justify',
+                        fontSize: '1.1rem',
+                      }}
+                    >
+                      {intl.formatMessage(messages.infoOpenCertificatesFolder)}
+                    </p>
+                    <div className="settings__open-settings-cache-container">
+                      <Button
+                        buttonType="secondary"
+                        label={intl.formatMessage(
+                          messages.buttonOpenFerdiumCertsFolder,
+                        )}
+                        className="settings__open-settings-file-button"
+                        onClick={() => openPath(certsFolder)}
+                      />
+                    </div>
+                  </div>
+                )}
+
+                <p
+                  className="settings__help"
+                  style={{
+                    padding: useSelfSignedCertificates
+                      ? '1rem 0rem 0rem 0rem'
+                      : undefined,
+                  }}
+                >
+                  {intl.formatMessage(messages.warningSelfSignedCertificates)}
                 </p>
 
                 <Hr />
