@@ -297,7 +297,7 @@ const messages = defineMessages({
   },
   useSelfSignedCertificates: {
     id: 'settings.app.form.useSelfSignedCertificates',
-    defaultMessage: 'Enable Self Signed Certificates',
+    defaultMessage: 'Enable self-signed certificates',
   },
   enableGPUAcceleration: {
     id: 'settings.app.form.enableGPUAcceleration',
