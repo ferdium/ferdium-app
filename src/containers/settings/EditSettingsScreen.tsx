@@ -443,7 +443,9 @@ class EditSettingsScreen extends Component<
         showDragArea: Boolean(settingsData.showDragArea),
         enableSpellchecking: Boolean(settingsData.enableSpellchecking),
         enableTranslator: Boolean(settingsData.enableTranslator),
-        useSelfSignedCertificates: Boolean(settingsData.useSelfSignedCertificates),
+        useSelfSignedCertificates: Boolean(
+          settingsData.useSelfSignedCertificates,
+        ),
         spellcheckerLanguage: settingsData.spellcheckerLanguage,
         userAgentPref: settingsData.userAgentPref,
         beta: Boolean(settingsData.beta), // we need this info in the main process as well

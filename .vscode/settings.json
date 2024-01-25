@@ -17,7 +17,7 @@
   // "explorer.confirmDelete": false,
   // "explorer.confirmDragAndDrop": false,
 
-  "eslint.runtime": "node",
+  // "eslint.runtime": "node",
   "eslint.format.enable": true,
   "eslint.workingDirectories": [{ "mode": "auto" }],
   // "eslint.packageManager": "npm",

@@ -1,6 +1,10 @@
 import { readdirSync, readFileSync, ensureDirSync } from 'fs-extra';
+import { join } from 'node:path';
 import { userDataCertsPath } from '../environment-remote';
-import { join } from 'path';
+
+export function removeNewLines(string: string) {
+  return string.replaceAll(/\r?\n|\r/g, '');
+}
 
 export function readCerts() {
   const certsFolder = userDataCertsPath();
@@ -9,17 +13,13 @@ export function readCerts() {
 
   const certs: string[] = [];
 
-  readdirSync(certsFolder).forEach(file => {
+  for (const file of readdirSync(certsFolder)) {
     const cert = readFileSync(join(certsFolder, file), {
       encoding: 'utf8',
       flag: 'r',
     });
     certs.push(removeNewLines(cert));
-  });
+  }
 
   return certs;
-}
-
-export function removeNewLines(string: string) {
-  return string.replace(/\r?\n|\r/g, '');
 }
