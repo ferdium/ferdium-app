@@ -263,7 +263,7 @@
   "settings.app.form.universalDarkMode": "Enable universal Dark Mode",
   "settings.app.form.useGrayscaleServices": "Use grayscale services",
   "settings.app.form.useHorizontalStyle": "Use horizontal style",
-  "settings.app.form.useSelfSignedCertificates": "Enable Self Signed Certificates",
+  "settings.app.form.useSelfSignedCertificates": "Enable self-signed certificates",
   "settings.app.form.useTouchIdToUnlock": "Allow using TouchID to unlock Ferdium",
   "settings.app.form.wakeUpHibernationSplay": "Splay hibernate/wake cycles to reduce load",
   "settings.app.form.wakeUpHibernationStrategy": "Hibernation strategy after automatic wake up",
