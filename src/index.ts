@@ -50,7 +50,7 @@ import { openExternalUrl } from './helpers/url-helpers';
 import userAgent from './helpers/userAgent-helpers';
 import { translateTo } from './helpers/translation-helpers';
 import { darkThemeGrayDarkest } from './themes/legacy';
-import { readCerts, removeNewLines } from './helpers/certs-helpers';
+import { checkIfCertIsPresent } from './helpers/certs-helpers';
 
 const debug = require('./preload-safe-debug')('Ferdium:App');
 
@@ -773,21 +773,6 @@ app.on(
       return;
     }
 
-    const trustedCerts = readCerts();
-    if (!trustedCerts) {
-      callback(false);
-      return;
-    }
-
-    const isTrustedCert = trustedCerts.includes(
-      removeNewLines(certificate.data),
-    );
-
-    if (isTrustedCert) {
-      callback(true);
-      return;
-    }
-
-    callback(false);
+    callback(checkIfCertIsPresent(certificate.data));
   },
 );
