@@ -424,6 +424,7 @@ export const DEFAULT_APP_SETTINGS = {
   customTodoServer: '',
   locale: 'en-US',
   keepAllWorkspacesLoaded: false,
+  useSelfSignedCertificates: false,
 };
 
 export const DEFAULT_SERVICE_SETTINGS = {

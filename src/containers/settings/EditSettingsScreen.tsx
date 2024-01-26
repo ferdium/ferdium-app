@@ -295,6 +295,10 @@ const messages = defineMessages({
     id: 'settings.app.form.enableTranslator',
     defaultMessage: 'Enable Translator',
   },
+  useSelfSignedCertificates: {
+    id: 'settings.app.form.useSelfSignedCertificates',
+    defaultMessage: 'Enable self-signed certificates',
+  },
   enableGPUAcceleration: {
     id: 'settings.app.form.enableGPUAcceleration',
     defaultMessage: 'Enable GPU Acceleration',
@@ -439,6 +443,9 @@ class EditSettingsScreen extends Component<
         showDragArea: Boolean(settingsData.showDragArea),
         enableSpellchecking: Boolean(settingsData.enableSpellchecking),
         enableTranslator: Boolean(settingsData.enableTranslator),
+        useSelfSignedCertificates: Boolean(
+          settingsData.useSelfSignedCertificates,
+        ),
         spellcheckerLanguage: settingsData.spellcheckerLanguage,
         userAgentPref: settingsData.userAgentPref,
         beta: Boolean(settingsData.beta), // we need this info in the main process as well
@@ -904,6 +911,15 @@ class EditSettingsScreen extends Component<
             DEFAULT_APP_SETTINGS.enableTranslator,
           ),
           default: DEFAULT_APP_SETTINGS.enableTranslator,
+          type: 'checkbox',
+        },
+        useSelfSignedCertificates: {
+          label: intl.formatMessage(messages.useSelfSignedCertificates),
+          value: ifUndefined<boolean>(
+            settings.all.app.useSelfSignedCertificates,
+            DEFAULT_APP_SETTINGS.useSelfSignedCertificates,
+          ),
+          default: DEFAULT_APP_SETTINGS.useSelfSignedCertificates,
           type: 'checkbox',
         },
         spellcheckerLanguage: {
