@@ -30,3 +30,6 @@ export const acceleratorString = (
   prefix: string = '(',
   suffix: string = ')',
 ) => (index <= 10 ? `${prefix}${keyCombo}+${index % 10}${suffix}` : '');
+
+export const removeNewLines = (input: string): string =>
+  input.replaceAll(/\r?\n|\r/g, '');

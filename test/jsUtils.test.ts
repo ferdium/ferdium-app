@@ -151,4 +151,20 @@ describe('jsUtils', () => {
       expect(jsUtils.acceleratorString(11, 'abc')).toEqual('');
     });
   });
+
+  describe('removeNewLines', () => {
+    it('handles unix style new lines', () => {
+      expect(jsUtils.removeNewLines('abc def\nghi')).toEqual('abc defghi');
+    });
+
+    it('handles windows style new lines', () => {
+      expect(jsUtils.removeNewLines('abc def\r\nghi')).toEqual('abc defghi');
+    });
+
+    it('handles new lines in the beginning, middle and ending of the string', () => {
+      expect(jsUtils.removeNewLines('\nabc def\r\nghi\n')).toEqual(
+        'abc defghi',
+      );
+    });
+  });
 });

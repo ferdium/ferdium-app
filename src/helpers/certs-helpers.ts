@@ -1,12 +1,9 @@
 import { readdirSync, readFileSync, ensureDirSync } from 'fs-extra';
 import { join } from 'node:path';
 import { userDataCertsPath } from '../environment-remote';
+import { removeNewLines } from '../jsUtils';
 
-export function removeNewLines(string: string) {
-  return string.replaceAll(/\r?\n|\r/g, '');
-}
-
-export function readCerts() {
+export function checkIfCertIsPresent(certData: string): boolean {
   const certsFolder = userDataCertsPath();
 
   ensureDirSync(certsFolder);
@@ -21,5 +18,5 @@ export function readCerts() {
     certs.push(removeNewLines(cert));
   }
 
-  return certs;
+  return certs.length > 0 && certs.includes(removeNewLines(certData));
 }
