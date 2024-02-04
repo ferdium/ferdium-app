@@ -15,7 +15,7 @@ export class NotificationsHandler {
       const notificationId = uuidV4();
 
       /*
-      parse the token digits from sms body, find "token" or "code" in options.body which reflect the sms content 
+      parse the token digits from sms body, find "token" or "code" in options.body which reflect the sms content
       ---
       Token: 03624 / SMS-Code = PIN Token
       ---
@@ -29,9 +29,14 @@ export class NotificationsHandler {
       */
       const rawBody = options.body;
       const { 0: token } = /\d{5,6}/.exec(options.body) || [];
-      if (token && (['token', 'code'].find(a => options.body.toLowerCase().includes(a)))) {
+      if (
+        token &&
+        ['token', 'code', 'sms'].some(a =>
+          options.body.toLowerCase().includes(a),
+        )
+      ) {
         // with the extra "+ " it shows its copied to clipboard in the notification
-        options.body = "+ " + rawBody;
+        options.body = `+ ${rawBody}`;
         clipboard.writeText(token);
       }
 
@@ -72,7 +77,7 @@ export const notificationsClassDefinition = `(() => {
               if (typeof (this.onClick) === 'function') {
                 this.onClick();
               }
-            });      
+            });
       }
     }
 
