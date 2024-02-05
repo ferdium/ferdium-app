@@ -14,7 +14,11 @@ export class NotificationsHandler {
 
       const notificationId = uuidV4();
 
-      /*
+      const { twoFactorAutoCatcher, twoFactorAutoCatcherArray } =
+        window['ferdium'].stores.settings.app;
+
+      if (twoFactorAutoCatcher) {
+        /*
       parse the token digits from sms body, find "token" or "code" in options.body which reflect the sms content
       ---
       Token: 03624 / SMS-Code = PIN Token
@@ -27,17 +31,24 @@ export class NotificationsHandler {
       ---
       PayPal: Ihr Sicherheitscode lautet: 989605. Geben Sie diesen Code nicht weiter.
       */
-      const rawBody = options.body;
-      const { 0: token } = /\d{5,6}/.exec(options.body) || [];
-      if (
-        token &&
-        ['token', 'code', 'sms'].some(a =>
-          options.body.toLowerCase().includes(a),
-        )
-      ) {
-        // with the extra "+ " it shows its copied to clipboard in the notification
-        options.body = `+ ${rawBody}`;
-        clipboard.writeText(token);
+
+        const rawBody = options.body;
+        const { 0: token } = /\d{5,6}/.exec(options.body) || [];
+
+        const wordsToCatch = twoFactorAutoCatcherArray
+          .replaceAll(', ', ',')
+          .split(',');
+
+        if (
+          token &&
+          wordsToCatch.some(a =>
+            options.body.toLowerCase().includes(a.toLowerCase()),
+          )
+        ) {
+          // with the extra "+ " it shows its copied to clipboard in the notification
+          options.body = `+ ${rawBody}`;
+          clipboard.writeText(token);
+        }
       }
 
       ipcRenderer.sendToHost(

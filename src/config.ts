@@ -357,6 +357,8 @@ export const DEFAULT_APP_SETTINGS = {
   privateNotifications: false,
   clipboardNotifications: true,
   notifyTaskBarOnMessage: false,
+  twoFactorAutoCatcher: false,
+  twoFactorAutoCatcherArray: 'token, code, sms',
   showDisabledServices: true,
   showServiceName: false,
   showMessageBadgeWhenMuted: true,
