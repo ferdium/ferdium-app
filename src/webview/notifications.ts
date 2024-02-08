@@ -45,7 +45,6 @@ export class NotificationsHandler {
           .replaceAll(', ', ',')
           .split(',');
 
-        debug('token', token);
         debug('wordsToCatch', wordsToCatch);
 
         if (
@@ -54,14 +53,12 @@ export class NotificationsHandler {
             options.body.toLowerCase().includes(a.toLowerCase()),
           )
         ) {
-          debug('Token parsed and copy to clipboard');
+          debug('Token parsed and copy to clipboard', token);
           // with the extra "+ " it shows its copied to clipboard in the notification
           options.body = `+ ${rawBody}`;
           clipboard.writeText(token);
         }
       }
-
-      options.body = `? ${options.body}`;
 
       ipcRenderer.sendToHost(
         'notification',
