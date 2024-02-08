@@ -3,7 +3,7 @@
   "productName": "Ferdium",
   "desktopName": "ferdium.desktop",
   "appId": "org.ferdium.ferdium-app",
-  "version": "6.7.1-nightly.12",
+  "version": "6.7.1-nightly.14",
   "description": "Messaging app for WhatsApp, Slack, Telegram, Hangouts and many many more.",
   "author": "Ferdium Contributors <hello@ferdium.org> (https://ferdium.org/)",
   "license": "Apache-2.0",
@@ -23,7 +23,7 @@
   },
   "packageManager": "pnpm@8.14.1",
   "scripts": {
-    "prepare": "is-ci || husky install",
+    "prepare": "is-ci || cd .. && husky install",
     "start": "electron ./build",
     "start:local": "cross-env USE_LOCAL_API=1 pnpm start",
     "start:live": "cross-env USE_LIVE_API=1 pnpm start",
