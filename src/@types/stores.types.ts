@@ -87,6 +87,8 @@ export interface AppStore extends TypedStore {
   authRequestFailed: () => void;
   autoLaunchOnStart: () => void;
   automaticUpdates: boolean;
+  twoFactorAutoCatcher: boolean;
+  twoFactorAutoCatcherArray: string;
   clearAppCacheRequest: () => void;
   clipboardNotifications: boolean;
   darkMode: boolean;

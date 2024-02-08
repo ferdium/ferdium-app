@@ -14,31 +14,54 @@ export class NotificationsHandler {
 
       const notificationId = uuidV4();
 
-      /*
-      parse the token digits from sms body, find "token" or "code" in options.body which reflect the sms content
-      ---
-      Token: 03624 / SMS-Code = PIN Token
-      ---
-      Prüfcode 010313 für Microsoft-Authentifizierung verwenden.
-      ---
-      483133 is your GitHub authentication code. @github.com #483133
-      ---
-      eBay: Ihr Sicherheitscode lautet 080090. \nEr läuft in 15 Minuten ab. Geben Sie den Code nicht an andere weiter.
-      ---
-      PayPal: Ihr Sicherheitscode lautet: 989605. Geben Sie diesen Code nicht weiter.
-      */
-      const rawBody = options.body;
-      const { 0: token } = /\d{5,6}/.exec(options.body) || [];
-      if (
-        token &&
-        ['token', 'code', 'sms'].some(a =>
-          options.body.toLowerCase().includes(a),
-        )
-      ) {
-        // with the extra "+ " it shows its copied to clipboard in the notification
-        options.body = `+ ${rawBody}`;
-        clipboard.writeText(token);
+      const { twoFactorAutoCatcher, twoFactorAutoCatcherArray } =
+        window['ferdium'].stores.settings.app;
+
+      debug(
+        'Settings for catch tokens',
+        twoFactorAutoCatcher,
+        twoFactorAutoCatcherArray,
+      );
+
+      if (twoFactorAutoCatcher) {
+        /*
+          parse the token digits from sms body, find "token" or "code" in options.body which reflect the sms content
+          ---
+          Token: 03624 / SMS-Code = PIN Token
+          ---
+          Prüfcode 010313 für Microsoft-Authentifizierung verwenden.
+          ---
+          483133 is your GitHub authentication code. @github.com #483133
+          ---
+          eBay: Ihr Sicherheitscode lautet 080090. \nEr läuft in 15 Minuten ab. Geben Sie den Code nicht an andere weiter.
+          ---
+          PayPal: Ihr Sicherheitscode lautet: 989605. Geben Sie diesen Code nicht weiter.
+        */
+
+        const rawBody = options.body;
+        const { 0: token } = /\d{5,6}/.exec(options.body) || [];
+
+        const wordsToCatch = twoFactorAutoCatcherArray
+          .replaceAll(', ', ',')
+          .split(',');
+
+        debug('token', token);
+        debug('wordsToCatch', wordsToCatch);
+
+        if (
+          token &&
+          wordsToCatch.some(a =>
+            options.body.toLowerCase().includes(a.toLowerCase()),
+          )
+        ) {
+          debug('Token parsed and copy to clipboard');
+          // with the extra "+ " it shows its copied to clipboard in the notification
+          options.body = `+ ${rawBody}`;
+          clipboard.writeText(token);
+        }
       }
+
+      options.body = `? ${options.body}`;
 
       ipcRenderer.sendToHost(
         'notification',
