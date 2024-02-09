@@ -303,6 +303,8 @@ interface IProps extends WrappedComponentProps {
   isClearingAllCache: boolean;
   isTodosActivated: boolean;
   automaticUpdates: boolean;
+  twoFactorAutoCatcher: boolean;
+  twoFactorAutoCatcherArray: string;
   isDarkmodeEnabled: boolean;
   isAdaptableDarkModeEnabled: boolean;
   isUseGrayscaleServicesEnabled: boolean;
@@ -354,13 +356,23 @@ class EditSettingsForm extends Component<IProps, IState> {
     this.props.form.submit({
       onSuccess: (form: Form) => {
         const values = form.values();
-        const { accentColor } = values;
+        const { accentColor, twoFactorAutoCatcher } = values;
+        
         if (accentColor.trim().length === 0) {
           values.accentColor = DEFAULT_ACCENT_COLOR;
         }
         const { progressbarAccentColor } = values;
         if (progressbarAccentColor.trim().length === 0) {
           values.progressbarAccentColor = DEFAULT_ACCENT_COLOR;
+        }
+
+        // If twoFactorAutoCatcher is enabled, but the string input is empty, set it to the default value
+        if (
+          !twoFactorAutoCatcher &&
+          values.twoFactorAutoCatcherArray.length === 0
+        ) {
+          values.twoFactorAutoCatcherArray =
+            DEFAULT_APP_SETTINGS.twoFactorAutoCatcherArray;
         }
         this.props.onSubmit(values);
       },
@@ -386,6 +398,7 @@ class EditSettingsForm extends Component<IProps, IState> {
       onClearAllCache,
       getCacheSize,
       automaticUpdates,
+      twoFactorAutoCatcher,
       isDarkmodeEnabled,
       isSplitModeEnabled,
       openProcessManager,
@@ -837,6 +850,15 @@ class EditSettingsForm extends Component<IProps, IState> {
                   <Toggle {...form.$('notifyTaskBarOnMessage').bind()} />
                 )}
 
+                <Toggle {...form.$('twoFactorAutoCatcher').bind()} />
+
+                {twoFactorAutoCatcher && (
+                  <Input
+                    onChange={e => this.submit(e)}
+                    {...form.$('twoFactorAutoCatcherArray').bind()}
+                  />
+                )}
+                
                 <Hr />
 
                 <Select field={form.$('webRTCIPHandlingPolicy')} />
