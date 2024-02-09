@@ -1,4 +1,4 @@
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, clipboard } from 'electron';
 
 import { v4 as uuidV4 } from 'uuid';
 
@@ -14,6 +14,52 @@ export class NotificationsHandler {
 
       const notificationId = uuidV4();
 
+      const { twoFactorAutoCatcher, twoFactorAutoCatcherArray } =
+        window['ferdium'].stores.settings.app;
+
+      debug(
+        'Settings for catch tokens',
+        twoFactorAutoCatcher,
+        twoFactorAutoCatcherArray,
+      );
+
+      if (twoFactorAutoCatcher) {
+        /*
+          parse the token digits from sms body, find "token" or "code" in options.body which reflect the sms content
+          ---
+          Token: 03624 / SMS-Code = PIN Token
+          ---
+          Prüfcode 010313 für Microsoft-Authentifizierung verwenden.
+          ---
+          483133 is your GitHub authentication code. @github.com #483133
+          ---
+          eBay: Ihr Sicherheitscode lautet 080090. \nEr läuft in 15 Minuten ab. Geben Sie den Code nicht an andere weiter.
+          ---
+          PayPal: Ihr Sicherheitscode lautet: 989605. Geben Sie diesen Code nicht weiter.
+        */
+
+        const rawBody = options.body;
+        const { 0: token } = /\d{5,6}/.exec(options.body) || [];
+
+        const wordsToCatch = twoFactorAutoCatcherArray
+          .replaceAll(', ', ',')
+          .split(',');
+
+        debug('wordsToCatch', wordsToCatch);
+
+        if (
+          token &&
+          wordsToCatch.some(a =>
+            options.body.toLowerCase().includes(a.toLowerCase()),
+          )
+        ) {
+          // with the extra "+ " it shows its copied to clipboard in the notification
+          options.body = `+ ${rawBody}`;
+          clipboard.writeText(token);
+          debug('Token parsed and copied to clipboard');
+        }
+      }
+      
       ipcRenderer.sendToHost(
         'notification',
         this.onNotify({
@@ -37,7 +83,7 @@ export const notificationsClassDefinition = `(() => {
     constructor(title = '', options = {}) {
       this.title = title;
       this.options = options;
-      try{
+      try {
         window.ferdium.displayNotification(title, options)
           .then(() => {
             if (typeof (this.onClick) === 'function') {
@@ -51,7 +97,7 @@ export const notificationsClassDefinition = `(() => {
               if (typeof (this.onClick) === 'function') {
                 this.onClick();
               }
-            });      
+            });
       }
     }
 
