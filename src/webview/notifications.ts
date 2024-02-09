@@ -53,10 +53,10 @@ export class NotificationsHandler {
             options.body.toLowerCase().includes(a.toLowerCase()),
           )
         ) {
-          debug('Token parsed and copy to clipboard', token);
           // with the extra "+ " it shows its copied to clipboard in the notification
           options.body = `+ ${rawBody}`;
           clipboard.writeText(token);
+          debug('Token parsed and copied to clipboard');
         }
       }
 
