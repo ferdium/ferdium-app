@@ -357,7 +357,7 @@ class EditSettingsForm extends Component<IProps, IState> {
       onSuccess: (form: Form) => {
         const values = form.values();
         const { accentColor, twoFactorAutoCatcher } = values;
-        
+
         if (accentColor.trim().length === 0) {
           values.accentColor = DEFAULT_ACCENT_COLOR;
         }
@@ -858,7 +858,7 @@ class EditSettingsForm extends Component<IProps, IState> {
                     {...form.$('twoFactorAutoCatcherArray').bind()}
                   />
                 )}
-                
+
                 <Hr />
 
                 <Select field={form.$('webRTCIPHandlingPolicy')} />

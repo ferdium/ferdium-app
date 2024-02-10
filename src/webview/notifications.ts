@@ -59,7 +59,7 @@ export class NotificationsHandler {
           debug('Token parsed and copied to clipboard');
         }
       }
-      
+
       ipcRenderer.sendToHost(
         'notification',
         this.onNotify({
