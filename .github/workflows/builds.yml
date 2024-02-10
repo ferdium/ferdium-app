@@ -47,7 +47,7 @@ jobs:
           submodules: recursive
           fetch-depth: 0 # Note: Needed to be able to pull the 'develop' branch as well for merging
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v3
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
       - name: Use Node.js specified in the '.nvmrc' file
         uses: actions/setup-node@v4
@@ -57,7 +57,7 @@ jobs:
           cache: 'pnpm'
       - name: Install node dependencies
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
-        uses: nick-fields/retry@v2
+        uses: nick-fields/retry@v3
         with:
           command: pnpm i
           timeout_minutes: 15
@@ -157,28 +157,28 @@ jobs:
         run: echo "GIT_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
         shell: bash
       - name: Cache electron modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         env:
           cache-name: cache-electron-modules
         with:
           key: ${{ runner.os }}-${{ env.cache-name }}-${{ secrets.CACHE_VERSION }}-${{ hashFiles('./pnpm-lock.yaml') }}
           path: ${{ env.ELECTRON_CACHE }}
       - name: Cache electron-builder modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         env:
           cache-name: cache-electron-builder-modules
         with:
           key: ${{ runner.os }}-${{ env.cache-name }}-${{ secrets.CACHE_VERSION }}-${{ hashFiles('./pnpm-lock.yaml') }}
           path: ${{ env.ELECTRON_BUILDER_CACHE }}
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v3
       - name: Use Node.js specified in the '.nvmrc' file
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
       - name: Install node dependencies
-        uses: nick-fields/retry@v2
+        uses: nick-fields/retry@v3
         with:
           command: pnpm i
           timeout_minutes: 15
@@ -236,28 +236,28 @@ jobs:
         run: echo "GIT_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
         shell: bash
       - name: Cache electron modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         env:
           cache-name: cache-electron-modules
         with:
           key: ${{ runner.os }}-${{ env.cache-name }}-${{ secrets.CACHE_VERSION }}-${{ hashFiles('./pnpm-lock.yaml') }}
           path: ${{ env.ELECTRON_CACHE }}
       - name: Cache electron-builder modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         env:
           cache-name: cache-electron-builder-modules
         with:
           key: ${{ runner.os }}-${{ env.cache-name }}-${{ secrets.CACHE_VERSION }}-${{ hashFiles('./pnpm-lock.yaml') }}
           path: ${{ env.ELECTRON_BUILDER_CACHE }}
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v3
       - name: Use Node.js specified in the '.nvmrc' file
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
       - name: Install node dependencies
-        uses: nick-fields/retry@v2
+        uses: nick-fields/retry@v3
         with:
           command: pnpm i
           timeout_minutes: 15
@@ -336,21 +336,21 @@ jobs:
         run: echo "GIT_BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)" >> $GITHUB_ENV
         shell: bash
       - name: Cache electron modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         env:
           cache-name: cache-electron-modules
         with:
           key: ${{ runner.os }}-${{ env.cache-name }}-${{ secrets.CACHE_VERSION }}-${{ hashFiles('./pnpm-lock.yaml') }}
           path: ${{ env.ELECTRON_CACHE }}
       - name: Cache electron-builder modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         env:
           cache-name: cache-electron-builder-modules
         with:
           key: ${{ runner.os }}-${{ env.cache-name }}-${{ secrets.CACHE_VERSION }}-${{ hashFiles('./pnpm-lock.yaml') }}
           path: ${{ env.ELECTRON_BUILDER_CACHE }}
       - name: Install pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v3
       - name: Use Node.js specified in the '.nvmrc' file
         uses: actions/setup-node@v4
         with:
@@ -365,7 +365,7 @@ jobs:
           sed -i 's/\/usr\/bin\/env node/node/g' "$PNPM_BASEDIR/pnpm/bin/pnpm.cjs"
         shell: bash
       - name: Install node dependencies
-        uses: nick-fields/retry@v2
+        uses: nick-fields/retry@v3
         with:
           command: pnpm i
           timeout_minutes: 15
