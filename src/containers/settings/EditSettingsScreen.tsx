@@ -398,7 +398,7 @@ class EditSettingsScreen extends Component<
         wakeUpHibernationSplay: Boolean(settingsData.wakeUpHibernationSplay),
         predefinedTodoServer: settingsData.predefinedTodoServer,
         customTodoServer: settingsData.customTodoServer,
-        lockingFeatureEnabled: Boolean(settingsData.lockingFeatureEnabled),
+        isLockingFeatureEnabled: Boolean(settingsData.isLockingFeatureEnabled),
         lockedPassword: useOriginalPassword
           ? this.props.stores.settings.all.app.lockedPassword
           : hash(String(settingsData.lockedPassword)),
@@ -796,13 +796,13 @@ class EditSettingsScreen extends Component<
           ),
           default: DEFAULT_APP_SETTINGS.customTodoServer,
         },
-        lockingFeatureEnabled: {
+        isLockingFeatureEnabled: {
           label: intl.formatMessage(messages.enableLock),
           value: ifUndefined<boolean>(
-            settings.all.app.lockingFeatureEnabled,
-            DEFAULT_APP_SETTINGS.lockingFeatureEnabled,
+            settings.all.app.isLockingFeatureEnabled,
+            DEFAULT_APP_SETTINGS.isLockingFeatureEnabled,
           ),
-          default: DEFAULT_APP_SETTINGS.lockingFeatureEnabled,
+          default: DEFAULT_APP_SETTINGS.isLockingFeatureEnabled,
           type: 'checkbox',
         },
         lockedPassword: {
@@ -1223,7 +1223,7 @@ class EditSettingsScreen extends Component<
       updateVersion,
       updateStatusTypes,
       isClearingAllCache,
-      lockingFeatureEnabled,
+      isLockingFeatureEnabled,
     } = app;
     const { checkForUpdates, installUpdate, clearAllCache } =
       this.props.actions.app;
@@ -1247,7 +1247,7 @@ class EditSettingsScreen extends Component<
           getCacheSize={() => app.cacheSize}
           isClearingAllCache={isClearingAllCache}
           onClearAllCache={clearAllCache}
-          lockingFeatureEnabled={lockingFeatureEnabled}
+          isLockingFeatureEnabled={isLockingFeatureEnabled}
           automaticUpdates={this.props.stores.settings.app.automaticUpdates}
           isDarkmodeEnabled={this.props.stores.settings.app.darkMode}
           isAdaptableDarkModeEnabled={
