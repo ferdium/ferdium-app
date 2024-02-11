@@ -368,6 +368,7 @@ build
 .tmp
 .stage
 server*.log
+*.zwc*
 
 # These entries have been merged from the git submodule repo 'internal-server'
 
