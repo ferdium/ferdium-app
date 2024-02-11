@@ -306,7 +306,7 @@ interface IProps extends WrappedComponentProps {
   isDarkmodeEnabled: boolean;
   isAdaptableDarkModeEnabled: boolean;
   isUseGrayscaleServicesEnabled: boolean;
-  lockingFeatureEnabled: boolean;
+  isLockingFeatureEnabled: boolean;
   isSplitModeEnabled: boolean;
   isOnline: boolean;
   showServicesUpdatedInfoBar: boolean;
@@ -403,7 +403,7 @@ class EditSettingsForm extends Component<IProps, IState> {
     }
 
     const {
-      lockingFeatureEnabled,
+      isLockingFeatureEnabled,
       scheduledDNDEnabled,
       reloadAfterResume,
       useSelfSignedCertificates,
@@ -860,8 +860,8 @@ class EditSettingsForm extends Component<IProps, IState> {
 
                 <Hr />
 
-                <Toggle {...form.$('lockingFeatureEnabled').bind()} />
-                {lockingFeatureEnabled && (
+                <Toggle {...form.$('isLockingFeatureEnabled').bind()} />
+                {isLockingFeatureEnabled && (
                   <>
                     {isMac && systemPreferences.canPromptTouchID() && (
                       <Toggle {...form.$('useTouchIdToUnlock').bind()} />

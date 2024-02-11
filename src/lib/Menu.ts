@@ -709,7 +709,7 @@ class FranzMenu implements StoresProps {
     const { intl } = window['ferdium'];
     const locked =
       this.stores.settings.app.locked &&
-      this.stores.settings.app.lockingFeatureEnabled &&
+      this.stores.settings.app.isLockingFeatureEnabled &&
       this.stores.user.isLoggedIn;
     const { actions } = this;
     const tpl = titleBarTemplateFactory(intl, locked);
@@ -847,7 +847,7 @@ class FranzMenu implements StoresProps {
           accelerator: `${lockFerdiumShortcutKey()}`,
           enabled:
             this.stores.user.isLoggedIn &&
-            this.stores.settings.app.lockingFeatureEnabled,
+            this.stores.settings.app.isLockingFeatureEnabled,
           click() {
             actions.settings.update({
               type: 'app',
