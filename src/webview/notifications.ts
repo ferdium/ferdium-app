@@ -14,16 +14,16 @@ export class NotificationsHandler {
 
       const notificationId = uuidV4();
 
-      const { twoFactorAutoCatcher, twoFactorAutoCatcherArray } =
+      const { isTwoFactorAutoCatcherEnabled, twoFactorAutoCatcherMatcher } =
         window['ferdium'].stores.settings.app;
 
       debug(
         'Settings for catch tokens',
-        twoFactorAutoCatcher,
-        twoFactorAutoCatcherArray,
+        isTwoFactorAutoCatcherEnabled,
+        twoFactorAutoCatcherMatcher,
       );
 
-      if (twoFactorAutoCatcher) {
+      if (isTwoFactorAutoCatcherEnabled) {
         /*
           parse the token digits from sms body, find "token" or "code" in options.body which reflect the sms content
           ---
@@ -41,7 +41,7 @@ export class NotificationsHandler {
         const rawBody = options.body;
         const { 0: token } = /\d{5,6}/.exec(options.body) || [];
 
-        const wordsToCatch = twoFactorAutoCatcherArray
+        const wordsToCatch = twoFactorAutoCatcherMatcher
           .replaceAll(', ', ',')
           .split(',');
 

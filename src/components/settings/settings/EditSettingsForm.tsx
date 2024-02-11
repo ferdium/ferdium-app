@@ -303,8 +303,8 @@ interface IProps extends WrappedComponentProps {
   isClearingAllCache: boolean;
   isTodosActivated: boolean;
   automaticUpdates: boolean;
-  twoFactorAutoCatcher: boolean;
-  twoFactorAutoCatcherArray: string;
+  isTwoFactorAutoCatcherEnabled: boolean;
+  twoFactorAutoCatcherMatcher: string;
   isDarkmodeEnabled: boolean;
   isAdaptableDarkModeEnabled: boolean;
   isUseGrayscaleServicesEnabled: boolean;
@@ -356,7 +356,7 @@ class EditSettingsForm extends Component<IProps, IState> {
     this.props.form.submit({
       onSuccess: (form: Form) => {
         const values = form.values();
-        const { accentColor, twoFactorAutoCatcher } = values;
+        const { accentColor, isTwoFactorAutoCatcherEnabled } = values;
 
         if (accentColor.trim().length === 0) {
           values.accentColor = DEFAULT_ACCENT_COLOR;
@@ -366,13 +366,13 @@ class EditSettingsForm extends Component<IProps, IState> {
           values.progressbarAccentColor = DEFAULT_ACCENT_COLOR;
         }
 
-        // If twoFactorAutoCatcher is enabled, but the string input is empty, set it to the default value
+        // If isTwoFactorAutoCatcherEnabled is enabled, but the string input is empty, set it to the default value
         if (
-          !twoFactorAutoCatcher &&
-          values.twoFactorAutoCatcherArray.length === 0
+          !isTwoFactorAutoCatcherEnabled &&
+          values.twoFactorAutoCatcherMatcher.length === 0
         ) {
-          values.twoFactorAutoCatcherArray =
-            DEFAULT_APP_SETTINGS.twoFactorAutoCatcherArray;
+          values.twoFactorAutoCatcherMatcher =
+            DEFAULT_APP_SETTINGS.twoFactorAutoCatcherMatcher;
         }
         this.props.onSubmit(values);
       },
@@ -398,7 +398,7 @@ class EditSettingsForm extends Component<IProps, IState> {
       onClearAllCache,
       getCacheSize,
       automaticUpdates,
-      twoFactorAutoCatcher,
+      isTwoFactorAutoCatcherEnabled,
       isDarkmodeEnabled,
       isSplitModeEnabled,
       openProcessManager,
@@ -850,12 +850,12 @@ class EditSettingsForm extends Component<IProps, IState> {
                   <Toggle {...form.$('notifyTaskBarOnMessage').bind()} />
                 )}
 
-                <Toggle {...form.$('twoFactorAutoCatcher').bind()} />
+                <Toggle {...form.$('isTwoFactorAutoCatcherEnabled').bind()} />
 
-                {twoFactorAutoCatcher && (
+                {isTwoFactorAutoCatcherEnabled && (
                   <Input
                     onChange={e => this.submit(e)}
-                    {...form.$('twoFactorAutoCatcherArray').bind()}
+                    {...form.$('twoFactorAutoCatcherMatcher').bind()}
                   />
                 )}
 

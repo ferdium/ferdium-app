@@ -99,13 +99,13 @@ const messages = defineMessages({
     id: 'settings.app.form.notifyTaskBarOnMessage',
     defaultMessage: 'Notify TaskBar/Dock on new message',
   },
-  twoFactorAutoCatcher: {
-    id: 'settings.app.form.twoFactorAutoCatcher',
+  isTwoFactorAutoCatcherEnabled: {
+    id: 'settings.app.form.isTwoFactorAutoCatcherEnabled',
     defaultMessage:
-      'Auto catch two-factor codes from notifications (Ex.: android messages) and copy to clipboard',
+      'Auto-catch two-factor codes from notifications (Ex.: android messages) and copy to clipboard',
   },
-  twoFactorAutoCatcherArray: {
-    id: 'settings.app.form.twoFactorAutoCatcherArray',
+  twoFactorAutoCatcherMatcher: {
+    id: 'settings.app.form.twoFactorAutoCatcherMatcher',
     defaultMessage:
       'Comma-separated and case-insensitive words/expressions to catch two-factor codes from. Ex.: token, code, sms, verify',
   },
@@ -393,8 +393,10 @@ class EditSettingsScreen extends Component<
         privateNotifications: Boolean(settingsData.privateNotifications),
         clipboardNotifications: Boolean(settingsData.clipboardNotifications),
         notifyTaskBarOnMessage: Boolean(settingsData.notifyTaskBarOnMessage),
-        twoFactorAutoCatcher: Boolean(settingsData.twoFactorAutoCatcher),
-        twoFactorAutoCatcherArray: settingsData.twoFactorAutoCatcherArray,
+        isTwoFactorAutoCatcherEnabled: Boolean(
+          settingsData.isTwoFactorAutoCatcherEnabled,
+        ),
+        twoFactorAutoCatcherMatcher: settingsData.twoFactorAutoCatcherMatcher,
         navigationBarBehaviour: settingsData.navigationBarBehaviour,
         webRTCIPHandlingPolicy: settingsData.webRTCIPHandlingPolicy,
         searchEngine: settingsData.searchEngine,
@@ -692,22 +694,22 @@ class EditSettingsScreen extends Component<
           default: DEFAULT_APP_SETTINGS.notifyTaskBarOnMessage,
           type: 'checkbox',
         },
-        twoFactorAutoCatcher: {
-          label: intl.formatMessage(messages.twoFactorAutoCatcher),
+        isTwoFactorAutoCatcherEnabled: {
+          label: intl.formatMessage(messages.isTwoFactorAutoCatcherEnabled),
           value: ifUndefined<boolean>(
-            settings.all.app.twoFactorAutoCatcher,
-            DEFAULT_APP_SETTINGS.twoFactorAutoCatcher,
+            settings.all.app.isTwoFactorAutoCatcherEnabled,
+            DEFAULT_APP_SETTINGS.isTwoFactorAutoCatcherEnabled,
           ),
-          default: DEFAULT_APP_SETTINGS.twoFactorAutoCatcher,
+          default: DEFAULT_APP_SETTINGS.isTwoFactorAutoCatcherEnabled,
           type: 'checkbox',
         },
-        twoFactorAutoCatcherArray: {
-          label: intl.formatMessage(messages.twoFactorAutoCatcherArray),
+        twoFactorAutoCatcherMatcher: {
+          label: intl.formatMessage(messages.twoFactorAutoCatcherMatcher),
           value: ifUndefined<string>(
-            settings.all.app.twoFactorAutoCatcherArray,
-            DEFAULT_APP_SETTINGS.twoFactorAutoCatcherArray,
+            settings.all.app.twoFactorAutoCatcherMatcher,
+            DEFAULT_APP_SETTINGS.twoFactorAutoCatcherMatcher,
           ),
-          default: DEFAULT_APP_SETTINGS.twoFactorAutoCatcherArray,
+          default: DEFAULT_APP_SETTINGS.twoFactorAutoCatcherMatcher,
         },
         navigationBarBehaviour: {
           label: intl.formatMessage(messages.navigationBarBehaviour),
@@ -1286,11 +1288,11 @@ class EditSettingsScreen extends Component<
             this.props.stores.settings.app.useGrayscaleServices
           }
           isSplitModeEnabled={this.props.stores.settings.app.splitMode}
-          twoFactorAutoCatcher={
-            this.props.stores.settings.app.twoFactorAutoCatcher
+          isTwoFactorAutoCatcherEnabled={
+            this.props.stores.settings.app.isTwoFactorAutoCatcherEnabled
           }
-          twoFactorAutoCatcherArray={
-            this.props.stores.settings.app.twoFactorAutoCatcherArray
+          twoFactorAutoCatcherMatcher={
+            this.props.stores.settings.app.twoFactorAutoCatcherMatcher
           }
           isTodosActivated={this.props.stores.todos.isFeatureEnabledByUser}
           openProcessManager={() => this.openProcessManager()}
