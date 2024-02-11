@@ -8,6 +8,7 @@ import withStyles, { WithStylesProps } from 'react-jss';
 import Loader from '../loader/index';
 import { Theme } from '../../../themes';
 import { IFormField } from '../typings/generic';
+import { DEFAULT_LOADER_COLOR } from '../../../config';
 
 type ButtonType =
   | 'primary'
@@ -194,7 +195,7 @@ class ButtonComponent extends Component<IProps, IState> {
       <>
         {showLoader && (
           <div className={classes.loaderContainer}>
-            <Loader size={18} color="#FFFFFF" />
+            <Loader size={18} color={DEFAULT_LOADER_COLOR} />
           </div>
         )}
         <div className={classes.label}>

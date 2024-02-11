@@ -10,7 +10,7 @@ import Loader from '../../ui/loader';
 import Button from '../../ui/button';
 import Infobox from '../../ui/Infobox';
 import { H1 } from '../../ui/headline';
-import { LIVE_FRANZ_API } from '../../../config';
+import { DEFAULT_LOADER_COLOR, LIVE_FRANZ_API } from '../../../config';
 
 const messages = defineMessages({
   headline: {
@@ -128,7 +128,7 @@ class TeamDashboard extends Component<IProps> {
           </span>
         </div>
         <div className="settings__body">
-          {isLoading && <Loader color="#FFFFFF" />}
+          {isLoading && <Loader color={DEFAULT_LOADER_COLOR} />}
 
           {!isLoading && userInfoRequestFailed && (
             <Infobox
