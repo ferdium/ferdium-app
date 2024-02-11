@@ -107,7 +107,7 @@ const messages = defineMessages({
   twoFactorAutoCatcherArray: {
     id: 'settings.app.form.twoFactorAutoCatcherArray',
     defaultMessage:
-      'Comma seperated and case insensitive words/expressions to catch two-factor codes from. Ex.: token, code, sms, verify',
+      'Comma-separated and case-insensitive words/expressions to catch two-factor codes from. Ex.: token, code, sms, verify',
   },
   navigationBarBehaviour: {
     id: 'settings.app.form.navigationBarBehaviour',
