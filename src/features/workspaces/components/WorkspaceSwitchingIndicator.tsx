@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import Loader from '../../../components/ui/loader';
 import { workspaceStore } from '../index';
+import { DEFAULT_LOADER_COLOR } from '../../../config';
 
 const messages = defineMessages({
   switchingTo: {
@@ -70,7 +71,7 @@ class WorkspaceSwitchingIndicator extends Component<IProps> {
     return (
       <div className={classnames([classes.wrapper])}>
         <div className={classes.component}>
-          <Loader className={classes.spinner} color="#FFFFFF" />
+          <Loader className={classes.spinner} color={DEFAULT_LOADER_COLOR} />
           <p className={classes.message}>
             {`${intl.formatMessage(messages.switchingTo)} ${nextWorkspaceName}`}
           </p>

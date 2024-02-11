@@ -6,6 +6,7 @@ import { noop } from 'lodash';
 import { observer } from 'mobx-react';
 import Loader from './loader/index';
 import Icon from './icon';
+import { DEFAULT_LOADER_COLOR } from '../../config';
 
 const icons = {
   'checkbox-marked-circle-outline': mdiCheckboxMarkedCircleOutline,
@@ -84,7 +85,11 @@ class Infobox extends Component<IProps, IState> {
               className="contentWrapper"
               style={{ display: 'flex', gap: '8px' }}
             >
-              <Loader size={18} loaded={!ctaLoading} color="#FFFFFF" />
+              <Loader
+                size={18}
+                loaded={!ctaLoading}
+                color={DEFAULT_LOADER_COLOR}
+              />
               {ctaLabel}
             </div>
           </button>

@@ -7,7 +7,11 @@ import { H1, H2 } from '../../ui/headline';
 import Loader from '../../ui/loader';
 import Button from '../../ui/button';
 import Infobox from '../../ui/infobox/index';
-import { LOCAL_SERVER, LIVE_FRANZ_API } from '../../../config';
+import {
+  DEFAULT_LOADER_COLOR,
+  LOCAL_SERVER,
+  LIVE_FRANZ_API,
+} from '../../../config';
 import User from '../../../models/User';
 
 const messages = defineMessages({
@@ -123,7 +127,7 @@ class AccountDashboard extends Component<IProp> {
           )}
           {!isUsingWithoutAccount && (
             <>
-              {isLoading && <Loader color="#FFFFFF" />}
+              {isLoading && <Loader color={DEFAULT_LOADER_COLOR} />}
 
               {!isLoading && userInfoRequestFailed && (
                 <Infobox
