@@ -32,7 +32,7 @@ const messages = defineMessages({
   },
   iconUrl: {
     id: 'settings.workspace.form.iconUrl',
-    defaultMessage: 'Icon',
+    defaultMessage: 'Workspace icon url',
   },
   yourWorkspaces: {
     id: 'settings.workspace.form.yourWorkspaces',

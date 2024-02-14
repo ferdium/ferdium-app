@@ -424,7 +424,7 @@
   "settings.workspace.add.form.submitButton": "Créer l'espace de travail",
   "settings.workspace.form.buttonDelete": "Effacer l'espace de travail",
   "settings.workspace.form.buttonSave": "Sauvegarder l'espace de travail",
-  "settings.workspace.form.iconUrl": "Icône",
+  "settings.workspace.form.iconUrl": "Url de l'icône de l'espace de travail",
   "settings.workspace.form.keepLoaded": "Garder cet espace de travail chargé*",
   "settings.workspace.form.keepLoadedInfo": "*Cette option va être écrasée par l'option globale « Garder cette espace de travail chargé ».",
   "settings.workspace.form.name": "Nom",
