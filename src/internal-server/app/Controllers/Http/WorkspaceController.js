@@ -76,7 +76,7 @@ class WorkspaceController {
       .update({
         name,
         services: JSON.stringify(services),
-        data: JSON.stringify({ iconUrl }),
+        data: JSON.stringify({ name, iconUrl }),
       });
 
     // Get updated row
