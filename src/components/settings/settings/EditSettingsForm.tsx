@@ -366,16 +366,13 @@ class EditSettingsForm extends Component<IProps, IState> {
           values.progressbarAccentColor = DEFAULT_ACCENT_COLOR;
         }
 
-        // If isTwoFactorAutoCatcherEnabled is enabled, but the string input is empty, set it to the default value
+        // set twoFactorAutoCatcherMatcher to the default value, if its get enabled the input is prefilled
         if (
-          isTwoFactorAutoCatcherEnabled &&
+          !isTwoFactorAutoCatcherEnabled &&
           values.twoFactorAutoCatcherMatcher.length === 0
         ) {
           values.twoFactorAutoCatcherMatcher =
             DEFAULT_APP_SETTINGS.twoFactorAutoCatcherMatcher;
-          // empty the store if its disabled
-        } else if (!isTwoFactorAutoCatcherEnabled) {
-          values.twoFactorAutoCatcherMatcher = '';
         }
         this.props.onSubmit(values);
       },
