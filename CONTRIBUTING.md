@@ -130,7 +130,7 @@ If you want to copy them outside of the image, simply mount a volume into a diff
 ```bash
 DATE=`date +"%Y-%b-%d-%H-%M"`
 mkdir -p ~/Downloads/$DATE
-docker run -e GIT_SHA=`git rev-parse --short HEAD` -v ~/Downloads/$DATE:/ferdium-out -it ferdium-package sh
+docker run -e GIT_SHA=`git rev-parse --short HEAD` -v ~/Downloads/$DATE:/ferdium-out -it ferdium-package-`uname -m` sh
 # inside the container:
 mv /ferdium/Ferdium-*.AppImage /ferdium-out/Ferdium-$GIT_SHA.AppImage
 mv /ferdium/ferdium-*.tar.gz /ferdium-out/Ferdium-$GIT_SHA.tar.gz
