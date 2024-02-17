@@ -44,7 +44,7 @@ import {
 } from './spellchecker';
 
 import { DEFAULT_APP_SETTINGS } from '../config';
-import { ifUndefined, safeParseInt } from '../jsUtils';
+import { cleanseJSObject, ifUndefined, safeParseInt } from '../jsUtils';
 import { AppStore } from '../@types/stores.types';
 import Service from '../models/Service';
 
@@ -129,7 +129,7 @@ contextBridge.exposeInMainWorld('ferdium', {
       title,
       // The following line is needed so that a proper clone of the "options" object is made.
       // This line was causing issues with some services.
-      JSON.parse(JSON.stringify(options)),
+      cleanseJSObject(options),
     );
   },
   getDisplayMediaSelector,
