@@ -124,8 +124,14 @@ contextBridge.exposeInMainWorld('ferdium', {
     safeParseInt(text),
   setDialogTitle: (title: string | null | undefined) =>
     dialogTitleHandler.setDialogTitle(title),
-  displayNotification: (title: string, options: any) =>
-    notificationsHandler.displayNotification(title, options),
+  displayNotification: (title: string, options: any) => {
+    notificationsHandler.displayNotification(
+      title,
+      // The following line is needed so that a proper clone of the "options" object is made.
+      // This line was causing issues with some services.
+      JSON.parse(JSON.stringify(options)),
+    );
+  },
   getDisplayMediaSelector,
 });
 
