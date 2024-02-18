@@ -2974,6 +2974,15 @@
       "contributions": [
         "infra"
       ]
+    },
+    {
+      "login": "dutscher",
+      "name": "Willy Woitas",
+      "avatar_url": "https://avatars.githubusercontent.com/u/14682?v=4",
+      "profile": "http://www.willy-woitas.de",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "commitType": "docs"
