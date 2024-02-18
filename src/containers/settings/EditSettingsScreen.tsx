@@ -99,6 +99,16 @@ const messages = defineMessages({
     id: 'settings.app.form.notifyTaskBarOnMessage',
     defaultMessage: 'Notify TaskBar/Dock on new message',
   },
+  isTwoFactorAutoCatcherEnabled: {
+    id: 'settings.app.form.isTwoFactorAutoCatcherEnabled',
+    defaultMessage:
+      'Auto-catch two-factor codes from notifications (Ex.: android messages) and copy to clipboard',
+  },
+  twoFactorAutoCatcherMatcher: {
+    id: 'settings.app.form.twoFactorAutoCatcherMatcher',
+    defaultMessage:
+      'Comma-separated and case-insensitive words/expressions to catch two-factor codes from. Ex.: token, code, sms, verify',
+  },
   navigationBarBehaviour: {
     id: 'settings.app.form.navigationBarBehaviour',
     defaultMessage: 'Navigation bar behaviour',
@@ -383,6 +393,10 @@ class EditSettingsScreen extends Component<
         privateNotifications: Boolean(settingsData.privateNotifications),
         clipboardNotifications: Boolean(settingsData.clipboardNotifications),
         notifyTaskBarOnMessage: Boolean(settingsData.notifyTaskBarOnMessage),
+        isTwoFactorAutoCatcherEnabled: Boolean(
+          settingsData.isTwoFactorAutoCatcherEnabled,
+        ),
+        twoFactorAutoCatcherMatcher: settingsData.twoFactorAutoCatcherMatcher,
         navigationBarBehaviour: settingsData.navigationBarBehaviour,
         webRTCIPHandlingPolicy: settingsData.webRTCIPHandlingPolicy,
         searchEngine: settingsData.searchEngine,
@@ -679,6 +693,23 @@ class EditSettingsScreen extends Component<
           ),
           default: DEFAULT_APP_SETTINGS.notifyTaskBarOnMessage,
           type: 'checkbox',
+        },
+        isTwoFactorAutoCatcherEnabled: {
+          label: intl.formatMessage(messages.isTwoFactorAutoCatcherEnabled),
+          value: ifUndefined<boolean>(
+            settings.all.app.isTwoFactorAutoCatcherEnabled,
+            DEFAULT_APP_SETTINGS.isTwoFactorAutoCatcherEnabled,
+          ),
+          default: DEFAULT_APP_SETTINGS.isTwoFactorAutoCatcherEnabled,
+          type: 'checkbox',
+        },
+        twoFactorAutoCatcherMatcher: {
+          label: intl.formatMessage(messages.twoFactorAutoCatcherMatcher),
+          value: ifUndefined<string>(
+            settings.all.app.twoFactorAutoCatcherMatcher,
+            DEFAULT_APP_SETTINGS.twoFactorAutoCatcherMatcher,
+          ),
+          default: DEFAULT_APP_SETTINGS.twoFactorAutoCatcherMatcher,
         },
         navigationBarBehaviour: {
           label: intl.formatMessage(messages.navigationBarBehaviour),
@@ -1257,6 +1288,12 @@ class EditSettingsScreen extends Component<
             this.props.stores.settings.app.useGrayscaleServices
           }
           isSplitModeEnabled={this.props.stores.settings.app.splitMode}
+          isTwoFactorAutoCatcherEnabled={
+            this.props.stores.settings.app.isTwoFactorAutoCatcherEnabled
+          }
+          twoFactorAutoCatcherMatcher={
+            this.props.stores.settings.app.twoFactorAutoCatcherMatcher
+          }
           isTodosActivated={this.props.stores.todos.isFeatureEnabledByUser}
           openProcessManager={() => this.openProcessManager()}
           isOnline={app.isOnline}

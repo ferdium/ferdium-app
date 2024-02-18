@@ -303,6 +303,8 @@ interface IProps extends WrappedComponentProps {
   isClearingAllCache: boolean;
   isTodosActivated: boolean;
   automaticUpdates: boolean;
+  isTwoFactorAutoCatcherEnabled: boolean;
+  twoFactorAutoCatcherMatcher: string;
   isDarkmodeEnabled: boolean;
   isAdaptableDarkModeEnabled: boolean;
   isUseGrayscaleServicesEnabled: boolean;
@@ -354,13 +356,23 @@ class EditSettingsForm extends Component<IProps, IState> {
     this.props.form.submit({
       onSuccess: (form: Form) => {
         const values = form.values();
-        const { accentColor } = values;
+        const { accentColor, isTwoFactorAutoCatcherEnabled } = values;
+
         if (accentColor.trim().length === 0) {
           values.accentColor = DEFAULT_ACCENT_COLOR;
         }
         const { progressbarAccentColor } = values;
         if (progressbarAccentColor.trim().length === 0) {
           values.progressbarAccentColor = DEFAULT_ACCENT_COLOR;
+        }
+
+        // set twoFactorAutoCatcherMatcher to the default value, if its get enabled the input is prefilled
+        if (
+          !isTwoFactorAutoCatcherEnabled &&
+          values.twoFactorAutoCatcherMatcher.length === 0
+        ) {
+          values.twoFactorAutoCatcherMatcher =
+            DEFAULT_APP_SETTINGS.twoFactorAutoCatcherMatcher;
         }
         this.props.onSubmit(values);
       },
@@ -386,6 +398,7 @@ class EditSettingsForm extends Component<IProps, IState> {
       onClearAllCache,
       getCacheSize,
       automaticUpdates,
+      isTwoFactorAutoCatcherEnabled,
       isDarkmodeEnabled,
       isSplitModeEnabled,
       openProcessManager,
@@ -835,6 +848,15 @@ class EditSettingsForm extends Component<IProps, IState> {
                 <Toggle {...form.$('clipboardNotifications').bind()} />
                 {(isWindows || isMac) && (
                   <Toggle {...form.$('notifyTaskBarOnMessage').bind()} />
+                )}
+
+                <Toggle {...form.$('isTwoFactorAutoCatcherEnabled').bind()} />
+
+                {isTwoFactorAutoCatcherEnabled && (
+                  <Input
+                    onChange={e => this.submit(e)}
+                    {...form.$('twoFactorAutoCatcherMatcher').bind()}
+                  />
                 )}
 
                 <Hr />
