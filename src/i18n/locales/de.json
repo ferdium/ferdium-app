@@ -303,6 +303,7 @@
   "settings.app.updateStatusAvailable": "Update verfügbar, lädt herunter...",
   "settings.app.updateStatusSearching": "Suche nach Updates...",
   "settings.app.updateStatusUpToDate": "Sie verwenden die neueste Version von Ferdium",
+  "settings.app.warningSelfSignedCertificates": "Warnhinweis: Aktivieren Sie diese Funktion nur, wenn Sie wissen, was Sie tun. Das Aktivieren dieser Funktion stellt ein Sicherheitsrisiko dar und sollte nur zu Testzwecken verwendet werden.",
   "settings.invite.headline": "Lade drei Deiner Freunde ein",
   "settings.navigation.account": "Konto",
   "settings.navigation.availableServices": "Verfügbare Dienste",
