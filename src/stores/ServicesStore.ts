@@ -917,7 +917,8 @@ export default class ServicesStore extends TypedStore {
 
         if (service.isNotificationEnabled) {
           let title: string;
-          options.icon = service.iconUrl;
+          options.icon =
+            options.icon || service.customIconUrl || service.iconUrl;
           if (this.stores.settings.all.app.privateNotifications === true) {
             // Remove message data from notification in private mode
             options.body = '';

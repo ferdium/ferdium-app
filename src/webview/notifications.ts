@@ -37,22 +37,13 @@ export const notificationsClassDefinition = `(() => {
     constructor(title = '', options = {}) {
       this.title = title;
       this.options = options;
-      try {
         window.ferdium.displayNotification(title, options)
           .then(() => {
             if (typeof (this.onClick) === 'function') {
               this.onClick();
             }
+          }).catch(() => {
           });
-      } catch(error) {
-	        this.options.onClick = null;
-          window.ferdium.displayNotification(title, options)
-            .then(() => {
-              if (typeof (this.onClick) === 'function') {
-                this.onClick();
-              }
-            });
-      }
     }
 
     static requestPermission(cb = null) {
