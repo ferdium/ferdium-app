@@ -28,7 +28,7 @@ import {
 } from './darkmode';
 import DialogTitleHandler from './dialogTitle';
 import FindInPage from './find';
-import { notificationInject, NotificationsHandler } from './notifications';
+import { notificationsClassDefinition, NotificationsHandler } from './notifications';
 import { getDisplayMediaSelector, screenShareJs } from './screenshare';
 import SessionHandler from './sessionHandler';
 import {
@@ -118,7 +118,6 @@ contextBridge.exposeInMainWorld('ferdium', {
   setDialogTitle: (title: string | null | undefined) =>
     dialogTitleHandler.setDialogTitle(title),
   displayNotification: (title: string, options: any) => {
-    debug('New notification BASE', title, options);
     notificationsHandler.displayNotification(
       title,
       // The following line is needed so that a proper clone of the "options" object is made.
@@ -132,7 +131,7 @@ contextBridge.exposeInMainWorld('ferdium', {
 ipcRenderer.sendToHost(
   'inject-js-unsafe',
   'window.open = window.ferdium.open;',
-  `${notificationInject}`,
+  notificationsClassDefinition,
   screenShareJs,
 );
 
