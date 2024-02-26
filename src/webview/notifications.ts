@@ -31,43 +31,29 @@ export class NotificationsHandler {
 }
 
 export const notificationsClassDefinition = `(() => {
-  class Notification {
-    static permission = 'granted';
+class Notification extends window.Notification {
+  static permission = 'granted';
 
-    constructor(title = '', options = {}) {
-      this.title = title;
-      this.options = options;
-        window.ferdium.displayNotification(title, options)
-          .then(() => {
-            if (typeof (this.onClick) === 'function') {
-              this.onClick();
-            }
-          }).catch(() => {
-          });
-    }
-
-    static requestPermission(cb = null) {
-      if (!cb) {
-        return new Promise((resolve) => {
-          resolve(Notification.permission);
-        });
-      }
-
-      if (typeof (cb) === 'function') {
-        return cb(Notification.permission);
-      }
-
-      return Notification.permission;
-    }
-
-    onNotify(data) {
-      return data;
-    }
-
-    onClick() {}
-
-    close() {}
+  constructor(title = '', options = {}) {
+    super(title, options);
+    window.ferdium.displayNotification(title, options).then(() => {
+      // Continue to dispatch the event to the original Notification class
+      super.dispatchEvent(new Event('click'));
+    });
   }
+
+  static requestPermission(cb) {
+    if (typeof cb === 'function') {
+      cb(Notification.permission);
+    }
+
+    return Promise.resolve(Notification.permission);
+  }
+
+  onNotify(data) {
+    return data;
+  }
+}
 
   window.Notification = Notification;
 })();`;
