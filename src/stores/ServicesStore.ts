@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { ipcRenderer, shell } from 'electron';
+import { clipboard, ipcRenderer, shell } from 'electron';
 import { action, reaction, computed, observable, makeObservable } from 'mobx';
 import { debounce, remove } from 'lodash';
 import ms from 'ms';
@@ -64,6 +64,8 @@ export default class ServicesStore extends TypedStore {
   // [0] => Most recent, [n] => Least recent
   // No service ID should be in the list multiple times, not all service IDs have to be in the list
   @observable lastUsedServices: string[] = [];
+
+  private toggleToTalkCallback = () => this.active?.toggleToTalk();
 
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
@@ -239,12 +241,16 @@ export default class ServicesStore extends TypedStore {
   initialize() {
     super.initialize();
 
+    ipcRenderer.on('toggle-to-talk', this.toggleToTalkCallback);
+
     // Check services to become hibernated
     this.serviceMaintenanceTick();
   }
 
   teardown() {
     super.teardown();
+
+    ipcRenderer.off('toggle-to-talk', this.toggleToTalkCallback);
 
     // Stop checking services for hibernation
     this.serviceMaintenanceTick.cancel();
@@ -828,6 +834,54 @@ export default class ServicesStore extends TypedStore {
         break;
       }
       case 'notification': {
+        const { notificationId, options } = args[0];
+
+        const { isTwoFactorAutoCatcherEnabled, twoFactorAutoCatcherMatcher } =
+          this.stores.settings.all.app;
+
+        debug(
+          'Settings for catch tokens',
+          isTwoFactorAutoCatcherEnabled,
+          twoFactorAutoCatcherMatcher,
+        );
+
+        if (isTwoFactorAutoCatcherEnabled) {
+          /*
+        parse the token digits from sms body, find "token" or "code" in options.body which reflect the sms content
+        ---
+        Token: 03624 / SMS-Code = PIN Token
+        ---
+        Prüfcode 010313 für Microsoft-Authentifizierung verwenden.
+        ---
+        483133 is your GitHub authentication code. @github.com #483133
+        ---
+        eBay: Ihr Sicherheitscode lautet 080090. \nEr läuft in 15 Minuten ab. Geben Sie den Code nicht an andere weiter.
+        ---
+        PayPal: Ihr Sicherheitscode lautet: 989605. Geben Sie diesen Code nicht weiter.
+      */
+
+          const rawBody = options.body;
+          const { 0: token } = /\d{5,6}/.exec(options.body) || [];
+
+          const wordsToCatch = twoFactorAutoCatcherMatcher
+            .replaceAll(', ', ',')
+            .split(',');
+
+          debug('wordsToCatch', wordsToCatch);
+
+          if (
+            token &&
+            wordsToCatch.some(a =>
+              options.body.toLowerCase().includes(a.toLowerCase()),
+            )
+          ) {
+            // with the extra "+ " it shows its copied to clipboard in the notification
+            options.body = `+ ${rawBody}`;
+            clipboard.writeText(token);
+            debug('Token parsed and copied to clipboard');
+          }
+        }
+
         // Check if we are in scheduled Do-not-Disturb time
         const { scheduledDNDEnabled, scheduledDNDStart, scheduledDNDEnd } =
           this.stores.settings.all.app;
@@ -838,8 +892,6 @@ export default class ServicesStore extends TypedStore {
         ) {
           return;
         }
-
-        const { notificationId, options } = args[0];
 
         if (service.isMuted || this.stores.settings.all.app.isAppMuted) {
           Object.assign(options, {

@@ -62,8 +62,8 @@ Currently, these are the combinations of system dependencies that work for MacOS
 # Note: 'jq' is not a required system dependency; its only here to show the combined output of versions needed
 $ jq --null-input '[inputs.engines] | add' < ./package.json < ./recipes/package.json
 {
-  "node": "20.9.0",
-  "pnpm": "8.10.0"
+  "node": "20.11.1",
+  "pnpm": "8.15.3"
 }
 ```
 
@@ -130,7 +130,7 @@ If you want to copy them outside of the image, simply mount a volume into a diff
 ```bash
 DATE=`date +"%Y-%b-%d-%H-%M"`
 mkdir -p ~/Downloads/$DATE
-docker run -e GIT_SHA=`git rev-parse --short HEAD` -v ~/Downloads/$DATE:/ferdium-out -it ferdium-package sh
+docker run -e GIT_SHA=`git rev-parse --short HEAD` -v ~/Downloads/$DATE:/ferdium-out -it ferdium-package-`uname -m` sh
 # inside the container:
 mv /ferdium/Ferdium-*.AppImage /ferdium-out/Ferdium-$GIT_SHA.AppImage
 mv /ferdium/ferdium-*.tar.gz /ferdium-out/Ferdium-$GIT_SHA.tar.gz

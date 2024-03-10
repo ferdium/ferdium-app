@@ -15,6 +15,7 @@ import Infobox from '../../ui/Infobox';
 import { H1, H2, H3, H5 } from '../../ui/headline';
 import {
   ferdiumVersion,
+  userDataCertsPath,
   userDataPath,
   userDataRecipesPath,
 } from '../../../environment-remote';
@@ -238,6 +239,10 @@ const messages = defineMessages({
     id: 'settings.app.updateStatusUpToDate',
     defaultMessage: 'You are using the latest version of Ferdium',
   },
+  servicesUpdateStatusUpToDate: {
+    id: 'settings.app.servicesUpdateStatusUpToDate',
+    defaultMessage: 'Your services are up-to-date',
+  },
   currentVersion: {
     id: 'settings.app.currentVersion',
     defaultMessage: 'Current version:',
@@ -257,6 +262,20 @@ const messages = defineMessages({
   numberOfColumns: {
     id: 'settings.app.form.splitColumns',
     defaultMessage: 'Number of columns',
+  },
+  warningSelfSignedCertificates: {
+    id: 'settings.app.warningSelfSignedCertificates',
+    defaultMessage:
+      'WARNING: Only enable this feature if you know what you are doing. Enabling this is a security risk and should only be used for testing purposes.',
+  },
+  infoOpenCertificatesFolder: {
+    id: 'settings.app.infoOpenCertificatesFolder',
+    defaultMessage:
+      'To install a certificate, click the button below to open the certificates folder and copy it into the folder. After that you can refresh the service (CTRL/CMD + R). To remove/uninstall, simply delete the certificate file and restart Ferdium.',
+  },
+  buttonOpenFerdiumCertsFolder: {
+    id: 'settings.app.buttonOpenFerdiumCertsFolder',
+    defaultMessage: 'Open certificates folder',
   },
 });
 
@@ -284,10 +303,12 @@ interface IProps extends WrappedComponentProps {
   isClearingAllCache: boolean;
   isTodosActivated: boolean;
   automaticUpdates: boolean;
+  isTwoFactorAutoCatcherEnabled: boolean;
+  twoFactorAutoCatcherMatcher: string;
   isDarkmodeEnabled: boolean;
   isAdaptableDarkModeEnabled: boolean;
   isUseGrayscaleServicesEnabled: boolean;
-  lockingFeatureEnabled: boolean;
+  isLockingFeatureEnabled: boolean;
   isSplitModeEnabled: boolean;
   isOnline: boolean;
   showServicesUpdatedInfoBar: boolean;
@@ -335,13 +356,23 @@ class EditSettingsForm extends Component<IProps, IState> {
     this.props.form.submit({
       onSuccess: (form: Form) => {
         const values = form.values();
-        const { accentColor } = values;
+        const { accentColor, isTwoFactorAutoCatcherEnabled } = values;
+
         if (accentColor.trim().length === 0) {
           values.accentColor = DEFAULT_ACCENT_COLOR;
         }
         const { progressbarAccentColor } = values;
         if (progressbarAccentColor.trim().length === 0) {
           values.progressbarAccentColor = DEFAULT_ACCENT_COLOR;
+        }
+
+        // set twoFactorAutoCatcherMatcher to the default value, if its get enabled the input is prefilled
+        if (
+          !isTwoFactorAutoCatcherEnabled &&
+          values.twoFactorAutoCatcherMatcher.length === 0
+        ) {
+          values.twoFactorAutoCatcherMatcher =
+            DEFAULT_APP_SETTINGS.twoFactorAutoCatcherMatcher;
         }
         this.props.onSubmit(values);
       },
@@ -367,6 +398,7 @@ class EditSettingsForm extends Component<IProps, IState> {
       onClearAllCache,
       getCacheSize,
       automaticUpdates,
+      isTwoFactorAutoCatcherEnabled,
       isDarkmodeEnabled,
       isSplitModeEnabled,
       openProcessManager,
@@ -383,8 +415,12 @@ class EditSettingsForm extends Component<IProps, IState> {
       updateButtonLabelMessage = messages.updateStatusAvailable;
     }
 
-    const { lockingFeatureEnabled, scheduledDNDEnabled, reloadAfterResume } =
-      window['ferdium'].stores.settings.all.app;
+    const {
+      isLockingFeatureEnabled,
+      scheduledDNDEnabled,
+      reloadAfterResume,
+      useSelfSignedCertificates,
+    } = window['ferdium'].stores.settings.all.app;
 
     let cacheSize;
     let notCleared;
@@ -407,6 +443,7 @@ class EditSettingsForm extends Component<IProps, IState> {
 
     const profileFolder = userDataPath();
     const recipeFolder = userDataRecipesPath();
+    const certsFolder = userDataCertsPath();
 
     return (
       <div className="settings__main">
@@ -813,6 +850,15 @@ class EditSettingsForm extends Component<IProps, IState> {
                   <Toggle {...form.$('notifyTaskBarOnMessage').bind()} />
                 )}
 
+                <Toggle {...form.$('isTwoFactorAutoCatcherEnabled').bind()} />
+
+                {isTwoFactorAutoCatcherEnabled && (
+                  <Input
+                    onChange={e => this.submit(e)}
+                    {...form.$('twoFactorAutoCatcherMatcher').bind()}
+                  />
+                )}
+
                 <Hr />
 
                 <Select field={form.$('webRTCIPHandlingPolicy')} />
@@ -836,8 +882,8 @@ class EditSettingsForm extends Component<IProps, IState> {
 
                 <Hr />
 
-                <Toggle {...form.$('lockingFeatureEnabled').bind()} />
-                {lockingFeatureEnabled && (
+                <Toggle {...form.$('isLockingFeatureEnabled').bind()} />
+                {isLockingFeatureEnabled && (
                   <>
                     {isMac && systemPreferences.canPromptTouchID() && (
                       <Toggle {...form.$('useTouchIdToUnlock').bind()} />
@@ -941,6 +987,43 @@ class EditSettingsForm extends Component<IProps, IState> {
                 <Toggle {...form.$('enableGlobalHideShortcut').bind()} />
                 <p className="settings__help indented__help">
                   {intl.formatMessage(messages.appRestartRequired)}
+                </p>
+
+                <Toggle {...form.$('useSelfSignedCertificates').bind()} />
+
+                {useSelfSignedCertificates && (
+                  <div className="settings__settings-group">
+                    <p
+                      style={{
+                        padding: '0rem 0rem 1rem 0rem',
+                        textAlign: 'justify',
+                        fontSize: '1.1rem',
+                      }}
+                    >
+                      {intl.formatMessage(messages.infoOpenCertificatesFolder)}
+                    </p>
+                    <div className="settings__open-settings-cache-container">
+                      <Button
+                        buttonType="secondary"
+                        label={intl.formatMessage(
+                          messages.buttonOpenFerdiumCertsFolder,
+                        )}
+                        className="settings__open-settings-file-button"
+                        onClick={() => openPath(certsFolder)}
+                      />
+                    </div>
+                  </div>
+                )}
+
+                <p
+                  className="settings__help"
+                  style={{
+                    padding: useSelfSignedCertificates
+                      ? '1rem 0rem 0rem 0rem'
+                      : undefined,
+                  }}
+                >
+                  {intl.formatMessage(messages.warningSelfSignedCertificates)}
                 </p>
 
                 <Hr />
@@ -1117,7 +1200,10 @@ class EditSettingsForm extends Component<IProps, IState> {
                     ) : (
                       <p>
                         <Icon icon={mdiPowerPlug} />
-                        &nbsp;Your services are up-to-date.
+                        &nbsp;
+                        {intl.formatMessage(
+                          messages.servicesUpdateStatusUpToDate,
+                        )}
                       </p>
                     )}
                   </>

@@ -409,9 +409,9 @@ class EditServiceScreen extends Component<IProps> {
               label: intl.formatMessage(messages.enableProxy),
               value: ifUndefined<boolean>(
                 serviceProxyConfig.isEnabled,
-                DEFAULT_SERVICE_SETTINGS.proxyFeatureEnabled,
+                DEFAULT_SERVICE_SETTINGS.isProxyFeatureEnabled,
               ),
-              default: DEFAULT_SERVICE_SETTINGS.proxyFeatureEnabled,
+              default: DEFAULT_SERVICE_SETTINGS.isProxyFeatureEnabled,
               type: 'checkbox',
             },
             host: {

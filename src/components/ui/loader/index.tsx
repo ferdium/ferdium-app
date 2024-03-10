@@ -4,6 +4,7 @@ import injectStyle, { WithStylesProps } from 'react-jss';
 import { Oval } from 'react-loader-spinner';
 import { inject } from 'mobx-react';
 import { FerdiumStores } from '../../../@types/stores.types';
+import { DEFAULT_LOADER_COLOR } from '../../../config';
 
 const styles = () => ({
   container: {
@@ -29,11 +30,11 @@ class LoaderComponent extends Component<IProps> {
     const {
       classes,
       className,
-      size = 36,
+      size = 100,
       color = this.props.stores?.settings.app.accentColor,
       loaded = false,
     } = this.props;
-    const loaderColor = color || '#FFFFFF';
+    const loaderColor = color ?? DEFAULT_LOADER_COLOR;
 
     return (
       <div

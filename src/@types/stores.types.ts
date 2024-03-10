@@ -87,12 +87,14 @@ export interface AppStore extends TypedStore {
   authRequestFailed: () => void;
   autoLaunchOnStart: () => void;
   automaticUpdates: boolean;
+  isTwoFactorAutoCatcherEnabled: boolean;
+  twoFactorAutoCatcherMatcher: string;
   clearAppCacheRequest: () => void;
   clipboardNotifications: boolean;
   darkMode: boolean;
-  dictionaries: [];
   enableSpellchecking: boolean;
   enableTranslator: boolean;
+  useSelfSignedCertificates: boolean;
   fetchDataInterval: 4;
   get(key: string): any;
   getAppCacheSizeRequest: () => void;
@@ -234,7 +236,6 @@ interface SettingsStore extends TypedStore {
   remove: (value: any) => void;
   fileSystemSettingsTypes: any[];
   loaded: boolean;
-  updateAppSettingsRequest: () => void;
   _fileSystemSettingsCache: () => void;
   all: ISettings;
   app: AppStore;
@@ -304,7 +305,6 @@ interface UserStore extends TypedStore {
   accountType: () => void;
   authToken: () => void;
   deleteAccountRequest: () => void;
-  fetchUserInfoInterval: null;
   getLegacyServicesRequest: () => void;
   getUserInfoRequest: CachedRequest;
   hasCompletedSignup: () => void;
@@ -327,15 +327,10 @@ interface UserStore extends TypedStore {
   _retrievePassword: () => void;
   changeServerRoute: () => void;
   data: User;
-  importRoute: string;
-  inviteRoute: string;
   isLoggedIn: boolean;
   isTokenExpired: boolean;
-  legacyServices: () => void;
   loginRoute: string;
-  logoutRoute: string;
   passwordRoute: string;
-  setupRoute: string;
   signupRoute: string;
   team: () => void;
 }

@@ -121,12 +121,10 @@ export default class AppStore extends TypedStore {
 
   @observable isFocused = true;
 
-  @observable lockingFeatureEnabled =
-    DEFAULT_APP_SETTINGS.lockingFeatureEnabled;
+  @observable isLockingFeatureEnabled =
+    DEFAULT_APP_SETTINGS.isLockingFeatureEnabled;
 
   @observable launchInBackground = DEFAULT_APP_SETTINGS.autoLaunchInBackground;
-
-  dictionaries = [];
 
   fetchDataInterval: NodeJS.Timeout | null = null;
 

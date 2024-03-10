@@ -78,6 +78,7 @@ mac:
   extendInfo:
     NSCameraUsageDescription: "This app requires camera access for video chats"
     NSMicrophoneUsageDescription: "This app requires microphone access for voice chats"
+    NSFocusStatusUsageDescription: "This app requires focus access for DND functionality"
 
 win:
   artifactName: "${productName}-${os}-Installer-${version}-${arch}.${ext}"

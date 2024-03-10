@@ -50,6 +50,7 @@ import { openExternalUrl } from './helpers/url-helpers';
 import userAgent from './helpers/userAgent-helpers';
 import { translateTo } from './helpers/translation-helpers';
 import { darkThemeGrayDarkest } from './themes/legacy';
+import { checkIfCertIsPresent } from './helpers/certs-helpers';
 
 const debug = require('./preload-safe-debug')('Ferdium:App');
 
@@ -752,3 +753,26 @@ app.on('will-finish-launching', () => {
     });
   });
 });
+
+app.on(
+  'certificate-error',
+  (event, _webContents, _url, _error, certificate, callback) => {
+    // On certificate error we disable default behaviour (stop loading the page)
+    // and we then say "it is all fine - true" to the callback
+    event.preventDefault();
+
+    const useSelfSignedCertificates =
+      retrieveSettingValue(
+        'useSelfSignedCertificates',
+        DEFAULT_APP_SETTINGS.useSelfSignedCertificates,
+      ) === true;
+
+    // Check if the certificate is trusted
+    if (!useSelfSignedCertificates) {
+      callback(false);
+      return;
+    }
+
+    callback(checkIfCertIsPresent(certificate.data));
+  },
+);

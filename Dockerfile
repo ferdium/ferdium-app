@@ -1,6 +1,6 @@
 # Note: Before running this file, you should have already cloned the git repo + submodules on the host machine. This is used when actively developing on your local machine, but you want to build for a different architecture
 
-FROM docker.io/library/node:20.9.0-buster as builder
+FROM docker.io/library/node:20.11.1-buster AS builder
 
 ENV PATH="/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/usr/local/lib:/usr/include:/usr/share"
 
@@ -13,6 +13,7 @@ ARG PREVAL_BUILD_INFO_PLACEHOLDERS=true
 # Note: 'fpm' is needed for building on ARM machines
 RUN apt-get update -y \
   && apt-get install --no-install-recommends -y rpm ruby gem \
+  && gem install dotenv -v 2.8.1 --no-ri --no-rdoc --no-document \
   && gem install fpm --no-ri --no-rdoc --no-document
 
 WORKDIR /usr/src/ferdium

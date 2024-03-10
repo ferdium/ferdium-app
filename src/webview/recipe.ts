@@ -44,7 +44,7 @@ import {
 } from './spellchecker';
 
 import { DEFAULT_APP_SETTINGS } from '../config';
-import { ifUndefined, safeParseInt } from '../jsUtils';
+import { cleanseJSObject, ifUndefined, safeParseInt } from '../jsUtils';
 import { AppStore } from '../@types/stores.types';
 import Service from '../models/Service';
 
@@ -124,8 +124,14 @@ contextBridge.exposeInMainWorld('ferdium', {
     safeParseInt(text),
   setDialogTitle: (title: string | null | undefined) =>
     dialogTitleHandler.setDialogTitle(title),
-  displayNotification: (title: string, options: any) =>
-    notificationsHandler.displayNotification(title, options),
+  displayNotification: (title: string, options: any) => {
+    notificationsHandler.displayNotification(
+      title,
+      // The following line is needed so that a proper clone of the "options" object is made.
+      // This line was causing issues with some services.
+      cleanseJSObject(options),
+    );
+  },
   getDisplayMediaSelector,
 });
 
@@ -158,6 +164,7 @@ class RecipeController {
     'service-settings-update': 'updateServiceSettings',
     'get-service-id': 'serviceIdEcho',
     'find-in-page': 'openFindInPage',
+    'toggle-to-talk': 'toggleToTalk',
   };
 
   universalDarkModeInjected = false;
@@ -482,6 +489,10 @@ class RecipeController {
         }
       }, 225),
     );
+  }
+
+  toggleToTalk() {
+    this.recipe?.toggleToTalkFunc?.();
   }
 }
 

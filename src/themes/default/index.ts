@@ -3,6 +3,7 @@ import { cloneDeep } from 'lodash';
 
 import * as legacyStyles from '../legacy';
 import type IStyleTypes from '../IStyleTypes';
+import { DEFAULT_LOADER_COLOR } from '../../config';
 
 export default (brandPrimary: string) => {
   if (!brandPrimary) {
@@ -14,7 +15,7 @@ export default (brandPrimary: string) => {
   const brandDanger = '#d9534f';
   const uiFontSize = 14;
   const colorBackground = legacyStyles.themeGrayLighter;
-  const colorContentBackground = '#FFFFFF';
+  const colorContentBackground = DEFAULT_LOADER_COLOR;
   const colorText = legacyStyles.themeGrayDark;
   const inputColor = legacyStyles.themeGray;
   const inputBackground = legacyStyles.themeGrayLightest;

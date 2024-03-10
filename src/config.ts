@@ -27,12 +27,8 @@ export const LIVE_API_FERDIUM_WEBSITE = 'https://ferdium.org';
 export const LIVE_API_FERDIUM_LIBRETRANSLATE =
   'https://translator.ferdium.org/translate';
 
-export const STATS_API = 'https://stats.franzinfra.com';
-
 export const LOCAL_TODOS_FRONTEND_URL = 'http://localhost:4000';
 export const PRODUCTION_TODOS_FRONTEND_URL = 'https://app.franztodos.com';
-export const DEVELOPMENT_TODOS_FRONTEND_URL =
-  'https://development--franz-todos.netlify.com';
 
 export const CDN_URL = 'https://cdn.franzinfra.com';
 
@@ -282,11 +278,6 @@ export const TODO_APPS = {
   [CUSTOM_TODO_SERVICE]: 'Other service',
 };
 
-export const DEFAULT_TODO_SERVICE = TODO_TODOIST_URL;
-export const DEFAULT_TODO_RECIPE_ID =
-  TODO_SERVICE_RECIPE_IDS[DEFAULT_TODO_SERVICE];
-export const DEFAULT_TODO_SERVICE_NAME = TODO_APPS[DEFAULT_TODO_SERVICE];
-
 export const SIDEBAR_WIDTH = {
   35: 'Extremely slim sidebar',
   45: 'Very slim sidebar',
@@ -329,7 +320,8 @@ export const GITHUB_FRANZ_URL = 'https://github.com/meetfranz';
 export const GITHUB_FERDIUM_URL = 'https://github.com/ferdium';
 export const FERDIUM_SERVICE_REQUEST = `${GITHUB_FERDIUM_URL}/ferdium-app/issues`;
 export const FERDIUM_TRANSLATION = 'https://crowdin.com/project/ferdium-app';
-export const FRANZ_DEV_DOCS = 'http://bit.ly/franz-dev-hub';
+export const FERDIUM_DEV_DOCS =
+  'https://github.com/ferdium/ferdium-recipes/blob/main/docs/integration.md';
 
 export const FILE_SYSTEM_SETTINGS_TYPES = ['app', 'proxy'];
 
@@ -351,6 +343,8 @@ export const DEFAULT_SERVICE_ORDER = 99; // something high enough that it gets a
 export const SPLIT_COLUMNS_MIN = 1;
 export const SPLIT_COLUMNS_MAX = 5;
 
+export const DEFAULT_LOADER_COLOR = '#FFFFFF';
+
 export const DEFAULT_APP_SETTINGS = {
   autoLaunchOnStart: false,
   autoLaunchInBackground: false,
@@ -366,6 +360,8 @@ export const DEFAULT_APP_SETTINGS = {
   clipboardNotifications: true,
   notifyTaskBarOnMessage: false,
   showDisabledServices: true,
+  isTwoFactorAutoCatcherEnabled: false,
+  twoFactorAutoCatcherMatcher: 'token, code, sms, verify',
   showServiceName: false,
   showMessageBadgeWhenMuted: true,
   showDragArea: false,
@@ -384,9 +380,9 @@ export const DEFAULT_APP_SETTINGS = {
 
   // Ferdium specific options
   server: LIVE_FERDIUM_API,
-  predefinedTodoServer: DEFAULT_TODO_SERVICE,
+  predefinedTodoServer: TODO_TODOIST_URL,
   autohideMenuBar: false,
-  lockingFeatureEnabled: false,
+  isLockingFeatureEnabled: false,
   locked: false,
   lockedPassword: '',
   useTouchIdToUnlock: true,
@@ -432,6 +428,7 @@ export const DEFAULT_APP_SETTINGS = {
   customTodoServer: '',
   locale: 'en-US',
   keepAllWorkspacesLoaded: false,
+  useSelfSignedCertificates: false,
 };
 
 export const DEFAULT_SERVICE_SETTINGS = {
@@ -457,7 +454,7 @@ export const DEFAULT_SERVICE_SETTINGS = {
   disablewebsecurity: false,
   spellcheckerLanguage: false,
   onlyShowFavoritesInUnreadCount: false,
-  proxyFeatureEnabled: false,
+  isProxyFeatureEnabled: false,
   proxyHost: '',
   proxyPort: 0,
   proxyUser: '',

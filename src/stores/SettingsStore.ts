@@ -11,17 +11,11 @@ import {
   LOCAL_SERVER,
 } from '../config';
 import { hash } from '../helpers/password-helpers';
-import Request from './lib/Request';
 import TypedStore from './lib/TypedStore';
 
 const debug = require('../preload-safe-debug')('Ferdium:SettingsStore');
 
 export default class SettingsStore extends TypedStore {
-  @observable updateAppSettingsRequest = new Request(
-    this.api.local,
-    'updateAppSettings',
-  );
-
   @observable loaded: boolean = false;
 
   fileSystemSettingsTypes = FILE_SYSTEM_SETTINGS_TYPES;
@@ -67,7 +61,7 @@ export default class SettingsStore extends TypedStore {
     let inactivityTimer;
     getCurrentWindow().on('blur', () => {
       if (
-        this.all.app.lockingFeatureEnabled &&
+        this.all.app.isLockingFeatureEnabled &&
         this.all.app.inactivityLock !== 0
       ) {
         inactivityTimer = setTimeout(
@@ -94,7 +88,7 @@ export default class SettingsStore extends TypedStore {
       if (
         !this.loaded &&
         resp.type === 'app' &&
-        resp.data.lockingFeatureEnabled
+        resp.data.isLockingFeatureEnabled
       ) {
         process.nextTick(() => {
           if (!this.all.app.locked) {

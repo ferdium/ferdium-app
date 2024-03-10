@@ -2965,6 +2965,24 @@
         "code",
         "infra"
       ]
+    },
+    {
+      "login": "xduugu",
+      "name": "xduugu",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1039174?v=4",
+      "profile": "https://github.com/xduugu",
+      "contributions": [
+        "infra"
+      ]
+    },
+    {
+      "login": "dutscher",
+      "name": "Willy Woitas",
+      "avatar_url": "https://avatars.githubusercontent.com/u/14682?v=4",
+      "profile": "http://www.willy-woitas.de",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "commitType": "docs"

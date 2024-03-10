@@ -318,7 +318,7 @@ class Sidebar extends Component<IProps, IState> {
             <Icon icon={mdiCheckAll} size={1.5} />
           </button>
         ) : null}
-        {stores!.settings.all.app.lockingFeatureEnabled ? (
+        {stores!.settings.all.app.isLockingFeatureEnabled ? (
           <button
             type="button"
             className="sidebar__button"
