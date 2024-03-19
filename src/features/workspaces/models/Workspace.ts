@@ -7,6 +7,8 @@ export default class Workspace {
 
   @observable name = null;
 
+  @observable iconUrl = '';
+
   @observable order = null;
 
   @observable services: string[] = [];
@@ -22,6 +24,7 @@ export default class Workspace {
 
     this.id = data.id;
     this.name = data.name;
+    this.iconUrl = data.iconUrl;
     this.order = data.order;
 
     let { services } = data;

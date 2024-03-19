@@ -40,15 +40,24 @@ const messages = defineMessages({
 const styles = theme => ({
   drawer: {
     background: theme.workspaces.drawer.background,
-    width: `${theme.workspaces.drawer.width}px`,
     display: 'flex',
     flexDirection: 'column',
+  },
+  drawerWithText: {
+    width: `${theme.workspaces.drawer.width}px`,
+  },
+  drawerWithIcon: {
+    width: '75px',
   },
   headline: {
     fontSize: '24px',
     marginTop: '38px',
     marginBottom: '25px',
     marginLeft: theme.workspaces.drawer.padding,
+  },
+  headlineWithicon: {
+    marginLeft: '0',
+    color: theme.workspaces.drawer.buttons.color,
   },
   workspacesSettingsButton: {
     float: 'right',
@@ -90,6 +99,7 @@ const styles = theme => ({
 
 interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
   getServicesForWorkspace: (workspace: Workspace | null) => string[];
+  useIconDisplayStyle: boolean;
 }
 
 @observer
@@ -104,19 +114,24 @@ class WorkspaceDrawer extends Component<IProps> {
   }
 
   render(): ReactElement {
-    const { classes, getServicesForWorkspace } = this.props;
+    const { classes, getServicesForWorkspace, useIconDisplayStyle } =
+      this.props;
     const { intl } = this.props;
     const { activeWorkspace, isSwitchingWorkspace, nextWorkspace, workspaces } =
       workspaceStore;
     const actualWorkspace = isSwitchingWorkspace
       ? nextWorkspace
       : activeWorkspace;
+
+    const drawerWithClass = useIconDisplayStyle
+      ? classes.drawerWithIcon
+      : classes.drawerWithText;
     return (
-      <div className={`${classes.drawer} workspaces-drawer`}>
-        <H1 className={classes.headline}>
-          {intl.formatMessage(messages.headline)}
-          <span
-            className={classes.workspacesSettingsButton}
+      <div className={`${classes.drawer} ${drawerWithClass} workspaces-drawer`}>
+        {useIconDisplayStyle ? (
+          <button
+            type="button"
+            className={`${classes.headline} ${classes.headlineWithicon}`}
             onKeyDown={noop}
             onClick={() => {
               workspaceActions.openWorkspaceSettings();
@@ -131,11 +146,34 @@ class WorkspaceDrawer extends Component<IProps> {
               size={1.5}
               className={classes.workspacesSettingsButtonIcon}
             />
-          </span>
-        </H1>
+          </button>
+        ) : (
+          <H1 className={classes.headline}>
+            {intl.formatMessage(messages.headline)}
+            <span
+              className={classes.workspacesSettingsButton}
+              onKeyDown={noop}
+              onClick={() => {
+                workspaceActions.openWorkspaceSettings();
+              }}
+              data-tip={`${intl.formatMessage(
+                messages.workspacesSettingsTooltip,
+              )}`}
+            >
+              <Icon
+                icon={mdiCog}
+                size={1.5}
+                className={classes.workspacesSettingsButtonIcon}
+              />
+            </span>
+          </H1>
+        )}
+
         <div className={classes.workspaces}>
           <WorkspaceDrawerItem
             name={intl.formatMessage(messages.allServices)}
+            iconUrl="allServices"
+            useIconDisplayStyle={useIconDisplayStyle}
             onClick={() => {
               workspaceActions.deactivate();
               workspaceActions.toggleWorkspaceDrawer();
@@ -148,6 +186,8 @@ class WorkspaceDrawer extends Component<IProps> {
             <WorkspaceDrawerItem
               key={workspace.id}
               name={workspace.name}
+              iconUrl={workspace.iconUrl}
+              useIconDisplayStyle={useIconDisplayStyle}
               isActive={actualWorkspace === workspace}
               onClick={() => {
                 if (actualWorkspace === workspace) {
@@ -172,9 +212,12 @@ class WorkspaceDrawer extends Component<IProps> {
           >
             <Icon
               icon={mdiPlusBox}
+              size={useIconDisplayStyle ? 1.5 : 1}
               className={classes.workspacesSettingsButtonIcon}
             />
-            <span>{intl.formatMessage(messages.addNewWorkspaceLabel)}</span>
+            {useIconDisplayStyle !== true && (
+              <span>{intl.formatMessage(messages.addNewWorkspaceLabel)}</span>
+            )}{' '}
           </div>
         </div>
         <ReactTooltip

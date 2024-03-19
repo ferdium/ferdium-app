@@ -80,6 +80,7 @@ class AppLayoutContainer extends Component<IProps> {
             ? workspaceStore.getWorkspaceServices(workspace).map(s => s.name)
             : services.all.map(s => s.name)
         }
+        useIconDisplayStyle={settings.all.app.useWorkspaceDrawerIconStyle}
       />
     );
 

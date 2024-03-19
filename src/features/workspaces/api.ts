@@ -51,7 +51,7 @@ export const workspaceApi = {
     const url = `${apiBase()}/workspace/${workspace.id}`;
     const options = {
       method: 'PUT',
-      body: JSON.stringify(pick(workspace, ['name', 'services'])),
+      body: JSON.stringify(pick(workspace, ['name', 'services', 'iconUrl'])),
     };
     debug('updateWorkspace UPDATE', url, options);
     const result = await sendAuthRequest(url, options);
