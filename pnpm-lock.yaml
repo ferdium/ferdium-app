@@ -258,7 +258,7 @@ dependencies:
 optionalDependencies:
   macos-notification-state:
     specifier: github:ferdium/macos-notification-state#e0e78c3aff1a9d2362709dff70d01d3eaef4ee6a
-    version: github.com/ferdium/macos-notification-state/e0e78c3aff1a9d2362709dff70d01d3eaef4ee6a
+    version: git/github.com+ferdium/macos-notification-state/e0e78c3aff1a9d2362709dff70d01d3eaef4ee6a
   node-mac-permissions:
     specifier: 2.3.0
     version: 2.3.0
@@ -274,8 +274,8 @@ devDependencies:
     specifier: 19.1.0
     version: 19.1.0
   '@electron/notarize':
-    specifier: 1.2.3
-    version: 1.2.3
+    specifier: 2.3.0
+    version: 2.3.0
   '@formatjs/cli':
     specifier: 6.2.7
     version: 6.2.7
@@ -1440,18 +1440,19 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@electron/notarize@1.2.3:
-    resolution: {integrity: sha512-9oRzT56rKh5bspk3KpAVF8lPKHYQrBnRwcgiOeR0hdilVEQmszDaAu0IPCPrwwzJN0ugNs0rRboTreHMt/6mBQ==}
+  /@electron/notarize@2.2.1:
+    resolution: {integrity: sha512-aL+bFMIkpR0cmmj5Zgy0LMKEpgy43/hw5zadEArgmAMWWlKc5buwFvFT9G/o/YJkvXAJm5q3iuTuLaiaXW39sg==}
     engines: {node: '>= 10.0.0'}
     dependencies:
       debug: 4.3.4(supports-color@5.5.0)
       fs-extra: 9.1.0
+      promise-retry: 2.0.1
     transitivePeerDependencies:
       - supports-color
     dev: true
 
-  /@electron/notarize@2.2.1:
-    resolution: {integrity: sha512-aL+bFMIkpR0cmmj5Zgy0LMKEpgy43/hw5zadEArgmAMWWlKc5buwFvFT9G/o/YJkvXAJm5q3iuTuLaiaXW39sg==}
+  /@electron/notarize@2.3.0:
+    resolution: {integrity: sha512-EiTBU0BwE7HZZjAG1fFWQaiQpCuPrVGn7jPss1kUjD6eTTdXXd29RiZqEqkgN7xqt/Pgn4g3I7Saqovanrfj3w==}
     engines: {node: '>= 10.0.0'}
     dependencies:
       debug: 4.3.4(supports-color@5.5.0)
@@ -14343,8 +14344,8 @@ packages:
       readable-stream: 3.6.2
     dev: true
 
-  github.com/ferdium/macos-notification-state/e0e78c3aff1a9d2362709dff70d01d3eaef4ee6a:
-    resolution: {tarball: https://codeload.github.com/ferdium/macos-notification-state/tar.gz/e0e78c3aff1a9d2362709dff70d01d3eaef4ee6a}
+  git/github.com+ferdium/macos-notification-state/e0e78c3aff1a9d2362709dff70d01d3eaef4ee6a:
+    resolution: {commit: e0e78c3aff1a9d2362709dff70d01d3eaef4ee6a, repo: git@github.com:ferdium/macos-notification-state.git, type: git}
     name: macos-notification-state
     version: 3.0.0
     os: [darwin]
