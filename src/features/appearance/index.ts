@@ -3,14 +3,14 @@ import { reaction } from 'mobx';
 import TopBarProgress from 'react-topbar-progress-indicator';
 
 import { pathExistsSync, readFileSync } from 'fs-extra';
-import { isWindows, isLinux } from '../../environment';
 import {
   DEFAULT_APP_SETTINGS,
-  iconSizeBias,
-  SIDEBAR_SERVICES_LOCATION_TOPLEFT,
-  SIDEBAR_SERVICES_LOCATION_CENTER,
   SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT,
+  SIDEBAR_SERVICES_LOCATION_CENTER,
+  SIDEBAR_SERVICES_LOCATION_TOPLEFT,
+  iconSizeBias,
 } from '../../config';
+import { isLinux, isWindows } from '../../environment';
 import { userDataPath } from '../../environment-remote';
 
 const STYLE_ELEMENT_ID = 'custom-appearance-style';

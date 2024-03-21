@@ -5,14 +5,19 @@ import {
 } from '@mdi/js';
 import Icon from '@mdi/react';
 import classnames from 'classnames';
-import { ChangeEvent, Component, createRef, ReactElement } from 'react';
-import withStyles, { WithStylesProps } from 'react-jss';
 import { noop } from 'lodash';
-import { Theme } from '../../../themes';
-import { IFormField } from '../typings/generic';
+import {
+  type ChangeEvent,
+  Component,
+  type ReactElement,
+  createRef,
+} from 'react';
+import withStyles, { type WithStylesProps } from 'react-jss';
+import type { Theme } from '../../../themes';
 // biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
 import Error from '../error';
 import Label from '../label';
+import type { IFormField } from '../typings/generic';
 import Wrapper from '../wrapper';
 
 let popupTransition: string = 'none';

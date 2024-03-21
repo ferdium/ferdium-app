@@ -1,4 +1,4 @@
-import { Component, ReactElement } from 'react';
+import { Component, type ReactElement } from 'react';
 
 import SupportFerdium from '../../components/settings/supportFerdium/SupportFerdiumDashboard';
 import ErrorBoundary from '../../components/util/ErrorBoundary';

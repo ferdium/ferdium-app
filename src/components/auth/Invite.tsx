@@ -1,16 +1,20 @@
-import { Component } from 'react';
-import { observer } from 'mobx-react';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
-import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import { noop } from 'lodash';
-import Infobox from '../ui/Infobox';
-import Appear from '../ui/effects/Appear';
-import Form from '../../lib/Form';
+import { observer } from 'mobx-react';
+import { Component } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
+import { Link } from 'react-router-dom';
 import { email, required } from '../../helpers/validation-helpers';
-import Input from '../ui/input/index';
+import Form from '../../lib/Form';
+import Infobox from '../ui/Infobox';
 import Button from '../ui/button';
+import Appear from '../ui/effects/Appear';
 import { H1 } from '../ui/headline';
+import Input from '../ui/input/index';
 
 const messages = defineMessages({
   settingsHeadline: {

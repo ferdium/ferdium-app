@@ -1,7 +1,11 @@
-import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
-import withStyles, { WithStylesProps } from 'react-jss';
+import { Component, type ReactElement } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
+import withStyles, { type WithStylesProps } from 'react-jss';
 import Button from '../../ui/button';
 import { H1 } from '../../ui/headline';
 

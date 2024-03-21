@@ -1,8 +1,8 @@
-import { Component } from 'react';
 import { observer } from 'mobx-react';
+import { Component } from 'react';
 
+import type Service from '../../../models/Service';
 import TabBarSortableList from './TabBarSortableList';
-import Service from '../../../models/Service';
 
 interface IProps {
   useHorizontalStyle: boolean;

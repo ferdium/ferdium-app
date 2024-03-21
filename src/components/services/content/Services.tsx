@@ -1,13 +1,17 @@
-import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
-import { Link } from 'react-router-dom';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
-import Confetti from 'react-confetti';
 import ms from 'ms';
-import withStyles, { WithStylesProps } from 'react-jss';
-import ServiceView from './ServiceView';
+import { Component, type ReactElement } from 'react';
+import Confetti from 'react-confetti';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
+import withStyles, { type WithStylesProps } from 'react-jss';
+import { Link } from 'react-router-dom';
+import type Service from '../../../models/Service';
 import Appear from '../../ui/effects/Appear';
-import Service from '../../../models/Service';
+import ServiceView from './ServiceView';
 
 const messages = defineMessages({
   getStarted: {

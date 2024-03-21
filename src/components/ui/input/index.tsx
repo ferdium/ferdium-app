@@ -1,22 +1,26 @@
 import { mdiEye, mdiEyeOff } from '@mdi/js';
 import classnames from 'classnames';
-import {
-  Component,
-  createRef,
-  InputHTMLAttributes,
-  ReactElement,
-  RefObject,
-  KeyboardEvent,
-} from 'react';
-import withStyles, { WithStylesProps } from 'react-jss';
 import { noop } from 'lodash';
 import { observer } from 'mobx-react';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
-import Icon from '../icon';
-import { IFormField } from '../typings/generic';
+import {
+  Component,
+  type InputHTMLAttributes,
+  type KeyboardEvent,
+  type ReactElement,
+  type RefObject,
+  createRef,
+} from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
+import withStyles, { type WithStylesProps } from 'react-jss';
 // biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
 import Error from '../error';
+import Icon from '../icon';
 import Label from '../label';
+import type { IFormField } from '../typings/generic';
 import Wrapper from '../wrapper';
 import { scorePasswordFunc } from './scorePassword';
 import styles from './styles';

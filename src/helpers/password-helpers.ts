@@ -1,4 +1,4 @@
-import { createHash, BinaryLike } from 'node:crypto';
+import { type BinaryLike, createHash } from 'node:crypto';
 
 export function hash(password: BinaryLike): string {
   return createHash('sha256').update(password).digest('base64');

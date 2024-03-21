@@ -1,7 +1,7 @@
-import { Component, ReactNode } from 'react';
 import { inject, observer } from 'mobx-react';
+import { Component, type ReactNode } from 'react';
 
-import { StoresProps } from '../../@types/ferdium-components.types';
+import type { StoresProps } from '../../@types/ferdium-components.types';
 import Invite from '../../components/auth/Invite';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 

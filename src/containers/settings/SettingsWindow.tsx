@@ -1,10 +1,10 @@
 import { inject, observer } from 'mobx-react';
-import { Component, ReactElement, ReactPortal } from 'react';
+import { Component, type ReactElement, type ReactPortal } from 'react';
 import ReactDOM from 'react-dom';
 import { Outlet } from 'react-router-dom';
-import { StoresProps } from '../../@types/ferdium-components.types';
-import Navigation from '../../components/settings/navigation/SettingsNavigation';
+import type { StoresProps } from '../../@types/ferdium-components.types';
 import Layout from '../../components/settings/SettingsLayout';
+import Navigation from '../../components/settings/navigation/SettingsNavigation';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 import { workspaceStore } from '../../features/workspaces';
 

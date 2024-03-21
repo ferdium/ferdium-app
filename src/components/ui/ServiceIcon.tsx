@@ -1,8 +1,8 @@
-import { Component, ReactNode } from 'react';
-import { observer } from 'mobx-react';
-import withStyles, { WithStylesProps } from 'react-jss';
 import classnames from 'classnames';
-import ServiceModel from '../../models/Service';
+import { observer } from 'mobx-react';
+import { Component, type ReactNode } from 'react';
+import withStyles, { type WithStylesProps } from 'react-jss';
+import type ServiceModel from '../../models/Service';
 
 const styles = theme => ({
   root: {

@@ -66,9 +66,13 @@ module.exports = {
         '@typescript-eslint/consistent-type-assertions': 0,
         '@typescript-eslint/consistent-type-definitions': 0,
         '@typescript-eslint/no-empty-interface': 0,
+        '@typescript-eslint/ban-ts-comment': 0,
 
         // eslint-plugin-import
         'import/no-extraneous-dependencies': 0,
+
+        // sonar
+        'sonar/no-try-promise': 0,
       },
     },
   ],

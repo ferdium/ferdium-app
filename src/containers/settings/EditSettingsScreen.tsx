@@ -1,32 +1,36 @@
 import { ipcRenderer } from 'electron';
-import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
+import { Component, type ReactElement } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
 
-import { FormFields } from '../../@types/mobx-form.types';
-import { StoresProps } from '../../@types/ferdium-components.types';
-import Form from '../../lib/Form';
-import { APP_LOCALES, SPELLCHECKER_LOCALES } from '../../i18n/languages';
+import type { StoresProps } from '../../@types/ferdium-components.types';
+import type { FormFields } from '../../@types/mobx-form.types';
 import {
   DEFAULT_APP_SETTINGS,
+  GOOGLE_TRANSLATOR_LANGUAGES,
   HIBERNATION_STRATEGIES,
-  SIDEBAR_WIDTH,
-  SIDEBAR_SERVICES_LOCATION,
   ICON_SIZES,
+  LIBRETRANSLATE_TRANSLATOR_LANGUAGES,
   NAVIGATION_BAR_BEHAVIOURS,
   SEARCH_ENGINE_NAMES,
-  TRANSLATOR_ENGINE_NAMES,
-  GOOGLE_TRANSLATOR_LANGUAGES,
-  TRANSLATOR_ENGINE_GOOGLE,
-  LIBRETRANSLATE_TRANSLATOR_LANGUAGES,
-  TODO_APPS,
-  WAKE_UP_STRATEGIES,
-  WAKE_UP_HIBERNATION_STRATEGIES,
-  SPLIT_COLUMNS_MIN,
+  SIDEBAR_SERVICES_LOCATION,
+  SIDEBAR_WIDTH,
   SPLIT_COLUMNS_MAX,
+  SPLIT_COLUMNS_MIN,
+  TODO_APPS,
+  TRANSLATOR_ENGINE_GOOGLE,
+  TRANSLATOR_ENGINE_NAMES,
+  WAKE_UP_HIBERNATION_STRATEGIES,
+  WAKE_UP_STRATEGIES,
   WEBRTC_IP_HANDLING_POLICY,
 } from '../../config';
 import { isMac } from '../../environment';
+import { APP_LOCALES, SPELLCHECKER_LOCALES } from '../../i18n/languages';
+import Form from '../../lib/Form';
 
 import { getSelectOptions } from '../../helpers/i18n-helpers';
 import { hash } from '../../helpers/password-helpers';
@@ -35,8 +39,8 @@ import defaultUserAgent from '../../helpers/userAgent-helpers';
 import EditSettingsForm from '../../components/settings/settings/EditSettingsForm';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 
-import globalMessages from '../../i18n/globalMessages';
 import { importExportURL } from '../../api/apiBase';
+import globalMessages from '../../i18n/globalMessages';
 import { ifUndefined } from '../../jsUtils';
 
 const debug = require('../../preload-safe-debug')('Ferdium:EditSettingsScreen');

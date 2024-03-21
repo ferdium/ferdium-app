@@ -1,25 +1,29 @@
-import { Component, FormEvent, ReactElement } from 'react';
-import { observer } from 'mobx-react';
-import { Link } from 'react-router-dom';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { mdiInformation } from '@mdi/js';
 import { noop } from 'lodash';
-import Form from '../../../lib/Form';
-import Tabs from '../../ui/Tabs/Tabs';
+import { observer } from 'mobx-react';
+import { Component, type FormEvent, type ReactElement } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
+import { Link } from 'react-router-dom';
+import { isMac } from '../../../environment';
+import { normalizedUrl } from '../../../helpers/url-helpers';
+import globalMessages from '../../../i18n/globalMessages';
+import type Form from '../../../lib/Form';
+import type { IRecipe } from '../../../models/Recipe';
+import type Service from '../../../models/Service';
+import Select from '../../ui/Select';
+import Slider from '../../ui/Slider';
 import TabItem from '../../ui/Tabs/TabItem';
+import Tabs from '../../ui/Tabs/Tabs';
+import Button from '../../ui/button';
+import { H3 } from '../../ui/headline';
+import Icon from '../../ui/icon';
+import ImageUpload from '../../ui/imageUpload';
 import Input from '../../ui/input/index';
 import Toggle from '../../ui/toggle';
-import Slider from '../../ui/Slider';
-import Button from '../../ui/button';
-import ImageUpload from '../../ui/imageUpload';
-import Select from '../../ui/Select';
-import { isMac } from '../../../environment';
-import globalMessages from '../../../i18n/globalMessages';
-import Icon from '../../ui/icon';
-import { H3 } from '../../ui/headline';
-import { IRecipe } from '../../../models/Recipe';
-import Service from '../../../models/Service';
-import { normalizedUrl } from '../../../helpers/url-helpers';
 
 const messages = defineMessages({
   saveService: {

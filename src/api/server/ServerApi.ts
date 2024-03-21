@@ -1,22 +1,24 @@
 /* eslint-disable import/no-import-module-exports */
 /* eslint-disable global-require */
 import { join } from 'node:path';
-import tar from 'tar';
 import {
-  readdirSync,
-  statSync,
-  writeFileSync,
+  type PathOrFileDescriptor,
   copySync,
   ensureDirSync,
   pathExistsSync,
   readJsonSync,
+  readdirSync,
   removeSync,
-  PathOrFileDescriptor,
+  statSync,
+  writeFileSync,
 } from 'fs-extra';
+import tar from 'tar';
 
+import RecipeModel, { type IRecipe } from '../../models/Recipe';
+import RecipePreviewModel, {
+  type IRecipePreview,
+} from '../../models/RecipePreview';
 import ServiceModel from '../../models/Service';
-import RecipePreviewModel, { IRecipePreview } from '../../models/RecipePreview';
-import RecipeModel, { IRecipe } from '../../models/Recipe';
 import UserModel from '../../models/User';
 
 import sleep from '../../helpers/async-helpers';
@@ -32,8 +34,8 @@ import {
 } from '../utils/auth';
 
 import {
-  getRecipeDirectory,
   getDevRecipeDirectory,
+  getRecipeDirectory,
   loadRecipeConfig,
 } from '../../helpers/recipe-helpers';
 

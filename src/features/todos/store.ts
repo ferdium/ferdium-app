@@ -1,25 +1,26 @@
-import { Webview } from 'react-electron-web-view';
-import { computed, action, observable, makeObservable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 import localStorage from 'mobx-localstorage';
-import { Actions } from '../../actions/lib/actions';
+import type { Webview } from 'react-electron-web-view';
+import type { Actions } from '../../actions/lib/actions';
 
-import { ThemeType } from '../../themes';
-import { todoActions } from './actions';
 import {
   CUSTOM_TODO_SERVICE,
-  TODO_SERVICE_RECIPE_IDS,
+  DEFAULT_IS_TODO_FEATURE_ENABLED_BY_USER,
+  DEFAULT_TODOS_VISIBLE,
   DEFAULT_TODOS_WIDTH,
   TODOS_MIN_WIDTH,
-  DEFAULT_TODOS_VISIBLE,
-  DEFAULT_IS_TODO_FEATURE_ENABLED_BY_USER,
+  TODO_SERVICE_RECIPE_IDS,
 } from '../../config';
 import { isValidExternalURL } from '../../helpers/url-helpers';
-import FeatureStore from '../utils/FeatureStore';
-import Reaction, { createReactions } from '../../stores/lib/Reaction';
-import { createActionBindings } from '../utils/ActionBinding';
-import { IPC, TODOS_ROUTES } from './constants';
-import UserAgent from '../../models/UserAgent';
 import { ifUndefined } from '../../jsUtils';
+import UserAgent from '../../models/UserAgent';
+import type Reaction from '../../stores/lib/Reaction';
+import { createReactions } from '../../stores/lib/Reaction';
+import { ThemeType } from '../../themes';
+import { createActionBindings } from '../utils/ActionBinding';
+import FeatureStore from '../utils/FeatureStore';
+import { todoActions } from './actions';
+import { IPC, TODOS_ROUTES } from './constants';
 
 const debug = require('../../preload-safe-debug')(
   'Ferdium:feature:todos:store',

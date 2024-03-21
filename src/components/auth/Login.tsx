@@ -1,19 +1,23 @@
-import { Component, FormEvent, ReactElement } from 'react';
-import { observer } from 'mobx-react';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { mdiArrowLeftCircle } from '@mdi/js';
 import { noop } from 'lodash';
-import Icon from '../ui/icon';
+import { observer } from 'mobx-react';
+import { Component, type FormEvent, type ReactElement } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
+import type { GlobalError } from '../../@types/ferdium-components.types';
+import { serverBase } from '../../api/apiBase'; // TODO: Remove this line after fixing password recovery in-app
 import { LIVE_FRANZ_API } from '../../config';
 import { API_VERSION } from '../../environment-remote';
-import { serverBase } from '../../api/apiBase'; // TODO: Remove this line after fixing password recovery in-app
+import { email, required } from '../../helpers/validation-helpers';
 import Form from '../../lib/Form';
-import { required, email } from '../../helpers/validation-helpers';
-import Input from '../ui/input/index';
-import Button from '../ui/button';
 import Link from '../ui/Link';
+import Button from '../ui/button';
 import { H1 } from '../ui/headline';
-import { GlobalError } from '../../@types/ferdium-components.types';
+import Icon from '../ui/icon';
+import Input from '../ui/input/index';
 
 const messages = defineMessages({
   headline: {

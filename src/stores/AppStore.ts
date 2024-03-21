@@ -1,46 +1,46 @@
 import { URL } from 'node:url';
-import { ipcRenderer } from 'electron';
 import {
   app,
-  screen,
-  powerMonitor,
-  nativeTheme,
   getCurrentWindow,
+  nativeTheme,
+  powerMonitor,
   process as remoteProcess,
+  screen,
 } from '@electron/remote';
+import AutoLaunch from 'auto-launch';
+import { ipcRenderer } from 'electron';
+import { readJsonSync } from 'fs-extra';
 import { action, computed, makeObservable, observable } from 'mobx';
 import moment from 'moment';
-import AutoLaunch from 'auto-launch';
 import ms from 'ms';
-import { readJsonSync } from 'fs-extra';
 
-import { Stores } from '../@types/stores.types';
-import { ApiInterface } from '../api';
-import { Actions } from '../actions/lib/actions';
-import TypedStore from './lib/TypedStore';
-import Request from './lib/Request';
+import type { Stores } from '../@types/stores.types';
+import type { Actions } from '../actions/lib/actions';
+import type { ApiInterface } from '../api';
 import { CHECK_INTERVAL, DEFAULT_APP_SETTINGS } from '../config';
-import { cleanseJSObject } from '../jsUtils';
 import {
+  electronVersion,
   isMac,
   isWinPortable,
-  electronVersion,
   osRelease,
 } from '../environment';
 import {
+  ferdiumLocale,
   ferdiumVersion,
   userDataPath,
-  ferdiumLocale,
 } from '../environment-remote';
-import generatedTranslations from '../i18n/translations';
 import { getLocale } from '../helpers/i18n-helpers';
+import generatedTranslations from '../i18n/translations';
+import { cleanseJSObject } from '../jsUtils';
+import Request from './lib/Request';
+import TypedStore from './lib/TypedStore';
 
+import sleep from '../helpers/async-helpers';
 import {
   getServiceIdsFromPartitions,
   removeServicePartitionDirectory,
 } from '../helpers/service-helpers';
 import { openExternalUrl } from '../helpers/url-helpers';
-import sleep from '../helpers/async-helpers';
 
 const debug = require('../preload-safe-debug')('Ferdium:AppStore');
 

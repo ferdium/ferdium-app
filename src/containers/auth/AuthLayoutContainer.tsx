@@ -1,8 +1,8 @@
-import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
+import { Component, type ReactElement } from 'react';
 import { ThemeProvider } from 'react-jss';
 import { Outlet } from 'react-router-dom';
-import { StoresProps } from '../../@types/ferdium-components.types';
+import type { StoresProps } from '../../@types/ferdium-components.types';
 import AuthLayout from '../../components/auth/AuthLayout';
 import AppLoader from '../../components/ui/AppLoader';
 

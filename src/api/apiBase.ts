@@ -1,15 +1,15 @@
-/**
- * Get API base URL from store
- */
-import { API_VERSION } from '../environment-remote';
 import {
   DEV_API_FRANZ_WEBSITE,
-  LIVE_FRANZ_API,
   LIVE_FERDIUM_API,
+  LIVE_FRANZ_API,
   LOCAL_HOSTNAME,
   LOCAL_SERVER,
   SERVER_NOT_LOADED,
 } from '../config';
+/**
+ * Get API base URL from store
+ */
+import { API_VERSION } from '../environment-remote';
 import { fixUrl } from '../helpers/url-helpers';
 
 // Note: This cannot be used from the internal-server since we are not running within the context of a browser window

@@ -1,5 +1,5 @@
-import { autorun, action, observable } from 'mobx';
 import { session } from '@electron/remote';
+import { action, autorun, observable } from 'mobx';
 
 const debug = require('../../preload-safe-debug')(
   'Ferdium:feature:serviceProxy',

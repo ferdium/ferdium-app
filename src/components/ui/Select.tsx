@@ -1,14 +1,14 @@
-import {
-  createRef,
-  Component,
-  ReactElement,
-  RefObject,
-  ChangeEvent,
-  ReactNode,
-} from 'react';
-import { observer } from 'mobx-react';
 import classnames from 'classnames';
-import { Field } from '../../@types/mobx-form.types';
+import { observer } from 'mobx-react';
+import {
+  type ChangeEvent,
+  Component,
+  type ReactElement,
+  type ReactNode,
+  type RefObject,
+  createRef,
+} from 'react';
+import type { Field } from '../../@types/mobx-form.types';
 
 interface IProps {
   field: Field;

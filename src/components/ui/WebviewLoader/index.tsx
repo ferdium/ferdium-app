@@ -1,7 +1,11 @@
-import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
-import injectSheet, { WithStylesProps } from 'react-jss';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
+import { Component, type ReactElement } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
+import injectSheet, { type WithStylesProps } from 'react-jss';
 import FullscreenLoader from '../FullscreenLoader';
 
 const messages = defineMessages({

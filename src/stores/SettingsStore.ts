@@ -1,10 +1,10 @@
-import { ipcRenderer } from 'electron';
 import { getCurrentWindow } from '@electron/remote';
+import { ipcRenderer } from 'electron';
 import { action, computed, makeObservable, observable, reaction } from 'mobx';
 import localStorage from 'mobx-localstorage';
-import { Stores } from '../@types/stores.types';
-import { ApiInterface } from '../api';
-import { Actions } from '../actions/lib/actions';
+import type { Stores } from '../@types/stores.types';
+import type { Actions } from '../actions/lib/actions';
+import type { ApiInterface } from '../api';
 import {
   DEFAULT_APP_SETTINGS,
   FILE_SYSTEM_SETTINGS_TYPES,

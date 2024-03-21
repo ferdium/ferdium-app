@@ -1,20 +1,20 @@
 import { readJsonSync } from 'fs-extra';
-import { Component, ReactElement } from 'react';
-import { autorun, IReactionDisposer } from 'mobx';
+import { type IReactionDisposer, autorun } from 'mobx';
 import { inject, observer } from 'mobx-react';
+import { Component, type ReactElement } from 'react';
 
-import { Params } from 'react-router-dom';
-import Recipe from '../../models/Recipe';
-import { StoresProps } from '../../@types/ferdium-components.types';
+import type { Params } from 'react-router-dom';
+import type { StoresProps } from '../../@types/ferdium-components.types';
 import RecipesDashboard from '../../components/settings/recipes/RecipesDashboard';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
+import withParams from '../../components/util/WithParams';
 import { CUSTOM_WEBSITE_RECIPE_ID, FERDIUM_DEV_DOCS } from '../../config';
 import { userDataRecipesPath } from '../../environment-remote';
-import { asarRecipesPath } from '../../helpers/asar-helpers';
 import { communityRecipesStore } from '../../features/communityRecipes';
-import RecipePreview from '../../models/RecipePreview';
+import { asarRecipesPath } from '../../helpers/asar-helpers';
 import { openPath } from '../../helpers/url-helpers';
-import withParams from '../../components/util/WithParams';
+import type Recipe from '../../models/Recipe';
+import RecipePreview from '../../models/RecipePreview';
 
 interface IProps extends Partial<StoresProps> {
   params: Params;

@@ -1,7 +1,7 @@
 // Enhanced from: https://github.com/dertieran/electron-util/blob/replace-remote/source/api.js
 
+import { enable, initialize } from '@electron/remote/main';
 import * as electron from 'electron';
-import { initialize, enable } from '@electron/remote/main';
 
 export const initializeRemote = (): void => {
   if (process.type !== 'browser') {

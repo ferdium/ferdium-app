@@ -1,6 +1,6 @@
 import classnames from 'classnames';
-import { Component, ReactNode } from 'react';
-import injectStyle, { WithStylesProps } from 'react-jss';
+import { Component, type ReactNode } from 'react';
+import injectStyle, { type WithStylesProps } from 'react-jss';
 
 // eslint-disable-next-line no-use-before-define
 interface IProps extends WithStylesProps<typeof styles> {

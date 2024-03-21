@@ -1,7 +1,7 @@
-import { Component, ReactElement, ReactNode } from 'react';
-import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import { noop } from 'lodash';
+import { observer } from 'mobx-react';
+import { Component, type ReactElement, type ReactNode } from 'react';
 
 interface IProps {
   className: string;

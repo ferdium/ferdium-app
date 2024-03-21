@@ -1,7 +1,7 @@
-import { Component } from 'react';
-import { observer } from 'mobx-react';
 import classnames from 'classnames';
-import FieldInterface from 'mobx-react-form/lib/models/FieldInterface';
+import { observer } from 'mobx-react';
+import type FieldInterface from 'mobx-react-form/lib/models/FieldInterface';
+import { Component } from 'react';
 // biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
 import Error from './error';
 

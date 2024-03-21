@@ -1,10 +1,10 @@
 import AppApi from './AppApi';
-import ServicesApi from './ServicesApi';
+import FeaturesApi from './FeaturesApi';
+import LocalApi from './LocalApi';
 import RecipePreviewsApi from './RecipePreviewsApi';
 import RecipesApi from './RecipesApi';
+import ServicesApi from './ServicesApi';
 import UserApi from './UserApi';
-import LocalApi from './LocalApi';
-import FeaturesApi from './FeaturesApi';
 
 export interface ApiInterface {
   app: AppApi;

@@ -7,20 +7,25 @@
  * Source: https://github.com/electron-userland/electron-spellchecker/blob/master/src/context-menu-builder.js
  */
 
-import { clipboard, ipcRenderer, nativeImage, WebContents } from 'electron';
 import { Menu, MenuItem } from '@electron/remote';
+import {
+  type WebContents,
+  clipboard,
+  ipcRenderer,
+  nativeImage,
+} from 'electron';
 import { cmdOrCtrlShortcutKey, isMac } from '../environment';
 
 import {
+  GOOGLE_TRANSLATOR_LANGUAGES,
+  LIBRETRANSLATE_TRANSLATOR_LANGUAGES,
   SEARCH_ENGINE_NAMES,
   SEARCH_ENGINE_URLS,
-  GOOGLE_TRANSLATOR_LANGUAGES,
   TRANSLATOR_ENGINE_GOOGLE,
   TRANSLATOR_ENGINE_LIBRETRANSLATE,
-  LIBRETRANSLATE_TRANSLATOR_LANGUAGES,
 } from '../config';
 import { openExternalUrl } from '../helpers/url-helpers';
-import IContextMenuParams from '../models/IContextMenuParams';
+import type IContextMenuParams from '../models/IContextMenuParams';
 
 function matchesWord(string: string) {
   const regex =

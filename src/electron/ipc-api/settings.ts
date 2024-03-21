@@ -1,4 +1,4 @@
-import { ipcMain, BrowserWindow, Settings } from 'electron';
+import { type BrowserWindow, type Settings, ipcMain } from 'electron';
 
 export default (params: { mainWindow: BrowserWindow; settings: Settings }) => {
   ipcMain.on('getAppSettings', (_event, type) => {

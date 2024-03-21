@@ -1,42 +1,42 @@
-import { Component, ReactElement } from 'react';
+import type { HashHistory } from 'history';
 import { inject, observer } from 'mobx-react';
+import { Component, type ReactElement } from 'react';
 import {
+  unstable_HistoryRouter as HistoryRouter,
   Navigate,
   Route,
   Routes,
-  unstable_HistoryRouter as HistoryRouter,
 } from 'react-router-dom';
-import { HashHistory } from 'history';
-import AppLayoutContainer from './containers/layout/AppLayoutContainer';
-import SettingsWindow from './containers/settings/SettingsWindow';
-import ReleaseNotesWindow from './containers/settings/ReleaseNotesWindow';
-import RecipesScreen from './containers/settings/RecipesScreen';
-import ServicesScreen from './containers/settings/ServicesScreen';
-import EditServiceScreen from './containers/settings/EditServiceScreen';
-import AccountScreen from './containers/settings/AccountScreen';
-import TeamScreen from './containers/settings/TeamScreen';
-import EditUserScreen from './containers/settings/EditUserScreen';
-import EditSettingsScreen from './containers/settings/EditSettingsScreen';
-import InviteSettingsScreen from './containers/settings/InviteScreen';
-import SupportFerdiumScreen from './containers/settings/SupportScreen';
-import ReleaseNotesScreen from './containers/settings/ReleaseNotesScreen';
-import WelcomeScreen from './containers/auth/WelcomeScreen';
-import LoginScreen from './containers/auth/LoginScreen';
-import AuthReleaseNotesScreen from './containers/auth/AuthReleaseNotesScreen';
-import PasswordScreen from './containers/auth/PasswordScreen';
-import ChangeServerScreen from './containers/auth/ChangeServerScreen';
-import SignupScreen from './containers/auth/SignupScreen';
-import SetupAssistantScreen from './containers/auth/SetupAssistantScreen';
-import InviteScreen from './containers/auth/InviteScreen';
+import type { StoresProps } from './@types/ferdium-components.types';
+import type { Actions } from './actions/lib/actions';
 import AuthLayoutContainer from './containers/auth/AuthLayoutContainer';
-import WorkspacesScreen from './features/workspaces/containers/WorkspacesScreen';
-import EditWorkspaceScreen from './features/workspaces/containers/EditWorkspaceScreen';
-import { WORKSPACES_ROUTES } from './features/workspaces/constants';
-import { StoresProps } from './@types/ferdium-components.types';
-import { Actions } from './actions/lib/actions';
-import { RealStores } from './stores';
+import AuthReleaseNotesScreen from './containers/auth/AuthReleaseNotesScreen';
+import ChangeServerScreen from './containers/auth/ChangeServerScreen';
+import InviteScreen from './containers/auth/InviteScreen';
+import LoginScreen from './containers/auth/LoginScreen';
+import PasswordScreen from './containers/auth/PasswordScreen';
+import SetupAssistantScreen from './containers/auth/SetupAssistantScreen';
+import SignupScreen from './containers/auth/SignupScreen';
+import WelcomeScreen from './containers/auth/WelcomeScreen';
 import DownloadManagerScreen from './containers/download-manager/DownloadManagerScreen';
 import DownloadManagerWindow from './containers/download-manager/DownloadManagerWindow';
+import AppLayoutContainer from './containers/layout/AppLayoutContainer';
+import AccountScreen from './containers/settings/AccountScreen';
+import EditServiceScreen from './containers/settings/EditServiceScreen';
+import EditSettingsScreen from './containers/settings/EditSettingsScreen';
+import EditUserScreen from './containers/settings/EditUserScreen';
+import InviteSettingsScreen from './containers/settings/InviteScreen';
+import RecipesScreen from './containers/settings/RecipesScreen';
+import ReleaseNotesScreen from './containers/settings/ReleaseNotesScreen';
+import ReleaseNotesWindow from './containers/settings/ReleaseNotesWindow';
+import ServicesScreen from './containers/settings/ServicesScreen';
+import SettingsWindow from './containers/settings/SettingsWindow';
+import SupportFerdiumScreen from './containers/settings/SupportScreen';
+import TeamScreen from './containers/settings/TeamScreen';
+import { WORKSPACES_ROUTES } from './features/workspaces/constants';
+import EditWorkspaceScreen from './features/workspaces/containers/EditWorkspaceScreen';
+import WorkspacesScreen from './features/workspaces/containers/WorkspacesScreen';
+import type { RealStores } from './stores';
 
 interface IProps {
   history: HashHistory;

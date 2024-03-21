@@ -4,7 +4,7 @@
     "enabled": false
   },
   "organizeImports": {
-    "enabled": false
+    "enabled": true
   },
   "linter": {
     "ignore": ["build", "coverage", "node_modules", "recipes", "*.json"],
@@ -23,7 +23,9 @@
       "suspicious": {
         "noEmptyInterface": "off",
         "noExplicitAny": "off",
-        "noArrayIndexKey": "off"
+        "noImplicitAnyLet": "off",
+        "noArrayIndexKey": "off",
+        "noThenProperty": "off"
       },
       "performance": {
         "noDelete": "off"

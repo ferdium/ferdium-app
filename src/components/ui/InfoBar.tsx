@@ -1,14 +1,18 @@
-import { Component, MouseEventHandler, ReactNode } from 'react';
-import { observer } from 'mobx-react';
 import classnames from 'classnames';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
+import { observer } from 'mobx-react';
+import { Component, type MouseEventHandler, type ReactNode } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
 
 import { mdiClose } from '@mdi/js';
 import { noop } from 'lodash';
-import Loader from './loader/index';
+import { DEFAULT_LOADER_COLOR } from '../../config';
 import Appear from './effects/Appear';
 import Icon from './icon';
-import { DEFAULT_LOADER_COLOR } from '../../config';
+import Loader from './loader/index';
 
 const messages = defineMessages({
   hide: {

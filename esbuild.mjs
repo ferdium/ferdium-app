@@ -1,15 +1,15 @@
 #!/usr/bin/env node
-import * as esbuild from 'esbuild';
-import { sassPlugin } from 'esbuild-sass-plugin';
-import { copy } from 'esbuild-plugin-copy';
-import glob from 'tiny-glob';
-import livereload from 'gulp-livereload';
 import * as fs from 'node:fs';
-import * as buildInfo from 'preval-build-info';
-import fsPkg from 'fs-extra';
-import chalk from 'chalk';
 import { performance } from 'node:perf_hooks';
+import chalk from 'chalk';
+import * as esbuild from 'esbuild';
+import { copy } from 'esbuild-plugin-copy';
+import { sassPlugin } from 'esbuild-sass-plugin';
+import fsPkg from 'fs-extra';
+import livereload from 'gulp-livereload';
 import moment from 'moment';
+import * as buildInfo from 'preval-build-info';
+import glob from 'tiny-glob';
 
 const { log } = console;
 
@@ -140,4 +140,4 @@ const runEsbuild = async () => {
   }
 };
 
-runEsbuild();
+await runEsbuild();

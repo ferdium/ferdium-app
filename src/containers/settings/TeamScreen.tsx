@@ -1,7 +1,7 @@
-import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
+import { Component, type ReactElement } from 'react';
 
-import { StoresProps } from '../../@types/ferdium-components.types';
+import type { StoresProps } from '../../@types/ferdium-components.types';
 
 import TeamDashboard from '../../components/settings/team/TeamDashboard';
 import ErrorBoundary from '../../components/util/ErrorBoundary';

@@ -1,11 +1,11 @@
-import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
-import { StoresProps } from '../../@types/ferdium-components.types';
+import { Component, type ReactElement } from 'react';
+import type { StoresProps } from '../../@types/ferdium-components.types';
 import Locked from '../../components/auth/Locked';
 
+import type { Actions } from '../../actions/lib/actions';
 import { hash } from '../../helpers/password-helpers';
-import { Actions } from '../../actions/lib/actions';
-import { RealStores } from '../../stores';
+import type { RealStores } from '../../stores';
 
 interface IProps {
   actions?: Actions;

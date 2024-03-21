@@ -1,8 +1,8 @@
-import { Component, ReactElement } from 'react';
-import { observer } from 'mobx-react';
-import withStyles, { WithStylesProps } from 'react-jss';
 import { noop } from 'lodash';
-import Workspace from '../models/Workspace';
+import { observer } from 'mobx-react';
+import { Component, type ReactElement } from 'react';
+import withStyles, { type WithStylesProps } from 'react-jss';
+import type Workspace from '../models/Workspace';
 
 const styles = theme => ({
   row: {

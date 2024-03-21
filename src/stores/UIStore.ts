@@ -1,10 +1,10 @@
-import { action, observable, computed, reaction, makeObservable } from 'mobx';
 import { nativeTheme } from '@electron/remote';
+import { action, computed, makeObservable, observable, reaction } from 'mobx';
 
-import { Stores } from '../@types/stores.types';
-import { ApiInterface } from '../api';
-import { Actions } from '../actions/lib/actions';
-import { Theme, theme, ThemeType } from '../themes';
+import type { Stores } from '../@types/stores.types';
+import type { Actions } from '../actions/lib/actions';
+import type { ApiInterface } from '../api';
+import { type Theme, ThemeType, theme } from '../themes';
 import TypedStore from './lib/TypedStore';
 
 export default class UIStore extends TypedStore {

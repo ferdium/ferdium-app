@@ -1,14 +1,23 @@
-import { Component, FormEvent, FormEventHandler, ReactElement } from 'react';
-import { observer } from 'mobx-react';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
-import { Link } from 'react-router-dom';
 import { noop } from 'lodash';
-import Input from '../../ui/input/index';
-import Form from '../../../lib/Form';
-import Button from '../../ui/button';
-import Radio from '../../ui/Radio';
+import { observer } from 'mobx-react';
+import {
+  Component,
+  type FormEvent,
+  type FormEventHandler,
+  type ReactElement,
+} from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
+import { Link } from 'react-router-dom';
+import type Form from '../../../lib/Form';
 import Infobox from '../../ui/Infobox';
+import Radio from '../../ui/Radio';
+import Button from '../../ui/button';
 import { H2 } from '../../ui/headline';
+import Input from '../../ui/input/index';
 
 const messages = defineMessages({
   headline: {

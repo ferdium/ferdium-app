@@ -1,8 +1,10 @@
-import { computed, observable, action, makeObservable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 import localStorage from 'mobx-localstorage';
 import matchRoute from '../../helpers/routing-helpers';
-import workspaceActions from './actions';
+import { createReactions } from '../../stores/lib/Reaction';
+import { createActionBindings } from '../utils/ActionBinding';
 import FeatureStore from '../utils/FeatureStore';
+import workspaceActions from './actions';
 import {
   createWorkspaceRequest,
   deleteWorkspaceRequest,
@@ -10,12 +12,10 @@ import {
   updateWorkspaceRequest,
 } from './api';
 import { WORKSPACES_ROUTES } from './constants';
-import { createReactions } from '../../stores/lib/Reaction';
-import { createActionBindings } from '../utils/ActionBinding';
 
+import type { Actions } from '../../actions/lib/actions';
 import { KEEP_WS_LOADED_USID } from '../../config';
-import Workspace from './models/Workspace';
-import { Actions } from '../../actions/lib/actions';
+import type Workspace from './models/Workspace';
 
 const debug = require('../../preload-safe-debug')(
   'Ferdium:feature:workspaces:store',

@@ -1,4 +1,4 @@
-import { Component, ReactElement } from 'react';
+import { Component, type ReactElement } from 'react';
 
 import ReleaseNotes from '../../components/settings/releaseNotes/ReleaseNotesDashboard';
 import ErrorBoundary from '../../components/util/ErrorBoundary';

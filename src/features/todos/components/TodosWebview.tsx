@@ -1,10 +1,15 @@
-import { Component, createRef, ReactElement, MouseEvent } from 'react';
-import { observer } from 'mobx-react';
-import withStyles, { WithStylesProps } from 'react-jss';
-import Webview from 'react-electron-web-view';
 import classnames from 'classnames';
+import { observer } from 'mobx-react';
+import {
+  Component,
+  type MouseEvent,
+  type ReactElement,
+  createRef,
+} from 'react';
+import Webview from 'react-electron-web-view';
+import withStyles, { type WithStylesProps } from 'react-jss';
 import { TODOS_PARTITION_ID } from '../../../config';
-import { TodoClientMessage } from '../actions';
+import type { TodoClientMessage } from '../actions';
 
 const styles = theme => ({
   root: {

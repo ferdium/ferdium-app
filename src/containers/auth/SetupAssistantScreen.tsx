@@ -1,9 +1,9 @@
-import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
-import { StoresProps } from '../../@types/ferdium-components.types';
-import sleep from '../../helpers/async-helpers';
+import { Component, type ReactElement } from 'react';
+import type { StoresProps } from '../../@types/ferdium-components.types';
+import type { ILegacyServices } from '../../@types/legacy-types';
 import SetupAssistant from '../../components/auth/SetupAssistant';
-import { ILegacyServices } from '../../@types/legacy-types';
+import sleep from '../../helpers/async-helpers';
 
 interface IProps extends StoresProps {}
 

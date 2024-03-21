@@ -1,9 +1,9 @@
 import { inject, observer } from 'mobx-react';
-import { Component, ReactPortal } from 'react';
+import { Component, type ReactPortal } from 'react';
 import ReactDOM from 'react-dom';
 import { Outlet } from 'react-router-dom';
 
-import { StoresProps } from '../../@types/ferdium-components.types';
+import type { StoresProps } from '../../@types/ferdium-components.types';
 import Layout from '../../components/downloadManager/DownloadManagerLayout';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 

@@ -1,15 +1,15 @@
-import {
-  ChangeEvent,
-  Component,
-  createRef,
-  InputHTMLAttributes,
-  RefObject,
-} from 'react';
-import { observer } from 'mobx-react';
 import classnames from 'classnames';
-import { Color, ColorResult, SliderPicker } from 'react-color';
 import { noop } from 'lodash';
-import { FormFields } from '../../../@types/mobx-form.types';
+import { observer } from 'mobx-react';
+import {
+  type ChangeEvent,
+  Component,
+  type InputHTMLAttributes,
+  type RefObject,
+  createRef,
+} from 'react';
+import { type Color, type ColorResult, SliderPicker } from 'react-color';
+import type { FormFields } from '../../../@types/mobx-form.types';
 
 interface IProps extends InputHTMLAttributes<HTMLInputElement>, FormFields {
   onColorChange: (event: ChangeEvent<HTMLInputElement>) => void;

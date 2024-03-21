@@ -1,16 +1,20 @@
-import { Component, ReactElement } from 'react';
+import type { To } from 'history';
 import { observer } from 'mobx-react';
+import { Component, type ReactElement } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
 import { Link } from 'react-router-dom';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
-import { To } from 'history';
-import SearchInput from '../../ui/SearchInput';
-import Infobox from '../../ui/Infobox';
-import Loader from '../../ui/loader';
+import type Service from '../../../models/Service';
 import FAB from '../../ui/FAB';
-import ServiceItem from './ServiceItem';
+import Infobox from '../../ui/Infobox';
+import SearchInput from '../../ui/SearchInput';
 import Appear from '../../ui/effects/Appear';
 import { H1 } from '../../ui/headline';
-import Service from '../../../models/Service';
+import Loader from '../../ui/loader';
+import ServiceItem from './ServiceItem';
 
 const messages = defineMessages({
   headline: {

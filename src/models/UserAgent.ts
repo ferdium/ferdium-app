@@ -1,6 +1,6 @@
 import { action, computed, makeObservable, observable, observe } from 'mobx';
 
-import ElectronWebView from 'react-electron-web-view';
+import type ElectronWebView from 'react-electron-web-view';
 import defaultUserAgent from '../helpers/userAgent-helpers';
 
 const debug = require('../preload-safe-debug')('Ferdium:UserAgent');

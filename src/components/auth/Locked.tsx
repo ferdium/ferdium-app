@@ -1,13 +1,17 @@
 import { systemPreferences } from '@electron/remote';
-import { Component } from 'react';
-import { observer } from 'mobx-react';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { noop } from 'lodash';
+import { observer } from 'mobx-react';
+import { Component } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
+import { isMac } from '../../environment';
 import Form from '../../lib/Form';
-import Input from '../ui/input/index';
 import Button from '../ui/button';
 import { H1 } from '../ui/headline';
-import { isMac } from '../../environment';
+import Input from '../ui/input/index';
 
 const messages = defineMessages({
   headline: {

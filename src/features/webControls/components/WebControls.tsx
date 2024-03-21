@@ -1,14 +1,18 @@
-import { createRef, Component, ReactElement, RefObject } from 'react';
-import { observer } from 'mobx-react';
-import withStyles, { WithStylesProps } from 'react-jss';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import {
-  mdiReload,
-  mdiArrowRight,
   mdiArrowLeft,
-  mdiHomeOutline,
+  mdiArrowRight,
   mdiEarth,
+  mdiHomeOutline,
+  mdiReload,
 } from '@mdi/js';
+import { observer } from 'mobx-react';
+import { Component, type ReactElement, type RefObject, createRef } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
+import withStyles, { type WithStylesProps } from 'react-jss';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import Icon from '../../../components/ui/icon';
 

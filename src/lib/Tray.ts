@@ -1,17 +1,17 @@
 import { join } from 'node:path';
 import {
-  app,
+  BrowserWindow,
   Menu,
+  type NativeImage,
+  Tray,
+  app,
+  ipcMain,
   nativeImage,
   nativeTheme,
   systemPreferences,
-  Tray,
-  ipcMain,
-  BrowserWindow,
-  NativeImage,
 } from 'electron';
 import macosVersion from 'macos-version';
-import { isMac, isWindows, isLinux } from '../environment';
+import { isLinux, isMac, isWindows } from '../environment';
 
 const FILE_EXTENSION = isWindows ? 'ico' : 'png';
 const INDICATOR_TRAY_PLAIN = 'tray';

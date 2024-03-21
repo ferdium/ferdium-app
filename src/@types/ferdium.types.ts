@@ -21,4 +21,4 @@ declare global {
  * Workaround to make TS recognize this file as a module.
  * https://fettblog.eu/typescript-augmenting-global-lib-dom/
  */
-export {};
+export type {};

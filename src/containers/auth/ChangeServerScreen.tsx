@@ -1,9 +1,9 @@
-import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
-import { StoresProps } from '../../@types/ferdium-components.types';
+import { Component, type ReactElement } from 'react';
+import type { StoresProps } from '../../@types/ferdium-components.types';
+import type { Actions } from '../../actions/lib/actions';
 import ChangeServer from '../../components/auth/ChangeServer';
-import { Actions } from '../../actions/lib/actions';
-import { RealStores } from '../../stores';
+import type { RealStores } from '../../stores';
 
 interface IProps {
   stores?: RealStores;

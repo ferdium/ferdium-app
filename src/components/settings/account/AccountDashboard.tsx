@@ -1,18 +1,22 @@
-import { Component } from 'react';
 import { observer } from 'mobx-react';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
+import { Component } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import { H1, H2 } from '../../ui/headline';
 
-import Loader from '../../ui/loader';
-import Button from '../../ui/button';
-import Infobox from '../../ui/infobox/index';
 import {
   DEFAULT_LOADER_COLOR,
-  LOCAL_SERVER,
   LIVE_FRANZ_API,
+  LOCAL_SERVER,
 } from '../../../config';
-import User from '../../../models/User';
+import type User from '../../../models/User';
+import Button from '../../ui/button';
+import Infobox from '../../ui/infobox/index';
+import Loader from '../../ui/loader';
 
 const messages = defineMessages({
   headline: {

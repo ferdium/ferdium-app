@@ -1,18 +1,22 @@
-import { Component } from 'react';
-import { observer, inject } from 'mobx-react';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { mdiArrowLeftCircle } from '@mdi/js';
 import { noop } from 'lodash';
-import Form from '../../lib/Form';
-import { required, email, minLength } from '../../helpers/validation-helpers';
-import Input from '../ui/input/index';
-import Button from '../ui/button';
-import Link from '../ui/Link';
-import Icon from '../ui/icon';
+import { inject, observer } from 'mobx-react';
+import { Component } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
+import type { GlobalError } from '../../@types/ferdium-components.types';
+import type { Actions } from '../../actions/lib/actions';
 import { serverBase } from '../../api/apiBase';
+import { email, minLength, required } from '../../helpers/validation-helpers';
+import Form from '../../lib/Form';
+import Link from '../ui/Link';
+import Button from '../ui/button';
 import { H1 } from '../ui/headline';
-import { GlobalError } from '../../@types/ferdium-components.types';
-import { Actions } from '../../actions/lib/actions';
+import Icon from '../ui/icon';
+import Input from '../ui/input/index';
 
 const messages = defineMessages({
   headline: {
