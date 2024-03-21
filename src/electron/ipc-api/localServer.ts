@@ -1,6 +1,6 @@
 import { randomBytes } from 'node:crypto';
 import { createServer } from 'node:net';
-import { ipcMain, BrowserWindow } from 'electron';
+import { type BrowserWindow, ipcMain } from 'electron';
 import { LOCAL_HOSTNAME, LOCAL_PORT } from '../../config';
 import { userDataPath } from '../../environment-remote';
 import { server } from '../../internal-server/start';

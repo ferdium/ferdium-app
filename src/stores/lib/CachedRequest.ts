@@ -1,5 +1,5 @@
-import { action } from 'mobx';
 import { isEqual } from 'lodash';
+import { action } from 'mobx';
 import Request from './Request';
 
 export default class CachedRequest extends Request {

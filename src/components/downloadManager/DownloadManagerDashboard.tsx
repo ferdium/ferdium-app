@@ -1,29 +1,29 @@
-import { Component } from 'react';
-import { observer } from 'mobx-react';
-import { IntlShape, defineMessages, injectIntl } from 'react-intl';
-import { shell } from 'electron';
-import prettyBytes from 'pretty-bytes';
+import { mdiDownload } from '@mdi/js';
+import CancelIcon from '@mui/icons-material/Cancel';
+import ClearAllIcon from '@mui/icons-material/ClearAll';
+import DeleteIcon from '@mui/icons-material/Delete';
+import FolderIcon from '@mui/icons-material/Folder';
+import PauseIcon from '@mui/icons-material/Pause';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import {
-  Typography,
+  Box,
   Card,
   CardContent,
-  LinearProgress,
-  Box,
   IconButton,
+  LinearProgress,
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Typography,
 } from '@mui/material';
-import { mdiDownload } from '@mdi/js';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import PauseIcon from '@mui/icons-material/Pause';
-import CancelIcon from '@mui/icons-material/Cancel';
-import FolderIcon from '@mui/icons-material/Folder';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ClearAllIcon from '@mui/icons-material/ClearAll';
+import { shell } from 'electron';
 import { round } from 'lodash';
-import { RealStores } from '../../stores';
-import { Actions } from '../../actions/lib/actions';
+import { observer } from 'mobx-react';
+import prettyBytes from 'pretty-bytes';
+import { Component } from 'react';
+import { type IntlShape, defineMessages, injectIntl } from 'react-intl';
+import type { Actions } from '../../actions/lib/actions';
+import type { RealStores } from '../../stores';
 import Icon from '../ui/icon';
 
 const messages = defineMessages({

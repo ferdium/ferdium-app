@@ -1,5 +1,5 @@
-import { Actions } from '../actions/lib/actions';
-import { RealStores } from '../stores';
+import type { Actions } from '../actions/lib/actions';
+import type { RealStores } from '../stores';
 
 export interface StoresProps {
   actions: Actions;

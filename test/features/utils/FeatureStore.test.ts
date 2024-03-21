@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types';
 import { observable } from 'mobx';
-import FeatureStore from '../../../src/features/utils/FeatureStore';
+import PropTypes from 'prop-types';
 import { createActionsFromDefinitions } from '../../../src/actions/lib/actions';
 import { createActionBindings } from '../../../src/features/utils/ActionBinding';
+import FeatureStore from '../../../src/features/utils/FeatureStore';
 import { createReactions } from '../../../src/stores/lib/Reaction';
 
 const actions: any = createActionsFromDefinitions(

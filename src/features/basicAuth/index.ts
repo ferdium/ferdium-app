@@ -1,4 +1,4 @@
-import { AuthInfo, BrowserWindow, ipcRenderer } from 'electron';
+import { type AuthInfo, type BrowserWindow, ipcRenderer } from 'electron';
 
 import { state as ModalState } from './store';
 

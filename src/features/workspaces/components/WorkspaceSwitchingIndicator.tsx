@@ -1,11 +1,15 @@
-import { Component, ReactElement } from 'react';
-import { observer } from 'mobx-react';
-import withStyles, { WithStylesProps } from 'react-jss';
 import classnames from 'classnames';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
+import { observer } from 'mobx-react';
+import { Component, type ReactElement } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
+import withStyles, { type WithStylesProps } from 'react-jss';
 import Loader from '../../../components/ui/loader';
-import { workspaceStore } from '../index';
 import { DEFAULT_LOADER_COLOR } from '../../../config';
+import { workspaceStore } from '../index';
 
 const messages = defineMessages({
   switchingTo: {

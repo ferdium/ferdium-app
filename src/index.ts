@@ -1,22 +1,22 @@
 /* eslint-disable import/first */
 
-import { join } from 'node:path';
 import { EventEmitter } from 'node:events';
+import { join } from 'node:path';
 import {
-  app,
   BrowserWindow,
+  app,
+  desktopCapturer,
+  dialog,
   globalShortcut,
   ipcMain,
   session,
-  dialog,
-  desktopCapturer,
 } from 'electron';
 
-import { emptyDirSync, ensureFileSync } from 'fs-extra';
+import { initialize } from 'electron-react-titlebar/main';
 import windowStateKeeper from 'electron-window-state';
+import { emptyDirSync, ensureFileSync } from 'fs-extra';
 import minimist from 'minimist';
 import ms from 'ms';
-import { initialize } from 'electron-react-titlebar/main';
 import { enableWebContents, initializeRemote } from './electron-util';
 import enforceMacOSAppLocation from './enforce-macos-app-location';
 
@@ -24,33 +24,33 @@ initializeRemote();
 
 import { DEFAULT_APP_SETTINGS, DEFAULT_WINDOW_OPTIONS } from './config';
 
-import { isMac, isWindows, isLinux, altKey } from './environment';
+import { altKey, isLinux, isMac, isWindows } from './environment';
 import {
   isDevMode,
-  userDataRecipesPath,
-  userDataPath,
   protocolClient,
+  userDataPath,
+  userDataRecipesPath,
 } from './environment-remote';
 import { ifUndefined } from './jsUtils';
 
-import { mainIpcHandler as basicAuthHandler } from './features/basicAuth';
-// eslint-disable-next-line import/no-cycle
-import ipcApi from './electron/ipc-api';
-import TrayIcon from './lib/Tray';
-import DBus from './lib/DBus';
 import Settings from './electron/Settings';
 import handleDeepLink from './electron/deepLinking';
+import './electron/exception';
+// eslint-disable-next-line import/no-cycle
+import ipcApi from './electron/ipc-api';
 import isPositionValid from './electron/windowUtils';
+import { mainIpcHandler as basicAuthHandler } from './features/basicAuth';
+import DBus from './lib/DBus';
+import TrayIcon from './lib/Tray';
 // @ts-expect-error Cannot find module './package.json' or its corresponding type declarations.
 import { appId } from './package.json';
-import './electron/exception';
 
 import { asarPath } from './helpers/asar-helpers';
+import { checkIfCertIsPresent } from './helpers/certs-helpers';
+import { translateTo } from './helpers/translation-helpers';
 import { openExternalUrl } from './helpers/url-helpers';
 import userAgent from './helpers/userAgent-helpers';
-import { translateTo } from './helpers/translation-helpers';
 import { darkThemeGrayDarkest } from './themes/legacy';
-import { checkIfCertIsPresent } from './helpers/certs-helpers';
 
 const debug = require('./preload-safe-debug')('Ferdium:App');
 

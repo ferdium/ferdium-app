@@ -1,7 +1,7 @@
-import { ChangeEvent, Component, ReactElement } from 'react';
-import { observer } from 'mobx-react';
 import classnames from 'classnames';
 import { noop } from 'lodash';
+import { observer } from 'mobx-react';
+import { type ChangeEvent, Component, type ReactElement } from 'react';
 
 interface IProps {
   field: any;

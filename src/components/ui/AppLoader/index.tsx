@@ -1,9 +1,9 @@
-import { Component, ReactElement } from 'react';
 import classnames from 'classnames';
-import withStyles, { WithStylesProps } from 'react-jss';
-import { Theme } from '../../../themes';
-import FullscreenLoader from '../FullscreenLoader';
+import { Component, type ReactElement } from 'react';
+import withStyles, { type WithStylesProps } from 'react-jss';
 import shuffleArray from '../../../helpers/array-helpers';
+import type { Theme } from '../../../themes';
+import FullscreenLoader from '../FullscreenLoader';
 
 import styles from './styles';
 

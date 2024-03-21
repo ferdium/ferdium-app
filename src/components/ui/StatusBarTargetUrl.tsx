@@ -1,6 +1,6 @@
-import { Component } from 'react';
-import { observer } from 'mobx-react';
 import classnames from 'classnames';
+import { observer } from 'mobx-react';
+import { Component } from 'react';
 import Appear from './effects/Appear';
 
 interface IProps {

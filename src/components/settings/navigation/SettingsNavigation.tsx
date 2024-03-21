@@ -1,12 +1,16 @@
-import { Component } from 'react';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { inject, observer } from 'mobx-react';
-import { NavLink } from 'react-router-dom';
-import { StoresProps } from '../../../@types/ferdium-components.types';
+import { Component } from 'react';
 import {
-  LOCAL_SERVER,
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
+import { NavLink } from 'react-router-dom';
+import type { StoresProps } from '../../../@types/ferdium-components.types';
+import {
   LIVE_FERDIUM_API,
   LIVE_FRANZ_API,
+  LOCAL_SERVER,
 } from '../../../config';
 import globalMessages from '../../../i18n/globalMessages';
 

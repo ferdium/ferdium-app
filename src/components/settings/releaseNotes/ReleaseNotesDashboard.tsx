@@ -1,7 +1,7 @@
-import { Component } from 'react';
-import { observer } from 'mobx-react';
-import { IntlShape, defineMessages, injectIntl } from 'react-intl';
 import Markdown from 'markdown-to-jsx';
+import { observer } from 'mobx-react';
+import { Component } from 'react';
+import { type IntlShape, defineMessages, injectIntl } from 'react-intl';
 import { ferdiumVersion } from '../../../environment-remote';
 import {
   getFerdiumVersion,

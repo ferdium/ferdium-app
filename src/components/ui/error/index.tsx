@@ -1,4 +1,4 @@
-import { Classes } from 'jss';
+import type { Classes } from 'jss';
 import { Component } from 'react';
 import injectSheet from 'react-jss';
 

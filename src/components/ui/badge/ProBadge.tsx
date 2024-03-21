@@ -1,9 +1,9 @@
 import { mdiStar } from '@mdi/js';
 import classnames from 'classnames';
 import { Component } from 'react';
-import injectStyle, { WithStylesProps } from 'react-jss';
+import injectStyle, { type WithStylesProps } from 'react-jss';
 
-import { Theme } from '../../../themes';
+import type { Theme } from '../../../themes';
 import Icon from '../icon';
 import Badge from './index';
 

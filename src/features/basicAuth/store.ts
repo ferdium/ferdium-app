@@ -1,5 +1,5 @@
-import { observable } from 'mobx';
 import { ipcRenderer } from 'electron';
+import { observable } from 'mobx';
 
 const debug = require('../../preload-safe-debug')('Ferdium:feature:basicAuth');
 

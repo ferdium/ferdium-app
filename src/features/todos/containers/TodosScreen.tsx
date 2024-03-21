@@ -1,11 +1,11 @@
-import { Component, ReactElement } from 'react';
-import { observer, inject } from 'mobx-react';
-import TodosWebview from '../components/TodosWebview';
-import ErrorBoundary from '../../../components/util/ErrorBoundary';
+import { inject, observer } from 'mobx-react';
+import { Component, type ReactElement } from 'react';
 import { todosStore } from '..';
+import ErrorBoundary from '../../../components/util/ErrorBoundary';
 import { TODOS_MIN_WIDTH } from '../../../config';
+import type { RealStores } from '../../../stores';
 import { todoActions } from '../actions';
-import { RealStores } from '../../../stores';
+import TodosWebview from '../components/TodosWebview';
 
 interface IProps {
   stores?: RealStores;

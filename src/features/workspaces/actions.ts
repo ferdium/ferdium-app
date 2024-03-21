@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import Workspace from './models/Workspace';
 import { createActionsFromDefinitions } from '../../actions/lib/actions';
+import Workspace from './models/Workspace';
 
 type WorkspaceArg = { workspace: Workspace };
 

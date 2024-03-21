@@ -1,11 +1,11 @@
-import { Component, ReactElement, ReactNode } from 'react';
-import { observer } from 'mobx-react';
-import withStyles, { WithStylesProps } from 'react-jss';
 import classnames from 'classnames';
+import { observer } from 'mobx-react';
+import { Component, type ReactElement, type ReactNode } from 'react';
+import withStyles, { type WithStylesProps } from 'react-jss';
+import type { Theme } from '../../../themes';
+import { H1 } from '../headline';
 import Loader from '../loader/index';
 import styles from './styles';
-import { H1 } from '../headline';
-import { Theme } from '../../../themes';
 
 interface IProps extends WithStylesProps<typeof styles> {
   className?: string;

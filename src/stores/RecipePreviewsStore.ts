@@ -1,14 +1,14 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 
-import { Actions } from '../actions/lib/actions';
-import { ApiInterface } from '../api';
-import Recipe from '../models/Recipe';
-import { Stores } from '../@types/stores.types';
+import type { Stores } from '../@types/stores.types';
+import type { Actions } from '../actions/lib/actions';
+import type { ApiInterface } from '../api';
+import type Recipe from '../models/Recipe';
 
+import type RecipePreview from '../models/RecipePreview';
 import CachedRequest from './lib/CachedRequest';
 import Request from './lib/Request';
 import TypedStore from './lib/TypedStore';
-import RecipePreview from '../models/RecipePreview';
 
 export default class RecipePreviewsStore extends TypedStore {
   @observable allRecipePreviewsRequest = new CachedRequest(

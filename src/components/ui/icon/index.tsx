@@ -1,9 +1,9 @@
 import MdiIcon from '@mdi/react';
 import classnames from 'classnames';
-import { Component, ReactElement } from 'react';
-import injectStyle, { WithStylesProps } from 'react-jss';
+import { Component, type ReactElement } from 'react';
+import injectStyle, { type WithStylesProps } from 'react-jss';
 
-import { Theme } from '../../../themes';
+import type { Theme } from '../../../themes';
 
 const styles = (theme: Theme) => ({
   icon: {

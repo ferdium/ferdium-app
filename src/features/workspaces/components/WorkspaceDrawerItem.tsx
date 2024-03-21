@@ -1,11 +1,15 @@
-import { Component, MouseEventHandler, ReactElement } from 'react';
-import { observer } from 'mobx-react';
-import withStyles, { WithStylesProps } from 'react-jss';
-import classnames from 'classnames';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
-import { noop } from 'lodash';
 import { Menu } from '@electron/remote';
-import { MenuItemConstructorOptions } from 'electron';
+import classnames from 'classnames';
+import type { MenuItemConstructorOptions } from 'electron';
+import { noop } from 'lodash';
+import { observer } from 'mobx-react';
+import { Component, type MouseEventHandler, type ReactElement } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
+import withStyles, { type WithStylesProps } from 'react-jss';
 import { altKey, cmdOrCtrlShortcutKey } from '../../../environment';
 import { acceleratorString } from '../../../jsUtils';
 

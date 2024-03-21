@@ -1,4 +1,4 @@
-import { ipcMain, Session, session } from 'electron';
+import { type Session, ipcMain, session } from 'electron';
 
 import { TODOS_PARTITION_ID } from '../../config';
 

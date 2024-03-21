@@ -1,16 +1,16 @@
-import { Component } from 'react';
 import { inject, observer } from 'mobx-react';
+import { Component } from 'react';
 
-import { IntlShape, defineMessages, injectIntl } from 'react-intl';
-import Markdown from 'markdown-to-jsx';
 import { mdiArrowLeftCircle } from '@mdi/js';
-import { openExternalUrl } from '../../helpers/url-helpers';
+import Markdown from 'markdown-to-jsx';
+import { type IntlShape, defineMessages, injectIntl } from 'react-intl';
 import Icon from '../../components/ui/icon';
 import { ferdiumVersion } from '../../environment-remote';
 import {
   getFerdiumVersion,
   getUpdateInfoFromGH,
 } from '../../helpers/update-helpers';
+import { openExternalUrl } from '../../helpers/url-helpers';
 
 const messages = defineMessages({
   headline: {

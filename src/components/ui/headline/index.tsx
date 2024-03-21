@@ -1,15 +1,15 @@
 import classnames from 'classnames';
 import {
   Component,
+  type MouseEventHandler,
+  type ReactElement,
+  type ReactNode,
   createElement,
-  MouseEventHandler,
-  ReactElement,
-  ReactNode,
 } from 'react';
-import injectStyle, { WithStylesProps } from 'react-jss';
+import injectStyle, { type WithStylesProps } from 'react-jss';
 
-import { Theme } from '../../../themes';
-import { Omit } from '../typings/generic';
+import type { Theme } from '../../../themes';
+import type { Omit } from '../typings/generic';
 
 const styles = (theme: Theme) => ({
   headline: {

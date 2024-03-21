@@ -1,6 +1,6 @@
-import semver from 'semver';
 import { TouchBar, getCurrentWindow } from '@electron/remote';
 import { autorun } from 'mobx';
+import semver from 'semver';
 
 import { isMac, osRelease } from '../environment';
 

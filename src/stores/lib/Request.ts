@@ -1,4 +1,4 @@
-import { observable, action, computed, makeObservable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 
 // eslint-disable-next-line no-use-before-define
 type Hook = (request: Request) => void;

@@ -1,11 +1,11 @@
 /* eslint-disable no-use-before-define */
-import Workspace from '../features/workspaces/models/Workspace';
-import Recipe from '../models/Recipe';
-import Service from '../models/Service';
-import User from '../models/User';
-import Request from '../stores/lib/Request';
-import CachedRequest from '../stores/lib/CachedRequest';
-import Reaction from '../stores/lib/Reaction';
+import type Workspace from '../features/workspaces/models/Workspace';
+import type Recipe from '../models/Recipe';
+import type Service from '../models/Service';
+import type User from '../models/User';
+import type CachedRequest from '../stores/lib/CachedRequest';
+import type Reaction from '../stores/lib/Reaction';
+import type Request from '../stores/lib/Request';
 
 // TODO: This file will be removed in the future when all stores are
 // correctly typed and the use of these interfaces are obsolete.

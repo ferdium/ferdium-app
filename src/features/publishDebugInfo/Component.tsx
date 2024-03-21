@@ -1,15 +1,19 @@
 import { inject, observer } from 'mobx-react';
-import { Component, ReactElement } from 'react';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
-import withStyles, { WithStylesProps } from 'react-jss';
-import { StoresProps } from '../../@types/ferdium-components.types';
-import { state as ModalState } from './store';
-import { H1 } from '../../components/ui/headline';
+import { Component, type ReactElement } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
+import withStyles, { type WithStylesProps } from 'react-jss';
+import type { StoresProps } from '../../@types/ferdium-components.types';
 import { sendAuthRequest } from '../../api/utils/auth';
-import Button from '../../components/ui/button';
-import Input from '../../components/ui/input/index';
 import Modal from '../../components/ui/Modal';
+import Button from '../../components/ui/button';
+import { H1 } from '../../components/ui/headline';
+import Input from '../../components/ui/input/index';
 import { DEBUG_API } from '../../config';
+import { state as ModalState } from './store';
 
 const debug = require('../../preload-safe-debug')(
   'Ferdium:feature:publishDebugInfo',

@@ -1,29 +1,29 @@
 import { join } from 'node:path';
 import { clipboard, ipcRenderer, shell } from 'electron';
-import { action, reaction, computed, observable, makeObservable } from 'mobx';
-import { debounce, remove } from 'lodash';
-import ms from 'ms';
 import { ensureFileSync, pathExistsSync, writeFileSync } from 'fs-extra';
+import { debounce, remove } from 'lodash';
+import { action, computed, makeObservable, observable, reaction } from 'mobx';
+import ms from 'ms';
 
-import { Stores } from '../@types/stores.types';
-import { ApiInterface } from '../api';
-import { Actions } from '../actions/lib/actions';
-import Request from './lib/Request';
-import CachedRequest from './lib/CachedRequest';
+import type { Stores } from '../@types/stores.types';
+import type { Actions } from '../actions/lib/actions';
+import type { ApiInterface } from '../api';
+import { DEFAULT_SERVICE_SETTINGS, KEEP_WS_LOADED_USID } from '../config';
+import { ferdiumVersion } from '../environment-remote';
+import { workspaceStore } from '../features/workspaces';
+import {
+  getDevRecipeDirectory,
+  getRecipeDirectory,
+} from '../helpers/recipe-helpers';
 import matchRoute from '../helpers/routing-helpers';
 import { isInTimeframe } from '../helpers/schedule-helpers';
-import {
-  getRecipeDirectory,
-  getDevRecipeDirectory,
-} from '../helpers/recipe-helpers';
-import Service from '../models/Service';
-import { workspaceStore } from '../features/workspaces';
-import { DEFAULT_SERVICE_SETTINGS, KEEP_WS_LOADED_USID } from '../config';
-import { cleanseJSObject } from '../jsUtils';
 import { SPELLCHECKER_LOCALES } from '../i18n/languages';
-import { ferdiumVersion } from '../environment-remote';
-import TypedStore from './lib/TypedStore';
+import { cleanseJSObject } from '../jsUtils';
 import type { UnreadServices } from '../lib/dbus/Ferdium';
+import type Service from '../models/Service';
+import CachedRequest from './lib/CachedRequest';
+import Request from './lib/Request';
+import TypedStore from './lib/TypedStore';
 
 const debug = require('../preload-safe-debug')('Ferdium:ServiceStore');
 

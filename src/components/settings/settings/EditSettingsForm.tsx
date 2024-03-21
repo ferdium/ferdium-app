@@ -1,31 +1,20 @@
 import { systemPreferences } from '@electron/remote';
-import { Component, ReactElement } from 'react';
-import { observer } from 'mobx-react';
-import prettyBytes from 'pretty-bytes';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { mdiGithub, mdiOpenInNew, mdiPowerPlug } from '@mdi/js';
 import { noop } from 'lodash';
-import Form from '../../../lib/Form';
-import Button from '../../ui/button';
-import Toggle from '../../ui/toggle';
-import Select from '../../ui/Select';
-import Input from '../../ui/input/index';
-import ColorPickerInput from '../../ui/colorPickerInput';
-import Infobox from '../../ui/Infobox';
-import { H1, H2, H3, H5 } from '../../ui/headline';
+import { observer } from 'mobx-react';
+import prettyBytes from 'pretty-bytes';
+import { Component, type ReactElement } from 'react';
 import {
-  ferdiumVersion,
-  userDataCertsPath,
-  userDataPath,
-  userDataRecipesPath,
-} from '../../../environment-remote';
-import { updateVersionParse } from '../../../helpers/update-helpers';
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
 import {
   DEFAULT_ACCENT_COLOR,
   DEFAULT_APP_SETTINGS,
   FERDIUM_TRANSLATION,
-  GITHUB_FRANZ_URL,
   GITHUB_FERDIUM_URL,
+  GITHUB_FRANZ_URL,
   SPLIT_COLUMNS_MAX,
   SPLIT_COLUMNS_MIN,
 } from '../../../config';
@@ -35,10 +24,25 @@ import {
   isWindows,
   lockFerdiumShortcutKey,
 } from '../../../environment';
+import {
+  ferdiumVersion,
+  userDataCertsPath,
+  userDataPath,
+  userDataRecipesPath,
+} from '../../../environment-remote';
+import { updateVersionParse } from '../../../helpers/update-helpers';
 import { openExternalUrl, openPath } from '../../../helpers/url-helpers';
 import globalMessages from '../../../i18n/globalMessages';
-import Icon from '../../ui/icon';
+import type Form from '../../../lib/Form';
+import Infobox from '../../ui/Infobox';
+import Select from '../../ui/Select';
 import Slider from '../../ui/Slider';
+import Button from '../../ui/button';
+import ColorPickerInput from '../../ui/colorPickerInput';
+import { H1, H2, H3, H5 } from '../../ui/headline';
+import Icon from '../../ui/icon';
+import Input from '../../ui/input/index';
+import Toggle from '../../ui/toggle';
 
 const debug = require('../../../preload-safe-debug')(
   'Ferdium:EditSettingsForm',

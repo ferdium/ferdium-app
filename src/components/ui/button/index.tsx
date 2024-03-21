@@ -1,14 +1,14 @@
 /* eslint-disable no-use-before-define */
 import Icon from '@mdi/react';
 import classnames from 'classnames';
-import { Property } from 'csstype';
+import type { Property } from 'csstype';
 import { noop } from 'lodash';
-import { Component, MouseEventHandler } from 'react';
-import withStyles, { WithStylesProps } from 'react-jss';
-import Loader from '../loader/index';
-import { Theme } from '../../../themes';
-import { IFormField } from '../typings/generic';
+import { Component, type MouseEventHandler } from 'react';
+import withStyles, { type WithStylesProps } from 'react-jss';
 import { DEFAULT_LOADER_COLOR } from '../../../config';
+import type { Theme } from '../../../themes';
+import Loader from '../loader/index';
+import type { IFormField } from '../typings/generic';
 
 type ButtonType =
   | 'primary'
@@ -206,7 +206,6 @@ class ButtonComponent extends Component<IProps, IState> {
     );
 
     const wrapperComponent = href ? (
-      // biome-ignore lint/a11y/useValidAnchor: <explanation>
       <a
         href={href}
         target={target}

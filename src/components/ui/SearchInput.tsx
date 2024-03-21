@@ -1,8 +1,8 @@
-import { ChangeEvent, Component, ReactElement } from 'react';
-import { observer } from 'mobx-react';
+import { mdiCloseCircleOutline, mdiMagnify } from '@mdi/js';
 import classnames from 'classnames';
 import { debounce, noop } from 'lodash';
-import { mdiCloseCircleOutline, mdiMagnify } from '@mdi/js';
+import { observer } from 'mobx-react';
+import { type ChangeEvent, Component, type ReactElement } from 'react';
 import Icon from './icon';
 
 interface IProps {

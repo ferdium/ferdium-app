@@ -1,15 +1,15 @@
-import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
+import { Component, type ReactElement } from 'react';
 import { ThemeProvider } from 'react-jss';
 import { Outlet } from 'react-router-dom';
 
-import { StoresProps } from '../../@types/ferdium-components.types';
+import type { StoresProps } from '../../@types/ferdium-components.types';
 import AppLayout from '../../components/layout/AppLayout';
 import Sidebar from '../../components/layout/Sidebar';
 import Services from '../../components/services/content/Services';
 import AppLoader from '../../components/ui/AppLoader';
-import WorkspaceDrawer from '../../features/workspaces/components/WorkspaceDrawer';
 import { workspaceStore } from '../../features/workspaces';
+import WorkspaceDrawer from '../../features/workspaces/components/WorkspaceDrawer';
 
 interface IProps extends StoresProps {}
 

@@ -1,17 +1,17 @@
-import { join, basename } from 'node:path';
-import { autorun, action, computed, makeObservable, observable } from 'mobx';
-import { ipcRenderer } from 'electron';
+import { basename, join } from 'node:path';
 import { webContents } from '@electron/remote';
-import ElectronWebView from 'react-electron-web-view';
+import { ipcRenderer } from 'electron';
+import { action, autorun, computed, makeObservable, observable } from 'mobx';
+import type ElectronWebView from 'react-electron-web-view';
 
 import { v4 as uuidV4 } from 'uuid';
+import { needsToken } from '../api/apiBase';
+import { DEFAULT_SERVICE_ORDER, DEFAULT_SERVICE_SETTINGS } from '../config';
 import { todosStore } from '../features/todos';
 import { isValidExternalURL, normalizedUrl } from '../helpers/url-helpers';
-import UserAgent from './UserAgent';
-import { DEFAULT_SERVICE_ORDER, DEFAULT_SERVICE_SETTINGS } from '../config';
 import { ifUndefined } from '../jsUtils';
-import { IRecipe } from './Recipe';
-import { needsToken } from '../api/apiBase';
+import type { IRecipe } from './Recipe';
+import UserAgent from './UserAgent';
 
 const debug = require('../preload-safe-debug')('Ferdium:Service');
 

@@ -5,18 +5,18 @@ import {
   observable,
   runInAction,
 } from 'mobx';
-import { Stores } from '../@types/stores.types';
-import { ApiInterface } from '../api';
-import { Actions } from '../actions/lib/actions';
-import CachedRequest from './lib/CachedRequest';
-import serviceProxy from '../features/serviceProxy';
-import basicAuth from '../features/basicAuth';
-import workspaces from '../features/workspaces';
-import quickSwitch from '../features/quickSwitch';
-import publishDebugInfo from '../features/publishDebugInfo';
-import communityRecipes from '../features/communityRecipes';
-import todos from '../features/todos';
+import type { Stores } from '../@types/stores.types';
+import type { Actions } from '../actions/lib/actions';
+import type { ApiInterface } from '../api';
 import appearance from '../features/appearance';
+import basicAuth from '../features/basicAuth';
+import communityRecipes from '../features/communityRecipes';
+import publishDebugInfo from '../features/publishDebugInfo';
+import quickSwitch from '../features/quickSwitch';
+import serviceProxy from '../features/serviceProxy';
+import todos from '../features/todos';
+import workspaces from '../features/workspaces';
+import CachedRequest from './lib/CachedRequest';
 import TypedStore from './lib/TypedStore';
 
 export default class FeaturesStore extends TypedStore {

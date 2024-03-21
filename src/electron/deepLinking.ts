@@ -1,4 +1,4 @@
-import { BrowserWindow } from 'electron';
+import type { BrowserWindow } from 'electron';
 import { protocolClient } from '../environment-remote';
 
 export default function handleDeepLink(

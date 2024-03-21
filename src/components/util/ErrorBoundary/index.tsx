@@ -1,6 +1,6 @@
-import { Component, ReactNode } from 'react';
-import withStyles, { WithStylesProps } from 'react-jss';
-import { defineMessages, injectIntl, IntlShape } from 'react-intl';
+import { Component, type ReactNode } from 'react';
+import { type IntlShape, defineMessages, injectIntl } from 'react-intl';
+import withStyles, { type WithStylesProps } from 'react-jss';
 
 import Button from '../../ui/button';
 import { H1 } from '../../ui/headline';

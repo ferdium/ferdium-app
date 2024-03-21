@@ -1,10 +1,14 @@
-import { Component, ReactElement } from 'react';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
-import { Tooltip as ReactTooltip } from 'react-tooltip';
-import { observer } from 'mobx-react';
-import classnames from 'classnames';
 import { mdiBellOff, mdiMessageBulletedOff, mdiPower } from '@mdi/js';
-import ServiceModel from '../../../models/Service';
+import classnames from 'classnames';
+import { observer } from 'mobx-react';
+import { Component, type ReactElement } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
+import { Tooltip as ReactTooltip } from 'react-tooltip';
+import type ServiceModel from '../../../models/Service';
 import Icon from '../../ui/icon';
 
 const messages = defineMessages({

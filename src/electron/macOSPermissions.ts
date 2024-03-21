@@ -1,6 +1,6 @@
 import { dirname } from 'node:path';
-import { systemPreferences, BrowserWindow, dialog } from 'electron';
-import { pathExistsSync, mkdirSync, writeFileSync } from 'fs-extra';
+import { type BrowserWindow, dialog, systemPreferences } from 'electron';
+import { mkdirSync, pathExistsSync, writeFileSync } from 'fs-extra';
 import macosVersion from 'macos-version';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment, @typescript-eslint/prefer-ts-expect-error
 // @ts-ignore

@@ -1,12 +1,12 @@
-import { Component } from 'react';
 import { inject, observer } from 'mobx-react';
+import { Component } from 'react';
 
-import { StoresProps } from '../../../@types/ferdium-components.types';
+import type { StoresProps } from '../../../@types/ferdium-components.types';
 import ErrorBoundary from '../../../components/util/ErrorBoundary';
-import EditWorkspaceForm from '../components/EditWorkspaceForm';
-import Workspace from '../models/Workspace';
-import { workspaceStore } from '../index';
 import { deleteWorkspaceRequest, updateWorkspaceRequest } from '../api';
+import EditWorkspaceForm from '../components/EditWorkspaceForm';
+import { workspaceStore } from '../index';
+import Workspace from '../models/Workspace';
 
 class EditWorkspaceScreen extends Component<StoresProps> {
   onDelete = () => {

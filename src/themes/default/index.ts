@@ -1,9 +1,9 @@
 import color from 'color';
 import { cloneDeep } from 'lodash';
 
-import * as legacyStyles from '../legacy';
-import type IStyleTypes from '../IStyleTypes';
 import { DEFAULT_LOADER_COLOR } from '../../config';
+import type IStyleTypes from '../IStyleTypes';
+import * as legacyStyles from '../legacy';
 
 export default (brandPrimary: string) => {
   if (!brandPrimary) {

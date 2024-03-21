@@ -1,9 +1,9 @@
 import { ipcMain } from 'electron';
 import { comparer } from 'mobx';
 
-import { MessageBus, sessionBus } from 'dbus-next';
+import { type MessageBus, sessionBus } from 'dbus-next';
 import { isLinux } from '../environment';
-import TrayIcon from './Tray';
+import type TrayIcon from './Tray';
 import Ferdium, { type UnreadServices } from './dbus/Ferdium';
 
 export default class DBus {

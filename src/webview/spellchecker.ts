@@ -1,6 +1,6 @@
 import { ipcRenderer } from 'electron';
-import { SPELLCHECKER_LOCALES } from '../i18n/languages';
 import { isMac } from '../environment';
+import { SPELLCHECKER_LOCALES } from '../i18n/languages';
 
 const debug = require('../preload-safe-debug')('Ferdium:spellchecker');
 
