@@ -1,8 +1,8 @@
 import { join } from 'node:path';
-import { app, ipcMain, BrowserWindow } from 'electron';
+import { type BrowserWindow, app, ipcMain } from 'electron';
 import { autorun } from 'mobx';
-import { isMac, isWindows, isLinux } from '../../environment';
-import TrayIcon from '../../lib/Tray';
+import { isLinux, isMac, isWindows } from '../../environment';
+import type TrayIcon from '../../lib/Tray';
 
 const INDICATOR_TASKBAR = 'taskbar';
 const FILE_EXTENSION = isWindows ? 'ico' : 'png';

@@ -1,18 +1,18 @@
-import { Component } from 'react';
-import { autorun, IReactionDisposer } from 'mobx';
-import { observer, inject } from 'mobx-react';
 import classnames from 'classnames';
+import { type IReactionDisposer, autorun } from 'mobx';
+import { inject, observer } from 'mobx-react';
+import { Component } from 'react';
 import TopBarProgress from 'react-topbar-progress-indicator';
-import ServiceModel from '../../../models/Service';
+import { CUSTOM_WEBSITE_RECIPE_ID } from '../../../config';
+import WebControlsScreen from '../../../features/webControls/containers/WebControlsScreen';
+import type ServiceModel from '../../../models/Service';
+import type { RealStores } from '../../../stores';
 import StatusBarTargetUrl from '../../ui/StatusBarTargetUrl';
 import WebviewLoader from '../../ui/WebviewLoader';
-import WebviewCrashHandler from './WebviewCrashHandler';
-import WebviewErrorHandler from './WebviewErrorHandler';
 import ServiceDisabled from './ServiceDisabled';
 import ServiceWebview from './ServiceWebview';
-import WebControlsScreen from '../../../features/webControls/containers/WebControlsScreen';
-import { CUSTOM_WEBSITE_RECIPE_ID } from '../../../config';
-import { RealStores } from '../../../stores';
+import WebviewCrashHandler from './WebviewCrashHandler';
+import WebviewErrorHandler from './WebviewErrorHandler';
 
 interface IProps {
   service: ServiceModel;

@@ -1,4 +1,4 @@
-import { ipcMain, BrowserWindow } from 'electron';
+import { BrowserWindow, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import { appEvents } from '../..';
 

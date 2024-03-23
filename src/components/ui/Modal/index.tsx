@@ -1,8 +1,8 @@
-import { Component, ReactNode } from 'react';
-import ReactModal from 'react-modal';
-import classnames from 'classnames';
-import injectCSS, { WithStylesProps } from 'react-jss';
 import { mdiClose } from '@mdi/js';
+import classnames from 'classnames';
+import { Component, type ReactNode } from 'react';
+import injectCSS, { type WithStylesProps } from 'react-jss';
+import ReactModal from 'react-modal';
 
 import Icon from '../icon';
 import styles from './styles';

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import ServiceModel from '../models/Service';
-import { ActionDefinitions } from './lib/actions';
+import type { ActionDefinitions } from './lib/actions';
 
 export default <ActionDefinitions>{
   setActive: {

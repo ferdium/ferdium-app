@@ -2,9 +2,9 @@
 import { mdiClose } from '@mdi/js';
 import classnames from 'classnames';
 import { noop } from 'lodash';
-import { Component, ReactElement, ReactNode } from 'react';
-import withStyles, { WithStylesProps } from 'react-jss';
-import { Theme } from '../../../themes';
+import { Component, type ReactElement, type ReactNode } from 'react';
+import withStyles, { type WithStylesProps } from 'react-jss';
+import type { Theme } from '../../../themes';
 import Icon from '../icon';
 
 const buttonStyles = (theme: Theme) => {

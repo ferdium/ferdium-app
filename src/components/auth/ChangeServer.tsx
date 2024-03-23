@@ -1,19 +1,23 @@
-import { Component, FormEvent, ReactElement } from 'react';
-import { observer } from 'mobx-react';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { mdiArrowLeftCircle } from '@mdi/js';
 import { noop } from 'lodash';
+import { observer } from 'mobx-react';
+import { Component, type FormEvent, type ReactElement } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
+import { LIVE_FERDIUM_API, LIVE_FRANZ_API } from '../../config';
+import { url, required } from '../../helpers/validation-helpers';
+import globalMessages from '../../i18n/globalMessages';
 import Form from '../../lib/Form';
-import Input from '../ui/input/index';
+import Infobox from '../ui/Infobox';
+import Link from '../ui/Link';
 import Select from '../ui/Select';
 import Button from '../ui/button';
-import Link from '../ui/Link';
-import Infobox from '../ui/Infobox';
-import { url, required } from '../../helpers/validation-helpers';
-import { LIVE_FERDIUM_API, LIVE_FRANZ_API } from '../../config';
-import globalMessages from '../../i18n/globalMessages';
 import { H1 } from '../ui/headline';
 import Icon from '../ui/icon';
+import Input from '../ui/input/index';
 
 const messages = defineMessages({
   headline: {

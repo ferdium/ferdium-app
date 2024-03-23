@@ -1,14 +1,18 @@
-import { Component, ReactElement } from 'react';
-import { observer, inject } from 'mobx-react';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { noop } from 'lodash';
-import serverlessLogin from '../../helpers/serverless-helpers';
-import shuffleArray from '../../helpers/array-helpers';
+import { inject, observer } from 'mobx-react';
+import { Component, type ReactElement } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
+import type { StoresProps } from '../../@types/ferdium-components.types';
 import { serverName } from '../../api/apiBase';
+import shuffleArray from '../../helpers/array-helpers';
+import serverlessLogin from '../../helpers/serverless-helpers';
+import type RecipePreview from '../../models/RecipePreview';
 import Link from '../ui/Link';
 import { H1 } from '../ui/headline';
-import { StoresProps } from '../../@types/ferdium-components.types';
-import RecipePreview from '../../models/RecipePreview';
 
 const messages = defineMessages({
   signupButton: {

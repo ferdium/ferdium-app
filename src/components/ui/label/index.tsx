@@ -1,8 +1,8 @@
 import classnames from 'classnames';
-import { Component, LabelHTMLAttributes } from 'react';
-import injectSheet, { WithStylesProps } from 'react-jss';
+import { Component, type LabelHTMLAttributes } from 'react';
+import injectSheet, { type WithStylesProps } from 'react-jss';
 
-import { IFormField } from '../typings/generic';
+import type { IFormField } from '../typings/generic';
 
 import styles from './styles';
 

@@ -1,12 +1,16 @@
-import { Component, PropsWithChildren, ReactElement } from 'react';
-import { observer } from 'mobx-react';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { mdiClose } from '@mdi/js';
+import { observer } from 'mobx-react';
+import { Component, type PropsWithChildren, type ReactElement } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
 import { Outlet } from 'react-router-dom';
-import ErrorBoundary from '../util/ErrorBoundary';
+import { isEscKeyPress } from '../../jsUtils';
 import Appear from '../ui/effects/Appear';
 import Icon from '../ui/icon';
-import { isEscKeyPress } from '../../jsUtils';
+import ErrorBoundary from '../util/ErrorBoundary';
 
 const messages = defineMessages({
   closeSettings: {

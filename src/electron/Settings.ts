@@ -1,5 +1,5 @@
+import { outputJsonSync, pathExistsSync, readJsonSync } from 'fs-extra';
 import { makeObservable, observable, toJS } from 'mobx';
-import { pathExistsSync, outputJsonSync, readJsonSync } from 'fs-extra';
 import { userDataPath } from '../environment-remote';
 
 const debug = require('../preload-safe-debug')('Ferdium:Settings');

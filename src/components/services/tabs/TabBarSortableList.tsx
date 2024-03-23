@@ -1,9 +1,9 @@
-import { Component } from 'react';
 import { observer } from 'mobx-react';
+import { Component } from 'react';
 import { SortableContainer } from 'react-sortable-hoc';
 
+import type Service from '../../../models/Service';
 import TabItem from './TabItem';
-import Service from '../../../models/Service';
 
 interface IProps {
   showMessageBadgeWhenMutedSetting: boolean;

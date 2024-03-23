@@ -1,16 +1,16 @@
 import PropTypes from 'prop-types';
 
+import { todoActions } from '../features/todos/actions';
+import workspaces from '../features/workspaces/actions';
+import app from './app';
 import defineActions from './lib/actions';
-import service from './service';
 import recipe from './recipe';
 import recipePreview from './recipePreview';
-import ui from './ui';
-import app from './app';
-import user from './user';
-import settings from './settings';
 import requests from './requests';
-import workspaces from '../features/workspaces/actions';
-import { todoActions } from '../features/todos/actions';
+import service from './service';
+import settings from './settings';
+import ui from './ui';
+import user from './user';
 
 const actions = {
   service,

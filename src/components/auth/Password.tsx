@@ -1,16 +1,20 @@
-import { Component, FormEvent } from 'react';
 import { observer } from 'mobx-react';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
+import { Component, type FormEvent } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
 
 import { noop } from 'lodash';
-import Form from '../../lib/Form';
-import { required, email } from '../../helpers/validation-helpers';
-import Input from '../ui/input/index';
-import Button from '../ui/button';
-import Link from '../ui/Link';
-import Infobox from '../ui/Infobox';
+import { email, required } from '../../helpers/validation-helpers';
 import globalMessages from '../../i18n/globalMessages';
+import Form from '../../lib/Form';
+import Infobox from '../ui/Infobox';
+import Link from '../ui/Link';
+import Button from '../ui/button';
 import { H1 } from '../ui/headline';
+import Input from '../ui/input/index';
 
 const messages = defineMessages({
   headline: {

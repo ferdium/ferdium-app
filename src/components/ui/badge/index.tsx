@@ -1,8 +1,8 @@
 import classnames from 'classnames';
-import { Component, ReactNode } from 'react';
-import injectStyle, { WithStylesProps } from 'react-jss';
+import { Component, type ReactNode } from 'react';
+import injectStyle, { type WithStylesProps } from 'react-jss';
 
-import { Theme } from '../../../themes';
+import type { Theme } from '../../../themes';
 
 const badgeStyles = (theme: Theme) => {
   const styles = {};

@@ -1,9 +1,9 @@
-import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
+import { Component, type ReactElement } from 'react';
 
-import {
-  StoresProps,
+import type {
   GlobalError,
+  StoresProps,
 } from '../../@types/ferdium-components.types';
 import Signup from '../../components/auth/Signup';
 

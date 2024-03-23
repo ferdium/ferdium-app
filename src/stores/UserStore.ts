@@ -1,16 +1,16 @@
-import { observable, computed, action, makeObservable } from 'mobx';
-import moment from 'moment';
-import jwt from 'jsonwebtoken';
-import localStorage from 'mobx-localstorage';
 import { ipcRenderer } from 'electron';
+import jwt from 'jsonwebtoken';
+import { action, computed, makeObservable, observable } from 'mobx';
+import localStorage from 'mobx-localstorage';
+import moment from 'moment';
 
-import { ApiInterface } from '../api';
-import { Actions } from '../actions/lib/actions';
-import { Stores } from '../@types/stores.types';
+import type { Stores } from '../@types/stores.types';
+import type { Actions } from '../actions/lib/actions';
+import type { ApiInterface } from '../api';
 import { TODOS_PARTITION_ID } from '../config';
 import { isDevMode } from '../environment-remote';
-import Request from './lib/Request';
 import CachedRequest from './lib/CachedRequest';
+import Request from './lib/Request';
 import TypedStore from './lib/TypedStore';
 
 const debug = require('../preload-safe-debug')('Ferdium:UserStore');

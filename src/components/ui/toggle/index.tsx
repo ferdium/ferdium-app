@@ -1,13 +1,13 @@
 import classnames from 'classnames';
-import { Property } from 'csstype';
+import type { Property } from 'csstype';
 import { noop } from 'lodash';
-import { Component, InputHTMLAttributes, ReactElement } from 'react';
-import withStyles, { WithStylesProps } from 'react-jss';
-import { Theme } from '../../../themes';
+import { Component, type InputHTMLAttributes, type ReactElement } from 'react';
+import withStyles, { type WithStylesProps } from 'react-jss';
+import type { Theme } from '../../../themes';
 // biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
 import Error from '../error';
 import Label from '../label';
-import { IFormField } from '../typings/generic';
+import type { IFormField } from '../typings/generic';
 import Wrapper from '../wrapper';
 
 const buttonTransition: string = window?.matchMedia(

@@ -1,9 +1,9 @@
 import classnames from 'classnames';
-import { Component } from 'react';
-import injectStyle, { WithStylesProps } from 'react-jss';
-import { Oval } from 'react-loader-spinner';
 import { inject } from 'mobx-react';
-import { FerdiumStores } from '../../../@types/stores.types';
+import { Component } from 'react';
+import injectStyle, { type WithStylesProps } from 'react-jss';
+import { Oval } from 'react-loader-spinner';
+import type { FerdiumStores } from '../../../@types/stores.types';
 import { DEFAULT_LOADER_COLOR } from '../../../config';
 
 const styles = () => ({

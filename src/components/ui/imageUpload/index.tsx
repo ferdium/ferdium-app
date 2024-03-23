@@ -1,11 +1,11 @@
-import { Component, ReactElement } from 'react';
-import { observer } from 'mobx-react';
-import classnames from 'classnames';
-import Dropzone from 'react-dropzone';
 import { mdiDelete, mdiFileImage } from '@mdi/js';
+import classnames from 'classnames';
+import { observer } from 'mobx-react';
 import prettyBytes from 'pretty-bytes';
-import Icon from '../icon';
+import { Component, type ReactElement } from 'react';
+import Dropzone from 'react-dropzone';
 import { isWindows } from '../../../environment';
+import Icon from '../icon';
 
 interface IProps {
   field: any;

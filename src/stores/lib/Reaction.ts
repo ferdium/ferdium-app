@@ -1,4 +1,4 @@
-import { autorun, IReactionDisposer, IReactionPublic } from 'mobx';
+import { type IReactionDisposer, type IReactionPublic, autorun } from 'mobx';
 
 export default class Reaction {
   public reaction: (r: IReactionPublic) => any;

@@ -1,4 +1,4 @@
-import { Fragment, ReactElement } from 'react';
+import { Fragment, type ReactElement } from 'react';
 
 export interface IProps {
   children:

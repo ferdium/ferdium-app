@@ -1,19 +1,19 @@
-import { RouterStore } from '@superwf/mobx-react-router';
-import { ApiInterface } from '../api';
-import { Actions } from '../actions/lib/actions';
-import AppStore from './AppStore';
-import UserStore from './UserStore';
-import FeaturesStore from './FeaturesStore';
-import SettingsStore from './SettingsStore';
-import ServicesStore from './ServicesStore';
-import RecipesStore from './RecipesStore';
-import RecipePreviewsStore from './RecipePreviewsStore';
-import UIStore from './UIStore';
-import RequestStore from './RequestStore';
-import GlobalErrorStore from './GlobalErrorStore';
-import { workspaceStore } from '../features/workspaces';
+import type { RouterStore } from '@superwf/mobx-react-router';
+import type { Actions } from '../actions/lib/actions';
+import type { ApiInterface } from '../api';
 import { communityRecipesStore } from '../features/communityRecipes';
 import { todosStore } from '../features/todos';
+import { workspaceStore } from '../features/workspaces';
+import AppStore from './AppStore';
+import FeaturesStore from './FeaturesStore';
+import GlobalErrorStore from './GlobalErrorStore';
+import RecipePreviewsStore from './RecipePreviewsStore';
+import RecipesStore from './RecipesStore';
+import RequestStore from './RequestStore';
+import ServicesStore from './ServicesStore';
+import SettingsStore from './SettingsStore';
+import UIStore from './UIStore';
+import UserStore from './UserStore';
 
 export interface RealStores {
   router: RouterStore;

@@ -1,5 +1,5 @@
-import { readdirSync, readFileSync, ensureDirSync } from 'fs-extra';
 import { join } from 'node:path';
+import { ensureDirSync, readFileSync, readdirSync } from 'fs-extra';
 import { userDataCertsPath } from '../environment-remote';
 import { removeNewLines } from '../jsUtils';
 

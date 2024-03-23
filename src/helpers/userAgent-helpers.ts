@@ -3,9 +3,9 @@ import macosVersion from 'macos-version';
 import { chrome } from 'useragent-generator';
 import {
   chromeVersion,
+  is64Bit,
   isMac,
   isWindows,
-  is64Bit,
   osArch,
   osRelease,
 } from '../environment';

@@ -1,8 +1,8 @@
-import { observable, action, makeObservable } from 'mobx';
-import { Response } from 'electron';
-import { Actions } from '../actions/lib/actions';
-import { ApiInterface } from '../api';
-import { Stores } from '../@types/stores.types';
+import type { Response } from 'electron';
+import { action, makeObservable, observable } from 'mobx';
+import type { Stores } from '../@types/stores.types';
+import type { Actions } from '../actions/lib/actions';
+import type { ApiInterface } from '../api';
 import Request from './lib/Request';
 import TypedStore from './lib/TypedStore';
 

@@ -1,5 +1,5 @@
-import { Webview } from 'react-electron-web-view';
 import PropTypes from 'prop-types';
+import type { Webview } from 'react-electron-web-view';
 import { createActionsFromDefinitions } from '../../actions/lib/actions';
 
 export interface TodoClientMessage {

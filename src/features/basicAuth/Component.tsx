@@ -1,17 +1,21 @@
-import { Component, FormEvent, ReactElement } from 'react';
-import injectSheet, { WithStylesProps } from 'react-jss';
-import { observer } from 'mobx-react';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import classnames from 'classnames';
 import { noop } from 'lodash';
+import { observer } from 'mobx-react';
+import { Component, type FormEvent, type ReactElement } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
+import injectSheet, { type WithStylesProps } from 'react-jss';
 import Modal from '../../components/ui/Modal';
-import Input from '../../components/ui/input/index';
 import Button from '../../components/ui/button';
-import { state, resetState, sendCredentials, cancelLogin } from './store';
-import Form from './Form';
-import styles from './styles';
-import globalMessages from '../../i18n/globalMessages';
 import { H1 } from '../../components/ui/headline';
+import Input from '../../components/ui/input/index';
+import globalMessages from '../../i18n/globalMessages';
+import Form from './Form';
+import { cancelLogin, resetState, sendCredentials, state } from './store';
+import styles from './styles';
 
 const messages = defineMessages({
   signIn: {

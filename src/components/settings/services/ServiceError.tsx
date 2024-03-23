@@ -1,7 +1,11 @@
-import { Component, ReactElement } from 'react';
 import { observer } from 'mobx-react';
+import { Component, type ReactElement } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
 import { Link } from 'react-router-dom';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import Infobox from '../../ui/Infobox';
 import Button from '../../ui/button';
 

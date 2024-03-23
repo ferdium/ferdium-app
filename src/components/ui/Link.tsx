@@ -1,9 +1,14 @@
-import { Component, CSSProperties, ReactNode, MouseEvent } from 'react';
-import { inject, observer } from 'mobx-react';
 import classnames from 'classnames';
+import { inject, observer } from 'mobx-react';
+import {
+  type CSSProperties,
+  Component,
+  type MouseEvent,
+  type ReactNode,
+} from 'react';
+import type { StoresProps } from '../../@types/ferdium-components.types';
 import matchRoute from '../../helpers/routing-helpers';
 import { openExternalUrl } from '../../helpers/url-helpers';
-import { StoresProps } from '../../@types/ferdium-components.types';
 
 interface IProps extends Partial<StoresProps> {
   children: ReactNode;
@@ -54,7 +59,6 @@ class Link extends Component<IProps> {
     });
 
     return (
-      // biome-ignore lint/a11y/useValidAnchor: <explanation>
       <a
         href={router.history.createHref(to)}
         className={linkClasses}

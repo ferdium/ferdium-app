@@ -1,5 +1,5 @@
-import { ChangeEventHandler, FocusEventHandler } from 'react';
-import { GlobalError } from './ferdium-components.types';
+import type { ChangeEventHandler, FocusEventHandler } from 'react';
+import type { GlobalError } from './ferdium-components.types';
 
 interface SelectOptions {
   disabled?: boolean;

@@ -1,5 +1,5 @@
-import { PathLike } from 'node:fs';
-import { ipcMain, dialog, BrowserWindow } from 'electron';
+import type { PathLike } from 'node:fs';
+import { BrowserWindow, dialog, ipcMain } from 'electron';
 import { download } from 'electron-dl';
 import { writeFileSync } from 'fs-extra';
 

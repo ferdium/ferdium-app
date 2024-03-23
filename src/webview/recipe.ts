@@ -1,26 +1,24 @@
 /* eslint-disable global-require */
 /* eslint-disable import/no-dynamic-require */
 
-import { join } from 'node:path';
 import { existsSync } from 'node:fs';
-import { noop, debounce } from 'lodash';
-import { contextBridge, ipcRenderer } from 'electron';
-import { autorun, computed, makeObservable, observable } from 'mobx';
-import { pathExistsSync, readFileSync } from 'fs-extra';
+import { join } from 'node:path';
 import {
   disable as disableDarkMode,
   enable as enableDarkMode,
 } from 'darkreader';
+import { contextBridge, ipcRenderer } from 'electron';
+import { pathExistsSync, readFileSync } from 'fs-extra';
+import { debounce, noop } from 'lodash';
+import { autorun, computed, makeObservable, observable } from 'mobx';
 
-import ignoreList from './darkmode/ignore';
 import customDarkModeCss from './darkmode/custom';
+import ignoreList from './darkmode/ignore';
 
 import RecipeWebview from './lib/RecipeWebview';
 import Userscript from './lib/Userscript';
 
 import BadgeHandler from './badge';
-import DialogTitleHandler from './dialogTitle';
-import SessionHandler from './sessionHandler';
 import contextMenu from './contextMenu';
 import {
   darkModeStyleExists,
@@ -28,25 +26,27 @@ import {
   isDarkModeStyleInjected,
   removeDarkModeStyle,
 } from './darkmode';
+import DialogTitleHandler from './dialogTitle';
 import FindInPage from './find';
 import {
-  notificationsClassDefinition,
   NotificationsHandler,
+  notificationsClassDefinition,
 } from './notifications';
 import {
   getDisplayMediaSelector,
   screenShareCss,
   screenShareJs,
 } from './screenshare';
+import SessionHandler from './sessionHandler';
 import {
   getSpellcheckerLocaleByFuzzyIdentifier,
   switchDict,
 } from './spellchecker';
 
+import type { AppStore } from '../@types/stores.types';
 import { DEFAULT_APP_SETTINGS } from '../config';
 import { cleanseJSObject, ifUndefined, safeParseInt } from '../jsUtils';
-import { AppStore } from '../@types/stores.types';
-import Service from '../models/Service';
+import type Service from '../models/Service';
 
 // For some services darkreader tries to use the chrome extension message API
 // This will cause the service to fail loading

@@ -1,11 +1,11 @@
-import { Component, ReactElement } from 'react';
-import { observer } from 'mobx-react';
-import withStyles, { WithStylesProps } from 'react-jss';
 import classnames from 'classnames';
 import { noop } from 'lodash';
-import Toggle from '../../../components/ui/toggle';
+import { observer } from 'mobx-react';
+import { Component, type ReactElement } from 'react';
+import withStyles, { type WithStylesProps } from 'react-jss';
 import ServiceIcon from '../../../components/ui/ServiceIcon';
-import Service from '../../../models/Service';
+import Toggle from '../../../components/ui/toggle';
+import type Service from '../../../models/Service';
 
 const styles = theme => ({
   listItem: {

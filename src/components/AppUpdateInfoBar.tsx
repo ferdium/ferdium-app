@@ -1,12 +1,12 @@
 import { defineMessages, useIntl } from 'react-intl';
 
 import { mdiInformation } from '@mdi/js';
-import { MouseEventHandler } from 'react';
+import type { MouseEventHandler } from 'react';
 import InfoBar from './ui/InfoBar';
 import Icon from './ui/icon';
 
-import { onAuthGoToReleaseNotes } from '../helpers/update-helpers';
 import { isWinPortable } from '../environment';
+import { onAuthGoToReleaseNotes } from '../helpers/update-helpers';
 
 const messages = defineMessages({
   updateAvailable: {

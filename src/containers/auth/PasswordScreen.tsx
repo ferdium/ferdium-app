@@ -1,6 +1,6 @@
-import { Component, ReactElement } from 'react';
 import { inject, observer } from 'mobx-react';
-import { StoresProps } from '../../@types/ferdium-components.types';
+import { Component, type ReactElement } from 'react';
+import type { StoresProps } from '../../@types/ferdium-components.types';
 import Password from '../../components/auth/Password';
 
 class PasswordScreen extends Component<StoresProps> {

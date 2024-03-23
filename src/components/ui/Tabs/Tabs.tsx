@@ -1,7 +1,12 @@
-import { Children, Component, ReactElement, ReactPortal } from 'react';
-import { observer } from 'mobx-react';
 import classnames from 'classnames';
-import { IProps as TabItemProps } from './TabItem';
+import { observer } from 'mobx-react';
+import {
+  Children,
+  Component,
+  type ReactElement,
+  type ReactPortal,
+} from 'react';
+import type { IProps as TabItemProps } from './TabItem';
 
 interface IProps {
   children:

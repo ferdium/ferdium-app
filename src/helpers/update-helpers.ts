@@ -1,5 +1,5 @@
 import { Octokit } from '@octokit/core';
-import { defineMessages, IntlShape } from 'react-intl';
+import { type IntlShape, defineMessages } from 'react-intl';
 
 export function getFerdiumVersion(
   currentLocation: string,

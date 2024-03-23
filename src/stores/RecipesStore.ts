@@ -1,15 +1,15 @@
-import { action, computed, makeObservable, observable } from 'mobx';
 import { readJSONSync } from 'fs-extra';
+import { action, computed, makeObservable, observable } from 'mobx';
 import semver from 'semver';
 
-import Recipe from '../models/Recipe';
-import { Stores } from '../@types/stores.types';
-import { ApiInterface } from '../api';
-import { Actions } from '../actions/lib/actions';
+import type { Stores } from '../@types/stores.types';
+import type { Actions } from '../actions/lib/actions';
+import type { ApiInterface } from '../api';
+import { asarRecipesPath } from '../helpers/asar-helpers';
+import matchRoute from '../helpers/routing-helpers';
+import type Recipe from '../models/Recipe';
 import CachedRequest from './lib/CachedRequest';
 import Request from './lib/Request';
-import matchRoute from '../helpers/routing-helpers';
-import { asarRecipesPath } from '../helpers/asar-helpers';
 import TypedStore from './lib/TypedStore';
 
 const debug = require('../preload-safe-debug')('Ferdium:RecipeStore');

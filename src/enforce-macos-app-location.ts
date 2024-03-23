@@ -1,8 +1,8 @@
 // Enhanced from: https://github.com/dertieran/electron-util/blob/replace-remote/source/enforce-macos-app-location.js
 
+import { api } from './electron-util';
 import { isMac } from './environment';
 import { isDevMode } from './environment-remote';
-import { api } from './electron-util';
 
 export default function enforceMacOSAppLocation(): void {
   if (isDevMode || !isMac || api.app.isInApplicationsFolder()) {

@@ -1,17 +1,21 @@
-import { Component, ReactElement } from 'react';
-import { observer } from 'mobx-react';
-import withStyles, { WithStylesProps } from 'react-jss';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
-import { Tooltip as ReactTooltip } from 'react-tooltip';
-import { mdiPlusBox, mdiCog } from '@mdi/js';
+import { mdiCog, mdiPlusBox } from '@mdi/js';
 import { noop } from 'lodash';
+import { observer } from 'mobx-react';
+import { Component, type ReactElement } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
+import withStyles, { type WithStylesProps } from 'react-jss';
+import { Tooltip as ReactTooltip } from 'react-tooltip';
 import { H1 } from '../../../components/ui/headline';
 import Icon from '../../../components/ui/icon';
-import WorkspaceDrawerItem from './WorkspaceDrawerItem';
 import workspaceActions from '../actions';
-import { workspaceStore } from '../index';
 import { getUserWorkspacesRequest } from '../api';
-import Workspace from '../models/Workspace';
+import { workspaceStore } from '../index';
+import type Workspace from '../models/Workspace';
+import WorkspaceDrawerItem from './WorkspaceDrawerItem';
 
 const messages = defineMessages({
   headline: {

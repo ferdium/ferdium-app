@@ -18,7 +18,7 @@
 import { join } from 'node:path';
 import fold from '@adonisjs/fold';
 import { Ignitor, hooks } from '@adonisjs/ignitor';
-import { readFile, stat, chmod, writeFile } from 'fs-extra';
+import { chmod, readFile, stat, writeFile } from 'fs-extra';
 import { LOCAL_HOSTNAME } from '../config';
 import { isWindows } from '../environment';
 

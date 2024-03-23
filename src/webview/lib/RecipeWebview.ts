@@ -1,6 +1,6 @@
-import { ipcRenderer } from 'electron';
 import { BrowserWindow } from '@electron/remote';
-import { pathExistsSync, readFileSync, existsSync } from 'fs-extra';
+import { ipcRenderer } from 'electron';
+import { existsSync, pathExistsSync, readFileSync } from 'fs-extra';
 import { safeParseInt } from '../../jsUtils';
 
 const debug = require('../../preload-safe-debug')(

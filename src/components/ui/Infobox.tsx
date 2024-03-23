@@ -1,12 +1,21 @@
-import { Component, MouseEventHandler, ReactElement, ReactNode } from 'react';
-import classnames from 'classnames';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
 import { mdiAlert, mdiCheckboxMarkedCircleOutline, mdiClose } from '@mdi/js';
+import classnames from 'classnames';
 import { noop } from 'lodash';
 import { observer } from 'mobx-react';
-import Loader from './loader/index';
-import Icon from './icon';
+import {
+  Component,
+  type MouseEventHandler,
+  type ReactElement,
+  type ReactNode,
+} from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
 import { DEFAULT_LOADER_COLOR } from '../../config';
+import Icon from './icon';
+import Loader from './loader/index';
 
 const icons = {
   'checkbox-marked-circle-outline': mdiCheckboxMarkedCircleOutline,

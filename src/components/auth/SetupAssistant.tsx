@@ -1,17 +1,21 @@
-import { Component } from 'react';
-import { observer } from 'mobx-react';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
-import withStyles, { WithStylesProps } from 'react-jss';
 import classnames from 'classnames';
-import Input from '../ui/input/index';
-import Button from '../ui/button';
-import Badge from '../ui/badge';
-import Modal from '../ui/Modal';
-import Infobox from '../ui/Infobox';
-import Appear from '../ui/effects/Appear';
-import globalMessages from '../../i18n/globalMessages';
+import { observer } from 'mobx-react';
+import { Component } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
+import withStyles, { type WithStylesProps } from 'react-jss';
 import { CDN_URL } from '../../config';
+import globalMessages from '../../i18n/globalMessages';
+import Infobox from '../ui/Infobox';
+import Modal from '../ui/Modal';
+import Badge from '../ui/badge';
+import Button from '../ui/button';
+import Appear from '../ui/effects/Appear';
 import { H1, H2 } from '../ui/headline';
+import Input from '../ui/input/index';
 
 const SLACK_ID = 'slack';
 

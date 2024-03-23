@@ -1,6 +1,6 @@
 import path from 'node:path';
-import fs from 'fs-extra';
 import allContributors from 'all-contributors-cli';
+import fs from 'fs-extra';
 
 /**
  * Add CrowdIn Contributors to AllContributors list

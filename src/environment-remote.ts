@@ -1,16 +1,16 @@
 import { join } from 'node:path';
-import { api as electronApi } from './electron-util';
 import {
-  LIVE_FERDIUM_API,
+  DEV_API_FRANZ_WEBSITE,
   DEV_FRANZ_API,
+  DEV_WS_API,
+  LIVE_API_FERDIUM_WEBSITE,
+  LIVE_FERDIUM_API,
+  LIVE_WS_API,
   LOCAL_API,
   LOCAL_API_WEBSITE,
-  DEV_API_FRANZ_WEBSITE,
-  LIVE_API_FERDIUM_WEBSITE,
-  LIVE_WS_API,
   LOCAL_WS_API,
-  DEV_WS_API,
 } from './config';
+import { api as electronApi } from './electron-util';
 import { isWindows } from './environment';
 
 export const { app } = electronApi;

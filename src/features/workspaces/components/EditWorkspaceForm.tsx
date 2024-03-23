@@ -1,21 +1,25 @@
-import { Component, ReactElement } from 'react';
-import { observer } from 'mobx-react';
-import { defineMessages, injectIntl, WrappedComponentProps } from 'react-intl';
-import { Link } from 'react-router-dom';
-import withStyles, { WithStylesProps } from 'react-jss';
 import { noop } from 'lodash';
+import { observer } from 'mobx-react';
+import { Component, type ReactElement } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
+import withStyles, { type WithStylesProps } from 'react-jss';
+import { Link } from 'react-router-dom';
+import Button from '../../../components/ui/button';
+import { H2 } from '../../../components/ui/headline';
 import Infobox from '../../../components/ui/infobox/index';
 import Input from '../../../components/ui/input';
-import Button from '../../../components/ui/button';
-import Workspace from '../models/Workspace';
-import Service from '../../../models/Service';
-import Form from '../../../lib/Form';
-import { required } from '../../../helpers/validation-helpers';
-import WorkspaceServiceListItem from './WorkspaceServiceListItem';
-import Request from '../../../stores/lib/Request';
-import { KEEP_WS_LOADED_USID } from '../../../config';
 import Toggle from '../../../components/ui/toggle';
-import { H2 } from '../../../components/ui/headline';
+import { KEEP_WS_LOADED_USID } from '../../../config';
+import { required } from '../../../helpers/validation-helpers';
+import Form from '../../../lib/Form';
+import type Service from '../../../models/Service';
+import type Request from '../../../stores/lib/Request';
+import type Workspace from '../models/Workspace';
+import WorkspaceServiceListItem from './WorkspaceServiceListItem';
 
 const messages = defineMessages({
   buttonDelete: {

@@ -1,4 +1,4 @@
-import { BrowserWindow } from 'electron';
+import type { BrowserWindow } from 'electron';
 
 export default (params: { mainWindow: BrowserWindow }) => {
   params.mainWindow.on('focus', () => {

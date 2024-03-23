@@ -1,4 +1,4 @@
-import Reaction from '../../stores/lib/Reaction';
+import type Reaction from '../../stores/lib/Reaction';
 
 export default class FeatureStore {
   _actions: any = [];
