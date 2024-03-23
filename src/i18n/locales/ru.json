@@ -63,6 +63,8 @@
   "locked.submit.label": "Разблокировать",
   "locked.touchId": "Разблокировать с Touch ID",
   "locked.unlockWithPassword": "Разблокировать паролем",
+  "login.changeServer": "Изменить здесь!",
+  "login.changeServerMessage": "Вы используете {serverNameParse} сервер, вы хотите переключиться?",
   "login.customServerQuestion": "Использовать пользовательский сервер Ferdium?",
   "login.email.label": "Адрес электронной почты",
   "login.headline": "Вход",
