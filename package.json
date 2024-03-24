@@ -129,7 +129,7 @@
     "route-parser": "0.0.5",
     "sanitize-filename": "1.6.3",
     "semver": "7.6.0",
-    "sqlite3": "5.1.6",
+    "sqlite3": "5.1.7",
     "tar": "6.2.0",
     "tslib": "2.6.2",
     "useragent-generator": "1.1.1-amkt-22079-finish.0",
