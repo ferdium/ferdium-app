@@ -55,6 +55,9 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
+      - name: Use python specified in the '.python-version' file
+        uses: actions/setup-python@v5
+        if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
       - name: Install node dependencies
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
         uses: nick-fields/retry@v3
@@ -63,6 +66,10 @@ jobs:
           timeout_minutes: 15
           max_attempts: 3
           retry_on: error
+      - name: rebuild native dependencies
+        if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
+        run: |
+          pnpm i sqlite3
       - id: should_run
         name: Check whether there are any commits since this run was last triggered and push them and/or set the output
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
@@ -177,6 +184,8 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
+      - name: Use python specified in the '.python-version' file
+        uses: actions/setup-python@v5
       - name: Install node dependencies
         uses: nick-fields/retry@v3
         with:
@@ -184,6 +193,9 @@ jobs:
           timeout_minutes: 15
           max_attempts: 3
           retry_on: error
+      - name: rebuild native dependencies
+        run: |
+          pnpm i sqlite3
       - name: Package recipes
         run: pnpm i && pnpm lint && pnpm reformat-files && pnpm package
         working-directory: ./recipes
@@ -256,6 +268,8 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
+      - name: Use python specified in the '.python-version' file
+        uses: actions/setup-python@v5
       - name: Install node dependencies
         uses: nick-fields/retry@v3
         with:
@@ -263,6 +277,9 @@ jobs:
           timeout_minutes: 15
           max_attempts: 3
           retry_on: error
+      - name: rebuild native dependencies
+        run: |
+          pnpm i sqlite3
       - name: Figure out used package.json version
         run: |
           PACKAGE_VERSION="$(node -p 'require("./package.json").version')"
@@ -356,6 +373,8 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
+      - name: Use python specified in the '.python-version' file
+        uses: actions/setup-python@v5
       #TODO - Remove this once https://github.com/electron-userland/electron-builder/issues/6933#issuecomment-1213438889 is resolved
       - name: Tweak pnpm.cjs
         run: |
@@ -371,6 +390,9 @@ jobs:
           timeout_minutes: 15
           max_attempts: 3
           retry_on: error
+      - name: rebuild native dependencies
+        run: |
+          pnpm i sqlite3
       - name: Package recipes
         run: pnpm i && pnpm lint && pnpm reformat-files && pnpm package
         working-directory: ./recipes
