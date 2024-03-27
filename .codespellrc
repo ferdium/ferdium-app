@@ -1,6 +1,7 @@
 [codespell]
 # Ref: https://github.com/codespell-project/codespell#using-a-config-file
-skip = .git,*.svg,*.css,.codespellrc
+skip = .git*,*.svg,*.css,.codespellrc,locales,pnpm-lock.yaml,i18n,config.ts,extensions.json
 check-hidden = true
-# ignore-regex = 
+# Case sensitive names etc
+ignore-regex = \b(Manuel|Sie diesen|Sie den|l'authentification)\b
 # ignore-words-list =
