@@ -140,7 +140,7 @@ class QuickSwitchModal extends Component<IProps, IState> {
       this.state.search &&
       compact(invoke(this.state.search, 'match', /^[\da-z]/i)).length > 0
     ) {
-      // Apply simple search algorythm to list of all services
+      // Apply simple search algorithm to list of all services
       services = this.props.stores!.services.allDisplayed;
       services = services.filter(
         service =>

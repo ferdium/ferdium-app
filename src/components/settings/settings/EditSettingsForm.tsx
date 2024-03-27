@@ -88,7 +88,7 @@ const messages = defineMessages({
   lockInfo: {
     id: 'settings.app.lockInfo',
     defaultMessage:
-      'Password Lock allows you to keep your messages protected.\nUsing Password Lock, you will be prompted to enter your password everytime you start Ferdium or lock Ferdium yourself using the lock symbol in the bottom left corner or the shortcut {lockShortcut}.',
+      'Password Lock allows you to keep your messages protected.\nUsing Password Lock, you will be prompted to enter your password every time you start Ferdium or lock Ferdium yourself using the lock symbol in the bottom left corner or the shortcut {lockShortcut}.',
   },
   scheduledDNDTimeInfo: {
     id: 'settings.app.scheduledDNDTimeInfo',
@@ -185,7 +185,7 @@ const messages = defineMessages({
   spellCheckerLanguageInfo: {
     id: 'settings.app.spellCheckerLanguageInfo',
     defaultMessage:
-      "Ferdium uses your Mac's build-in spellchecker to check for typos. If you want to change the languages the spellchecker checks for, you can do so in your Mac's System Preferences.",
+      "Ferdium uses your Mac's built-in spellchecker to check for typos. If you want to change the languages the spellchecker checks for, you can do so in your Mac's System Preferences.",
   },
   subheadlineCache: {
     id: 'settings.app.subheadlineCache',

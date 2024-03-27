@@ -49,7 +49,7 @@ if [ -d "$FERDIUM_PATH" ]; then
 fi
 
 if mv -vf "$FERDI_PATH" "$FERDIUM_PATH"; then
-  echo "Files exported succesfully"
+  echo "Files exported successfully"
 else
   echo "ERROR!"
   echo "No user data was found to be exported. Exiting..."

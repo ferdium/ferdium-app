@@ -22,7 +22,7 @@
     <!--
       ToggleMute:
 
-      Toggles the muted state of notifcations.
+      Toggles the muted state of notifications.
 
       Use the #org.ferdium.Ferdium.Muted property to get or set the current
       muted state.
