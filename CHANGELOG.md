@@ -192,7 +192,7 @@
 - Fix default accent color to Ferdium gradient
 - Fix reload after resume and add idle time setting
 - Don't replace custom icon when service updates
-- Workaroud for in-app Password Recovery
+- Workaround for in-app Password Recovery
 - Fix navigation toolbar buttons not being clickable
 - Fix drag-n-drop not working if the service name is shown
 - Fix ribbon menu style on windows
@@ -225,7 +225,7 @@
 - Resurrect the electron-process-manager for Ferdium
 - Hide sidebar buttons toggled behind a hamburger menu
 - Add monochromatic Service icons option with Dim adjustment
-- Add new service-level option where the user can choose whether to open links in Ferdium or in the default browser. Currently implimented only for discord, skype, steamchat and zoom.
+- Add new service-level option where the user can choose whether to open links in Ferdium or in the default browser. Currently implemented only for discord, skype, steamchat and zoom.
 
 ### Services
 

@@ -29,12 +29,12 @@ const messages = defineMessages({
   connectionError: {
     id: 'settings.releasenotes.connectionError',
     defaultMessage:
-      'An error occured when connecting to Github, please try again later.',
+      'An error occurred when connecting to Github, please try again later.',
   },
   connectionErrorPageMissing: {
     id: 'settings.releasenotes.connectionErrorPageMissing',
     defaultMessage:
-      'An error occured when connecting to Github, the page you are looking for is missing.',
+      'An error occurred when connecting to Github, the page you are looking for is missing.',
   },
 });
 

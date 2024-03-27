@@ -2,7 +2,7 @@
  * Context Menu builder.
  *
  * Based on "electron-spellchecker"'s  ContextMenuBuilder but customized for Ferdium
- * and for usage with Electron's build-in spellchecker
+ * and for usage with Electron's built-in spellchecker
  *
  * Source: https://github.com/electron-userland/electron-spellchecker/blob/master/src/context-menu-builder.js
  */
