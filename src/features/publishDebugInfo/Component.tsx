@@ -48,7 +48,7 @@ const messages = defineMessages({
   },
   published: {
     id: 'feature.publishDebugInfo.published',
-    defaultMessage: 'Your debug log was published and is now availible at',
+    defaultMessage: 'Your debug log was published and is now available at',
   },
 });
 

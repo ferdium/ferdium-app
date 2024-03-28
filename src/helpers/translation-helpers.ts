@@ -8,7 +8,7 @@ export async function translateTo(
 ): Promise<{ text: string; error: boolean }> {
   const errorText =
     // TODO: Need to support i18n
-    'FERDIUM ERROR: An error occured. Please select less text to translate or try again later.';
+    'FERDIUM ERROR: An error occurred. Please select less text to translate or try again later.';
 
   if (translatorEngine === 'Google') {
     const translationResult = await translateGoogle(text, {

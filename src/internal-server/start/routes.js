@@ -64,7 +64,7 @@ Route.get('health', ({ response }) =>
 
 // API is grouped under '/v1/' route
 Route.group(() => {
-  // User authentification
+  // User authentication
   Route.post('auth/signup', 'UserController.signup');
   Route.post('auth/login', 'UserController.login');
 

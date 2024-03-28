@@ -16,7 +16,7 @@ interface Listeners {
 
 export interface Field extends Listeners {
   id?: string;
-  type?: string; // todo specifiy probably
+  type?: string; // todo specify probably
   name?: string;
   value?: any;
   label?: string;
