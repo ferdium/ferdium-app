@@ -55,7 +55,7 @@
     "@adonisjs/auth": "3.2.0",
     "@adonisjs/bodyparser": "2.3.0",
     "@adonisjs/cors": "1.0.7",
-    "@adonisjs/drive": "1.0.4",
+    "@adonisjs/drive": "2.3.0",
     "@adonisjs/fold": "4.1.0",
     "@adonisjs/framework": "5.0.13",
     "@adonisjs/ignitor": "2.0.8",
