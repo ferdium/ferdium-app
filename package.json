@@ -143,7 +143,6 @@
     "@electron/notarize": "1.2.3",
     "@formatjs/cli": "6.2.7",
     "@jest/types": "29.6.3",
-    "@mapbox/node-pre-gyp": "1.0.11",
     "@types/auto-launch": "5.0.5",
     "@types/color": "3.0.6",
     "@types/fs-extra": "11.0.4",
