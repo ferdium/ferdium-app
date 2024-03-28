@@ -55,6 +55,9 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
+      - name: Use python specified in the '.python-version' file
+        uses: actions/setup-python@v5
+        if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
       - name: Install node dependencies
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
         uses: nick-fields/retry@v3
@@ -177,6 +180,8 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
+      - name: Use python specified in the '.python-version' file
+        uses: actions/setup-python@v5
       - name: Install node dependencies
         uses: nick-fields/retry@v3
         with:
@@ -256,6 +261,8 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
+      - name: Use python specified in the '.python-version' file
+        uses: actions/setup-python@v5
       - name: Install node dependencies
         uses: nick-fields/retry@v3
         with:
@@ -356,6 +363,8 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           cache: 'pnpm'
+      - name: Use python specified in the '.python-version' file
+        uses: actions/setup-python@v5
       #TODO - Remove this once https://github.com/electron-userland/electron-builder/issues/6933#issuecomment-1213438889 is resolved
       - name: Tweak pnpm.cjs
         run: |
