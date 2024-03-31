@@ -13,7 +13,7 @@
   - [How can I contribute?](#how-can-i-contribute)
   - [Setting up your development machine](#setting-up-your-development-machine)
     - [Install system-level dependencies](#install-system-level-dependencies)
-      - [Node.js, pnpm, python](#nodejs-pnpm-python)
+      - [Node.js, pnpm](#nodejs-pnpm)
       - [Git](#git)
       - [On Debian/Ubuntu](#on-debianubuntu)
       - [On Fedora](#on-fedora)
@@ -52,7 +52,7 @@ If so, engage in the already existing discussion.
 
 _Note:_ This list can likely get outdated. If so, please refer to the specific version of the [electronuserland builder](https://hub.docker.com/r/electronuserland/builder) that we use in our [Dockerfile](./Dockerfile).
 
-#### Node.js, pnpm, python
+#### Node.js, pnpm
 
 Please make sure you are conforming to the `engines` requirements used by the developers/contributors as specified in the [`package.json`](./package.json#engines) and [`recipes/package.json`](./recipes/package.json#engine) files.
 
@@ -63,14 +63,11 @@ Currently, these are the combinations of system dependencies that work for MacOS
 $ jq --null-input '[inputs.engines] | add' < ./package.json < ./recipes/package.json
 {
   "node": "20.11.1",
-  "pnpm": "8.15.5",
-  "python": "3.11.8"
+  "pnpm": "8.15.5"
 }
 ```
 
-Python is only/mainly required to compile any dependencies for which the binary is not found, and we have to resort to compiling from source (for eg sqlite3)
-
-_Note:_ You can choose any version manager to manage multiple versions of `node` and `pnpm`. For eg, [nvm](https://github.com/nvm-sh/nvm) or [mise](https://github.com/jdx/mise).
+_Note:_ You can choose any version manager to manage multiple versions of `node` and `pnpm`. For eg, [nvm](https://github.com/nvm-sh/nvm) or [asdf](https://github.com/asdf-vm/asdf).
 
 #### Git
 

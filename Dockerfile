@@ -12,7 +12,7 @@ ARG PREVAL_BUILD_INFO_PLACEHOLDERS=true
 
 # Note: 'fpm' is needed for building on ARM machines
 RUN apt-get update -y \
-  && apt-get install --no-install-recommends -y python3 rpm ruby gem \
+  && apt-get install --no-install-recommends -y rpm ruby gem \
   && gem install dotenv -v 2.8.1 --no-ri --no-rdoc --no-document \
   && gem install fpm --no-ri --no-rdoc --no-document
 

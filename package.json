@@ -14,14 +14,12 @@
   "private": true,
   "engines": {
     "node": "20.11.1",
-    "pnpm": "8.15.5",
-    "python": "3.11.8"
+    "pnpm": "8.15.5"
   },
   "engine-strict": true,
   "volta": {
     "node": "20.11.1",
-    "pnpm": "8.15.5",
-    "python": "3.11.8"
+    "pnpm": "8.15.5"
   },
   "packageManager": "pnpm@8.15.5",
   "scripts": {
@@ -129,7 +127,7 @@
     "route-parser": "0.0.5",
     "sanitize-filename": "1.6.3",
     "semver": "7.6.0",
-    "sqlite3": "5.1.7",
+    "sqlite3": "5.1.6",
     "tar": "6.2.0",
     "tslib": "2.6.2",
     "useragent-generator": "1.1.1-amkt-22079-finish.0",
