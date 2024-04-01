@@ -170,7 +170,7 @@
     "esbuild": "0.16.17",
     "esbuild-plugin-copy": "2.1.1",
     "esbuild-runner": "2.2.2",
-    "esbuild-sass-plugin": "2.16.1",
+    "esbuild-sass-plugin": "3.2.0",
     "eslint": "8.57.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-airbnb-typescript": "18.0.0",
