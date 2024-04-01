@@ -135,7 +135,7 @@
     "validator": "13.11.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.6.1",
+    "@biomejs/biome": "1.6.3",
     "@commitlint/cli": "19.2.1",
     "@commitlint/config-conventional": "19.1.0",
     "@electron/notarize": "1.2.3",
