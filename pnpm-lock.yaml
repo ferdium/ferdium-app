@@ -76,7 +76,7 @@ dependencies:
     version: 4.14.0
   '@superwf/mobx-react-router':
     specifier: 7.4.0
-    version: 7.4.0(history@5.3.0)(mobx@6.12.3)(path-to-regexp@6.2.1)
+    version: 7.4.0(history@5.3.0)(mobx@6.12.3)(path-to-regexp@6.2.2)
   auto-launch:
     specifier: 5.0.6
     version: 5.0.6
@@ -2916,7 +2916,7 @@ packages:
       resetable: 1.0.3
     dev: false
 
-  /@superwf/mobx-react-router@7.4.0(history@5.3.0)(mobx@6.12.3)(path-to-regexp@6.2.1):
+  /@superwf/mobx-react-router@7.4.0(history@5.3.0)(mobx@6.12.3)(path-to-regexp@6.2.2):
     resolution: {integrity: sha512-3Mq3p1mTJPYpDkYzAzhFLBCPqP528pHyu2V3UFSwcGGPUiFqFFmz31RIRYFHF13anQ2joxwrSllKZj0NiLMFpw==}
     peerDependencies:
       history: '>=5'
@@ -2925,7 +2925,7 @@ packages:
     dependencies:
       history: 5.3.0
       mobx: 6.12.3
-      path-to-regexp: 6.2.1
+      path-to-regexp: 6.2.2
     dev: false
 
   /@szmarczak/http-timer@4.0.6:
@@ -4667,7 +4667,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001606
+      caniuse-lite: 1.0.30001607
       electron-to-chromium: 1.4.710
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.23.0)
@@ -4923,8 +4923,8 @@ packages:
     resolution: {integrity: sha512-dU+Tx2fsypxTgtLoE36npi3UqcjSSMNYfkqgmoEhtZrraP5VWq0K7FkWVTYa8eMPtnU/G2txVsfdCJTn9uzpuQ==}
     dev: false
 
-  /caniuse-lite@1.0.30001606:
-    resolution: {integrity: sha512-LPbwnW4vfpJId225pwjZJOgX1m9sGfbw/RKJvw/t0QhYOOaTXHvkjVGFGPpvwEzufrjvTlsULnVTxdy4/6cqkg==}
+  /caniuse-lite@1.0.30001607:
+    resolution: {integrity: sha512-WcvhVRjXLKFB/kmOFVwELtMxyhq3iM/MvmXcyCe2PNf166c39mptscOc/45TTS96n2gpNV2z7+NakArTWZCQ3w==}
 
   /caseless@0.12.0:
     resolution: {integrity: sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==}
@@ -11117,8 +11117,8 @@ packages:
     resolution: {integrity: sha512-G6zHoVqC6GGTQkZwF4lkuEyMbVOjoBKAEybQUypI1WTkqinCOrq2x6U2+phkJ1XsEMTy4LjtwPI7HW+NVrRR2w==}
     dev: false
 
-  /path-to-regexp@6.2.1:
-    resolution: {integrity: sha512-JLyh7xT1kizaEvcaXOQwOc2/Yhw6KZOvPf1S8401UyLk86CU79LN3vl7ztXGm/pZ+YjoyAJ4rxmHwbkBXJX+yw==}
+  /path-to-regexp@6.2.2:
+    resolution: {integrity: sha512-GQX3SSMokngb36+whdpRXE+3f9V8UzyAorlYvOGx87ufGHehNTn5lCxrKtLyZ4Yl/wEKnNnr98ZzOwwDZV5ogw==}
     dev: false
 
   /path-type@4.0.0:
