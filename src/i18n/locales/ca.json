@@ -11,7 +11,6 @@
   "feature.publishDebugInfo.info": "La publicació de la informació de depuració ens ajuda a trobar problemes i errors a Ferdium. En publicar la informació de depuració, accepteu la política de privadesa i els termes del servei de Ferdium Debugger",
   "feature.publishDebugInfo.privacy": "Política de privacitat",
   "feature.publishDebugInfo.publish": "Accepta i publica",
-  "feature.publishDebugInfo.published": "El vostre registre de depuració es va publicar i ja es pot consultar a",
   "feature.publishDebugInfo.terms": "Termes del Servei",
   "feature.publishDebugInfo.title": "Publicar informació de depuració",
   "feature.quickSwitch.info": "Seleccioneu un servei amb TAB, ↑ i ↓. Obriu un servei amb ENTER.",
