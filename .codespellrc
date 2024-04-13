@@ -1,0 +1,9 @@
+[codespell]
+# Ref: https://github.com/codespell-project/codespell#using-a-config-file
+skip = .git*,*.svg,*.css,.codespellrc,locales,pnpm-lock.yaml,i18n,config.ts,extensions.json
+check-hidden = true
+# Case sensitive names, or phrases (typically non-English), to ignore
+# Python style regex. \b is a match at a word boundary
+ignore-regex = \b(Manuel|Sie diesen|Sie den|l'authentification)\b
+# Case insensitive comma separated list of words to ignore
+# ignore-words-list =
