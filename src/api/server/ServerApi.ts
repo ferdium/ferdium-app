@@ -462,7 +462,6 @@ export default class ServerApi {
 
     await sleep(10);
 
-    // @ts-expect-error No overload matches this call.
     await tar.x({
       file: archivePath,
       cwd: recipeTempDirectory,
