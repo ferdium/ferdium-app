@@ -53,9 +53,6 @@ dependencies:
   '@emotion/styled':
     specifier: 11.11.5
     version: 11.11.5(@emotion/react@11.11.4)(@types/react@18.2.77)(react@18.2.0)
-  '@krisdages/electron-process-manager':
-    specifier: 3.0.0
-    version: 3.0.0(@electron/remote@2.1.2)(electron@29.3.0)(rxjs@7.8.1)
   '@mdi/js':
     specifier: 7.4.47
     version: 7.4.47
@@ -77,6 +74,9 @@ dependencies:
   '@superwf/mobx-react-router':
     specifier: 7.4.0
     version: 7.4.0(history@5.3.0)(mobx@6.12.3)(path-to-regexp@6.2.2)
+  '@syed_umair/electron-process-manager':
+    specifier: 1.1.0
+    version: 1.1.0(electron@29.3.0)
   auto-launch:
     specifier: 5.0.6
     version: 5.0.6
@@ -2362,30 +2362,6 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@krisdages/electron-process-manager@3.0.0(@electron/remote@2.1.2)(electron@29.3.0)(rxjs@7.8.1):
-    resolution: {integrity: sha512-Gs8McOVC6BVdfP4SeF+l5nx85eFooarm37K5mxs1PESI59a7oLwRf5Yd2tsZ6Ye14bCG0eTJGDv3yPuixBg3OQ==}
-    peerDependencies:
-      '@electron/remote': '>= 1.2.0'
-      electron: '>= 10'
-      rxjs: '>= 7'
-    dependencies:
-      '@electron/remote': 2.1.2(electron@29.3.0)
-      electron: 29.3.0
-      electron-process-reporter: /@krisdages/electron-process-reporter@2.0.0-rxjs7-1.4.0(rxjs@7.8.1)
-      rxjs: 7.8.1
-    dev: false
-
-  /@krisdages/electron-process-reporter@2.0.0-rxjs7-1.4.0(rxjs@7.8.1):
-    resolution: {integrity: sha512-xcHTmzgMuKsdcP3X61FZ3XAw/5vc3LFgbumKKnswmV0P9k810MMBBeVt5GS9sTSrFju0NYGSBDjn3/X/I2UN/A==}
-    peerDependencies:
-      rxjs: '>= 7'
-    dependencies:
-      memoizee: 0.4.15
-      pidtree: 0.3.1
-      pidusage: 2.0.16
-      rxjs: 7.8.1
-    dev: false
-
   /@kwsites/file-exists@1.1.1:
     resolution: {integrity: sha512-m9/5YGR18lIwxSFDwfE3oA7bWuq9kdau6ugN4H2rJeyhFQZcG9AgSHkQtSD15a8WvTgfz9aikZMrKPHvbpqFiw==}
     dependencies:
@@ -2926,6 +2902,15 @@ packages:
       history: 5.3.0
       mobx: 6.12.3
       path-to-regexp: 6.2.2
+    dev: false
+
+  /@syed_umair/electron-process-manager@1.1.0(electron@29.3.0):
+    resolution: {integrity: sha512-rbDJ1GQ51DcsP+354WpI/3xWOra1HH4cT1jA0maK8VJogn7s5BiMO2XkSBaCoeMCvTIIwx7Y6dgUHpfnL2M6wg==}
+    peerDependencies:
+      electron: '>=21'
+    dependencies:
+      electron: 29.3.0
+      electron-process-reporter: 1.4.0
     dev: false
 
   /@szmarczak/http-timer@4.0.6:
@@ -6057,6 +6042,15 @@ packages:
 
   /electron-find@1.0.7:
     resolution: {integrity: sha512-C2FQJuk8567P2a2loBNwl5c8kwOTQVMB0capgHtPI7zKwZG16X0UxG+sNYZExQfnJ0PA+ecECA/4LcXxQa2TCA==}
+    dev: false
+
+  /electron-process-reporter@1.4.0:
+    resolution: {integrity: sha512-zI5IV7zplV2eHznNbeYtMwATVqXO+g9i2ChpurvGTvExA/rpi7BdSrp38bsTz5tjJLLTz9LmzeSt85uIZ051Qw==}
+    dependencies:
+      memoizee: 0.4.15
+      pidtree: 0.3.1
+      pidusage: 2.0.16
+      rxjs: 5.5.12
     dev: false
 
   /electron-publish@24.13.1:
@@ -12283,6 +12277,13 @@ packages:
       queue-microtask: 1.2.3
     dev: true
 
+  /rxjs@5.5.12:
+    resolution: {integrity: sha512-xx2itnL5sBbqeeiVgNPVuQQ1nC8Jp2WfNJhXWHmElW9YmrpS9UVnNzhP3EH3HFqexO5Tlp8GhYY+WEcqcVMvGw==}
+    engines: {npm: '>=2.0.0'}
+    dependencies:
+      symbol-observable: 1.0.1
+    dev: false
+
   /rxjs@6.6.7:
     resolution: {integrity: sha512-hTdwr+7yYNIT5n4AMYp85KA6yw2Va0FLa3Rguvbpa4W3I5xynaBZo41cM3XM+4Q6fRMj3sBYIR1VAmZMXYJvRQ==}
     engines: {npm: '>=2.0.0'}
@@ -12294,6 +12295,7 @@ packages:
     resolution: {integrity: sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==}
     dependencies:
       tslib: 2.6.2
+    dev: true
 
   /safe-array-concat@1.0.1:
     resolution: {integrity: sha512-6XbUAseYE2KtOuGueyeobCySj9L4+66Tn6KQMOPQJrAJEowYKW/YR/MGJZl7FdydUdaFu4LYyDZjxf4/Nmo23Q==}
@@ -13248,6 +13250,11 @@ packages:
   /supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+
+  /symbol-observable@1.0.1:
+    resolution: {integrity: sha512-Kb3PrPYz4HanVF1LVGuAdW6LoVgIwjUYJGzFe7NDrBLCN4lsV/5J0MFurV+ygS4bRVwrCEt2c7MQ1R2a72oJDw==}
+    engines: {node: '>=0.10.0'}
+    dev: false
 
   /symbol-observable@1.2.0:
     resolution: {integrity: sha512-e900nM8RRtGhlV36KGEU9k65K3mPb1WV70OdjfxlG2EAuM1noi/E/BaW/uMhL7bPEssK8QV57vN3esixjUvcXQ==}
