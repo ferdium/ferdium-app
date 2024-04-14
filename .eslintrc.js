@@ -134,17 +134,9 @@ module.exports = {
     'unicorn/no-null': 0,
     'unicorn/prefer-module': 0,
     'unicorn/prevent-abbreviations': 0,
-    'unicorn/import-style': [
-      2,
-      {
-        styles: {
-          path: {
-            named: true,
-          },
-        },
-      },
-    ],
+    'unicorn/import-style': 0,
     'unicorn/consistent-destructuring': 0,
+    'unicorn/no-anonymous-default-export': 0,
     // eslint-plugin-sonar
     'sonar/function-name': 0,
   },
