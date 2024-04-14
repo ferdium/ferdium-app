@@ -182,7 +182,7 @@
     "eslint-plugin-react": "7.34.1",
     "eslint-plugin-react-hooks": "4.6.0",
     "eslint-plugin-sonar": "0.13.2",
-    "eslint-plugin-unicorn": "51.0.1",
+    "eslint-plugin-unicorn": "52.0.0",
     "gulp-livereload": "4.0.2",
     "husky": "9.0.11",
     "is-ci": "3.0.1",
