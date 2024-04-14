@@ -1,26 +1,9 @@
 {
-  "prettier.singleQuote": true,
   "js/ts.implicitProjectConfig.experimentalDecorators": true,
   "yaml.schemas": {
     "https://json.schemastore.org/github-issue-config.json": ".github/ISSUE_TEMPLATE/config.yml"
   },
-
-  // "editor.fontFamily": "Fira Code",
-  // "editor.fontLigatures": true,
-  "editor.detectIndentation": false,
-  "editor.guides.bracketPairs": "active",
-  "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit",
-    "source.fixAll.eslint": "explicit"
-  },
-
-  // "explorer.confirmDelete": false,
-  // "explorer.confirmDragAndDrop": false,
-
-  // "eslint.runtime": "node",
-  "eslint.format.enable": true,
   "eslint.workingDirectories": [{ "mode": "auto" }],
-  // "eslint.packageManager": "npm",
   "eslint.validate": [
     "javascript",
     "javascriptreact",
@@ -28,20 +11,9 @@
     "typescriptreact"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-
-  // "workbench.colorTheme": "Visual Studio Dark",
-  // "workbench.iconTheme": "material-icon-theme",
-
   "terminal.integrated.sendKeybindingsToShell": true,
-  // "terminal.integrated.copyOnSelection": true,
-  "terminal.integrated.defaultProfile.osx": "zsh",
   "terminal.integrated.cursorBlinking": true,
-
-  "git.enableSmartCommit": true,
   "diffEditor.ignoreTrimWhitespace": false,
-
-  // "formatFiles.runOrganizeImports": true,
-
   "javascript.preferences.importModuleSpecifier": "relative",
   "typescript.preferences.importModuleSpecifier": "relative"
 }
