@@ -183,8 +183,10 @@ export default class SettingsStore extends TypedStore {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  _ensureMigrationAndMarkDone(migrationName: string, callback: Function): void {
+  _ensureMigrationAndMarkDone(
+    migrationName: string,
+    callback: () => void,
+  ): void {
     if (!this.all.migration[migrationName]) {
       callback();
 

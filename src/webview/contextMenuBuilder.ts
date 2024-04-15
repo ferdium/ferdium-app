@@ -288,11 +288,9 @@ export class ContextMenuBuilder {
     this.addPaste(menu, menuInfo);
     this.addPastePlain(menu, menuInfo);
     this.addInspectElement(menu, menuInfo);
-    // @ts-expect-error Expected 1 arguments, but got 2.
-    this.processMenu(menu, menuInfo);
+    this.processMenu(menu);
 
-    // @ts-expect-error Expected 2 arguments, but got 1.
-    this.copyPageUrl(menu);
+    this.copyPageUrl(menu, menuInfo);
     this.goToHomePage(menu, menuInfo);
     this.openInBrowser(menu, menuInfo);
 
@@ -349,14 +347,12 @@ export class ContextMenuBuilder {
     }
 
     this.addInspectElement(menu, menuInfo);
-    // @ts-expect-error Expected 1 arguments, but got 2.
-    this.processMenu(menu, menuInfo);
+    this.processMenu(menu);
 
     this.addSeparator(menu);
     this.goBack(menu);
     this.goForward(menu);
-    // @ts-expect-error Expected 2 arguments, but got 1.
-    this.copyPageUrl(menu);
+    this.copyPageUrl(menu, menuInfo);
     this.goToHomePage(menu, menuInfo);
     this.openInBrowser(menu, menuInfo);
 

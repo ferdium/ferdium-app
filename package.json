@@ -23,7 +23,7 @@
   },
   "packageManager": "pnpm@8.15.5",
   "scripts": {
-    "prepare": "is-ci || husky install",
+    "prepare": "is-ci || husky",
     "start": "electron ./build",
     "start:local": "cross-env USE_LOCAL_API=1 pnpm start",
     "start:live": "cross-env USE_LIVE_API=1 pnpm start",
@@ -49,10 +49,8 @@
     "add-crowdin-contributors": "ts-node scripts/add-crowdin-contributors.ts",
     "debug": "cross-env-shell DEBUG_COLORS=1 DEBUG=Ferdium:* pnpm start:all-dev"
   },
-  "keywords": [],
   "dependencies": {
     "@adonisjs/ace": "5.1.0",
-    "@adonisjs/auth": "3.2.0",
     "@adonisjs/bodyparser": "2.3.0",
     "@adonisjs/cors": "1.0.7",
     "@adonisjs/drive": "1.0.4",
@@ -60,11 +58,9 @@
     "@adonisjs/framework": "5.0.13",
     "@adonisjs/ignitor": "2.0.8",
     "@adonisjs/lucid": "6.3.0",
-    "@adonisjs/session": "1.1.0",
     "@adonisjs/shield": "1.1.0",
     "@adonisjs/validator": "5.1.0",
     "@electron/remote": "2.1.2",
-    "@emotion/react": "11.11.4",
     "@emotion/styled": "11.11.5",
     "@mdi/js": "7.4.47",
     "@mdi/react": "1.6.1",

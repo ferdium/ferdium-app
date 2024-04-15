@@ -50,14 +50,14 @@ export interface IRecipe {
   partition: string;
   local: boolean;
 
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  readonly overrideUserAgent?: null | Function;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  readonly buildUrl?: null | Function;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  readonly modifyRequestHeaders?: null | Function;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  readonly knownCertificateHosts?: null | Function;
+  readonly overrideUserAgent?: () => string;
+
+  readonly buildUrl?: (url: string) => string;
+
+  readonly modifyRequestHeaders?: () => void;
+
+  readonly knownCertificateHosts?: () => void;
+
   readonly events?: null | ((key: string) => string);
 
   // TODO: [TS DEBT] Need to check if below properties are needed and where is inherited / implemented from
