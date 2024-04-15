@@ -135,7 +135,7 @@
     "@biomejs/biome": "1.6.1",
     "@commitlint/cli": "19.2.1",
     "@commitlint/config-conventional": "19.1.0",
-    "@electron/notarize": "1.2.3",
+    "@electron/notarize": "2.3.0",
     "@formatjs/cli": "6.2.9",
     "@jest/types": "29.6.3",
     "@types/auto-launch": "5.0.5",
