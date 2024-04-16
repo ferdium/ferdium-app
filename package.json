@@ -52,7 +52,7 @@
   "dependencies": {
     "@adonisjs/ace": "5.1.0",
     "@adonisjs/bodyparser": "2.3.0",
-    "@adonisjs/cors": "1.0.7",
+    "@adonisjs/cors": "2.2.1",
     "@adonisjs/drive": "1.0.4",
     "@adonisjs/fold": "4.1.0",
     "@adonisjs/framework": "5.0.13",
