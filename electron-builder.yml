@@ -70,6 +70,7 @@ mac:
   entitlements: "./build-helpers/entitlements.mas.plist"
   entitlementsInherit: "./build-helpers/entitlements.mas.inherit.plist"
   artifactName: "${productName}-${os}-bundle-${version}-${arch}.${ext}"
+  notarize: false
   target:
     - target: dmg
       arch: [x64, arm64]
