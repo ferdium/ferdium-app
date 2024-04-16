@@ -61,6 +61,7 @@
     "@adonisjs/shield": "1.1.0",
     "@adonisjs/validator": "5.1.0",
     "@electron/remote": "2.1.2",
+    "@emotion/react": "11.11.4",
     "@emotion/styled": "11.11.5",
     "@mdi/js": "7.4.47",
     "@mdi/react": "1.6.1",

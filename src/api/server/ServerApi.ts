@@ -379,7 +379,8 @@ export default class ServerApi {
       .filter(recipe => recipe.id);
 
     // @ts-expect-error Type 'boolean' is not assignable to type 'ConcatArray<IRecipe>'.
-    this.recipes = [...this.recipes, ...this._getDevRecipes()];
+    // eslint-disable-next-line unicorn/prefer-spread
+    this.recipes = this.recipes.concat(this._getDevRecipes());
 
     debug('StubServerApi::getInstalledRecipes resolves', this.recipes);
     return this.recipes;
