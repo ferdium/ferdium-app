@@ -258,7 +258,17 @@ export class ContextMenuBuilder {
       return this.buildMenuForVideo(info);
     }
 
-    if (info.isEditable || info.inputFieldType !== 'none') {
+    if (
+      info.isEditable ||
+      info.formControlType === 'input-email' ||
+      info.formControlType === 'input-file' ||
+      info.formControlType === 'input-number' ||
+      info.formControlType === 'input-search' ||
+      info.formControlType === 'input-telephone' ||
+      info.formControlType === 'input-text' ||
+      info.formControlType === 'input-url' ||
+      info.formControlType === 'text-area'
+    ) {
       return this.buildMenuForTextInput(info);
     }
 
