@@ -97,7 +97,7 @@
     "minimist": "1.2.8",
     "mobx": "6.12.3",
     "mobx-localstorage": "1.2.0",
-    "mobx-react": "7.6.0",
+    "mobx-react": "9.1.1",
     "mobx-react-form": "6.9.4",
     "moment": "2.30.1",
     "ms": "2.1.3",
