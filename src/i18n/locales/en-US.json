@@ -251,6 +251,7 @@
   "settings.app.form.searchEngine": "Search engine",
   "settings.app.form.sentry": "Send telemetry data",
   "settings.app.form.serviceRibbonWidth": "Sidebar width",
+  "settings.app.form.showAllServicesWorkspace": "Show \"All services\" workspace",
   "settings.app.form.showDisabledServices": "Display disabled services tabs",
   "settings.app.form.showDragArea": "Show draggable area on window",
   "settings.app.form.showMessagesBadgesWhenMuted": "Show unread message badge when notifications are disabled",
