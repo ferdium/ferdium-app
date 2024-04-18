@@ -124,6 +124,7 @@
   "menu.view.back": "Back",
   "menu.view.forward": "Forward",
   "menu.view.lockFerdium": "Lock Ferdium",
+  "menu.view.openProcessManager": "Open Process Manager",
   "menu.view.openQuickSwitch": "Open Quick Switch",
   "menu.view.reloadFerdium": "Reload Ferdium",
   "menu.view.reloadService": "Reload Service",
