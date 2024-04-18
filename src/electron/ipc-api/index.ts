@@ -1,6 +1,7 @@
 import type { BrowserWindow } from 'electron';
 import type TrayIcon from '../../lib/Tray';
 import appIndicator from './appIndicator';
+// eslint-disable-next-line import/no-cycle
 import autoUpdate from './autoUpdate';
 import dnd from './dnd';
 import download from './download';

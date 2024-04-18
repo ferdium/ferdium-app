@@ -129,7 +129,9 @@ class ImageUpload extends Component<IProps, IState> {
             </>
           ) : (
             <Dropzone
+              // eslint-disable-next-line react/jsx-no-bind
               onDropAccepted={this.onDropAccepted.bind(this)}
+              // eslint-disable-next-line react/jsx-no-bind
               onDropRejected={this.onDropRejected.bind(this)}
               multiple={multiple}
               accept={{

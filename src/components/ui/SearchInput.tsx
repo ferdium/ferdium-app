@@ -98,6 +98,7 @@ class SearchInput extends Component<IProps, IState> {
           />
         </label>
         {value.length > 0 && (
+          // eslint-disable-next-line jsx-a11y/no-static-element-interactions
           <span onClick={() => this.reset()} onKeyDown={noop}>
             <Icon icon={mdiCloseCircleOutline} />
           </span>

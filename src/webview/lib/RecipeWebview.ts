@@ -128,7 +128,6 @@ class RecipeWebview {
    *                          be an absolute path to the file
    */
   injectCSS(...files) {
-    // eslint-disable-next-line unicorn/no-array-for-each
     files.forEach(file => {
       if (pathExistsSync(file)) {
         const styles = document.createElement('style');

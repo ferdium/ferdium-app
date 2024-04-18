@@ -8,6 +8,7 @@ const Database = use('Database');
 const User = use('App/Models/User');
 
 const migrateLog = text => {
+  // eslint-disable-next-line no-console
   console.log('\u001B[36m%s\u001B[0m', 'Ferdium Migration:', '\u001B[0m', text);
 };
 

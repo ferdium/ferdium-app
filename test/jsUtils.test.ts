@@ -97,13 +97,13 @@ describe('jsUtils', () => {
   });
 
   describe('isEscKeyPress', () => {
-    it('returns true if the key number is 27', () => {
-      const result = jsUtils.isEscKeyPress(27);
+    it('returns true if the key is "Escape"', () => {
+      const result = jsUtils.isEscKeyPress('Escape');
       expect(result).toEqual(true);
     });
 
-    it('returns false if the key number is 27', () => {
-      const result = jsUtils.isEscKeyPress(28);
+    it('returns false if the key is some other key', () => {
+      const result = jsUtils.isEscKeyPress('Backspace');
       expect(result).toEqual(false);
     });
   });

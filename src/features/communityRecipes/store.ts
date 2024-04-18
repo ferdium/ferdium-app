@@ -27,6 +27,7 @@ export class CommunityRecipesStore extends FeatureStore {
     return this.stores.recipePreviews.dev.map(
       (recipePreview: { isDevRecipe: boolean; author: any[] }) => {
         // TODO: Need to figure out if this is even necessary/used
+        // eslint-disable-next-line no-param-reassign
         recipePreview.isDevRecipe = !!recipePreview.author.some(
           (author: { email: string }) =>
             author.email === this.stores.user.data.email,

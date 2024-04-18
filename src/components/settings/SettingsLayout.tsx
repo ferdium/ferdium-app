@@ -41,7 +41,7 @@ class SettingsLayout extends Component<PropsWithChildren<IProps>> {
   }
 
   handleKeyDown(e: KeyboardEvent): void {
-    if (isEscKeyPress(e.keyCode)) {
+    if (isEscKeyPress(e.key)) {
       this.props.closeSettings();
     }
   }

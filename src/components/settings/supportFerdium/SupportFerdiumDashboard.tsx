@@ -33,7 +33,7 @@ const SupportFerdiumDashboard = () => {
             <a
               href="https://twitter.com/ferdiumteam/"
               target="_blank"
-              rel="noreferrer"
+              rel="noreferrer noopener"
             >
               <img
                 alt="Twitter Follow"
@@ -43,14 +43,18 @@ const SupportFerdiumDashboard = () => {
             <a
               href="https://github.com/ferdium/ferdium-app"
               target="_blank"
-              rel="noreferrer"
+              rel="noreferrer noopener"
             >
               <img
                 alt="GitHub Stars"
                 src="https://img.shields.io/github/stars/ferdium/ferdium-app?style=social"
               />
             </a>
-            <a target="_blank" href={FERDIUM_TRANSLATION} rel="noreferrer">
+            <a
+              target="_blank"
+              href={FERDIUM_TRANSLATION}
+              rel="noreferrer noopener"
+            >
               <img
                 src="https://badges.crowdin.net/ferdium-app/localized.svg"
                 alt="Crowdin"
@@ -59,7 +63,7 @@ const SupportFerdiumDashboard = () => {
             <a
               href="https://opencollective.com/ferdium#section-contributors"
               target="_blank"
-              rel="noreferrer"
+              rel="noreferrer noopener"
             >
               <img
                 alt="Open Collective backers"
@@ -72,7 +76,7 @@ const SupportFerdiumDashboard = () => {
             <a
               href="https://github.com/ferdium/ferdium-app#contributors-"
               target="_blank"
-              rel="noreferrer"
+              rel="noreferrer noopener"
             >
               <img
                 alt="GitHub contributors (non-exhaustive)"

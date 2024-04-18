@@ -129,6 +129,7 @@ class WorkspaceDrawer extends Component<IProps> {
       <div className={`${classes.drawer} workspaces-drawer`}>
         <H1 className={classes.headline}>
           {intl.formatMessage(messages.headline)}
+          {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
           <span
             className={classes.workspacesSettingsButton}
             onKeyDown={noop}
@@ -179,6 +180,7 @@ class WorkspaceDrawer extends Component<IProps> {
               shortcutIndex={index + 1}
             />
           ))}
+          {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
           <div
             className={classes.addNewWorkspaceLabel}
             onClick={() => {

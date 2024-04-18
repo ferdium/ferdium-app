@@ -40,10 +40,9 @@ class TextareaComponent extends Component<IProps> {
     const { data } = this.props;
 
     if (this.textareaRef?.current && data) {
-      Object.keys(data).map(
-        // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-        key => (this.textareaRef.current!.dataset[key] = data[key]),
-      );
+      Object.keys(data).forEach(key => {
+        this.textareaRef.current!.dataset[key] = data[key];
+      });
     }
   }
 

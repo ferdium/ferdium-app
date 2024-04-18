@@ -302,6 +302,7 @@ class QuickSwitchModal extends Component<IProps, IState> {
         isOpen={isModalVisible}
         className={`${classes.modal} quick-switch`}
         shouldCloseOnOverlayClick
+        // eslint-disable-next-line react/jsx-no-bind
         close={this.close.bind(this)}
       >
         <H1 className={classes.headline}>
@@ -318,6 +319,7 @@ class QuickSwitchModal extends Component<IProps, IState> {
 
         <div className={classes.services}>
           {services.map((service, index) => (
+            // eslint-disable-next-line jsx-a11y/no-static-element-interactions
             <div
               className={`${classes.service} ${
                 this.state.selected === index

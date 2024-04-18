@@ -141,13 +141,17 @@ class EditServiceScreen extends Component<IProps> {
     const { action } = this.props.params;
     const { recipes, services } = this.props.stores;
     const { createService, updateService } = this.props.actions.service;
+    // eslint-disable-next-line no-param-reassign
     data.darkReaderSettings = {
       brightness: data.darkReaderBrightness,
       contrast: data.darkReaderContrast,
       sepia: data.darkReaderSepia,
     };
+    // eslint-disable-next-line no-param-reassign
     delete data.darkReaderContrast;
+    // eslint-disable-next-line no-param-reassign
     delete data.darkReaderBrightness;
+    // eslint-disable-next-line no-param-reassign
     delete data.darkReaderSepia;
 
     const serviceData = data;

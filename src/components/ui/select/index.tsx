@@ -197,6 +197,7 @@ class SelectComponent extends Component<IProps, IState> {
     this.arrowKeysHandler = this.arrowKeysHandler.bind(this);
   }
 
+  // eslint-disable-next-line @eslint-react/no-unsafe-component-will-mount
   UNSAFE_componentWillMount(): void {
     const { value } = this.props;
 
@@ -417,6 +418,7 @@ class SelectComponent extends Component<IProps, IState> {
               ref={this.scrollContainerRef}
             >
               {Object.keys(options!).map((key, i) => (
+                // eslint-disable-next-line jsx-a11y/no-static-element-interactions
                 <div
                   key={key}
                   onClick={() => this.select(key)}

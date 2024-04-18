@@ -36,6 +36,7 @@ export const todoActions = createActionsFromDefinitions<TodoActionsType>(
       channel: PropTypes.string.isRequired,
       message: PropTypes.shape({
         action: PropTypes.string.isRequired,
+        // eslint-disable-next-line react/forbid-prop-types
         data: PropTypes.object,
       }),
     },

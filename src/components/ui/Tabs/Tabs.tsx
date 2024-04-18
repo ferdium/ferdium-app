@@ -35,6 +35,7 @@ class Tab extends Component<IProps, IState> {
 
   render(): ReactElement {
     const { children: childElements } = this.props;
+    // eslint-disable-next-line @eslint-react/no-children-to-array
     const children = Children.toArray(childElements); // removes all null values
 
     if (children.length === 1) {
@@ -44,9 +45,10 @@ class Tab extends Component<IProps, IState> {
     return (
       <div className="content-tabs">
         <div className="content-tabs__tabs">
+          {/* eslint-disable-next-line @eslint-react/no-children-map */}
           {Children.map(children, (child, i) => (
             <button
-              // eslint-disable-next-line react/no-array-index-key
+              // eslint-disable-next-line react/no-array-index-key, @eslint-react/no-array-index-key
               key={i}
               className={classnames({
                 'content-tabs__item': true,
@@ -60,9 +62,10 @@ class Tab extends Component<IProps, IState> {
           ))}
         </div>
         <div className="content-tabs__content">
+          {/* eslint-disable-next-line @eslint-react/no-children-map */}
           {Children.map(children, (child, i) => (
             <div
-              // eslint-disable-next-line react/no-array-index-key
+              // eslint-disable-next-line react/no-array-index-key, @eslint-react/no-array-index-key
               key={i}
               className={classnames({
                 'content-tabs__item': true,

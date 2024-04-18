@@ -92,6 +92,7 @@ class EditWorkspaceForm extends Component<IProps> {
     this.form = this.prepareWorkspaceForm(this.props.workspace);
   }
 
+  // eslint-disable-next-line @eslint-react/no-unsafe-component-will-receive-props
   UNSAFE_componentWillReceiveProps(nextProps): void {
     const { workspace } = this.props;
     if (workspace.id !== nextProps.workspace.id) {
@@ -178,11 +179,11 @@ class EditWorkspaceForm extends Component<IProps> {
           <span className="settings__header-item">{workspace.name}</span>
         </div>
         <div className="settings__body">
-          {updateWorkspaceRequest.error && (
+          {updateWorkspaceRequest.error ? (
             <Infobox icon="alert" type="danger">
               Error while saving workspace
             </Infobox>
-          )}
+          ) : null}
           <div className={classes.nameInput}>
             <Input {...form.$('name').bind()} />
             <Toggle {...form.$('keepLoaded').bind()} />
@@ -228,6 +229,7 @@ class EditWorkspaceForm extends Component<IProps> {
             buttonType={isDeleting ? 'secondary' : 'danger'}
             className="settings__delete-button"
             disabled={isDeleting}
+            // eslint-disable-next-line react/jsx-no-bind
             onClick={this.delete.bind(this)}
           />
           {/* ===== Save Button ===== */}
@@ -237,6 +239,7 @@ class EditWorkspaceForm extends Component<IProps> {
             busy={isSaving}
             className="franz-form__button"
             buttonType={isSaving ? 'secondary' : 'primary'}
+            // eslint-disable-next-line react/jsx-no-bind
             onClick={this.save.bind(this, form)}
             // TODO: Need to disable if no services have been added to this workspace
             disabled={isSaving}

@@ -42,6 +42,7 @@ class WorkspaceServiceListItem extends Component<IProps> {
     const { classes, isInWorkspace, onToggle, service } = this.props;
     return (
       // onclick in below div used to fix bug raised under toggle duplicate component removal
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div className={classes.listItem} onClick={onToggle} onKeyDown={noop}>
         <ServiceIcon className={classes.serviceIcon} service={service} />
         <span

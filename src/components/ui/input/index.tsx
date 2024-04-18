@@ -172,7 +172,7 @@ class Input extends Component<IProps, IState> {
             onFocus={onFocus}
             onBlur={onBlur}
             disabled={disabled}
-            onKeyPress={this.onInputKeyPress.bind(this)}
+            onKeyUp={this.onInputKeyPress.bind(this)}
             min={min}
             max={max}
             step={step}
