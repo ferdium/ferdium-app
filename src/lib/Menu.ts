@@ -7,6 +7,7 @@ import {
   systemPreferences,
   webContents,
 } from '@electron/remote';
+import { ipcRenderer } from 'electron';
 import { type MenuItemConstructorOptions, clipboard } from 'electron';
 import { fromJS } from 'immutable';
 import { action, autorun, makeObservable, observable } from 'mobx';
@@ -162,6 +163,10 @@ const menuItems = defineMessages({
   toggleServiceDevTools: {
     id: 'menu.view.toggleServiceDevTools',
     defaultMessage: 'Toggle Service Developer Tools',
+  },
+  openProcessManager: {
+    id: 'menu.view.openProcessManager',
+    defaultMessage: 'Open Process Manager',
   },
   reloadService: {
     id: 'menu.view.reloadService',
@@ -762,6 +767,13 @@ class FranzMenu implements StoresProps {
       (tpl[1].submenu as MenuItemConstructorOptions[]).push(
         {
           type: 'separator',
+        },
+        {
+          label: intl.formatMessage(menuItems.openProcessManager),
+          accelerator: `${shiftKey()}+Escape`,
+          click: () => {
+            ipcRenderer.send('openProcessManager');
+          },
         },
         {
           label: intl.formatMessage(menuItems.toggleDevTools),
