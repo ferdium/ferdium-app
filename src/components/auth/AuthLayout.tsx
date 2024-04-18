@@ -106,6 +106,7 @@ class AuthLayout extends Component<IProps, IState> {
           )}
           <div className="auth__layout">
             {/* Inject globalError into children  */}
+            {/* eslint-disable-next-line @eslint-react/no-clone-element */}
             {cloneElement(children, { error })}
           </div>
           {/* </div> */}

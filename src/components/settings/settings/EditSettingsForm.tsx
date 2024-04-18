@@ -1085,34 +1085,34 @@ class EditSettingsForm extends Component<IProps, IState> {
                   <H3>
                     {intl.formatMessage(messages.subheadlineFerdiumProfile)}
                   </H3>
-                  <p>
-                    <div className="settings__open-settings-file-container">
-                      <Button
-                        buttonType="secondary"
-                        label={intl.formatMessage(
-                          messages.buttonOpenFerdiumProfileFolder,
-                        )}
-                        className="settings__open-settings-file-button"
-                        onClick={() => openPath(profileFolder)}
-                      />
-                      <Button
-                        buttonType="secondary"
-                        label={intl.formatMessage(
-                          messages.buttonOpenFerdiumServiceRecipesFolder,
-                        )}
-                        className="settings__open-settings-file-button"
-                        onClick={() => openPath(recipeFolder)}
-                      />
-                      <Button
-                        buttonType="secondary"
-                        label={intl.formatMessage(
-                          messages.buttonOpenImportExport,
-                        )}
-                        className="settings__open-settings-file-button"
-                        onClick={() => openExternalUrl(serverURL, true)}
-                      />
-                    </div>
-                  </p>
+
+                  <div className="settings__open-settings-file-container">
+                    <Button
+                      buttonType="secondary"
+                      label={intl.formatMessage(
+                        messages.buttonOpenFerdiumProfileFolder,
+                      )}
+                      className="settings__open-settings-file-button"
+                      onClick={() => openPath(profileFolder)}
+                    />
+                    <Button
+                      buttonType="secondary"
+                      label={intl.formatMessage(
+                        messages.buttonOpenFerdiumServiceRecipesFolder,
+                      )}
+                      className="settings__open-settings-file-button"
+                      onClick={() => openPath(recipeFolder)}
+                    />
+                    <Button
+                      buttonType="secondary"
+                      label={intl.formatMessage(
+                        messages.buttonOpenImportExport,
+                      )}
+                      className="settings__open-settings-file-button"
+                      onClick={() => openExternalUrl(serverURL, true)}
+                    />
+                  </div>
+
                   <p className="settings__help">
                     {intl.formatMessage(messages.serverHelp, {
                       serverURL,

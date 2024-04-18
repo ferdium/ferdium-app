@@ -572,6 +572,7 @@ ipcMain.on(
           for (const key in headers) {
             if (Object.prototype.hasOwnProperty.call(headers, key)) {
               const value = headers[key];
+              // eslint-disable-next-line no-param-reassign
               details.requestHeaders[key] = value;
             }
           }

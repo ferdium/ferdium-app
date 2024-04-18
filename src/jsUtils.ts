@@ -9,7 +9,7 @@ export const convertToJSON = (data?: string | any | null) =>
 export const cleanseJSObject = (data?: any | null) =>
   JSON.parse(JSON.stringify(data));
 
-export const isEscKeyPress = (keyCode: number) => keyCode === 27;
+export const isEscKeyPress = (key: string) => key === 'Escape';
 
 export const safeParseInt = (text?: string | number | null) => {
   if (text === undefined || text === null) {

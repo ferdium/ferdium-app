@@ -46,6 +46,7 @@ function generateAccentStyle(accentColorStr) {
   try {
     accentColor = color(accentColorStr);
   } catch {
+    // eslint-disable-next-line no-param-reassign
     accentColorStr = DEFAULT_APP_SETTINGS.accentColor;
     accentColor = color(accentColorStr);
   }

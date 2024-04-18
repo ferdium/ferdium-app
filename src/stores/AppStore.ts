@@ -571,7 +571,7 @@ export default class AppStore extends TypedStore {
     debug(`Removed download ${id}`);
     if (id === null) {
       const indexesToRemove: number[] = [];
-      this.downloads.map(item => {
+      this.downloads.forEach(item => {
         if (!item.state) return;
         if (item.state === 'completed' || item.state === 'cancelled') {
           indexesToRemove.push(this.downloads.indexOf(item));

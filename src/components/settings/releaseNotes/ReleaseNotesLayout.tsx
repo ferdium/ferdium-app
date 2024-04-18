@@ -43,8 +43,8 @@ class ReleaseNotesLayout extends Component<IProps> {
     );
   }
 
-  handleKeyDown(e) {
-    if (isEscKeyPress(e.keyCode)) {
+  handleKeyDown(e: KeyboardEvent) {
+    if (isEscKeyPress(e.key)) {
       this.props.actions!.ui.closeSettings();
     }
   }

@@ -9,6 +9,7 @@
 import path from 'node:path';
 import fs from 'fs-extra';
 
+// eslint-disable-next-line no-console
 console.log('Linking issues and PRs in README.md');
 
 const readmepath = path.join(__dirname, '..', 'README.md');
@@ -60,4 +61,5 @@ readme = readme.replaceAll(/(?<!\[)@\w+(?!])/gi, match => {
 // Write to file
 fs.writeFileSync(readmepath, readme);
 
+// eslint-disable-next-line no-console
 console.log(`Added ${replacements} strings`);

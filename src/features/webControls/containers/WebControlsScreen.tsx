@@ -118,8 +118,10 @@ class WebControlsScreen extends Component<IProps> {
     }
 
     try {
+      // eslint-disable-next-line no-param-reassign
       url = new URL(url).toString();
     } catch {
+      // eslint-disable-next-line no-param-reassign
       url =
         /^((?!-))(xn--)?[\da-z][\d_a-z-]{0,61}[\da-z]{0,1}\.(xn--)?([\da-z-]{1,61}|[\da-z-]{1,30}\.[a-z]{2,})$/.test(
           url,

@@ -43,6 +43,7 @@ class AuthReleaseNotesScreen extends Component<IProps, IState> {
       intl,
     );
 
+    // eslint-disable-next-line @eslint-react/no-set-state-in-component-did-mount
     this.setState({
       data,
     });

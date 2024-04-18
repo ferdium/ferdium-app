@@ -10,6 +10,7 @@ pids
 # Coverage directory used by tools like istanbul
 coverage
 .eslintcache
+.eslintrc.js
 
 # Dependency directory
 # https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
