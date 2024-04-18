@@ -222,6 +222,7 @@
   "settings.app.form.grayscaleServicesDim": "Grayscale dim level",
   "settings.app.form.hibernateOnStartup": "Keep services in hibernation on startup",
   "settings.app.form.hibernationStrategy": "Hibernation strategy",
+  "settings.app.form.hideAllServicesWorkspace": "Hide \"All services\" workspace",
   "settings.app.form.hideCollapseButton": "Hide Collapse button",
   "settings.app.form.hideDownloadButton": "Hide Downloads button",
   "settings.app.form.hideNotificationsButton": "Hide Notifications & Sound button",

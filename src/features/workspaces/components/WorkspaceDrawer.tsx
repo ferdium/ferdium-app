@@ -1,6 +1,6 @@
 import { mdiCog, mdiPlusBox } from '@mdi/js';
 import { noop } from 'lodash';
-import { observer } from 'mobx-react';
+import { inject, observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
 import {
   type WrappedComponentProps,
@@ -9,6 +9,7 @@ import {
 } from 'react-intl';
 import withStyles, { type WithStylesProps } from 'react-jss';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
+import type { StoresProps } from 'src/@types/ferdium-components.types';
 import { H1 } from '../../../components/ui/headline';
 import Icon from '../../../components/ui/icon';
 import workspaceActions from '../actions';
@@ -92,10 +93,14 @@ const styles = theme => ({
   },
 });
 
-interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
+interface IProps
+  extends WithStylesProps<typeof styles>,
+    WrappedComponentProps,
+    StoresProps {
   getServicesForWorkspace: (workspace: Workspace | null) => string[];
 }
 
+@inject('stores')
 @observer
 class WorkspaceDrawer extends Component<IProps> {
   componentDidMount(): void {
@@ -115,6 +120,11 @@ class WorkspaceDrawer extends Component<IProps> {
     const actualWorkspace = isSwitchingWorkspace
       ? nextWorkspace
       : activeWorkspace;
+
+    const { settings } = this.props.stores;
+
+    const { hideAllServicesWorkspace } = settings.all.app;
+
     return (
       <div className={`${classes.drawer} workspaces-drawer`}>
         <H1 className={classes.headline}>
@@ -138,16 +148,18 @@ class WorkspaceDrawer extends Component<IProps> {
           </span>
         </H1>
         <div className={classes.workspaces}>
-          <WorkspaceDrawerItem
-            name={intl.formatMessage(messages.allServices)}
-            onClick={() => {
-              workspaceActions.deactivate();
-              workspaceActions.toggleWorkspaceDrawer();
-            }}
-            services={getServicesForWorkspace(null)}
-            isActive={actualWorkspace == null}
-            shortcutIndex={0}
-          />
+          {!hideAllServicesWorkspace && (
+            <WorkspaceDrawerItem
+              name={intl.formatMessage(messages.allServices)}
+              onClick={() => {
+                workspaceActions.deactivate();
+                workspaceActions.toggleWorkspaceDrawer();
+              }}
+              services={getServicesForWorkspace(null)}
+              isActive={actualWorkspace == null}
+              shortcutIndex={0}
+            />
+          )}
           {workspaces.map((workspace, index) => (
             <WorkspaceDrawerItem
               key={workspace.id}

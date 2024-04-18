@@ -1186,20 +1186,22 @@ class FranzMenu implements StoresProps {
       });
     }
 
-    menu.push(
-      {
-        type: 'separator',
-      },
-      {
-        label: intl.formatMessage(menuItems.defaultWorkspace),
-        accelerator: `${cmdOrCtrlShortcutKey()}+${altKey()}+0`,
-        type: 'radio',
-        checked: !activeWorkspace,
-        click: () => {
-          workspaceActions.deactivate();
+    if (!this.stores.settings.app.hideAllServicesWorkspace) {
+      menu.push(
+        {
+          type: 'separator',
         },
-      },
-    );
+        {
+          label: intl.formatMessage(menuItems.defaultWorkspace),
+          accelerator: `${cmdOrCtrlShortcutKey()}+${altKey()}+0`,
+          type: 'radio',
+          checked: !activeWorkspace,
+          click: () => {
+            workspaceActions.deactivate();
+          },
+        },
+      );
+    }
 
     // Workspace items
     for (const [i, workspace] of workspaces.entries()) {

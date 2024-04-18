@@ -80,6 +80,8 @@ class AppLayoutContainer extends Component<IProps> {
             ? workspaceStore.getWorkspaceServices(workspace).map(s => s.name)
             : services.all.map(s => s.name)
         }
+        stores={this.props.stores}
+        actions={this.props.actions}
       />
     );
 
