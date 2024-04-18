@@ -277,9 +277,9 @@ const messages = defineMessages({
     id: 'settings.app.form.alwaysShowWorkspaces',
     defaultMessage: 'Always show workspace drawer',
   },
-  showAllServicesWorkspace: {
-    id: 'settings.app.form.showAllServicesWorkspace',
-    defaultMessage: 'Show "All services" workspace',
+  hideAllServicesWorkspace: {
+    id: 'settings.app.form.hideAllServicesWorkspace',
+    defaultMessage: 'Hide "All services" workspace',
   },
   accentColor: {
     id: 'settings.app.form.accentColor',
@@ -457,8 +457,8 @@ class EditSettingsScreen extends Component<
         hideSettingsButton: Boolean(settingsData.hideSettingsButton),
         hideDownloadButton: Boolean(settingsData.hideDownloadButton),
         alwaysShowWorkspaces: Boolean(settingsData.alwaysShowWorkspaces),
-        showAllServicesWorkspace: Boolean(
-          settingsData.showAllServicesWorkspace,
+        hideAllServicesWorkspace: Boolean(
+          settingsData.hideAllServicesWorkspace,
         ),
         accentColor: settingsData.accentColor,
         progressbarAccentColor: settingsData.progressbarAccentColor,
@@ -1162,13 +1162,13 @@ class EditSettingsScreen extends Component<
           default: DEFAULT_APP_SETTINGS.alwaysShowWorkspaces,
           type: 'checkbox',
         },
-        showAllServicesWorkspace: {
-          label: intl.formatMessage(messages.showAllServicesWorkspace),
+        hideAllServicesWorkspace: {
+          label: intl.formatMessage(messages.hideAllServicesWorkspace),
           value: ifUndefined<boolean>(
-            settings.all.app.showAllServicesWorkspace,
-            DEFAULT_APP_SETTINGS.showAllServicesWorkspace,
+            settings.all.app.hideAllServicesWorkspace,
+            DEFAULT_APP_SETTINGS.hideAllServicesWorkspace,
           ),
-          default: DEFAULT_APP_SETTINGS.showAllServicesWorkspace,
+          default: DEFAULT_APP_SETTINGS.hideAllServicesWorkspace,
           type: 'checkbox',
         },
         accentColor: {

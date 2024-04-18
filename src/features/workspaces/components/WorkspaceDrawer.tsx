@@ -123,7 +123,7 @@ class WorkspaceDrawer extends Component<IProps> {
 
     const { settings } = this.props.stores;
 
-    const { showAllServicesWorkspace } = settings.all.app;
+    const { hideAllServicesWorkspace } = settings.all.app;
 
     return (
       <div className={`${classes.drawer} workspaces-drawer`}>
@@ -148,7 +148,7 @@ class WorkspaceDrawer extends Component<IProps> {
           </span>
         </H1>
         <div className={classes.workspaces}>
-          {showAllServicesWorkspace && (
+          {!hideAllServicesWorkspace && (
             <WorkspaceDrawerItem
               name={intl.formatMessage(messages.allServices)}
               onClick={() => {

@@ -1186,7 +1186,7 @@ class FranzMenu implements StoresProps {
       });
     }
 
-    if (this.stores.settings.app.showAllServicesWorkspace) {
+    if (!this.stores.settings.app.hideAllServicesWorkspace) {
       menu.push(
         {
           type: 'separator',

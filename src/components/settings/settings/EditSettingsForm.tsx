@@ -839,7 +839,7 @@ class EditSettingsForm extends Component<IProps, IState> {
 
                 <Toggle {...form.$('alwaysShowWorkspaces').bind()} />
 
-                <Toggle {...form.$('showAllServicesWorkspace').bind()} />
+                <Toggle {...form.$('hideAllServicesWorkspace').bind()} />
               </div>
             )}
 
