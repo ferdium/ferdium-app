@@ -202,6 +202,7 @@
       "allowedVersions": {
         "@typescript-eslint/parser": "^7.0.0",
         "esbuild-sass-plugin>esbuild": "^0.16.7",
+        "eslint": "^8.0.0",
         "react-electron-web-view>react": "^18.0.0",
         "react-electron-web-view>react-dom": "^18.0.0",
         "react-sortable-hoc>react": "^18.0.0",
