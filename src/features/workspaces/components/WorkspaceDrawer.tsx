@@ -9,7 +9,7 @@ import {
 } from 'react-intl';
 import withStyles, { type WithStylesProps } from 'react-jss';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
-import type { StoresProps } from 'src/@types/ferdium-components.types';
+import type { StoresProps } from '../../../@types/ferdium-components.types';
 import { H1 } from '../../../components/ui/headline';
 import Icon from '../../../components/ui/icon';
 import workspaceActions from '../actions';

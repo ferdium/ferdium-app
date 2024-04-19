@@ -7,7 +7,7 @@ import {
   injectIntl,
 } from 'react-intl';
 import { Outlet } from 'react-router-dom';
-import { isEscKeyPress } from '../../jsUtils';
+import { isEscapeKeyPress } from '../../jsUtils';
 import Appear from '../ui/effects/Appear';
 import Icon from '../ui/icon';
 import ErrorBoundary from '../util/ErrorBoundary';
@@ -41,7 +41,7 @@ class SettingsLayout extends Component<PropsWithChildren<IProps>> {
   }
 
   handleKeyDown(e: KeyboardEvent): void {
-    if (isEscKeyPress(e.key)) {
+    if (isEscapeKeyPress(e.key)) {
       this.props.closeSettings();
     }
   }

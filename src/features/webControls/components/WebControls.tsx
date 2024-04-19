@@ -15,6 +15,7 @@ import {
 import withStyles, { type WithStylesProps } from 'react-jss';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import Icon from '../../../components/ui/icon';
+import { isEnterKeyPress, isEscapeKeyPress } from '../../../jsUtils';
 
 const messages = defineMessages({
   goHome: {
@@ -215,7 +216,7 @@ class WebControls extends Component<IProps, IState> {
             });
           }}
           onKeyDown={event => {
-            if (event.key === 'Enter') {
+            if (isEnterKeyPress(event.key)) {
               this.setState({
                 editUrl: false,
               });
@@ -224,7 +225,7 @@ class WebControls extends Component<IProps, IState> {
               if (this.inputRef?.current) {
                 this.inputRef.current.blur();
               }
-            } else if (event.key === 'Escape') {
+            } else if (isEscapeKeyPress(event.key)) {
               this.setState({
                 editUrl: false,
                 inputUrl: url,
