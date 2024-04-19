@@ -19,7 +19,7 @@ import globalMessages from '../../../i18n/globalMessages';
 import type Service from '../../../models/Service';
 import Icon from '../../ui/icon';
 import MenuItemConstructorOptions = Electron.MenuItemConstructorOptions;
-import { acceleratorString } from '../../../jsUtils';
+import { acceleratorString, isShiftKeyPress } from '../../../jsUtils';
 
 const IS_SERVICE_DEBUGGING_ENABLED = (
   localStorage.getItem('debug') || ''
@@ -171,8 +171,8 @@ class TabItem extends Component<IProps, IState> {
     );
   }
 
-  handleShortcutIndex = (event, showShortcutIndex = true) => {
-    if (event.key === 'Shift') {
+  handleShortcutIndex = (event: KeyboardEvent, showShortcutIndex = true) => {
+    if (isShiftKeyPress(event.key)) {
       this.setState({ showShortcutIndex });
     }
   };
