@@ -114,6 +114,7 @@ class FerdiumRoutes extends Component<IProps> {
             >
               <Route
                 path="/releasenotes"
+                // @ts-expect-error Fix me
                 element={<ReleaseNotesScreen {...this.props} />}
               />
             </Route>
@@ -184,10 +185,12 @@ class FerdiumRoutes extends Component<IProps> {
               />
               <Route
                 path="/settings/support"
+                // @ts-expect-error Fix me
                 element={<SupportFerdiumScreen {...this.props} />}
               />
               <Route
                 path="/settings/releasenotes"
+                // @ts-expect-error Fix me
                 element={<ReleaseNotesScreen {...this.props} />}
               />
             </Route>

@@ -10,7 +10,7 @@ import {
 import { mdiClose } from '@mdi/js';
 import { Outlet } from 'react-router-dom';
 import type { Actions } from '../../actions/lib/actions';
-import { isEscKeyPress } from '../../jsUtils';
+import { isEscapeKeyPress } from '../../jsUtils';
 import Appear from '../ui/effects/Appear';
 import Icon from '../ui/icon';
 import ErrorBoundary from '../util/ErrorBoundary';
@@ -44,8 +44,8 @@ class DownloadManagerLayout extends Component<IProps> {
     );
   }
 
-  handleKeyDown(e) {
-    if (isEscKeyPress(e.keyCode)) {
+  handleKeyDown(e: KeyboardEvent) {
+    if (isEscapeKeyPress(e.key)) {
       this.props.actions!.ui.closeSettings();
     }
   }

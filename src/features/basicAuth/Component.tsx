@@ -61,6 +61,7 @@ class BasicAuthModal extends Component<IProps> {
       <Modal
         isOpen={isModalVisible}
         className={classes.modal}
+        // eslint-disable-next-line react/jsx-no-bind
         close={this.cancel.bind(this)}
         showClose={false}
       >
@@ -86,6 +87,7 @@ class BasicAuthModal extends Component<IProps> {
               type="button"
               label={intl.formatMessage(globalMessages.cancel)}
               buttonType="secondary"
+              // eslint-disable-next-line react/jsx-no-bind
               onClick={this.cancel.bind(this)}
             />
             <Button

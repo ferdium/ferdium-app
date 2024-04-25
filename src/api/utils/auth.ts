@@ -39,6 +39,7 @@ export const prepareLocalToken = async (requestData: {
   await when(() => !needsToken() || !!localServerToken(), { timeout: 2000 });
   const token = localServerToken();
   if (token) {
+    // eslint-disable-next-line no-param-reassign
     requestData.headers['X-Ferdium-Local-Token'] = token;
   }
 };

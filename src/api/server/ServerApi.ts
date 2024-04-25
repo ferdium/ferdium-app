@@ -462,7 +462,6 @@ export default class ServerApi {
 
     await sleep(10);
 
-    // @ts-expect-error No overload matches this call.
     await tar.x({
       file: archivePath,
       cwd: recipeTempDirectory,
@@ -583,7 +582,7 @@ export default class ServerApi {
           file !== 'temp',
       );
 
-      const recipes = paths
+      const recipes: IRecipe[] = paths
         .map(id => {
           try {
             // eslint-disable-next-line import/no-dynamic-require

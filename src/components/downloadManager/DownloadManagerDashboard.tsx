@@ -47,7 +47,6 @@ interface IState {
   data: string;
 }
 
-// eslint-disable-next-line react/prefer-stateless-function
 class DownloadManagerDashboard extends Component<IProps, IState> {
   render() {
     const { intl, stores, actions } = this.props;

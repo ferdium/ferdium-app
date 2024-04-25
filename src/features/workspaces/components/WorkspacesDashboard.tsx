@@ -105,33 +105,33 @@ class WorkspacesDashboard extends Component<IProps> {
         <div className="settings__body">
           {/* ===== Workspace updated info ===== */}
           {updateWorkspaceRequest.wasExecuted &&
-            updateWorkspaceRequest.result && (
-              <Appear className={classes.appear}>
-                <Infobox
-                  type="success"
-                  icon="checkbox-marked-circle-outline"
-                  dismissible
-                  onUnmount={updateWorkspaceRequest.reset}
-                >
-                  {intl.formatMessage(messages.updatedInfo)}
-                </Infobox>
-              </Appear>
-            )}
+          updateWorkspaceRequest.result ? (
+            <Appear className={classes.appear}>
+              <Infobox
+                type="success"
+                icon="checkbox-marked-circle-outline"
+                dismissible
+                onUnmount={updateWorkspaceRequest.reset}
+              >
+                {intl.formatMessage(messages.updatedInfo)}
+              </Infobox>
+            </Appear>
+          ) : null}
 
           {/* ===== Workspace deleted info ===== */}
           {deleteWorkspaceRequest.wasExecuted &&
-            deleteWorkspaceRequest.result && (
-              <Appear className={classes.appear}>
-                <Infobox
-                  type="success"
-                  icon="checkbox-marked-circle-outline"
-                  dismissible
-                  onUnmount={deleteWorkspaceRequest.reset}
-                >
-                  {intl.formatMessage(messages.deletedInfo)}
-                </Infobox>
-              </Appear>
-            )}
+          deleteWorkspaceRequest.result ? (
+            <Appear className={classes.appear}>
+              <Infobox
+                type="success"
+                icon="checkbox-marked-circle-outline"
+                dismissible
+                onUnmount={deleteWorkspaceRequest.reset}
+              >
+                {intl.formatMessage(messages.deletedInfo)}
+              </Infobox>
+            </Appear>
+          ) : null}
 
           {/* ===== Create workspace form ===== */}
           <div className={classes.createForm}>
@@ -169,7 +169,7 @@ class WorkspacesDashboard extends Component<IProps> {
                       </p>
                     </div>
                   ) : (
-                    <table className={classes.table} role="grid">
+                    <table className={classes.table}>
                       {/* ===== Workspaces list ===== */}
                       <tbody>
                         {workspaces.map(workspace => (

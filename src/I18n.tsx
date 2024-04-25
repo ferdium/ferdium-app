@@ -27,7 +27,9 @@ class I18N extends Component<Props> {
 
     return (
       <IntlProvider
-        {...{ locale, key: locale, messages: translations[locale] }}
+        locale={locale}
+        key={locale}
+        messages={translations[locale]}
         ref={intlProvider => {
           window['ferdium'].intl = intlProvider
             ? intlProvider.state.intl

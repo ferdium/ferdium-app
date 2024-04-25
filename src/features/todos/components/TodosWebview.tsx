@@ -92,6 +92,7 @@ class TodosWebview extends Component<IProps, IState> {
   }
 
   componentDidMount() {
+    // eslint-disable-next-line @eslint-react/no-set-state-in-component-did-mount
     this.setState({
       width: this.props.width,
     });
@@ -173,6 +174,7 @@ class TodosWebview extends Component<IProps, IState> {
     }
 
     return (
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div
         className={classnames({
           [classes.root]: true,
@@ -185,6 +187,7 @@ class TodosWebview extends Component<IProps, IState> {
         ref={this.node}
         id="todos-panel"
       >
+        {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
         <div
           className={classes.resizeHandler}
           style={{

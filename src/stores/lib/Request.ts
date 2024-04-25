@@ -4,7 +4,7 @@ import { action, computed, makeObservable, observable } from 'mobx';
 type Hook = (request: Request) => void;
 
 export default class Request {
-  static _hooks: Hook[] = [];
+  static readonly _hooks: Hook[] = [];
 
   static registerHook(hook: Hook) {
     Request._hooks.push(hook);

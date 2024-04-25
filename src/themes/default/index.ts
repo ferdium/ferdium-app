@@ -7,6 +7,7 @@ import * as legacyStyles from '../legacy';
 
 export default (brandPrimary: string) => {
   if (!brandPrimary) {
+    // eslint-disable-next-line no-param-reassign
     brandPrimary = '#7266F0';
   }
   const brandSuccess = '#5cb85c';

@@ -96,14 +96,62 @@ describe('jsUtils', () => {
     });
   });
 
-  describe('isEscKeyPress', () => {
-    it('returns true if the key number is 27', () => {
-      const result = jsUtils.isEscKeyPress(27);
+  describe('isArrowUpKeyPress', () => {
+    it('returns true if the key is "ArrowUp"', () => {
+      const result = jsUtils.isArrowUpKeyPress('ArrowUp');
       expect(result).toEqual(true);
     });
 
-    it('returns false if the key number is 27', () => {
-      const result = jsUtils.isEscKeyPress(28);
+    it('returns false if the key is some other key', () => {
+      const result = jsUtils.isArrowUpKeyPress('Backspace');
+      expect(result).toEqual(false);
+    });
+  });
+
+  describe('isArrowDownKeyPress', () => {
+    it('returns true if the key is "ArrowDown"', () => {
+      const result = jsUtils.isArrowDownKeyPress('ArrowDown');
+      expect(result).toEqual(true);
+    });
+
+    it('returns false if the key is some other key', () => {
+      const result = jsUtils.isArrowDownKeyPress('Backspace');
+      expect(result).toEqual(false);
+    });
+  });
+
+  describe('isEnterKeyPress', () => {
+    it('returns true if the key is "Enter"', () => {
+      const result = jsUtils.isEnterKeyPress('Enter');
+      expect(result).toEqual(true);
+    });
+
+    it('returns false if the key is some other key', () => {
+      const result = jsUtils.isEnterKeyPress('Backspace');
+      expect(result).toEqual(false);
+    });
+  });
+
+  describe('isEscapeKeyPress', () => {
+    it('returns true if the key is "Escape"', () => {
+      const result = jsUtils.isEscapeKeyPress('Escape');
+      expect(result).toEqual(true);
+    });
+
+    it('returns false if the key is some other key', () => {
+      const result = jsUtils.isEscapeKeyPress('Backspace');
+      expect(result).toEqual(false);
+    });
+  });
+
+  describe('isShiftKeyPress', () => {
+    it('returns true if the key is "Shift"', () => {
+      const result = jsUtils.isShiftKeyPress('Shift');
+      expect(result).toEqual(true);
+    });
+
+    it('returns false if the key is some other key', () => {
+      const result = jsUtils.isShiftKeyPress('Backspace');
       expect(result).toEqual(false);
     });
   });

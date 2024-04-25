@@ -332,6 +332,7 @@ export default class ServicesStore extends TypedStore {
             .slice()
             .sort((a, b) => a.order - b.order)
             .map((s, index) => {
+              // eslint-disable-next-line no-param-reassign
               s.index = index;
               return s;
             }),
@@ -462,6 +463,7 @@ export default class ServicesStore extends TypedStore {
     }
 
     // set default values for serviceData
+    // eslint-disable-next-line no-param-reassign
     serviceData = {
       isEnabled: DEFAULT_SERVICE_SETTINGS.isEnabled,
       isHibernationEnabled: DEFAULT_SERVICE_SETTINGS.isHibernationEnabled,
@@ -649,6 +651,7 @@ export default class ServicesStore extends TypedStore {
   }
 
   @action _setIsActive(service: Service, state: boolean): void {
+    // eslint-disable-next-line no-param-reassign
     service.isActive = state;
   }
 
@@ -742,7 +745,9 @@ export default class ServicesStore extends TypedStore {
   }
 
   @action _detachService({ service }) {
+    // eslint-disable-next-line no-param-reassign
     service.webview = null;
+    // eslint-disable-next-line no-param-reassign
     service.isAttached = false;
   }
 
@@ -1023,6 +1028,7 @@ export default class ServicesStore extends TypedStore {
     }
 
     if (!service.webview) return;
+    // eslint-disable-next-line consistent-return
     return service.webview.loadURL(service.url);
   }
 
@@ -1226,7 +1232,9 @@ export default class ServicesStore extends TypedStore {
 
     // eslint-disable-next-line unicorn/consistent-function-scoping
     const resetTimer = (service: Service) => {
+      // eslint-disable-next-line no-param-reassign
       service.lastPollAnswer = Date.now();
+      // eslint-disable-next-line no-param-reassign
       service.lastPoll = Date.now();
     };
 
@@ -1375,6 +1383,7 @@ export default class ServicesStore extends TypedStore {
       delete serviceData.team;
     }
 
+    // eslint-disable-next-line consistent-return
     return serviceData;
   }
 

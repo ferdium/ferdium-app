@@ -7,7 +7,8 @@ describe('array_helpers', () => {
 
     // Expect the arrays to be exactly the same
     // when both are sorted alphabetically
-    // eslint-disable-next-line sonar/no-alphabetical-sort
-    expect(shuffledArray.sort()).toEqual(originalArray.sort());
+    expect(shuffledArray.toSorted((a, b) => a.localeCompare(b))).toEqual(
+      originalArray.toSorted((a, b) => a.localeCompare(b)),
+    );
   });
 });

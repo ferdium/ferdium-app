@@ -111,6 +111,7 @@ class WorkspaceDrawerItem extends Component<IProps> {
     const contextMenu = Menu.buildFromTemplate(contextMenuTemplate);
 
     return (
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div
         className={classnames([
           classes.item,

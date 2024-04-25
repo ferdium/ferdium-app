@@ -11,15 +11,14 @@ exports.default = async function notarizing(context) {
 
   const appName = context.packager.appInfo.productFilename;
 
-  // @ts-ignore global-require
+  // eslint-disable-next-line global-require
   const { notarize } = require('@electron/notarize');
 
   await notarize({
     tool: 'notarytool',
-    appBundleId: 'org.ferdium.ferdium-app',
     appPath: `${appOutDir}/${appName}.app`,
     teamId: '55E9FPJ93P',
-    appleId: process.env.APPLEID,
-    appleIdPassword: process.env.APPLEID_PASSWORD,
+    appleId: process.env.APPLEID || '',
+    appleIdPassword: process.env.APPLEID_PASSWORD || '',
   });
 };

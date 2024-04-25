@@ -1,4 +1,4 @@
-import { openProcessManager } from '@krisdages/electron-process-manager';
+import { openProcessManager } from '@syed_umair/electron-process-manager';
 import { ipcMain } from 'electron';
 
 export default () => {

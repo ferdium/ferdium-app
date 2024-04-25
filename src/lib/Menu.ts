@@ -7,6 +7,7 @@ import {
   systemPreferences,
   webContents,
 } from '@electron/remote';
+import { ipcRenderer } from 'electron';
 import { type MenuItemConstructorOptions, clipboard } from 'electron';
 import { fromJS } from 'immutable';
 import { action, autorun, makeObservable, observable } from 'mobx';
@@ -162,6 +163,10 @@ const menuItems = defineMessages({
   toggleServiceDevTools: {
     id: 'menu.view.toggleServiceDevTools',
     defaultMessage: 'Toggle Service Developer Tools',
+  },
+  openProcessManager: {
+    id: 'menu.view.openProcessManager',
+    defaultMessage: 'Open Process Manager',
   },
   reloadService: {
     id: 'menu.view.reloadService',
@@ -764,6 +769,13 @@ class FranzMenu implements StoresProps {
           type: 'separator',
         },
         {
+          label: intl.formatMessage(menuItems.openProcessManager),
+          accelerator: `${shiftKey()}+Escape`,
+          click: () => {
+            ipcRenderer.send('openProcessManager');
+          },
+        },
+        {
           label: intl.formatMessage(menuItems.toggleDevTools),
           accelerator: `${cmdOrCtrlShortcutKey()}+${altKey()}+I`,
           enabled: webContents.fromId(1) !== undefined,
@@ -1186,20 +1198,22 @@ class FranzMenu implements StoresProps {
       });
     }
 
-    menu.push(
-      {
-        type: 'separator',
-      },
-      {
-        label: intl.formatMessage(menuItems.defaultWorkspace),
-        accelerator: `${cmdOrCtrlShortcutKey()}+${altKey()}+0`,
-        type: 'radio',
-        checked: !activeWorkspace,
-        click: () => {
-          workspaceActions.deactivate();
+    if (!this.stores.settings.app.hideAllServicesWorkspace) {
+      menu.push(
+        {
+          type: 'separator',
         },
-      },
-    );
+        {
+          label: intl.formatMessage(menuItems.defaultWorkspace),
+          accelerator: `${cmdOrCtrlShortcutKey()}+${altKey()}+0`,
+          type: 'radio',
+          checked: !activeWorkspace,
+          click: () => {
+            workspaceActions.deactivate();
+          },
+        },
+      );
+    }
 
     // Workspace items
     for (const [i, workspace] of workspaces.entries()) {

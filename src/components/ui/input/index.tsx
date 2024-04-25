@@ -16,6 +16,7 @@ import {
   injectIntl,
 } from 'react-intl';
 import withStyles, { type WithStylesProps } from 'react-jss';
+import { isEnterKeyPress } from '../../../jsUtils';
 // biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
 import Error from '../error';
 import Icon from '../icon';
@@ -96,7 +97,7 @@ class Input extends Component<IProps, IState> {
   }
 
   onInputKeyPress(e: KeyboardEvent<HTMLInputElement>): void {
-    if (e.key === 'Enter') {
+    if (isEnterKeyPress(e.key)) {
       const { onEnterKey = noop } = this.props;
       onEnterKey();
     }
@@ -172,7 +173,7 @@ class Input extends Component<IProps, IState> {
             onFocus={onFocus}
             onBlur={onBlur}
             disabled={disabled}
-            onKeyPress={this.onInputKeyPress.bind(this)}
+            onKeyUp={this.onInputKeyPress.bind(this)}
             min={min}
             max={max}
             step={step}

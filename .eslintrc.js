@@ -17,8 +17,9 @@ module.exports = {
     'plugin:unicorn/recommended',
     'plugin:sonar/recommended',
     'plugin:prettier/recommended',
+    'plugin:@eslint-react/recommended-legacy',
   ],
-  plugins: ['jest'],
+  plugins: ['@eslint-react', 'jest'],
   settings: {
     react: {
       pragma: 'React', // Pragma to use, default to "React"
@@ -45,6 +46,7 @@ module.exports = {
         // TODO: Opt-in to a stricter ruleset in the future
         // 'plugin:@typescript-eslint/strict-type-checked',
         'plugin:@typescript-eslint/stylistic-type-checked',
+        'plugin:@eslint-react/recommended-type-checked-legacy',
       ],
       parser: '@typescript-eslint/parser',
       plugins: [],
@@ -70,6 +72,12 @@ module.exports = {
 
         // eslint-plugin-import
         'import/no-extraneous-dependencies': 0,
+
+        // @eslint-react
+        '@eslint-react/no-class-component': 0,
+        '@eslint-react/no-complicated-conditional-rendering': 0,
+        '@eslint-react/no-leaked-conditional-rendering': 0,
+        '@eslint-react/hooks-extra/ensure-custom-hooks-using-other-hooks': 0,
 
         // sonar
         'sonar/no-try-promise': 0,
@@ -105,7 +113,7 @@ module.exports = {
     'react/jsx-filename-extension': 1,
     'react/jsx-no-bind': 1,
     'react/jsx-props-no-spreading': 0,
-    'react/prefer-stateless-function': 1,
+    'react/prefer-stateless-function': 0,
     'react/static-property-placement': 0,
     'react/state-in-constructor': 1,
     'react/sort-comp': 0,
@@ -134,17 +142,10 @@ module.exports = {
     'unicorn/no-null': 0,
     'unicorn/prefer-module': 0,
     'unicorn/prevent-abbreviations': 0,
-    'unicorn/import-style': [
-      2,
-      {
-        styles: {
-          path: {
-            named: true,
-          },
-        },
-      },
-    ],
+    'unicorn/import-style': 0,
     'unicorn/consistent-destructuring': 0,
+    'unicorn/no-anonymous-default-export': 0,
+    'unicorn/no-array-for-each': 0,
     // eslint-plugin-sonar
     'sonar/function-name': 0,
   },
