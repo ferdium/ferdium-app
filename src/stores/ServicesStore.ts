@@ -838,6 +838,16 @@ export default class ServicesStore extends TypedStore {
 
         break;
       }
+
+      case 'load-available-displays': {
+        debug('Received request for capture devices from', serviceId);
+        ipcRenderer.send('load-available-displays', {
+          serviceId,
+          ...args[0],
+        });
+        break;
+      }
+
       case 'notification': {
         const { notificationId, options } = args[0];
 
