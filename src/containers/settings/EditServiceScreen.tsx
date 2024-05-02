@@ -96,6 +96,10 @@ const messages = defineMessages({
     id: 'settings.service.form.trapLinkClicks',
     defaultMessage: 'Open URLs within Ferdium',
   },
+  useFavicon: {
+    id: 'settings.service.form.useFavicon',
+    defaultMessage: 'Use service favicon instead of default or custom icon',
+  },
   onlyShowFavoritesInUnreadCount: {
     id: 'settings.service.form.onlyShowFavoritesInUnreadCount',
     defaultMessage: 'Only show Favorites in unread count',
@@ -256,6 +260,15 @@ class EditServiceScreen extends Component<IProps> {
             DEFAULT_SERVICE_SETTINGS.trapLinkClicks,
           ),
           default: DEFAULT_SERVICE_SETTINGS.trapLinkClicks,
+          type: 'checkbox',
+        },
+        useFavicon: {
+          label: intl.formatMessage(messages.useFavicon),
+          value: ifUndefined<boolean>(
+            service?.useFavicon,
+            DEFAULT_SERVICE_SETTINGS.useFavicon,
+          ),
+          default: DEFAULT_SERVICE_SETTINGS.useFavicon,
           type: 'checkbox',
         },
         isMuted: {

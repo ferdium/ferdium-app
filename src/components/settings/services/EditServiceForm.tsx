@@ -396,6 +396,7 @@ class EditServiceForm extends Component<IProps, IState> {
 
                 <div className="settings__settings-group">
                   <H3>{intl.formatMessage(messages.headlineAppearance)}</H3>
+                  <Toggle {...form.$('useFavicon').bind()} />
                   <Toggle {...form.$('isDarkModeEnabled').bind()} />
                   {form.$('isDarkModeEnabled').value && (
                     <>

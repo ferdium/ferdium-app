@@ -394,6 +394,7 @@
   "settings.service.form.tabOnPremise": "Self hosted ⭐️",
   "settings.service.form.team": "Team",
   "settings.service.form.trapLinkClicks": "Open URLs within Ferdium",
+  "settings.service.form.useFavicon": "Use service favicon instead of default or custom icon",
   "settings.service.form.useHostedService": "Use the hosted {name} service.",
   "settings.service.form.yourServices": "Your services",
   "settings.service.reloadRequired": "Changes require reload of the service",
