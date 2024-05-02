@@ -610,6 +610,11 @@ ipcMain.on('feature-basic-auth-cancel', () => {
   authCallback = noop;
 });
 
+ipcMain.on('load-available-displays', (_e, data) => {
+  debug('MAIN PROCESS: Received load-desktop-capturer-sources');
+  mainWindow?.webContents.send(`select-capture-device:${data.serviceId}`, data);
+});
+
 // Handle synchronous messages from service webviews.
 
 ipcMain.on('find-in-page', (e, text, options) => {

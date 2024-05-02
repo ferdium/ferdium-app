@@ -32,11 +32,7 @@ import {
   NotificationsHandler,
   notificationsClassDefinition,
 } from './notifications';
-import {
-  getDisplayMediaSelector,
-  screenShareCss,
-  screenShareJs,
-} from './screenshare';
+import { getDisplayMediaSelector, screenShareJs } from './screenshare';
 import SessionHandler from './sessionHandler';
 import {
   getSpellcheckerLocaleByFuzzyIdentifier,
@@ -267,7 +263,6 @@ class RecipeController {
 
   async loadUserFiles(recipe, config) {
     const styles = document.createElement('style');
-    styles.innerHTML = screenShareCss;
 
     const userCss = join(recipe.path, 'user.css');
     if (pathExistsSync(userCss)) {

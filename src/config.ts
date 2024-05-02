@@ -49,6 +49,9 @@ export const WEBRTC_IP_HANDLING_POLICY = {
   [disableWebRTCIPHandlingPolicy]: 'Do not expose public or local IPs',
 };
 
+export const SCREENSHARE_CANCELLED_BY_USER =
+  'desktop-capturer-selection__cancel';
+
 // TODO: Need to convert many of these to i18n
 export const HIBERNATION_STRATEGIES = {
   10: 'Extremely Fast Hibernation (10sec)',
