@@ -8,6 +8,7 @@ import { v4 as uuidV4 } from 'uuid';
 import { needsToken } from '../api/apiBase';
 import { DEFAULT_SERVICE_ORDER, DEFAULT_SERVICE_SETTINGS } from '../config';
 import { todosStore } from '../features/todos';
+import { getFaviconUrl } from '../helpers/favicon-helpers';
 import { isValidExternalURL, normalizedUrl } from '../helpers/url-helpers';
 import { ifUndefined } from '../jsUtils';
 import type { IRecipe } from './Recipe';
@@ -134,6 +135,8 @@ export default class Service {
 
   @observable isMediaPlaying: boolean = false;
 
+  @observable useFavicon: boolean = DEFAULT_SERVICE_SETTINGS.useFavicon;
+
   @action _setAutoRun() {
     if (!this.isEnabled) {
       this.webview = null;
@@ -167,6 +170,7 @@ export default class Service {
     this.team = ifUndefined<string>(data.team, this.team);
     this.customUrl = ifUndefined<string>(data.customUrl, this.customUrl);
     this.iconUrl = ifUndefined<string>(data.iconUrl, this.iconUrl);
+    this.useFavicon = ifUndefined<boolean>(data.useFavicon, this.useFavicon);
     this.order = ifUndefined<number>(data.order, this.order);
     this.isEnabled = ifUndefined<boolean>(data.isEnabled, this.isEnabled);
     this.isNotificationEnabled = ifUndefined<boolean>(
@@ -350,6 +354,10 @@ export default class Service {
   }
 
   @computed get icon(): string {
+    if (this.useFavicon) {
+      return getFaviconUrl(this.url);
+    }
+
     if (this.iconUrl) {
       if (needsToken()) {
         let url: URL;
