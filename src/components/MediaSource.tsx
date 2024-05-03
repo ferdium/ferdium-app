@@ -19,10 +19,14 @@ export default function MediaSource(props: IProps) {
   });
 
   useEffect(() => {
-    ipcRenderer
-      .invoke('get-desktop-capturer-sources')
-      .then(sources => setSources(sources));
-  }, []);
+    if (show) {
+      ipcRenderer
+        .invoke('get-desktop-capturer-sources')
+        .then(sources => setSources(sources));
+    } else {
+      setSources([]);
+    }
+  }, [show]);
 
   if (sources.length === 0 || !show) {
     return null;
