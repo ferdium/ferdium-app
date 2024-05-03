@@ -1,6 +1,7 @@
 import { ipcRenderer } from 'electron';
 import { useEffect, useState } from 'react';
 import { SCREENSHARE_CANCELLED_BY_USER } from '../config';
+import { isWayland } from '../environment';
 import type Service from '../models/Service';
 
 export interface IProps {
@@ -18,20 +19,6 @@ export default function MediaSource(props: IProps) {
     setTrackerId(data.trackerId);
   });
 
-  useEffect(() => {
-    if (show) {
-      ipcRenderer
-        .invoke('get-desktop-capturer-sources')
-        .then(sources => setSources(sources));
-    } else {
-      setSources([]);
-    }
-  }, [show]);
-
-  if (sources.length === 0 || !show) {
-    return null;
-  }
-
   const handleOnClick = (e: any) => {
     const { id } = e.currentTarget.dataset;
     window['ferdium'].actions.service.sendIPCMessage({
@@ -45,6 +32,26 @@ export default function MediaSource(props: IProps) {
     setShow(false);
     setTrackerId(null);
   };
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: This effect should only run when `show` changes
+  useEffect(() => {
+    if (show) {
+      ipcRenderer.invoke('get-desktop-capturer-sources').then(sources => {
+        if (isWayland) {
+          // On Linux, we do not need to prompt the user again for the source
+          handleOnClick({ currentTarget: { dataset: { id: sources[0].id } } });
+          return;
+        }
+        setSources(sources);
+      });
+    } else {
+      setSources([]);
+    }
+  }, [show]);
+
+  if (sources.length === 0 || !show) {
+    return null;
+  }
 
   return (
     <div className="desktop-capturer-selection">
