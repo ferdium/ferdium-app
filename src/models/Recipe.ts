@@ -26,6 +26,7 @@ interface RecipeData {
     message?: string;
     allowFavoritesDelineationInUnreadCount?: boolean;
   };
+  defaultIcon: string;
 }
 
 export interface IRecipe {
@@ -49,6 +50,7 @@ export interface IRecipe {
   path: string;
   partition: string;
   local: boolean;
+  defaultIcon: string;
 
   readonly overrideUserAgent?: () => string;
 
@@ -75,6 +77,8 @@ export default class Recipe implements IRecipe {
   description = '';
 
   version = '';
+
+  defaultIcon = '';
 
   // Removing this specific type will cause a typescript error
   // even while it's the exact same as the interface
@@ -135,6 +139,7 @@ export default class Recipe implements IRecipe {
     // from the recipe
     this.id = ifUndefined<string>(data.id, this.id);
     this.name = ifUndefined<string>(data.name, this.name);
+    this.defaultIcon = ifUndefined<string>(data.defaultIcon, this.defaultIcon);
     this.version = ifUndefined<string>(data.version, this.version);
     this.aliases = ifUndefined<string[]>(data.aliases, this.aliases);
     this.serviceURL = ifUndefined<string>(

@@ -377,6 +377,10 @@ export default class Service {
       return this.iconUrl;
     }
 
+    if (this.recipe.defaultIcon) {
+      return this.recipe.defaultIcon;
+    }
+
     return join(this.recipe.path, 'icon.svg');
   }
 
