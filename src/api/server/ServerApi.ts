@@ -12,6 +12,7 @@ import {
   statSync,
   writeFileSync,
 } from 'fs-extra';
+import ms from 'ms';
 import tar from 'tar';
 
 import RecipeModel, { type IRecipe } from '../../models/Recipe';
@@ -460,7 +461,7 @@ export default class ServerApi {
     }
     debug(archivePath);
 
-    await sleep(10);
+    await sleep(ms('10ms'));
 
     await tar.x({
       file: archivePath,
@@ -471,7 +472,7 @@ export default class ServerApi {
       onwarn: x => debug('warn', recipeId, x),
     });
 
-    await sleep(10);
+    await sleep(ms('10ms'));
 
     const { id, defaultIcon } = readJsonSync(
       join(recipeTempDirectory, 'package.json'),
