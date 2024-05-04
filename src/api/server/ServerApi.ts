@@ -481,8 +481,7 @@ export default class ServerApi {
     removeSync(recipeTempDirectory);
     removeSync(join(recipesDirectory, recipeId, 'recipe.tar.gz'));
 
-    // TODO: This is a temporary fix to remove svg icons from the user AppData. This should be removed after some versions.
-    debug('Removing default icon', defaultIcon);
+    // TODO: This is a temporary fix to remove svg icons from the user AppData. This should be removed after versions of all recipes have been bumped up
     if (defaultIcon) {
       removeSync(join(recipeDirectory, 'icon.svg'));
     }
