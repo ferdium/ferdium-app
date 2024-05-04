@@ -164,6 +164,8 @@
   "service.errorHandler.headline": "Oh no!",
   "service.errorHandler.message": "Error",
   "service.errorHandler.text": "{name} has failed to load.",
+  "service.screenshare.cancel": "Cancel",
+  "service.screenshare.loading": "Loading screens and windows",
   "service.webviewLoader.loading": "Loading {service}",
   "services.getStarted": "Get started",
   "services.login": "Please login to use Ferdium.",
