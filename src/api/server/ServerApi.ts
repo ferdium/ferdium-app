@@ -473,11 +473,19 @@ export default class ServerApi {
 
     await sleep(10);
 
-    const { id } = readJsonSync(join(recipeTempDirectory, 'package.json'));
+    const { id, defaultIcon } = readJsonSync(
+      join(recipeTempDirectory, 'package.json'),
+    );
     const recipeDirectory = join(recipesDirectory, id);
     copySync(recipeTempDirectory, recipeDirectory);
     removeSync(recipeTempDirectory);
     removeSync(join(recipesDirectory, recipeId, 'recipe.tar.gz'));
+
+    // TODO: This is a temporary fix to remove svg icons from the user AppData. This should be removed after some versions.
+    debug('Removing default icon', defaultIcon);
+    if (defaultIcon) {
+      removeSync(join(recipeDirectory, 'icon.svg'));
+    }
 
     return id;
   }
