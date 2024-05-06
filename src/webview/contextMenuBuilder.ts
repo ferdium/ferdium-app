@@ -130,8 +130,8 @@ interface ContextMenuStringTable {
     translatorLanguage: string;
   }) => string;
   openLinkUrl: () => string;
-  openLinkInFerdiumUrl: () => string;
   openInBrowser: () => string;
+  openInFerdium: () => string;
   copyLinkUrl: () => string;
   copyImageUrl: () => string;
   copyImage: () => string;
@@ -158,8 +158,8 @@ const contextMenuStringTable: ContextMenuStringTable = {
     `Translate to ${translatorLanguage}`,
   translateLanguage: ({ translatorLanguage }) => `${translatorLanguage}`,
   openLinkUrl: () => 'Open Link',
-  openLinkInFerdiumUrl: () => 'Open Link in Ferdium',
   openInBrowser: () => 'Open in Browser',
+  openInFerdium: () => 'Open in Ferdium',
   copyLinkUrl: () => 'Copy Link',
   copyImageUrl: () => 'Copy Image Address',
   copyImage: () => 'Copy Image',
@@ -299,10 +299,13 @@ export class ContextMenuBuilder {
     this.addPastePlain(menu, menuInfo);
     this.addInspectElement(menu, menuInfo);
     this.processMenu(menu);
-
+    this.addSeparator(menu);
     this.copyPageUrl(menu, menuInfo);
-    this.goToHomePage(menu, menuInfo);
+    this.addSeparator(menu);
     this.openInBrowser(menu, menuInfo);
+    this.openInFerdium(menu, menuInfo);
+    this.addSeparator(menu);
+    this.goToHomePage(menu, menuInfo);
 
     return menu;
   }
@@ -340,16 +343,8 @@ export class ContextMenuBuilder {
       },
     });
 
-    const openInFerdiumLink = new MenuItem({
-      label: this.stringTable.openLinkInFerdiumUrl(),
-      click: () => {
-        window.location.href = menuInfo.linkURL;
-      },
-    });
-
     menu.append(copyLink);
     menu.append(openLink);
-    menu.append(openInFerdiumLink);
 
     if (this.isSrcUrlValid(menuInfo)) {
       this.addSeparator(menu);
@@ -358,13 +353,15 @@ export class ContextMenuBuilder {
 
     this.addInspectElement(menu, menuInfo);
     this.processMenu(menu);
-
     this.addSeparator(menu);
     this.goBack(menu);
     this.goForward(menu);
     this.copyPageUrl(menu, menuInfo);
-    this.goToHomePage(menu, menuInfo);
+    this.addSeparator(menu);
     this.openInBrowser(menu, menuInfo);
+    this.openInFerdium(menu, menuInfo);
+    this.addSeparator(menu);
+    this.goToHomePage(menu, menuInfo);
 
     return menu;
   }
@@ -384,16 +381,19 @@ export class ContextMenuBuilder {
       this.addTranslateItems(menu, menuInfo);
     }
     this.addCopy(menu, menuInfo);
-    this.addInspectElement(menu, menuInfo);
-    // @ts-expect-error Expected 1 arguments, but got 2.
-    this.processMenu(menu, menuInfo);
 
+    this.addInspectElement(menu, menuInfo);
+    this.processMenu(menu);
     this.addSeparator(menu);
     this.goBack(menu);
     this.goForward(menu);
+    this.addSeparator(menu);
     this.copyPageUrl(menu, menuInfo);
-    this.goToHomePage(menu, menuInfo);
+    this.addSeparator(menu);
     this.openInBrowser(menu, menuInfo);
+    this.openInFerdium(menu, menuInfo);
+    this.addSeparator(menu);
+    this.goToHomePage(menu, menuInfo);
 
     return menu;
   }
@@ -412,8 +412,7 @@ export class ContextMenuBuilder {
       this.addImageItems(menu, menuInfo);
     }
     this.addInspectElement(menu, menuInfo);
-    // @ts-expect-error Expected 1 arguments, but got 2.
-    this.processMenu(menu, menuInfo);
+    this.processMenu(menu);
 
     return menu;
   }
@@ -963,6 +962,26 @@ export class ContextMenuBuilder {
         enabled: true,
         click: () => {
           openExternalUrl(menuInfo.pageURL, true);
+        },
+      }),
+    );
+
+    return menu;
+  }
+
+  /**
+   * Adds the 'open in ferdium' menu item.
+   */
+  openInFerdium(
+    menu: Electron.CrossProcessExports.Menu,
+    menuInfo: IContextMenuParams,
+  ) {
+    menu.append(
+      new MenuItem({
+        label: this.stringTable.openInFerdium(),
+        enabled: true,
+        click: () => {
+          window.location.href = menuInfo.linkURL;
         },
       }),
     );
