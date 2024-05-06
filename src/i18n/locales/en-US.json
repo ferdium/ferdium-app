@@ -214,7 +214,7 @@
   "settings.app.form.confirmOnQuit": "Confirm when quitting Ferdium",
   "settings.app.form.customTodoServer": "Custom Todo Server",
   "settings.app.form.darkMode": "Enable Dark Mode",
-  "settings.app.form.downloadFolderPath": "Default download folder (leave blank to be prompt for each download)",
+  "settings.app.form.downloadFolderPath": "Default download folder (leave blank to be prompted for each download)",
   "settings.app.form.enableGPUAcceleration": "Enable GPU Acceleration",
   "settings.app.form.enableGlobalHideShortcut": "Enable Global shortcut to hide Ferdium",
   "settings.app.form.enableLock": "Enable Password Lock",
