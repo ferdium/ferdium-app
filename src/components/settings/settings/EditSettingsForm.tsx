@@ -1,5 +1,6 @@
 import { systemPreferences } from '@electron/remote';
 import { mdiGithub, mdiOpenInNew, mdiPowerPlug } from '@mdi/js';
+import { ipcRenderer } from 'electron';
 import { noop } from 'lodash';
 import { observer } from 'mobx-react';
 import prettyBytes from 'pretty-bytes';
@@ -191,6 +192,14 @@ const messages = defineMessages({
     id: 'settings.app.subheadlineCache',
     defaultMessage: 'Cache',
   },
+  subheadlineUserAgent: {
+    id: 'settings.app.subheadlineUserAgent',
+    defaultMessage: 'User Agent',
+  },
+  subheadlineDownloads: {
+    id: 'settings.app.subheadlineDownloads',
+    defaultMessage: 'Downloads',
+  },
   cacheInfo: {
     id: 'settings.app.cacheInfo',
     defaultMessage: 'Ferdium cache is currently using {size} of disk space.',
@@ -280,6 +289,10 @@ const messages = defineMessages({
   buttonOpenFerdiumCertsFolder: {
     id: 'settings.app.buttonOpenFerdiumCertsFolder',
     defaultMessage: 'Open certificates folder',
+  },
+  buttonOpenFolderSelector: {
+    id: 'settings.app.buttonOpenFolderSelector',
+    defaultMessage: 'Open folder selector',
   },
 });
 
@@ -1034,49 +1047,87 @@ class EditSettingsForm extends Component<IProps, IState> {
 
                 <Hr />
 
-                <Input
-                  placeholder="User Agent"
-                  onChange={e => this.submit(e)}
-                  {...form.$('userAgentPref').bind()}
-                />
-                <p className="settings__help">
-                  {intl.formatMessage(globalMessages.userAgentHelp)}
-                </p>
-                <p className="settings__help">
-                  {intl.formatMessage(messages.appRestartRequired)}
-                </p>
+                <div className="settings__settings-group">
+                  <H3>{intl.formatMessage(messages.subheadlineDownloads)}</H3>
+
+                  <Input
+                    placeholder="Default download folder"
+                    onChange={e => {
+                      this.submit(e);
+                    }}
+                    {...form.$('downloadFolderPath').bind()}
+                  />
+
+                  <Button
+                    buttonType="secondary"
+                    label={intl.formatMessage(
+                      messages.buttonOpenFolderSelector,
+                    )}
+                    className="settings__open-settings-cache-button"
+                    onClick={e => {
+                      ipcRenderer
+                        .invoke('download-folder-select')
+                        .then(path => {
+                          if (path) {
+                            form.$('downloadFolderPath').set(path);
+                            this.submit(e);
+                          }
+                        })
+                        .catch(console.error);
+                    }}
+                    disabled={isClearingAllCache}
+                    loaded={!isClearingAllCache}
+                  />
+                </div>
 
                 <Hr />
 
                 <div className="settings__settings-group">
-                  <H3>{intl.formatMessage(messages.subheadlineCache)}</H3>
-                  <p>
-                    {intl.formatMessage(messages.cacheInfo, {
-                      size: cacheSize,
-                    })}
+                  <Input
+                    placeholder="User Agent"
+                    onChange={e => this.submit(e)}
+                    {...form.$('userAgentPref').bind()}
+                  />
+
+                  <p className="settings__help">
+                    {intl.formatMessage(globalMessages.userAgentHelp)}
                   </p>
-                  {notCleared && (
-                    <p>{intl.formatMessage(messages.cacheNotCleared)}</p>
-                  )}
+                  <p className="settings__help">
+                    {intl.formatMessage(messages.appRestartRequired)}
+                  </p>
+
+                  <Hr />
+
                   <div className="settings__settings-group">
-                    <div className="settings__open-settings-cache-container">
-                      <Button
-                        buttonType="secondary"
-                        label={intl.formatMessage(globalMessages.clearCache)}
-                        className="settings__open-settings-cache-button"
-                        onClick={() => {
-                          onClearAllCache();
-                          this.onClearCacheClicked();
-                        }}
-                        disabled={isClearingAllCache}
-                        loaded={!isClearingAllCache}
-                      />
-                      <Button
-                        buttonType="secondary"
-                        label="Open Process Manager"
-                        className="settings__open-settings-cache-button"
-                        onClick={openProcessManager}
-                      />
+                    <H3>{intl.formatMessage(messages.subheadlineCache)}</H3>
+                    <p>
+                      {intl.formatMessage(messages.cacheInfo, {
+                        size: cacheSize,
+                      })}
+                    </p>
+                    {notCleared && (
+                      <p>{intl.formatMessage(messages.cacheNotCleared)}</p>
+                    )}
+                    <div className="settings__settings-group">
+                      <div className="settings__open-settings-cache-container">
+                        <Button
+                          buttonType="secondary"
+                          label={intl.formatMessage(globalMessages.clearCache)}
+                          className="settings__open-settings-cache-button"
+                          onClick={() => {
+                            onClearAllCache();
+                            this.onClearCacheClicked();
+                          }}
+                          disabled={isClearingAllCache}
+                          loaded={!isClearingAllCache}
+                        />
+                        <Button
+                          buttonType="secondary"
+                          label="Open Process Manager"
+                          className="settings__open-settings-cache-button"
+                          onClick={openProcessManager}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>

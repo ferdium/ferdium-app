@@ -245,6 +245,18 @@ const createWindow = () => {
         openExternalUrl(url);
         return { action: 'deny' };
       });
+
+      // Handle will download event from main process (prevent download dialog)
+      contents.session.on('will-download', (_e, item) => {
+        const downloadFolderPath = retrieveSettingValue(
+          'downloadFolderPath',
+          DEFAULT_APP_SETTINGS.downloadFolderPath,
+        ) as string;
+
+        if (downloadFolderPath !== '') {
+          item.setSavePath(join(downloadFolderPath, item.getFilename()));
+        }
+      });
     }
   });
 

@@ -341,6 +341,11 @@ const messages = defineMessages({
     id: 'settings.app.form.keepAllWorkspacesLoaded',
     defaultMessage: 'Keep all workspaces loaded',
   },
+  downloadFolderPath: {
+    id: 'settings.app.form.downloadFolderPath',
+    defaultMessage:
+      'Default download folder (leave blank to be prompted for each download)',
+  },
 });
 
 interface EditSettingsScreenProps extends StoresProps, WrappedComponentProps {}
@@ -430,6 +435,7 @@ class EditSettingsScreen extends Component<
         scheduledDNDStart: settingsData.scheduledDNDStart,
         scheduledDNDEnd: settingsData.scheduledDNDEnd,
         enableGPUAcceleration: Boolean(settingsData.enableGPUAcceleration),
+        downloadFolderPath: String(settingsData.downloadFolderPath),
         enableGlobalHideShortcut: Boolean(
           settingsData.enableGlobalHideShortcut,
         ),
@@ -981,6 +987,14 @@ class EditSettingsScreen extends Component<
           ),
           default: DEFAULT_APP_SETTINGS.userAgentPref,
           placeholder: defaultUserAgent(),
+        },
+        downloadFolderPath: {
+          label: intl.formatMessage(messages.downloadFolderPath),
+          value: ifUndefined<string>(
+            settings.all.app.downloadFolderPath,
+            DEFAULT_APP_SETTINGS.downloadFolderPath,
+          ),
+          default: DEFAULT_APP_SETTINGS.userAgentPref,
         },
         darkMode: {
           label: intl.formatMessage(messages.darkMode),
