@@ -52,4 +52,15 @@ export default (params: { mainWindow: BrowserWindow }) => {
       }
     },
   );
+
+  ipcMain.handle('download-folder-select', async () => {
+    const result = await dialog.showOpenDialog(params.mainWindow, {
+      properties: ['openDirectory'],
+    });
+
+    if (result.canceled) return;
+
+    // eslint-disable-next-line consistent-return
+    return result.filePaths[0];
+  });
 };
