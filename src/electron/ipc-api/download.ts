@@ -58,9 +58,8 @@ export default (params: { mainWindow: BrowserWindow }) => {
       properties: ['openDirectory'],
     });
 
-    if (result.canceled) return;
+    if (result.canceled) return null;
 
-    // eslint-disable-next-line consistent-return
     return result.filePaths[0];
   });
 };
