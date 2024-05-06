@@ -344,7 +344,7 @@ const messages = defineMessages({
   downloadFolderPath: {
     id: 'settings.app.form.downloadFolderPath',
     defaultMessage:
-      'Default download folder (leave blank to be prompt for each download)',
+      'Default download folder (leave blank to be prompted for each download)',
   },
 });
 
