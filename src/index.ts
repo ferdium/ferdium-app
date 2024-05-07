@@ -794,3 +794,15 @@ app.on(
     callback(checkIfCertIsPresent(certificate.data));
   },
 );
+
+ipcMain.on('relaunch-app', async (_, options) => {
+  // Ask user to confirm
+  const result = await dialog.showMessageBox(mainWindow!, options);
+
+  if (result.response === options.cancelId) {
+    return;
+  }
+
+  app.relaunch();
+  app.quit();
+});
