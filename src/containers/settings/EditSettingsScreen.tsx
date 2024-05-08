@@ -346,6 +346,27 @@ const messages = defineMessages({
     defaultMessage:
       'Default download folder (leave blank to be prompted for each download)',
   },
+  restartDialogTitle: {
+    id: 'settings.app.restart.restartDialogTitle',
+    defaultMessage: 'Ferdium - Relaunch Application',
+  },
+  restartNow: {
+    id: 'settings.app.restart.restartNow',
+    defaultMessage: 'Restart now',
+  },
+  restartLater: {
+    id: 'settings.app.restart.restartLater',
+    defaultMessage: 'Restart later',
+  },
+  restartDialogMessage: {
+    id: 'settings.app.restart.restartDialogMessage',
+    defaultMessage: 'Do you want to relaunch Ferdium?',
+  },
+  restartDialogDetail: {
+    id: 'settings.app.restart.restartDialogDetail',
+    defaultMessage:
+      'You made a change that requires a restart. This will close Ferdium and restart it.',
+  },
 });
 
 interface EditSettingsScreenProps extends StoresProps, WrappedComponentProps {}
@@ -369,6 +390,7 @@ class EditSettingsScreen extends Component<
   }
 
   onSubmit(settingsData) {
+    const { intl } = this.props;
     const { todos, workspaces } = this.props.stores;
     const {
       app,
@@ -391,98 +413,130 @@ class EditSettingsScreen extends Component<
 
     debug(`Updating settings store with data: ${settingsData}`);
 
+    const { app: currentSettings } = this.props.stores.settings.all;
+
+    const newSettings = {
+      runInBackground: Boolean(settingsData.runInBackground),
+      enableSystemTray: Boolean(settingsData.enableSystemTray),
+      reloadAfterResume: Boolean(settingsData.reloadAfterResume),
+      reloadAfterResumeTime: Number(settingsData.reloadAfterResumeTime),
+      startMinimized: Boolean(settingsData.startMinimized),
+      confirmOnQuit: Boolean(settingsData.confirmOnQuit),
+      minimizeToSystemTray: Boolean(settingsData.minimizeToSystemTray),
+      closeToSystemTray: Boolean(settingsData.closeToSystemTray),
+      privateNotifications: Boolean(settingsData.privateNotifications),
+      clipboardNotifications: Boolean(settingsData.clipboardNotifications),
+      notifyTaskBarOnMessage: Boolean(settingsData.notifyTaskBarOnMessage),
+      isTwoFactorAutoCatcherEnabled: Boolean(
+        settingsData.isTwoFactorAutoCatcherEnabled,
+      ),
+      twoFactorAutoCatcherMatcher: settingsData.twoFactorAutoCatcherMatcher,
+      navigationBarBehaviour: settingsData.navigationBarBehaviour,
+      webRTCIPHandlingPolicy: settingsData.webRTCIPHandlingPolicy,
+      searchEngine: settingsData.searchEngine,
+      translatorEngine: settingsData.translatorEngine,
+      translatorLanguage: settingsData.translatorLanguage,
+      sentry: Boolean(settingsData.sentry),
+      hibernateOnStartup: Boolean(settingsData.hibernateOnStartup),
+      hibernationStrategy: Number(settingsData.hibernationStrategy),
+      wakeUpStrategy: Number(settingsData.wakeUpStrategy),
+      wakeUpHibernationStrategy: Number(settingsData.wakeUpHibernationStrategy),
+      wakeUpHibernationSplay: Boolean(settingsData.wakeUpHibernationSplay),
+      predefinedTodoServer: settingsData.predefinedTodoServer,
+      customTodoServer: settingsData.customTodoServer,
+      isLockingFeatureEnabled: Boolean(settingsData.isLockingFeatureEnabled),
+      lockedPassword: useOriginalPassword
+        ? this.props.stores.settings.all.app.lockedPassword
+        : hash(String(settingsData.lockedPassword)),
+      useTouchIdToUnlock: Boolean(settingsData.useTouchIdToUnlock),
+      inactivityLock: Number(settingsData.inactivityLock),
+      scheduledDNDEnabled: Boolean(settingsData.scheduledDNDEnabled),
+      scheduledDNDStart: settingsData.scheduledDNDStart,
+      scheduledDNDEnd: settingsData.scheduledDNDEnd,
+      enableGPUAcceleration: Boolean(settingsData.enableGPUAcceleration),
+      downloadFolderPath: String(settingsData.downloadFolderPath),
+      enableGlobalHideShortcut: Boolean(settingsData.enableGlobalHideShortcut),
+      showDisabledServices: Boolean(settingsData.showDisabledServices),
+      showServiceName: Boolean(settingsData.showServiceName),
+      darkMode: Boolean(settingsData.darkMode),
+      adaptableDarkMode: Boolean(settingsData.adaptableDarkMode),
+      universalDarkMode: Boolean(settingsData.universalDarkMode),
+      splitMode: Boolean(settingsData.splitMode),
+      splitColumns: Number(settingsData.splitColumns),
+      serviceRibbonWidth: Number(settingsData.serviceRibbonWidth),
+      sidebarServicesLocation: Number(settingsData.sidebarServicesLocation),
+      iconSize: Number(settingsData.iconSize),
+      enableLongPressServiceHint: Boolean(
+        settingsData.enableLongPressServiceHint,
+      ),
+      useHorizontalStyle: Boolean(settingsData.useHorizontalStyle),
+      hideCollapseButton: Boolean(settingsData.hideCollapseButton),
+      hideRecipesButton: Boolean(settingsData.hideRecipesButton),
+      hideSplitModeButton: Boolean(settingsData.hideSplitModeButton),
+      useGrayscaleServices: Boolean(settingsData.useGrayscaleServices),
+      grayscaleServicesDim: Number(settingsData.grayscaleServicesDim),
+      hideWorkspacesButton: Boolean(settingsData.hideWorkspacesButton),
+      hideNotificationsButton: Boolean(settingsData.hideNotificationsButton),
+      hideSettingsButton: Boolean(settingsData.hideSettingsButton),
+      hideDownloadButton: Boolean(settingsData.hideDownloadButton),
+      alwaysShowWorkspaces: Boolean(settingsData.alwaysShowWorkspaces),
+      hideAllServicesWorkspace: Boolean(settingsData.hideAllServicesWorkspace),
+      accentColor: settingsData.accentColor,
+      progressbarAccentColor: settingsData.progressbarAccentColor,
+      showMessageBadgeWhenMuted: Boolean(
+        settingsData.showMessageBadgeWhenMuted,
+      ),
+      showDragArea: Boolean(settingsData.showDragArea),
+      enableSpellchecking: Boolean(settingsData.enableSpellchecking),
+      enableTranslator: Boolean(settingsData.enableTranslator),
+      useSelfSignedCertificates: Boolean(
+        settingsData.useSelfSignedCertificates,
+      ),
+      spellcheckerLanguage: settingsData.spellcheckerLanguage,
+      userAgentPref: settingsData.userAgentPref,
+      beta: Boolean(settingsData.beta), // we need this info in the main process as well
+      automaticUpdates: Boolean(settingsData.automaticUpdates), // we need this info in the main process as well
+      locale: settingsData.locale, // we need this info in the main process as well
+    };
+
+    const requiredRestartKeys = [
+      'webRTCIPHandlingPolicy',
+      'sentry',
+      'searchEngine',
+      'enableSpellchecking',
+      'spellcheckerLanguage',
+      'enableGlobalHideShortcut',
+      // 'userAgentPref', // TODO: this is an input field, so it changes on every key stroke
+    ];
+
+    // Check if any of the keys that require a restart have changed
+    const requiresRestart = requiredRestartKeys.some(
+      key => newSettings[key] !== currentSettings[key],
+    );
+
+    if (requiresRestart) {
+      debug('Settings require restart');
+
+      const options: Electron.MessageBoxOptions = {
+        type: 'warning',
+        buttons: [
+          intl.formatMessage(messages.restartNow),
+          intl.formatMessage(messages.restartLater),
+        ],
+        defaultId: 0,
+        cancelId: 1,
+        title: intl.formatMessage(messages.restartDialogTitle),
+        message: intl.formatMessage(messages.restartDialogMessage),
+        detail: intl.formatMessage(messages.restartDialogDetail),
+      };
+
+      ipcRenderer.send('relaunch-app', options);
+    }
+
     settings.update({
       type: 'app',
       // TODO: The conversions might not be necessary once we convert to typescript
-      data: {
-        runInBackground: Boolean(settingsData.runInBackground),
-        enableSystemTray: Boolean(settingsData.enableSystemTray),
-        reloadAfterResume: Boolean(settingsData.reloadAfterResume),
-        reloadAfterResumeTime: Number(settingsData.reloadAfterResumeTime),
-        startMinimized: Boolean(settingsData.startMinimized),
-        confirmOnQuit: Boolean(settingsData.confirmOnQuit),
-        minimizeToSystemTray: Boolean(settingsData.minimizeToSystemTray),
-        closeToSystemTray: Boolean(settingsData.closeToSystemTray),
-        privateNotifications: Boolean(settingsData.privateNotifications),
-        clipboardNotifications: Boolean(settingsData.clipboardNotifications),
-        notifyTaskBarOnMessage: Boolean(settingsData.notifyTaskBarOnMessage),
-        isTwoFactorAutoCatcherEnabled: Boolean(
-          settingsData.isTwoFactorAutoCatcherEnabled,
-        ),
-        twoFactorAutoCatcherMatcher: settingsData.twoFactorAutoCatcherMatcher,
-        navigationBarBehaviour: settingsData.navigationBarBehaviour,
-        webRTCIPHandlingPolicy: settingsData.webRTCIPHandlingPolicy,
-        searchEngine: settingsData.searchEngine,
-        translatorEngine: settingsData.translatorEngine,
-        translatorLanguage: settingsData.translatorLanguage,
-        sentry: Boolean(settingsData.sentry),
-        hibernateOnStartup: Boolean(settingsData.hibernateOnStartup),
-        hibernationStrategy: Number(settingsData.hibernationStrategy),
-        wakeUpStrategy: Number(settingsData.wakeUpStrategy),
-        wakeUpHibernationStrategy: Number(
-          settingsData.wakeUpHibernationStrategy,
-        ),
-        wakeUpHibernationSplay: Boolean(settingsData.wakeUpHibernationSplay),
-        predefinedTodoServer: settingsData.predefinedTodoServer,
-        customTodoServer: settingsData.customTodoServer,
-        isLockingFeatureEnabled: Boolean(settingsData.isLockingFeatureEnabled),
-        lockedPassword: useOriginalPassword
-          ? this.props.stores.settings.all.app.lockedPassword
-          : hash(String(settingsData.lockedPassword)),
-        useTouchIdToUnlock: Boolean(settingsData.useTouchIdToUnlock),
-        inactivityLock: Number(settingsData.inactivityLock),
-        scheduledDNDEnabled: Boolean(settingsData.scheduledDNDEnabled),
-        scheduledDNDStart: settingsData.scheduledDNDStart,
-        scheduledDNDEnd: settingsData.scheduledDNDEnd,
-        enableGPUAcceleration: Boolean(settingsData.enableGPUAcceleration),
-        downloadFolderPath: String(settingsData.downloadFolderPath),
-        enableGlobalHideShortcut: Boolean(
-          settingsData.enableGlobalHideShortcut,
-        ),
-        showDisabledServices: Boolean(settingsData.showDisabledServices),
-        showServiceName: Boolean(settingsData.showServiceName),
-        darkMode: Boolean(settingsData.darkMode),
-        adaptableDarkMode: Boolean(settingsData.adaptableDarkMode),
-        universalDarkMode: Boolean(settingsData.universalDarkMode),
-        splitMode: Boolean(settingsData.splitMode),
-        splitColumns: Number(settingsData.splitColumns),
-        serviceRibbonWidth: Number(settingsData.serviceRibbonWidth),
-        sidebarServicesLocation: Number(settingsData.sidebarServicesLocation),
-        iconSize: Number(settingsData.iconSize),
-        enableLongPressServiceHint: Boolean(
-          settingsData.enableLongPressServiceHint,
-        ),
-        useHorizontalStyle: Boolean(settingsData.useHorizontalStyle),
-        hideCollapseButton: Boolean(settingsData.hideCollapseButton),
-        hideRecipesButton: Boolean(settingsData.hideRecipesButton),
-        hideSplitModeButton: Boolean(settingsData.hideSplitModeButton),
-        useGrayscaleServices: Boolean(settingsData.useGrayscaleServices),
-        grayscaleServicesDim: Number(settingsData.grayscaleServicesDim),
-        hideWorkspacesButton: Boolean(settingsData.hideWorkspacesButton),
-        hideNotificationsButton: Boolean(settingsData.hideNotificationsButton),
-        hideSettingsButton: Boolean(settingsData.hideSettingsButton),
-        hideDownloadButton: Boolean(settingsData.hideDownloadButton),
-        alwaysShowWorkspaces: Boolean(settingsData.alwaysShowWorkspaces),
-        hideAllServicesWorkspace: Boolean(
-          settingsData.hideAllServicesWorkspace,
-        ),
-        accentColor: settingsData.accentColor,
-        progressbarAccentColor: settingsData.progressbarAccentColor,
-        showMessageBadgeWhenMuted: Boolean(
-          settingsData.showMessageBadgeWhenMuted,
-        ),
-        showDragArea: Boolean(settingsData.showDragArea),
-        enableSpellchecking: Boolean(settingsData.enableSpellchecking),
-        enableTranslator: Boolean(settingsData.enableTranslator),
-        useSelfSignedCertificates: Boolean(
-          settingsData.useSelfSignedCertificates,
-        ),
-        spellcheckerLanguage: settingsData.spellcheckerLanguage,
-        userAgentPref: settingsData.userAgentPref,
-        beta: Boolean(settingsData.beta), // we need this info in the main process as well
-        automaticUpdates: Boolean(settingsData.automaticUpdates), // we need this info in the main process as well
-        locale: settingsData.locale, // we need this info in the main process as well
-      },
+      data: newSettings,
     });
 
     user.update({
