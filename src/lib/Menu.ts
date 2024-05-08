@@ -1134,7 +1134,12 @@ class FranzMenu implements StoresProps {
     for (const [i, service] of services.allDisplayed.entries()) {
       menu.push({
         label: this._getServiceName(service),
-        accelerator: acceleratorString(i + 1, cmdOrCtrlShortcutKey(), '', ''),
+        accelerator: acceleratorString({
+          index: i + 1,
+          keyCombo: cmdOrCtrlShortcutKey(),
+          prefix: '',
+          suffix: '',
+        }),
         type: 'radio',
         checked: service.isActive,
         click: () => {
