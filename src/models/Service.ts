@@ -13,6 +13,7 @@ import { isValidExternalURL, normalizedUrl } from '../helpers/url-helpers';
 import { ifUndefined } from '../jsUtils';
 import type { IRecipe } from './Recipe';
 import UserAgent from './UserAgent';
+import { isMac } from '../environment';
 
 const debug = require('../preload-safe-debug')('Ferdium:Service');
 
@@ -536,13 +537,15 @@ export default class Service {
     });
 
     if (webviewWebContents) {
-      webviewWebContents.on('before-input-event', (event, input) => {
-        if (input.control && input.key === '+' && input.type === 'keyDown') {
-          event.preventDefault();
-          const currentZoom = this.webview?.getZoomLevel();
-          this.webview?.setZoomLevel(currentZoom + 0.5);
-        }
-      });
+      if (!isMac) {
+        webviewWebContents.on('before-input-event', (event, input) => {
+          if (input.control && input.key === '+' && input.type === 'keyDown') {
+            event.preventDefault();
+            const currentZoom = this.webview?.getZoomLevel();
+            this.webview?.setZoomLevel(currentZoom + 0.5);
+          }
+        });
+      }
 
       webviewWebContents.session.on('will-download', (event, item) => {
         event.preventDefault();

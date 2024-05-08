@@ -496,11 +496,13 @@ function titleBarTemplateFactory(
         },
         {
           label: intl.formatMessage(menuItems.zoomIn),
-          accelerator: `${cmdOrCtrlShortcutKey()}++`,
+          accelerator: isMac
+            ? `${cmdOrCtrlShortcutKey()}+Plus`
+            : `${cmdOrCtrlShortcutKey()} + +`,
           // This is a workaround for the issue where the zoom in shortcut is not working
           // This makes sure the accelerator is not registered
-          registerAccelerator: false,
-          acceleratorWorksWhenHidden: false,
+          registerAccelerator: !!isMac,
+          acceleratorWorksWhenHidden: !!isMac,
           // ---------------------------
           click() {
             const activeService = getActiveService();
