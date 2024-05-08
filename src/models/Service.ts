@@ -7,13 +7,13 @@ import type ElectronWebView from 'react-electron-web-view';
 import { v4 as uuidV4 } from 'uuid';
 import { needsToken } from '../api/apiBase';
 import { DEFAULT_SERVICE_ORDER, DEFAULT_SERVICE_SETTINGS } from '../config';
+import { isMac } from '../environment';
 import { todosStore } from '../features/todos';
 import { getFaviconUrl } from '../helpers/favicon-helpers';
 import { isValidExternalURL, normalizedUrl } from '../helpers/url-helpers';
 import { ifUndefined } from '../jsUtils';
 import type { IRecipe } from './Recipe';
 import UserAgent from './UserAgent';
-import { isMac } from '../environment';
 
 const debug = require('../preload-safe-debug')('Ferdium:Service');
 
