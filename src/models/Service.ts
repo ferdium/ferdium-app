@@ -537,6 +537,8 @@ export default class Service {
     });
 
     if (webviewWebContents) {
+      // TODO: Modify this logic once https://github.com/electron/electron/issues/40674 is fixed
+      // This is a workaround for the issue where the zoom in shortcut is not working
       if (!isMac) {
         webviewWebContents.on('before-input-event', (event, input) => {
           if (input.control && input.key === '+' && input.type === 'keyDown') {

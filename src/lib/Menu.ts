@@ -496,11 +496,12 @@ function titleBarTemplateFactory(
         },
         {
           label: intl.formatMessage(menuItems.zoomIn),
+          // TODO: Modify this logic once https://github.com/electron/electron/issues/40674 is fixed
+          // This is a workaround for the issue where the zoom in shortcut is not working
+          // This makes sure the accelerator is not registered
           accelerator: isWindows
             ? `${cmdOrCtrlShortcutKey()}++`
             : `${cmdOrCtrlShortcutKey()}+Plus`,
-          // This is a workaround for the issue where the zoom in shortcut is not working
-          // This makes sure the accelerator is not registered
           registerAccelerator: !!isMac,
           acceleratorWorksWhenHidden: !!isMac,
           // ---------------------------
@@ -514,21 +515,6 @@ function titleBarTemplateFactory(
             webview.setZoomLevel(level + 0.5);
           },
         },
-        // {
-        //   label: intl.formatMessage(menuItems.zoomIn),
-        //   visible: false,
-        //   accelerator: `${cmdOrCtrlShortcutKey()} + =`,
-        //   registerAccelerator: true,
-        //   click() {
-        //     const activeService = getActiveService();
-        //     if (!activeService) {
-        //       return;
-        //     }
-        //     const { webview } = activeService;
-        //     const level = webview.getZoomLevel();
-        //     webview.setZoomLevel(level + 0.5);
-        //   },
-        // },
         {
           label: intl.formatMessage(menuItems.zoomOut),
           accelerator: `${cmdOrCtrlShortcutKey()}+-`,
