@@ -496,7 +496,12 @@ function titleBarTemplateFactory(
         },
         {
           label: intl.formatMessage(menuItems.zoomIn),
-          accelerator: `${cmdOrCtrlShortcutKey()}+plus`,
+          accelerator: `${cmdOrCtrlShortcutKey()}++`,
+          // This is a workaround for the issue where the zoom in shortcut is not working
+          // This makes sure the accelerator is not registered
+          registerAccelerator: false,
+          acceleratorWorksWhenHidden: false,
+          // ---------------------------
           click() {
             const activeService = getActiveService();
             if (!activeService) {
@@ -507,6 +512,21 @@ function titleBarTemplateFactory(
             webview.setZoomLevel(level + 0.5);
           },
         },
+        // {
+        //   label: intl.formatMessage(menuItems.zoomIn),
+        //   visible: false,
+        //   accelerator: `${cmdOrCtrlShortcutKey()} + =`,
+        //   registerAccelerator: true,
+        //   click() {
+        //     const activeService = getActiveService();
+        //     if (!activeService) {
+        //       return;
+        //     }
+        //     const { webview } = activeService;
+        //     const level = webview.getZoomLevel();
+        //     webview.setZoomLevel(level + 0.5);
+        //   },
+        // },
         {
           label: intl.formatMessage(menuItems.zoomOut),
           accelerator: `${cmdOrCtrlShortcutKey()}+-`,

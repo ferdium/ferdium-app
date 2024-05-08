@@ -536,6 +536,14 @@ export default class Service {
     });
 
     if (webviewWebContents) {
+      webviewWebContents.on('before-input-event', (event, input) => {
+        if (input.control && input.key === '+' && input.type === 'keyDown') {
+          event.preventDefault();
+          const currentZoom = this.webview?.getZoomLevel();
+          this.webview?.setZoomLevel(currentZoom + 0.5);
+        }
+      });
+
       webviewWebContents.session.on('will-download', (event, item) => {
         event.preventDefault();
 
