@@ -31,14 +31,14 @@ export class NotificationsHandler {
 }
 
 export const notificationsClassDefinition = `(() => {
-class Notification extends window.Notification {
+class Notification {
   static permission = 'granted';
 
   constructor(title = '', options = {}) {
-    super(title, options);
     window.ferdium.displayNotification(title, options).then(() => {
-      // Continue to dispatch the event to the original Notification class
-      super.dispatchEvent(new Event('click'));
+      // TODO: After several tries, we couldn't find a way to trigger the native notification onclick event.
+      // This was needed so that user could go to the specific context when clicking on the notification (it only goes to the service now).
+      // For now, we don't do anything here
     });
   }
 

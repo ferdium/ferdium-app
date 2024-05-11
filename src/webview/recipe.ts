@@ -28,7 +28,10 @@ import {
 } from './darkmode';
 import DialogTitleHandler from './dialogTitle';
 import FindInPage from './find';
-import { notificationsClassDefinition, NotificationsHandler } from './notifications';
+import {
+  NotificationsHandler,
+  notificationsClassDefinition,
+} from './notifications';
 import { getDisplayMediaSelector, screenShareJs } from './screenshare';
 import SessionHandler from './sessionHandler';
 import {
