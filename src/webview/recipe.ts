@@ -121,7 +121,7 @@ contextBridge.exposeInMainWorld('ferdium', {
   setDialogTitle: (title: string | null | undefined) =>
     dialogTitleHandler.setDialogTitle(title),
   displayNotification: (title: string, options: any) => {
-    notificationsHandler.displayNotification(
+    return notificationsHandler.displayNotification(
       title,
       // The following line is needed so that a proper clone of the "options" object is made.
       // This line was causing issues with some services.
