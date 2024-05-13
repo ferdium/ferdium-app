@@ -7,6 +7,7 @@ import type ElectronWebView from 'react-electron-web-view';
 import { v4 as uuidV4 } from 'uuid';
 import { needsToken } from '../api/apiBase';
 import { DEFAULT_SERVICE_ORDER, DEFAULT_SERVICE_SETTINGS } from '../config';
+import { isMac } from '../environment';
 import { todosStore } from '../features/todos';
 import { getFaviconUrl } from '../helpers/favicon-helpers';
 import { isValidExternalURL, normalizedUrl } from '../helpers/url-helpers';
@@ -536,6 +537,18 @@ export default class Service {
     });
 
     if (webviewWebContents) {
+      // TODO: Modify this logic once https://github.com/electron/electron/issues/40674 is fixed
+      // This is a workaround for the issue where the zoom in shortcut is not working
+      if (!isMac) {
+        webviewWebContents.on('before-input-event', (event, input) => {
+          if (input.control && input.key === '+' && input.type === 'keyDown') {
+            event.preventDefault();
+            const currentZoom = this.webview?.getZoomLevel();
+            this.webview?.setZoomLevel(currentZoom + 0.5);
+          }
+        });
+      }
+
       webviewWebContents.session.on('will-download', (event, item) => {
         event.preventDefault();
 

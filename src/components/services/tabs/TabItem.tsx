@@ -364,10 +364,10 @@ class TabItem extends Component<IProps, IState> {
         role="presentation"
         onContextMenu={() => menu.popup()}
         data-tooltip-id="tooltip-sidebar-button"
-        data-tooltip-content={`${service.name} ${acceleratorString(
-          shortcutIndex,
-          cmdOrCtrlShortcutKey(false),
-        )}`}
+        data-tooltip-content={`${service.name} ${acceleratorString({
+          index: shortcutIndex,
+          keyCombo: cmdOrCtrlShortcutKey(false),
+        })}`}
       >
         <img src={service.icon} className="tab-item__icon" alt="" />
         {showServiceNameSetting && (
