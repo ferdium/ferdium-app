@@ -40,7 +40,7 @@ dependencies:
     version: 5.1.0
   '@electron/remote':
     specifier: 2.1.2
-    version: 2.1.2(electron@30.0.3)
+    version: 2.1.2(electron@30.0.5)
   '@emotion/react':
     specifier: 11.11.4
     version: 11.11.4(@types/react@18.2.77)(react@18.2.0)
@@ -70,7 +70,7 @@ dependencies:
     version: 7.4.0(history@5.3.0)(mobx@6.12.3)(path-to-regexp@6.2.2)
   '@syed_umair/electron-process-manager':
     specifier: 1.1.0
-    version: 1.1.0(electron@30.0.3)
+    version: 1.1.0(electron@30.0.5)
   auto-launch:
     specifier: 5.0.6
     version: 5.0.6
@@ -352,8 +352,8 @@ devDependencies:
     specifier: 7.0.3
     version: 7.0.3
   electron:
-    specifier: 30.0.3
-    version: 30.0.3
+    specifier: 30.0.5
+    version: 30.0.5
   electron-builder:
     specifier: 24.13.3
     version: 24.13.3(electron-builder-squirrel-windows@24.13.3)
@@ -1494,12 +1494,12 @@ packages:
       - supports-color
     dev: true
 
-  /@electron/remote@2.1.2(electron@30.0.3):
+  /@electron/remote@2.1.2(electron@30.0.5):
     resolution: {integrity: sha512-EPwNx+nhdrTBxyCqXt/pftoQg/ybtWDW3DUWHafejvnB1ZGGfMpv6e15D8KeempocjXe78T7WreyGGb3mlZxdA==}
     peerDependencies:
       electron: '>= 13.0.0'
     dependencies:
-      electron: 30.0.3
+      electron: 30.0.5
     dev: false
 
   /@electron/universal@1.5.1:
@@ -3024,12 +3024,12 @@ packages:
       path-to-regexp: 6.2.2
     dev: false
 
-  /@syed_umair/electron-process-manager@1.1.0(electron@30.0.3):
+  /@syed_umair/electron-process-manager@1.1.0(electron@30.0.5):
     resolution: {integrity: sha512-rbDJ1GQ51DcsP+354WpI/3xWOra1HH4cT1jA0maK8VJogn7s5BiMO2XkSBaCoeMCvTIIwx7Y6dgUHpfnL2M6wg==}
     peerDependencies:
       electron: '>=21'
     dependencies:
-      electron: 30.0.3
+      electron: 30.0.5
       electron-process-reporter: 1.4.0
     dev: false
 
@@ -6217,8 +6217,8 @@ packages:
       mkdirp: 0.5.6
     dev: false
 
-  /electron@30.0.3:
-    resolution: {integrity: sha512-h+suwx6e0fnv/9wi0/cmCMtG+4LrPzJZa+3DEEpxcPcP+pcWnBI70t8QspxgMNIh2wzXLMD9XVqrLkEbiBAInw==}
+  /electron@30.0.5:
+    resolution: {integrity: sha512-+a7PjcAq2HrfF1l+Ez8n0W9YeZIam7E9ERHEGs+L2dqKu7qxk8GNSEFoBEPCpLI00p/fc0d76L9IcLCQJdNFqA==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
     requiresBuild: true
