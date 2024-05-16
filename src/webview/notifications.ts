@@ -34,12 +34,20 @@ export const notificationsClassDefinition = `(() => {
 class Notification {
   static permission = 'granted';
 
+  static _notification;
+
   constructor(title = '', options = {}) {
-    window.ferdium.displayNotification(title, options).then(() => {
-      // TODO: After several tries, we couldn't find a way to trigger the native notification onclick event.
-      // This was needed so that user could go to the specific context when clicking on the notification (it only goes to the service now).
-      // For now, we don't do anything here
-    });
+    Notification._displayNotification(title, options);
+  }
+
+  static _displayNotification(title, options) {
+    Notification._notification = window.ferdium
+      .displayNotification(title, options)
+      .then(() => {
+        // TODO: After several tries, we couldn't find a way to trigger the native notification onclick event.
+        // This was needed so that user could go to the specific context when clicking on the notification (it only goes to the service now).
+        // For now, we don't do anything here
+      });
   }
 
   static requestPermission(cb) {
@@ -53,6 +61,20 @@ class Notification {
   onNotify(data) {
     return data;
   }
+
+  close() {
+    if (Notification._notification) {
+      Notification._notification = null;
+    }
+  }
+
+  onclick() {}
+
+  onclose() {}
+
+  onerror() {}
+
+  onshow() {}
 }
 
   window.Notification = Notification;
