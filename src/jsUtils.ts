@@ -28,12 +28,21 @@ export const safeParseInt = (text?: string | number | null) => {
   return Math.max(adjustedNumber, 0);
 };
 
-export const acceleratorString = (
-  index: number,
-  keyCombo: string,
-  prefix: string = '(',
-  suffix: string = ')',
-) => (index <= 10 ? `${prefix}${keyCombo}+${index % 10}${suffix}` : '');
+interface IAcceleratorString {
+  keyCombo: string;
+  index: number;
+  prefix?: string;
+  suffix?: string;
+  maxIndex?: number;
+}
+export const acceleratorString = ({
+  index,
+  keyCombo,
+  prefix = '(',
+  suffix = ')',
+  maxIndex = 9,
+}: IAcceleratorString) =>
+  index <= maxIndex ? `${prefix}${keyCombo}+${index % 10}${suffix}` : '';
 
 export const removeNewLines = (input: string): string =>
   input.replaceAll(/\r?\n|\r/g, '');

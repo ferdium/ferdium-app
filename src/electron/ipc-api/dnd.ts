@@ -8,7 +8,6 @@ export default async () => {
     if (!isMac) {
       return false;
     }
-
     const { getDoNotDisturb } = await import('macos-notification-state');
 
     if (!getDoNotDisturb) {

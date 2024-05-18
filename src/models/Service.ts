@@ -7,7 +7,9 @@ import type ElectronWebView from 'react-electron-web-view';
 import { v4 as uuidV4 } from 'uuid';
 import { needsToken } from '../api/apiBase';
 import { DEFAULT_SERVICE_ORDER, DEFAULT_SERVICE_SETTINGS } from '../config';
+import { isMac } from '../environment';
 import { todosStore } from '../features/todos';
+import { getFaviconUrl } from '../helpers/favicon-helpers';
 import { isValidExternalURL, normalizedUrl } from '../helpers/url-helpers';
 import { ifUndefined } from '../jsUtils';
 import type { IRecipe } from './Recipe';
@@ -134,6 +136,8 @@ export default class Service {
 
   @observable isMediaPlaying: boolean = false;
 
+  @observable useFavicon: boolean = DEFAULT_SERVICE_SETTINGS.useFavicon;
+
   @action _setAutoRun() {
     if (!this.isEnabled) {
       this.webview = null;
@@ -167,6 +171,7 @@ export default class Service {
     this.team = ifUndefined<string>(data.team, this.team);
     this.customUrl = ifUndefined<string>(data.customUrl, this.customUrl);
     this.iconUrl = ifUndefined<string>(data.iconUrl, this.iconUrl);
+    this.useFavicon = ifUndefined<boolean>(data.useFavicon, this.useFavicon);
     this.order = ifUndefined<number>(data.order, this.order);
     this.isEnabled = ifUndefined<boolean>(data.isEnabled, this.isEnabled);
     this.isNotificationEnabled = ifUndefined<boolean>(
@@ -350,6 +355,10 @@ export default class Service {
   }
 
   @computed get icon(): string {
+    if (this.useFavicon) {
+      return getFaviconUrl(this.url);
+    }
+
     if (this.iconUrl) {
       if (needsToken()) {
         let url: URL;
@@ -367,6 +376,10 @@ export default class Service {
         }
       }
       return this.iconUrl;
+    }
+
+    if (this.recipe.defaultIcon) {
+      return this.recipe.defaultIcon;
     }
 
     return join(this.recipe.path, 'icon.svg');
@@ -524,6 +537,18 @@ export default class Service {
     });
 
     if (webviewWebContents) {
+      // TODO: Modify this logic once https://github.com/electron/electron/issues/40674 is fixed
+      // This is a workaround for the issue where the zoom in shortcut is not working
+      if (!isMac) {
+        webviewWebContents.on('before-input-event', (event, input) => {
+          if (input.control && input.key === '+' && input.type === 'keyDown') {
+            event.preventDefault();
+            const currentZoom = this.webview?.getZoomLevel();
+            this.webview?.setZoomLevel(currentZoom + 0.5);
+          }
+        });
+      }
+
       webviewWebContents.session.on('will-download', (event, item) => {
         event.preventDefault();
 

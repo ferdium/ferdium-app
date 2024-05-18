@@ -245,6 +245,18 @@ const createWindow = () => {
         openExternalUrl(url);
         return { action: 'deny' };
       });
+
+      // Handle will download event from main process (prevent download dialog)
+      contents.session.on('will-download', (_e, item) => {
+        const downloadFolderPath = retrieveSettingValue(
+          'downloadFolderPath',
+          DEFAULT_APP_SETTINGS.downloadFolderPath,
+        ) as string;
+
+        if (downloadFolderPath !== '') {
+          item.setSavePath(join(downloadFolderPath, item.getFilename()));
+        }
+      });
     }
   });
 
@@ -393,7 +405,8 @@ const createWindow = () => {
   });
 
   if (isMac) {
-    import('./electron/macOSPermissions').then(macOSPermissions => {
+    // Note: Do not remove the extension. See https://github.com/ferdium/ferdium-app/issues/1755 for explanation
+    import('./electron/macOSPermissions.js').then(macOSPermissions => {
       const { askFormacOSPermissions } = macOSPermissions;
 
       setTimeout(() => askFormacOSPermissions(mainWindow!), ms('30s'));
@@ -610,6 +623,11 @@ ipcMain.on('feature-basic-auth-cancel', () => {
   authCallback = noop;
 });
 
+ipcMain.on('load-available-displays', (_e, data) => {
+  debug('MAIN PROCESS: Received load-desktop-capturer-sources');
+  mainWindow?.webContents.send(`select-capture-device:${data.serviceId}`, data);
+});
+
 // Handle synchronous messages from service webviews.
 
 ipcMain.on('find-in-page', (e, text, options) => {
@@ -777,3 +795,15 @@ app.on(
     callback(checkIfCertIsPresent(certificate.data));
   },
 );
+
+ipcMain.on('relaunch-app', async (_, options) => {
+  // Ask user to confirm
+  const result = await dialog.showMessageBox(mainWindow!, options);
+
+  if (result.response === options.cancelId) {
+    return;
+  }
+
+  app.relaunch();
+  app.quit();
+});

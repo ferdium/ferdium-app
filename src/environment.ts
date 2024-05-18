@@ -7,6 +7,8 @@ export const isWindows = process.platform === 'win32';
 export const isLinux = process.platform === 'linux';
 export const isWinPortable = process.env.PORTABLE_EXECUTABLE_FILE != null;
 
+export const isWayland = isLinux && process.env.XDG_SESSION_TYPE === 'wayland';
+
 export const electronVersion: string = process.versions.electron ?? '';
 export const chromeVersion: string = process.versions.chrome ?? '';
 export const nodeVersion: string = process.versions.node;

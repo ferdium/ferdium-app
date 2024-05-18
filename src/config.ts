@@ -49,6 +49,9 @@ export const WEBRTC_IP_HANDLING_POLICY = {
   [disableWebRTCIPHandlingPolicy]: 'Do not expose public or local IPs',
 };
 
+export const SCREENSHARE_CANCELLED_BY_USER =
+  'desktop-capturer-selection__cancel';
+
 // TODO: Need to convert many of these to i18n
 export const HIBERNATION_STRATEGIES = {
   10: 'Extremely Fast Hibernation (10sec)',
@@ -398,6 +401,7 @@ export const DEFAULT_APP_SETTINGS = {
   automaticUpdates: true,
   universalDarkMode: true,
   userAgentPref: '',
+  downloadFolderPath: '',
   adaptableDarkMode: true,
   accentColor: DEFAULT_ACCENT_COLOR,
   progressbarAccentColor: DEFAULT_ACCENT_COLOR,
@@ -440,6 +444,7 @@ export const DEFAULT_SERVICE_SETTINGS = {
   isBadgeEnabled: true,
   isMediaBadgeEnabled: false,
   trapLinkClicks: false,
+  useFavicon: false,
   isMuted: false,
   customIcon: false,
   isDarkModeEnabled: false,

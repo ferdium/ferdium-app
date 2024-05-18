@@ -7,6 +7,7 @@ import { CUSTOM_WEBSITE_RECIPE_ID } from '../../../config';
 import WebControlsScreen from '../../../features/webControls/containers/WebControlsScreen';
 import type ServiceModel from '../../../models/Service';
 import type { RealStores } from '../../../stores';
+import MediaSource from '../../MediaSource';
 import StatusBarTargetUrl from '../../ui/StatusBarTargetUrl';
 import WebviewLoader from '../../ui/WebviewLoader';
 import ServiceDisabled from './ServiceDisabled';
@@ -164,6 +165,7 @@ class ServiceView extends Component<IProps, IState> {
             ) : (
               <>
                 {showNavBar && <WebControlsScreen service={service} />}
+                <MediaSource service={service} />
                 <ServiceWebview
                   service={service}
                   setWebviewReference={setWebviewRef}

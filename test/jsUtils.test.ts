@@ -180,23 +180,59 @@ describe('jsUtils', () => {
 
   describe('acceleratorString', () => {
     it('handles without prefix and suffix', () => {
-      expect(jsUtils.acceleratorString(5, 'abc')).toEqual('(abc+5)');
+      expect(
+        jsUtils.acceleratorString({
+          index: 5,
+          keyCombo: 'abc',
+        }),
+      ).toEqual('(abc+5)');
     });
 
     it('handles index = 0', () => {
-      expect(jsUtils.acceleratorString(0, 'abc')).toEqual('(abc+0)');
+      expect(
+        jsUtils.acceleratorString({
+          index: 0,
+          keyCombo: 'abc',
+        }),
+      ).toEqual('(abc+0)');
     });
 
     it('handles index = 1', () => {
-      expect(jsUtils.acceleratorString(1, 'abc')).toEqual('(abc+1)');
+      expect(
+        jsUtils.acceleratorString({
+          index: 1,
+          keyCombo: 'abc',
+        }),
+      ).toEqual('(abc+1)');
     });
 
     it('handles index = 10', () => {
-      expect(jsUtils.acceleratorString(10, 'abc')).toEqual('(abc+0)');
+      expect(
+        jsUtils.acceleratorString({
+          index: 10,
+          keyCombo: 'abc',
+          maxIndex: 10,
+        }),
+      ).toEqual('(abc+0)');
     });
 
     it('handles index = 11', () => {
-      expect(jsUtils.acceleratorString(11, 'abc')).toEqual('');
+      expect(
+        jsUtils.acceleratorString({
+          index: 11,
+          keyCombo: 'abc',
+        }),
+      ).toEqual('');
+    });
+
+    it('handles index = 9, maxIndex = 8', () => {
+      expect(
+        jsUtils.acceleratorString({
+          index: 9,
+          maxIndex: 8,
+          keyCombo: 'abc',
+        }),
+      ).toEqual('');
     });
   });
 

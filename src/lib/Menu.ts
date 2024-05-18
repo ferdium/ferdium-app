@@ -496,7 +496,15 @@ function titleBarTemplateFactory(
         },
         {
           label: intl.formatMessage(menuItems.zoomIn),
-          accelerator: `${cmdOrCtrlShortcutKey()}+plus`,
+          // TODO: Modify this logic once https://github.com/electron/electron/issues/40674 is fixed
+          // This is a workaround for the issue where the zoom in shortcut is not working
+          // This makes sure the accelerator is not registered
+          accelerator: isWindows
+            ? `${cmdOrCtrlShortcutKey()}++`
+            : `${cmdOrCtrlShortcutKey()}+Plus`,
+          registerAccelerator: !!isMac,
+          acceleratorWorksWhenHidden: !!isMac,
+          // ---------------------------
           click() {
             const activeService = getActiveService();
             if (!activeService) {
@@ -1134,7 +1142,12 @@ class FranzMenu implements StoresProps {
     for (const [i, service] of services.allDisplayed.entries()) {
       menu.push({
         label: this._getServiceName(service),
-        accelerator: acceleratorString(i + 1, cmdOrCtrlShortcutKey(), '', ''),
+        accelerator: acceleratorString({
+          index: i + 1,
+          keyCombo: cmdOrCtrlShortcutKey(),
+          prefix: '',
+          suffix: '',
+        }),
         type: 'radio',
         checked: service.isActive,
         click: () => {

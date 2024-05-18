@@ -53,6 +53,7 @@ class ServiceController {
         isNotificationEnabled: DEFAULT_SERVICE_SETTINGS.isNotificationEnabled,
         isBadgeEnabled: DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
         trapLinkClicks: DEFAULT_SERVICE_SETTINGS.trapLinkClicks,
+        useFavicon: DEFAULT_SERVICE_SETTINGS.useFavicon,
         isMuted: DEFAULT_SERVICE_SETTINGS.isMuted,
         isDarkModeEnabled: '', // TODO: This should ideally be a boolean (false). But, changing it caused the sidebar toggle to not work.
         isProgressbarEnabled: DEFAULT_SERVICE_SETTINGS.isProgressbarEnabled,
@@ -83,6 +84,7 @@ class ServiceController {
         hasCustomIcon: DEFAULT_SERVICE_SETTINGS.hasCustomIcon,
         isBadgeEnabled: DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
         trapLinkClicks: DEFAULT_SERVICE_SETTINGS.trapLinkClicks,
+        useFavicon: DEFAULT_SERVICE_SETTINGS.useFavicon,
         isDarkModeEnabled: '', // TODO: This should ideally be a boolean (false). But, changing it caused the sidebar toggle to not work.
         isProgressbarEnabled: DEFAULT_SERVICE_SETTINGS.isProgressbarEnabled,
         isEnabled: DEFAULT_SERVICE_SETTINGS.isEnabled,
@@ -232,6 +234,7 @@ class ServiceController {
         hasCustomIcon: DEFAULT_SERVICE_SETTINGS.customIcon,
         isBadgeEnabled: DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
         trapLinkClicks: DEFAULT_SERVICE_SETTINGS.trapLinkClicks,
+        useFavicon: DEFAULT_SERVICE_SETTINGS.useFavicon,
         isDarkModeEnabled: '', // TODO: This should ideally be a boolean (false). But, changing it caused the sidebar toggle to not work.
         isProgressbarEnabled: DEFAULT_SERVICE_SETTINGS.isProgressbarEnabled,
         isEnabled: DEFAULT_SERVICE_SETTINGS.isEnabled,

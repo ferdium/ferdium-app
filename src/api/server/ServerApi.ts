@@ -12,6 +12,7 @@ import {
   statSync,
   writeFileSync,
 } from 'fs-extra';
+import ms from 'ms';
 import tar from 'tar';
 
 import RecipeModel, { type IRecipe } from '../../models/Recipe';
@@ -460,7 +461,7 @@ export default class ServerApi {
     }
     debug(archivePath);
 
-    await sleep(10);
+    await sleep(ms('10ms'));
 
     await tar.x({
       file: archivePath,
@@ -471,13 +472,20 @@ export default class ServerApi {
       onwarn: x => debug('warn', recipeId, x),
     });
 
-    await sleep(10);
+    await sleep(ms('10ms'));
 
-    const { id } = readJsonSync(join(recipeTempDirectory, 'package.json'));
+    const { id, defaultIcon } = readJsonSync(
+      join(recipeTempDirectory, 'package.json'),
+    );
     const recipeDirectory = join(recipesDirectory, id);
     copySync(recipeTempDirectory, recipeDirectory);
     removeSync(recipeTempDirectory);
     removeSync(join(recipesDirectory, recipeId, 'recipe.tar.gz'));
+
+    // TODO: This is a temporary fix to remove svg icons from the user AppData. This should be removed after versions of all recipes have been bumped up
+    if (defaultIcon) {
+      removeSync(join(recipeDirectory, 'icon.svg'));
+    }
 
     return id;
   }

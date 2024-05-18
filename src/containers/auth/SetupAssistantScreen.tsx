@@ -1,4 +1,5 @@
 import { inject, observer } from 'mobx-react';
+import ms from 'ms';
 import { Component, type ReactElement } from 'react';
 import type { StoresProps } from '../../@types/ferdium-components.types';
 import type { ILegacyServices } from '../../@types/legacy-types';
@@ -83,11 +84,11 @@ class SetupAssistantScreen extends Component<IProps, IState> {
       });
 
       // eslint-disable-next-line no-await-in-loop
-      await sleep(100);
+      await sleep(ms('100ms'));
     }
 
     this.setState({ isSettingUpServices: false });
-    await sleep(100);
+    await sleep(ms('100ms'));
     router.push('/');
   }
 

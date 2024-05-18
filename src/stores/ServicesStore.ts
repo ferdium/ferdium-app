@@ -472,6 +472,7 @@ export default class ServicesStore extends TypedStore {
       isBadgeEnabled: DEFAULT_SERVICE_SETTINGS.isBadgeEnabled,
       isMediaBadgeEnabled: DEFAULT_SERVICE_SETTINGS.isMediaBadgeEnabled,
       trapLinkClicks: DEFAULT_SERVICE_SETTINGS.trapLinkClicks,
+      useFavicon: DEFAULT_SERVICE_SETTINGS.useFavicon,
       isMuted: DEFAULT_SERVICE_SETTINGS.isMuted,
       customIcon: DEFAULT_SERVICE_SETTINGS.customIcon,
       isDarkModeEnabled: DEFAULT_SERVICE_SETTINGS.isDarkModeEnabled,
@@ -838,6 +839,16 @@ export default class ServicesStore extends TypedStore {
 
         break;
       }
+
+      case 'load-available-displays': {
+        debug('Received request for capture devices from', serviceId);
+        ipcRenderer.send('load-available-displays', {
+          serviceId,
+          ...args[0],
+        });
+        break;
+      }
+
       case 'notification': {
         const { notificationId, options } = args[0];
 
@@ -906,12 +917,13 @@ export default class ServicesStore extends TypedStore {
 
         if (service.isNotificationEnabled) {
           let title: string;
-          options.icon = service.iconUrl;
           if (this.stores.settings.all.app.privateNotifications === true) {
             // Remove message data from notification in private mode
             options.body = '';
+            options.icon = service.icon;
             title = `Notification from ${service.name}`;
           } else {
+            options.icon = options.icon || service.icon;
             options.body = typeof options.body === 'string' ? options.body : '';
             title =
               typeof args[0].title === 'string' ? args[0].title : service.name;

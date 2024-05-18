@@ -32,11 +32,7 @@ import {
   NotificationsHandler,
   notificationsClassDefinition,
 } from './notifications';
-import {
-  getDisplayMediaSelector,
-  screenShareCss,
-  screenShareJs,
-} from './screenshare';
+import { getDisplayMediaSelector, screenShareJs } from './screenshare';
 import SessionHandler from './sessionHandler';
 import {
   getSpellcheckerLocaleByFuzzyIdentifier,
@@ -125,7 +121,7 @@ contextBridge.exposeInMainWorld('ferdium', {
   setDialogTitle: (title: string | null | undefined) =>
     dialogTitleHandler.setDialogTitle(title),
   displayNotification: (title: string, options: any) => {
-    notificationsHandler.displayNotification(
+    return notificationsHandler.displayNotification(
       title,
       // The following line is needed so that a proper clone of the "options" object is made.
       // This line was causing issues with some services.
@@ -267,7 +263,6 @@ class RecipeController {
 
   async loadUserFiles(recipe, config) {
     const styles = document.createElement('style');
-    styles.innerHTML = screenShareCss;
 
     const userCss = join(recipe.path, 'user.css');
     if (pathExistsSync(userCss)) {
