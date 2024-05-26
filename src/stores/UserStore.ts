@@ -408,7 +408,7 @@ export default class UserStore extends TypedStore {
     const parsedUrl = new URL(url);
     const params = new URLSearchParams(parsedUrl.search.slice(1));
 
-    // TODO: Remove the neccesity for `as string`
+    // TODO: Remove the necessity for `as string`
     params.append('authToken', this.authToken!);
 
     return `${parsedUrl.origin}${parsedUrl.pathname}?${params.toString()}`;
