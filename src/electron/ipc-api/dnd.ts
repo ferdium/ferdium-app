@@ -8,6 +8,8 @@ export default async () => {
     if (!isMac) {
       return false;
     }
+    // eslint-disable-next-line @typescript-eslint/prefer-ts-expect-error
+    // @ts-ignore
     const { getDoNotDisturb } = await import('macos-notification-state');
 
     if (!getDoNotDisturb) {
