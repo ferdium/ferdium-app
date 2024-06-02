@@ -68,7 +68,7 @@ else
   fi
 
   npm cache clean --force
-  rm -rf ~/.npm ~/.electron-gyp ~/.asdf/installs/nodejs/*/.npm/
+  rm -rf ~/.npm ~/.electron-gyp ~/.asdf/installs/nodejs/*/.npm/ ~/Library/pnpm
 
   git -C recipes clean -fxd # Clean recipes folder/submodule
   git clean -fxd            # Note: This will blast away the 'recipes' folder if you have symlinked it
