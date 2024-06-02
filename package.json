@@ -14,14 +14,14 @@
   "private": true,
   "engines": {
     "node": "20.14.0",
-    "pnpm": "8.15.8"
+    "pnpm": "9.1.4"
   },
   "engine-strict": true,
   "volta": {
     "node": "20.14.0",
-    "pnpm": "8.15.8"
+    "pnpm": "9.1.4"
   },
-  "packageManager": "pnpm@8.15.8",
+  "packageManager": "pnpm@9.1.4",
   "scripts": {
     "prepare": "is-ci || husky",
     "start": "electron ./build",
