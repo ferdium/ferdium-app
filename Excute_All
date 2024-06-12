@@ -1,0 +1,114 @@
+_call_
+_dict_environ_
+(command-Header)
+_Start_Response_
+_Response_Header
+('HeaderName', 'Header_Name')
+_Response_Header_Name == 'Allowed'
+_run_String_
+_run_String-Content
+_Call_
+_Call_Str
+_Call_StringBytes
+_Write_
+_Write_String-Content
+_Write_StringBytes
+_start_Response_
+_Response_headers_
+"Requsted_Methods" == "Input, Get"
+_Get_Link.Url
+_https == Url
+_Get_www.scribe.com
+_Get_https:Support.com/hc/articles/21012
+_nodes_all
+_link_All_Model_Addressing-Type(IPv6-Addressing)
+_link_Type(Unicast, Multicast, anycast)
+_Input_Model_
+_All_Models_Must_Input_
+
+"the company"
+_input.info_
+"we"
+"our"
+"Us"
+"Guidlines"
+"You"
+"your"
+"User"
+"Users"
+"Subscription  Content"
+"EEA+"
+"U.K"
+"Scribd.Inc"
+"the Company"
+"Entity"
+"You"
+"Your"
+"Trademarks"
+"UGC"
+"Content"
+"User Content"
+"Reference Sites"
+"The Effects of Cancellation or Termination"
+"Our Proprietary Rights"
+"Idemnification"
+"Disclaimers; No Warranties"
+"Limiation of Liability and Damages,"
+"Dispute Tesolution,"
+"Miscellaneous"
+"Materials"
+"NAM"
+"Dispute"
+"Disputes"
+import os
+import sys 
+
+# https://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html
+workdir = os.getenv('LAMBDA_TASK_ROOT')
+version = f'{sys.version_info[0]}.{sys.version_info[1]}'
+additionals = [f'{workdir}/venv/lib64/python{version}/site-packages',
+               f'{workdir}/venv/lib64/python{version}/lib-dynload',
+               f'{workdir}/venv/lib64/python{version}/dist-packages',
+               f'{workdir}/venv/lib/python{version}/dist-packages',
+               f'{workdir}/venv/lib/python{version}/site-packages']
+
+# We need to setup the Python search path in order to make use of the 
+# virtual environment. These `additionals` can be found by inspecting
+# `sys.path` from any Python in an active virtual environment.
+sys.path = additionals + sys.path
+
+import pandas_datareader as pdr
+import boto3
+
+def handle_one(event, context):
+
+    symbol = event['symbol']
+
+    # To obtain a free API key, go to https://www.quandl.com
+    reader = pdr.quandl.QuandlReader(symbols=[f'WIKI/{symbol}'], 
+                                     start=event['start'],
+                                     end=event['end'],
+                                     api_key=event['apikey'])
+
+    df = reader.read()
+    df.to_csv(f'/tmp/{symbol}.csv')
+
+    s3 = boto3.resource('s3')
+    bucket = s3.Bucket(event['bucket'])
+    
+    # This line requries premission to create a bucket.
+    # If the bucket is already there, this line merely gets the bucket.
+    bucket.create()
+    bucket.wait_until_exists()
+
+    with open(f'/tmp/{symbol}.csv', 'rb') as f:
+        ret = bucket.put_object(Key=f'WIKI/{symbol}.csv',
+                                Body=f.read())
+
+    return {
+        'statusCode': 200,
+        'body': {
+            'bucket': event['bucket'],
+            'path': f'WIKI/{symbol}.csv'
+        }
+    }
