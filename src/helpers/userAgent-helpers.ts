@@ -17,7 +17,7 @@ function macOS() {
     // eslint-disable-next-line prefer-destructuring
     cpuName = cpuName.split('(')[0];
   }
-  return `Macintosh; ${cpuName} Mac OS X ${version.replaceAll('.', '_')}`;
+  return `Macintosh; ${cpuName} macOS ${version.replaceAll('.', '_')}`;
 }
 
 function windows() {
@@ -33,7 +33,7 @@ function linux() {
 }
 
 export default function userAgent() {
-  let platformString = '';
+  let platformString;
 
   if (isMac) {
     platformString = macOS();

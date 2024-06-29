@@ -697,6 +697,7 @@ class FranzMenu implements StoresProps {
   }
 
   get template(): any {
+    // @ts-expect-error
     return fromJS(this.currentTemplate).toJS();
   }
 

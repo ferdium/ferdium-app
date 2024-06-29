@@ -643,7 +643,7 @@ export class ContextMenuBuilder {
   addImageItems(
     menu: Electron.CrossProcessExports.Menu,
     menuInfo: IContextMenuParams,
-  ) {
+  ): void {
     const copyImage = new MenuItem({
       label: this.stringTable.copyImage(),
       click: () => {
@@ -718,8 +718,6 @@ export class ContextMenuBuilder {
 
       menu.append(downloadImage);
     }
-
-    return menu;
   }
 
   /**
@@ -728,7 +726,7 @@ export class ContextMenuBuilder {
   addCut(
     menu: Electron.CrossProcessExports.Menu,
     menuInfo: IContextMenuParams,
-  ) {
+  ): void {
     const webContents = this.getWebContents();
     menu.append(
       new MenuItem({
@@ -738,8 +736,6 @@ export class ContextMenuBuilder {
         click: () => webContents.cut(),
       }),
     );
-
-    return menu;
   }
 
   /**
@@ -748,7 +744,7 @@ export class ContextMenuBuilder {
   addCopy(
     menu: Electron.CrossProcessExports.Menu,
     menuInfo: IContextMenuParams,
-  ) {
+  ): void {
     const webContents = this.getWebContents();
     menu.append(
       new MenuItem({
@@ -758,8 +754,6 @@ export class ContextMenuBuilder {
         click: () => webContents.copy(),
       }),
     );
-
-    return menu;
   }
 
   /**
@@ -768,7 +762,7 @@ export class ContextMenuBuilder {
   addPaste(
     menu: Electron.CrossProcessExports.Menu,
     menuInfo: IContextMenuParams,
-  ) {
+  ): void {
     const webContents = this.getWebContents();
     menu.append(
       new MenuItem({
@@ -778,14 +772,12 @@ export class ContextMenuBuilder {
         click: () => webContents.paste(),
       }),
     );
-
-    return menu;
   }
 
   addPastePlain(
     menu: Electron.CrossProcessExports.Menu,
     menuInfo: IContextMenuParams,
-  ) {
+  ): void {
     if (
       menuInfo.editFlags.canPaste &&
       !menuInfo.linkText &&
@@ -805,9 +797,8 @@ export class ContextMenuBuilder {
   /**
    * Adds a separator item.
    */
-  addSeparator(menu: Electron.CrossProcessExports.Menu) {
+  addSeparator(menu: Electron.CrossProcessExports.Menu): void {
     menu.append(new MenuItem({ type: 'separator' }));
-    return menu;
   }
 
   /**
@@ -817,18 +808,17 @@ export class ContextMenuBuilder {
     menu: Electron.CrossProcessExports.Menu,
     menuInfo: IContextMenuParams,
     needsSeparator = true,
-  ) {
+  ): void {
     const webContents = this.getWebContents();
-    if (!this.debugMode) return menu;
+    if (!this.debugMode) return;
     if (needsSeparator) this.addSeparator(menu);
 
-    const inspect = new MenuItem({
-      label: this.stringTable.inspectElement(),
-      click: () => webContents.inspectElement(menuInfo.x, menuInfo.y),
-    });
-
-    menu.append(inspect);
-    return menu;
+    menu.append(
+      new MenuItem({
+        label: this.stringTable.inspectElement(),
+        click: () => webContents.inspectElement(menuInfo.x, menuInfo.y),
+      }),
+    );
   }
 
   /**
@@ -846,7 +836,7 @@ export class ContextMenuBuilder {
       (arg0: string): void;
     },
     outputFormat: string = 'image/png',
-  ) {
+  ): void {
     let canvas: HTMLCanvasElement | null = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
     const img = new Image();
@@ -870,7 +860,7 @@ export class ContextMenuBuilder {
   /**
    * Adds the 'go back' menu item
    */
-  goBack(menu: Electron.CrossProcessExports.Menu) {
+  goBack(menu: Electron.CrossProcessExports.Menu): void {
     const webContents = this.getWebContents();
 
     menu.append(
@@ -881,14 +871,12 @@ export class ContextMenuBuilder {
         click: () => webContents.goBack(),
       }),
     );
-
-    return menu;
   }
 
   /**
    * Adds the 'go forward' menu item
    */
-  goForward(menu: Electron.CrossProcessExports.Menu) {
+  goForward(menu: Electron.CrossProcessExports.Menu): void {
     const webContents = this.getWebContents();
     menu.append(
       new MenuItem({
@@ -898,8 +886,6 @@ export class ContextMenuBuilder {
         click: () => webContents.goForward(),
       }),
     );
-
-    return menu;
   }
 
   /**
@@ -908,7 +894,7 @@ export class ContextMenuBuilder {
   copyPageUrl(
     menu: Electron.CrossProcessExports.Menu,
     menuInfo: IContextMenuParams,
-  ) {
+  ): void {
     menu.append(
       new MenuItem({
         label: this.stringTable.copyPageUrl(),
@@ -922,8 +908,6 @@ export class ContextMenuBuilder {
         },
       }),
     );
-
-    return menu;
   }
 
   /**
@@ -932,7 +916,7 @@ export class ContextMenuBuilder {
   goToHomePage(
     menu: Electron.CrossProcessExports.Menu,
     menuInfo: IContextMenuParams,
-  ) {
+  ): void {
     const baseURL = new window.URL(menuInfo.pageURL);
     menu.append(
       new MenuItem({
@@ -945,8 +929,6 @@ export class ContextMenuBuilder {
         },
       }),
     );
-
-    return menu;
   }
 
   /**
@@ -955,7 +937,7 @@ export class ContextMenuBuilder {
   openInBrowser(
     menu: Electron.CrossProcessExports.Menu,
     menuInfo: IContextMenuParams,
-  ) {
+  ): void {
     menu.append(
       new MenuItem({
         label: this.stringTable.openInBrowser(),
@@ -965,8 +947,6 @@ export class ContextMenuBuilder {
         },
       }),
     );
-
-    return menu;
   }
 
   /**
@@ -975,7 +955,7 @@ export class ContextMenuBuilder {
   openInFerdium(
     menu: Electron.CrossProcessExports.Menu,
     menuInfo: IContextMenuParams,
-  ) {
+  ): void {
     menu.append(
       new MenuItem({
         label: this.stringTable.openInFerdium(),
@@ -985,14 +965,12 @@ export class ContextMenuBuilder {
         },
       }),
     );
-
-    return menu;
   }
 
   _sendNotificationOnClipboardEvent(
     isDisabled: boolean,
     notificationText: () => string,
-  ) {
+  ): void {
     if (isDisabled) {
       return;
     }
