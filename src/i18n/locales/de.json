@@ -356,6 +356,7 @@
   "settings.service.error.message": "Das Dienst-Rezept konnte nicht geladen werden.",
   "settings.service.form.addServiceHeadline": "{name} hinzufügen",
   "settings.service.form.availableServices": "Verfügbare Dienste",
+  "settings.service.form.confirmDeleteService": "Möchten Sie den Dienst {serviceName} wirklich löschen?",
   "settings.service.form.customUrl": "Eigener Server",
   "settings.service.form.customUrlValidationError": "Dein {name}-Server konnte nicht verifiziert werden.",
   "settings.service.form.darkReaderBrightness": "Dark Reader Helligkeit",
