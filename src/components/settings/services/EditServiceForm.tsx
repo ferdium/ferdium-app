@@ -1,3 +1,4 @@
+import { app, dialog } from '@electron/remote';
 import { mdiInformation } from '@mdi/js';
 import { noop } from 'lodash';
 import { observer } from 'mobx-react';
@@ -33,6 +34,10 @@ const messages = defineMessages({
   deleteService: {
     id: 'settings.service.form.deleteButton',
     defaultMessage: 'Delete service',
+  },
+  confirmDeleteService: {
+    id: 'settings.service.form.confirmDeleteService',
+    defaultMessage: 'Do you really want to delete the {serviceName} service?',
   },
   openDarkmodeCss: {
     id: 'settings.service.form.openDarkmodeCss',
@@ -248,7 +253,23 @@ class EditServiceForm extends Component<IProps, IState> {
         buttonType="danger"
         label={intl.formatMessage(messages.deleteService)}
         className="settings__delete-button"
-        onClick={onDelete}
+        onClick={() => {
+          // @ts-expect-error Fix me
+          const selection = dialog.showMessageBoxSync(app.mainWindow, {
+            type: 'question',
+            message: intl.formatMessage(messages.deleteService),
+            detail: intl.formatMessage(messages.confirmDeleteService, {
+              serviceName: service?.name || recipe.name,
+            }),
+            buttons: [
+              intl.formatMessage(globalMessages.yes),
+              intl.formatMessage(globalMessages.no),
+            ],
+          });
+          if (selection === 0) {
+            onDelete();
+          }
+        }}
       />
     );
 
