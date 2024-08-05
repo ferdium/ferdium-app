@@ -37,27 +37,27 @@
       ]
     },
     {
-      "login": "kytwb",
-      "name": "Amine Mouafik",
-      "avatar_url": "https://avatars0.githubusercontent.com/u/412895?v=4",
-      "profile": "https://twitter.com/kytwb",
+      "login": "vraravam",
+      "name": "Vijay Raghavan Aravamudhan",
+      "avatar_url": "https://avatars.githubusercontent.com/u/69629?v=4",
+      "profile": "https://github.com/vraravam",
       "contributions": [
+        "blog",
+        "bug",
         "code",
+        "content",
         "design",
         "doc",
         "ideas",
-        "bug",
-        "content",
         "infra",
-        "userTesting",
-        "question",
-        "projectManagement",
-        "review",
         "maintenance",
+        "mentoring",
         "platform",
-        "fundingFinding",
-        "blog",
-        "translation"
+        "projectManagement",
+        "question",
+        "review",
+        "translation",
+        "userTesting"
       ]
     },
     {
@@ -840,26 +840,6 @@
       "contributions": [
         "code",
         "bug"
-      ]
-    },
-    {
-      "login": "vraravam",
-      "name": "Vijay Raghavan Aravamudhan",
-      "avatar_url": "https://avatars.githubusercontent.com/u/69629?v=4",
-      "profile": "https://github.com/vraravam",
-      "contributions": [
-        "maintenance",
-        "doc",
-        "code",
-        "mentoring",
-        "review",
-        "infra",
-        "ideas",
-        "bug",
-        "content",
-        "userTesting",
-        "projectManagement",
-        "translation"
       ]
     },
     {

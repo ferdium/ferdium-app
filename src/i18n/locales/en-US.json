@@ -356,6 +356,7 @@
   "settings.service.error.message": "Could not load service recipe.",
   "settings.service.form.addServiceHeadline": "Add {name}",
   "settings.service.form.availableServices": "Available services",
+  "settings.service.form.confirmDeleteService": "Do you really want to delete the {serviceName} service?",
   "settings.service.form.customUrl": "Custom server",
   "settings.service.form.customUrlValidationError": "Could not validate custom {name} server.",
   "settings.service.form.darkReaderBrightness": "Dark Reader Brightness",
