@@ -43,7 +43,7 @@ importers:
         version: 5.1.0
       '@electron/remote':
         specifier: 2.1.2
-        version: 2.1.2(electron@31.3.1)
+        version: 2.1.2(electron@31.4.0)
       '@emotion/react':
         specifier: 11.11.4
         version: 11.11.4(@types/react@18.3.3)(react@18.3.1)
@@ -73,7 +73,7 @@ importers:
         version: 7.4.0(history@5.3.0)(mobx@6.13.1)(path-to-regexp@6.2.2)
       '@syed_umair/electron-process-manager':
         specifier: 1.1.0
-        version: 1.1.0(electron@31.3.1)
+        version: 1.1.0(electron@31.4.0)
       auto-launch:
         specifier: 5.0.6
         version: 5.0.6
@@ -353,8 +353,8 @@ importers:
         specifier: 7.0.3
         version: 7.0.3
       electron:
-        specifier: 31.3.1
-        version: 31.3.1
+        specifier: 31.4.0
+        version: 31.4.0
       electron-builder:
         specifier: 24.13.3
         version: 24.13.3(electron-builder-squirrel-windows@24.13.3(dmg-builder@24.13.3))
@@ -3235,8 +3235,8 @@ packages:
     resolution: {integrity: sha512-1mNTwCfkolXl3kMf50yW3vE2lZj0y92P/HYWFBrb+v2S/pCka5mdwN3cagKm458A7NjndSwijynXgcLWRodsVg==}
     engines: {node: '>=8.0.0'}
 
-  electron@31.3.1:
-    resolution: {integrity: sha512-9fiuWlRhBfygtcT+auRd/WdBK/f8LZZcrpx0RjpXhH2DPTP/PfnkC4JB1PW55qCbGbh4wAgkYbf4ExIag8oGCA==}
+  electron@31.4.0:
+    resolution: {integrity: sha512-YTwKoAA+nrJMlI1TTHnIXLYWoQLKnhbkz0qxZcI7Hadcy0UaFMFs9xzwvH2MnrRpVJy7RKo49kVGuvSdRl8zMA==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
 
@@ -8172,9 +8172,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@electron/remote@2.1.2(electron@31.3.1)':
+  '@electron/remote@2.1.2(electron@31.4.0)':
     dependencies:
-      electron: 31.3.1
+      electron: 31.4.0
 
   '@electron/universal@1.5.1':
     dependencies:
@@ -9100,9 +9100,9 @@ snapshots:
       mobx: 6.13.1
       path-to-regexp: 6.2.2
 
-  '@syed_umair/electron-process-manager@1.1.0(electron@31.3.1)':
+  '@syed_umair/electron-process-manager@1.1.0(electron@31.4.0)':
     dependencies:
-      electron: 31.3.1
+      electron: 31.4.0
       electron-process-reporter: 1.4.0
 
   '@szmarczak/http-timer@4.0.6':
@@ -11172,7 +11172,7 @@ snapshots:
       jsonfile: 4.0.0
       mkdirp: 0.5.6
 
-  electron@31.3.1:
+  electron@31.4.0:
     dependencies:
       '@electron/get': 2.0.3
       '@types/node': 20.14.10
