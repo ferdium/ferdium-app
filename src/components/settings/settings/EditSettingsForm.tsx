@@ -294,6 +294,11 @@ const messages = defineMessages({
     id: 'settings.app.buttonOpenFolderSelector',
     defaultMessage: 'Open folder selector',
   },
+  sandboxServicesInfo: {
+    id: 'settings.app.sandboxServicesInfo',
+    defaultMessage:
+      'Sandbox Services allows you to isolate your services from each other. This means that services cannot access each other’s data. Changing this setting will require a restart of Ferdium and re-login on services.',
+  },
 });
 
 const Hr = (): ReactElement => (
@@ -739,6 +744,27 @@ class EditSettingsForm extends Component<IProps, IState> {
                 <Select field={form.$('wakeUpStrategy')} />
                 <Select field={form.$('wakeUpHibernationStrategy')} />
                 <Toggle {...form.$('wakeUpHibernationSplay').bind()} />
+
+                <HrSections />
+
+                <H2 className="settings__section_header">
+                  {/* {intl.formatMessage(messages.sectionHibernation)} */}
+                  Session settings
+                </H2>
+                <Toggle {...form.$('sandboxServices').bind()} />
+                <p
+                  className="settings__message"
+                  style={{
+                    borderTop: 0,
+                    marginTop: 0,
+                    paddingTop: 0,
+                    marginBottom: '2rem',
+                  }}
+                >
+                  <span>
+                    {intl.formatMessage(messages.sandboxServicesInfo)}
+                  </span>
+                </p>
               </div>
             )}
 

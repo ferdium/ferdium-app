@@ -171,6 +171,7 @@ class ServiceView extends Component<IProps, IState> {
                   setWebviewReference={setWebviewRef}
                   detachService={detachService}
                   isSpellcheckerEnabled={isSpellcheckerEnabled}
+                  stores={stores}
                 />
               </>
             )}

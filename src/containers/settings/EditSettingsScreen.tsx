@@ -367,6 +367,10 @@ const messages = defineMessages({
     defaultMessage:
       'You made a change that requires a restart. This will close Ferdium and restart it.',
   },
+  sandboxServices: {
+    id: 'settings.app.form.sandboxServices',
+    defaultMessage: 'Use sandboxed services',
+  },
 });
 
 interface EditSettingsScreenProps extends StoresProps, WrappedComponentProps {}
@@ -497,6 +501,7 @@ class EditSettingsScreen extends Component<
       beta: Boolean(settingsData.beta), // we need this info in the main process as well
       automaticUpdates: Boolean(settingsData.automaticUpdates), // we need this info in the main process as well
       locale: settingsData.locale, // we need this info in the main process as well
+      sandboxServices: Boolean(settingsData.sandboxServices),
     };
 
     const requiredRestartKeys = [
@@ -1295,6 +1300,15 @@ class EditSettingsScreen extends Component<
             DEFAULT_APP_SETTINGS.automaticUpdates,
           ),
           default: DEFAULT_APP_SETTINGS.automaticUpdates,
+          type: 'checkbox',
+        },
+        sandboxServices: {
+          label: intl.formatMessage(messages.sandboxServices),
+          value: ifUndefined<boolean>(
+            settings.app.sandboxServices,
+            DEFAULT_APP_SETTINGS.sandboxServices,
+          ),
+          default: DEFAULT_APP_SETTINGS.sandboxServices,
           type: 'checkbox',
         },
       },

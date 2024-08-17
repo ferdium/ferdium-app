@@ -3,6 +3,7 @@ import { action, makeObservable, observable, reaction } from 'mobx';
 import { observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
 import ElectronWebView from 'react-electron-web-view';
+import type { RealStores } from 'src/stores';
 import type ServiceModel from '../../../models/Service';
 
 const debug = require('../../../preload-safe-debug')('Ferdium:Services');
@@ -15,6 +16,7 @@ interface IProps {
   }) => void;
   detachService: (options: { service: ServiceModel }) => void;
   isSpellcheckerEnabled: boolean;
+  stores?: RealStores;
 }
 
 @observer
@@ -82,7 +84,9 @@ class ServiceWebview extends Component<IProps> {
   }
 
   render(): ReactElement {
-    const { service, setWebviewReference, isSpellcheckerEnabled } = this.props;
+    const { service, setWebviewReference, isSpellcheckerEnabled, stores } = this.props;
+
+    const { sandboxServices } = stores!.settings.app;
 
     const preloadScript = join(
       __dirname,
@@ -107,7 +111,9 @@ class ServiceWebview extends Component<IProps> {
         autosize
         src={service.url}
         preload={preloadScript}
-        partition={service.partition}
+        partition={
+          sandboxServices ? service.partition : 'persist:general-session'
+        }
         onDidAttach={() => {
           // Force the event handler to run in a new task.
           // This resolves a race condition when the `did-attach` is called,
