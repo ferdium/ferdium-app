@@ -84,7 +84,8 @@ class ServiceWebview extends Component<IProps> {
   }
 
   render(): ReactElement {
-    const { service, setWebviewReference, isSpellcheckerEnabled, stores } = this.props;
+    const { service, setWebviewReference, isSpellcheckerEnabled, stores } =
+      this.props;
 
     const { sandboxServices } = stores!.settings.app;
 

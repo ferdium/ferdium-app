@@ -34,4 +34,7 @@ export default <ActionDefinitions>{
   endedDownload: {},
   stopDownload: {},
   togglePauseDownload: {},
+  addSandboxService: {},
+  deleteSandboxService: {},
+  editSandboxService: {},
 };

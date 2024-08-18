@@ -77,6 +77,12 @@ interface Download {
   endTime?: number;
 }
 
+interface SandboxServices {
+  id: string;
+  name: string;
+  services: string[];
+}
+
 export default class AppStore extends TypedStore {
   updateStatusTypes = {
     CHECKING: 'CHECKING',
@@ -87,6 +93,8 @@ export default class AppStore extends TypedStore {
   };
 
   @observable healthCheckRequest = new Request(this.api.app, 'health');
+
+  @observable sandboxServices: SandboxServices[] = [];
 
   @observable getAppCacheSizeRequest = new Request(
     this.api.local,
@@ -161,6 +169,16 @@ export default class AppStore extends TypedStore {
     this.actions.app.stopDownload.listen(this._stopDownload.bind(this));
     this.actions.app.togglePauseDownload.listen(
       this._togglePauseDownload.bind(this),
+    );
+
+    this.actions.app.addSandboxService.listen(
+      this._addSandboxService.bind(this),
+    );
+    this.actions.app.editSandboxService.listen(
+      this._editSandboxService.bind(this),
+    );
+    this.actions.app.deleteSandboxService.listen(
+      this._deleteSandboxService.bind(this),
     );
 
     this.registerReactions([
@@ -387,6 +405,10 @@ export default class AppStore extends TypedStore {
         user: this.stores.user.data.id,
       },
     };
+  }
+
+  getSandbox({ serviceId }) {
+    return this.sandboxServices.find(s => s.services.includes(serviceId));
   }
 
   // Actions
@@ -632,6 +654,28 @@ export default class AppStore extends TypedStore {
     ipcRenderer.send('toggle-pause-download', {
       downloadId,
     });
+  }
+
+  @action _addSandboxService({ name = 'NEW SANDBOX' }) {
+    // Random ID
+    const id = Math.random().toString(36).slice(7);
+
+    const sandboxService = { id, name, services: [] };
+
+    this.sandboxServices.push(sandboxService);
+    return sandboxService;
+  }
+
+  @action _editSandboxService({ id, name, services }) {
+    const sandboxService = this.sandboxServices.find(s => s.id === id);
+    if (sandboxService) {
+      sandboxService.name = name ?? sandboxService.name;
+      sandboxService.services = services ?? sandboxService.services;
+    }
+  }
+
+  @action _deleteSandboxService({ id }) {
+    this.sandboxServices = this.sandboxServices.filter(s => s.id !== id);
   }
 
   _setLocale() {

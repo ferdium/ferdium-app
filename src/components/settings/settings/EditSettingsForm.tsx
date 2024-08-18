@@ -44,6 +44,7 @@ import { H1, H2, H3, H5 } from '../../ui/headline';
 import Icon from '../../ui/icon';
 import Input from '../../ui/input/index';
 import Toggle from '../../ui/toggle';
+import SandboxServiceTabs from '../SandboxServiceTabs';
 
 const debug = require('../../../preload-safe-debug')(
   'Ferdium:EditSettingsForm',
@@ -752,6 +753,7 @@ class EditSettingsForm extends Component<IProps, IState> {
                   Session settings
                 </H2>
                 <Toggle {...form.$('sandboxServices').bind()} />
+                <SandboxServiceTabs />
                 <p
                   className="settings__message"
                   style={{
