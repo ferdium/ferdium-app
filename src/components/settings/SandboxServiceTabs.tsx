@@ -1,6 +1,5 @@
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { Button, IconButton, TextField } from '@mui/material';
 import { inject, observer } from 'mobx-react';
@@ -27,13 +26,10 @@ function TabPanel(props: TabPanelProps) {
       hidden={value !== index}
       id={`vertical-tabpanel-${index}`}
       aria-labelledby={`vertical-tab-${index}`}
+      style={{ width: '100%' }}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   );
 }
@@ -92,7 +88,7 @@ function SandboxServiceTabs(props: IProps) {
       <Box
         sx={{
           flexGrow: 1,
-          bgcolor: 'background.paper',
+          // bgcolor: 'background.paper',
           display: sandboxServices.length === 0 ? 'none' : 'flex',
         }}
       >
@@ -102,7 +98,12 @@ function SandboxServiceTabs(props: IProps) {
           value={value}
           onChange={handleChange}
           aria-label="Vertical tabs example"
-          sx={{ borderRight: 1, borderColor: 'divider' }}
+          sx={{
+            borderRight: 1,
+            borderColor: 'divider',
+            minWidth: '20%',
+            maxWidth: '20%',
+          }}
         >
           {sandboxServices?.map((tab, index) => (
             <Tab key={tab.id} label={tab.name} {...a11yProps(index)} />
@@ -110,7 +111,7 @@ function SandboxServiceTabs(props: IProps) {
         </Tabs>
         {sandboxServices?.map((tab, index) => (
           <TabPanel key={`${tab.id}-tabpanel`} value={value} index={index}>
-            <Box>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <TextField
                 id={`text-${tab.id}`}
                 variant="outlined"
@@ -125,7 +126,7 @@ function SandboxServiceTabs(props: IProps) {
                   setValue(value ? value - 1 : 0);
                 }}
                 aria-label="delete"
-                color="primary"
+                color="error"
               >
                 <DeleteIcon />
               </IconButton>

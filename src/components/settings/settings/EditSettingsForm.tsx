@@ -298,7 +298,11 @@ const messages = defineMessages({
   sandboxServicesInfo: {
     id: 'settings.app.sandboxServicesInfo',
     defaultMessage:
-      'Sandbox Services allows you to isolate your services from each other. This means that services cannot access each other’s data. Changing this setting will require a restart of Ferdium and re-login on services.',
+      'Sandbox Services allows you to isolate your services from each other. This means that services cannot access each other’s data. Changing any setting in this section will require a restart of Ferdium and re-login on services.',
+  },
+  sectionSandboxes: {
+    id: 'settings.app.sectionSandboxes',
+    defaultMessage: 'Sandboxes',
   },
 });
 
@@ -443,6 +447,7 @@ class EditSettingsForm extends Component<IProps, IState> {
       scheduledDNDEnabled,
       reloadAfterResume,
       useSelfSignedCertificates,
+      sandboxServices,
     } = window['ferdium'].stores.settings.all.app;
 
     let cacheSize;
@@ -749,11 +754,8 @@ class EditSettingsForm extends Component<IProps, IState> {
                 <HrSections />
 
                 <H2 className="settings__section_header">
-                  {/* {intl.formatMessage(messages.sectionHibernation)} */}
-                  Session settings
+                  {intl.formatMessage(messages.sectionSandboxes)}
                 </H2>
-                <Toggle {...form.$('sandboxServices').bind()} />
-                <SandboxServiceTabs />
                 <p
                   className="settings__message"
                   style={{
@@ -767,6 +769,8 @@ class EditSettingsForm extends Component<IProps, IState> {
                     {intl.formatMessage(messages.sandboxServicesInfo)}
                   </span>
                 </p>
+                <Toggle {...form.$('sandboxServices').bind()} />
+                {sandboxServices && <SandboxServiceTabs />}
               </div>
             )}
 

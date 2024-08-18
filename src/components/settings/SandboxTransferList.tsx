@@ -54,8 +54,6 @@ function SandboxTransferList(props: ISandboxTransferListProps) {
   // Convert the Set to an array
   const notSelected = [...notSelectedSet];
 
-  console.log('notSelected', notSelected);
-
   const [checked, setChecked] = useState<readonly string[]>([]);
   const handleToggle = (value: string) => () => {
     const currentIndex = checked.indexOf(value);
