@@ -93,7 +93,6 @@ class ServiceWebview extends Component<IProps> {
 
     const checkForSandbox = () => {
       const sandbox = sandboxes.find(s => s.services.includes(service.id));
-      console.log('sandboxServices', sandbox);
 
       if (sandbox) {
         return `persist:sandbox-${sandbox.id}`;
