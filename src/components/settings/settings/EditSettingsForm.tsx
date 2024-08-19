@@ -778,6 +778,9 @@ class EditSettingsForm extends Component<IProps, IState> {
                 <Toggle {...form.$('sandboxServices').bind()} />
                 {/* @ts-expect-error */}
                 {sandboxServices && <SandboxServiceTabs />}
+                <p className="settings__help">
+                  {intl.formatMessage(messages.appRestartRequired)}
+                </p>
               </div>
             )}
 
