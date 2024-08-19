@@ -1,3 +1,4 @@
+import { v4 as uuidV4 } from 'uuid';
 import { URL } from 'node:url';
 import {
   app,
@@ -34,7 +35,6 @@ import generatedTranslations from '../i18n/translations';
 import { cleanseJSObject } from '../jsUtils';
 import Request from './lib/Request';
 import TypedStore from './lib/TypedStore';
-
 import sleep from '../helpers/async-helpers';
 import {
   getServiceIdsFromPartitions,
@@ -720,7 +720,7 @@ export default class AppStore extends TypedStore {
 
   @action _addSandboxService({ name = 'NEW SANDBOX' }) {
     // Random ID
-    const id = Math.random().toString(36).slice(7);
+    const id = uuidV4();
 
     const sandboxService = { id, name, services: [] };
 

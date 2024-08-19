@@ -98,7 +98,13 @@ function SandboxTransferList(props: ISandboxTransferListProps) {
             role="listitem"
             onClick={handleToggle(value)}
           >
-            <ListItemIcon>
+            <ListItemIcon
+              sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
               <Checkbox
                 checked={checked.includes(value)}
                 tabIndex={-1}
@@ -106,6 +112,12 @@ function SandboxTransferList(props: ISandboxTransferListProps) {
                 inputProps={{
                   'aria-labelledby': labelId,
                 }}
+              />
+              <img
+                src={getServiceInfo(value)?.icon}
+                alt={getServiceInfo(value)?.name}
+                width={15}
+                height={15}
               />
             </ListItemIcon>
             <ListItemText id={labelId} primary={getServiceInfo(value)?.name} />
