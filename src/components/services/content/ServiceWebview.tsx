@@ -89,6 +89,19 @@ class ServiceWebview extends Component<IProps> {
 
     const { sandboxServices } = stores!.settings.app;
 
+    const { sandboxServices: sandboxes } = stores!.app;
+
+    const checkForSandbox = () => {
+      const sandbox = sandboxes.find(s => s.services.includes(service.id));
+      console.log('sandboxServices', sandbox);
+
+      if (sandbox) {
+        return `persist:sandbox-${sandbox.id}`;
+      }
+
+      return service.partition;
+    };
+
     const preloadScript = join(
       __dirname,
       '..',
@@ -113,7 +126,7 @@ class ServiceWebview extends Component<IProps> {
         src={service.url}
         preload={preloadScript}
         partition={
-          sandboxServices ? service.partition : 'persist:general-session'
+          sandboxServices ? checkForSandbox() : 'persist:general-session'
         }
         onDidAttach={() => {
           // Force the event handler to run in a new task.

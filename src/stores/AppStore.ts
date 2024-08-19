@@ -9,7 +9,7 @@ import {
 } from '@electron/remote';
 import AutoLaunch from 'auto-launch';
 import { ipcRenderer } from 'electron';
-import { readJsonSync } from 'fs-extra';
+import { readdirSync, readJsonSync, writeJsonSync } from 'fs-extra';
 import { action, computed, makeObservable, observable } from 'mobx';
 import moment from 'moment';
 import ms from 'ms';
@@ -352,6 +352,68 @@ export default class AppStore extends TypedStore {
 
       localStorage.setItem(CATALINA_NOTIFICATION_HACK_KEY, 'true');
     }
+
+    this._initializeSandboxes();
+  }
+
+  _initializeSandboxes() {
+    this._readSandboxes();
+
+    // Check partitions of the sandboxes that no longer exist
+    const dir = readdirSync(userDataPath('Partitions'));
+    dir
+      .filter(d => d.startsWith('sandbox-'))
+      .forEach(d => {
+        if (
+          !this.sandboxServices.some(s =>
+            s.id.includes(d.replace('sandbox-', '')),
+          )
+        ) {
+          try {
+            removeServicePartitionDirectory(d);
+          } catch (error) {
+            console.error(
+              'Error while checking service partition directory -',
+              error,
+            );
+          }
+        }
+      });
+
+    // Check if services in sandboxes still exists, if so, remove their partitions (NOT WORKING!)
+    // this.sandboxServices.forEach(sandbox => {
+    //   sandbox.services.forEach(serviceId => {
+    //     try {
+    //       removeServicePartitionDirectory(serviceId, true);
+    //     } catch (error) {
+    //       console.error(
+    //         'Error while checking service partition directory -',
+    //         error,
+    //       );
+    //     }
+    //   });
+    // });
+  }
+
+  _readSandboxes() {
+    this.sandboxServices = readJsonSync(
+      userDataPath('config', 'sandboxes.json'),
+    );
+  }
+
+  _writeSandboxes() {
+    // Check if services in sandboxes still exists, otherwise remove them
+    this.sandboxServices = this.sandboxServices.map(sandbox => ({
+      ...sandbox,
+      services: sandbox.services.filter(serviceId =>
+        this.stores.services.all.some(service => service.id === serviceId),
+      ),
+    }));
+
+    writeJsonSync(
+      userDataPath('config', 'sandboxes.json'),
+      this.sandboxServices,
+    );
   }
 
   @computed get cacheSize() {
@@ -407,7 +469,7 @@ export default class AppStore extends TypedStore {
     };
   }
 
-  getSandbox({ serviceId }) {
+  @action getSandbox({ serviceId }) {
     return this.sandboxServices.find(s => s.services.includes(serviceId));
   }
 
@@ -663,6 +725,8 @@ export default class AppStore extends TypedStore {
     const sandboxService = { id, name, services: [] };
 
     this.sandboxServices.push(sandboxService);
+
+    this._writeSandboxes();
     return sandboxService;
   }
 
@@ -671,11 +735,13 @@ export default class AppStore extends TypedStore {
     if (sandboxService) {
       sandboxService.name = name ?? sandboxService.name;
       sandboxService.services = services ?? sandboxService.services;
+      this._writeSandboxes();
     }
   }
 
   @action _deleteSandboxService({ id }) {
     this.sandboxServices = this.sandboxServices.filter(s => s.id !== id);
+    this._writeSandboxes();
   }
 
   _setLocale() {

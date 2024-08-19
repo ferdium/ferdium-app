@@ -298,7 +298,7 @@ const messages = defineMessages({
   sandboxServicesInfo: {
     id: 'settings.app.sandboxServicesInfo',
     defaultMessage:
-      'Sandbox Services allows you to isolate your services from each other. This means that services cannot access each other’s data. Changing any setting in this section will require a restart of Ferdium and re-login on services.',
+      'By default, Ferdium sandboxes all services, meaning that each service runs in its own isolated environment (recommended). This is a security feature that prevents services from accessing each other’s data. You can create custom sandboxes to group services together by adding a custom sandbox - this way, services can share data between them if they are in the same sandbox. You can also disable sandboxing entirely for all services - allowing them to access each other’s data (not recommended).',
   },
   sectionSandboxes: {
     id: 'settings.app.sectionSandboxes',
@@ -755,6 +755,12 @@ class EditSettingsForm extends Component<IProps, IState> {
 
                 <H2 className="settings__section_header">
                   {intl.formatMessage(messages.sectionSandboxes)}
+                  <span
+                    className="badge badge--success"
+                    style={{ margin: '1rem' }}
+                  >
+                    beta
+                  </span>
                 </H2>
                 <p
                   className="settings__message"
@@ -770,6 +776,7 @@ class EditSettingsForm extends Component<IProps, IState> {
                   </span>
                 </p>
                 <Toggle {...form.$('sandboxServices').bind()} />
+                {/* @ts-expect-error */}
                 {sandboxServices && <SandboxServiceTabs />}
               </div>
             )}

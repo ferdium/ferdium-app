@@ -7,9 +7,17 @@ import type { StoresProps } from 'src/@types/ferdium-components.types';
 import { SyntheticEvent, useState, type ReactNode } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { defineMessages, useIntl } from 'react-intl';
 import SandboxTransferList from './SandboxTransferList';
 
 const debug = require('../../preload-safe-debug')('Ferdium:Settings');
+
+const messages = defineMessages({
+  addCustomSandbox: {
+    id: 'sandbox.addCustomSandbox',
+    defaultMessage: 'Add a custom sandbox',
+  },
+});
 
 interface TabPanelProps {
   children?: ReactNode;
@@ -45,6 +53,8 @@ interface IProps extends StoresProps {}
 
 function SandboxServiceTabs(props: IProps) {
   const [value, setValue] = useState(0);
+
+  const intl = useIntl();
 
   const { stores, actions } = props;
 
@@ -82,7 +92,7 @@ function SandboxServiceTabs(props: IProps) {
           alignItems: 'center',
         }}
       >
-        Add new sandbox
+        {intl.formatMessage(messages.addCustomSandbox)}
       </Button>
 
       <Box
