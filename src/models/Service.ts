@@ -17,6 +17,10 @@ import UserAgent from './UserAgent';
 
 const debug = require('../preload-safe-debug')('Ferdium:Service');
 
+// Global registry for active partitions
+// This is needed to prevent events of the same partition from being registered multiple times (when using custom sandboxes)
+const activePartitions = new Set<string>();
+
 interface DarkReaderInterface {
   brightness: number;
   contrast: number;
@@ -537,6 +541,19 @@ export default class Service {
     });
 
     if (webviewWebContents) {
+      // This is needed to prevent events of the same partition from being registered multiple times (when using custom sandboxes)
+      const webviewPartition = webviewWebContents.session.getStoragePath();
+      if (webviewPartition) {
+        // Check if the partition is already active
+        if (activePartitions.has(webviewPartition)) {
+          return;
+        }
+
+        // Add the partition to the active partitions
+        activePartitions.add(webviewPartition);
+      }
+      // -----
+
       // TODO: Modify this logic once https://github.com/electron/electron/issues/40674 is fixed
       // This is a workaround for the issue where the zoom in shortcut is not working
       if (!isMac) {
