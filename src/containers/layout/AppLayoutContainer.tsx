@@ -4,8 +4,8 @@ import { ThemeProvider } from 'react-jss';
 import { Outlet } from 'react-router-dom';
 
 import {
-  createTheme,
   ThemeProvider as MUIThemeProvider,
+  createTheme,
 } from '@mui/material/styles';
 import type { StoresProps } from '../../@types/ferdium-components.types';
 import AppLayout from '../../components/layout/AppLayout';

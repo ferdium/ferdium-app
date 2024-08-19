@@ -1,14 +1,14 @@
+import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Checkbox from '@mui/material/Checkbox';
-import Button from '@mui/material/Button';
 // import Paper from '@mui/material/Paper';
 import { inject, observer } from 'mobx-react';
 import { useState } from 'react';
-import { StoresProps } from 'src/@types/ferdium-components.types';
+import type { StoresProps } from 'src/@types/ferdium-components.types';
 
 function not(a: readonly string[], b: readonly string[]) {
   return a.filter(value => !b.includes(value));
@@ -169,7 +169,7 @@ function SandboxTransferList(props: ISandboxTransferListProps) {
             sx={{ my: 0.5 }}
             variant="outlined"
             size="small"
-            onClick={handleAllLeft}
+            onClick={() => handleAllLeft()}
             disabled={notSelected.length === 0}
             aria-label="move all left"
           >
@@ -179,7 +179,7 @@ function SandboxTransferList(props: ISandboxTransferListProps) {
             sx={{ my: 0.5 }}
             variant="outlined"
             size="small"
-            onClick={handleCheckedLeft}
+            onClick={() => handleCheckedLeft()}
             disabled={rightChecked.length === 0}
             aria-label="move selected left"
           >
@@ -190,7 +190,7 @@ function SandboxTransferList(props: ISandboxTransferListProps) {
             sx={{ my: 0.5 }}
             variant="outlined"
             size="small"
-            onClick={handleCheckedRight}
+            onClick={() => handleCheckedRight()}
             disabled={leftChecked.length === 0}
             aria-label="move selected right"
           >
@@ -200,7 +200,7 @@ function SandboxTransferList(props: ISandboxTransferListProps) {
             sx={{ my: 0.5 }}
             variant="outlined"
             size="small"
-            onClick={handleAllRight}
+            onClick={() => handleAllRight()}
             disabled={selectedServices.length === 0}
             aria-label="move all right"
           >

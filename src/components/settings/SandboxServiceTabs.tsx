@@ -1,13 +1,13 @@
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-import { Button, IconButton, TextField } from '@mui/material';
-import { inject, observer } from 'mobx-react';
-import type { StoresProps } from 'src/@types/ferdium-components.types';
-import { SyntheticEvent, useState, type ReactNode } from 'react';
-import DeleteIcon from '@mui/icons-material/Delete';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Button, IconButton, TextField } from '@mui/material';
+import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import { inject, observer } from 'mobx-react';
+import { type ReactNode, type SyntheticEvent, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
+import type { StoresProps } from 'src/@types/ferdium-components.types';
 import SandboxTransferList from './SandboxTransferList';
 
 const debug = require('../../preload-safe-debug')('Ferdium:Settings');

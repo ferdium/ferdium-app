@@ -1,4 +1,3 @@
-import { v4 as uuidV4 } from 'uuid';
 import { URL } from 'node:url';
 import {
   app,
@@ -10,10 +9,11 @@ import {
 } from '@electron/remote';
 import AutoLaunch from 'auto-launch';
 import { ipcRenderer } from 'electron';
-import { readdirSync, readJsonSync, writeJsonSync } from 'fs-extra';
+import { readJsonSync, readdirSync, writeJsonSync } from 'fs-extra';
 import { action, computed, makeObservable, observable } from 'mobx';
 import moment from 'moment';
 import ms from 'ms';
+import { v4 as uuidV4 } from 'uuid';
 
 import type { Stores } from '../@types/stores.types';
 import type { Actions } from '../actions/lib/actions';
@@ -30,17 +30,17 @@ import {
   ferdiumVersion,
   userDataPath,
 } from '../environment-remote';
-import { getLocale } from '../helpers/i18n-helpers';
-import generatedTranslations from '../i18n/translations';
-import { cleanseJSObject } from '../jsUtils';
-import Request from './lib/Request';
-import TypedStore from './lib/TypedStore';
 import sleep from '../helpers/async-helpers';
+import { getLocale } from '../helpers/i18n-helpers';
 import {
   getServiceIdsFromPartitions,
   removeServicePartitionDirectory,
 } from '../helpers/service-helpers';
 import { openExternalUrl } from '../helpers/url-helpers';
+import generatedTranslations from '../i18n/translations';
+import { cleanseJSObject } from '../jsUtils';
+import Request from './lib/Request';
+import TypedStore from './lib/TypedStore';
 
 const debug = require('../preload-safe-debug')('Ferdium:AppStore');
 
