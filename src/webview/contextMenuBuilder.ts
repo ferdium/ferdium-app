@@ -867,8 +867,8 @@ export class ContextMenuBuilder {
       new MenuItem({
         label: this.stringTable.goBack(),
         accelerator: `${cmdOrCtrlShortcutKey()}+left`,
-        enabled: webContents.canGoBack(),
-        click: () => webContents.goBack(),
+        enabled: webContents.navigationHistory.canGoBack(),
+        click: () => webContents.navigationHistory.goBack(),
       }),
     );
   }
@@ -882,8 +882,8 @@ export class ContextMenuBuilder {
       new MenuItem({
         label: this.stringTable.goForward(),
         accelerator: `${cmdOrCtrlShortcutKey()}+right`,
-        enabled: webContents.canGoForward(),
-        click: () => webContents.goForward(),
+        enabled: webContents.navigationHistory.canGoForward(),
+        click: () => webContents.navigationHistory.goForward(),
       }),
     );
   }
