@@ -131,7 +131,7 @@ if((-not $NPM_CONFIG_MSVS_VERSION) -or -not ($EXPECTED_MSVST_VERSION -contains $
 # Ensure that the system dependencies are at the correct version - recover if not
 # Check pnpm version
 $EXPECTED_PNPM_VERSION = (Get-Content package.json | ConvertFrom-Json).engines.pnpm
-$ACTUAL_PNPM_VERSION = pnpm --version -ErrorAction SilentlyContinue  # in case the pnpm executable itself is not present
+$ACTUAL_PNPM_VERSION = pnpm --version 2>$null  # in case the pnpm executable itself is not present
 if ($ACTUAL_PNPM_VERSION -ne $EXPECTED_PNPM_VERSION) {
   npm i -gf pnpm@$EXPECTED_PNPM_VERSION
 }
@@ -142,13 +142,16 @@ if ($ACTUAL_PNPM_VERSION -ne $EXPECTED_RECIPES_PNPM_VERSION) {
  fail_with_docs "The expected versions of pnpm are not the same in the main repo and in the recipes submodule, please sync them.
     expected in recipes  : [$EXPECTED_RECIPES_PNPM_VERSION]
     expected in main repo: [$EXPECTED_PNPM_VERSION]
-    actual               : [$EXPECTED_PNPM_VERSION]"
+    actual               : [$ACTUAL_PNPM_VERSION]"
 }
 
 # -----------------------------------------------------------------------------
 Write-Host "*************** Building recipes ***************"
 Push-Location recipes
-pnpm i && pnpm lint && pnpm reformat-files && pnpm package
+pnpm i
+pnpm lint
+pnpm reformat-files
+pnpm package
 Pop-Location
 
 # -----------------------------------------------------------------------------
