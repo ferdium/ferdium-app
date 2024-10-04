@@ -2963,6 +2963,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "danny8376",
+      "name": "Danny Tsai",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3490463?v=4",
+      "profile": "http://saru.moe",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "commitType": "docs"
