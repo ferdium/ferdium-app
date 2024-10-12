@@ -2972,6 +2972,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "insidewhy",
+      "name": "insidewhy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/97685?v=4",
+      "profile": "https://github.com/insidewhy",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "commitType": "docs"
