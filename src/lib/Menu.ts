@@ -51,7 +51,7 @@ import { acceleratorString } from '../jsUtils';
 import type Service from '../models/Service';
 import type { RealStores } from '../stores';
 
-const menuItems = defineMessages({
+export const menuItems = defineMessages({
   edit: {
     id: 'menu.edit',
     defaultMessage: 'Edit',
@@ -1102,7 +1102,7 @@ class FranzMenu implements StoresProps {
       },
       {
         label: intl.formatMessage(menuItems.activateNextService),
-        accelerator: `${cmdOrCtrlShortcutKey()}+tab`,
+        accelerator: this.stores.settings.shortcuts.activateNextService,
         click: () => this.actions.service.setActiveNext(),
         visible: !cmdAltShortcutsVisibile,
       },
@@ -1114,7 +1114,7 @@ class FranzMenu implements StoresProps {
       },
       {
         label: intl.formatMessage(menuItems.activatePreviousService),
-        accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+tab`,
+        accelerator: this.stores.settings.shortcuts.activatePreviousService,
         click: () => this.actions.service.setActivePrev(),
         visible: !cmdAltShortcutsVisibile,
       },

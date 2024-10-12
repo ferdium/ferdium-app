@@ -201,6 +201,10 @@ const messages = defineMessages({
     id: 'settings.app.subheadlineDownloads',
     defaultMessage: 'Downloads',
   },
+  subheadlineShortcuts: {
+    id: 'settings.app.subheadlineShortcuts',
+    defaultMessage: 'Shortcuts',
+  },
   cacheInfo: {
     id: 'settings.app.cacheInfo',
     defaultMessage: 'Ferdium cache is currently using {size} of disk space.',
@@ -1213,6 +1217,24 @@ class EditSettingsForm extends Component<IProps, IState> {
                       serverURL,
                     })}
                   </p>
+                </div>
+
+                <Hr />
+
+                <div className="settings__settings-group">
+                  <H3>{intl.formatMessage(messages.subheadlineShortcuts)}</H3>
+
+                  <Input
+                    placeholder="Activate next service"
+                    onChange={e => this.submit(e)}
+                    {...form.$('shortcutActivateNextService').bind()}
+                  />
+
+                  <Input
+                    placeholder="Activate previous service"
+                    onChange={e => this.submit(e)}
+                    {...form.$('shortcutActivatePreviousService').bind()}
+                  />
                 </div>
               </div>
             )}

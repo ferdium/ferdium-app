@@ -22,7 +22,11 @@ import enforceMacOSAppLocation from './enforce-macos-app-location';
 
 initializeRemote();
 
-import { DEFAULT_APP_SETTINGS, DEFAULT_WINDOW_OPTIONS } from './config';
+import {
+  DEFAULT_APP_SETTINGS,
+  DEFAULT_SHORTCUTS,
+  DEFAULT_WINDOW_OPTIONS,
+} from './config';
 
 import { altKey, isLinux, isMac, isWindows } from './environment';
 import {
@@ -95,6 +99,7 @@ if (isWindows) {
 // Initialize Settings
 const settings = new Settings('app', DEFAULT_APP_SETTINGS);
 const proxySettings = new Settings('proxy');
+const shortcutSettings = new Settings('shortcuts', DEFAULT_SHORTCUTS);
 
 const retrieveSettingValue = (key: string, defaultValue: boolean | string) =>
   ifUndefined<boolean | string>(settings.get(key), defaultValue);
@@ -283,6 +288,7 @@ const createWindow = () => {
     settings: {
       app: settings,
       proxy: proxySettings,
+      shortcuts: shortcutSettings,
     },
     trayIcon,
   });

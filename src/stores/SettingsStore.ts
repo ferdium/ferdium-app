@@ -7,6 +7,7 @@ import type { Actions } from '../actions/lib/actions';
 import type { ApiInterface } from '../api';
 import {
   DEFAULT_APP_SETTINGS,
+  DEFAULT_SHORTCUTS,
   FILE_SYSTEM_SETTINGS_TYPES,
   LOCAL_SERVER,
 } from '../config';
@@ -23,6 +24,7 @@ export default class SettingsStore extends TypedStore {
   @observable _fileSystemSettingsCache = {
     app: DEFAULT_APP_SETTINGS,
     proxy: {},
+    shortcuts: DEFAULT_SHORTCUTS,
   };
 
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
@@ -126,6 +128,10 @@ export default class SettingsStore extends TypedStore {
     );
   }
 
+  @computed get shortcuts() {
+    return this._fileSystemSettingsCache.shortcuts || DEFAULT_SHORTCUTS;
+  }
+
   @computed get stats() {
     return (
       localStorage.getItem('stats') || {
@@ -145,6 +151,7 @@ export default class SettingsStore extends TypedStore {
       service: this.service,
       stats: this.stats,
       migration: this.migration,
+      shortcuts: this.shortcuts,
     };
   }
 
