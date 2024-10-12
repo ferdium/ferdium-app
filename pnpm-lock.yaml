@@ -269,8 +269,8 @@ importers:
         specifier: 19.2.2
         version: 19.2.2
       '@electron/notarize':
-        specifier: 2.3.2
-        version: 2.3.2
+        specifier: 2.5.0
+        version: 2.5.0
       '@eslint-react/eslint-plugin':
         specifier: 1.5.12
         version: 1.5.12(@typescript-eslint/parser@7.10.0(eslint@8.57.0)(typescript@5.4.5))(eslint@8.57.0)(typescript@5.4.5)
@@ -842,8 +842,8 @@ packages:
     resolution: {integrity: sha512-aL+bFMIkpR0cmmj5Zgy0LMKEpgy43/hw5zadEArgmAMWWlKc5buwFvFT9G/o/YJkvXAJm5q3iuTuLaiaXW39sg==}
     engines: {node: '>= 10.0.0'}
 
-  '@electron/notarize@2.3.2':
-    resolution: {integrity: sha512-zfayxCe19euNwRycCty1C7lF7snk9YwfRpB5M8GLr1a4ICH63znxaPNAubrMvj0yDvVozqfgsdYpXVUnpWBDpg==}
+  '@electron/notarize@2.5.0':
+    resolution: {integrity: sha512-jNT8nwH1f9X5GEITXaQ8IF/KdskvIkOFfB2CvwumsveVidzpSc+mvhhTMdAGSYF3O+Nq49lJ7y+ssODRXu06+A==}
     engines: {node: '>= 10.0.0'}
 
   '@electron/osx-sign@1.0.5':
@@ -8362,7 +8362,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@electron/notarize@2.3.2':
+  '@electron/notarize@2.5.0':
     dependencies:
       debug: 4.3.7(supports-color@5.5.0)
       fs-extra: 9.1.0
