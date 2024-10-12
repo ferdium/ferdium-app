@@ -321,6 +321,7 @@
   "settings.app.subheadlineCache": "Cache",
   "settings.app.subheadlineDownloads": "Downloads",
   "settings.app.subheadlineFerdiumProfile": "Ferdium Profile",
+  "settings.app.subheadlineShortcuts": "Shortcuts",
   "settings.app.subheadlineUserAgent": "User Agent",
   "settings.app.todoServerInfo": "This server will be used for the \"Ferdium Todo\" feature.",
   "settings.app.translationHelp": "Help us to translate Ferdium into your language.",
