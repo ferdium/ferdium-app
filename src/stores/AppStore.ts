@@ -9,10 +9,11 @@ import {
 } from '@electron/remote';
 import AutoLaunch from 'auto-launch';
 import { ipcRenderer } from 'electron';
-import { readJsonSync } from 'fs-extra';
+import { readJsonSync, readdirSync, writeJsonSync } from 'fs-extra';
 import { action, computed, makeObservable, observable } from 'mobx';
 import moment from 'moment';
 import ms from 'ms';
+import { v4 as uuidV4 } from 'uuid';
 
 import type { Stores } from '../@types/stores.types';
 import type { Actions } from '../actions/lib/actions';
@@ -29,18 +30,17 @@ import {
   ferdiumVersion,
   userDataPath,
 } from '../environment-remote';
-import { getLocale } from '../helpers/i18n-helpers';
-import generatedTranslations from '../i18n/translations';
-import { cleanseJSObject } from '../jsUtils';
-import Request from './lib/Request';
-import TypedStore from './lib/TypedStore';
-
 import sleep from '../helpers/async-helpers';
+import { getLocale } from '../helpers/i18n-helpers';
 import {
   getServiceIdsFromPartitions,
   removeServicePartitionDirectory,
 } from '../helpers/service-helpers';
 import { openExternalUrl } from '../helpers/url-helpers';
+import generatedTranslations from '../i18n/translations';
+import { cleanseJSObject } from '../jsUtils';
+import Request from './lib/Request';
+import TypedStore from './lib/TypedStore';
 
 const debug = require('../preload-safe-debug')('Ferdium:AppStore');
 
@@ -77,6 +77,12 @@ interface Download {
   endTime?: number;
 }
 
+interface SandboxServices {
+  id: string;
+  name: string;
+  services: string[];
+}
+
 export default class AppStore extends TypedStore {
   updateStatusTypes = {
     CHECKING: 'CHECKING',
@@ -87,6 +93,8 @@ export default class AppStore extends TypedStore {
   };
 
   @observable healthCheckRequest = new Request(this.api.app, 'health');
+
+  @observable sandboxServices: SandboxServices[] = [];
 
   @observable getAppCacheSizeRequest = new Request(
     this.api.local,
@@ -161,6 +169,16 @@ export default class AppStore extends TypedStore {
     this.actions.app.stopDownload.listen(this._stopDownload.bind(this));
     this.actions.app.togglePauseDownload.listen(
       this._togglePauseDownload.bind(this),
+    );
+
+    this.actions.app.addSandboxService.listen(
+      this._addSandboxService.bind(this),
+    );
+    this.actions.app.editSandboxService.listen(
+      this._editSandboxService.bind(this),
+    );
+    this.actions.app.deleteSandboxService.listen(
+      this._deleteSandboxService.bind(this),
     );
 
     this.registerReactions([
@@ -334,6 +352,68 @@ export default class AppStore extends TypedStore {
 
       localStorage.setItem(CATALINA_NOTIFICATION_HACK_KEY, 'true');
     }
+
+    this._initializeSandboxes();
+  }
+
+  _initializeSandboxes() {
+    this._readSandboxes();
+
+    // Check partitions of the sandboxes that no longer exist
+    const dir = readdirSync(userDataPath('Partitions'));
+    dir
+      .filter(d => d.startsWith('sandbox-'))
+      .forEach(d => {
+        if (
+          !this.sandboxServices.some(s =>
+            s.id.includes(d.replace('sandbox-', '')),
+          )
+        ) {
+          try {
+            removeServicePartitionDirectory(d);
+          } catch (error) {
+            console.error(
+              'Error while checking service partition directory -',
+              error,
+            );
+          }
+        }
+      });
+
+    // Check if services in sandboxes still exists, if so, remove their partitions (NOT WORKING!)
+    // this.sandboxServices.forEach(sandbox => {
+    //   sandbox.services.forEach(serviceId => {
+    //     try {
+    //       removeServicePartitionDirectory(serviceId, true);
+    //     } catch (error) {
+    //       console.error(
+    //         'Error while checking service partition directory -',
+    //         error,
+    //       );
+    //     }
+    //   });
+    // });
+  }
+
+  _readSandboxes() {
+    this.sandboxServices = readJsonSync(
+      userDataPath('config', 'sandboxes.json'),
+    );
+  }
+
+  _writeSandboxes() {
+    // Check if services in sandboxes still exists, otherwise remove them
+    this.sandboxServices = this.sandboxServices.map(sandbox => ({
+      ...sandbox,
+      services: sandbox.services.filter(serviceId =>
+        this.stores.services.all.some(service => service.id === serviceId),
+      ),
+    }));
+
+    writeJsonSync(
+      userDataPath('config', 'sandboxes.json'),
+      this.sandboxServices,
+    );
   }
 
   @computed get cacheSize() {
@@ -387,6 +467,10 @@ export default class AppStore extends TypedStore {
         user: this.stores.user.data.id,
       },
     };
+  }
+
+  @action getSandbox({ serviceId }) {
+    return this.sandboxServices.find(s => s.services.includes(serviceId));
   }
 
   // Actions
@@ -632,6 +716,32 @@ export default class AppStore extends TypedStore {
     ipcRenderer.send('toggle-pause-download', {
       downloadId,
     });
+  }
+
+  @action _addSandboxService({ name = 'NEW SANDBOX' }) {
+    // Random ID
+    const id = uuidV4();
+
+    const sandboxService = { id, name, services: [] };
+
+    this.sandboxServices.push(sandboxService);
+
+    this._writeSandboxes();
+    return sandboxService;
+  }
+
+  @action _editSandboxService({ id, name, services }) {
+    const sandboxService = this.sandboxServices.find(s => s.id === id);
+    if (sandboxService) {
+      sandboxService.name = name ?? sandboxService.name;
+      sandboxService.services = services ?? sandboxService.services;
+      this._writeSandboxes();
+    }
+  }
+
+  @action _deleteSandboxService({ id }) {
+    this.sandboxServices = this.sandboxServices.filter(s => s.id !== id);
+    this._writeSandboxes();
   }
 
   _setLocale() {

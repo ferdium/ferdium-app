@@ -131,6 +131,7 @@ export interface AppStore extends TypedStore {
   cacheSize: () => void;
   debugInfo: () => void;
   enableLongPressServiceHint: boolean;
+  getSandbox: (serviceId: string) => string | undefined;
 }
 
 interface CommunityRecipesStore extends TypedStore {

@@ -3,6 +3,10 @@ import { Component, type ReactElement } from 'react';
 import { ThemeProvider } from 'react-jss';
 import { Outlet } from 'react-router-dom';
 
+import {
+  ThemeProvider as MUIThemeProvider,
+  createTheme,
+} from '@mui/material/styles';
 import type { StoresProps } from '../../@types/ferdium-components.types';
 import AppLayout from '../../components/layout/AppLayout';
 import Sidebar from '../../components/layout/Sidebar';
@@ -46,6 +50,26 @@ class AppLayoutContainer extends Component<IProps> {
       hibernate,
       awake,
     } = this.props.actions.service;
+
+    // This is a workaround to fix theming on MUI components
+    const themeMUIDark = createTheme({
+      palette: {
+        mode: 'dark',
+        primary: {
+          main: settings.app.accentColor,
+        },
+      },
+    });
+
+    const themeMUILight = createTheme({
+      palette: {
+        mode: 'light',
+        primary: {
+          main: settings.app.accentColor,
+        },
+      },
+    });
+    // ---
 
     const { retryRequiredRequests } = this.props.actions.requests;
 
@@ -136,28 +160,35 @@ class AppLayoutContainer extends Component<IProps> {
     );
 
     return (
-      <ThemeProvider theme={ui.theme}>
-        <AppLayout
-          settings={settings}
-          isFullScreen={app.isFullScreen}
-          showServicesUpdatedInfoBar={ui.showServicesUpdatedInfoBar}
-          appUpdateIsDownloaded={
-            app.updateStatus === app.updateStatusTypes.DOWNLOADED
-          }
-          authRequestFailed={app.authRequestFailed}
-          sidebar={sidebar}
-          workspacesDrawer={workspacesDrawer}
-          services={servicesContainer}
-          installAppUpdate={installUpdate}
-          showRequiredRequestsError={requests.showRequiredRequestsError}
-          areRequiredRequestsSuccessful={requests.areRequiredRequestsSuccessful}
-          retryRequiredRequests={retryRequiredRequests}
-          areRequiredRequestsLoading={requests.areRequiredRequestsLoading}
-          updateVersion={app.updateVersion}
-        >
-          <Outlet />
-        </AppLayout>
-      </ThemeProvider>
+      // TODO: Using 2 ThemeProviders is not ideal, but it's a workaround for now
+      <MUIThemeProvider
+        theme={settings.app.darkMode ? themeMUIDark : themeMUILight}
+      >
+        <ThemeProvider theme={ui.theme}>
+          <AppLayout
+            settings={settings}
+            isFullScreen={app.isFullScreen}
+            showServicesUpdatedInfoBar={ui.showServicesUpdatedInfoBar}
+            appUpdateIsDownloaded={
+              app.updateStatus === app.updateStatusTypes.DOWNLOADED
+            }
+            authRequestFailed={app.authRequestFailed}
+            sidebar={sidebar}
+            workspacesDrawer={workspacesDrawer}
+            services={servicesContainer}
+            installAppUpdate={installUpdate}
+            showRequiredRequestsError={requests.showRequiredRequestsError}
+            areRequiredRequestsSuccessful={
+              requests.areRequiredRequestsSuccessful
+            }
+            retryRequiredRequests={retryRequiredRequests}
+            areRequiredRequestsLoading={requests.areRequiredRequestsLoading}
+            updateVersion={app.updateVersion}
+          >
+            <Outlet />
+          </AppLayout>
+        </ThemeProvider>
+      </MUIThemeProvider>
     );
   }
 }

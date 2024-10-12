@@ -434,6 +434,7 @@ export const DEFAULT_APP_SETTINGS = {
   locale: 'en-US',
   keepAllWorkspacesLoaded: false,
   useSelfSignedCertificates: false,
+  sandboxServices: true,
 };
 
 export const DEFAULT_SERVICE_SETTINGS = {

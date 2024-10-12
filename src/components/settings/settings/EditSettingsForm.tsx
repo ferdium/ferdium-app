@@ -44,6 +44,7 @@ import { H1, H2, H3, H5 } from '../../ui/headline';
 import Icon from '../../ui/icon';
 import Input from '../../ui/input/index';
 import Toggle from '../../ui/toggle';
+import SandboxServiceTabs from '../SandboxServiceTabs';
 
 const debug = require('../../../preload-safe-debug')(
   'Ferdium:EditSettingsForm',
@@ -294,6 +295,15 @@ const messages = defineMessages({
     id: 'settings.app.buttonOpenFolderSelector',
     defaultMessage: 'Open folder selector',
   },
+  sandboxServicesInfo: {
+    id: 'settings.app.sandboxServicesInfo',
+    defaultMessage:
+      'By default, Ferdium sandboxes all services, meaning that each service runs in its own isolated environment (recommended). This is a security feature that prevents services from accessing each other’s data. You can create custom sandboxes to group services together by adding a custom sandbox - this way, services can share data between them if they are in the same sandbox. You can also disable sandboxing entirely for all services - allowing them to access each other’s data (not recommended).',
+  },
+  sectionSandboxes: {
+    id: 'settings.app.sectionSandboxes',
+    defaultMessage: 'Sandboxes',
+  },
 });
 
 const Hr = (): ReactElement => (
@@ -437,6 +447,7 @@ class EditSettingsForm extends Component<IProps, IState> {
       scheduledDNDEnabled,
       reloadAfterResume,
       useSelfSignedCertificates,
+      sandboxServices,
     } = window['ferdium'].stores.settings.all.app;
 
     let cacheSize;
@@ -739,6 +750,37 @@ class EditSettingsForm extends Component<IProps, IState> {
                 <Select field={form.$('wakeUpStrategy')} />
                 <Select field={form.$('wakeUpHibernationStrategy')} />
                 <Toggle {...form.$('wakeUpHibernationSplay').bind()} />
+
+                <HrSections />
+
+                <H2 className="settings__section_header">
+                  {intl.formatMessage(messages.sectionSandboxes)}
+                  <span
+                    className="badge badge--success"
+                    style={{ margin: '1rem' }}
+                  >
+                    beta
+                  </span>
+                </H2>
+                <p
+                  className="settings__message"
+                  style={{
+                    borderTop: 0,
+                    marginTop: 0,
+                    paddingTop: 0,
+                    marginBottom: '2rem',
+                  }}
+                >
+                  <span>
+                    {intl.formatMessage(messages.sandboxServicesInfo)}
+                  </span>
+                </p>
+                <Toggle {...form.$('sandboxServices').bind()} />
+                {/* @ts-expect-error */}
+                {sandboxServices && <SandboxServiceTabs />}
+                <p className="settings__help">
+                  {intl.formatMessage(messages.appRestartRequired)}
+                </p>
               </div>
             )}
 
