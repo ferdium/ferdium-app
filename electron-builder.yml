@@ -89,9 +89,8 @@ win:
       arch: [x64, ia32, arm64]
     - target: portable
       arch: [x64, ia32, arm64]
-  signtoolOptions:
-    # The name of the CN appearing in the certificate must be present in the publisherName list below
-    publisherName: ["Ferdium Contributors", "Ambroise Grau"]
+  # The name of the CN appearing in the certificate must be present in the publisherName list below
+  publisherName: ["Ferdium Contributors", "Ambroise Grau"]
   # Remove the verification for a signature to allow auto-update without signed certificate
   verifyUpdateCodeSignature: false
 
