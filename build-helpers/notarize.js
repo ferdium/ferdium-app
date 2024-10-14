@@ -15,8 +15,9 @@ exports.default = async function notarizing(context) {
   const { notarize } = require('@electron/notarize');
 
   await notarize({
+    tool: 'notarytool',
     appPath: `${appOutDir}/${appName}.app`,
-    teamId: process.env.APPLE_TEAM_ID || '',
+    teamId: '55E9FPJ93P',
     appleId: process.env.APPLEID || '',
     appleIdPassword: process.env.APPLEID_PASSWORD || '',
   });
