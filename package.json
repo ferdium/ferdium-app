@@ -163,7 +163,7 @@
     "chalk": "5.3.0",
     "concurrently": "8.2.2",
     "cross-env": "7.0.3",
-    "electron": "32.2.0",
+    "electron": "33.0.0",
     "electron-builder": "24.13.3",
     "esbuild": "0.16.17",
     "esbuild-plugin-copy": "2.1.1",
