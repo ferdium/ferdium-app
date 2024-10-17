@@ -8,7 +8,7 @@ on:
 
 jobs:
   bump-casks:
-    runs-on: macos-12
+    runs-on: macos-14
     steps:
       - name: Publish nightly
         uses: macauley/action-homebrew-bump-cask@v1
