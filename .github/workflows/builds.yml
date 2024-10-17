@@ -47,14 +47,14 @@ jobs:
           ref: nightly
           submodules: recursive
           fetch-depth: 0 # Note: Needed to be able to pull the 'develop' branch as well for merging
-      - name: Install pnpm
-        uses: pnpm/action-setup@v3
-        if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
       - name: Use Node.js specified in the '.nvmrc' file
         uses: actions/setup-node@v4
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
         with:
           node-version-file: '.nvmrc'
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
       - name: Install node dependencies
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && contains(github.event.inputs.message, '[nightly branch]')) }}
         uses: nick-fields/retry@v3
@@ -170,12 +170,12 @@ jobs:
         with:
           key: ${{ runner.os }}-${{ env.cache-name }}-${{ secrets.CACHE_VERSION }}-${{ hashFiles('./pnpm-lock.yaml') }}
           path: ${{ env.ELECTRON_BUILDER_CACHE }}
-      - name: Install pnpm
-        uses: pnpm/action-setup@v3
       - name: Use Node.js specified in the '.nvmrc' file
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
       - name: Install node dependencies
         uses: nick-fields/retry@v3
         with:
@@ -184,10 +184,16 @@ jobs:
           max_attempts: 3
           retry_on: error
       - name: Package recipes
-        run: pnpm i && pnpm lint && pnpm reformat-files && pnpm package
         working-directory: ./recipes
+        run: |
+          pnpm i
+          pnpm lint
+          pnpm reformat-files
+          pnpm package
       - name: Run linter and tests
-        run: pnpm lint && pnpm test
+        run: |
+          pnpm lint
+          pnpm test
       - name: Build Ferdium without publish for any branch not 'nightly' and not 'release'
         if: ${{ env.GIT_BRANCH_NAME != 'nightly' && env.GIT_BRANCH_NAME != 'release' }}
         env:
@@ -249,12 +255,12 @@ jobs:
         with:
           key: ${{ runner.os }}-${{ env.cache-name }}-${{ secrets.CACHE_VERSION }}-${{ hashFiles('./pnpm-lock.yaml') }}
           path: ${{ env.ELECTRON_BUILDER_CACHE }}
-      - name: Install pnpm
-        uses: pnpm/action-setup@v3
       - name: Use Node.js specified in the '.nvmrc' file
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
       - name: Install node dependencies
         uses: nick-fields/retry@v3
         with:
@@ -282,10 +288,16 @@ jobs:
           fi
         shell: bash
       - name: Package recipes
-        run: pnpm i && pnpm lint && pnpm reformat-files && pnpm package
+        run: |
+          pnpm i
+          pnpm lint
+          pnpm reformat-files
+          pnpm package
         working-directory: ./recipes
       - name: Run linter and tests
-        run: pnpm lint && pnpm test
+        run: |
+          pnpm lint
+          pnpm test
       - name: Build Ferdium without publish for any branch not 'nightly' and not 'release'
         if: ${{ env.GIT_BRANCH_NAME != 'nightly' && env.GIT_BRANCH_NAME != 'release' }}
         env:
@@ -348,12 +360,12 @@ jobs:
         with:
           key: ${{ runner.os }}-${{ env.cache-name }}-${{ secrets.CACHE_VERSION }}-${{ hashFiles('./pnpm-lock.yaml') }}
           path: ${{ env.ELECTRON_BUILDER_CACHE }}
-      - name: Install pnpm
-        uses: pnpm/action-setup@v3
       - name: Use Node.js specified in the '.nvmrc' file
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
       #TODO - Remove this once https://github.com/electron-userland/electron-builder/issues/6933#issuecomment-1213438889 is resolved
       - name: Tweak pnpm.cjs
         run: |
@@ -370,11 +382,17 @@ jobs:
           max_attempts: 3
           retry_on: error
       - name: Package recipes
-        run: pnpm i && pnpm lint && pnpm reformat-files && pnpm package
+        run: |
+          pnpm i
+          pnpm lint
+          pnpm reformat-files
+          pnpm package
         working-directory: ./recipes
         shell: bash
       - name: Run linter and tests
-        run: pnpm lint && pnpm test
+        run: |
+          pnpm lint
+          pnpm test
         shell: bash
       - name: Build Ferdium without publish for any branch not 'nightly' and not 'release'
         if: ${{ env.GIT_BRANCH_NAME != 'nightly' && env.GIT_BRANCH_NAME != 'release' }}
