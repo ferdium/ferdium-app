@@ -79,7 +79,6 @@ const runEsbuild = async () => {
   const startTime = performance.now();
 
   const myArgs = process.argv.slice(2);
-  const isDev = myArgs.includes('--watch');
   log(chalk.blue('Starting with args'), myArgs);
 
   if (fs.existsSync(outDir)) {
@@ -99,7 +98,7 @@ const runEsbuild = async () => {
   );
 
   // Run build
-  await esbuild.build({
+  const context = await esbuild.context({
     entryPoints,
     format: 'cjs',
     minify: false,
@@ -107,36 +106,33 @@ const runEsbuild = async () => {
     minifyIdentifiers: true,
     keepNames: true,
     outdir: outDir,
-    watch: isDev && {
-      onRebuild(error, result) {
-        if (error) {
-          log(chalk.red(`watch build failed: ${error}`));
-        } else {
-          log(chalk.blue('watch build success:'), result);
-          livereload.reload();
-        }
-      },
-    },
-    incremental: isDev,
     plugins: [sassPlugin(), ...staticAssets()],
   });
 
+  const isDev = myArgs.includes('--watch');
   if (isDev) {
-    const serveResult = await esbuild.serve(
-      {
-        servedir: outDir,
-        port: 8080,
-      },
-      {},
-    );
+    const serveResult = await context.serve({
+      servedir: outDir,
+      port: 8080,
+    });
     log(chalk.green(`Listening on ${serveResult.host}:${serveResult.port}`));
     livereload.listen();
   } else {
+    let exitCode = 0;
+    const result = await context.rebuild();
+    if (result.errors && result.errors.length > 0) {
+      log(chalk.red(`build errors: ${JSON.stringify(result.errors)}`));
+      exitCode = -1;
+    } else {
+      log(chalk.blue('✨ build success'));
+    }
+
     const endTime = performance.now();
     const duration = endTime - startTime;
     log(
       chalk.green(`Completed build in ${moment(duration).format('ss.m')}sec`),
     );
+    process.exit(exitCode);
   }
 };
 
