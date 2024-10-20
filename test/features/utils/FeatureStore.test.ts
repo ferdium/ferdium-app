@@ -13,7 +13,7 @@ const actions: any = createActionsFromDefinitions(
 );
 
 class TestFeatureStore extends FeatureStore {
-  @observable count = 0;
+  @observable accessor count = 0;
 
   reactionInvokedCount = 0;
 
