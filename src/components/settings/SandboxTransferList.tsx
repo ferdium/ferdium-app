@@ -8,7 +8,7 @@ import ListItemText from '@mui/material/ListItemText';
 // import Paper from '@mui/material/Paper';
 import { inject, observer } from 'mobx-react';
 import { useState } from 'react';
-import type { StoresProps } from 'src/@types/ferdium-components.types';
+import type { StoresProps } from '../../@types/ferdium-components.types';
 
 function not(a: readonly string[], b: readonly string[]) {
   return a.filter(value => !b.includes(value));

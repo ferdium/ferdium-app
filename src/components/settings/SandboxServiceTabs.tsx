@@ -7,7 +7,7 @@ import Tabs from '@mui/material/Tabs';
 import { inject, observer } from 'mobx-react';
 import { type ReactNode, type SyntheticEvent, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
-import type { StoresProps } from 'src/@types/ferdium-components.types';
+import type { StoresProps } from '../../@types/ferdium-components.types';
 import SandboxTransferList from './SandboxTransferList';
 
 const debug = require('../../preload-safe-debug')('Ferdium:Settings');
