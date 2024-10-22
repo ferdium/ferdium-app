@@ -1,10 +1,10 @@
 import { type BinaryLike, createHash } from 'node:crypto';
 
-export function hash(password: BinaryLike): string {
+export const hash = (password: BinaryLike): string => {
   return createHash('sha256').update(password).digest('base64');
-}
+};
 
-export function scorePassword(password: string): number {
+export const scorePassword = (password: string): number => {
   let score = 0;
   if (!password) {
     return score;
@@ -33,4 +33,4 @@ export function scorePassword(password: string): number {
   score += (variationCount - 1) * 10;
 
   return Number.parseInt(score.toString(), 10);
-}
+};

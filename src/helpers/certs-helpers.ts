@@ -3,7 +3,7 @@ import { ensureDirSync, readFileSync, readdirSync } from 'fs-extra';
 import { userDataCertsPath } from '../environment-remote';
 import { removeNewLines } from '../jsUtils';
 
-export function checkIfCertIsPresent(certData: string): boolean {
+export const checkIfCertIsPresent = (certData: string): boolean => {
   const certsFolder = userDataCertsPath();
 
   ensureDirSync(certsFolder);
@@ -19,4 +19,4 @@ export function checkIfCertIsPresent(certData: string): boolean {
   }
 
   return certs.length > 0 && certs.includes(removeNewLines(certData));
-}
+};

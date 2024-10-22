@@ -1,29 +1,29 @@
 import { Octokit } from '@octokit/core';
 import { type IntlShape, defineMessages } from 'react-intl';
 
-export function getFerdiumVersion(
+export const getFerdiumVersion = (
   currentLocation: string,
   ferdiumVersion: string,
-): string {
+): string => {
   const matches = currentLocation.match(/version=([^&]*)/);
   if (matches !== null) {
     return `v${matches[1]}`;
   }
   return `v${ferdiumVersion}`;
-}
+};
 
-export function updateVersionParse(updateVersion: string): string {
+export const updateVersionParse = (updateVersion: string): string => {
   return updateVersion === '' ? '' : `?version=${updateVersion}`;
-}
+};
 
-export function onAuthGoToReleaseNotes(
+export const onAuthGoToReleaseNotes = (
   currentLocation: string,
   updateVersionParsed: string = '',
-): string {
+): string => {
   return currentLocation.includes('#/auth')
     ? `#/auth/releasenotes${updateVersionParsed}`
     : `#/releasenotes${updateVersionParsed}`;
-}
+};
 
 const messages = defineMessages({
   connectionError: {

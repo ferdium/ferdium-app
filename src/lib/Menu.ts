@@ -354,11 +354,11 @@ export const menuItems = defineMessages({
   },
 });
 
-function getActiveService(): Service | undefined {
+const getActiveService = (): Service | undefined => {
   return window['ferdium'].stores.services.active;
-}
+};
 
-function toggleFullScreen(): void {
+const toggleFullScreen = (): void => {
   const mainWindow = getCurrentWindow();
 
   if (!mainWindow) return;
@@ -368,7 +368,7 @@ function toggleFullScreen(): void {
   } else {
     mainWindow.setFullScreen(true);
   }
-}
+};
 
 function titleBarTemplateFactory(
   intl: IntlShape,

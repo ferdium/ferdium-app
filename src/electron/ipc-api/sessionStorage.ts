@@ -1,21 +1,18 @@
 import { type Session, ipcMain, session } from 'electron';
-
 import { TODOS_PARTITION_ID } from '../../config';
 
 const debug = require('../../preload-safe-debug')(
   'Ferdium:ipcApi:sessionStorage',
 );
 
-function deduceSession(serviceId: string | undefined | null): Session {
-  if (serviceId) {
-    return session.fromPartition(
-      serviceId === TODOS_PARTITION_ID
-        ? TODOS_PARTITION_ID
-        : `persist:service-${serviceId}`,
-    );
-  }
-  return session.defaultSession;
-}
+const deduceSession = (serviceId: string | undefined | null): Session => {
+  if (!serviceId) return session.defaultSession;
+
+  if (serviceId === TODOS_PARTITION_ID)
+    return session.fromPartition(TODOS_PARTITION_ID);
+
+  return session.fromPartition(`persist:service-${serviceId}`);
+};
 
 export default async () => {
   ipcMain.on('clear-storage-data', (_event, { serviceId, targetsToClear }) => {

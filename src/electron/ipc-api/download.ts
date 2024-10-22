@@ -5,7 +5,7 @@ import { writeFileSync } from 'fs-extra';
 
 const debug = require('../../preload-safe-debug')('Ferdium:ipcApi:download');
 
-function decodeBase64Image(dataString: string) {
+const decodeBase64Image = (dataString: string) => {
   const matches = dataString.match(/^data:([+/A-Za-z-]+);base64,(.+)$/);
 
   if (matches?.length !== 3) {
@@ -13,7 +13,7 @@ function decodeBase64Image(dataString: string) {
   }
 
   return Buffer.from(matches[2], 'base64');
-}
+};
 
 export default (params: { mainWindow: BrowserWindow }) => {
   ipcMain.on(

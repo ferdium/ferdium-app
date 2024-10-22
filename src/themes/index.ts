@@ -7,14 +7,14 @@ export enum ThemeType {
   dark = 'dark',
 }
 
-export function theme(
+export const theme = (
   themeId: ThemeType,
   brandColor: string = themeBrandPrimary,
-) {
+) => {
   return themeId === ThemeType.dark
     ? makeDarkThemeConfig(brandColor)
     : makeDefaultThemeConfig(brandColor);
-}
+};
 
 const defaultThemeConfigWithDefaultAccentColor =
   makeDefaultThemeConfig(themeBrandPrimary);

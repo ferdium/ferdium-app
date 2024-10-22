@@ -9,15 +9,15 @@ const ID = Array.from({ length: 20 })
   .map(() => chars[Math.trunc(Math.random() * chars.length)])
   .join('');
 
-function darkModeFilePath(recipePath: string) {
+const darkModeFilePath = (recipePath: string) => {
   return join(recipePath, 'darkmode.css');
-}
+};
 
-export function darkModeStyleExists(recipePath: string) {
+export const darkModeStyleExists = (recipePath: string) => {
   return pathExistsSync(darkModeFilePath(recipePath));
-}
+};
 
-export function injectDarkModeStyle(recipePath: string) {
+export const injectDarkModeStyle = (recipePath: string) => {
   if (darkModeStyleExists(recipePath)) {
     const darkmodeCss = darkModeFilePath(recipePath);
     const data = readFileSync(darkmodeCss);
@@ -30,9 +30,9 @@ export function injectDarkModeStyle(recipePath: string) {
 
     debug('Injected Dark Mode style with ID', ID);
   }
-}
+};
 
-export function removeDarkModeStyle() {
+export const removeDarkModeStyle = () => {
   const style = document.querySelector(`#${ID}`);
 
   if (style) {
@@ -40,8 +40,8 @@ export function removeDarkModeStyle() {
 
     debug('Removed Dark Mode Style with ID', ID);
   }
-}
+};
 
-export function isDarkModeStyleInjected() {
+export const isDarkModeStyleInjected = () => {
   return !!document.querySelector(`#${ID}`);
-}
+};

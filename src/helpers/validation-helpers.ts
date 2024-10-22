@@ -25,7 +25,7 @@ const messages = defineMessages({
   },
 });
 
-export function required({ field }) {
+export const required = ({ field }) => {
   const isValid = field.value.trim() !== '';
   return [
     isValid,
@@ -33,9 +33,9 @@ export function required({ field }) {
       field: field.label,
     }),
   ];
-}
+};
 
-export function email({ field }) {
+export const email = ({ field }) => {
   const value = field.value.trim();
   const isValid = isEmail(value);
   return [
@@ -44,9 +44,9 @@ export function email({ field }) {
       field: field.label,
     }),
   ];
-}
+};
 
-export function url({ field }) {
+export const url = ({ field }) => {
   const value = field.value.trim();
   let isValid = true;
 
@@ -66,9 +66,9 @@ export function url({ field }) {
       field: field.label,
     }),
   ];
-}
+};
 
-export function minLength(length: number) {
+export const minLength = (length: number) => {
   return ({ field }) => {
     let isValid = true;
     if (field.touched) {
@@ -82,9 +82,9 @@ export function minLength(length: number) {
       }),
     ];
   };
-}
+};
 
-export function oneRequired(targets: string[]) {
+export const oneRequired = (targets: string[]) => {
   return ({ field, form }) => {
     const invalidFields = targets.filter(target => form.$(target).value === '');
     return [
@@ -94,4 +94,4 @@ export function oneRequired(targets: string[]) {
       }),
     ];
   };
-}
+};

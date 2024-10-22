@@ -10,7 +10,7 @@ interface IVariations {
   upper: boolean;
 }
 
-export function scorePasswordFunc(password: string): number {
+export const scorePasswordFunc = (password: string): number => {
   let score = 0;
   if (!password) {
     return score;
@@ -39,4 +39,4 @@ export function scorePasswordFunc(password: string): number {
   score += (variationCount - 1) * 10;
 
   return Math.round(score);
-}
+};
