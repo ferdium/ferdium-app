@@ -9,7 +9,7 @@ const FILE_EXTENSION = isWindows ? 'ico' : 'png';
 
 let isTrayIconEnabled: boolean;
 
-function getAsset(type: 'tray' | 'taskbar', asset: string) {
+const getAsset = (type: 'tray' | 'taskbar', asset: string) => {
   return join(
     __dirname,
     '..',
@@ -20,7 +20,7 @@ function getAsset(type: 'tray' | 'taskbar', asset: string) {
     process.platform,
     `${asset}.${FILE_EXTENSION}`,
   );
-}
+};
 
 export default (params: {
   mainWindow: BrowserWindow;

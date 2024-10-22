@@ -21,12 +21,15 @@ export default function initialize() {
   });
 }
 
-export function mainIpcHandler(mainWindow: BrowserWindow, authInfo: AuthInfo) {
+export const mainIpcHandler = (
+  mainWindow: BrowserWindow,
+  authInfo: AuthInfo,
+) => {
   debug('Sending basic auth call', authInfo);
 
   mainWindow.webContents.send('feature:basic-auth-request', {
     authInfo,
   });
-}
+};
 
 export { default as Component } from './Component';

@@ -74,18 +74,18 @@ export const appEvents = new EventEmitter();
 // Register methods to be called once the window has been loaded.
 let onDidLoadFns: any[] | null = [];
 
-function onDidLoad(fn: {
+const onDidLoad = (fn: {
   (window: BrowserWindow): void;
   (window: BrowserWindow): void;
   (window: BrowserWindow): void;
   (arg0: BrowserWindow): void;
-}): void {
+}): void => {
   if (onDidLoadFns) {
     onDidLoadFns.push(fn);
   } else if (mainWindow) {
     fn(mainWindow);
   }
-}
+};
 
 // Ensure that the recipe directory exists
 emptyDirSync(userDataRecipesPath('temp'));

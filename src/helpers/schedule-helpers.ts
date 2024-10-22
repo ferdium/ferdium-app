@@ -1,4 +1,4 @@
-export function isInTimeframe(start: string, end: string) {
+export const isInTimeframe = (start: string, end: string) => {
   const [startHourStr, startMinuteStr] = start.split(':');
   const startHour = Number.parseInt(startHourStr, 10);
   const startMinute = Number.parseInt(startMinuteStr, 10);
@@ -44,4 +44,4 @@ export function isInTimeframe(start: string, end: string) {
 
   // We are not in scheduled timeframe
   return false;
-}
+};

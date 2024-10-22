@@ -10,9 +10,9 @@ const debug = require('../../preload-safe-debug')(
 export default function initialize() {
   debug('Initialize quickSwitch feature');
 
-  function showModal() {
+  const showModal = (): void => {
     state.isModalVisible = true;
-  }
+  };
 
   window['ferdium'].features.quickSwitch = {
     state,

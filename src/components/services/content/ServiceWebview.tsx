@@ -3,8 +3,8 @@ import { action, makeObservable, observable, reaction } from 'mobx';
 import { observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
 import ElectronWebView from 'react-electron-web-view';
-import type { RealStores } from 'src/stores';
 import type ServiceModel from '../../../models/Service';
+import type { RealStores } from '../../../stores';
 
 const debug = require('../../../preload-safe-debug')('Ferdium:Services');
 

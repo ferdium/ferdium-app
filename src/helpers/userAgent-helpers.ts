@@ -10,7 +10,7 @@ import {
   osRelease,
 } from '../environment';
 
-function macOS() {
+const macOS = () => {
   const version = macosVersion() ?? '';
   let cpuName = cpus()[0].model.split(' ')[0];
   if (cpuName.includes('(')) {
@@ -18,19 +18,19 @@ function macOS() {
     cpuName = cpuName.split('(')[0];
   }
   return `Macintosh; ${cpuName} macOS ${version.replaceAll('.', '_')}`;
-}
+};
 
-function windows() {
+const windows = () => {
   const version = osRelease;
   const [majorVersion, minorVersion] = version.split('.');
   const archString = is64Bit ? 'Win64' : 'Win32';
   return `Windows NT ${majorVersion}.${minorVersion}; ${archString}; ${osArch}`;
-}
+};
 
-function linux() {
+const linux = () => {
   const archString = is64Bit ? 'x86_64' : osArch;
   return `X11; Linux ${archString}`;
-}
+};
 
 export default function userAgent() {
   let platformString;

@@ -21,20 +21,21 @@ const defaultState: IDefaultState = {
 
 export const state = observable(defaultState);
 
-export function resetState() {
+export const resetState = () => {
   Object.assign(state, defaultState);
-}
-export function sendCredentials(user, password) {
+};
+
+export const sendCredentials = (user: any, password: any) => {
   debug('Sending credentials to main', user, password);
 
   ipcRenderer.send('feature-basic-auth-credentials', {
     user,
     password,
   });
-}
+};
 
-export function cancelLogin() {
+export const cancelLogin = () => {
   debug('Cancel basic auth event');
 
   ipcRenderer.send('feature-basic-auth-cancel');
-}
+};

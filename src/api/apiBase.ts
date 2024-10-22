@@ -29,24 +29,24 @@ export default function apiBase(withVersion = true) {
   return fixUrl(withVersion ? `${url}/${API_VERSION}` : url);
 }
 
-export function needsToken(): boolean {
+export const needsToken = (): boolean => {
   return (
     (window as any).ferdium.stores.settings.all.app.server === LOCAL_SERVER
   );
-}
+};
 
-export function localServerToken(): string | undefined {
+export const localServerToken = (): string | undefined => {
   return needsToken()
     ? (window as any).ferdium.stores.requests.localServerToken
     : undefined;
-}
+};
 
-export function importExportURL() {
+export const importExportURL = () => {
   const base = apiBase(false);
   return needsToken() ? `${base}/token/${localServerToken()}` : base;
-}
+};
 
-export function serverBase() {
+export const serverBase = () => {
   const serverType = (window as any).ferdium.stores.settings.all.app.server;
   const noServerFerdi = 'You are using Ferdi without a server';
   const noServerFerdium = 'You are using Ferdium without a server';
@@ -71,9 +71,9 @@ export function serverBase() {
   }
 
   return fixUrl(terms);
-}
+};
 
-export function serverName(): string {
+export const serverName = (): string => {
   const serverType = (window as any).ferdium.stores.settings.all.app.server;
   const noServerFerdi = 'You are using Ferdi without a server';
   const noServerFerdium = 'You are using Ferdium without a server';
@@ -102,4 +102,4 @@ export function serverName(): string {
   }
 
   return nameServer;
-}
+};

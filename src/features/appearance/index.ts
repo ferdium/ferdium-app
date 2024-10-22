@@ -15,33 +15,33 @@ import { userDataPath } from '../../environment-remote';
 
 const STYLE_ELEMENT_ID = 'custom-appearance-style';
 
-function createStyleElement() {
+const createStyleElement = () => {
   const styles = document.createElement('style');
   styles.id = STYLE_ELEMENT_ID;
 
   document.querySelector('head')?.append(styles);
-}
+};
 
-function setAppearance(style) {
+const setAppearance = style => {
   const styleElement = document.querySelector(`#${STYLE_ELEMENT_ID}`);
 
   if (styleElement) {
     styleElement.innerHTML = style;
   }
-}
+};
 
 // See https://github.com/Qix-/color/issues/53#issuecomment-656590710
-function darkenAbsolute(originalColor, absoluteChange) {
+const darkenAbsolute = (originalColor, absoluteChange) => {
   const originalLightness = originalColor.lightness();
   return originalColor.lightness(originalLightness - absoluteChange);
-}
+};
 
-function generateUserCustomCSS() {
+const generateUserCustomCSS = () => {
   const path = userDataPath('config', 'custom.css');
   return pathExistsSync(path) ? readFileSync(path).toString() : '';
-}
+};
 
-function generateAccentStyle(accentColorStr) {
+const generateAccentStyle = accentColorStr => {
   let accentColor;
   try {
     accentColor = color(accentColorStr);
@@ -132,9 +132,9 @@ function generateAccentStyle(accentColorStr) {
       background: ${accentColor.lightness(90).hex()};
     }
   `;
-}
+};
 
-function generateServiceRibbonWidthStyle(
+const generateServiceRibbonWidthStyle = (
   widthStr,
   iconSizeStr,
   horizontal,
@@ -144,7 +144,7 @@ function generateServiceRibbonWidthStyle(
   grayscaleServicesDim,
   shouldShowDragArea,
   isFullScreen,
-) {
+) => {
   const width = Number(widthStr);
   const iconSize = Number(iconSizeStr) - iconSizeBias;
   const tabItemWidthBias = 3;
@@ -313,9 +313,9 @@ function generateServiceRibbonWidthStyle(
       width: calc(100% - ${300 + width}px) !important;
     }
   `;
-}
+};
 
-function generateShowDragAreaStyle(accentColor) {
+const generateShowDragAreaStyle = accentColor => {
   return `
     .sidebar {
       padding-top: 0px !important;
@@ -329,9 +329,9 @@ function generateShowDragAreaStyle(accentColor) {
       height: calc(100% - 28px);
     }
   `;
-}
+};
 
-function generateVerticalStyle(widthStr, alwaysShowWorkspaces) {
+const generateVerticalStyle = (widthStr, alwaysShowWorkspaces) => {
   if (!document.querySelector('#vertical-style')) {
     const link = document.createElement('link');
     link.id = 'vertical-style';
@@ -368,9 +368,9 @@ function generateVerticalStyle(widthStr, alwaysShowWorkspaces) {
     width: calc(100% - 300px) !important;
   }
   `;
-}
+};
 
-function generateOpenWorkspaceStyle() {
+const generateOpenWorkspaceStyle = () => {
   return `
   .app .app__content {
     width: 100%;
@@ -380,9 +380,9 @@ function generateOpenWorkspaceStyle() {
     display: none;
   }
   `;
-}
+};
 
-function generateStyle(settings, app) {
+const generateStyle = (settings, app) => {
   let style = '';
 
   const {
@@ -438,9 +438,9 @@ function generateStyle(settings, app) {
   style += generateUserCustomCSS();
 
   return style;
-}
+};
 
-function updateProgressbar(settings) {
+const updateProgressbar = settings => {
   TopBarProgress.config({
     barThickness: 4,
     barColors: {
@@ -448,13 +448,13 @@ function updateProgressbar(settings) {
     },
     shadowBlur: 5,
   });
-}
+};
 
-function updateStyle(settings, app) {
+const updateStyle = (settings, app) => {
   const style = generateStyle(settings, app);
   setAppearance(style);
   updateProgressbar(settings);
-}
+};
 
 export default function initAppearance(stores) {
   const { settings, app } = stores;

@@ -1,4 +1,4 @@
-export function getLocale({ locale, locales, fallbackLocale }) {
+export const getLocale = ({ locale, locales, fallbackLocale }) => {
   if (!locale) {
     return fallbackLocale;
   }
@@ -17,15 +17,15 @@ export function getLocale({ locale, locales, fallbackLocale }) {
   }
 
   return locale;
-}
+};
 
-export function getSelectOptions({
+export const getSelectOptions = ({
   locales,
   resetToDefaultText = '',
   automaticDetectionText = '',
   sort = true,
   addDefault = false,
-}) {
+}) => {
   const options: object[] = [];
 
   if (resetToDefaultText) {
@@ -62,4 +62,4 @@ export function getSelectOptions({
   }
 
   return options;
-}
+};

@@ -3,15 +3,15 @@
 import { parse } from 'node:path';
 import { userDataRecipesPath } from '../environment-remote';
 
-export function getRecipeDirectory(id: string = ''): string {
+export const getRecipeDirectory = (id: string = ''): string => {
   return userDataRecipesPath(id);
-}
+};
 
-export function getDevRecipeDirectory(id: string = ''): string {
+export const getDevRecipeDirectory = (id: string = ''): string => {
   return userDataRecipesPath('dev', id);
-}
+};
 
-export function loadRecipeConfig(recipeId: string) {
+export const loadRecipeConfig = (recipeId: string) => {
   try {
     const configPath = `${recipeId}/package.json`;
     // Delete module from cache
@@ -29,6 +29,6 @@ export function loadRecipeConfig(recipeId: string) {
     console.error(error);
     return null;
   }
-}
+};
 
 module.paths.unshift(getDevRecipeDirectory(), getRecipeDirectory());
