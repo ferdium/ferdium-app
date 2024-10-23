@@ -165,7 +165,7 @@
     "cross-env": "7.0.3",
     "electron": "33.0.2",
     "electron-builder": "24.13.3",
-    "esbuild": "0.16.17",
+    "esbuild": "0.24.0",
     "esbuild-plugin-copy": "2.1.1",
     "esbuild-runner": "2.2.2",
     "esbuild-sass-plugin": "2.16.1",
