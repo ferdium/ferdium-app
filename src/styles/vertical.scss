@@ -39,8 +39,8 @@ $tabitem-bias: 30px;
       }
 
       &.is-label-enabled {
-        min-width: 80px;
-        max-width: 80px;
+        min-width: 100px;
+        max-width: 100px;
         height: $sidebar-width + 10;
         width: max-content !important;
         overflow: hidden;
