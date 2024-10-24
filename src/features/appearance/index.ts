@@ -147,7 +147,7 @@ const generateServiceRibbonWidthStyle = (
 ) => {
   const width = Number(widthStr);
   const iconSize = Number(iconSizeStr) - iconSizeBias;
-  const tabItemWidthBias = 3;
+  const tabItemWidthBias = 1;
   const verticalStyleOffset = 29;
 
   let fontSize: number;
@@ -252,7 +252,8 @@ const generateServiceRibbonWidthStyle = (
       font-size: ${fontSize}px !important;
     }
     .tab-item.is-label-enabled {
-      padding-bottom: 0px !important;
+      padding-top: 6px !important;
+      padding-bottom: 2px !important;
     }
     .sidebar__button {
       font-size: ${width / 3}px !important;
