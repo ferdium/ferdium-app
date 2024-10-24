@@ -58,8 +58,14 @@
   }
 
   .tab-item__label {
-    display: flex;
     font-size: 11px;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
+    text-align: center;
+    padding: 0 8px;
   }
 
   &.is-disabled .tab-item__icon {

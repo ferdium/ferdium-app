@@ -39,8 +39,8 @@ $tabitem-bias: 30px;
       }
 
       &.is-label-enabled {
-        min-width: 70px;
-        max-width: 140px;
+        min-width: 80px;
+        max-width: 80px;
         height: $sidebar-width + 10;
         width: max-content !important;
         overflow: hidden;
@@ -51,6 +51,10 @@ $tabitem-bias: 30px;
 
       .tab-item__icon {
         margin-left: 0;
+      }
+
+      &__label {
+        padding: 0;
       }
     }
   }

@@ -248,7 +248,6 @@ const generateServiceRibbonWidthStyle = (
       ${useGrayscaleServices ? graysacleServices : null},
     }
     .tab-item .tab-item__label {
-      margin-left: 4px !important;
       font-size: ${fontSize}px !important;
     }
     .tab-item.is-label-enabled {
