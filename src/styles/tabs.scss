@@ -5,10 +5,6 @@
 
   &.is-active {
     background: $dark-theme-gray;
-
-    .tab-item__icon {
-      margin-left: -4px;
-    }
   }
 
   &.is-disabled .tab-item__icon {
@@ -45,13 +41,12 @@
       $theme-brand-primary,
       $lightness: min(lightness($theme-brand-primary) * 1.35, 100)
     );
-    border-color: $theme-brand-primary;
-    border-left-width: 4px;
-    border-left-style: solid;
+
+    box-shadow: inset 4px 0 0 0 $theme-brand-primary;
 
     .tab-item__icon,
     .tab-item__label {
-      margin-left: -4px;
+      margin-left: 0px;
     }
   }
 
@@ -63,8 +58,14 @@
   }
 
   .tab-item__label {
-    display: flex;
     font-size: 11px;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
+    text-align: center;
+    padding: 0 8px;
   }
 
   &.is-disabled .tab-item__icon {
