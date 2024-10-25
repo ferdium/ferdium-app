@@ -2981,6 +2981,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "DenysMb",
+      "name": "Denys Madureira",
+      "avatar_url": "https://avatars.githubusercontent.com/u/33737137?v=4",
+      "profile": "https://github.com/DenysMb",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "commitType": "docs"
