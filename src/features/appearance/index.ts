@@ -291,7 +291,7 @@ const generateServiceRibbonWidthStyle = (
   `
     : `
     .sidebar {
-      width: ${width}px !important;
+      width: ${width + 8}px !important;
     }
     .tabs {
       justify-content: ${sidebarServicesAlignment};
