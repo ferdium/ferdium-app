@@ -19,7 +19,7 @@ html {
 }
 
 .theme__dark .app {
-  background: #353535;
+  background: #272727;
 
   .sidebar {
     background: $dark-theme-gray-darker;
@@ -119,7 +119,6 @@ body.win32:not(.isFullScreen) .app .app__content {
     display: flex;
     flex: 1;
     flex-direction: column;
-    padding: 4px;
   }
 }
 
