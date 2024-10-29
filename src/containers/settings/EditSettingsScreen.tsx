@@ -206,7 +206,7 @@ const messages = defineMessages({
   },
   webviewPadding: {
     id: 'settings.app.form.webviewPadding',
-    defaultMessage: 'Enable Webview Padding',
+    defaultMessage: 'Show margins around Webview',
   },
   splitMode: {
     id: 'settings.app.form.splitMode',
