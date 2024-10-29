@@ -336,6 +336,7 @@
   "settings.app.form.wakeUpHibernationStrategy": "Hibernation strategy after automatic wake up",
   "settings.app.form.wakeUpStrategy": "Wake up strategy",
   "settings.app.form.webRTCIPHandlingPolicy": "WebRTC IP Handling Policy",
+  "settings.app.form.webviewPadding": "Enable Webview Padding",
   "settings.app.headlineAdvanced": "Advanced",
   "settings.app.headlineAppearance": "Appearance",
   "settings.app.headlineGeneral": "General",
