@@ -30,6 +30,8 @@ $tabitem-bias: 30px;
 
   .tabs {
     flex-direction: row;
+    overflow-y: hidden;
+    overflow-x: scroll;
 
     .tab-item {
       &.is-active {
@@ -53,9 +55,18 @@ $tabitem-bias: 30px;
         padding: 0;
       }
     }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
   div {
     overflow: hidden !important;
+  }
+
+  .sidebar__button:first-of-type {
+    height: 100%;
+    box-shadow: -4px 0px 4px 0px $theme-gray-lightest;
   }
 
   .sidebar__button--workspaces.is-active {
@@ -64,6 +75,7 @@ $tabitem-bias: 30px;
       right: 300px;
       height: 100%;
       background-color: #f7f7f9;
+      box-shadow: -4px 0px 4px 0px $theme-gray-lightest;
     }
   }
 }

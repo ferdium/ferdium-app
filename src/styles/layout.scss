@@ -39,6 +39,10 @@ html {
     .sidebar__button {
       color: $dark-theme-gray-lighter;
 
+      &:first-of-type {
+        box-shadow: -4px 0px 4px 0px $dark-theme-gray-darker;
+      }
+
       &:hover,
       &:active {
         color: $dark-theme-gray-smoke;
@@ -53,6 +57,10 @@ html {
         opacity: 0.25;
         filter: grayscale(1);
       }
+    }
+
+    .sidebar__button--workspaces.is-active {
+      box-shadow: -4px 0px 4px 0px $dark-theme-gray-darker;
     }
   }
 
