@@ -204,6 +204,10 @@ const messages = defineMessages({
     id: 'settings.app.form.universalDarkMode',
     defaultMessage: 'Enable universal Dark Mode',
   },
+  webviewPadding: {
+    id: 'settings.app.form.webviewPadding',
+    defaultMessage: 'Enable Webview Padding',
+  },
   splitMode: {
     id: 'settings.app.form.splitMode',
     defaultMessage: 'Enable Split View Mode',
@@ -464,6 +468,7 @@ class EditSettingsScreen extends Component<
       darkMode: Boolean(settingsData.darkMode),
       adaptableDarkMode: Boolean(settingsData.adaptableDarkMode),
       universalDarkMode: Boolean(settingsData.universalDarkMode),
+      webviewPadding: Boolean(settingsData.webviewPadding),
       splitMode: Boolean(settingsData.splitMode),
       splitColumns: Number(settingsData.splitColumns),
       serviceRibbonWidth: Number(settingsData.serviceRibbonWidth),
@@ -1105,6 +1110,15 @@ class EditSettingsScreen extends Component<
             DEFAULT_APP_SETTINGS.universalDarkMode,
           ),
           default: DEFAULT_APP_SETTINGS.universalDarkMode,
+          type: 'checkbox',
+        },
+        webviewPadding: {
+          label: intl.formatMessage(messages.webviewPadding),
+          value: ifUndefined<boolean>(
+            settings.all.app.webviewPadding,
+            DEFAULT_APP_SETTINGS.webviewPadding,
+          ),
+          default: DEFAULT_APP_SETTINGS.webviewPadding,
           type: 'checkbox',
         },
         splitMode: {

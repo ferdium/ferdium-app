@@ -51,11 +51,8 @@
 
   .services__webview-wrapper {
     background: $theme-gray-lighter;
-    border-radius: 4px;
-    padding: 4px;
 
     webview {
-      border-radius: 4px;
       overflow: hidden;
     }
   }
