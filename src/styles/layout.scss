@@ -183,7 +183,7 @@ body.win32:not(.isFullScreen) .app .app__content {
   padding-bottom: 10px;
   text-align: center;
   width: $theme-sidebar-width;
-  z-index: 200;
+  z-index: 300;
 
   &::after {
     content: ' ';
