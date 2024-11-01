@@ -134,7 +134,7 @@ export default (brandPrimary: string) => {
       },
       drawer: {
         background: legacyStyles.darkThemeBlack,
-        border: legacyStyles.darkThemeGray,
+        border: legacyStyles.darkThemeGrayDarkest,
         addButton: {
           color: legacyStyles.darkThemeGrayLighter,
           hoverColor: legacyStyles.darkThemeGraySmoke,
