@@ -25,7 +25,6 @@ export default (brandPrimary: string) => {
     .hex();
   const buttonSecondaryTextColor = legacyStyles.darkThemeTextColor;
   const selectColor = inputColor;
-  const drawerBg = color(colorBackground).lighten(0.3).hex();
 
   const services = merge({}, defaultStyles.services, {
     listItems: {
@@ -140,8 +139,8 @@ export default (brandPrimary: string) => {
           hoverColor: legacyStyles.darkThemeGraySmoke,
         },
         listItem: {
-          border: color(drawerBg).lighten(0.2).hex(),
-          hoverBackground: legacyStyles.darkThemeGrayDarkest,
+          border: legacyStyles.darkThemeGrayDark,
+          hoverBackground: legacyStyles.darkThemeGrayDark,
           activeBackground: legacyStyles.darkThemeGrayDarker,
           name: {
             color: colorText,
