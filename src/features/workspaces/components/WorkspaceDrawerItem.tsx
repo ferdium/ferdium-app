@@ -63,27 +63,19 @@ const styles = theme => ({
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      borderTop: `1px solid ${theme.workspaces.drawer.listItem.border}`,
       borderBottom: 0,
       borderRadius: 4,
       overflow: 'hidden',
       padding: '4px 8px',
       minWidth: 300,
     },
-    '&.horizontal:first-of-type': {
-      borderBottomLeftRadius: 0,
-    },
-    '&.horizontal:last-of-type': {
-      borderBottomRightRadius: 0,
+    '&.horizontal:hover': {
+      backgroundColor: 'transparent',
     },
   },
   isActiveItem: {
     backgroundColor: theme.workspaces.drawer.listItem.activeBackground,
     '&.horizontal': {
-      border: `1px solid ${theme.workspaces.drawer.listItem.border}`,
-      borderTop: 'none',
-      borderBottomLeftRadius: 4,
-      borderBottomRightRadius: 4,
       boxShadow: `0 0 0 1px ${theme.workspaces.drawer.listItem.border}`,
     },
     '&:hover': {

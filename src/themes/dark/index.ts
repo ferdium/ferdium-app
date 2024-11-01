@@ -133,7 +133,8 @@ export default (brandPrimary: string) => {
         listItems: cloneDeep(services.listItems),
       },
       drawer: {
-        background: legacyStyles.darkThemeGrayDarkest,
+        background: color(legacyStyles.darkThemeBlack).darken(0.25).hex(),
+        border: legacyStyles.darkThemeGray,
         addButton: {
           color: legacyStyles.darkThemeGrayLighter,
           hoverColor: legacyStyles.darkThemeGraySmoke,
@@ -141,14 +142,14 @@ export default (brandPrimary: string) => {
         listItem: {
           border: legacyStyles.darkThemeGrayDark,
           hoverBackground: legacyStyles.darkThemeGrayDark,
-          activeBackground: legacyStyles.darkThemeGrayDarker,
+          activeBackground: legacyStyles.darkThemeGray,
           name: {
             color: colorText,
             activeColor: 'white',
           },
           services: {
             color: color(colorText).darken(0.5).hex(),
-            active: color(colorText).darken(0.5).hex(),
+            active: color(colorText).darken(0.25).hex(),
           },
         },
       },
