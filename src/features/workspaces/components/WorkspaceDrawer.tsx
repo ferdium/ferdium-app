@@ -42,19 +42,61 @@ const messages = defineMessages({
   },
 });
 
+const isHorizontalWorkspaceDrawer = () =>
+  Boolean(workspaceStore.stores?.settings?.all?.app?.useHorizontalStyle);
+
 const styles = theme => ({
   drawer: {
     background: theme.workspaces.drawer.background,
-    width: 'var(--workspace-drawer-width)',
+    width() {
+      return isHorizontalWorkspaceDrawer()
+        ? '100%'
+        : 'var(--workspace-drawer-width)';
+    },
+    transition: 'transform 0.2s ease',
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection() {
+      return isHorizontalWorkspaceDrawer() ? 'row' : 'column';
+    },
+    height() {
+      return isHorizontalWorkspaceDrawer()
+        ? theme.workspaces.drawer.height
+        : 'auto';
+    },
+    position() {
+      return isHorizontalWorkspaceDrawer() ? 'absolute' : 'relative';
+    },
+    zIndex() {
+      return isHorizontalWorkspaceDrawer() ? 200 : 'auto';
+    },
+    borderTop() {
+      return isHorizontalWorkspaceDrawer()
+        ? `1px solid ${theme.workspaces.drawer.border}`
+        : 'none';
+    },
+    borderBottom() {
+      return isHorizontalWorkspaceDrawer()
+        ? `1px solid ${theme.workspaces.drawer.border}`
+        : 'none';
+    },
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+    transform() {
+      if (!isHorizontalWorkspaceDrawer()) {
+        return 'none';
+      }
+
+      return workspaceStore.isWorkspaceDrawerOpen
+        ? 'translateY(0px) !important'
+        : 'inherit';
+    },
   },
   headline: {
     fontSize: '24px',
     marginTop: '38px',
     marginBottom: '25px',
     marginLeft: theme.workspaces.drawer.padding,
-    '&.compact': {
+    '&.compact, &.horizontal': {
       display: 'none',
     },
   },
@@ -70,10 +112,28 @@ const styles = theme => ({
     },
   },
   workspaces: {
-    overflowY: 'auto',
+    overflowY() {
+      return isHorizontalWorkspaceDrawer() ? 'hidden' : 'auto';
+    },
     display: 'flex',
-    flexDirection: 'column',
-    height: '100%',
+    flexDirection() {
+      return isHorizontalWorkspaceDrawer() ? 'row' : 'column';
+    },
+    height() {
+      return isHorizontalWorkspaceDrawer() ? 'auto' : '100%';
+    },
+    flex() {
+      return isHorizontalWorkspaceDrawer() ? 1 : 'initial';
+    },
+    padding() {
+      return isHorizontalWorkspaceDrawer() ? 6 : 0;
+    },
+    gap() {
+      return isHorizontalWorkspaceDrawer() ? 6 : 0;
+    },
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
   },
   workspaceNameContainer: {
     display: 'none',
@@ -137,7 +197,6 @@ interface IProps
     WrappedComponentProps,
     StoresProps {
   getServicesForWorkspace: (workspace: Workspace | null) => string[];
-  useCompactWorkspaceDrawer?: boolean;
 }
 
 @inject('stores')
@@ -163,14 +222,59 @@ class WorkspaceDrawer extends Component<IProps> {
 
     const { settings } = this.props.stores;
 
-    const { hideAllServicesWorkspace, useCompactWorkspaceDrawer } =
-      settings.all.app;
+    const {
+      hideAllServicesWorkspace,
+      useCompactWorkspaceDrawer,
+      useHorizontalStyle,
+    } = settings.all.app;
 
-    const compactClass = useCompactWorkspaceDrawer ? 'compact' : '';
+    const isCompact = !useHorizontalStyle && useCompactWorkspaceDrawer;
+    const compactClass = isCompact ? 'compact' : '';
+    const horizontalClass = useHorizontalStyle ? 'horizontal' : '';
+
+    const workspaceItems = (
+      <>
+        {!hideAllServicesWorkspace && (
+          <WorkspaceDrawerItem
+            name={intl.formatMessage(messages.allServices)}
+            onClick={() => {
+              workspaceActions.deactivate();
+              workspaceActions.toggleWorkspaceDrawer();
+            }}
+            services={getServicesForWorkspace(null)}
+            isActive={actualWorkspace == null}
+            shortcutIndex={0}
+            isCompact={isCompact}
+            isHorizontal={useHorizontalStyle}
+          />
+        )}
+        {workspaces.map((workspace, index) => (
+          <WorkspaceDrawerItem
+            key={workspace.id}
+            name={workspace.name}
+            isActive={actualWorkspace === workspace}
+            onClick={() => {
+              if (actualWorkspace === workspace) {
+                return;
+              }
+              workspaceActions.activate({ workspace });
+              workspaceActions.toggleWorkspaceDrawer();
+            }}
+            onContextMenuEditClick={() => workspaceActions.edit({ workspace })}
+            services={getServicesForWorkspace(workspace)}
+            shortcutIndex={index + 1}
+            isCompact={isCompact}
+            isHorizontal={useHorizontalStyle}
+          />
+        ))}
+      </>
+    );
 
     return (
-      <div className={`${classes.drawer} workspaces-drawer ${compactClass}`}>
-        <H1 className={`${classes.headline} ${compactClass}`}>
+      <div
+        className={`${classes.drawer} workspaces-drawer ${compactClass} ${horizontalClass}`}
+      >
+        <H1 className={`${classes.headline} ${compactClass} ${horizontalClass}`}>
           {intl.formatMessage(messages.headline)}
           {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
           <span
@@ -191,58 +295,43 @@ class WorkspaceDrawer extends Component<IProps> {
             />
           </span>
         </H1>
-        <div className={`${classes.workspaces} ${compactClass}`}>
-          <div className={classes.workspacesList}>
-            {!hideAllServicesWorkspace && (
-              <WorkspaceDrawerItem
-                name={intl.formatMessage(messages.allServices)}
-                onClick={() => {
-                  workspaceActions.deactivate();
-                  workspaceActions.toggleWorkspaceDrawer();
-                }}
-                services={getServicesForWorkspace(null)}
-                isActive={actualWorkspace == null}
-                shortcutIndex={0}
-                isCompact={useCompactWorkspaceDrawer}
-              />
-            )}
-            {workspaces.map((workspace, index) => (
-              <WorkspaceDrawerItem
-                key={workspace.id}
-                name={workspace.name}
-                isActive={actualWorkspace === workspace}
-                onClick={() => {
-                  if (actualWorkspace === workspace) {
-                    return;
-                  }
-                  workspaceActions.activate({ workspace });
-                  workspaceActions.toggleWorkspaceDrawer();
-                }}
-                onContextMenuEditClick={() =>
-                  workspaceActions.edit({ workspace })
+        <div
+          className={`${classes.workspaces} ${compactClass} ${horizontalClass}`}
+          onWheel={
+            useHorizontalStyle
+              ? event => {
+                  const target = event.currentTarget;
+
+                  target.scrollBy({
+                    left: event.deltaY,
+                  });
                 }
-                services={getServicesForWorkspace(workspace)}
-                shortcutIndex={index + 1}
-                isCompact={useCompactWorkspaceDrawer}
-              />
-            ))}
-          </div>
-          {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-          <div
-            className={`${classes.addNewWorkspaceLabel} ${compactClass}`}
-            onClick={() => {
-              workspaceActions.openWorkspaceSettings();
-            }}
-            onKeyDown={noop}
-          >
-            <Icon
-              icon={mdiPlusBox}
-              className={`${classes.workspacesSettingsButtonIcon} ${compactClass}`}
-            />
-            <span className={compactClass}>
-              {intl.formatMessage(messages.addNewWorkspaceLabel)}
-            </span>
-          </div>
+              : undefined
+          }
+        >
+          {useHorizontalStyle ? (
+            workspaceItems
+          ) : (
+            <>
+              <div className={classes.workspacesList}>{workspaceItems}</div>
+              {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+              <div
+                className={`${classes.addNewWorkspaceLabel} ${compactClass}`}
+                onClick={() => {
+                  workspaceActions.openWorkspaceSettings();
+                }}
+                onKeyDown={noop}
+              >
+                <Icon
+                  icon={mdiPlusBox}
+                  className={`${classes.workspacesSettingsButtonIcon} ${compactClass}`}
+                />
+                <span className={compactClass}>
+                  {intl.formatMessage(messages.addNewWorkspaceLabel)}
+                </span>
+              </div>
+            </>
+          )}
         </div>
         <ReactTooltip
           id="tooltip-workspaces-drawer"

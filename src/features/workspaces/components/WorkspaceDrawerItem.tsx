@@ -56,9 +56,28 @@ const styles = theme => ({
       textAlign: 'center',
       fontSize: '16px',
     },
+    '&.horizontal': {
+      height: 'auto',
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderBottom: 0,
+      borderRadius: 4,
+      overflow: 'hidden',
+      padding: '4px 8px',
+      minWidth: 300,
+    },
+    '&.horizontal:first-child': {
+      borderTop: 0,
+    },
   },
   isActiveItem: {
     backgroundColor: theme.workspaces.drawer.listItem.activeBackground,
+    '&.horizontal': {
+      boxShadow: `0 0 0 1px ${theme.workspaces.drawer.listItem.border}`,
+    },
     '&:hover': {
       backgroundColor: theme.workspaces.drawer.listItem.activeBackground,
     },
@@ -74,6 +93,9 @@ const styles = theme => ({
       overflow: 'hidden',
       textOverflow: 'ellipsis',
     },
+    '&.horizontal': {
+      marginTop: 0,
+    },
   },
   activeName: {
     color: theme.workspaces.drawer.listItem.name.activeColor,
@@ -81,7 +103,6 @@ const styles = theme => ({
   services: {
     display: 'block',
     fontSize: '11px',
-    marginTop: '5px',
     color: theme.workspaces.drawer.listItem.services.color,
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
@@ -89,6 +110,12 @@ const styles = theme => ({
     lineHeight: '15px',
     '&.compact': {
       display: 'none',
+    },
+    '&.horizontal': {
+      marginTop: 0,
+      lineHeight: 'normal',
+      width: '100%',
+      textAlign: 'center',
     },
   },
   activeServices: {
@@ -110,6 +137,7 @@ interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
   onContextMenuEditClick?: (() => void) | null;
   shortcutIndex: number;
   isCompact: boolean;
+  isHorizontal?: boolean;
 }
 
 @observer
@@ -125,9 +153,11 @@ class WorkspaceDrawerItem extends Component<IProps> {
       shortcutIndex,
       intl,
       isCompact,
+      isHorizontal = false,
     } = this.props;
 
     const compactClass = isCompact ? 'compact' : '';
+    const horizontalClass = isHorizontal ? 'horizontal' : '';
 
     const contextMenuTemplate: MenuItemConstructorOptions[] = [
       {
@@ -152,6 +182,7 @@ class WorkspaceDrawerItem extends Component<IProps> {
           classes.item,
           isActive ? classes.isActiveItem : null,
           compactClass,
+          horizontalClass,
         ])}
         onClick={onClick}
         onContextMenu={() => {
@@ -172,6 +203,7 @@ class WorkspaceDrawerItem extends Component<IProps> {
             classes.name,
             isActive ? classes.activeName : null,
             compactClass,
+            horizontalClass,
           ])}
         >
           {compactClass ? (
@@ -196,6 +228,7 @@ class WorkspaceDrawerItem extends Component<IProps> {
             classes.services,
             isActive ? classes.activeServices : null,
             compactClass,
+            horizontalClass,
           ])}
         >
           {services.length > 0

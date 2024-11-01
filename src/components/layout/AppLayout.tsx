@@ -21,7 +21,6 @@ import ErrorBoundary from '../util/ErrorBoundary';
 
 import { isMac, isSnap, isWindows } from '../../environment';
 import Todos from '../../features/todos/containers/TodosScreen';
-import { workspaceStore } from '../../features/workspaces';
 import WorkspaceSwitchingIndicator from '../../features/workspaces/components/WorkspaceSwitchingIndicator';
 import AppUpdateInfoBar from '../AppUpdateInfoBar';
 import Icon from '../ui/icon';
@@ -53,28 +52,10 @@ const transition = window?.matchMedia('(prefers-reduced-motion: no-preference)')
   ? 'transform 0.5s ease'
   : 'none';
 
-const styles = (theme: {
-  workspaces: {
-    drawer: {
-      width: any;
-      compactWidth: any;
-    };
-  };
-}) => ({
+const styles = () => ({
   appContent: {
     width: '100%',
     transition,
-    transform() {
-      const { settings } = workspaceStore.stores;
-
-      const drawerWidth = settings.all.app.useCompactWorkspaceDrawer
-        ? settings.all.app.serviceRibbonWidth
-        : theme.workspaces.drawer.width;
-
-      return workspaceStore.isWorkspaceDrawerOpen
-        ? 'translateX(0)'
-        : `translateX(-${drawerWidth}px)`;
-    },
   },
   titleBar: {
     display: 'block',
@@ -146,8 +127,12 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
 
     const { intl } = this.props;
 
-    const { locked, automaticUpdates, useCompactWorkspaceDrawer } =
-      settings.app;
+    const {
+      locked,
+      automaticUpdates,
+      useCompactWorkspaceDrawer,
+      useHorizontalStyle,
+    } = settings.app;
     if (locked) {
       return <LockedScreen />;
     }
@@ -157,7 +142,9 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
         {isMac && !isFullScreen && <div className="window-draggable" />}
         <ErrorBoundary>
           <div
-            className={`app ${useCompactWorkspaceDrawer ? 'app--compact-workspace' : ''}`}
+            className={`app ${useCompactWorkspaceDrawer ? 'app--compact-workspace' : ''} ${
+              useHorizontalStyle ? 'app--horizontal-workspace-drawer' : ''
+            }`}
           >
             {isWindows && !isFullScreen && (
               <TitleBar
@@ -172,7 +159,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
               />
             )}
             <div className={`app__content ${classes.appContent}`}>
-              {workspacesDrawer}
+              {!useHorizontalStyle && workspacesDrawer}
               {sidebar}
               <div className="app__service">
                 <WorkspaceSwitchingIndicator />
@@ -234,6 +221,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                 <BasicAuth />
                 <QuickSwitch />
                 <PublishDebugInfo />
+                {useHorizontalStyle && workspacesDrawer}
                 {services}
                 <Outlet />
               </div>

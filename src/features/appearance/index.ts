@@ -266,9 +266,6 @@ const generateServiceRibbonWidthStyle = (
     .app .app__content {
       padding-top: ${width + sidebarSizeBias + PADDING}px !important;
     }
-    .workspaces-drawer {
-      margin-top: -${width}px !important;
-    }
     .darwin .sidebar {
       height: ${
         isFullScreen ? width : width + verticalStyleOffset - 3 - sizeDragArea
@@ -386,9 +383,10 @@ const generateWorkspaceDrawerTransform = (
   useCompactWorkspaceDrawer,
   isWorkspaceDrawerOpen,
   alwaysShowWorkspaces,
+  useHorizontalStyle,
 ) => {
   // When drawer is open or always show is enabled, don't override - let JSS handle the transition
-  if (isWorkspaceDrawerOpen || alwaysShowWorkspaces) {
+  if (useHorizontalStyle || isWorkspaceDrawerOpen || alwaysShowWorkspaces) {
     return '';
   }
 
@@ -430,7 +428,7 @@ const generateVerticalStyle = (
   ${
     alwaysShowWorkspaces
       ? `
-    width: calc(100% - ${drawerWidth}px) !important;
+    width: calc(100%) !important;
   `
       : ''
   }
@@ -441,7 +439,7 @@ const generateVerticalStyle = (
   }
 
   .todos__todos-panel--expanded {
-    width: calc(100% - ${drawerWidth + width}px) !important;
+    width: calc(100% - ${drawerWidth}px) !important;
   }
   `;
 };
@@ -454,6 +452,12 @@ const generateOpenWorkspaceStyle = () => {
   }
   .sidebar__button--workspaces {
     display: none;
+  }
+  .sidebar::after {
+    box-shadow: none !important;
+  }
+  .workspaces-drawer {
+    height: 36px !important;
   }
   `;
 };
@@ -538,6 +542,7 @@ const generateStyle = (settings, app) => {
     useCompactWorkspaceDrawer,
     workspaceStore.isWorkspaceDrawerOpen,
     alwaysShowWorkspaces,
+    useHorizontalStyle,
   );
 
   if (shouldShowDragArea) {

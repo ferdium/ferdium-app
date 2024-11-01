@@ -134,14 +134,14 @@ export default (brandPrimary: string) => {
         listItems: cloneDeep(services.listItems),
       },
       drawer: {
-        background: drawerBg,
+        background: legacyStyles.darkThemeGrayDarkest,
         addButton: {
           color: legacyStyles.darkThemeGrayLighter,
           hoverColor: legacyStyles.darkThemeGraySmoke,
         },
         listItem: {
           border: color(drawerBg).lighten(0.2).hex(),
-          hoverBackground: legacyStyles.darkThemeGrayDark,
+          hoverBackground: legacyStyles.darkThemeGrayDarkest,
           activeBackground: legacyStyles.darkThemeGrayDarker,
           name: {
             color: colorText,

@@ -118,6 +118,10 @@ body.win32:not(.isFullScreen) .app .app__content {
     width: calc(100% + var(--workspace-drawer-width));
   }
 
+  &.app--horizontal-workspace-drawer .app__content {
+    width: 100%;
+  }
+
   .app__main-content {
     display: flex;
     width: 100%;
@@ -127,6 +131,7 @@ body.win32:not(.isFullScreen) .app .app__content {
     display: flex;
     flex: 1;
     flex-direction: column;
+    width: 100%;
   }
 }
 
