@@ -69,6 +69,11 @@ const styles = theme => ({
     zIndex() {
       return isHorizontalWorkspaceDrawer() ? 200 : 'auto';
     },
+    boxShadow() {
+      return isHorizontalWorkspaceDrawer()
+        ? theme.workspaces.drawer.boxShadow
+        : 'none';
+    },
     borderTop() {
       return isHorizontalWorkspaceDrawer()
         ? `1px solid ${theme.workspaces.drawer.border}`
@@ -87,8 +92,8 @@ const styles = theme => ({
       }
 
       return workspaceStore.isWorkspaceDrawerOpen
-        ? 'translateY(0px) !important'
-        : 'inherit';
+        ? 'translateY(0px)'
+        : `translateY(-${theme.workspaces.drawer.height}px)`;
     },
   },
   headline: {

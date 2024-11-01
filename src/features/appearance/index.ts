@@ -457,7 +457,11 @@ const generateOpenWorkspaceStyle = () => {
     box-shadow: none !important;
   }
   .workspaces-drawer {
-    height: 48px !important;
+    position: relative !important;
+    transform: translateY(0px) !important;
+    box-shadow: none !important;
+    border-top-width: 1px !important;
+    border-bottom-width: 1px !important;
   }
   `;
 };
