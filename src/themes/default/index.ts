@@ -26,7 +26,7 @@ export default (brandPrimary: string) => {
   const inputDisabledOpacity = 0.5;
   const buttonSecondaryTextColor = legacyStyles.themeGray;
   const selectColor = inputColor;
-  const drawerBg = color(colorBackground).lighten(0.1).hex();
+  const drawerBg = legacyStyles.themeGrayLightest;
 
   const styleTypes: IStyleTypes = {
     primary: {
@@ -219,8 +219,7 @@ export default (brandPrimary: string) => {
           hoverColor: legacyStyles.themeGrayLight,
         },
         listItem: {
-          hoverBackground: color(drawerBg).darken(0.05).hex(),
-          activeBackground: legacyStyles.themeGrayLightest,
+          activeBackground: legacyStyles.themeGrayLighter,
           border: color(drawerBg).darken(0.05).hex(),
           name: {
             color: colorText,

@@ -67,6 +67,12 @@ html {
   .app-loader .app-loader__title {
     color: $dark-theme-gray-lightest;
   }
+
+  .workspaces-drawer::after {
+    box-shadow:
+      inset 0 0 10px 0 rgba(0, 0, 0, 0.5),
+      inset 0 0 2px 0 rgba(0, 0, 0, 0.4);
+  }
 }
 
 .update-available {
@@ -236,6 +242,22 @@ body.win32:not(.isFullScreen) .app .app__content {
     &::-webkit-scrollbar {
       display: none;
     }
+  }
+}
+
+.workspaces-drawer {
+  &::after {
+    content: ' ';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    bottom: 0px;
+    left: -10px;
+    z-index: 1000;
+    pointer-events: none;
+    box-shadow:
+      inset 0 0 15px 0 rgba(0, 0, 0, 0.12),
+      inset 0 0 2px 0 rgba(0, 0, 0, 0.36);
   }
 }
 

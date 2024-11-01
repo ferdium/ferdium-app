@@ -133,7 +133,7 @@ export default (brandPrimary: string) => {
         listItems: cloneDeep(services.listItems),
       },
       drawer: {
-        background: color(legacyStyles.darkThemeBlack).darken(0.25).hex(),
+        background: legacyStyles.darkThemeBlack,
         border: legacyStyles.darkThemeGray,
         addButton: {
           color: legacyStyles.darkThemeGrayLighter,

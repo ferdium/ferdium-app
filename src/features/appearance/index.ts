@@ -444,7 +444,13 @@ const generateVerticalStyle = (
   `;
 };
 
-const generateOpenWorkspaceStyle = () => {
+const generateOpenWorkspaceStyle = useHorizontalStyle => {
+  const sidebarAfter = `
+  .sidebar::after { box-shadow: none !important; }
+  `;
+
+  const border = useHorizontalStyle ? '1px !important' : '0px !important';
+
   return `
   .app .app__content {
     width: 100% !important;
@@ -453,16 +459,14 @@ const generateOpenWorkspaceStyle = () => {
   .sidebar__button--workspaces {
     display: none;
   }
-  .sidebar::after {
-    box-shadow: none !important;
-  }
   .workspaces-drawer {
     position: relative !important;
     transform: translateY(0px) !important;
     box-shadow: none !important;
-    border-top-width: 1px !important;
-    border-bottom-width: 1px !important;
-  }
+    border-top-width: ${border};
+    border-bottom-width: ${border};
+    }
+    ${useHorizontalStyle && sidebarAfter}
   `;
 };
 
@@ -565,7 +569,7 @@ const generateStyle = (settings, app) => {
     }
   }
   if (alwaysShowWorkspaces) {
-    style += generateOpenWorkspaceStyle();
+    style += generateOpenWorkspaceStyle(useHorizontalStyle);
   }
 
   // Always add transition to app__content for smooth animations

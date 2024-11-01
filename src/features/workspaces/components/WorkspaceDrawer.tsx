@@ -69,11 +69,6 @@ const styles = theme => ({
     zIndex() {
       return isHorizontalWorkspaceDrawer() ? 200 : 'auto';
     },
-    boxShadow() {
-      return isHorizontalWorkspaceDrawer()
-        ? theme.workspaces.drawer.boxShadow
-        : 'none';
-    },
     borderTop() {
       return isHorizontalWorkspaceDrawer()
         ? `1px solid ${theme.workspaces.drawer.border}`
