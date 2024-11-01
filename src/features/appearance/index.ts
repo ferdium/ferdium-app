@@ -22,6 +22,8 @@ const STYLE_ELEMENT_ID = 'custom-appearance-style';
 // So we get a total of 12px
 const PADDING = 6 * 2;
 
+const WORKSPACES_DRAWER_HEIGHT = 48;
+
 const createStyleElement = () => {
   const styles = document.createElement('style');
   styles.id = STYLE_ELEMENT_ID;
@@ -272,6 +274,11 @@ const generateServiceRibbonWidthStyle = (
     }
     .workspaces-drawer {
       border-top-width: ${showWorkspacesAtBottom ? '0px' : '1px'};
+      transform: ${
+        showWorkspacesAtBottom
+          ? `translateY(${WORKSPACES_DRAWER_HEIGHT}px)`
+          : `translateY(-${WORKSPACES_DRAWER_HEIGHT}px)`
+      } !important;
     }
     .workspaces-drawer::after {
       top: ${showWorkspacesAtBottom ? '0px' : '-10px'};
@@ -334,6 +341,11 @@ const generateServiceRibbonWidthStyle = (
     }
     .workspaces-drawer {
       border-top-width: ${showWorkspacesAtBottom ? '0px' : '1px'};
+      transform: ${
+        showWorkspacesAtBottom
+          ? `translateY(${WORKSPACES_DRAWER_HEIGHT}px)`
+          : `translateY(-${WORKSPACES_DRAWER_HEIGHT}px)`
+      } !important;
     }
     .workspaces-drawer::after {
       top: ${showWorkspacesAtBottom ? '0px' : '-10px'};
