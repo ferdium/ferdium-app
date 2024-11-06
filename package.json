@@ -14,14 +14,14 @@
   "private": true,
   "engines": {
     "node": "20.18.0",
-    "pnpm": "9.12.2"
+    "pnpm": "9.12.3"
   },
   "engine-strict": true,
   "volta": {
     "node": "20.18.0",
-    "pnpm": "9.12.2"
+    "pnpm": "9.12.3"
   },
-  "packageManager": "pnpm@9.12.2",
+  "packageManager": "pnpm@9.12.3",
   "scripts": {
     "prepare": "is-ci || husky",
     "start": "electron ./build",
@@ -75,7 +75,7 @@
     "classnames": "2.5.1",
     "color": "4.2.3",
     "csstype": "3.1.3",
-    "darkreader": "4.9.95",
+    "darkreader": "4.9.96",
     "dbus-next": "0.10.2",
     "debug": "4.3.7",
     "electron-dl": "3.5.2",
@@ -95,7 +95,7 @@
     "macos-version": "5.2.1",
     "markdown-to-jsx": "7.5.0",
     "minimist": "1.2.8",
-    "mobx": "6.13.3",
+    "mobx": "6.13.5",
     "mobx-localstorage": "1.2.0",
     "mobx-react": "7.6.0",
     "mobx-react-form": "6.10.1",
@@ -142,13 +142,13 @@
     "@types/auto-launch": "5.0.5",
     "@types/color": "3.0.6",
     "@types/fs-extra": "11.0.4",
-    "@types/jest": "29.5.13",
-    "@types/lodash": "4.17.10",
+    "@types/jest": "29.5.14",
+    "@types/lodash": "4.17.13",
     "@types/minimist": "1.2.5",
     "@types/ms": "0.7.34",
     "@types/node": "20.14.10",
     "@types/prop-types": "15.7.13",
-    "@types/react": "18.3.11",
+    "@types/react": "18.3.12",
     "@types/react-color": "3.0.12",
     "@types/react-dom": "18.3.1",
     "@types/react-transition-group": "4.4.11",
