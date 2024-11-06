@@ -123,6 +123,7 @@ class TabBar extends Component<IProps> {
           showMessageBadgeWhenMutedSetting={showMessageBadgeWhenMutedSetting}
           showServiceNameSetting={showServiceNameSetting}
           showMessageBadgesEvenWhenMuted={showMessageBadgesEvenWhenMuted}
+          useHorizontalStyle={useHorizontalStyle}
         />
       </div>
     );

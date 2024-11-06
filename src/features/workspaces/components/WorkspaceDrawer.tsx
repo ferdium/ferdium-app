@@ -87,8 +87,8 @@ const styles = theme => ({
       }
 
       return workspaceStore.isWorkspaceDrawerOpen
-        ? 'translateY(0px) !important'
-        : 'inherit';
+        ? 'translateY(0px)'
+        : `translateY(-${theme.workspaces.drawer.height}px)`;
     },
   },
   headline: {
