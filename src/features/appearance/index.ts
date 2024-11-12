@@ -50,7 +50,7 @@ const generateUserCustomCSS = () => {
   return pathExistsSync(path) ? readFileSync(path).toString() : '';
 };
 
-const generateAccentStyle = (accentColorStr, useHorizontalStyle) => {
+const generateAccentStyle = accentColorStr => {
   let accentColor;
   try {
     accentColor = color(accentColorStr);
@@ -105,10 +105,6 @@ const generateAccentStyle = (accentColorStr, useHorizontalStyle) => {
       border-right-color: ${accentColorStr};
     }
 
-    .franz-form .franz-form__radio.is-selected {
-      box-shadow: inset ${useHorizontalStyle ? '0 4px' : '4px 0'} 0 0 ${accentColorStr};
-    }
-
     a.button:hover, button.button:hover {
       background: ${darkenAbsolute(accentColor, 10).hex()};
     }
@@ -139,7 +135,6 @@ const generateAccentStyle = (accentColorStr, useHorizontalStyle) => {
 
     .tab-item.is-active {
       background: ${accentColor.lightness(90).hex()};
-      box-shadow: inset ${useHorizontalStyle ? '0 4px' : '4px 0'} 0 0 ${accentColorStr};
     }
   `;
 };
@@ -565,7 +560,7 @@ const generateStyle = (settings, app) => {
   if (
     accentColor.toLowerCase() !== DEFAULT_APP_SETTINGS.accentColor.toLowerCase()
   ) {
-    style += generateAccentStyle(accentColor, useHorizontalStyle);
+    style += generateAccentStyle(accentColor);
   }
 
   style += generateServiceRibbonWidthStyle(
