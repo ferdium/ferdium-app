@@ -97,7 +97,7 @@ const generateAccentStyle = accentColorStr => {
     }
 
     .franz-form .franz-form__radio.is-selected, .tab-item.is-active {
-      border-color: ${accentColorStr};
+      box-shadow: inset 4px 0 0 0 ${accentColorStr};
     }
 
     a.button:hover, button.button:hover {
