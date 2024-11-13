@@ -389,7 +389,7 @@
   "settings.service.form.indirectMessageInfo": "Tiks paziņots par visiuem plūsmas jaunajiem ziņojumiem, ne tikai @username, @channel, @here, ...",
   "settings.service.form.indirectMessages": "Rādīt ziņojumu nozīmīti visiem jaunajiem ziņojumiem",
   "settings.service.form.isHibernatedEnabledInfo": "Kad iespējots, pakalpojums tik izslēgts pēc noteikta laika posma, lai taupītu sistēmas resursus.",
-  "settings.service.form.isMutedInfo": "Kad atslēgta, visas paziņojumu skaņas un atskaņošana ir apklusināta",
+  "settings.service.form.isMutedInfo": "Kad atspējota, visas paziņojumu skaņas un atskaņošana ir apklusināta",
   "settings.service.form.maxFileSize": "Maksimālais faila izmērs:",
   "settings.service.form.maxFileSizeError": "Fails, ko mēģini ievietot, ir pārāk liels.",
   "settings.service.form.name": "Nosaukums",
