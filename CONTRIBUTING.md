@@ -1,4 +1,4 @@
-# Contributing to Ferdium 6
+# Contributing to Ferdium 7
 
 :tada: First off, thanks for taking the time and your effort to make Ferdium better! :tada:
 
@@ -6,7 +6,7 @@
 
 <!-- TOC depthFrom:2 depthTo:2 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-- [Contributing to Ferdium 6](#contributing-to-ferdium-6)
+- [Contributing to Ferdium 7](#contributing-to-ferdium-7)
   - [Table of contents](#table-of-contents)
   - [Code of Conduct](#code-of-conduct)
   - [What should I know before I get started?](#what-should-i-know-before-i-get-started)
@@ -39,7 +39,7 @@ Please report unacceptable behavior to [hello@ferdium.org](mailto:hello@ferdium.
 
 ## What should I know before I get started?
 
-For the moment, Ferdium's development is only starting, aiming at releasing a 6.0.0 version with the rebranded assets and tooling upgrade completed. You can join our official [Discord chat](https://discord.com/invite/xpNTzgKmHM) to get more updates and discuss issues with the other contributors.
+You can join our official [Discord chat](https://discord.com/invite/xpNTzgKmHM) to get more updates and discuss issues with the other contributors.
 
 ## How can I contribute?
 
