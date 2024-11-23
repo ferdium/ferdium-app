@@ -76,7 +76,7 @@ The version [2.23.0](https://git-scm.com/download) for Git is working fine for d
 #### On Debian/Ubuntu
 
 ```bash
-apt-get update -y && apt-get install --no-install-recommends -y rpm ruby gem && gem install fpm --no-ri --no-rdoc --no-document
+apt-get update -y && apt-get install --no-install-recommends -y rpm ruby gem && gem install fpm --no-document
 ```
 
 #### On Fedora
