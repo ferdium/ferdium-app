@@ -33,7 +33,12 @@ RUN pnpm i && pnpm lint && pnpm reformat-files && pnpm package
 
 WORKDIR /usr/src/ferdium
 
-RUN pnpm build --dir
+RUN arch="$(dpkg --print-architecture)"; \
+        case "$arch" in \
+            *arm*) TARGET_ARCH=arm64 ;; \
+            *)     TARGET_ARCH=x64 ;; \
+        esac; \
+        pnpm build --$TARGET_ARCH --dir
 
 # --------------------------------------------------------------------------------------------
 
