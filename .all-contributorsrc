@@ -2999,6 +2999,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "dxrcy",
+      "name": "darcy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/44690813?v=4",
+      "profile": "http://dxrcy.dev",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "commitType": "docs"
