@@ -113,6 +113,7 @@
   "menu.help.tos": "Nutzungsbedingungen",
   "menu.services": "Dienste",
   "menu.services.activatePreviousService": "Vorherigen Dienst aktivieren",
+  "menu.services.activateServiceUsesAlt": "Alt-Taste verwenden, um den Dienst zu aktivieren",
   "menu.services.addNewService": "Neuen Dienst hinzufügen ...",
   "menu.services.copyToClipboard": "In die Zwischenablage kopieren",
   "menu.services.goHome": "Startseite",
