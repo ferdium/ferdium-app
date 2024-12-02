@@ -113,6 +113,7 @@
   "menu.help.tos": "תנאי שירות",
   "menu.services": "שירותים",
   "menu.services.activatePreviousService": "הפעלת השירות הקודם",
+  "menu.services.activateServiceUsesAlt": "להשתמש במקש Alt כדי להפעיל את השירות",
   "menu.services.addNewService": "הוספת שירות חדש…",
   "menu.services.copyToClipboard": "העתקה ללוח הגזירים",
   "menu.services.goHome": "בית",
