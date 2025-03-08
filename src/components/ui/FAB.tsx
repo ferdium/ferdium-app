@@ -36,7 +36,6 @@ class Button extends Component<IProps> {
     };
 
     return (
-      // eslint-disable-next-line @eslint-react/dom/no-missing-button-type
       <button {...buttonProps} type="button">
         {children}
       </button>
