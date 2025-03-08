@@ -25,15 +25,6 @@ interface IProps
 }
 
 class TextareaComponent extends Component<IProps> {
-  static defaultProps = {
-    onChange: noop,
-    onBlur: noop,
-    onFocus: noop,
-    showLabel: true,
-    disabled: false,
-    rows: 5,
-  };
-
   private textareaRef = createRef<HTMLTextAreaElement>();
 
   componentDidMount() {
@@ -47,7 +38,7 @@ class TextareaComponent extends Component<IProps> {
   }
 
   onChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
-    const { onChange } = this.props;
+    const { onChange = noop } = this.props;
 
     if (onChange) {
       onChange(e);
@@ -58,22 +49,22 @@ class TextareaComponent extends Component<IProps> {
     const {
       classes,
       className,
-      disabled,
+      disabled = false,
       error,
       id,
       textareaClassName,
       label,
-      showLabel,
+      showLabel = true,
       value,
       name,
       placeholder,
       spellCheck,
-      onBlur,
-      onFocus,
+      onBlur = noop,
+      onFocus = noop,
       minLength,
       maxLength,
       required,
-      rows,
+      rows = 5,
       noMargin,
     } = this.props;
 

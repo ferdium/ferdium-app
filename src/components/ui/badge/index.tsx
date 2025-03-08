@@ -45,12 +45,8 @@ interface IProps extends WithStylesProps<typeof styles> {
 }
 
 class BadgeComponent extends Component<IProps> {
-  public static defaultProps = {
-    type: 'primary',
-  };
-
   render() {
-    const { classes, children, type, className } = this.props;
+    const { classes, children, type = 'primary', className } = this.props;
 
     return (
       <div
