@@ -48,10 +48,6 @@ interface IProps extends Partial<StoresProps>, WrappedComponentProps {
 @inject('actions')
 @observer
 class Welcome extends Component<IProps> {
-  useLocalServer(): void {
-    serverlessLogin(this.props.actions);
-  }
-
   render(): ReactElement {
     const { loginRoute, signupRoute, changeServerRoute, intl } = this.props;
     let { recipes } = this.props;
@@ -98,7 +94,7 @@ class Welcome extends Component<IProps> {
           <button
             type="button"
             className="button"
-            onClick={this.useLocalServer.bind(this)}
+            onClick={() => serverlessLogin(this.props.actions)}
             onKeyDown={noop}
           >
             {intl.formatMessage(messages.serverless)}

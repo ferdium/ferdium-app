@@ -14,14 +14,10 @@ interface ILabel
 }
 
 class LabelComponent extends Component<ILabel> {
-  static defaultProps = {
-    showLabel: true,
-  };
-
   render() {
     const {
       title,
-      showLabel,
+      showLabel = true,
       classes,
       className,
       children,

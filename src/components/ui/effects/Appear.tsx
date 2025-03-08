@@ -1,4 +1,4 @@
-import { type ReactElement, type ReactNode, useEffect, useState } from 'react';
+import type { ReactElement, ReactNode } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 interface IProps {
@@ -22,16 +22,6 @@ const Appear = ({
   transitionEnterTimeout = 1500,
   transitionLeaveTimeout = 1500,
 }: IProps): ReactElement | null => {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
-
   return (
     <TransitionGroup component={null}>
       <CSSTransition
