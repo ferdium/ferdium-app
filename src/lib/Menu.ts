@@ -18,7 +18,11 @@ import type { StoresProps } from '../@types/ferdium-components.types';
 import { importExportURL, serverBase, serverName } from '../api/apiBase';
 // @ts-expect-error Cannot find module '../buildInfo.json' or its corresponding type declarations.
 import { gitBranch, gitHashShort, timestamp } from '../buildInfo.json';
-import { CUSTOM_WEBSITE_RECIPE_ID, LIVE_API_FERDIUM_WEBSITE } from '../config';
+import {
+  CUSTOM_WEBSITE_RECIPE_ID,
+  DEFAULT_SHORTCUTS,
+  LIVE_API_FERDIUM_WEBSITE,
+} from '../config';
 import {
   addNewServiceShortcutKey,
   altKey,
@@ -1106,7 +1110,9 @@ class FranzMenu implements StoresProps {
       },
       {
         label: intl.formatMessage(menuItems.activateNextService),
-        accelerator: this.stores.settings.shortcuts.activateNextService,
+        accelerator:
+          this.stores.settings?.shortcuts?.activateNextService ??
+          DEFAULT_SHORTCUTS.activateNextService,
         click: () => this.actions.service.setActiveNext(),
         visible: !cmdAltShortcutsVisibile,
       },
@@ -1118,7 +1124,9 @@ class FranzMenu implements StoresProps {
       },
       {
         label: intl.formatMessage(menuItems.activatePreviousService),
-        accelerator: this.stores.settings.shortcuts.activatePreviousService,
+        accelerator:
+          this.stores.settings?.shortcuts?.activatePreviousService ??
+          DEFAULT_SHORTCUTS.activatePreviousService,
         click: () => this.actions.service.setActivePrev(),
         visible: !cmdAltShortcutsVisibile,
       },
