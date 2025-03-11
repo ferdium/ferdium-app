@@ -52,12 +52,7 @@ class WebControlsScreen extends Component<IProps> {
         this._setUrl(this.webview.getURL());
 
         for (const event of URL_EVENTS) {
-          this.webview.addEventListener(event, e => {
-            if (!e.isMainFrame) {
-              return;
-            }
-            this._setUrlAndHistory(e.url);
-          });
+          this.webview.addEventListener(event, this.handleWebviewEvent);
         }
       }
     });
@@ -67,7 +62,20 @@ class WebControlsScreen extends Component<IProps> {
     if (this.autorunDisposer) {
       this.autorunDisposer();
     }
+
+    if (this.webview) {
+      for (const event of URL_EVENTS) {
+        this.webview.removeEventListener(event, this.handleWebviewEvent);
+      }
+    }
   }
+
+  handleWebviewEvent = (e: any) => {
+    if (!e.isMainFrame) {
+      return;
+    }
+    this._setUrlAndHistory(e.url);
+  };
 
   @action
   _setUrl(value): void {

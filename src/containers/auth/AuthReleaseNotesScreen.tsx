@@ -28,6 +28,8 @@ interface IState {
 }
 
 class AuthReleaseNotesScreen extends Component<IProps, IState> {
+  private handleClickBound = this.handleClick.bind(this);
+
   constructor(props) {
     super(props);
 
@@ -49,7 +51,7 @@ class AuthReleaseNotesScreen extends Component<IProps, IState> {
     });
 
     for (const link of document.querySelectorAll('.releasenotes__body a')) {
-      link.addEventListener('click', this.handleClick.bind(this), false);
+      link.addEventListener('click', this.handleClickBound, false);
     }
   }
 
@@ -59,12 +61,9 @@ class AuthReleaseNotesScreen extends Component<IProps, IState> {
   }
 
   componentWillUnmount() {
-    document.removeEventListener(
-      'click',
-      // eslint-disable-next-line unicorn/no-invalid-remove-event-listener
-      this.handleClick.bind(this),
-      false,
-    );
+    for (const link of document.querySelectorAll('.releasenotes__body a')) {
+      link.removeEventListener('click', this.handleClickBound, false);
+    }
   }
 
   render() {

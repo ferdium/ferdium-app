@@ -104,6 +104,14 @@ class TodosWebview extends Component<IProps, IState> {
     }
   }
 
+  componentWillUnmount() {
+    if (this.node.current) {
+      this.node.current.removeEventListener('mousemove', this.resizePanel);
+      this.node.current.removeEventListener('mouseup', this.stopResize);
+      this.node.current.removeEventListener('mouseleave', this.stopResize);
+    }
+  }
+
   startResize = (e: MouseEvent<HTMLDivElement>): void => {
     this.setState({
       isDragging: true,
