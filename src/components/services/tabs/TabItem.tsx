@@ -152,6 +152,10 @@ class TabItem extends Component<IProps, IState> {
 
   @observable isPollAnswered = false;
 
+  private pollTimeoutId: NodeJS.Timeout | null = null;
+
+  private pollAnswerTimeoutId: NodeJS.Timeout | null = null;
+
   constructor(props) {
     super(props);
 
@@ -197,7 +201,11 @@ class TabItem extends Component<IProps, IState> {
         if (Date.now() - service.lastPoll < ms('0.2s')) {
           this.isPolled = true;
 
-          setTimeout(() => {
+          if (this.pollTimeoutId) {
+            clearTimeout(this.pollTimeoutId);
+          }
+
+          this.pollTimeoutId = setTimeout(() => {
             this.isPolled = false;
           }, ms('1s'));
         }
@@ -205,7 +213,11 @@ class TabItem extends Component<IProps, IState> {
         if (Date.now() - service.lastPollAnswer < ms('0.2s')) {
           this.isPollAnswered = true;
 
-          setTimeout(() => {
+          if (this.pollAnswerTimeoutId) {
+            clearTimeout(this.pollAnswerTimeoutId);
+          }
+
+          this.pollAnswerTimeoutId = setTimeout(() => {
             this.isPollAnswered = false;
           }, ms('1s'));
         }
@@ -213,6 +225,15 @@ class TabItem extends Component<IProps, IState> {
     }
 
     this.checkForLongPress(stores!.settings.app.enableLongPressServiceHint);
+  }
+
+  componentWillUnmount() {
+    if (this.pollTimeoutId) {
+      clearTimeout(this.pollTimeoutId);
+    }
+    if (this.pollAnswerTimeoutId) {
+      clearTimeout(this.pollAnswerTimeoutId);
+    }
   }
 
   render() {
