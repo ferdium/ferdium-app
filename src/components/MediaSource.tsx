@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron';
-import { type MouseEventHandler, useState } from 'react';
+import { type MouseEventHandler, useEffect, useState } from 'react';
 import {
   type WrappedComponentProps,
   defineMessages,
@@ -54,6 +54,26 @@ function MediaSource(props: IProps) {
   const [trackerId, setTrackerId] = useState<string | null>(null);
   const [loadingSources, setLoadingSources] = useState<boolean>(false);
 
+  useEffect(() => {
+    const handleSelectCaptureDevice = (_event: any, data: any) => {
+      if (loadingSources) return;
+      setShow(true);
+      setTrackerId(data.trackerId);
+    };
+
+    ipcRenderer.on(
+      `select-capture-device:${service.id}`,
+      handleSelectCaptureDevice,
+    );
+
+    return () => {
+      ipcRenderer.removeListener(
+        `select-capture-device:${service.id}`,
+        handleSelectCaptureDevice,
+      );
+    };
+  }, [service.id, loadingSources]);
+
   const handleOnClick = (e: any) => {
     const { id } = e.currentTarget.dataset;
     window['ferdium'].actions.service.sendIPCMessage({
@@ -69,35 +89,35 @@ function MediaSource(props: IProps) {
     setTrackerId(null);
   };
 
-  const showCaptureSources = () => {
-    setLoadingSources(true);
-    ipcRenderer
-      .invoke('get-desktop-capturer-sources')
-      .then(sources => {
-        if (isWayland) {
-          // On Linux, we do not need to prompt the user again for the source
-          handleOnClick({
-            currentTarget: { dataset: { id: sources[0].id } },
-          });
-          return;
-        }
+  // biome-ignore lint/correctness/useExhaustiveDependencies: This effect should only run when `show` changes
+  useEffect(() => {
+    if (show) {
+      setLoadingSources(true);
+      ipcRenderer
+        .invoke('get-desktop-capturer-sources')
+        .then(sources => {
+          if (isWayland) {
+            // On Linux, we do not need to prompt the user again for the source
+            handleOnClick({
+              currentTarget: { dataset: { id: sources[0].id } },
+            });
+            return;
+          }
 
-        setSources(sources);
-        setLoadingSources(false);
-      })
-      // silence the error
-      .catch(() => {
-        setShow(false);
-        setSources([]);
-        setLoadingSources(false);
-      });
-  };
-
-  ipcRenderer.on(`select-capture-device:${service.id}`, (_event, data) => {
-    if (loadingSources) return;
-    showCaptureSources();
-    setTrackerId(data.trackerId);
-  });
+          setSources(sources);
+          setLoadingSources(false);
+        })
+        // silence the error
+        .catch(() => {
+          setShow(false);
+          setSources([]);
+          setLoadingSources(false);
+        });
+    } else {
+      setSources([]);
+      setLoadingSources(false);
+    }
+  }, [show]);
 
   if (!show) {
     return null;
