@@ -384,6 +384,14 @@ class EditSettingsForm extends Component<IProps, IState> {
       e.preventDefault();
     }
 
+    // Do not submit if the accent color is not set
+    if (
+      this.props.form.$('accentColor').value === '#' ||
+      this.props.form.$('progressbarAccentColor').value === '#'
+    ) {
+      return;
+    }
+
     this.props.form.submit({
       onSuccess: (form: Form) => {
         const values = form.values();
