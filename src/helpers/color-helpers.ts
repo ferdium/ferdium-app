@@ -2,7 +2,7 @@ type ColorMethod = 'hex' | 'rgb' | 'rgba' | 'hsl' | 'hsla' | 'named';
 
 export const isValidColor = (color: string, method?: ColorMethod): boolean => {
   const patterns: Record<ColorMethod, RegExp> = {
-    hex: /^#(?:[\dA-Fa-f]{3}){1,2}$/,
+    hex: /^#(?:[\dA-Fa-f]{3,4}){1,2}$/,
     rgb: /^rgb\((\d{1,3}%?,\s*){2}\d{1,3}%?\)$/,
     rgba: /^rgba\((\d{1,3}%?,\s*){3}[\d.]+\)$/,
     hsl: /^hsl\(\d{1,3}(?:,\s*\d{1,3}%){2}\)$/,
