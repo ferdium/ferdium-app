@@ -2,11 +2,15 @@ import { BrowserWindow, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 // eslint-disable-next-line import/no-cycle
 import { appEvents } from '../..';
+import { isSnap } from '../../environment';
 
 const debug = require('../../preload-safe-debug')('Ferdium:ipcApi:autoUpdate');
 
 export default (params: { mainWindow: BrowserWindow; settings: any }) => {
   const enableUpdate = Boolean(params.settings.app.get('automaticUpdates'));
+
+  // The following line is a workaround to force the development update. Should only be used for development purposes.
+  // autoUpdater.forceDevUpdateConfig = true;
 
   if (enableUpdate) {
     ipcMain.on('autoUpdate', (event, args) => {
@@ -21,6 +25,12 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
             debug('checking for update');
             autoUpdater.checkForUpdates();
           } else if (args.action === 'install') {
+            // If the app is a snap, auto-updates are not supported.
+            // The snap store will handle updates, therefore the user should be prompted to update through snap store.
+            if (isSnap) {
+              return;
+            }
+
             debug('installing update');
 
             appEvents.emit('install-update');

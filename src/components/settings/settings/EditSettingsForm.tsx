@@ -21,6 +21,7 @@ import {
 } from '../../../config';
 import {
   isMac,
+  isSnap,
   isWinPortable,
   isWindows,
   lockFerdiumShortcutKey,
@@ -253,6 +254,10 @@ const messages = defineMessages({
     id: 'settings.app.updateStatusAvailable',
     defaultMessage: 'Update available, downloading...',
   },
+  updateAvailableSnap: {
+    id: 'settings.app.updateAvailableSnap',
+    defaultMessage: 'Update available. Please update via Snap Store.',
+  },
   updateStatusUpToDate: {
     id: 'settings.app.updateStatusUpToDate',
     defaultMessage: 'You are using the latest version of Ferdium',
@@ -446,6 +451,10 @@ class EditSettingsForm extends Component<IProps, IState> {
       serverURL,
       intl,
     } = this.props;
+
+    const installUpdateMessage = isSnap
+      ? messages.updateAvailableSnap
+      : messages.buttonInstallUpdate;
 
     let updateButtonLabelMessage = messages.buttonSearchForUpdate;
     if (isCheckingForUpdates) {
@@ -1262,12 +1271,13 @@ class EditSettingsForm extends Component<IProps, IState> {
                     <>
                       <div>
                         <Toggle {...form.$('beta').bind()} />
-                        {updateIsReadyToInstall ? (
+                        {updateIsReadyToInstall ||
+                        (isSnap && isUpdateAvailable) ? (
                           <Button
-                            label={intl.formatMessage(
-                              messages.buttonInstallUpdate,
-                            )}
+                            label={intl.formatMessage(installUpdateMessage)}
                             onClick={installUpdate}
+                            disabled={isSnap}
+                            buttonType={isSnap ? 'secondary' : undefined}
                           />
                         ) : (
                           <Button

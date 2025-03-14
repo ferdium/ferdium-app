@@ -217,7 +217,7 @@ export default class AppStore extends TypedStore {
     this._autoStart();
 
     // Check if system is muted
-    // There are no events to subscribe so we need to poll everey 5s
+    // There are no events to subscribe so we need to poll every 5s
     this._systemDND();
     setInterval(() => this._systemDND(), ms('5s'));
 
