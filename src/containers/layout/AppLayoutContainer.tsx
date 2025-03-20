@@ -12,10 +12,10 @@ import AppLayout from '../../components/layout/AppLayout';
 import Sidebar from '../../components/layout/Sidebar';
 import Services from '../../components/services/content/Services';
 import AppLoader from '../../components/ui/AppLoader';
+import { DEFAULT_ACCENT_COLOR } from '../../config';
 import { workspaceStore } from '../../features/workspaces';
 import WorkspaceDrawer from '../../features/workspaces/components/WorkspaceDrawer';
 import { isValidColor } from '../../helpers/color-helpers';
-import { DEFAULT_ACCENT_COLOR } from '../../config';
 
 interface IProps extends StoresProps {}
 
