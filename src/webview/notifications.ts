@@ -78,4 +78,15 @@ class Notification {
 }
 
   window.Notification = Notification;
+
+  // some sites use service workers for notifications, but electron doesn't support this
+  // this is a monkey patch to redirect them to window.Notification instead
+  window.ServiceWorkerRegistration.prototype.showNotification = function (
+    title = '',
+    options = {},
+  ) {
+    // passing all of options causes notifications to only appear sometimes
+    // but the only option that actually matters is body
+    new Notification(title, { body: options.body });
+  };
 })();`;
