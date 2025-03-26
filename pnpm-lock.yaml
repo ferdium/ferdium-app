@@ -239,6 +239,9 @@ importers:
       tar:
         specifier: 6.2.1
         version: 6.2.1
+      tinycolor2:
+        specifier: 1.6.0
+        version: 1.6.0
       tslib:
         specifier: 2.7.0
         version: 2.7.0
@@ -321,6 +324,9 @@ importers:
       '@types/tar':
         specifier: 6.1.13
         version: 6.1.13
+      '@types/tinycolor2':
+        specifier: 1.4.6
+        version: 1.4.6
       '@types/uuid':
         specifier: 9.0.8
         version: 9.0.8
@@ -1723,6 +1729,9 @@ packages:
 
   '@types/tar@6.1.13':
     resolution: {integrity: sha512-IznnlmU5f4WcGTh2ltRu/Ijpmk8wiWXfF0VA4s+HPjHZgvFggk1YaIkbo5krX/zUCzWF8N/l4+W/LNxnvAJ8nw==}
+
+  '@types/tinycolor2@1.4.6':
+    resolution: {integrity: sha512-iEN8J0BoMnsWBqjVbWH/c0G0Hh7O21lpR2/+PrvAVgWdzL7eexIFm4JN/Wn10PTcmNdtS6U67r499mlWMXOxNw==}
 
   '@types/uuid@9.0.8':
     resolution: {integrity: sha512-jg+97EGIcY9AGHJJRaaPVgetKDsrTgbRjQ5Msgjh/DQKEFl0DtyRr/VCOyD1T2R1MNeWPK/u7JoGhlDZnKBAfA==}
@@ -7078,8 +7087,8 @@ packages:
   tiny-warning@1.0.3:
     resolution: {integrity: sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==}
 
-  tinycolor2@1.4.2:
-    resolution: {integrity: sha512-vJhccZPs965sV/L2sU4oRQVAos0pQXwsvTLkWYdqJ+a8Q5kPFzJTuOFwy7UniPli44NKQGAglksjvOcpo95aZA==}
+  tinycolor2@1.6.0:
+    resolution: {integrity: sha512-XPaBkWQJdsf3pLKJV9p4qN/S+fm2Oj8AIPo1BTUhg5oxkvm9+SVEGFdhyOz7tTdUTfvxMiAs4sp6/eZO2Ew+pw==}
 
   tinyexec@0.3.0:
     resolution: {integrity: sha512-tVGE0mVJPGb0chKhqmsoosjsS+qUnJVGJpZgsHYQcGoPlG3B51R3PouqTgEGH2Dc9jjFyOqOpix6ZHNMXp1FZg==}
@@ -9305,6 +9314,8 @@ snapshots:
     dependencies:
       '@types/node': 20.14.10
       minipass: 4.2.8
+
+  '@types/tinycolor2@1.4.6': {}
 
   '@types/uuid@9.0.8': {}
 
@@ -14837,7 +14848,7 @@ snapshots:
       prop-types: 15.8.1
       react: 18.3.1
       reactcss: 1.2.3(react@18.3.1)
-      tinycolor2: 1.4.2
+      tinycolor2: 1.6.0
 
   react-confetti@6.1.0(react@18.3.1):
     dependencies:
@@ -15964,7 +15975,7 @@ snapshots:
 
   tiny-warning@1.0.3: {}
 
-  tinycolor2@1.4.2: {}
+  tinycolor2@1.6.0: {}
 
   tinyexec@0.3.0: {}
 

@@ -7,6 +7,7 @@ import {
   ThemeProvider as MUIThemeProvider,
   createTheme,
 } from '@mui/material/styles';
+import tinycolor from 'tinycolor2';
 import type { StoresProps } from '../../@types/ferdium-components.types';
 import AppLayout from '../../components/layout/AppLayout';
 import Sidebar from '../../components/layout/Sidebar';
@@ -15,7 +16,6 @@ import AppLoader from '../../components/ui/AppLoader';
 import { DEFAULT_ACCENT_COLOR } from '../../config';
 import { workspaceStore } from '../../features/workspaces';
 import WorkspaceDrawer from '../../features/workspaces/components/WorkspaceDrawer';
-import { isValidColor } from '../../helpers/color-helpers';
 
 interface IProps extends StoresProps {}
 
@@ -55,7 +55,7 @@ class AppLayoutContainer extends Component<IProps> {
 
     // This is a workaround to fix theming on MUI components when the settings are poorly set
     let { accentColor } = settings.app;
-    accentColor = isValidColor(accentColor)
+    accentColor = tinycolor(accentColor).isValid()
       ? accentColor
       : DEFAULT_ACCENT_COLOR;
     // ---
