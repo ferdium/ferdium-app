@@ -863,18 +863,18 @@ export default class ServicesStore extends TypedStore {
 
         if (isTwoFactorAutoCatcherEnabled) {
           /*
-        parse the token digits from sms body, find "token" or "code" in options.body which reflect the sms content
-        ---
-        Token: 03624 / SMS-Code = PIN Token
-        ---
-        Prüfcode 010313 für Microsoft-Authentifizierung verwenden.
-        ---
-        483133 is your GitHub authentication code. @github.com #483133
-        ---
-        eBay: Ihr Sicherheitscode lautet 080090. \nEr läuft in 15 Minuten ab. Geben Sie den Code nicht an andere weiter.
-        ---
-        PayPal: Ihr Sicherheitscode lautet: 989605. Geben Sie diesen Code nicht weiter.
-      */
+            parse the token digits from sms body, find "token" or "code" in options.body which reflect the sms content
+            ---
+            Token: 03624 / SMS-Code = PIN Token
+            ---
+            Prüfcode 010313 für Microsoft-Authentifizierung verwenden.
+            ---
+            483133 is your GitHub authentication code. @github.com #483133
+            ---
+            eBay: Ihr Sicherheitscode lautet 080090. \nEr läuft in 15 Minuten ab. Geben Sie den Code nicht an andere weiter.
+            ---
+            PayPal: Ihr Sicherheitscode lautet: 989605. Geben Sie diesen Code nicht weiter.
+          */
 
           const rawBody = options.body;
           const { 0: token } = /\d{5,6}/.exec(options.body) || [];
@@ -899,14 +899,24 @@ export default class ServicesStore extends TypedStore {
         }
 
         // Check if we are in scheduled Do-not-Disturb time
-        const { scheduledDNDEnabled, scheduledDNDStart, scheduledDNDEnd } =
-          this.stores.settings.all.app;
+        if (this.stores.settings.all.app.scheduledDNDEnabled) {
+          const { scheduledDNDStart, scheduledDNDEnd } =
+            this.stores.settings.all.app;
 
-        if (
-          scheduledDNDEnabled &&
-          isInTimeframe(scheduledDNDStart, scheduledDNDEnd)
-        ) {
-          return;
+          const shouldBeDnd = isInTimeframe(scheduledDNDStart, scheduledDNDEnd);
+          debug(
+            'Check if we are in a schedule Do not disturb window :',
+            shouldBeDnd,
+            scheduledDNDStart,
+            scheduledDNDEnd,
+          );
+
+          if (shouldBeDnd !== this.stores.settings.all.app.isAppMuted) {
+            debug('Toggle scheduled Do not disturb');
+            this.actions.app.muteApp({
+              isMuted: shouldBeDnd,
+            });
+          }
         }
 
         if (service.isMuted || this.stores.settings.all.app.isAppMuted) {
