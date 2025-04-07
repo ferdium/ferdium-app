@@ -12,8 +12,10 @@ import AppLayout from '../../components/layout/AppLayout';
 import Sidebar from '../../components/layout/Sidebar';
 import Services from '../../components/services/content/Services';
 import AppLoader from '../../components/ui/AppLoader';
+import { DEFAULT_ACCENT_COLOR } from '../../config';
 import { workspaceStore } from '../../features/workspaces';
 import WorkspaceDrawer from '../../features/workspaces/components/WorkspaceDrawer';
+import { isValidColor } from '../../helpers/color-helpers';
 
 interface IProps extends StoresProps {}
 
@@ -51,12 +53,19 @@ class AppLayoutContainer extends Component<IProps> {
       awake,
     } = this.props.actions.service;
 
+    // This is a workaround to fix theming on MUI components when the settings are poorly set
+    let { accentColor } = settings.app;
+    accentColor = isValidColor(accentColor)
+      ? accentColor
+      : DEFAULT_ACCENT_COLOR;
+    // ---
+
     // This is a workaround to fix theming on MUI components
     const themeMUIDark = createTheme({
       palette: {
         mode: 'dark',
         primary: {
-          main: settings.app.accentColor,
+          main: accentColor,
         },
       },
     });
@@ -65,7 +74,7 @@ class AppLayoutContainer extends Component<IProps> {
       palette: {
         mode: 'light',
         primary: {
-          main: settings.app.accentColor,
+          main: accentColor,
         },
       },
     });

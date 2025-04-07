@@ -1,6 +1,6 @@
 # Note: Before running this file, you should have already cloned the git repo + submodules on the host machine. This is used when actively developing on your local machine, but you want to build for a different architecture
 
-FROM docker.io/library/node:20.18.0-buster AS builder
+FROM docker.io/library/node:22.14.0-bookworm AS builder
 
 ENV PATH="/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin:/usr/local/lib:/usr/include:/usr/share"
 
@@ -13,8 +13,8 @@ ARG PREVAL_BUILD_INFO_PLACEHOLDERS=true
 # Note: 'fpm' is needed for building on ARM machines
 RUN apt-get update -y \
   && apt-get install --no-install-recommends -y rpm ruby gem \
-  && gem install dotenv -v 2.8.1 --no-ri --no-rdoc --no-document \
-  && gem install fpm --no-ri --no-rdoc --no-document
+  && gem install dotenv -v 2.8.1 --no-document \
+  && gem install fpm --no-document
 
 WORKDIR /usr/src/ferdium
 
@@ -33,7 +33,12 @@ RUN pnpm i && pnpm lint && pnpm reformat-files && pnpm package
 
 WORKDIR /usr/src/ferdium
 
-RUN pnpm build --dir
+RUN arch="$(dpkg --print-architecture)"; \
+        case "$arch" in \
+            *arm*) TARGET_ARCH=arm64 ;; \
+            *)     TARGET_ARCH=x64 ;; \
+        esac; \
+        pnpm build --$TARGET_ARCH --dir
 
 # --------------------------------------------------------------------------------------------
 

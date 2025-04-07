@@ -476,4 +476,5 @@ export const DEFAULT_SERVICE_SETTINGS = {
 export const DEFAULT_SHORTCUTS = {
   activateNextService: 'Ctrl+tab',
   activatePreviousService: `Ctrl+${shiftKey()}+tab`,
+  activateServiceUsesAlt: false,
 };

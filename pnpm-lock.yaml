@@ -43,7 +43,7 @@ importers:
         version: 5.1.0
       '@electron/remote':
         specifier: 2.1.2
-        version: 2.1.2(electron@33.2.0)
+        version: 2.1.2(electron@34.4.1)
       '@emotion/react':
         specifier: 11.13.3
         version: 11.13.3(@types/react@18.3.12)(react@18.3.1)
@@ -73,7 +73,7 @@ importers:
         version: 7.4.0(history@5.3.0)(mobx@6.13.5)(path-to-regexp@6.2.2)
       '@syed_umair/electron-process-manager':
         specifier: 1.1.0
-        version: 1.1.0(electron@33.2.0)
+        version: 1.1.0(electron@34.4.1)
       auto-launch:
         specifier: 5.0.6
         version: 5.0.6
@@ -251,13 +251,6 @@ importers:
       validator:
         specifier: 13.12.0
         version: 13.12.0
-    optionalDependencies:
-      macos-notification-state:
-        specifier: github:ferdium/macos-notification-state#7d740bcea260feb08197bd210912133e72853d93
-        version: https://codeload.github.com/ferdium/macos-notification-state/tar.gz/7d740bcea260feb08197bd210912133e72853d93
-      node-mac-permissions:
-        specifier: 2.4.0
-        version: 2.4.0
     devDependencies:
       '@biomejs/biome':
         specifier: 1.6.1
@@ -353,8 +346,8 @@ importers:
         specifier: 7.0.3
         version: 7.0.3
       electron:
-        specifier: 33.2.0
-        version: 33.2.0
+        specifier: 34.4.1
+        version: 34.4.1
       electron-builder:
         specifier: 24.13.3
         version: 24.13.3(electron-builder-squirrel-windows@24.13.3)
@@ -442,6 +435,13 @@ importers:
       wait-on:
         specifier: 7.2.0
         version: 7.2.0(debug@4.3.7)
+    optionalDependencies:
+      macos-notification-state:
+        specifier: github:ferdium/macos-notification-state#7d740bcea260feb08197bd210912133e72853d93
+        version: https://codeload.github.com/ferdium/macos-notification-state/tar.gz/7d740bcea260feb08197bd210912133e72853d93
+      node-mac-permissions:
+        specifier: 2.4.0
+        version: 2.4.0
 
 packages:
 
@@ -2570,8 +2570,8 @@ packages:
   camelize@1.0.1:
     resolution: {integrity: sha512-dU+Tx2fsypxTgtLoE36npi3UqcjSSMNYfkqgmoEhtZrraP5VWq0K7FkWVTYa8eMPtnU/G2txVsfdCJTn9uzpuQ==}
 
-  caniuse-lite@1.0.30001679:
-    resolution: {integrity: sha512-j2YqID/YwpLnKzCmBOS4tlZdWprXm3ZmQLBH9ZBXFOhoxLA46fwyBvx6toCBWBmnuwUY/qB3kEU6gFx8qgCroA==}
+  caniuse-lite@1.0.30001707:
+    resolution: {integrity: sha512-3qtRjw/HQSMlDWf+X79N206fepf4SOOU6SQLMaq/0KkZLmSjPxAkBOQQ+FxbHKfHmYLZFfdWsO3KA90ceHPSnw==}
 
   caseless@0.12.0:
     resolution: {integrity: sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==}
@@ -3252,8 +3252,8 @@ packages:
     resolution: {integrity: sha512-1mNTwCfkolXl3kMf50yW3vE2lZj0y92P/HYWFBrb+v2S/pCka5mdwN3cagKm458A7NjndSwijynXgcLWRodsVg==}
     engines: {node: '>=8.0.0'}
 
-  electron@33.2.0:
-    resolution: {integrity: sha512-PVw1ICAQDPsnnsmpNFX/b1i/49h67pbSPxuIENd9K9WpGO1tsRaQt+K2bmXqTuoMJsbzIc75Ce8zqtuwBPqawA==}
+  electron@34.4.1:
+    resolution: {integrity: sha512-iYzeLBdCrAR3i0RVSLa+mzuFZwH6HGxTGKsI+SS41sg2anZj4R5mHjOiHsxcZ50/ih47NJbuVRJgPIVlTF+USg==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
 
@@ -8200,9 +8200,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@electron/remote@2.1.2(electron@33.2.0)':
+  '@electron/remote@2.1.2(electron@34.4.1)':
     dependencies:
-      electron: 33.2.0
+      electron: 34.4.1
 
   '@electron/universal@1.5.1':
     dependencies:
@@ -9128,9 +9128,9 @@ snapshots:
       mobx: 6.13.5
       path-to-regexp: 6.2.2
 
-  '@syed_umair/electron-process-manager@1.1.0(electron@33.2.0)':
+  '@syed_umair/electron-process-manager@1.1.0(electron@34.4.1)':
     dependencies:
-      electron: 33.2.0
+      electron: 34.4.1
       electron-process-reporter: 1.4.0
 
   '@szmarczak/http-timer@4.0.6':
@@ -10273,7 +10273,7 @@ snapshots:
 
   browserslist@4.23.0:
     dependencies:
-      caniuse-lite: 1.0.30001679
+      caniuse-lite: 1.0.30001707
       electron-to-chromium: 1.4.710
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.23.0)
@@ -10443,7 +10443,7 @@ snapshots:
 
   camelize@1.0.1: {}
 
-  caniuse-lite@1.0.30001679: {}
+  caniuse-lite@1.0.30001707: {}
 
   caseless@0.12.0: {}
 
@@ -11211,7 +11211,7 @@ snapshots:
       jsonfile: 4.0.0
       mkdirp: 0.5.6
 
-  electron@33.2.0:
+  electron@34.4.1:
     dependencies:
       '@electron/get': 2.0.3
       '@types/node': 20.14.10

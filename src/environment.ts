@@ -8,6 +8,7 @@ export const isLinux = process.platform === 'linux';
 export const isWinPortable = process.env.PORTABLE_EXECUTABLE_FILE != null;
 
 export const isWayland = isLinux && process.env.XDG_SESSION_TYPE === 'wayland';
+export const isSnap = isLinux && process.env.SNAP != null;
 
 export const electronVersion: string = process.versions.electron ?? '';
 export const chromeVersion: string = process.versions.chrome ?? '';

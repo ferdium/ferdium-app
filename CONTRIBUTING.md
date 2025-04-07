@@ -1,4 +1,4 @@
-# Contributing to Ferdium 6
+# Contributing to Ferdium 7
 
 :tada: First off, thanks for taking the time and your effort to make Ferdium better! :tada:
 
@@ -6,7 +6,7 @@
 
 <!-- TOC depthFrom:2 depthTo:2 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-- [Contributing to Ferdium 6](#contributing-to-ferdium-6)
+- [Contributing to Ferdium 7](#contributing-to-ferdium-7)
   - [Table of contents](#table-of-contents)
   - [Code of Conduct](#code-of-conduct)
   - [What should I know before I get started?](#what-should-i-know-before-i-get-started)
@@ -39,7 +39,7 @@ Please report unacceptable behavior to [hello@ferdium.org](mailto:hello@ferdium.
 
 ## What should I know before I get started?
 
-For the moment, Ferdium's development is only starting, aiming at releasing a 6.0.0 version with the rebranded assets and tooling upgrade completed. You can join our official [Discord chat](https://discord.com/invite/xpNTzgKmHM) to get more updates and discuss issues with the other contributors.
+You can join our official [Discord chat](https://discord.com/invite/xpNTzgKmHM) to get more updates and discuss issues with the other contributors.
 
 ## How can I contribute?
 
@@ -62,8 +62,8 @@ Currently, these are the combinations of system dependencies that work for MacOS
 # Note: 'jq' is not a required system dependency; its only here to show the combined output of versions needed
 $ jq --null-input '[inputs.engines] | add' < ./package.json < ./recipes/package.json
 {
-  "node": "20.18.0",
-  "pnpm": "9.12.3"
+  "node": "22.14.0",
+  "pnpm": "10.4.0"
 }
 ```
 
@@ -76,7 +76,7 @@ The version [2.23.0](https://git-scm.com/download) for Git is working fine for d
 #### On Debian/Ubuntu
 
 ```bash
-apt-get update -y && apt-get install --no-install-recommends -y rpm ruby gem && gem install fpm --no-ri --no-rdoc --no-document
+apt-get update -y && apt-get install --no-install-recommends -y rpm ruby gem && gem install fpm --no-document
 ```
 
 #### On Fedora

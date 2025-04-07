@@ -8,17 +8,12 @@ import Error from './error';
 type Props = {
   field: FieldInterface;
   className: string;
-  focus: boolean;
-  showLabel: boolean;
+  focus?: boolean;
+  showLabel?: boolean;
 };
 
 // TODO: Should this file be converted into the coding style similar to './toggle/index.tsx'?
 class Radio extends Component<Props> {
-  static defaultProps = {
-    focus: false,
-    showLabel: true,
-  };
-
   inputElement = null;
 
   componentDidMount() {
@@ -33,7 +28,7 @@ class Radio extends Component<Props> {
   }
 
   render() {
-    const { field, className, showLabel } = this.props;
+    const { field, className, showLabel = true } = this.props;
 
     return (
       <div

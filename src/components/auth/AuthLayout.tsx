@@ -11,7 +11,7 @@ import {
 import { type WrappedComponentProps, injectIntl } from 'react-intl';
 import { serverName } from '../../api/apiBase';
 import { GITHUB_FERDIUM_URL } from '../../config';
-import { isWindows } from '../../environment';
+import { isSnap, isWindows } from '../../environment';
 import { Component as PublishDebugInfo } from '../../features/publishDebugInfo';
 import { updateVersionParse } from '../../helpers/update-helpers';
 import globalMessages from '../../i18n/globalMessages';
@@ -81,15 +81,16 @@ class AuthLayout extends Component<IProps, IState> {
               {intl.formatMessage(globalMessages.notConnectedToTheInternet)}
             </InfoBar>
           )}
-          {appUpdateIsDownloaded && this.state.shouldShowAppUpdateInfoBar && (
-            <AppUpdateInfoBar
-              onInstallUpdate={installAppUpdate}
-              updateVersionParsed={updateVersionParse(updateVersion)}
-              onHide={() => {
-                this.setState({ shouldShowAppUpdateInfoBar: false });
-              }}
-            />
-          )}
+          {(appUpdateIsDownloaded || isSnap) &&
+            this.state.shouldShowAppUpdateInfoBar && (
+              <AppUpdateInfoBar
+                onInstallUpdate={installAppUpdate}
+                updateVersionParsed={updateVersionParse(updateVersion)}
+                onHide={() => {
+                  this.setState({ shouldShowAppUpdateInfoBar: false });
+                }}
+              />
+            )}
           {isOnline && !isAPIHealthy && (
             <InfoBar
               type="danger"

@@ -223,7 +223,7 @@ class ButtonComponent extends Component<IProps, IState> {
     ) : (
       <button
         id={id}
-        // eslint-disable-next-line react/button-has-type, @eslint-react/dom/no-missing-button-type
+        // eslint-disable-next-line @eslint-react/dom/no-missing-button-type, react/button-has-type
         type={type}
         onClick={onClick}
         className={classnames({

@@ -60,6 +60,7 @@ asarUnpack:
   - ./recipes
   - ./assets/fonts
   - ./assets/images/taskbar
+  - ./assets/images/icons
 
 mac:
   hardenedRuntime: true

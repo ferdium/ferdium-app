@@ -18,7 +18,11 @@ import type { StoresProps } from '../@types/ferdium-components.types';
 import { importExportURL, serverBase, serverName } from '../api/apiBase';
 // @ts-expect-error Cannot find module '../buildInfo.json' or its corresponding type declarations.
 import { gitBranch, gitHashShort, timestamp } from '../buildInfo.json';
-import { CUSTOM_WEBSITE_RECIPE_ID, LIVE_API_FERDIUM_WEBSITE } from '../config';
+import {
+  CUSTOM_WEBSITE_RECIPE_ID,
+  DEFAULT_SHORTCUTS,
+  LIVE_API_FERDIUM_WEBSITE,
+} from '../config';
 import {
   addNewServiceShortcutKey,
   altKey,
@@ -47,7 +51,7 @@ import { workspaceStore } from '../features/workspaces/index';
 import { onAuthGoToReleaseNotes } from '../helpers/update-helpers';
 import { openExternalUrl } from '../helpers/url-helpers';
 import globalMessages from '../i18n/globalMessages';
-import { acceleratorString } from '../jsUtils';
+import { acceleratorString, ifUndefined } from '../jsUtils';
 import type Service from '../models/Service';
 import type { RealStores } from '../stores';
 
@@ -303,6 +307,10 @@ export const menuItems = defineMessages({
   activatePreviousService: {
     id: 'menu.services.activatePreviousService',
     defaultMessage: 'Activate previous service',
+  },
+  activateServiceUsesAlt: {
+    id: 'menu.services.activateServiceUsesAlt',
+    defaultMessage: 'Use Alt key to activate service',
   },
   muteApp: {
     id: 'sidebar.muteApp',
@@ -1102,7 +1110,10 @@ class FranzMenu implements StoresProps {
       },
       {
         label: intl.formatMessage(menuItems.activateNextService),
-        accelerator: this.stores.settings.shortcuts.activateNextService,
+        accelerator: ifUndefined<string>(
+          this.stores.settings.shortcuts.activateNextService,
+          DEFAULT_SHORTCUTS.activateNextService,
+        ),
         click: () => this.actions.service.setActiveNext(),
         visible: !cmdAltShortcutsVisibile,
       },
@@ -1114,7 +1125,10 @@ class FranzMenu implements StoresProps {
       },
       {
         label: intl.formatMessage(menuItems.activatePreviousService),
-        accelerator: this.stores.settings.shortcuts.activatePreviousService,
+        accelerator: ifUndefined<string>(
+          this.stores.settings.shortcuts.activatePreviousService,
+          DEFAULT_SHORTCUTS.activatePreviousService,
+        ),
         click: () => this.actions.service.setActivePrev(),
         visible: !cmdAltShortcutsVisibile,
       },
@@ -1145,7 +1159,9 @@ class FranzMenu implements StoresProps {
         label: this._getServiceName(service),
         accelerator: acceleratorString({
           index: i + 1,
-          keyCombo: cmdOrCtrlShortcutKey(),
+          keyCombo: this.stores.settings.shortcuts.activateServiceUsesAlt
+            ? altKey()
+            : cmdOrCtrlShortcutKey(),
           prefix: '',
           suffix: '',
         }),

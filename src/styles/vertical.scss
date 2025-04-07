@@ -33,7 +33,6 @@ $tabitem-bias: 30px;
 
     .tab-item {
       &.is-active {
-        box-shadow: inset 0 4px 0 0 $theme-brand-primary;
         overflow: hidden;
         height: $sidebar-width + 4;
       }

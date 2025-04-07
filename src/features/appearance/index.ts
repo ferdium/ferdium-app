@@ -41,7 +41,7 @@ const generateUserCustomCSS = () => {
   return pathExistsSync(path) ? readFileSync(path).toString() : '';
 };
 
-const generateAccentStyle = accentColorStr => {
+const generateAccentStyle = (accentColorStr, useHorizontalStyle) => {
   let accentColor;
   try {
     accentColor = color(accentColorStr);
@@ -97,7 +97,7 @@ const generateAccentStyle = accentColorStr => {
     }
 
     .franz-form .franz-form__radio.is-selected, .tab-item.is-active {
-      border-color: ${accentColorStr};
+      box-shadow: inset ${useHorizontalStyle ? '0 4px' : '4px 0'} 0 0 ${accentColorStr};
     }
 
     a.button:hover, button.button:hover {
@@ -405,7 +405,7 @@ const generateStyle = (settings, app) => {
   if (
     accentColor.toLowerCase() !== DEFAULT_APP_SETTINGS.accentColor.toLowerCase()
   ) {
-    style += generateAccentStyle(accentColor);
+    style += generateAccentStyle(accentColor, useHorizontalStyle);
   }
 
   style += generateServiceRibbonWidthStyle(

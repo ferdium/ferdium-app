@@ -54,11 +54,25 @@ function MediaSource(props: IProps) {
   const [trackerId, setTrackerId] = useState<string | null>(null);
   const [loadingSources, setLoadingSources] = useState<boolean>(false);
 
-  ipcRenderer.on(`select-capture-device:${service.id}`, (_event, data) => {
-    if (loadingSources) return;
-    setShow(true);
-    setTrackerId(data.trackerId);
-  });
+  useEffect(() => {
+    const handleSelectCaptureDevice = (_event: any, data: any) => {
+      if (loadingSources) return;
+      setShow(true);
+      setTrackerId(data.trackerId);
+    };
+
+    ipcRenderer.on(
+      `select-capture-device:${service.id}`,
+      handleSelectCaptureDevice,
+    );
+
+    return () => {
+      ipcRenderer.removeListener(
+        `select-capture-device:${service.id}`,
+        handleSelectCaptureDevice,
+      );
+    };
+  }, [service.id, loadingSources]);
 
   const handleOnClick = (e: any) => {
     const { id } = e.currentTarget.dataset;

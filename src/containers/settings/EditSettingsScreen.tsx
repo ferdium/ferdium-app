@@ -509,6 +509,7 @@ class EditSettingsScreen extends Component<
     const newShortcuts = {
       activateNextService: settingsData.shortcutActivateNextService,
       activatePreviousService: settingsData.shortcutActivatePreviousService,
+      activateServiceUsesAlt: Boolean(settingsData.activateServiceUsesAlt),
     };
 
     const requiredRestartKeys = [
@@ -1341,6 +1342,15 @@ class EditSettingsScreen extends Component<
           ),
           default: DEFAULT_SHORTCUTS.activatePreviousService,
           placeholder: DEFAULT_SHORTCUTS.activatePreviousService,
+        },
+        activateServiceUsesAlt: {
+          label: intl.formatMessage(menuItems.activateServiceUsesAlt),
+          value: ifUndefined<boolean>(
+            settings.all.shortcuts.activateServiceUsesAlt,
+            DEFAULT_SHORTCUTS.activateServiceUsesAlt,
+          ),
+          default: DEFAULT_SHORTCUTS.activateServiceUsesAlt,
+          type: 'checkbox',
         },
       },
     };

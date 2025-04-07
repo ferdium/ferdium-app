@@ -217,7 +217,7 @@ export default class AppStore extends TypedStore {
     this._autoStart();
 
     // Check if system is muted
-    // There are no events to subscribe so we need to poll everey 5s
+    // There are no events to subscribe so we need to poll every 5s
     this._systemDND();
     setInterval(() => this._systemDND(), ms('5s'));
 
@@ -346,7 +346,7 @@ export default class AppStore extends TypedStore {
     if (isMac && !localStorage.getItem(CATALINA_NOTIFICATION_HACK_KEY)) {
       debug('Triggering macOS Catalina notification permission trigger');
       // eslint-disable-next-line no-new
-      new window.Notification('Welcome to Ferdium 6', {
+      new window.Notification('Welcome to Ferdium 7', {
         body: 'Have a wonderful day & happy messaging.',
       });
 

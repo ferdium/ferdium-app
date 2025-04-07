@@ -30,17 +30,14 @@ interface IProps extends WrappedComponentProps {
 @inject('stores', 'actions')
 @observer
 class ReleaseNotesLayout extends Component<IProps> {
+  private handleKeyDownBound = this.handleKeyDown.bind(this);
+
   componentDidMount() {
-    document.addEventListener('keydown', this.handleKeyDown.bind(this), false);
+    document.addEventListener('keydown', this.handleKeyDownBound, false);
   }
 
   componentWillUnmount() {
-    document.removeEventListener(
-      'keydown',
-      // eslint-disable-next-line unicorn/no-invalid-remove-event-listener
-      this.handleKeyDown.bind(this),
-      false,
-    );
+    document.removeEventListener('keydown', this.handleKeyDownBound, false);
   }
 
   handleKeyDown(e: KeyboardEvent) {

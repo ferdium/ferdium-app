@@ -214,6 +214,15 @@ const createWindow = () => {
         DEFAULT_APP_SETTINGS.accentColor,
       ) as string);
 
+  const linuxMainWindowConf = {
+    icon: asarPath(
+      join(
+        isDevMode ? `${__dirname}../src/` : __dirname,
+        'assets/images/icons/256x256.png',
+      ),
+    ),
+  };
+
   mainWindow = new BrowserWindow({
     x: posX,
     y: posY,
@@ -234,6 +243,7 @@ const createWindow = () => {
       contextIsolation: false,
       webviewTag: true,
     },
+    ...(isLinux ? linuxMainWindowConf : {}),
   });
 
   enableWebContents(mainWindow.webContents);

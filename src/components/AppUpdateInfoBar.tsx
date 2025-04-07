@@ -5,7 +5,7 @@ import type { MouseEventHandler } from 'react';
 import InfoBar from './ui/InfoBar';
 import Icon from './ui/icon';
 
-import { isWinPortable } from '../environment';
+import { isSnap, isWinPortable } from '../environment';
 import { onAuthGoToReleaseNotes } from '../helpers/update-helpers';
 
 const messages = defineMessages({
@@ -20,6 +20,10 @@ const messages = defineMessages({
   buttonInstallUpdate: {
     id: 'infobar.buttonInstallUpdate',
     defaultMessage: 'Restart & install update',
+  },
+  isSnapMessage: {
+    id: 'infobar.isSnapMessage',
+    defaultMessage: 'Please update via Snap Store.',
   },
 });
 
@@ -36,17 +40,21 @@ const AppUpdateInfoBar = (props: IProps) => {
   return (
     <InfoBar
       type="primary"
-      ctaLabel={intl.formatMessage(messages.buttonInstallUpdate)}
+      ctaLabel={
+        isSnap ? undefined : intl.formatMessage(messages.buttonInstallUpdate)
+      }
       onClick={event => {
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        !isWinPortable && onInstallUpdate(event);
+        !isWinPortable && !isSnap && onInstallUpdate(event);
       }}
       onHide={onHide}
     >
       <Icon icon={mdiInformation} />
       <p style={{ padding: '0 0.5rem 0 1rem' }}>
         {intl.formatMessage(messages.updateAvailable)}
+        {isSnap && ` ${intl.formatMessage(messages.isSnapMessage)}`}
       </p>
+
       <button
         className="info-bar__inline-button"
         type="button"
