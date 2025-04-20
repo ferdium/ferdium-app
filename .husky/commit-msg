@@ -4,5 +4,7 @@ if ! [ -d node_modules ]; then
   exit 0
 fi
 
-echo "" # empty line to help reading
+
+echo ""
+echo "> checking commit message with \`commitlint\`"
 commitlint --edit "$1"
