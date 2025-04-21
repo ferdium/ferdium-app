@@ -50,6 +50,9 @@ class AuthLayoutContainer extends Component<IProps> {
             app.updateStatus === app.updateStatusTypes.DOWNLOADED
           }
           updateVersion={app.updateVersion}
+          isUpdateAvailable={
+            app.updateStatus === app.updateStatusTypes.AVAILABLE
+          }
         >
           <Outlet />
         </AuthLayout>

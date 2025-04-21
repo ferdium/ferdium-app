@@ -31,6 +31,7 @@ export interface IProps extends WrappedComponentProps {
   installAppUpdate: MouseEventHandler<HTMLButtonElement>;
   appUpdateIsDownloaded: boolean;
   updateVersion: string;
+  isUpdateAvailable: boolean;
 }
 
 interface IState {
@@ -60,6 +61,7 @@ class AuthLayout extends Component<IProps, IState> {
       appUpdateIsDownloaded,
       updateVersion,
       intl,
+      isUpdateAvailable,
     } = this.props;
 
     let serverNameParse = serverName();
@@ -81,7 +83,7 @@ class AuthLayout extends Component<IProps, IState> {
               {intl.formatMessage(globalMessages.notConnectedToTheInternet)}
             </InfoBar>
           )}
-          {(appUpdateIsDownloaded || isSnap) &&
+          {(appUpdateIsDownloaded || (isSnap && isUpdateAvailable)) &&
             this.state.shouldShowAppUpdateInfoBar && (
               <AppUpdateInfoBar
                 onInstallUpdate={installAppUpdate}

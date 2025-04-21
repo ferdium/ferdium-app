@@ -13,6 +13,12 @@ export default (params: { mainWindow: BrowserWindow; settings: any }) => {
   // autoUpdater.forceDevUpdateConfig = true;
 
   if (enableUpdate) {
+    // Disable auto download for snap packages
+    // since the snap store will handle the update.
+    if (isSnap) {
+      autoUpdater.autoDownload = false;
+    }
+
     ipcMain.on('autoUpdate', (event, args) => {
       if (enableUpdate) {
         try {
