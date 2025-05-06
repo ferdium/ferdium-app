@@ -49,13 +49,13 @@ export default (params: {
           params.mainWindow.flashFrame(false),
         );
       } else if (isMac) {
-        app.dock.bounce('informational');
+        app.dock?.bounce('informational');
       }
     }
 
     // Update badge
     if (isMac && typeof args.indicator === 'string') {
-      app.dock.setBadge(args.indicator);
+      app.dock?.setBadge(args.indicator);
     }
 
     if ((isMac || isLinux) && typeof args.indicator === 'number') {

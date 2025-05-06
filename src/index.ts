@@ -806,7 +806,7 @@ app.on(
       return;
     }
 
-    callback(checkIfCertIsPresent(certificate.data));
+    callback(checkIfCertIsPresent(certificate));
   },
 );
 

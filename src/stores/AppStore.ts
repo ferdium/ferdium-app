@@ -240,7 +240,7 @@ export default class AppStore extends TypedStore {
           this.updateVersion = data.version;
           this.updateStatus = this.updateStatusTypes.AVAILABLE;
           if (isMac && this.stores.settings.app.automaticUpdates) {
-            app.dock.bounce();
+            app.dock?.bounce();
           }
         }
 
@@ -251,7 +251,7 @@ export default class AppStore extends TypedStore {
         if (data.downloaded) {
           this.updateStatus = this.updateStatusTypes.DOWNLOADED;
           if (isMac && this.stores.settings.app.automaticUpdates) {
-            app.dock.bounce();
+            app.dock?.bounce();
           }
         }
 

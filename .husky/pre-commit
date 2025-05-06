@@ -1,10 +1,8 @@
-#!/bin/sh
-
-FILE_NAME="$(dirname "$0")/_/husky.sh"
-
 # Conditionally invoke so as to avoid running pnpm commands if this is a clean checkout (ie before installing node modules)
-if [ -f $FILE_NAME ]; then
-  . $FILE_NAME
-  pnpm prepare-code
-  pnpm test
+if ! [ -d node_modules ]; then
+  echo "Skipping $0 hook as node modules are not installed" >&2
+  exit 0
 fi
+
+pnpm prepare-code
+pnpm test
