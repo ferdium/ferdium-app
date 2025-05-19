@@ -612,6 +612,7 @@ export const DEFAULT_APP_SETTINGS = {
   hideSettingsButton: false,
   hideDownloadButton: false,
   alwaysShowWorkspaces: false,
+  useCompactWorkspaceDrawer: false,
   hideAllServicesWorkspace: false,
   liftSingleInstanceLock: false,
   enableLongPressServiceHint: false,
