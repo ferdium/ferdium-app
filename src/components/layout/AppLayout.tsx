@@ -53,15 +53,27 @@ const transition = window?.matchMedia('(prefers-reduced-motion: no-preference)')
   ? 'transform 0.5s ease'
   : 'none';
 
-const styles = (theme: { workspaces: { drawer: { width: any } } }) => ({
+const styles = (theme: {
+  workspaces: {
+    drawer: {
+      width: any;
+      compactWidth: any;
+    };
+  };
+}) => ({
   appContent: {
-    // width: `calc(100% + ${theme.workspaces.drawer.width}px)`,
     width: '100%',
     transition,
     transform() {
+      const { settings } = workspaceStore.stores;
+
+      const drawerWidth = settings.all.app.useCompactWorkspaceDrawer
+        ? theme.workspaces.drawer.compactWidth
+        : theme.workspaces.drawer.width;
+
       return workspaceStore.isWorkspaceDrawerOpen
         ? 'translateX(0)'
-        : `translateX(-${theme.workspaces.drawer.width}px)`;
+        : `translateX(-${drawerWidth}px)`;
     },
   },
   titleBar: {
@@ -134,7 +146,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
 
     const { intl } = this.props;
 
-    const { locked, automaticUpdates } = settings.app;
+    const { locked, automaticUpdates, useCompactWorkspaceDrawer } = settings.app;
     if (locked) {
       return <LockedScreen />;
     }
@@ -143,7 +155,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
       <>
         {isMac && !isFullScreen && <div className="window-draggable" />}
         <ErrorBoundary>
-          <div className="app">
+          <div className={`app ${useCompactWorkspaceDrawer ? 'app--compact-workspace' : ''}`}>
             {isWindows && !isFullScreen && (
               <TitleBar
                 menu={window['ferdium'].menu.template}

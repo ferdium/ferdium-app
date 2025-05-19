@@ -208,6 +208,7 @@ export default (brandPrimary: string) => {
       },
       drawer: {
         width: 300,
+        compactWidth: 64,
         padding: 20,
         background: drawerBg,
         buttons: {

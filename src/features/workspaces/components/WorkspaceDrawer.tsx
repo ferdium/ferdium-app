@@ -48,12 +48,18 @@ const styles = theme => ({
     width: `${theme.workspaces.drawer.width}px`,
     display: 'flex',
     flexDirection: 'column',
+    '&.compact': {
+      width: `${theme.workspaces.drawer.compactWidth}px`,
+    },
   },
   headline: {
     fontSize: '24px',
     marginTop: '38px',
     marginBottom: '25px',
     marginLeft: theme.workspaces.drawer.padding,
+    '&.compact': {
+      display: 'none',
+    },
   },
   workspacesSettingsButton: {
     float: 'right',
@@ -69,6 +75,9 @@ const styles = theme => ({
   workspaces: {
     height: 'auto',
     overflowY: 'auto',
+    '&.compact': {
+      height: '100%',
+    },
   },
   addNewWorkspaceLabel: {
     height: 'auto',
@@ -98,6 +107,7 @@ interface IProps
     WrappedComponentProps,
     StoresProps {
   getServicesForWorkspace: (workspace: Workspace | null) => string[];
+  useCompactWorkspaceDrawer?: boolean;
 }
 
 @inject('stores')
@@ -123,11 +133,14 @@ class WorkspaceDrawer extends Component<IProps> {
 
     const { settings } = this.props.stores;
 
-    const { hideAllServicesWorkspace } = settings.all.app;
+    const { hideAllServicesWorkspace, useCompactWorkspaceDrawer } =
+      settings.all.app;
+
+    const compactClass = useCompactWorkspaceDrawer ? 'compact' : '';
 
     return (
-      <div className={`${classes.drawer} workspaces-drawer`}>
-        <H1 className={classes.headline}>
+      <div className={`${classes.drawer} workspaces-drawer ${compactClass}`}>
+        <H1 className={`${classes.headline} ${compactClass}`}>
           {intl.formatMessage(messages.headline)}
           {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
           <span
@@ -148,7 +161,7 @@ class WorkspaceDrawer extends Component<IProps> {
             />
           </span>
         </H1>
-        <div className={classes.workspaces}>
+        <div className={`${classes.workspaces} ${compactClass}`}>
           {!hideAllServicesWorkspace && (
             <WorkspaceDrawerItem
               name={intl.formatMessage(messages.allServices)}

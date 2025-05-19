@@ -104,7 +104,7 @@ body.win32:not(.isFullScreen) .app .app__content {
   background: #fff;
   .app__content {
     display: flex;
-    width: calc(100% + 300px);
+    width: calc(100% + var(--workspace-drawer-width));
   }
 
   .app__main-content {
@@ -278,4 +278,13 @@ body.win32:not(.isFullScreen) .app .app__content {
 a,
 button {
   cursor: pointer;
+}
+
+:root {
+  --workspace-drawer-width: 300px;
+}
+
+// Add a class for compact mode
+.app--compact-workspace {
+  --workspace-drawer-width: 64px;
 }

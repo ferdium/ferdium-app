@@ -331,7 +331,11 @@ const generateShowDragAreaStyle = accentColor => {
   `;
 };
 
-const generateVerticalStyle = (widthStr, alwaysShowWorkspaces) => {
+const generateVerticalStyle = (
+  widthStr,
+  alwaysShowWorkspaces,
+  useCompactWorkspaceDrawer,
+) => {
   if (!document.querySelector('#vertical-style')) {
     const link = document.createElement('link');
     link.id = 'vertical-style';
@@ -344,13 +348,14 @@ const generateVerticalStyle = (widthStr, alwaysShowWorkspaces) => {
   const width = Number(widthStr);
   const sidebarWidth = width - 4;
   const verticalStyleOffset = 29;
+  const drawerWidth = useCompactWorkspaceDrawer ? 64 : 300;
 
   return `
   .sidebar {
   ${
     alwaysShowWorkspaces
       ? `
-    width: calc(100% - 300px) !important;
+    width: calc(100% - ${drawerWidth}px) !important;
   `
       : ''
   }
@@ -365,7 +370,7 @@ const generateVerticalStyle = (widthStr, alwaysShowWorkspaces) => {
   }
 
   .todos__todos-panel--expanded {
-    width: calc(100% - 300px) !important;
+    width: calc(100% - ${drawerWidth + width}px) !important;
   }
   `;
 };
@@ -396,6 +401,7 @@ const generateStyle = (settings, app) => {
     useHorizontalStyle,
     alwaysShowWorkspaces,
     showServiceName,
+    useCompactWorkspaceDrawer,
   } = settings;
 
   const { isFullScreen } = app;
@@ -424,7 +430,11 @@ const generateStyle = (settings, app) => {
     style += generateShowDragAreaStyle(accentColor);
   }
   if (useHorizontalStyle) {
-    style += generateVerticalStyle(serviceRibbonWidth, alwaysShowWorkspaces);
+    style += generateVerticalStyle(
+      serviceRibbonWidth,
+      alwaysShowWorkspaces,
+      useCompactWorkspaceDrawer,
+    );
   } else if (document.querySelector('#vertical-style')) {
     const link = document.querySelector('#vertical-style');
     if (link) {
