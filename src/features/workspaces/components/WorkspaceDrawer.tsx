@@ -50,6 +50,7 @@ const styles = theme => ({
     flexDirection: 'column',
     '&.compact': {
       width: `${theme.workspaces.drawer.compactWidth}px`,
+      // borderRight: `1px solid ${theme.workspaces.drawer.listItem.border}`,
     },
   },
   headline: {
@@ -86,12 +87,19 @@ const styles = theme => ({
     textAlign: 'center',
     '& > svg': {
       fill: theme.workspaces.drawer.buttons.color,
+      '&.compact': {
+        width: '2.25rem !important',
+        height: '2.25rem !important',
+      },
     },
     '& > span': {
       fontSize: '13px',
       marginLeft: 10,
       position: 'relative',
       top: -3,
+      '&.compact': {
+        display: 'none',
+      },
     },
     '&:hover': {
       color: theme.workspaces.drawer.buttons.hoverColor,
@@ -172,6 +180,7 @@ class WorkspaceDrawer extends Component<IProps> {
               services={getServicesForWorkspace(null)}
               isActive={actualWorkspace == null}
               shortcutIndex={0}
+              compactClass={compactClass}
             />
           )}
           {workspaces.map((workspace, index) => (
@@ -191,6 +200,7 @@ class WorkspaceDrawer extends Component<IProps> {
               }
               services={getServicesForWorkspace(workspace)}
               shortcutIndex={index + 1}
+              compactClass={compactClass}
             />
           ))}
           {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
@@ -203,9 +213,11 @@ class WorkspaceDrawer extends Component<IProps> {
           >
             <Icon
               icon={mdiPlusBox}
-              className={classes.workspacesSettingsButtonIcon}
+              className={`${classes.workspacesSettingsButtonIcon} ${compactClass}`}
             />
-            <span>{intl.formatMessage(messages.addNewWorkspaceLabel)}</span>
+            <span className={compactClass}>
+              {intl.formatMessage(messages.addNewWorkspaceLabel)}
+            </span>
           </div>
         </div>
         <ReactTooltip

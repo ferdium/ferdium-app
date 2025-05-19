@@ -346,8 +346,6 @@ const generateVerticalStyle = (
     document.head.append(link);
   }
   const width = Number(widthStr);
-  const sidebarWidth = width - 4;
-  const verticalStyleOffset = 29;
   const drawerWidth = useCompactWorkspaceDrawer ? 64 : 300;
 
   return `
@@ -363,10 +361,6 @@ const generateVerticalStyle = (
 
   .sidebar .sidebar__button {
     width: ${width}px;
-  }
-
-  .workspaces-drawer {
-    margin-top: -${sidebarWidth - verticalStyleOffset - 1}px !important;
   }
 
   .todos__todos-panel--expanded {

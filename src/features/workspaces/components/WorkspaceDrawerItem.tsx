@@ -22,6 +22,10 @@ const messages = defineMessages({
     id: 'workspaceDrawer.item.contextMenuEdit',
     defaultMessage: 'edit',
   },
+  services: {
+    id: 'workspaceDrawer.item.services',
+    defaultMessage: 'services',
+  },
 });
 
 const itemTransition = window?.matchMedia(
@@ -42,6 +46,13 @@ const styles = theme => ({
     '&:hover': {
       backgroundColor: theme.workspaces.drawer.listItem.hoverBackground,
     },
+    '&.compact': {
+      padding: '0px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      textAlign: 'center',
+    },
   },
   isActiveItem: {
     backgroundColor: theme.workspaces.drawer.listItem.activeBackground,
@@ -52,6 +63,14 @@ const styles = theme => ({
   name: {
     marginTop: '4px',
     color: theme.workspaces.drawer.listItem.name.color,
+    '&.compact': {
+      marginTop: 0,
+      display: '-webkit-box',
+      WebkitLineClamp: 2,
+      WebkitBoxOrient: 'vertical',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+    },
   },
   activeName: {
     color: theme.workspaces.drawer.listItem.name.activeColor,
@@ -65,6 +84,9 @@ const styles = theme => ({
     textOverflow: 'ellipsis',
     overflow: 'hidden',
     lineHeight: '15px',
+    '&.compact': {
+      display: 'none',
+    },
   },
   activeServices: {
     color: theme.workspaces.drawer.listItem.services.active,
@@ -78,6 +100,7 @@ interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
   services: string[];
   onContextMenuEditClick?: (() => void) | null;
   shortcutIndex: number;
+  compactClass: string;
 }
 
 @observer
@@ -92,6 +115,7 @@ class WorkspaceDrawerItem extends Component<IProps> {
       services,
       shortcutIndex,
       intl,
+      compactClass,
     } = this.props;
 
     const contextMenuTemplate: MenuItemConstructorOptions[] = [
@@ -116,6 +140,7 @@ class WorkspaceDrawerItem extends Component<IProps> {
         className={classnames([
           classes.item,
           isActive ? classes.isActiveItem : null,
+          compactClass,
         ])}
         onClick={onClick}
         onContextMenu={() => {
@@ -134,6 +159,7 @@ class WorkspaceDrawerItem extends Component<IProps> {
           className={classnames([
             classes.name,
             isActive ? classes.activeName : null,
+            compactClass,
           ])}
         >
           {name}
@@ -142,6 +168,7 @@ class WorkspaceDrawerItem extends Component<IProps> {
           className={classnames([
             classes.services,
             isActive ? classes.activeServices : null,
+            compactClass,
           ])}
         >
           {services.length > 0
