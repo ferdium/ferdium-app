@@ -146,7 +146,8 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
 
     const { intl } = this.props;
 
-    const { locked, automaticUpdates, useCompactWorkspaceDrawer } = settings.app;
+    const { locked, automaticUpdates, useCompactWorkspaceDrawer } =
+      settings.app;
     if (locked) {
       return <LockedScreen />;
     }
@@ -155,7 +156,9 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
       <>
         {isMac && !isFullScreen && <div className="window-draggable" />}
         <ErrorBoundary>
-          <div className={`app ${useCompactWorkspaceDrawer ? 'app--compact-workspace' : ''}`}>
+          <div
+            className={`app ${useCompactWorkspaceDrawer ? 'app--compact-workspace' : ''}`}
+          >
             {isWindows && !isFullScreen && (
               <TitleBar
                 menu={window['ferdium'].menu.template}
