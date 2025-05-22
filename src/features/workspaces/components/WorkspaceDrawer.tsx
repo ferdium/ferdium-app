@@ -82,6 +82,21 @@ const styles = theme => ({
       height: '100%',
     },
   },
+  workspaceNameContainer: {
+    padding: 8,
+    height: 38,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderBottom: `1px solid ${theme.workspaces.drawer.listItem.border}`,
+  },
+  workspaceName: {
+    fontSize: '1rem',
+    overflow: 'hidden',
+    height: 'auto',
+    maxHeight: 22,
+    textAlign: 'center',
+  },
   workspacesList: {
     position: 'relative',
     overflowY: 'auto',
@@ -94,8 +109,10 @@ const styles = theme => ({
   addNewWorkspaceLabel: {
     height: 'auto',
     color: theme.workspaces.drawer.buttons.color,
-    margin: [40, 0],
+    padding: [40, 0],
     textAlign: 'center',
+    borderTop: `1px solid ${theme.workspaces.drawer.listItem.border}`,
+    cursor: 'pointer',
     '& > svg': {
       fill: theme.workspaces.drawer.buttons.color,
       '&.compact': {
@@ -181,6 +198,12 @@ class WorkspaceDrawer extends Component<IProps> {
           </span>
         </H1>
         <div className={`${classes.workspaces} ${compactClass}`}>
+          <div className={classes.workspaceNameContainer}>
+            <div className={classes.workspaceName}>
+              {actualWorkspace?.name ||
+                intl.formatMessage(messages.allServices)}
+            </div>
+          </div>
           <div className={classes.workspacesList}>
             {!hideAllServicesWorkspace && (
               <WorkspaceDrawerItem
