@@ -50,7 +50,6 @@ const styles = theme => ({
     flexDirection: 'column',
     '&.compact': {
       width: `${theme.workspaces.drawer.compactWidth}px`,
-      // borderRight: `1px solid ${theme.workspaces.drawer.listItem.border}`,
     },
   },
   headline: {
@@ -85,7 +84,6 @@ const styles = theme => ({
     height: 38,
     alignItems: 'center',
     justifyContent: 'center',
-    borderBottom: `1px solid ${theme.workspaces.drawer.listItem.border}`,
     '&.compact': {
       display: 'flex',
     },
@@ -112,9 +110,6 @@ const styles = theme => ({
     padding: [40, 0],
     textAlign: 'center',
     cursor: 'pointer',
-    '&.compact': {
-      borderTop: `1px solid ${theme.workspaces.drawer.listItem.border}`,
-    },
     '& > svg': {
       fill: theme.workspaces.drawer.buttons.color,
       '&.compact': {

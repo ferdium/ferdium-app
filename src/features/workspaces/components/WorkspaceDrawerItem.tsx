@@ -40,11 +40,8 @@ const styles = theme => ({
     padding: `15px ${theme.workspaces.drawer.padding}px`,
     borderBottom: `1px solid ${theme.workspaces.drawer.listItem.border}`,
     transition: itemTransition,
-    '&:first-child:not(.compact)': {
+    '&:first-child': {
       borderTop: `1px solid ${theme.workspaces.drawer.listItem.border}`,
-    },
-    '&.compact:last-child': {
-      borderBottom: 'none',
     },
     '&:hover': {
       backgroundColor: theme.workspaces.drawer.listItem.hoverBackground,
