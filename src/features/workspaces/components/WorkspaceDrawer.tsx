@@ -74,21 +74,21 @@ const styles = theme => ({
     },
   },
   workspaces: {
-    height: 'auto',
-    overflowY: 'hidden',
-    '&.compact': {
-      display: 'flex',
-      flexDirection: 'column',
-      height: '100%',
-    },
+    overflowY: 'auto',
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
   },
   workspaceNameContainer: {
+    display: 'none',
     padding: 8,
     height: 38,
-    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     borderBottom: `1px solid ${theme.workspaces.drawer.listItem.border}`,
+    '&.compact': {
+      display: 'flex',
+    },
   },
   workspaceName: {
     fontSize: '1rem',
@@ -111,8 +111,10 @@ const styles = theme => ({
     color: theme.workspaces.drawer.buttons.color,
     padding: [40, 0],
     textAlign: 'center',
-    borderTop: `1px solid ${theme.workspaces.drawer.listItem.border}`,
     cursor: 'pointer',
+    '&.compact': {
+      borderTop: `1px solid ${theme.workspaces.drawer.listItem.border}`,
+    },
     '& > svg': {
       fill: theme.workspaces.drawer.buttons.color,
       '&.compact': {
@@ -198,7 +200,7 @@ class WorkspaceDrawer extends Component<IProps> {
           </span>
         </H1>
         <div className={`${classes.workspaces} ${compactClass}`}>
-          <div className={classes.workspaceNameContainer}>
+          <div className={`${classes.workspaceNameContainer} ${compactClass}`}>
             <div className={classes.workspaceName}>
               {actualWorkspace?.name ||
                 intl.formatMessage(messages.allServices)}
@@ -241,7 +243,7 @@ class WorkspaceDrawer extends Component<IProps> {
           </div>
           {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
           <div
-            className={classes.addNewWorkspaceLabel}
+            className={`${classes.addNewWorkspaceLabel} ${compactClass}`}
             onClick={() => {
               workspaceActions.openWorkspaceSettings();
             }}

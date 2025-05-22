@@ -40,7 +40,10 @@ const styles = theme => ({
     padding: `15px ${theme.workspaces.drawer.padding}px`,
     borderBottom: `1px solid ${theme.workspaces.drawer.listItem.border}`,
     transition: itemTransition,
-    '&:last-child': {
+    '&:first-child:not(.compact)': {
+      borderTop: `1px solid ${theme.workspaces.drawer.listItem.border}`,
+    },
+    '&.compact:last-child': {
       borderBottom: 'none',
     },
     '&:hover': {
@@ -162,7 +165,7 @@ class WorkspaceDrawerItem extends Component<IProps> {
             compactClass,
           ])}
         >
-          {compactClass && shortcutIndex !== 0 ? [...name][0] : '*'}
+          {compactClass ? (shortcutIndex === 0 ? '*' : [...name][0]) : name}
         </span>
         <span
           className={classnames([
