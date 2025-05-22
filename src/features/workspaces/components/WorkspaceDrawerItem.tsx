@@ -162,7 +162,7 @@ class WorkspaceDrawerItem extends Component<IProps> {
             compactClass,
           ])}
         >
-          {name}
+          {compactClass && shortcutIndex !== 0 ? [...name][0] : name}
         </span>
         <span
           className={classnames([
