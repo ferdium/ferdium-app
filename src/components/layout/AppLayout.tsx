@@ -80,6 +80,7 @@ const toggleFullScreen = () => {
 
 interface IProps extends WrappedComponentProps, WithStylesProps<typeof styles> {
   settings: SettingsStore;
+  isUpdateAvailable: boolean;
   updateVersion: string;
   isFullScreen: boolean;
   sidebar: React.ReactElement;
@@ -128,6 +129,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
       retryRequiredRequests,
       areRequiredRequestsLoading,
       updateVersion,
+      isUpdateAvailable,
     } = this.props;
 
     const { intl } = this.props;
@@ -204,7 +206,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                     </InfoBar>
                   )}
                 {automaticUpdates &&
-                  (appUpdateIsDownloaded || isSnap) &&
+                  (appUpdateIsDownloaded || (isSnap && isUpdateAvailable)) &&
                   this.state.shouldShowAppUpdateInfoBar && (
                     <AppUpdateInfoBar
                       onInstallUpdate={installAppUpdate}

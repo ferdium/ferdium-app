@@ -10,6 +10,7 @@ import {
   defineMessages,
   injectIntl,
 } from 'react-intl';
+import tinycolor from 'tinycolor2';
 import {
   DEFAULT_ACCENT_COLOR,
   DEFAULT_APP_SETTINGS,
@@ -384,30 +385,59 @@ class EditSettingsForm extends Component<IProps, IState> {
     this.setState({ clearCacheButtonClicked: true });
   };
 
+  resetColorOnEmptyInput(name: string): void {
+    if (this.props.form.$(name).value.trim().length === 0) {
+      this.props.form.$(name).set(DEFAULT_ACCENT_COLOR);
+    }
+  }
+
+  resetColorsFromSettings(): void {
+    const { accentColor, progressbarAccentColor } =
+      window['ferdium'].stores.settings.app;
+    this.props.form.$('accentColor').set(accentColor);
+    this.props.form.$('progressbarAccentColor').set(progressbarAccentColor);
+  }
+
   submit(e): void {
     if (e) {
       e.preventDefault();
     }
 
-    // Do not submit if the accent color is not set
-    if (
-      this.props.form.$('accentColor').value === '#' ||
-      this.props.form.$('progressbarAccentColor').value === '#'
-    ) {
-      return;
+    // Reset color to default if input is empty
+    this.resetColorOnEmptyInput('accentColor');
+    this.resetColorOnEmptyInput('progressbarAccentColor');
+
+    const tinyAccentColor = tinycolor(this.props.form.$('accentColor').value);
+    const tinyProgressbarAccentColor = tinycolor(
+      this.props.form.$('progressbarAccentColor').value,
+    );
+
+    // Do not submit if one of the accent color is not set and the action is the change of color
+    if (!tinyAccentColor.isValid() || !tinyProgressbarAccentColor.isValid()) {
+      if (
+        e.target.name === 'accentColor' ||
+        e.target.name === 'progressbarAccentColor'
+      ) {
+        return;
+      }
+      // Reset colors in the form to the ones stored in the file settings
+      // when we are trying to modify a setting which is not about the colors
+      // but these are badly set so that other changes are not prevented
+      this.resetColorsFromSettings();
     }
 
     this.props.form.submit({
       onSuccess: (form: Form) => {
         const values = form.values();
-        const { accentColor, isTwoFactorAutoCatcherEnabled } = values;
+        const { isTwoFactorAutoCatcherEnabled } = values;
 
-        if (accentColor.trim().length === 0) {
-          values.accentColor = DEFAULT_ACCENT_COLOR;
+        // react-color does not work well with named colors, so we pass their hex value instead
+        if (tinyAccentColor.getFormat() === 'name') {
+          values.accentColor = tinyAccentColor.toHexString();
         }
-        const { progressbarAccentColor } = values;
-        if (progressbarAccentColor.trim().length === 0) {
-          values.progressbarAccentColor = DEFAULT_ACCENT_COLOR;
+        if (tinyProgressbarAccentColor.getFormat() === 'name') {
+          values.progressbarAccentColor =
+            tinyProgressbarAccentColor.toHexString();
         }
 
         // set twoFactorAutoCatcherMatcher to the default value, if its get enabled the input is prefilled
