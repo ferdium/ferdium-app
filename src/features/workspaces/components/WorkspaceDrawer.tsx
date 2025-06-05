@@ -112,6 +112,9 @@ const styles = theme => ({
     },
   },
   workspaces: {
+    overflowX() {
+      return isHorizontalWorkspaceDrawer() ? 'auto' : 'hidden';
+    },
     overflowY() {
       return isHorizontalWorkspaceDrawer() ? 'hidden' : 'auto';
     },
@@ -274,7 +277,9 @@ class WorkspaceDrawer extends Component<IProps> {
       <div
         className={`${classes.drawer} workspaces-drawer ${compactClass} ${horizontalClass}`}
       >
-        <H1 className={`${classes.headline} ${compactClass} ${horizontalClass}`}>
+        <H1
+          className={`${classes.headline} ${compactClass} ${horizontalClass}`}
+        >
           {intl.formatMessage(messages.headline)}
           {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
           <span

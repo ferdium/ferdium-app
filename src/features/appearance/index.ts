@@ -16,11 +16,8 @@ import { workspaceStore } from '../workspaces';
 
 const STYLE_ELEMENT_ID = 'custom-appearance-style';
 
-// The padding is 6px. We multiply because when we sum, we want to get
-// the value of the left and right side when using on width
-// and the value of the top and bottom side when using on height
-// So we get a total of 12px
-const PADDING = 6 * 2;
+// The horizontal style uses a 6px inset around the sidebar and webview.
+const PADDING = 6;
 
 const WORKSPACES_DRAWER_HEIGHT = 48;
 
@@ -268,16 +265,11 @@ const generateServiceRibbonWidthStyle = (
       flex-direction: ${showWorkspacesAtBottom ? 'column-reverse' : 'column'};
     }
     .workspaces-drawer {
-      border-top-width: ${showWorkspacesAtBottom ? '0px' : '1px'};
       transform: ${
         showWorkspacesAtBottom
           ? `translateY(${WORKSPACES_DRAWER_HEIGHT}px)`
           : `translateY(-${WORKSPACES_DRAWER_HEIGHT}px)`
       } !important;
-    }
-    .workspaces-drawer::after {
-      top: ${showWorkspacesAtBottom ? '0px' : '-10px'};
-      bottom: ${showWorkspacesAtBottom ? '-10px' : '0px'};
     }
     .darwin .sidebar {
       height: ${
@@ -306,7 +298,9 @@ const generateServiceRibbonWidthStyle = (
       overflow: hidden !important;
     }
     .services__webview-wrapper {
-      padding: ${webviewPadding ? '6px' : '0px'};
+      height: ${webviewPadding ? 'calc(100% - 6px)' : '100%'};
+      margin: ${webviewPadding ? '6px' : '0px'};
+      width: ${webviewPadding ? 'calc(100% - 12px)' : '100%'};
     }
     .services__webview-wrapper webview {
       border-radius: ${webviewPadding ? '4px' : '0px'};
@@ -335,22 +329,19 @@ const generateServiceRibbonWidthStyle = (
       flex-direction: ${showWorkspacesAtBottom ? 'column-reverse' : 'column'};
     }
     .workspaces-drawer {
-      border-top-width: ${showWorkspacesAtBottom ? '0px' : '1px'};
       transform: ${
         showWorkspacesAtBottom
           ? `translateY(${WORKSPACES_DRAWER_HEIGHT}px)`
           : `translateY(-${WORKSPACES_DRAWER_HEIGHT}px)`
       } !important;
     }
-    .workspaces-drawer::after {
-      top: ${showWorkspacesAtBottom ? '0px' : '-10px'};
-      bottom: ${showWorkspacesAtBottom ? '-10px' : '0px'};
-    }
     .todos__todos-panel--expanded {
       width: calc(100% - ${300 + width}px) !important;
     }
     .services__webview-wrapper {
-      padding: ${webviewPadding ? '6px' : '0px'};
+      height: ${webviewPadding ? 'calc(100% - 6px)' : '100%'};
+      margin: ${webviewPadding ? '6px' : '0px'};
+      width: ${webviewPadding ? 'calc(100% - 12px)' : '100%'};
     }
     .services__webview-wrapper webview {
       border-radius: ${webviewPadding ? '4px' : '0px'};
@@ -480,12 +471,6 @@ const generateOpenWorkspaceStyle = (
   .sidebar::after { box-shadow: none !important; }
   `;
 
-  const borderBottom = useHorizontalStyle ? '1px !important' : '0px !important';
-  const borderTop =
-    useHorizontalStyle && !showWorkspacesAtBottom
-      ? '1px !important'
-      : '0px !important';
-
   return `
   .app .app__content {
     width: 100% !important;
@@ -498,10 +483,8 @@ const generateOpenWorkspaceStyle = (
     position: relative !important;
     transform: translateY(0px) !important;
     box-shadow: none !important;
-    border-top-width: ${borderTop};
-    border-bottom-width: ${borderBottom};
-    }
-    ${useHorizontalStyle && !showWorkspacesAtBottom && sidebarAfter}
+  }
+    ${useHorizontalStyle && !showWorkspacesAtBottom ? sidebarAfter : ''}
   `;
 };
 

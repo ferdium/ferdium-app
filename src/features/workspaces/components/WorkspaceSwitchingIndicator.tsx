@@ -34,7 +34,7 @@ const styles = theme => ({
     alignItems: 'flex-start',
     position: 'absolute',
     transition: wrapperTransition,
-    width: '100%', // TODO: CHECK THIS LATER
+    width: '100%',
     marginTop: '20px',
   },
   component: {

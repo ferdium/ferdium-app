@@ -1,15 +1,11 @@
 @use './config.scss' as *;
 
 .theme__dark .services {
-  background: $dark-theme-gray-darkest;
+  background: $dark-theme-gray-darker;
 
   .services__webview-wrapper {
-    background: $dark-theme-gray-darkest;
-  }
-
-  .services__webview,
-  .services__info-layer {
-    // webview { background: $dark-theme-gray-darkest; }
+    background: $dark-theme-gray-darker;
+    border: 1px solid $dark-theme-gray;
   }
 
   .services__no-service,
@@ -42,7 +38,7 @@
 }
 
 .services {
-  background: #fff;
+  background: $theme-gray-lightest;
   flex: 1;
   height: 100%;
   order: 5;
@@ -50,7 +46,9 @@
   position: relative;
 
   .services__webview-wrapper {
-    background: $theme-gray-lighter;
+    background: $theme-gray-lightest;
+    border: 1px solid $theme-gray-lighter;
+    border-radius: 4px;
 
     webview {
       overflow: hidden;
@@ -62,7 +60,8 @@
     left: 0;
     position: absolute;
     top: 0;
-    width: 100%;
+    width: calc(100% - 12px);
+    height: calc(100% - 6px);
     z-index: 0;
 
     webview {

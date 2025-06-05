@@ -15,14 +15,6 @@ $tabitem-bias: 30px;
   padding-bottom: 0px;
   overflow: hidden !important;
 
-  &::after {
-    top: -10px;
-    right: -10px;
-    bottom: 0;
-    left: -10px;
-    clip-path: inset(10px 10px 0 10px);
-  }
-
   > div:first-of-type {
     overflow-x: scroll !important;
     width: 100%;
@@ -32,6 +24,7 @@ $tabitem-bias: 30px;
     flex-direction: row;
     overflow-y: hidden;
     overflow-x: scroll;
+    padding: 6px 6px 0 6px;
 
     .tab-item {
       &.is-active {
@@ -65,7 +58,7 @@ $tabitem-bias: 30px;
   }
 
   .sidebar__button:first-of-type {
-    height: 100%;
+    height: auto;
     box-shadow: -4px 0px 4px 0px $theme-gray-lightest;
   }
 
