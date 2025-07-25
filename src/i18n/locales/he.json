@@ -1,5 +1,5 @@
 {
-  "app.errorHandler.action": "רענון",
+  "app.errorHandler.action": "ריענון",
   "app.errorHandler.headline": "משהו השתבש.",
   "changeserver.customServerLabel": "שרת אחר",
   "changeserver.headline": "החלפת שרת",
@@ -47,6 +47,7 @@
   "infobar.buttonInstallUpdate": "הפעלה מחדש והתקנת עדכונים",
   "infobar.buttonReloadServices": "רענון שירותים",
   "infobar.hide": "הסתרה",
+  "infobar.isSnapMessage": "נא לעדכן דרך חנות Snap.",
   "infobar.requiredRequestsFailed": "לא ניתן לטעון את השירותים ואת פרטי המשתמש",
   "infobar.servicesUpdated": "השירותים שלך עודכנו.",
   "infobar.updateAvailable": "יש עדכון חדש ל־Ferdium.",
@@ -327,6 +328,7 @@
   "settings.app.todoServerInfo": "השרת הזה ישמש לספק את היכולת „משימות Ferdium”.",
   "settings.app.translationHelp": "נשמח לעזרה בתרגום Ferdium לשפה שלך.",
   "settings.app.universalDarkModeInfo": "מצב לילה כולל מנסה לייצר סגנונות מצב לילה באופן דינמי לשירותים שאינם נתמכים בצורה אחרת.",
+  "settings.app.updateAvailableSnap": "יש עדכון. נא לעדכן דרך חנות Snap.",
   "settings.app.updateStatusAvailable": "יש עדכון, מתבצעת הורדה…",
   "settings.app.updateStatusSearching": "מתבצע חיפוש אחר עדכונים…",
   "settings.app.updateStatusUpToDate": "זו הגרסה העדכנית ביותר של Ferdium",
