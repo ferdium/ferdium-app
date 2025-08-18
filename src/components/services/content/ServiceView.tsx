@@ -2,6 +2,11 @@ import classnames from 'classnames';
 import { type IReactionDisposer, autorun } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import { Component } from 'react';
+import {
+  type WrappedComponentProps,
+  defineMessages,
+  injectIntl,
+} from 'react-intl';
 import TopBarProgress from 'react-topbar-progress-indicator';
 import { CUSTOM_WEBSITE_RECIPE_ID } from '../../../config';
 import WebControlsScreen from '../../../features/webControls/containers/WebControlsScreen';
@@ -15,7 +20,18 @@ import ServiceWebview from './ServiceWebview';
 import WebviewCrashHandler from './WebviewCrashHandler';
 import WebviewErrorHandler from './WebviewErrorHandler';
 
-interface IProps {
+const messages = defineMessages({
+  hibernatingMessage: {
+    id: 'service.hibernating.message',
+    defaultMessage: 'This service is currently hibernating.',
+  },
+  hibernatingAction: {
+    id: 'service.hibernating.action',
+    defaultMessage: 'Try switching services or reloading Ferdium.',
+  },
+});
+
+interface IProps extends WrappedComponentProps {
   service: ServiceModel;
   setWebviewRef: () => void;
   detachService: () => void;
@@ -79,6 +95,7 @@ class ServiceView extends Component<IProps, IState> {
       enable,
       stores,
       isSpellcheckerEnabled,
+      intl,
     } = this.props;
 
     const { navigationBarBehaviour, navigationBarManualActive } =
@@ -158,9 +175,9 @@ class ServiceView extends Component<IProps, IState> {
                 </span>
                 <br />
                 <br />
-                This service is currently hibernating.
+                {intl.formatMessage(messages.hibernatingMessage)}
                 <br />
-                Try switching services or reloading Ferdium.
+                {intl.formatMessage(messages.hibernatingAction)}
               </div>
             ) : (
               <>
@@ -194,4 +211,4 @@ class ServiceView extends Component<IProps, IState> {
   }
 }
 
-export default ServiceView;
+export default injectIntl(ServiceView);

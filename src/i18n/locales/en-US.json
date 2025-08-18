@@ -162,6 +162,8 @@
   "service.crashHandler.text": "{name} has caused an error.",
   "service.disabledHandler.action": "Enable {name}",
   "service.disabledHandler.headline": "{name} is disabled",
+  "service.hibernating.action": "Try switching services or reloading Ferdium.",
+  "service.hibernating.message": "This service is currently hibernating.",
   "service.errorHandler.action": "Reload {name}",
   "service.errorHandler.editAction": "Edit {name}",
   "service.errorHandler.headline": "Oh no!",
