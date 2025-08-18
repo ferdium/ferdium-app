@@ -61,6 +61,19 @@ const CATALINA_NOTIFICATION_HACK_KEY =
 
 const locales = generatedTranslations();
 
+// Helper function to get translated text
+const getTranslatedText = (
+  locale: string,
+  key: string,
+  fallback: string,
+): string => {
+  try {
+    return locales[locale]?.[key] || fallback;
+  } catch {
+    return fallback;
+  }
+};
+
 interface Download {
   id: string;
   serviceId: string;
@@ -346,9 +359,20 @@ export default class AppStore extends TypedStore {
     if (isMac && !localStorage.getItem(CATALINA_NOTIFICATION_HACK_KEY)) {
       debug('Triggering macOS Catalina notification permission trigger');
       // eslint-disable-next-line no-new
-      new window.Notification('Welcome to Ferdium 7', {
-        body: 'Have a wonderful day & happy messaging.',
-      });
+      new window.Notification(
+        getTranslatedText(
+          this.locale,
+          'app.welcomeNotification.title',
+          'Welcome to Ferdium 7',
+        ),
+        {
+          body: getTranslatedText(
+            this.locale,
+            'app.welcomeNotification.body',
+            'Have a wonderful day & happy messaging.',
+          ),
+        },
+      );
 
       localStorage.setItem(CATALINA_NOTIFICATION_HACK_KEY, 'true');
     }
@@ -718,7 +742,9 @@ export default class AppStore extends TypedStore {
     });
   }
 
-  @action _addSandboxService({ name = 'NEW SANDBOX' }) {
+  @action _addSandboxService({
+    name = getTranslatedText(this.locale, 'app.newSandbox', 'NEW SANDBOX'),
+  }) {
     // Random ID
     const id = uuidV4();
 

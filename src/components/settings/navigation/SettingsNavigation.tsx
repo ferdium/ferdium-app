@@ -47,6 +47,10 @@ const messages = defineMessages({
     id: 'settings.navigation.logout',
     defaultMessage: 'Logout',
   },
+  exitSession: {
+    id: 'settings.navigation.exitSession',
+    defaultMessage: 'Exit session',
+  },
 });
 
 interface IProps extends Partial<StoresProps>, WrappedComponentProps {
@@ -192,7 +196,7 @@ class SettingsNavigation extends Component<IProps> {
           onClick={this.handleLogout.bind(this)}
         >
           {isUsingWithoutAccount
-            ? 'Exit session'
+            ? intl.formatMessage(messages.exitSession)
             : intl.formatMessage(messages.logout)}
         </button>
       </div>
