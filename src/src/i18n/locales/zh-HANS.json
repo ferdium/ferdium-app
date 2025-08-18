@@ -95,7 +95,7 @@
   "contextMenu.copyMail": "复制邮箱地址",
   "contextMenu.inspectElement": "检查元素",
   "connectionLostBanner.message": "糟糕！Ferdium 失去了与 {name} 的连接。",
-  "downloadManager.empty": "您的下载列表为空。",
+  "downloadManager.empty": "您的下载列表为空",
   "downloadManager.headline": "下载管理器",
   "feature.basicAuth.signIn": "登录",
   "feature.publishDebugInfo.error": "发布调试信息时出错。请稍后再试或查看控制台获取更多信息。",

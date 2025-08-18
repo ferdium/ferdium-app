@@ -9,7 +9,7 @@
   "connectionLostBanner.cta": "重新加载服务",
   "connectionLostBanner.informationLink": "发生了什么？",
   "connectionLostBanner.message": "糟糕！Ferdium 失去了与 {name} 的连接。",
-  "downloadManager.empty": "您的下载列表为空。",
+  "downloadManager.empty": "您的下载列表为空",
   "downloadManager.headline": "下载管理器",
   "feature.basicAuth.signIn": "登录",
   "feature.publishDebugInfo.error": "发布调试信息时出错。请稍后再试或查看控制台获取更多信息。",
