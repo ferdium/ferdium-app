@@ -1,0 +1,867 @@
+/* eslint-disable import/first */
+
+import { EventEmitter } from 'node:events';
+import { join } from 'node:path';
+import {
+  BrowserWindow,
+  app,
+  desktopCapturer,
+  dialog,
+  globalShortcut,
+  ipcMain,
+  session,
+} from 'electron';
+
+import { initialize } from 'electron-react-titlebar/main';
+import windowStateKeeper from 'electron-window-state';
+import { emptyDirSync, ensureFileSync } from 'fs-extra';
+import minimist from 'minimist';
+import ms from 'ms';
+import { enableWebContents, initializeRemote } from './electron-util';
+import enforceMacOSAppLocation from './enforce-macos-app-location';
+
+initializeRemote();
+
+import {
+  DEFAULT_APP_SETTINGS,
+  DEFAULT_SHORTCUTS,
+  DEFAULT_WINDOW_OPTIONS,
+} from './config';
+
+import { altKey, isLinux, isMac, isWindows } from './environment';
+import {
+  isDevMode,
+  protocolClient,
+  userDataPath,
+  userDataRecipesPath,
+} from './environment-remote';
+import { ifUndefined } from './jsUtils';
+
+import Settings from './electron/Settings';
+import handleDeepLink from './electron/deepLinking';
+import './electron/exception';
+// eslint-disable-next-line import/no-cycle
+import ipcApi from './electron/ipc-api';
+import isPositionValid from './electron/windowUtils';
+import { mainIpcHandler as basicAuthHandler } from './features/basicAuth';
+import DBus from './lib/DBus';
+import TrayIcon from './lib/Tray';
+// @ts-expect-error Cannot find module './package.json' or its corresponding type declarations.
+import { appId } from './package.json';
+
+import { asarPath } from './helpers/asar-helpers';
+import { checkIfCertIsPresent } from './helpers/certs-helpers';
+import { translateTo } from './helpers/translation-helpers';
+import { openExternalUrl } from './helpers/url-helpers';
+import userAgent from './helpers/userAgent-helpers';
+import { darkThemeGrayDarkest } from './themes/legacy';
+import generatedTranslations from './i18n/translations';
+
+const debug = require('./preload-safe-debug')('Ferdium:App');
+
+// Globally set useragent to fix user agent override in service workers
+debug('Set userAgent to ', userAgent());
+app.userAgentFallback = userAgent();
+
+// Keep a global reference of the window object, if you don't, the window will
+// be closed automatically when the JavaScript object is garbage collected.
+let mainWindow: BrowserWindow | undefined;
+let willQuitApp = false;
+let overrideAppQuitForUpdate = false;
+
+// eslint-disable-next-line unicorn/prefer-event-target
+export const appEvents = new EventEmitter();
+
+// Register methods to be called once the window has been loaded.
+let onDidLoadFns: any[] | null = [];
+
+const onDidLoad = (fn: {
+  (window: BrowserWindow): void;
+  (window: BrowserWindow): void;
+  (window: BrowserWindow): void;
+  (arg0: BrowserWindow): void;
+}): void => {
+  if (onDidLoadFns) {
+    onDidLoadFns.push(fn);
+  } else if (mainWindow) {
+    fn(mainWindow);
+  }
+};
+
+// Ensure that the recipe directory exists
+emptyDirSync(userDataRecipesPath('temp'));
+ensureFileSync(userDataPath('window-state.json'));
+
+// Set App ID for Windows
+if (isWindows) {
+  app.setAppUserModelId(appId);
+}
+
+// Initialize Settings
+const settings = new Settings('app', DEFAULT_APP_SETTINGS);
+const proxySettings = new Settings('proxy');
+const shortcutSettings = new Settings('shortcuts', DEFAULT_SHORTCUTS);
+
+const retrieveSettingValue = (key: string, defaultValue: boolean | string) =>
+  ifUndefined<boolean | string>(settings.get(key), defaultValue);
+
+// TODO: Commenting out sentry to fix https://github.com/ferdium/ferdium-app/issues/814
+// if (retrieveSettingValue('sentry', DEFAULT_APP_SETTINGS.sentry)) {
+//   // eslint-disable-next-line global-require
+//   require('./sentry');
+// }
+
+const liftSingleInstanceLock = retrieveSettingValue(
+  'liftSingleInstanceLock',
+  DEFAULT_APP_SETTINGS.liftSingleInstanceLock,
+);
+
+// Force single window
+const gotTheLock = liftSingleInstanceLock
+  ? true
+  : app.requestSingleInstanceLock();
+if (gotTheLock) {
+  app.on('second-instance', (_event, argv) => {
+    // Someone tried to run a second instance, we should focus our window.
+    if (mainWindow) {
+      if (!mainWindow.isVisible()) {
+        mainWindow.show();
+      }
+      if (mainWindow.isMinimized()) {
+        mainWindow.restore();
+      }
+      mainWindow.focus();
+
+      if (isWindows) {
+        onDidLoad((window: BrowserWindow) => {
+          // Keep only command line / deep linked arguments
+          const url = argv.slice(1);
+          handleDeepLink(window, url.toString());
+
+          if (argv.includes('--reset-window')) {
+            // Needs to be delayed to not interfere with mainWindow.restore();
+            setTimeout(() => {
+              debug('Resetting windows via Task');
+              window.setPosition(
+                DEFAULT_WINDOW_OPTIONS.x + 100,
+                DEFAULT_WINDOW_OPTIONS.y + 100,
+              );
+              window.setSize(
+                DEFAULT_WINDOW_OPTIONS.width,
+                DEFAULT_WINDOW_OPTIONS.height,
+              );
+            }, 1);
+          } else if (argv.includes('--quit')) {
+            // Needs to be delayed to not interfere with mainWindow.restore();
+            setTimeout(() => {
+              debug('Quitting Ferdium via Task');
+              app.quit();
+            }, 1);
+          }
+        });
+      }
+    }
+  });
+} else {
+  app.quit();
+}
+
+// Disable GPU acceleration
+if (
+  !retrieveSettingValue(
+    'enableGPUAcceleration',
+    DEFAULT_APP_SETTINGS.enableGPUAcceleration,
+  )
+) {
+  debug('Disable GPU Acceleration');
+  app.disableHardwareAcceleration();
+}
+
+const webRTCIPHandlingPolicy = retrieveSettingValue(
+  'webRTCIPHandlingPolicy',
+  DEFAULT_APP_SETTINGS.webRTCIPHandlingPolicy,
+) as
+  | 'disable_non_proxied_udp'
+  | 'default'
+  | 'default_public_interface_only'
+  | 'default_public_and_private_interfaces';
+
+const createWindow = () => {
+  // Remember window size
+  const mainWindowState = windowStateKeeper({
+    defaultWidth: DEFAULT_WINDOW_OPTIONS.width,
+    defaultHeight: DEFAULT_WINDOW_OPTIONS.height,
+    maximize: true, // Automatically maximizes the window, if it was last closed maximized
+    fullScreen: true, // Automatically restores the window to full screen, if it was last closed full screen
+  });
+
+  let posX = mainWindowState.x || DEFAULT_WINDOW_OPTIONS.x;
+  let posY = mainWindowState.y || DEFAULT_WINDOW_OPTIONS.y;
+
+  if (!isPositionValid({ x: posX, y: posY })) {
+    debug('Window is out of screen bounds, resetting window');
+    posX = DEFAULT_WINDOW_OPTIONS.x;
+    posY = DEFAULT_WINDOW_OPTIONS.y;
+  }
+
+  // Create the browser window.
+  const backgroundColor = retrieveSettingValue(
+    'darkMode',
+    DEFAULT_APP_SETTINGS.darkMode,
+  )
+    ? darkThemeGrayDarkest
+    : (retrieveSettingValue(
+        'accentColor',
+        DEFAULT_APP_SETTINGS.accentColor,
+      ) as string);
+
+  const linuxMainWindowConf = {
+    icon: asarPath(
+      join(
+        isDevMode ? `${__dirname}../src/` : __dirname,
+        'assets/images/icons/256x256.png',
+      ),
+    ),
+  };
+
+  mainWindow = new BrowserWindow({
+    x: posX,
+    y: posY,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
+    minWidth: 600,
+    minHeight: 500,
+    show: false,
+    titleBarStyle: isMac ? 'hidden' : 'default',
+    frame: isLinux,
+    backgroundColor,
+    webPreferences: {
+      spellcheck: retrieveSettingValue(
+        'enableSpellchecking',
+        DEFAULT_APP_SETTINGS.enableSpellchecking,
+      ) as boolean,
+      nodeIntegration: true,
+      contextIsolation: false,
+      webviewTag: true,
+    },
+    ...(isLinux ? linuxMainWindowConf : {}),
+  });
+
+  enableWebContents(mainWindow.webContents);
+  mainWindow.webContents.setWebRTCIPHandlingPolicy(webRTCIPHandlingPolicy);
+
+  app.on('browser-window-created', (_, window) => {
+    enableWebContents(window.webContents);
+  });
+
+  app.on('web-contents-created', (_e, contents) => {
+    if (contents.getType() === 'webview') {
+      enableWebContents(contents);
+      contents.setWindowOpenHandler(({ url }) => {
+        openExternalUrl(url);
+        return { action: 'deny' };
+      });
+
+      // Handle will download event from main process (prevent download dialog)
+      contents.session.on('will-download', (_e, item) => {
+        const downloadFolderPath = retrieveSettingValue(
+          'downloadFolderPath',
+          DEFAULT_APP_SETTINGS.downloadFolderPath,
+        ) as string;
+
+        if (downloadFolderPath !== '') {
+          item.setSavePath(join(downloadFolderPath, item.getFilename()));
+        }
+      });
+    }
+  });
+
+  mainWindow.webContents.on('did-finish-load', () => {
+    const fns = onDidLoadFns;
+    onDidLoadFns = null;
+
+    if (!fns) return;
+
+    for (const fn of fns) {
+      fn(mainWindow);
+    }
+  });
+
+  // Initialize System Tray
+  const trayIcon: TrayIcon = new TrayIcon();
+
+  // Initialize DBus interface
+  const dbus = new DBus(trayIcon);
+
+  // Initialize ipcApi
+  ipcApi({
+    mainWindow,
+    settings: {
+      app: settings,
+      proxy: proxySettings,
+      shortcuts: shortcutSettings,
+    },
+    trayIcon,
+  });
+
+  // Connect to the DBus after ipcApi took care of the System Tray
+  dbus.start();
+
+  // Manage Window State
+  mainWindowState.manage(mainWindow);
+
+  // and load the index.html of the app.
+  mainWindow.loadURL(`file://${__dirname}/index.html`);
+
+  // Open the DevTools.
+  if (isDevMode || process.argv.includes('--devtools')) {
+    mainWindow.webContents.openDevTools();
+  }
+
+  // Windows deep linking handling on app launch
+  if (isWindows) {
+    onDidLoad((window: BrowserWindow) => {
+      const url = process.argv.slice(1);
+      handleDeepLink(window, url.toString());
+    });
+  }
+
+  // Emitted when the window is closed.
+  mainWindow.on('close', e => {
+    debug('Window: close window');
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    if (
+      !willQuitApp &&
+      retrieveSettingValue(
+        'runInBackground',
+        DEFAULT_APP_SETTINGS.runInBackground,
+      )
+    ) {
+      e.preventDefault();
+      if (isWindows) {
+        debug('Window: minimize');
+        mainWindow?.minimize();
+
+        if (
+          retrieveSettingValue(
+            'closeToSystemTray',
+            DEFAULT_APP_SETTINGS.closeToSystemTray,
+          )
+        ) {
+          debug('Skip taskbar: true');
+          mainWindow?.setSkipTaskbar(true);
+        }
+      } else if (isMac && mainWindow?.isFullScreen()) {
+        debug('Window: leaveFullScreen and hide');
+        mainWindow.once('show', () => mainWindow?.setFullScreen(true));
+        mainWindow.once('leave-full-screen', () => mainWindow?.hide());
+        mainWindow.setFullScreen(false);
+      } else {
+        debug('Window: hide');
+        mainWindow?.hide();
+      }
+    } else if (!overrideAppQuitForUpdate) {
+      debug('Quitting the app');
+      dbus.stop();
+      app.quit();
+    }
+  });
+
+  // For Windows we need to store a flag to properly restore the window
+  // if the window was maximized before minimizing it so system tray
+  mainWindow.on('minimize', () => {
+    // @ts-expect-error Property 'wasMaximized' does not exist on type 'App'.
+    app.wasMaximized = app.isMaximized;
+
+    if (
+      retrieveSettingValue(
+        'minimizeToSystemTray',
+        DEFAULT_APP_SETTINGS.minimizeToSystemTray,
+      )
+    ) {
+      debug('Skip taskbar: true');
+      mainWindow?.setSkipTaskbar(true);
+      trayIcon.show();
+    }
+  });
+
+  mainWindow.on('maximize', () => {
+    debug('Window: maximize');
+    // @ts-expect-error Property 'isMaximized' does not exist on type 'App'.
+    app.isMaximized = true;
+    mainWindow?.setSkipTaskbar(false);
+  });
+
+  mainWindow.on('unmaximize', () => {
+    debug('Window: unmaximize');
+    // @ts-expect-error Property 'isMaximized' does not exist on type 'App'.
+    app.isMaximized = false;
+  });
+
+  mainWindow.on('restore', () => {
+    debug('Window: restore');
+    mainWindow?.setSkipTaskbar(false);
+
+    // @ts-expect-error Property 'wasMaximized' does not exist on type 'App'.
+    if (app.wasMaximized) {
+      debug('Window: was maximized before, maximize window');
+      mainWindow?.maximize();
+    }
+
+    if (
+      !retrieveSettingValue(
+        'enableSystemTray',
+        DEFAULT_APP_SETTINGS.enableSystemTray,
+      )
+    ) {
+      debug('Tray: hiding tray icon');
+      trayIcon.hide();
+    }
+  });
+
+  if (isMac) {
+    // Note: Do not remove the extension. See https://github.com/ferdium/ferdium-app/issues/1755 for explanation
+    import('./electron/macOSPermissions.js').then(macOSPermissions => {
+      const { askFormacOSPermissions } = macOSPermissions;
+
+      setTimeout(() => askFormacOSPermissions(mainWindow!), ms('30s'));
+    });
+  }
+
+  mainWindow.on('show', () => {
+    debug('Skip taskbar: true');
+    mainWindow?.setSkipTaskbar(false);
+  });
+
+  // @ts-expect-error Property 'isMaximized' does not exist on type 'App'.
+  app.isMaximized = mainWindow.isMaximized();
+
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+    openExternalUrl(url);
+    return { action: 'deny' };
+  });
+
+  if (
+    retrieveSettingValue('startMinimized', DEFAULT_APP_SETTINGS.startMinimized)
+  ) {
+    mainWindow.hide();
+  } else {
+    mainWindow.show();
+  }
+
+  app.whenReady().then(() => {
+    if (
+      retrieveSettingValue(
+        'enableGlobalHideShortcut',
+        DEFAULT_APP_SETTINGS.enableGlobalHideShortcut,
+      )
+    ) {
+      // Toggle the window on 'Alt+X'
+      globalShortcut.register(`${altKey()}+X`, () => {
+        trayIcon._toggleWindow();
+      });
+    }
+  });
+};
+
+// Allow passing command line parameters/switches to electron
+// https://electronjs.org/docs/api/chrome-command-line-switches
+// used for Kerberos support
+// Usage e.g. MACOS
+// $ Ferdium.app/Contents/MacOS/Ferdium --auth-server-whitelist *.mydomain.com --auth-negotiate-delegate-whitelist *.mydomain.com
+const argv = minimist(process.argv.slice(1));
+
+if (argv['auth-server-whitelist']) {
+  app.commandLine.appendSwitch(
+    'auth-server-whitelist',
+    argv['auth-server-whitelist'],
+  );
+}
+if (argv['auth-negotiate-delegate-whitelist']) {
+  app.commandLine.appendSwitch(
+    'auth-negotiate-delegate-whitelist',
+    argv['auth-negotiate-delegate-whitelist'],
+  );
+}
+
+// Apply workaround for https://github.com/electron/electron/pull/26432
+app.commandLine.appendSwitch('disable-features', 'CrossOriginOpenerPolicy');
+
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
+// Some APIs can only be used after this event occurs.
+app.on('ready', () => {
+  // force app to live in /Applications
+  enforceMacOSAppLocation();
+
+  // Register App URL
+  if (!app.isDefaultProtocolClient(protocolClient, process.execPath)) {
+    app.setAsDefaultProtocolClient(protocolClient, process.execPath);
+  }
+
+  if (isWindows) {
+    const extraArgs = isDevMode ? `${__dirname} ` : '';
+    const iconPath = asarPath(
+      join(
+        isDevMode ? `${__dirname}../src/` : __dirname,
+        'assets/images/taskbar/win32/display.ico',
+      ),
+    );
+    app.setUserTasks([
+      {
+        program: process.execPath,
+        arguments: `${extraArgs}--reset-window`,
+        iconPath,
+        iconIndex: 0,
+        title: 'Move Ferdium to Current Display',
+        description: 'Restore the position and size of Ferdium',
+      },
+      {
+        program: process.execPath,
+        arguments: `${extraArgs}--quit`,
+        iconPath,
+        iconIndex: 0,
+        title: 'Quit Ferdium',
+        description: '',
+      },
+    ]);
+  }
+
+  initialize();
+
+  createWindow();
+});
+
+// This is the worst possible implementation as the webview.webContents based callback doesn't work 🖕
+// TODO: rewrite to handle multiple login calls
+const noop = () => null;
+let authCallback = noop;
+
+app.on('login', (event, _webContents, _request, authInfo, callback) => {
+  // @ts-expect-error Type '(username?: string | undefined, password?: string | undefined) => void' is not assignable to type '() => null'.
+  authCallback = callback;
+  debug('browser login event', authInfo);
+  event.preventDefault();
+
+  if (!authInfo.isProxy && authInfo.scheme === 'basic') {
+    debug('basic auth handler', authInfo);
+    basicAuthHandler(mainWindow!, authInfo);
+  }
+});
+
+ipcMain.handle(
+  'translate',
+  async (_e, { text, translateToLanguage, translatorEngine }) => {
+    const response = await translateTo(
+      text,
+      translateToLanguage,
+      translatorEngine,
+    );
+    return response;
+  },
+);
+
+// Handle translation requests from webview
+ipcMain.handle(
+  'get-translation',
+  async (_e, key: string, params?: { [key: string]: string }) => {
+    try {
+      const locale = settings.get('locale') || 'en-US';
+      const translations = generatedTranslations();
+      let text = translations[locale]?.[key] || key;
+
+      if (params) {
+        Object.keys(params).forEach(param => {
+          text = text.replace(`{${param}}`, params[param]);
+        });
+      }
+
+      return text;
+    } catch {
+      return key;
+    }
+  },
+);
+
+// Send translation cache to webview when requested
+ipcMain.on('request-translation-cache', event => {
+  try {
+    const locale = settings.get('locale') || 'en-US';
+    const translations = generatedTranslations();
+    const contextMenuTranslations = {};
+
+    // Extract only context menu related translations
+    Object.keys(translations[locale] || {}).forEach(key => {
+      if (key.startsWith('contextMenu.')) {
+        contextMenuTranslations[key] = translations[locale][key];
+      }
+    });
+
+    event.reply('translation-cache', contextMenuTranslations);
+  } catch (error) {
+    debug('Error sending translation cache:', error);
+    event.reply('translation-cache', {});
+  }
+});
+
+// TODO: evaluate if we need to store the authCallback for every service
+ipcMain.on('feature-basic-auth-credentials', (_e, { user, password }) => {
+  debug('Received basic auth credentials', user, '********');
+
+  // @ts-expect-error Expected 0 arguments, but got 2.
+  authCallback(user, password);
+  authCallback = noop;
+});
+
+ipcMain.on('open-browser-window', (_e, { url, serviceId }) => {
+  const serviceSession = session.fromPartition(`persist:service-${serviceId}`);
+  const child = new BrowserWindow({
+    parent: mainWindow,
+    fullscreenable: false,
+    webPreferences: {
+      session: serviceSession,
+    },
+  });
+  enableWebContents(child.webContents);
+  child.webContents.setWebRTCIPHandlingPolicy(webRTCIPHandlingPolicy);
+  child.show();
+  child.loadURL(url);
+  debug('Received open-browser-window', url);
+});
+
+ipcMain.on(
+  'modifyRequestHeaders',
+  (_e, { modifiedRequestHeaders, serviceId }) => {
+    debug(
+      `Received modifyRequestHeaders ${modifiedRequestHeaders} for serviceId ${serviceId}`,
+    );
+    for (const headerFilterSet of modifiedRequestHeaders) {
+      const { headers, requestFilters } = headerFilterSet;
+      session
+        .fromPartition(`persist:service-${serviceId}`)
+        .webRequest.onBeforeSendHeaders(requestFilters, (details, callback) => {
+          for (const key in headers) {
+            if (Object.prototype.hasOwnProperty.call(headers, key)) {
+              const value = headers[key];
+              // eslint-disable-next-line no-param-reassign
+              details.requestHeaders[key] = value;
+            }
+          }
+          callback({ requestHeaders: details.requestHeaders });
+        });
+    }
+  },
+);
+
+ipcMain.on('knownCertificateHosts', (_e, { knownHosts, serviceId }) => {
+  debug(
+    `Received knownCertificateHosts ${knownHosts} for serviceId ${serviceId}`,
+  );
+  session
+    .fromPartition(`persist:service-${serviceId}`)
+    .setCertificateVerifyProc((request, callback) => {
+      // To know more about these callbacks: https://www.electronjs.org/docs/api/session#sessetcertificateverifyprocproc
+      const { hostname } = request;
+      if (
+        knownHosts.find((item: string | string[]) => item.includes(hostname))
+          .length > 0
+      ) {
+        callback(0);
+      } else {
+        callback(-2);
+      }
+    });
+});
+
+ipcMain.on('feature-basic-auth-cancel', () => {
+  debug('Cancel basic auth');
+
+  // @ts-expect-error Expected 0 arguments, but got 2.
+  authCallback(null);
+  authCallback = noop;
+});
+
+ipcMain.on('load-available-displays', (_e, data) => {
+  debug('MAIN PROCESS: Received load-desktop-capturer-sources');
+  mainWindow?.webContents.send(`select-capture-device:${data.serviceId}`, data);
+});
+
+// Handle synchronous messages from service webviews.
+
+ipcMain.on('find-in-page', (e, text, options) => {
+  const { sender: webContents } = e;
+  if (webContents !== mainWindow?.webContents && typeof text === 'string') {
+    const sanitizedOptions = {};
+    for (const option of ['forward', 'findNext', 'matchCase']) {
+      if (option in options) {
+        sanitizedOptions[option] = !!options[option];
+      }
+    }
+    const requestId = webContents.findInPage(text, sanitizedOptions);
+    debug('Find in page', text, options, requestId);
+    e.returnValue = requestId;
+  } else {
+    e.returnValue = null;
+  }
+});
+
+ipcMain.on('stop-find-in-page', (e, action) => {
+  const { sender: webContents } = e;
+  if (webContents !== mainWindow?.webContents) {
+    const validActions = [
+      'clearSelection',
+      'keepSelection',
+      'activateSelection',
+    ];
+    if (validActions.includes(action)) {
+      webContents.stopFindInPage(action);
+    }
+  }
+  e.returnValue = null;
+});
+
+ipcMain.on('set-spellchecker-locales', (_e, { locale, serviceId }) => {
+  if (serviceId === undefined) {
+    return;
+  }
+
+  const serviceSession = session.fromPartition(`persist:service-${serviceId}`);
+  const [defaultLocale] = serviceSession.getSpellCheckerLanguages();
+  debug(`Spellchecker default locale is: ${defaultLocale}`);
+
+  const locales = [locale, defaultLocale, DEFAULT_APP_SETTINGS.fallbackLocale];
+  debug(`Setting spellchecker locales to: ${locales}`);
+  serviceSession.setSpellCheckerLanguages(locales);
+});
+
+ipcMain.handle('get-desktop-capturer-sources', () =>
+  desktopCapturer.getSources({
+    types: ['screen', 'window'],
+  }),
+);
+
+ipcMain.on('window.toolbar-double-clicked', () => {
+  if (mainWindow?.isMaximized()) {
+    mainWindow.unmaximize();
+  } else {
+    mainWindow?.maximize();
+  }
+});
+
+ipcMain.on('stop-download', (_e, data) => {
+  debug(`stopping download from main process ${data}`);
+  mainWindow?.webContents.send('stop-download', data);
+});
+
+ipcMain.on('toggle-pause-download', (_e, data) => {
+  debug(`stopping download from main process ${data}`);
+  mainWindow?.webContents.send('toggle-pause-download', data);
+});
+
+// Quit when all windows are closed.
+app.on('window-all-closed', () => {
+  // On macos it is common for applications and their menu bar to stay active until the user quits explicitly with Cmd + Q
+  if (
+    retrieveSettingValue(
+      'runInBackground',
+      DEFAULT_APP_SETTINGS.runInBackground,
+    )
+  ) {
+    debug('Window: all windows closed, quit app');
+    if (!overrideAppQuitForUpdate) {
+      // TODO: based on https://github.com/electron-userland/electron-builder/issues/6058#issuecomment-1130344017 (not yet tested since we don't have signed builds yet for macos)
+      app.quit();
+    }
+  } else {
+    debug("Window: don't quit app");
+  }
+});
+
+appEvents.on('install-update', () => {
+  willQuitApp = true;
+  overrideAppQuitForUpdate = true;
+});
+
+app.on('before-quit', event => {
+  const yesButtonIndex = 0;
+  let selection = yesButtonIndex;
+  if (
+    retrieveSettingValue('confirmOnQuit', DEFAULT_APP_SETTINGS.confirmOnQuit)
+  ) {
+    selection = dialog.showMessageBoxSync(mainWindow!, {
+      type: 'question',
+      message: 'Quit',
+      detail: 'Do you really want to quit Ferdium?',
+      buttons: ['Yes', 'No'],
+    });
+  }
+  if (selection === yesButtonIndex) {
+    willQuitApp = true;
+  } else {
+    event.preventDefault();
+  }
+});
+
+app.on('activate', () => {
+  // On macos it's common to re-create a window in the app when the dock icon is clicked and there are no other windows open.
+  if (mainWindow === null) {
+    createWindow();
+  } else {
+    mainWindow?.show();
+  }
+});
+
+app.on('web-contents-created', (_createdEvent, contents) => {
+  contents.setWindowOpenHandler(({ disposition }) =>
+    disposition === 'foreground-tab' ? { action: 'deny' } : { action: 'allow' },
+  );
+});
+
+app.on('will-finish-launching', () => {
+  // Protocol handler for macOS
+  app.on('open-url', (event, url) => {
+    event.preventDefault();
+
+    onDidLoad((window: BrowserWindow) => {
+      debug('open-url event', url);
+      handleDeepLink(window, url);
+    });
+  });
+});
+
+app.on(
+  'certificate-error',
+  (event, _webContents, _url, _error, certificate, callback) => {
+    // On certificate error we disable default behaviour (stop loading the page)
+    // and we then say "it is all fine - true" to the callback
+    event.preventDefault();
+
+    const useSelfSignedCertificates =
+      retrieveSettingValue(
+        'useSelfSignedCertificates',
+        DEFAULT_APP_SETTINGS.useSelfSignedCertificates,
+      ) === true;
+
+    // Check if the certificate is trusted
+    if (!useSelfSignedCertificates) {
+      callback(false);
+      return;
+    }
+
+    callback(checkIfCertIsPresent(certificate));
+  },
+);
+
+ipcMain.on('relaunch-app', async (_, options) => {
+  // Ask user to confirm
+  const result = await dialog.showMessageBox(mainWindow!, options);
+
+  if (result.response === options.cancelId) {
+    return;
+  }
+
+  app.relaunch();
+  app.quit();
+});
