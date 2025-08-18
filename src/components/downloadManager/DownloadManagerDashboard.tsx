@@ -125,7 +125,9 @@ class DownloadManagerDashboard extends Component<IProps, IState> {
                   <ListItemIcon>
                     <ClearAllIcon />
                   </ListItemIcon>
-                  <ListItemText primary={intl.formatMessage(messages.clearAllCompleted)} />
+                  <ListItemText
+                    primary={intl.formatMessage(messages.clearAllCompleted)}
+                  />
                 </ListItemButton>
               </Box>
             </Box>

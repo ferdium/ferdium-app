@@ -12,13 +12,27 @@ import {
 } from 'electron';
 import macosVersion from 'macos-version';
 import { isLinux, isMac, isWindows } from '../environment';
+import generatedTranslations from '../i18n/translations';
 
 const FILE_EXTENSION = isWindows ? 'ico' : 'png';
 const INDICATOR_TRAY_PLAIN = 'tray';
 const INDICATOR_TRAY_UNREAD = 'tray-unread';
 const INDICATOR_TRAY_INDIRECT = 'tray-indirect';
 
-// TODO: Need to support i18n for a lot of the hard-coded strings in this file
+const locales = generatedTranslations();
+
+// Helper function to get translated text
+const getTranslatedText = (
+  locale: string,
+  key: string,
+  fallback: string,
+): string => {
+  try {
+    return locales[locale]?.[key] || fallback;
+  } catch {
+    return fallback;
+  }
+};
 export default class TrayIcon {
   tray: Tray | null = null;
 
@@ -33,6 +47,8 @@ export default class TrayIcon {
   isAppMuted = false;
 
   mainWindow: BrowserWindow | null = null;
+
+  currentLocale: string = 'en-US';
 
   constructor() {
     ipcMain.on('initialAppSettings', (_, appSettings) => {
@@ -72,23 +88,43 @@ export default class TrayIcon {
       {
         label:
           tray.mainWindow.isVisible() && tray.mainWindow.isFocused()
-            ? 'Hide Ferdium'
-            : 'Show Ferdium',
+            ? getTranslatedText(
+                tray.currentLocale,
+                'tray.hideFerdium',
+                'Hide Ferdium',
+              )
+            : getTranslatedText(
+                tray.currentLocale,
+                'tray.showFerdium',
+                'Show Ferdium',
+              ),
         click() {
           tray._toggleWindow();
         },
       },
       {
         label: tray.isAppMuted
-          ? 'Enable Notifications && Audio'
-          : 'Disable Notifications && Audio',
+          ? getTranslatedText(
+              tray.currentLocale,
+              'tray.enableNotifications',
+              'Enable Notifications && Audio',
+            )
+          : getTranslatedText(
+              tray.currentLocale,
+              'tray.disableNotifications',
+              'Disable Notifications && Audio',
+            ),
         click() {
           if (!tray.mainWindow) return;
           tray.mainWindow.webContents.send('muteApp');
         },
       },
       {
-        label: 'Quit Ferdium',
+        label: getTranslatedText(
+          tray.currentLocale,
+          'tray.quitFerdium',
+          'Quit Ferdium',
+        ),
         click() {
           app.quit();
         },
@@ -103,6 +139,9 @@ export default class TrayIcon {
 
     if (appSettings && appSettings.type === 'app') {
       this.isAppMuted = appSettings.data.isAppMuted; // save current state after a change
+      if (appSettings.data.locale) {
+        this.currentLocale = appSettings.data.locale;
+      }
     }
 
     this.trayMenu = Menu.buildFromTemplate(this.trayMenuTemplate(this));
