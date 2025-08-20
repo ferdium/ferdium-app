@@ -65,6 +65,7 @@
   "login.changeServer": "Изменить здесь!",
   "login.changeServerMessage": "Вы используете {serverNameParse} сервер, вы хотите переключиться?",
   "login.customServerQuestion": "Использовать пользовательский сервер Ferdium?",
+  "login.customServerSuggestion": "Попробуйте импортировать ваш аккаунт Franz",
   "login.email.label": "Адрес электронной почты",
   "login.headline": "Вход",
   "login.invalidCredentials": "Неправильный адрес электронной почты или пароль",
