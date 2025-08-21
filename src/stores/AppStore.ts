@@ -61,14 +61,24 @@ const CATALINA_NOTIFICATION_HACK_KEY =
 
 const locales = generatedTranslations();
 
-// Helper function to get translated text
+// Helper function to get translated text with parameter support
 const getTranslatedText = (
   locale: string,
   key: string,
   fallback: string,
+  params?: Record<string, string>,
 ): string => {
   try {
-    return locales[locale]?.[key] || fallback;
+    let text = locales[locale]?.[key] || fallback;
+
+    // Replace parameters in the format {paramName}
+    if (params) {
+      Object.entries(params).forEach(([paramKey, paramValue]) => {
+        text = text.replace(new RegExp(`\\{${paramKey}\\}`, 'g'), paramValue);
+      });
+    }
+
+    return text;
   } catch {
     return fallback;
   }
@@ -363,7 +373,11 @@ export default class AppStore extends TypedStore {
         getTranslatedText(
           this.locale,
           'app.welcomeNotification.title',
-          'Welcome to Ferdium 7',
+          //`Welcome to Ferdium ${ferdiumVersion}`,
+          //{ version: ferdiumVersion },
+          `Welcome to Ferdium ${ferdiumVersion.split('.')[0]}`,
+          { version: ferdiumVersion.split('.')[0] },
+
         ),
         {
           body: getTranslatedText(

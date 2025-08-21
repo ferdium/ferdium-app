@@ -2,7 +2,7 @@
   "app.errorHandler.action": "Reload",
   "app.errorHandler.headline": "Something went wrong.",
   "app.newSandbox": "NEW SANDBOX",
-  "app.welcomeNotification.title": "Welcome to Ferdium 7",
+  "app.welcomeNotification.title": "Welcome to Ferdium {version}",
   "app.welcomeNotification.body": "Have a wonderful day & happy messaging.",
   "auth.loggingOut": "Logging you out...",
   "changeserver.customServerLabel": "Custom server",

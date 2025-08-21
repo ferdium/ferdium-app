@@ -586,20 +586,20 @@ class EditSettingsScreen extends Component<
     const { intl } = this.props;
     const { lockedPassword } = this.state;
 
-    // 获取国际化配置对象 - 这是关键步骤
+    // Obtain the internationalization configuration object - this is the critical step
     const i18nConfig = getI18nConfigObjects(intl);
 
     const locales = getSelectOptions({
       locales: APP_LOCALES,
     });
 
-    // 使用国际化的导航栏行为配置
+    // Use the internationalized navigation bar behavior configuration
     const navigationBarBehaviours = getSelectOptions({
       locales: i18nConfig.NAVIGATION_BAR_BEHAVIOURS,
       sort: false,
     });
 
-    // 使用国际化的WebRTC IP处理策略配置
+    // Use the internationalized WebRTC IP handling policy configuration
     const webRTCIPHandlingPolicies = getSelectOptions({
       locales: i18nConfig.WEBRTC_IP_HANDLING_POLICY,
       sort: false,
@@ -620,19 +620,19 @@ class EditSettingsScreen extends Component<
       sort: false,
     });
 
-    // 使用国际化的休眠策略配置
+    // Use the internationalized hibernation strategy configuration
     const hibernationStrategies = getSelectOptions({
       locales: i18nConfig.HIBERNATION_STRATEGIES,
       sort: false,
     });
 
-    // 使用国际化的唤醒策略配置
+    // Use the internationalized wake-up strategy configuration
     const wakeUpStrategies = getSelectOptions({
       locales: i18nConfig.WAKE_UP_STRATEGIES,
       sort: false,
     });
 
-    // 使用国际化的唤醒休眠策略配置
+    // Use the internationalized wake-up hibernation strategy configuration
     const wakeUpHibernationStrategies = getSelectOptions({
       locales: i18nConfig.WAKE_UP_HIBERNATION_STRATEGIES,
       sort: false,
@@ -643,19 +643,19 @@ class EditSettingsScreen extends Component<
       sort: false,
     });
 
-    // 使用国际化的侧边栏宽度配置
+    // Use the internationalized sidebar width configuration
     const sidebarWidth = getSelectOptions({
       locales: i18nConfig.SIDEBAR_WIDTH,
       sort: false,
     });
 
-    // 使用国际化的侧边栏服务位置配置
+    // Use the internationalized sidebar service location configuration
     const sidebarServicesLocation = getSelectOptions({
       locales: i18nConfig.SIDEBAR_SERVICES_LOCATION,
       sort: false,
     });
 
-    // 使用国际化的图标大小配置
+    // Use the internationalized icon size configuration
     const iconSizes = getSelectOptions({
       locales: i18nConfig.ICON_SIZES,
       sort: false,

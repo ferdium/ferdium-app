@@ -2,7 +2,7 @@
   "app.errorHandler.action": "重新加载",
   "app.errorHandler.headline": "出了点问题！",
   "app.newSandbox": "新沙盒",
-  "app.welcomeNotification.title": "欢迎使用 Ferdium 7",
+  "app.welcomeNotification.title": "欢迎使用 Ferdium {version}",
   "app.welcomeNotification.body": "祝您有美好的一天，聊天愉快！",
   "auth.loggingOut": "正在登出...",
   "changeserver.customServerLabel": "自定义服务器",
