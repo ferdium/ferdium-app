@@ -12,27 +12,13 @@ import {
 } from 'electron';
 import macosVersion from 'macos-version';
 import { isLinux, isMac, isWindows } from '../environment';
-import generatedTranslations from '../i18n/translations';
+import { getTranslatedText } from '../helpers/i18n-helpers';
 
 const FILE_EXTENSION = isWindows ? 'ico' : 'png';
 const INDICATOR_TRAY_PLAIN = 'tray';
 const INDICATOR_TRAY_UNREAD = 'tray-unread';
 const INDICATOR_TRAY_INDIRECT = 'tray-indirect';
 
-const locales = generatedTranslations();
-
-// Helper function to get translated text
-const getTranslatedText = (
-  locale: string,
-  key: string,
-  fallback: string,
-): string => {
-  try {
-    return locales[locale]?.[key] || fallback;
-  } catch {
-    return fallback;
-  }
-};
 export default class TrayIcon {
   tray: Tray | null = null;
 

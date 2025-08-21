@@ -1,3 +1,7 @@
+import generatedTranslations from '../i18n/translations';
+
+const locales = generatedTranslations();
+
 export const getLocale = ({ locale, locales, fallbackLocale }) => {
   if (!locale) {
     return fallbackLocale;
@@ -17,6 +21,28 @@ export const getLocale = ({ locale, locales, fallbackLocale }) => {
   }
 
   return locale;
+};
+
+export const getTranslatedText = (
+  locale: string,
+  key: string,
+  fallback: string,
+  params?: Record<string, string>,
+): string => {
+  try {
+    let text = locales[locale]?.[key] || fallback;
+
+    // Replace parameters in the format {paramName}
+    if (params) {
+      Object.entries(params).forEach(([paramKey, paramValue]) => {
+        text = text.replaceAll(`{${paramKey}}`, paramValue);
+      });
+    }
+
+    return text;
+  } catch {
+    return fallback;
+  }
 };
 
 export const getSelectOptions = ({

@@ -31,7 +31,7 @@ import {
   userDataPath,
 } from '../environment-remote';
 import sleep from '../helpers/async-helpers';
-import { getLocale } from '../helpers/i18n-helpers';
+import { getLocale, getTranslatedText } from '../helpers/i18n-helpers';
 import {
   getServiceIdsFromPartitions,
   removeServicePartitionDirectory,
@@ -60,29 +60,6 @@ const CATALINA_NOTIFICATION_HACK_KEY =
   '_temp_askedForCatalinaNotificationPermissions';
 
 const locales = generatedTranslations();
-
-// Helper function to get translated text with parameter support
-const getTranslatedText = (
-  locale: string,
-  key: string,
-  fallback: string,
-  params?: Record<string, string>,
-): string => {
-  try {
-    let text = locales[locale]?.[key] || fallback;
-
-    // Replace parameters in the format {paramName}
-    if (params) {
-      Object.entries(params).forEach(([paramKey, paramValue]) => {
-        text = text.replaceAll(`{${paramKey}}`, paramValue);
-      });
-    }
-
-    return text;
-  } catch {
-    return fallback;
-  }
-};
 
 interface Download {
   id: string;

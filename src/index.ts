@@ -54,8 +54,8 @@ import { checkIfCertIsPresent } from './helpers/certs-helpers';
 import { translateTo } from './helpers/translation-helpers';
 import { openExternalUrl } from './helpers/url-helpers';
 import userAgent from './helpers/userAgent-helpers';
-import { darkThemeGrayDarkest } from './themes/legacy';
 import generatedTranslations from './i18n/translations';
+import { darkThemeGrayDarkest } from './themes/legacy';
 
 const debug = require('./preload-safe-debug')('Ferdium:App');
 
@@ -570,11 +570,11 @@ ipcMain.handle(
     try {
       const locale = settings.get('locale') || 'en-US';
       const translations = generatedTranslations();
-      let text = translations[locale]?.[key] || key;
+      let text: string = translations[locale]?.[key] || key;
 
       if (params) {
-        Object.keys(params).forEach(param => {
-          text = text.replace(`{${param}}`, params[param]);
+        Object.entries(params).forEach(([param, value]) => {
+          text = text.replaceAll(`{${param}}`, value);
         });
       }
 
