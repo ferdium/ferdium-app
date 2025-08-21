@@ -74,7 +74,7 @@ const getTranslatedText = (
     // Replace parameters in the format {paramName}
     if (params) {
       Object.entries(params).forEach(([paramKey, paramValue]) => {
-        text = text.replace(new RegExp(`\\{${paramKey}\\}`, 'g'), paramValue);
+        text = text.replaceAll(`{${paramKey}}`, paramValue);
       });
     }
 
@@ -373,11 +373,10 @@ export default class AppStore extends TypedStore {
         getTranslatedText(
           this.locale,
           'app.welcomeNotification.title',
-          //`Welcome to Ferdium ${ferdiumVersion}`,
-          //{ version: ferdiumVersion },
+          // `Welcome to Ferdium ${ferdiumVersion}`,
+          // { version: ferdiumVersion },
           `Welcome to Ferdium ${ferdiumVersion.split('.')[0]}`,
           { version: ferdiumVersion.split('.')[0] },
-
         ),
         {
           body: getTranslatedText(
