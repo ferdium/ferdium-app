@@ -408,6 +408,7 @@
   "settings.service.form.tabOnPremise": "Собственный хостинг ⭐",
   "settings.service.form.team": "Команда",
   "settings.service.form.trapLinkClicks": "Открывать ссылки в Ferdium",
+  "settings.service.form.useFavicon": "Загружать иконку с сайта службы вместо стандартной или пользовательской иконки",
   "settings.service.form.useHostedService": "Использовать собственный сервис {name}.",
   "settings.service.form.yourServices": "Ваши сервисы",
   "settings.service.reloadRequired": "Изменения требуют перезагрузки службы",
