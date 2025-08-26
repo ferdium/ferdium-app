@@ -494,7 +494,7 @@
   "tabs.item.reload": "Перезагрузить",
   "tabs.item.wakeUpService": "Разбудить службу",
   "validation.email": "{field} не действительно",
-  "validation.minLength": "Кількість символів в {field} повина бути не меньше {length}",
+  "validation.minLength": "Поле {field} должно содержать не менее {length} символов",
   "validation.oneRequired": "Необходим как минимум один",
   "validation.required": "{field} необходимо",
   "validation.url": "{field} не является действительным URL",
@@ -510,7 +510,7 @@
   "workspaceDrawer.headline": "Рабочее пространство",
   "workspaceDrawer.item.contextMenuEdit": "редактировать",
   "workspaceDrawer.item.noServicesAddedYet": "Нет добавленных сервисов",
-  "workspaceDrawer.workspaceFeatureInfo": "<p>Рабочие окружения Ferdium позволяют вма сфокусироваться на том, что важно на текущий момент. Установите разные наборы сервисов и легко переключайтесь между ними в любое время.</p><p>Только вы решаете, какие сервисы вам необходимы здесь и сейчас, а мы можем вам помочь достичь совершенства или отключиться от работы, по своему усмотрению.</p>",
+  "workspaceDrawer.workspaceFeatureInfo": "<p>Рабочие пространства Ferdium позволяют сосредоточиться на том, что важно именно сейчас. Создавайте разные наборы сервисов и легко переключайтесь между ними в любое время.</p><p>Только вы решаете, какие сервисы вам необходимы здесь и сейчас. Это поможет сконцентрироваться на работе или наоборот переключиться на отдых и развлечения.</p>",
   "workspaceDrawer.workspacesSettingsTooltip": "Изменить настройки рабочих областей",
   "workspaces.switchingIndicator.switchingTo": "Переключение на"
 }
