@@ -352,6 +352,7 @@
   "settings.invite.headline": "Пригласить друзей",
   "settings.navigation.account": "Учетная запись",
   "settings.navigation.availableServices": "Доступные сервисы",
+  "settings.navigation.exitSession": "Выход из аккаунта",
   "settings.navigation.logout": "Выход из аккаунта",
   "settings.navigation.releaseNotes": "Информация о выпуске",
   "settings.navigation.supportFerdium": "О Ferdium",
