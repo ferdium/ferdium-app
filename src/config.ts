@@ -273,10 +273,12 @@ export const NAVIGATION_BAR_BEHAVIOURS = {
 const SEARCH_ENGINE_STARTPAGE = 'startPage';
 const SEARCH_ENGINE_GOOGLE = 'google';
 const SEARCH_ENGINE_DDG = 'duckDuckGo';
+const SEARCH_ENGINE_BING = 'bing';
 export const SEARCH_ENGINE_NAMES = {
   [SEARCH_ENGINE_STARTPAGE]: 'Startpage',
   [SEARCH_ENGINE_GOOGLE]: 'Google',
   [SEARCH_ENGINE_DDG]: 'DuckDuckGo',
+  [SEARCH_ENGINE_BING]: 'Bing',
 };
 
 export const TRANSLATOR_ENGINE_GOOGLE = 'Google';
@@ -420,6 +422,8 @@ export const SEARCH_ENGINE_URLS = {
     `https://www.google.com/search?q=${searchTerm}`,
   [SEARCH_ENGINE_DDG]: ({ searchTerm }) =>
     `https://duckduckgo.com/?q=${searchTerm}`,
+  [SEARCH_ENGINE_BING]: ({ searchTerm }) =>
+    `https://www.bing.com/search?q=${searchTerm}`,
 };
 
 export const CUSTOM_TODO_SERVICE = 'isUsingCustomTodoService';
