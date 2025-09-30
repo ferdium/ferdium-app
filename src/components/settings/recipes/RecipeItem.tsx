@@ -1,8 +1,13 @@
 import { observer } from 'mobx-react';
 import { Component, MouseEventHandler } from 'react';
+import {
+  type WrappedComponentProps,
+  injectIntl,
+} from 'react-intl';
+import { getLocalizedRecipeName } from '../../../helpers/recipe-helpers';
 import RecipePreview from '../../../models/RecipePreview';
 
-interface IProps {
+interface IProps extends WrappedComponentProps {
   recipe: RecipePreview;
   onClick: MouseEventHandler<HTMLButtonElement>;
 }
@@ -14,7 +19,7 @@ class RecipeItem extends Component<IProps> {
   }
 
   render() {
-    const { recipe, onClick } = this.props;
+    const { recipe, onClick, intl } = this.props;
 
     return (
       <button type="button" className="recipe-teaser" onClick={onClick}>
@@ -22,7 +27,9 @@ class RecipeItem extends Component<IProps> {
           <span className="recipe-teaser__dev-badge">dev</span>
         )}
         <img src={recipe.icons?.svg} className="recipe-teaser__icon" alt="" />
-        <span className="recipe-teaser__label">{recipe.name}</span>
+        <span className="recipe-teaser__label">
+          {getLocalizedRecipeName(recipe.id, recipe.name, intl)}
+        </span>
         {recipe.aliases && recipe.aliases.length > 0 && (
           <span className="recipe-teaser__alias_label">
             {`Aliases: ${recipe.aliases.join(', ')}`}
@@ -33,4 +40,4 @@ class RecipeItem extends Component<IProps> {
   }
 }
 
-export default RecipeItem;
+export default injectIntl(RecipeItem);

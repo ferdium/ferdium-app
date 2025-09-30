@@ -15,6 +15,7 @@ import withParams from '../../components/util/WithParams';
 import { DEFAULT_APP_SETTINGS, DEFAULT_SERVICE_SETTINGS } from '../../config';
 import { config as proxyFeature } from '../../features/serviceProxy';
 import { getSelectOptions } from '../../helpers/i18n-helpers';
+import { getLocalizedRecipeName } from '../../helpers/recipe-helpers';
 import { url, oneRequired, required } from '../../helpers/validation-helpers';
 import globalMessages from '../../i18n/globalMessages';
 import { SPELLCHECKER_LOCALES } from '../../i18n/languages';
@@ -197,7 +198,9 @@ class EditServiceScreen extends Component<IProps> {
         name: {
           label: intl.formatMessage(messages.name),
           placeholder: intl.formatMessage(messages.name),
-          value: service?.id ? service.name : recipe.name,
+          value: service?.id
+            ? service.name
+            : getLocalizedRecipeName(recipe.id, recipe.name, intl),
         },
         isEnabled: {
           label: intl.formatMessage(messages.enableService),

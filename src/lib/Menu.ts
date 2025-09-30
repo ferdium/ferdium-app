@@ -48,6 +48,7 @@ import { ferdiumVersion } from '../environment-remote';
 import { todoActions } from '../features/todos/actions';
 import workspaceActions from '../features/workspaces/actions';
 import { workspaceStore } from '../features/workspaces/index';
+import { getLocalizedRecipeName } from '../helpers/recipe-helpers';
 import { onAuthGoToReleaseNotes } from '../helpers/update-helpers';
 import { openExternalUrl } from '../helpers/url-helpers';
 import globalMessages from '../i18n/globalMessages';
@@ -1336,7 +1337,11 @@ class FranzMenu implements StoresProps {
       return service.name;
     }
 
-    let { name: serviceName } = service.recipe;
+    let serviceName = getLocalizedRecipeName(
+      service.recipe.id,
+      service.recipe.name,
+      this.stores.app.locale,
+    );
     if (service.team) {
       serviceName = `${serviceName} (${service.team})`;
     } else if (service.customUrl) {

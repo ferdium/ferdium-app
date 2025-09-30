@@ -15,6 +15,7 @@ import injectSheet, { type WithStylesProps } from 'react-jss';
 import { SortableElement } from 'react-sortable-hoc';
 import type { Stores } from '../../../@types/stores.types';
 import { altKey, cmdOrCtrlShortcutKey, shiftKey } from '../../../environment';
+import { getLocalizedRecipeName } from '../../../helpers/recipe-helpers';
 import globalMessages from '../../../i18n/globalMessages';
 import type Service from '../../../models/Service';
 import Icon from '../../ui/icon';
@@ -261,7 +262,9 @@ class TabItem extends Component<IProps, IState> {
 
     const menuTemplate: MenuItemConstructorOptions[] = [
       {
-        label: service.name || service.recipe.name,
+        label:
+          service.name ||
+          getLocalizedRecipeName(service.recipe.id, service.recipe.name, intl),
         enabled: false,
       },
       {
@@ -341,7 +344,13 @@ class TabItem extends Component<IProps, IState> {
             type: 'question',
             message: intl.formatMessage(messages.deleteService),
             detail: intl.formatMessage(messages.confirmDeleteService, {
-              serviceName: service.name || service.recipe.name,
+              serviceName:
+                service.name ||
+                getLocalizedRecipeName(
+                  service.recipe.id,
+                  service.recipe.name,
+                  intl,
+                ),
             }),
             buttons: [
               intl.formatMessage(globalMessages.yes),
