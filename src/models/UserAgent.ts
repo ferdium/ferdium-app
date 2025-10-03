@@ -14,8 +14,6 @@ export default class UserAgent {
 
   @observable.ref webview: ElectronWebView = null;
 
-  @observable chromelessUserAgent: boolean = false;
-
   @observable userAgentPref: string | null = null;
 
   @observable overrideUserAgent = (): string => '';
@@ -70,39 +68,35 @@ export default class UserAgent {
   }
 
   @computed get userAgent(): string {
-    return (
-      this.serviceUserAgentPref ||
-      (this.chromelessUserAgent
-        ? this.userAgentWithoutChromeVersion
-        : this.defaultUserAgent)
-    );
+    return this.serviceUserAgentPref || this.defaultUserAgent;
   }
 
   @action setWebviewReference(webview: ElectronWebView): void {
     this.webview = webview;
   }
 
-  @action _handleNavigate(url: string, forwardingHack: boolean = false): void {
+  @action _handleNavigate(url: string): void {
     if (url.startsWith('https://accounts.google.com')) {
-      if (!this.chromelessUserAgent) {
-        debug('Setting user agent to chromeless for url', url);
-        this.chromelessUserAgent = true;
-        this.webview.userAgent = this.userAgent;
-        if (forwardingHack) {
-          this.webview.loadURL(url);
-        }
-      }
-    } else if (this.chromelessUserAgent) {
-      debug('Setting user agent to contain chrome for url', url);
-      this.chromelessUserAgent = false;
-      this.webview.userAgent = this.userAgent;
+      debug('Setting user agent to chromeless for url', url);
+      // Set chromeless user agent (without Chrome version) for Google accounts
+      this.webview.userAgent =
+        this.serviceUserAgentPref || this.userAgentWithoutChromeVersion;
+    } else {
+      debug('Setting user agent to default for url', url);
+      // Set default user agent for all other sites
+      this.webview.userAgent =
+        this.serviceUserAgentPref || this.defaultUserAgent;
     }
+    // Note: We don't reload the URL here (previously done with loadURL() on will-navigate)
+    // because it cancels POST requests, which breaks SSO/SAML authentication flows
+    // (e.g., ACS endpoint requests). The user agent change takes effect on the
+    // current navigation without needing a reload.
   }
 
   _addWebviewEvents(webview: ElectronWebView): void {
     debug('Adding event handlers');
 
-    this._willNavigateListener = event => this._handleNavigate(event.url, true);
+    this._willNavigateListener = event => this._handleNavigate(event.url);
     webview.addEventListener('will-navigate', this._willNavigateListener);
 
     this._didNavigateListener = event => this._handleNavigate(event.url);
