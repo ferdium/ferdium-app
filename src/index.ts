@@ -54,6 +54,7 @@ import { checkIfCertIsPresent } from './helpers/certs-helpers';
 import { translateTo } from './helpers/translation-helpers';
 import { openExternalUrl } from './helpers/url-helpers';
 import userAgent from './helpers/userAgent-helpers';
+import generatedTranslations from './i18n/translations';
 import { darkThemeGrayDarkest } from './themes/legacy';
 
 const debug = require('./preload-safe-debug')('Ferdium:App');
@@ -561,6 +562,49 @@ ipcMain.handle(
     return response;
   },
 );
+
+// Handle translation requests from webview
+ipcMain.handle(
+  'get-translation',
+  async (_e, key: string, params?: { [key: string]: string }) => {
+    try {
+      const locale = settings.get('locale') || 'en-US';
+      const translations = generatedTranslations();
+      let text: string = translations[locale]?.[key] || key;
+
+      if (params) {
+        Object.entries(params).forEach(([param, value]) => {
+          text = text.replaceAll(`{${param}}`, value);
+        });
+      }
+
+      return text;
+    } catch {
+      return key;
+    }
+  },
+);
+
+// Send translation cache to webview when requested
+ipcMain.on('request-translation-cache', event => {
+  try {
+    const locale = settings.get('locale') || 'en-US';
+    const translations = generatedTranslations();
+    const contextMenuTranslations = {};
+
+    // Extract only context menu related translations
+    Object.keys(translations[locale] || {}).forEach(key => {
+      if (key.startsWith('contextMenu.')) {
+        contextMenuTranslations[key] = translations[locale][key];
+      }
+    });
+
+    event.reply('translation-cache', contextMenuTranslations);
+  } catch (error) {
+    debug('Error sending translation cache:', error);
+    event.reply('translation-cache', {});
+  }
+});
 
 // TODO: evaluate if we need to store the authCallback for every service
 ipcMain.on('feature-basic-auth-credentials', (_e, { user, password }) => {

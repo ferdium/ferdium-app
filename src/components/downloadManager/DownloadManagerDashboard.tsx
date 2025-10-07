@@ -35,6 +35,22 @@ const messages = defineMessages({
     id: 'downloadManager.empty',
     defaultMessage: 'Your download list is empty.',
   },
+  clearAllCompleted: {
+    id: 'downloadManager.clearAllCompleted',
+    defaultMessage: 'Clear all completed',
+  },
+  statusPaused: {
+    id: 'downloadManager.status.paused',
+    defaultMessage: 'Paused',
+  },
+  statusCancelled: {
+    id: 'downloadManager.status.cancelled',
+    defaultMessage: 'Cancelled',
+  },
+  statusError: {
+    id: 'downloadManager.status.error',
+    defaultMessage: 'Error',
+  },
 });
 
 interface IProps {
@@ -109,7 +125,9 @@ class DownloadManagerDashboard extends Component<IProps, IState> {
                   <ListItemIcon>
                     <ClearAllIcon />
                   </ListItemIcon>
-                  <ListItemText primary="Clear all completed" />
+                  <ListItemText
+                    primary={intl.formatMessage(messages.clearAllCompleted)}
+                  />
                 </ListItemButton>
               </Box>
             </Box>
@@ -131,16 +149,17 @@ class DownloadManagerDashboard extends Component<IProps, IState> {
                 ? round((receivedBytes / totalBytes) * 100, 2)
                 : null;
 
+            const isPaused = state === 'progressing' && paused === true;
             const stateParse =
               state === 'progressing'
                 ? paused === false || paused === undefined
                   ? null
-                  : 'Paused'
+                  : intl.formatMessage(messages.statusPaused)
                 : state === 'cancelled'
-                  ? 'Cancelled'
+                  ? intl.formatMessage(messages.statusCancelled)
                   : state === 'completed'
                     ? null
-                    : 'Error';
+                    : intl.formatMessage(messages.statusError);
 
             return (
               <Card
@@ -177,7 +196,7 @@ class DownloadManagerDashboard extends Component<IProps, IState> {
                           color={state === 'completed' ? 'primary' : undefined}
                           sx={{
                             textDecoration:
-                              stateParse !== null && stateParse !== 'Paused'
+                              stateParse !== null && !isPaused
                                 ? 'line-through'
                                 : state === 'completed'
                                   ? 'underline'
@@ -189,11 +208,11 @@ class DownloadManagerDashboard extends Component<IProps, IState> {
                       </button>
                       <Typography
                         variant="h6"
-                        color={stateParse === 'Paused' ? '#ed6c02' : undefined}
+                        color={isPaused ? '#ed6c02' : undefined}
                       >
-                        {stateParse !== null && stateParse !== 'Paused'
+                        {stateParse !== null && !isPaused
                           ? stateParse
-                          : stateParse === 'Paused'
+                          : isPaused
                             ? stateParse
                             : null}
                       </Typography>

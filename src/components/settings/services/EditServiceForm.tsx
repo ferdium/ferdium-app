@@ -56,6 +56,10 @@ const messages = defineMessages({
     defaultMessage:
       'Your user files will be inserted into the webpage so you can customize services in any way you like. User files are only stored locally and are not transferred to other computers using the same account.',
   },
+  recipeVersion: {
+    id: 'settings.service.form.recipeVersion',
+    defaultMessage: 'Recipe version:',
+  },
   availableServices: {
     id: 'settings.service.form.availableServices',
     defaultMessage: 'Available services',
@@ -532,7 +536,7 @@ class EditServiceForm extends Component<IProps, IState> {
             </>
           )}
           <span style={{ fontStyle: 'italic', fontSize: '80%' }}>
-            Recipe version:
+            {intl.formatMessage(messages.recipeVersion)}
             {recipe.version}
           </span>
         </div>

@@ -1,6 +1,7 @@
 // Note: This file has now become devoid of all references to values deduced from the runtime process - all those now live in the `environment.js` file
 
 import ms from 'ms';
+import { defineMessages } from 'react-intl';
 
 import { shiftKey } from './environment';
 
@@ -36,12 +37,185 @@ export const CDN_URL = 'https://cdn.franzinfra.com';
 
 export const KEEP_WS_LOADED_USID = '0a0aa000-0a0a-49a0-a000-a0a0a0a0a0a0';
 
+// Configuration messages for internationalization
+export const configMessages = defineMessages({
+  // WEBRTC_IP_HANDLING_POLICY
+  webrtcExposePublicAndLocal: {
+    id: 'config.webrtc.exposePublicAndLocal',
+    defaultMessage: 'Expose user public and local IPs',
+  },
+  webrtcExposePublicOnly: {
+    id: 'config.webrtc.exposePublicOnly',
+    defaultMessage: 'Expose user public IP, but not expose user local IP',
+  },
+  webrtcExposePublicAndLocalDefaultRoute: {
+    id: 'config.webrtc.exposePublicAndLocalDefaultRoute',
+    defaultMessage:
+      'Expose user public and local IPs (only use default route used by http)',
+  },
+  webrtcDoNotExpose: {
+    id: 'config.webrtc.doNotExpose',
+    defaultMessage: 'Do not expose public or local IPs',
+  },
+
+  // HIBERNATION_STRATEGIES
+  hibernationExtremelyFast: {
+    id: 'config.hibernation.extremelyFast',
+    defaultMessage: 'Extremely Fast Hibernation (10sec)',
+  },
+  hibernationVeryFast: {
+    id: 'config.hibernation.veryFast',
+    defaultMessage: 'Very Fast Hibernation (30sec)',
+  },
+  hibernationFast: {
+    id: 'config.hibernation.fast',
+    defaultMessage: 'Fast Hibernation (1min)',
+  },
+  hibernationNormal: {
+    id: 'config.hibernation.normal',
+    defaultMessage: 'Normal Hibernation (5min)',
+  },
+  hibernationSlow: {
+    id: 'config.hibernation.slow',
+    defaultMessage: 'Slow Hibernation (10min)',
+  },
+  hibernationVerySlow: {
+    id: 'config.hibernation.verySlow',
+    defaultMessage: 'Very Slow Hibernation (30min)',
+  },
+  hibernationExtremelySlow: {
+    id: 'config.hibernation.extremelySlow',
+    defaultMessage: 'Extremely Slow Hibernation (1hour)',
+  },
+
+  // WAKE_UP_STRATEGIES
+  wakeUpNever: {
+    id: 'config.wakeUp.never',
+    defaultMessage: 'Never wake up',
+  },
+  wakeUp10sec: {
+    id: 'config.wakeUp.10sec',
+    defaultMessage: 'Wake up after 10sec',
+  },
+  wakeUp30sec: {
+    id: 'config.wakeUp.30sec',
+    defaultMessage: 'Wake up after 30sec',
+  },
+  wakeUp1min: {
+    id: 'config.wakeUp.1min',
+    defaultMessage: 'Wake up after 1min',
+  },
+  wakeUp5min: {
+    id: 'config.wakeUp.5min',
+    defaultMessage: 'Wake up after 5min',
+  },
+  wakeUp10min: {
+    id: 'config.wakeUp.10min',
+    defaultMessage: 'Wake up after 10min',
+  },
+  wakeUp30min: {
+    id: 'config.wakeUp.30min',
+    defaultMessage: 'Wake up after 30min',
+  },
+  wakeUp1hour: {
+    id: 'config.wakeUp.1hour',
+    defaultMessage: 'Wake up after 1hour',
+  },
+
+  // WAKE_UP_HIBERNATION_STRATEGIES
+  wakeUpHibernationUseMain: {
+    id: 'config.wakeUpHibernation.useMain',
+    defaultMessage: 'Use main hibernation strategy',
+  },
+
+  // NAVIGATION_BAR_BEHAVIOURS
+  navigationBarCustom: {
+    id: 'config.navigationBar.custom',
+    defaultMessage: 'Show navigation bar on custom websites only',
+  },
+  navigationBarAlways: {
+    id: 'config.navigationBar.always',
+    defaultMessage: 'Show navigation bar on all services',
+  },
+  navigationBarNever: {
+    id: 'config.navigationBar.never',
+    defaultMessage: 'Never show navigation bar',
+  },
+
+  // SIDEBAR_WIDTH
+  sidebarExtremelySlim: {
+    id: 'config.sidebar.extremelySlim',
+    defaultMessage: 'Extremely slim sidebar',
+  },
+  sidebarVerySlim: {
+    id: 'config.sidebar.verySlim',
+    defaultMessage: 'Very slim sidebar',
+  },
+  sidebarSlim: {
+    id: 'config.sidebar.slim',
+    defaultMessage: 'Slim sidebar',
+  },
+  sidebarNormal: {
+    id: 'config.sidebar.normal',
+    defaultMessage: 'Normal sidebar',
+  },
+  sidebarWide: {
+    id: 'config.sidebar.wide',
+    defaultMessage: 'Wide sidebar',
+  },
+  sidebarVeryWide: {
+    id: 'config.sidebar.veryWide',
+    defaultMessage: 'Very wide sidebar',
+  },
+  sidebarExtremelyWide: {
+    id: 'config.sidebar.extremelyWide',
+    defaultMessage: 'Extremely wide sidebar',
+  },
+
+  // SIDEBAR_SERVICES_LOCATION
+  sidebarLocationTopLeft: {
+    id: 'config.sidebarLocation.topLeft',
+    defaultMessage: 'Top/Left',
+  },
+  sidebarLocationCenter: {
+    id: 'config.sidebarLocation.center',
+    defaultMessage: 'Center',
+  },
+  sidebarLocationBottomRight: {
+    id: 'config.sidebarLocation.bottomRight',
+    defaultMessage: 'Bottom/Right',
+  },
+
+  // ICON_SIZES
+  iconSizeVerySmall: {
+    id: 'config.iconSize.verySmall',
+    defaultMessage: 'Very small icons',
+  },
+  iconSizeSmall: {
+    id: 'config.iconSize.small',
+    defaultMessage: 'Small icons',
+  },
+  iconSizeNormal: {
+    id: 'config.iconSize.normal',
+    defaultMessage: 'Normal icons',
+  },
+  iconSizeLarge: {
+    id: 'config.iconSize.large',
+    defaultMessage: 'Large icons',
+  },
+  iconSizeVeryLarge: {
+    id: 'config.iconSize.veryLarge',
+    defaultMessage: 'Very large icons',
+  },
+});
+
 const defaultWebRTCIPHandlingPolicy = 'default';
 const publicWebRTCIPHandlingPolicy = 'default_public_interface_only';
 const publicPrivateWebRTCIPHandlingPolicy =
   'default_public_and_private_interfaces';
 const disableWebRTCIPHandlingPolicy = 'disable_non_proxied_udp';
 
+// NOTE: For internationalized version, use getI18nConfigObjects().WEBRTC_IP_HANDLING_POLICY
 export const WEBRTC_IP_HANDLING_POLICY = {
   [defaultWebRTCIPHandlingPolicy]: 'Expose user public and local IPs',
   [publicWebRTCIPHandlingPolicy]:
@@ -54,7 +228,7 @@ export const WEBRTC_IP_HANDLING_POLICY = {
 export const SCREENSHARE_CANCELLED_BY_USER =
   'desktop-capturer-selection__cancel';
 
-// TODO: Need to convert many of these to i18n
+// NOTE: For internationalized version, use getI18nConfigObjects().HIBERNATION_STRATEGIES
 export const HIBERNATION_STRATEGIES = {
   10: 'Extremely Fast Hibernation (10sec)',
   30: 'Very Fast Hibernation (30sec)',
@@ -65,6 +239,7 @@ export const HIBERNATION_STRATEGIES = {
   3600: 'Extremely Slow Hibernation (1hour)',
 };
 
+// NOTE: For internationalized version, use getI18nConfigObjects().WAKE_UP_STRATEGIES
 export const WAKE_UP_STRATEGIES = {
   0: 'Never wake up',
   10: 'Wake up after 10sec',
@@ -76,6 +251,7 @@ export const WAKE_UP_STRATEGIES = {
   3600: 'Wake up after 1hour',
 };
 
+// NOTE: For internationalized version, use getI18nConfigObjects().WAKE_UP_HIBERNATION_STRATEGIES
 export const WAKE_UP_HIBERNATION_STRATEGIES = {
   0: 'Use main hibernation strategy',
   10: 'Extremely Fast Hibernation (10sec)',
@@ -87,6 +263,7 @@ export const WAKE_UP_HIBERNATION_STRATEGIES = {
   3600: 'Extremely Slow Hibernation (1hour)',
 };
 
+// NOTE: For internationalized version, use getI18nConfigObjects().NAVIGATION_BAR_BEHAVIOURS
 export const NAVIGATION_BAR_BEHAVIOURS = {
   custom: 'Show navigation bar on custom websites only',
   always: 'Show navigation bar on all services',
@@ -283,6 +460,7 @@ export const TODO_APPS = {
   [CUSTOM_TODO_SERVICE]: 'Other service',
 };
 
+// NOTE: For internationalized version, use getI18nConfigObjects().SIDEBAR_WIDTH
 export const SIDEBAR_WIDTH = {
   35: 'Extremely slim sidebar',
   45: 'Very slim sidebar',
@@ -296,12 +474,14 @@ export const SIDEBAR_WIDTH = {
 export const SIDEBAR_SERVICES_LOCATION_TOPLEFT = 0;
 export const SIDEBAR_SERVICES_LOCATION_CENTER = 1;
 export const SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT = 2;
+// NOTE: For internationalized version, use getI18nConfigObjects().SIDEBAR_SERVICES_LOCATION
 export const SIDEBAR_SERVICES_LOCATION = {
   [SIDEBAR_SERVICES_LOCATION_TOPLEFT]: 'Top/Left',
   [SIDEBAR_SERVICES_LOCATION_CENTER]: 'Center',
   [SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT]: 'Bottom/Right',
 };
 
+// NOTE: For internationalized version, use getI18nConfigObjects().ICON_SIZES
 export const ICON_SIZES = {
   0: 'Very small icons',
   10: 'Small icons',
@@ -478,3 +658,89 @@ export const DEFAULT_SHORTCUTS = {
   activatePreviousService: `Ctrl+${shiftKey()}+tab`,
   activateServiceUsesAlt: false,
 };
+
+// Helper function to get internationalized config objects
+export const getI18nConfigObjects = (intl: any) => ({
+  WEBRTC_IP_HANDLING_POLICY: {
+    [defaultWebRTCIPHandlingPolicy]: intl.formatMessage(
+      configMessages.webrtcExposePublicAndLocal,
+    ),
+    [publicWebRTCIPHandlingPolicy]: intl.formatMessage(
+      configMessages.webrtcExposePublicOnly,
+    ),
+    [publicPrivateWebRTCIPHandlingPolicy]: intl.formatMessage(
+      configMessages.webrtcExposePublicAndLocalDefaultRoute,
+    ),
+    [disableWebRTCIPHandlingPolicy]: intl.formatMessage(
+      configMessages.webrtcDoNotExpose,
+    ),
+  },
+
+  HIBERNATION_STRATEGIES: {
+    10: intl.formatMessage(configMessages.hibernationExtremelyFast),
+    30: intl.formatMessage(configMessages.hibernationVeryFast),
+    60: intl.formatMessage(configMessages.hibernationFast),
+    300: intl.formatMessage(configMessages.hibernationNormal),
+    600: intl.formatMessage(configMessages.hibernationSlow),
+    1800: intl.formatMessage(configMessages.hibernationVerySlow),
+    3600: intl.formatMessage(configMessages.hibernationExtremelySlow),
+  },
+
+  WAKE_UP_STRATEGIES: {
+    0: intl.formatMessage(configMessages.wakeUpNever),
+    10: intl.formatMessage(configMessages.wakeUp10sec),
+    30: intl.formatMessage(configMessages.wakeUp30sec),
+    60: intl.formatMessage(configMessages.wakeUp1min),
+    300: intl.formatMessage(configMessages.wakeUp5min),
+    600: intl.formatMessage(configMessages.wakeUp10min),
+    1800: intl.formatMessage(configMessages.wakeUp30min),
+    3600: intl.formatMessage(configMessages.wakeUp1hour),
+  },
+
+  WAKE_UP_HIBERNATION_STRATEGIES: {
+    0: intl.formatMessage(configMessages.wakeUpHibernationUseMain),
+    10: intl.formatMessage(configMessages.hibernationExtremelyFast),
+    30: intl.formatMessage(configMessages.hibernationVeryFast),
+    60: intl.formatMessage(configMessages.hibernationFast),
+    300: intl.formatMessage(configMessages.hibernationNormal),
+    600: intl.formatMessage(configMessages.hibernationSlow),
+    1800: intl.formatMessage(configMessages.hibernationVerySlow),
+    3600: intl.formatMessage(configMessages.hibernationExtremelySlow),
+  },
+
+  NAVIGATION_BAR_BEHAVIOURS: {
+    custom: intl.formatMessage(configMessages.navigationBarCustom),
+    always: intl.formatMessage(configMessages.navigationBarAlways),
+    never: intl.formatMessage(configMessages.navigationBarNever),
+  },
+
+  SIDEBAR_WIDTH: {
+    35: intl.formatMessage(configMessages.sidebarExtremelySlim),
+    45: intl.formatMessage(configMessages.sidebarVerySlim),
+    55: intl.formatMessage(configMessages.sidebarSlim),
+    68: intl.formatMessage(configMessages.sidebarNormal),
+    80: intl.formatMessage(configMessages.sidebarWide),
+    90: intl.formatMessage(configMessages.sidebarVeryWide),
+    100: intl.formatMessage(configMessages.sidebarExtremelyWide),
+  },
+
+  SIDEBAR_SERVICES_LOCATION: {
+    [SIDEBAR_SERVICES_LOCATION_TOPLEFT]: intl.formatMessage(
+      configMessages.sidebarLocationTopLeft,
+    ),
+    [SIDEBAR_SERVICES_LOCATION_CENTER]: intl.formatMessage(
+      configMessages.sidebarLocationCenter,
+    ),
+    [SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT]: intl.formatMessage(
+      configMessages.sidebarLocationBottomRight,
+    ),
+  },
+
+  ICON_SIZES: {
+    0: intl.formatMessage(configMessages.iconSizeVerySmall),
+    10: intl.formatMessage(configMessages.iconSizeSmall),
+    20: intl.formatMessage(configMessages.iconSizeNormal),
+    30: intl.formatMessage(configMessages.iconSizeLarge),
+    40: intl.formatMessage(configMessages.iconSizeVeryLarge),
+  },
+});

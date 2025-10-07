@@ -76,6 +76,10 @@ const messages = defineMessages({
     defaultMessage:
       'Minutes of inactivity, after which Ferdium should automatically lock. Use 0 to disable',
   },
+  lockAfterInactivity: {
+    id: 'settings.app.lockAfterInactivity',
+    defaultMessage: 'Lock after inactivity',
+  },
   todoServerInfo: {
     id: 'settings.app.todoServerInfo',
     defaultMessage: 'This server will be used for the "Ferdium Todo" feature.',
@@ -161,6 +165,10 @@ const messages = defineMessages({
     defaultMessage:
       'Write your color choice in a CSS-compatible format. (Default: {defaultAccentColor} or clear the input field)',
   },
+  applyColor: {
+    id: 'settings.app.applyColor',
+    defaultMessage: 'Apply color',
+  },
   overallTheme: {
     id: 'settings.app.overallTheme',
     defaultMessage: 'Overall Theme',
@@ -230,6 +238,10 @@ const messages = defineMessages({
   buttonOpenImportExport: {
     id: 'settings.app.buttonOpenImportExport',
     defaultMessage: 'Import / Export',
+  },
+  buttonOpenProcessManager: {
+    id: 'settings.app.buttonOpenProcessManager',
+    defaultMessage: 'Open Process Manager',
   },
   serverHelp: {
     id: 'settings.app.serverHelp',
@@ -911,7 +923,7 @@ class EditSettingsForm extends Component<IProps, IState> {
                   <Button
                     buttonType="secondary"
                     className="settings__settings-group__apply-color__button"
-                    label="Apply color"
+                    label={intl.formatMessage(messages.applyColor)}
                     onClick={e => {
                       this.submit(e);
                     }}
@@ -1012,7 +1024,9 @@ class EditSettingsForm extends Component<IProps, IState> {
                     <p>{intl.formatMessage(messages.lockedPasswordInfo)}</p>
 
                     <Input
-                      placeholder="Lock after inactivity"
+                      placeholder={intl.formatMessage(
+                        messages.lockAfterInactivity,
+                      )}
                       onChange={e => this.submit(e)}
                       {...form.$('inactivityLock')}
                       autoFocus
@@ -1216,7 +1230,9 @@ class EditSettingsForm extends Component<IProps, IState> {
                         />
                         <Button
                           buttonType="secondary"
-                          label="Open Process Manager"
+                          label={intl.formatMessage(
+                            messages.buttonOpenProcessManager,
+                          )}
                           className="settings__open-settings-cache-button"
                           onClick={openProcessManager}
                         />

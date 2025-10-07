@@ -16,6 +16,10 @@ const messages = defineMessages({
     id: 'workspaces.switchingIndicator.switchingTo',
     defaultMessage: 'Switching to',
   },
+  allServices: {
+    id: 'workspaces.switchingIndicator.allServices',
+    defaultMessage: 'All services',
+  },
 });
 
 const wrapperTransition = window?.matchMedia(
@@ -70,7 +74,7 @@ class WorkspaceSwitchingIndicator extends Component<IProps> {
 
     const nextWorkspaceName = nextWorkspace
       ? nextWorkspace.name
-      : 'All services';
+      : intl.formatMessage(messages.allServices);
 
     return (
       <div className={classnames([classes.wrapper])}>
