@@ -985,6 +985,15 @@ export default class ServicesStore extends TypedStore {
 
         break;
       }
+      case 'set-loop-delay': {
+        debug('Received set-loop-delay request from', serviceId);
+        const defaultDelay = ms('2s');
+        let parsedData = ms(`${args[0]}`);
+        if (parsedData < defaultDelay) parsedData = defaultDelay;
+
+        service.pollDelay = parsedData;
+        break;
+      }
       // No default
     }
   }
@@ -1442,8 +1451,6 @@ export default class ServicesStore extends TypedStore {
   _initRecipePolling(serviceId: string) {
     const service = this.one(serviceId);
 
-    const delay = ms('2s');
-
     if (service) {
       if (service.timer !== null) {
         clearTimeout(service.timer);
@@ -1454,7 +1461,7 @@ export default class ServicesStore extends TypedStore {
 
         service.webview.send('poll');
 
-        service.timer = setTimeout(loop, delay);
+        service.timer = setTimeout(loop, service.pollDelay);
         service.lastPoll = Date.now();
       };
 

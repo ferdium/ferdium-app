@@ -126,6 +126,8 @@ export default class Service {
 
   @observable lastHibernated: number | null = null; // timestamp
 
+  @observable pollDelay: number = 2000; // interval for Recipe Polling
+
   @observable lastPoll: number = Date.now();
 
   @observable lastPollAnswer: number = Date.now();
