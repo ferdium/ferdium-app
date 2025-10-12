@@ -91,6 +91,10 @@ Route.group(() => {
   Route.delete('workspace/:id', 'WorkspaceController.delete');
   Route.post('workspace', 'WorkspaceController.create');
   Route.get('workspace', 'WorkspaceController.list');
+
+  // Webhook
+  Route.get('webhook', 'WebhookController.handleWebhook');
+  Route.post('webhook', 'WebhookController.handleWebhook');
 })
   .prefix(API_VERSION)
   .middleware(OnlyAllowFerdium);
