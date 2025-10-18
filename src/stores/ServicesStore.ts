@@ -481,6 +481,7 @@ export default class ServicesStore extends TypedStore {
       spellcheckerLanguage:
         SPELLCHECKER_LOCALES[this.stores.settings.app.spellcheckerLanguage],
       userAgentPref: '',
+      pollDelay: DEFAULT_SERVICE_SETTINGS.pollDelay,
       ...serviceData,
     };
 
@@ -983,15 +984,6 @@ export default class ServicesStore extends TypedStore {
         Object.assign(args[0].data, { serviceId });
         this.actions.todos.handleHostMessage(args[0]);
 
-        break;
-      }
-      case 'set-loop-delay': {
-        debug('Received set-loop-delay request from', serviceId);
-        const defaultDelay = ms('2s');
-        let parsedData = ms(`${args[0]}`);
-        if (parsedData < defaultDelay) parsedData = defaultDelay;
-
-        service.pollDelay = parsedData;
         break;
       }
       // No default

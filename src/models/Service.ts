@@ -126,7 +126,7 @@ export default class Service {
 
   @observable lastHibernated: number | null = null; // timestamp
 
-  @observable pollDelay: number = 2000; // interval for Recipe Polling
+  @observable pollDelay: number = DEFAULT_SERVICE_SETTINGS.pollDelay; // interval for Recipe Polling
 
   @observable lastPoll: number = Date.now();
 
@@ -239,7 +239,11 @@ export default class Service {
       data.isWakeUpEnabled,
       this.isWakeUpEnabled,
     );
-
+    this.pollDelay = ifUndefined<number>(
+      recipe.pollDelay <= data.pollDelay ? data.pollDelay : recipe.pollDelay,
+      this.pollDelay,
+    );
+    // console.log('ctor-recipe', recipe);
     // Check if "Hibernate on Startup" is enabled and hibernate all services except active one
     const { hibernateOnStartup } = window['ferdium'].stores.settings.app;
     // The service store is probably not loaded yet so we need to use localStorage data to get active service

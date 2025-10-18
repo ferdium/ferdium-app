@@ -25,6 +25,7 @@ interface RecipeData {
     local?: boolean;
     message?: string;
     allowFavoritesDelineationInUnreadCount?: boolean;
+    pollDelay?: number;
   };
   defaultIcon: string;
 }
@@ -51,6 +52,7 @@ export interface IRecipe {
   partition: string;
   local: boolean;
   defaultIcon: string;
+  pollDelay: number;
 
   readonly overrideUserAgent?: () => string;
 
@@ -112,6 +114,8 @@ export default class Recipe implements IRecipe {
   path = '';
 
   partition = '';
+
+  pollDelay = DEFAULT_SERVICE_SETTINGS.pollDelay;
 
   // TODO: Is this being used?
   local = false;
@@ -188,6 +192,7 @@ export default class Recipe implements IRecipe {
       data.config.allowFavoritesDelineationInUnreadCount,
       this.allowFavoritesDelineationInUnreadCount,
     );
+    this.pollDelay = ifUndefined<number>(data.config.pollDelay, this.pollDelay);
 
     // computed
     this.path = data.path;
