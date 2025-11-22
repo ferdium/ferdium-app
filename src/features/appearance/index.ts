@@ -12,6 +12,7 @@ import {
 } from '../../config';
 import { isLinux, isWindows } from '../../environment';
 import { userDataPath } from '../../environment-remote';
+import { workspaceStore } from '../workspaces';
 
 const STYLE_ELEMENT_ID = 'custom-appearance-style';
 
@@ -357,6 +358,24 @@ const generateCompactWorkspaceDrawerStyle = (
   `;
 };
 
+const generateWorkspaceDrawerTransform = (
+  widthStr,
+  useCompactWorkspaceDrawer,
+  isWorkspaceDrawerOpen,
+) => {
+  if (isWorkspaceDrawerOpen) {
+    return '';
+  }
+
+  const drawerWidth = useCompactWorkspaceDrawer ? Number(widthStr) : 300;
+
+  return `
+  .app__content {
+    transform: translateX(-${drawerWidth}px) !important;
+  }
+  `;
+};
+
 const generateVerticalStyle = (
   widthStr,
   alwaysShowWorkspaces,
@@ -422,7 +441,7 @@ const generateStyle = (settings, app) => {
     alwaysShowWorkspaces,
     showServiceName,
     useCompactWorkspaceDrawer,
-  } = settings;
+  } = settings.all ? settings.all.app : settings;
 
   const { isFullScreen } = app;
 
@@ -449,6 +468,12 @@ const generateStyle = (settings, app) => {
   style += generateCompactWorkspaceDrawerStyle(
     serviceRibbonWidth,
     useCompactWorkspaceDrawer,
+  );
+
+  style += generateWorkspaceDrawerTransform(
+    serviceRibbonWidth,
+    useCompactWorkspaceDrawer,
+    workspaceStore.isWorkspaceDrawerOpen,
   );
 
   if (shouldShowDragArea) {
@@ -510,10 +535,12 @@ export default function initAppearance(stores) {
       settings.all.app.useHorizontalStyle,
       settings.all.app.alwaysShowWorkspaces,
       settings.all.app.showServiceName,
+      settings.all.app.useCompactWorkspaceDrawer,
       app.isFullScreen,
+      workspaceStore.isWorkspaceDrawerOpen,
     ],
     () => {
-      updateStyle(settings.all.app, app);
+      updateStyle(settings, app);
     },
     { fireImmediately: true },
   );
