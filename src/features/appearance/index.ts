@@ -361,8 +361,8 @@ const generateCompactWorkspaceDrawerStyle = (
   `;
 };
 
-let isChangingRibbonWidth = false;
-let ribbonWidthTimeout: NodeJS.Timeout | null = null;
+let isChangingDrawerSettings = false;
+let drawerSettingsTimeout: NodeJS.Timeout | null = null;
 
 const generateWorkspaceDrawerTransform = (
   widthStr,
@@ -378,8 +378,8 @@ const generateWorkspaceDrawerTransform = (
   // When drawer is closed, apply transform
   const drawerWidth = useCompactWorkspaceDrawer ? Number(widthStr) : 300;
 
-  // Disable transition only when actively changing ribbon width
-  const transitionStyle = isChangingRibbonWidth
+  // Disable transition only when actively changing drawer settings (ribbon width or compact mode)
+  const transitionStyle = isChangingDrawerSettings
     ? 'transition: none !important;'
     : '';
 
@@ -437,6 +437,34 @@ const generateOpenWorkspaceStyle = () => {
   }
   .sidebar__button--workspaces {
     display: none;
+  }
+  `;
+};
+
+const generateAppContentTransition = alwaysShowWorkspaces => {
+  const widthTransition = window?.matchMedia(
+    '(prefers-reduced-motion: no-preference)',
+  )
+    ? 'width 0.5s ease'
+    : 'none';
+
+  // Disable all transitions when changing drawer settings
+  if (isChangingDrawerSettings) {
+    return `
+  .app .app__content {
+    transition: none !important;
+  }
+  `;
+  }
+
+  // Only add width transition when Always Show is active to prevent bounce
+  const transitionValue = alwaysShowWorkspaces
+    ? `transform 0.5s ease, ${widthTransition}`
+    : 'transform 0.5s ease';
+
+  return `
+  .app .app__content {
+    transition: ${transitionValue} !important;
   }
   `;
 };
@@ -511,6 +539,9 @@ const generateStyle = (settings, app) => {
     style += generateOpenWorkspaceStyle();
   }
 
+  // Always add transition to app__content for smooth animations
+  style += generateAppContentTransition(alwaysShowWorkspaces);
+
   style += generateUserCustomCSS();
 
   return style;
@@ -537,21 +568,30 @@ export default function initAppearance(stores) {
   createStyleElement();
   updateProgressbar(settings);
 
-  // Track ribbon width changes separately to disable transition temporarily
+  // Track drawer settings changes (ribbon width and compact mode) to disable transition temporarily
   reaction(
-    () => settings.all.app.serviceRibbonWidth,
+    () => [
+      settings.all.app.serviceRibbonWidth,
+      settings.all.app.useCompactWorkspaceDrawer,
+    ],
     () => {
-      if (ribbonWidthTimeout) {
-        clearTimeout(ribbonWidthTimeout);
-      }
-      isChangingRibbonWidth = true;
-      updateStyle(settings, app);
-
-      // Re-enable transition after a brief delay
-      ribbonWidthTimeout = setTimeout(() => {
-        isChangingRibbonWidth = false;
+      // Only disable transitions if drawer is closed and always show is off
+      if (
+        !workspaceStore.isWorkspaceDrawerOpen &&
+        !settings.all.app.alwaysShowWorkspaces
+      ) {
+        if (drawerSettingsTimeout) {
+          clearTimeout(drawerSettingsTimeout);
+        }
+        isChangingDrawerSettings = true;
         updateStyle(settings, app);
-      }, 50);
+
+        // Re-enable transition after a brief delay
+        drawerSettingsTimeout = setTimeout(() => {
+          isChangingDrawerSettings = false;
+          updateStyle(settings, app);
+        }, 50);
+      }
     },
   );
 
