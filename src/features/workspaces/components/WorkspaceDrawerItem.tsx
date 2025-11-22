@@ -52,6 +52,7 @@ const styles = theme => ({
       alignItems: 'center',
       justifyContent: 'center',
       textAlign: 'center',
+      fontSize: '16px',
     },
   },
   isActiveItem: {

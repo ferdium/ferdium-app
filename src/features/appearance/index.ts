@@ -575,11 +575,12 @@ export default function initAppearance(stores) {
       settings.all.app.useCompactWorkspaceDrawer,
     ],
     () => {
-      // Only disable transitions if drawer is closed and always show is off
-      if (
+      // Disable transitions only if drawer is closed and always show is off
+      const shouldDisableTransitions =
         !workspaceStore.isWorkspaceDrawerOpen &&
-        !settings.all.app.alwaysShowWorkspaces
-      ) {
+        !settings.all.app.alwaysShowWorkspaces;
+
+      if (shouldDisableTransitions) {
         if (drawerSettingsTimeout) {
           clearTimeout(drawerSettingsTimeout);
         }
@@ -591,6 +592,9 @@ export default function initAppearance(stores) {
           isChangingDrawerSettings = false;
           updateStyle(settings, app);
         }, 50);
+      } else {
+        // Always update style even when transitions should be enabled
+        updateStyle(settings, app);
       }
     },
   );
