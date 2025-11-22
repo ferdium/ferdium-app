@@ -344,9 +344,15 @@ const generateCompactWorkspaceDrawerStyle = (
   const itemHeight = width - tabItemWidthBias;
 
   return `
+  .workspaces-drawer.compact {
+    width: ${width}px !important;
+  }
   .workspaces-drawer [data-tooltip-id="tooltip-workspaces-drawer"].compact {
     height: ${itemHeight}px !important;
     min-height: ${itemHeight}px !important;
+  }
+  .app__service > div[class*="WorkspaceSwitchingIndicator-wrapper"] {
+    width: calc(100% - ${width}px) !important;
   }
   `;
 };
@@ -366,7 +372,7 @@ const generateVerticalStyle = (
     document.head.append(link);
   }
   const width = Number(widthStr);
-  const drawerWidth = useCompactWorkspaceDrawer ? 64 : 300;
+  const drawerWidth = useCompactWorkspaceDrawer ? width : 300;
 
   return `
   .sidebar {

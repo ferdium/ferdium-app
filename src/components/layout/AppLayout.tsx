@@ -68,7 +68,7 @@ const styles = (theme: {
       const { settings } = workspaceStore.stores;
 
       const drawerWidth = settings.all.app.useCompactWorkspaceDrawer
-        ? theme.workspaces.drawer.compactWidth
+        ? settings.all.app.serviceRibbonWidth
         : theme.workspaces.drawer.width;
 
       return workspaceStore.isWorkspaceDrawerOpen
