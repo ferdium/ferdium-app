@@ -358,20 +358,31 @@ const generateCompactWorkspaceDrawerStyle = (
   `;
 };
 
+let isChangingRibbonWidth = false;
+let ribbonWidthTimeout: NodeJS.Timeout | null = null;
+
 const generateWorkspaceDrawerTransform = (
   widthStr,
   useCompactWorkspaceDrawer,
   isWorkspaceDrawerOpen,
 ) => {
+  // When drawer is open, don't override - let JSS handle the transition
   if (isWorkspaceDrawerOpen) {
     return '';
   }
 
+  // When drawer is closed, apply transform
   const drawerWidth = useCompactWorkspaceDrawer ? Number(widthStr) : 300;
+
+  // Disable transition only when actively changing ribbon width
+  const transitionStyle = isChangingRibbonWidth
+    ? 'transition: none !important;'
+    : '';
 
   return `
   .app__content {
     transform: translateX(-${drawerWidth}px) !important;
+    ${transitionStyle}
   }
   `;
 };
@@ -521,12 +532,29 @@ export default function initAppearance(stores) {
   createStyleElement();
   updateProgressbar(settings);
 
+  // Track ribbon width changes separately to disable transition temporarily
+  reaction(
+    () => settings.all.app.serviceRibbonWidth,
+    () => {
+      if (ribbonWidthTimeout) {
+        clearTimeout(ribbonWidthTimeout);
+      }
+      isChangingRibbonWidth = true;
+      updateStyle(settings, app);
+
+      // Re-enable transition after a brief delay
+      ribbonWidthTimeout = setTimeout(() => {
+        isChangingRibbonWidth = false;
+        updateStyle(settings, app);
+      }, 50);
+    },
+  );
+
   // Update style when settings change
   reaction(
     () => [
       settings.all.app.accentColor,
       settings.all.app.progressbarAccentColor,
-      settings.all.app.serviceRibbonWidth,
       settings.all.app.iconSize,
       settings.all.app.showDragArea,
       settings.all.app.sidebarServicesLocation,
