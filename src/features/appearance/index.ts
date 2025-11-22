@@ -331,6 +331,26 @@ const generateShowDragAreaStyle = accentColor => {
   `;
 };
 
+const generateCompactWorkspaceDrawerStyle = (
+  widthStr,
+  useCompactWorkspaceDrawer,
+) => {
+  if (!useCompactWorkspaceDrawer) {
+    return '';
+  }
+
+  const width = Number(widthStr);
+  const tabItemWidthBias = 1;
+  const itemHeight = width - tabItemWidthBias;
+
+  return `
+  .workspaces-drawer [data-tooltip-id="tooltip-workspaces-drawer"].compact {
+    height: ${itemHeight}px !important;
+    min-height: ${itemHeight}px !important;
+  }
+  `;
+};
+
 const generateVerticalStyle = (
   widthStr,
   alwaysShowWorkspaces,
@@ -418,6 +438,11 @@ const generateStyle = (settings, app) => {
     grayscaleServicesDim,
     shouldShowDragArea,
     isFullScreen,
+  );
+
+  style += generateCompactWorkspaceDrawerStyle(
+    serviceRibbonWidth,
+    useCompactWorkspaceDrawer,
   );
 
   if (shouldShowDragArea) {
