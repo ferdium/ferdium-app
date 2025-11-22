@@ -195,12 +195,6 @@ class WorkspaceDrawer extends Component<IProps> {
           </span>
         </H1>
         <div className={`${classes.workspaces} ${compactClass}`}>
-          <div className={`${classes.workspaceNameContainer} ${compactClass}`}>
-            <div className={classes.workspaceName}>
-              {actualWorkspace?.name ||
-                intl.formatMessage(messages.allServices)}
-            </div>
-          </div>
           <div className={classes.workspacesList}>
             {!hideAllServicesWorkspace && (
               <WorkspaceDrawerItem
