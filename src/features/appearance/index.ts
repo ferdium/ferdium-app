@@ -368,9 +368,10 @@ const generateWorkspaceDrawerTransform = (
   widthStr,
   useCompactWorkspaceDrawer,
   isWorkspaceDrawerOpen,
+  alwaysShowWorkspaces,
 ) => {
-  // When drawer is open, don't override - let JSS handle the transition
-  if (isWorkspaceDrawerOpen) {
+  // When drawer is open or always show is enabled, don't override - let JSS handle the transition
+  if (isWorkspaceDrawerOpen || alwaysShowWorkspaces) {
     return '';
   }
 
@@ -431,8 +432,8 @@ const generateVerticalStyle = (
 const generateOpenWorkspaceStyle = () => {
   return `
   .app .app__content {
-    width: 100%;
-    transform: translateX(0px);
+    width: 100% !important;
+    transform: translateX(0px) !important;
   }
   .sidebar__button--workspaces {
     display: none;
@@ -488,6 +489,7 @@ const generateStyle = (settings, app) => {
     serviceRibbonWidth,
     useCompactWorkspaceDrawer,
     workspaceStore.isWorkspaceDrawerOpen,
+    alwaysShowWorkspaces,
   );
 
   if (shouldShowDragArea) {
