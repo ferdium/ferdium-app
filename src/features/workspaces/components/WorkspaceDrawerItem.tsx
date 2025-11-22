@@ -1,4 +1,5 @@
 import { Menu } from '@electron/remote';
+import { mdiApps } from '@mdi/js';
 import classnames from 'classnames';
 import type { MenuItemConstructorOptions } from 'electron';
 import { noop } from 'lodash';
@@ -10,6 +11,7 @@ import {
   injectIntl,
 } from 'react-intl';
 import withStyles, { type WithStylesProps } from 'react-jss';
+import Icon from '../../../components/ui/icon';
 import { altKey, cmdOrCtrlShortcutKey } from '../../../environment';
 import { acceleratorString } from '../../../jsUtils';
 
@@ -92,6 +94,12 @@ const styles = theme => ({
   activeServices: {
     color: theme.workspaces.drawer.listItem.services.active,
   },
+  icon: {
+    fill: theme.workspaces.drawer.listItem.name.color,
+  },
+  activeIcon: {
+    fill: theme.workspaces.drawer.listItem.name.activeColor,
+  },
 });
 
 interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
@@ -163,7 +171,22 @@ class WorkspaceDrawerItem extends Component<IProps> {
             compactClass,
           ])}
         >
-          {compactClass ? (shortcutIndex === 0 ? '*' : [...name][0]) : name}
+          {compactClass ? (
+            shortcutIndex === 0 ? (
+              <Icon
+                icon={mdiApps}
+                size={1.5}
+                className={classnames([
+                  classes.icon,
+                  isActive ? classes.activeIcon : null,
+                ])}
+              />
+            ) : (
+              [...name][0]
+            )
+          ) : (
+            name
+          )}
         </span>
         <span
           className={classnames([
