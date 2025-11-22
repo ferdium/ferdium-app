@@ -345,6 +345,9 @@ const generateCompactWorkspaceDrawerStyle = (
   const itemHeight = width - tabItemWidthBias;
 
   return `
+  .app--compact-workspace {
+    --workspace-drawer-width: ${width}px !important;
+  }
   .workspaces-drawer.compact {
     width: ${width}px !important;
   }
