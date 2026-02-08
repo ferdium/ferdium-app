@@ -14,7 +14,6 @@ import type ServiceModel from '../../../models/Service';
 import type { RealStores } from '../../../stores';
 import MediaSource from '../../MediaSource';
 import StatusBarTargetUrl from '../../ui/StatusBarTargetUrl';
-import WebviewLoader from '../../ui/WebviewLoader';
 import ServiceDisabled from './ServiceDisabled';
 import ServiceWebview from './ServiceWebview';
 import WebviewCrashHandler from './WebviewCrashHandler';
@@ -133,16 +132,8 @@ class ServiceView extends Component<IProps, IState> {
                 reload={reload}
               />
             )}
-            {service.isEnabled &&
-              service.isLoading &&
-              service.isFirstLoad &&
-              !service.isHibernating &&
-              !service.isServiceAccessRestricted && (
-                <WebviewLoader loaded={false} name={service.name} />
-              )}
             {service.isProgressbarEnabled &&
-              service.isLoadingPage &&
-              !service.isFirstLoad && <TopBarProgress />}
+              service.isLoadingPage && <TopBarProgress />}
             {service.isError && (
               <WebviewErrorHandler
                 name={service.recipe.name}
