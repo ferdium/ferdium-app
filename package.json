@@ -50,6 +50,7 @@
     "debug": "cross-env-shell DEBUG_COLORS=1 DEBUG=Ferdium:* pnpm start:all-dev"
   },
   "dependencies": {
+    "electron-webauthn-linux": "file:../electron-webauthn-linux",
     "@adonisjs/ace": "5.1.0",
     "@adonisjs/bodyparser": "2.3.0",
     "@adonisjs/cors": "1.0.7",

@@ -56,6 +56,7 @@ import { openExternalUrl } from './helpers/url-helpers';
 import userAgent from './helpers/userAgent-helpers';
 import generatedTranslations from './i18n/translations';
 import { darkThemeGrayDarkest } from './themes/legacy';
+import { setupWebAuthn } from 'electron-webauthn-linux';
 
 const debug = require('./preload-safe-debug')('Ferdium:App');
 
@@ -605,6 +606,16 @@ app.on('ready', () => {
   }
 
   initialize();
+
+  // Initialize WebAuthn/passkey support on Linux
+  if (isLinux) {
+    setupWebAuthn({
+      storagePath: userDataPath(),
+      enableHardwareKeys: true,
+    }).catch(err => {
+      debug('WebAuthn setup failed:', err.message);
+    });
+  }
 
   createWindow();
 });
