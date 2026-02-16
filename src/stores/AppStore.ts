@@ -410,9 +410,8 @@ export default class AppStore extends TypedStore {
   }
 
   _readSandboxes() {
-    this.sandboxServices = readJsonSync(
-      userDataPath('config', 'sandboxes.json'),
-    );
+    const data = readJsonSync(userDataPath('config', 'sandboxes.json'));
+    this.sandboxServices = Array.isArray(data) ? data : [];
   }
 
   _writeSandboxes() {

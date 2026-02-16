@@ -13,6 +13,11 @@ import {
 } from 'electron';
 
 import { initialize } from 'electron-react-titlebar/main';
+import {
+  hasStoredCredentials,
+  setupWebAuthn,
+  webauthnPageScript,
+} from 'electron-webauthn-linux';
 import windowStateKeeper from 'electron-window-state';
 import { emptyDirSync, ensureFileSync } from 'fs-extra';
 import minimist from 'minimist';
@@ -56,7 +61,6 @@ import { openExternalUrl } from './helpers/url-helpers';
 import userAgent from './helpers/userAgent-helpers';
 import generatedTranslations from './i18n/translations';
 import { darkThemeGrayDarkest } from './themes/legacy';
-import { setupWebAuthn } from 'electron-webauthn-linux';
 
 const debug = require('./preload-safe-debug')('Ferdium:App');
 
@@ -310,31 +314,40 @@ const createWindow = () => {
         });
       }
 
-      contents.setWindowOpenHandler(({ url, disposition }) => {
-        // OAuth popups (Google, Microsoft, etc.) are opened via window.open()
-        // and need window.opener preserved so the parent can receive the
-        // postMessage callback that completes the flow. Allow them as a child
-        // BrowserWindow that inherits the service partition.
-        if (disposition === 'new-window') {
-          return {
-            action: 'allow',
-            outlivesOpener: false,
-            overrideBrowserWindowOptions: {
-              parent: mainWindow,
-              fullscreenable: false,
-              webPreferences: { session: contents.session },
-            },
-          };
-        }
+      // Inject WebAuthn page script on Linux only when we have stored
+      // passkeys. When the credential store is empty, skip injection so
+      // sites use normal sign-in (password/2FA) without passkey prompts.
+      // The preload always exposes the IPC bridge for future create calls.
+      if (isLinux) {
+        contents.on('dom-ready', async () => {
+          try {
+            const url = contents.getURL();
+            const { hostname } = new URL(url);
+            const hasCreds = await hasStoredCredentials(hostname);
+            if (hasCreds) {
+              contents.executeJavaScript(webauthnPageScript).catch(() => {});
+            }
+          } catch {
+            // ignore - don't inject on invalid URLs
+          }
+        });
+      }
 
-        // Regular link clicks → open in the user's default browser.
+      contents.setWindowOpenHandler(({ url }) => {
+        // Allow same-root-domain popups (e.g. Google auth) to open
+        // as child windows within Ferdium instead of the external browser.
+        try {
+          const popupHost = new URL(url).hostname;
+          const currentHost = new URL(contents.getURL()).hostname;
+          const rootDomain = (h: string) => h.split('.').slice(-2).join('.');
+          if (rootDomain(popupHost) === rootDomain(currentHost)) {
+            return { action: 'allow' };
+          }
+        } catch {
+          // fall through
+        }
         openExternalUrl(url);
         return { action: 'deny' };
-      });
-
-      contents.on('did-create-window', child => {
-        enableWebContents(child.webContents);
-        child.webContents.setWebRTCIPHandlingPolicy(webRTCIPHandlingPolicy);
       });
 
       // Handle will download event from main process (prevent download dialog)
@@ -612,8 +625,8 @@ app.on('ready', () => {
     setupWebAuthn({
       storagePath: userDataPath(),
       enableHardwareKeys: true,
-    }).catch(err => {
-      debug('WebAuthn setup failed:', err.message);
+    }).catch(error => {
+      debug('WebAuthn setup failed:', error.message);
     });
   }
 

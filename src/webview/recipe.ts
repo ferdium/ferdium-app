@@ -33,7 +33,6 @@ import {
   notificationsClassDefinition,
 } from './notifications';
 import { getDisplayMediaSelector, screenShareJs } from './screenshare';
-import { webauthnPageScript } from 'electron-webauthn-linux';
 import SessionHandler from './sessionHandler';
 import {
   getSpellcheckerLocaleByFuzzyIdentifier,
@@ -133,17 +132,20 @@ contextBridge.exposeInMainWorld('ferdium', {
 });
 
 // Expose WebAuthn IPC bridge for passkey support on Linux
-contextBridge.exposeInMainWorld('electronWebAuthn', {
-  create: (options: any) => ipcRenderer.invoke('webauthn:create', options),
-  get: (options: any) => ipcRenderer.invoke('webauthn:get', options),
-});
+if (process.platform === 'linux') {
+  contextBridge.exposeInMainWorld('electronWebAuthn', {
+    create: (options: any) => ipcRenderer.invoke('webauthn:create', options),
+    get: (options: any) => ipcRenderer.invoke('webauthn:get', options),
+    hasCredentials: (rpId: string) =>
+      ipcRenderer.invoke('webauthn:hasCredentials', rpId),
+  });
+}
 
 ipcRenderer.sendToHost(
   'inject-js-unsafe',
   'window.open = window.ferdium.open;',
   notificationsClassDefinition,
   screenShareJs,
-  webauthnPageScript,
 );
 
 class RecipeController {
