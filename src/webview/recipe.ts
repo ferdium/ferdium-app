@@ -131,7 +131,9 @@ contextBridge.exposeInMainWorld('ferdium', {
   getDisplayMediaSelector,
 });
 
-// Expose WebAuthn IPC bridge for passkey support on Linux
+// Expose WebAuthn IPC bridge for passkey support on Linux.
+// Page script injection is done from the main process via CDP
+// (Page.addScriptToEvaluateOnNewDocument) which runs before page scripts.
 if (process.platform === 'linux') {
   contextBridge.exposeInMainWorld('electronWebAuthn', {
     create: (options: any) => ipcRenderer.invoke('webauthn:create', options),
