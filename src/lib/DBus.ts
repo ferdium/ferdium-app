@@ -105,9 +105,13 @@ export default class DBus {
         oldOwner !== newOwner &&
         newOwner !== ''
       ) {
-        // Leave ample time for the StatusNotifierWatcher to be initialized
+        // StatusNotifierWatcher reappeared (e.g. screen unlock on GNOME).
+        // DO NOT destroy and recreate the tray - Electron doesn't properly
+        // clean up D-Bus exports, causing "already exported" errors.
+        // Instead, force a setImage() call which writes the icon to a new
+        // temp file and updates the IconThemePath in the D-Bus properties.
         setTimeout(() => {
-          this.trayIcon.recreateIfVisible();
+          this.trayIcon.refreshTrayAfterWatcherRestart();
         }, 400);
       }
     });

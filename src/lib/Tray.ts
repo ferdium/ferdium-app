@@ -223,6 +223,25 @@ export default class TrayIcon {
     }
   }
 
+  /**
+   * Refresh the tray icon after a StatusNotifierWatcher restart (e.g. screen
+   * unlock on GNOME). Instead of destroying and recreating the Tray object
+   * (which fails because Electron doesn't clean up D-Bus exports), we call
+   * setImage() which forces Electron to write the icon to a new temp file
+   * and update the IconThemePath property in D-Bus.
+   */
+  refreshTrayAfterWatcherRestart(): void {
+    if (!this.visible || !this.tray) {
+      return;
+    }
+
+    const icon = this._getAsset(
+      'tray',
+      this._getAssetFromIndicator(this.indicator),
+    );
+    this.tray.setImage(icon);
+  }
+
   setIndicator(indicator: string | number): void {
     this.indicator = indicator;
     this._refreshIcon();
