@@ -3026,6 +3026,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "mbentley",
+      "name": "Matt Bentley",
+      "avatar_url": "https://avatars.githubusercontent.com/u/414445?v=4",
+      "profile": "https://blog.mbentley.net",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "commitType": "docs"
