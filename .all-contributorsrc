@@ -3044,6 +3044,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "danilofalcao",
+      "name": "Danilo Falcão",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4456855?v=4",
+      "profile": "https://fcon.fedorapeople.org",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "commitType": "docs"
