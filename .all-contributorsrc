@@ -3035,6 +3035,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "jotardo",
+      "name": "jotardo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/63938660?v=4",
+      "profile": "https://github.com/jotardo",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "commitType": "docs"
