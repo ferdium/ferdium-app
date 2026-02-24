@@ -3053,6 +3053,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "kurobeats",
+      "name": "Anthony Cozamanis",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4091936?v=4",
+      "profile": "https://kurobeats.github.io",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "commitType": "docs"
