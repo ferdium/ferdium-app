@@ -7,9 +7,6 @@ const debug = require('../preload-safe-debug')('Ferdium:UserAgent');
 
 export default class UserAgent {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _willNavigateListener = (_event: any): void => {};
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _didNavigateListener = (_event: any): void => {};
 
   @observable.ref webview: ElectronWebView = null;
@@ -78,26 +75,23 @@ export default class UserAgent {
   @action _handleNavigate(url: string): void {
     if (url.startsWith('https://accounts.google.com')) {
       debug('Setting user agent to chromeless for url', url);
-      // Set chromeless user agent (without Chrome version) for Google accounts
+      // Set chromeless user agent (without Chrome version) for Google accounts.
+      // Note: This is intentionally only called from did-navigate (after navigation
+      // completes), never from will-navigate or did-redirect-navigation. Setting
+      // webview.userAgent during a pending navigation or redirect chain causes
+      // Electron to cancel the navigation via SetUserAgentOverride(), which breaks
+      // cross-origin form POST requests (e.g. SAML ACS endpoints) and redirect chains.
       this.webview.userAgent =
         this.serviceUserAgentPref || this.userAgentWithoutChromeVersion;
     } else {
       debug('Setting user agent to default for url', url);
-      // Set default user agent for all other sites
       this.webview.userAgent =
         this.serviceUserAgentPref || this.defaultUserAgent;
     }
-    // Note: We don't reload the URL here (previously done with loadURL() on will-navigate)
-    // because it cancels POST requests, which breaks SSO/SAML authentication flows
-    // (e.g., ACS endpoint requests). The user agent change takes effect on the
-    // current navigation without needing a reload.
   }
 
   _addWebviewEvents(webview: ElectronWebView): void {
     debug('Adding event handlers');
-
-    this._willNavigateListener = event => this._handleNavigate(event.url);
-    webview.addEventListener('will-navigate', this._willNavigateListener);
 
     this._didNavigateListener = event => this._handleNavigate(event.url);
     webview.addEventListener('did-navigate', this._didNavigateListener);
@@ -106,7 +100,6 @@ export default class UserAgent {
   _removeWebviewEvents(webview: ElectronWebView): void {
     debug('Removing event handlers');
 
-    webview.removeEventListener('will-navigate', this._willNavigateListener);
     webview.removeEventListener('did-navigate', this._didNavigateListener);
   }
 }
