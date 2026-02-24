@@ -21,7 +21,7 @@
 
 [![Open Collective backers](https://img.shields.io/static/v1?label=Contribute%20on%20Open%20Collective&message=Donate%20to%20Ferdium&color=9cf&logo=open-collective)](https://opencollective.com/ferdium#category-CONTRIBUTE)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-327-default.svg?logo=github&color=6c64e4' alt='Contributors'/></a>
+<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-328-default.svg?logo=github&color=6c64e4' alt='Contributors'/></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 - [Ferdium](#ferdium)
@@ -509,6 +509,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href='https://blog.mbentley.net' title='Matt Bentley: code'><img src='https://avatars.githubusercontent.com/u/414445?v=4' alt='mbentley' style='width:100px;'/></a></td>
       <td align="center" valign="top" width="14.28%"><a href='https://github.com/jotardo' title='jotardo: code'><img src='https://avatars.githubusercontent.com/u/63938660?v=4' alt='jotardo' style='width:100px;'/></a></td>
       <td align="center" valign="top" width="14.28%"><a href='https://fcon.fedorapeople.org' title='Danilo Falcão: code'><img src='https://avatars.githubusercontent.com/u/4456855?v=4' alt='danilofalcao' style='width:100px;'/></a></td>
+      <td align="center" valign="top" width="14.28%"><a href='https://kurobeats.github.io' title='Anthony Cozamanis: code'><img src='https://avatars.githubusercontent.com/u/4091936?v=4' alt='kurobeats' style='width:100px;'/></a></td>
     </tr>
   </tbody>
 </table>
