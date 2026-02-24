@@ -14,14 +14,15 @@ import {
 
 import { initialize } from 'electron-react-titlebar/main';
 import {
+  getAuthenticatorManager,
   setupWebAuthn,
   webauthnPageScript,
-  getAuthenticatorManager,
 } from 'electron-webauthn-linux';
 import windowStateKeeper from 'electron-window-state';
 import { emptyDirSync, ensureFileSync } from 'fs-extra';
 import minimist from 'minimist';
 import ms from 'ms';
+import { getDomain } from 'tldts';
 import { enableWebContents, initializeRemote } from './electron-util';
 import enforceMacOSAppLocation from './enforce-macos-app-location';
 
@@ -433,45 +434,14 @@ const createWindow = () => {
 
                   break;
                 }
-                default:
+                default: {
                   debug(`CDP bridge: unknown method '${webauthnMethod}'`);
                   break;
+                }
               }
             } catch (error: any) {
               debug('CDP bridge call parse error:', error.message);
             }
-          }
-        });
-
-        // Diagnostic: check WebAuthn API state after page loads
-        contents.on('dom-ready', () => {
-          const url = contents.getURL();
-          if (url.includes('google.com') || url.includes('myaccount')) {
-            contents
-              .executeJavaScript(
-                `
-              (function() {
-                var results = [];
-                results.push('DIAG URL: ' + location.href);
-                results.push('DIAG PublicKeyCredential exists: ' + (typeof PublicKeyCredential !== 'undefined'));
-                results.push('DIAG navigator.credentials exists: ' + !!navigator.credentials);
-                results.push('DIAG window.electronWebAuthn exists: ' + !!window.electronWebAuthn);
-                results.push('DIAG __webauthnBridge exists: ' + (typeof __webauthnBridge !== 'undefined'));
-                if (typeof PublicKeyCredential !== 'undefined') {
-                  PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable()
-                    .then(function(r) { console.log('DIAG isUVPAA result: ' + r); })
-                    .catch(function(e) { console.log('DIAG isUVPAA error: ' + e.message); });
-                }
-                results.push('DIAG navigator.credentials.create patched: ' + (navigator.credentials.create && navigator.credentials.create.toString().includes('webauthnBridge')));
-                if (navigator.userAgentData) {
-                  results.push('DIAG userAgentData.brands: ' + JSON.stringify(navigator.userAgentData.brands));
-                }
-                results.forEach(function(r) { console.log(r); });
-                return 'diagnostics sent';
-              })();
-            `,
-              )
-              .catch((error: any) => debug('Diagnostic eval failed:', error));
           }
         });
       } catch (error) {
@@ -483,8 +453,9 @@ const createWindow = () => {
       enableWebContents(contents);
 
       // Set permission handlers on service webview sessions.
-      // This explicitly allows safe permissions and denies unknown ones,
-      // and enables HID/USB/Serial for hardware FIDO2 security key detection.
+      // setPermissionRequestHandler allows safe permissions and denies unknown ones.
+      // setPermissionCheckHandler additionally allows hid/serial/usb feature detection
+      // (actual device access is gated by select-hid-device/select-usb-device events).
       const ses = contents.session;
       if (!(ses as any)._permissionHandlersSet) {
         (ses as any)._permissionHandlersSet = true;
@@ -534,13 +505,15 @@ const createWindow = () => {
       }
 
       contents.setWindowOpenHandler(({ url }) => {
-        // Allow same-root-domain popups (e.g. Google auth) to open
+        // Allow same-domain popups (e.g. Google auth) to open
         // as child windows within Ferdium instead of the external browser.
+        // Uses tldts for correct eTLD+1 matching (handles .co.uk, .com.au, etc.)
         try {
           const popupHost = new URL(url).hostname;
           const currentHost = new URL(contents.getURL()).hostname;
-          const rootDomain = (h: string) => h.split('.').slice(-2).join('.');
-          if (rootDomain(popupHost) === rootDomain(currentHost)) {
+          const popupDomain = getDomain(popupHost);
+          const currentDomain = getDomain(currentHost);
+          if (popupDomain && currentDomain && popupDomain === currentDomain) {
             return { action: 'allow' };
           }
         } catch {

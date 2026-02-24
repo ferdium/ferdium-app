@@ -245,6 +245,9 @@ importers:
       tinycolor2:
         specifier: 1.6.0
         version: 1.6.0
+      tldts:
+        specifier: 7.0.23
+        version: 7.0.23
       tslib:
         specifier: 2.7.0
         version: 2.7.0
@@ -7123,6 +7126,13 @@ packages:
   titleize@3.0.0:
     resolution: {integrity: sha512-KxVu8EYHDPBdUYdKZdKtU2aj2XfEx9AfjXxE/Aj0vT06w2icA09Vus1rh6eSu1y01akYg6BjIK/hxyLJINoMLQ==}
     engines: {node: '>=12'}
+
+  tldts-core@7.0.23:
+    resolution: {integrity: sha512-0g9vrtDQLrNIiCj22HSe9d4mLVG3g5ph5DZ8zCKBr4OtrspmNB6ss7hVyzArAeE88ceZocIEGkyW1Ime7fxPtQ==}
+
+  tldts@7.0.23:
+    resolution: {integrity: sha512-ASdhgQIBSay0R/eXggAkQ53G4nTJqTXqC2kbaBbdDwM7SkjyZyO0OaaN1/FH7U/yCeqOHDwFO5j8+Os/IS1dXw==}
+    hasBin: true
 
   tmp-promise@3.0.3:
     resolution: {integrity: sha512-RwM7MoPojPxsOBYnyd2hy0bxtIlVrihNs9pj5SUvY8Zz1sQcQG2tG1hSr8PDxfgEB8RNKDhqbIlroIarSNDNsQ==}
@@ -16036,6 +16046,12 @@ snapshots:
   tinyexec@0.3.0: {}
 
   titleize@3.0.0: {}
+
+  tldts-core@7.0.23: {}
+
+  tldts@7.0.23:
+    dependencies:
+      tldts-core: 7.0.23
 
   tmp-promise@3.0.3:
     dependencies:
