@@ -442,9 +442,10 @@ const generateOpenWorkspaceStyle = () => {
 };
 
 const generateAppContentTransition = alwaysShowWorkspaces => {
-  const widthTransition = window?.matchMedia(
+  const reducedMotionQuery = window?.matchMedia?.(
     '(prefers-reduced-motion: no-preference)',
-  )
+  );
+  const widthTransition = reducedMotionQuery?.matches
     ? 'width 0.5s ease'
     : 'none';
 
@@ -484,7 +485,7 @@ const generateStyle = (settings, app) => {
     alwaysShowWorkspaces,
     showServiceName,
     useCompactWorkspaceDrawer,
-  } = settings.all ? settings.all.app : settings;
+  } = settings;
 
   const { isFullScreen } = app;
 
@@ -558,15 +559,16 @@ const updateProgressbar = settings => {
 };
 
 const updateStyle = (settings, app) => {
-  const style = generateStyle(settings, app);
+  const appSettings = settings.all?.app ?? settings;
+  const style = generateStyle(appSettings, app);
   setAppearance(style);
-  updateProgressbar(settings);
+  updateProgressbar(appSettings);
 };
 
 export default function initAppearance(stores) {
   const { settings, app } = stores;
   createStyleElement();
-  updateProgressbar(settings);
+  updateProgressbar(settings.all.app);
 
   // Track drawer settings changes (ribbon width and compact mode) to disable transition temporarily
   reaction(

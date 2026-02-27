@@ -45,12 +45,9 @@ const messages = defineMessages({
 const styles = theme => ({
   drawer: {
     background: theme.workspaces.drawer.background,
-    width: `${theme.workspaces.drawer.width}px`,
+    width: 'var(--workspace-drawer-width)',
     display: 'flex',
     flexDirection: 'column',
-    '&.compact': {
-      width: `${theme.workspaces.drawer.compactWidth}px`,
-    },
   },
   headline: {
     fontSize: '24px',
@@ -206,7 +203,7 @@ class WorkspaceDrawer extends Component<IProps> {
                 services={getServicesForWorkspace(null)}
                 isActive={actualWorkspace == null}
                 shortcutIndex={0}
-                compactClass={compactClass}
+                isCompact={useCompactWorkspaceDrawer}
               />
             )}
             {workspaces.map((workspace, index) => (
@@ -226,7 +223,7 @@ class WorkspaceDrawer extends Component<IProps> {
                 }
                 services={getServicesForWorkspace(workspace)}
                 shortcutIndex={index + 1}
-                compactClass={compactClass}
+                isCompact={useCompactWorkspaceDrawer}
               />
             ))}
           </div>

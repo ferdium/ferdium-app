@@ -23,9 +23,16 @@ const debug = require('../../preload-safe-debug')(
 
 // Calculate animation duration based on user's motion preferences
 const getDrawerAnimationDuration = () => {
-  const prefersReducedMotion = window?.matchMedia(
+  if (
+    typeof window === 'undefined' ||
+    typeof window.matchMedia !== 'function'
+  ) {
+    return 500;
+  }
+
+  const prefersReducedMotion = window.matchMedia(
     '(prefers-reduced-motion: reduce)',
-  )?.matches;
+  ).matches;
   return prefersReducedMotion ? 0 : 500;
 };
 

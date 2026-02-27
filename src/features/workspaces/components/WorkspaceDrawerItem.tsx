@@ -109,7 +109,7 @@ interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
   services: string[];
   onContextMenuEditClick?: (() => void) | null;
   shortcutIndex: number;
-  compactClass: string;
+  isCompact: boolean;
 }
 
 @observer
@@ -124,8 +124,10 @@ class WorkspaceDrawerItem extends Component<IProps> {
       services,
       shortcutIndex,
       intl,
-      compactClass,
+      isCompact,
     } = this.props;
+
+    const compactClass = isCompact ? 'compact' : '';
 
     const contextMenuTemplate: MenuItemConstructorOptions[] = [
       {
@@ -158,6 +160,7 @@ class WorkspaceDrawerItem extends Component<IProps> {
           }
         }}
         onKeyDown={noop}
+        aria-label={isCompact ? name : undefined}
         data-tooltip-id="tooltip-workspaces-drawer"
         data-tooltip-content={acceleratorString({
           index: shortcutIndex,
