@@ -13,11 +13,7 @@ import {
 } from 'electron';
 
 import { initialize } from 'electron-react-titlebar/main';
-import {
-  getAuthenticatorManager,
-  setupWebAuthn,
-  webauthnPageScript,
-} from 'electron-webauthn-linux';
+import { setupWebAuthn } from 'electron-webauthn-linux';
 import windowStateKeeper from 'electron-window-state';
 import { emptyDirSync, ensureFileSync } from 'fs-extra';
 import minimist from 'minimist';
@@ -261,194 +257,6 @@ const createWindow = () => {
   });
 
   app.on('web-contents-created', (_e, contents) => {
-    // Inject WebAuthn page script into ALL content types on Linux via CDP.
-    // This covers both service webviews AND popup windows (e.g. Google passkey settings).
-    // Page.addScriptToEvaluateOnNewDocument runs BEFORE page scripts,
-    // in the main world — the only reliable way to monkey-patch
-    // navigator.credentials before sites like Google check it.
-    if (isLinux) {
-      contents.on('console-message', (_event, _level, message) => {
-        if (
-          message.includes('webauthn') ||
-          message.includes('WebAuthn') ||
-          message.includes('DIAG')
-        ) {
-          debug('WebView console:', message);
-        }
-      });
-
-      try {
-        contents.debugger.attach('1.3');
-        const contentType = contents.getType();
-        debug(
-          `Debugger attached to ${contentType}, injecting WebAuthn page script`,
-        );
-
-        // Enable Page domain so addScriptToEvaluateOnNewDocument persists across navigations
-        contents.debugger.sendCommand('Page.enable', {}).catch(error => {
-          debug('CDP Page.enable failed:', error);
-        });
-
-        // Inject page script before any page JS runs
-        contents.debugger
-          .sendCommand('Page.addScriptToEvaluateOnNewDocument', {
-            source: webauthnPageScript,
-            worldName: '',
-            runImmediately: true,
-          })
-          .then(result => {
-            debug('WebAuthn page script registered via CDP:', result);
-          })
-          .catch(error => {
-            debug('CDP addScriptToEvaluateOnNewDocument failed:', error);
-          });
-
-        // Set up Runtime.addBinding for popup windows that lack a preload script.
-        // This creates a __webauthnBridge function in the page context that triggers
-        // Runtime.bindingCalled events in our debugger listener.
-        contents.debugger
-          .sendCommand('Runtime.addBinding', {
-            name: '__webauthnBridge',
-          })
-          .catch(error => {
-            debug('CDP Runtime.addBinding failed:', error);
-          });
-
-        contents.debugger.sendCommand('Runtime.enable', {}).catch(error => {
-          debug('CDP Runtime.enable failed:', error);
-        });
-
-        // Handle CDP binding calls from popup windows
-        contents.debugger.on('message', (_event, method, params) => {
-          if (
-            method === 'Runtime.bindingCalled' &&
-            params.name === '__webauthnBridge'
-          ) {
-            const manager = getAuthenticatorManager();
-            if (!manager) {
-              debug('CDP bridge: manager not available');
-              return;
-            }
-            try {
-              const {
-                id,
-                method: webauthnMethod,
-                arg,
-              } = JSON.parse(params.payload);
-              const ctxId = params.executionContextId;
-              debug(
-                `CDP bridge call: method=${webauthnMethod} id=${id} ctxId=${ctxId}`,
-              );
-
-              const sendResponse = (error: string | null, result: any) => {
-                debug(
-                  `CDP bridge response: id=${id} error=${error} hasResult=${result != null}`,
-                );
-                const response = JSON.stringify({ id, error, result });
-                contents.debugger
-                  .sendCommand('Runtime.evaluate', {
-                    expression: `window.__webauthnCallback(${JSON.stringify(response)})`,
-                    contextId: ctxId,
-                  })
-                  .then(() => {
-                    debug(`CDP bridge callback delivered: id=${id}`);
-                  })
-                  .catch(error_ => {
-                    debug('CDP Runtime.evaluate callback failed:', error_);
-                  });
-              };
-
-              switch (webauthnMethod) {
-                case 'hasCredentials': {
-                  manager
-                    .getAvailableBackendsForGet(arg)
-                    .then(backends => {
-                      debug(
-                        `CDP bridge hasCredentials(${arg}): ${backends.length} backends`,
-                      );
-                      sendResponse(null, backends.length > 0);
-                    })
-                    .catch(error => {
-                      debug(
-                        `CDP bridge hasCredentials error: ${error.message}`,
-                      );
-                      sendResponse(error.message, null);
-                    });
-
-                  break;
-                }
-                case 'create': {
-                  manager
-                    .getAvailableBackendsForCreate()
-                    .then(async backends => {
-                      debug(
-                        `CDP bridge create: ${backends.length} backends available`,
-                      );
-                      if (backends.length === 0)
-                        throw new Error('No WebAuthn authenticator available');
-                      const result = await manager.createCredential(
-                        arg,
-                        backends[0],
-                      );
-                      debug(
-                        'CDP bridge create: credential created successfully',
-                      );
-                      sendResponse(null, result);
-                    })
-                    .catch(error => {
-                      debug(`CDP bridge create error: ${error.message}`);
-                      sendResponse(error.message, null);
-                    });
-
-                  break;
-                }
-                case 'get': {
-                  const rpId = arg.rpId || '';
-                  debug(
-                    `CDP bridge get: rpId=${rpId} allowCredentials=${arg.allowCredentials?.length || 0}`,
-                  );
-                  manager
-                    .getAvailableBackendsForGet(
-                      rpId,
-                      arg.allowCredentials?.map((c: any) => c.id),
-                    )
-                    .then(async backends => {
-                      debug(
-                        `CDP bridge get: ${backends.length} matching backends`,
-                      );
-                      if (backends.length === 0)
-                        throw new Error(
-                          'NoCredentials: No passkeys found for this site.',
-                        );
-                      const result = await manager.getAssertion(
-                        arg,
-                        backends[0],
-                      );
-                      debug('CDP bridge get: assertion retrieved successfully');
-                      sendResponse(null, result);
-                    })
-                    .catch(error => {
-                      debug(`CDP bridge get error: ${error.message}`);
-                      sendResponse(error.message, null);
-                    });
-
-                  break;
-                }
-                default: {
-                  debug(`CDP bridge: unknown method '${webauthnMethod}'`);
-                  break;
-                }
-              }
-            } catch (error: any) {
-              debug('CDP bridge call parse error:', error.message);
-            }
-          }
-        });
-      } catch (error) {
-        debug('Failed to attach debugger for WebAuthn injection:', error);
-      }
-    }
-
     if (contents.getType() === 'webview') {
       enableWebContents(contents);
 
@@ -514,6 +322,24 @@ const createWindow = () => {
           const popupDomain = getDomain(popupHost);
           const currentDomain = getDomain(currentHost);
           if (popupDomain && currentDomain && popupDomain === currentDomain) {
+            // On Linux, give popup windows a WebAuthn preload so passkey
+            // flows work in auth popups (they don't get the recipe preload).
+            if (isLinux) {
+              return {
+                action: 'allow',
+                overrideBrowserWindowOptions: {
+                  webPreferences: {
+                    preload: join(
+                      __dirname,
+                      'webview',
+                      'webauthn-popup-preload.js',
+                    ),
+                    contextIsolation: true,
+                    sandbox: true,
+                  },
+                },
+              };
+            }
             return { action: 'allow' };
           }
         } catch {

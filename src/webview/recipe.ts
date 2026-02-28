@@ -131,15 +131,26 @@ contextBridge.exposeInMainWorld('ferdium', {
   getDisplayMediaSelector,
 });
 
-// Expose WebAuthn IPC bridge for passkey support on Linux.
-// Page script injection is done from the main process via CDP
-// (Page.addScriptToEvaluateOnNewDocument) which runs before page scripts.
+// WebAuthn/passkey support on Linux.
+// Expose the IPC bridge and inject the page script into the main world
+// BEFORE page scripts run, so navigator.credentials is patched in time.
 if (process.platform === 'linux') {
   contextBridge.exposeInMainWorld('electronWebAuthn', {
     create: (options: any) => ipcRenderer.invoke('webauthn:create', options),
     get: (options: any) => ipcRenderer.invoke('webauthn:get', options),
     hasCredentials: (rpId: string) =>
       ipcRenderer.invoke('webauthn:hasCredentials', rpId),
+  });
+
+  // Inject page script at document-start (before any page JS).
+  // The <script> element runs in the main world (world 0), not the
+  // isolated preload world, which is what we need for monkey-patching.
+  const { webauthnPageScript } = require('electron-webauthn-linux');
+  process.once('document-start', () => {
+    const script = document.createElement('script');
+    script.textContent = webauthnPageScript;
+    document.documentElement.append(script);
+    script.remove();
   });
 }
 
