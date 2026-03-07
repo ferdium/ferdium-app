@@ -42,6 +42,8 @@ class RecipeWebview {
 
   toggleToTalkFunc = () => null;
 
+  rescanConversationFunc = () => null;
+
   darkModeHandler: ((darkMode: boolean, config: any) => void) | null = null;
 
   // TODO Remove this once we implement a proper wrapper.
@@ -203,6 +205,16 @@ class RecipeWebview {
 
   toggleToTalk(fn) {
     this.toggleToTalkFunc = fn;
+  }
+
+  setRescanConversationHandler(fn) {
+    if (typeof fn === 'function') {
+      this.rescanConversationFunc = fn;
+    }
+  }
+
+  rescanConversation() {
+    this.rescanConversationFunc();
   }
 }
 

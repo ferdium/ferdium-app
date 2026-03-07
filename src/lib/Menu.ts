@@ -96,6 +96,10 @@ export const menuItems = defineMessages({
     id: 'menu.edit.findInPage',
     defaultMessage: 'Find in Page',
   },
+  rescanCurrentConversation: {
+    id: 'menu.view.rescanCurrentConversation',
+    defaultMessage: 'Rescan Current Conversation',
+  },
   speech: {
     id: 'menu.edit.speech',
     defaultMessage: 'Speech',
@@ -459,6 +463,22 @@ function titleBarTemplateFactory(
             window['ferdium'].actions.service.sendIPCMessage({
               serviceId: activeService.id,
               channel: 'find-in-page',
+              args: {},
+            });
+          },
+        },
+        {
+          label: intl.formatMessage(menuItems.rescanCurrentConversation),
+          accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+${altKey()}+S`,
+          click() {
+            const activeService = getActiveService();
+            if (!activeService) {
+              return;
+            }
+            activeService.webview.focus();
+            window['ferdium'].actions.service.sendIPCMessage({
+              serviceId: activeService.id,
+              channel: 'aihub-rescan-conversation',
               args: {},
             });
           },

@@ -181,6 +181,7 @@
   "menu.view.reloadFerdium": "Reload Ferdium",
   "menu.view.reloadService": "Reload Service",
   "menu.view.reloadTodos": "Reload ToDos",
+  "menu.view.rescanCurrentConversation": "Rescan Current Conversation",
   "menu.view.resetZoom": "Actual Size",
   "menu.view.splitModeToggle": "Toggle Split Mode",
   "menu.view.toggleDarkMode": "Toggle Dark Mode",
