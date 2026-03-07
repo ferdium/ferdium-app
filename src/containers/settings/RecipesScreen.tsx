@@ -1,4 +1,4 @@
-import { readJsonSync } from 'fs-extra';
+import { pathExistsSync, readJsonSync } from 'fs-extra';
 import { type IReactionDisposer, autorun } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
@@ -10,7 +10,6 @@ import ErrorBoundary from '../../components/util/ErrorBoundary';
 import withParams from '../../components/util/WithParams';
 import { CUSTOM_WEBSITE_RECIPE_ID, FERDIUM_DEV_DOCS } from '../../config';
 import { userDataRecipesPath } from '../../environment-remote';
-import { communityRecipesStore } from '../../features/communityRecipes';
 import { asarRecipesPath } from '../../helpers/asar-helpers';
 import { openPath } from '../../helpers/url-helpers';
 import type Recipe from '../../models/Recipe';
@@ -35,7 +34,10 @@ class RecipesScreen extends Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
-    this.customRecipes = readJsonSync(asarRecipesPath('all.json'));
+    const allJsonPath = asarRecipesPath('all.json');
+    this.customRecipes = pathExistsSync(allJsonPath)
+      ? readJsonSync(allJsonPath)
+      : [];
     this.state = {
       needle: null,
       currentFilter: 'featured',
@@ -101,7 +103,14 @@ class RecipesScreen extends Component<IProps, IState> {
 
   // Create an array of RecipePreviews from an array of recipe objects
   createPreviews(recipes: Recipe[]) {
-    return recipes.map((recipe: any) => new RecipePreview(recipe));
+    return recipes.map(
+      (recipe: any) =>
+        new RecipePreview({
+          ...recipe,
+          icon: recipe.icon || recipe.icons?.svg || '',
+          isDevRecipe: recipe.local,
+        }),
+    );
   }
 
   resetSearch(): void {
@@ -112,6 +121,8 @@ class RecipesScreen extends Component<IProps, IState> {
     const { recipePreviews, recipes, services } = this.props.stores!;
     const { app: appActions, service: serviceActions } = this.props.actions!;
     const filter = this.state.currentFilter;
+    const devRecipes = recipes.all.filter(recipe => recipe.local);
+    const devRecipePreviews = this.createPreviews(devRecipes);
 
     let recipeFilter;
 
@@ -121,7 +132,7 @@ class RecipesScreen extends Component<IProps, IState> {
         ...this.createPreviews(this.customRecipes),
       ]);
     } else if (filter === 'dev') {
-      recipeFilter = communityRecipesStore.communityRecipes;
+      recipeFilter = this.prepareRecipes(devRecipePreviews);
     } else {
       recipeFilter = recipePreviews.featured;
     }
@@ -132,11 +143,11 @@ class RecipesScreen extends Component<IProps, IState> {
       needle === null
         ? recipeFilter
         : this.prepareRecipes([
-            // All search recipes from server
-            ...recipePreviews.searchResults,
+            // All search recipes from current source
+            ...(filter === 'dev' ? [] : recipePreviews.searchResults),
             // All search recipes from local recipes
             ...this.createPreviews(
-              this.customRecipes.filter(
+              [...this.customRecipes, ...devRecipes].filter(
                 (recipe: Recipe) =>
                   recipe.name.toLowerCase().includes(needle.toLowerCase()) ||
                   (recipe.aliases || []).some(alias =>

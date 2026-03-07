@@ -9,7 +9,13 @@ import {
 } from '@electron/remote';
 import AutoLaunch from 'auto-launch';
 import { ipcRenderer } from 'electron';
-import { readJsonSync, readdirSync, writeJsonSync } from 'fs-extra';
+import {
+  ensureDirSync,
+  pathExistsSync,
+  readJsonSync,
+  readdirSync,
+  writeJsonSync,
+} from 'fs-extra';
 import { action, computed, makeObservable, observable } from 'mobx';
 import moment from 'moment';
 import ms from 'ms';
@@ -373,6 +379,10 @@ export default class AppStore extends TypedStore {
   _initializeSandboxes() {
     this._readSandboxes();
 
+    if (!pathExistsSync(userDataPath('Partitions'))) {
+      return;
+    }
+
     // Check partitions of the sandboxes that no longer exist
     const dir = readdirSync(userDataPath('Partitions'));
     dir
@@ -410,9 +420,14 @@ export default class AppStore extends TypedStore {
   }
 
   _readSandboxes() {
-    this.sandboxServices = readJsonSync(
-      userDataPath('config', 'sandboxes.json'),
-    );
+    const sandboxesPath = userDataPath('config', 'sandboxes.json');
+
+    if (!pathExistsSync(sandboxesPath)) {
+      this.sandboxServices = [];
+      return;
+    }
+
+    this.sandboxServices = readJsonSync(sandboxesPath);
   }
 
   _writeSandboxes() {
@@ -424,10 +439,10 @@ export default class AppStore extends TypedStore {
       ),
     }));
 
-    writeJsonSync(
-      userDataPath('config', 'sandboxes.json'),
-      this.sandboxServices,
-    );
+    const sandboxesPath = userDataPath('config', 'sandboxes.json');
+    ensureDirSync(userDataPath('config'));
+
+    writeJsonSync(sandboxesPath, this.sandboxServices);
   }
 
   @computed get cacheSize() {
