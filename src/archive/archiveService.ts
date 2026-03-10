@@ -1,154 +1,31 @@
-import { join } from 'node:path';
-import { pathExistsSync, readdirSync, removeSync } from 'fs-extra';
-import sanitizeFilename from 'sanitize-filename';
 import type Service from '../models/Service';
+import { archivePaths, getArchiveDb, run } from './db';
+import { resolveConversationIdentity } from './conversationKeyResolver';
+import { upsertAccount, upsertConversation } from './conversationUpsertService';
+import { exportArchiveIndex } from './index/archiveIndexExporter';
 import {
-  all,
-  archivePaths,
-  getArchiveDb,
-  run,
-  stableHash,
-  writeConversationMarkdown,
-  writeLatestMarkdown,
-} from './db';
+  replaceConversationMessagesForFullScan,
+  updateLastAssistantMessage,
+  upsertIncrementalMessages,
+} from './messageUpsertService';
+import { exportConversationMarkdown } from './markdownExporter';
+import type { ArchiveIncrementalPayload, ArchiveScanPayload } from './types';
 
-type ScanMessage = {
-  seq: number;
-  role: 'user' | 'assistant' | 'system';
-  text: string;
-  markdown?: string;
-  html?: string;
-  id?: string;
-};
-
-type ScanPayload = {
-  platform?: string;
-  title?: string;
-  model?: string;
-  currentUrl?: string;
-  messageCount?: number;
-  messages?: ScanMessage[];
-};
-
-type ArchiveMessageRow = {
-  seq: number;
-  role: string;
-  sender_label: string | null;
-  content_md: string;
-  content_text: string;
-};
-
-function getAccountId(service: Service): string {
-  return stableHash(`account|${service.partition || service.id}`);
+function getNormalizedMessages(payload: { messages?: any[] }) {
+  return (payload.messages || []).filter(message => message?.text?.trim());
 }
 
-function getVendorConversationId(payload: ScanPayload): string | null {
-  if (!payload.currentUrl) {
-    return null;
-  }
-
-  const match = payload.currentUrl.match(/\/c\/([^#/?]+)/);
-  return match?.[1] || null;
-}
-
-function getConversationId(service: Service, payload: ScanPayload): string {
-  const vendorConversationId = getVendorConversationId(payload);
-
-  if (vendorConversationId) {
-    return stableHash(
-      `conversation|${getAccountId(service)}|${vendorConversationId}`,
-    );
-  }
-
-  return stableHash(
-    `conversation|${getAccountId(service)}|${payload.currentUrl || 'unknown-url'}`,
-  );
-}
-
-function getAccountLabel(service: Service): string {
-  return service.name || service.recipe?.name || 'unknown';
-}
-
-function slugifyTitle(title: string): string {
-  const safe = sanitizeFilename(title || 'Conversation')
-    .replaceAll(/\s+/g, '-')
-    .replaceAll(/-+/g, '-')
-    .replaceAll(/^-|-$/g, '');
-
-  return safe || 'Conversation';
-}
-
-function getConversationFileKey(
-  service: Service,
-  payload: ScanPayload,
-): string {
-  return (
-    getVendorConversationId(payload) || getConversationId(service, payload)
-  );
-}
-
-function getConversationFilename(
-  service: Service,
-  payload: ScanPayload,
-): string {
-  return `${getConversationFileKey(service, payload)}-${slugifyTitle(
-    payload.title || service.name || 'Conversation',
-  )}.md`;
-}
-
-function removeStaleConversationMarkdowns(
-  fileKey: string,
-  nextFilename: string,
+async function exportArchiveArtifacts(
+  db: any,
+  identity: ReturnType<typeof resolveConversationIdentity>,
 ) {
-  if (!pathExistsSync(archivePaths.conversationsDir)) {
-    return;
-  }
+  const exportResult = await exportConversationMarkdown(db, identity);
+  const indexResult = await exportArchiveIndex(db);
 
-  const filenames = readdirSync(archivePaths.conversationsDir);
-
-  filenames
-    .filter(
-      filename =>
-        filename.startsWith(`${fileKey}-`) && filename !== nextFilename,
-    )
-    .forEach(filename => {
-      removeSync(join(archivePaths.conversationsDir, filename));
-    });
-}
-
-function toSenderLabel(message: ScanMessage): string {
-  if (message.role === 'user') {
-    return 'You';
-  }
-
-  if (message.role === 'assistant') {
-    return 'Assistant';
-  }
-
-  return 'System';
-}
-
-function toMarkdown(
-  messages: ArchiveMessageRow[],
-  title: string,
-  sourceUrl?: string,
-) {
-  const lines = [`# ${title || 'Conversation'}`, ''];
-
-  if (sourceUrl) {
-    lines.push(`Source: ${sourceUrl}`, '');
-  }
-
-  for (const message of messages) {
-    lines.push(
-      `## ${message.seq}. ${message.sender_label || message.role}`,
-      '',
-      message.content_md || message.content_text || '',
-      '',
-    );
-  }
-
-  return `${lines.join('\n').trim()}\n`;
+  return {
+    exportResult,
+    indexResult,
+  };
 }
 
 export async function archiveConversationScan({
@@ -156,80 +33,95 @@ export async function archiveConversationScan({
   payload,
 }: {
   service: Service;
-  payload: ScanPayload;
+  payload: ArchiveScanPayload;
 }) {
   const db = await getArchiveDb();
   const now = new Date().toISOString();
-  const accountId = getAccountId(service);
-  const conversationId = getConversationId(service, payload);
-  const conversationFileKey = getConversationFileKey(service, payload);
-  const messages = (payload.messages || []).filter(message =>
-    message?.text?.trim(),
-  );
+  const identity = resolveConversationIdentity(service, payload);
+  const messages = getNormalizedMessages(payload);
 
   await run(db, 'BEGIN TRANSACTION');
 
   try {
-    await run(
+    await upsertAccount(db, identity, now);
+    await upsertConversation(db, identity, now);
+    await replaceConversationMessagesForFullScan(
       db,
-      `INSERT INTO accounts (id, vendor, account_label, partition_name, created_at)
-       VALUES (?, ?, ?, ?, ?)
-       ON CONFLICT(id) DO UPDATE SET vendor = excluded.vendor, account_label = excluded.account_label, partition_name = excluded.partition_name`,
-      [
-        accountId,
-        payload.platform || service.recipe?.id || 'unknown',
-        getAccountLabel(service),
-        service.partition || service.id,
-        now,
-      ],
+      identity.conversationId,
+      messages,
+      now,
     );
+    await run(db, 'COMMIT');
+  } catch (error) {
+    await run(db, 'ROLLBACK');
+    throw error;
+  }
 
-    await run(
-      db,
-      `INSERT INTO conversations (id, account_id, vendor_conversation_id, title, source_url, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?)
-       ON CONFLICT(id) DO UPDATE SET title = excluded.title, source_url = excluded.source_url, updated_at = excluded.updated_at`,
-      [
-        conversationId,
-        accountId,
-        getVendorConversationId(payload),
-        payload.title || service.name,
-        payload.currentUrl || null,
+  const { exportResult, indexResult } = await exportArchiveArtifacts(
+    db,
+    identity,
+  );
+
+  return {
+    accountId: identity.accountId,
+    conversationId: identity.conversationId,
+    messageCount: messages.length,
+    dbPath: archivePaths.dbPath,
+    markdownPath: archivePaths.latestMarkdownPath,
+    conversationMarkdownPath: exportResult.conversationMarkdownPath,
+    indexMarkdownPath: indexResult.indexMarkdownPath,
+  };
+}
+
+export async function archiveIncrementalMessages({
+  service,
+  payload,
+}: {
+  service: Service;
+  payload: ArchiveIncrementalPayload;
+}) {
+  if (payload.mode === 'rescan') {
+    return archiveConversationScan({
+      service,
+      payload: {
+        platform: payload.vendor,
+        title: payload.title,
+        model: payload.model,
+        currentUrl: payload.currentUrl || payload.sourceUrl,
+        messageCount: payload.messages?.length,
+        messages: payload.messages,
+      },
+    });
+  }
+
+  const db = await getArchiveDb();
+  const now = payload.scannedAt || new Date().toISOString();
+  const identity = resolveConversationIdentity(service, payload);
+  const messages = getNormalizedMessages(payload);
+
+  await run(db, 'BEGIN TRANSACTION');
+
+  try {
+    await upsertAccount(db, identity, now);
+    await upsertConversation(db, identity, now);
+
+    if (payload.mode === 'bootstrap' || payload.mode === 'append') {
+      await upsertIncrementalMessages(
+        db,
+        identity.conversationId,
+        messages,
         now,
+      );
+    }
+
+    if (payload.mode === 'update-tail' && payload.updatedTail?.text?.trim()) {
+      await updateLastAssistantMessage(
+        db,
+        identity.conversationId,
+        payload.updatedTail,
         now,
-      ],
-    );
-
-    await run(db, 'DELETE FROM messages WHERE conversation_id = ?', [
-      conversationId,
-    ]);
-
-    await Promise.all(
-      messages.map(message => {
-        const contentMd = message.markdown || message.text;
-        const contentText = message.text;
-        const messageId = stableHash(
-          `message|${conversationId}|${message.seq}|${message.role}|${contentText}`,
-        );
-
-        return run(
-          db,
-          `INSERT INTO messages (id, conversation_id, role, sender_label, content_text, content_md, seq, created_at, hash)
-           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-          [
-            messageId,
-            conversationId,
-            message.role,
-            toSenderLabel(message),
-            contentText,
-            contentMd,
-            message.seq,
-            now,
-            stableHash(`${message.role}|${contentText}`),
-          ],
-        );
-      }),
-    );
+      );
+    }
 
     await run(db, 'COMMIT');
   } catch (error) {
@@ -237,31 +129,19 @@ export async function archiveConversationScan({
     throw error;
   }
 
-  const persistedMessages = await all<ArchiveMessageRow>(
+  const { exportResult, indexResult } = await exportArchiveArtifacts(
     db,
-    'SELECT seq, role, sender_label, content_md, content_text FROM messages WHERE conversation_id = ? ORDER BY seq ASC',
-    [conversationId],
+    identity,
   );
-
-  const markdown = toMarkdown(
-    persistedMessages,
-    payload.title || service.name,
-    payload.currentUrl,
-  );
-
-  writeLatestMarkdown(markdown);
-
-  const conversationFilename = getConversationFilename(service, payload);
-
-  removeStaleConversationMarkdowns(conversationFileKey, conversationFilename);
-  writeConversationMarkdown(conversationFilename, markdown);
 
   return {
-    accountId,
-    conversationId,
-    messageCount: persistedMessages.length,
+    accountId: identity.accountId,
+    conversationId: identity.conversationId,
+    mode: payload.mode,
+    messageCount: payload.mode === 'update-tail' ? 1 : messages.length,
     dbPath: archivePaths.dbPath,
     markdownPath: archivePaths.latestMarkdownPath,
-    conversationMarkdownPath: `${archivePaths.conversationsDir}/${conversationFilename}`,
+    conversationMarkdownPath: exportResult.conversationMarkdownPath,
+    indexMarkdownPath: indexResult.indexMarkdownPath,
   };
 }

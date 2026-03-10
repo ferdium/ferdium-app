@@ -32,8 +32,20 @@ CREATE TABLE IF NOT EXISTS messages (
   content_text TEXT NOT NULL,
   content_md TEXT NOT NULL,
   seq INTEGER NOT NULL,
+  message_key TEXT,
   created_at TEXT NOT NULL,
+  updated_at TEXT,
   hash TEXT NOT NULL
+);
+
+CREATE VIRTUAL TABLE IF NOT EXISTS messages_fts USING fts5(
+  message_id UNINDEXED,
+  conversation_id UNINDEXED,
+  account_id UNINDEXED,
+  vendor UNINDEXED,
+  conversation_title,
+  content_text,
+  content_md
 );
 `;
 
@@ -43,41 +55,12 @@ export const archivePaths = {
   rootDir: userDataPath('ai-hub'),
   dbPath: userDataPath('ai-hub', 'archive.db'),
   latestMarkdownPath: userDataPath('ai-hub', 'conversation.md'),
+  indexMarkdownPath: userDataPath('ai-hub', 'index.md'),
   conversationsDir: userDataPath('ai-hub', 'conversations'),
 };
 
 export function stableHash(value: string): string {
   return createHash('sha256').update(value).digest('hex');
-}
-
-function openDatabase(): Promise<any> {
-  ensureDirSync(dirname(archivePaths.dbPath));
-
-  return new Promise((resolve, reject) => {
-    const db = new sqlite3.Database(archivePaths.dbPath, error => {
-      if (error) {
-        reject(error);
-        return;
-      }
-
-      db.exec(schemaSql, execError => {
-        if (execError) {
-          reject(execError);
-          return;
-        }
-
-        resolve(db);
-      });
-    });
-  });
-}
-
-export function getArchiveDb(): Promise<any> {
-  if (!databasePromise) {
-    databasePromise = openDatabase();
-  }
-
-  return databasePromise;
 }
 
 export function run(db: any, sql: string, params: any[] = []): Promise<void> {
@@ -123,9 +106,119 @@ export function all<T>(db: any, sql: string, params: any[] = []): Promise<T[]> {
   });
 }
 
+async function ensureMessageColumns(db: any) {
+  const columns = await all<{ name: string }>(
+    db,
+    'PRAGMA table_info(messages)',
+  );
+  const columnNames = new Set(columns.map(column => column.name));
+
+  if (!columnNames.has('message_key')) {
+    await run(db, 'ALTER TABLE messages ADD COLUMN message_key TEXT');
+  }
+
+  if (!columnNames.has('updated_at')) {
+    await run(db, 'ALTER TABLE messages ADD COLUMN updated_at TEXT');
+  }
+}
+
+export async function ensureFtsSchema(db: any) {
+  await run(
+    db,
+    `CREATE VIRTUAL TABLE IF NOT EXISTS messages_fts USING fts5(
+      message_id UNINDEXED,
+      conversation_id UNINDEXED,
+      account_id UNINDEXED,
+      vendor UNINDEXED,
+      conversation_title,
+      content_text,
+      content_md
+    )`,
+  );
+}
+
+export async function rebuildFtsIndex(db: any): Promise<number> {
+  await ensureFtsSchema(db);
+  await run(db, 'DELETE FROM messages_fts');
+  await run(
+    db,
+    `INSERT INTO messages_fts (
+      message_id,
+      conversation_id,
+      account_id,
+      vendor,
+      conversation_title,
+      content_text,
+      content_md
+    )
+    SELECT
+      m.id,
+      m.conversation_id,
+      c.account_id,
+      a.vendor,
+      COALESCE(c.title, ''),
+      m.content_text,
+      m.content_md
+    FROM messages m
+    JOIN conversations c ON c.id = m.conversation_id
+    JOIN accounts a ON a.id = c.account_id`,
+  );
+
+  const row = await get<{ count: number }>(
+    db,
+    'SELECT COUNT(*) AS count FROM messages_fts',
+  );
+
+  return row?.count || 0;
+}
+
+function openDatabase(): Promise<any> {
+  ensureDirSync(dirname(archivePaths.dbPath));
+
+  return new Promise((resolve, reject) => {
+    const db = new sqlite3.Database(
+      archivePaths.dbPath,
+      (error: Error | null) => {
+        if (error) {
+          reject(error);
+          return;
+        }
+
+        db.exec(schemaSql, async (execError: Error | null) => {
+          if (execError) {
+            reject(execError);
+            return;
+          }
+
+          try {
+            await ensureMessageColumns(db);
+            await ensureFtsSchema(db);
+            resolve(db);
+          } catch (migrationError) {
+            reject(migrationError);
+          }
+        });
+      },
+    );
+  });
+}
+
+export function getArchiveDb(): Promise<any> {
+  if (!databasePromise) {
+    databasePromise = openDatabase();
+  }
+
+  return databasePromise;
+}
+
 export function writeLatestMarkdown(content: string) {
   ensureDirSync(dirname(archivePaths.latestMarkdownPath));
   writeFileSync(archivePaths.latestMarkdownPath, content, 'utf8');
+}
+
+export function writeIndexMarkdown(content: string) {
+  ensureDirSync(dirname(archivePaths.indexMarkdownPath));
+  writeFileSync(archivePaths.indexMarkdownPath, content, 'utf8');
 }
 
 export function writeConversationMarkdown(filename: string, content: string) {

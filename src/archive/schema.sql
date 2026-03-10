@@ -24,6 +24,18 @@ CREATE TABLE IF NOT EXISTS messages (
   content_text TEXT NOT NULL,
   content_md TEXT NOT NULL,
   seq INTEGER NOT NULL,
+  message_key TEXT,
   created_at TEXT NOT NULL,
+  updated_at TEXT,
   hash TEXT NOT NULL
+);
+
+CREATE VIRTUAL TABLE IF NOT EXISTS messages_fts USING fts5(
+  message_id UNINDEXED,
+  conversation_id UNINDEXED,
+  account_id UNINDEXED,
+  vendor UNINDEXED,
+  conversation_title,
+  content_text,
+  content_md
 );

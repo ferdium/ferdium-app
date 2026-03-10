@@ -8,7 +8,8 @@ import ms from 'ms';
 import type { Stores } from '../@types/stores.types';
 import type { Actions } from '../actions/lib/actions';
 import type { ApiInterface } from '../api';
-import { archiveConversationScan } from '../archive/archiveService';
+import { handleAiHubIncrementalMessages } from '../webview/handlers/handleAiHubIncrementalMessages';
+import { handleAiHubScanMessages } from '../webview/handlers/handleAiHubScanMessages';
 import { DEFAULT_SERVICE_SETTINGS, KEEP_WS_LOADED_USID } from '../config';
 import { ferdiumVersion } from '../environment-remote';
 import { workspaceStore } from '../features/workspaces';
@@ -844,27 +845,25 @@ export default class ServicesStore extends TypedStore {
       case 'aihub-scan-messages': {
         const payload = args[0] || {};
 
-        debug('[AI-HUB] received conversation scan', {
+        handleAiHubScanMessages({
+          service,
           serviceId,
-          serviceName: service?.name,
-          recipeId: service?.recipe?.id,
-          title: payload.title,
-          model: payload.model,
-          currentUrl: payload.currentUrl,
-          messageCount: payload.messageCount,
-          messages: payload.messages,
+          payload,
+          debug,
         });
 
-        archiveConversationScan({ service, payload })
-          .then(result => {
-            debug('[AI-HUB] archived conversation scan', result);
-          })
-          .catch(error => {
-            debug('[AI-HUB] failed to archive conversation scan', {
-              serviceId,
-              error,
-            });
-          });
+        break;
+      }
+
+      case 'aihub-incremental-messages': {
+        const payload = args[0] || {};
+
+        handleAiHubIncrementalMessages({
+          service,
+          serviceId,
+          payload,
+          debug,
+        });
 
         break;
       }
