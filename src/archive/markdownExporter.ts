@@ -1,5 +1,6 @@
 import { join, relative } from 'node:path';
 import { pathExistsSync, readdirSync, removeSync } from 'fs-extra';
+import { getConversationFilenameForKey } from './conversationKeyResolver';
 import {
   all,
   archivePaths,
@@ -7,7 +8,6 @@ import {
   writeConversationMarkdown,
   writeLatestMarkdown,
 } from './db';
-import { getConversationFilenameForKey } from './conversationKeyResolver';
 import type { ConversationIdentity, PersistedMessageRow } from './types';
 
 function toMarkdown(

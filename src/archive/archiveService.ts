@@ -1,14 +1,14 @@
 import type Service from '../models/Service';
-import { archivePaths, getArchiveDb, run } from './db';
 import { resolveConversationIdentity } from './conversationKeyResolver';
 import { upsertAccount, upsertConversation } from './conversationUpsertService';
+import { archivePaths, getArchiveDb, run } from './db';
 import { exportArchiveIndex } from './index/archiveIndexExporter';
+import { exportConversationMarkdown } from './markdownExporter';
 import {
   replaceConversationMessagesForFullScan,
   updateLastAssistantMessage,
   upsertIncrementalMessages,
 } from './messageUpsertService';
-import { exportConversationMarkdown } from './markdownExporter';
 import type { ArchiveIncrementalPayload, ArchiveScanPayload } from './types';
 
 function getNormalizedMessages(payload: { messages?: any[] }) {
