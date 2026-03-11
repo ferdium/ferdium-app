@@ -108,8 +108,8 @@ importers:
         specifier: 6.3.9
         version: 6.3.9
       electron-webauthn-linux:
-        specifier: 0.1.0
-        version: 0.1.0(electron@37.6.0)
+        specifier: 0.1.1
+        version: 0.1.1(electron@37.6.0)
       electron-window-state:
         specifier: 5.0.3
         version: 5.0.3
@@ -3274,8 +3274,8 @@ packages:
   electron-updater@6.3.9:
     resolution: {integrity: sha512-2PJNONi+iBidkoC5D1nzT9XqsE8Q1X28Fn6xRQhO3YX8qRRyJ3mkV4F1aQsuRnYPqq6Hw+E51y27W75WgDoofw==}
 
-  electron-webauthn-linux@0.1.0:
-    resolution: {integrity: sha512-ra7xeBiNVsOtedY+G1WOye0dqAqAUZc2TKBD7TWrVR9/e7wtkPfySHlzG48Z8IQ6siLXbnVV1wKDTSQsfmq34g==}
+  electron-webauthn-linux@0.1.1:
+    resolution: {integrity: sha512-cws9rFV1p/w+iaQXQ67IVYkAri988n6kJyVXkZ3/G3PXGVIvhlRop2lyBR2/EEVcS9hQZtpyPaQVAvxMigatrg==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       electron: '>=25.0.0'
@@ -11271,7 +11271,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  electron-webauthn-linux@0.1.0(electron@37.6.0):
+  electron-webauthn-linux@0.1.1(electron@37.6.0):
     dependencies:
       electron: 37.6.0
 
