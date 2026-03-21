@@ -150,7 +150,7 @@ class ServiceWebview extends Component<IProps> {
         nodeintegration
         webpreferences={`spellcheck=${
           isSpellcheckerEnabled ? 1 : 0
-        }, contextIsolation=1`}
+        }, contextIsolation=1, backgroundThrottling=1`}
       />
     );
   }
