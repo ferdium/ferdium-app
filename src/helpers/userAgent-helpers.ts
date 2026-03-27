@@ -1,6 +1,5 @@
 import { cpus } from 'node:os';
 import macosVersion from 'macos-version';
-import { chrome } from 'useragent-generator';
 import {
   chromeVersion,
   is64Bit,
@@ -43,5 +42,5 @@ export default function userAgent() {
     platformString = linux();
   }
 
-  return chrome({ os: platformString, version: chromeVersion });
+  return `Mozilla/5.0 (${platformString}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chromeVersion} Safari/537.36`;
 }

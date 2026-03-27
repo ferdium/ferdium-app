@@ -35,4 +35,18 @@ export default async () => {
     const serviceSession = deduceSession(serviceId);
     return serviceSession.clearCache();
   });
+
+  ipcMain.handle(
+    'cleanup-service-session',
+    async (_event, { serviceId }: { serviceId: string }) => {
+      try {
+        const serviceSession = deduceSession(serviceId);
+        debug('Cleaning up session for service', serviceId);
+        await serviceSession.clearCache();
+        serviceSession.flushStorageData();
+      } catch (error) {
+        debug('Error cleaning up session for service', serviceId, error);
+      }
+    },
+  );
 };
