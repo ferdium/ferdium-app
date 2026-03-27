@@ -145,6 +145,7 @@ class DownloadManagerDashboard extends Component<IProps, IState> {
 
             const downloadPercentage =
               receivedBytes !== undefined && totalBytes !== undefined
+                // Multiply by 10_000 then divide by 100 to round to 2 decimal places
                 ? Math.round((receivedBytes / totalBytes) * 10_000) / 100
                 : null;
 
