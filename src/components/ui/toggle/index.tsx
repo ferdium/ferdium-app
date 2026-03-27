@@ -1,6 +1,5 @@
 import classnames from 'classnames';
 import type { Property } from 'csstype';
-import { noop } from 'lodash';
 import { Component, type InputHTMLAttributes, type ReactElement } from 'react';
 import withStyles, { type WithStylesProps } from 'react-jss';
 import type { Theme } from '../../../themes';
@@ -75,7 +74,7 @@ class Toggle extends Component<IProps> {
       checked = false,
       showLabel = true,
       disabled = false,
-      onChange = noop,
+      onChange = () => {},
     } = this.props;
 
     return (

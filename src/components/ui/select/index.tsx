@@ -5,7 +5,6 @@ import {
 } from '@mdi/js';
 import Icon from '@mdi/react';
 import classnames from 'classnames';
-import { noop } from 'lodash';
 import {
   type ChangeEvent,
   Component,
@@ -198,7 +197,7 @@ class SelectComponent extends Component<IProps, IState> {
       options: null,
     };
 
-    this.keyListener = noop;
+    this.keyListener = () => {};
     this.arrowKeysHandler = this.arrowKeysHandler.bind(this);
   }
 
@@ -336,7 +335,7 @@ class SelectComponent extends Component<IProps, IState> {
       label,
       showSearch,
       required,
-      onChange = noop,
+      onChange = () => {},
       showLabel = true,
       disabled = false,
       error = '',
@@ -376,7 +375,7 @@ class SelectComponent extends Component<IProps, IState> {
               })}
               onClick={
                 disabled
-                  ? noop
+                  ? () => {}
                   : () =>
                       this.setState((state: IState) => ({
                         open: !state.open,
@@ -434,8 +433,8 @@ class SelectComponent extends Component<IProps, IState> {
                   })}
                   onMouseOver={() => this.setState({ selected: i })}
                   ref={selected === i ? this.activeOptionRef : null}
-                  onKeyUp={noop}
-                  onFocus={noop}
+                  onKeyUp={() => {}}
+                  onFocus={() => {}}
                 >
                   {options![key]}
                 </div>

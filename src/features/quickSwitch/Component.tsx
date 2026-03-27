@@ -1,5 +1,4 @@
 import { getCurrentWindow } from '@electron/remote';
-import { compact, invoke, noop } from 'lodash';
 import { reaction } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import {
@@ -138,7 +137,7 @@ class QuickSwitchModal extends Component<IProps, IState> {
     let services: Service[] = [];
     if (
       this.state.search &&
-      compact(invoke(this.state.search, 'match', /^[\da-z]/i)).length > 0
+      (this.state.search?.match(/^[\da-z]/i) ?? []).filter(Boolean).length > 0
     ) {
       // Apply simple search algorithm to list of all services
       services = this.props.stores!.services.allDisplayed;
@@ -327,7 +326,7 @@ class QuickSwitchModal extends Component<IProps, IState> {
                   : ''
               } service`}
               onClick={() => openService(index)}
-              onKeyDown={noop}
+              onKeyDown={() => {}}
               key={service.id}
               ref={el => {
                 this.serviceElements[index] = el;

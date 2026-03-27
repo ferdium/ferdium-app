@@ -1,7 +1,6 @@
 /* eslint-disable no-use-before-define */
 import { mdiClose } from '@mdi/js';
 import classnames from 'classnames';
-import { noop } from 'lodash';
 import { Component, type ReactElement, type ReactNode } from 'react';
 import withStyles, { type WithStylesProps } from 'react-jss';
 import type { Theme } from '../../../themes';
@@ -148,7 +147,7 @@ class InfoboxComponent extends Component<IProps, IState> {
       icon,
       type = 'primary',
       dismissible = false,
-      ctaOnClick = noop,
+      ctaOnClick = () => {},
       ctaLabel = '',
       className = '',
     } = this.props;

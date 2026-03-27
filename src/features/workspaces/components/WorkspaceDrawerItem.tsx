@@ -1,7 +1,6 @@
 import { Menu } from '@electron/remote';
 import classnames from 'classnames';
 import type { MenuItemConstructorOptions } from 'electron';
-import { noop } from 'lodash';
 import { observer } from 'mobx-react';
 import { Component, type MouseEventHandler, type ReactElement } from 'react';
 import {
@@ -104,7 +103,7 @@ class WorkspaceDrawerItem extends Component<IProps> {
       },
       {
         label: intl.formatMessage(messages.contextMenuEdit),
-        click: onContextMenuEditClick || noop,
+        click: onContextMenuEditClick || (() => {}),
       },
     ];
 
@@ -123,7 +122,7 @@ class WorkspaceDrawerItem extends Component<IProps> {
             contextMenu.popup();
           }
         }}
-        onKeyDown={noop}
+        onKeyDown={() => {}}
         data-tooltip-id="tooltip-workspaces-drawer"
         data-tooltip-content={acceleratorString({
           index: shortcutIndex,

@@ -1,5 +1,4 @@
 import { mdiArrowLeftCircle } from '@mdi/js';
-import { noop } from 'lodash';
 import { inject, observer } from 'mobx-react';
 import { Component } from 'react';
 import {
@@ -118,7 +117,7 @@ class Signup extends Component<IProps> {
       onSuccess: form => {
         this.props.onSubmit(form.values());
       },
-      onError: noop,
+      onError: () => {},
     });
   }
 
@@ -163,14 +162,14 @@ class Signup extends Component<IProps> {
                 label={`${intl.formatMessage(messages.submitButtonLabel)} ...`}
                 loaded={false}
                 disabled
-                onClick={noop}
+                onClick={() => {}}
               />
             ) : (
               <Button
                 type="submit"
                 className="auth__button"
                 label={intl.formatMessage(messages.submitButtonLabel)}
-                onClick={noop}
+                onClick={() => {}}
               />
             )}
             <p className="legal">

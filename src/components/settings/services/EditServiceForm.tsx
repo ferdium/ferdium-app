@@ -1,6 +1,5 @@
 import { app, dialog } from '@electron/remote';
 import { mdiInformation } from '@mdi/js';
-import { noop } from 'lodash';
 import { observer } from 'mobx-react';
 import { Component, type FormEvent, type ReactElement } from 'react';
 import {
@@ -224,7 +223,7 @@ class EditServiceForm extends Component<IProps, IState> {
 
         this.setState({ isValidatingCustomUrl: false });
       },
-      onError: noop,
+      onError: () => {},
     });
   }
 

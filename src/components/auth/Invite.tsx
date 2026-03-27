@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import { noop } from 'lodash';
 import { observer } from 'mobx-react';
 import { Component } from 'react';
 import {
@@ -120,7 +119,7 @@ class Invite extends Component<IProps, IState> {
 
         this.setState({ showSuccessInfo: true });
       },
-      onError: noop,
+      onError: () => {},
     });
   }
 
@@ -178,7 +177,7 @@ class Invite extends Component<IProps, IState> {
             disabled={!atLeastOneEmailAddress}
             label={intl.formatMessage(messages.submitButtonLabel)}
             loaded={!isLoadingInvite}
-            onClick={noop}
+            onClick={() => {}}
           />
           {!embed && (
             <Link

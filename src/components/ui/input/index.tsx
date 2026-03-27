@@ -1,6 +1,5 @@
 import { mdiEye, mdiEyeOff } from '@mdi/js';
 import classnames from 'classnames';
-import { noop } from 'lodash';
 import { observer } from 'mobx-react';
 import {
   Component,
@@ -122,8 +121,8 @@ class Input extends Component<IProps, IState> {
       step,
       required,
       noMargin,
-      onBlur = noop,
-      onFocus = noop,
+      onBlur = () => {},
+      onFocus = () => {},
       scorePassword = false,
       showLabel = true,
       showPasswordToggle = false,

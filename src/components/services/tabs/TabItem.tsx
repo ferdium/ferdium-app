@@ -1,7 +1,6 @@
 import { Menu, app, dialog } from '@electron/remote';
 import { mdiExclamation, mdiVolumeSource } from '@mdi/js';
 import classnames from 'classnames';
-import { noop } from 'lodash';
 import { autorun, makeObservable, observable, reaction } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import ms from 'ms';
@@ -381,7 +380,7 @@ class TabItem extends Component<IProps, IState> {
           'is-label-enabled': showServiceNameSetting,
         })}
         onClick={clickHandler}
-        onKeyDown={noop}
+        onKeyDown={() => {}}
         role="presentation"
         onContextMenu={() => menu.popup()}
         data-tooltip-id="tooltip-sidebar-button"

@@ -1,5 +1,4 @@
 import color from 'color';
-import { cloneDeep } from 'lodash';
 
 import { DEFAULT_LOADER_COLOR } from '../../config';
 import type IStyleTypes from '../IStyleTypes';
@@ -204,7 +203,7 @@ export default (brandPrimary: string) => {
     // Workspaces
     workspaces: {
       settings: {
-        listItems: cloneDeep(services.listItems),
+        listItems: structuredClone(services.listItems),
       },
       drawer: {
         width: 300,

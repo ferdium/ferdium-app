@@ -1,5 +1,4 @@
 import { mdiCog, mdiPlusBox } from '@mdi/js';
-import { noop } from 'lodash';
 import { inject, observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
 import {
@@ -132,7 +131,7 @@ class WorkspaceDrawer extends Component<IProps> {
           {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
           <span
             className={classes.workspacesSettingsButton}
-            onKeyDown={noop}
+            onKeyDown={() => {}}
             onClick={() => {
               workspaceActions.openWorkspaceSettings();
             }}
@@ -186,7 +185,7 @@ class WorkspaceDrawer extends Component<IProps> {
             onClick={() => {
               workspaceActions.openWorkspaceSettings();
             }}
-            onKeyDown={noop}
+            onKeyDown={() => {}}
           >
             <Icon
               icon={mdiPlusBox}

@@ -1,7 +1,6 @@
 import { systemPreferences } from '@electron/remote';
 import { mdiGithub, mdiOpenInNew, mdiPowerPlug } from '@mdi/js';
 import { ipcRenderer } from 'electron';
-import { noop } from 'lodash';
 import { observer } from 'mobx-react';
 import prettyBytes from 'pretty-bytes';
 import { Component, type ReactElement } from 'react';
@@ -462,7 +461,7 @@ class EditSettingsForm extends Component<IProps, IState> {
         }
         this.props.onSubmit(values);
       },
-      onError: noop,
+      onError: () => {},
     });
   }
 

@@ -1,4 +1,3 @@
-import { noop } from 'lodash';
 import { observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
 import withStyles, { type WithStylesProps } from 'react-jss';
@@ -27,7 +26,7 @@ class WorkspaceItem extends Component<IProps> {
 
     return (
       <tr className={classes.row}>
-        <td onClick={() => onItemClick(workspace)} onKeyDown={noop}>
+        <td onClick={() => onItemClick(workspace)} onKeyDown={() => {}}>
           {workspace.name}
         </td>
       </tr>

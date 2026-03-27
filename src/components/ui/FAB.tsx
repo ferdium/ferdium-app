@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import { noop } from 'lodash';
 import { observer } from 'mobx-react';
 import { Component, type ReactElement, type ReactNode } from 'react';
 
@@ -18,7 +17,7 @@ class Button extends Component<IProps> {
     const {
       className,
       disabled = false,
-      onClick = noop,
+      onClick = () => {},
       type = 'button',
       children,
       htmlForm = '',

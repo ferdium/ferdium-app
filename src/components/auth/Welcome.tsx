@@ -1,4 +1,3 @@
-import { noop } from 'lodash';
 import { inject, observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
 import {
@@ -95,7 +94,7 @@ class Welcome extends Component<IProps> {
             type="button"
             className="button"
             onClick={() => serverlessLogin(this.props.actions)}
-            onKeyDown={noop}
+            onKeyDown={() => {}}
           >
             {intl.formatMessage(messages.serverless)}
           </button>

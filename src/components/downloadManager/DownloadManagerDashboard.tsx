@@ -17,7 +17,6 @@ import {
   Typography,
 } from '@mui/material';
 import { shell } from 'electron';
-import { round } from 'lodash';
 import { observer } from 'mobx-react';
 import prettyBytes from 'pretty-bytes';
 import { Component } from 'react';
@@ -146,7 +145,8 @@ class DownloadManagerDashboard extends Component<IProps, IState> {
 
             const downloadPercentage =
               receivedBytes !== undefined && totalBytes !== undefined
-                ? round((receivedBytes / totalBytes) * 100, 2)
+                // Multiply by 10_000 then divide by 100 to round to 2 decimal places
+                ? Math.round((receivedBytes / totalBytes) * 10_000) / 100
                 : null;
 
             const isPaused = state === 'progressing' && paused === true;

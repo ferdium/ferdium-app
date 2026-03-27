@@ -1,5 +1,5 @@
-import { isEqual } from 'lodash';
 import { action } from 'mobx';
+import { deepEqual } from '../../helpers/object-helpers';
 import Request from './Request';
 
 export default class CachedRequest extends Request {
@@ -117,6 +117,6 @@ export default class CachedRequest extends Request {
   }
 
   _findApiCall(args: any) {
-    return this._apiCalls.find(c => isEqual(c.args, args));
+    return this._apiCalls.find(c => deepEqual(c.args, args));
   }
 }

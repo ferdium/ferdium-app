@@ -1,4 +1,3 @@
-import { noop } from 'lodash';
 import { observer } from 'mobx-react';
 import {
   Component,
@@ -62,7 +61,7 @@ class EditUserForm extends Component<IProps> {
         const values = form.values();
         this.props.onSubmit(values);
       },
-      onError: noop,
+      onError: () => {},
     });
   }
 
@@ -123,14 +122,14 @@ class EditUserForm extends Component<IProps> {
               loaded={!isSaving}
               buttonType="secondary"
               disabled
-              onClick={noop}
+              onClick={() => {}}
             />
           ) : (
             <Button
               type="submit"
               label={intl.formatMessage(messages.buttonSave)}
               htmlForm="form"
-              onClick={noop}
+              onClick={() => {}}
             />
           )}
         </div>
