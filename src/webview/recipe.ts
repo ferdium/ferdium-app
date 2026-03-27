@@ -9,7 +9,7 @@ import {
 } from 'darkreader';
 import { contextBridge, ipcRenderer } from 'electron';
 import { pathExistsSync, readFileSync } from 'fs-extra';
-import { debounce, noop } from 'lodash';
+import { debounce } from '../helpers/async-helpers';
 import { autorun, computed, makeObservable, observable } from 'mobx';
 
 import customDarkModeCss from './darkmode/custom';
@@ -49,7 +49,7 @@ import type Service from '../models/Service';
 // As the message API is not actually needed, we'll add this shim sendMessage
 // function in order for darkreader to continue working
 // @ts-expect-error Fix this
-window.chrome.runtime.sendMessage = noop;
+window.chrome.runtime.sendMessage = () => {};
 
 const debug = require('../preload-safe-debug')('Ferdium:Plugin');
 

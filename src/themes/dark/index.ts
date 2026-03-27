@@ -1,5 +1,4 @@
 import color from 'color';
-import { cloneDeep, merge } from 'lodash';
 
 import makeDefaultThemeConfig from '../default';
 import * as legacyStyles from '../legacy';
@@ -27,15 +26,18 @@ export default (brandPrimary: string) => {
   const selectColor = inputColor;
   const drawerBg = color(colorBackground).lighten(0.3).hex();
 
-  const services = merge({}, defaultStyles.services, {
+  const services = {
+    ...defaultStyles.services,
     listItems: {
+      ...defaultStyles.services.listItems,
       borderColor: legacyStyles.darkThemeGrayDarker,
       hoverBgColor: legacyStyles.darkThemeGrayDarker,
       disabled: {
+        ...defaultStyles.services.listItems.disabled,
         color: legacyStyles.darkThemeGray,
       },
     },
-  });
+  };
 
   return {
     ...defaultStyles,
@@ -122,52 +124,64 @@ export default (brandPrimary: string) => {
     services,
 
     // Service Icon
-    serviceIcon: merge({}, defaultStyles.serviceIcon, {
+    serviceIcon: {
+      ...defaultStyles.serviceIcon,
       isCustom: {
+        ...defaultStyles.serviceIcon.isCustom,
         border: `1px solid ${legacyStyles.darkThemeGrayDark}`,
       },
-    }),
+    },
 
     // Workspaces
-    workspaces: merge({}, defaultStyles.workspaces, {
+    workspaces: {
+      ...defaultStyles.workspaces,
       settings: {
-        listItems: cloneDeep(services.listItems),
+        ...defaultStyles.workspaces.settings,
+        listItems: structuredClone(services.listItems),
       },
       drawer: {
+        ...defaultStyles.workspaces.drawer,
         background: drawerBg,
         addButton: {
           color: legacyStyles.darkThemeGrayLighter,
           hoverColor: legacyStyles.darkThemeGraySmoke,
         },
         listItem: {
+          ...defaultStyles.workspaces.drawer.listItem,
           border: color(drawerBg).lighten(0.2).hex(),
           hoverBackground: legacyStyles.darkThemeGrayDark,
           activeBackground: legacyStyles.darkThemeGrayDarker,
           name: {
+            ...defaultStyles.workspaces.drawer.listItem.name,
             color: colorText,
             activeColor: 'white',
           },
           services: {
+            ...defaultStyles.workspaces.drawer.listItem.services,
             color: color(colorText).darken(0.5).hex(),
             active: color(colorText).darken(0.5).hex(),
           },
         },
       },
-    }),
+    },
 
     // Todos
-    todos: merge({}, defaultStyles.todos, {
+    todos: {
+      ...defaultStyles.todos,
       todosLayer: {
+        ...defaultStyles.todos.todosLayer,
         borderLeftColor: legacyStyles.darkThemeGrayDarker,
       },
       toggleButton: {
+        ...defaultStyles.todos.toggleButton,
         background: defaultStyles.styleTypes.primary.accent,
         textColor: defaultStyles.styleTypes.primary.contrast,
         shadowColor: 'rgba(0, 0, 0, 0.2)',
       },
       dragIndicator: {
+        ...defaultStyles.todos.dragIndicator,
         background: legacyStyles.themeGrayLight,
       },
-    }),
+    },
   };
 };

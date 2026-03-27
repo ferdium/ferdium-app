@@ -6,7 +6,6 @@ import {
   injectIntl,
 } from 'react-intl';
 
-import { noop } from 'lodash';
 import { email, required } from '../../helpers/validation-helpers';
 import globalMessages from '../../i18n/globalMessages';
 import Form from '../../lib/Form';
@@ -75,7 +74,7 @@ class Password extends Component<IProps> {
       onSuccess: form => {
         this.props.onSubmit(form.values());
       },
-      onError: noop,
+      onError: () => {},
     });
   }
 
@@ -107,7 +106,7 @@ class Password extends Component<IProps> {
               buttonType="secondary"
               label={`${intl.formatMessage(globalMessages.submit)} ...`}
               loaded={false}
-              onClick={noop}
+              onClick={() => {}}
               disabled
             />
           ) : (
@@ -115,7 +114,7 @@ class Password extends Component<IProps> {
               type="submit"
               className="auth__button"
               label={intl.formatMessage(globalMessages.submit)}
-              onClick={noop}
+              onClick={() => {}}
             />
           )}
         </form>

@@ -2,7 +2,6 @@
 import Icon from '@mdi/react';
 import classnames from 'classnames';
 import type { Property } from 'csstype';
-import { noop } from 'lodash';
 import { Component, type MouseEventHandler } from 'react';
 import withStyles, { type WithStylesProps } from 'react-jss';
 import { DEFAULT_LOADER_COLOR } from '../../../config';
@@ -173,7 +172,7 @@ class ButtonComponent extends Component<IProps, IState> {
       htmlForm,
       type = 'button',
       disabled = false,
-      onClick = noop,
+      onClick = () => {},
       buttonType = 'primary' as ButtonType,
     } = this.props;
 

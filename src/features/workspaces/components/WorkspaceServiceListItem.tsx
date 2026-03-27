@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import { noop } from 'lodash';
 import { observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
 import withStyles, { type WithStylesProps } from 'react-jss';
@@ -43,7 +42,7 @@ class WorkspaceServiceListItem extends Component<IProps> {
     return (
       // onclick in below div used to fix bug raised under toggle duplicate component removal
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-      <div className={classes.listItem} onClick={onToggle} onKeyDown={noop}>
+      <div className={classes.listItem} onClick={onToggle} onKeyDown={() => {}}>
         <ServiceIcon className={classes.serviceIcon} service={service} />
         <span
           className={classnames([

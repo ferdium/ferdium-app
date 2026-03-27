@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import { noop } from 'lodash';
 import { observer } from 'mobx-react';
 import {
   type ChangeEvent,
@@ -35,7 +34,7 @@ class ColorPickerInput extends Component<IProps> {
       disabled = false,
       className = null,
       type = 'text',
-      onChange = noop,
+      onChange = () => {},
     } = this.props;
 
     return (

@@ -1,5 +1,4 @@
 import { systemPreferences } from '@electron/remote';
-import { noop } from 'lodash';
 import { observer } from 'mobx-react';
 import { Component } from 'react';
 import {
@@ -72,7 +71,7 @@ class Locked extends Component<IProps> {
       onSuccess: form => {
         this.props.onSubmit(form.values());
       },
-      onError: noop,
+      onError: () => {},
     });
   }
 
@@ -127,7 +126,7 @@ class Locked extends Component<IProps> {
               buttonType="secondary"
               label={`${submitButtonLabel} ...`}
               loaded={false}
-              onClick={noop}
+              onClick={() => {}}
               disabled
             />
           ) : (
@@ -135,7 +134,7 @@ class Locked extends Component<IProps> {
               type="submit"
               className="auth__button"
               label={submitButtonLabel}
-              onClick={noop}
+              onClick={() => {}}
             />
           )}
         </form>

@@ -1,8 +1,6 @@
 import classnames from 'classnames';
 import { Component, type TextareaHTMLAttributes, createRef } from 'react';
 import injectSheet, { type WithStylesProps } from 'react-jss';
-
-import { noop } from 'lodash';
 import type { IFormField } from '../typings/generic';
 
 // biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
@@ -38,7 +36,7 @@ class TextareaComponent extends Component<IProps> {
   }
 
   onChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
-    const { onChange = noop } = this.props;
+    const { onChange = () => {} } = this.props;
 
     if (onChange) {
       onChange(e);
@@ -59,8 +57,8 @@ class TextareaComponent extends Component<IProps> {
       name,
       placeholder,
       spellCheck,
-      onBlur = noop,
-      onFocus = noop,
+      onBlur = () => {},
+      onFocus = () => {},
       minLength,
       maxLength,
       required,

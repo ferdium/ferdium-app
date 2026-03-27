@@ -8,7 +8,6 @@ import {
 } from 'react-intl';
 
 import { mdiClose } from '@mdi/js';
-import { noop } from 'lodash';
 import { DEFAULT_LOADER_COLOR } from '../../config';
 import Appear from './effects/Appear';
 import Icon from './icon';
@@ -39,13 +38,13 @@ class InfoBar extends Component<IProps> {
     const {
       children,
       type = 'primary',
-      onClick = noop,
+      onClick = () => {},
       className = '',
       ctaLabel = '',
       ctaLoading = false,
       position = 'bottom',
       sticky = false,
-      onHide = noop,
+      onHide = () => {},
       intl,
     } = this.props;
 

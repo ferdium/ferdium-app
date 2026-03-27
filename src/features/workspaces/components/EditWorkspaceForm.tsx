@@ -1,4 +1,3 @@
-import { noop } from 'lodash';
 import { observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
 import {
@@ -133,7 +132,7 @@ class EditWorkspaceForm extends Component<IProps> {
         const values = f.values();
         onSave(values);
       },
-      onError: noop,
+      onError: () => {},
     });
   }
 

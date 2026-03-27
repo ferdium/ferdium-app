@@ -1,8 +1,8 @@
 import { mdiCloseCircleOutline, mdiMagnify } from '@mdi/js';
 import classnames from 'classnames';
-import { debounce, noop } from 'lodash';
 import { observer } from 'mobx-react';
 import { type ChangeEvent, Component, type ReactElement } from 'react';
+import { debounce } from '../../helpers/async-helpers';
 import Icon from './icon';
 
 interface IProps {
@@ -47,7 +47,7 @@ class SearchInput extends Component<IProps, IState> {
   }
 
   onChange(e: ChangeEvent<HTMLInputElement>): void {
-    const { throttle = false, onChange = noop } = this.props;
+    const { throttle = false, onChange = () => {} } = this.props;
     const { value } = e.target;
     this.setState({ value });
 
@@ -60,13 +60,13 @@ class SearchInput extends Component<IProps, IState> {
   }
 
   throttledOnChange(e: string): void {
-    const { onChange = noop } = this.props;
+    const { onChange = () => {} } = this.props;
 
     onChange(e);
   }
 
   reset(): void {
-    const { onReset = noop } = this.props;
+    const { onReset = () => {} } = this.props;
     this.setState({ value: '' });
 
     onReset();
@@ -99,7 +99,7 @@ class SearchInput extends Component<IProps, IState> {
         </label>
         {value.length > 0 && (
           // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-          <span onClick={() => this.reset()} onKeyDown={noop}>
+          <span onClick={() => this.reset()} onKeyDown={() => {}}>
             <Icon icon={mdiCloseCircleOutline} />
           </span>
         )}

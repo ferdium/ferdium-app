@@ -1,5 +1,4 @@
 import { mdiArrowLeftCircle } from '@mdi/js';
-import { noop } from 'lodash';
 import { observer } from 'mobx-react';
 import { Component, type FormEvent, type ReactElement } from 'react';
 import {
@@ -141,7 +140,7 @@ class ChangeServer extends Component<IProps> {
             type="submit"
             className="auth__button"
             label={intl.formatMessage(globalMessages.submit)}
-            onClick={noop}
+            onClick={() => {}}
           />
         </form>
         <div className="auth__help">

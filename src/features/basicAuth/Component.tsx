@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import { noop } from 'lodash';
 import { observer } from 'mobx-react';
 import { Component, type FormEvent, type ReactElement } from 'react';
 import {
@@ -93,7 +92,7 @@ class BasicAuthModal extends Component<IProps> {
             <Button
               type="submit"
               label={intl.formatMessage(messages.signIn)}
-              onClick={noop}
+              onClick={() => {}}
             />
           </div>
         </form>

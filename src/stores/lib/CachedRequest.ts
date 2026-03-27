@@ -1,4 +1,3 @@
-import { isEqual } from 'lodash';
 import { action } from 'mobx';
 import Request from './Request';
 
@@ -117,6 +116,6 @@ export default class CachedRequest extends Request {
   }
 
   _findApiCall(args: any) {
-    return this._apiCalls.find(c => isEqual(c.args, args));
+    return this._apiCalls.find(c => JSON.stringify(c.args) === JSON.stringify(args));
   }
 }

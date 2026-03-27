@@ -1,6 +1,5 @@
 import { mdiAlert, mdiCheckboxMarkedCircleOutline, mdiClose } from '@mdi/js';
 import classnames from 'classnames';
-import { noop } from 'lodash';
 import { observer } from 'mobx-react';
 import {
   Component,
@@ -67,10 +66,10 @@ class Infobox extends Component<IProps, IState> {
       icon = '',
       type = 'primary',
       dismissible = false,
-      ctaOnClick = noop,
+      ctaOnClick = () => {},
       ctaLabel = '',
       ctaLoading = false,
-      onDismiss = noop,
+      onDismiss = () => {},
       intl,
     } = this.props;
 

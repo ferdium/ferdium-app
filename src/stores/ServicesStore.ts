@@ -1,7 +1,7 @@
 import { join } from 'node:path';
 import { clipboard, ipcRenderer, shell } from 'electron';
 import { ensureFileSync, pathExistsSync, writeFileSync } from 'fs-extra';
-import { debounce, remove } from 'lodash';
+import { debounce } from '../helpers/async-helpers';
 import { action, computed, makeObservable, observable, reaction } from 'mobx';
 import ms from 'ms';
 
@@ -604,7 +604,8 @@ export default class ServicesStore extends TypedStore {
     }
 
     this.allServicesRequest.patch((result: Service[]) => {
-      remove(result, (c: Service) => c.id === serviceId);
+      const idx = result.findIndex((c: Service) => c.id === serviceId);
+      if (idx !== -1) result.splice(idx, 1);
     });
 
     await request.promise;

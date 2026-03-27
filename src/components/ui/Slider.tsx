@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import { noop } from 'lodash';
 import { observer } from 'mobx-react';
 import { type ChangeEvent, Component, type ReactElement } from 'react';
 
