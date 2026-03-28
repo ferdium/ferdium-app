@@ -3062,6 +3062,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "phelix001",
+      "name": "Joshua Freedman",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5187100?v=4",
+      "profile": "https://www.linkedin.com/in/joshuafreedman1/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "commitType": "docs"
