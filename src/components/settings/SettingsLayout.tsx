@@ -1,10 +1,6 @@
 import { mdiClose } from '@mdi/js';
 import { observer } from 'mobx-react';
-import {
-  Component,
-  type PropsWithChildren,
-  type ReactElement,
-} from 'react';
+import { Component, type PropsWithChildren, type ReactElement } from 'react';
 import {
   type WrappedComponentProps,
   defineMessages,

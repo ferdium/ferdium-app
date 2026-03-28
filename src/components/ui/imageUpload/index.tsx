@@ -131,6 +131,7 @@ class ImageUpload extends Component<IProps, IState> {
               </div>
             </>
           ) : (
+            // eslint-disable-next-line react/jsx-no-useless-fragment
             <>
               {disabled ? (
                 <div className={cssClasses}>

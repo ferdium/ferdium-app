@@ -40,7 +40,13 @@ interface IProps extends WithStylesProps<typeof styles> {
 @observer
 class WorkspaceServiceListItem extends Component<IProps> {
   render(): ReactElement {
-    const { classes, isInWorkspace, onToggle, service, disabled = false } = this.props;
+    const {
+      classes,
+      isInWorkspace,
+      onToggle,
+      service,
+      disabled = false,
+    } = this.props;
     return (
       // onclick in below div used to fix bug raised under toggle duplicate component removal
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions

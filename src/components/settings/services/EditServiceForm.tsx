@@ -341,7 +341,11 @@ class EditServiceForm extends Component<IProps, IState> {
           )}
           <form onSubmit={e => this.submit(e)} id="form">
             <div className="service-name">
-              <Input {...form.$('name').bind()} focus disabled={isFormDisabled} />
+              <Input
+                {...form.$('name').bind()}
+                focus
+                disabled={isFormDisabled}
+              />
             </div>
             {(recipe.hasTeamId || recipe.hasCustomUrl) && (
               <Tabs active={activeTabIndex}>
@@ -364,7 +368,10 @@ class EditServiceForm extends Component<IProps, IState> {
                 )}
                 {recipe.hasCustomUrl && (
                   <TabItem title={intl.formatMessage(messages.tabOnPremise)}>
-                    <Input {...form.$('customUrl').bind()} disabled={isFormDisabled} />
+                    <Input
+                      {...form.$('customUrl').bind()}
+                      disabled={isFormDisabled}
+                    />
                     {form.error === 'url-validation-error' && (
                       <p className="franz-form__error">
                         {intl.formatMessage(messages.customUrlValidationError, {
@@ -396,7 +403,10 @@ class EditServiceForm extends Component<IProps, IState> {
                     {...form.$('isNotificationEnabled').bind()}
                     disabled={isFormDisabled}
                   />
-                  <Toggle {...form.$('isMuted').bind()} disabled={isFormDisabled} />
+                  <Toggle
+                    {...form.$('isMuted').bind()}
+                    disabled={isFormDisabled}
+                  />
                   <p className="settings__help indented__help">
                     {intl.formatMessage(messages.isMutedInfo)}
                   </p>
@@ -434,7 +444,10 @@ class EditServiceForm extends Component<IProps, IState> {
 
                 <div className="settings__settings-group">
                   <H3>{intl.formatMessage(messages.headlineGeneral)}</H3>
-                  <Toggle {...form.$('isEnabled').bind()} disabled={isFormDisabled} />
+                  <Toggle
+                    {...form.$('isEnabled').bind()}
+                    disabled={isFormDisabled}
+                  />
                   <Toggle
                     {...form.$('isHibernationEnabled').bind()}
                     disabled={isFormDisabled}

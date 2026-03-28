@@ -1,4 +1,9 @@
-import { ensureDirSync, pathExistsSync, readJsonSync, writeJsonSync } from 'fs-extra';
+import {
+  ensureDirSync,
+  pathExistsSync,
+  readJsonSync,
+  writeJsonSync,
+} from 'fs-extra';
 import { userDataPath } from '../environment-remote';
 import Workspace from '../features/workspaces/models/Workspace';
 import ServiceModel from '../models/Service';

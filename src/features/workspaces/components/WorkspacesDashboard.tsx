@@ -137,7 +137,8 @@ class WorkspacesDashboard extends Component<IProps> {
 
           {isOfflineMode && (
             <Infobox icon="information-outline" type="warning">
-              Workspace changes are disabled while Ferdium is running from a local backup.
+              Workspace changes are disabled while Ferdium is running from a
+              local backup.
             </Infobox>
           )}
 

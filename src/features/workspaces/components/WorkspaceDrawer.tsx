@@ -162,7 +162,7 @@ class WorkspaceDrawer extends Component<IProps> {
       : activeWorkspace;
 
     const { settings } = this.props.stores;
-    const isOfflineMode = this.props.stores.app.isOfflineMode;
+    const { isOfflineMode } = this.props.stores.app;
 
     const { hideAllServicesWorkspace, useCompactWorkspaceDrawer } =
       settings.all.app;
