@@ -85,6 +85,8 @@ export default class GlobalErrorStore extends TypedStore {
   }
 
   @action _handleRequests = async (request: Request): Promise<void> => {
+    const appStore = window['ferdium'].stores.app;
+
     if (request.isError) {
       this.error = request.error;
 
@@ -94,8 +96,8 @@ export default class GlobalErrorStore extends TypedStore {
         } catch {
           this.response = {} as Response;
         }
-        if (this.error?.status === 401) {
-          window['ferdium'].stores.app.authRequestFailed = true;
+        if (this.error?.status === 401 && !appStore.isOfflineMode) {
+          appStore.authRequestFailed = true;
         }
       }
 
@@ -111,7 +113,8 @@ export default class GlobalErrorStore extends TypedStore {
         server: window['ferdium'].stores.settings.app.server,
       });
     } else {
-      window['ferdium'].stores.app.authRequestFailed = false;
+      appStore.authRequestFailed = false;
+      appStore.refreshOfflineBackup();
     }
   };
 }

@@ -66,6 +66,7 @@ interface IProps extends WrappedComponentProps {
   retryServicesRequest: () => void;
   status: any;
   searchNeedle: string | null;
+  isOfflineMode?: boolean;
 }
 
 @observer
@@ -82,6 +83,7 @@ class ServicesDashboard extends Component<IProps> {
       retryServicesRequest,
       status,
       searchNeedle = '',
+      isOfflineMode,
       intl,
     } = this.props;
 
@@ -108,6 +110,12 @@ class ServicesDashboard extends Component<IProps> {
               ctaOnClick={retryServicesRequest}
             >
               {intl.formatMessage(messages.servicesRequestFailed)}
+            </Infobox>
+          )}
+          {isOfflineMode && (
+            <Infobox icon="information-outline" type="warning">
+              Service changes are disabled while Ferdium is running from a local
+              backup.
             </Infobox>
           )}
 
@@ -174,15 +182,18 @@ class ServicesDashboard extends Component<IProps> {
                     goToServiceForm={() =>
                       goTo(`/settings/services/edit/${service.id}`)
                     }
+                    disabled={isOfflineMode}
                   />
                 ))}
               </tbody>
             </table>
           )}
 
-          <FAB className="FAB-class">
-            <Link to="/settings/recipes">+</Link>
-          </FAB>
+          {!isOfflineMode && (
+            <FAB className="FAB-class">
+              <Link to="/settings/recipes">+</Link>
+            </FAB>
+          )}
         </div>
       </div>
     );

@@ -174,6 +174,7 @@ interface IProps extends WrappedComponentProps {
   isSaving: boolean;
   isDeleting: boolean;
   isProxyFeatureEnabled: boolean;
+  isOfflineMode?: boolean;
 }
 
 interface IState {
@@ -194,6 +195,9 @@ class EditServiceForm extends Component<IProps, IState> {
     const { recipe } = this.props;
 
     e.preventDefault();
+    if (this.props.isOfflineMode) {
+      return;
+    }
     this.props.form.submit({
       onSuccess: async form => {
         const values = form.values();
@@ -240,9 +244,11 @@ class EditServiceForm extends Component<IProps, IState> {
       onClearCache,
       openRecipeFile,
       isProxyFeatureEnabled,
+      isOfflineMode,
       intl,
     } = this.props;
     const { isValidatingCustomUrl } = this.state;
+    const isFormDisabled = Boolean(isOfflineMode);
 
     const deleteButton = isDeleting ? (
       <Button
@@ -257,7 +263,11 @@ class EditServiceForm extends Component<IProps, IState> {
         buttonType="danger"
         label={intl.formatMessage(messages.deleteService)}
         className="settings__delete-button"
+        disabled={isFormDisabled}
         onClick={() => {
+          if (isFormDisabled) {
+            return;
+          }
           // @ts-expect-error Fix me
           const selection = dialog.showMessageBoxSync(app.mainWindow, {
             type: 'question',
@@ -323,9 +333,15 @@ class EditServiceForm extends Component<IProps, IState> {
           </span>
         </div>
         <div className="settings__body">
+          {isOfflineMode && (
+            <p className="settings__message" style={{ marginTop: 0 }}>
+              <Icon icon={mdiInformation} />
+              Service changes are disabled while running from a local backup.
+            </p>
+          )}
           <form onSubmit={e => this.submit(e)} id="form">
             <div className="service-name">
-              <Input {...form.$('name').bind()} focus />
+              <Input {...form.$('name').bind()} focus disabled={isFormDisabled} />
             </div>
             {(recipe.hasTeamId || recipe.hasCustomUrl) && (
               <Tabs active={activeTabIndex}>
@@ -342,12 +358,13 @@ class EditServiceForm extends Component<IProps, IState> {
                       {...form.$('team').bind()}
                       prefix={recipe.urlInputPrefix}
                       suffix={recipe.urlInputSuffix}
+                      disabled={isFormDisabled}
                     />
                   </TabItem>
                 )}
                 {recipe.hasCustomUrl && (
                   <TabItem title={intl.formatMessage(messages.tabOnPremise)}>
-                    <Input {...form.$('customUrl').bind()} />
+                    <Input {...form.$('customUrl').bind()} disabled={isFormDisabled} />
                     {form.error === 'url-validation-error' && (
                       <p className="franz-form__error">
                         {intl.formatMessage(messages.customUrlValidationError, {
@@ -375,22 +392,32 @@ class EditServiceForm extends Component<IProps, IState> {
               <div className="settings__options">
                 <div className="settings__settings-group">
                   <H3>{intl.formatMessage(messages.headlineNotifications)}</H3>
-                  <Toggle {...form.$('isNotificationEnabled').bind()} />
-                  <Toggle {...form.$('isMuted').bind()} />
+                  <Toggle
+                    {...form.$('isNotificationEnabled').bind()}
+                    disabled={isFormDisabled}
+                  />
+                  <Toggle {...form.$('isMuted').bind()} disabled={isFormDisabled} />
                   <p className="settings__help indented__help">
                     {intl.formatMessage(messages.isMutedInfo)}
                   </p>
-                  <Toggle {...form.$('isMediaBadgeEnabled').bind()} />
+                  <Toggle
+                    {...form.$('isMediaBadgeEnabled').bind()}
+                    disabled={isFormDisabled}
+                  />
                 </div>
 
                 <div className="settings__settings-group">
                   <H3>{intl.formatMessage(messages.headlineBadges)}</H3>
-                  <Toggle {...form.$('isBadgeEnabled').bind()} />
+                  <Toggle
+                    {...form.$('isBadgeEnabled').bind()}
+                    disabled={isFormDisabled}
+                  />
                   {recipe.hasIndirectMessages &&
                     form.$('isBadgeEnabled').value && (
                       <>
                         <Toggle
                           {...form.$('isIndirectMessageBadgeEnabled').bind()}
+                          disabled={isFormDisabled}
                         />
                         <p className="settings__help indented__help">
                           {intl.formatMessage(messages.indirectMessageInfo)}
@@ -400,19 +427,29 @@ class EditServiceForm extends Component<IProps, IState> {
                   {recipe.allowFavoritesDelineationInUnreadCount && (
                     <Toggle
                       {...form.$('onlyShowFavoritesInUnreadCount').bind()}
+                      disabled={isFormDisabled}
                     />
                   )}
                 </div>
 
                 <div className="settings__settings-group">
                   <H3>{intl.formatMessage(messages.headlineGeneral)}</H3>
-                  <Toggle {...form.$('isEnabled').bind()} />
-                  <Toggle {...form.$('isHibernationEnabled').bind()} />
+                  <Toggle {...form.$('isEnabled').bind()} disabled={isFormDisabled} />
+                  <Toggle
+                    {...form.$('isHibernationEnabled').bind()}
+                    disabled={isFormDisabled}
+                  />
                   <p className="settings__help indented__help">
                     {intl.formatMessage(messages.isHibernationEnabledInfo)}
                   </p>
-                  <Toggle {...form.$('isWakeUpEnabled').bind()} />
-                  <Toggle {...form.$('trapLinkClicks').bind()} />
+                  <Toggle
+                    {...form.$('isWakeUpEnabled').bind()}
+                    disabled={isFormDisabled}
+                  />
+                  <Toggle
+                    {...form.$('trapLinkClicks').bind()}
+                    disabled={isFormDisabled}
+                  />
                   {/* TODO: Need to figure out how to effect this change without a reload of the recipe */}
                   <p className="settings__help indented__help">
                     {intl.formatMessage(messages.serviceReloadRequired)}
@@ -421,8 +458,14 @@ class EditServiceForm extends Component<IProps, IState> {
 
                 <div className="settings__settings-group">
                   <H3>{intl.formatMessage(messages.headlineAppearance)}</H3>
-                  <Toggle {...form.$('useFavicon').bind()} />
-                  <Toggle {...form.$('isDarkModeEnabled').bind()} />
+                  <Toggle
+                    {...form.$('useFavicon').bind()}
+                    disabled={isFormDisabled}
+                  />
+                  <Toggle
+                    {...form.$('isDarkModeEnabled').bind()}
+                    disabled={isFormDisabled}
+                  />
                   {form.$('isDarkModeEnabled').value && (
                     <>
                       <H3>
@@ -430,12 +473,24 @@ class EditServiceForm extends Component<IProps, IState> {
                           messages.headlineDarkReaderSettings,
                         )}
                       </H3>
-                      <Slider field={form.$('darkReaderBrightness')} />
-                      <Slider field={form.$('darkReaderContrast')} />
-                      <Slider field={form.$('darkReaderSepia')} />
+                      <Slider
+                        field={form.$('darkReaderBrightness')}
+                        disabled={isFormDisabled}
+                      />
+                      <Slider
+                        field={form.$('darkReaderContrast')}
+                        disabled={isFormDisabled}
+                      />
+                      <Slider
+                        field={form.$('darkReaderSepia')}
+                        disabled={isFormDisabled}
+                      />
                     </>
                   )}
-                  <Toggle {...form.$('isProgressbarEnabled').bind()} />
+                  <Toggle
+                    {...form.$('isProgressbarEnabled').bind()}
+                    disabled={isFormDisabled}
+                  />
                 </div>
               </div>
               <div className="service-icon">
@@ -449,13 +504,17 @@ class EditServiceForm extends Component<IProps, IState> {
                   textMaxFileSizeError={intl.formatMessage(
                     messages.maxFileSizeError,
                   )}
+                  disabled={isFormDisabled}
                 />
               </div>
             </div>
 
             {!isMac && (
               <div className="settings__settings-group">
-                <Select field={form.$('spellcheckerLanguage')} />
+                <Select
+                  field={form.$('spellcheckerLanguage')}
+                  disabled={isFormDisabled}
+                />
               </div>
             )}
 
@@ -465,7 +524,10 @@ class EditServiceForm extends Component<IProps, IState> {
                   {intl.formatMessage(messages.headlineProxy)}
                   <span className="badge badge--success">beta</span>
                 </H3>
-                <Toggle {...form.$('proxy.isEnabled').bind()} />
+                <Toggle
+                  {...form.$('proxy.isEnabled').bind()}
+                  disabled={isFormDisabled}
+                />
                 {form.$('proxy.isEnabled').value && (
                   <>
                     <div className="grid">
@@ -473,16 +535,24 @@ class EditServiceForm extends Component<IProps, IState> {
                         <Input
                           {...form.$('proxy.host').bind()}
                           className="proxyHost"
+                          disabled={isFormDisabled}
                         />
-                        <Input {...form.$('proxy.port').bind()} />
+                        <Input
+                          {...form.$('proxy.port').bind()}
+                          disabled={isFormDisabled}
+                        />
                       </div>
                     </div>
                     <div className="grid">
                       <div className="grid__row">
-                        <Input {...form.$('proxy.user').bind()} />
+                        <Input
+                          {...form.$('proxy.user').bind()}
+                          disabled={isFormDisabled}
+                        />
                         <Input
                           {...form.$('proxy.password').bind()}
                           showPasswordToggle
+                          disabled={isFormDisabled}
                         />
                       </div>
                     </div>
@@ -500,7 +570,10 @@ class EditServiceForm extends Component<IProps, IState> {
             )}
 
             <div className="user-agent">
-              <Input {...form.$('userAgentPref').bind()} />
+              <Input
+                {...form.$('userAgentPref').bind()}
+                disabled={isFormDisabled}
+              />
               <p className="settings__help">
                 {intl.formatMessage(globalMessages.userAgentHelp)}
               </p>
@@ -515,18 +588,21 @@ class EditServiceForm extends Component<IProps, IState> {
                   label={intl.formatMessage(messages.openDarkmodeCss)}
                   className="settings__open-recipe-file-button"
                   onClick={() => openRecipeFile('darkmode.css')}
+                  disabled={isFormDisabled}
                 />
                 <Button
                   buttonType="secondary"
                   label={intl.formatMessage(messages.openUserCss)}
                   className="settings__open-recipe-file-button"
                   onClick={() => openRecipeFile('user.css')}
+                  disabled={isFormDisabled}
                 />
                 <Button
                   buttonType="secondary"
                   label={intl.formatMessage(messages.openUserJs)}
                   className="settings__open-recipe-file-button"
                   onClick={() => openRecipeFile('user.js')}
+                  disabled={isFormDisabled}
                 />
               </div>
               <p style={{ marginTop: 10, marginBottom: 10 }}>
@@ -560,7 +636,8 @@ class EditServiceForm extends Component<IProps, IState> {
               label={intl.formatMessage(messages.saveService)}
               htmlForm="form"
               disabled={
-                action !== 'edit' && form.isPristine && requiresUserInput
+                isOfflineMode ||
+                (action !== 'edit' && form.isPristine && requiresUserInput)
               }
             />
           )}

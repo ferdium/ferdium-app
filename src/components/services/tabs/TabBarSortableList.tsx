@@ -22,6 +22,7 @@ interface IProps {
   enableService: (args: { serviceId: string }) => void;
   hibernateService: (args: { serviceId: string }) => void;
   wakeUpService: (args: { serviceId: string }) => void;
+  isOfflineMode?: boolean;
 }
 
 @observer
@@ -44,6 +45,7 @@ class TabBarSortableList extends Component<IProps> {
       showMessageBadgeWhenMutedSetting,
       showServiceNameSetting,
       showMessageBadgesEvenWhenMuted,
+      isOfflineMode,
     } = this.props;
 
     return (
@@ -72,6 +74,7 @@ class TabBarSortableList extends Component<IProps> {
             showMessageBadgeWhenMutedSetting={showMessageBadgeWhenMutedSetting}
             showMessageBadgesEvenWhenMuted={showMessageBadgesEvenWhenMuted}
             showServiceNameSetting={showServiceNameSetting}
+            isOfflineMode={isOfflineMode}
           />
         ))}
       </ul>

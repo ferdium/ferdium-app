@@ -322,6 +322,11 @@ const messages = defineMessages({
     defaultMessage:
       'By default, Ferdium sandboxes all services, meaning that each service runs in its own isolated environment (recommended). This is a security feature that prevents services from accessing each other’s data. You can create custom sandboxes to group services together by adding a custom sandbox - this way, services can share data between them if they are in the same sandbox. You can also disable sandboxing entirely for all services - allowing them to access each other’s data (not recommended).',
   },
+  offlineSettingsNotice: {
+    id: 'settings.app.offlineSettingsNotice',
+    defaultMessage:
+      'Changes made here while offline may not persist after you switch back online.',
+  },
   sectionSandboxes: {
     id: 'settings.app.sectionSandboxes',
     defaultMessage: 'Sandboxes',
@@ -360,6 +365,7 @@ interface IProps extends WrappedComponentProps {
   isLockingFeatureEnabled: boolean;
   isSplitModeEnabled: boolean;
   isOnline: boolean;
+  isOfflineMode: boolean;
   showServicesUpdatedInfoBar: boolean;
   updateVersion: string;
   serverURL: string;
@@ -490,6 +496,7 @@ class EditSettingsForm extends Component<IProps, IState> {
       openProcessManager,
       isTodosActivated,
       isOnline,
+      isOfflineMode,
       serverURL,
       intl,
     } = this.props;
@@ -542,6 +549,13 @@ class EditSettingsForm extends Component<IProps, IState> {
           <H1>{intl.formatMessage(globalMessages.settings)}</H1>
         </div>
         <div className="settings__body">
+          {isOfflineMode && (
+            <div style={{ marginBottom: 20 }}>
+              <Infobox icon="alert" type="warning">
+                {intl.formatMessage(messages.offlineSettingsNotice)}
+              </Infobox>
+            </div>
+          )}
           <form
             onSubmit={e => this.submit(e)}
             onChange={e => this.submit(e)}

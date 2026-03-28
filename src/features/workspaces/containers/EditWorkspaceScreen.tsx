@@ -40,6 +40,7 @@ class EditWorkspaceScreen extends Component<StoresProps> {
           onSave={this.onSave}
           updateWorkspaceRequest={updateWorkspaceRequest}
           deleteWorkspaceRequest={deleteWorkspaceRequest}
+          isOfflineMode={stores.app.isOfflineMode}
         />
       </ErrorBoundary>
     );

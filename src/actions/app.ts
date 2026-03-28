@@ -37,4 +37,6 @@ export default <ActionDefinitions>{
   addSandboxService: {},
   deleteSandboxService: {},
   editSandboxService: {},
+  enterOfflineMode: {},
+  exitOfflineMode: {},
 };

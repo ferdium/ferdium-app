@@ -58,6 +58,7 @@ class AuthLayoutContainer extends Component<IProps> {
           isOnline={app.isOnline}
           isAPIHealthy={!app.healthCheckRequest.isError}
           retryHealthCheck={actions.app.healthCheck}
+          useOfflineMode={actions.app.enterOfflineMode}
           isHealthCheckLoading={app.healthCheckRequest.isExecuting}
           isFullScreen={app.isFullScreen}
           installAppUpdate={actions.app.installUpdate}
@@ -68,6 +69,7 @@ class AuthLayoutContainer extends Component<IProps> {
           isUpdateAvailable={
             app.updateStatus === app.updateStatusTypes.AVAILABLE
           }
+          hasOfflineBackup={app.hasOfflineBackup}
         >
           <Outlet />
         </AuthLayout>

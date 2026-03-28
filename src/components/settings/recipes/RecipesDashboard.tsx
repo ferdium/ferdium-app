@@ -120,6 +120,7 @@ interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
   recipeDirectory: string;
   openRecipeDirectory: () => void;
   openDevDocs: () => void;
+  isOfflineMode?: boolean;
 }
 
 interface IState {
@@ -148,6 +149,7 @@ class RecipesDashboard extends Component<IProps, IState> {
       recipeDirectory,
       openRecipeDirectory,
       openDevDocs,
+      isOfflineMode,
       classes,
       intl,
     } = this.props;
@@ -169,6 +171,13 @@ class RecipesDashboard extends Component<IProps, IState> {
                 dismissible
               >
                 {intl.formatMessage(messages.servicesSuccessfulAddedInfo)}
+              </Infobox>
+            </Appear>
+          )}
+          {isOfflineMode && (
+            <Appear>
+              <Infobox icon="information-outline" type="warning">
+                Service add and edit actions are disabled while Ferdium is running from a local backup.
               </Infobox>
             </Appear>
           )}
@@ -257,7 +266,9 @@ class RecipesDashboard extends Component<IProps, IState> {
                   <RecipeItem
                     key={recipe.id}
                     recipe={recipe}
+                    disabled={isOfflineMode}
                     onClick={() =>
+                      !isOfflineMode &&
                       showAddServiceInterface({ recipeId: recipe.id })
                     }
                   />
@@ -271,7 +282,9 @@ class RecipesDashboard extends Component<IProps, IState> {
                       <RecipeItem
                         key={customWebsiteRecipe.id}
                         recipe={customWebsiteRecipe}
+                        disabled={isOfflineMode}
                         onClick={() =>
+                          !isOfflineMode &&
                           showAddServiceInterface({
                             recipeId: customWebsiteRecipe.id,
                           })
@@ -291,7 +304,9 @@ class RecipesDashboard extends Component<IProps, IState> {
                       <RecipeItem
                         key={recipe.id}
                         recipe={recipe}
+                        disabled={isOfflineMode}
                         onClick={() =>
+                          !isOfflineMode &&
                           showAddServiceInterface({ recipeId: recipe.id })
                         }
                       />

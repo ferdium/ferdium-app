@@ -162,6 +162,7 @@ class WorkspaceDrawer extends Component<IProps> {
       : activeWorkspace;
 
     const { settings } = this.props.stores;
+    const isOfflineMode = this.props.stores.app.isOfflineMode;
 
     const { hideAllServicesWorkspace, useCompactWorkspaceDrawer } =
       settings.all.app;
@@ -177,7 +178,9 @@ class WorkspaceDrawer extends Component<IProps> {
             className={classes.workspacesSettingsButton}
             onKeyDown={noop}
             onClick={() => {
-              workspaceActions.openWorkspaceSettings();
+              if (!isOfflineMode) {
+                workspaceActions.openWorkspaceSettings();
+              }
             }}
             data-tooltip-id="tooltip-workspaces-drawer"
             data-tooltip-content={intl.formatMessage(
@@ -218,8 +221,10 @@ class WorkspaceDrawer extends Component<IProps> {
                   workspaceActions.activate({ workspace });
                   workspaceActions.toggleWorkspaceDrawer();
                 }}
-                onContextMenuEditClick={() =>
-                  workspaceActions.edit({ workspace })
+                onContextMenuEditClick={
+                  isOfflineMode
+                    ? null
+                    : () => workspaceActions.edit({ workspace })
                 }
                 services={getServicesForWorkspace(workspace)}
                 shortcutIndex={index + 1}
@@ -227,22 +232,24 @@ class WorkspaceDrawer extends Component<IProps> {
               />
             ))}
           </div>
-          {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-          <div
-            className={`${classes.addNewWorkspaceLabel} ${compactClass}`}
-            onClick={() => {
-              workspaceActions.openWorkspaceSettings();
-            }}
-            onKeyDown={noop}
-          >
-            <Icon
-              icon={mdiPlusBox}
-              className={`${classes.workspacesSettingsButtonIcon} ${compactClass}`}
-            />
-            <span className={compactClass}>
-              {intl.formatMessage(messages.addNewWorkspaceLabel)}
-            </span>
-          </div>
+          {!isOfflineMode && (
+            // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+            <div
+              className={`${classes.addNewWorkspaceLabel} ${compactClass}`}
+              onClick={() => {
+                workspaceActions.openWorkspaceSettings();
+              }}
+              onKeyDown={noop}
+            >
+              <Icon
+                icon={mdiPlusBox}
+                className={`${classes.workspacesSettingsButtonIcon} ${compactClass}`}
+              />
+              <span className={compactClass}>
+                {intl.formatMessage(messages.addNewWorkspaceLabel)}
+              </span>
+            </div>
+          )}
         </div>
         <ReactTooltip
           id="tooltip-workspaces-drawer"

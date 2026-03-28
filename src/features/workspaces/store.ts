@@ -176,12 +176,20 @@ export default class WorkspacesStore extends FeatureStore {
   };
 
   @action _create = async ({ name }) => {
+    if (this.stores.app.isOfflineMode) {
+      return;
+    }
+
     const workspace = await createWorkspaceRequest.execute(name).promise;
     await getUserWorkspacesRequest.result.push(workspace);
     this._edit({ workspace });
   };
 
   @action _delete = async ({ workspace }) => {
+    if (this.stores.app.isOfflineMode) {
+      return;
+    }
+
     await deleteWorkspaceRequest.execute(workspace).promise;
     await getUserWorkspacesRequest.result.remove(workspace);
     this.stores.router.push('/settings/workspaces');
@@ -191,6 +199,10 @@ export default class WorkspacesStore extends FeatureStore {
   };
 
   @action _update = async ({ workspace }) => {
+    if (this.stores.app.isOfflineMode) {
+      return;
+    }
+
     await updateWorkspaceRequest.execute(workspace).promise;
     // Path local result optimistically
     const localWorkspace = this._getWorkspaceById(workspace.id);
@@ -278,6 +290,10 @@ export default class WorkspacesStore extends FeatureStore {
   };
 
   @action reorderServicesOfActiveWorkspace = async ({ oldIndex, newIndex }) => {
+    if (this.stores.app.isOfflineMode) {
+      return;
+    }
+
     if (!this.activeWorkspace) {
       return;
     }

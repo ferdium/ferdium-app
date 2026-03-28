@@ -27,6 +27,8 @@ export default class RequestStore extends TypedStore {
 
   retryDelay: number = ms('2s');
 
+  retryTimeout: NodeJS.Timeout | null = null;
+
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
     super(stores, api, actions);
 
@@ -52,6 +54,9 @@ export default class RequestStore extends TypedStore {
   }
 
   @computed get areRequiredRequestsSuccessful(): boolean {
+    if (this.stores.app.isOfflineMode) {
+      return true;
+    }
     return !this.userInfoRequest.isError && !this.servicesRequest.isError;
   }
 
@@ -64,8 +69,23 @@ export default class RequestStore extends TypedStore {
   }
 
   @action _retryRequiredRequests(): void {
+    if (this.stores.app.isOfflineMode) {
+      return;
+    }
     this.userInfoRequest.reload();
     this.servicesRequest.reload();
+  }
+
+  @action _resetRetryState(): void {
+    this.retries = 0;
+    this.showRequiredRequestsError = false;
+  }
+
+  _clearRetryTimeout(): void {
+    if (this.retryTimeout) {
+      clearTimeout(this.retryTimeout);
+      this.retryTimeout = null;
+    }
   }
 
   @action setData(data: { port: number; token: string | undefined }): void {
@@ -79,9 +99,35 @@ export default class RequestStore extends TypedStore {
 
   // Reactions
   _autoRetry(): void {
+    if (this.stores.app.isOfflineMode || !this.stores.user.isLoggedIn) {
+      this._clearRetryTimeout();
+      this._resetRetryState();
+      return;
+    }
+
+    if (this.areRequiredRequestsSuccessful) {
+      this._clearRetryTimeout();
+      this._resetRetryState();
+      return;
+    }
+
+    if (this.retryTimeout) {
+      return;
+    }
+
     const delay = (this.retries <= 10 ? this.retries : 10) * this.retryDelay;
-    if (!this.areRequiredRequestsSuccessful && this.stores.user.isLoggedIn) {
-      setTimeout(() => {
+    this.retryTimeout = setTimeout(
+      action(() => {
+        this.retryTimeout = null;
+
+        if (
+          this.stores.app.isOfflineMode ||
+          this.areRequiredRequestsSuccessful ||
+          !this.stores.user.isLoggedIn
+        ) {
+          return;
+        }
+
         this.retries += 1;
         this._retryRequiredRequests();
         if (this.retries === 4) {
@@ -90,7 +136,8 @@ export default class RequestStore extends TypedStore {
 
         this._autoRetry();
         debug(`Retry required requests delayed in ${delay / 1000}s`);
-      }, delay);
-    }
+      }),
+      delay,
+    );
   }
 }

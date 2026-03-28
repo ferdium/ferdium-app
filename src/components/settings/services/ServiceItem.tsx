@@ -29,6 +29,7 @@ const messages = defineMessages({
 interface IProps extends WrappedComponentProps {
   service: ServiceModel;
   goToServiceForm: () => void;
+  disabled?: boolean;
 }
 
 @observer
@@ -38,8 +39,15 @@ class ServiceItem extends Component<IProps> {
       service,
       // toggleAction, // TODO: [TECH DEBT][PROP NOT USED IN COMPONENT] check it later
       goToServiceForm,
+      disabled = false,
     } = this.props;
     const { intl } = this.props;
+
+    const openServiceForm = () => {
+      if (!disabled) {
+        goToServiceForm();
+      }
+    };
 
     return (
       <tr
@@ -48,7 +56,7 @@ class ServiceItem extends Component<IProps> {
           'service-table__row--disabled': !service.isEnabled,
         })}
       >
-        <td className="service-table__column-icon" onClick={goToServiceForm}>
+        <td className="service-table__column-icon" onClick={openServiceForm}>
           <img
             src={service.icon}
             className={classnames({
@@ -58,10 +66,10 @@ class ServiceItem extends Component<IProps> {
             alt=""
           />
         </td>
-        <td className="service-table__column-name" onClick={goToServiceForm}>
+        <td className="service-table__column-name" onClick={openServiceForm}>
           {service.name === '' ? service.recipe.name : service.name}
         </td>
-        <td className="service-table__column-info" onClick={goToServiceForm}>
+        <td className="service-table__column-info" onClick={openServiceForm}>
           {service.isMuted && (
             <Icon
               icon={mdiBellOff}
@@ -70,7 +78,7 @@ class ServiceItem extends Component<IProps> {
             />
           )}
         </td>
-        <td className="service-table__column-info" onClick={goToServiceForm}>
+        <td className="service-table__column-info" onClick={openServiceForm}>
           {!service.isEnabled && (
             <Icon
               icon={mdiPower}
@@ -81,7 +89,7 @@ class ServiceItem extends Component<IProps> {
             />
           )}
         </td>
-        <td className="service-table__column-info" onClick={goToServiceForm}>
+        <td className="service-table__column-info" onClick={openServiceForm}>
           {!service.isNotificationEnabled && (
             <Icon
               icon={mdiMessageBulletedOff}

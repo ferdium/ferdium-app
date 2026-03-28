@@ -31,6 +31,7 @@ class WorkspacesScreen extends Component<IProps> {
           onWorkspaceClick={(workspace: Workspace) =>
             actions.workspaces.edit({ workspace })
           }
+          isOfflineMode={this.props.stores.app.isOfflineMode}
         />
       </ErrorBoundary>
     );

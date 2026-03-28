@@ -26,12 +26,14 @@ export interface IProps extends WrappedComponentProps {
   isOnline: boolean;
   isAPIHealthy: boolean;
   retryHealthCheck: MouseEventHandler<HTMLButtonElement>;
+  useOfflineMode: MouseEventHandler<HTMLButtonElement>;
   isHealthCheckLoading: boolean;
   isFullScreen: boolean;
   installAppUpdate: MouseEventHandler<HTMLButtonElement>;
   appUpdateIsDownloaded: boolean;
   updateVersion: string;
   isUpdateAvailable: boolean;
+  hasOfflineBackup: boolean;
 }
 
 interface IState {
@@ -55,6 +57,7 @@ class AuthLayout extends Component<IProps, IState> {
       isOnline,
       isAPIHealthy,
       retryHealthCheck,
+      useOfflineMode,
       isHealthCheckLoading,
       isFullScreen,
       installAppUpdate,
@@ -62,6 +65,7 @@ class AuthLayout extends Component<IProps, IState> {
       updateVersion,
       intl,
       isUpdateAvailable,
+      hasOfflineBackup,
     } = this.props;
 
     let serverNameParse = serverName();
@@ -94,17 +98,28 @@ class AuthLayout extends Component<IProps, IState> {
               />
             )}
           {isOnline && !isAPIHealthy && (
-            <InfoBar
-              type="danger"
-              ctaLabel="Try again"
-              ctaLoading={isHealthCheckLoading}
-              sticky
-              onClick={retryHealthCheck}
-            >
+            <InfoBar type="danger" sticky>
               <Icon icon={mdiFlash} />
               {intl.formatMessage(globalMessages.APIUnhealthy, {
                 serverNameParse,
               })}
+              <button
+                type="button"
+                className="info-bar__cta"
+                onClick={retryHealthCheck}
+              >
+                Try again
+              </button>
+              {hasOfflineBackup && (
+                <button
+                  type="button"
+                  className="info-bar__cta"
+                  onClick={useOfflineMode}
+                  disabled={isHealthCheckLoading}
+                >
+                  Run in offline mode
+                </button>
+              )}
             </InfoBar>
           )}
           <div className="auth__layout">

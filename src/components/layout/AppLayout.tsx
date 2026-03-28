@@ -106,6 +106,9 @@ interface IProps extends WrappedComponentProps, WithStylesProps<typeof styles> {
   areRequiredRequestsSuccessful: boolean;
   retryRequiredRequests: () => void;
   areRequiredRequestsLoading: boolean;
+  isOfflineMode: boolean;
+  hasOfflineBackup: boolean;
+  enterOfflineMode: () => void;
 }
 
 interface IState {
@@ -142,6 +145,9 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
       areRequiredRequestsLoading,
       updateVersion,
       isUpdateAvailable,
+      isOfflineMode,
+      hasOfflineBackup,
+      enterOfflineMode,
     } = this.props;
 
     const { intl } = this.props;
@@ -178,27 +184,49 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                 <WorkspaceSwitchingIndicator />
                 {!areRequiredRequestsSuccessful &&
                   showRequiredRequestsError && (
-                    <InfoBar
-                      type="danger"
-                      ctaLabel="Try again"
-                      ctaLoading={areRequiredRequestsLoading}
-                      sticky
-                      onClick={retryRequiredRequests}
-                    >
+                    <InfoBar type="danger" sticky>
                       <Icon icon={mdiFlash} />
                       {intl.formatMessage(messages.requiredRequestsFailed)}
+                      <button
+                        type="button"
+                        className="info-bar__cta"
+                        onClick={retryRequiredRequests}
+                      >
+                        Try again
+                      </button>
+                      {hasOfflineBackup && !isOfflineMode && (
+                        <button
+                          type="button"
+                          className="info-bar__cta"
+                          onClick={enterOfflineMode}
+                          disabled={areRequiredRequestsLoading}
+                        >
+                          Run in offline mode
+                        </button>
+                      )}
                     </InfoBar>
                   )}
                 {authRequestFailed && (
-                  <InfoBar
-                    type="danger"
-                    ctaLabel="Try again"
-                    ctaLoading={areRequiredRequestsLoading}
-                    sticky
-                    onClick={retryRequiredRequests}
-                  >
+                  <InfoBar type="danger" sticky>
                     <Icon icon={mdiFlash} />
                     {intl.formatMessage(messages.authRequestFailed)}
+                    <button
+                      type="button"
+                      className="info-bar__cta"
+                      onClick={retryRequiredRequests}
+                    >
+                      Try again
+                    </button>
+                    {hasOfflineBackup && !isOfflineMode && (
+                      <button
+                        type="button"
+                        className="info-bar__cta"
+                        onClick={enterOfflineMode}
+                        disabled={areRequiredRequestsLoading}
+                      >
+                        Run in offline mode
+                      </button>
+                    )}
                   </InfoBar>
                 )}
                 {automaticUpdates &&

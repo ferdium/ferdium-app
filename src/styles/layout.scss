@@ -52,6 +52,18 @@ html {
         filter: grayscale(1);
       }
     }
+
+    .sidebar__status {
+      background: rgba($dark-theme-gray-lightest, 0.08);
+      border-color: rgba($dark-theme-gray-lightest, 0.16);
+      color: $dark-theme-gray-lightest;
+
+      &.sidebar__status--ready {
+        background: rgba($theme-brand-primary, 0.16);
+        border-color: rgba($theme-brand-primary, 0.4);
+        color: lighten($theme-brand-primary, 16%);
+      }
+    }
   }
 
   .app-loader .app-loader__title {
@@ -210,6 +222,30 @@ body.win32:not(.isFullScreen) .app .app__content {
     }
     &--new-service {
       padding-bottom: 6px;
+    }
+  }
+
+  .sidebar__status {
+    background: rgba($theme-gray, 0.08);
+    border: 1px solid rgba($theme-gray, 0.18);
+    border-radius: 8px;
+    color: darken($theme-gray, 8%);
+    cursor: default;
+    display: inline-flex;
+    font-size: 11px;
+    font-weight: 600;
+    justify-content: center;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    margin: 10px auto 8px;
+    padding: 5px 8px;
+    white-space: nowrap;
+
+    &--ready {
+      background: rgba($theme-brand-primary, 0.1);
+      border-color: rgba($theme-brand-primary, 0.24);
+      color: darken($theme-brand-primary, 4%);
+      cursor: pointer;
     }
   }
 

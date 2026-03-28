@@ -139,6 +139,7 @@ interface IProps extends WrappedComponentProps, WithStylesProps<typeof styles> {
   enableService: () => void;
   hibernateService: () => void;
   wakeUpService: () => void;
+  isOfflineMode?: boolean;
 }
 
 interface IState {
@@ -256,6 +257,7 @@ class TabItem extends Component<IProps, IState> {
       showMessageBadgeWhenMutedSetting,
       showServiceNameSetting,
       showMessageBadgesEvenWhenMuted,
+      isOfflineMode = false,
     } = this.props;
     const { intl } = this.props;
 
@@ -279,6 +281,7 @@ class TabItem extends Component<IProps, IState> {
           openSettings({
             path: `services/edit/${service.id}`,
           }),
+        enabled: !isOfflineMode,
       },
       {
         type: 'separator',
@@ -289,7 +292,7 @@ class TabItem extends Component<IProps, IState> {
           : intl.formatMessage(messages.enableNotifications),
         click: () => toggleNotifications(),
         accelerator: `${cmdOrCtrlShortcutKey()}+${altKey()}+N`,
-        enabled: service.isEnabled,
+        enabled: service.isEnabled && !isOfflineMode,
       },
       {
         label: service.isMuted
@@ -297,7 +300,7 @@ class TabItem extends Component<IProps, IState> {
           : intl.formatMessage(messages.disableAudio),
         click: () => toggleAudio(),
         accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+A`,
-        enabled: service.isEnabled,
+        enabled: service.isEnabled && !isOfflineMode,
       },
       {
         label: service.isDarkModeEnabled
@@ -305,7 +308,7 @@ class TabItem extends Component<IProps, IState> {
           : intl.formatMessage(messages.enableDarkMode),
         click: () => toggleDarkMode(),
         accelerator: `${shiftKey()}+${altKey()}+D`,
-        enabled: service.isEnabled,
+        enabled: service.isEnabled && !isOfflineMode,
       },
       {
         label: intl.formatMessage(
@@ -313,6 +316,7 @@ class TabItem extends Component<IProps, IState> {
         ),
         click: () => (service.isEnabled ? disableService() : enableService()),
         accelerator: `${cmdOrCtrlShortcutKey()}+${shiftKey()}+S`,
+        enabled: !isOfflineMode,
       },
       {
         label: intl.formatMessage(
@@ -352,6 +356,7 @@ class TabItem extends Component<IProps, IState> {
             deleteService();
           }
         },
+        enabled: !isOfflineMode,
       },
     ];
     const menu = Menu.buildFromTemplate(menuTemplate);
