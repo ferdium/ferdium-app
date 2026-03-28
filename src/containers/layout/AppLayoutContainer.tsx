@@ -201,6 +201,7 @@ class AppLayoutContainer extends Component<IProps> {
               app.updateStatus === app.updateStatusTypes.AVAILABLE
             }
             isOfflineMode={app.isOfflineMode}
+            isEnteringOfflineMode={app.isEnteringOfflineMode}
             hasOfflineBackup={app.hasOfflineBackup}
             enterOfflineMode={this.props.actions.app.enterOfflineMode}
           >

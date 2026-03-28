@@ -112,6 +112,7 @@ interface IProps extends WrappedComponentProps, WithStylesProps<typeof styles> {
   retryRequiredRequests: () => void;
   areRequiredRequestsLoading: boolean;
   isOfflineMode: boolean;
+  isEnteringOfflineMode: boolean;
   hasOfflineBackup: boolean;
   enterOfflineMode: () => void;
 }
@@ -154,6 +155,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
       updateVersion,
       isUpdateAvailable,
       isOfflineMode,
+      isEnteringOfflineMode,
       hasOfflineBackup,
       enterOfflineMode,
     } = this.props;
@@ -215,9 +217,13 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                           type="button"
                           className="info-bar__cta"
                           onClick={enterOfflineMode}
-                          disabled={areRequiredRequestsLoading}
+                          disabled={
+                            areRequiredRequestsLoading || isEnteringOfflineMode
+                          }
                         >
-                          Run in offline mode
+                          {isEnteringOfflineMode
+                            ? 'Starting offline mode...'
+                            : 'Run in offline mode'}
                         </button>
                       )}
                     </InfoBar>
@@ -239,9 +245,13 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                           type="button"
                           className="info-bar__cta"
                           onClick={enterOfflineMode}
-                          disabled={areRequiredRequestsLoading}
+                          disabled={
+                            areRequiredRequestsLoading || isEnteringOfflineMode
+                          }
                         >
-                          Run in offline mode
+                          {isEnteringOfflineMode
+                            ? 'Starting offline mode...'
+                            : 'Run in offline mode'}
                         </button>
                       )}
                     </InfoBar>
@@ -262,9 +272,13 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                         type="button"
                         className="info-bar__cta"
                         onClick={enterOfflineMode}
-                        disabled={areRequiredRequestsLoading}
+                        disabled={
+                          areRequiredRequestsLoading || isEnteringOfflineMode
+                        }
                       >
-                        Run in offline mode
+                        {isEnteringOfflineMode
+                          ? 'Starting offline mode...'
+                          : 'Run in offline mode'}
                       </button>
                     )}
                   </InfoBar>

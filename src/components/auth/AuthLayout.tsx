@@ -28,6 +28,7 @@ export interface IProps extends WrappedComponentProps {
   retryHealthCheck: MouseEventHandler<HTMLButtonElement>;
   useOfflineMode: MouseEventHandler<HTMLButtonElement>;
   isHealthCheckLoading: boolean;
+  isEnteringOfflineMode: boolean;
   isFullScreen: boolean;
   installAppUpdate: MouseEventHandler<HTMLButtonElement>;
   appUpdateIsDownloaded: boolean;
@@ -59,6 +60,7 @@ class AuthLayout extends Component<IProps, IState> {
       retryHealthCheck,
       useOfflineMode,
       isHealthCheckLoading,
+      isEnteringOfflineMode,
       isFullScreen,
       installAppUpdate,
       appUpdateIsDownloaded,
@@ -115,9 +117,11 @@ class AuthLayout extends Component<IProps, IState> {
                   type="button"
                   className="info-bar__cta"
                   onClick={useOfflineMode}
-                  disabled={isHealthCheckLoading}
+                  disabled={isHealthCheckLoading || isEnteringOfflineMode}
                 >
-                  Run in offline mode
+                  {isEnteringOfflineMode
+                    ? 'Starting offline mode...'
+                    : 'Run in offline mode'}
                 </button>
               )}
             </InfoBar>

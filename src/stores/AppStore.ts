@@ -119,6 +119,8 @@ export default class AppStore extends TypedStore {
 
   @observable isOfflineMode = false;
 
+  @observable isEnteringOfflineMode = false;
+
   @observable hasOfflineBackup = false;
 
   @observable lastOfflineSyncAt: string | null = null;
@@ -689,48 +691,67 @@ export default class AppStore extends TypedStore {
     }
 
     window.sessionStorage.removeItem(OFFLINE_MODE_BOOTSTRAP_KEY);
+    this.isEnteringOfflineMode = true;
     this._activateOfflineMode();
   }
 
   @action async _activateOfflineMode() {
-    const snapshot = loadOfflineState();
-    if (!snapshot) {
-      this.hasOfflineBackup = false;
-      return;
-    }
+    try {
+      const snapshot = loadOfflineState();
+      if (!snapshot) {
+        this.hasOfflineBackup = false;
+        return;
+      }
 
-    let recipes = this.stores.recipes.all;
-    if (recipes.length === 0) {
-      recipes = await this.stores.recipes.allRecipesRequest.execute().promise;
-    }
+      let recipes = this.stores.recipes.all;
+      if (recipes.length === 0) {
+        recipes = await this.stores.recipes.allRecipesRequest.execute().promise;
+      }
 
-    const hydrated = hydrateOfflineState(snapshot, recipes);
+      const hydrated = hydrateOfflineState(snapshot, recipes);
 
-    this._hydrateOfflineRequest(
-      this.stores.user.getUserInfoRequest,
-      hydrated.user,
-    );
-    this._hydrateOfflineRequest(
-      this.stores.services.allServicesRequest,
-      hydrated.services,
-    );
-    this._hydrateOfflineRequest(getUserWorkspacesRequest, hydrated.workspaces);
+      this._hydrateOfflineRequest(
+        this.stores.user.getUserInfoRequest,
+        hydrated.user,
+      );
+      this._hydrateOfflineRequest(
+        this.stores.services.allServicesRequest,
+        hydrated.services,
+      );
+      this._hydrateOfflineRequest(
+        getUserWorkspacesRequest,
+        hydrated.workspaces,
+      );
 
-    this.healthCheckRequest.error = null;
-    this.healthCheckRequest.isError = false;
-    this.authRequestFailed = false;
-    this.isOfflineMode = true;
-    this.hasOfflineBackup = true;
-    this.lastOfflineSyncAt = snapshot.updatedAt;
-    this.canSwitchBackOnline = false;
-    this._startOfflineReconnectChecks();
+      this.healthCheckRequest.error = null;
+      this.healthCheckRequest.isError = false;
+      this.authRequestFailed = false;
+      this.isOfflineMode = true;
+      this.hasOfflineBackup = true;
+      this.lastOfflineSyncAt = snapshot.updatedAt;
+      this.canSwitchBackOnline = false;
+      this._startOfflineReconnectChecks();
 
-    if (this.stores.user.isLoggedIn && window.location.hash.includes('/auth')) {
-      this.stores.router.push('/');
+      if (
+        this.stores.user.isLoggedIn &&
+        window.location.hash.includes('/auth')
+      ) {
+        this.stores.router.push('/');
+      }
+    } catch (error) {
+      console.error('Could not activate offline mode', error);
+    } finally {
+      this.isEnteringOfflineMode = false;
     }
   }
 
   @action _enterOfflineMode() {
+    if (this.isOfflineMode || this.isEnteringOfflineMode) {
+      return;
+    }
+
+    this.isEnteringOfflineMode = true;
+
     if (this._shouldReloadIntoOfflineMode()) {
       window.sessionStorage.setItem(OFFLINE_MODE_BOOTSTRAP_KEY, 'true');
       window.location.reload();
@@ -742,6 +763,7 @@ export default class AppStore extends TypedStore {
 
   @action _exitOfflineMode() {
     this._stopOfflineReconnectChecks();
+    this.isEnteringOfflineMode = false;
     this.isOfflineMode = false;
     this.canSwitchBackOnline = false;
     window.location.reload();

@@ -60,6 +60,7 @@ class AuthLayoutContainer extends Component<IProps> {
           retryHealthCheck={actions.app.healthCheck}
           useOfflineMode={actions.app.enterOfflineMode}
           isHealthCheckLoading={app.healthCheckRequest.isExecuting}
+          isEnteringOfflineMode={app.isEnteringOfflineMode}
           isFullScreen={app.isFullScreen}
           installAppUpdate={actions.app.installUpdate}
           appUpdateIsDownloaded={
