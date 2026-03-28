@@ -16,6 +16,8 @@ import { Component as BasicAuth } from '../../features/basicAuth';
 import { Component as PublishDebugInfo } from '../../features/publishDebugInfo';
 import { Component as QuickSwitch } from '../../features/quickSwitch';
 import { updateVersionParse } from '../../helpers/update-helpers';
+import { serverName } from '../../api/apiBase';
+import globalMessages from '../../i18n/globalMessages';
 import InfoBar from '../ui/InfoBar';
 import ErrorBoundary from '../util/ErrorBoundary';
 
@@ -104,6 +106,9 @@ interface IProps extends WrappedComponentProps, WithStylesProps<typeof styles> {
   installAppUpdate: () => void;
   showRequiredRequestsError: boolean;
   areRequiredRequestsSuccessful: boolean;
+  isOnline: boolean;
+  isAPIHealthy: boolean;
+  retryHealthCheck: () => void;
   retryRequiredRequests: () => void;
   areRequiredRequestsLoading: boolean;
   isOfflineMode: boolean;
@@ -141,6 +146,9 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
       settings,
       showRequiredRequestsError,
       areRequiredRequestsSuccessful,
+      isOnline,
+      isAPIHealthy,
+      retryHealthCheck,
       retryRequiredRequests,
       areRequiredRequestsLoading,
       updateVersion,
@@ -151,6 +159,9 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
     } = this.props;
 
     const { intl } = this.props;
+    let serverNameParse = serverName();
+    serverNameParse =
+      serverNameParse === 'Custom' ? 'your Custom Server' : serverNameParse;
 
     const { locked, automaticUpdates, useCompactWorkspaceDrawer } =
       settings.app;
@@ -182,6 +193,35 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
               {sidebar}
               <div className="app__service">
                 <WorkspaceSwitchingIndicator />
+                {isOnline &&
+                  !isAPIHealthy &&
+                  areRequiredRequestsSuccessful &&
+                  !authRequestFailed &&
+                  !isOfflineMode && (
+                    <InfoBar type="danger" sticky>
+                      <Icon icon={mdiFlash} />
+                      {intl.formatMessage(globalMessages.APIUnhealthy, {
+                        serverNameParse,
+                      })}
+                      <button
+                        type="button"
+                        className="info-bar__cta"
+                        onClick={retryHealthCheck}
+                      >
+                        Try again
+                      </button>
+                      {hasOfflineBackup && (
+                        <button
+                          type="button"
+                          className="info-bar__cta"
+                          onClick={enterOfflineMode}
+                          disabled={areRequiredRequestsLoading}
+                        >
+                          Run in offline mode
+                        </button>
+                      )}
+                    </InfoBar>
+                  )}
                 {!areRequiredRequestsSuccessful &&
                   showRequiredRequestsError && (
                     <InfoBar type="danger" sticky>

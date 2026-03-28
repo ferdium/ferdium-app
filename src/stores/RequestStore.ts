@@ -25,7 +25,7 @@ export default class RequestStore extends TypedStore {
 
   retries: number = 0;
 
-  retryDelay: number = ms('2s');
+  retryDelay: number = ms('1s');
 
   retryTimeout: NodeJS.Timeout | null = null;
 
@@ -130,7 +130,7 @@ export default class RequestStore extends TypedStore {
 
         this.retries += 1;
         this._retryRequiredRequests();
-        if (this.retries === 4) {
+        if (this.retries === 2) {
           this.showRequiredRequestsError = true;
         }
 

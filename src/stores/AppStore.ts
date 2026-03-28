@@ -65,6 +65,7 @@ const autoLauncher = new AutoLaunch({
 
 const CATALINA_NOTIFICATION_HACK_KEY =
   '_temp_askedForCatalinaNotificationPermissions';
+const OFFLINE_MODE_BOOTSTRAP_KEY = 'ferdium.pendingOfflineMode';
 
 const locales = generatedTranslations();
 
@@ -153,6 +154,8 @@ export default class AppStore extends TypedStore {
 
   offlineReconnectInterval: NodeJS.Timeout | null = null;
 
+  healthCheckInterval: NodeJS.Timeout | null = null;
+
   @observable downloads: Download[] = [];
 
   @observable justFinishedDownloading: boolean = false;
@@ -211,6 +214,7 @@ export default class AppStore extends TypedStore {
 
   async setup(): Promise<void> {
     this._loadOfflineBackupMeta();
+    this._resumePendingOfflineMode();
     this._appStartsCounter();
     // Focus the active service
     window.addEventListener('focus', this.actions.service.focusActiveService);
@@ -325,6 +329,11 @@ export default class AppStore extends TypedStore {
     setTimeout(() => {
       this._healthCheck();
     }, 1000);
+    this.healthCheckInterval = setInterval(() => {
+      if (!this.isOfflineMode) {
+        this._healthCheck();
+      }
+    }, ms('5s'));
 
     this.isSystemDarkModeEnabled = nativeTheme.shouldUseDarkColors;
 
@@ -663,7 +672,27 @@ export default class AppStore extends TypedStore {
     }
   }
 
-  @action async _enterOfflineMode() {
+  _shouldReloadIntoOfflineMode() {
+    return (
+      !this.isOfflineMode &&
+      this.stores.user.isLoggedIn &&
+      !window.location.hash.includes('/auth') &&
+      this.stores.services.allServicesRequest.wasExecuted &&
+      Array.isArray(this.stores.services.allServicesRequest.result) &&
+      this.stores.services.allServicesRequest.result.length > 0
+    );
+  }
+
+  _resumePendingOfflineMode() {
+    if (window.sessionStorage.getItem(OFFLINE_MODE_BOOTSTRAP_KEY) !== 'true') {
+      return;
+    }
+
+    window.sessionStorage.removeItem(OFFLINE_MODE_BOOTSTRAP_KEY);
+    this._activateOfflineMode();
+  }
+
+  @action async _activateOfflineMode() {
     const snapshot = loadOfflineState();
     if (!snapshot) {
       this.hasOfflineBackup = false;
@@ -699,6 +728,16 @@ export default class AppStore extends TypedStore {
     if (this.stores.user.isLoggedIn && window.location.hash.includes('/auth')) {
       this.stores.router.push('/');
     }
+  }
+
+  @action _enterOfflineMode() {
+    if (this._shouldReloadIntoOfflineMode()) {
+      window.sessionStorage.setItem(OFFLINE_MODE_BOOTSTRAP_KEY, 'true');
+      window.location.reload();
+      return;
+    }
+
+    this._activateOfflineMode();
   }
 
   @action _exitOfflineMode() {
@@ -969,6 +1008,7 @@ export default class AppStore extends TypedStore {
   _startOfflineReconnectChecks() {
     this._stopOfflineReconnectChecks();
 
+    // eslint-disable-next-line unicorn/consistent-function-scoping
     const probe = async () => {
       if (!this.isOfflineMode) {
         return;
@@ -990,10 +1030,10 @@ export default class AppStore extends TypedStore {
       }
     };
 
-    void probe();
+    probe();
     this.offlineReconnectInterval = setInterval(() => {
-      void probe();
-    }, ms('30s'));
+      probe();
+    }, ms('5s'));
   }
 
   _stopOfflineReconnectChecks() {

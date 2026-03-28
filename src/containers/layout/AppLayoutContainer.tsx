@@ -191,6 +191,9 @@ class AppLayoutContainer extends Component<IProps> {
             areRequiredRequestsSuccessful={
               requests.areRequiredRequestsSuccessful
             }
+            isOnline={app.isOnline}
+            isAPIHealthy={!app.healthCheckRequest.isError}
+            retryHealthCheck={this.props.actions.app.healthCheck}
             retryRequiredRequests={retryRequiredRequests}
             areRequiredRequestsLoading={requests.areRequiredRequestsLoading}
             updateVersion={app.updateVersion}
