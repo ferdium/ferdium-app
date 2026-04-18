@@ -31,31 +31,33 @@ export class NotificationsHandler {
 }
 
 export const notificationsClassDefinition = `(() => {
-class Notification {
+// Changed the class name for clarity purpose
+class WrapNotification {
+  
   static permission = 'granted';
 
-  static _notification;
-
   constructor(title = '', options = {}) {
-    Notification._displayNotification(title, options);
+    this._onclick = null;
+    this._displayNotification(title, options);
   }
 
-  static _displayNotification(title, options) {
-    Notification._notification = window.ferdium
+  _displayNotification(title, options) {
+    window.ferdium
       .displayNotification(title, options)
-      .then(() => {
-        // TODO: After several tries, we couldn't find a way to trigger the native notification onclick event.
-        // This was needed so that user could go to the specific context when clicking on the notification (it only goes to the service now).
-        // For now, we don't do anything here
+      .then((value) => {  
+        // When clicked, the assigned onclick will execute
+        if (this._onclick)
+        {
+          this._onclick();
+        }
       });
   }
 
   static requestPermission(cb) {
     if (typeof cb === 'function') {
-      cb(Notification.permission);
+      cb(WrapNotification.permission);
     }
-
-    return Promise.resolve(Notification.permission);
+    return Promise.resolve(WrapNotification.permission);
   }
 
   onNotify(data) {
@@ -63,21 +65,23 @@ class Notification {
   }
 
   close() {
-    if (Notification._notification) {
-      Notification._notification = null;
+    if (this._notification) {
+      this._notification = null;
+      // Clean-up
+      this._onclick = null
     }
   }
 
-  onclick() {}
-
-  onclose() {}
-
-  onerror() {}
-
-  onshow() {}
+  // Monkey-patching the onclick setter method
+  set onclick(callback) {
+    this._onclick = callback;
+  }
 }
 
-  window.Notification = Notification;
+  // Copy prototype of the original Notification object before monkey-patch
+  const OriginalNotification = window.Notification;
+  Object.setPrototypeOf(WrapNotification.prototype, OriginalNotification.prototype);
+  window.Notification = WrapNotification;
 
   // some sites use service workers for notifications, but electron doesn't support this
   // this is a monkey patch to redirect them to window.Notification instead
@@ -87,6 +91,6 @@ class Notification {
   ) {
     // passing all of options causes notifications to only appear sometimes
     // but the only option that actually matters is body
-    new Notification(title, { body: options.body });
+    new WrapNotification(title, { body: options.body });
   };
 })();`;

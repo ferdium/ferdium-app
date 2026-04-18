@@ -21,6 +21,21 @@ const debug = require('../../preload-safe-debug')(
   'Ferdium:feature:workspaces:store',
 );
 
+// Calculate animation duration based on user's motion preferences
+const getDrawerAnimationDuration = () => {
+  if (
+    typeof window === 'undefined' ||
+    typeof window.matchMedia !== 'function'
+  ) {
+    return 500;
+  }
+
+  const prefersReducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)',
+  ).matches;
+  return prefersReducedMotion ? 0 : 500;
+};
+
 export default class WorkspacesStore extends FeatureStore {
   @observable isFeatureActive = false;
 
@@ -199,11 +214,14 @@ export default class WorkspacesStore extends FeatureStore {
     // Indicate that we are switching to another workspace
     this._setIsSwitchingWorkspace(true);
     this._setNextWorkspace(workspace);
-    // Delay switching to next workspace so that the services loading does not drag down UI
+
+    const animationDuration = getDrawerAnimationDuration();
+    // Delay switching to next workspace until after drawer animation completes
+    // This prevents the service refresh from interrupting the drawer close animation
     setTimeout(() => {
       this._setActiveWorkspace(workspace);
       this._updateSettings({ lastActiveWorkspace: workspace.id });
-    }, 100);
+    }, animationDuration + 50);
     // Indicate that we are done switching to the next workspace
     setTimeout(() => {
       this._setIsSwitchingWorkspace(false);
@@ -220,7 +238,7 @@ export default class WorkspacesStore extends FeatureStore {
             : 'none';
         }
       }
-    }, 500);
+    }, animationDuration + 100);
   };
 
   @action _deactivateActiveWorkspace = () => {
@@ -228,10 +246,13 @@ export default class WorkspacesStore extends FeatureStore {
     this._setIsSwitchingWorkspace(true);
     this._setNextWorkspace(null);
     this._updateSettings({ lastActiveWorkspace: null });
-    // Delay switching to next workspace so that the services loading does not drag down UI
+
+    const animationDuration = getDrawerAnimationDuration();
+    // Delay switching to next workspace until after drawer animation completes
+    // This prevents the service refresh from interrupting the drawer close animation
     setTimeout(() => {
       this._setActiveWorkspace(null);
-    }, 100);
+    }, animationDuration + 50);
     // Indicate that we are done switching to the default workspace
     setTimeout(() => {
       this._setIsSwitchingWorkspace(false);
@@ -242,7 +263,7 @@ export default class WorkspacesStore extends FeatureStore {
           wrapper.style.display = '';
         }
       }
-    }, 500);
+    }, animationDuration + 100);
   };
 
   @action _toggleWorkspaceDrawer = () => {

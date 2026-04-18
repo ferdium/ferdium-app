@@ -11,7 +11,7 @@ jobs:
     runs-on: macos-14
     steps:
       - name: Publish nightly
-        uses: macauley/action-homebrew-bump-cask@v1
+        uses: friesi23/action-homebrew-bump-cask@v2
         if: ${{ contains(github.event.release.tag_name, 'nightly') }}
         with:
           # Required, custom GitHub access token with only the 'public_repo' scope enabled
@@ -23,7 +23,7 @@ jobs:
           livecheck: true
           dryrun: false
       - name: Publish beta
-        uses: macauley/action-homebrew-bump-cask@v1
+        uses: friesi23/action-homebrew-bump-cask@v2
         if: ${{ contains(github.event.release.tag_name, 'beta') }}
         with:
           # Required, custom GitHub access token with only the 'public_repo' scope enabled
@@ -35,7 +35,7 @@ jobs:
           livecheck: true
           dryrun: false
       - name: Publish release
-        uses: macauley/action-homebrew-bump-cask@v1
+        uses: friesi23/action-homebrew-bump-cask@v2
         if: ${{ !contains(github.event.release.tag_name, 'nightly') && !contains(github.event.release.tag_name, 'beta') }}
         with:
           # Required, custom GitHub access token with only the 'public_repo' scope enabled

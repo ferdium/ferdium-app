@@ -62,10 +62,12 @@ $tabitem-bias: 30px;
   }
 
   .sidebar__button--workspaces.is-active {
-    position: absolute;
-    right: 300px;
-    height: 100%;
-    background-color: #f7f7f9;
+    .app:not(.app--compact-workspace) & {
+      position: absolute;
+      right: 300px;
+      height: 100%;
+      background-color: #f7f7f9;
+    }
   }
 }
 

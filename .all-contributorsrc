@@ -3026,6 +3026,51 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "mbentley",
+      "name": "Matt Bentley",
+      "avatar_url": "https://avatars.githubusercontent.com/u/414445?v=4",
+      "profile": "https://blog.mbentley.net",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "jotardo",
+      "name": "jotardo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/63938660?v=4",
+      "profile": "https://github.com/jotardo",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "danilofalcao",
+      "name": "Danilo Falcão",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4456855?v=4",
+      "profile": "https://fcon.fedorapeople.org",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "kurobeats",
+      "name": "Anthony Cozamanis",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4091936?v=4",
+      "profile": "https://kurobeats.github.io",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "phelix001",
+      "name": "Joshua Freedman",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5187100?v=4",
+      "profile": "https://www.linkedin.com/in/joshuafreedman1/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "commitType": "docs"

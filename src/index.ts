@@ -257,6 +257,58 @@ const createWindow = () => {
   app.on('web-contents-created', (_e, contents) => {
     if (contents.getType() === 'webview') {
       enableWebContents(contents);
+
+      // Set permission handlers on service webview sessions.
+      // This explicitly allows safe permissions and denies unknown ones,
+      // and enables HID/USB/Serial for hardware FIDO2 security key detection.
+      const ses = contents.session;
+      if (!(ses as any)._permissionHandlersSet) {
+        (ses as any)._permissionHandlersSet = true;
+
+        ses.setPermissionRequestHandler((webContents, permission, callback) => {
+          const allowedPermissions = [
+            'media',
+            'notifications',
+            'fullscreen',
+            'pointerLock',
+            'display-capture',
+            'idle-detection',
+            'clipboard-read',
+            'clipboard-sanitized-write',
+            'speaker-selection',
+          ];
+
+          if (allowedPermissions.includes(permission)) {
+            callback(true);
+            return;
+          }
+
+          debug(
+            `Denied permission request: ${permission} from ${webContents?.getURL()}`,
+          );
+          callback(false);
+        });
+
+        ses.setPermissionCheckHandler((_webContents, permission) => {
+          const allowedChecks = [
+            'media',
+            'notifications',
+            'fullscreen',
+            'pointerLock',
+            'display-capture',
+            'idle-detection',
+            'clipboard-read',
+            'clipboard-sanitized-write',
+            'hid',
+            'serial',
+            'usb',
+            'speaker-selection',
+          ];
+
+          return allowedChecks.includes(permission);
+        });
+      }
+
       contents.setWindowOpenHandler(({ url }) => {
         openExternalUrl(url);
         return { action: 'deny' };

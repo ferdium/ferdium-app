@@ -12,6 +12,7 @@ import {
 } from '../../config';
 import { isLinux, isWindows } from '../../environment';
 import { userDataPath } from '../../environment-remote';
+import { workspaceStore } from '../workspaces';
 
 const STYLE_ELEMENT_ID = 'custom-appearance-style';
 
@@ -331,7 +332,70 @@ const generateShowDragAreaStyle = accentColor => {
   `;
 };
 
-const generateVerticalStyle = (widthStr, alwaysShowWorkspaces) => {
+const generateCompactWorkspaceDrawerStyle = (
+  widthStr,
+  useCompactWorkspaceDrawer,
+) => {
+  if (!useCompactWorkspaceDrawer) {
+    return '';
+  }
+
+  const width = Number(widthStr);
+  const tabItemWidthBias = 1;
+  const itemHeight = width - tabItemWidthBias;
+
+  return `
+  .app--compact-workspace {
+    --workspace-drawer-width: ${width}px !important;
+  }
+  .workspaces-drawer.compact {
+    width: ${width}px !important;
+  }
+  .workspaces-drawer [data-tooltip-id="tooltip-workspaces-drawer"].compact {
+    height: ${itemHeight}px !important;
+    min-height: ${itemHeight}px !important;
+  }
+  .app__service > div[class*="WorkspaceSwitchingIndicator-wrapper"] {
+    width: calc(100% - ${width}px) !important;
+  }
+  `;
+};
+
+let isChangingDrawerSettings = false;
+let drawerSettingsTimeout: NodeJS.Timeout | null = null;
+
+const generateWorkspaceDrawerTransform = (
+  widthStr,
+  useCompactWorkspaceDrawer,
+  isWorkspaceDrawerOpen,
+  alwaysShowWorkspaces,
+) => {
+  // When drawer is open or always show is enabled, don't override - let JSS handle the transition
+  if (isWorkspaceDrawerOpen || alwaysShowWorkspaces) {
+    return '';
+  }
+
+  // When drawer is closed, apply transform
+  const drawerWidth = useCompactWorkspaceDrawer ? Number(widthStr) : 300;
+
+  // Disable transition only when actively changing drawer settings (ribbon width or compact mode)
+  const transitionStyle = isChangingDrawerSettings
+    ? 'transition: none !important;'
+    : '';
+
+  return `
+  .app__content {
+    transform: translateX(-${drawerWidth}px) !important;
+    ${transitionStyle}
+  }
+  `;
+};
+
+const generateVerticalStyle = (
+  widthStr,
+  alwaysShowWorkspaces,
+  useCompactWorkspaceDrawer,
+) => {
   if (!document.querySelector('#vertical-style')) {
     const link = document.createElement('link');
     link.id = 'vertical-style';
@@ -342,15 +406,14 @@ const generateVerticalStyle = (widthStr, alwaysShowWorkspaces) => {
     document.head.append(link);
   }
   const width = Number(widthStr);
-  const sidebarWidth = width - 4;
-  const verticalStyleOffset = 29;
+  const drawerWidth = useCompactWorkspaceDrawer ? width : 300;
 
   return `
   .sidebar {
   ${
     alwaysShowWorkspaces
       ? `
-    width: calc(100% - 300px) !important;
+    width: calc(100% - ${drawerWidth}px) !important;
   `
       : ''
   }
@@ -360,12 +423,8 @@ const generateVerticalStyle = (widthStr, alwaysShowWorkspaces) => {
     width: ${width}px;
   }
 
-  .workspaces-drawer {
-    margin-top: -${sidebarWidth - verticalStyleOffset - 1}px !important;
-  }
-
   .todos__todos-panel--expanded {
-    width: calc(100% - 300px) !important;
+    width: calc(100% - ${drawerWidth + width}px) !important;
   }
   `;
 };
@@ -373,11 +432,40 @@ const generateVerticalStyle = (widthStr, alwaysShowWorkspaces) => {
 const generateOpenWorkspaceStyle = () => {
   return `
   .app .app__content {
-    width: 100%;
-    transform: translateX(0px);
+    width: 100% !important;
+    transform: translateX(0px) !important;
   }
   .sidebar__button--workspaces {
     display: none;
+  }
+  `;
+};
+
+const generateAppContentTransition = alwaysShowWorkspaces => {
+  const reducedMotionQuery = window?.matchMedia?.(
+    '(prefers-reduced-motion: no-preference)',
+  );
+  const widthTransition = reducedMotionQuery?.matches
+    ? 'width 0.5s ease'
+    : 'none';
+
+  // Disable all transitions when changing drawer settings
+  if (isChangingDrawerSettings) {
+    return `
+  .app .app__content {
+    transition: none !important;
+  }
+  `;
+  }
+
+  // Only add width transition when Always Show is active to prevent bounce
+  const transitionValue = alwaysShowWorkspaces
+    ? `transform 0.5s ease, ${widthTransition}`
+    : 'transform 0.5s ease';
+
+  return `
+  .app .app__content {
+    transition: ${transitionValue} !important;
   }
   `;
 };
@@ -396,6 +484,7 @@ const generateStyle = (settings, app) => {
     useHorizontalStyle,
     alwaysShowWorkspaces,
     showServiceName,
+    useCompactWorkspaceDrawer,
   } = settings;
 
   const { isFullScreen } = app;
@@ -420,11 +509,27 @@ const generateStyle = (settings, app) => {
     isFullScreen,
   );
 
+  style += generateCompactWorkspaceDrawerStyle(
+    serviceRibbonWidth,
+    useCompactWorkspaceDrawer,
+  );
+
+  style += generateWorkspaceDrawerTransform(
+    serviceRibbonWidth,
+    useCompactWorkspaceDrawer,
+    workspaceStore.isWorkspaceDrawerOpen,
+    alwaysShowWorkspaces,
+  );
+
   if (shouldShowDragArea) {
     style += generateShowDragAreaStyle(accentColor);
   }
   if (useHorizontalStyle) {
-    style += generateVerticalStyle(serviceRibbonWidth, alwaysShowWorkspaces);
+    style += generateVerticalStyle(
+      serviceRibbonWidth,
+      alwaysShowWorkspaces,
+      useCompactWorkspaceDrawer,
+    );
   } else if (document.querySelector('#vertical-style')) {
     const link = document.querySelector('#vertical-style');
     if (link) {
@@ -434,6 +539,9 @@ const generateStyle = (settings, app) => {
   if (alwaysShowWorkspaces) {
     style += generateOpenWorkspaceStyle();
   }
+
+  // Always add transition to app__content for smooth animations
+  style += generateAppContentTransition(alwaysShowWorkspaces);
 
   style += generateUserCustomCSS();
 
@@ -451,22 +559,53 @@ const updateProgressbar = settings => {
 };
 
 const updateStyle = (settings, app) => {
-  const style = generateStyle(settings, app);
+  const appSettings = settings.all?.app ?? settings;
+  const style = generateStyle(appSettings, app);
   setAppearance(style);
-  updateProgressbar(settings);
+  updateProgressbar(appSettings);
 };
 
 export default function initAppearance(stores) {
   const { settings, app } = stores;
   createStyleElement();
-  updateProgressbar(settings);
+  updateProgressbar(settings.all.app);
+
+  // Track drawer settings changes (ribbon width and compact mode) to disable transition temporarily
+  reaction(
+    () => [
+      settings.all.app.serviceRibbonWidth,
+      settings.all.app.useCompactWorkspaceDrawer,
+    ],
+    () => {
+      // Disable transitions only if drawer is closed and always show is off
+      const shouldDisableTransitions =
+        !workspaceStore.isWorkspaceDrawerOpen &&
+        !settings.all.app.alwaysShowWorkspaces;
+
+      if (shouldDisableTransitions) {
+        if (drawerSettingsTimeout) {
+          clearTimeout(drawerSettingsTimeout);
+        }
+        isChangingDrawerSettings = true;
+        updateStyle(settings, app);
+
+        // Re-enable transition after a brief delay
+        drawerSettingsTimeout = setTimeout(() => {
+          isChangingDrawerSettings = false;
+          updateStyle(settings, app);
+        }, 50);
+      } else {
+        // Always update style even when transitions should be enabled
+        updateStyle(settings, app);
+      }
+    },
+  );
 
   // Update style when settings change
   reaction(
     () => [
       settings.all.app.accentColor,
       settings.all.app.progressbarAccentColor,
-      settings.all.app.serviceRibbonWidth,
       settings.all.app.iconSize,
       settings.all.app.showDragArea,
       settings.all.app.sidebarServicesLocation,
@@ -475,10 +614,12 @@ export default function initAppearance(stores) {
       settings.all.app.useHorizontalStyle,
       settings.all.app.alwaysShowWorkspaces,
       settings.all.app.showServiceName,
+      settings.all.app.useCompactWorkspaceDrawer,
       app.isFullScreen,
+      workspaceStore.isWorkspaceDrawerOpen,
     ],
     () => {
-      updateStyle(settings.all.app, app);
+      updateStyle(settings, app);
     },
     { fireImmediately: true },
   );

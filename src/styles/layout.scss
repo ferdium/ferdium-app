@@ -104,7 +104,7 @@ body.win32:not(.isFullScreen) .app .app__content {
   background: #fff;
   .app__content {
     display: flex;
-    width: calc(100% + 300px);
+    width: calc(100% + var(--workspace-drawer-width));
   }
 
   .app__main-content {
@@ -116,6 +116,25 @@ body.win32:not(.isFullScreen) .app .app__content {
     display: flex;
     flex: 1;
     flex-direction: column;
+  }
+}
+
+.workspaces-drawer {
+  position: relative;
+
+  &::after {
+    content: ' ';
+    position: absolute;
+    top: -10px;
+    right: 0;
+    bottom: -10px;
+    left: -10px;
+    z-index: 1000;
+    pointer-events: none;
+    clip-path: inset(10px 0 10px 10px);
+    box-shadow:
+      inset 0 0 15px 0 rgba(0, 0, 0, 0.12),
+      inset 0 0 2px 0 rgba(0, 0, 0, 0.36);
   }
 }
 
@@ -278,4 +297,13 @@ body.win32:not(.isFullScreen) .app .app__content {
 a,
 button {
   cursor: pointer;
+}
+
+:root {
+  --workspace-drawer-width: 300px;
+}
+
+// Add a class for compact mode
+.app--compact-workspace {
+  --workspace-drawer-width: 64px;
 }
