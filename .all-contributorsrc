@@ -3071,6 +3071,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "shuhikari",
+      "name": "Édipo Maciel | 'Shu'",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4049331?v=4",
+      "profile": "http://auditore.com.br",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "commitType": "docs"
