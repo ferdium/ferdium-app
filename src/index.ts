@@ -309,9 +309,31 @@ const createWindow = () => {
         });
       }
 
-      contents.setWindowOpenHandler(({ url }) => {
+      contents.setWindowOpenHandler(({ url, disposition }) => {
+        // OAuth popups (Google, Microsoft, etc.) are opened via window.open()
+        // and need window.opener preserved so the parent can receive the
+        // postMessage callback that completes the flow. Allow them as a child
+        // BrowserWindow that inherits the service partition.
+        if (disposition === 'new-window') {
+          return {
+            action: 'allow',
+            outlivesOpener: false,
+            overrideBrowserWindowOptions: {
+              parent: mainWindow,
+              fullscreenable: false,
+              webPreferences: { session: contents.session },
+            },
+          };
+        }
+
+        // Regular link clicks → open in the user's default browser.
         openExternalUrl(url);
         return { action: 'deny' };
+      });
+
+      contents.on('did-create-window', child => {
+        enableWebContents(child.webContents);
+        child.webContents.setWebRTCIPHandlingPolicy(webRTCIPHandlingPolicy);
       });
 
       // Handle will download event from main process (prevent download dialog)
