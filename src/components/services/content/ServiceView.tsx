@@ -10,6 +10,7 @@ import {
 import TopBarProgress from 'react-topbar-progress-indicator';
 import { CUSTOM_WEBSITE_RECIPE_ID } from '../../../config';
 import WebControlsScreen from '../../../features/webControls/containers/WebControlsScreen';
+import { getLocalizedRecipeName } from '../../../helpers/recipe-helpers';
 import type ServiceModel from '../../../models/Service';
 import type { RealStores } from '../../../stores';
 import MediaSource from '../../MediaSource';
@@ -198,7 +199,15 @@ class ServiceView extends Component<IProps, IState> {
           <>
             {service.isActive && (
               <ServiceDisabled
-                name={service.name === '' ? service.recipe.name : service.name}
+                name={
+                  service.name === ''
+                    ? getLocalizedRecipeName(
+                        service.recipe.id,
+                        service.recipe.name,
+                        intl,
+                      )
+                    : service.name
+                }
                 // webview={service.webview} // TODO: [TECH DEBT][PROPS NOT EXIST IN COMPONENT] check it
                 enable={enable}
               />

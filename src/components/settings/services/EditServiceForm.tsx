@@ -10,6 +10,7 @@ import {
 } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { isMac } from '../../../environment';
+import { getLocalizedRecipeName } from '../../../helpers/recipe-helpers';
 import { normalizedUrl } from '../../../helpers/url-helpers';
 import globalMessages from '../../../i18n/globalMessages';
 import type Form from '../../../lib/Form';
@@ -263,7 +264,9 @@ class EditServiceForm extends Component<IProps, IState> {
             type: 'question',
             message: intl.formatMessage(messages.deleteService),
             detail: intl.formatMessage(messages.confirmDeleteService, {
-              serviceName: service?.name || recipe.name,
+              serviceName:
+                service?.name ||
+                getLocalizedRecipeName(recipe.id, recipe.name, intl),
             }),
             buttons: [
               intl.formatMessage(globalMessages.yes),
@@ -314,11 +317,13 @@ class EditServiceForm extends Component<IProps, IState> {
           <span className="settings__header-item">
             {action === 'add'
               ? intl.formatMessage(messages.addServiceHeadline, {
-                  name: recipe.name,
+                  name: getLocalizedRecipeName(recipe.id, recipe.name, intl),
                 })
               : intl.formatMessage(messages.editServiceHeadline, {
                   name:
-                    service && service.name !== '' ? service.name : recipe.name,
+                    service && service.name !== ''
+                      ? service.name
+                      : getLocalizedRecipeName(recipe.id, recipe.name, intl),
                 })}
           </span>
         </div>
@@ -330,9 +335,15 @@ class EditServiceForm extends Component<IProps, IState> {
             {(recipe.hasTeamId || recipe.hasCustomUrl) && (
               <Tabs active={activeTabIndex}>
                 {recipe.hasHostedOption && (
-                  <TabItem title={recipe.name}>
+                  <TabItem
+                    title={getLocalizedRecipeName(recipe.id, recipe.name, intl)}
+                  >
                     {intl.formatMessage(messages.useHostedService, {
-                      name: recipe.name,
+                      name: getLocalizedRecipeName(
+                        recipe.id,
+                        recipe.name,
+                        intl,
+                      ),
                     })}
                   </TabItem>
                 )}
@@ -351,7 +362,11 @@ class EditServiceForm extends Component<IProps, IState> {
                     {form.error === 'url-validation-error' && (
                       <p className="franz-form__error">
                         {intl.formatMessage(messages.customUrlValidationError, {
-                          name: recipe.name,
+                          name: getLocalizedRecipeName(
+                            recipe.id,
+                            recipe.name,
+                            intl,
+                          ),
                         })}
                       </p>
                     )}

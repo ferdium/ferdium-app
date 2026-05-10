@@ -1363,7 +1363,7 @@ class EditSettingsForm extends Component<IProps, IState> {
                       </p>
                       {noUpdateAvailable && (
                         <p>
-                          {intl.formatMessage(messages.updateStatusUpToDate)}.
+                          {intl.formatMessage(messages.updateStatusUpToDate)}
                         </p>
                       )}
                       {updateFailed && (

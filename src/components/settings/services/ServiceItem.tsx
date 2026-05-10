@@ -8,6 +8,7 @@ import {
   injectIntl,
 } from 'react-intl';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
+import { getLocalizedRecipeName } from '../../../helpers/recipe-helpers';
 import type ServiceModel from '../../../models/Service';
 import Icon from '../../ui/icon';
 
@@ -59,7 +60,13 @@ class ServiceItem extends Component<IProps> {
           />
         </td>
         <td className="service-table__column-name" onClick={goToServiceForm}>
-          {service.name === '' ? service.recipe.name : service.name}
+          {service.name === ''
+            ? getLocalizedRecipeName(
+                service.recipe.id,
+                service.recipe.name,
+                intl,
+              )
+            : service.name}
         </td>
         <td className="service-table__column-info" onClick={goToServiceForm}>
           {service.isMuted && (
