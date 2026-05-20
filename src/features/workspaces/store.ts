@@ -19,8 +19,8 @@ import { KEEP_WS_LOADED_USID } from '../../config';
 import type Workspace from './models/Workspace';
 
 const { app } = require('@electron/remote');
-const path = require('path');
-const fs = require('fs');
+const path = require('node:path');
+const fs = require('node:fs');
 
 const debug = require('../../preload-safe-debug')(
   'Ferdium:feature:workspaces:store',
@@ -144,6 +144,7 @@ export default class WorkspacesStore extends FeatureStore {
       this._setActiveServiceOnWorkspaceSwitchReaction,
       this._activateLastUsedWorkspaceReaction,
       this._setWorkspaceBeingEditedReaction,
+      this._loadIconPathsReaction,
     ]);
     this._registerReactions(this._allReactions);
 
@@ -189,6 +190,23 @@ export default class WorkspacesStore extends FeatureStore {
     });
   };
 
+  // Returns the localStorage key for a workspace's icon path
+  _iconStorageKey = (workspaceId: string) => `workspace-icon:${workspaceId}`;
+
+  // Load all locally persisted icon paths into workspace models
+  _loadIconPaths = () => {
+    for (const workspace of this.workspaces) {
+      const stored = localStorage.getItem(this._iconStorageKey(workspace.id));
+      if (stored && fs.existsSync(stored)) {
+        workspace.iconPath = stored;
+      } else if (stored) {
+        // File was deleted externally — clean up the key
+        localStorage.removeItem(this._iconStorageKey(workspace.id));
+        workspace.iconPath = null;
+      }
+    }
+  };
+
   // Actions
 
   @action _edit = ({ workspace }) => {
@@ -202,16 +220,20 @@ export default class WorkspacesStore extends FeatureStore {
   };
 
   @action _delete = async ({ workspace }) => {
-    // Clean up icon file if it exists
+    // Clean up icon file and localStorage key if they exist
     if (workspace.iconPath) {
       try {
-        const fullIconPath = path.join(getWorkspaceIconsDir(), path.basename(workspace.iconPath));
+        const fullIconPath = path.join(
+          getWorkspaceIconsDir(),
+          path.basename(workspace.iconPath),
+        );
         if (fs.existsSync(fullIconPath)) {
           fs.unlinkSync(fullIconPath);
         }
-      } catch (e) {
-        debug('WorkspacesStore::_delete - failed to remove icon file', e);
+      } catch (error) {
+        debug('WorkspacesStore::_delete - failed to remove icon file', error);
       }
+      localStorage.removeItem(this._iconStorageKey(workspace.id));
     }
     await deleteWorkspaceRequest.execute(workspace).promise;
     await getUserWorkspacesRequest.result.remove(workspace);
@@ -235,7 +257,7 @@ export default class WorkspacesStore extends FeatureStore {
     const [moved] = workspaces.splice(oldIndex, 1);
     workspaces.splice(newIndex, 0, moved);
 
-    // Update order property on each workspace and persist
+    // Update order property on each workspace locally
     workspaces.forEach((ws, idx) => {
       const localWorkspace = this._getWorkspaceById(ws.id);
       if (localWorkspace) {
@@ -243,17 +265,21 @@ export default class WorkspacesStore extends FeatureStore {
       }
     });
 
-    // Persist each reordered workspace to the local server
-    for (const ws of workspaces) {
-      try {
-        await reorderWorkspaceRequest.execute({ id: ws.id, order: ws.order }).promise;
-      } catch (e) {
-        debug('WorkspacesStore::_reorderWorkspace - server reorder failed (non-fatal)', e);
-      }
-    }
+    // Persist reordered workspaces to the local server sequentially
+    const reorderPromises = workspaces.map(ws =>
+      reorderWorkspaceRequest
+        .execute({ id: ws.id, order: ws.order })
+        .promise.catch(error => {
+          debug(
+            'WorkspacesStore::_reorderWorkspace - server reorder failed (non-fatal)',
+            error,
+          );
+        }),
+    );
+    await Promise.all(reorderPromises);
   };
 
-  @action _saveWorkspaceIcon = async ({ workspaceId, iconPath: srcPath }) => {
+  @action _saveWorkspaceIcon = ({ workspaceId, iconPath: srcPath }) => {
     try {
       const iconsDir = getWorkspaceIconsDir();
       const ext = path.extname(srcPath) || '.png';
@@ -265,29 +291,35 @@ export default class WorkspacesStore extends FeatureStore {
       const localWorkspace = this._getWorkspaceById(workspaceId);
       if (localWorkspace) {
         localWorkspace.iconPath = destPath;
-        // Persist to server (iconPath stored in the data column via updateWorkspace)
-        await updateWorkspaceRequest.execute(localWorkspace).promise;
+        // Persist path to localStorage — survives reloads without server round-trip
+        localStorage.setItem(this._iconStorageKey(workspaceId), destPath);
       }
-    } catch (e) {
-      debug('WorkspacesStore::_saveWorkspaceIcon - failed', e);
+    } catch (error) {
+      debug('WorkspacesStore::_saveWorkspaceIcon - failed', error);
     }
   };
 
-  @action _deleteWorkspaceIcon = async ({ workspaceId }) => {
+  @action _deleteWorkspaceIcon = ({ workspaceId }) => {
     const localWorkspace = this._getWorkspaceById(workspaceId);
-    if (!localWorkspace || !localWorkspace.iconPath) return;
+    if (!localWorkspace?.iconPath) return;
 
     try {
-      const fullPath = path.join(getWorkspaceIconsDir(), path.basename(localWorkspace.iconPath));
+      const fullPath = path.join(
+        getWorkspaceIconsDir(),
+        path.basename(localWorkspace.iconPath),
+      );
       if (fs.existsSync(fullPath)) {
         fs.unlinkSync(fullPath);
       }
-    } catch (e) {
-      debug('WorkspacesStore::_deleteWorkspaceIcon - failed to remove file', e);
+    } catch (error) {
+      debug(
+        'WorkspacesStore::_deleteWorkspaceIcon - failed to remove file',
+        error,
+      );
     }
 
     localWorkspace.iconPath = null;
-    await updateWorkspaceRequest.execute(localWorkspace).promise;
+    localStorage.removeItem(this._iconStorageKey(workspaceId));
   };
 
   @action _setNextWorkspace(workspace) {
@@ -418,6 +450,12 @@ export default class WorkspacesStore extends FeatureStore {
   };
 
   // Reactions
+
+  _loadIconPathsReaction = () => {
+    if (this.workspaces.length > 0) {
+      this._loadIconPaths();
+    }
+  };
 
   _setWorkspaceBeingEditedReaction = () => {
     const { pathname } = this.stores.router.location;

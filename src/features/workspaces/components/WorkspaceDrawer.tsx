@@ -130,11 +130,6 @@ const styles = theme => ({
       },
     },
   },
-  // Highlight drop target while dragging
-  dropTarget: {
-    outline: `2px dashed ${theme.workspaces.drawer.buttons.color}`,
-    outlineOffset: '-2px',
-  },
 });
 
 interface IProps
@@ -145,21 +140,12 @@ interface IProps
   useCompactWorkspaceDrawer?: boolean;
 }
 
-interface IState {
-  dragOverIndex: number | null;
-  draggingIndex: number | null;
-}
-
 @inject('stores')
 @observer
-class WorkspaceDrawer extends Component<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
-    this.state = {
-      dragOverIndex: null,
-      draggingIndex: null,
-    };
-  }
+class WorkspaceDrawer extends Component<IProps> {
+  // Plain instance variables for drag state — no React state needed,
+  // avoids unused-state lint errors while keeping drag tracking simple.
+  private _draggingIndex: number | null = null;
 
   componentDidMount(): void {
     try {
@@ -171,25 +157,27 @@ class WorkspaceDrawer extends Component<IProps, IState> {
   }
 
   handleDragStart = (index: number) => () => {
-    this.setState({ draggingIndex: index });
+    this._draggingIndex = index;
   };
 
-  handleDragOver = (index: number) => (e: React.DragEvent) => {
+  // Static handler — doesn't need instance scope, satisfies unicorn/consistent-function-scoping
+  static handleDragOver(e: React.DragEvent) {
     e.preventDefault();
-    this.setState({ dragOverIndex: index });
-  };
+  }
 
   handleDrop = (dropIndex: number) => (e: React.DragEvent) => {
     e.preventDefault();
-    const { draggingIndex } = this.state;
-    if (draggingIndex !== null && draggingIndex !== dropIndex) {
-      workspaceActions.reorder({ oldIndex: draggingIndex, newIndex: dropIndex });
+    if (this._draggingIndex !== null && this._draggingIndex !== dropIndex) {
+      workspaceActions.reorder({
+        oldIndex: this._draggingIndex,
+        newIndex: dropIndex,
+      });
     }
-    this.setState({ dragOverIndex: null, draggingIndex: null });
+    this._draggingIndex = null;
   };
 
   handleDragEnd = () => {
-    this.setState({ dragOverIndex: null, draggingIndex: null });
+    this._draggingIndex = null;
   };
 
   render(): ReactElement {
@@ -207,7 +195,6 @@ class WorkspaceDrawer extends Component<IProps, IState> {
       settings.all.app;
 
     const compactClass = useCompactWorkspaceDrawer ? 'compact' : '';
-    const { dragOverIndex, draggingIndex } = this.state;
 
     return (
       <div className={`${classes.drawer} workspaces-drawer ${compactClass}`}>
@@ -233,7 +220,10 @@ class WorkspaceDrawer extends Component<IProps, IState> {
           </span>
         </H1>
         <div className={`${classes.workspaces} ${compactClass}`}>
-          <div className={classes.workspacesList} onDragEnd={this.handleDragEnd}>
+          <div
+            className={classes.workspacesList}
+            onDragEnd={this.handleDragEnd}
+          >
             {!hideAllServicesWorkspace && (
               <WorkspaceDrawerItem
                 name={intl.formatMessage(messages.allServices)}
@@ -268,7 +258,7 @@ class WorkspaceDrawer extends Component<IProps, IState> {
                 isCompact={useCompactWorkspaceDrawer}
                 draggable
                 onDragStart={this.handleDragStart(index)}
-                onDragOver={this.handleDragOver(index)}
+                onDragOver={WorkspaceDrawer.handleDragOver}
                 onDrop={this.handleDrop(index)}
               />
             ))}
