@@ -97,6 +97,7 @@ interface IProps extends WrappedComponentProps, WithStylesProps<typeof styles> {
   isFullScreen: boolean;
   sidebar: React.ReactElement;
   workspacesDrawer: React.ReactElement;
+  workspaceQuickSwitchBar?: React.ReactElement | null;
   services: React.ReactElement;
   showServicesUpdatedInfoBar: boolean;
   appUpdateIsDownloaded: boolean;
@@ -115,6 +116,10 @@ interface IState {
 
 @observer
 class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
+  static defaultProps = {
+    workspaceQuickSwitchBar: null,
+  };
+
   constructor(props) {
     super(props);
 
@@ -129,6 +134,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
       classes,
       isFullScreen,
       workspacesDrawer,
+      workspaceQuickSwitchBar,
       sidebar,
       services,
       showServicesUpdatedInfoBar,
@@ -173,6 +179,8 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
             )}
             <div className={`app__content ${classes.appContent}`}>
               {workspacesDrawer}
+              {/* Quick-switch bar: slides in from the right of the drawer when drawer is closed */}
+              {workspaceQuickSwitchBar}
               {sidebar}
               <div className="app__service">
                 <WorkspaceSwitchingIndicator />

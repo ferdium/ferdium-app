@@ -14,6 +14,9 @@ interface WorkspaceActions {
   delete: (workspaceArg: WorkspaceArg) => void;
   update: (workspaceArg: WorkspaceArg) => void;
   toggleKeepAllWorkspacesLoadedSetting: () => void;
+  reorder: ({ oldIndex, newIndex }: { oldIndex: number; newIndex: number }) => void;
+  saveIcon: ({ workspaceId, iconPath }: { workspaceId: string; iconPath: string }) => void;
+  deleteIcon: ({ workspaceId }: { workspaceId: string }) => void;
 }
 
 export default createActionsFromDefinitions<WorkspaceActions>(
@@ -37,6 +40,17 @@ export default createActionsFromDefinitions<WorkspaceActions>(
     toggleWorkspaceDrawer: {},
     openWorkspaceSettings: {},
     toggleKeepAllWorkspacesLoadedSetting: {},
+    reorder: {
+      oldIndex: PropTypes.number.isRequired,
+      newIndex: PropTypes.number.isRequired,
+    },
+    saveIcon: {
+      workspaceId: PropTypes.string.isRequired,
+      iconPath: PropTypes.string.isRequired,
+    },
+    deleteIcon: {
+      workspaceId: PropTypes.string.isRequired,
+    },
   },
   PropTypes.checkPropTypes,
 );

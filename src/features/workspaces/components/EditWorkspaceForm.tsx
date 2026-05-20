@@ -13,13 +13,23 @@ import { H2 } from '../../../components/ui/headline';
 import Infobox from '../../../components/ui/infobox/index';
 import Input from '../../../components/ui/input';
 import Toggle from '../../../components/ui/toggle';
+import WorkspaceIcon from '../../../components/ui/WorkspaceIcon';
 import { KEEP_WS_LOADED_USID } from '../../../config';
 import { required } from '../../../helpers/validation-helpers';
 import Form from '../../../lib/Form';
 import type Service from '../../../models/Service';
 import type Request from '../../../stores/lib/Request';
+import workspaceActions from '../actions';
 import type Workspace from '../models/Workspace';
 import WorkspaceServiceListItem from './WorkspaceServiceListItem';
+
+// Electron dialog for picking files
+let dialog: any;
+try {
+  dialog = require('@electron/remote').dialog;
+} catch {
+  dialog = null;
+}
 
 const messages = defineMessages({
   buttonDelete: {
@@ -59,6 +69,18 @@ const messages = defineMessages({
     id: 'settings.services.discoverServices',
     defaultMessage: 'Discover services',
   },
+  iconHeadline: {
+    id: 'settings.workspace.form.iconHeadline',
+    defaultMessage: 'Workspace icon',
+  },
+  changeIcon: {
+    id: 'settings.workspace.form.changeIcon',
+    defaultMessage: 'Choose image…',
+  },
+  removeIcon: {
+    id: 'settings.workspace.form.removeIcon',
+    defaultMessage: 'Remove icon',
+  },
 });
 
 const styles = {
@@ -70,6 +92,29 @@ const styles = {
   },
   keepLoadedInfo: {
     marginBottom: '2rem !important',
+  },
+  iconSection: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '16px',
+    marginBottom: '24px',
+  },
+  iconButtons: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px',
+  },
+  iconButton: {
+    fontSize: '12px',
+    padding: '6px 12px',
+    cursor: 'pointer',
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+    background: 'transparent',
+    color: 'inherit',
+    '&:hover': {
+      background: 'rgba(0,0,0,0.06)',
+    },
   },
 };
 
@@ -153,6 +198,30 @@ class EditWorkspaceForm extends Component<IProps> {
     servicesField.set(serviceIds);
   }
 
+  async pickIcon(): Promise<void> {
+    const { workspace } = this.props;
+    if (!dialog) return;
+
+    const result = await dialog.showOpenDialog({
+      properties: ['openFile'],
+      filters: [
+        { name: 'Images', extensions: ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'] },
+      ],
+    });
+
+    if (!result.canceled && result.filePaths.length > 0) {
+      workspaceActions.saveIcon({
+        workspaceId: workspace.id,
+        iconPath: result.filePaths[0],
+      });
+    }
+  }
+
+  removeIcon(): void {
+    const { workspace } = this.props;
+    workspaceActions.deleteIcon({ workspaceId: workspace.id });
+  }
+
   render(): ReactElement {
     const {
       classes,
@@ -191,6 +260,37 @@ class EditWorkspaceForm extends Component<IProps> {
               {intl.formatMessage(messages.keepLoadedInfo)}
             </p>
           </div>
+
+          {/* ===== Icon section ===== */}
+          <H2>{intl.formatMessage(messages.iconHeadline)}</H2>
+          <div className={classes.iconSection}>
+            <WorkspaceIcon
+              iconPath={workspace.iconPath}
+              name={workspace.name}
+              size={56}
+            />
+            <div className={classes.iconButtons}>
+              {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+              <span
+                className={classes.iconButton}
+                onClick={() => this.pickIcon()}
+                onKeyDown={noop}
+              >
+                {intl.formatMessage(messages.changeIcon)}
+              </span>
+              {workspace.iconPath && (
+                // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+                <span
+                  className={classes.iconButton}
+                  onClick={() => this.removeIcon()}
+                  onKeyDown={noop}
+                >
+                  {intl.formatMessage(messages.removeIcon)}
+                </span>
+              )}
+            </div>
+          </div>
+
           <H2>{intl.formatMessage(messages.servicesInWorkspaceHeadline)}</H2>
           <div className={classes.serviceList}>
             {services.length === 0 ? (

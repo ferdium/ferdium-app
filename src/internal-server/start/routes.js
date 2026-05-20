@@ -87,6 +87,7 @@ Route.group(() => {
   Route.post('recipes/update', 'RecipeController.update');
 
   // Workspaces
+  Route.put('workspace/reorder/:id', 'WorkspaceController.reorder');
   Route.put('workspace/:id', 'WorkspaceController.edit');
   Route.delete('workspace/:id', 'WorkspaceController.delete');
   Route.post('workspace', 'WorkspaceController.create');

@@ -51,7 +51,7 @@ export const workspaceApi = {
     const url = `${apiBase()}/workspace/${workspace.id}`;
     const options = {
       method: 'PUT',
-      body: JSON.stringify(pick(workspace, ['name', 'services'])),
+      body: JSON.stringify(pick(workspace, ['name', 'services', 'order', 'iconPath'])),
     };
     debug('updateWorkspace UPDATE', url, options);
     const result = await sendAuthRequest(url, options);
@@ -60,6 +60,22 @@ export const workspaceApi = {
       throw new Error("Couldn't updateWorkspace");
     }
     return new Workspace(await result.json());
+  },
+
+  reorderWorkspace: async ({ id, order }: { id: string; order: number }) => {
+    const url = `${apiBase()}/workspace/${id}/reorder`;
+    const options = {
+      method: 'PUT',
+      body: JSON.stringify({ order }),
+    };
+    debug('reorderWorkspace PUT', url, options);
+    const result = await sendAuthRequest(url, options);
+    debug('reorderWorkspace RESULT', result);
+    if (!result.ok) {
+      // Graceful fallback: reorder is stored locally even if server doesn't support this endpoint
+      debug('reorderWorkspace: server does not support reorder endpoint, using local order only');
+    }
+    return true;
   },
 };
 
@@ -79,10 +95,15 @@ export const updateWorkspaceRequest = new Request(
   workspaceApi,
   'updateWorkspace',
 );
+export const reorderWorkspaceRequest = new Request(
+  workspaceApi,
+  'reorderWorkspace',
+);
 
 export const resetApiRequests = () => {
   getUserWorkspacesRequest.reset();
   createWorkspaceRequest.reset();
   deleteWorkspaceRequest.reset();
   updateWorkspaceRequest.reset();
+  reorderWorkspaceRequest.reset();
 };

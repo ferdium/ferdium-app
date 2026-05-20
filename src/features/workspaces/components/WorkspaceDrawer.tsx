@@ -34,7 +34,7 @@ const messages = defineMessages({
   workspaceFeatureInfo: {
     id: 'workspaceDrawer.workspaceFeatureInfo',
     defaultMessage:
-      '<p>Ferdium Workspaces let you focus on what’s important right now. Set up different sets of services and easily switch between them at any time.</p><p>You decide which services you need when and where, so we can help you stay on top of your game - or easily switch off from work whenever you want.</p>',
+      "<p>Ferdium Workspaces let you focus on what's important right now. Set up different sets of services and easily switch between them at any time.</p><p>You decide which services you need when and where, so we can help you stay on top of your game - or easily switch off from work whenever you want.</p>",
   },
   addNewWorkspaceLabel: {
     id: 'workspaceDrawer.addNewWorkspaceLabel',
@@ -130,6 +130,11 @@ const styles = theme => ({
       },
     },
   },
+  // Highlight drop target while dragging
+  dropTarget: {
+    outline: `2px dashed ${theme.workspaces.drawer.buttons.color}`,
+    outlineOffset: '-2px',
+  },
 });
 
 interface IProps
@@ -140,9 +145,22 @@ interface IProps
   useCompactWorkspaceDrawer?: boolean;
 }
 
+interface IState {
+  dragOverIndex: number | null;
+  draggingIndex: number | null;
+}
+
 @inject('stores')
 @observer
-class WorkspaceDrawer extends Component<IProps> {
+class WorkspaceDrawer extends Component<IProps, IState> {
+  constructor(props: IProps) {
+    super(props);
+    this.state = {
+      dragOverIndex: null,
+      draggingIndex: null,
+    };
+  }
+
   componentDidMount(): void {
     try {
       getUserWorkspacesRequest.execute();
@@ -151,6 +169,28 @@ class WorkspaceDrawer extends Component<IProps> {
       console.log(error);
     }
   }
+
+  handleDragStart = (index: number) => () => {
+    this.setState({ draggingIndex: index });
+  };
+
+  handleDragOver = (index: number) => (e: React.DragEvent) => {
+    e.preventDefault();
+    this.setState({ dragOverIndex: index });
+  };
+
+  handleDrop = (dropIndex: number) => (e: React.DragEvent) => {
+    e.preventDefault();
+    const { draggingIndex } = this.state;
+    if (draggingIndex !== null && draggingIndex !== dropIndex) {
+      workspaceActions.reorder({ oldIndex: draggingIndex, newIndex: dropIndex });
+    }
+    this.setState({ dragOverIndex: null, draggingIndex: null });
+  };
+
+  handleDragEnd = () => {
+    this.setState({ dragOverIndex: null, draggingIndex: null });
+  };
 
   render(): ReactElement {
     const { classes, getServicesForWorkspace } = this.props;
@@ -167,6 +207,7 @@ class WorkspaceDrawer extends Component<IProps> {
       settings.all.app;
 
     const compactClass = useCompactWorkspaceDrawer ? 'compact' : '';
+    const { dragOverIndex, draggingIndex } = this.state;
 
     return (
       <div className={`${classes.drawer} workspaces-drawer ${compactClass}`}>
@@ -192,7 +233,7 @@ class WorkspaceDrawer extends Component<IProps> {
           </span>
         </H1>
         <div className={`${classes.workspaces} ${compactClass}`}>
-          <div className={classes.workspacesList}>
+          <div className={classes.workspacesList} onDragEnd={this.handleDragEnd}>
             {!hideAllServicesWorkspace && (
               <WorkspaceDrawerItem
                 name={intl.formatMessage(messages.allServices)}
@@ -210,6 +251,7 @@ class WorkspaceDrawer extends Component<IProps> {
               <WorkspaceDrawerItem
                 key={workspace.id}
                 name={workspace.name}
+                iconPath={workspace.iconPath}
                 isActive={actualWorkspace === workspace}
                 onClick={() => {
                   if (actualWorkspace === workspace) {
@@ -224,6 +266,10 @@ class WorkspaceDrawer extends Component<IProps> {
                 services={getServicesForWorkspace(workspace)}
                 shortcutIndex={index + 1}
                 isCompact={useCompactWorkspaceDrawer}
+                draggable
+                onDragStart={this.handleDragStart(index)}
+                onDragOver={this.handleDragOver(index)}
+                onDrop={this.handleDrop(index)}
               />
             ))}
           </div>

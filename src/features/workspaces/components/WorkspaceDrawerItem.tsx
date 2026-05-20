@@ -1,5 +1,5 @@
 import { Menu } from '@electron/remote';
-import { mdiApps } from '@mdi/js';
+import { mdiApps, mdiDragVertical } from '@mdi/js';
 import classnames from 'classnames';
 import type { MenuItemConstructorOptions } from 'electron';
 import { noop } from 'lodash';
@@ -12,6 +12,7 @@ import {
 } from 'react-intl';
 import withStyles, { type WithStylesProps } from 'react-jss';
 import Icon from '../../../components/ui/icon';
+import WorkspaceIcon from '../../../components/ui/WorkspaceIcon';
 import { altKey, cmdOrCtrlShortcutKey } from '../../../environment';
 import { acceleratorString } from '../../../jsUtils';
 
@@ -42,6 +43,9 @@ const styles = theme => ({
     padding: `15px ${theme.workspaces.drawer.padding}px`,
     borderBottom: `1px solid ${theme.workspaces.drawer.listItem.border}`,
     transition: itemTransition,
+    display: 'flex',
+    alignItems: 'center',
+    gap: '10px',
     '&:first-child': {
       borderTop: `1px solid ${theme.workspaces.drawer.listItem.border}`,
     },
@@ -56,12 +60,20 @@ const styles = theme => ({
       textAlign: 'center',
       fontSize: '16px',
     },
+    '&:hover $dragHandle': {
+      opacity: 1,
+    },
   },
   isActiveItem: {
     backgroundColor: theme.workspaces.drawer.listItem.activeBackground,
     '&:hover': {
       backgroundColor: theme.workspaces.drawer.listItem.activeBackground,
     },
+  },
+  textContent: {
+    flex: 1,
+    overflow: 'hidden',
+    minWidth: 0,
   },
   name: {
     marginTop: '4px',
@@ -100,31 +112,63 @@ const styles = theme => ({
   activeIcon: {
     fill: theme.workspaces.drawer.listItem.name.activeColor,
   },
+  dragHandle: {
+    opacity: 0,
+    transition: 'opacity 150ms',
+    cursor: 'grab',
+    flexShrink: 0,
+    fill: theme.workspaces.drawer.listItem.name.color,
+    '&:active': {
+      cursor: 'grabbing',
+    },
+    '&.compact': {
+      display: 'none',
+    },
+  },
 });
 
 interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
   isActive: boolean;
   name: string;
+  iconPath?: string | null;
   onClick: MouseEventHandler<HTMLInputElement>;
   services: string[];
   onContextMenuEditClick?: (() => void) | null;
   shortcutIndex: number;
   isCompact: boolean;
+  onDragStart?: (e: React.DragEvent) => void;
+  onDragOver?: (e: React.DragEvent) => void;
+  onDrop?: (e: React.DragEvent) => void;
+  draggable?: boolean;
 }
 
 @observer
 class WorkspaceDrawerItem extends Component<IProps> {
+  static defaultProps = {
+    iconPath: null,
+    onContextMenuEditClick: null,
+    onDragStart: noop,
+    onDragOver: noop,
+    onDrop: noop,
+    draggable: false,
+  };
+
   render(): ReactElement {
     const {
       classes,
       isActive,
       name,
+      iconPath,
       onClick,
       onContextMenuEditClick = null,
       services,
       shortcutIndex,
       intl,
       isCompact,
+      onDragStart,
+      onDragOver,
+      onDrop,
+      draggable,
     } = this.props;
 
     const compactClass = isCompact ? 'compact' : '';
@@ -160,6 +204,10 @@ class WorkspaceDrawerItem extends Component<IProps> {
           }
         }}
         onKeyDown={noop}
+        onDragStart={onDragStart}
+        onDragOver={onDragOver}
+        onDrop={onDrop}
+        draggable={draggable && !isCompact}
         aria-label={isCompact ? name : undefined}
         data-tooltip-id="tooltip-workspaces-drawer"
         data-tooltip-content={acceleratorString({
@@ -167,41 +215,76 @@ class WorkspaceDrawerItem extends Component<IProps> {
           keyCombo: `${cmdOrCtrlShortcutKey(false)}+${altKey(false)}`,
         })}
       >
-        <span
-          className={classnames([
-            classes.name,
-            isActive ? classes.activeName : null,
-            compactClass,
-          ])}
-        >
-          {compactClass ? (
-            shortcutIndex === 0 ? (
-              <Icon
-                icon={mdiApps}
-                size={1.5}
-                className={classnames([
-                  classes.icon,
-                  isActive ? classes.activeIcon : null,
-                ])}
-              />
-            ) : (
-              [...name][0]
-            )
+        {/* Drag handle — only shown on hover in non-compact mode */}
+        {!isCompact && shortcutIndex > 0 && (
+          // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+          <span
+            className={classnames([classes.dragHandle, compactClass])}
+            onMouseDown={e => e.stopPropagation()}
+            onClick={e => e.stopPropagation()}
+            onKeyDown={noop}
+          >
+            <Icon
+              icon={mdiDragVertical}
+              size={0.9}
+            />
+          </span>
+        )}
+
+        {/* Compact mode: show icon or initials circle */}
+        {isCompact ? (
+          shortcutIndex === 0 ? (
+            <Icon
+              icon={mdiApps}
+              size={1.5}
+              className={classnames([
+                classes.icon,
+                isActive ? classes.activeIcon : null,
+              ])}
+            />
           ) : (
-            name
-          )}
-        </span>
-        <span
-          className={classnames([
-            classes.services,
-            isActive ? classes.activeServices : null,
-            compactClass,
-          ])}
-        >
-          {services.length > 0
-            ? services.join(', ')
-            : intl.formatMessage(messages.noServicesAddedYet)}
-        </span>
+            <WorkspaceIcon
+              iconPath={iconPath}
+              name={name}
+              size={36}
+              isActive={isActive}
+            />
+          )
+        ) : (
+          <>
+            {/* Normal mode: icon on the left if workspace has one (not "All services") */}
+            {shortcutIndex > 0 && (
+              <WorkspaceIcon
+                iconPath={iconPath}
+                name={name}
+                size={32}
+                isActive={isActive}
+              />
+            )}
+
+            {/* Text content */}
+            <div className={classes.textContent}>
+              <span
+                className={classnames([
+                  classes.name,
+                  isActive ? classes.activeName : null,
+                ])}
+              >
+                {name}
+              </span>
+              <span
+                className={classnames([
+                  classes.services,
+                  isActive ? classes.activeServices : null,
+                ])}
+              >
+                {services.length > 0
+                  ? services.join(', ')
+                  : intl.formatMessage(messages.noServicesAddedYet)}
+              </span>
+            </div>
+          </>
+        )}
       </div>
     );
   }

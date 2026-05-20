@@ -9,6 +9,7 @@ import {
   createWorkspaceRequest,
   deleteWorkspaceRequest,
   getUserWorkspacesRequest,
+  reorderWorkspaceRequest,
   updateWorkspaceRequest,
 } from './api';
 import { WORKSPACES_ROUTES } from './constants';
@@ -16,6 +17,10 @@ import { WORKSPACES_ROUTES } from './constants';
 import type { Actions } from '../../actions/lib/actions';
 import { KEEP_WS_LOADED_USID } from '../../config';
 import type Workspace from './models/Workspace';
+
+const { app } = require('@electron/remote');
+const path = require('path');
+const fs = require('fs');
 
 const debug = require('../../preload-safe-debug')(
   'Ferdium:feature:workspaces:store',
@@ -34,6 +39,16 @@ const getDrawerAnimationDuration = () => {
     '(prefers-reduced-motion: reduce)',
   ).matches;
   return prefersReducedMotion ? 0 : 500;
+};
+
+// Returns the directory where workspace icons are stored
+const getWorkspaceIconsDir = (): string => {
+  const userDataPath = app.getPath('userData');
+  const iconsDir = path.join(userDataPath, 'workspaceIcons');
+  if (!fs.existsSync(iconsDir)) {
+    fs.mkdirSync(iconsDir, { recursive: true });
+  }
+  return iconsDir;
 };
 
 export default class WorkspacesStore extends FeatureStore {
@@ -63,7 +78,9 @@ export default class WorkspacesStore extends FeatureStore {
 
   @computed get workspaces() {
     if (!this.isFeatureActive) return [];
-    return getUserWorkspacesRequest.result || [];
+    const ws = getUserWorkspacesRequest.result || [];
+    // Sort by order field so reordering is reflected everywhere
+    return [...ws].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
   }
 
   @computed get settings() {
@@ -113,6 +130,9 @@ export default class WorkspacesStore extends FeatureStore {
         workspaceActions.toggleKeepAllWorkspacesLoadedSetting,
         this._toggleKeepAllWorkspacesLoadedSetting,
       ],
+      [workspaceActions.reorder, this._reorderWorkspace],
+      [workspaceActions.saveIcon, this._saveWorkspaceIcon],
+      [workspaceActions.deleteIcon, this._deleteWorkspaceIcon],
     ]);
     this._registerActions(this._allActions);
 
@@ -182,6 +202,17 @@ export default class WorkspacesStore extends FeatureStore {
   };
 
   @action _delete = async ({ workspace }) => {
+    // Clean up icon file if it exists
+    if (workspace.iconPath) {
+      try {
+        const fullIconPath = path.join(getWorkspaceIconsDir(), path.basename(workspace.iconPath));
+        if (fs.existsSync(fullIconPath)) {
+          fs.unlinkSync(fullIconPath);
+        }
+      } catch (e) {
+        debug('WorkspacesStore::_delete - failed to remove icon file', e);
+      }
+    }
     await deleteWorkspaceRequest.execute(workspace).promise;
     await getUserWorkspacesRequest.result.remove(workspace);
     this.stores.router.push('/settings/workspaces');
@@ -192,10 +223,71 @@ export default class WorkspacesStore extends FeatureStore {
 
   @action _update = async ({ workspace }) => {
     await updateWorkspaceRequest.execute(workspace).promise;
-    // Path local result optimistically
+    // Patch local result optimistically
     const localWorkspace = this._getWorkspaceById(workspace.id);
     Object.assign(localWorkspace, workspace);
     this.stores.router.push('/settings/workspaces');
+  };
+
+  @action _reorderWorkspace = async ({ oldIndex, newIndex }) => {
+    const workspaces = [...this.workspaces];
+    // Move item from old to new position
+    const [moved] = workspaces.splice(oldIndex, 1);
+    workspaces.splice(newIndex, 0, moved);
+
+    // Update order property on each workspace and persist
+    workspaces.forEach((ws, idx) => {
+      const localWorkspace = this._getWorkspaceById(ws.id);
+      if (localWorkspace) {
+        localWorkspace.order = idx;
+      }
+    });
+
+    // Persist each reordered workspace to the local server
+    for (const ws of workspaces) {
+      try {
+        await reorderWorkspaceRequest.execute({ id: ws.id, order: ws.order }).promise;
+      } catch (e) {
+        debug('WorkspacesStore::_reorderWorkspace - server reorder failed (non-fatal)', e);
+      }
+    }
+  };
+
+  @action _saveWorkspaceIcon = async ({ workspaceId, iconPath: srcPath }) => {
+    try {
+      const iconsDir = getWorkspaceIconsDir();
+      const ext = path.extname(srcPath) || '.png';
+      const destFilename = `${workspaceId}${ext}`;
+      const destPath = path.join(iconsDir, destFilename);
+
+      fs.copyFileSync(srcPath, destPath);
+
+      const localWorkspace = this._getWorkspaceById(workspaceId);
+      if (localWorkspace) {
+        localWorkspace.iconPath = destPath;
+        // Persist to server (iconPath stored in the data column via updateWorkspace)
+        await updateWorkspaceRequest.execute(localWorkspace).promise;
+      }
+    } catch (e) {
+      debug('WorkspacesStore::_saveWorkspaceIcon - failed', e);
+    }
+  };
+
+  @action _deleteWorkspaceIcon = async ({ workspaceId }) => {
+    const localWorkspace = this._getWorkspaceById(workspaceId);
+    if (!localWorkspace || !localWorkspace.iconPath) return;
+
+    try {
+      const fullPath = path.join(getWorkspaceIconsDir(), path.basename(localWorkspace.iconPath));
+      if (fs.existsSync(fullPath)) {
+        fs.unlinkSync(fullPath);
+      }
+    } catch (e) {
+      debug('WorkspacesStore::_deleteWorkspaceIcon - failed to remove file', e);
+    }
+
+    localWorkspace.iconPath = null;
+    await updateWorkspaceRequest.execute(localWorkspace).promise;
   };
 
   @action _setNextWorkspace(workspace) {

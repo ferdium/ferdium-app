@@ -16,6 +16,7 @@ import AppLoader from '../../components/ui/AppLoader';
 import { DEFAULT_ACCENT_COLOR } from '../../config';
 import { workspaceStore } from '../../features/workspaces';
 import WorkspaceDrawer from '../../features/workspaces/components/WorkspaceDrawer';
+import WorkspaceQuickSwitchBar from '../../features/workspaces/components/WorkspaceQuickSwitchBar';
 
 interface IProps extends StoresProps {}
 
@@ -106,6 +107,8 @@ class AppLayoutContainer extends Component<IProps> {
       );
     }
 
+    const { hideAllServicesWorkspace } = settings.all.app;
+
     const workspacesDrawer = (
       <WorkspaceDrawer
         getServicesForWorkspace={workspace =>
@@ -117,6 +120,21 @@ class AppLayoutContainer extends Component<IProps> {
         actions={this.props.actions}
       />
     );
+
+    // Quick-switch bar: shown when drawer is closed and there are workspaces
+    const { activeWorkspace, isSwitchingWorkspace, nextWorkspace } = workspaceStore;
+    const actualWorkspace = isSwitchingWorkspace ? nextWorkspace : activeWorkspace;
+    const quickSwitchBar =
+      !workspaceStore.isWorkspaceDrawerOpen &&
+      workspaceStore.userHasWorkspaces ? (
+        <WorkspaceQuickSwitchBar
+          workspaces={workspaceStore.workspaces}
+          activeWorkspace={actualWorkspace}
+          hideAllServicesWorkspace={hideAllServicesWorkspace}
+          stores={this.props.stores}
+          actions={this.props.actions}
+        />
+      ) : null;
 
     const sidebar = (
       <Sidebar
@@ -184,6 +202,7 @@ class AppLayoutContainer extends Component<IProps> {
             authRequestFailed={app.authRequestFailed}
             sidebar={sidebar}
             workspacesDrawer={workspacesDrawer}
+            workspaceQuickSwitchBar={quickSwitchBar}
             services={servicesContainer}
             installAppUpdate={installUpdate}
             showRequiredRequestsError={requests.showRequiredRequestsError}

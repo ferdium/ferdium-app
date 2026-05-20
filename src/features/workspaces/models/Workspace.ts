@@ -13,6 +13,8 @@ export default class Workspace {
 
   @observable userId = null;
 
+  @observable iconPath: string | null = null;
+
   constructor(data) {
     if (!data.id) {
       throw new Error('Workspace requires Id');
@@ -23,6 +25,7 @@ export default class Workspace {
     this.id = data.id;
     this.name = data.name;
     this.order = data.order;
+    this.iconPath = data.iconPath || null;
 
     let { services } = data;
     if (data.saving && Boolean(data.keepLoaded)) {
