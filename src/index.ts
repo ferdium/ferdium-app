@@ -429,8 +429,9 @@ const createWindow = () => {
         }
       } else if (isMac && mainWindow?.isFullScreen()) {
         debug('Window: leaveFullScreen and hide');
-        mainWindow.once('show', () => mainWindow?.setFullScreen(true));
-        mainWindow.once('leave-full-screen', () => mainWindow?.hide());
+        mainWindow.once('leave-full-screen', () => {
+          mainWindow?.hide();
+        });
         mainWindow.setFullScreen(false);
       } else {
         debug('Window: hide');
