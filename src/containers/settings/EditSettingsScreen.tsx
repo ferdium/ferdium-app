@@ -345,6 +345,11 @@ const messages = defineMessages({
     defaultMessage:
       'Default download folder (leave blank to be prompted for each download)',
   },
+  externalBrowserPath: {
+    id: 'settings.app.form.externalBrowserPath',
+    defaultMessage:
+      'Custom browser executable (leave blank to use the system default browser)',
+  },
   restartDialogTitle: {
     id: 'settings.app.restart.restartDialogTitle',
     defaultMessage: 'Ferdium - Relaunch Application',
@@ -458,6 +463,7 @@ class EditSettingsScreen extends Component<
       scheduledDNDEnd: settingsData.scheduledDNDEnd,
       enableGPUAcceleration: Boolean(settingsData.enableGPUAcceleration),
       downloadFolderPath: String(settingsData.downloadFolderPath),
+      externalBrowserPath: String(settingsData.externalBrowserPath).trim(),
       enableGlobalHideShortcut: Boolean(settingsData.enableGlobalHideShortcut),
       showDisabledServices: Boolean(settingsData.showDisabledServices),
       showServiceName: Boolean(settingsData.showServiceName),
@@ -1079,6 +1085,14 @@ class EditSettingsScreen extends Component<
             DEFAULT_APP_SETTINGS.downloadFolderPath,
           ),
           default: DEFAULT_APP_SETTINGS.userAgentPref,
+        },
+        externalBrowserPath: {
+          label: intl.formatMessage(messages.externalBrowserPath),
+          value: ifUndefined<string>(
+            settings.all.app.externalBrowserPath,
+            DEFAULT_APP_SETTINGS.externalBrowserPath,
+          ),
+          default: DEFAULT_APP_SETTINGS.externalBrowserPath,
         },
         darkMode: {
           label: intl.formatMessage(messages.darkMode),
