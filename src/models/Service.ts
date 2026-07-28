@@ -414,9 +414,35 @@ export default class Service {
   }
 
   initializeWebViewEvents({ handleIPCMessage, openWindow, stores }): void {
-    const webviewWebContents = webContents.fromId(
-      this.webview.getWebContentsId(),
-    );
+    let webviewWebContents;
+    try {
+      webviewWebContents = webContents.fromId(this.webview.getWebContentsId());
+    } catch (error) {
+      // The <webview> can still be mid-attach here even after the
+      // setTimeout(0) workaround in ServiceWebview's onDidAttach (see
+      // https://github.com/electron/electron/issues/31918). getWebContentsId
+      // throws in that case instead of returning a usable id. Rather than
+      // assuming a fixed delay is enough (and silently never initializing
+      // the service, leaving it stuck in its default "loading" state
+      // forever), retry once the webview itself reports it's actually
+      // ready.
+      debug(
+        'Webview was not ready yet, retrying once dom-ready fires',
+        this.name,
+        error,
+      );
+      this.webview.addEventListener(
+        'dom-ready',
+        () =>
+          this.initializeWebViewEvents({
+            handleIPCMessage,
+            openWindow,
+            stores,
+          }),
+        { once: true },
+      );
+      return;
+    }
 
     this.userAgentModel.setWebviewReference(this.webview);
 
