@@ -267,7 +267,11 @@ class RecipeController {
     const userCss = join(recipe.path, 'user.css');
     if (pathExistsSync(userCss)) {
       const data = readFileSync(userCss);
-      styles.innerHTML += data.toString();
+      // textContent, not innerHTML: innerHTML is a Trusted Types sink, so
+      // sites sending `require-trusted-types-for 'script'` reject the
+      // assignment. That threw here before reaching the user.js block below,
+      // so a single user.css took user.js down with it (ferdium#1086).
+      styles.textContent += data.toString();
       debug('Loaded user.css from: ', userCss);
     }
     document.querySelector('head')?.append(styles);

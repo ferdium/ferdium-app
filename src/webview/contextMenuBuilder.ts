@@ -99,7 +99,10 @@ const translatePopup = (res, isError: boolean = false) => {
   }
 
   const style = document.createElement('style');
-  style.innerHTML = `
+  // textContent, not innerHTML: innerHTML is a Trusted Types sink, so sites
+  // sending `require-trusted-types-for 'script'` reject the assignment and the
+  // translator popup renders unstyled.
+  style.textContent = `
     .container-ferdium-translator {
       position: fixed;
       opacity: 0.9;

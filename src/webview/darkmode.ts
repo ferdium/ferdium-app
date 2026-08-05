@@ -23,7 +23,10 @@ export const injectDarkModeStyle = (recipePath: string) => {
     const data = readFileSync(darkmodeCss);
     const styles = document.createElement('style');
     styles.id = ID;
-    styles.innerHTML = data.toString();
+    // textContent, not innerHTML: innerHTML is a Trusted Types sink, so sites
+    // sending `require-trusted-types-for 'script'` reject the assignment and
+    // darkmode.css is never applied.
+    styles.textContent = data.toString();
     debug('Loaded darkmode.css from: ', darkmodeCss);
 
     document.querySelector('head')?.append(styles);
