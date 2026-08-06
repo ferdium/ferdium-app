@@ -3080,6 +3080,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "tfluehmann",
+      "name": "Tobias Flühmann",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5341776?v=4",
+      "profile": "http://tobiasfluehmann.ch",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "commitType": "docs"
