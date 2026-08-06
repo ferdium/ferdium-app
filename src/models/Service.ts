@@ -414,9 +414,18 @@ export default class Service {
   }
 
   initializeWebViewEvents({ handleIPCMessage, openWindow, stores }): void {
+    const { webview } = this;
+    if (!webview) {
+      debug(
+        'Webview is no longer available; skipping event initialization',
+        this.name,
+      );
+      return;
+    }
+
     let webviewWebContents;
     try {
-      webviewWebContents = webContents.fromId(this.webview.getWebContentsId());
+      webviewWebContents = webContents.fromId(webview.getWebContentsId());
     } catch (error) {
       // The <webview> can still be mid-attach here even after the
       // setTimeout(0) workaround in ServiceWebview's onDidAttach (see
@@ -431,21 +440,27 @@ export default class Service {
         this.name,
         error,
       );
-      this.webview.addEventListener(
+      webview.addEventListener(
         'dom-ready',
-        () =>
+        () => {
+          // The service may have been detached or assigned a replacement
+          // webview while this one was finishing its attach lifecycle.
+          if (this.webview !== webview) {
+            debug('Ignoring dom-ready from a stale webview', this.name);
+            return;
+          }
+
           this.initializeWebViewEvents({
             handleIPCMessage,
             openWindow,
             stores,
-          }),
+          });
+        },
         { once: true },
       );
       return;
     }
-
-    this.userAgentModel.setWebviewReference(this.webview);
-
+    this.userAgentModel.setWebviewReference(webview);
     // If the recipe has implemented 'modifyRequestHeaders',
     // Send those headers to ipcMain so that it can be set in session
     if (typeof this.recipe.modifyRequestHeaders === 'function') {
