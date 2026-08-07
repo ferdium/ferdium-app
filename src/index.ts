@@ -187,6 +187,9 @@ const webRTCIPHandlingPolicy = retrieveSettingValue(
   | 'default_public_interface_only'
   | 'default_public_and_private_interfaces';
 
+const windowOpenFeaturesRequestResizable = (features = ''): boolean =>
+  /(?:^|,)\s*resizable(?:=(?:yes|1|true))?(?:,|$)/i.test(features);
+
 const createWindow = () => {
   // Remember window size
   const mainWindowState = windowStateKeeper({
@@ -310,7 +313,8 @@ const createWindow = () => {
           return allowedChecks.includes(permission);
         });
       }
-      contents.setWindowOpenHandler(({ url, disposition }) => {
+
+      contents.setWindowOpenHandler(({ url, disposition, features }) => {
         // OAuth popups (Google, Microsoft, etc.) are opened via window.open()
         // and need window.opener preserved so the parent can receive the
         // postMessage callback that completes the flow. Allow them as a child
@@ -322,6 +326,7 @@ const createWindow = () => {
             overrideBrowserWindowOptions: {
               parent: mainWindow,
               fullscreenable: false,
+              resizable: windowOpenFeaturesRequestResizable(features),
               webPreferences: isLinux
                 ? {
                     session: contents.session,
@@ -909,9 +914,18 @@ app.on('activate', () => {
 });
 
 app.on('web-contents-created', (_createdEvent, contents) => {
-  contents.setWindowOpenHandler(({ disposition }) =>
-    disposition === 'foreground-tab' ? { action: 'deny' } : { action: 'allow' },
-  );
+  contents.setWindowOpenHandler(({ disposition, features }) => {
+    if (disposition === 'foreground-tab') {
+      return { action: 'deny' };
+    }
+
+    return {
+      action: 'allow',
+      overrideBrowserWindowOptions: {
+        resizable: windowOpenFeaturesRequestResizable(features),
+      },
+    };
+  });
 });
 
 app.on('will-finish-launching', () => {
