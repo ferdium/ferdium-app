@@ -406,7 +406,7 @@ export class ContextMenuBuilder {
       click: () => {
         // Omit the mailto: portion of the link; we just want the address
         const url = isEmailAddress ? menuInfo.linkText : menuInfo.linkURL;
-        void writeTextToClipboard(url);
+        writeTextToClipboard(url).catch(console.error);
         this._sendNotificationOnClipboardEvent(
           menuInfo.clipboardNotifications,
           () =>
@@ -736,7 +736,9 @@ export class ContextMenuBuilder {
       click: () => {
         const result = this.convertImageToBase64(
           menuInfo.srcURL,
-          (dataURL: string) => void writeImageDataUrlToClipboard(dataURL),
+          (dataURL: string) => {
+            writeImageDataUrlToClipboard(dataURL).catch(console.error);
+          },
         );
 
         this._sendNotificationOnClipboardEvent(
@@ -1002,7 +1004,7 @@ export class ContextMenuBuilder {
         label: this.stringTable.copyPageUrl(),
         enabled: true,
         click: () => {
-          void writeTextToClipboard(window.location.href);
+          writeTextToClipboard(window.location.href).catch(console.error);
           this._sendNotificationOnClipboardEvent(
             menuInfo?.clipboardNotifications,
             () =>

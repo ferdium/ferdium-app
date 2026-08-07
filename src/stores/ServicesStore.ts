@@ -894,7 +894,7 @@ export default class ServicesStore extends TypedStore {
           ) {
             // with the extra "+ " it shows its copied to clipboard in the notification
             options.body = `+ ${rawBody}`;
-            void writeTextToClipboard(token);
+            writeTextToClipboard(token).catch(console.error);
             debug('Token parsed and copied to clipboard');
           }
         }

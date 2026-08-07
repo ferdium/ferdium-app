@@ -993,7 +993,7 @@ class FranzMenu implements StoresProps {
           })
           .then(result => {
             if (result.response === 1) {
-              void writeTextToClipboard(aboutAppDetails);
+              writeTextToClipboard(aboutAppDetails).catch(console.error);
             }
           });
       },
@@ -1307,7 +1307,7 @@ class FranzMenu implements StoresProps {
         click: () => {
           const { debugInfo } = this.stores.app;
 
-          void writeTextToClipboard(JSON.stringify(debugInfo));
+          writeTextToClipboard(JSON.stringify(debugInfo)).catch(console.error);
 
           this.actions.app.notify({
             title: intl.formatMessage(menuItems.debugInfoCopiedHeadline),
