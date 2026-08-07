@@ -43,7 +43,7 @@ importers:
         version: 5.1.0
       '@electron/remote':
         specifier: 2.1.2
-        version: 2.1.2(electron@39.8.10)
+        version: 2.1.2(electron@40.0.0)
       '@emotion/react':
         specifier: 11.13.3
         version: 11.13.3(@types/react@18.3.12)(react@18.3.1)
@@ -73,7 +73,7 @@ importers:
         version: 7.4.0(history@5.3.0)(mobx@6.13.5)(path-to-regexp@6.2.2)
       '@syed_umair/electron-process-manager':
         specifier: 1.1.0
-        version: 1.1.0(electron@39.8.10)
+        version: 1.1.0(electron@40.0.0)
       auto-launch:
         specifier: 5.0.6
         version: 5.0.6
@@ -355,8 +355,8 @@ importers:
         specifier: 7.0.3
         version: 7.0.3
       electron:
-        specifier: 39.8.10
-        version: 39.8.10
+        specifier: 40.0.0
+        version: 40.0.0
       electron-builder:
         specifier: 24.13.3
         version: 24.13.3(electron-builder-squirrel-windows@24.13.3)
@@ -1688,8 +1688,8 @@ packages:
   '@types/node@20.14.10':
     resolution: {integrity: sha512-MdiXf+nDuMvY0gJKxyfZ7/6UFsETO7mGKF54MVD/ekJS6HdFtpZFBgrh6Pseu64XTb2MLyFPlbW6hj8HYRQNOQ==}
 
-  '@types/node@22.14.1':
-    resolution: {integrity: sha512-u0HuPQwe/dHrItgHHpmw3N2fYCR6x4ivMNbPHRkBVP4CvN+kiRrKHWk3i8tXiO/joPwXLMYvF9TTF0eqgHIuOw==}
+  '@types/node@24.13.3':
+    resolution: {integrity: sha512-Dh8vAsV36ig5wa9OX4pXvMc9D3Veibfw2wix0CUwYODLD8nkj9UsLjASr49nPg+2eKzxhBV+v7L8pXvT4e639Q==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -3277,8 +3277,8 @@ packages:
     resolution: {integrity: sha512-1mNTwCfkolXl3kMf50yW3vE2lZj0y92P/HYWFBrb+v2S/pCka5mdwN3cagKm458A7NjndSwijynXgcLWRodsVg==}
     engines: {node: '>=8.0.0'}
 
-  electron@39.8.10:
-    resolution: {integrity: sha512-zbYtGPYUI7PzqLAzkk21Rk6j67WN0hxn0Mq/njErZo1d0HSf33is4f8ICI5fMLy5vYe0JtCtM5sYunNOaochSQ==}
+  electron@40.0.0:
+    resolution: {integrity: sha512-UyBy5yJ0/wm4gNugCtNPjvddjAknMTuXR2aCHioXicH7aKRKGDBPp4xqTEi/doVcB3R+MN3wfU9o8d/9pwgK2A==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
 
@@ -7326,8 +7326,8 @@ packages:
   undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
-  undici-types@6.21.0:
-    resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
+  undici-types@7.18.2:
+    resolution: {integrity: sha512-AsuCzffGHJybSaRrmr5eHr81mwJU3kjw6M+uprWvCXiNeN9SOGwQ3Jn8jb8m3Z6izVgknn1R0FTCEAP2QrLY/w==}
 
   unicorn-magic@0.1.0:
     resolution: {integrity: sha512-lRfVq8fE8gz6QMBuDM6a+LO3IAzTi05H6gCVaUpir2E1Rwpo4ZUog45KpNXKC/Mn3Yb9UDuHumeFTo9iV/D9FQ==}
@@ -8232,9 +8232,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@electron/remote@2.1.2(electron@39.8.10)':
+  '@electron/remote@2.1.2(electron@40.0.0)':
     dependencies:
-      electron: 39.8.10
+      electron: 40.0.0
 
   '@electron/universal@1.5.1':
     dependencies:
@@ -9160,9 +9160,9 @@ snapshots:
       mobx: 6.13.5
       path-to-regexp: 6.2.2
 
-  '@syed_umair/electron-process-manager@1.1.0(electron@39.8.10)':
+  '@syed_umair/electron-process-manager@1.1.0(electron@40.0.0)':
     dependencies:
-      electron: 39.8.10
+      electron: 40.0.0
       electron-process-reporter: 1.4.0
 
   '@szmarczak/http-timer@4.0.6':
@@ -9287,9 +9287,9 @@ snapshots:
     dependencies:
       undici-types: 5.26.5
 
-  '@types/node@22.14.1':
+  '@types/node@24.13.3':
     dependencies:
-      undici-types: 6.21.0
+      undici-types: 7.18.2
 
   '@types/normalize-package-data@2.4.4': {}
 
@@ -11257,10 +11257,10 @@ snapshots:
       jsonfile: 4.0.0
       mkdirp: 0.5.6
 
-  electron@39.8.10:
+  electron@40.0.0:
     dependencies:
       '@electron/get': 2.0.3
-      '@types/node': 22.14.1
+      '@types/node': 24.13.3
       extract-zip: 2.0.1
     transitivePeerDependencies:
       - supports-color
@@ -16238,7 +16238,7 @@ snapshots:
 
   undici-types@5.26.5: {}
 
-  undici-types@6.21.0: {}
+  undici-types@7.18.2: {}
 
   unicorn-magic@0.1.0: {}
 
