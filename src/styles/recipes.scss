@@ -1,4 +1,4 @@
-@import './config.scss';
+@use './config.scss';
 
 .theme__dark .recipe-teaser {
   background-color: $dark-theme-gray-dark;

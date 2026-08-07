@@ -1,4 +1,4 @@
-@import './config.scss';
+@use './config.scss';
 
 .theme__dark #electron-app-title-bar {
   background: $dark-theme-gray-darker;

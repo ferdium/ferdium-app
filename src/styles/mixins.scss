@@ -1,4 +1,4 @@
-@import './config.scss';
+@use './config.scss';
 
 @mixin formLabel {
   color: $theme-gray-light;

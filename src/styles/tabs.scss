@@ -1,4 +1,4 @@
-@import './config.scss';
+@use './config.scss';
 
 .theme__dark .tab-item {
   color: $dark-theme-text-color;

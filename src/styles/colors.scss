@@ -1,4 +1,4 @@
-@import './type-helper';
+@use './type-helper';
 
 $theme-brand-primary: convert-rgb-string-to-color($raw-theme-brand-primary);
 $theme-brand-gradient: $theme-brand-primary;

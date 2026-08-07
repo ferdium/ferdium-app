@@ -1,4 +1,4 @@
-@import './config.scss';
+@use './config.scss';
 
 .theme__dark .services {
   background: $dark-theme-gray-darkest;

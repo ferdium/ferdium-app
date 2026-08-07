@@ -1,4 +1,4 @@
-@import './config.scss';
+@use './config.scss';
 
 .status-bar-target-url {
   background: $theme-gray-lighter;
