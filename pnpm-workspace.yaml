@@ -23,24 +23,16 @@ allowedDeprecatedVersions:
   source-map-url: 0.4.1
   resolve-url: 0.2.1
   urix: 0.1.0
-
-onlyBuiltDependencies:
-  - '@biomejs/biome'
-  - electron
-  - es5-ext
-  - esbuild
-  - fast-folder-size
-  - macos-notification-state
-  - node-mac-permissions
-  - preval-build-info
-  - sqlite3
-
 allowBuilds:
   '@biomejs/biome': true
   '@parcel/watcher': true
+  electron: true
   es5-ext: true
   esbuild: true
   fast-folder-size: true
+  macos-notification-state: true
+  macos-notification-state@https://codeload.github.com/ferdium/macos-notification-state/tar.gz/7d740bcea260feb08197bd210912133e72853d93: true
+  node-mac-permissions: true
   preval-build-info: true
   sqlite3: true
 

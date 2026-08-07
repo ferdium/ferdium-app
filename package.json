@@ -23,7 +23,7 @@
   },
   "packageManager": "pnpm@11.20.0",
   "scripts": {
-    "prepare": "is-ci || husky",
+    "prepare": "node scripts/prepare.js",
     "start": "electron ./build",
     "start:local": "cross-env USE_LOCAL_API=1 pnpm start",
     "start:live": "cross-env USE_LIVE_API=1 pnpm start",
