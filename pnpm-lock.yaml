@@ -43,7 +43,7 @@ importers:
         version: 5.1.0
       '@electron/remote':
         specifier: 2.1.2
-        version: 2.1.2(electron@40.10.6)
+        version: 2.1.2(electron@43.3.0)
       '@emotion/react':
         specifier: 11.13.3
         version: 11.13.3(@types/react@18.3.12)(react@18.3.1)
@@ -73,7 +73,7 @@ importers:
         version: 7.4.0(history@5.3.0)(mobx@6.13.5)(path-to-regexp@6.2.2)
       '@syed_umair/electron-process-manager':
         specifier: 1.1.0
-        version: 1.1.0(electron@40.10.6)
+        version: 1.1.0(electron@43.3.0)
       auto-launch:
         specifier: 5.0.6
         version: 5.0.6
@@ -355,8 +355,8 @@ importers:
         specifier: 7.0.3
         version: 7.0.3
       electron:
-        specifier: 40.10.6
-        version: 40.10.6
+        specifier: 43.3.0
+        version: 43.3.0
       electron-builder:
         specifier: 24.13.3
         version: 24.13.3(electron-builder-squirrel-windows@24.13.3)
@@ -3232,8 +3232,8 @@ packages:
     resolution: {integrity: sha512-1mNTwCfkolXl3kMf50yW3vE2lZj0y92P/HYWFBrb+v2S/pCka5mdwN3cagKm458A7NjndSwijynXgcLWRodsVg==}
     engines: {node: '>=8.0.0'}
 
-  electron@40.10.6:
-    resolution: {integrity: sha512-TGjlkOU9Lg6K4KjDbsErywCWCIDaNgLh0q+xj0nlpRoQhevI7VBIxBTtJI/V30lypyLAaXMpnP9O9jui1/qRFw==}
+  electron@43.3.0:
+    resolution: {integrity: sha512-nLlvu0WFjftWsSaTkV2B/c4NDuJBspTyXu8vKSQ6vLvFt8uG3NgN49LLKcXddwX0GqVvAQDhciWp+4xOdTdhew==}
     engines: {node: '>= 22.12.0'}
     hasBin: true
 
@@ -8124,9 +8124,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@electron/remote@2.1.2(electron@40.10.6)':
+  '@electron/remote@2.1.2(electron@43.3.0)':
     dependencies:
-      electron: 40.10.6
+      electron: 43.3.0
 
   '@electron/universal@1.5.1':
     dependencies:
@@ -9050,9 +9050,9 @@ snapshots:
       mobx: 6.13.5
       path-to-regexp: 6.2.2
 
-  '@syed_umair/electron-process-manager@1.1.0(electron@40.10.6)':
+  '@syed_umair/electron-process-manager@1.1.0(electron@43.3.0)':
     dependencies:
-      electron: 40.10.6
+      electron: 43.3.0
       electron-process-reporter: 1.4.0
 
   '@tootallnate/once@1.1.2':
@@ -11093,7 +11093,7 @@ snapshots:
       jsonfile: 4.0.0
       mkdirp: 0.5.6
 
-  electron@40.10.6:
+  electron@43.3.0:
     dependencies:
       '@electron-internal/extract-zip': 1.0.5
       '@electron/get': 5.1.0
