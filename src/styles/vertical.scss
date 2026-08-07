@@ -1,5 +1,5 @@
 @use './globals.scss';
-@use './config.scss';
+@use './config.scss' as *;
 
 $sidebar-width: 75px;
 $sidebar-bias: 28px;

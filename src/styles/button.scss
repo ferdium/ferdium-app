@@ -1,4 +1,4 @@
-@use './config.scss';
+@use './config.scss' as *;
 
 .theme__dark .franz-form__button {
   background: $theme-brand-primary;

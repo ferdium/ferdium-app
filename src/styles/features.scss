@@ -1,3 +1,5 @@
+@use './config.scss' as *;
+
 .theme__dark .quick-switch {
   background: $dark-theme-gray-darkest;
 
