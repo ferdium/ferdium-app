@@ -43,3 +43,5 @@ allowBuilds:
   fast-folder-size: true
   preval-build-info: true
   sqlite3: true
+
+optimisticRepeatInstall: false
