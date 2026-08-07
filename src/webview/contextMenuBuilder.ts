@@ -8,12 +8,7 @@
  */
 
 import { Menu, MenuItem } from '@electron/remote';
-import {
-  type WebContents,
-  clipboard,
-  ipcRenderer,
-  nativeImage,
-} from 'electron';
+import { type WebContents, ipcRenderer } from 'electron';
 import { cmdOrCtrlShortcutKey, isMac } from '../environment';
 
 import {
@@ -24,6 +19,10 @@ import {
   TRANSLATOR_ENGINE_GOOGLE,
   TRANSLATOR_ENGINE_LIBRETRANSLATE,
 } from '../config';
+import {
+  writeImageDataUrlToClipboard,
+  writeTextToClipboard,
+} from '../helpers/clipboard-helpers';
 import { openExternalUrl } from '../helpers/url-helpers';
 import type IContextMenuParams from '../models/IContextMenuParams';
 
@@ -407,7 +406,7 @@ export class ContextMenuBuilder {
       click: () => {
         // Omit the mailto: portion of the link; we just want the address
         const url = isEmailAddress ? menuInfo.linkText : menuInfo.linkURL;
-        clipboard.writeText(url);
+        void writeTextToClipboard(url);
         this._sendNotificationOnClipboardEvent(
           menuInfo.clipboardNotifications,
           () =>
@@ -737,8 +736,7 @@ export class ContextMenuBuilder {
       click: () => {
         const result = this.convertImageToBase64(
           menuInfo.srcURL,
-          (dataURL: string) =>
-            clipboard.writeImage(nativeImage.createFromDataURL(dataURL)),
+          (dataURL: string) => void writeImageDataUrlToClipboard(dataURL),
         );
 
         this._sendNotificationOnClipboardEvent(
@@ -758,7 +756,7 @@ export class ContextMenuBuilder {
     const copyImageUrl = new MenuItem({
       label: this.stringTable.copyImageUrl(),
       click: () => {
-        const result = clipboard.writeText(menuInfo.srcURL);
+        const result = writeTextToClipboard(menuInfo.srcURL);
         this._sendNotificationOnClipboardEvent(
           menuInfo.clipboardNotifications,
           () =>
@@ -1004,7 +1002,7 @@ export class ContextMenuBuilder {
         label: this.stringTable.copyPageUrl(),
         enabled: true,
         click: () => {
-          clipboard.writeText(window.location.href);
+          void writeTextToClipboard(window.location.href);
           this._sendNotificationOnClipboardEvent(
             menuInfo?.clipboardNotifications,
             () =>

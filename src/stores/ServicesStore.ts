@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { clipboard, ipcRenderer, shell } from 'electron';
+import { ipcRenderer, shell } from 'electron';
 import { ensureFileSync, pathExistsSync, writeFileSync } from 'fs-extra';
 import { debounce, remove } from 'lodash';
 import { action, computed, makeObservable, observable, reaction } from 'mobx';
@@ -11,6 +11,7 @@ import type { ApiInterface } from '../api';
 import { DEFAULT_SERVICE_SETTINGS, KEEP_WS_LOADED_USID } from '../config';
 import { ferdiumVersion } from '../environment-remote';
 import { workspaceStore } from '../features/workspaces';
+import { writeTextToClipboard } from '../helpers/clipboard-helpers';
 import {
   getDevRecipeDirectory,
   getRecipeDirectory,
@@ -893,7 +894,7 @@ export default class ServicesStore extends TypedStore {
           ) {
             // with the extra "+ " it shows its copied to clipboard in the notification
             options.body = `+ ${rawBody}`;
-            clipboard.writeText(token);
+            void writeTextToClipboard(token);
             debug('Token parsed and copied to clipboard');
           }
         }
