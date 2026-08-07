@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 @use './config.scss' as *;
 @use './mixins.scss' as *;
 
@@ -79,7 +81,7 @@
     width: 100%;
 
     &::placeholder {
-      color: lighten($theme-gray-light, 10%);
+      color: color.adjust($theme-gray-light, $lightness: 10%);
     }
   }
 

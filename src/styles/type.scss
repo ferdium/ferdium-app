@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 @use './config.scss' as *;
 @use './mixins.scss' as *;
 
@@ -66,7 +68,7 @@ button {
     cursor: pointer;
 
     &:hover {
-      background: darken($theme-brand-primary, 10%);
+      background: color.adjust($theme-brand-primary, $lightness: -10%);
       color: #fff;
     }
   }
