@@ -1,6 +1,6 @@
 import type { Classes } from 'jss';
 import { Component } from 'react';
-import injectSheet from 'react-jss';
+import { useStyles } from 'react-jss';
 
 import styles from './styles';
 
@@ -9,12 +9,10 @@ interface IProps {
   message: string;
 }
 
-class ErrorComponent extends Component<IProps> {
-  render() {
-    const { classes, message } = this.props;
+function ErrorComponent({ classes, message }: IProps) {
+  useStyles(styles);
 
-    return <p className={classes.message}>{message}</p>;
-  }
+  return <p className={classes.message}>{message}</p>;
 }
 
-export default injectSheet(styles, { injectTheme: true })(ErrorComponent);
+export default ErrorComponent;
