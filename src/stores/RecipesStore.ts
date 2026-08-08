@@ -1,4 +1,4 @@
-import { readJSONSync } from 'fs-extra';
+import { pathExistsSync, readJSONSync } from 'fs-extra';
 import { action, computed, makeObservable, observable } from 'mobx';
 import semver from 'semver';
 
@@ -103,7 +103,9 @@ export default class RecipesStore extends TypedStore {
 
     // Check for local updates
     const allJsonFile = asarRecipesPath('all.json');
-    const allJson = readJSONSync(allJsonFile);
+    const allJson = pathExistsSync(allJsonFile)
+      ? readJSONSync(allJsonFile)
+      : [];
     const localUpdates: string[] = [];
 
     for (const recipe of Object.keys(recipes)) {

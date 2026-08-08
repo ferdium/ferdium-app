@@ -21,6 +21,8 @@ import { SPELLCHECKER_LOCALES } from '../i18n/languages';
 import { cleanseJSObject } from '../jsUtils';
 import type { UnreadServices } from '../lib/dbus/Ferdium';
 import type Service from '../models/Service';
+import { handleAiHubIncrementalMessages } from '../webview/handlers/handleAiHubIncrementalMessages';
+import { handleAiHubScanMessages } from '../webview/handlers/handleAiHubScanMessages';
 import CachedRequest from './lib/CachedRequest';
 import Request from './lib/Request';
 import TypedStore from './lib/TypedStore';
@@ -835,6 +837,32 @@ export default class ServicesStore extends TypedStore {
         this.actions.service.setDialogTitle({
           serviceId,
           dialogTitle: args[0],
+        });
+
+        break;
+      }
+
+      case 'aihub-scan-messages': {
+        const payload = args[0] || {};
+
+        handleAiHubScanMessages({
+          service,
+          serviceId,
+          payload,
+          debug,
+        });
+
+        break;
+      }
+
+      case 'aihub-incremental-messages': {
+        const payload = args[0] || {};
+
+        handleAiHubIncrementalMessages({
+          service,
+          serviceId,
+          payload,
+          debug,
         });
 
         break;

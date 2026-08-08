@@ -53,6 +53,10 @@ window.chrome.runtime.sendMessage = noop;
 
 const debug = require('../preload-safe-debug')('Ferdium:Plugin');
 
+const aiHubBridge = {
+  rescanConversation: noop,
+};
+
 const badgeHandler = new BadgeHandler();
 
 const dialogTitleHandler = new DialogTitleHandler();
@@ -129,6 +133,7 @@ contextBridge.exposeInMainWorld('ferdium', {
     );
   },
   getDisplayMediaSelector,
+  aiHubRescanConversation: () => aiHubBridge.rescanConversation(),
 });
 
 ipcRenderer.sendToHost(
@@ -161,6 +166,7 @@ class RecipeController {
     'get-service-id': 'serviceIdEcho',
     'find-in-page': 'openFindInPage',
     'toggle-to-talk': 'toggleToTalk',
+    'aihub-rescan-conversation': 'rescanConversation',
   };
 
   universalDarkModeInjected = false;
@@ -245,6 +251,7 @@ class RecipeController {
         notificationsHandler,
         sessionHandler,
       );
+      aiHubBridge.rescanConversation = () => this.recipe?.rescanConversation();
       if (existsSync(modulePath)) {
         require(modulePath)(this.recipe, { ...config, recipe });
         debug('Initialize Recipe', config, recipe);
@@ -299,6 +306,10 @@ class RecipeController {
 
   openFindInPage() {
     this.findInPage?.openFindWindow();
+  }
+
+  rescanConversation() {
+    this.recipe?.rescanConversation();
   }
 
   update() {
