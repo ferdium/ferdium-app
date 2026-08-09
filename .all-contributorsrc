@@ -3098,6 +3098,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "ritteralvaro",
+      "name": "Alvaro Ritter Quevedo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/113945166?v=4",
+      "profile": "http://ritteralvaro.com",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "commitType": "docs"
