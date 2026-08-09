@@ -414,12 +414,53 @@ export default class Service {
   }
 
   initializeWebViewEvents({ handleIPCMessage, openWindow, stores }): void {
-    const webviewWebContents = webContents.fromId(
-      this.webview.getWebContentsId(),
-    );
+    const { webview } = this;
+    if (!webview) {
+      debug(
+        'Webview is no longer available; skipping event initialization',
+        this.name,
+      );
+      return;
+    }
 
-    this.userAgentModel.setWebviewReference(this.webview);
+    let webviewWebContents;
+    try {
+      webviewWebContents = webContents.fromId(webview.getWebContentsId());
+    } catch (error) {
+      // The <webview> can still be mid-attach here even after the
+      // setTimeout(0) workaround in ServiceWebview's onDidAttach (see
+      // https://github.com/electron/electron/issues/31918). getWebContentsId
+      // throws in that case instead of returning a usable id. Rather than
+      // assuming a fixed delay is enough (and silently never initializing
+      // the service, leaving it stuck in its default "loading" state
+      // forever), retry once the webview itself reports it's actually
+      // ready.
+      debug(
+        'Webview was not ready yet, retrying once dom-ready fires',
+        this.name,
+        error,
+      );
+      webview.addEventListener(
+        'dom-ready',
+        () => {
+          // The service may have been detached or assigned a replacement
+          // webview while this one was finishing its attach lifecycle.
+          if (this.webview !== webview) {
+            debug('Ignoring dom-ready from a stale webview', this.name);
+            return;
+          }
 
+          this.initializeWebViewEvents({
+            handleIPCMessage,
+            openWindow,
+            stores,
+          });
+        },
+        { once: true },
+      );
+      return;
+    }
+    this.userAgentModel.setWebviewReference(webview);
     // If the recipe has implemented 'modifyRequestHeaders',
     // Send those headers to ipcMain so that it can be set in session
     if (typeof this.recipe.modifyRequestHeaders === 'function') {
