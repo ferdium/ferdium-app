@@ -3089,6 +3089,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "eXistenZNL",
+      "name": "Stefan van Essen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1150201?v=4",
+      "profile": "https://stevops.nl",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "commitType": "docs"
