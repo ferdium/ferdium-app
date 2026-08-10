@@ -37,7 +37,12 @@ const readPendingPartitionRemovals = (): string[] => {
     }
 
     return pendingRemovals.filter(
-      partition => typeof partition === 'string' && partition.length > 0,
+      partition =>
+        typeof partition === 'string' &&
+        partition.length > 0 &&
+        !partition.includes('..') &&
+        !partition.includes('/') &&
+        !partition.includes('\\'),
     );
   } catch (error) {
     debug('Unable to read pending service partition removals', error);
@@ -50,7 +55,9 @@ const writePendingPartitionRemovals = (pendingRemovals: string[]): void => {
 
   try {
     if (pendingRemovals.length === 0) {
-      removeSync(pendingRemovalsFile);
+      if (pathExistsSync(pendingRemovalsFile)) {
+        removeSync(pendingRemovalsFile);
+      }
       return;
     }
 
@@ -79,13 +86,23 @@ export const cleanupPendingServicePartitionDirectories = (): void => {
       removeSync(servicePartition);
       debug(`Removed deferred service partition "${servicePartition}"`);
     } catch (error) {
-      if ((error as FileSystemError).code !== 'ENOENT') {
-        remainingRemovals.push(partition);
-        debug(
-          `Unable to remove deferred service partition "${servicePartition}"`,
-          error,
-        );
+      const errorCode = (error as FileSystemError).code;
+
+      if (errorCode === 'ENOENT') {
+        continue;
       }
+
+      if (
+        errorCode !== undefined &&
+        RETRYABLE_PARTITION_REMOVAL_ERROR_CODES.has(errorCode)
+      ) {
+        remainingRemovals.push(partition);
+      }
+
+      debug(
+        `Unable to remove deferred service partition "${servicePartition}"`,
+        error,
+      );
     }
   }
 
