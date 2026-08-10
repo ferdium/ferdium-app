@@ -19,7 +19,7 @@ import { updateVersionParse } from '../../helpers/update-helpers';
 import InfoBar from '../ui/InfoBar';
 import ErrorBoundary from '../util/ErrorBoundary';
 
-import { isMac, isSnap, isWindows } from '../../environment';
+import { isMac, isSnap, isWayland, isWindows } from '../../environment';
 import Todos from '../../features/todos/containers/TodosScreen';
 import { workspaceStore } from '../../features/workspaces';
 import WorkspaceSwitchingIndicator from '../../features/workspaces/components/WorkspaceSwitchingIndicator';
@@ -159,10 +159,11 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
           <div
             className={`app ${useCompactWorkspaceDrawer ? 'app--compact-workspace' : ''}`}
           >
-            {isWindows && !isFullScreen && (
+            {(isWindows || isWayland) && !isFullScreen && (
               <TitleBar
                 menu={window['ferdium'].menu.template}
-                icon="assets/images/logo.svg"
+                icon={isWindows ? 'assets/images/logo.svg' : undefined}
+                className={isWayland ? 'wayland-menu-bar' : undefined}
               />
             )}
             {isMac && !isFullScreen && (

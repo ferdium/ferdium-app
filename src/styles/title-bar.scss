@@ -100,4 +100,20 @@
       border-left-width: 0px;
     }
   }
+
+  // On native Wayland the Electron/GTK application menu may not be drawn.
+  // Keep the compositor-provided window frame and render Ferdium's existing
+  // React menu bar inside the window instead.
+  &.wayland-menu-bar {
+    -webkit-app-region: no-drag;
+
+    .resize-handle,
+    .window-controls {
+      display: none;
+    }
+
+    #app-menu-bar {
+      max-width: 100%;
+    }
+  }
 }
