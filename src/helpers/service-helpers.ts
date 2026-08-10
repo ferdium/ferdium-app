@@ -24,6 +24,14 @@ export const getServicePartitionsDirectory = (...segments) => {
 const getPendingPartitionRemovalsFile = () =>
   userDataPath('pending-service-partition-removals.json');
 
+const isValidDeferredPartitionName = (partition: string): boolean => {
+  return (
+    partition.length > 0 &&
+    !partition.includes('..') &&
+    !/[\\/]/.test(partition)
+  );
+};
+
 const readPendingPartitionRemovals = (): string[] => {
   const pendingRemovalsFile = getPendingPartitionRemovalsFile();
   if (!pathExistsSync(pendingRemovalsFile)) {
@@ -37,7 +45,8 @@ const readPendingPartitionRemovals = (): string[] => {
     }
 
     return pendingRemovals.filter(
-      partition => typeof partition === 'string' && partition.length > 0,
+      partition =>
+        typeof partition === 'string' && isValidDeferredPartitionName(partition),
     );
   } catch (error) {
     debug('Unable to read pending service partition removals', error);
@@ -50,7 +59,9 @@ const writePendingPartitionRemovals = (pendingRemovals: string[]): void => {
 
   try {
     if (pendingRemovals.length === 0) {
-      removeSync(pendingRemovalsFile);
+      if (pathExistsSync(pendingRemovalsFile)) {
+        removeSync(pendingRemovalsFile);
+      }
       return;
     }
 
@@ -79,10 +90,20 @@ export const cleanupPendingServicePartitionDirectories = (): void => {
       removeSync(servicePartition);
       debug(`Removed deferred service partition "${servicePartition}"`);
     } catch (error) {
-      if ((error as FileSystemError).code !== 'ENOENT') {
+      const errorCode = (error as FileSystemError).code;
+
+      if (
+        errorCode !== undefined &&
+        RETRYABLE_PARTITION_REMOVAL_ERROR_CODES.has(errorCode)
+      ) {
         remainingRemovals.push(partition);
         debug(
           `Unable to remove deferred service partition "${servicePartition}"`,
+          error,
+        );
+      } else if (errorCode !== 'ENOENT') {
+        debug(
+          `Deferred service partition "${servicePartition}" failed with non-retryable error`,
           error,
         );
       }

@@ -113,6 +113,24 @@ describe('service_helpers', () => {
     expect(mockedWriteJsonSync).not.toHaveBeenCalled();
   });
 
+  it('ignores invalid deferred partition names loaded from disk', () => {
+    mockedPathExistsSync.mockReturnValue(true);
+    mockedReadJsonSync.mockReturnValue([
+      'service-abc123',
+      '../outside',
+      'nested/path',
+      'nested\\path',
+      '..',
+    ]);
+
+    cleanupPendingServicePartitionDirectories();
+
+    expect(mockedRemoveSync).toHaveBeenCalledWith('Partitions/service-abc123');
+    expect(mockedRemoveSync).not.toHaveBeenCalledWith('Partitions/../outside');
+    expect(mockedRemoveSync).not.toHaveBeenCalledWith('Partitions/nested/path');
+    expect(mockedRemoveSync).not.toHaveBeenCalledWith('Partitions/nested\\path');
+  });
+
   it('keeps a deferred partition queued if startup cleanup still cannot remove it', () => {
     const lockedError = Object.assign(new Error('Partition is still locked'), {
       code: 'EBUSY',
@@ -128,5 +146,21 @@ describe('service_helpers', () => {
     expect(mockedWriteJsonSync).toHaveBeenCalledWith(pendingRemovalsFile, [
       'service-abc123',
     ]);
+  });
+
+  it('drops deferred partitions when cleanup fails with non-retryable errors', () => {
+    const invalidPathError = Object.assign(new Error('Invalid path'), {
+      code: 'EINVAL',
+    });
+    mockedPathExistsSync.mockReturnValue(true);
+    mockedReadJsonSync.mockReturnValue(['service-abc123']);
+    mockedRemoveSync.mockImplementationOnce(() => {
+      throw invalidPathError;
+    });
+
+    cleanupPendingServicePartitionDirectories();
+
+    expect(mockedWriteJsonSync).not.toHaveBeenCalled();
+    expect(mockedRemoveSync).toHaveBeenNthCalledWith(2, pendingRemovalsFile);
   });
 });
