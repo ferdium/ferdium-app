@@ -27,6 +27,7 @@ allowBuilds:
   '@biomejs/biome': true
   '@parcel/watcher': true
   electron: true
+  electron-winstaller: false
   es5-ext: true
   esbuild: true
   fast-folder-size: true
