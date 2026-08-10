@@ -191,6 +191,7 @@
     "prettier": "3.3.3",
     "preval-build-info": "1.0.3",
     "rimraf": "5.0.7",
+    "sass": "1.102.0",
     "simple-git": "3.27.0",
     "tiny-glob": "0.2.9",
     "ts-node": "10.9.2",
