@@ -88,21 +88,19 @@ export const cleanupPendingServicePartitionDirectories = (): void => {
     } catch (error) {
       const errorCode = (error as FileSystemError).code;
 
-      if (errorCode === 'ENOENT') {
-        continue;
-      }
+      if (errorCode !== 'ENOENT') {
+        if (
+          errorCode !== undefined &&
+          RETRYABLE_PARTITION_REMOVAL_ERROR_CODES.has(errorCode)
+        ) {
+          remainingRemovals.push(partition);
+        }
 
-      if (
-        errorCode !== undefined &&
-        RETRYABLE_PARTITION_REMOVAL_ERROR_CODES.has(errorCode)
-      ) {
-        remainingRemovals.push(partition);
+        debug(
+          `Unable to remove deferred service partition "${servicePartition}"`,
+          error,
+        );
       }
-
-      debug(
-        `Unable to remove deferred service partition "${servicePartition}"`,
-        error,
-      );
     }
   }
 
