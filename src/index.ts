@@ -18,7 +18,6 @@ import windowStateKeeper from 'electron-window-state';
 import { emptyDirSync, ensureFileSync } from 'fs-extra';
 import minimist from 'minimist';
 import ms from 'ms';
-import { getDomain } from 'tldts';
 import { enableWebContents, initializeRemote } from './electron-util';
 import enforceMacOSAppLocation from './enforce-macos-app-location';
 
@@ -311,24 +310,21 @@ const createWindow = () => {
           return allowedChecks.includes(permission);
         });
       }
-
-      contents.setWindowOpenHandler(({ url }) => {
-        // Allow same-domain popups (e.g. Google auth) to open
-        // as child windows within Ferdium instead of the external browser.
-        // Uses tldts for correct eTLD+1 matching (handles .co.uk, .com.au, etc.)
-        try {
-          const popupHost = new URL(url).hostname;
-          const currentHost = new URL(contents.getURL()).hostname;
-          const popupDomain = getDomain(popupHost);
-          const currentDomain = getDomain(currentHost);
-          if (popupDomain && currentDomain && popupDomain === currentDomain) {
-            // On Linux, give popup windows a WebAuthn preload so passkey
-            // flows work in auth popups (they don't get the recipe preload).
-            if (isLinux) {
-              return {
-                action: 'allow',
-                overrideBrowserWindowOptions: {
-                  webPreferences: {
+      contents.setWindowOpenHandler(({ url, disposition }) => {
+        // OAuth popups (Google, Microsoft, etc.) are opened via window.open()
+        // and need window.opener preserved so the parent can receive the
+        // postMessage callback that completes the flow. Allow them as a child
+        // BrowserWindow that inherits the service partition.
+        if (disposition === 'new-window') {
+          return {
+            action: 'allow',
+            outlivesOpener: false,
+            overrideBrowserWindowOptions: {
+              parent: mainWindow,
+              fullscreenable: false,
+              webPreferences: isLinux
+                ? {
+                    session: contents.session,
                     preload: join(
                       __dirname,
                       'webview',
@@ -336,19 +332,20 @@ const createWindow = () => {
                     ),
                     contextIsolation: true,
                     sandbox: true,
-                  },
-                },
-              };
-            }
-            return { action: 'allow' };
-          }
-        } catch {
-          // fall through
+                  }
+                : { session: contents.session },
+            },
+          };
         }
+        // Regular link clicks → open in the user's default browser.
         openExternalUrl(url);
         return { action: 'deny' };
       });
 
+      contents.on('did-create-window', child => {
+        enableWebContents(child.webContents);
+        child.webContents.setWebRTCIPHandlingPolicy(webRTCIPHandlingPolicy);
+      });
       // Handle will download event from main process (prevent download dialog)
       contents.session.on('will-download', (_e, item) => {
         const downloadFolderPath = retrieveSettingValue(
