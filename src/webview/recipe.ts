@@ -9,9 +9,10 @@ import {
 } from 'darkreader';
 import { contextBridge, ipcRenderer } from 'electron';
 import { pathExistsSync, readFileSync } from 'fs-extra';
-import { debounce, noop } from 'lodash';
+import { noop } from 'lodash';
 import { autorun, computed, makeObservable, observable } from 'mobx';
 
+import AutomaticLanguageDetection from './AutomaticLanguageDetection';
 import customDarkModeCss from './darkmode/custom';
 import ignoreList from './darkmode/ignore';
 
@@ -209,6 +210,16 @@ class RecipeController {
 
   findInPage: FindInPage | null = null;
 
+  automaticLanguageDetection = new AutomaticLanguageDetection({
+    detectLanguage: sample =>
+      ipcRenderer.invoke('detect-language', {
+        sample,
+      }),
+    getServiceId: () => this.settings.service.id,
+    resolveSpellcheckerLocale: getSpellcheckerLocaleByFuzzyIdentifier,
+    switchDictionary: switchDict,
+  });
+
   async initialize() {
     for (const channel of Object.keys(this.ipcEvents)) {
       ipcRenderer.on(channel, (...args) => {
@@ -252,6 +263,12 @@ class RecipeController {
         window.history.forward();
       }
     });
+
+    window.addEventListener('unload', () => this.destroy(), { once: true });
+  }
+
+  destroy() {
+    this.automaticLanguageDetection.destroy();
   }
 
   loadRecipeModule(_event, config, recipe) {
@@ -349,16 +366,19 @@ class RecipeController {
       let { spellcheckerLanguage } = this;
       debug(`Setting spellchecker language to ${spellcheckerLanguage}`);
       if (spellcheckerLanguage.includes('automatic')) {
-        this.automaticLanguageDetection();
+        this.automaticLanguageDetection.enable();
         debug(
           'Found `automatic` locale, falling back to user locale until detected',
           this.settings.app.locale,
         );
         spellcheckerLanguage = this.settings.app.locale;
+      } else {
+        this.automaticLanguageDetection.disable();
       }
       switchDict(spellcheckerLanguage, this.settings.service.id);
     } else {
       debug('Disable spellchecker');
+      this.automaticLanguageDetection.disable();
     }
 
     if (!this.recipe) {
@@ -472,45 +492,6 @@ class RecipeController {
   serviceIdEcho(event) {
     debug('Received a service echo ping');
     event.sender.send('service-id', this.settings.service.id);
-  }
-
-  async automaticLanguageDetection() {
-    window.addEventListener(
-      'keyup',
-      debounce(async e => {
-        const element = e.target;
-
-        if (!element) return;
-
-        let value = '';
-        if (element.isContentEditable) {
-          value = element.textContent;
-        } else if (element.value) {
-          value = element.value;
-        }
-
-        // Force a minimum length to get better detection results
-        if (value.length < 25) return;
-
-        debug('Detecting language for', value);
-        const locale = await ipcRenderer.invoke('detect-language', {
-          sample: value,
-        });
-        if (!locale) {
-          return;
-        }
-
-        const spellcheckerLocale =
-          getSpellcheckerLocaleByFuzzyIdentifier(locale);
-        debug(
-          'Language detected reliably, setting spellchecker language to',
-          spellcheckerLocale,
-        );
-        if (spellcheckerLocale) {
-          switchDict(spellcheckerLocale, this.settings.service.id);
-        }
-      }, 225),
-    );
   }
 
   toggleToTalk() {
