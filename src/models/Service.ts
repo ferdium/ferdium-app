@@ -1,10 +1,9 @@
-import { basename, join } from 'node:path';
+import { join } from 'node:path';
 import { webContents } from '@electron/remote';
 import { ipcRenderer } from 'electron';
 import { action, autorun, computed, makeObservable, observable } from 'mobx';
 import type ElectronWebView from 'react-electron-web-view';
 
-import { v4 as uuidV4 } from 'uuid';
 import { needsToken } from '../api/apiBase';
 import { DEFAULT_SERVICE_ORDER, DEFAULT_SERVICE_SETTINGS } from '../config';
 import { isMac } from '../environment';
@@ -12,6 +11,7 @@ import { todosStore } from '../features/todos';
 import { getFaviconUrl } from '../helpers/favicon-helpers';
 import { isValidExternalURL, normalizedUrl } from '../helpers/url-helpers';
 import { ifUndefined } from '../jsUtils';
+import { downloadController } from './DownloadController';
 import type { IRecipe } from './Recipe';
 import UserAgent from './UserAgent';
 
@@ -610,79 +610,9 @@ export default class Service {
       webviewWebContents.session.on('will-download', (event, item) => {
         event.preventDefault();
 
-        const downloadId = uuidV4();
-
-        window['ferdium'].actions.app.addDownload({
-          id: downloadId,
+        downloadController.trackDownload({
+          item,
           serviceId: this.id,
-          filename: item.getFilename(),
-          url: item.getURL(),
-          savePath: item.getSavePath(),
-        });
-
-        item.addListener('updated', (event, state) => {
-          if (state === 'interrupted') {
-            debug('Download is interrupted but can be resumed');
-          } else if (state === 'progressing') {
-            if (item.isPaused()) {
-              debug('Download is paused');
-            } else {
-              debug(`Received bytes: ${item.getReceivedBytes()}`);
-            }
-          }
-          window['ferdium'].actions.app.updateDownload({
-            id: downloadId,
-            serviceId: this.id,
-            filename: basename(item.getSavePath()),
-            url: item.getURL(),
-            savePath: item.getSavePath(),
-            receivedBytes: item.getReceivedBytes(),
-            totalBytes: item.getTotalBytes(),
-            state,
-          });
-          debug('download updated', event, state);
-        });
-        item.addListener('done', (event, state) => {
-          debug('download done', event, state);
-          if (state === 'completed') {
-            debug('Download successfully');
-          } else {
-            if (state === 'cancelled' && item.getSavePath() === '') {
-              window['ferdium'].actions.app.removeDownload(downloadId);
-              debug('Download is cancelled');
-            }
-            debug(`Download failed: ${state}`);
-          }
-
-          window['ferdium'].actions.app.endedDownload({
-            id: downloadId,
-            serviceId: this.id,
-            receivedBytes: item.getReceivedBytes(),
-            totalBytes: item.getTotalBytes(),
-            state,
-          });
-        });
-
-        ipcRenderer.on('toggle-pause-download', (_, data) => {
-          debug('toggle-pause-download', item.isPaused(), item.getState());
-          if (data.downloadId === downloadId || data.downloadId === undefined) {
-            if (item.isPaused()) {
-              item.resume();
-            } else {
-              item.pause();
-            }
-          }
-          debug('toggle-pause-download', item.isPaused(), item.getState());
-          window['ferdium'].actions.app.updateDownload({
-            id: downloadId,
-            paused: item.isPaused(),
-          });
-        });
-
-        ipcRenderer.on('stop-download', (_, data) => {
-          if (data === undefined || downloadId === data.downloadId) {
-            item.cancel();
-          }
         });
       });
       webviewWebContents.on('login', (event, _, authInfo, callback) => {
