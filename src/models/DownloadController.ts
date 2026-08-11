@@ -66,8 +66,41 @@ type DownloadControllerOptions = {
   getAppActions?: () => DownloadActions;
 };
 
+type DownloadSessionLike = {
+  on: (
+    eventName: 'will-download',
+    listener: (...args: any[]) => void,
+  ) => unknown;
+};
+
+type DownloadWebContentsLike = {
+  id?: number;
+  session: DownloadSessionLike;
+  getId?: () => number;
+  once?: (eventName: 'destroyed', listener: () => void) => unknown;
+};
+
+type SessionDownloadListener = (
+  event: { preventDefault: () => void },
+  item: DownloadItemLike,
+  webContents?: DownloadWebContentsLike,
+) => void;
+
 export default class DownloadController {
   private activeDownloads = new Map<string, DownloadItemLike>();
+
+  private registeredSessions = new WeakSet<DownloadSessionLike>();
+
+  private sessionDownloadListeners = new WeakMap<
+    DownloadSessionLike,
+    SessionDownloadListener
+  >();
+
+  private sessionServiceIds = new WeakMap<DownloadSessionLike, Set<string>>();
+
+  private webContentsServiceIds = new Map<number, string>();
+
+  private sessionRegistrationCount = 0;
 
   private isListeningForIpc = false;
 
@@ -89,6 +122,35 @@ export default class DownloadController {
 
   get activeDownloadCount(): number {
     return this.activeDownloads.size;
+  }
+
+  get registeredSessionCount(): number {
+    return this.sessionRegistrationCount;
+  }
+
+  registerWebContents({
+    serviceId,
+    webContents,
+  }: {
+    serviceId: string;
+    webContents: DownloadWebContentsLike;
+  }): void {
+    this.registerSession(webContents.session);
+    this.registerServiceIdForSession(webContents.session, serviceId);
+
+    const webContentsId = this.getWebContentsId(webContents);
+    if (webContentsId === null) {
+      return;
+    }
+
+    this.webContentsServiceIds.set(webContentsId, serviceId);
+    webContents.once?.('destroyed', () => {
+      this.unregisterWebContents(webContentsId);
+    });
+  }
+
+  unregisterWebContents(webContentsId: number): void {
+    this.webContentsServiceIds.delete(webContentsId);
   }
 
   trackDownload({
@@ -179,7 +241,91 @@ export default class DownloadController {
     }
 
     this.activeDownloads.clear();
+    this.webContentsServiceIds.clear();
+    this.registeredSessions = new WeakSet<DownloadSessionLike>();
+    this.sessionDownloadListeners = new WeakMap<
+      DownloadSessionLike,
+      SessionDownloadListener
+    >();
+    this.sessionServiceIds = new WeakMap<DownloadSessionLike, Set<string>>();
+    this.sessionRegistrationCount = 0;
   }
+
+  private registerSession(session: DownloadSessionLike): void {
+    if (this.registeredSessions.has(session)) {
+      return;
+    }
+
+    const listener: SessionDownloadListener = (event, item, webContents) => {
+      this.handleWillDownload(session, event, item, webContents);
+    };
+
+    session.on('will-download', listener);
+    this.registeredSessions.add(session);
+    this.sessionDownloadListeners.set(session, listener);
+    this.sessionRegistrationCount += 1;
+  }
+
+  private registerServiceIdForSession(
+    session: DownloadSessionLike,
+    serviceId: string,
+  ): void {
+    const serviceIds = this.sessionServiceIds.get(session) ?? new Set<string>();
+    serviceIds.add(serviceId);
+    this.sessionServiceIds.set(session, serviceIds);
+  }
+
+  private getWebContentsId(
+    webContents: DownloadWebContentsLike | undefined,
+  ): number | null {
+    if (!webContents) {
+      return null;
+    }
+
+    if (typeof webContents.id === 'number') {
+      return webContents.id;
+    }
+
+    if (typeof webContents.getId === 'function') {
+      return webContents.getId();
+    }
+
+    return null;
+  }
+
+  private getServiceIdForDownload(
+    session: DownloadSessionLike,
+    webContents: DownloadWebContentsLike | undefined,
+  ): string {
+    const webContentsId = this.getWebContentsId(webContents);
+    if (webContentsId !== null) {
+      const serviceId = this.webContentsServiceIds.get(webContentsId);
+      if (serviceId) {
+        return serviceId;
+      }
+    }
+
+    const serviceIds = this.sessionServiceIds.get(session);
+    if (serviceIds?.size === 1) {
+      return [...serviceIds][0];
+    }
+
+    return '';
+  }
+
+  private handleWillDownload = (
+    session: DownloadSessionLike,
+    event: { preventDefault: () => void },
+    item: DownloadItemLike,
+    webContents?: DownloadWebContentsLike,
+  ): void => {
+    event.preventDefault();
+
+    this.trackDownload({
+      item,
+      serviceId: this.getServiceIdForDownload(session, webContents),
+    });
+  };
 
   private ensureIpcListeners(): void {
     if (this.isListeningForIpc) {

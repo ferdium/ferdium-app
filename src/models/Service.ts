@@ -461,6 +461,10 @@ export default class Service {
       return;
     }
     this.userAgentModel.setWebviewReference(webview);
+    downloadController.registerWebContents({
+      serviceId: this.id,
+      webContents: webviewWebContents,
+    });
     // If the recipe has implemented 'modifyRequestHeaders',
     // Send those headers to ipcMain so that it can be set in session
     if (typeof this.recipe.modifyRequestHeaders === 'function') {
@@ -606,15 +610,6 @@ export default class Service {
           }
         });
       }
-
-      webviewWebContents.session.on('will-download', (event, item) => {
-        event.preventDefault();
-
-        downloadController.trackDownload({
-          item,
-          serviceId: this.id,
-        });
-      });
       webviewWebContents.on('login', (event, _, authInfo, callback) => {
         // const authCallback = callback;
         debug('browser login event', authInfo);
