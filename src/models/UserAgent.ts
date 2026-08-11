@@ -9,7 +9,7 @@ export default class UserAgent {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _didNavigateListener = (_event: any): void => {};
 
-  @observable.ref webview: ElectronWebView = null;
+  @observable.ref webview: ElectronWebView | null = null;
 
   @observable userAgentPref: string | null = null;
 
@@ -68,7 +68,11 @@ export default class UserAgent {
     return this.serviceUserAgentPref || this.defaultUserAgent;
   }
 
-  @action setWebviewReference(webview: ElectronWebView): void {
+  @action setWebviewReference(webview: ElectronWebView | null): void {
+    if (this.webview === webview) {
+      return;
+    }
+
     this.webview = webview;
   }
 
@@ -81,12 +85,16 @@ export default class UserAgent {
       // webview.userAgent during a pending navigation or redirect chain causes
       // Electron to cancel the navigation via SetUserAgentOverride(), which breaks
       // cross-origin form POST requests (e.g. SAML ACS endpoints) and redirect chains.
-      this.webview.userAgent =
-        this.serviceUserAgentPref || this.userAgentWithoutChromeVersion;
+      if (this.webview) {
+        this.webview.userAgent =
+          this.serviceUserAgentPref || this.userAgentWithoutChromeVersion;
+      }
     } else {
       debug('Setting user agent to default for url', url);
-      this.webview.userAgent =
-        this.serviceUserAgentPref || this.defaultUserAgent;
+      if (this.webview) {
+        this.webview.userAgent =
+          this.serviceUserAgentPref || this.defaultUserAgent;
+      }
     }
   }
 
