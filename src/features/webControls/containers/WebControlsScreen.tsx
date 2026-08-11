@@ -1,9 +1,9 @@
 import {
   type IReactionDisposer,
   action,
-  autorun,
   makeObservable,
   observable,
+  reaction,
 } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import { Component, type ReactElement } from 'react';
@@ -35,9 +35,9 @@ class WebControlsScreen extends Component<IProps> {
 
   webview: ElectronWebView | null = null;
 
-  autorunDisposer: IReactionDisposer | null = null;
+  webviewReactionDisposer: IReactionDisposer | null = null;
 
-  constructor(props) {
+  constructor(props: IProps) {
     super(props);
 
     makeObservable(this);
@@ -46,31 +46,54 @@ class WebControlsScreen extends Component<IProps> {
   componentDidMount(): void {
     const { service } = this.props;
 
-    this.autorunDisposer = autorun(() => {
-      if (service.isAttached) {
-        this.webview = service.webview;
-        this._setUrl(this.webview.getURL());
-
-        for (const event of URL_EVENTS) {
-          this.webview.addEventListener(event, this.handleWebviewEvent);
-        }
-      }
-    });
+    this.webviewReactionDisposer = reaction(
+      () => (service.isAttached ? service.webview : null),
+      webview => this.setWebview(webview),
+      { fireImmediately: true },
+    );
   }
 
   componentWillUnmount(): void {
-    if (this.autorunDisposer) {
-      this.autorunDisposer();
+    if (this.webviewReactionDisposer) {
+      this.webviewReactionDisposer();
     }
 
-    if (this.webview) {
-      for (const event of URL_EVENTS) {
-        this.webview.removeEventListener(event, this.handleWebviewEvent);
-      }
+    this.setWebview(null);
+  }
+
+  addWebviewEventListeners(webview: ElectronWebView): void {
+    for (const event of URL_EVENTS) {
+      webview.addEventListener(event, this.handleWebviewEvent);
     }
   }
 
-  handleWebviewEvent = (e: any) => {
+  removeWebviewEventListeners(webview: ElectronWebView | null): void {
+    if (!webview) {
+      return;
+    }
+
+    for (const event of URL_EVENTS) {
+      webview.removeEventListener(event, this.handleWebviewEvent);
+    }
+  }
+
+  setWebview(webview: ElectronWebView | null): void {
+    if (this.webview === webview) {
+      return;
+    }
+
+    this.removeWebviewEventListeners(this.webview);
+    this.webview = webview;
+
+    if (!webview) {
+      return;
+    }
+
+    this._setUrlAndHistory(webview.getURL());
+    this.addWebviewEventListeners(webview);
+  }
+
+  handleWebviewEvent = (e: any): void => {
     if (!e.isMainFrame) {
       return;
     }
@@ -85,42 +108,47 @@ class WebControlsScreen extends Component<IProps> {
   @action
   _setUrlAndHistory(value): void {
     this._setUrl(value);
+    if (!this.webview) {
+      this.canGoBack = false;
+      this.canGoForward = false;
+      return;
+    }
     this.canGoBack = this.webview.canGoBack();
     this.canGoForward = this.webview.canGoForward();
   }
 
-  goHome(): void {
+  goHome = (): void => {
     if (!this.webview) {
       return;
     }
     this.webview.goToIndex(0);
-  }
+  };
 
-  reload(): void {
+  reload = (): void => {
     if (!this.webview) {
       return;
     }
 
     this.webview.reload();
-  }
+  };
 
-  goBack(): void {
+  goBack = (): void => {
     if (!this.webview) {
       return;
     }
 
     this.webview.goBack();
-  }
+  };
 
-  goForward(): void {
+  goForward = (): void => {
     if (!this.webview) {
       return;
     }
 
     this.webview.goForward();
-  }
+  };
 
-  navigate(url: string): void {
+  navigate = (url: string): void => {
     if (!this.webview) {
       return;
     }
@@ -142,28 +170,28 @@ class WebControlsScreen extends Component<IProps> {
 
     this.webview.loadURL(url);
     this._setUrl(url);
-  }
+  };
 
-  openInBrowser(): void {
+  openInBrowser = (): void => {
     const { openExternalUrl } = this.props.actions!.app;
     if (!this.webview) {
       return;
     }
 
     openExternalUrl({ url: this.url });
-  }
+  };
 
   render(): ReactElement {
     return (
       <WebControls
-        goHome={() => this.goHome()}
-        reload={() => this.reload()}
-        openInBrowser={() => this.openInBrowser()}
+        goHome={this.goHome}
+        reload={this.reload}
+        openInBrowser={this.openInBrowser}
         canGoBack={this.canGoBack}
-        goBack={() => this.goBack()}
+        goBack={this.goBack}
         canGoForward={this.canGoForward}
-        goForward={() => this.goForward()}
-        navigate={url => this.navigate(url)}
+        goForward={this.goForward}
+        navigate={this.navigate}
         url={this.url}
       />
     );
