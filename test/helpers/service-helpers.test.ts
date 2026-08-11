@@ -1,3 +1,5 @@
+import type * as ServiceHelpersModule from '../../src/helpers/service-helpers';
+
 jest.mock('fs-extra', () => ({
   pathExistsSync: jest.fn(),
   readJsonSync: jest.fn(),
@@ -21,7 +23,7 @@ const {
   removeServicePartitionDirectory,
 } = jest.requireActual(
   '../../src/helpers/service-helpers',
-) as typeof import('../../src/helpers/service-helpers');
+) as typeof ServiceHelpersModule;
 
 const mockedPathExistsSync = jest.mocked(fsExtra.pathExistsSync);
 const mockedReadJsonSync = jest.mocked(fsExtra.readJsonSync);
