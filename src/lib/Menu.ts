@@ -7,8 +7,7 @@ import {
   systemPreferences,
   webContents,
 } from '@electron/remote';
-import { ipcRenderer } from 'electron';
-import { type MenuItemConstructorOptions, clipboard } from 'electron';
+import { type MenuItemConstructorOptions, ipcRenderer } from 'electron';
 import { fromJS } from 'immutable';
 import { action, autorun, makeObservable, observable } from 'mobx';
 import osName from 'os-name';
@@ -48,6 +47,7 @@ import { ferdiumVersion } from '../environment-remote';
 import { todoActions } from '../features/todos/actions';
 import workspaceActions from '../features/workspaces/actions';
 import { workspaceStore } from '../features/workspaces/index';
+import { writeTextToClipboard } from '../helpers/clipboard-helpers';
 import { onAuthGoToReleaseNotes } from '../helpers/update-helpers';
 import { openExternalUrl } from '../helpers/url-helpers';
 import globalMessages from '../i18n/globalMessages';
@@ -993,9 +993,7 @@ class FranzMenu implements StoresProps {
           })
           .then(result => {
             if (result.response === 1) {
-              clipboard.write({
-                text: aboutAppDetails,
-              });
+              writeTextToClipboard(aboutAppDetails).catch(console.error);
             }
           });
       },
@@ -1309,9 +1307,7 @@ class FranzMenu implements StoresProps {
         click: () => {
           const { debugInfo } = this.stores.app;
 
-          clipboard.write({
-            text: JSON.stringify(debugInfo),
-          });
+          writeTextToClipboard(JSON.stringify(debugInfo)).catch(console.error);
 
           this.actions.app.notify({
             title: intl.formatMessage(menuItems.debugInfoCopiedHeadline),

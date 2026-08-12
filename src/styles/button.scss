@@ -1,14 +1,16 @@
-@import './config.scss';
+@use 'sass:color';
+
+@use './config.scss' as *;
 
 .theme__dark .franz-form__button {
   background: $theme-brand-primary;
   color: $dark-theme-text-color;
 
   &:hover {
-    background: darken($theme-brand-primary, 5%);
+    background: color.adjust($theme-brand-primary, $lightness: -5%);
   }
   &:active {
-    background: lighten($theme-brand-primary, 5%);
+    background: color.adjust($theme-brand-primary, $lightness: 5%);
   }
 
   &.franz-form__button--secondary {
@@ -16,10 +18,10 @@
     color: $dark-theme-text-color;
 
     &:hover {
-      background: lighten($dark-theme-gray-dark, 10%);
+      background: color.adjust($dark-theme-gray-dark, $lightness: 10%);
     }
     &:active {
-      background: lighten($dark-theme-gray-dark, 20%);
+      background: color.adjust($dark-theme-gray-dark, $lightness: 20%);
     }
   }
 
@@ -27,10 +29,10 @@
     background: $theme-brand-danger;
 
     &:hover {
-      background: darken($theme-brand-danger, 5%);
+      background: color.adjust($theme-brand-danger, $lightness: -5%);
     }
     &:active {
-      background: lighten($theme-brand-danger, 5%);
+      background: color.adjust($theme-brand-danger, $lightness: 5%);
     }
   }
 
@@ -38,10 +40,10 @@
     background: $theme-brand-warning;
 
     &:hover {
-      background: darken($theme-brand-warning, 5%);
+      background: color.adjust($theme-brand-warning, $lightness: -5%);
     }
     &:active {
-      background: lighten($theme-brand-warning, 5%);
+      background: color.adjust($theme-brand-warning, $lightness: 5%);
     }
   }
 
@@ -50,7 +52,7 @@
     color: $theme-brand-primary;
 
     &:hover {
-      background: darken($theme-brand-primary, 5%);
+      background: color.adjust($theme-brand-primary, $lightness: -5%);
       color: $dark-theme-text-color;
     }
   }
@@ -73,11 +75,11 @@
   text-align: center;
 
   &:hover {
-    background: darken($theme-brand-primary, 5%);
+    background: color.adjust($theme-brand-primary, $lightness: -5%);
   }
 
   &:active {
-    background: lighten($theme-brand-primary, 5%);
+    background: color.adjust($theme-brand-primary, $lightness: 5%);
     transition: none;
   }
 
@@ -95,10 +97,10 @@
     color: $theme-gray;
 
     &:hover {
-      background: darken($theme-gray-lighter, 5%);
+      background: color.adjust($theme-gray-lighter, $lightness: -5%);
     }
     &:active {
-      background: lighten($theme-gray-lighter, 5%);
+      background: color.adjust($theme-gray-lighter, $lightness: 5%);
     }
   }
 
@@ -106,10 +108,10 @@
     background: $theme-brand-danger;
 
     &:hover {
-      background: darken($theme-brand-danger, 5%);
+      background: color.adjust($theme-brand-danger, $lightness: -5%);
     }
     &:active {
-      background: lighten($theme-brand-danger, 5%);
+      background: color.adjust($theme-brand-danger, $lightness: 5%);
     }
   }
 
@@ -117,10 +119,10 @@
     background: $theme-brand-warning;
 
     &:hover {
-      background: darken($theme-brand-warning, 5%);
+      background: color.adjust($theme-brand-warning, $lightness: -5%);
     }
     &:active {
-      background: lighten($theme-brand-warning, 5%);
+      background: color.adjust($theme-brand-warning, $lightness: 5%);
     }
   }
 
@@ -135,7 +137,7 @@
         color 0.5s;
     }
     &:hover {
-      background: darken($theme-brand-primary, 5%);
+      background: color.adjust($theme-brand-primary, $lightness: -5%);
       color: #fff;
     }
   }

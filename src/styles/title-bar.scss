@@ -1,4 +1,6 @@
-@import './config.scss';
+@use 'sass:color';
+
+@use './config.scss' as *;
 
 .theme__dark #electron-app-title-bar {
   background: $dark-theme-gray-darker;
@@ -27,7 +29,7 @@
 
       .menu-item {
         .accelerator {
-          color: lighten($dark-theme-gray-light, 20%);
+          color: color.adjust($dark-theme-gray-light, $lightness: 20%);
         }
       }
 
@@ -96,6 +98,22 @@
       border-bottom-right-radius: $theme-border-radius-small;
       box-shadow: 0px 15px 10px -15px rgba(black, 0.5);
       border-left-width: 0px;
+    }
+  }
+
+  // On native Wayland the Electron/GTK application menu may not be drawn.
+  // Keep the compositor-provided window frame and render Ferdium's existing
+  // React menu bar inside the window instead.
+  &.wayland-menu-bar {
+    -webkit-app-region: no-drag;
+
+    .resize-handle,
+    .window-controls {
+      display: none;
+    }
+
+    #app-menu-bar {
+      max-width: 100%;
     }
   }
 }

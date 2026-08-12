@@ -97,7 +97,7 @@ const generateAccentStyle = (accentColorStr, useHorizontalStyle) => {
       border-right-color: ${accentColorStr};
     }
 
-    .franz-form .franz-form__radio.is-selected, .tab-item.is-active {
+    .franz-form .franz-form__radio.is-selected {
       box-shadow: inset ${useHorizontalStyle ? '0 4px' : '4px 0'} 0 0 ${accentColorStr};
     }
 
@@ -131,6 +131,7 @@ const generateAccentStyle = (accentColorStr, useHorizontalStyle) => {
 
     .tab-item.is-active {
       background: ${accentColor.lightness(90).hex()};
+      box-shadow: inset ${useHorizontalStyle ? '0 4px' : '4px 0'} 0 0 ${accentColorStr};
     }
   `;
 };

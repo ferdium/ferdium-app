@@ -1,4 +1,5 @@
 import type { PathLike } from 'node:fs';
+import type { OpenDialogOptions } from 'electron';
 import { BrowserWindow, dialog, ipcMain } from 'electron';
 import { download } from 'electron-dl';
 import { writeFileSync } from 'fs-extra';
@@ -15,7 +16,16 @@ const decodeBase64Image = (dataString: string) => {
   return Buffer.from(matches[2], 'base64');
 };
 
-export default (params: { mainWindow: BrowserWindow }) => {
+type DownloadSettings = {
+  app?: {
+    get: (key: string) => unknown;
+  };
+};
+
+export default (params: {
+  mainWindow: BrowserWindow;
+  settings?: DownloadSettings;
+}) => {
   ipcMain.on(
     'download-file',
     async (_event, { url, content, fileOptions = {} }) => {
@@ -54,9 +64,19 @@ export default (params: { mainWindow: BrowserWindow }) => {
   );
 
   ipcMain.handle('download-folder-select', async () => {
-    const result = await dialog.showOpenDialog(params.mainWindow, {
+    const dialogOptions: OpenDialogOptions = {
       properties: ['openDirectory'],
-    });
+    };
+    const defaultPath = params.settings?.app?.get('downloadFolderPath');
+
+    if (typeof defaultPath === 'string' && defaultPath !== '') {
+      dialogOptions.defaultPath = defaultPath;
+    }
+
+    const result = await dialog.showOpenDialog(
+      params.mainWindow,
+      dialogOptions,
+    );
 
     if (result.canceled) return null;
 

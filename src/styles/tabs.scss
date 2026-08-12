@@ -1,4 +1,7 @@
-@import './config.scss';
+@use 'sass:color';
+@use 'sass:math';
+
+@use './config.scss' as *;
 
 .theme__dark .tab-item {
   color: $dark-theme-text-color;
@@ -37,9 +40,13 @@
   width: $theme-sidebar-width;
 
   &.is-active {
-    background: change-color(
+    background: color.change(
       $theme-brand-primary,
-      $lightness: min(lightness($theme-brand-primary) * 1.35, 100)
+      $lightness:
+        math.min(
+          color.channel($theme-brand-primary, 'lightness', $space: hsl) * 1.35,
+          100%
+        )
     );
 
     box-shadow: inset 4px 0 0 0 $theme-brand-primary;

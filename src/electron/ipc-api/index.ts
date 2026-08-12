@@ -3,6 +3,7 @@ import type TrayIcon from '../../lib/Tray';
 import appIndicator from './appIndicator';
 // eslint-disable-next-line import/no-cycle
 import autoUpdate from './autoUpdate';
+import clipboard from './clipboard';
 import dnd from './dnd';
 import download from './download';
 import focusState from './focusState';
@@ -21,6 +22,7 @@ export default (params: {
   sessionStorage();
   autoUpdate(params);
   appIndicator(params);
+  clipboard();
   download(params);
   processManager();
   localServer(params);

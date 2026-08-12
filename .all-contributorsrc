@@ -3062,6 +3062,51 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "phelix001",
+      "name": "Joshua Freedman",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5187100?v=4",
+      "profile": "https://www.linkedin.com/in/joshuafreedman1/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "shuhikari",
+      "name": "Édipo Maciel | 'Shu'",
+      "avatar_url": "https://avatars.githubusercontent.com/u/4049331?v=4",
+      "profile": "http://auditore.com.br",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "tfluehmann",
+      "name": "Tobias Flühmann",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5341776?v=4",
+      "profile": "http://tobiasfluehmann.ch",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "eXistenZNL",
+      "name": "Stefan van Essen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1150201?v=4",
+      "profile": "https://stevops.nl",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "ritteralvaro",
+      "name": "Alvaro Ritter Quevedo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/113945166?v=4",
+      "profile": "http://ritteralvaro.com",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "commitType": "docs"

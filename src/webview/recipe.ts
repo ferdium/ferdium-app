@@ -131,6 +131,29 @@ contextBridge.exposeInMainWorld('ferdium', {
   getDisplayMediaSelector,
 });
 
+// WebAuthn/passkey support on Linux.
+// Expose the IPC bridge and inject the page script into the main world
+// BEFORE page scripts run, so navigator.credentials is patched in time.
+if (process.platform === 'linux') {
+  contextBridge.exposeInMainWorld('electronWebAuthn', {
+    create: (options: any) => ipcRenderer.invoke('webauthn:create', options),
+    get: (options: any) => ipcRenderer.invoke('webauthn:get', options),
+    hasCredentials: (rpId: string) =>
+      ipcRenderer.invoke('webauthn:hasCredentials', rpId),
+  });
+
+  // Inject page script at document-start (before any page JS).
+  // The <script> element runs in the main world (world 0), not the
+  // isolated preload world, which is what we need for monkey-patching.
+  const { webauthnPageScript } = require('electron-webauthn-linux');
+  process.once('document-start', () => {
+    const script = document.createElement('script');
+    script.textContent = webauthnPageScript;
+    document.documentElement.append(script);
+    script.remove();
+  });
+}
+
 ipcRenderer.sendToHost(
   'inject-js-unsafe',
   'window.open = window.ferdium.open;',
@@ -267,7 +290,11 @@ class RecipeController {
     const userCss = join(recipe.path, 'user.css');
     if (pathExistsSync(userCss)) {
       const data = readFileSync(userCss);
-      styles.innerHTML += data.toString();
+      // textContent, not innerHTML: innerHTML is a Trusted Types sink, so
+      // sites sending `require-trusted-types-for 'script'` reject the
+      // assignment. That threw here before reaching the user.js block below,
+      // so a single user.css took user.js down with it (ferdium#1086).
+      styles.textContent += data.toString();
       debug('Loaded user.css from: ', userCss);
     }
     document.querySelector('head')?.append(styles);

@@ -1,6 +1,6 @@
 @use 'sass:math';
 
-@import './config.scss';
+@use './config.scss' as *;
 
 $toggle-size: 14px;
 $toggle-width: 40px;

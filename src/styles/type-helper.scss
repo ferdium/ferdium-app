@@ -1,21 +1,27 @@
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:meta';
+@use 'sass:string';
+
 @function str-split($string, $separator) {
   // empty array/list
   $split-arr: ();
   // first index of separator in string
-  $index: str-index($string, $separator);
+  $index: string.index($string, $separator);
   // loop through string
   @while $index != null {
     // get the substring from the first character to the separator
-    $item: str-slice($string, 1, $index - 1);
+    $item: string.slice($string, 1, $index - 1);
     // push item to array
-    $split-arr: append($split-arr, $item);
+    $split-arr: list.append($split-arr, $item);
     // remove item and separator from string
-    $string: str-slice($string, $index + 1);
+    $string: string.slice($string, $index + 1);
     // find new index of separator
-    $index: str-index($string, $separator);
+    $index: string.index($string, $separator);
   }
   // add the remaining string to list (the last item)
-  $split-arr: append($split-arr, $string);
+  $split-arr: list.append($split-arr, $string);
 
   @return $split-arr;
 }
@@ -36,15 +42,16 @@
 /// @return {Number}
 
 @function to-number($value) {
-  @if type-of($value) == 'number' {
+  @if meta.type-of($value) == 'number' {
     @return $value;
-  } @else if type-of($value) != 'string' {
+  } @else if meta.type-of($value) != 'string' {
     $_: log('Value for `to-number` should be a number or a string.');
   }
 
   $result: 0;
   $digits: 0;
-  $minus: str-slice($value, 1, 1) == '-';
+  $minus: string.slice($value, 1, 1) == '-';
+  $start: 1;
   $numbers: (
     '0': 0,
     '1': 1,
@@ -58,24 +65,38 @@
     '9': 9,
   );
 
-  @for $i from if($minus, 2, 1) through str-length($value) {
-    $character: str-slice($value, $i, $i);
+  @if $minus {
+    $start: 2;
+  }
 
-    @if not(index(map-keys($numbers), $character) or $character == '.') {
-      @return to-length(if($minus, -$result, $result), str-slice($value, $i));
+  @for $i from $start through string.length($value) {
+    $character: string.slice($value, $i, $i);
+
+    @if not(list.index(map.keys($numbers), $character) or $character == '.') {
+      $signed-result: $result;
+
+      @if $minus {
+        $signed-result: -$result;
+      }
+
+      @return to-length($signed-result, string.slice($value, $i));
     }
 
     @if $character == '.' {
       $digits: 1;
     } @else if $digits == 0 {
-      $result: $result * 10 + map-get($numbers, $character);
+      $result: $result * 10 + map.get($numbers, $character);
     } @else {
       $digits: $digits * 10;
-      $result: $result + map-get($numbers, $character) / $digits;
+      $result: $result + math.div(map.get($numbers, $character), $digits);
     }
   }
 
-  @return if($minus, -$result, $result);
+  @if $minus {
+    @return -$result;
+  }
+
+  @return $result;
 }
 
 /// Add `$unit` to `$value`
@@ -103,11 +124,11 @@
     'vmax': 1vmax,
   );
 
-  @if not index(map-keys($units), $unit) {
+  @if not list.index(map.keys($units), $unit) {
     $_: log('Invalid unit `#{$unit}`.');
   }
 
-  @return $value * map-get($units, $unit);
+  @return $value * map.get($units, $unit);
 }
 
 /// converts injectes rgb strings to sass colors
@@ -115,9 +136,13 @@
   $values: str-split($string, ',');
   $colorList: ();
   @each $value in $values {
-    $colorList: append($colorList, to-number($value));
+    $colorList: list.append($colorList, to-number($value));
   }
 
-  $rgbaColor: rgb(nth($colorList, 1), nth($colorList, 2), nth($colorList, 3));
+  $rgbaColor: rgb(
+    list.nth($colorList, 1),
+    list.nth($colorList, 2),
+    list.nth($colorList, 3)
+  );
   @return $rgbaColor;
 }

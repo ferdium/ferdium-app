@@ -131,7 +131,10 @@ class RecipeWebview {
     files.forEach(file => {
       if (pathExistsSync(file)) {
         const styles = document.createElement('style');
-        styles.innerHTML = readFileSync(file, 'utf8');
+        // textContent, not innerHTML: innerHTML is a Trusted Types sink, so
+        // sites sending `require-trusted-types-for 'script'` reject the
+        // assignment and the stylesheet is never applied.
+        styles.textContent = readFileSync(file, 'utf8');
 
         const head = document.querySelector('head');
 

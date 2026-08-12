@@ -13,6 +13,7 @@ import {
 } from 'electron';
 
 import { initialize } from 'electron-react-titlebar/main';
+import { setupWebAuthn } from 'electron-webauthn-linux';
 import windowStateKeeper from 'electron-window-state';
 import { emptyDirSync, ensureFileSync } from 'fs-extra';
 import minimist from 'minimist';
@@ -186,6 +187,9 @@ const webRTCIPHandlingPolicy = retrieveSettingValue(
   | 'default_public_interface_only'
   | 'default_public_and_private_interfaces';
 
+const windowOpenFeaturesRequestResizable = (features = ''): boolean =>
+  /(?:^|,)\s*resizable(?:=(?:yes|1|true))?(?:,|$)/i.test(features);
+
 const createWindow = () => {
   // Remember window size
   const mainWindowState = windowStateKeeper({
@@ -257,11 +261,96 @@ const createWindow = () => {
   app.on('web-contents-created', (_e, contents) => {
     if (contents.getType() === 'webview') {
       enableWebContents(contents);
-      contents.setWindowOpenHandler(({ url }) => {
+
+      // Set permission handlers on service webview sessions.
+      // setPermissionRequestHandler allows safe permissions and denies unknown ones.
+      // setPermissionCheckHandler additionally allows hid/serial/usb feature detection
+      // (actual device access is gated by select-hid-device/select-usb-device events).
+      const ses = contents.session;
+      if (!(ses as any)._permissionHandlersSet) {
+        (ses as any)._permissionHandlersSet = true;
+
+        ses.setPermissionRequestHandler((webContents, permission, callback) => {
+          const allowedPermissions = [
+            'media',
+            'notifications',
+            'fullscreen',
+            'pointerLock',
+            'display-capture',
+            'idle-detection',
+            'clipboard-read',
+            'clipboard-sanitized-write',
+            'speaker-selection',
+          ];
+
+          if (allowedPermissions.includes(permission)) {
+            callback(true);
+            return;
+          }
+
+          debug(
+            `Denied permission request: ${permission} from ${webContents?.getURL()}`,
+          );
+          callback(false);
+        });
+
+        ses.setPermissionCheckHandler((_webContents, permission) => {
+          const allowedChecks = [
+            'media',
+            'notifications',
+            'fullscreen',
+            'pointerLock',
+            'display-capture',
+            'idle-detection',
+            'clipboard-read',
+            'clipboard-sanitized-write',
+            'hid',
+            'serial',
+            'usb',
+            'speaker-selection',
+          ];
+
+          return allowedChecks.includes(permission);
+        });
+      }
+
+      contents.setWindowOpenHandler(({ url, disposition, features }) => {
+        // OAuth popups (Google, Microsoft, etc.) are opened via window.open()
+        // and need window.opener preserved so the parent can receive the
+        // postMessage callback that completes the flow. Allow them as a child
+        // BrowserWindow that inherits the service partition.
+        if (disposition === 'new-window') {
+          return {
+            action: 'allow',
+            outlivesOpener: false,
+            overrideBrowserWindowOptions: {
+              parent: mainWindow,
+              fullscreenable: false,
+              resizable: windowOpenFeaturesRequestResizable(features),
+              webPreferences: isLinux
+                ? {
+                    session: contents.session,
+                    preload: join(
+                      __dirname,
+                      'webview',
+                      'webauthn-popup-preload.js',
+                    ),
+                    contextIsolation: true,
+                    sandbox: true,
+                  }
+                : { session: contents.session },
+            },
+          };
+        }
+        // Regular link clicks → open in the user's default browser.
         openExternalUrl(url);
         return { action: 'deny' };
       });
 
+      contents.on('did-create-window', child => {
+        enableWebContents(child.webContents);
+        child.webContents.setWebRTCIPHandlingPolicy(webRTCIPHandlingPolicy);
+      });
       // Handle will download event from main process (prevent download dialog)
       contents.session.on('will-download', (_e, item) => {
         const downloadFolderPath = retrieveSettingValue(
@@ -355,8 +444,9 @@ const createWindow = () => {
         }
       } else if (isMac && mainWindow?.isFullScreen()) {
         debug('Window: leaveFullScreen and hide');
-        mainWindow.once('show', () => mainWindow?.setFullScreen(true));
-        mainWindow.once('leave-full-screen', () => mainWindow?.hide());
+        mainWindow.once('leave-full-screen', () => {
+          mainWindow?.hide();
+        });
         mainWindow.setFullScreen(false);
       } else {
         debug('Window: hide');
@@ -530,6 +620,16 @@ app.on('ready', () => {
   }
 
   initialize();
+
+  // Initialize WebAuthn/passkey support on Linux
+  if (isLinux) {
+    setupWebAuthn({
+      storagePath: userDataPath(),
+      enableHardwareKeys: true,
+    }).catch(error => {
+      debug('WebAuthn setup failed:', error.message);
+    });
+  }
 
   createWindow();
 });
@@ -814,9 +914,18 @@ app.on('activate', () => {
 });
 
 app.on('web-contents-created', (_createdEvent, contents) => {
-  contents.setWindowOpenHandler(({ disposition }) =>
-    disposition === 'foreground-tab' ? { action: 'deny' } : { action: 'allow' },
-  );
+  contents.setWindowOpenHandler(({ disposition, features }) => {
+    if (disposition === 'foreground-tab') {
+      return { action: 'deny' };
+    }
+
+    return {
+      action: 'allow',
+      overrideBrowserWindowOptions: {
+        resizable: windowOpenFeaturesRequestResizable(features),
+      },
+    };
+  });
 });
 
 app.on('will-finish-launching', () => {

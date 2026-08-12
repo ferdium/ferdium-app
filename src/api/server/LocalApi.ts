@@ -49,15 +49,12 @@ export default class LocalApi {
   async clearCache(serviceId: string | null = null) {
     const targetsToClear = {
       storages: [
-        'appcache',
         'filesystem',
         'indexdb',
         'shadercache',
-        'websql',
         'serviceworkers',
         'cachestorage',
       ],
-      quotas: ['temporary', 'persistent', 'syncable'],
     };
     ipcRenderer.send('clear-storage-data', { serviceId, targetsToClear });
     return ipcRenderer.invoke('clear-cache', { serviceId });

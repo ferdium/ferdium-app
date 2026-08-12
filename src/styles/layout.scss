@@ -1,4 +1,6 @@
-@import './config.scss';
+@use 'sass:color';
+
+@use './config.scss' as *;
 
 html {
   overflow: hidden;
@@ -6,13 +8,13 @@ html {
 
 @keyframes pulse-danger {
   0% {
-    background: darken($theme-brand-danger, 10%);
+    background: color.adjust($theme-brand-danger, $lightness: -10%);
   }
   50% {
-    background: lighten($theme-brand-danger, 10%);
+    background: color.adjust($theme-brand-danger, $lightness: 10%);
   }
   100% {
-    background: darken($theme-brand-danger, 10%);
+    background: color.adjust($theme-brand-danger, $lightness: -10%);
   }
 }
 
@@ -202,7 +204,7 @@ body.win32:not(.isFullScreen) .app .app__content {
 
     &:hover,
     &:active {
-      color: lighten($theme-gray-light, 10%);
+      color: color.adjust($theme-gray-light, $lightness: 10%);
     }
     &.is-muted,
     &.is-active {

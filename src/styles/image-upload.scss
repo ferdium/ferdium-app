@@ -1,3 +1,5 @@
+@use './config.scss' as *;
+
 .theme__dark {
   .image-upload {
     background: $dark-theme-gray-darker;

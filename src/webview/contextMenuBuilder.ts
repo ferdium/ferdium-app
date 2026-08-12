@@ -8,12 +8,7 @@
  */
 
 import { Menu, MenuItem } from '@electron/remote';
-import {
-  type WebContents,
-  clipboard,
-  ipcRenderer,
-  nativeImage,
-} from 'electron';
+import { type WebContents, ipcRenderer } from 'electron';
 import { cmdOrCtrlShortcutKey, isMac } from '../environment';
 
 import {
@@ -24,6 +19,10 @@ import {
   TRANSLATOR_ENGINE_GOOGLE,
   TRANSLATOR_ENGINE_LIBRETRANSLATE,
 } from '../config';
+import {
+  writeImageDataUrlToClipboard,
+  writeTextToClipboard,
+} from '../helpers/clipboard-helpers';
 import { openExternalUrl } from '../helpers/url-helpers';
 import type IContextMenuParams from '../models/IContextMenuParams';
 
@@ -99,7 +98,10 @@ const translatePopup = (res, isError: boolean = false) => {
   }
 
   const style = document.createElement('style');
-  style.innerHTML = `
+  // textContent, not innerHTML: innerHTML is a Trusted Types sink, so sites
+  // sending `require-trusted-types-for 'script'` reject the assignment and the
+  // translator popup renders unstyled.
+  style.textContent = `
     .container-ferdium-translator {
       position: fixed;
       opacity: 0.9;
@@ -404,7 +406,7 @@ export class ContextMenuBuilder {
       click: () => {
         // Omit the mailto: portion of the link; we just want the address
         const url = isEmailAddress ? menuInfo.linkText : menuInfo.linkURL;
-        clipboard.writeText(url);
+        writeTextToClipboard(url).catch(console.error);
         this._sendNotificationOnClipboardEvent(
           menuInfo.clipboardNotifications,
           () =>
@@ -734,8 +736,9 @@ export class ContextMenuBuilder {
       click: () => {
         const result = this.convertImageToBase64(
           menuInfo.srcURL,
-          (dataURL: string) =>
-            clipboard.writeImage(nativeImage.createFromDataURL(dataURL)),
+          (dataURL: string) => {
+            writeImageDataUrlToClipboard(dataURL).catch(console.error);
+          },
         );
 
         this._sendNotificationOnClipboardEvent(
@@ -755,7 +758,7 @@ export class ContextMenuBuilder {
     const copyImageUrl = new MenuItem({
       label: this.stringTable.copyImageUrl(),
       click: () => {
-        const result = clipboard.writeText(menuInfo.srcURL);
+        const result = writeTextToClipboard(menuInfo.srcURL);
         this._sendNotificationOnClipboardEvent(
           menuInfo.clipboardNotifications,
           () =>
@@ -1001,7 +1004,7 @@ export class ContextMenuBuilder {
         label: this.stringTable.copyPageUrl(),
         enabled: true,
         click: () => {
-          clipboard.writeText(window.location.href);
+          writeTextToClipboard(window.location.href).catch(console.error);
           this._sendNotificationOnClipboardEvent(
             menuInfo?.clipboardNotifications,
             () =>

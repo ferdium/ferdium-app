@@ -1,4 +1,4 @@
-@import './config.scss';
+@use './config.scss' as *;
 
 .theme__dark .franz-form .franz-form__radio {
   border: 1px solid $dark-theme-gray-lighter;
