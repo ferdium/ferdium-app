@@ -229,6 +229,7 @@ const generateServiceRibbonWidthStyle = (
   opacity: ${grayscaleServicesDim}%;`;
 
   const sizeDragArea = shouldShowDragArea ? verticalStyleOffset : 0;
+  const webviewInset = webviewPadding ? `${PADDING}px` : '0px';
   const horizontalContentOffset = width + sidebarSizeBias + PADDING;
   const darwinHorizontalContentOffset = isFullScreen
     ? width
@@ -264,6 +265,9 @@ const generateServiceRibbonWidthStyle = (
     .app .app__content {
       padding-top: ${horizontalContentOffset}px !important;
     }
+    .app .app__service {
+      padding: ${webviewInset} !important;
+    }
     .workspaces-drawer {
       height: calc(100% + ${horizontalContentOffset}px) !important;
       margin-top: -${horizontalContentOffset}px !important;
@@ -286,11 +290,6 @@ const generateServiceRibbonWidthStyle = (
     }
     .tab-item div {
       overflow: hidden !important;
-    }
-    .services__webview-wrapper {
-      height: ${webviewPadding ? 'calc(100% - 6px)' : '100%'};
-      margin: ${webviewPadding ? '6px' : '0px'};
-      width: ${webviewPadding ? 'calc(100% - 12px)' : '100%'};
     }
     .services__webview-wrapper webview {
       border-radius: ${webviewPadding ? '4px' : '0px'};
@@ -315,13 +314,11 @@ const generateServiceRibbonWidthStyle = (
     .sidebar__button {
       font-size: ${width / 3}px !important;
     }
+    .app .app__service {
+      padding: ${webviewInset} !important;
+    }
     .todos__todos-panel--expanded {
       width: calc(100% - ${300 + width}px) !important;
-    }
-    .services__webview-wrapper {
-      height: ${webviewPadding ? 'calc(100% - 6px)' : '100%'};
-      margin: ${webviewPadding ? '6px' : '0px'};
-      width: ${webviewPadding ? 'calc(100% - 12px)' : '100%'};
     }
     .services__webview-wrapper webview {
       border-radius: ${webviewPadding ? '4px' : '0px'};

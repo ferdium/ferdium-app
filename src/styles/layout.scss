@@ -58,6 +58,10 @@ html {
     }
   }
 
+  .app__service {
+    background: $dark-theme-gray-darker;
+  }
+
   .app-loader .app-loader__title {
     color: $dark-theme-gray-lightest;
   }
@@ -118,6 +122,7 @@ body.win32:not(.isFullScreen) .app .app__content {
   }
 
   .app__service {
+    background: $theme-gray-lightest;
     display: flex;
     flex: 1;
     flex-direction: column;
