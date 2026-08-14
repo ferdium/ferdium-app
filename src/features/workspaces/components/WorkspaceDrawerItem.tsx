@@ -58,8 +58,8 @@ const styles = theme => ({
       justifyContent: 'center',
       textAlign: 'center',
       fontSize: '16px',
-      width: 'calc(100% - 6px)',
-      margin: [0, 0, 6, 6],
+      width: '100%',
+      margin: [0, 0, 6, 0],
     },
   },
   isActiveItem: {
