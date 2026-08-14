@@ -76,6 +76,9 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
+    '&.compact': {
+      paddingTop: 6,
+    },
     '&::-webkit-scrollbar': {
       display: 'none',
     },

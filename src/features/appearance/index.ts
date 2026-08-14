@@ -229,6 +229,12 @@ const generateServiceRibbonWidthStyle = (
   opacity: ${grayscaleServicesDim}%;`;
 
   const sizeDragArea = shouldShowDragArea ? verticalStyleOffset : 0;
+  const horizontalContentOffset = width + sidebarSizeBias + PADDING;
+  const darwinHorizontalContentOffset = isFullScreen
+    ? width
+    : width + sidebarSizeBias + (sizeDragArea === 0 ? 4 : 4 - sizeDragArea);
+  const darwinDrawerTopOffset = width + verticalStyleOffset - 5 - sizeDragArea;
+
   return horizontal
     ? `
     .sidebar {
@@ -256,7 +262,11 @@ const generateServiceRibbonWidthStyle = (
       line-height: 0;
     }
     .app .app__content {
-      padding-top: ${width + sidebarSizeBias + PADDING}px !important;
+      padding-top: ${horizontalContentOffset}px !important;
+    }
+    .workspaces-drawer {
+      height: calc(100% + ${horizontalContentOffset}px) !important;
+      margin-top: -${horizontalContentOffset}px !important;
     }
     .darwin .sidebar {
       height: ${
@@ -265,18 +275,11 @@ const generateServiceRibbonWidthStyle = (
       ${isFullScreen ? `padding-top: ${2}px !important` : null}
     }
     .darwin .app .app__content {
-      padding-top: ${
-        isFullScreen
-          ? width
-          : width +
-            sidebarSizeBias +
-            (sizeDragArea === 0 ? 4 : 4 - sizeDragArea)
-      }px !important;
+      padding-top: ${darwinHorizontalContentOffset}px !important;
     }
     .darwin .workspaces-drawer {
-      margin-top: -${
-        width + verticalStyleOffset - 5 - sizeDragArea
-      }px !important;
+      height: calc(100% + ${darwinDrawerTopOffset}px) !important;
+      margin-top: -${darwinDrawerTopOffset}px !important;
     }
     .darwin .sidebar .sidebar__button--workspaces.is-active {
       height: ${width - sidebarSizeBias}px !important;

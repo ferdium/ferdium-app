@@ -33,32 +33,38 @@ const messages = defineMessages({
 const itemTransition = window?.matchMedia(
   '(prefers-reduced-motion: no-preference)',
 )
-  ? 'background-color 300ms ease-out'
+  ? 'background-color 300ms ease-out, border-color 300ms ease-out'
   : 'none';
 
 const styles = theme => ({
   item: {
+    boxSizing: 'border-box',
     height: '67px',
     padding: `15px ${theme.workspaces.drawer.padding}px`,
-    borderBottom: `1px solid ${theme.workspaces.drawer.listItem.border}`,
+    margin: [0, 6, 6, 6],
+    border: '1px solid transparent',
+    borderRadius: 4,
     transition: itemTransition,
     '&:first-child': {
-      borderTop: `1px solid ${theme.workspaces.drawer.listItem.border}`,
+      borderTop: '1px solid transparent',
     },
     '&:hover': {
       backgroundColor: theme.workspaces.drawer.listItem.hoverBackground,
     },
     '&.compact': {
-      padding: '0px',
+      padding: '4px',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       textAlign: 'center',
       fontSize: '16px',
+      width: 'calc(100% - 6px)',
+      margin: [0, 0, 6, 6],
     },
   },
   isActiveItem: {
     backgroundColor: theme.workspaces.drawer.listItem.activeBackground,
+    borderColor: theme.workspaces.drawer.listItem.border,
     '&:hover': {
       backgroundColor: theme.workspaces.drawer.listItem.activeBackground,
     },
