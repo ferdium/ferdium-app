@@ -19,8 +19,6 @@ const STYLE_ELEMENT_ID = 'custom-appearance-style';
 // The horizontal style uses a 6px inset around the sidebar and webview.
 const PADDING = 6;
 
-const WORKSPACES_DRAWER_HEIGHT = 48;
-
 const createStyleElement = () => {
   const styles = document.createElement('style');
   styles.id = STYLE_ELEMENT_ID;
@@ -147,7 +145,6 @@ const generateServiceRibbonWidthStyle = (
   shouldShowDragArea,
   isFullScreen,
   webviewPadding,
-  showWorkspacesAtBottom,
 ) => {
   const width = Number(widthStr);
   const iconSize = Number(iconSizeStr) - iconSizeBias;
@@ -261,16 +258,6 @@ const generateServiceRibbonWidthStyle = (
     .app .app__content {
       padding-top: ${width + sidebarSizeBias + PADDING}px !important;
     }
-    .app .app__service {
-      flex-direction: ${showWorkspacesAtBottom ? 'column-reverse' : 'column'};
-    }
-    .workspaces-drawer {
-      transform: ${
-        showWorkspacesAtBottom
-          ? `translateY(${WORKSPACES_DRAWER_HEIGHT}px)`
-          : `translateY(-${WORKSPACES_DRAWER_HEIGHT}px)`
-      } !important;
-    }
     .darwin .sidebar {
       height: ${
         isFullScreen ? width : width + verticalStyleOffset - 3 - sizeDragArea
@@ -324,16 +311,6 @@ const generateServiceRibbonWidthStyle = (
     }
     .sidebar__button {
       font-size: ${width / 3}px !important;
-    }
-    .app .app__service {
-      flex-direction: ${showWorkspacesAtBottom ? 'column-reverse' : 'column'};
-    }
-    .workspaces-drawer {
-      transform: ${
-        showWorkspacesAtBottom
-          ? `translateY(${WORKSPACES_DRAWER_HEIGHT}px)`
-          : `translateY(-${WORKSPACES_DRAWER_HEIGHT}px)`
-      } !important;
     }
     .todos__todos-panel--expanded {
       width: calc(100% - ${300 + width}px) !important;
@@ -402,10 +379,9 @@ const generateWorkspaceDrawerTransform = (
   useCompactWorkspaceDrawer,
   isWorkspaceDrawerOpen,
   alwaysShowWorkspaces,
-  useHorizontalStyle,
 ) => {
   // When drawer is open or always show is enabled, don't override - let JSS handle the transition
-  if (useHorizontalStyle || isWorkspaceDrawerOpen || alwaysShowWorkspaces) {
+  if (isWorkspaceDrawerOpen || alwaysShowWorkspaces) {
     return '';
   }
 
@@ -447,7 +423,7 @@ const generateVerticalStyle = (
   ${
     alwaysShowWorkspaces
       ? `
-    width: calc(100%) !important;
+    width: calc(100% - ${drawerWidth}px) !important;
   `
       : ''
   }
@@ -458,19 +434,12 @@ const generateVerticalStyle = (
   }
 
   .todos__todos-panel--expanded {
-    width: calc(100% - ${drawerWidth}px) !important;
+    width: calc(100% - ${drawerWidth + width}px) !important;
   }
   `;
 };
 
-const generateOpenWorkspaceStyle = (
-  useHorizontalStyle,
-  showWorkspacesAtBottom,
-) => {
-  const sidebarAfter = `
-  .sidebar::after { box-shadow: none !important; }
-  `;
-
+const generateOpenWorkspaceStyle = () => {
   return `
   .app .app__content {
     width: 100% !important;
@@ -479,12 +448,6 @@ const generateOpenWorkspaceStyle = (
   .sidebar__button--workspaces {
     display: none;
   }
-  .workspaces-drawer {
-    position: relative !important;
-    transform: translateY(0px) !important;
-    box-shadow: none !important;
-  }
-    ${useHorizontalStyle && !showWorkspacesAtBottom ? sidebarAfter : ''}
   `;
 };
 
@@ -530,7 +493,6 @@ const generateStyle = (settings, app) => {
     showDragArea,
     useHorizontalStyle,
     alwaysShowWorkspaces,
-    showWorkspacesAtBottom,
     showServiceName,
     useCompactWorkspaceDrawer,
     webviewPadding,
@@ -557,7 +519,6 @@ const generateStyle = (settings, app) => {
     shouldShowDragArea,
     isFullScreen,
     webviewPadding,
-    showWorkspacesAtBottom,
   );
 
   style += generateCompactWorkspaceDrawerStyle(
@@ -570,7 +531,6 @@ const generateStyle = (settings, app) => {
     useCompactWorkspaceDrawer,
     workspaceStore.isWorkspaceDrawerOpen,
     alwaysShowWorkspaces,
-    useHorizontalStyle,
   );
 
   if (shouldShowDragArea) {
@@ -589,10 +549,7 @@ const generateStyle = (settings, app) => {
     }
   }
   if (alwaysShowWorkspaces) {
-    style += generateOpenWorkspaceStyle(
-      useHorizontalStyle,
-      showWorkspacesAtBottom,
-    );
+    style += generateOpenWorkspaceStyle();
   }
 
   // Always add transition to app__content for smooth animations
@@ -668,7 +625,6 @@ export default function initAppearance(stores) {
       settings.all.app.grayscaleServicesDim,
       settings.all.app.useHorizontalStyle,
       settings.all.app.alwaysShowWorkspaces,
-      settings.all.app.showWorkspacesAtBottom,
       settings.all.app.showServiceName,
       settings.all.app.useCompactWorkspaceDrawer,
       settings.all.app.webviewPadding,

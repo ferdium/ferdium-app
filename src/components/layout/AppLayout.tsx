@@ -127,12 +127,8 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
 
     const { intl } = this.props;
 
-    const {
-      locked,
-      automaticUpdates,
-      useCompactWorkspaceDrawer,
-      useHorizontalStyle,
-    } = settings.app;
+    const { locked, automaticUpdates, useCompactWorkspaceDrawer } =
+      settings.app;
     if (locked) {
       return <LockedScreen />;
     }
@@ -142,9 +138,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
         {isMac && !isFullScreen && <div className="window-draggable" />}
         <ErrorBoundary>
           <div
-            className={`app ${useCompactWorkspaceDrawer ? 'app--compact-workspace' : ''} ${
-              useHorizontalStyle ? 'app--horizontal-workspace-drawer' : ''
-            }`}
+            className={`app ${useCompactWorkspaceDrawer ? 'app--compact-workspace' : ''}`}
           >
             {isWindows && !isFullScreen && (
               <TitleBar
@@ -159,7 +153,7 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
               />
             )}
             <div className={`app__content ${classes.appContent}`}>
-              {!useHorizontalStyle && workspacesDrawer}
+              {workspacesDrawer}
               {sidebar}
               <div className="app__service">
                 <WorkspaceSwitchingIndicator />
@@ -221,7 +215,6 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
                 <BasicAuth />
                 <QuickSwitch />
                 <PublishDebugInfo />
-                {useHorizontalStyle && workspacesDrawer}
                 {services}
                 <Outlet />
               </div>

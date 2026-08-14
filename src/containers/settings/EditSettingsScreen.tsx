@@ -280,10 +280,6 @@ const messages = defineMessages({
     id: 'settings.app.form.useCompactWorkspaceDrawer',
     defaultMessage: 'Use compact workspace drawer',
   },
-  showWorkspacesAtBottom: {
-    id: 'settings.app.form.showWorkspacesAtBottom',
-    defaultMessage: 'Show workspaces at the bottom',
-  },
   hideAllServicesWorkspace: {
     id: 'settings.app.form.hideAllServicesWorkspace',
     defaultMessage: 'Hide "All services" workspace',
@@ -495,7 +491,6 @@ class EditSettingsScreen extends Component<
       useCompactWorkspaceDrawer: Boolean(
         settingsData.useCompactWorkspaceDrawer,
       ),
-      showWorkspacesAtBottom: Boolean(settingsData.showWorkspacesAtBottom),
       hideAllServicesWorkspace: Boolean(settingsData.hideAllServicesWorkspace),
       accentColor: settingsData.accentColor,
       progressbarAccentColor: settingsData.progressbarAccentColor,
@@ -1286,15 +1281,6 @@ class EditSettingsScreen extends Component<
             DEFAULT_APP_SETTINGS.useCompactWorkspaceDrawer,
           ),
           default: DEFAULT_APP_SETTINGS.useCompactWorkspaceDrawer,
-          type: 'checkbox',
-        },
-        showWorkspacesAtBottom: {
-          label: intl.formatMessage(messages.showWorkspacesAtBottom),
-          value: ifUndefined<boolean>(
-            settings.all.app.showWorkspacesAtBottom,
-            DEFAULT_APP_SETTINGS.showWorkspacesAtBottom,
-          ),
-          default: DEFAULT_APP_SETTINGS.showWorkspacesAtBottom,
           type: 'checkbox',
         },
         hideAllServicesWorkspace: {
