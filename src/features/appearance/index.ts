@@ -273,8 +273,16 @@ const generateServiceRibbonWidthStyle = (
       font-size: ${fontSize}px !important;
     }
     .sidebar__button {
+      align-items: center;
+      align-self: flex-start;
+      display: flex;
       font-size: ${width / 3}px !important;
+      height: ${width - tabItemWidthBias}px !important;
+      justify-content: center;
       line-height: 0;
+      margin-top: ${PADDING}px !important;
+      padding: 0 !important;
+      width: ${width}px !important;
     }
     .app .app__content {
       padding-top: ${horizontalContentOffset}px !important;
@@ -298,7 +306,7 @@ const generateServiceRibbonWidthStyle = (
       margin-top: -${darwinDrawerTopOffset}px !important;
     }
     .darwin .sidebar .sidebar__button--workspaces.is-active {
-      height: ${width - sidebarSizeBias}px !important;
+      height: ${width - tabItemWidthBias}px !important;
     }
     .tab-item div {
       overflow: hidden !important;
@@ -325,7 +333,12 @@ const generateServiceRibbonWidthStyle = (
       ${useGrayscaleServices ? graysacleServices : null},
     }
     .sidebar__button {
+      align-items: center;
+      align-self: flex-end;
+      display: flex;
       font-size: ${width / 3}px !important;
+      justify-content: center;
+      width: ${width}px !important;
     }
     .app .app__service {
       padding: ${webviewInset} !important;

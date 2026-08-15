@@ -175,9 +175,13 @@ body.win32:not(.isFullScreen) .app .app__content {
   }
 
   .sidebar__button {
+    align-items: center;
+    box-sizing: border-box;
     color: $theme-gray-light;
+    display: flex;
     flex: 0 0 auto;
     font-size: 24px;
+    justify-content: center;
     padding: 7px 0;
     position: relative;
     width: $theme-sidebar-width;
