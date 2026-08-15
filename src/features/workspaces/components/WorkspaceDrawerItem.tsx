@@ -22,7 +22,7 @@ const messages = defineMessages({
   },
   contextMenuEdit: {
     id: 'workspaceDrawer.item.contextMenuEdit',
-    defaultMessage: 'edit',
+    defaultMessage: 'Edit',
   },
   services: {
     id: 'workspaceDrawer.item.services',
