@@ -235,10 +235,19 @@ const generateServiceRibbonWidthStyle = (
   const sizeDragArea = shouldShowDragArea ? verticalStyleOffset : 0;
   const webviewInset = webviewPadding ? `${PADDING}px` : '0px';
   const horizontalContentOffset = width + sidebarSizeBias + PADDING;
-  const darwinHorizontalContentOffset = isFullScreen
+  const currentDarwinHorizontalContentOffset = isFullScreen
     ? width
     : width + sidebarSizeBias + (sizeDragArea === 0 ? 4 : 4 - sizeDragArea);
-  const darwinDrawerTopOffset = width + verticalStyleOffset - 5 - sizeDragArea;
+  const darwinSidebarTopInset = isFullScreen
+    ? 2
+    : shouldShowDragArea
+      ? 0
+      : verticalStyleOffset;
+  const darwinHorizontalContentOffset = Math.max(
+    currentDarwinHorizontalContentOffset,
+    darwinSidebarTopInset + width + PADDING,
+  );
+  const darwinDrawerTopOffset = darwinHorizontalContentOffset;
 
   return horizontal
     ? `
@@ -279,9 +288,7 @@ const generateServiceRibbonWidthStyle = (
       margin-top: -${horizontalContentOffset}px !important;
     }
     .darwin .sidebar {
-      height: ${
-        isFullScreen ? width : width + verticalStyleOffset - 3 - sizeDragArea
-      }px !important;
+      height: ${darwinHorizontalContentOffset}px !important;
       ${isFullScreen ? `padding-top: ${2}px !important` : null}
     }
     .darwin .app .app__content {
@@ -352,6 +359,8 @@ const generateShowDragAreaStyle = accentColor => {
 const generateCompactWorkspaceDrawerStyle = (
   widthStr,
   useCompactWorkspaceDrawer,
+  shouldShowDragArea,
+  isFullScreen,
 ) => {
   if (!useCompactWorkspaceDrawer) {
     return '';
@@ -360,6 +369,11 @@ const generateCompactWorkspaceDrawerStyle = (
   const width = Number(widthStr);
   const tabItemWidthBias = 1;
   const itemHeight = width - tabItemWidthBias;
+  const darwinWorkspaceDrawerTopInset = isFullScreen
+    ? 2
+    : shouldShowDragArea
+      ? 0
+      : 29;
 
   return `
   .app--compact-workspace {
@@ -367,6 +381,9 @@ const generateCompactWorkspaceDrawerStyle = (
   }
   .workspaces-drawer.compact {
     width: ${width}px !important;
+  }
+  .darwin .workspaces-drawer.compact {
+    padding-top: ${darwinWorkspaceDrawerTopInset}px !important;
   }
   .workspaces-drawer [data-tooltip-id="tooltip-workspaces-drawer"].compact {
     height: ${itemHeight}px !important;
@@ -531,6 +548,8 @@ const generateStyle = (settings, app) => {
   style += generateCompactWorkspaceDrawerStyle(
     serviceRibbonWidth,
     useCompactWorkspaceDrawer,
+    shouldShowDragArea,
+    isFullScreen,
   );
 
   style += generateWorkspaceDrawerTransform(
