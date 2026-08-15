@@ -48,9 +48,12 @@
   .services__webview-wrapper {
     background: $theme-gray-lightest;
     border: 1px solid $theme-gray-lighter;
-    border-radius: 4px;
+    border-radius: var(--service-webview-border-radius, 4px);
+    clip-path: inset(0 round var(--service-webview-border-radius, 4px));
+    overflow: hidden;
 
     webview {
+      border-radius: var(--service-webview-border-radius, 4px);
       overflow: hidden;
     }
   }

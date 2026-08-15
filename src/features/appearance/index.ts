@@ -5,6 +5,9 @@ import TopBarProgress from 'react-topbar-progress-indicator';
 import { pathExistsSync, readFileSync } from 'fs-extra';
 import {
   DEFAULT_APP_SETTINGS,
+  SERVICE_WEBVIEW_BORDER_RADIUS_DEFAULT,
+  SERVICE_WEBVIEW_BORDER_RADIUS_MAX,
+  SERVICE_WEBVIEW_BORDER_RADIUS_MIN,
   SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT,
   SIDEBAR_SERVICES_LOCATION_CENTER,
   SIDEBAR_SERVICES_LOCATION_TOPLEFT,
@@ -31,6 +34,19 @@ const normalizeWebviewPaddingSize = paddingSize => {
   return Math.min(
     WEBVIEW_PADDING_SIZE_MAX,
     Math.max(WEBVIEW_PADDING_SIZE_MIN, value),
+  );
+};
+
+const normalizeServiceWebviewBorderRadius = borderRadius => {
+  const value = Number(borderRadius);
+
+  if (!Number.isFinite(value)) {
+    return SERVICE_WEBVIEW_BORDER_RADIUS_DEFAULT;
+  }
+
+  return Math.min(
+    SERVICE_WEBVIEW_BORDER_RADIUS_MAX,
+    Math.max(SERVICE_WEBVIEW_BORDER_RADIUS_MIN, value),
   );
 };
 
@@ -149,10 +165,21 @@ const generateAccentStyle = accentColorStr => {
   `;
 };
 
-const generateWebviewPaddingStyle = paddingSize => {
+const generateWebviewLayoutStyle = (paddingSize, borderRadius) => {
   return `
     :root {
       --webview-padding: ${normalizeWebviewPaddingSize(paddingSize)}px;
+      --service-webview-border-radius: ${normalizeServiceWebviewBorderRadius(
+        borderRadius,
+      )}px;
+    }
+    .services__webview-wrapper {
+      border-radius: var(--service-webview-border-radius);
+      clip-path: inset(0 round var(--service-webview-border-radius));
+      overflow: hidden;
+    }
+    .services__webview-wrapper webview {
+      border-radius: var(--service-webview-border-radius);
     }
   `;
 };
@@ -336,9 +363,6 @@ const generateServiceRibbonWidthStyle = (
     .tab-item div {
       overflow: hidden !important;
     }
-    .services__webview-wrapper webview {
-      border-radius: 4px;
-    }
   `
     : `
     .sidebar {
@@ -370,9 +394,6 @@ const generateServiceRibbonWidthStyle = (
     }
     .todos__todos-panel--expanded {
       width: calc(100% - ${300 + width}px) !important;
-    }
-    .services__webview-wrapper webview {
-      border-radius: 4px;
     }
   `;
 };
@@ -565,13 +586,17 @@ const generateStyle = (settings, app) => {
     showServiceName,
     useCompactWorkspaceDrawer,
     webviewPaddingSize,
+    serviceWebviewBorderRadius,
   } = settings;
 
   const { isFullScreen } = app;
 
   const shouldShowDragArea = showDragArea && !isFullScreen;
 
-  style += generateWebviewPaddingStyle(webviewPaddingSize);
+  style += generateWebviewLayoutStyle(
+    webviewPaddingSize,
+    serviceWebviewBorderRadius,
+  );
 
   if (
     accentColor.toLowerCase() !== DEFAULT_APP_SETTINGS.accentColor.toLowerCase()
@@ -700,6 +725,7 @@ export default function initAppearance(stores) {
       settings.all.app.showServiceName,
       settings.all.app.useCompactWorkspaceDrawer,
       settings.all.app.webviewPaddingSize,
+      settings.all.app.serviceWebviewBorderRadius,
       app.isFullScreen,
       workspaceStore.isWorkspaceDrawerOpen,
     ],
