@@ -878,8 +878,6 @@ class EditSettingsForm extends Component<IProps, IState> {
                   </>
                 )}
 
-                <Toggle {...form.$('webviewPadding').bind()} />
-
                 {isSplitModeEnabled && <Hr />}
                 <Toggle {...form.$('splitMode').bind()} />
                 {isSplitModeEnabled && (

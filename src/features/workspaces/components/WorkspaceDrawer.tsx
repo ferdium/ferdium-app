@@ -75,12 +75,9 @@ const styles = theme => ({
     overflowY: 'auto',
     display: 'flex',
     flexDirection: 'column',
-    height: '100%',
-    '&.has-webview-padding': {
-      height: 'calc(100% - 6px)',
-      marginTop: 6,
-      marginLeft: 6,
-    },
+    height: 'calc(100% - 6px)',
+    marginTop: 6,
+    marginLeft: 6,
     '&::-webkit-scrollbar': {
       display: 'none',
     },
@@ -172,15 +169,11 @@ class WorkspaceDrawer extends Component<IProps> {
 
     const { settings } = this.props.stores;
 
-    const {
-      hideAllServicesWorkspace,
-      useCompactWorkspaceDrawer,
-      webviewPadding,
-    } = settings.all.app;
+    const { hideAllServicesWorkspace, useCompactWorkspaceDrawer } =
+      settings.all.app;
 
     const isCompact = useCompactWorkspaceDrawer;
     const compactClass = isCompact ? 'compact' : '';
-    const webviewPaddingClass = webviewPadding ? 'has-webview-padding' : '';
 
     const workspaceItems = (
       <>
@@ -242,9 +235,7 @@ class WorkspaceDrawer extends Component<IProps> {
               />
             </span>
           </H1>
-          <div
-            className={`${classes.workspaces} ${compactClass} ${webviewPaddingClass}`}
-          >
+          <div className={`${classes.workspaces} ${compactClass}`}>
             <div className={classes.workspacesList}>{workspaceItems}</div>
             {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
             <div

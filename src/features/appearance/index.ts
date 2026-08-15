@@ -144,7 +144,6 @@ const generateServiceRibbonWidthStyle = (
   grayscaleServicesDim,
   shouldShowDragArea,
   isFullScreen,
-  webviewPadding,
 ) => {
   const width = Number(widthStr);
   const iconSize = Number(iconSizeStr) - iconSizeBias;
@@ -233,7 +232,7 @@ const generateServiceRibbonWidthStyle = (
   opacity: ${grayscaleServicesDim}%;`;
 
   const sizeDragArea = shouldShowDragArea ? verticalStyleOffset : 0;
-  const webviewInset = webviewPadding ? `${PADDING}px` : '0px';
+  const webviewInset = `${PADDING}px`;
   const horizontalContentOffset = width + sidebarSizeBias + PADDING;
   const currentDarwinHorizontalContentOffset = isFullScreen
     ? width
@@ -305,7 +304,7 @@ const generateServiceRibbonWidthStyle = (
       overflow: hidden !important;
     }
     .services__webview-wrapper webview {
-      border-radius: ${webviewPadding ? '4px' : '0px'};
+      border-radius: 4px;
     }
   `
     : `
@@ -335,7 +334,7 @@ const generateServiceRibbonWidthStyle = (
       width: calc(100% - ${300 + width}px) !important;
     }
     .services__webview-wrapper webview {
-      border-radius: ${webviewPadding ? '4px' : '0px'};
+      border-radius: 4px;
     }
   `;
 };
@@ -519,7 +518,6 @@ const generateStyle = (settings, app) => {
     alwaysShowWorkspaces,
     showServiceName,
     useCompactWorkspaceDrawer,
-    webviewPadding,
   } = settings;
 
   const { isFullScreen } = app;
@@ -542,7 +540,6 @@ const generateStyle = (settings, app) => {
     grayscaleServicesDim,
     shouldShowDragArea,
     isFullScreen,
-    webviewPadding,
   );
 
   style += generateCompactWorkspaceDrawerStyle(
@@ -653,7 +650,6 @@ export default function initAppearance(stores) {
       settings.all.app.alwaysShowWorkspaces,
       settings.all.app.showServiceName,
       settings.all.app.useCompactWorkspaceDrawer,
-      settings.all.app.webviewPadding,
       app.isFullScreen,
       workspaceStore.isWorkspaceDrawerOpen,
     ],
