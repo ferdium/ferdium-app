@@ -17,7 +17,8 @@ $tabitem-bias: 30px;
 
   .sidebar__services {
     flex: 1 1 auto;
-    height: 100%;
+    height: calc(100% - 6px);
+    margin: 6px 0 0 6px;
     min-width: 0;
     overflow-y: hidden !important;
     overflow-x: scroll !important;
@@ -29,7 +30,7 @@ $tabitem-bias: 30px;
     min-width: 0;
     overflow-y: hidden;
     overflow-x: scroll;
-    padding: 6px 6px 0 6px;
+    padding: 0;
     width: 100%;
 
     .tab-item {

@@ -202,10 +202,11 @@ body.win32:not(.isFullScreen) .app .app__content {
   .sidebar__services {
     display: flex;
     flex: 1 1 auto;
+    margin: 6px 0 6px 6px;
     min-height: 0;
     overflow-x: hidden;
     overflow-y: scroll;
-    width: 100%;
+    width: calc(100% - 6px);
 
     &::-webkit-scrollbar {
       display: none;
