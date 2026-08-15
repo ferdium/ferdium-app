@@ -8,6 +8,9 @@ import {
   SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT,
   SIDEBAR_SERVICES_LOCATION_CENTER,
   SIDEBAR_SERVICES_LOCATION_TOPLEFT,
+  WEBVIEW_PADDING_SIZE_DEFAULT,
+  WEBVIEW_PADDING_SIZE_MAX,
+  WEBVIEW_PADDING_SIZE_MIN,
   iconSizeBias,
 } from '../../config';
 import { isLinux, isWindows } from '../../environment';
@@ -17,6 +20,19 @@ import { workspaceStore } from '../workspaces';
 const STYLE_ELEMENT_ID = 'custom-appearance-style';
 
 const WEBVIEW_PADDING_VAR = 'var(--webview-padding)';
+
+const normalizeWebviewPaddingSize = paddingSize => {
+  const value = Number(paddingSize);
+
+  if (!Number.isFinite(value)) {
+    return WEBVIEW_PADDING_SIZE_DEFAULT;
+  }
+
+  return Math.min(
+    WEBVIEW_PADDING_SIZE_MAX,
+    Math.max(WEBVIEW_PADDING_SIZE_MIN, value),
+  );
+};
 
 const createStyleElement = () => {
   const styles = document.createElement('style');
@@ -129,6 +145,14 @@ const generateAccentStyle = accentColorStr => {
 
     .tab-item.is-active {
       background: ${accentColor.lightness(90).hex()};
+    }
+  `;
+};
+
+const generateWebviewPaddingStyle = paddingSize => {
+  return `
+    :root {
+      --webview-padding: ${normalizeWebviewPaddingSize(paddingSize)}px;
     }
   `;
 };
@@ -532,11 +556,14 @@ const generateStyle = (settings, app) => {
     alwaysShowWorkspaces,
     showServiceName,
     useCompactWorkspaceDrawer,
+    webviewPaddingSize,
   } = settings;
 
   const { isFullScreen } = app;
 
   const shouldShowDragArea = showDragArea && !isFullScreen;
+
+  style += generateWebviewPaddingStyle(webviewPaddingSize);
 
   if (
     accentColor.toLowerCase() !== DEFAULT_APP_SETTINGS.accentColor.toLowerCase()
@@ -664,6 +691,7 @@ export default function initAppearance(stores) {
       settings.all.app.alwaysShowWorkspaces,
       settings.all.app.showServiceName,
       settings.all.app.useCompactWorkspaceDrawer,
+      settings.all.app.webviewPaddingSize,
       app.isFullScreen,
       workspaceStore.isWorkspaceDrawerOpen,
     ],

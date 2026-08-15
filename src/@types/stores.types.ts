@@ -84,6 +84,7 @@ export interface AppStore extends TypedStore {
   accentColor: string;
   adaptableDarkMode: boolean;
   progressbarAccentColor: string;
+  webviewPaddingSize: number;
   authRequestFailed: () => void;
   autoLaunchOnStart: () => void;
   automaticUpdates: boolean;

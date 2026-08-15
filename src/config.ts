@@ -485,6 +485,15 @@ export const SIDEBAR_SERVICES_LOCATION = {
   [SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT]: 'Bottom/Right',
 };
 
+export const WEBVIEW_PADDING_SIZE_MIN = 2;
+export const WEBVIEW_PADDING_SIZE_DEFAULT = 6;
+export const WEBVIEW_PADDING_SIZE_MAX = 10;
+export const WEBVIEW_PADDING_SIZES = {
+  [WEBVIEW_PADDING_SIZE_MIN]: 'Small',
+  [WEBVIEW_PADDING_SIZE_DEFAULT]: 'Medium',
+  [WEBVIEW_PADDING_SIZE_MAX]: 'Large',
+};
+
 // NOTE: For internationalized version, use getI18nConfigObjects().ICON_SIZES
 export const ICON_SIZES = {
   0: 'Very small icons',
@@ -559,7 +568,7 @@ export const DEFAULT_APP_SETTINGS = {
   spellcheckerLanguage: 'en-us',
   darkMode: false,
   navigationBarManualActive: false,
-  webviewPadding: true,
+  webviewPaddingSize: WEBVIEW_PADDING_SIZE_DEFAULT,
   splitMode: false,
   splitColumns: 3,
   fallbackLocale: 'en-US',
