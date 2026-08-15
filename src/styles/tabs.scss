@@ -32,6 +32,7 @@
 .tab-item {
   align-items: center;
   display: flex;
+  flex: 0 0 auto;
   height: 65px;
   justify-content: space-evenly;
   min-height: 50px;

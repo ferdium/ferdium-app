@@ -97,7 +97,7 @@ class TabBar extends Component<IProps> {
     const axis = useHorizontalStyle ? 'x' : 'y';
 
     return (
-      <div>
+      <div className="sidebar__services">
         <TabBarSortableList
           // @ts-expect-error Fix me
           services={services}

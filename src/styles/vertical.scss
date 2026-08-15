@@ -15,16 +15,22 @@ $tabitem-bias: 30px;
   padding-bottom: 0px;
   overflow: hidden !important;
 
-  > div:first-of-type {
+  .sidebar__services {
+    flex: 1 1 auto;
+    height: 100%;
+    min-width: 0;
+    overflow-y: hidden !important;
     overflow-x: scroll !important;
-    width: 100%;
+    width: auto;
   }
 
   .tabs {
     flex-direction: row;
+    min-width: 0;
     overflow-y: hidden;
     overflow-x: scroll;
     padding: 6px 6px 0 6px;
+    width: 100%;
 
     .tab-item {
       &.is-active {
@@ -33,6 +39,7 @@ $tabitem-bias: 30px;
       }
 
       &.is-label-enabled {
+        flex-basis: 100px;
         min-width: 100px;
         max-width: 100px;
         height: $sidebar-width + 10;
@@ -53,10 +60,6 @@ $tabitem-bias: 30px;
       display: none;
     }
   }
-  div {
-    overflow: hidden !important;
-  }
-
   .sidebar__button:first-of-type {
     height: auto;
     box-shadow: -4px 0px 4px 0px $theme-gray-lightest;

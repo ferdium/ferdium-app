@@ -208,22 +208,26 @@ const generateServiceRibbonWidthStyle = (
   let sidebarServicesAlignment;
   switch (sidebarServicesLocation) {
     case SIDEBAR_SERVICES_LOCATION_TOPLEFT: {
-      sidebarServicesAlignment = horizontal ? 'left' : 'start';
+      sidebarServicesAlignment = 'flex-start';
       break;
     }
     case SIDEBAR_SERVICES_LOCATION_CENTER: {
-      sidebarServicesAlignment = horizontal ? 'center' : 'center';
+      sidebarServicesAlignment = 'center';
       break;
     }
     case SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT: {
-      sidebarServicesAlignment = horizontal ? 'right' : 'end';
+      sidebarServicesAlignment = 'flex-end';
       break;
     }
     default: {
-      sidebarServicesAlignment = horizontal ? 'left' : 'start';
+      sidebarServicesAlignment = 'flex-start';
       break;
     }
   }
+  const overflowSafeSidebarServicesAlignment =
+    sidebarServicesAlignment === 'flex-start'
+      ? sidebarServicesAlignment
+      : `safe ${sidebarServicesAlignment}`;
 
   const graysacleServices = `filter: grayscale(1);
   opacity: ${grayscaleServicesDim}%;`;
@@ -242,13 +246,15 @@ const generateServiceRibbonWidthStyle = (
       height: ${width + PADDING}px !important;
       overflow: hidden !important;
     }
-    .sidebar div {
-      justify-content: ${sidebarServicesAlignment};
+    .sidebar .tabs {
+      justify-content: ${overflowSafeSidebarServicesAlignment};
     }
     .tab-item {
       height: ${width - tabItemWidthBias}px !important;
       width: ${width + iconSize + tabItemHeightBias}px !important;
+      min-width: ${width + iconSize + tabItemHeightBias}px !important;
       min-height: unset;
+      flex-shrink: 0;
       overflow: hidden !important;
     }
     .tab-item .tab-item__icon {
@@ -299,13 +305,14 @@ const generateServiceRibbonWidthStyle = (
     .sidebar {
       width: ${width + PADDING}px !important;
     }
-    .tabs {
-      justify-content: ${sidebarServicesAlignment};
+    .sidebar .tabs {
+      justify-content: ${overflowSafeSidebarServicesAlignment};
     }
     .tab-item {
       width: ${width}px !important;
       height: ${width - tabItemWidthBias}px !important;
       min-height: ${width - tabItemWidthBias}px !important;
+      flex-shrink: 0;
     }
     .tab-item .tab-item__icon {
       width: ${minimumAdjustedIconSize}px !important;
