@@ -149,6 +149,10 @@ body.win32:not(.isFullScreen) .app .app__content {
   padding-top: 29px;
 }
 
+.darwin.isFullScreen .sidebar {
+  padding-top: 0;
+}
+
 .sidebar {
   position: relative;
   align-items: center;
