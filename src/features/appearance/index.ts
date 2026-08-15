@@ -406,6 +406,7 @@ const generateCompactWorkspaceDrawerStyle = (
   const width = Number(widthStr);
   const tabItemWidthBias = 1;
   const itemHeight = width - tabItemWidthBias;
+  const compactDrawerWidth = `calc(${width}px + ${WEBVIEW_PADDING_VAR})`;
   const darwinWorkspaceDrawerTopInset = isFullScreen
     ? 2
     : shouldShowDragArea
@@ -414,10 +415,10 @@ const generateCompactWorkspaceDrawerStyle = (
 
   return `
   .app--compact-workspace {
-    --workspace-drawer-width: ${width}px !important;
+    --workspace-drawer-width: ${compactDrawerWidth} !important;
   }
   .workspaces-drawer.compact {
-    width: ${width}px !important;
+    width: ${compactDrawerWidth} !important;
   }
   .darwin .workspaces-drawer.compact {
     padding-top: ${darwinWorkspaceDrawerTopInset}px !important;
@@ -427,7 +428,7 @@ const generateCompactWorkspaceDrawerStyle = (
     min-height: ${itemHeight}px !important;
   }
   .app__service > div[class*="WorkspaceSwitchingIndicator-wrapper"] {
-    width: calc(100% - ${width}px) !important;
+    width: calc(100% - ${width}px - ${WEBVIEW_PADDING_VAR}) !important;
   }
   `;
 };
@@ -447,7 +448,9 @@ const generateWorkspaceDrawerTransform = (
   }
 
   // When drawer is closed, apply transform
-  const drawerWidth = useCompactWorkspaceDrawer ? Number(widthStr) : 300;
+  const drawerWidth = useCompactWorkspaceDrawer
+    ? `calc(0px - ${Number(widthStr)}px - ${WEBVIEW_PADDING_VAR})`
+    : '-300px';
 
   // Disable transition only when actively changing drawer settings (ribbon width or compact mode)
   const transitionStyle = isChangingDrawerSettings
@@ -456,7 +459,7 @@ const generateWorkspaceDrawerTransform = (
 
   return `
   .app__content {
-    transform: translateX(-${drawerWidth}px) !important;
+    transform: translateX(${drawerWidth}) !important;
     ${transitionStyle}
   }
   `;
@@ -477,14 +480,19 @@ const generateVerticalStyle = (
     document.head.append(link);
   }
   const width = Number(widthStr);
-  const drawerWidth = useCompactWorkspaceDrawer ? width : 300;
+  const drawerWidth = useCompactWorkspaceDrawer
+    ? `calc(100% - ${width}px - ${WEBVIEW_PADDING_VAR})`
+    : 'calc(100% - 300px)';
+  const todosPanelWidth = useCompactWorkspaceDrawer
+    ? `calc(100% - ${width * 2}px - ${WEBVIEW_PADDING_VAR})`
+    : `calc(100% - ${300 + width}px)`;
 
   return `
   .sidebar {
   ${
     alwaysShowWorkspaces
       ? `
-    width: calc(100% - ${drawerWidth}px) !important;
+    width: ${drawerWidth} !important;
   `
       : ''
   }
@@ -495,7 +503,7 @@ const generateVerticalStyle = (
   }
 
   .todos__todos-panel--expanded {
-    width: calc(100% - ${drawerWidth + width}px) !important;
+    width: ${todosPanelWidth} !important;
   }
   `;
 };
