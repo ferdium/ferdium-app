@@ -16,8 +16,7 @@ import { workspaceStore } from '../workspaces';
 
 const STYLE_ELEMENT_ID = 'custom-appearance-style';
 
-// The horizontal style uses a 6px inset around the sidebar and webview.
-const PADDING = 6;
+const WEBVIEW_PADDING_VAR = 'var(--webview-padding)';
 
 const createStyleElement = () => {
   const styles = document.createElement('style');
@@ -232,8 +231,9 @@ const generateServiceRibbonWidthStyle = (
   opacity: ${grayscaleServicesDim}%;`;
 
   const sizeDragArea = shouldShowDragArea ? verticalStyleOffset : 0;
-  const webviewInset = `${PADDING}px`;
-  const horizontalContentOffset = width + sidebarSizeBias + PADDING;
+  const webviewInset = WEBVIEW_PADDING_VAR;
+  const horizontalContentOffsetBase = width + sidebarSizeBias;
+  const horizontalContentOffset = `calc(${horizontalContentOffsetBase}px + ${WEBVIEW_PADDING_VAR})`;
   const currentDarwinHorizontalContentOffset = isFullScreen
     ? width
     : width + sidebarSizeBias + (sizeDragArea === 0 ? 4 : 4 - sizeDragArea);
@@ -242,16 +242,17 @@ const generateServiceRibbonWidthStyle = (
     : shouldShowDragArea
       ? 0
       : verticalStyleOffset;
-  const darwinHorizontalContentOffset = Math.max(
-    currentDarwinHorizontalContentOffset,
-    darwinSidebarTopInset + width + PADDING,
-  );
+  const darwinHorizontalContentOffsetBase = darwinSidebarTopInset + width;
+  const darwinHorizontalContentOffset = `max(
+    ${currentDarwinHorizontalContentOffset}px,
+    calc(${darwinHorizontalContentOffsetBase}px + ${WEBVIEW_PADDING_VAR})
+  )`;
   const darwinDrawerTopOffset = darwinHorizontalContentOffset;
 
   return horizontal
     ? `
     .sidebar {
-      height: ${width + PADDING}px !important;
+      height: calc(${width}px + ${WEBVIEW_PADDING_VAR}) !important;
       overflow: hidden !important;
     }
     .sidebar .tabs {
@@ -280,30 +281,30 @@ const generateServiceRibbonWidthStyle = (
       height: ${width - tabItemWidthBias}px !important;
       justify-content: center;
       line-height: 0;
-      margin-top: ${PADDING}px !important;
+      margin-top: ${WEBVIEW_PADDING_VAR} !important;
       padding: 0 !important;
       width: ${width}px !important;
     }
     .app .app__content {
-      padding-top: ${horizontalContentOffset}px !important;
+      padding-top: ${horizontalContentOffset} !important;
     }
     .app .app__service {
       padding: ${webviewInset} !important;
     }
     .workspaces-drawer {
-      height: calc(100% + ${horizontalContentOffset}px) !important;
-      margin-top: -${horizontalContentOffset}px !important;
+      height: calc(100% + ${horizontalContentOffsetBase}px + ${WEBVIEW_PADDING_VAR}) !important;
+      margin-top: calc(0px - ${horizontalContentOffsetBase}px - ${WEBVIEW_PADDING_VAR}) !important;
     }
     .darwin .sidebar {
-      height: ${darwinHorizontalContentOffset}px !important;
+      height: ${darwinHorizontalContentOffset} !important;
       ${isFullScreen ? `padding-top: ${2}px !important` : null}
     }
     .darwin .app .app__content {
-      padding-top: ${darwinHorizontalContentOffset}px !important;
+      padding-top: ${darwinHorizontalContentOffset} !important;
     }
     .darwin .workspaces-drawer {
-      height: calc(100% + ${darwinDrawerTopOffset}px) !important;
-      margin-top: -${darwinDrawerTopOffset}px !important;
+      height: calc(100% + ${darwinDrawerTopOffset}) !important;
+      margin-top: calc(0px - ${darwinDrawerTopOffset}) !important;
     }
     .darwin .sidebar .sidebar__button--workspaces.is-active {
       height: ${width - tabItemWidthBias}px !important;
@@ -317,7 +318,7 @@ const generateServiceRibbonWidthStyle = (
   `
     : `
     .sidebar {
-      width: ${width + PADDING}px !important;
+      width: calc(${width}px + ${WEBVIEW_PADDING_VAR}) !important;
     }
     .sidebar .tabs {
       justify-content: ${overflowSafeSidebarServicesAlignment};

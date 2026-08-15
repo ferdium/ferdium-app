@@ -17,8 +17,8 @@ $tabitem-bias: 30px;
 
   .sidebar__services {
     flex: 1 1 auto;
-    height: calc(100% - 6px);
-    margin: 6px 0 0 6px;
+    height: calc(100% - var(--webview-padding));
+    margin: var(--webview-padding) 0 0 var(--webview-padding);
     min-width: 0;
     overflow-y: hidden !important;
     overflow-x: scroll !important;

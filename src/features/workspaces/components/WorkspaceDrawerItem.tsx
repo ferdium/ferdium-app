@@ -41,7 +41,8 @@ const styles = theme => ({
     boxSizing: 'border-box',
     height: '67px',
     padding: `15px ${theme.workspaces.drawer.padding}px`,
-    margin: [0, 6, 6, 6],
+    margin:
+      '0 var(--webview-padding) var(--webview-padding) var(--webview-padding)',
     border: '1px solid transparent',
     borderRadius: 4,
     transition: itemTransition,
@@ -59,7 +60,7 @@ const styles = theme => ({
       textAlign: 'center',
       fontSize: '16px',
       width: '100%',
-      margin: [0, 0, 6, 0],
+      margin: '0 0 var(--webview-padding) 0',
     },
   },
   isActiveItem: {

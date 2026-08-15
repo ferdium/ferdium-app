@@ -75,9 +75,9 @@ const styles = theme => ({
     overflowY: 'auto',
     display: 'flex',
     flexDirection: 'column',
-    height: 'calc(100% - 6px)',
-    marginTop: 6,
-    marginLeft: 6,
+    height: 'calc(100% - var(--webview-padding))',
+    marginTop: 'var(--webview-padding)',
+    marginLeft: 'var(--webview-padding)',
     '&::-webkit-scrollbar': {
       display: 'none',
     },
