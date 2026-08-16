@@ -361,7 +361,6 @@
   "workspaceDrawer.addNewWorkspaceLabel": "새 작업영역을 추가",
   "workspaceDrawer.allServices": "모든 서비스",
   "workspaceDrawer.headline": "작업 공간",
-  "workspaceDrawer.item.contextMenuEdit": "편집",
   "workspaceDrawer.item.noServicesAddedYet": "추가된 서비스가 없습니다.",
   "workspaceDrawer.workspacesSettingsTooltip": "작업 영역 설정",
   "workspaces.switchingIndicator.switchingTo": "다음으로 전환"
