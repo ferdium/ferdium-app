@@ -270,6 +270,5 @@
   "welcome.loginButton": "Inicia sessió al teu compte",
   "welcome.signupButton": "Crea un compte gratuït",
   "workspaceDrawer.allServices": "Tots els serveis",
-  "workspaceDrawer.headline": "Espais de treball",
-  "workspaceDrawer.item.contextMenuEdit": "edita"
+  "workspaceDrawer.headline": "Espais de treball"
 }
