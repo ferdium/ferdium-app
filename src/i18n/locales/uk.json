@@ -439,7 +439,6 @@
   "workspaceDrawer.addNewWorkspaceLabel": "Додати новий робочий простір",
   "workspaceDrawer.allServices": "Усі сервіси",
   "workspaceDrawer.headline": "Робочі простори",
-  "workspaceDrawer.item.contextMenuEdit": "редагувати",
   "workspaceDrawer.item.noServicesAddedYet": "Немає доданих сервісів",
   "workspaceDrawer.workspaceFeatureInfo": "<p>Робочі простори Ferdium дозволяють вам сфокусуватися на тому, що важливо прямо зараз. Встановіть різні набори сервісів та легко перемикайтесь між ними в будь-який час.</p><p>Тільки ви вирішуєте, які сервіси вам потрібні тут і зараз, так що ми можемо допомогти вам залишатись в найкращій формі або легко закінчувати роботу коли забажаєте.</p>",
   "workspaceDrawer.workspacesSettingsTooltip": "Змінити налаштування робочих просторів",
