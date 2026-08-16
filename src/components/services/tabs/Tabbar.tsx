@@ -28,18 +28,25 @@ interface IProps {
     serviceData: { isEnabled: boolean; isMediaPlaying: boolean };
     redirect: boolean;
   }) => void;
+  isOfflineMode?: boolean;
 }
 
 @observer
 class TabBar extends Component<IProps> {
   onSortEnd = ({ oldIndex, newIndex }) => {
-    const { enableToolTip, reorder } = this.props;
+    const { enableToolTip, reorder, isOfflineMode } = this.props;
+
+    if (isOfflineMode) {
+      enableToolTip();
+      return;
+    }
 
     enableToolTip();
     reorder({ oldIndex, newIndex });
   };
 
-  shouldPreventSorting = event => event.target.tagName !== 'LI';
+  shouldPreventSorting = event =>
+    this.props.isOfflineMode || event.target.tagName !== 'LI';
 
   toggleService = (args: { serviceId: string; isEnabled: boolean }) => {
     const { updateService } = this.props;
@@ -92,6 +99,7 @@ class TabBar extends Component<IProps> {
       showMessageBadgeWhenMutedSetting,
       showServiceNameSetting,
       showMessageBadgesEvenWhenMuted,
+      isOfflineMode,
     } = this.props;
 
     const axis = useHorizontalStyle ? 'x' : 'y';
@@ -123,6 +131,7 @@ class TabBar extends Component<IProps> {
           showMessageBadgeWhenMutedSetting={showMessageBadgeWhenMutedSetting}
           showServiceNameSetting={showServiceNameSetting}
           showMessageBadgesEvenWhenMuted={showMessageBadgesEvenWhenMuted}
+          isOfflineMode={isOfflineMode}
         />
       </div>
     );

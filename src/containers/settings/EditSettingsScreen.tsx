@@ -1460,6 +1460,7 @@ class EditSettingsScreen extends Component<
           isTodosActivated={this.props.stores.todos.isFeatureEnabledByUser}
           openProcessManager={() => this.openProcessManager()}
           isOnline={app.isOnline}
+          isOfflineMode={app.isOfflineMode}
           serverURL={importExportURL()}
         />
       </ErrorBoundary>

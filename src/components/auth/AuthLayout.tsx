@@ -26,12 +26,15 @@ export interface IProps extends WrappedComponentProps {
   isOnline: boolean;
   isAPIHealthy: boolean;
   retryHealthCheck: MouseEventHandler<HTMLButtonElement>;
+  useOfflineMode: MouseEventHandler<HTMLButtonElement>;
   isHealthCheckLoading: boolean;
+  isEnteringOfflineMode: boolean;
   isFullScreen: boolean;
   installAppUpdate: MouseEventHandler<HTMLButtonElement>;
   appUpdateIsDownloaded: boolean;
   updateVersion: string;
   isUpdateAvailable: boolean;
+  hasOfflineBackup: boolean;
 }
 
 interface IState {
@@ -55,13 +58,16 @@ class AuthLayout extends Component<IProps, IState> {
       isOnline,
       isAPIHealthy,
       retryHealthCheck,
+      useOfflineMode,
       isHealthCheckLoading,
+      isEnteringOfflineMode,
       isFullScreen,
       installAppUpdate,
       appUpdateIsDownloaded,
       updateVersion,
       intl,
       isUpdateAvailable,
+      hasOfflineBackup,
     } = this.props;
 
     let serverNameParse = serverName();
@@ -94,17 +100,30 @@ class AuthLayout extends Component<IProps, IState> {
               />
             )}
           {isOnline && !isAPIHealthy && (
-            <InfoBar
-              type="danger"
-              ctaLabel="Try again"
-              ctaLoading={isHealthCheckLoading}
-              sticky
-              onClick={retryHealthCheck}
-            >
+            <InfoBar type="danger" sticky>
               <Icon icon={mdiFlash} />
               {intl.formatMessage(globalMessages.APIUnhealthy, {
                 serverNameParse,
               })}
+              <button
+                type="button"
+                className="info-bar__cta"
+                onClick={retryHealthCheck}
+              >
+                Try again
+              </button>
+              {hasOfflineBackup && (
+                <button
+                  type="button"
+                  className="info-bar__cta"
+                  onClick={useOfflineMode}
+                  disabled={isHealthCheckLoading || isEnteringOfflineMode}
+                >
+                  {isEnteringOfflineMode
+                    ? 'Starting offline mode...'
+                    : 'Run in offline mode'}
+                </button>
+              )}
             </InfoBar>
           )}
           <div className="auth__layout">

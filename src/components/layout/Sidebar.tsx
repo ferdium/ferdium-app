@@ -76,6 +76,23 @@ const messages = defineMessages({
     id: 'sidebar.lockFerdium',
     defaultMessage: 'Lock Ferdium',
   },
+  offline: {
+    id: 'sidebar.offline',
+    defaultMessage: 'Offline',
+  },
+  online: {
+    id: 'sidebar.online',
+    defaultMessage: 'Online',
+  },
+  offlineRetrying: {
+    id: 'sidebar.offlineRetrying',
+    defaultMessage:
+      'Running from your local backup. Ferdium is retrying the server connection in the background.',
+  },
+  offlineReconnectReady: {
+    id: 'sidebar.offlineReconnectReady',
+    defaultMessage: 'Connection restored. Click to switch back online.',
+  },
 });
 
 interface IProps extends WrappedComponentProps {
@@ -114,6 +131,7 @@ interface IProps extends WrappedComponentProps {
     serviceData: { isEnabled: boolean; isMediaPlaying: boolean };
     redirect: boolean;
   }) => void;
+  isOfflineMode?: boolean;
 }
 
 interface IState {
@@ -156,6 +174,7 @@ class Sidebar extends Component<IProps, IState> {
       stores,
       actions,
       isTodosServiceActive,
+      isOfflineMode,
     } = this.props;
     const {
       hideCollapseButton,
@@ -189,6 +208,12 @@ class Sidebar extends Component<IProps, IState> {
     const { isMenuCollapsed } = stores!.settings.all.app;
 
     const { isDownloading, justFinishedDownloading } = stores!.app;
+    const { canSwitchBackOnline } = stores!.app;
+    const offlineStatusTooltip = intl.formatMessage(
+      canSwitchBackOnline
+        ? messages.offlineReconnectReady
+        : messages.offlineRetrying,
+    );
 
     return (
       <div className="sidebar">
@@ -216,7 +241,31 @@ class Sidebar extends Component<IProps, IState> {
           clearCache={this.props.clearCache}
           hibernateService={this.props.hibernateService}
           wakeUpService={this.props.wakeUpService}
+          isOfflineMode={isOfflineMode}
         />
+        {isOfflineMode &&
+          (canSwitchBackOnline ? (
+            <button
+              type="button"
+              className="sidebar__status sidebar__status--ready"
+              onClick={() => {
+                actions!.app.exitOfflineMode();
+              }}
+              data-tooltip-id="tooltip-sidebar-button"
+              data-tooltip-content={offlineStatusTooltip}
+              aria-label={offlineStatusTooltip}
+            >
+              {intl.formatMessage(messages.online)}
+            </button>
+          ) : (
+            <span
+              className="sidebar__status"
+              data-tooltip-id="tooltip-sidebar-button"
+              data-tooltip-content={offlineStatusTooltip}
+            >
+              {intl.formatMessage(messages.offline)}
+            </span>
+          ))}
         {numberActiveButtons <= 1 || hideCollapseButton ? null : (
           <button
             type="button"
@@ -234,7 +283,7 @@ class Sidebar extends Component<IProps, IState> {
             ) : null}
           </button>
         )}
-        {!hideRecipesButton && !isMenuCollapsed ? (
+        {!hideRecipesButton && !isMenuCollapsed && !isOfflineMode ? (
           <button
             type="button"
             onClick={() => openSettings({ path: 'recipes' })}

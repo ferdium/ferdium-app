@@ -1,7 +1,6 @@
 import { inject, observer } from 'mobx-react';
 import { Component, type ReactElement, type ReactPortal } from 'react';
 import ReactDOM from 'react-dom';
-import { Outlet } from 'react-router-dom';
 import type { StoresProps } from '../../@types/ferdium-components.types';
 import Layout from '../../components/settings/SettingsLayout';
 import Navigation from '../../components/settings/navigation/SettingsNavigation';
@@ -47,9 +46,7 @@ class SettingsContainer extends Component<IProps> {
 
     return ReactDOM.createPortal(
       <ErrorBoundary>
-        <Layout navigation={navigation} closeSettings={closeSettings}>
-          <Outlet />
-        </Layout>
+        <Layout navigation={navigation} closeSettings={closeSettings} />
       </ErrorBoundary>,
       this.el,
     );

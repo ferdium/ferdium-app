@@ -79,6 +79,7 @@ interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
   onCreateWorkspaceSubmit: (workspace: Workspace) => void;
   onWorkspaceClick: (workspace: Workspace) => void;
   workspaces: Workspace[];
+  isOfflineMode?: boolean;
 }
 
 @observer
@@ -93,6 +94,7 @@ class WorkspacesDashboard extends Component<IProps> {
       onCreateWorkspaceSubmit,
       onWorkspaceClick,
       workspaces,
+      isOfflineMode,
     } = this.props;
 
     const { intl } = this.props;
@@ -133,13 +135,22 @@ class WorkspacesDashboard extends Component<IProps> {
             </Appear>
           ) : null}
 
+          {isOfflineMode && (
+            <Infobox icon="information-outline" type="warning">
+              Workspace changes are disabled while Ferdium is running from a
+              local backup.
+            </Infobox>
+          )}
+
           {/* ===== Create workspace form ===== */}
-          <div className={classes.createForm}>
-            <CreateWorkspaceForm
-              isSubmitting={createWorkspaceRequest.isExecuting}
-              onSubmit={onCreateWorkspaceSubmit}
-            />
-          </div>
+          {!isOfflineMode && (
+            <div className={classes.createForm}>
+              <CreateWorkspaceForm
+                isSubmitting={createWorkspaceRequest.isExecuting}
+                onSubmit={onCreateWorkspaceSubmit}
+              />
+            </div>
+          )}
           {getUserWorkspacesRequest.isExecuting ? (
             <Loader />
           ) : (
@@ -176,7 +187,11 @@ class WorkspacesDashboard extends Component<IProps> {
                           <WorkspaceItem
                             key={workspace.id}
                             workspace={workspace}
-                            onItemClick={w => onWorkspaceClick(w)}
+                            onItemClick={w => {
+                              if (!isOfflineMode) {
+                                onWorkspaceClick(w);
+                              }
+                            }}
                           />
                         ))}
                       </tbody>

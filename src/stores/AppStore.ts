@@ -30,7 +30,14 @@ import {
   ferdiumVersion,
   userDataPath,
 } from '../environment-remote';
+import { getUserWorkspacesRequest } from '../features/workspaces/api';
 import sleep from '../helpers/async-helpers';
+import {
+  hydrateOfflineState,
+  loadOfflineState,
+  saveOfflineState,
+  serializeOfflineState,
+} from '../helpers/offline-state';
 import { getLocale, getTranslatedText } from '../helpers/i18n-helpers';
 import {
   getServiceIdsFromPartitions,
@@ -58,6 +65,7 @@ const autoLauncher = new AutoLaunch({
 
 const CATALINA_NOTIFICATION_HACK_KEY =
   '_temp_askedForCatalinaNotificationPermissions';
+const OFFLINE_MODE_BOOTSTRAP_KEY = 'ferdium.pendingOfflineMode';
 
 const locales = generatedTranslations();
 
@@ -109,6 +117,16 @@ export default class AppStore extends TypedStore {
 
   @observable authRequestFailed = false;
 
+  @observable isOfflineMode = false;
+
+  @observable isEnteringOfflineMode = false;
+
+  @observable hasOfflineBackup = false;
+
+  @observable lastOfflineSyncAt: string | null = null;
+
+  @observable canSwitchBackOnline = false;
+
   @observable timeSuspensionStart = moment();
 
   @observable timeOfflineStart;
@@ -135,6 +153,10 @@ export default class AppStore extends TypedStore {
   @observable launchInBackground = DEFAULT_APP_SETTINGS.autoLaunchInBackground;
 
   fetchDataInterval: NodeJS.Timeout | null = null;
+
+  offlineReconnectInterval: NodeJS.Timeout | null = null;
+
+  healthCheckInterval: NodeJS.Timeout | null = null;
 
   @observable downloads: Download[] = [];
 
@@ -170,6 +192,8 @@ export default class AppStore extends TypedStore {
     this.actions.app.togglePauseDownload.listen(
       this._togglePauseDownload.bind(this),
     );
+    this.actions.app.enterOfflineMode.listen(this._enterOfflineMode.bind(this));
+    this.actions.app.exitOfflineMode.listen(this._exitOfflineMode.bind(this));
 
     this.actions.app.addSandboxService.listen(
       this._addSandboxService.bind(this),
@@ -191,6 +215,8 @@ export default class AppStore extends TypedStore {
   }
 
   async setup(): Promise<void> {
+    this._loadOfflineBackupMeta();
+    this._resumePendingOfflineMode();
     this._appStartsCounter();
     // Focus the active service
     window.addEventListener('focus', this.actions.service.focusActiveService);
@@ -305,6 +331,11 @@ export default class AppStore extends TypedStore {
     setTimeout(() => {
       this._healthCheck();
     }, 1000);
+    this.healthCheckInterval = setInterval(() => {
+      if (!this.isOfflineMode) {
+        this._healthCheck();
+      }
+    }, ms('5s'));
 
     this.isSystemDarkModeEnabled = nativeTheme.shouldUseDarkColors;
 
@@ -594,6 +625,149 @@ export default class AppStore extends TypedStore {
     this.healthCheckRequest.execute();
   }
 
+  @action refreshOfflineBackup() {
+    if (
+      !this.stores.user.isLoggedIn ||
+      this.stores.user.getUserInfoRequest.isError ||
+      this.stores.services.allServicesRequest.isError
+    ) {
+      return;
+    }
+
+    const user = this.stores.user.getUserInfoRequest.result;
+    const services = this.stores.services.allServicesRequest.result;
+    const workspaces = getUserWorkspacesRequest.result || [];
+
+    if (!user || !services) {
+      return;
+    }
+
+    const snapshot = serializeOfflineState({
+      user,
+      services,
+      workspaces,
+    });
+
+    saveOfflineState(snapshot);
+    this.hasOfflineBackup = true;
+    this.lastOfflineSyncAt = snapshot.updatedAt;
+  }
+
+  @action _hydrateOfflineRequest(request: any, result: any) {
+    request.result = result;
+    request.error = null;
+    request.isExecuting = false;
+    request.isError = false;
+    request.wasExecuted = true;
+    request.isWaitingForResponse = false;
+    request.promise = Promise.resolve(result);
+
+    if (request.currentApiCall) {
+      request.currentApiCall.result = result;
+    } else {
+      request.currentApiCall = { args: [], result };
+    }
+
+    if ('_isInvalidated' in request) {
+      request._isInvalidated = false;
+    }
+  }
+
+  _shouldReloadIntoOfflineMode() {
+    return (
+      !this.isOfflineMode &&
+      this.stores.user.isLoggedIn &&
+      !window.location.hash.includes('/auth') &&
+      this.stores.services.allServicesRequest.wasExecuted &&
+      Array.isArray(this.stores.services.allServicesRequest.result) &&
+      this.stores.services.allServicesRequest.result.length > 0
+    );
+  }
+
+  _resumePendingOfflineMode() {
+    if (window.sessionStorage.getItem(OFFLINE_MODE_BOOTSTRAP_KEY) !== 'true') {
+      return;
+    }
+
+    window.sessionStorage.removeItem(OFFLINE_MODE_BOOTSTRAP_KEY);
+    this.isEnteringOfflineMode = true;
+    this._activateOfflineMode();
+  }
+
+  @action async _activateOfflineMode() {
+    try {
+      const snapshot = loadOfflineState();
+      if (!snapshot) {
+        this.hasOfflineBackup = false;
+        return;
+      }
+
+      let recipes = this.stores.recipes.all;
+      if (recipes.length === 0) {
+        recipes = await this.stores.recipes.allRecipesRequest.execute().promise;
+      }
+
+      const hydrated = hydrateOfflineState(snapshot, recipes);
+
+      this._hydrateOfflineRequest(
+        this.stores.user.getUserInfoRequest,
+        hydrated.user,
+      );
+      this._hydrateOfflineRequest(
+        this.stores.services.allServicesRequest,
+        hydrated.services,
+      );
+      this._hydrateOfflineRequest(
+        getUserWorkspacesRequest,
+        hydrated.workspaces,
+      );
+
+      this.healthCheckRequest.error = null;
+      this.healthCheckRequest.isError = false;
+      this.authRequestFailed = false;
+      this.isOfflineMode = true;
+      this.hasOfflineBackup = true;
+      this.lastOfflineSyncAt = snapshot.updatedAt;
+      this.canSwitchBackOnline = false;
+      this._startOfflineReconnectChecks();
+
+      if (
+        this.stores.user.isLoggedIn &&
+        window.location.hash.includes('/auth')
+      ) {
+        this.stores.router.push('/');
+      }
+    } catch (error) {
+      console.error('Could not activate offline mode', error);
+    } finally {
+      this.isEnteringOfflineMode = false;
+    }
+  }
+
+  @action _enterOfflineMode() {
+    if (this.isOfflineMode || this.isEnteringOfflineMode) {
+      return;
+    }
+
+    this.isEnteringOfflineMode = true;
+
+    if (this._shouldReloadIntoOfflineMode()) {
+      window.sessionStorage.setItem(OFFLINE_MODE_BOOTSTRAP_KEY, 'true');
+      window.location.reload();
+      return;
+    }
+
+    this._activateOfflineMode();
+  }
+
+  @action _exitOfflineMode() {
+    this._stopOfflineReconnectChecks();
+    this.isEnteringOfflineMode = false;
+    this.isOfflineMode = false;
+    this.canSwitchBackOnline = false;
+    window.location.reload();
+  }
+
   @action _muteApp({ isMuted, overrideSystemMute = true }) {
     this.isSystemMuteOverridden = overrideSystemMute;
     this.actions.settings.update({
@@ -817,6 +991,7 @@ export default class AppStore extends TypedStore {
   _handleLogout() {
     if (!this.stores.user.isLoggedIn && this.fetchDataInterval !== null) {
       clearInterval(this.fetchDataInterval);
+      this._stopOfflineReconnectChecks();
     }
   }
 
@@ -843,6 +1018,50 @@ export default class AppStore extends TypedStore {
 
   async _checkAutoStart() {
     return autoLauncher.isEnabled() || false;
+  }
+
+  @action _loadOfflineBackupMeta() {
+    const snapshot = loadOfflineState();
+    this.hasOfflineBackup = Boolean(snapshot);
+    this.lastOfflineSyncAt = snapshot?.updatedAt || null;
+  }
+
+  _startOfflineReconnectChecks() {
+    this._stopOfflineReconnectChecks();
+
+    // eslint-disable-next-line unicorn/consistent-function-scoping
+    const probe = async () => {
+      if (!this.isOfflineMode) {
+        return;
+      }
+
+      try {
+        await this.api.app.health();
+        action(() => {
+          if (this.isOfflineMode) {
+            this.canSwitchBackOnline = true;
+          }
+        })();
+      } catch {
+        action(() => {
+          if (this.isOfflineMode) {
+            this.canSwitchBackOnline = false;
+          }
+        })();
+      }
+    };
+
+    probe();
+    this.offlineReconnectInterval = setInterval(() => {
+      probe();
+    }, ms('5s'));
+  }
+
+  _stopOfflineReconnectChecks() {
+    if (this.offlineReconnectInterval) {
+      clearInterval(this.offlineReconnectInterval);
+      this.offlineReconnectInterval = null;
+    }
   }
 
   async _systemDND() {

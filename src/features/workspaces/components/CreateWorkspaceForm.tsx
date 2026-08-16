@@ -39,6 +39,7 @@ const styles = {
 interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
   isSubmitting: boolean;
   onSubmit: (...args: any[]) => void;
+  disabled?: boolean;
 }
 
 @observer
@@ -61,6 +62,10 @@ class CreateWorkspaceForm extends Component<IProps> {
   }
 
   submitForm(): void {
+    if (this.props.disabled) {
+      return;
+    }
+
     this.form.submit({
       onSuccess: async form => {
         const { onSubmit } = this.props;
@@ -71,7 +76,7 @@ class CreateWorkspaceForm extends Component<IProps> {
   }
 
   render(): ReactElement {
-    const { classes, isSubmitting, intl } = this.props;
+    const { classes, isSubmitting, intl, disabled = false } = this.props;
     const { form } = this;
 
     return (
@@ -84,6 +89,7 @@ class CreateWorkspaceForm extends Component<IProps> {
           // eslint-disable-next-line react/jsx-no-bind
           onEnterKey={this.submitForm.bind(this, form)}
           focus={workspaceStore.isUserAllowedToUseFeature}
+          disabled={disabled}
         />
         <Button
           className={`${classes.submitButton} franz-form__button`}
@@ -94,6 +100,7 @@ class CreateWorkspaceForm extends Component<IProps> {
           onClick={this.submitForm.bind(this, form)}
           busy={isSubmitting}
           buttonType={isSubmitting ? 'secondary' : 'primary'}
+          disabled={disabled}
         />
       </div>
     );

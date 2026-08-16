@@ -5,6 +5,7 @@ import RecipePreview from '../../../models/RecipePreview';
 interface IProps {
   recipe: RecipePreview;
   onClick: MouseEventHandler<HTMLButtonElement>;
+  disabled?: boolean;
 }
 
 @observer
@@ -14,10 +15,15 @@ class RecipeItem extends Component<IProps> {
   }
 
   render() {
-    const { recipe, onClick } = this.props;
+    const { recipe, onClick, disabled = false } = this.props;
 
     return (
-      <button type="button" className="recipe-teaser" onClick={onClick}>
+      <button
+        type="button"
+        className="recipe-teaser"
+        onClick={onClick}
+        disabled={disabled}
+      >
         {recipe.isDevRecipe && (
           <span className="recipe-teaser__dev-badge">dev</span>
         )}

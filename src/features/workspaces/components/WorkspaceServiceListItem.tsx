@@ -34,16 +34,31 @@ interface IProps extends WithStylesProps<typeof styles> {
   isInWorkspace: boolean;
   onToggle: () => void;
   service: Service;
+  disabled?: boolean;
 }
 
 @observer
 class WorkspaceServiceListItem extends Component<IProps> {
   render(): ReactElement {
-    const { classes, isInWorkspace, onToggle, service } = this.props;
+    const {
+      classes,
+      isInWorkspace,
+      onToggle,
+      service,
+      disabled = false,
+    } = this.props;
     return (
       // onclick in below div used to fix bug raised under toggle duplicate component removal
       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-      <div className={classes.listItem} onClick={onToggle} onKeyDown={noop}>
+      <div
+        className={classes.listItem}
+        onClick={() => {
+          if (!disabled) {
+            onToggle();
+          }
+        }}
+        onKeyDown={noop}
+      >
         <ServiceIcon className={classes.serviceIcon} service={service} />
         <span
           className={classnames([
@@ -57,6 +72,7 @@ class WorkspaceServiceListItem extends Component<IProps> {
           className={classes.toggle}
           checked={isInWorkspace}
           onChange={onToggle}
+          disabled={disabled}
         />
       </div>
     );

@@ -178,6 +178,7 @@ class RecipesScreen extends Component<IProps, IState> {
           openDevDocs={() =>
             appActions.openExternalUrl({ url: FERDIUM_DEV_DOCS })
           }
+          isOfflineMode={this.props.stores!.app.isOfflineMode}
         />
       </ErrorBoundary>
     );

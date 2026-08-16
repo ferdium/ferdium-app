@@ -447,6 +447,10 @@ export default class ServicesStore extends TypedStore {
   }
 
   async _showAddServiceInterface({ recipeId }) {
+    if (this.stores.app.isOfflineMode) {
+      return;
+    }
+
     this.stores.router.push(`/settings/services/add/${recipeId}`);
   }
 
@@ -457,6 +461,10 @@ export default class ServicesStore extends TypedStore {
     redirect = true,
     skipCleanup = false,
   }) {
+    if (this.stores.app.isOfflineMode) {
+      return;
+    }
+
     if (!this.stores.recipes.isInstalled(recipeId)) {
       debug(`Recipe "${recipeId}" is not installed, installing recipe`);
       await this.stores.recipes._install({ recipeId });
@@ -539,6 +547,10 @@ export default class ServicesStore extends TypedStore {
   }
 
   @action async _updateService({ serviceId, serviceData, redirect = true }) {
+    if (this.stores.app.isOfflineMode) {
+      return;
+    }
+
     const service = this.one(serviceId);
     const data = this._cleanUpTeamIdAndCustomUrl(
       service.recipe.id,
@@ -598,6 +610,10 @@ export default class ServicesStore extends TypedStore {
   }
 
   @action async _deleteService({ serviceId, redirect }): Promise<void> {
+    if (this.stores.app.isOfflineMode) {
+      return;
+    }
+
     const request = this.deleteServiceRequest.execute(serviceId);
 
     if (redirect) {
@@ -1080,6 +1096,10 @@ export default class ServicesStore extends TypedStore {
   }
 
   @action _reorderService({ oldIndex, newIndex }) {
+    if (this.stores.app.isOfflineMode) {
+      return;
+    }
+
     const { showDisabledServices } = this.stores.settings.all.app;
     const oldEnabledSortIndex = showDisabledServices
       ? oldIndex

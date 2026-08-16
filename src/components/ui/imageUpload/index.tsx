@@ -17,6 +17,7 @@ interface IProps {
   multiple?: boolean;
   maxSize?: number;
   maxFiles?: number;
+  disabled?: boolean;
 }
 
 interface IState {
@@ -82,6 +83,7 @@ class ImageUpload extends Component<IProps, IState> {
       multiple = false,
       maxSize = Number.POSITIVE_INFINITY,
       maxFiles = 0,
+      disabled = false,
     } = this.props;
 
     const cssClasses = classnames({
@@ -111,6 +113,7 @@ class ImageUpload extends Component<IProps, IState> {
               <div className="image-upload__action">
                 <button
                   type="button"
+                  disabled={disabled}
                   onClick={() => {
                     if (field.value) {
                       field.set('delete');
@@ -128,29 +131,39 @@ class ImageUpload extends Component<IProps, IState> {
               </div>
             </>
           ) : (
-            <Dropzone
-              // eslint-disable-next-line react/jsx-no-bind
-              onDropAccepted={this.onDropAccepted.bind(this)}
-              // eslint-disable-next-line react/jsx-no-bind
-              onDropRejected={this.onDropRejected.bind(this)}
-              multiple={multiple}
-              accept={{
-                'image/jpeg': ['.jpeg', '.jpg'],
-                'image/png': ['.png'],
-                'image/svg+xml': ['.svg'],
-              }}
-              minSize={0}
-              maxSize={maxSize}
-              maxFiles={maxFiles}
-            >
-              {({ getRootProps, getInputProps }) => (
-                <div {...getRootProps()} className={cssClasses}>
+            // eslint-disable-next-line react/jsx-no-useless-fragment
+            <>
+              {disabled ? (
+                <div className={cssClasses}>
                   <Icon icon={mdiFileImage} />
                   <p>{textUpload}</p>
-                  <input {...getInputProps()} />
                 </div>
+              ) : (
+                <Dropzone
+                  // eslint-disable-next-line react/jsx-no-bind
+                  onDropAccepted={this.onDropAccepted.bind(this)}
+                  // eslint-disable-next-line react/jsx-no-bind
+                  onDropRejected={this.onDropRejected.bind(this)}
+                  multiple={multiple}
+                  accept={{
+                    'image/jpeg': ['.jpeg', '.jpg'],
+                    'image/png': ['.png'],
+                    'image/svg+xml': ['.svg'],
+                  }}
+                  minSize={0}
+                  maxSize={maxSize}
+                  maxFiles={maxFiles}
+                >
+                  {({ getRootProps, getInputProps }) => (
+                    <div {...getRootProps()} className={cssClasses}>
+                      <Icon icon={mdiFileImage} />
+                      <p>{textUpload}</p>
+                      <input {...getInputProps()} />
+                    </div>
+                  )}
+                </Dropzone>
               )}
-            </Dropzone>
+            </>
           )}
         </div>
         {maxSizeParse !== 0 && (

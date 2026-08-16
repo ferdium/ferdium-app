@@ -568,6 +568,7 @@ class EditServiceScreen extends Component<IProps> {
           onClearCache={() => this.clearCache()}
           openRecipeFile={file => this.openRecipeFile(file)}
           isProxyFeatureEnabled={proxyFeature.isEnabled}
+          isOfflineMode={this.props.stores.app.isOfflineMode}
         />
       </ErrorBoundary>
     );

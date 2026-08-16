@@ -80,6 +80,7 @@ interface IProps extends WithStylesProps<typeof styles>, WrappedComponentProps {
   workspace: Workspace;
   updateWorkspaceRequest: Request;
   deleteWorkspaceRequest: Request;
+  isOfflineMode?: boolean;
 }
 
 @observer
@@ -126,6 +127,10 @@ class EditWorkspaceForm extends Component<IProps> {
   }
 
   save(form): void {
+    if (this.props.isOfflineMode) {
+      return;
+    }
+
     this.props.updateWorkspaceRequest.reset();
     form.submit({
       onSuccess: async f => {
@@ -138,11 +143,19 @@ class EditWorkspaceForm extends Component<IProps> {
   }
 
   delete(): void {
+    if (this.props.isOfflineMode) {
+      return;
+    }
+
     const { onDelete } = this.props;
     onDelete();
   }
 
   toggleService(service: Service): void {
+    if (this.props.isOfflineMode) {
+      return;
+    }
+
     const servicesField = this.form.$('services');
     const serviceIds = servicesField.value;
     if (serviceIds.includes(service.id)) {
@@ -160,6 +173,7 @@ class EditWorkspaceForm extends Component<IProps> {
       services,
       deleteWorkspaceRequest,
       updateWorkspaceRequest,
+      isOfflineMode,
       intl,
     } = this.props;
     const { form } = this;
@@ -184,9 +198,14 @@ class EditWorkspaceForm extends Component<IProps> {
               Error while saving workspace
             </Infobox>
           ) : null}
+          {isOfflineMode && (
+            <Infobox icon="information-outline" type="warning">
+              Workspace changes are disabled while running from a local backup.
+            </Infobox>
+          )}
           <div className={classes.nameInput}>
-            <Input {...form.$('name').bind()} />
-            <Toggle {...form.$('keepLoaded').bind()} />
+            <Input {...form.$('name').bind()} disabled={isOfflineMode} />
+            <Toggle {...form.$('keepLoaded').bind()} disabled={isOfflineMode} />
             <p className={`${classes.keepLoadedInfo} franz-form__label`}>
               {intl.formatMessage(messages.keepLoadedInfo)}
             </p>
@@ -214,6 +233,7 @@ class EditWorkspaceForm extends Component<IProps> {
                     service={service}
                     isInWorkspace={workspaceServices.includes(service.id)}
                     onToggle={() => this.toggleService(service)}
+                    disabled={isOfflineMode}
                   />
                 ))}
               </>
@@ -228,7 +248,7 @@ class EditWorkspaceForm extends Component<IProps> {
             busy={isDeleting}
             buttonType={isDeleting ? 'secondary' : 'danger'}
             className="settings__delete-button"
-            disabled={isDeleting}
+            disabled={isDeleting || isOfflineMode}
             // eslint-disable-next-line react/jsx-no-bind
             onClick={this.delete.bind(this)}
           />
@@ -242,7 +262,7 @@ class EditWorkspaceForm extends Component<IProps> {
             // eslint-disable-next-line react/jsx-no-bind
             onClick={this.save.bind(this, form)}
             // TODO: Need to disable if no services have been added to this workspace
-            disabled={isSaving}
+            disabled={isSaving || isOfflineMode}
           />
         </div>
       </div>

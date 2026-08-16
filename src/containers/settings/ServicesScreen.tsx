@@ -53,6 +53,7 @@ class ServicesScreen extends Component<IProps> {
           }
           retryServicesRequest={() => services.allServicesRequest.reload()}
           searchNeedle={services.filterNeedle}
+          isOfflineMode={this.props.stores.app.isOfflineMode}
         />
       </ErrorBoundary>
     );

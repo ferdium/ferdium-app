@@ -150,6 +150,7 @@ class AppLayoutContainer extends Component<IProps> {
         showServiceNameSetting={settings.all.app.showServiceName}
         showMessageBadgesEvenWhenMuted={ui.showMessageBadgesEvenWhenMuted}
         isTodosServiceActive={services.isTodosServiceActive || false}
+        isOfflineMode={app.isOfflineMode}
       />
     );
 
@@ -190,12 +191,19 @@ class AppLayoutContainer extends Component<IProps> {
             areRequiredRequestsSuccessful={
               requests.areRequiredRequestsSuccessful
             }
+            isOnline={app.isOnline}
+            isAPIHealthy={!app.healthCheckRequest.isError}
+            retryHealthCheck={this.props.actions.app.healthCheck}
             retryRequiredRequests={retryRequiredRequests}
             areRequiredRequestsLoading={requests.areRequiredRequestsLoading}
             updateVersion={app.updateVersion}
             isUpdateAvailable={
               app.updateStatus === app.updateStatusTypes.AVAILABLE
             }
+            isOfflineMode={app.isOfflineMode}
+            isEnteringOfflineMode={app.isEnteringOfflineMode}
+            hasOfflineBackup={app.hasOfflineBackup}
+            enterOfflineMode={this.props.actions.app.enterOfflineMode}
           >
             <Outlet />
           </AppLayout>

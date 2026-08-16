@@ -81,6 +81,7 @@ interface TypedStore {
 }
 
 export interface AppStore extends TypedStore {
+  isOfflineMode: boolean;
   accentColor: string;
   adaptableDarkMode: boolean;
   progressbarAccentColor: string;
@@ -164,7 +165,7 @@ interface RecipePreviewsStore extends TypedStore {
 }
 
 interface RecipeStore extends TypedStore {
-  allRecipesRequest: () => void;
+  allRecipesRequest: CachedRequest;
   getRecipeUpdatesRequest: () => void;
   installRecipeRequest: () => void;
   isInstalled: (id: string) => boolean;
