@@ -575,7 +575,6 @@
   "workspaceDrawer.addNewWorkspaceLabel": "Ajouter un nouvel espace de travail",
   "workspaceDrawer.allServices": "Tous les services",
   "workspaceDrawer.headline": "Espace de travail",
-  "workspaceDrawer.item.contextMenuEdit": "modifier",
   "workspaceDrawer.item.noServicesAddedYet": "Aucun service ajouté pour l'instant",
   "workspaceDrawer.workspaceFeatureInfo": "<p>Les Espaces de travail de Ferdium vous permettant de rester concentré sur ce qui est important. Créez différents groupes de services et naviguez facilement entre eux à n'importe quel moment.</p><p>Vous décidez de quels services vous avez besoin, où et quand, ainsi nous pouvons vous aider à rester concentré sur votre travail - ou à le quitter dès que vous le souhaitez.</p>",
   "workspaceDrawer.workspacesSettingsTooltip": "Éditer les paramètres de l'espace de travail",
