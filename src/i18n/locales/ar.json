@@ -410,7 +410,6 @@
   "workspaceDrawer.addNewWorkspaceLabel": "إضافة فضاء عمل جديد",
   "workspaceDrawer.allServices": "جميع الخدمات",
   "workspaceDrawer.headline": "مساحاتُ العمل",
-  "workspaceDrawer.item.contextMenuEdit": "تعديل",
   "workspaceDrawer.item.noServicesAddedYet": "لم تضف أي خدمات بعد",
   "workspaceDrawer.workspaceFeatureInfo": "<p>أماكن عمل فردي تسمح لك بالتركيز على ما هو مهم الآن. إعداد مجموعات مختلفة من الخدمات والتبديل بينها بسهولة في أي وقت.</p><p>أنت تقرر الخدمات التي تحتاج إليها متى ومكان، حتى نتمكن من مساعدتك على البقاء على رأس لعبتك - أو بسهولة إيقاف العمل من العمل كلما أردت.</p>",
   "workspaceDrawer.workspacesSettingsTooltip": "تعديل إعدادات مساحات العمل",
