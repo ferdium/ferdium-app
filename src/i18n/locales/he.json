@@ -576,7 +576,6 @@
   "workspaceDrawer.addNewWorkspaceLabel": "הוספת סביבת עבודה חדשה",
   "workspaceDrawer.allServices": "כל השירותים",
   "workspaceDrawer.headline": "סביבות עבודה",
-  "workspaceDrawer.item.contextMenuEdit": "עריכה",
   "workspaceDrawer.item.noServicesAddedYet": "לא נוספו שירותים עדיין",
   "workspaceDrawer.workspaceFeatureInfo": "<p>סביבות העבודה של Ferdium מאפשרות לך להתמקד על מה שחשוב לך כרגע. ניתן להקים סדרות שונות של שירותים ולעבור ביניהן בכל רגע נתון.</p><p>מותר לך לבחור אילו שירותים נחוצים לך מתי ואיפה, כדי שנוכל לסייע לך להתחבר למה שחשוב שלך או להתנתק מהעבודה מתי שנחוץ לך.</p>",
   "workspaceDrawer.workspacesSettingsTooltip": "עריכת הגדרות סביבת עבודה",
