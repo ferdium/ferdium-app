@@ -501,7 +501,6 @@
   "workspaceDrawer.addNewWorkspaceLabel": "新しいワークスペースを追加する",
   "workspaceDrawer.allServices": "すべてのサービス",
   "workspaceDrawer.headline": "ワークスペース",
-  "workspaceDrawer.item.contextMenuEdit": "編集",
   "workspaceDrawer.item.noServicesAddedYet": "まだサービスが追加されていません",
   "workspaceDrawer.workspaceFeatureInfo": "<p>Ferdiumワークスペースを使用すると、すぐに重要なことに集中できます。異なるサービス群を設定し、いつでも簡単に切り替えることができます。</p><p> 必要なサービスを、必要な時に、必要な場所でご利用いただけますので、好きな時に仕事に集中することも離れることも可能です。</p>",
   "workspaceDrawer.workspacesSettingsTooltip": "ワークスペースの設定を編集する",
