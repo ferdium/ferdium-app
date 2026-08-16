@@ -214,6 +214,5 @@
   "webControls.reload": "Athlódáil",
   "welcome.loginButton": "Logáil isteach i do chuntas",
   "welcome.signupButton": "Cruthaigh cuntas saor in aisce",
-  "workspaceDrawer.allServices": "Gach seirbhís",
-  "workspaceDrawer.item.contextMenuEdit": "cuir in eagar"
+  "workspaceDrawer.allServices": "Gach seirbhís"
 }
