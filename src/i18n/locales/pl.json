@@ -479,7 +479,6 @@
   "workspaceDrawer.addNewWorkspaceLabel": "Dodaj nowy obszar roboczy",
   "workspaceDrawer.allServices": "Wszystkie usługi",
   "workspaceDrawer.headline": "Obszary robocze",
-  "workspaceDrawer.item.contextMenuEdit": "Edycja",
   "workspaceDrawer.item.noServicesAddedYet": "Żadne usługi nie zostały jeszcze dodane",
   "workspaceDrawer.workspaceFeatureInfo": "<p>Ferdium Workspace pozwala skupić się na tym, co jest obecnie ważne. Skonfiguruj różne zestawy usług i łatwo przełączaj się między nimi w dowolnym momencie.</p><p>Decydujesz, które usługi potrzebujesz kiedy i gdzie abyśmy mogli pomóc Ci pozostać na górze gry - lub łatwo wyłączyć pracę kiedy tylko chcesz.</p>",
   "workspaceDrawer.workspacesSettingsTooltip": "Edytuj ustawienia projektu",
