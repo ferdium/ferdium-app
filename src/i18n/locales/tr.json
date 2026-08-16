@@ -532,7 +532,6 @@
   "workspaceDrawer.addNewWorkspaceLabel": "Yeni Çalışma Alanı ekle",
   "workspaceDrawer.allServices": "Tüm servisler",
   "workspaceDrawer.headline": "Çalışma Alanları",
-  "workspaceDrawer.item.contextMenuEdit": "düzenle",
   "workspaceDrawer.item.noServicesAddedYet": "Henüz eklenmiş bir hizmet yok",
   "workspaceDrawer.workspaceFeatureInfo": "<p>Ferdium Çalışma Alanları o an sizin için ne önemliyse ona odaklanmanızı sağlar. Farklı servis grupları kurun ve istediğiniz zaman bunlar arasında kolayca geçiş yapın.</p><p>Hangi servislere ne zaman ve nerede ihtiyacınız olduğuna siz karar verirsiniz, böylece oyununuzun zirvesinde kalmanıza da - ya da istediğiniz zaman dikkatinizi işinizden almanıza da yardımcı olabiliriz.</p>",
   "workspaceDrawer.workspacesSettingsTooltip": "Çalışma alanı ayarlarını düzenle",
