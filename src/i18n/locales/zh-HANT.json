@@ -263,7 +263,6 @@
   "workspaceDrawer.addNewWorkspaceLabel": "新增工作區",
   "workspaceDrawer.allServices": "所有服務",
   "workspaceDrawer.headline": "工作區",
-  "workspaceDrawer.item.contextMenuEdit": "編輯",
   "workspaceDrawer.item.noServicesAddedYet": "未有添加服務",
   "workspaces.switchingIndicator.switchingTo": "切換到"
 }
