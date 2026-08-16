@@ -401,7 +401,6 @@
   "workspaceDrawer.addNewWorkspaceLabel": "Opprett nytt arbeidsområde",
   "workspaceDrawer.allServices": "Alle tjenester",
   "workspaceDrawer.headline": "Arbeidsområder",
-  "workspaceDrawer.item.contextMenuEdit": "rediger",
   "workspaceDrawer.item.noServicesAddedYet": "Ingen tjenester er lagt til ennå",
   "workspaceDrawer.workspaceFeatureInfo": "<p>Ferdium arbeidsområder lar deg fokusere på hva som er viktig akkurat nå. Sett opp ulike sett av tjenester og veksle enkelt mellom dem når som helst.</p><p>Du bestemmer hvilke tjenester du trenger når og hvor, så vi kan hjelpe deg med å bli øverst i spillet - eller enkelt slå av fra å virke når du vil.</p>",
   "workspaceDrawer.workspacesSettingsTooltip": "Rediger innstillinger for arbeidsområder",
