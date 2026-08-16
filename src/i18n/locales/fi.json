@@ -411,7 +411,6 @@
   "workspaceDrawer.addNewWorkspaceLabel": "Lisää uusi työtila",
   "workspaceDrawer.allServices": "Kaikki palvelut",
   "workspaceDrawer.headline": "Työtilat",
-  "workspaceDrawer.item.contextMenuEdit": "muokkaa",
   "workspaceDrawer.item.noServicesAddedYet": "Palveluja ei ole vielä lisätty",
   "workspaceDrawer.workspaceFeatureInfo": "<p>Ferdiumn työtilat auttaa sinua keskittymään siihen mikä on tärkeää juuri nyt. Määritä erilaisia palvelukokonaisuuksia ja vaihda helposti niiden välillä milloin tahansa.</p><p>Sinä päätät mitä palveluita tarvitset milloin ja missä, jotta voimme auttaa sinua pysymään lempiasioittesi äärellä - tai rentoutumaan ilman työhälinää.</p>",
   "workspaceDrawer.workspacesSettingsTooltip": "Muokkaa työtilojen asetuksia",
