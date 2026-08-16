@@ -241,7 +241,6 @@
   "workspaceDrawer.addNewWorkspaceLabel": "Voeg een nieuwe werkruimte toe",
   "workspaceDrawer.allServices": "Alle services",
   "workspaceDrawer.headline": "Werkruimten",
-  "workspaceDrawer.item.contextMenuEdit": "bewerken",
   "workspaceDrawer.item.noServicesAddedYet": "Nog geen diensten toegevoegd",
   "workspaceDrawer.workspacesSettingsTooltip": "Pas werkruimte instellingen aan",
   "workspaces.switchingIndicator.switchingTo": "Overschakelen naar"
