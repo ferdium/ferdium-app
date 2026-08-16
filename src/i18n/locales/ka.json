@@ -139,6 +139,5 @@
   "webControls.reload": "ჩატვირთვა",
   "welcome.loginButton": "შედით თქვენს ანგარიშში",
   "welcome.signupButton": "ანგარიშის შექმნა",
-  "workspaceDrawer.allServices": "ყველა სერვისი",
-  "workspaceDrawer.item.contextMenuEdit": "რედაქტირება"
+  "workspaceDrawer.allServices": "ყველა სერვისი"
 }
