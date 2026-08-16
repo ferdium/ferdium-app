@@ -228,6 +228,5 @@
   "webControls.reload": "Ponovno učitavanje",
   "welcome.loginButton": "Prijavite se na račun",
   "welcome.signupButton": "Stvorite besplatan račun",
-  "workspaceDrawer.allServices": "Sve usluge",
-  "workspaceDrawer.item.contextMenuEdit": "uredi"
+  "workspaceDrawer.allServices": "Sve usluge"
 }
