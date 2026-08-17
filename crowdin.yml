@@ -4,6 +4,7 @@ append_commit_message:
 files:
   - source: /src/i18n/locales/en-US.json
     translation: /src/i18n/locales/%two_letters_code%.json
+    update_option: update_as_unapproved
     languages_mapping:
       two_letters_code:
         nl-BE: nl-BE
