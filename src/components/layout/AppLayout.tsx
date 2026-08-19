@@ -21,7 +21,6 @@ import ErrorBoundary from '../util/ErrorBoundary';
 
 import { isMac, isSnap, isWindows } from '../../environment';
 import Todos from '../../features/todos/containers/TodosScreen';
-import { workspaceStore } from '../../features/workspaces';
 import WorkspaceSwitchingIndicator from '../../features/workspaces/components/WorkspaceSwitchingIndicator';
 import AppUpdateInfoBar from '../AppUpdateInfoBar';
 import Icon from '../ui/icon';
@@ -53,28 +52,10 @@ const transition = window?.matchMedia('(prefers-reduced-motion: no-preference)')
   ? 'transform 0.5s ease'
   : 'none';
 
-const styles = (theme: {
-  workspaces: {
-    drawer: {
-      width: any;
-      compactWidth: any;
-    };
-  };
-}) => ({
+const styles = () => ({
   appContent: {
     width: '100%',
     transition,
-    transform() {
-      const { settings } = workspaceStore.stores;
-
-      const drawerWidth = settings.all.app.useCompactWorkspaceDrawer
-        ? settings.all.app.serviceRibbonWidth
-        : theme.workspaces.drawer.width;
-
-      return workspaceStore.isWorkspaceDrawerOpen
-        ? 'translateX(0)'
-        : `translateX(-${drawerWidth}px)`;
-    },
   },
   titleBar: {
     display: 'block',

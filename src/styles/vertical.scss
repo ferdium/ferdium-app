@@ -1,5 +1,5 @@
-@import './globals.scss';
-@import './config.scss';
+@use './globals.scss';
+@use './config.scss' as *;
 
 $sidebar-width: 75px;
 $sidebar-bias: 28px;
@@ -15,37 +15,37 @@ $tabitem-bias: 30px;
   padding-bottom: 0px;
   overflow: hidden !important;
 
-  &::after {
-    top: -10px;
-    right: -10px;
-    bottom: 0;
-    left: -10px;
-    clip-path: inset(10px 10px 0 10px);
-  }
-
-  > div:first-of-type {
+  .sidebar__services {
+    flex: 1 1 auto;
+    height: calc(100% - var(--webview-padding));
+    margin: var(--webview-padding) 0 0 var(--webview-padding);
+    min-width: 0;
+    overflow-y: hidden !important;
     overflow-x: scroll !important;
-    width: 100%;
+    width: auto;
   }
 
   .tabs {
     flex-direction: row;
+    min-width: 0;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    padding: 0;
+    width: 100%;
 
     .tab-item {
       &.is-active {
         overflow: hidden;
-        height: $sidebar-width + 4;
+        height: $sidebar-width;
       }
 
       &.is-label-enabled {
+        flex-basis: 100px;
         min-width: 100px;
         max-width: 100px;
         height: $sidebar-width + 10;
         width: max-content !important;
         overflow: hidden;
-        padding-left: 4px;
-        padding-right: 4px;
-        padding-top: 8px;
       }
 
       .tab-item__icon {
@@ -56,18 +56,18 @@ $tabitem-bias: 30px;
         padding: 0;
       }
     }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
-  div {
-    overflow: hidden !important;
+  .sidebar__button:first-of-type {
+    box-shadow: -4px 0px 4px 0px $theme-gray-lightest;
   }
 
   .sidebar__button--workspaces.is-active {
-    .app:not(.app--compact-workspace) & {
-      position: absolute;
-      right: 300px;
-      height: 100%;
-      background-color: #f7f7f9;
-    }
+    background-color: #f7f7f9;
+    box-shadow: -4px 0px 4px 0px $theme-gray-lightest;
   }
 }
 
@@ -76,35 +76,12 @@ $tabitem-bias: 30px;
 }
 
 .workspaces-drawer {
-  margin-top: -$sidebar-width;
-  height: 100vh;
-  position: relative;
-
-  &::after {
-    content: ' ';
-    position: absolute;
-    top: -10px;
-    right: 0;
-    bottom: -10px;
-    left: -10px;
-    z-index: 1000;
-    pointer-events: none;
-    clip-path: inset(10px 0 10px 10px);
-    box-shadow:
-      inset 0 0 15px 0 rgba(0, 0, 0, 0.12),
-      inset 0 0 2px 0 rgba(0, 0, 0, 0.36);
-  }
+  overflow: hidden;
 }
 
 .theme__dark {
   .sidebar .sidebar__button--workspaces.is-active {
     background-color: #2d2f31;
-  }
-
-  .workspaces-drawer::after {
-    box-shadow:
-      inset 0 0 10px 0 $dark-theme-black,
-      inset 0 0 2px 0 rgba(0, 0, 0, 0.4);
   }
 }
 

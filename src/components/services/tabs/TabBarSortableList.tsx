@@ -10,6 +10,7 @@ interface IProps {
   showServiceNameSetting: boolean;
   showMessageBadgesEvenWhenMuted: boolean;
   services: Service[];
+  useHorizontalStyle: boolean;
   setActive: (args: { serviceId: string }) => void;
   openSettings: (args: { path: string }) => void;
   reload: (args: { serviceId: string }) => void;
@@ -44,10 +45,22 @@ class TabBarSortableList extends Component<IProps> {
       showMessageBadgeWhenMutedSetting,
       showServiceNameSetting,
       showMessageBadgesEvenWhenMuted,
+      useHorizontalStyle,
     } = this.props;
 
     return (
-      <ul className="tabs">
+      <ul
+        className="tabs"
+        onWheel={event => {
+          if (useHorizontalStyle) {
+            const target = event.currentTarget;
+
+            target.scrollBy({
+              left: event.deltaY,
+            });
+          }
+        }}
+      >
         {services.map((service, index) => (
           <TabItem
             key={service.id}

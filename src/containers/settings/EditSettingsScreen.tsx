@@ -15,11 +15,13 @@ import {
   GOOGLE_TRANSLATOR_LANGUAGES,
   LIBRETRANSLATE_TRANSLATOR_LANGUAGES,
   SEARCH_ENGINE_NAMES,
+  SERVICE_WEBVIEW_BORDER_RADII,
   SPLIT_COLUMNS_MAX,
   SPLIT_COLUMNS_MIN,
   TODO_APPS,
   TRANSLATOR_ENGINE_GOOGLE,
   TRANSLATOR_ENGINE_NAMES,
+  WEBVIEW_PADDING_SIZES,
   getI18nConfigObjects,
 } from '../../config';
 import { isMac } from '../../environment';
@@ -215,6 +217,14 @@ const messages = defineMessages({
   serviceRibbonWidth: {
     id: 'settings.app.form.serviceRibbonWidth',
     defaultMessage: 'Sidebar width',
+  },
+  webviewPaddingSize: {
+    id: 'settings.app.form.webviewPaddingSize',
+    defaultMessage: 'Workspace, sidebar and webview padding',
+  },
+  serviceWebviewBorderRadius: {
+    id: 'settings.app.form.serviceWebviewBorderRadius',
+    defaultMessage: 'Service webview border radius',
   },
   sidebarServicesLocation: {
     id: 'settings.app.form.sidebarServicesLocation',
@@ -467,6 +477,10 @@ class EditSettingsScreen extends Component<
       splitMode: Boolean(settingsData.splitMode),
       splitColumns: Number(settingsData.splitColumns),
       serviceRibbonWidth: Number(settingsData.serviceRibbonWidth),
+      webviewPaddingSize: Number(settingsData.webviewPaddingSize),
+      serviceWebviewBorderRadius: Number(
+        settingsData.serviceWebviewBorderRadius,
+      ),
       sidebarServicesLocation: Number(settingsData.sidebarServicesLocation),
       iconSize: Number(settingsData.iconSize),
       enableLongPressServiceHint: Boolean(
@@ -653,6 +667,15 @@ class EditSettingsScreen extends Component<
     // Use the internationalized sidebar width configuration
     const sidebarWidth = getSelectOptions({
       locales: i18nConfig.SIDEBAR_WIDTH,
+      sort: false,
+    });
+
+    const webviewPaddingSizes = getSelectOptions({
+      locales: WEBVIEW_PADDING_SIZES,
+      sort: false,
+    });
+    const serviceWebviewBorderRadii = getSelectOptions({
+      locales: SERVICE_WEBVIEW_BORDER_RADII,
       sort: false,
     });
 
@@ -1134,6 +1157,24 @@ class EditSettingsScreen extends Component<
           ),
           default: DEFAULT_APP_SETTINGS.serviceRibbonWidth,
           options: sidebarWidth,
+        },
+        webviewPaddingSize: {
+          label: intl.formatMessage(messages.webviewPaddingSize),
+          value: ifUndefined<number>(
+            settings.all.app.webviewPaddingSize,
+            DEFAULT_APP_SETTINGS.webviewPaddingSize,
+          ),
+          default: DEFAULT_APP_SETTINGS.webviewPaddingSize,
+          options: webviewPaddingSizes,
+        },
+        serviceWebviewBorderRadius: {
+          label: intl.formatMessage(messages.serviceWebviewBorderRadius),
+          value: ifUndefined<number>(
+            settings.all.app.serviceWebviewBorderRadius,
+            DEFAULT_APP_SETTINGS.serviceWebviewBorderRadius,
+          ),
+          default: DEFAULT_APP_SETTINGS.serviceWebviewBorderRadius,
+          options: serviceWebviewBorderRadii,
         },
         sidebarServicesLocation: {
           label: intl.formatMessage(messages.sidebarServicesLocation),

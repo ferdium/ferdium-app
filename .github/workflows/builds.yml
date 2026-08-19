@@ -73,8 +73,9 @@ jobs:
           # Defensive: update submodules in the develop branch
           git checkout develop
           git submodule update --init --recursive --remote --rebase --force
-          git add .
-          git commit -am "Update submodules [skip ci]" --no-verify || true
+          # Git 2.54+ requires --force and an explicit path for submodules with ignore=all.
+          git add --force recipes
+          git commit -m "Update submodules [skip ci]" --no-verify || true
           git push origin develop --no-verify
           git checkout -
 

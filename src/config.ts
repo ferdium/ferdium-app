@@ -485,6 +485,40 @@ export const SIDEBAR_SERVICES_LOCATION = {
   [SIDEBAR_SERVICES_LOCATION_BOTTOMRIGHT]: 'Bottom/Right',
 };
 
+export const WEBVIEW_PADDING_SIZE_MIN = 0;
+export const WEBVIEW_PADDING_SIZE_XS = 2;
+export const WEBVIEW_PADDING_SIZE_SMALL = 4;
+export const WEBVIEW_PADDING_SIZE_DEFAULT = 6;
+export const WEBVIEW_PADDING_SIZE_LARGE = 8;
+export const WEBVIEW_PADDING_SIZE_XL = 10;
+export const WEBVIEW_PADDING_SIZE_MAX = 12;
+export const WEBVIEW_PADDING_SIZES = {
+  [WEBVIEW_PADDING_SIZE_MIN]: 'None',
+  [WEBVIEW_PADDING_SIZE_XS]: 'Very small',
+  [WEBVIEW_PADDING_SIZE_SMALL]: 'Small',
+  [WEBVIEW_PADDING_SIZE_DEFAULT]: 'Normal',
+  [WEBVIEW_PADDING_SIZE_LARGE]: 'Large',
+  [WEBVIEW_PADDING_SIZE_XL]: 'Very large',
+  [WEBVIEW_PADDING_SIZE_MAX]: 'Extremely large',
+};
+
+export const SERVICE_WEBVIEW_BORDER_RADIUS_MIN = 0;
+export const SERVICE_WEBVIEW_BORDER_RADIUS_XS = 2;
+export const SERVICE_WEBVIEW_BORDER_RADIUS_SMALL = 4;
+export const SERVICE_WEBVIEW_BORDER_RADIUS_DEFAULT = 6;
+export const SERVICE_WEBVIEW_BORDER_RADIUS_LARGE = 8;
+export const SERVICE_WEBVIEW_BORDER_RADIUS_XL = 10;
+export const SERVICE_WEBVIEW_BORDER_RADIUS_MAX = 12;
+export const SERVICE_WEBVIEW_BORDER_RADII = {
+  [SERVICE_WEBVIEW_BORDER_RADIUS_MIN]: 'None',
+  [SERVICE_WEBVIEW_BORDER_RADIUS_XS]: 'Very small',
+  [SERVICE_WEBVIEW_BORDER_RADIUS_SMALL]: 'Small',
+  [SERVICE_WEBVIEW_BORDER_RADIUS_DEFAULT]: 'Normal',
+  [SERVICE_WEBVIEW_BORDER_RADIUS_LARGE]: 'Large',
+  [SERVICE_WEBVIEW_BORDER_RADIUS_XL]: 'Very large',
+  [SERVICE_WEBVIEW_BORDER_RADIUS_MAX]: 'Extremely large',
+};
+
 // NOTE: For internationalized version, use getI18nConfigObjects().ICON_SIZES
 export const ICON_SIZES = {
   0: 'Very small icons',
@@ -559,6 +593,8 @@ export const DEFAULT_APP_SETTINGS = {
   spellcheckerLanguage: 'en-us',
   darkMode: false,
   navigationBarManualActive: false,
+  webviewPaddingSize: WEBVIEW_PADDING_SIZE_DEFAULT,
+  serviceWebviewBorderRadius: SERVICE_WEBVIEW_BORDER_RADIUS_DEFAULT,
   splitMode: false,
   splitColumns: 3,
   fallbackLocale: 'en-US',

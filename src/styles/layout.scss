@@ -1,4 +1,6 @@
-@import './config.scss';
+@use 'sass:color';
+
+@use './config.scss' as *;
 
 html {
   overflow: hidden;
@@ -6,13 +8,13 @@ html {
 
 @keyframes pulse-danger {
   0% {
-    background: darken($theme-brand-danger, 10%);
+    background: color.adjust($theme-brand-danger, $lightness: -10%);
   }
   50% {
-    background: lighten($theme-brand-danger, 10%);
+    background: color.adjust($theme-brand-danger, $lightness: 10%);
   }
   100% {
-    background: darken($theme-brand-danger, 10%);
+    background: color.adjust($theme-brand-danger, $lightness: -10%);
   }
 }
 
@@ -23,12 +25,6 @@ html {
     background: $dark-theme-gray-darker;
     color: $theme-text-color;
 
-    &::after {
-      box-shadow:
-        inset 0 0 5px 0 $dark-theme-black,
-        inset 0 0 2px 0 rgba(0, 0, 0, 0.4);
-    }
-
     .sidebar__add-service {
       color: $dark-theme-gray-lighter;
       background: $dark-theme-gray;
@@ -36,6 +32,10 @@ html {
 
     .sidebar__button {
       color: $dark-theme-gray-lighter;
+
+      &:first-of-type {
+        box-shadow: -4px 0px 4px 0px $dark-theme-gray-darker;
+      }
 
       &:hover,
       &:active {
@@ -52,6 +52,14 @@ html {
         filter: grayscale(1);
       }
     }
+
+    .sidebar__button--workspaces.is-active {
+      box-shadow: -4px 0px 4px 0px $dark-theme-gray-darker;
+    }
+  }
+
+  .app__service {
+    background: $dark-theme-gray-darker;
   }
 
   .app-loader .app-loader__title {
@@ -102,6 +110,7 @@ body.win32:not(.isFullScreen) .app .app__content {
 
 .app {
   background: #fff;
+
   .app__content {
     display: flex;
     width: calc(100% + var(--workspace-drawer-width));
@@ -113,28 +122,11 @@ body.win32:not(.isFullScreen) .app .app__content {
   }
 
   .app__service {
+    background: $theme-gray-lightest;
     display: flex;
     flex: 1;
     flex-direction: column;
-  }
-}
-
-.workspaces-drawer {
-  position: relative;
-
-  &::after {
-    content: ' ';
-    position: absolute;
-    top: -10px;
-    right: 0;
-    bottom: -10px;
-    left: -10px;
-    z-index: 1000;
-    pointer-events: none;
-    clip-path: inset(10px 0 10px 10px);
-    box-shadow:
-      inset 0 0 15px 0 rgba(0, 0, 0, 0.12),
-      inset 0 0 2px 0 rgba(0, 0, 0, 0.36);
+    width: 100%;
   }
 }
 
@@ -157,6 +149,10 @@ body.win32:not(.isFullScreen) .app .app__content {
   padding-top: 29px;
 }
 
+.darwin.isFullScreen .sidebar {
+  padding-top: 0;
+}
+
 .sidebar {
   position: relative;
   align-items: center;
@@ -167,22 +163,7 @@ body.win32:not(.isFullScreen) .app .app__content {
   padding-bottom: 10px;
   text-align: center;
   width: $theme-sidebar-width;
-  z-index: 200;
-
-  &::after {
-    content: ' ';
-    position: absolute;
-    top: -10px;
-    right: 0;
-    bottom: -10px;
-    left: -10px;
-    z-index: 1000;
-    pointer-events: none;
-    clip-path: inset(10px 0 10px 10px);
-    box-shadow:
-      inset 0 0 10px 0 rgba(0, 0, 0, 0.12),
-      inset 0 0 2px 0 rgba(0, 0, 0, 0.24);
-  }
+  z-index: 300;
 
   .sidebar__add-service {
     color: $theme-gray-light;
@@ -194,15 +175,20 @@ body.win32:not(.isFullScreen) .app .app__content {
   }
 
   .sidebar__button {
+    align-items: center;
+    box-sizing: border-box;
     color: $theme-gray-light;
+    display: flex;
+    flex: 0 0 auto;
     font-size: 24px;
+    justify-content: center;
     padding: 7px 0;
     position: relative;
     width: $theme-sidebar-width;
 
     &:hover,
     &:active {
-      color: lighten($theme-gray-light, 10%);
+      color: color.adjust($theme-gray-light, $lightness: 10%);
     }
     &.is-muted,
     &.is-active {
@@ -213,9 +199,15 @@ body.win32:not(.isFullScreen) .app .app__content {
     }
   }
 
-  & > div {
+  .sidebar__services {
     display: flex;
+    flex: 1 1 auto;
+    margin: var(--webview-padding) 0 var(--webview-padding)
+      var(--webview-padding);
+    min-height: 0;
+    overflow-x: hidden;
     overflow-y: scroll;
+    width: calc(100% - var(--webview-padding));
 
     &::-webkit-scrollbar {
       display: none;

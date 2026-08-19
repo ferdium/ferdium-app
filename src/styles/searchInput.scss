@@ -1,5 +1,6 @@
-@import './config.scss';
-@import './mixins.scss';
+@use './config.scss' as *;
+@use './headlines.scss' as *;
+@use './mixins.scss' as *;
 
 .theme__dark .search-input {
   @extend %headline__dark;

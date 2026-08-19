@@ -34,7 +34,7 @@ const styles = theme => ({
     alignItems: 'flex-start',
     position: 'absolute',
     transition: wrapperTransition,
-    width: `calc(100% - ${theme.workspaces.drawer.width}px)`,
+    width: '100%',
     marginTop: '20px',
   },
   component: {

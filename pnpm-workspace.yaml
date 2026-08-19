@@ -1,0 +1,40 @@
+overrides:
+  usocket: _EXCLUDED_
+
+peerDependencyRules:
+  allowedVersions:
+    '@typescript-eslint/parser': ^7.0.0
+    'esbuild-sass-plugin>esbuild': ^0.16.7
+    eslint: ^8.0.0
+    'react-electron-web-view>react': ^18.0.0
+    'react-electron-web-view>react-dom': ^18.0.0
+    'react-sortable-hoc>react': ^18.0.0
+    'react-sortable-hoc>react-dom': ^18.0.0
+
+allowedDeprecatedVersions:
+  kleur: 2.0.2
+  set-value: 1.0.0
+  request: 2.88.2
+  har-validator: 5.1.5
+  uuid: 3.4.0
+  '@sinonjs/fake-timers': 10.2.0
+  '@npmcli/move-file': 1.1.2 || 2.0.1
+  source-map-resolve: 0.5.3
+  source-map-url: 0.4.1
+  resolve-url: 0.2.1
+  urix: 0.1.0
+allowBuilds:
+  '@biomejs/biome': true
+  '@parcel/watcher': true
+  electron: true
+  electron-winstaller: false
+  es5-ext: true
+  esbuild: true
+  fast-folder-size: true
+  macos-notification-state: true
+  macos-notification-state@https://codeload.github.com/ferdium/macos-notification-state/tar.gz/7d740bcea260feb08197bd210912133e72853d93: true
+  node-mac-permissions: true
+  preval-build-info: true
+  sqlite3: true
+
+optimisticRepeatInstall: false

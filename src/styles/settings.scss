@@ -1,26 +1,7 @@
-@import './config.scss';
+@use 'sass:color';
 
-%headline {
-  color: #fff;
-  font-size: 20px;
-  font-weight: 400;
-  letter-spacing: -1px;
-
-  a {
-    color: #fff;
-  }
-}
-
-%headline__dark {
-  color: #fff;
-  font-size: 20px;
-  font-weight: 400;
-  letter-spacing: -1px;
-
-  a {
-    color: #fff;
-  }
-}
+@use './config.scss' as *;
+@use './headlines.scss' as *;
 
 .theme__dark {
   .settings__hr {
@@ -102,7 +83,8 @@
 
     .settings-navigation__link {
       color: $dark-theme-gray-lightest;
-      border-bottom: 1px solid darken($dark-theme-gray-darker, 3%);
+      border-bottom: 1px solid
+        color.adjust($dark-theme-gray-darker, $lightness: -3%);
 
       &:last-child {
         border: 0;
@@ -114,7 +96,7 @@
       }
 
       &:hover {
-        background: darken($dark-theme-gray-darker, 5%);
+        background: color.adjust($dark-theme-gray-darker, $lightness: -5%);
 
         .badge {
           background: $dark-theme-gray;
@@ -325,7 +307,7 @@
 
   .settings__close {
     background: $theme-brand-primary;
-    border-left: 1px solid darken($theme-brand-primary, 8%);
+    border-left: 1px solid color.adjust($theme-brand-primary, $lightness: -8%);
     color: #fff;
     font-size: 20px;
     height: 50px;
@@ -342,7 +324,7 @@
       cursor: pointer;
     }
     &:hover {
-      background: darken($theme-brand-primary, 5%);
+      background: color.adjust($theme-brand-primary, $lightness: -5%);
     }
   }
 
@@ -593,10 +575,10 @@
         background $theme-transition-time,
         color $theme-transition-time;
     }
-    border-bottom: 1px solid darken($theme-gray-lightest, 3%);
+    border-bottom: 1px solid color.adjust($theme-gray-lightest, $lightness: -3%);
 
     &:hover {
-      background: darken($theme-gray-lightest, 8%);
+      background: color.adjust($theme-gray-lightest, $lightness: -8%);
     }
 
     &.is-active {

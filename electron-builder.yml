@@ -11,7 +11,7 @@ snap:
   base: core22
   plugs: ["default", "camera", "audio-record", "removable-media"]
   allowNativeWayland: true
-  executableArgs: ["$(sh -c '[ \"$(snapctl get wayland-native)\" != \"false\" ] && echo --ozone-platform-hint=auto || true')"]
+  executableArgs: ["$(sh -c '[ \"$(snapctl get wayland-native)\" = \"false\" ] && echo --ozone-platform=x11 || true')"]
   hooks: ./build-helpers/snap-hooks
   publish:
     provider: snapStore
@@ -80,6 +80,7 @@ mac:
   extendInfo:
     NSCameraUsageDescription: "This app requires camera access for video chats"
     NSMicrophoneUsageDescription: "This app requires microphone access for voice chats"
+    NSAudioCaptureUsageDescription: "This app requires system audio capture access for screen sharing"
     NSFocusStatusUsageDescription: "This app requires focus access for DND functionality"
 
 win:
@@ -91,7 +92,8 @@ win:
     - target: portable
       arch: [x64, ia32, arm64]
   # The name of the CN appearing in the certificate must be present in the publisherName list below
-  publisherName: ["Ferdium Contributors", "Ambroise Grau"]
+  signtoolOptions:
+    publisherName: ["Ferdium Contributors", "Ambroise Grau"]
   # Remove the verification for a signature to allow auto-update without signed certificate
   verifyUpdateCodeSignature: false
 

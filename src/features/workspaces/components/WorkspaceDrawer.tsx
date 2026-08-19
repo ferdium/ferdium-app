@@ -46,6 +46,7 @@ const styles = theme => ({
   drawer: {
     background: theme.workspaces.drawer.background,
     width: 'var(--workspace-drawer-width)',
+    transition: 'transform 0.2s ease',
     display: 'flex',
     flexDirection: 'column',
   },
@@ -70,10 +71,16 @@ const styles = theme => ({
     },
   },
   workspaces: {
+    overflowX: 'hidden',
     overflowY: 'auto',
     display: 'flex',
     flexDirection: 'column',
-    height: '100%',
+    height: 'calc(100% - var(--webview-padding))',
+    marginTop: 'var(--webview-padding)',
+    marginLeft: 'var(--webview-padding)',
+    '&::-webkit-scrollbar': {
+      display: 'none',
+    },
   },
   workspaceNameContainer: {
     display: 'none',
@@ -137,7 +144,6 @@ interface IProps
     WrappedComponentProps,
     StoresProps {
   getServicesForWorkspace: (workspace: Workspace | null) => string[];
-  useCompactWorkspaceDrawer?: boolean;
 }
 
 @inject('stores')
@@ -166,91 +172,97 @@ class WorkspaceDrawer extends Component<IProps> {
     const { hideAllServicesWorkspace, useCompactWorkspaceDrawer } =
       settings.all.app;
 
-    const compactClass = useCompactWorkspaceDrawer ? 'compact' : '';
+    const isCompact = useCompactWorkspaceDrawer;
+    const compactClass = isCompact ? 'compact' : '';
+
+    const workspaceItems = (
+      <>
+        {!hideAllServicesWorkspace && (
+          <WorkspaceDrawerItem
+            name={intl.formatMessage(messages.allServices)}
+            onClick={() => {
+              workspaceActions.deactivate();
+              workspaceActions.toggleWorkspaceDrawer();
+            }}
+            services={getServicesForWorkspace(null)}
+            isActive={actualWorkspace == null}
+            shortcutIndex={0}
+            isCompact={isCompact}
+          />
+        )}
+        {workspaces.map((workspace, index) => (
+          <WorkspaceDrawerItem
+            key={workspace.id}
+            name={workspace.name}
+            isActive={actualWorkspace === workspace}
+            onClick={() => {
+              if (actualWorkspace === workspace) {
+                return;
+              }
+              workspaceActions.activate({ workspace });
+              workspaceActions.toggleWorkspaceDrawer();
+            }}
+            onContextMenuEditClick={() => workspaceActions.edit({ workspace })}
+            services={getServicesForWorkspace(workspace)}
+            shortcutIndex={index + 1}
+            isCompact={isCompact}
+          />
+        ))}
+      </>
+    );
 
     return (
-      <div className={`${classes.drawer} workspaces-drawer ${compactClass}`}>
-        <H1 className={`${classes.headline} ${compactClass}`}>
-          {intl.formatMessage(messages.headline)}
-          {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-          <span
-            className={classes.workspacesSettingsButton}
-            onKeyDown={noop}
-            onClick={() => {
-              workspaceActions.openWorkspaceSettings();
-            }}
-            data-tooltip-id="tooltip-workspaces-drawer"
-            data-tooltip-content={intl.formatMessage(
-              messages.workspacesSettingsTooltip,
-            )}
-          >
-            <Icon
-              icon={mdiCog}
-              size={1.5}
-              className={classes.workspacesSettingsButtonIcon}
-            />
-          </span>
-        </H1>
-        <div className={`${classes.workspaces} ${compactClass}`}>
-          <div className={classes.workspacesList}>
-            {!hideAllServicesWorkspace && (
-              <WorkspaceDrawerItem
-                name={intl.formatMessage(messages.allServices)}
-                onClick={() => {
-                  workspaceActions.deactivate();
-                  workspaceActions.toggleWorkspaceDrawer();
-                }}
-                services={getServicesForWorkspace(null)}
-                isActive={actualWorkspace == null}
-                shortcutIndex={0}
-                isCompact={useCompactWorkspaceDrawer}
+      <>
+        <div className={`${classes.drawer} workspaces-drawer ${compactClass}`}>
+          <H1 className={`${classes.headline} ${compactClass}`}>
+            {intl.formatMessage(messages.headline)}
+            {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+            <span
+              className={classes.workspacesSettingsButton}
+              onKeyDown={noop}
+              onClick={() => {
+                workspaceActions.openWorkspaceSettings();
+              }}
+              data-tooltip-id="tooltip-workspaces-drawer"
+              data-tooltip-content={intl.formatMessage(
+                messages.workspacesSettingsTooltip,
+              )}
+            >
+              <Icon
+                icon={mdiCog}
+                size={1.5}
+                className={classes.workspacesSettingsButtonIcon}
               />
-            )}
-            {workspaces.map((workspace, index) => (
-              <WorkspaceDrawerItem
-                key={workspace.id}
-                name={workspace.name}
-                isActive={actualWorkspace === workspace}
-                onClick={() => {
-                  if (actualWorkspace === workspace) {
-                    return;
-                  }
-                  workspaceActions.activate({ workspace });
-                  workspaceActions.toggleWorkspaceDrawer();
-                }}
-                onContextMenuEditClick={() =>
-                  workspaceActions.edit({ workspace })
-                }
-                services={getServicesForWorkspace(workspace)}
-                shortcutIndex={index + 1}
-                isCompact={useCompactWorkspaceDrawer}
-              />
-            ))}
-          </div>
-          {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-          <div
-            className={`${classes.addNewWorkspaceLabel} ${compactClass}`}
-            onClick={() => {
-              workspaceActions.openWorkspaceSettings();
-            }}
-            onKeyDown={noop}
-          >
-            <Icon
-              icon={mdiPlusBox}
-              className={`${classes.workspacesSettingsButtonIcon} ${compactClass}`}
-            />
-            <span className={compactClass}>
-              {intl.formatMessage(messages.addNewWorkspaceLabel)}
             </span>
+          </H1>
+          <div className={`${classes.workspaces} ${compactClass}`}>
+            <div className={classes.workspacesList}>{workspaceItems}</div>
+            {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+            <div
+              className={`${classes.addNewWorkspaceLabel} ${compactClass}`}
+              onClick={() => {
+                workspaceActions.openWorkspaceSettings();
+              }}
+              onKeyDown={noop}
+            >
+              <Icon
+                icon={mdiPlusBox}
+                className={`${classes.workspacesSettingsButtonIcon} ${compactClass}`}
+              />
+              <span className={compactClass}>
+                {intl.formatMessage(messages.addNewWorkspaceLabel)}
+              </span>
+            </div>
           </div>
         </div>
         <ReactTooltip
           id="tooltip-workspaces-drawer"
           place="right"
+          positionStrategy="fixed"
           variant="dark"
-          style={{ height: 'auto', zIndex: 210 }}
+          style={{ height: 'auto', zIndex: 1000 }}
         />
-      </div>
+      </>
     );
   }
 }

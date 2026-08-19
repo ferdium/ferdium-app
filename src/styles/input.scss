@@ -1,5 +1,7 @@
-@import './config.scss';
-@import './mixins.scss';
+@use 'sass:color';
+
+@use './config.scss' as *;
+@use './mixins.scss' as *;
 
 .theme__dark .franz-form {
   .franz-form__label {
@@ -79,7 +81,7 @@
     width: 100%;
 
     &::placeholder {
-      color: lighten($theme-gray-light, 10%);
+      color: color.adjust($theme-gray-light, $lightness: 10%);
     }
   }
 

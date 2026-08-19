@@ -25,7 +25,6 @@ export default (brandPrimary: string) => {
     .hex();
   const buttonSecondaryTextColor = legacyStyles.darkThemeTextColor;
   const selectColor = inputColor;
-  const drawerBg = color(colorBackground).lighten(0.3).hex();
 
   const services = merge({}, defaultStyles.services, {
     listItems: {
@@ -134,22 +133,23 @@ export default (brandPrimary: string) => {
         listItems: cloneDeep(services.listItems),
       },
       drawer: {
-        background: drawerBg,
+        background: legacyStyles.darkThemeGrayDarker,
+        border: legacyStyles.darkThemeGrayDarkest,
         addButton: {
           color: legacyStyles.darkThemeGrayLighter,
           hoverColor: legacyStyles.darkThemeGraySmoke,
         },
         listItem: {
-          border: color(drawerBg).lighten(0.2).hex(),
+          border: legacyStyles.darkThemeGrayLight,
           hoverBackground: legacyStyles.darkThemeGrayDark,
-          activeBackground: legacyStyles.darkThemeGrayDarker,
+          activeBackground: legacyStyles.darkThemeGray,
           name: {
             color: colorText,
             activeColor: 'white',
           },
           services: {
             color: color(colorText).darken(0.5).hex(),
-            active: color(colorText).darken(0.5).hex(),
+            active: color(colorText).darken(0.25).hex(),
           },
         },
       },

@@ -1,4 +1,6 @@
-@import './config.scss';
+@use 'sass:color';
+
+@use './config.scss' as *;
 
 .theme__dark #electron-app-title-bar {
   background: $dark-theme-gray-darker;
@@ -27,7 +29,7 @@
 
       .menu-item {
         .accelerator {
-          color: lighten($dark-theme-gray-light, 20%);
+          color: color.adjust($dark-theme-gray-light, $lightness: 20%);
         }
       }
 

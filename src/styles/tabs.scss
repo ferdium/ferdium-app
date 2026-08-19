@@ -1,10 +1,14 @@
-@import './config.scss';
+@use 'sass:color';
+@use 'sass:math';
+
+@use './config.scss' as *;
 
 .theme__dark .tab-item {
   color: $dark-theme-text-color;
 
   &.is-active {
     background: $dark-theme-gray;
+    border: 1px solid $dark-theme-gray-light;
   }
 
   &.is-disabled .tab-item__icon {
@@ -16,6 +20,8 @@
   display: flex;
   flex-direction: column;
   flex-shrink: 1;
+  padding: 0;
+  gap: var(--webview-padding);
 
   .placeholder {
     height: 40px;
@@ -25,24 +31,32 @@
 
 .tab-item {
   align-items: center;
+  box-sizing: border-box;
   display: flex;
+  flex: 0 0 auto;
   height: 65px;
   justify-content: space-evenly;
   min-height: 50px;
   position: relative;
   flex-direction: column;
+  width: $theme-sidebar-width;
+  border-radius: 4px;
+  padding: 0;
+
   @media (prefers-reduced-motion: no-preference) {
     transition: background $theme-transition-time;
   }
-  width: $theme-sidebar-width;
 
   &.is-active {
-    background: change-color(
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    background: color.change(
       $theme-brand-primary,
-      $lightness: min(lightness($theme-brand-primary) * 1.35, 100)
+      $lightness:
+        math.min(
+          color.channel($theme-brand-primary, 'lightness', $space: hsl) * 1.35,
+          100%
+        )
     );
-
-    box-shadow: inset 4px 0 0 0 $theme-brand-primary;
 
     .tab-item__icon,
     .tab-item__label {
@@ -53,8 +67,6 @@
   &.is-label-enabled {
     height: min-content;
     overflow: hidden;
-    padding-top: 8px;
-    padding-bottom: 8px;
   }
 
   .tab-item__label {

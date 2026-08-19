@@ -1,10 +1,9 @@
-import { basename, join } from 'node:path';
+import { join } from 'node:path';
 import { webContents } from '@electron/remote';
 import { ipcRenderer } from 'electron';
 import { action, autorun, computed, makeObservable, observable } from 'mobx';
 import type ElectronWebView from 'react-electron-web-view';
 
-import { v4 as uuidV4 } from 'uuid';
 import { needsToken } from '../api/apiBase';
 import { DEFAULT_SERVICE_ORDER, DEFAULT_SERVICE_SETTINGS } from '../config';
 import { isMac } from '../environment';
@@ -12,6 +11,7 @@ import { todosStore } from '../features/todos';
 import { getFaviconUrl } from '../helpers/favicon-helpers';
 import { isValidExternalURL, normalizedUrl } from '../helpers/url-helpers';
 import { ifUndefined } from '../jsUtils';
+import { downloadController } from './DownloadController';
 import type { IRecipe } from './Recipe';
 import UserAgent from './UserAgent';
 
@@ -414,12 +414,57 @@ export default class Service {
   }
 
   initializeWebViewEvents({ handleIPCMessage, openWindow, stores }): void {
-    const webviewWebContents = webContents.fromId(
-      this.webview.getWebContentsId(),
-    );
+    const { webview } = this;
+    if (!webview) {
+      debug(
+        'Webview is no longer available; skipping event initialization',
+        this.name,
+      );
+      return;
+    }
 
-    this.userAgentModel.setWebviewReference(this.webview);
+    let webviewWebContents;
+    try {
+      webviewWebContents = webContents.fromId(webview.getWebContentsId());
+    } catch (error) {
+      // The <webview> can still be mid-attach here even after the
+      // setTimeout(0) workaround in ServiceWebview's onDidAttach (see
+      // https://github.com/electron/electron/issues/31918). getWebContentsId
+      // throws in that case instead of returning a usable id. Rather than
+      // assuming a fixed delay is enough (and silently never initializing
+      // the service, leaving it stuck in its default "loading" state
+      // forever), retry once the webview itself reports it's actually
+      // ready.
+      debug(
+        'Webview was not ready yet, retrying once dom-ready fires',
+        this.name,
+        error,
+      );
+      webview.addEventListener(
+        'dom-ready',
+        () => {
+          // The service may have been detached or assigned a replacement
+          // webview while this one was finishing its attach lifecycle.
+          if (this.webview !== webview) {
+            debug('Ignoring dom-ready from a stale webview', this.name);
+            return;
+          }
 
+          this.initializeWebViewEvents({
+            handleIPCMessage,
+            openWindow,
+            stores,
+          });
+        },
+        { once: true },
+      );
+      return;
+    }
+    this.userAgentModel.setWebviewReference(webview);
+    downloadController.registerWebContents({
+      serviceId: this.id,
+      webContents: webviewWebContents,
+    });
     // If the recipe has implemented 'modifyRequestHeaders',
     // Send those headers to ipcMain so that it can be set in session
     if (typeof this.recipe.modifyRequestHeaders === 'function') {
@@ -565,85 +610,6 @@ export default class Service {
           }
         });
       }
-
-      webviewWebContents.session.on('will-download', (event, item) => {
-        event.preventDefault();
-
-        const downloadId = uuidV4();
-
-        window['ferdium'].actions.app.addDownload({
-          id: downloadId,
-          serviceId: this.id,
-          filename: item.getFilename(),
-          url: item.getURL(),
-          savePath: item.getSavePath(),
-        });
-
-        item.addListener('updated', (event, state) => {
-          if (state === 'interrupted') {
-            debug('Download is interrupted but can be resumed');
-          } else if (state === 'progressing') {
-            if (item.isPaused()) {
-              debug('Download is paused');
-            } else {
-              debug(`Received bytes: ${item.getReceivedBytes()}`);
-            }
-          }
-          window['ferdium'].actions.app.updateDownload({
-            id: downloadId,
-            serviceId: this.id,
-            filename: basename(item.getSavePath()),
-            url: item.getURL(),
-            savePath: item.getSavePath(),
-            receivedBytes: item.getReceivedBytes(),
-            totalBytes: item.getTotalBytes(),
-            state,
-          });
-          debug('download updated', event, state);
-        });
-        item.addListener('done', (event, state) => {
-          debug('download done', event, state);
-          if (state === 'completed') {
-            debug('Download successfully');
-          } else {
-            if (state === 'cancelled' && item.getSavePath() === '') {
-              window['ferdium'].actions.app.removeDownload(downloadId);
-              debug('Download is cancelled');
-            }
-            debug(`Download failed: ${state}`);
-          }
-
-          window['ferdium'].actions.app.endedDownload({
-            id: downloadId,
-            serviceId: this.id,
-            receivedBytes: item.getReceivedBytes(),
-            totalBytes: item.getTotalBytes(),
-            state,
-          });
-        });
-
-        ipcRenderer.on('toggle-pause-download', (_, data) => {
-          debug('toggle-pause-download', item.isPaused(), item.getState());
-          if (data.downloadId === downloadId || data.downloadId === undefined) {
-            if (item.isPaused()) {
-              item.resume();
-            } else {
-              item.pause();
-            }
-          }
-          debug('toggle-pause-download', item.isPaused(), item.getState());
-          window['ferdium'].actions.app.updateDownload({
-            id: downloadId,
-            paused: item.isPaused(),
-          });
-        });
-
-        ipcRenderer.on('stop-download', (_, data) => {
-          if (data === undefined || downloadId === data.downloadId) {
-            item.cancel();
-          }
-        });
-      });
       webviewWebContents.on('login', (event, _, authInfo, callback) => {
         // const authCallback = callback;
         debug('browser login event', authInfo);

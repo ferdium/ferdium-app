@@ -9,7 +9,7 @@ Ferdium is an Electron desktop app that aggregates messaging services (Slack, Wh
 ## Essential Commands
 
 ```bash
-pnpm install              # Install dependencies (requires Node 22.18.0, pnpm 10.14.0)
+pnpm install              # Install dependencies (requires Node 24.18.1, pnpm 11.20.0)
 pnpm dev                  # Start esbuild in watch mode (serves on http://127.0.0.1:8080)
 pnpm start                # Launch Electron with built app (run after dev or build)
 pnpm start:all-dev        # Dev + Electron together (waits for dev server, then launches)

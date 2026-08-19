@@ -1,4 +1,5 @@
-@import './type-helper';
+@use './globals.scss' as *;
+@use './type-helper' as *;
 
 $theme-brand-primary: convert-rgb-string-to-color($raw-theme-brand-primary);
 $theme-brand-gradient: $theme-brand-primary;

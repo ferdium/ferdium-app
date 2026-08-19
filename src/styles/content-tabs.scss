@@ -1,4 +1,6 @@
-@import './config.scss';
+@use 'sass:color';
+
+@use './config.scss' as *;
 
 .theme__dark {
   .content-tabs {
@@ -26,7 +28,7 @@
     .content-tabs__item {
       background: linear-gradient(
         $theme-gray-lightest 80%,
-        darken($theme-gray-lightest, 3%)
+        color.adjust($theme-gray-lightest, $lightness: -3%)
       );
       border-right: 1px solid $theme-gray-lighter;
       color: $theme-gray-dark;
