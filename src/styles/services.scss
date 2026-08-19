@@ -4,8 +4,11 @@
   background: $dark-theme-gray-darker;
 
   .services__webview-wrapper {
-    background: $dark-theme-gray-darker;
-    border: 1px solid $dark-theme-gray;
+    background: $dark-theme-gray-darkest;
+  }
+
+  .services__webview webview {
+    background: $dark-theme-gray-darkest;
   }
 
   .services__no-service,
@@ -47,12 +50,12 @@
 
   .services__webview-wrapper {
     background: $theme-gray-lightest;
-    border: 1px solid $theme-gray-lighter;
     border-radius: var(--service-webview-border-radius, 4px);
     clip-path: inset(0 round var(--service-webview-border-radius, 4px));
     overflow: hidden;
 
     webview {
+      background: $theme-gray-lightest;
       border-radius: var(--service-webview-border-radius, 4px);
       overflow: hidden;
     }
