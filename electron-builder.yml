@@ -17,9 +17,7 @@ snapcraft:
       - gnome
     plugs:
       - default
-      - browser-support:
-          interface: browser-support
-          allow-sandbox: true
+      - browser-support
       - camera
       - audio-record
       - removable-media
