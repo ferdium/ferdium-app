@@ -39,7 +39,7 @@ import {
 import { ifUndefined } from './jsUtils';
 
 import Settings from './electron/Settings';
-import handleDeepLink from './electron/deepLinking';
+import handleDeepLink, { getDeepLinkFromArgs } from './electron/deepLinking';
 import './electron/exception';
 // eslint-disable-next-line import/no-cycle
 import ipcApi from './electron/ipc-api';
@@ -136,8 +136,11 @@ if (gotTheLock) {
       if (isWindows) {
         onDidLoad((window: BrowserWindow) => {
           // Keep only command line / deep linked arguments
-          const url = argv.slice(1);
-          handleDeepLink(window, url.toString());
+          const deepLink = getDeepLinkFromArgs(argv);
+
+          if (deepLink) {
+            handleDeepLink(window, deepLink);
+          }
 
           if (argv.includes('--reset-window')) {
             // Needs to be delayed to not interfere with mainWindow.restore();
@@ -410,8 +413,11 @@ const createWindow = () => {
   // Windows deep linking handling on app launch
   if (isWindows) {
     onDidLoad((window: BrowserWindow) => {
-      const url = process.argv.slice(1);
-      handleDeepLink(window, url.toString());
+      const deepLink = getDeepLinkFromArgs(process.argv);
+
+      if (deepLink) {
+        handleDeepLink(window, deepLink);
+      }
     });
   }
 
