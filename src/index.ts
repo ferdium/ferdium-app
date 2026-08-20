@@ -39,7 +39,7 @@ import {
 import { ifUndefined } from './jsUtils';
 
 import Settings from './electron/Settings';
-import handleDeepLink from './electron/deepLinking';
+import handleDeepLink, { getDeepLinkFromArgs } from './electron/deepLinking';
 import './electron/exception';
 // eslint-disable-next-line import/no-cycle
 import ipcApi from './electron/ipc-api';
@@ -106,6 +106,40 @@ const shortcutSettings = new Settings('shortcuts', DEFAULT_SHORTCUTS);
 const retrieveSettingValue = (key: string, defaultValue: boolean | string) =>
   ifUndefined<boolean | string>(settings.get(key), defaultValue);
 
+const normalizeAppSettings = (): void => {
+  if (settings.get('enableSystemTray') !== false) {
+    return;
+  }
+
+  const normalizedSettings: Partial<typeof DEFAULT_APP_SETTINGS> = {};
+
+  if (settings.get('runInBackground') !== false) {
+    normalizedSettings.runInBackground = false;
+  }
+
+  if (settings.get('startMinimized') !== false) {
+    normalizedSettings.startMinimized = false;
+  }
+
+  if (settings.get('minimizeToSystemTray') !== false) {
+    normalizedSettings.minimizeToSystemTray = false;
+  }
+
+  if (settings.get('closeToSystemTray') !== false) {
+    normalizedSettings.closeToSystemTray = false;
+  }
+
+  if (Object.keys(normalizedSettings).length > 0) {
+    debug(
+      'Normalizing app settings for disabled system tray',
+      normalizedSettings,
+    );
+    settings.set(normalizedSettings);
+  }
+};
+
+normalizeAppSettings();
+
 // TODO: Commenting out sentry to fix https://github.com/ferdium/ferdium-app/issues/814
 // if (retrieveSettingValue('sentry', DEFAULT_APP_SETTINGS.sentry)) {
 //   // eslint-disable-next-line global-require
@@ -136,8 +170,11 @@ if (gotTheLock) {
       if (isWindows) {
         onDidLoad((window: BrowserWindow) => {
           // Keep only command line / deep linked arguments
-          const url = argv.slice(1);
-          handleDeepLink(window, url.toString());
+          const deepLink = getDeepLinkFromArgs(argv);
+
+          if (deepLink) {
+            handleDeepLink(window, deepLink);
+          }
 
           if (argv.includes('--reset-window')) {
             // Needs to be delayed to not interfere with mainWindow.restore();
@@ -410,8 +447,11 @@ const createWindow = () => {
   // Windows deep linking handling on app launch
   if (isWindows) {
     onDidLoad((window: BrowserWindow) => {
-      const url = process.argv.slice(1);
-      handleDeepLink(window, url.toString());
+      const deepLink = getDeepLinkFromArgs(process.argv);
+
+      if (deepLink) {
+        handleDeepLink(window, deepLink);
+      }
     });
   }
 

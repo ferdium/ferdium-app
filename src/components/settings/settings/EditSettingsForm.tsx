@@ -460,6 +460,14 @@ class EditSettingsForm extends Component<IProps, IState> {
           values.twoFactorAutoCatcherMatcher =
             DEFAULT_APP_SETTINGS.twoFactorAutoCatcherMatcher;
         }
+
+        if (!values.enableSystemTray) {
+          values.runInBackground = false;
+          values.startMinimized = false;
+          values.minimizeToSystemTray = false;
+          values.closeToSystemTray = false;
+        }
+
         this.props.onSubmit(values);
       },
       onError: noop,
@@ -511,6 +519,7 @@ class EditSettingsForm extends Component<IProps, IState> {
       reloadAfterResume,
       useSelfSignedCertificates,
       sandboxServices,
+      enableSystemTray,
     } = window['ferdium'].stores.settings.all.app;
 
     let cacheSize;
@@ -655,9 +664,7 @@ class EditSettingsForm extends Component<IProps, IState> {
                   {intl.formatMessage(messages.sectionMain)}
                 </H2>
                 <Toggle {...form.$('autoLaunchOnStart').bind()} />
-                <Toggle {...form.$('runInBackground').bind()} />
                 <Toggle {...form.$('confirmOnQuit').bind()} />
-                <Toggle {...form.$('enableSystemTray').bind()} />
                 {reloadAfterResume && <Hr />}
                 <Toggle {...form.$('reloadAfterResume').bind()} />
                 {reloadAfterResume && (
@@ -666,12 +673,21 @@ class EditSettingsForm extends Component<IProps, IState> {
                     <Hr />
                   </div>
                 )}
-                <Toggle {...form.$('startMinimized').bind()} />
-                {isWindows && (
-                  <Toggle {...form.$('minimizeToSystemTray').bind()} />
-                )}
-                {isWindows && (
-                  <Toggle {...form.$('closeToSystemTray').bind()} />
+
+                {enableSystemTray && <Hr />}
+                <Toggle {...form.$('enableSystemTray').bind()} />
+                {enableSystemTray && (
+                  <>
+                    <Toggle {...form.$('runInBackground').bind()} />
+                    <Toggle {...form.$('startMinimized').bind()} />
+                    {isWindows && (
+                      <Toggle {...form.$('minimizeToSystemTray').bind()} />
+                    )}
+                    {isWindows && (
+                      <Toggle {...form.$('closeToSystemTray').bind()} />
+                    )}
+                    <Hr />
+                  </>
                 )}
 
                 <Toggle {...form.$('keepAllWorkspacesLoaded').bind()} />

@@ -65,7 +65,7 @@ const messages = defineMessages({
   },
   enableSystemTray: {
     id: 'settings.app.form.enableSystemTray',
-    defaultMessage: 'Always show Ferdium in System Tray',
+    defaultMessage: 'Show Ferdium in System Tray',
   },
   enableMenuBar: {
     id: 'settings.app.form.enableMenuBar',
@@ -419,9 +419,12 @@ class EditSettingsScreen extends Component<
       lockedPassword: useOriginalPassword ? '' : settingsData.lockedPassword,
     });
 
+    const enableSystemTray = Boolean(settingsData.enableSystemTray);
+
     app.launchOnStartup({
       enable: Boolean(settingsData.autoLaunchOnStart),
-      openInBackground: Boolean(settingsData.autoLaunchInBackground),
+      openInBackground:
+        enableSystemTray && Boolean(settingsData.autoLaunchInBackground),
     });
 
     debug(`Updating settings store with data: ${settingsData}`);
@@ -429,14 +432,17 @@ class EditSettingsScreen extends Component<
     const { app: currentSettings } = this.props.stores.settings.all;
 
     const newSettings = {
-      runInBackground: Boolean(settingsData.runInBackground),
-      enableSystemTray: Boolean(settingsData.enableSystemTray),
+      runInBackground:
+        enableSystemTray && Boolean(settingsData.runInBackground),
+      enableSystemTray,
       reloadAfterResume: Boolean(settingsData.reloadAfterResume),
       reloadAfterResumeTime: Number(settingsData.reloadAfterResumeTime),
-      startMinimized: Boolean(settingsData.startMinimized),
+      startMinimized: enableSystemTray && Boolean(settingsData.startMinimized),
       confirmOnQuit: Boolean(settingsData.confirmOnQuit),
-      minimizeToSystemTray: Boolean(settingsData.minimizeToSystemTray),
-      closeToSystemTray: Boolean(settingsData.closeToSystemTray),
+      minimizeToSystemTray:
+        enableSystemTray && Boolean(settingsData.minimizeToSystemTray),
+      closeToSystemTray:
+        enableSystemTray && Boolean(settingsData.closeToSystemTray),
       privateNotifications: Boolean(settingsData.privateNotifications),
       clipboardNotifications: Boolean(settingsData.clipboardNotifications),
       notifyTaskBarOnMessage: Boolean(settingsData.notifyTaskBarOnMessage),
@@ -697,6 +703,10 @@ class EditSettingsScreen extends Component<
         globalMessages.spellcheckerAutomaticDetection,
       ),
     });
+    const isSystemTrayEnabled = ifUndefined<boolean>(
+      settings.all.app.enableSystemTray,
+      DEFAULT_APP_SETTINGS.enableSystemTray,
+    );
 
     const config: FormFields = {
       fields: {
@@ -720,20 +730,26 @@ class EditSettingsScreen extends Component<
         },
         runInBackground: {
           label: intl.formatMessage(messages.runInBackground),
-          value: ifUndefined<boolean>(
-            settings.all.app.runInBackground,
-            DEFAULT_APP_SETTINGS.runInBackground,
-          ),
+          value:
+            isSystemTrayEnabled &&
+            ifUndefined<boolean>(
+              settings.all.app.runInBackground,
+              DEFAULT_APP_SETTINGS.runInBackground,
+            ),
           default: DEFAULT_APP_SETTINGS.runInBackground,
+          disabled: !isSystemTrayEnabled,
           type: 'checkbox',
         },
         startMinimized: {
           label: intl.formatMessage(messages.startMinimized),
-          value: ifUndefined<boolean>(
-            settings.all.app.startMinimized,
-            DEFAULT_APP_SETTINGS.startMinimized,
-          ),
+          value:
+            isSystemTrayEnabled &&
+            ifUndefined<boolean>(
+              settings.all.app.startMinimized,
+              DEFAULT_APP_SETTINGS.startMinimized,
+            ),
           default: DEFAULT_APP_SETTINGS.startMinimized,
+          disabled: !isSystemTrayEnabled,
           type: 'checkbox',
         },
         confirmOnQuit: {
@@ -775,20 +791,26 @@ class EditSettingsScreen extends Component<
         },
         minimizeToSystemTray: {
           label: intl.formatMessage(messages.minimizeToSystemTray),
-          value: ifUndefined<boolean>(
-            settings.all.app.minimizeToSystemTray,
-            DEFAULT_APP_SETTINGS.minimizeToSystemTray,
-          ),
+          value:
+            isSystemTrayEnabled &&
+            ifUndefined<boolean>(
+              settings.all.app.minimizeToSystemTray,
+              DEFAULT_APP_SETTINGS.minimizeToSystemTray,
+            ),
           default: DEFAULT_APP_SETTINGS.minimizeToSystemTray,
+          disabled: !isSystemTrayEnabled,
           type: 'checkbox',
         },
         closeToSystemTray: {
           label: intl.formatMessage(messages.closeToSystemTray),
-          value: ifUndefined<boolean>(
-            settings.all.app.closeToSystemTray,
-            DEFAULT_APP_SETTINGS.closeToSystemTray,
-          ),
+          value:
+            isSystemTrayEnabled &&
+            ifUndefined<boolean>(
+              settings.all.app.closeToSystemTray,
+              DEFAULT_APP_SETTINGS.closeToSystemTray,
+            ),
           default: DEFAULT_APP_SETTINGS.closeToSystemTray,
+          disabled: !isSystemTrayEnabled,
           type: 'checkbox',
         },
         privateNotifications: {

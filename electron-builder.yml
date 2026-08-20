@@ -7,15 +7,21 @@ appId: "org.ferdium.ferdium-app"
 publish:
   provider: github
 
-snap:
-  base: core22
-  plugs: ["default", "camera", "audio-record", "removable-media"]
-  allowNativeWayland: true
-  executableArgs: ["$(sh -c '[ \"$(snapctl get wayland-native)\" = \"false\" ] && echo --ozone-platform=x11 || true')"]
-  hooks: ./build-helpers/snap-hooks
+snapcraft:
+  base: core24
   publish:
     provider: snapStore
-  description: 'Ferdium is your cross-platform messaging app / former heir to the throne of Austria-Hungary which brings your chat & messaging services together into one application. For enabling webcam access you need to connect "camera" plug to snap, and for microphone with PulseAudio the "audio-record" plug. This can be done in Snap GUI or via command: `snap connect ferdium:camera; snap connect ferdium:audio-record`.'
+  core24:
+    useLXD: true
+    extensions:
+      - gnome
+    plugs:
+      - default
+      - browser-support
+      - camera
+      - audio-record
+      - removable-media
+    description: 'Ferdium is your cross-platform messaging app / former heir to the throne of Austria-Hungary which brings your chat & messaging services together into one application. For enabling webcam access you need to connect "camera" plug to snap, and for microphone with PulseAudio the "audio-record" plug. This can be done in Snap GUI or via command: `snap connect ferdium:camera; snap connect ferdium:audio-record`.'
 
 nsis:
   perMachine: false
