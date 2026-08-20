@@ -106,6 +106,40 @@ const shortcutSettings = new Settings('shortcuts', DEFAULT_SHORTCUTS);
 const retrieveSettingValue = (key: string, defaultValue: boolean | string) =>
   ifUndefined<boolean | string>(settings.get(key), defaultValue);
 
+const normalizeAppSettings = (): void => {
+  if (settings.get('enableSystemTray') !== false) {
+    return;
+  }
+
+  const normalizedSettings: Partial<typeof DEFAULT_APP_SETTINGS> = {};
+
+  if (settings.get('runInBackground') !== false) {
+    normalizedSettings.runInBackground = false;
+  }
+
+  if (settings.get('startMinimized') !== false) {
+    normalizedSettings.startMinimized = false;
+  }
+
+  if (settings.get('minimizeToSystemTray') !== false) {
+    normalizedSettings.minimizeToSystemTray = false;
+  }
+
+  if (settings.get('closeToSystemTray') !== false) {
+    normalizedSettings.closeToSystemTray = false;
+  }
+
+  if (Object.keys(normalizedSettings).length > 0) {
+    debug(
+      'Normalizing app settings for disabled system tray',
+      normalizedSettings,
+    );
+    settings.set(normalizedSettings);
+  }
+};
+
+normalizeAppSettings();
+
 // TODO: Commenting out sentry to fix https://github.com/ferdium/ferdium-app/issues/814
 // if (retrieveSettingValue('sentry', DEFAULT_APP_SETTINGS.sentry)) {
 //   // eslint-disable-next-line global-require
