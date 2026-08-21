@@ -97,6 +97,9 @@ win:
       arch: [x64, ia32, arm64]
     - target: portable
       arch: [x64, ia32, arm64]
+    # Temporary ARM64 ZIP build
+    - target: zip
+      arch: [arm64]
   # The name of the CN appearing in the certificate must be present in the publisherName list below
   signtoolOptions:
     publisherName: ["Ferdium Contributors", "Ambroise Grau"]
