@@ -56,7 +56,10 @@ export default class LocalApi {
         'cachestorage',
       ],
     };
-    ipcRenderer.send('clear-storage-data', { serviceId, targetsToClear });
+    await ipcRenderer.invoke('clear-storage-data', {
+      serviceId,
+      targetsToClear,
+    });
     return ipcRenderer.invoke('clear-cache', { serviceId });
   }
 }
