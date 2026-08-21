@@ -6,6 +6,11 @@ import { isLinux } from '../environment';
 import type TrayIcon from './Tray';
 import Ferdium, { type UnreadServices } from './dbus/Ferdium';
 
+const STATUS_NOTIFIER_WATCHERS = new Set([
+  'org.kde.StatusNotifierWatcher',
+  'org.freedesktop.StatusNotifierWatcher',
+]);
+
 export default class DBus {
   private bus: MessageBus | null = null;
 
@@ -87,7 +92,9 @@ export default class DBus {
     this.ferdium = new Ferdium(this);
     this.bus.export('/org/ferdium', this.ferdium);
 
-    // HACK Hook onto the MessageBus to track StatusNotifierWatchers
+    // Track StatusNotifierWatcher restarts. The custom Linux tray keeps its
+    // own D-Bus connection, so after a watcher restart it only needs to
+    // re-register its StatusNotifierItem and re-announce the icon.
     // @ts-expect-error Property '_addMatch' does not exist on type 'MessageBus'.
     this.bus._addMatch(
       "type='signal',sender='org.freedesktop.DBus',interface='org.freedesktop.DBus',path='/org/freedesktop/DBus',member='NameOwnerChanged'",
@@ -101,7 +108,7 @@ export default class DBus {
     this.bus._signals.on(mangled, (msg: { body: [any, any, any] }) => {
       const [name, oldOwner, newOwner] = msg.body;
       if (
-        name === 'org.kde.StatusNotifierWatcher' &&
+        STATUS_NOTIFIER_WATCHERS.has(name) &&
         oldOwner !== newOwner &&
         newOwner !== ''
       ) {
