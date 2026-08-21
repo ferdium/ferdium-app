@@ -4,6 +4,10 @@ directories:
 
 appId: "org.ferdium.ferdium-app"
 
+electronFuses:
+  enableEmbeddedAsarIntegrityValidation: true
+  onlyLoadAppFromAsar: true
+
 publish:
   provider: github
 
