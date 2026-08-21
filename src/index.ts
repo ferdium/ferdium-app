@@ -107,7 +107,7 @@ const retrieveSettingValue = (key: string, defaultValue: boolean | string) =>
   ifUndefined<boolean | string>(settings.get(key), defaultValue);
 
 const normalizeAppSettings = (): void => {
-  if (settings.get('enableSystemTray') !== false) {
+  if (isMac || settings.get('enableSystemTray') !== false) {
     return;
   }
 
