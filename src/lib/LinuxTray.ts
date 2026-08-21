@@ -5,9 +5,9 @@ import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-import { type NativeImage, nativeImage } from 'electron';
 import * as dbus from 'dbus-next';
 import type { MessageBus } from 'dbus-next';
+import { type NativeImage, nativeImage } from 'electron';
 
 const STATUS_NOTIFIER_ITEM_PATH = '/StatusNotifierItem';
 const DBUS_MENU_PATH = '/Menu';
@@ -576,7 +576,7 @@ export default class LinuxTray {
     const nextIconPath = join(nextDirectory, `${nextIconName}.png`);
 
     try {
-      writeFileSync(nextIconPath, image.toPNG());
+      writeFileSync(nextIconPath, Uint8Array.from(image.toPNG()));
     } catch (error) {
       rmSync(nextDirectory, { recursive: true, force: true });
       throw error;
