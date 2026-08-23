@@ -420,29 +420,29 @@ class EditSettingsScreen extends Component<
     });
 
     const enableSystemTray = Boolean(settingsData.enableSystemTray);
-
+    const trayDependencySatisfied = isMac || enableSystemTray;
     app.launchOnStartup({
       enable: Boolean(settingsData.autoLaunchOnStart),
       openInBackground:
-        enableSystemTray && Boolean(settingsData.autoLaunchInBackground),
+        trayDependencySatisfied && Boolean(settingsData.autoLaunchInBackground),
     });
 
     debug(`Updating settings store with data: ${settingsData}`);
 
     const { app: currentSettings } = this.props.stores.settings.all;
-
     const newSettings = {
       runInBackground:
-        enableSystemTray && Boolean(settingsData.runInBackground),
+        trayDependencySatisfied && Boolean(settingsData.runInBackground),
       enableSystemTray,
       reloadAfterResume: Boolean(settingsData.reloadAfterResume),
       reloadAfterResumeTime: Number(settingsData.reloadAfterResumeTime),
-      startMinimized: enableSystemTray && Boolean(settingsData.startMinimized),
+      startMinimized:
+        trayDependencySatisfied && Boolean(settingsData.startMinimized),
       confirmOnQuit: Boolean(settingsData.confirmOnQuit),
       minimizeToSystemTray:
-        enableSystemTray && Boolean(settingsData.minimizeToSystemTray),
+        trayDependencySatisfied && Boolean(settingsData.minimizeToSystemTray),
       closeToSystemTray:
-        enableSystemTray && Boolean(settingsData.closeToSystemTray),
+        trayDependencySatisfied && Boolean(settingsData.closeToSystemTray),
       privateNotifications: Boolean(settingsData.privateNotifications),
       clipboardNotifications: Boolean(settingsData.clipboardNotifications),
       notifyTaskBarOnMessage: Boolean(settingsData.notifyTaskBarOnMessage),
@@ -707,7 +707,7 @@ class EditSettingsScreen extends Component<
       settings.all.app.enableSystemTray,
       DEFAULT_APP_SETTINGS.enableSystemTray,
     );
-
+    const trayDependencySatisfied = isMac || isSystemTrayEnabled;
     const config: FormFields = {
       fields: {
         autoLaunchOnStart: {
@@ -731,25 +731,25 @@ class EditSettingsScreen extends Component<
         runInBackground: {
           label: intl.formatMessage(messages.runInBackground),
           value:
-            isSystemTrayEnabled &&
+            trayDependencySatisfied &&
             ifUndefined<boolean>(
               settings.all.app.runInBackground,
               DEFAULT_APP_SETTINGS.runInBackground,
             ),
           default: DEFAULT_APP_SETTINGS.runInBackground,
-          disabled: !isSystemTrayEnabled,
+          disabled: !trayDependencySatisfied,
           type: 'checkbox',
         },
         startMinimized: {
           label: intl.formatMessage(messages.startMinimized),
           value:
-            isSystemTrayEnabled &&
+            trayDependencySatisfied &&
             ifUndefined<boolean>(
               settings.all.app.startMinimized,
               DEFAULT_APP_SETTINGS.startMinimized,
             ),
           default: DEFAULT_APP_SETTINGS.startMinimized,
-          disabled: !isSystemTrayEnabled,
+          disabled: !trayDependencySatisfied,
           type: 'checkbox',
         },
         confirmOnQuit: {
@@ -792,25 +792,25 @@ class EditSettingsScreen extends Component<
         minimizeToSystemTray: {
           label: intl.formatMessage(messages.minimizeToSystemTray),
           value:
-            isSystemTrayEnabled &&
+            trayDependencySatisfied &&
             ifUndefined<boolean>(
               settings.all.app.minimizeToSystemTray,
               DEFAULT_APP_SETTINGS.minimizeToSystemTray,
             ),
           default: DEFAULT_APP_SETTINGS.minimizeToSystemTray,
-          disabled: !isSystemTrayEnabled,
+          disabled: !trayDependencySatisfied,
           type: 'checkbox',
         },
         closeToSystemTray: {
           label: intl.formatMessage(messages.closeToSystemTray),
           value:
-            isSystemTrayEnabled &&
+            trayDependencySatisfied &&
             ifUndefined<boolean>(
               settings.all.app.closeToSystemTray,
               DEFAULT_APP_SETTINGS.closeToSystemTray,
             ),
           default: DEFAULT_APP_SETTINGS.closeToSystemTray,
-          disabled: !isSystemTrayEnabled,
+          disabled: !trayDependencySatisfied,
           type: 'checkbox',
         },
         privateNotifications: {

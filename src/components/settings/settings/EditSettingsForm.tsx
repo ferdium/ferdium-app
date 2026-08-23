@@ -460,8 +460,7 @@ class EditSettingsForm extends Component<IProps, IState> {
           values.twoFactorAutoCatcherMatcher =
             DEFAULT_APP_SETTINGS.twoFactorAutoCatcherMatcher;
         }
-
-        if (!values.enableSystemTray) {
+        if (!isMac && !values.enableSystemTray) {
           values.runInBackground = false;
           values.startMinimized = false;
           values.minimizeToSystemTray = false;
@@ -664,7 +663,9 @@ class EditSettingsForm extends Component<IProps, IState> {
                   {intl.formatMessage(messages.sectionMain)}
                 </H2>
                 <Toggle {...form.$('autoLaunchOnStart').bind()} />
+                {isMac && <Toggle {...form.$('runInBackground').bind()} />}
                 <Toggle {...form.$('confirmOnQuit').bind()} />
+                {isMac && <Toggle {...form.$('enableSystemTray').bind()} />}
                 {reloadAfterResume && <Hr />}
                 <Toggle {...form.$('reloadAfterResume').bind()} />
                 {reloadAfterResume && (
@@ -673,20 +674,24 @@ class EditSettingsForm extends Component<IProps, IState> {
                     <Hr />
                   </div>
                 )}
-
-                {enableSystemTray && <Hr />}
-                <Toggle {...form.$('enableSystemTray').bind()} />
-                {enableSystemTray && (
+                {isMac && <Toggle {...form.$('startMinimized').bind()} />}
+                {!isMac && (
                   <>
-                    <Toggle {...form.$('runInBackground').bind()} />
-                    <Toggle {...form.$('startMinimized').bind()} />
-                    {isWindows && (
-                      <Toggle {...form.$('minimizeToSystemTray').bind()} />
+                    {enableSystemTray && <Hr />}
+                    <Toggle {...form.$('enableSystemTray').bind()} />
+                    {enableSystemTray && (
+                      <>
+                        <Toggle {...form.$('runInBackground').bind()} />
+                        <Toggle {...form.$('startMinimized').bind()} />
+                        {isWindows && (
+                          <Toggle {...form.$('minimizeToSystemTray').bind()} />
+                        )}
+                        {isWindows && (
+                          <Toggle {...form.$('closeToSystemTray').bind()} />
+                        )}
+                        <Hr />
+                      </>
                     )}
-                    {isWindows && (
-                      <Toggle {...form.$('closeToSystemTray').bind()} />
-                    )}
-                    <Hr />
                   </>
                 )}
 

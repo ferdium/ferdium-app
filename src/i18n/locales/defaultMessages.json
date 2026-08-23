@@ -4115,7 +4115,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Always show Ferdium in Menu Bar",
+        "defaultMessage": "!!!Show Ferdium in Menu Bar",
         "end": {
           "column": 3,
           "line": 53

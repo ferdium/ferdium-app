@@ -15,22 +15,24 @@ const deduceSession = (serviceId: string | undefined | null): Session => {
 };
 
 export default async () => {
-  ipcMain.on('clear-storage-data', (_event, { serviceId, targetsToClear }) => {
-    try {
-      const serviceSession = deduceSession(serviceId);
-      serviceSession.flushStorageData();
-      if (targetsToClear) {
-        debug('Clearing targets:', targetsToClear);
-        serviceSession.clearStorageData(targetsToClear);
-      } else {
-        debug('Clearing all targets');
-        serviceSession.clearStorageData();
+  ipcMain.handle(
+    'clear-storage-data',
+    async (_event, { serviceId, targetsToClear }) => {
+      try {
+        const serviceSession = deduceSession(serviceId);
+        serviceSession.flushStorageData();
+        if (targetsToClear) {
+          debug('Clearing targets:', targetsToClear);
+          await serviceSession.clearStorageData(targetsToClear);
+        } else {
+          debug('Clearing all targets');
+          await serviceSession.clearStorageData();
+        }
+      } catch (error) {
+        debug(error);
       }
-    } catch (error) {
-      debug(error);
-    }
-  });
-
+    },
+  );
   ipcMain.handle('clear-cache', (_event, { serviceId }) => {
     const serviceSession = deduceSession(serviceId);
     return serviceSession.clearCache();

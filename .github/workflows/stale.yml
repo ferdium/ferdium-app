@@ -1,0 +1,90 @@
+name: Stale issues and pull requests
+
+on:
+  #schedule:
+  #  # Avoid the existing midnight nightly build schedule.
+  #  - cron: "17 3 * * *"
+
+  workflow_dispatch:
+    inputs:
+      debug_only:
+        description: "Dry run without modifying issues or pull requests"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  actions: write
+  contents: read
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: stale
+  cancel-in-progress: false
+
+jobs:
+  stale:
+    name: Process stale issues and pull requests
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+
+    steps:
+      - name: Mark stale issues and pull requests
+        uses: actions/stale@v11
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+          # Issues
+          days-before-issue-stale: 120
+          days-before-issue-close: 30
+
+          stale-issue-label: stale
+
+          stale-issue-message: >
+            This issue has been automatically marked as stale because it has had no
+            activity for 120 days.
+
+            Please test this issue again using the latest version of Ferdium and let us
+            know whether the problem is still reproducible. If it is, please leave a
+            comment with the Ferdium version you tested and any updated information that
+            may help us investigate.
+
+            Any new activity will remove the stale label. If there is no further activity,
+            this issue will be automatically closed in 30 days.
+
+          close-issue-message: >
+            This issue was automatically closed after an additional 30 days without
+            activity.
+
+            If you can reproduce the issue on the latest version of Ferdium, please leave
+            updated reproduction details, including the Ferdium version you tested, so
+            the issue can be reconsidered.
+
+          close-issue-reason: not_planned
+
+          # Recipe requests are intentionally long-lived and MUST NOT
+          # participate in stale processing.
+          exempt-issue-labels: "recipe request :sparkles:"
+
+          # Pull requests
+          days-before-pr-stale: 60
+          days-before-pr-close: -1
+
+          stale-pr-label: stale
+          stale-pr-message: >
+            This pull request has had no activity for 60 days and has been
+            marked as stale. It will not be closed automatically. A new commit
+            or comment will remove the stale label.
+
+          exempt-draft-pr: true
+
+          # Large existing backlog: process incrementally.
+          operations-per-run: 100
+          ascending: true
+
+          remove-stale-when-updated: true
+
+          # workflow_dispatch defaults to a safe dry run.
+          # Scheduled executions are live.
+          debug-only: ${{ github.event_name == 'workflow_dispatch' && inputs.debug_only }}

@@ -1,6 +1,7 @@
 /* eslint-disable import/no-import-module-exports */
 /* eslint-disable global-require */
 import { join } from 'node:path';
+import { ipcRenderer } from 'electron';
 import {
   type PathOrFileDescriptor,
   copySync,
@@ -321,6 +322,16 @@ export default class ServerApi {
       throw new Error(request.statusText);
     }
     const data = await request.json();
+
+    // Chromium keeps persistent service sessions alive independently of the
+    // webview. Clear browser storage first so a locked partition cannot retain
+    // a corrupt IndexedDB database (for example WhatsApp's login database)
+    // while filesystem cleanup is deferred until the next app start.
+    try {
+      await ipcRenderer.invoke('clear-storage-data', { serviceId: id });
+    } catch (error) {
+      debug('Unable to clear service storage before partition removal', error);
+    }
 
     removeServicePartitionDirectory(id, true);
 
