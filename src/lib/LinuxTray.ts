@@ -1,10 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/class-literal-property-style */
 /* eslint-disable max-classes-per-file */
-import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
-
 import * as dbus from 'dbus-next';
 import type { MessageBus } from 'dbus-next';
 import { type NativeImage, nativeImage } from 'electron';
@@ -75,24 +71,48 @@ function makeStatusNotifierPixmap(image: NativeImage): StatusNotifierPixmap {
     return [];
   }
 
-  const bitmap = image.toBitmap();
-  const expectedLength = width * height * 4;
-  if (bitmap.length < expectedLength) {
-    return [];
-  }
-
   const format = getNativeBitmapFormat();
-  const argb = Buffer.alloc(expectedLength);
-  for (let offset = 0; offset < expectedLength; offset += 4) {
-    const redOffset = format === 'rgba' ? offset : offset + 2;
-    const blueOffset = format === 'rgba' ? offset + 2 : offset;
-    argb[offset] = bitmap[offset + 3];
-    argb[offset + 1] = bitmap[redOffset];
-    argb[offset + 2] = bitmap[offset + 1];
-    argb[offset + 3] = bitmap[blueOffset];
+  const scaleFactors = image.getScaleFactors();
+  const pixmaps: StatusNotifierPixmap = [];
+
+  for (const scale of scaleFactors.length > 0 ? scaleFactors : [1]) {
+    const scaledWidth = Math.round(width * scale);
+    const scaledHeight = Math.round(height * scale);
+    const bitmap = image.toBitmap({ scaleFactor: scale });
+    const expectedLength = scaledWidth * scaledHeight * 4;
+
+    if (bitmap.length >= expectedLength) {
+      const argb = Buffer.alloc(expectedLength);
+      for (let offset = 0; offset < expectedLength; offset += 4) {
+        const redOffset = format === 'rgba' ? offset : offset + 2;
+        const blueOffset = format === 'rgba' ? offset + 2 : offset;
+        argb[offset] = bitmap[offset + 3];
+        argb[offset + 1] = bitmap[redOffset];
+        argb[offset + 2] = bitmap[offset + 1];
+        argb[offset + 3] = bitmap[blueOffset];
+      }
+      pixmaps.push([scaledWidth, scaledHeight, argb]);
+    }
   }
 
-  return [[width, height, argb]];
+  if (pixmaps.length === 0) {
+    const bitmap = image.toBitmap();
+    const expectedLength = width * height * 4;
+    if (bitmap.length >= expectedLength) {
+      const argb = Buffer.alloc(expectedLength);
+      for (let offset = 0; offset < expectedLength; offset += 4) {
+        const redOffset = format === 'rgba' ? offset : offset + 2;
+        const blueOffset = format === 'rgba' ? offset + 2 : offset;
+        argb[offset] = bitmap[offset + 3];
+        argb[offset + 1] = bitmap[redOffset];
+        argb[offset + 2] = bitmap[offset + 1];
+        argb[offset + 3] = bitmap[blueOffset];
+      }
+      pixmaps.push([width, height, argb]);
+    }
+  }
+
+  return pixmaps;
 }
 
 class StatusNotifierItem extends dbus.interface.Interface {
@@ -477,13 +497,7 @@ export default class LinuxTray {
 
   private readonly serviceName = `org.freedesktop.StatusNotifierItem-${process.pid}-1`;
 
-  private iconDirectory: string | null = null;
-
-  private currentIconName = '';
-
   private currentIconPixmap: StatusNotifierPixmap = [];
-
-  private iconRevision = 0;
 
   private active = false;
 
@@ -498,11 +512,11 @@ export default class LinuxTray {
   }
 
   get iconName(): string {
-    return this.currentIconName;
+    return '';
   }
 
   get iconThemePath(): string {
-    return this.iconDirectory ?? '';
+    return '';
   }
 
   get iconPixmap(): StatusNotifierPixmap {
@@ -570,32 +584,12 @@ export default class LinuxTray {
       return;
     }
 
-    const nextDirectory = mkdtempSync(join(tmpdir(), 'ferdium-tray-'));
-    this.iconRevision += 1;
-    const nextIconName = `ferdium-tray-${this.iconRevision}`;
-    const nextIconPath = join(nextDirectory, `${nextIconName}.png`);
-
-    try {
-      writeFileSync(nextIconPath, Uint8Array.from(image.toPNG()));
-    } catch (error) {
-      rmSync(nextDirectory, { recursive: true, force: true });
-      throw error;
-    }
-
-    const previousDirectory = this.iconDirectory;
-    this.iconDirectory = nextDirectory;
-    this.currentIconName = nextIconName;
     this.currentIconPixmap = makeStatusNotifierPixmap(image);
 
     if (this.exported) {
       for (const statusNotifierItem of this.statusNotifierItems) {
-        statusNotifierItem.NewIconThemePath(nextDirectory);
         statusNotifierItem.NewIcon();
       }
-    }
-
-    if (previousDirectory) {
-      rmSync(previousDirectory, { recursive: true, force: true });
     }
   }
 
@@ -614,7 +608,6 @@ export default class LinuxTray {
 
     await this.registerWithWatcher();
     for (const statusNotifierItem of this.statusNotifierItems) {
-      statusNotifierItem.NewIconThemePath(this.iconThemePath);
       statusNotifierItem.NewIcon();
     }
   }
@@ -659,11 +652,6 @@ export default class LinuxTray {
       this.bus = null;
     }
 
-    if (this.iconDirectory) {
-      rmSync(this.iconDirectory, { recursive: true, force: true });
-      this.iconDirectory = null;
-      this.currentIconName = '';
-      this.currentIconPixmap = [];
-    }
+    this.currentIconPixmap = [];
   }
 }
