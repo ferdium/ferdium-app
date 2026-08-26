@@ -76,6 +76,30 @@ export default class DBus {
     }
   }
 
+  async hasStatusNotifierWatcher(): Promise<boolean> {
+    if (!this.bus) {
+      return false;
+    }
+
+    try {
+      const dbusObject = await this.bus.getProxyObject(
+        'org.freedesktop.DBus',
+        '/org/freedesktop/DBus',
+      );
+
+      const dbus = dbusObject.getInterface('org.freedesktop.DBus');
+
+      const owners = await Promise.all(
+        [...STATUS_NOTIFIER_WATCHERS].map(name => dbus.NameHasOwner(name)),
+      );
+
+      return owners.some(Boolean);
+    } catch {
+      // Treat an unavailable session bus as no SNI support.
+      return false;
+    }
+  }
+
   async start() {
     if (!isLinux || this.bus) {
       return;
