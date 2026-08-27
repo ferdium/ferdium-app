@@ -10,7 +10,13 @@ import {
 import AutoLaunch from 'auto-launch';
 import { ipcRenderer } from 'electron';
 import { readJsonSync, readdirSync, writeJsonSync } from 'fs-extra';
-import { action, computed, makeObservable, observable } from 'mobx';
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+  onBecomeObserved,
+} from 'mobx';
 import moment from 'moment';
 import ms from 'ms';
 import { v4 as uuidV4 } from 'uuid';
@@ -39,6 +45,7 @@ import {
 import { openExternalUrl } from '../helpers/url-helpers';
 import generatedTranslations from '../i18n/translations';
 import { cleanseJSObject } from '../jsUtils';
+import CachedRequest from './lib/CachedRequest';
 import Request from './lib/Request';
 import TypedStore from './lib/TypedStore';
 
@@ -96,7 +103,7 @@ export default class AppStore extends TypedStore {
 
   @observable sandboxServices: SandboxServices[] = [];
 
-  @observable getAppCacheSizeRequest = new Request(
+  @observable getAppCacheSizeRequest = new CachedRequest(
     this.api.local,
     'getAppCacheSize',
   );
@@ -144,6 +151,10 @@ export default class AppStore extends TypedStore {
     super(stores, api, actions);
 
     makeObservable(this);
+
+    onBecomeObserved(this, 'cacheSize', () => {
+      this.getAppCacheSizeRequest.invalidate();
+    });
 
     // Register action handlers
     this.actions.app.notify.listen(this._notify.bind(this));
@@ -650,7 +661,7 @@ export default class AppStore extends TypedStore {
 
     await sleep(ms('1s'));
 
-    this.getAppCacheSizeRequest.execute();
+    this.getAppCacheSizeRequest.invalidate({ immediately: true });
 
     this.isClearingAllCache = false;
   }
