@@ -348,7 +348,7 @@ export default class ServicesStore extends TypedStore {
   }
 
   @computed get allDisplayed(): Service[] {
-    const services = this.stores.settings.all.app.showDisabledServices
+    const services = this.stores.settings.app.showDisabledServices
       ? this.all
       : this.enabled;
     return workspaceStore.filterServicesByActiveWorkspace(services);
@@ -356,7 +356,7 @@ export default class ServicesStore extends TypedStore {
 
   // This is just used to avoid unnecessary rerendering of resource-heavy webviews
   @computed get allDisplayedUnordered() {
-    const { showDisabledServices } = this.stores.settings.all.app;
+    const { showDisabledServices } = this.stores.settings.app;
     const { keepAllWorkspacesLoaded } = this.stores.workspaces.settings;
     const services = this.allServicesRequest.execute().result || [];
     const filteredServices = showDisabledServices

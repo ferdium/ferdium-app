@@ -1,9 +1,12 @@
 import { nativeTheme } from '@electron/remote';
+import { createTheme } from '@mui/material/styles';
 import { action, computed, makeObservable, observable, reaction } from 'mobx';
+import tinycolor from 'tinycolor2';
 
 import type { Stores } from '../@types/stores.types';
 import type { Actions } from '../actions/lib/actions';
 import type { ApiInterface } from '../api';
+import { DEFAULT_ACCENT_COLOR } from '../config';
 import { type Theme, ThemeType, theme } from '../themes';
 import TypedStore from './lib/TypedStore';
 
@@ -95,6 +98,21 @@ export default class UIStore extends TypedStore {
         : ThemeType.default;
     const { accentColor } = this.stores.settings.app;
     return theme(themeId, accentColor);
+  }
+
+  @computed get muiTheme() {
+    const { accentColor, darkMode } = this.stores.settings.app;
+
+    return createTheme({
+      palette: {
+        mode: darkMode ? 'dark' : 'light',
+        primary: {
+          main: tinycolor(accentColor).isValid()
+            ? accentColor
+            : DEFAULT_ACCENT_COLOR,
+        },
+      },
+    });
   }
 
   // Actions
