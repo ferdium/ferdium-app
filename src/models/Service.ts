@@ -1,6 +1,6 @@
 import { join } from 'node:path';
 import { webContents } from '@electron/remote';
-import { ipcRenderer } from 'electron';
+import { type WebContents, ipcRenderer } from 'electron';
 import { action, autorun, computed, makeObservable, observable } from 'mobx';
 import type ElectronWebView from 'react-electron-web-view';
 
@@ -17,9 +17,8 @@ import UserAgent from './UserAgent';
 
 const debug = require('../preload-safe-debug')('Ferdium:Service');
 
-// Global registry for active partitions
-// This is needed to prevent events of the same partition from being registered multiple times (when using custom sandboxes)
-const activePartitions = new Set<string>();
+// WebContents listeners belong to each webview, not to its shared session.
+const initializedWebContents = new WeakSet<WebContents>();
 
 interface DarkReaderInterface {
   brightness: number;
@@ -588,18 +587,10 @@ export default class Service {
     });
 
     if (webviewWebContents) {
-      // This is needed to prevent events of the same partition from being registered multiple times (when using custom sandboxes)
-      const webviewPartition = webviewWebContents.session.getStoragePath();
-      if (webviewPartition) {
-        // Check if the partition is already active
-        if (activePartitions.has(webviewPartition)) {
-          return;
-        }
-
-        // Add the partition to the active partitions
-        activePartitions.add(webviewPartition);
+      if (initializedWebContents.has(webviewWebContents)) {
+        return;
       }
-      // -----
+      initializedWebContents.add(webviewWebContents);
 
       // TODO: Modify this logic once https://github.com/electron/electron/issues/40674 is fixed
       // This is a workaround for the issue where the zoom in shortcut is not working
