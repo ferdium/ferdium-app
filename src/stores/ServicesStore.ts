@@ -297,6 +297,8 @@ export default class ServicesStore extends TypedStore {
         }
       }
 
+      service.retryFailedLoad(this.stores.app.isOnline);
+
       if (
         service.lastPoll &&
         service.lastPoll - service.lastPollAnswer > ms('1m')
@@ -671,6 +673,7 @@ export default class ServicesStore extends TypedStore {
     }
     this._setIsActive(service, true);
     this._awake({ serviceId: service.id });
+    service.retryFailedLoad(this.stores.app.isOnline, true);
 
     if (
       this.isTodosServiceActive &&

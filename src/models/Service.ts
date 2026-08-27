@@ -17,6 +17,24 @@ import UserAgent from './UserAgent';
 
 const debug = require('../preload-safe-debug')('Ferdium:Service');
 
+const LOAD_RETRY_DELAYS = [10_000, 30_000, 60_000];
+// Chromium net errors for transient network failures. Certificate, permission,
+// authentication and blocked-request errors still require user intervention.
+const RETRYABLE_LOAD_ERRORS = new Set([
+  -7, // TIMED_OUT
+  -21, // NETWORK_CHANGED
+  -100, // CONNECTION_CLOSED
+  -101, // CONNECTION_RESET
+  -102, // CONNECTION_REFUSED
+  -104, // CONNECTION_FAILED
+  -105, // NAME_NOT_RESOLVED
+  -106, // INTERNET_DISCONNECTED
+  -109, // ADDRESS_UNREACHABLE
+  -118, // CONNECTION_TIMED_OUT
+  -137, // NAME_RESOLUTION_FAILED
+  -352, // HTTP2_PING_FAILED
+]);
+
 // Global registry for active partitions
 // This is needed to prevent events of the same partition from being registered multiple times (when using custom sandboxes)
 const activePartitions = new Set<string>();
@@ -106,6 +124,19 @@ export default class Service {
   @observable isError: boolean = false;
 
   @observable errorMessage: string = '';
+
+  private loadErrorCode: number | null = null;
+
+  private loadFailedAt: number = 0;
+
+  private loadRetryAttempts: number = 0;
+
+  private lastLoadRetryAt: number | null = null;
+
+  // A failure after a real page committed must not discard that page's state.
+  private hasCommittedNavigation: boolean = false;
+
+  private retryingWebview: ElectronWebView | null = null;
 
   @observable isUsingCustomUrl: boolean = false;
 
@@ -256,10 +287,11 @@ export default class Service {
   }
 
   @action _didStartLoading(): void {
+    // Keep a failed load visible until a real main-frame navigation commits.
+    // Subframe activity and Chromium's error document must not clear it.
     this.hasCrashed = false;
     this.isLoading = true;
     this.isLoadingPage = true;
-    this.isError = false;
   }
 
   @action _didStopLoading(): void {
@@ -273,14 +305,88 @@ export default class Service {
 
     if (!this.isError) {
       this.isFirstLoad = false;
+      this.loadRetryAttempts = 0;
+      this.lastLoadRetryAt = null;
     }
   }
 
-  @action _didFailLoad(event: { errorDescription: string }): void {
+  @action _didNavigate(): void {
+    this.hasCommittedNavigation = true;
     this.isError = false;
+    this.errorMessage = '';
+    this.loadErrorCode = null;
+  }
+
+  @action _didFailLoad(event: {
+    errorCode: number;
+    errorDescription: string;
+  }): void {
+    this.isError = true;
+    this.loadErrorCode = event.errorCode;
+    this.loadFailedAt = Date.now();
     this.errorMessage = event.errorDescription;
     this.isLoading = false;
     this.isLoadingPage = false;
+  }
+
+  @action retryFailedLoad(isOnline: boolean, onActivation = false): void {
+    const { webview } = this;
+    if (
+      !this.isError ||
+      this.hasCommittedNavigation ||
+      this.loadErrorCode === null ||
+      !RETRYABLE_LOAD_ERRORS.has(this.loadErrorCode) ||
+      !isOnline ||
+      !this.isEnabled ||
+      !this.isAttached ||
+      !webview ||
+      this.retryingWebview === webview ||
+      this.isLoading ||
+      this.isHibernating ||
+      this.isMediaPlaying ||
+      this.hasCrashed ||
+      this.isServiceAccessRestricted ||
+      this.isTodosService
+    ) {
+      return;
+    }
+
+    const now = Date.now();
+    const delay = LOAD_RETRY_DELAYS[this.loadRetryAttempts];
+    if (
+      (this.lastLoadRetryAt !== null &&
+        now - this.lastLoadRetryAt < LOAD_RETRY_DELAYS[0]) ||
+      (!onActivation &&
+        (delay === undefined ||
+          now - Math.max(this.loadFailedAt, this.lastLoadRetryAt ?? 0) < delay))
+    ) {
+      return;
+    }
+
+    this.lastLoadRetryAt = now;
+    this.loadRetryAttempts = Math.min(
+      this.loadRetryAttempts + 1,
+      LOAD_RETRY_DELAYS.length,
+    );
+    // Mark the request in flight before calling Electron; tab activation and
+    // maintenance can otherwise start overlapping navigations.
+    this.retryingWebview = webview;
+    try {
+      // Open the configured service URL with a fresh GET,
+      // rather than replaying a failed form submission or authentication URL.
+      Promise.resolve(webview.loadURL(this.url))
+        .catch(() => {
+          // did-fail-load records the error. Do not let a stale rejection change
+          // the state of a newer navigation or a replacement webview.
+          debug('Service load retry failed', this.id);
+        })
+        .finally(() => {
+          if (this.retryingWebview === webview) this.retryingWebview = null;
+        });
+    } catch {
+      this.retryingWebview = null;
+      debug('Unable to start service load retry', this.id);
+    }
   }
 
   @action _hasCrashed(): void {
@@ -536,33 +642,37 @@ export default class Service {
       },
     );
 
+    this.webview.addEventListener('did-start-navigation', event => {
+      if (this.webview === webview && event.isMainFrame && !event.isInPlace) {
+        this.hasCommittedNavigation = false;
+      }
+    });
+
     this.webview.addEventListener('did-start-loading', event => {
+      if (this.webview !== webview) return;
       debug('Did start load', this.name, event);
 
       this._didStartLoading();
     });
 
     this.webview.addEventListener('did-stop-loading', event => {
+      if (this.webview !== webview) return;
       debug('Did stop load', this.name, event);
 
       this._didStopLoading();
     });
 
-    // eslint-disable-next-line unicorn/consistent-function-scoping
-    const didLoad = () => {
-      this._didLoad();
-    };
-
-    this.webview.addEventListener('did-frame-finish-load', didLoad.bind(this));
-    this.webview.addEventListener('did-navigate', didLoad.bind(this));
+    this.webview.addEventListener('did-frame-finish-load', event => {
+      if (this.webview === webview && event.isMainFrame) this._didLoad();
+    });
+    this.webview.addEventListener('did-navigate', () => {
+      if (this.webview === webview) this._didNavigate();
+    });
 
     this.webview.addEventListener('did-fail-load', event => {
+      if (this.webview !== webview) return;
       debug('Service failed to load', this.name, event);
-      if (
-        event.isMainFrame &&
-        event.errorCode !== -21 &&
-        event.errorCode !== -3
-      ) {
+      if (event.isMainFrame && event.errorCode !== -3) {
         this._didFailLoad(event);
       }
     });
