@@ -32,9 +32,8 @@ export default class Settings {
       return;
     }
 
+    this._writeFile(nextSettings);
     this.store = nextSettings;
-
-    this._writeFile();
   }
 
   get all(): object {
@@ -58,11 +57,11 @@ export default class Settings {
     debug('Hydrate store', this.type, this.allSerialized);
   }
 
-  _writeFile(): void {
-    outputJsonSync(this.settingsFile, this.store, {
+  _writeFile(settings: object = this.store): void {
+    outputJsonSync(this.settingsFile, settings, {
       spaces: 2,
     });
-    debug('Write settings file', this.type, this.allSerialized);
+    debug('Write settings file', this.type, toJS(settings));
   }
 
   get settingsFile(): string {
