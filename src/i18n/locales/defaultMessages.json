@@ -2968,7 +2968,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Please make sure to set a password you'll remember.\nIf you loose this password, you will have to reinstall Ferdium.",
+        "defaultMessage": "!!!Please make sure to set a password you'll remember.\nIf you lose this password, you will have to reinstall Ferdium.",
         "end": {
           "column": 3,
           "line": 54
@@ -3555,7 +3555,7 @@
         }
       },
       {
-        "defaultMessage": "!!!Franz's Team Management allows you to manage Franz Subscriptions for multiple users. Please keep in mind that having a Franz Premium subscription will give you no advantages in using Ferdium: The only reason you still have access to Team Management is so you can manage your legacy Franz Teams and so that you don't loose any functionality in managing your account.",
+        "defaultMessage": "!!!Franz's Team Management allows you to manage Franz Subscriptions for multiple users. Please keep in mind that having a Franz Premium subscription will give you no advantages in using Ferdium: The only reason you still have access to Team Management is so you can manage your legacy Franz Teams and so that you don't lose any functionality in managing your account.",
         "end": {
           "column": 3,
           "line": 30
