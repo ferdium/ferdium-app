@@ -91,7 +91,7 @@ const messages = defineMessages({
   lockedPasswordInfo: {
     id: 'settings.app.lockedPasswordInfo',
     defaultMessage:
-      "Please make sure to set a password you'll remember.\nIf you loose this password, you will have to reinstall Ferdium.",
+      "Please make sure to set a password you'll remember.\nIf you lose this password, you will have to reinstall Ferdium.",
   },
   lockInfo: {
     id: 'settings.app.lockInfo',
