@@ -39,6 +39,7 @@ import {
   getSpellcheckerLocaleByFuzzyIdentifier,
   switchDict,
 } from './spellchecker';
+import { windowOpenShim } from './windowOpenShim';
 
 import type { AppStore } from '../@types/stores.types';
 import { DEFAULT_APP_SETTINGS } from '../config';
@@ -157,7 +158,7 @@ if (process.platform === 'linux') {
 
 ipcRenderer.sendToHost(
   'inject-js-unsafe',
-  'window.open = window.ferdium.open;',
+  windowOpenShim,
   notificationsClassDefinition,
   screenShareJs,
 );
