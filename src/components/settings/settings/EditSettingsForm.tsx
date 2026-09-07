@@ -211,6 +211,15 @@ const messages = defineMessages({
     id: 'settings.app.subheadlineDownloads',
     defaultMessage: 'Downloads',
   },
+  subheadlineExternalBrowser: {
+    id: 'settings.app.subheadlineExternalBrowser',
+    defaultMessage: 'External links',
+  },
+  externalBrowserInfo: {
+    id: 'settings.app.externalBrowserInfo',
+    defaultMessage:
+      'Open external links with this browser instead of your system default browser (useful for portable browsers). If it cannot be started, Ferdium falls back to the system default browser.',
+  },
   subheadlineShortcuts: {
     id: 'settings.app.subheadlineShortcuts',
     defaultMessage: 'Shortcuts',
@@ -316,6 +325,10 @@ const messages = defineMessages({
   buttonOpenFolderSelector: {
     id: 'settings.app.buttonOpenFolderSelector',
     defaultMessage: 'Open folder selector',
+  },
+  buttonOpenBrowserSelector: {
+    id: 'settings.app.buttonOpenBrowserSelector',
+    defaultMessage: 'Select browser executable',
   },
   sandboxServicesInfo: {
     id: 'settings.app.sandboxServicesInfo',
@@ -1212,6 +1225,47 @@ class EditSettingsForm extends Component<IProps, IState> {
                     disabled={isClearingAllCache}
                     loaded={!isClearingAllCache}
                   />
+                </div>
+
+                <Hr />
+
+                <div className="settings__settings-group">
+                  <H3>
+                    {intl.formatMessage(messages.subheadlineExternalBrowser)}
+                  </H3>
+
+                  <Input
+                    placeholder="Custom browser executable"
+                    onChange={e => {
+                      this.submit(e);
+                    }}
+                    {...form.$('externalBrowserPath').bind()}
+                  />
+
+                  <Button
+                    buttonType="secondary"
+                    label={intl.formatMessage(
+                      messages.buttonOpenBrowserSelector,
+                    )}
+                    className="settings__open-settings-cache-button"
+                    onClick={e => {
+                      ipcRenderer
+                        .invoke('external-browser-select')
+                        .then(path => {
+                          if (path) {
+                            form.$('externalBrowserPath').set(path);
+                            this.submit(e);
+                          }
+                        })
+                        .catch(console.error);
+                    }}
+                    disabled={isClearingAllCache}
+                    loaded={!isClearingAllCache}
+                  />
+
+                  <p className="settings__help">
+                    {intl.formatMessage(messages.externalBrowserInfo)}
+                  </p>
                 </div>
 
                 <Hr />
