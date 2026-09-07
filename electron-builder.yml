@@ -88,6 +88,7 @@ mac:
     - target: zip
       arch: [x64, arm64]
   extendInfo:
+    LSMinimumSystemVersion: "13.0.0"
     NSCameraUsageDescription: "This app requires camera access for video chats"
     NSMicrophoneUsageDescription: "This app requires microphone access for voice chats"
     NSAudioCaptureUsageDescription: "This app requires system audio capture access for screen sharing"
