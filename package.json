@@ -14,14 +14,14 @@
   "private": true,
   "engines": {
     "node": "24.20.0",
-    "pnpm": "11.20.0"
+    "pnpm": "12.3.4"
   },
   "engine-strict": true,
   "volta": {
     "node": "24.20.0",
-    "pnpm": "11.20.0"
+    "pnpm": "12.3.4"
   },
-  "packageManager": "pnpm@11.20.0",
+  "packageManager": "pnpm@12.3.4",
   "scripts": {
     "prepare": "node scripts/prepare.js",
     "start": "electron ./build",
