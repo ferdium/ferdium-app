@@ -1,7 +1,7 @@
 import { join } from 'node:path';
 import { type BrowserWindow, app, ipcMain } from 'electron';
 import { autorun } from 'mobx';
-import { isLinux, isMac, isWindows } from '../../environment';
+import { isMac, isWindows } from '../../environment';
 import type TrayIcon from '../../lib/Tray';
 
 const INDICATOR_TASKBAR = 'taskbar';
@@ -58,7 +58,7 @@ export default (params: {
       app.dock?.setBadge(args.indicator);
     }
 
-    if ((isMac || isLinux) && typeof args.indicator === 'number') {
+    if (isMac && typeof args.indicator === 'number') {
       app.badgeCount = args.indicator;
     }
 
