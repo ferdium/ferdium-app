@@ -46,7 +46,6 @@ body:
       label: What arch are you using?
       options:
         - x64
-        - ia32
         - arm64 (including Apple Silicon)
         - Other (specify in Additional information section)
     validations:
