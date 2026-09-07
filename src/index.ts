@@ -419,6 +419,12 @@ const createWindow = () => {
   // Initialize DBus interface
   const dbus = new DBus(trayIcon);
 
+  trayIcon.setStatusNotifierWatcherCheck(() => dbus.hasStatusNotifierWatcher());
+
+  dbus.start().catch(error => {
+    debug('Failed to start D-Bus:', error);
+  });
+
   // Initialize ipcApi
   ipcApi({
     mainWindow,

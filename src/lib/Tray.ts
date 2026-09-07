@@ -27,6 +27,10 @@ export default class TrayIcon {
 
   linuxTray: LinuxTray | null = null;
 
+  statusNotifierWatcherCheck: (() => Promise<boolean>) | null = null;
+
+  trayBackend: 'linux-sni' | 'electron' | null = null;
+
   indicator: string | number = 0;
 
   themeChangeSubscriberId: number | null = null;
@@ -72,6 +76,10 @@ export default class TrayIcon {
     this.mainWindow.on('blur', () => {
       this._updateTrayMenu(null);
     });
+  }
+
+  setStatusNotifierWatcherCheck(check: () => Promise<boolean>): void {
+    this.statusNotifierWatcherCheck = check;
   }
 
   trayMenuTemplate(tray): LinuxTrayMenuItem[] {
@@ -138,8 +146,10 @@ export default class TrayIcon {
     const menuTemplate = this.trayMenuTemplate(this);
     this.trayMenu = Menu.buildFromTemplate(menuTemplate);
 
-    if (isLinux) {
+    if (this.trayBackend === 'linux-sni') {
       this.linuxTray?.setMenu(menuTemplate);
+    } else {
+      this.tray?.setContextMenu(this.trayMenu);
     }
   }
 
@@ -150,44 +160,70 @@ export default class TrayIcon {
 
   _show(): void {
     if (isLinux) {
-      if (this.linuxTray) {
-        return;
-      }
-
-      const menuTemplate = this.trayMenuTemplate(this);
-      this.trayMenu = Menu.buildFromTemplate(menuTemplate);
-
-      const linuxTray = new LinuxTray({
-        onActivate: () => {
-          this._toggleWindow();
-        },
-        onContextMenu: () => {
-          if (this.trayMenu && this.mainWindow) {
-            this.trayMenu.popup({ window: this.mainWindow });
-          }
-        },
+      this._showLinuxTray().catch(() => {
+        this._showElectronTray();
       });
-      this.linuxTray = linuxTray;
-
-      linuxTray
-        .show(this._getAsset('tray', INDICATOR_TRAY_PLAIN), menuTemplate)
-        .catch(() => {
-          if (this.linuxTray === linuxTray) {
-            linuxTray.destroy();
-            this.linuxTray = null;
-          }
-        });
       return;
     }
 
-    if (this.tray) {
+    this._showElectronTray();
+  }
+
+  private async _showLinuxTray(): Promise<void> {
+    if (this.linuxTray || this.tray) {
+      return;
+    }
+
+    const hasWatcher =
+      this.statusNotifierWatcherCheck &&
+      (await this.statusNotifierWatcherCheck());
+
+    if (!hasWatcher) {
+      this._showElectronTray();
+      return;
+    }
+
+    const menuTemplate = this.trayMenuTemplate(this);
+    this.trayMenu = Menu.buildFromTemplate(menuTemplate);
+
+    const linuxTray = new LinuxTray({
+      onActivate: () => {
+        this._toggleWindow();
+      },
+      onContextMenu: () => {
+        if (this.trayMenu && this.mainWindow) {
+          this.trayMenu.popup({ window: this.mainWindow });
+        }
+      },
+    });
+
+    try {
+      await linuxTray.show(
+        this._getAsset('tray', INDICATOR_TRAY_PLAIN),
+        menuTemplate,
+      );
+
+      this.linuxTray = linuxTray;
+      this.trayBackend = 'linux-sni';
+    } catch {
+      linuxTray.destroy();
+      this._showElectronTray();
+    }
+  }
+
+  private _showElectronTray(): void {
+    if (this.tray || this.linuxTray) {
       return;
     }
 
     this.tray = new Tray(this._getAsset('tray', INDICATOR_TRAY_PLAIN));
+
+    this.trayBackend = 'electron';
     this.tray.setToolTip('Ferdium');
 
     this.trayMenu = Menu.buildFromTemplate(this.trayMenuTemplate(this));
+
+    this.tray.setContextMenu(this.trayMenu);
 
     this.tray.on('click', () => {
       this._toggleWindow();
@@ -236,18 +272,15 @@ export default class TrayIcon {
   }
 
   _hide(): void {
-    if (isLinux) {
-      if (this.linuxTray) {
-        this.linuxTray.destroy();
-        this.linuxTray = null;
-      }
-      return;
+    if (this.trayBackend === 'linux-sni') {
+      this.linuxTray?.destroy();
+      this.linuxTray = null;
+    } else {
+      this.tray?.destroy();
+      this.tray = null;
     }
 
-    if (!this.tray) return;
-
-    this.tray.destroy();
-    this.tray = null;
+    this.trayBackend = null;
 
     if (isMac && this.themeChangeSubscriberId) {
       systemPreferences.unsubscribeNotification(this.themeChangeSubscriberId);
@@ -276,22 +309,9 @@ export default class TrayIcon {
       return;
     }
 
-    if (isLinux) {
-      if (this.linuxTray) {
-        this.linuxTray.refreshAfterWatcherRestart().catch(() => null);
-      }
-      return;
+    if (this.trayBackend === 'linux-sni') {
+      this.linuxTray?.refreshAfterWatcherRestart().catch(() => null);
     }
-
-    if (!this.tray) {
-      return;
-    }
-
-    const icon = this._getAsset(
-      'tray',
-      this._getAssetFromIndicator(this.indicator),
-    );
-    this.tray.setImage(icon);
   }
 
   setIndicator(indicator: string | number): void {
@@ -316,7 +336,7 @@ export default class TrayIcon {
       this._getAssetFromIndicator(this.indicator),
     );
 
-    if (isLinux) {
+    if (this.trayBackend === 'linux-sni') {
       this.linuxTray?.setImage(icon);
       return;
     }
