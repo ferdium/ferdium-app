@@ -3107,6 +3107,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "OskarEichler",
+      "name": "Oskar Eichler",
+      "avatar_url": "https://avatars.githubusercontent.com/u/62393985?v=4",
+      "profile": "https://songstats.com",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "commitType": "docs"
