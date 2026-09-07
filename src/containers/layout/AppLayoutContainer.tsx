@@ -3,17 +3,12 @@ import { Component, type ReactElement } from 'react';
 import { ThemeProvider } from 'react-jss';
 import { Outlet } from 'react-router-dom';
 
-import {
-  ThemeProvider as MUIThemeProvider,
-  createTheme,
-} from '@mui/material/styles';
-import tinycolor from 'tinycolor2';
+import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
 import type { StoresProps } from '../../@types/ferdium-components.types';
 import AppLayout from '../../components/layout/AppLayout';
 import Sidebar from '../../components/layout/Sidebar';
 import Services from '../../components/services/content/Services';
 import AppLoader from '../../components/ui/AppLoader';
-import { DEFAULT_ACCENT_COLOR } from '../../config';
 import { workspaceStore } from '../../features/workspaces';
 import WorkspaceDrawer from '../../features/workspaces/components/WorkspaceDrawer';
 
@@ -52,33 +47,6 @@ class AppLayoutContainer extends Component<IProps> {
       hibernate,
       awake,
     } = this.props.actions.service;
-
-    // This is a workaround to fix theming on MUI components when the settings are poorly set
-    let { accentColor } = settings.app;
-    accentColor = tinycolor(accentColor).isValid()
-      ? accentColor
-      : DEFAULT_ACCENT_COLOR;
-    // ---
-
-    // This is a workaround to fix theming on MUI components
-    const themeMUIDark = createTheme({
-      palette: {
-        mode: 'dark',
-        primary: {
-          main: accentColor,
-        },
-      },
-    });
-
-    const themeMUILight = createTheme({
-      palette: {
-        mode: 'light',
-        primary: {
-          main: accentColor,
-        },
-      },
-    });
-    // ---
 
     const { retryRequiredRequests } = this.props.actions.requests;
 
@@ -122,8 +90,8 @@ class AppLayoutContainer extends Component<IProps> {
       <Sidebar
         services={services.allDisplayed}
         setActive={setActive}
-        isAppMuted={settings.all.app.isAppMuted}
-        isMenuCollapsed={settings.all.app.isMenuCollapsed}
+        isAppMuted={settings.app.isAppMuted}
+        isMenuCollapsed={settings.app.isMenuCollapsed}
         openSettings={openSettings}
         openDownloads={openDownloads}
         closeSettings={closeSettings}
@@ -145,9 +113,9 @@ class AppLayoutContainer extends Component<IProps> {
         isWorkspaceDrawerOpen={workspaceStore.isWorkspaceDrawerOpen}
         showServicesUpdatedInfoBar={ui.showServicesUpdatedInfoBar}
         showMessageBadgeWhenMutedSetting={
-          settings.all.app.showMessageBadgeWhenMuted
+          settings.app.showMessageBadgeWhenMuted
         }
-        showServiceNameSetting={settings.all.app.showServiceName}
+        showServiceNameSetting={settings.app.showServiceName}
         showMessageBadgesEvenWhenMuted={ui.showMessageBadgesEvenWhenMuted}
         isTodosServiceActive={services.isTodosServiceActive || false}
       />
@@ -170,9 +138,7 @@ class AppLayoutContainer extends Component<IProps> {
 
     return (
       // TODO: Using 2 ThemeProviders is not ideal, but it's a workaround for now
-      <MUIThemeProvider
-        theme={settings.app.darkMode ? themeMUIDark : themeMUILight}
-      >
+      <MUIThemeProvider theme={ui.muiTheme}>
         <ThemeProvider theme={ui.theme}>
           <AppLayout
             settings={settings}
