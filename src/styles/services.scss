@@ -1,6 +1,84 @@
 @use './config.scss' as *;
 
+@mixin service-webview-top-corners {
+  background:
+    radial-gradient(
+        circle var(--service-webview-border-radius, 4px) at bottom right,
+        transparent calc(var(--service-webview-border-radius, 4px) - 0.5px),
+        var(--service-webview-corner-color)
+          calc(var(--service-webview-border-radius, 4px) + 0.5px)
+      )
+      top left / var(--service-webview-border-radius, 4px)
+      var(--service-webview-border-radius, 4px) no-repeat,
+    radial-gradient(
+        circle var(--service-webview-border-radius, 4px) at bottom left,
+        transparent calc(var(--service-webview-border-radius, 4px) - 0.5px),
+        var(--service-webview-corner-color)
+          calc(var(--service-webview-border-radius, 4px) + 0.5px)
+      )
+      top right / var(--service-webview-border-radius, 4px)
+      var(--service-webview-border-radius, 4px) no-repeat;
+}
+
+@mixin service-webview-bottom-corners {
+  background:
+    radial-gradient(
+        circle var(--service-webview-border-radius, 4px) at top left,
+        transparent calc(var(--service-webview-border-radius, 4px) - 0.5px),
+        var(--service-webview-corner-color)
+          calc(var(--service-webview-border-radius, 4px) + 0.5px)
+      )
+      bottom right / var(--service-webview-border-radius, 4px)
+      var(--service-webview-border-radius, 4px) no-repeat,
+    radial-gradient(
+        circle var(--service-webview-border-radius, 4px) at top right,
+        transparent calc(var(--service-webview-border-radius, 4px) - 0.5px),
+        var(--service-webview-corner-color)
+          calc(var(--service-webview-border-radius, 4px) + 0.5px)
+      )
+      bottom left / var(--service-webview-border-radius, 4px)
+      var(--service-webview-border-radius, 4px) no-repeat;
+}
+
+@mixin service-webview-all-corners {
+  background:
+    radial-gradient(
+        circle var(--service-webview-border-radius, 4px) at bottom right,
+        transparent calc(var(--service-webview-border-radius, 4px) - 0.5px),
+        var(--service-webview-corner-color)
+          calc(var(--service-webview-border-radius, 4px) + 0.5px)
+      )
+      top left / var(--service-webview-border-radius, 4px)
+      var(--service-webview-border-radius, 4px) no-repeat,
+    radial-gradient(
+        circle var(--service-webview-border-radius, 4px) at bottom left,
+        transparent calc(var(--service-webview-border-radius, 4px) - 0.5px),
+        var(--service-webview-corner-color)
+          calc(var(--service-webview-border-radius, 4px) + 0.5px)
+      )
+      top right / var(--service-webview-border-radius, 4px)
+      var(--service-webview-border-radius, 4px) no-repeat,
+    radial-gradient(
+        circle var(--service-webview-border-radius, 4px) at top left,
+        transparent calc(var(--service-webview-border-radius, 4px) - 0.5px),
+        var(--service-webview-corner-color)
+          calc(var(--service-webview-border-radius, 4px) + 0.5px)
+      )
+      bottom right / var(--service-webview-border-radius, 4px)
+      var(--service-webview-border-radius, 4px) no-repeat,
+    radial-gradient(
+        circle var(--service-webview-border-radius, 4px) at top right,
+        transparent calc(var(--service-webview-border-radius, 4px) - 0.5px),
+        var(--service-webview-corner-color)
+          calc(var(--service-webview-border-radius, 4px) + 0.5px)
+      )
+      bottom left / var(--service-webview-border-radius, 4px)
+      var(--service-webview-border-radius, 4px) no-repeat;
+}
+
 .theme__dark .services {
+  --service-webview-corner-color: #{$dark-theme-gray-darker};
+
   background: $dark-theme-gray-darker;
 
   .services__webview-wrapper {
@@ -41,6 +119,8 @@
 }
 
 .services {
+  --service-webview-corner-color: #{$theme-gray-lightest};
+
   background: $theme-gray-lightest;
   flex: 1;
   height: 100%;
@@ -50,14 +130,39 @@
 
   .services__webview-wrapper {
     background: $theme-gray-lightest;
-    border-radius: var(--service-webview-border-radius, 4px);
-    clip-path: inset(0 round var(--service-webview-border-radius, 4px));
-    overflow: hidden;
+
+    // Electron webviews are out-of-process surfaces. Clipping them forces
+    // Chromium to composite every service through a live mask. Paint the four
+    // corner cutouts in the host renderer instead, keeping the same appearance
+    // without clipping the webview itself.
+    &::after {
+      @include service-webview-all-corners;
+
+      content: '';
+      inset: 0;
+      pointer-events: none;
+      position: absolute;
+      z-index: 111;
+    }
+
+    &.services__webview-wrapper--with-navbar {
+      &::before {
+        @include service-webview-top-corners;
+
+        content: '';
+        inset: 0;
+        pointer-events: none;
+        position: absolute;
+        z-index: 301;
+      }
+
+      &::after {
+        @include service-webview-bottom-corners;
+      }
+    }
 
     webview {
       background: $theme-gray-lightest;
-      border-radius: var(--service-webview-border-radius, 4px);
-      overflow: hidden;
     }
   }
 
