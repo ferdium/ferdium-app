@@ -1,5 +1,4 @@
 import { join } from 'node:path';
-
 import {
   BrowserWindow,
   Menu,
@@ -12,10 +11,8 @@ import {
   systemPreferences,
 } from 'electron';
 import macosVersion from 'macos-version';
-
 import { isLinux, isMac, isWindows } from '../environment';
 import { getTranslatedText } from '../helpers/i18n-helpers';
-import LinuxTray, { type LinuxTrayMenuItem } from './LinuxTray';
 
 const FILE_EXTENSION = isWindows ? 'ico' : 'png';
 const INDICATOR_TRAY_PLAIN = 'tray';
@@ -24,8 +21,6 @@ const INDICATOR_TRAY_INDIRECT = 'tray-indirect';
 
 export default class TrayIcon {
   tray: Tray | null = null;
-
-  linuxTray: LinuxTray | null = null;
 
   indicator: string | number = 0;
 
@@ -74,7 +69,7 @@ export default class TrayIcon {
     });
   }
 
-  trayMenuTemplate(tray): LinuxTrayMenuItem[] {
+  trayMenuTemplate(tray) {
     return [
       {
         label:
@@ -124,7 +119,7 @@ export default class TrayIcon {
   }
 
   _updateTrayMenu(appSettings): void {
-    if (!this.tray && !this.linuxTray) {
+    if (!this.tray) {
       return;
     }
 
@@ -135,11 +130,9 @@ export default class TrayIcon {
       }
     }
 
-    const menuTemplate = this.trayMenuTemplate(this);
-    this.trayMenu = Menu.buildFromTemplate(menuTemplate);
-
+    this.trayMenu = Menu.buildFromTemplate(this.trayMenuTemplate(this));
     if (isLinux) {
-      this.linuxTray?.setMenu(menuTemplate);
+      this.tray.setContextMenu(this.trayMenu);
     }
   }
 
@@ -149,37 +142,6 @@ export default class TrayIcon {
   }
 
   _show(): void {
-    if (isLinux) {
-      if (this.linuxTray) {
-        return;
-      }
-
-      const menuTemplate = this.trayMenuTemplate(this);
-      this.trayMenu = Menu.buildFromTemplate(menuTemplate);
-
-      const linuxTray = new LinuxTray({
-        onActivate: () => {
-          this._toggleWindow();
-        },
-        onContextMenu: () => {
-          if (this.trayMenu && this.mainWindow) {
-            this.trayMenu.popup({ window: this.mainWindow });
-          }
-        },
-      });
-      this.linuxTray = linuxTray;
-
-      linuxTray
-        .show(this._getAsset('tray', INDICATOR_TRAY_PLAIN), menuTemplate)
-        .catch(() => {
-          if (this.linuxTray === linuxTray) {
-            linuxTray.destroy();
-            this.linuxTray = null;
-          }
-        });
-      return;
-    }
-
     if (this.tray) {
       return;
     }
@@ -188,6 +150,9 @@ export default class TrayIcon {
     this.tray.setToolTip('Ferdium');
 
     this.trayMenu = Menu.buildFromTemplate(this.trayMenuTemplate(this));
+    if (isLinux) {
+      this.tray.setContextMenu(this.trayMenu);
+    }
 
     this.tray.on('click', () => {
       this._toggleWindow();
@@ -236,14 +201,6 @@ export default class TrayIcon {
   }
 
   _hide(): void {
-    if (isLinux) {
-      if (this.linuxTray) {
-        this.linuxTray.destroy();
-        this.linuxTray = null;
-      }
-      return;
-    }
-
     if (!this.tray) return;
 
     this.tray.destroy();
@@ -267,23 +224,14 @@ export default class TrayIcon {
   }
 
   /**
-   * Refresh the tray after a StatusNotifierWatcher restart (e.g. screen
-   * unlock on GNOME). The custom Linux StatusNotifierItem can simply
-   * re-register with the watcher. Other platforms keep using Electron Tray.
+   * Refresh the tray icon after a StatusNotifierWatcher restart (e.g. screen
+   * unlock on GNOME). Instead of destroying and recreating the Tray object
+   * (which fails because Electron doesn't clean up D-Bus exports), we call
+   * setImage() which forces Electron to write the icon to a new temp file
+   * and update the IconThemePath property in D-Bus.
    */
   refreshTrayAfterWatcherRestart(): void {
-    if (!this.visible) {
-      return;
-    }
-
-    if (isLinux) {
-      if (this.linuxTray) {
-        this.linuxTray.refreshAfterWatcherRestart().catch(() => null);
-      }
-      return;
-    }
-
-    if (!this.tray) {
+    if (!this.visible || !this.tray) {
       return;
     }
 
@@ -311,21 +259,13 @@ export default class TrayIcon {
   }
 
   _refreshIcon(): void {
-    const icon = this._getAsset(
-      'tray',
-      this._getAssetFromIndicator(this.indicator),
-    );
-
-    if (isLinux) {
-      this.linuxTray?.setImage(icon);
-      return;
-    }
-
     if (!this.tray) {
       return;
     }
 
-    this.tray.setImage(icon);
+    this.tray.setImage(
+      this._getAsset('tray', this._getAssetFromIndicator(this.indicator)),
+    );
 
     if (isMac && !macosVersion.isGreaterThanOrEqualTo('11')) {
       this.tray.setPressedImage(
