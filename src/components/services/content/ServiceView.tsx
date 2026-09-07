@@ -110,6 +110,7 @@ class ServiceView extends Component<IProps, IState> {
     const webviewClasses = classnames({
       services__webview: true,
       'services__webview-wrapper': true,
+      'services__webview-wrapper--with-navbar': showNavBar,
       'is-active': service.isActive,
       'services__webview--force-repaint': this.state.forceRepaint,
     });

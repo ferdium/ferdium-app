@@ -173,14 +173,6 @@ const generateWebviewLayoutStyle = (paddingSize, borderRadius) => {
         borderRadius,
       )}px;
     }
-    .services__webview-wrapper {
-      border-radius: var(--service-webview-border-radius);
-      clip-path: inset(0 round var(--service-webview-border-radius));
-      overflow: hidden;
-    }
-    .services__webview-wrapper webview {
-      border-radius: var(--service-webview-border-radius);
-    }
   `;
 };
 
