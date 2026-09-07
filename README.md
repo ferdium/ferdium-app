@@ -21,7 +21,7 @@
 
 [![Open Collective backers](https://img.shields.io/static/v1?label=Contribute%20on%20Open%20Collective&message=Donate%20to%20Ferdium&color=9cf&logo=open-collective)](https://opencollective.com/ferdium#category-CONTRIBUTE)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-333-default.svg?logo=github&color=6c64e4' alt='Contributors'/></a>
+<a href='#contributors-'><img src='https://img.shields.io/badge/contributors-334-default.svg?logo=github&color=6c64e4' alt='Contributors'/></a>
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 - [Ferdium](#ferdium)
@@ -517,6 +517,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href='http://tobiasfluehmann.ch' title='Tobias Flühmann: code'><img src='https://avatars.githubusercontent.com/u/5341776?v=4' alt='tfluehmann' style='width:100px;'/></a></td>
       <td align="center" valign="top" width="14.28%"><a href='https://stevops.nl' title='Stefan van Essen: code'><img src='https://avatars.githubusercontent.com/u/1150201?v=4' alt='eXistenZNL' style='width:100px;'/></a></td>
       <td align="center" valign="top" width="14.28%"><a href='http://ritteralvaro.com' title='Alvaro Ritter Quevedo: code'><img src='https://avatars.githubusercontent.com/u/113945166?v=4' alt='ritteralvaro' style='width:100px;'/></a></td>
+      <td align="center" valign="top" width="14.28%"><a href='https://songstats.com' title='Oskar Eichler: code'><img src='https://avatars.githubusercontent.com/u/62393985?v=4' alt='OskarEichler' style='width:100px;'/></a></td>
     </tr>
   </tbody>
 </table>

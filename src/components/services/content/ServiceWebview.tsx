@@ -66,14 +66,16 @@ class ServiceWebview extends Component<IProps> {
     debug('Service logged a message:', e.message);
   };
 
-  handleDidNavigate = (): void => {
+  @action handleDidNavigate = (): void => {
     if (this.props.service._webview) {
-      document.title = `Ferdium - ${this.props.service.name} ${
-        this.props.service.dialogTitle
-          ? ` - ${this.props.service.dialogTitle}`
-          : ''
-      } ${`- ${this.props.service._webview.getTitle()}`}`;
+      this.props.service.pageTitle = this.props.service._webview.getTitle();
     }
+  };
+
+  @action handlePageTitleUpdated = (
+    event: Electron.PageTitleUpdatedEvent,
+  ): void => {
+    this.props.service.pageTitle = event.title;
   };
 
   handleWebviewRef = (webview: ElectronWebView | null): void => {
@@ -108,13 +110,6 @@ class ServiceWebview extends Component<IProps> {
     if (this.props.service.isActive) {
       webview.view.blur();
       webview.view.focus();
-      window.setTimeout(() => {
-        document.title = `Ferdium - ${this.props.service.name} ${
-          this.props.service.dialogTitle
-            ? ` - ${this.props.service.dialogTitle}`
-            : ''
-        } ${`- ${this.props.service._webview.getTitle()}`}`;
-      }, 100);
     } else {
       debug('Refocus not required - Not active service');
     }
@@ -127,6 +122,7 @@ class ServiceWebview extends Component<IProps> {
 
     webview.addEventListener('console-message', this.handleConsoleMessage);
     webview.addEventListener('did-navigate', this.handleDidNavigate);
+    webview.addEventListener('page-title-updated', this.handlePageTitleUpdated);
     webview.addEventListener('did-stop-loading', this.refocusWebview);
   }
 
@@ -137,6 +133,10 @@ class ServiceWebview extends Component<IProps> {
 
     webview.removeEventListener('console-message', this.handleConsoleMessage);
     webview.removeEventListener('did-navigate', this.handleDidNavigate);
+    webview.removeEventListener(
+      'page-title-updated',
+      this.handlePageTitleUpdated,
+    );
     webview.removeEventListener('did-stop-loading', this.refocusWebview);
   }
 

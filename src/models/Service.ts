@@ -51,6 +51,8 @@ export default class Service {
 
   @observable dialogTitle: string = '';
 
+  @observable pageTitle: string = '';
+
   @observable order: number = DEFAULT_SERVICE_ORDER;
 
   @observable isEnabled: boolean = DEFAULT_SERVICE_SETTINGS.isEnabled;
