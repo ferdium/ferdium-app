@@ -1083,18 +1083,21 @@ export default class ServicesStore extends TypedStore {
   }
 
   @action _reorderService({ oldIndex, newIndex }) {
-    const { showDisabledServices } = this.stores.settings.all.app;
-    const oldEnabledSortIndex = showDisabledServices
-      ? oldIndex
-      : this.all.indexOf(this.enabled[oldIndex]);
-    const newEnabledSortIndex = showDisabledServices
-      ? newIndex
-      : this.all.indexOf(this.enabled[newIndex]);
+    // Use the currently displayed services for index mapping
+    const displayedServices = this.allDisplayed;
+    const oldId = displayedServices[oldIndex]?.id;
+    const newId = displayedServices[newIndex]?.id;
+    if (!oldId || !newId) return;
+
+    // Find the actual indices in the full this.all array
+    const oldActualIndex = this.all.findIndex(s => s.id === oldId);
+    const newActualIndex = this.all.findIndex(s => s.id === newId);
+    if (oldActualIndex === -1 || newActualIndex === -1) return;
 
     this.all.splice(
-      newEnabledSortIndex,
+      newActualIndex,
       0,
-      this.all.splice(oldEnabledSortIndex, 1)[0],
+      this.all.splice(oldActualIndex, 1)[0],
     );
 
     const services = {};
