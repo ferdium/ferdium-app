@@ -389,3 +389,6 @@ server*.log
 
 # env
 .envrc
+
+# Local dev scripts
+ferd.sh

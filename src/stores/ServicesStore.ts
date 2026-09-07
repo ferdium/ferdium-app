@@ -599,6 +599,9 @@ export default class ServicesStore extends TypedStore {
   }
 
   @action async _deleteService({ serviceId, redirect }): Promise<void> {
+    // Clean up the Chromium session before deleting
+    ipcRenderer.invoke('cleanup-service-session', { serviceId });
+
     const request = this.deleteServiceRequest.execute(serviceId);
 
     if (redirect) {
@@ -800,6 +803,11 @@ export default class ServicesStore extends TypedStore {
     const service = this.one(serviceId);
 
     service.isEnabled = !service.isEnabled;
+
+    // When disabling a service, clean up its Chromium session
+    if (!service.isEnabled) {
+      ipcRenderer.invoke('cleanup-service-session', { serviceId });
+    }
   }
 
   @action _handleIPCMessage({ serviceId, channel, args }) {
@@ -1176,6 +1184,9 @@ export default class ServicesStore extends TypedStore {
 
     service.isHibernationRequested = true;
     service.lastHibernated = Date.now();
+
+    // Clean up the Chromium session to release PartitionAlloc memory pools
+    ipcRenderer.invoke('cleanup-service-session', { serviceId });
   }
 
   @action _awake({
