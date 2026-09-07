@@ -98,12 +98,12 @@ export default class TrayIcon {
           ? getTranslatedText(
               tray.currentLocale,
               'tray.enableNotifications',
-              'Enable Notifications && Audio',
+              'Enable Notifications & Audio',
             )
           : getTranslatedText(
               tray.currentLocale,
               'tray.disableNotifications',
-              'Disable Notifications && Audio',
+              'Disable Notifications & Audio',
             ),
         click() {
           if (!tray.mainWindow) return;
