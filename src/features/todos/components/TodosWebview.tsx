@@ -76,7 +76,7 @@ interface IState {
 class TodosWebview extends Component<IProps, IState> {
   private node = createRef<HTMLDivElement>();
 
-  private webview: Webview;
+  private webview: Webview | null = null;
 
   constructor(props: IProps) {
     super(props);
@@ -161,10 +161,7 @@ class TodosWebview extends Component<IProps, IState> {
       return;
     }
 
-    const { handleClientMessage } = this.props;
-    this.webview.addEventListener('ipc-message', e => {
-      handleClientMessage(e.channel, e.args[0]);
-    });
+    this.webview.addEventListener('ipc-message', this.handleIpcMessage);
   };
 
   stopListeningToIpcMessages = (): void => {
@@ -172,8 +169,23 @@ class TodosWebview extends Component<IProps, IState> {
       return;
     }
 
-    const { handleClientMessage } = this.props;
-    this.webview.removeEventListener('ipc-message', handleClientMessage);
+    this.webview.removeEventListener('ipc-message', this.handleIpcMessage);
+  };
+
+  handleIpcMessage = (event: Electron.IpcMessageEvent): void => {
+    this.props.handleClientMessage(event.channel, event.args[0]);
+  };
+
+  handleWebviewRef = (webview: Webview | null): void => {
+    this.stopListeningToIpcMessages();
+    this.webview = webview ? webview.view : null;
+  };
+
+  handleDidAttach = (): void => {
+    if (this.webview) {
+      this.props.setTodosWebview(this.webview);
+      this.startListeningToIpcMessages();
+    }
   };
 
   render(): ReactElement {
@@ -224,16 +236,10 @@ class TodosWebview extends Component<IProps, IState> {
         {isTodoUrlValid && (
           <Webview
             // className={classes.webview} // TODO: [TS DEBT] style not found
-            onDidAttach={() => {
-              const { setTodosWebview } = this.props;
-              setTodosWebview(this.webview);
-              this.startListeningToIpcMessages();
-            }}
+            onDidAttach={this.handleDidAttach}
             partition={TODOS_PARTITION_ID}
             preload="./features/todos/preload.js"
-            ref={webview => {
-              this.webview = webview ? webview.view : null;
-            }}
+            ref={this.handleWebviewRef}
             useragent={userAgent}
             src={todoUrl}
             allowpopups
