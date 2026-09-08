@@ -1,6 +1,6 @@
 import { getCurrentWindow } from '@electron/remote';
-import { compact, invoke, noop } from 'lodash';
-import { reaction } from 'mobx';
+import { noop } from 'lodash';
+import { type IReactionDisposer, reaction } from 'mobx';
 import { inject, observer } from 'mobx-react';
 import {
   type ChangeEvent,
@@ -101,6 +101,10 @@ class QuickSwitchModal extends Component<IProps, IState> {
 
   serviceElements = {};
 
+  private visibilityReactionDisposer: IReactionDisposer | null = null;
+
+  private visibilityTimeout: ReturnType<typeof setTimeout> | null = null;
+
   constructor(props) {
     super(props);
 
@@ -114,40 +118,38 @@ class QuickSwitchModal extends Component<IProps, IState> {
     this._handleSearchUpdate = this._handleSearchUpdate.bind(this);
     this._handleVisibilityChange = this._handleVisibilityChange.bind(this);
     this.openService = this.openService.bind(this);
-
-    reaction(
-      () => ModalState.isModalVisible,
-      () => {
-        this._handleVisibilityChange();
-      },
-    );
   }
 
   // Add global keydown listener when component mounts
   componentDidMount(): void {
     document.addEventListener('keydown', this._handleKeyDown);
+    this.visibilityReactionDisposer = reaction(
+      () => ModalState.isModalVisible,
+      this._handleVisibilityChange,
+    );
   }
 
   // Remove global keydown listener when component unmounts
   componentWillUnmount(): void {
+    this.visibilityReactionDisposer?.();
+    if (this.visibilityTimeout) {
+      clearTimeout(this.visibilityTimeout);
+      this.visibilityTimeout = null;
+    }
     document.removeEventListener('keydown', this._handleKeyDown);
   }
 
   // Get currently shown services
   services(): Service[] {
-    let services: Service[] = [];
-    if (
-      this.state.search &&
-      compact(invoke(this.state.search, 'match', /^[\da-z]/i)).length > 0
-    ) {
-      // Apply simple search algorithm to list of all services
-      services = this.props.stores!.services.allDisplayed;
-      services = services.filter(
-        service =>
-          service.name.toLowerCase().search(this.state.search.toLowerCase()) !==
-          -1,
+    const search = this.state.search.toLowerCase();
+    if (search) {
+      return this.props.stores!.services.allDisplayed.filter(service =>
+        service.name.toLowerCase().includes(search),
       );
-    } else if (this.props.stores!.services.allDisplayed.length > 0) {
+    }
+
+    const services: Service[] = [];
+    if (this.props.stores!.services.allDisplayed.length > 0) {
       // Add the currently active service first
       const currentService = this.props.stores!.services.active;
       if (currentService) {
@@ -176,6 +178,9 @@ class QuickSwitchModal extends Component<IProps, IState> {
   openService(index): void {
     // Open service
     const service = this.services()[index];
+    if (!service) {
+      return;
+    }
     this.props.actions!.service.setActive({ serviceId: service.id });
 
     // Reset and close modal
@@ -189,9 +194,13 @@ class QuickSwitchModal extends Component<IProps, IState> {
   // Change the selected service
   // factor should be -1 or 1
   changeSelected(factor: number): any {
+    const services = this.services().length;
+    if (services === 0) {
+      return;
+    }
+
     this.setState(state => {
       let newSelected = state.selected + factor;
-      const services = this.services().length;
 
       // Roll around when on edge of list
       if (state.selected < 1 && factor === -1) {
@@ -247,11 +256,17 @@ class QuickSwitchModal extends Component<IProps, IState> {
   _handleSearchUpdate(event: ChangeEvent<HTMLInputElement>): void {
     this.setState({
       search: event.target.value,
+      selected: 0,
     });
   }
 
   _handleVisibilityChange(): void {
     const { isModalVisible } = ModalState;
+
+    if (this.visibilityTimeout) {
+      clearTimeout(this.visibilityTimeout);
+      this.visibilityTimeout = null;
+    }
 
     if (isModalVisible && !this.state.wasPrevVisible) {
       // Set focus back on current window if its in a service
@@ -262,10 +277,9 @@ class QuickSwitchModal extends Component<IProps, IState> {
       // The input "focus" attribute will only work on first modal open
       // Manually add focus to the input element
       // Wrapped inside timeout to let the modal render first
-      setTimeout(() => {
-        if (this.inputRef.current) {
-          this.inputRef.current.querySelectorAll('input')[0].focus();
-        }
+      this.visibilityTimeout = setTimeout(() => {
+        this.visibilityTimeout = null;
+        this.inputRef.current?.querySelector('input')?.focus();
       }, 10);
 
       this.setState({
@@ -274,10 +288,9 @@ class QuickSwitchModal extends Component<IProps, IState> {
     } else if (!isModalVisible && this.state.wasPrevVisible) {
       // Manually blur focus from the input element to prevent
       // search query change when modal not visible
-      setTimeout(() => {
-        if (this.inputRef.current) {
-          this.inputRef.current.querySelectorAll('input')[0].blur();
-        }
+      this.visibilityTimeout = setTimeout(() => {
+        this.visibilityTimeout = null;
+        this.inputRef.current?.querySelector('input')?.blur();
       }, 100);
 
       this.setState({
