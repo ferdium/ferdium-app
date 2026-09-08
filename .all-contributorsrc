@@ -3116,6 +3116,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "tobez",
+      "name": "Anton Berezin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/63679?v=4",
+      "profile": "http://www.tobez.org/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "commitType": "docs"
