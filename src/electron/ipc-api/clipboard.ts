@@ -1,23 +1,28 @@
-import { clipboard, ipcMain, nativeImage } from 'electron';
+import { ClipboardItem, clipboard, ipcMain, nativeImage } from 'electron';
 
 export default () => {
-  ipcMain.handle('clipboard-write-text', (_event, text: unknown) => {
+  ipcMain.handle('clipboard-write-text', async (_event, text: unknown) => {
     if (typeof text !== 'string') {
       return false;
     }
 
-    clipboard.writeText(text);
+    await clipboard.writeText(text);
     return true;
   });
 
   ipcMain.handle(
     'clipboard-write-image-data-url',
-    (_event, dataURL: unknown) => {
+    async (_event, dataURL: unknown) => {
       if (typeof dataURL !== 'string') {
         return false;
       }
 
-      clipboard.writeImage(nativeImage.createFromDataURL(dataURL));
+      const image = nativeImage.createFromDataURL(dataURL);
+      await clipboard.write([
+        new ClipboardItem({
+          'image/png': new Blob([image.toPNG()], { type: 'image/png' }),
+        }),
+      ]);
       return true;
     },
   );

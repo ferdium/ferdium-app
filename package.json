@@ -3,7 +3,7 @@
   "productName": "Ferdium",
   "desktopName": "ferdium.desktop",
   "appId": "org.ferdium.ferdium-app",
-  "version": "7.2.3-nightly.2",
+  "version": "7.2.4-nightly.1",
   "description": "Messaging app for WhatsApp, Slack, Telegram, Hangouts and many many more.",
   "author": "Ferdium Contributors <hello@ferdium.org> (https://ferdium.org/)",
   "license": "Apache-2.0",
@@ -13,15 +13,15 @@
   "repository": "https://github.com/ferdium/ferdium-app.git",
   "private": true,
   "engines": {
-    "node": "24.18.1",
-    "pnpm": "11.20.0"
+    "node": "24.20.0",
+    "pnpm": "12.3.4"
   },
   "engine-strict": true,
   "volta": {
-    "node": "24.18.1",
-    "pnpm": "11.20.0"
+    "node": "24.20.0",
+    "pnpm": "12.3.4"
   },
-  "packageManager": "pnpm@11.20.0",
+  "packageManager": "pnpm@12.3.4",
   "scripts": {
     "prepare": "node scripts/prepare.js",
     "start": "electron ./build",
@@ -166,7 +166,7 @@
     "chalk": "5.3.0",
     "concurrently": "8.2.2",
     "cross-env": "7.0.3",
-    "electron": "43.3.0",
+    "electron": "44.2.0",
     "electron-builder": "26.15.7",
     "esbuild": "0.16.17",
     "esbuild-plugin-copy": "2.1.1",

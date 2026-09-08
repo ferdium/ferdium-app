@@ -1,3 +1,104 @@
+---
+lockfileVersion: '9.0'
+
+importers:
+
+  .:
+    configDependencies: {}
+    packageManagerDependencies:
+      pnpm:
+        specifier: 12.3.4
+        version: 12.3.4
+
+packages:
+
+  '@pnpm/exe.darwin-arm64@12.3.4':
+    resolution: {integrity: sha512-PAyUol8T1+/+ViOiXAt51ECA+QnfXCqz6foL4bW+LsoX0NcVd5XVEM2mRQu+LV4oc7uRz9zf9U0P+XFfuQeDAw==}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@pnpm/exe.darwin-x64@12.3.4':
+    resolution: {integrity: sha512-fxP9JCk0Cdye+ePuj+GJJLMUMTqHGWRdb1dtv4How876uQ2ehxvenpgiYAir/ceO9PsYUZkFTtyZdx+rRu5QOA==}
+    cpu: [x64]
+    os: [darwin]
+
+  '@pnpm/exe.linux-arm64-musl@12.3.4':
+    resolution: {integrity: sha512-FBOt0/7ye6O6q4AllVV5QMviB6qE6fqkeczV/+MDWQsmo+QJrlfsh6X7CpH/tClVpBZEyIbjpUoT8bNhCYBxEg==}
+    cpu: [arm64]
+    os: [linux]
+    libc: [musl]
+
+  '@pnpm/exe.linux-arm64@12.3.4':
+    resolution: {integrity: sha512-t71AVA7LRqiKTyZ5xMYaZc2n5DfdpMbfokZuiIOXHBOM03ECnF0t4iYwaBDqJgVjlKYUOwaF/bRQajGNA4cJ4w==}
+    cpu: [arm64]
+    os: [linux]
+    libc: [glibc]
+
+  '@pnpm/exe.linux-x64-musl@12.3.4':
+    resolution: {integrity: sha512-RPmk7Jb/aYaFvL2iyDN/AtMY+hUEsue732WmXpcuQ9tBpMnGyA5py7Z3+e+qmQaJ0zY/4ni9jJiyPBQHujmv6w==}
+    cpu: [x64]
+    os: [linux]
+    libc: [musl]
+
+  '@pnpm/exe.linux-x64@12.3.4':
+    resolution: {integrity: sha512-2ZqOlSPkfwX1h5cR+FPiWf8+F+2hZT/3TvhUK5sigHqwaQCIiq8R7CGxhndKs63JtcLi2a1Qpo+wX/EoyfjyJQ==}
+    cpu: [x64]
+    os: [linux]
+    libc: [glibc]
+
+  '@pnpm/exe.win32-arm64@12.3.4':
+    resolution: {integrity: sha512-ANyrHqyqco6SXBysUTRF74itDyyraea7IbFsKFdNXTjcFnfycTDx37EwuhdpPYFNSIh2JhUG4fByclsRfiHX7w==}
+    cpu: [arm64]
+    os: [win32]
+
+  '@pnpm/exe.win32-x64@12.3.4':
+    resolution: {integrity: sha512-WH/KqBPY/hq2Tb7SgQltEZytimcjgKRaCRL/aM9CI0c67iKc5TVmHUhIiL3Ux9FB4bWn36i6XewUcScQI+zG8w==}
+    cpu: [x64]
+    os: [win32]
+
+  pnpm@12.3.4:
+    resolution: {integrity: sha512-lhqkH7B32joEpEHZ+OFevAyW2o73ELLrZ7+e58sGEOq9SPH9hfUc/+c4RnhfoPh8VqOocqHYk/hEZ0G1zORUVw==}
+    engines: {node: '>=18.*'}
+    hasBin: true
+
+snapshots:
+
+  '@pnpm/exe.darwin-arm64@12.3.4':
+    optional: true
+
+  '@pnpm/exe.darwin-x64@12.3.4':
+    optional: true
+
+  '@pnpm/exe.linux-arm64-musl@12.3.4':
+    optional: true
+
+  '@pnpm/exe.linux-arm64@12.3.4':
+    optional: true
+
+  '@pnpm/exe.linux-x64-musl@12.3.4':
+    optional: true
+
+  '@pnpm/exe.linux-x64@12.3.4':
+    optional: true
+
+  '@pnpm/exe.win32-arm64@12.3.4':
+    optional: true
+
+  '@pnpm/exe.win32-x64@12.3.4':
+    optional: true
+
+  pnpm@12.3.4:
+    optionalDependencies:
+      '@pnpm/exe.darwin-arm64': 12.3.4
+      '@pnpm/exe.darwin-x64': 12.3.4
+      '@pnpm/exe.linux-arm64': 12.3.4
+      '@pnpm/exe.linux-arm64-musl': 12.3.4
+      '@pnpm/exe.linux-x64': 12.3.4
+      '@pnpm/exe.linux-x64-musl': 12.3.4
+      '@pnpm/exe.win32-arm64': 12.3.4
+      '@pnpm/exe.win32-x64': 12.3.4
+
+---
 lockfileVersion: '9.0'
 
 settings:
@@ -43,7 +144,7 @@ importers:
         version: 5.1.0
       '@electron/remote':
         specifier: 2.1.2
-        version: 2.1.2(electron@43.3.0(supports-color@5.5.0))
+        version: 2.1.2(electron@44.2.0(supports-color@5.5.0))
       '@emotion/react':
         specifier: 11.13.3
         version: 11.13.3(@types/react@18.3.12)(react@18.3.1)
@@ -73,7 +174,7 @@ importers:
         version: 7.4.0(history@5.3.0)(mobx@6.13.5)(path-to-regexp@6.2.2)
       '@syed_umair/electron-process-manager':
         specifier: 1.1.0
-        version: 1.1.0(electron@43.3.0(supports-color@5.5.0))
+        version: 1.1.0(electron@44.2.0(supports-color@5.5.0))
       auto-launch:
         specifier: 5.0.6
         version: 5.0.6
@@ -109,7 +210,7 @@ importers:
         version: 6.3.9(supports-color@5.5.0)
       electron-webauthn-linux:
         specifier: 0.1.1
-        version: 0.1.1(electron@43.3.0(supports-color@5.5.0))
+        version: 0.1.1(electron@44.2.0(supports-color@5.5.0))
       electron-window-state:
         specifier: 5.0.3
         version: 5.0.3
@@ -355,8 +456,8 @@ importers:
         specifier: 7.0.3
         version: 7.0.3
       electron:
-        specifier: 43.3.0
-        version: 43.3.0(supports-color@5.5.0)
+        specifier: 44.2.0
+        version: 44.2.0(supports-color@5.5.0)
       electron-builder:
         specifier: 26.15.7
         version: 26.15.7(electron-builder-squirrel-windows@26.15.7)(supports-color@5.5.0)
@@ -2705,8 +2806,8 @@ packages:
   camelize@1.0.1:
     resolution: {integrity: sha512-dU+Tx2fsypxTgtLoE36npi3UqcjSSMNYfkqgmoEhtZrraP5VWq0K7FkWVTYa8eMPtnU/G2txVsfdCJTn9uzpuQ==}
 
-  caniuse-lite@1.0.30001809:
-    resolution: {integrity: sha512-xxWVywk6a6Arlk+hymeycyn/VgqEfLDxupvhH/xiY5SJ/18kmi9o6MiO320DCUzypORHLtvh0I4i04tUhCNHNQ==}
+  caniuse-lite@1.0.30001810:
+    resolution: {integrity: sha512-TITQPUkaz+aVk5GL6NhOdwk1aEaNTSDPsGFWrTuhKGtjTF70jL/Oht2W4c6rXUe5fu7Ie19VIahAXHIIiWWNeg==}
 
   caseless@0.12.0:
     resolution: {integrity: sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==}
@@ -3403,8 +3504,8 @@ packages:
     resolution: {integrity: sha512-bO3y10YikuUwUuDUQRM4KfwNkKhnpVO7IPdbsrejwN9/AABJzzTQ4GeHwyzNSrVO+tEH3/Np255a3sVZpZDjvg==}
     engines: {node: '>=8.0.0'}
 
-  electron@43.3.0:
-    resolution: {integrity: sha512-nLlvu0WFjftWsSaTkV2B/c4NDuJBspTyXu8vKSQ6vLvFt8uG3NgN49LLKcXddwX0GqVvAQDhciWp+4xOdTdhew==}
+  electron@44.2.0:
+    resolution: {integrity: sha512-oK1icjhapp3xsUZycO9WZaLmd3hJnA7ieobC4mpdtO1pEN+PPGWpA3m1Mgzzuc1wzSD2Wai4zcH4yfpGJqxFMA==}
     engines: {node: '>= 22.12.0'}
     hasBin: true
 
@@ -8532,9 +8633,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@electron/remote@2.1.2(electron@43.3.0(supports-color@5.5.0))':
+  '@electron/remote@2.1.2(electron@44.2.0(supports-color@5.5.0))':
     dependencies:
-      electron: 43.3.0(supports-color@5.5.0)
+      electron: 44.2.0(supports-color@5.5.0)
 
   '@electron/universal@2.0.3(supports-color@5.5.0)':
     dependencies:
@@ -9558,9 +9659,9 @@ snapshots:
       mobx: 6.13.5
       path-to-regexp: 6.2.2
 
-  '@syed_umair/electron-process-manager@1.1.0(electron@43.3.0(supports-color@5.5.0))':
+  '@syed_umair/electron-process-manager@1.1.0(electron@44.2.0(supports-color@5.5.0))':
     dependencies:
-      electron: 43.3.0(supports-color@5.5.0)
+      electron: 44.2.0(supports-color@5.5.0)
       electron-process-reporter: 1.4.0
 
   '@szmarczak/http-timer@4.0.6':
@@ -10678,7 +10779,7 @@ snapshots:
 
   browserslist@4.23.0:
     dependencies:
-      caniuse-lite: 1.0.30001809
+      caniuse-lite: 1.0.30001810
       electron-to-chromium: 1.4.710
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.23.0)
@@ -10851,7 +10952,7 @@ snapshots:
 
   camelize@1.0.1: {}
 
-  caniuse-lite@1.0.30001809: {}
+  caniuse-lite@1.0.30001810: {}
 
   caseless@0.12.0: {}
 
@@ -11605,9 +11706,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  electron-webauthn-linux@0.1.1(electron@43.3.0(supports-color@5.5.0)):
+  electron-webauthn-linux@0.1.1(electron@44.2.0(supports-color@5.5.0)):
     dependencies:
-      electron: 43.3.0(supports-color@5.5.0)
+      electron: 44.2.0(supports-color@5.5.0)
 
   electron-window-state@5.0.3:
     dependencies:
@@ -11626,7 +11727,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  electron@43.3.0(supports-color@5.5.0):
+  electron@44.2.0(supports-color@5.5.0):
     dependencies:
       '@electron-internal/extract-zip': 1.0.5
       '@electron/get': 5.1.0(supports-color@5.5.0)

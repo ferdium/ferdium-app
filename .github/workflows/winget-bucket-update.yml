@@ -80,10 +80,9 @@ jobs:
           $assets = $release | Where-Object -Property tag_name -match '${{ env.last_tag }}' | Select -First 1 | Select -ExpandProperty assets
 
           $urlSetup64 = $assets | Where-Object -Property name -CLike '*-win-AutoSetup*-x64.exe' | Select -ExpandProperty browser_download_url
-          $urlSetup86 = $assets | Where-Object -Property name -CLike '*-win-AutoSetup*-ia32.exe' | Select -ExpandProperty browser_download_url
           $urlSetupArm = $assets | Where-Object -Property name -CLike '*-win-AutoSetup*-arm64.exe' | Select -ExpandProperty browser_download_url
 
-          $installerUrls = "'$urlSetup64|x64' '$urlSetup86|x86' '$urlSetupArm|arm64'"
+          $installerUrls = "'$urlSetup64|x64' '$urlSetupArm|arm64'"
           Write-Host "urls to use: $installerUrls"
 
           $package = '${{ env.PACKAGE_NAME }}'
@@ -123,10 +122,9 @@ jobs:
           $assets = $ghobject.release.assets
 
           $urlSetup64 = $assets | Where-Object -Property name -CLike '*-win-AutoSetup*-x64.exe' | Select -ExpandProperty browser_download_url
-          $urlSetup86 = $assets | Where-Object -Property name -CLike '*-win-AutoSetup*-ia32.exe' | Select -ExpandProperty browser_download_url
           $urlSetupArm = $assets | Where-Object -Property name -CLike '*-win-AutoSetup*-arm64.exe' | Select -ExpandProperty browser_download_url
 
-          $installerUrls = "'$urlSetup64|x64' '$urlSetup86|x86' '$urlSetupArm|arm64'"
+          $installerUrls = "'$urlSetup64|x64' '$urlSetupArm|arm64'"
           Write-Host "urls to use: $installerUrls"
 
           $version = $ghobject.release.tag_name

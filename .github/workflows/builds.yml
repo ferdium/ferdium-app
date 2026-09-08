@@ -110,7 +110,7 @@ jobs:
             #   there were other changes coming from the 'develop' branch (or)
             #   this is a manual trigger with the key-phrase
             git checkout develop
-            pnpm version -m "%s [skip ci]" prerelease --preid=nightly
+            pnpm version prerelease --preid=nightly --message "%s [skip ci]"
             git commit --all --amend --no-edit --no-verify
             git push origin develop --no-verify
 
@@ -375,14 +375,6 @@ jobs:
           node-version-file: '.nvmrc'
       - name: Install pnpm
         uses: pnpm/action-setup@v4
-      #TODO - Remove this once https://github.com/electron-userland/electron-builder/issues/6933#issuecomment-1213438889 is resolved
-      - name: Tweak pnpm.cjs
-        run: |
-          # Run the command to get the pnpm store path and store it in a variable
-          PNPM_BASEDIR=$(dirname "$(echo "$PNPM_HOME" | sed -e 's/\\/\//g' -e 's/^\([A-Za-z]\):/\/\1/')")
-
-          sed -i 's/\/usr\/bin\/env node/node/g' "$PNPM_BASEDIR/pnpm/bin/pnpm.cjs"
-        shell: bash
       - name: Install node dependencies
         uses: nick-fields/retry@v3
         with:
