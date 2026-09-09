@@ -325,6 +325,7 @@ function SandboxTransferList(props: ISandboxTransferListProps) {
           <Button
             variant="outlined"
             size="small"
+            // eslint-disable-next-line react/jsx-no-bind
             onClick={handleAddAll}
             disabled={availableServices.length === 0}
           >
@@ -333,6 +334,7 @@ function SandboxTransferList(props: ISandboxTransferListProps) {
           <Button
             variant="contained"
             size="small"
+            // eslint-disable-next-line react/jsx-no-bind
             onClick={handleAddSelected}
             disabled={availableChecked.length === 0}
           >
@@ -341,6 +343,7 @@ function SandboxTransferList(props: ISandboxTransferListProps) {
           <Button
             variant="outlined"
             size="small"
+            // eslint-disable-next-line react/jsx-no-bind
             onClick={handleRemoveSelected}
             disabled={selectedChecked.length === 0}
           >
@@ -349,6 +352,7 @@ function SandboxTransferList(props: ISandboxTransferListProps) {
           <Button
             variant="outlined"
             size="small"
+            // eslint-disable-next-line react/jsx-no-bind
             onClick={handleRemoveAll}
             disabled={selectedServices.length === 0}
           >
