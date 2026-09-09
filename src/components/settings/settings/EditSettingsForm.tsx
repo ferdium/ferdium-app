@@ -839,12 +839,6 @@ class EditSettingsForm extends Component<IProps, IState> {
 
                 <H2 className="settings__section_header">
                   {intl.formatMessage(messages.sectionSandboxes)}
-                  <span
-                    className="badge badge--success"
-                    style={{ margin: '1rem' }}
-                  >
-                    beta
-                  </span>
                 </H2>
                 <p
                   className="settings__message"
