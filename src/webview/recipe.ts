@@ -63,57 +63,19 @@ const sessionHandler = new SessionHandler();
 
 const notificationsHandler = new NotificationsHandler();
 
-// Patching window.open
-const originalWindowOpen = window.open;
-
-window.open = (url, frameName, features): WindowProxy | null => {
-  debug('window.open', url, frameName, features);
-  if (!url) {
-    // The service hasn't yet supplied a URL (as used in Skype).
-    // Return a new dummy window object and wait for the service to change the properties
-    const newWindow = {
-      location: {
-        href: '',
-      },
-    };
-
-    const checkInterval = setInterval(() => {
-      // Has the service changed the URL yet?
-      if (newWindow.location.href !== '') {
-        if (features) {
-          originalWindowOpen(newWindow.location.href, frameName, features);
-        } else {
-          // Open the new URL
-          ipcRenderer.sendToHost('new-window', newWindow.location.href);
-        }
-        clearInterval(checkInterval);
-      }
-    }, 0);
-
-    setTimeout(() => {
-      // Stop checking for location changes after 1 second
-      clearInterval(checkInterval);
-    }, 1000);
-
-    return newWindow as Window;
-  }
-
-  // We need to differentiate if the link should be opened in a popup or in the systems default browser
-  if (!frameName && !features && typeof features !== 'string') {
-    ipcRenderer.sendToHost('new-window', url);
-    return null;
-  }
-
-  if (url) {
-    return originalWindowOpen(url, frameName, features);
-  }
-  return null;
-};
-
 // We can't override APIs here, so we first expose functions via 'window.ferdium',
 // then overwrite the corresponding field of the window object by injected JS.
 contextBridge.exposeInMainWorld('ferdium', {
-  open: window.open,
+  // Called by the page-world window.open replacement (see windowOpenShim.ts)
+  // for URLs that belong in the user's default browser. Real popups never
+  // come through here: they are created natively so the page keeps a genuine
+  // WindowProxy, and the main process' window open handler routes them.
+  open: (url: string) => {
+    debug('window.open (external)', url);
+    if (typeof url === 'string' && url !== '') {
+      ipcRenderer.sendToHost('new-window', url);
+    }
+  },
   setBadge: (
     direct: string | number | null | undefined,
     indirect: string | number | null | undefined,

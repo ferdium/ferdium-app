@@ -43,6 +43,7 @@ import handleDeepLink, { getDeepLinkFromArgs } from './electron/deepLinking';
 import './electron/exception';
 // eslint-disable-next-line import/no-cycle
 import ipcApi from './electron/ipc-api';
+import { popupWindowOptions } from './electron/popupWindowOptions';
 import isPositionValid from './electron/windowUtils';
 import { mainIpcHandler as basicAuthHandler } from './features/basicAuth';
 import DBus from './lib/DBus';
@@ -224,9 +225,6 @@ const webRTCIPHandlingPolicy = retrieveSettingValue(
   | 'default_public_interface_only'
   | 'default_public_and_private_interfaces';
 
-const windowOpenFeaturesRequestResizable = (features = ''): boolean =>
-  /(?:^|,)\s*resizable(?:=(?:yes|1|true))?(?:,|$)/i.test(features);
-
 const createWindow = () => {
   // Remember window size
   const mainWindowState = windowStateKeeper({
@@ -352,18 +350,26 @@ const createWindow = () => {
       }
 
       contents.setWindowOpenHandler(({ url, disposition, features }) => {
-        // OAuth popups (Google, Microsoft, etc.) are opened via window.open()
-        // and need window.opener preserved so the parent can receive the
-        // postMessage callback that completes the flow. Allow them as a child
-        // BrowserWindow that inherits the service partition.
+        // window.open() calls that ask for a window (a target name or window
+        // features) arrive with the 'new-window' disposition. OAuth popups
+        // (Google, Microsoft, etc.) need window.opener preserved so the parent
+        // receives the postMessage callback that completes the flow, and Slack
+        // renders its huddle / screen-share window into the popup's document
+        // from the opener. Both need a real popup on the service's session,
+        // and the page keeps the genuine WindowProxy (see windowOpenShim.ts).
+        // The popup is a standalone window rather than a child of the main
+        // window so it can be moved to another display, maximized or put in
+        // fullscreen, and stays visible while Ferdium is hidden or minimized.
+        // popupWindowOptions() keeps the page from controlling the window
+        // through Electron options in the features string (Slack asks for
+        // `show=no,alwaysOnTop=yes,...`, which would leave the huddle window
+        // invisible).
         if (disposition === 'new-window') {
           return {
             action: 'allow',
             outlivesOpener: false,
             overrideBrowserWindowOptions: {
-              parent: mainWindow,
-              fullscreenable: false,
-              resizable: windowOpenFeaturesRequestResizable(features),
+              ...popupWindowOptions(features, isPositionValid),
               webPreferences: isLinux
                 ? {
                     session: contents.session,
@@ -379,7 +385,8 @@ const createWindow = () => {
             },
           };
         }
-        // Regular link clicks → open in the user's default browser.
+        // Everything else (target=_blank links, window.open() without
+        // features) → open in the user's default browser.
         openExternalUrl(url);
         return { action: 'deny' };
       });
@@ -953,17 +960,23 @@ app.on('activate', () => {
   }
 });
 
+// Default handler for windows that are not service webviews, e.g. popups
+// opened by a service (the main window and the webviews install their own
+// handlers in createWindow). Links that would open a new tab go to the default
+// browser; nested window.open() popups are allowed.
 app.on('web-contents-created', (_createdEvent, contents) => {
-  contents.setWindowOpenHandler(({ disposition, features }) => {
+  contents.setWindowOpenHandler(({ url, disposition, features }) => {
     if (disposition === 'foreground-tab') {
+      openExternalUrl(url);
       return { action: 'deny' };
     }
 
     return {
       action: 'allow',
-      overrideBrowserWindowOptions: {
-        resizable: windowOpenFeaturesRequestResizable(features),
-      },
+      overrideBrowserWindowOptions: popupWindowOptions(
+        features,
+        isPositionValid,
+      ),
     };
   });
 });
