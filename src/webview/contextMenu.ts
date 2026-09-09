@@ -15,9 +15,9 @@ export default async function setupContextMenu(
 ) {
   const contextMenuBuilder = new ContextMenuBuilder(webContents);
 
-  webContents.on('context-menu', (_e, props) => {
-    // TODO?: e.preventDefault();
-    contextMenuBuilder.showPopupMenu(
+  webContents.on('context-menu', async (_e, props) => {
+    // The originating frame enables native macOS AutoFill in Electron menus.
+    const menu = await contextMenuBuilder.buildMenuForElement(
       {
         ...props,
         searchEngine: getSearchEngine(),
@@ -31,5 +31,13 @@ export default async function setupContextMenu(
       getDefaultSpellcheckerLanguage(),
       getSpellcheckerLanguage(),
     );
+
+    if (!menu) return;
+
+    if (props.frame) {
+      menu.popup({ frame: props.frame });
+    } else {
+      menu.popup();
+    }
   });
 }
