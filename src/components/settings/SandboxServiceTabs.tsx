@@ -1,9 +1,18 @@
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Button, IconButton, TextField } from '@mui/material';
-import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
+import {
+  Box,
+  Button,
+  Chip,
+  Divider,
+  IconButton,
+  Paper,
+  Tab,
+  Tabs,
+  TextField,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import { inject, observer } from 'mobx-react';
 import { type ReactNode, type SyntheticEvent, useState } from 'react';
 import { defineMessages, useIntl } from 'react-intl';
@@ -16,6 +25,32 @@ const messages = defineMessages({
   addCustomSandbox: {
     id: 'sandbox.addCustomSandbox',
     defaultMessage: 'Add a custom sandbox',
+  },
+  customSandboxes: {
+    id: 'sandbox.customSandboxes',
+    defaultMessage: 'Custom sandboxes',
+  },
+  customSandboxesInfo: {
+    id: 'sandbox.customSandboxesInfo',
+    defaultMessage:
+      'Group only the services that need to share sign-in or site data.',
+  },
+  emptyTitle: {
+    id: 'sandbox.emptyTitle',
+    defaultMessage: 'No custom sandboxes yet',
+  },
+  emptyDescription: {
+    id: 'sandbox.emptyDescription',
+    defaultMessage:
+      'Create one when two or more services need to share data. Unassigned services stay isolated.',
+  },
+  sandboxName: {
+    id: 'sandbox.sandboxName',
+    defaultMessage: 'Sandbox name',
+  },
+  deleteSandbox: {
+    id: 'sandbox.deleteSandbox',
+    defaultMessage: 'Delete sandbox',
   },
 });
 
@@ -34,10 +69,10 @@ function TabPanel(props: TabPanelProps) {
       hidden={value !== index}
       id={`vertical-tabpanel-${index}`}
       aria-labelledby={`vertical-tab-${index}`}
-      style={{ width: '100%' }}
+      style={{ width: '100%', minWidth: 0, height: 'auto' }}
       {...other}
     >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+      {value === index && <Box sx={{ p: 2, height: 'auto' }}>{children}</Box>}
     </div>
   );
 }
@@ -78,77 +113,171 @@ function SandboxServiceTabs(props: IProps) {
         display: 'flex',
         height: '100%',
         flexDirection: 'column',
+        gap: 2,
+        mt: 2,
       }}
     >
-      <Button
-        variant="outlined"
-        startIcon={<AddCircleIcon />}
-        onClick={handleAddTab}
-        sx={{
-          width: 'fit-content',
-          display: 'flex',
-          margin: '8px',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        {intl.formatMessage(messages.addCustomSandbox)}
-      </Button>
-
       <Box
         sx={{
-          flexGrow: 1,
-          // bgcolor: 'background.paper',
-          display: sandboxServices.length === 0 ? 'none' : 'flex',
+          display: 'flex',
+          height: 'auto',
+          alignItems: { xs: 'stretch', sm: 'center' },
+          justifyContent: 'space-between',
+          flexDirection: { xs: 'column', sm: 'row' },
+          gap: 1.5,
         }}
       >
-        <Tabs
-          orientation="vertical"
-          variant="scrollable"
-          value={value}
-          onChange={handleChange}
-          aria-label="Vertical tabs sandbox"
+        <Box sx={{ height: 'auto' }}>
+          <Typography variant="subtitle1" fontWeight={600}>
+            {intl.formatMessage(messages.customSandboxes)}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {intl.formatMessage(messages.customSandboxesInfo)}
+          </Typography>
+        </Box>
+        <Button
+          variant="outlined"
+          startIcon={<AddCircleIcon />}
+          onClick={handleAddTab}
+          sx={{ width: { xs: '100%', sm: 'fit-content' }, flexShrink: 0 }}
+        >
+          {intl.formatMessage(messages.addCustomSandbox)}
+        </Button>
+      </Box>
+
+      {sandboxServices.length === 0 ? (
+        <Paper
+          variant="outlined"
           sx={{
-            borderRight: 1,
-            borderColor: 'divider',
-            minWidth: '20%',
-            maxWidth: '20%',
+            px: 3,
+            py: 4,
+            textAlign: 'center',
+            borderStyle: 'dashed',
+            height: 'auto',
           }}
         >
-          {sandboxServices?.map((tab, index) => (
-            <Tab key={tab.id} label={tab.name} {...a11yProps(index)} />
-          ))}
-        </Tabs>
-        {sandboxServices?.map((tab, index) => (
-          <TabPanel key={`${tab.id}-tabpanel`} value={value} index={index}>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <TextField
-                id={`text-${tab.id}`}
-                variant="outlined"
-                value={tab.name}
-                onChange={e => {
-                  editSandboxService({ id: tab.id, name: e.target.value });
-                }}
+          <Typography variant="subtitle1" fontWeight={600}>
+            {intl.formatMessage(messages.emptyTitle)}
+          </Typography>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ mt: 0.75, maxWidth: 520, mx: 'auto' }}
+          >
+            {intl.formatMessage(messages.emptyDescription)}
+          </Typography>
+        </Paper>
+      ) : (
+        <Paper
+          variant="outlined"
+          sx={{
+            flexGrow: 1,
+            display: 'flex',
+            height: 'auto',
+            minHeight: 360,
+            overflow: 'hidden',
+          }}
+        >
+          <Tabs
+            orientation="vertical"
+            variant="scrollable"
+            value={value}
+            onChange={handleChange}
+            aria-label="Vertical tabs sandbox"
+            sx={{
+              borderRight: 1,
+              borderColor: 'divider',
+              width: 180,
+              flexShrink: 0,
+              bgcolor: 'action.hover',
+              '& .MuiTab-root': {
+                alignItems: 'stretch',
+                minHeight: 52,
+                maxWidth: 'none',
+                px: 1.5,
+                textTransform: 'none',
+              },
+            }}
+          >
+            {sandboxServices.map((tab, index) => (
+              <Tab
+                key={tab.id}
+                label={
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      height: 'auto',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: 1,
+                      width: '100%',
+                      minWidth: 0,
+                    }}
+                  >
+                    <Typography
+                      variant="body2"
+                      fontWeight={500}
+                      noWrap
+                      sx={{ minWidth: 0 }}
+                    >
+                      {tab.name}
+                    </Typography>
+                    <Chip
+                      size="small"
+                      label={tab.services.length}
+                      sx={{ height: 22, flexShrink: 0 }}
+                    />
+                  </Box>
+                }
+                {...a11yProps(index)}
               />
-              <IconButton
-                onClick={() => {
-                  deleteSandboxService({ id: tab.id });
-                  setValue(value ? value - 1 : 0);
+            ))}
+          </Tabs>
+          {sandboxServices.map((tab, index) => (
+            <TabPanel key={`${tab.id}-tabpanel`} value={value} index={index}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  height: 'auto',
+                  alignItems: 'center',
+                  gap: 1,
+                  maxWidth: 520,
                 }}
-                aria-label="delete"
-                color="error"
               >
-                <DeleteIcon />
-              </IconButton>
-            </Box>
-            <SandboxTransferList
-              value={value}
-              actions={actions}
-              stores={stores}
-            />
-          </TabPanel>
-        ))}
-      </Box>
+                <TextField
+                  id={`text-${tab.id}`}
+                  label={intl.formatMessage(messages.sandboxName)}
+                  size="small"
+                  fullWidth
+                  variant="outlined"
+                  value={tab.name}
+                  onChange={e => {
+                    editSandboxService({ id: tab.id, name: e.target.value });
+                  }}
+                />
+                <Tooltip title={intl.formatMessage(messages.deleteSandbox)}>
+                  <IconButton
+                    onClick={() => {
+                      deleteSandboxService({ id: tab.id });
+                      setValue(value ? value - 1 : 0);
+                    }}
+                    aria-label={intl.formatMessage(messages.deleteSandbox)}
+                    color="error"
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Tooltip>
+              </Box>
+              <Divider sx={{ my: 1.5 }} />
+              <SandboxTransferList
+                value={value}
+                actions={actions}
+                stores={stores}
+              />
+            </TabPanel>
+          ))}
+        </Paper>
+      )}
     </Box>
   );
 }

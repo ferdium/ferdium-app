@@ -1,13 +1,16 @@
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import Grid from '@mui/material/Grid';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-// import Paper from '@mui/material/Paper';
+import {
+  Box,
+  Button,
+  Checkbox,
+  Chip,
+  Divider,
+  ListItemButton,
+  Paper,
+  Typography,
+} from '@mui/material';
 import { inject, observer } from 'mobx-react';
 import { useState } from 'react';
+import { defineMessages, useIntl } from 'react-intl';
 import type { StoresProps } from '../../@types/ferdium-components.types';
 
 function not(a: readonly string[], b: readonly string[]) {
@@ -18,49 +21,81 @@ function intersection(a: readonly string[], b: readonly string[]) {
   return a.filter(value => b.includes(value));
 }
 
+const messages = defineMessages({
+  serviceAssignmentInfo: {
+    id: 'sandbox.serviceAssignmentInfo',
+    defaultMessage:
+      'Choose which services should share this sandbox. A service can belong to only one custom sandbox.',
+  },
+  availableServices: {
+    id: 'sandbox.availableServices',
+    defaultMessage: 'Available services',
+  },
+  sandboxServices: {
+    id: 'sandbox.sandboxServices',
+    defaultMessage: 'In this sandbox',
+  },
+  noAvailableServices: {
+    id: 'sandbox.noAvailableServices',
+    defaultMessage: 'No unassigned services available.',
+  },
+  noSandboxServices: {
+    id: 'sandbox.noSandboxServices',
+    defaultMessage: 'No services have been added yet.',
+  },
+  addAll: {
+    id: 'sandbox.addAll',
+    defaultMessage: 'Add all',
+  },
+  addSelected: {
+    id: 'sandbox.addSelected',
+    defaultMessage: 'Add selected',
+  },
+  removeSelected: {
+    id: 'sandbox.removeSelected',
+    defaultMessage: 'Remove selected',
+  },
+  removeAll: {
+    id: 'sandbox.removeAll',
+    defaultMessage: 'Remove all',
+  },
+});
+
 interface ISandboxTransferListProps extends StoresProps {
   value: number;
 }
 
 function SandboxTransferList(props: ISandboxTransferListProps) {
   const { value, actions, stores } = props;
+  const intl = useIntl();
 
   const { editSandboxService } = actions.app;
-
   const { sandboxServices } = stores.app;
   const { all: allServices } = stores.services;
-
-  const selectedServices = sandboxServices[value].services;
-
-  // Create a Set to keep track of unique not selected services
-  const notSelectedSet = new Set<string>();
-
-  // Loop through all services and check if they are in any sandbox's selected services
-  allServices.forEach(service => {
-    let isSelected = false;
-
-    sandboxServices.forEach(sandbox => {
-      if (sandbox.services.includes(service.id)) {
-        isSelected = true;
-      }
-    });
-
-    // If the service is not selected in any sandbox service, add it to the Set
-    if (!isSelected) {
-      notSelectedSet.add(service.id);
-    }
-  });
-
-  // Convert the Set to an array
-  const notSelected = [...notSelectedSet];
+  const sandbox = sandboxServices[value];
 
   const [checked, setChecked] = useState<readonly string[]>([]);
-  const handleToggle = (value: string) => () => {
-    const currentIndex = checked.indexOf(value);
+
+  if (!sandbox) {
+    return null;
+  }
+
+  const selectedServices = sandbox.services;
+
+  // Services can only belong to one custom sandbox at a time.
+  const assignedServiceIds = new Set(
+    sandboxServices.flatMap(item => item.services),
+  );
+  const availableServices = allServices
+    .filter(service => !assignedServiceIds.has(service.id))
+    .map(service => service.id);
+
+  const handleToggle = (serviceId: string) => () => {
+    const currentIndex = checked.indexOf(serviceId);
     const newChecked = [...checked];
 
     if (currentIndex === -1) {
-      newChecked.push(value);
+      newChecked.push(serviceId);
     } else {
       newChecked.splice(currentIndex, 1);
     }
@@ -68,67 +103,149 @@ function SandboxTransferList(props: ISandboxTransferListProps) {
     setChecked(newChecked);
   };
 
-  const sandboxId = sandboxServices[value].id;
+  const sandboxId = sandbox.id;
+  const selectedChecked = intersection(checked, selectedServices);
+  const availableChecked = intersection(checked, availableServices);
 
-  const leftChecked = intersection(checked, selectedServices);
-  const rightChecked = intersection(checked, notSelected);
+  const getServiceInfo = (id: string) =>
+    allServices.find(item => item.id === id) ?? null;
 
-  const getServiceInfo = (id: string) => {
-    const service = allServices.find(s => s.id === id);
-    if (!service) {
-      return null;
-    }
-    return service;
-  };
-
-  const customList = (items: readonly string[]) => (
-    // <Paper sx={{ width: 200, height: 230, overflow: 'auto' }}>
-    <List
-      dense
-      component="div"
-      role="list"
-      key={`${sandboxId}-${value}-transferlist`}
+  const customList = (
+    items: readonly string[],
+    title: string,
+    emptyMessage: string,
+  ) => (
+    <Paper
+      variant="outlined"
+      sx={{
+        minWidth: 0,
+        width: '100%',
+        height: 'auto',
+        overflow: 'hidden',
+      }}
     >
-      {items.map((value: string) => {
-        const labelId = `transfer-list-item-${value}-label`;
+      <Box
+        sx={{
+          px: 1,
+          height: 30,
+          minHeight: 30,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: 0.75,
+        }}
+      >
+        <Typography variant="subtitle2" fontWeight={600} noWrap>
+          {title}
+        </Typography>
+        <Chip size="small" label={items.length} sx={{ height: 22 }} />
+      </Box>
+      <Divider />
 
-        return (
-          <ListItemButton
-            key={`${sandboxId}-${value}-li`}
-            role="listitem"
-            onClick={handleToggle(value)}
-          >
-            <ListItemIcon
-              sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}
-            >
-              <Checkbox
-                checked={checked.includes(value)}
-                tabIndex={-1}
-                disableRipple
-                inputProps={{
-                  'aria-labelledby': labelId,
+      {items.length === 0 ? (
+        <Box
+          sx={{
+            height: 168,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            px: 1,
+            textAlign: 'center',
+          }}
+        >
+          <Typography variant="body2" color="text.secondary">
+            {emptyMessage}
+          </Typography>
+        </Box>
+      ) : (
+        <Box
+          role="list"
+          sx={{
+            height: 168,
+            overflowY: 'auto',
+            overflowX: 'hidden',
+            overscrollBehavior: 'contain',
+            py: 0.25,
+            // Match Ferdium's existing .settings__body scrollbar styling.
+            '&::-webkit-scrollbar': {
+              width: 8,
+            },
+            '&::-webkit-scrollbar-track': {
+              background: 'none',
+              borderRadius: '10px',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              backgroundColor: theme =>
+                theme.palette.mode === 'dark'
+                  ? 'rgb(71, 73, 75)'
+                  : 'rgb(236, 238, 239)',
+              borderRadius: '10px',
+            },
+            '&::-webkit-scrollbar-thumb:window-inactive': {
+              background: 'none',
+            },
+          }}
+        >
+          {items.map(serviceId => {
+            const service = getServiceInfo(serviceId);
+            const serviceName = service?.name ?? serviceId;
+            const isChecked = checked.includes(serviceId);
+
+            return (
+              <ListItemButton
+                role="listitem"
+                key={`${sandboxId}-${serviceId}`}
+                selected={isChecked}
+                onClick={handleToggle(serviceId)}
+                sx={{
+                  width: '100%',
+                  height: 32,
+                  minHeight: 32,
+                  px: 0.5,
+                  py: 0,
+                  gap: 0.5,
+                  flex: '0 0 32px',
+                  boxSizing: 'border-box',
+                  color: 'text.primary',
                 }}
-              />
-              <img
-                src={getServiceInfo(value)?.icon}
-                alt={getServiceInfo(value)?.name}
-                width={15}
-                height={15}
-              />
-            </ListItemIcon>
-            <ListItemText id={labelId} primary={getServiceInfo(value)?.name} />
-          </ListItemButton>
-        );
-      })}
-    </List>
-    // </Paper>
+              >
+                <Checkbox
+                  checked={isChecked}
+                  tabIndex={-1}
+                  disableRipple
+                  size="small"
+                  sx={{ p: 0.5, flexShrink: 0 }}
+                  inputProps={{ 'aria-label': serviceName }}
+                />
+                {service?.icon && (
+                  <Box
+                    component="img"
+                    src={service.icon}
+                    alt=""
+                    sx={{
+                      width: 18,
+                      height: 18,
+                      objectFit: 'contain',
+                      flexShrink: 0,
+                    }}
+                  />
+                )}
+                <Typography
+                  variant="body2"
+                  noWrap
+                  sx={{ minWidth: 0, color: 'text.primary' }}
+                >
+                  {serviceName}
+                </Typography>
+              </ListItemButton>
+            );
+          })}
+        </Box>
+      )}
+    </Paper>
   );
 
-  function handleAllRight() {
+  function handleRemoveAll() {
     editSandboxService({
       id: sandboxId,
       services: [],
@@ -136,81 +253,114 @@ function SandboxTransferList(props: ISandboxTransferListProps) {
     setChecked([]);
   }
 
-  function handleCheckedRight() {
+  function handleRemoveSelected() {
     editSandboxService({
       id: sandboxId,
-      services: not(selectedServices, leftChecked),
+      services: not(selectedServices, selectedChecked),
     });
-    setChecked(not(checked, leftChecked));
+    setChecked(not(checked, selectedChecked));
   }
 
-  function handleCheckedLeft() {
+  function handleAddSelected() {
     editSandboxService({
       id: sandboxId,
-      services: [...selectedServices, ...rightChecked],
+      services: [...selectedServices, ...availableChecked],
     });
-    setChecked(not(checked, rightChecked));
+    setChecked(not(checked, availableChecked));
   }
 
-  function handleAllLeft() {
+  function handleAddAll() {
     editSandboxService({
       id: sandboxId,
-      services: [...selectedServices, ...notSelected],
+      services: [...selectedServices, ...availableServices],
     });
     setChecked([]);
   }
 
   return (
-    <Grid container spacing={2} justifyContent="center" alignItems="center">
-      <Grid item>{customList(selectedServices)}</Grid>
-      <Grid item>
-        <Grid container direction="column" alignItems="center">
-          <Button
-            sx={{ my: 0.5 }}
-            variant="outlined"
-            size="small"
-            onClick={() => handleAllLeft()}
-            disabled={notSelected.length === 0}
-            aria-label="move all left"
-          >
-            ≪
-          </Button>
-          <Button
-            sx={{ my: 0.5 }}
-            variant="outlined"
-            size="small"
-            onClick={() => handleCheckedLeft()}
-            disabled={rightChecked.length === 0}
-            aria-label="move selected left"
-          >
-            &lt;
-          </Button>
+    <Box sx={{ containerType: 'inline-size', minWidth: 0, height: 'auto' }}>
+      <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+        {intl.formatMessage(messages.serviceAssignmentInfo)}
+      </Typography>
 
+      <Box
+        sx={{
+          display: 'grid',
+          height: 'auto',
+          gridTemplateColumns: 'minmax(0, 1fr)',
+          gap: 1,
+          '@container (min-width: 340px)': {
+            gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+          },
+        }}
+      >
+        {customList(
+          availableServices,
+          intl.formatMessage(messages.availableServices),
+          intl.formatMessage(messages.noAvailableServices),
+        )}
+
+        {customList(
+          selectedServices,
+          intl.formatMessage(messages.sandboxServices),
+          intl.formatMessage(messages.noSandboxServices),
+        )}
+
+        <Box
+          sx={{
+            display: 'grid',
+            height: 'auto',
+            gridTemplateColumns: '1fr 1fr',
+            gap: 0.5,
+            '@container (min-width: 340px)': {
+              gridColumn: '1 / -1',
+            },
+            '& .MuiButton-root': {
+              minWidth: 0,
+              px: 0.75,
+              whiteSpace: 'nowrap',
+            },
+          }}
+        >
           <Button
-            sx={{ my: 0.5 }}
             variant="outlined"
             size="small"
-            onClick={() => handleCheckedRight()}
-            disabled={leftChecked.length === 0}
-            aria-label="move selected right"
+            // eslint-disable-next-line react/jsx-no-bind
+            onClick={handleAddAll}
+            disabled={availableServices.length === 0}
           >
-            &gt;
+            {intl.formatMessage(messages.addAll)}
           </Button>
           <Button
-            sx={{ my: 0.5 }}
+            variant="contained"
+            size="small"
+            // eslint-disable-next-line react/jsx-no-bind
+            onClick={handleAddSelected}
+            disabled={availableChecked.length === 0}
+          >
+            {intl.formatMessage(messages.addSelected)}
+          </Button>
+          <Button
             variant="outlined"
             size="small"
-            onClick={() => handleAllRight()}
+            // eslint-disable-next-line react/jsx-no-bind
+            onClick={handleRemoveSelected}
+            disabled={selectedChecked.length === 0}
+          >
+            {intl.formatMessage(messages.removeSelected)}
+          </Button>
+          <Button
+            variant="outlined"
+            size="small"
+            // eslint-disable-next-line react/jsx-no-bind
+            onClick={handleRemoveAll}
             disabled={selectedServices.length === 0}
-            aria-label="move all right"
           >
-            ≫
+            {intl.formatMessage(messages.removeAll)}
           </Button>
-        </Grid>
-      </Grid>
-      <Grid item>{customList(notSelected)}</Grid>
-    </Grid>
+        </Box>
+      </Box>
+    </Box>
   );
 }
-
 export default inject('stores', 'actions')(observer(SandboxTransferList));
