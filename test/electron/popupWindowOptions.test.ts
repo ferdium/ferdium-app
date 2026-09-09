@@ -1,7 +1,6 @@
 import {
   parseWindowFeatures,
   popupWindowOptions,
-  windowOpenFeaturesAllowResizable,
 } from '../../src/electron/popupWindowOptions';
 
 // What Slack's openHuddleWindowMva hands to window.open() (Electron options
@@ -27,24 +26,6 @@ describe('parseWindowFeatures', () => {
   });
 });
 
-describe('windowOpenFeaturesAllowResizable', () => {
-  it('is resizable by default', () => {
-    expect(windowOpenFeaturesAllowResizable('')).toBe(true);
-    expect(windowOpenFeaturesAllowResizable()).toBe(true);
-    expect(windowOpenFeaturesAllowResizable('width=380,height=272')).toBe(true);
-    expect(windowOpenFeaturesAllowResizable('resizable=yes')).toBe(true);
-    expect(windowOpenFeaturesAllowResizable('resizable')).toBe(true);
-  });
-
-  it('honours an explicit opt-out', () => {
-    expect(windowOpenFeaturesAllowResizable('resizable=no')).toBe(false);
-    expect(windowOpenFeaturesAllowResizable('width=1,resizable=0')).toBe(false);
-    expect(windowOpenFeaturesAllowResizable('resizable=false,width=1')).toBe(
-      false,
-    );
-  });
-});
-
 describe('popupWindowOptions', () => {
   it('always shows the popup and keeps it a normal window', () => {
     const options = popupWindowOptions(SLACK_HUDDLE_FEATURES, onScreen);
@@ -53,7 +34,6 @@ describe('popupWindowOptions', () => {
       alwaysOnTop: false,
       fullscreen: false,
       fullscreenable: true,
-      resizable: true,
       frame: true,
       transparent: false,
       skipTaskbar: false,
@@ -81,8 +61,10 @@ describe('popupWindowOptions', () => {
     });
   });
 
-  it('respects a resizable opt-out', () => {
-    expect(popupWindowOptions('resizable=no', onScreen).resizable).toBe(false);
+  it('leaves resizable handling to Electron', () => {
+    const options = popupWindowOptions('resizable=no', onScreen);
+
+    expect(options).not.toHaveProperty('resizable');
   });
 
   it('leaves an on-screen position alone', () => {

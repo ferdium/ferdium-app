@@ -24,9 +24,6 @@ export const parseWindowFeatures = (
   return parsed;
 };
 
-const isDisabled = (value: string | undefined): boolean =>
-  value !== undefined && /^(?:no|0|false)$/i.test(value);
-
 const parseCoordinate = (value: string | undefined): number | undefined => {
   if (value === undefined) {
     return undefined;
@@ -34,13 +31,6 @@ const parseCoordinate = (value: string | undefined): number | undefined => {
   const parsed = Number.parseInt(value, 10);
   return Number.isNaN(parsed) ? undefined : parsed;
 };
-
-// Popups stay resizable unless the page explicitly opts out. Electron 38+
-// made every window.open() popup resizable to match the WHATWG spec; Slack
-// opens its huddle / screen-share window without asking for `resizable`, and
-// a fixed-size window is useless for a shared screen.
-export const windowOpenFeaturesAllowResizable = (features = ''): boolean =>
-  !isDisabled(parseWindowFeatures(features).resizable);
 
 export const popupWindowOptions = (
   features: string | undefined,
@@ -72,7 +62,6 @@ export const popupWindowOptions = (
     // Let the user maximize / fullscreen e.g. a shared screen even when the
     // page asked for `fullscreenable=no`.
     fullscreenable: true,
-    resizable: !isDisabled(parsed.resizable),
   };
 
   // Pages remember where their popup was last time; if that position is not
