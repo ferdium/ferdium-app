@@ -1,4 +1,7 @@
-import { buildZaloArchiveHtml } from '../../../src/features/zaloArchive/archiveWindow';
+import {
+  buildZaloArchiveHtml,
+  refreshZaloArchiveWindow,
+} from '../../../src/features/zaloArchive/archiveWindow';
 
 describe('Zalo archive window', () => {
   it('renders conversations as a separate read-only chat window', () => {
@@ -56,5 +59,23 @@ describe('Zalo archive window', () => {
 
     expect(html).not.toContain('</script><script>alert(1)</script>');
     expect(html).toContain('\\u003c/script\\u003e');
+  });
+
+  it('reloads fresh data when the archive window is already open', async () => {
+    const archiveWindow = { loadURL: jest.fn(async () => undefined) };
+    const repository = {
+      cleanupNoise: jest.fn(async () => undefined),
+      listConversations: jest.fn(async () => []),
+      getMessages: jest.fn(async () => []),
+    };
+
+    await refreshZaloArchiveWindow(
+      archiveWindow as never,
+      'zalo-refresh-test',
+      repository as never,
+    );
+
+    expect(repository.listConversations).toHaveBeenCalledTimes(1);
+    expect(archiveWindow.loadURL).toHaveBeenCalledTimes(1);
   });
 });

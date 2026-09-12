@@ -28,15 +28,11 @@ function show(key){selected=key;renderList(search.value);const c=conversations.f
 function renderList(q=''){const n=q.trim().toLocaleLowerCase('vi');const rows=conversations.filter(c=>!n||(c.displayName+' '+c.previewText).toLocaleLowerCase('vi').includes(n));list.innerHTML=rows.map(c=>'<button class="account '+(selected===c.conversationKey?'active':'')+'" data-key="'+esc(c.conversationKey)+'"><strong>'+esc(c.displayName)+'</strong><span>'+esc(c.previewText||'Không có nội dung xem trước')+'</span><time>'+esc(time(c.observedAt))+'</time>'+(c.unreadCount?'<i>Chưa đọc · '+c.unreadCount+'</i>':'')+'</button>').join('')||'<div class="empty"><p>Không tìm thấy tài khoản.</p></div>';list.querySelectorAll('button').forEach(b=>b.onclick=()=>show(b.dataset.key))}
 search.oninput=()=>renderList(search.value);renderList();</script></body></html>`;
 
-export const openZaloArchiveWindow = async (
+export const refreshZaloArchiveWindow = async (
+  archiveWindow: Pick<BrowserWindow, 'loadURL'>,
   serviceId: string,
   repository: ZaloArchiveRepository,
 ) => {
-  const existing = windows.get(serviceId);
-  if (existing && !existing.isDestroyed()) {
-    existing.focus();
-    return;
-  }
   await repository.cleanupNoise(serviceId);
   const conversations = await repository.listConversations(serviceId);
   const entries = await Promise.all(
@@ -44,10 +40,30 @@ export const openZaloArchiveWindow = async (
       async conversation =>
         [
           conversation.conversationKey,
-          await repository.getMessages(serviceId, conversation.conversationKey),
+          await repository.getMessages(
+            serviceId,
+            conversation.conversationKey,
+          ),
         ] as const,
     ),
   );
+  await archiveWindow.loadURL(
+    `data:text/html;charset=utf-8,${encodeURIComponent(
+      buildZaloArchiveHtml(conversations, Object.fromEntries(entries)),
+    )}`,
+  );
+};
+
+export const openZaloArchiveWindow = async (
+  serviceId: string,
+  repository: ZaloArchiveRepository,
+) => {
+  const existing = windows.get(serviceId);
+  if (existing && !existing.isDestroyed()) {
+    await refreshZaloArchiveWindow(existing, serviceId, repository);
+    existing.focus();
+    return;
+  }
   const archiveWindow = new BrowserWindow({
     width: 980,
     height: 720,
@@ -62,7 +78,5 @@ export const openZaloArchiveWindow = async (
   });
   windows.set(serviceId, archiveWindow);
   archiveWindow.on('closed', () => windows.delete(serviceId));
-  await archiveWindow.loadURL(
-    `data:text/html;charset=utf-8,${encodeURIComponent(buildZaloArchiveHtml(conversations, Object.fromEntries(entries)))}`,
-  );
+  await refreshZaloArchiveWindow(archiveWindow, serviceId, repository);
 };
