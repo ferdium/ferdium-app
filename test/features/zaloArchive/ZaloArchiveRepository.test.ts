@@ -90,7 +90,10 @@ describe('ZaloArchiveRepository', () => {
 
     expect(await repository.listConversations('zalo-a', 'xin')).toHaveLength(1);
     const messages = await repository.getMessages('zalo-a', 'lucy');
-    expect(messages.map(message => message.text)).toEqual(['Tin cũ', 'Xin chào']);
+    expect(messages.map(message => message.text)).toEqual([
+      'Tin cũ',
+      'Xin chào',
+    ]);
   });
 
   it('deletes only the selected profile', async () => {
@@ -100,5 +103,41 @@ describe('ZaloArchiveRepository', () => {
 
     expect((await repository.getSummary('zalo-a')).messageCount).toBe(0);
     expect((await repository.getSummary('zalo-b')).messageCount).toBe(1);
+  });
+
+  it('removes previously stored Zalo interface noise', async () => {
+    const batch = previewBatch('Vài giây');
+    batch.conversations[0].unreadCount = 599;
+    batch.conversations.push({
+      ...batch.conversations[0],
+      conversationKey: 'junk',
+      displayName: 'Hôm qua',
+    });
+    for (const displayName of ['giờ', 'ngày', 'phút']) {
+      batch.conversations.push({
+        ...batch.conversations[0],
+        conversationKey: `junk-${displayName}`,
+        displayName,
+      });
+    }
+    batch.messages.push({
+      ...batch.messages[0],
+      conversationKey: 'junk',
+      text: '/-heart/-strong/-heart:>:o:-((:-h',
+    });
+    await repository.saveBatch('zalo-a', batch);
+
+    await repository.cleanupNoise('zalo-a');
+
+    expect(await repository.listConversations('zalo-a')).toEqual([
+      expect.objectContaining({
+        displayName: 'Lucy',
+        previewText: '',
+        unreadCount: 0,
+      }),
+    ]);
+    expect(await repository.getMessages('zalo-a', 'lucy')).toEqual([]);
+    expect(await repository.getMessages('zalo-a', 'junk')).toEqual([]);
+    expect(await repository.listConversations('zalo-a')).toHaveLength(1);
   });
 });

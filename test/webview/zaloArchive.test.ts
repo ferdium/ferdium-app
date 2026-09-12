@@ -11,7 +11,8 @@ const element = (options: {
   ({
     textContent: options.text ?? '',
     getAttribute: (name: string) => options.attributes?.[name] ?? null,
-    querySelector: (selector: string) => options.matches?.[selector]?.[0] ?? null,
+    querySelector: (selector: string) =>
+      options.matches?.[selector]?.[0] ?? null,
     querySelectorAll: (selector: string) => options.matches?.[selector] ?? [],
   }) as unknown as Element;
 
@@ -31,10 +32,10 @@ describe('Zalo archive collector', () => {
     });
     const root = element({
       matches: {
-        '[data-id][class*="conv"], [data-conversation-id], [class*="chat-item"], [class*="conv-item"]': [
-          row,
-        ],
-        '[data-id][class*="message"], [data-msg-id], [class*="message-item"]': [],
+        '[data-id][class*="conv"], [data-conversation-id], [class*="chat-item"], [class*="conv-item"]':
+          [row],
+        '[data-id][class*="message"], [data-msg-id], [class*="message-item"]':
+          [],
       },
     });
 
@@ -68,16 +69,21 @@ describe('Zalo archive collector', () => {
     });
     const message = element({
       text: 'Nội dung đầy đủ',
-      attributes: { 'data-msg-id': 'message-9', class: 'incoming message-item' },
+      attributes: {
+        'data-msg-id': 'message-9',
+        class: 'incoming message-item',
+      },
       matches: { img: [], '[class*="file"], [data-file-name]': [] },
     });
     const root = element({
       matches: {
-        '[data-id][class*="conv"], [data-conversation-id], [class*="chat-item"], [class*="conv-item"]': [row],
-        'header [class*="name"], header [class*="title"], [class*="chat-info"] [class*="name"]': [
-          element({ text: 'Lucy' }),
+        '[data-id][class*="conv"], [data-conversation-id], [class*="chat-item"], [class*="conv-item"]':
+          [row],
+        'header [class*="name"], header [class*="title"], [class*="chat-info"] [class*="name"]':
+          [element({ text: 'Lucy' })],
+        '[data-id][class*="message"], [data-msg-id], [class*="message-item"]': [
+          message,
         ],
-        '[data-id][class*="message"], [data-msg-id], [class*="message-item"]': [message],
       },
     });
 
@@ -92,6 +98,62 @@ describe('Zalo archive collector', () => {
         completeness: 'full',
       }),
     ]);
+  });
+
+  it('ignores Zalo interface labels and does not read digits from names as unread', () => {
+    const validRow = element({
+      attributes: { 'data-id': 'conversation-7' },
+      matches: {
+        '[data-translate-inner], [class*="name"], [class*="title"]': [
+          element({ text: 'Hungtran599-V' }),
+        ],
+        '[class*="preview"], [class*="subtitle"], [class*="last-msg"]': [
+          element({ text: 'Vài giây' }),
+        ],
+        '[class*="unread"], [class*="badge"]': [
+          element({ text: 'Hungtran599-V' }),
+        ],
+      },
+    });
+    const junkRow = element({
+      attributes: { 'data-id': 'junk' },
+      matches: {
+        '[data-translate-inner], [class*="name"], [class*="title"]': [
+          element({ text: 'Hôm qua' }),
+        ],
+        '[class*="preview"], [class*="subtitle"], [class*="last-msg"]': [],
+        '[class*="unread"], [class*="badge"]': [],
+      },
+    });
+    const junkMessage = element({
+      text: '/-heart/-strong/-heart:>:o:-((:-h',
+      attributes: { 'data-msg-id': 'junk-message', class: 'message-item' },
+      matches: { img: [], '[class*="file"], [data-file-name]': [] },
+    });
+    const root = element({
+      matches: {
+        '[data-id][class*="conv"], [data-conversation-id], [class*="chat-item"], [class*="conv-item"]':
+          [validRow, junkRow],
+        'header [class*="name"], header [class*="title"], [class*="chat-info"] [class*="name"]':
+          [element({ text: 'Hungtran599-V' })],
+        '[data-id][class*="message"], [data-msg-id], [class*="message-item"]': [
+          junkMessage,
+        ],
+      },
+    });
+
+    const result = collectZaloArchiveSnapshot(
+      root as unknown as Document,
+      '2026-09-12T08:10:00.000Z',
+    );
+    expect(result.conversations).toEqual([
+      expect.objectContaining({
+        displayName: 'Hungtran599-V',
+        previewText: '',
+        unreadCount: 0,
+      }),
+    ]);
+    expect(result.messages).toEqual([]);
   });
 
   it('does nothing outside Zalo and cleans resources', () => {

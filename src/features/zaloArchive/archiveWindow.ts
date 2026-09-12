@@ -37,6 +37,7 @@ export const openZaloArchiveWindow = async (
     existing.focus();
     return;
   }
+  await repository.cleanupNoise(serviceId);
   const conversations = await repository.listConversations(serviceId);
   const entries = await Promise.all(
     conversations.map(

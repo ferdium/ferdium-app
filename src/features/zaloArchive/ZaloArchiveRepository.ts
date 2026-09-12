@@ -10,6 +10,7 @@ import type {
   ZaloMessageKind,
   ZaloMessageSender,
 } from './types';
+import { isInvalidZaloConversationName, isZaloUiNoise } from './noise';
 
 interface ConversationRow {
   service_id: string;
@@ -197,12 +198,75 @@ export class ZaloArchiveRepository {
     }));
   }
 
+  async cleanupNoise(serviceId: string): Promise<void> {
+    const conversations = await this.all<ConversationRow>(
+      `SELECT service_id, conversation_key, display_name, preview_text, unread_count, last_observed_at
+       FROM zalo_conversations WHERE service_id = ?`,
+      [serviceId],
+    );
+    const messages = await this.all<MessageRow>(
+      `SELECT service_id, conversation_key, dedupe_key, remote_id, sender, kind, text, occurred_at, completeness
+       FROM zalo_messages WHERE service_id = ?`,
+      [serviceId],
+    );
+    await this.run('BEGIN IMMEDIATE');
+    try {
+      for (const conversation of conversations) {
+        if (isInvalidZaloConversationName(conversation.display_name)) {
+          await this.run(
+            'DELETE FROM zalo_messages WHERE service_id = ? AND conversation_key = ?',
+            [serviceId, conversation.conversation_key],
+          );
+          await this.run(
+            'DELETE FROM zalo_conversations WHERE service_id = ? AND conversation_key = ?',
+            [serviceId, conversation.conversation_key],
+          );
+        } else if (
+          isZaloUiNoise(conversation.preview_text) ||
+          conversation.unread_count > 99
+        ) {
+          await this.run(
+            `UPDATE zalo_conversations SET preview_text = ?, unread_count = ?
+             WHERE service_id = ? AND conversation_key = ?`,
+            [
+              isZaloUiNoise(conversation.preview_text)
+                ? ''
+                : conversation.preview_text,
+              conversation.unread_count > 99 ? 0 : conversation.unread_count,
+              serviceId,
+              conversation.conversation_key,
+            ],
+          );
+        }
+      }
+      for (const message of messages) {
+        if (message.kind === 'text' && isZaloUiNoise(message.text)) {
+          await this.run(
+            `DELETE FROM zalo_messages
+             WHERE service_id = ? AND conversation_key = ? AND dedupe_key = ?`,
+            [serviceId, message.conversation_key, message.dedupe_key],
+          );
+        }
+      }
+      await this.run('COMMIT');
+    } catch (error) {
+      await this.run('ROLLBACK');
+      throw error;
+    }
+  }
+
   async deleteProfile(serviceId: string): Promise<void> {
     await this.run('BEGIN IMMEDIATE');
     try {
-      await this.run('DELETE FROM zalo_messages WHERE service_id = ?', [serviceId]);
-      await this.run('DELETE FROM zalo_conversations WHERE service_id = ?', [serviceId]);
-      await this.run('DELETE FROM zalo_archive_state WHERE service_id = ?', [serviceId]);
+      await this.run('DELETE FROM zalo_messages WHERE service_id = ?', [
+        serviceId,
+      ]);
+      await this.run('DELETE FROM zalo_conversations WHERE service_id = ?', [
+        serviceId,
+      ]);
+      await this.run('DELETE FROM zalo_archive_state WHERE service_id = ?', [
+        serviceId,
+      ]);
       await this.run('COMMIT');
     } catch (error) {
       await this.run('ROLLBACK');
@@ -241,7 +305,9 @@ export class ZaloArchiveRepository {
 
   private run(sql: string, values: unknown[] = []): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.database.run(sql, values, error => (error ? reject(error) : resolve()));
+      this.database.run(sql, values, error =>
+        error ? reject(error) : resolve(),
+      );
     });
   }
 

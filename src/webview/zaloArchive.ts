@@ -6,6 +6,10 @@ import type {
   ZaloMessageKind,
   ZaloMessageSender,
 } from '../features/zaloArchive/types';
+import {
+  isInvalidZaloConversationName,
+  isZaloUiNoise,
+} from '../features/zaloArchive/noise';
 
 const CONVERSATION_ROWS =
   '[data-id][class*="conv"], [data-conversation-id], [class*="chat-item"], [class*="conv-item"]';
@@ -36,8 +40,8 @@ const conversationKey = (node: Element, displayName: string) =>
 const unreadCount = (node: Element) => {
   const badge = node.querySelector(UNREAD_BADGE);
   if (!badge) return 0;
-  const match = clean(badge.textContent).match(/\d+/u);
-  return match ? Number(match[0]) : 1;
+  const match = clean(badge.textContent).match(/^(\d+)\+?$/u);
+  return match ? Number(match[1]) : 0;
 };
 
 const detectKind = (node: Element): ZaloMessageKind => {
@@ -72,10 +76,15 @@ export const collectZaloArchiveSnapshot = (
   const messages: ZaloMessageCapture[] = [];
 
   for (const row of Array.from(root.querySelectorAll(CONVERSATION_ROWS))) {
-    const displayName = clean(row.querySelector(CONVERSATION_NAME)?.textContent);
-    const previewText = clean(row.querySelector(CONVERSATION_PREVIEW)?.textContent);
+    const displayName = clean(
+      row.querySelector(CONVERSATION_NAME)?.textContent,
+    );
+    const rawPreview = clean(
+      row.querySelector(CONVERSATION_PREVIEW)?.textContent,
+    );
+    const previewText = isZaloUiNoise(rawPreview) ? '' : rawPreview;
     const key = conversationKey(row, displayName);
-    if (!key || !displayName) continue;
+    if (!key || isInvalidZaloConversationName(displayName)) continue;
     const unread = unreadCount(row);
     conversations.push({
       conversationKey: key,
@@ -107,7 +116,11 @@ export const collectZaloArchiveSnapshot = (
     for (const row of Array.from(root.querySelectorAll(MESSAGE_ROWS))) {
       const text = clean(row.textContent);
       const kind = detectKind(row);
-      if (!text && kind === 'unknown') continue;
+      if (
+        (kind === 'text' && isZaloUiNoise(text)) ||
+        (!text && kind === 'unknown')
+      )
+        continue;
       messages.push({
         conversationKey: activeKey,
         remoteId:
@@ -138,7 +151,10 @@ interface CollectorOptions {
   send: (channel: string, batch: ZaloArchiveBatch) => void;
   now?: () => Date;
   createObserver?: (callback: MutationCallback) => ObserverLike;
-  setTimer?: (callback: () => void, milliseconds: number) => ReturnType<typeof setTimeout>;
+  setTimer?: (
+    callback: () => void,
+    milliseconds: number,
+  ) => ReturnType<typeof setTimeout>;
   clearTimer?: (timer: ReturnType<typeof setTimeout>) => void;
 }
 
@@ -159,8 +175,14 @@ export const startZaloArchiveCollector = ({
     if (stopped) return;
     const observedAt = now().toISOString();
     const snapshot = collectZaloArchiveSnapshot(root, observedAt);
-    const combined = [...snapshot.conversations, ...snapshot.messages].slice(0, 100);
-    const conversationCount = Math.min(snapshot.conversations.length, combined.length);
+    const combined = [...snapshot.conversations, ...snapshot.messages].slice(
+      0,
+      100,
+    );
+    const conversationCount = Math.min(
+      snapshot.conversations.length,
+      combined.length,
+    );
     send('zalo-archive:capture', {
       recipeId: 'zalo',
       conversations: snapshot.conversations.slice(0, conversationCount),
