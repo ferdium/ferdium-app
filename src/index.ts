@@ -45,6 +45,8 @@ import './electron/exception';
 import ipcApi from './electron/ipc-api';
 import isPositionValid from './electron/windowUtils';
 import { mainIpcHandler as basicAuthHandler } from './features/basicAuth';
+import initializeLocalCrmIpc from './features/localCrm/ipc';
+import initializeZaloArchiveIpc from './features/zaloArchive/ipc';
 import DBus from './lib/DBus';
 import TrayIcon from './lib/Tray';
 // @ts-expect-error Cannot find module './package.json' or its corresponding type declarations.
@@ -59,6 +61,9 @@ import generatedTranslations from './i18n/translations';
 import { darkThemeGrayDarkest } from './themes/legacy';
 
 const debug = require('./preload-safe-debug')('Ferdium:App');
+
+initializeLocalCrmIpc();
+initializeZaloArchiveIpc();
 
 // Globally set useragent to fix user agent override in service workers
 debug('Set userAgent to ', userAgent());

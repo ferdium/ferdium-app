@@ -35,6 +35,7 @@ import {
 } from './notifications';
 import { getDisplayMediaSelector, screenShareJs } from './screenshare';
 import SessionHandler from './sessionHandler';
+import { startZaloArchiveCollector } from './zaloArchive';
 import {
   getSpellcheckerLocaleByFuzzyIdentifier,
   switchDict,
@@ -44,6 +45,21 @@ import type { AppStore } from '../@types/stores.types';
 import { DEFAULT_APP_SETTINGS } from '../config';
 import { cleanseJSObject, ifUndefined, safeParseInt } from '../jsUtils';
 import type Service from '../models/Service';
+
+let stopZaloArchiveCollector: (() => void) | undefined;
+
+document.addEventListener('DOMContentLoaded', () => {
+  stopZaloArchiveCollector?.();
+  stopZaloArchiveCollector = startZaloArchiveCollector({
+    document,
+    hostname: window.location.hostname,
+    send: (channel, batch) => ipcRenderer.sendToHost(channel, batch),
+  });
+});
+window.addEventListener('pagehide', () => {
+  stopZaloArchiveCollector?.();
+  stopZaloArchiveCollector = undefined;
+});
 
 // For some services darkreader tries to use the chrome extension message API
 // This will cause the service to fail loading

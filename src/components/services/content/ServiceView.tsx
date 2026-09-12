@@ -17,6 +17,8 @@ import StatusBarTargetUrl from '../../ui/StatusBarTargetUrl';
 import WebviewLoader from '../../ui/WebviewLoader';
 import ServiceDisabled from './ServiceDisabled';
 import ServiceWebview from './ServiceWebview';
+import LocalCrmPanel from '../../../features/localCrm/LocalCrmPanel';
+import { supportsLocalCrm } from '../../../features/localCrm/conversation';
 import WebviewCrashHandler from './WebviewCrashHandler';
 import WebviewErrorHandler from './WebviewErrorHandler';
 
@@ -113,6 +115,7 @@ class ServiceView extends Component<IProps, IState> {
       'services__webview-wrapper--with-navbar': showNavBar,
       'is-active': service.isActive,
       'services__webview--force-repaint': this.state.forceRepaint,
+      'services__webview-wrapper--with-crm': supportsLocalCrm(service.recipe.id),
     });
 
     const statusBar = this.state.statusBarVisible ? (
@@ -191,6 +194,9 @@ class ServiceView extends Component<IProps, IState> {
                   isSpellcheckerEnabled={isSpellcheckerEnabled}
                   stores={stores}
                 />
+                {supportsLocalCrm(service.recipe.id) && (
+                  <LocalCrmPanel service={service} />
+                )}
               </>
             )}
           </>

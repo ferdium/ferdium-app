@@ -493,7 +493,14 @@ export default class Service {
     }
 
     this.webview.addEventListener('ipc-message', async e => {
-      if (e.channel === 'inject-js-unsafe') {
+      if (e.channel === 'zalo-archive:capture') {
+        if (this.recipe.id !== 'zalo') return;
+        await ipcRenderer.invoke('zalo-archive:save-batch', {
+          serviceId: this.id,
+          recipeId: this.recipe.id,
+          batch: e.args[0],
+        });
+      } else if (e.channel === 'inject-js-unsafe') {
         await Promise.all(
           e.args.map(script =>
             this.webview.executeJavaScript(
