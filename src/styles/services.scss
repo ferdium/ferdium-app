@@ -164,6 +164,15 @@
     &.services__webview-wrapper--with-crm {
       width: calc(100% - 248px);
 
+      &.services__webview-wrapper--archive-open,
+      &:has(.zalo-archive__viewer) {
+        width: calc(100% - min(760px, calc(100vw - 92px)));
+
+        .local-crm-panel {
+          width: min(760px, calc(100vw - 92px));
+        }
+      }
+
       .local-crm-panel {
         background: #f7f9fc;
         border-left: 1px solid #d8e0ec;
@@ -801,9 +810,8 @@
       flex-direction: column;
       gap: 10px;
       bottom: 0;
-      right: 0;
-      top: 0;
-      width: min(760px, calc(100vw - 92px));
+      inset: 0;
+      width: auto;
       min-width: 0;
       padding: 12px;
       position: absolute;

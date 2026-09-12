@@ -19,6 +19,12 @@ describe('ZaloArchiveSection layout', () => {
     expect(source).toContain('zalo-archive__account-list');
     expect(source).toContain('zalo-archive__chat-pane');
     expect(source).toContain('Chọn một tài khoản để xem lịch sử');
+    expect(source).toContain('services__webview-wrapper--archive-open');
+    const styles = fs.readFileSync(
+      path.join(process.cwd(), 'src/styles/services.scss'),
+      'utf8',
+    );
+    expect(styles).toContain('&:has(.zalo-archive__viewer)');
   });
 
   it('is mounted for exact Zalo recipe only', () => {

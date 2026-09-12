@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron';
-import { Component, type ChangeEvent } from 'react';
+import { Component, createRef, type ChangeEvent } from 'react';
 import type {
   StoredZaloConversation,
   StoredZaloMessage,
@@ -51,6 +51,8 @@ export default class ZaloArchiveSection extends Component<Props, State> {
 
   private refreshTimer: ReturnType<typeof setInterval> | undefined;
 
+  private sectionRef = createRef<HTMLElement>();
+
   componentDidMount() {
     void this.loadSummary();
     this.refreshTimer = setInterval(() => void this.loadSummary(), 5_000);
@@ -58,7 +60,14 @@ export default class ZaloArchiveSection extends Component<Props, State> {
 
   componentWillUnmount() {
     clearInterval(this.refreshTimer);
+    this.setArchiveLayout(false);
   }
+
+  setArchiveLayout = (open: boolean) => {
+    this.sectionRef.current
+      ?.closest('.services__webview-wrapper--with-crm')
+      ?.classList.toggle('services__webview-wrapper--archive-open', open);
+  };
 
   loadSummary = async () => {
     const summary = (await ipcRenderer.invoke('zalo-archive:get-summary', {
@@ -77,8 +86,14 @@ export default class ZaloArchiveSection extends Component<Props, State> {
   };
 
   openArchive = async () => {
-    this.setState({ open: true, selected: null, messages: [] });
-    await this.loadConversations();
+    await ipcRenderer.invoke('zalo-archive:open-window', {
+      serviceId: this.props.serviceId,
+    });
+  };
+
+  closeArchive = () => {
+    this.setArchiveLayout(false);
+    this.setState({ open: false });
   };
 
   updateQuery = (event: ChangeEvent<HTMLInputElement>) => {
@@ -105,6 +120,7 @@ export default class ZaloArchiveSection extends Component<Props, State> {
     await ipcRenderer.invoke('zalo-archive:delete-profile', {
       serviceId: this.props.serviceId,
     });
+    this.setArchiveLayout(false);
     this.setState({
       open: false,
       conversations: [],
@@ -121,7 +137,11 @@ export default class ZaloArchiveSection extends Component<Props, State> {
       summary.loginState === 'signed-out' || summary.loginState === 'locked';
 
     return (
-      <section className="zalo-archive" aria-label="Lịch sử tin nhắn Zalo">
+      <section
+        ref={this.sectionRef}
+        className="zalo-archive"
+        aria-label="Lịch sử tin nhắn Zalo"
+      >
         <header>
           <span>
             <strong>Lịch sử tin nhắn</strong>
@@ -135,7 +155,8 @@ export default class ZaloArchiveSection extends Component<Props, State> {
           </p>
         )}
         <p>
-          {summary.messageCount} tin · Cập nhật {formatTime(summary.lastSyncedAt)}
+          {summary.messageCount} tin · Cập nhật{' '}
+          {formatTime(summary.lastSyncedAt)}
         </p>
         <button type="button" onClick={() => void this.openArchive()}>
           {inaccessible ? 'Mở lịch sử đã lưu' : 'Xem lịch sử đã lưu'}
@@ -155,7 +176,7 @@ export default class ZaloArchiveSection extends Component<Props, State> {
             <header>
               <button
                 type="button"
-                onClick={() => this.setState({ open: false })}
+                onClick={this.closeArchive}
                 aria-label="Đóng lịch sử"
               >
                 ×
@@ -191,7 +212,10 @@ export default class ZaloArchiveSection extends Component<Props, State> {
                       onClick={() => void this.selectConversation(conversation)}
                     >
                       <strong>{conversation.displayName}</strong>
-                      <span>{conversation.previewText || 'Không có nội dung xem trước'}</span>
+                      <span>
+                        {conversation.previewText ||
+                          'Không có nội dung xem trước'}
+                      </span>
                       <small>{formatTime(conversation.observedAt)}</small>
                       {conversation.unreadCount > 0 && (
                         <i>Chưa đọc · {conversation.unreadCount}</i>
