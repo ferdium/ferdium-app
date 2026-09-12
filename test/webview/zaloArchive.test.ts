@@ -34,7 +34,7 @@ describe('Zalo archive collector', () => {
       matches: {
         '[data-id][class*="conv"], [data-conversation-id], [class*="chat-item"], [class*="conv-item"]':
           [row],
-        '[data-id][class*="message"], [data-msg-id], [class*="message-item"]':
+        '[data-id][class*="message"], [data-msg-id], [class*="message-item"], [data-qid][class*="contact-message"]':
           [],
       },
     });
@@ -81,7 +81,7 @@ describe('Zalo archive collector', () => {
           [row],
         'header [class*="name"], header [class*="title"], [class*="chat-info"] [class*="name"]':
           [element({ text: 'Lucy' })],
-        '[data-id][class*="message"], [data-msg-id], [class*="message-item"]': [
+        '[data-id][class*="message"], [data-msg-id], [class*="message-item"], [data-qid][class*="contact-message"]': [
           message,
         ],
       },
@@ -96,6 +96,94 @@ describe('Zalo archive collector', () => {
         conversationKey: 'conversation-7',
         remoteId: 'message-9',
         completeness: 'full',
+      }),
+    ]);
+  });
+
+  it('ignores Zalo status text appended to the opened chat name', () => {
+    const row = element({
+      attributes: { 'data-id': 'conversation-7' },
+      matches: {
+        '[data-translate-inner], [class*="name"], [class*="title"]': [
+          element({ text: 'Anhnguyen6868-B' }),
+        ],
+        '[class*="preview"], [class*="subtitle"], [class*="last-msg"]': [],
+        '[class*="unread"], [class*="badge"]': [],
+      },
+    });
+    const message = element({
+      text: 'Alo',
+      attributes: { 'data-msg-id': 'message-10', class: 'message-item' },
+      matches: { img: [], '[class*="file"], [data-file-name]': [] },
+    });
+    const root = element({
+      matches: {
+        '[data-id][class*="conv"], [data-conversation-id], [class*="chat-item"], [class*="conv-item"]':
+          [row],
+        'header [class*="name"], header [class*="title"], [class*="chat-info"] [class*="name"]':
+          [element({ text: 'Anhnguyen6868-BNGƯỜI LẠKhông có nhóm chung' })],
+        '[data-id][class*="message"], [data-msg-id], [class*="message-item"], [data-qid][class*="contact-message"]':
+          [message],
+      },
+    });
+
+    const result = collectZaloArchiveSnapshot(
+      root as unknown as Document,
+      '2026-09-12T11:05:00.000Z',
+    );
+
+    expect(result.messages[0]?.conversationKey).toBe('conversation-7');
+  });
+
+  it('captures a Zalo contact card as a readable archive entry', () => {
+    const row = element({
+      attributes: { 'data-id': 'conversation-7' },
+      matches: {
+        '[data-translate-inner], [class*="name"], [class*="title"]': [
+          element({ text: 'Anhnguyen6868-B' }),
+        ],
+        '[class*="preview"], [class*="subtitle"], [class*="last-msg"]': [],
+        '[class*="unread"], [class*="badge"]': [],
+      },
+    });
+    const contact = element({
+      text: 'Anhnguyen6868-B 0909579578 Kết Bạn Nhắn Tin /-strong',
+      attributes: {
+        'data-qid': '8255778967139@1789210358028_0',
+        class: 'contact-message__container',
+      },
+      matches: {
+        '[class*="contact-card__name-wrapper"]': [
+          element({ text: 'Anhnguyen6868-B' }),
+        ],
+        '[class*="contact-card__description-wrapper"]': [
+          element({ text: '0909579578' }),
+        ],
+        img: [element({})],
+        '[class*="file"], [data-file-name]': [],
+      },
+    });
+    const root = element({
+      matches: {
+        '[data-id][class*="conv"], [data-conversation-id], [class*="chat-item"], [class*="conv-item"]':
+          [row],
+        'header [class*="name"], header [class*="title"], [class*="chat-info"] [class*="name"]':
+          [element({ text: 'Anhnguyen6868-B' })],
+        '[data-id][class*="message"], [data-msg-id], [class*="message-item"], [data-qid][class*="contact-message"]':
+          [contact],
+      },
+    });
+
+    const result = collectZaloArchiveSnapshot(
+      root as unknown as Document,
+      '2026-09-12T11:05:00.000Z',
+    );
+
+    expect(result.messages).toEqual([
+      expect.objectContaining({
+        remoteId: '8255778967139@1789210358028_0',
+        kind: 'contact',
+        text: 'Danh thiếp: Anhnguyen6868-B · 0909579578',
       }),
     ]);
   });
@@ -136,7 +224,7 @@ describe('Zalo archive collector', () => {
           [validRow, junkRow],
         'header [class*="name"], header [class*="title"], [class*="chat-info"] [class*="name"]':
           [element({ text: 'Hungtran599-V' })],
-        '[data-id][class*="message"], [data-msg-id], [class*="message-item"]': [
+        '[data-id][class*="message"], [data-msg-id], [class*="message-item"], [data-qid][class*="contact-message"]': [
           junkMessage,
         ],
       },

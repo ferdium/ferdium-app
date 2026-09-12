@@ -9,7 +9,14 @@ const MAX_ITEMS = 100;
 const MAX_TEXT_LENGTH = 10_000;
 const MAX_BATCH_BYTES = 512 * 1024;
 const senders = new Set(['me', 'them', 'system', 'unknown']);
-const kinds = new Set(['text', 'image', 'sticker', 'file', 'unknown']);
+const kinds = new Set([
+  'text',
+  'image',
+  'sticker',
+  'contact',
+  'file',
+  'unknown',
+]);
 const completenessValues = new Set(['preview', 'full']);
 const loginStates = new Set(['available', 'signed-out', 'locked', 'unknown']);
 

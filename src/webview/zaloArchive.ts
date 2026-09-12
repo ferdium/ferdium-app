@@ -19,7 +19,7 @@ const CONVERSATION_PREVIEW =
   '[class*="preview"], [class*="subtitle"], [class*="last-msg"]';
 const UNREAD_BADGE = '[class*="unread"], [class*="badge"]';
 const MESSAGE_ROWS =
-  '[data-id][class*="message"], [data-msg-id], [class*="message-item"]';
+  '[data-id][class*="message"], [data-msg-id], [class*="message-item"], [data-qid][class*="contact-message"]';
 const ACTIVE_NAME =
   'header [class*="name"], header [class*="title"], [class*="chat-info"] [class*="name"]';
 
@@ -45,10 +45,27 @@ const unreadCount = (node: Element) => {
 };
 
 const detectKind = (node: Element): ZaloMessageKind => {
+  if (
+    attribute(node, ['class']).includes('contact-message__container') ||
+    node.querySelector('[class*="contact-card__container"]')
+  )
+    return 'contact';
   if (node.querySelector('img'))
     return node.querySelector('[class*="sticker"]') ? 'sticker' : 'image';
   if (node.querySelector('[class*="file"], [data-file-name]')) return 'file';
   return clean(node.textContent) ? 'text' : 'unknown';
+};
+
+const messageText = (node: Element, kind: ZaloMessageKind) => {
+  if (kind !== 'contact') return clean(node.textContent);
+  const name = clean(
+    node.querySelector('[class*="contact-card__name-wrapper"]')?.textContent,
+  );
+  const description = clean(
+    node.querySelector('[class*="contact-card__description-wrapper"]')
+      ?.textContent,
+  );
+  return `Danh thiếp: ${[name, description].filter(Boolean).join(' · ')}`;
 };
 
 const detectSender = (node: Element): ZaloMessageSender => {
@@ -106,16 +123,23 @@ export const collectZaloArchiveSnapshot = (
   }
 
   const activeName = clean(root.querySelector(ACTIVE_NAME)?.textContent);
+  const normalizedActiveName = activeName.toLocaleLowerCase();
   const activeKey =
-    conversations.find(
-      conversation =>
-        clean(conversation.displayName).toLocaleLowerCase() ===
-        activeName.toLocaleLowerCase(),
-    )?.conversationKey ?? activeName;
+    [...conversations]
+      .sort((left, right) => right.displayName.length - left.displayName.length)
+      .find(conversation => {
+        const displayName = clean(
+          conversation.displayName,
+        ).toLocaleLowerCase();
+        return (
+          displayName === normalizedActiveName ||
+          normalizedActiveName.startsWith(displayName)
+        );
+      })?.conversationKey ?? activeName;
   if (activeKey) {
     for (const row of Array.from(root.querySelectorAll(MESSAGE_ROWS))) {
-      const text = clean(row.textContent);
       const kind = detectKind(row);
+      const text = messageText(row, kind);
       if (
         (kind === 'text' && isZaloUiNoise(text)) ||
         (!text && kind === 'unknown')
@@ -124,7 +148,12 @@ export const collectZaloArchiveSnapshot = (
       messages.push({
         conversationKey: activeKey,
         remoteId:
-          attribute(row, ['data-msg-id', 'data-message-id', 'data-id']) ||
+          attribute(row, [
+            'data-msg-id',
+            'data-message-id',
+            'data-id',
+            'data-qid',
+          ]) ||
           undefined,
         sender: detectSender(row),
         kind,

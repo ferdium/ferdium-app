@@ -211,6 +211,55 @@ export class ZaloArchiveRepository {
     );
     await this.run('BEGIN IMMEDIATE');
     try {
+      const validConversations = conversations.filter(
+        conversation =>
+          !isInvalidZaloConversationName(conversation.display_name),
+      );
+      const conversationKeys = new Set(
+        validConversations.map(conversation => conversation.conversation_key),
+      );
+      for (const message of messages) {
+        if (conversationKeys.has(message.conversation_key)) continue;
+        const malformedKey = normalizeText(
+          message.conversation_key,
+        ).toLocaleLowerCase();
+        const target = [...validConversations]
+          .sort(
+            (left, right) =>
+              right.display_name.length - left.display_name.length,
+          )
+          .find(conversation => {
+            const key = normalizeText(
+              conversation.conversation_key,
+            ).toLocaleLowerCase();
+            const name = normalizeText(
+              conversation.display_name,
+            ).toLocaleLowerCase();
+            return malformedKey.startsWith(key) || malformedKey.startsWith(name);
+          });
+        if (!target) continue;
+        await this.run(
+          `INSERT OR IGNORE INTO zalo_messages
+            (service_id, conversation_key, dedupe_key, remote_id, sender, kind, text, occurred_at, completeness)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          [
+            serviceId,
+            target.conversation_key,
+            message.dedupe_key,
+            message.remote_id,
+            message.sender,
+            message.kind,
+            message.text,
+            message.occurred_at,
+            message.completeness,
+          ],
+        );
+        await this.run(
+          `DELETE FROM zalo_messages
+           WHERE service_id = ? AND conversation_key = ? AND dedupe_key = ?`,
+          [serviceId, message.conversation_key, message.dedupe_key],
+        );
+      }
       for (const conversation of conversations) {
         if (isInvalidZaloConversationName(conversation.display_name)) {
           await this.run(
@@ -240,7 +289,10 @@ export class ZaloArchiveRepository {
         }
       }
       for (const message of messages) {
-        if (message.kind === 'text' && isZaloUiNoise(message.text)) {
+        if (
+          isZaloUiNoise(message.text) &&
+          (message.kind === 'text' || Boolean(message.text))
+        ) {
           await this.run(
             `DELETE FROM zalo_messages
              WHERE service_id = ? AND conversation_key = ? AND dedupe_key = ?`,

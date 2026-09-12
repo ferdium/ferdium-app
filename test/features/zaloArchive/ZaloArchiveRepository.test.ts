@@ -125,6 +125,12 @@ describe('ZaloArchiveRepository', () => {
       conversationKey: 'junk',
       text: '/-heart/-strong/-heart:>:o:-((:-h',
     });
+    batch.messages.push({
+      ...batch.messages[0],
+      kind: 'image',
+      text: 'Alo/-heart/-strong',
+      completeness: 'full',
+    });
     await repository.saveBatch('zalo-a', batch);
 
     await repository.cleanupNoise('zalo-a');
@@ -139,5 +145,30 @@ describe('ZaloArchiveRepository', () => {
     expect(await repository.getMessages('zalo-a', 'lucy')).toEqual([]);
     expect(await repository.getMessages('zalo-a', 'junk')).toEqual([]);
     expect(await repository.listConversations('zalo-a')).toHaveLength(1);
+  });
+
+  it('moves messages saved under a Zalo header key to the real conversation', async () => {
+    const batch = previewBatch();
+    batch.messages = [
+      {
+        ...batch.messages[0],
+        conversationKey: 'lucyNGƯỜI LẠKhông có nhóm chung',
+        text: 'Alo',
+        completeness: 'full',
+      },
+    ];
+    await repository.saveBatch('zalo-a', batch);
+
+    await repository.cleanupNoise('zalo-a');
+
+    expect(await repository.getMessages('zalo-a', 'lucy')).toEqual([
+      expect.objectContaining({ text: 'Alo' }),
+    ]);
+    expect(
+      await repository.getMessages(
+        'zalo-a',
+        'lucyNGƯỜI LẠKhông có nhóm chung',
+      ),
+    ).toEqual([]);
   });
 });

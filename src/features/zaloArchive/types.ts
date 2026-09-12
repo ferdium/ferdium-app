@@ -3,6 +3,7 @@ export type ZaloMessageKind =
   | 'text'
   | 'image'
   | 'sticker'
+  | 'contact'
   | 'file'
   | 'unknown';
 export type ZaloMessageSender = 'me' | 'them' | 'system' | 'unknown';

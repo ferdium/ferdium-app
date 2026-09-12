@@ -69,6 +69,27 @@ describe('zalo archive normalization', () => {
     });
   });
 
+  it('accepts a contact-card message', () => {
+    expect(
+      validateArchiveBatch({
+        recipeId: 'zalo',
+        conversations: [],
+        messages: [
+          {
+            conversationKey: 'lucy',
+            remoteId: 'contact-1',
+            sender: 'me',
+            kind: 'contact',
+            text: 'Danh thiếp: Lucy · 0900000000',
+            occurredAt: observedAt,
+            completeness: 'full',
+          },
+        ],
+        observedAt,
+      }),
+    ).toEqual(expect.objectContaining({ ok: true }));
+  });
+
   it.each([
     ['another recipe', { recipeId: 'telegram' }],
     [
