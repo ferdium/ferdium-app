@@ -62,7 +62,15 @@ describe('Zalo archive window', () => {
   });
 
   it('reloads fresh data when the archive window is already open', async () => {
-    const archiveWindow = { loadURL: jest.fn(async () => undefined) };
+    const archiveWindow = {
+      loadURL: jest.fn<Promise<void>, [string]>(async () => undefined),
+      webContents: {
+        executeJavaScript: jest.fn(async () => ({
+          selected: 'lucy',
+          query: 'lu',
+        })),
+      },
+    };
     const repository = {
       cleanupNoise: jest.fn(async () => undefined),
       listConversations: jest.fn(async () => []),
@@ -77,5 +85,9 @@ describe('Zalo archive window', () => {
 
     expect(repository.listConversations).toHaveBeenCalledTimes(1);
     expect(archiveWindow.loadURL).toHaveBeenCalledTimes(1);
+    const loadedUrl = archiveWindow.loadURL.mock.calls[0][0];
+    expect(decodeURIComponent(loadedUrl)).toContain(
+      '"selected":"lucy","query":"lu"',
+    );
   });
 });

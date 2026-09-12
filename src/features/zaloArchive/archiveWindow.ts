@@ -3,6 +3,12 @@ import type { StoredZaloConversation, StoredZaloMessage } from './types';
 import type { ZaloArchiveRepository } from './ZaloArchiveRepository';
 
 const windows = new Map<string, BrowserWindow>();
+const refreshTimers = new Map<string, ReturnType<typeof setTimeout>>();
+
+interface ArchiveWindowState {
+  selected?: string;
+  query?: string;
+}
 
 const safeJson = (value: unknown) =>
   JSON.stringify(value).replace(/</gu, '\\u003c').replace(/>/gu, '\\u003e');
@@ -10,6 +16,7 @@ const safeJson = (value: unknown) =>
 export const buildZaloArchiveHtml = (
   conversations: StoredZaloConversation[],
   messages: Record<string, StoredZaloMessage[]>,
+  initialState: ArchiveWindowState = {},
 ) => `<!doctype html>
 <html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'">
@@ -21,18 +28,23 @@ export const buildZaloArchiveHtml = (
 .chat{display:flex;flex-direction:column;min-width:0}.chat-header{background:#fff;border-bottom:1px solid #dce3ed;padding:16px 20px}.chat-header h2{font-size:17px;margin:0 0 4px}.chat-header p{color:#6d7b91;margin:0}.messages{display:flex;flex:1;flex-direction:column;gap:8px;overflow:auto;padding:18px}.bubble{background:#fff;border:1px solid #dce3ed;border-radius:10px;max-width:72%;padding:10px 12px}.bubble.me{align-self:flex-end;background:#dfeeff}.bubble p{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}.bubble footer{color:#6d7b91;font-size:11px;margin-top:6px}.bubble em{color:#d65d00;font-size:10px;font-style:normal;margin-left:8px}.empty{align-items:center;display:flex;flex:1;flex-direction:column;justify-content:center;text-align:center}.empty h2{font-size:18px;margin:0 0 6px}
 @media(max-width:680px){.app{grid-template-columns:42% 58%}.bubble{max-width:90%}}
 </style></head><body><div class="app"><aside class="sidebar"><div class="title"><h1>Lịch sử tin nhắn Zalo</h1><p>Dữ liệu chỉ đọc · lưu cục bộ trên máy này</p></div><input id="search" class="search" type="search" placeholder="Tìm theo tên hoặc nội dung"><div id="list" class="list"></div></aside><main class="chat"><header id="chatHeader" class="chat-header" hidden></header><div id="messages" class="messages"><div class="empty"><h2>Chọn một tài khoản để xem lịch sử</h2><p>Mỗi tài khoản được lưu thành một cuộc chat riêng.</p></div></div></main></div>
-<script>const conversations=${safeJson(conversations)};const messageMap=${safeJson(messages)};const list=document.querySelector('#list');const pane=document.querySelector('#messages');const header=document.querySelector('#chatHeader');const search=document.querySelector('#search');let selected='';
+<script>const conversations=${safeJson(conversations)};const messageMap=${safeJson(messages)};const initialState=${safeJson(initialState)};const list=document.querySelector('#list');const pane=document.querySelector('#messages');const header=document.querySelector('#chatHeader');const search=document.querySelector('#search');let selected=initialState.selected||'';search.value=initialState.query||'';
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const time=v=>{const d=new Date(v);return Number.isFinite(d.getTime())?new Intl.DateTimeFormat('vi-VN',{dateStyle:'short',timeStyle:'short'}).format(d):v};
 function show(key){selected=key;renderList(search.value);const c=conversations.find(x=>x.conversationKey===key);const rows=messageMap[key]||[];header.hidden=false;header.innerHTML='<h2>'+esc(c.displayName)+'</h2><p>'+rows.length+' tin đã lưu · '+esc(time(c.observedAt))+'</p>';pane.innerHTML=rows.length?rows.map(m=>'<article class="bubble '+(m.sender==='me'?'me':'them')+'"><p>'+esc(m.text||'['+m.kind+']')+'</p><footer>'+esc(time(m.occurredAt))+(m.completeness==='preview'?'<em>Bản xem trước · Chưa đọc</em>':'')+'</footer></article>').join(''):'<div class="empty"><h2>Chưa có nội dung đầy đủ</h2><p>Tin xem trước sẽ được bổ sung khi bạn mở cuộc chat.</p></div>';pane.scrollTop=pane.scrollHeight}
 function renderList(q=''){const n=q.trim().toLocaleLowerCase('vi');const rows=conversations.filter(c=>!n||(c.displayName+' '+c.previewText).toLocaleLowerCase('vi').includes(n));list.innerHTML=rows.map(c=>'<button class="account '+(selected===c.conversationKey?'active':'')+'" data-key="'+esc(c.conversationKey)+'"><strong>'+esc(c.displayName)+'</strong><span>'+esc(c.previewText||'Không có nội dung xem trước')+'</span><time>'+esc(time(c.observedAt))+'</time>'+(c.unreadCount?'<i>Chưa đọc · '+c.unreadCount+'</i>':'')+'</button>').join('')||'<div class="empty"><p>Không tìm thấy tài khoản.</p></div>';list.querySelectorAll('button').forEach(b=>b.onclick=()=>show(b.dataset.key))}
-search.oninput=()=>renderList(search.value);renderList();</script></body></html>`;
+search.oninput=()=>renderList(search.value);window.__zaloArchiveState=()=>({selected,query:search.value});renderList(search.value);if(selected&&conversations.some(c=>c.conversationKey===selected))show(selected);</script></body></html>`;
 
 export const refreshZaloArchiveWindow = async (
-  archiveWindow: Pick<BrowserWindow, 'loadURL'>,
+  archiveWindow: Pick<BrowserWindow, 'loadURL' | 'webContents'>,
   serviceId: string,
   repository: ZaloArchiveRepository,
 ) => {
+  const state = await archiveWindow.webContents
+    .executeJavaScript(
+      'window.__zaloArchiveState ? window.__zaloArchiveState() : ({})',
+    )
+    .catch(() => ({} as ArchiveWindowState));
   await repository.cleanupNoise(serviceId);
   const conversations = await repository.listConversations(serviceId);
   const entries = await Promise.all(
@@ -49,8 +61,29 @@ export const refreshZaloArchiveWindow = async (
   );
   await archiveWindow.loadURL(
     `data:text/html;charset=utf-8,${encodeURIComponent(
-      buildZaloArchiveHtml(conversations, Object.fromEntries(entries)),
+      buildZaloArchiveHtml(
+        conversations,
+        Object.fromEntries(entries),
+        state as ArchiveWindowState,
+      ),
     )}`,
+  );
+};
+
+export const notifyZaloArchiveUpdated = (
+  serviceId: string,
+  repository: ZaloArchiveRepository,
+) => {
+  const archiveWindow = windows.get(serviceId);
+  if (!archiveWindow || archiveWindow.isDestroyed()) return;
+  const pending = refreshTimers.get(serviceId);
+  if (pending) clearTimeout(pending);
+  refreshTimers.set(
+    serviceId,
+    setTimeout(() => {
+      refreshTimers.delete(serviceId);
+      void refreshZaloArchiveWindow(archiveWindow, serviceId, repository);
+    }, 600),
   );
 };
 
@@ -77,6 +110,11 @@ export const openZaloArchiveWindow = async (
     },
   });
   windows.set(serviceId, archiveWindow);
-  archiveWindow.on('closed', () => windows.delete(serviceId));
+  archiveWindow.on('closed', () => {
+    windows.delete(serviceId);
+    const pending = refreshTimers.get(serviceId);
+    if (pending) clearTimeout(pending);
+    refreshTimers.delete(serviceId);
+  });
   await refreshZaloArchiveWindow(archiveWindow, serviceId, repository);
 };

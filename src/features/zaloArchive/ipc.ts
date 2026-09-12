@@ -3,7 +3,10 @@ import { join } from 'node:path';
 import { userDataPath } from '../../environment-remote';
 import { validateArchiveBatch } from './normalize';
 import { ZaloArchiveRepository } from './ZaloArchiveRepository';
-import { openZaloArchiveWindow } from './archiveWindow';
+import {
+  notifyZaloArchiveUpdated,
+  openZaloArchiveWindow,
+} from './archiveWindow';
 
 let repositoryPromise: Promise<ZaloArchiveRepository> | undefined;
 
@@ -41,8 +44,11 @@ export const saveArchiveBatch = async (
 export default function initializeZaloArchiveIpc(): void {
   ipcMain.handle(
     'zalo-archive:save-batch',
-    async (_event, request: SaveRequest) =>
-      saveArchiveBatch(await repository(), request),
+    async (_event, request: SaveRequest) => {
+      const target = await repository();
+      await saveArchiveBatch(target, request);
+      notifyZaloArchiveUpdated(request.serviceId, target);
+    },
   );
   ipcMain.handle('zalo-archive:get-summary', async (_event, { serviceId }) =>
     (await repository()).getSummary(requireServiceId(serviceId)),
