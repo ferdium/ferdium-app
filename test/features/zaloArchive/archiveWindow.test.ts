@@ -33,6 +33,8 @@ describe('Zalo archive window', () => {
     expect(html).toContain('Chọn một tài khoản để xem lịch sử');
     expect(html).toContain('Lucy');
     expect(html).toContain('Xin chào');
+    expect(html).toContain('.bubble.me{align-self:flex-end');
+    expect(html).toContain("m.sender==='me'?'me':'them'");
     expect(html).not.toContain('Gửi tin');
   });
 

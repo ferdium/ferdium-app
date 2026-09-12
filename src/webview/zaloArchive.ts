@@ -18,8 +18,7 @@ const CONVERSATION_NAME =
 const CONVERSATION_PREVIEW =
   '[class*="preview"], [class*="subtitle"], [class*="last-msg"]';
 const UNREAD_BADGE = '[class*="unread"], [class*="badge"]';
-const MESSAGE_ROWS =
-  '[data-id][class*="message"], [data-msg-id], [class*="message-item"], [data-qid][class*="contact-message"]';
+const MESSAGE_ROWS = '[data-component="message-content-view"]';
 const ACTIVE_NAME =
   'header [class*="name"], header [class*="title"], [class*="chat-info"] [class*="name"]';
 
@@ -47,9 +46,11 @@ const unreadCount = (node: Element) => {
 const detectKind = (node: Element): ZaloMessageKind => {
   if (
     attribute(node, ['class']).includes('contact-message__container') ||
+    node.querySelector('[class*="contact-message__container"]') ||
     node.querySelector('[class*="contact-card__container"]')
   )
     return 'contact';
+  if (node.querySelector('[class*="text-message__container"]')) return 'text';
   if (node.querySelector('img'))
     return node.querySelector('[class*="sticker"]') ? 'sticker' : 'image';
   if (node.querySelector('[class*="file"], [data-file-name]')) return 'file';
@@ -57,7 +58,11 @@ const detectKind = (node: Element): ZaloMessageKind => {
 };
 
 const messageText = (node: Element, kind: ZaloMessageKind) => {
-  if (kind !== 'contact') return clean(node.textContent);
+  if (kind !== 'contact')
+    return clean(
+      node.querySelector('[class*="text-message__container"]')?.textContent ??
+        node.textContent,
+    );
   const name = clean(
     node.querySelector('[class*="contact-card__name-wrapper"]')?.textContent,
   );
@@ -75,7 +80,30 @@ const detectSender = (node: Element): ZaloMessageSender => {
   if (/\b(me|self|sent|outgoing)\b/u.test(marker)) return 'me';
   if (/\b(system)\b/u.test(marker)) return 'system';
   if (/\b(them|received|incoming)\b/u.test(marker)) return 'them';
-  return 'unknown';
+  return 'them';
+};
+
+const messageRemoteId = (node: Element) =>
+  attribute(node, ['data-msg-id', 'data-message-id', 'data-id', 'data-qid']) ||
+  attribute(node.querySelector('[data-qid]') ?? node, ['data-qid']);
+
+const messageOccurredAt = (node: Element, observedAt: string) => {
+  const remoteId = messageRemoteId(node);
+  const timestamp = remoteId.match(/@(\d{13})(?:_|$)/u)?.[1];
+  if (timestamp) {
+    const parsed = new Date(Number(timestamp));
+    if (Number.isFinite(parsed.getTime())) return parsed.toISOString();
+  }
+  const frameTimestamp = attribute(node, ['id']).match(
+    /^message-frame_(\d{13})$/u,
+  )?.[1];
+  if (frameTimestamp) {
+    const parsed = new Date(Number(frameTimestamp));
+    if (Number.isFinite(parsed.getTime())) return parsed.toISOString();
+  }
+  return (
+    attribute(node, ['data-time', 'data-timestamp', 'datetime']) || observedAt
+  );
 };
 
 const detectLoginState = (root: Document): ZaloLoginState => {
@@ -128,9 +156,7 @@ export const collectZaloArchiveSnapshot = (
     [...conversations]
       .sort((left, right) => right.displayName.length - left.displayName.length)
       .find(conversation => {
-        const displayName = clean(
-          conversation.displayName,
-        ).toLocaleLowerCase();
+        const displayName = clean(conversation.displayName).toLocaleLowerCase();
         return (
           displayName === normalizedActiveName ||
           normalizedActiveName.startsWith(displayName)
@@ -147,20 +173,11 @@ export const collectZaloArchiveSnapshot = (
         continue;
       messages.push({
         conversationKey: activeKey,
-        remoteId:
-          attribute(row, [
-            'data-msg-id',
-            'data-message-id',
-            'data-id',
-            'data-qid',
-          ]) ||
-          undefined,
+        remoteId: messageRemoteId(row) || undefined,
         sender: detectSender(row),
         kind,
         text,
-        occurredAt:
-          attribute(row, ['data-time', 'data-timestamp', 'datetime']) ||
-          observedAt,
+        occurredAt: messageOccurredAt(row, observedAt),
         completeness: 'full',
       });
     }

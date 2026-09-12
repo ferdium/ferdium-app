@@ -77,6 +77,37 @@ describe('ZaloArchiveRepository', () => {
     ]);
   });
 
+  it('replaces an old fallback record with authoritative Zalo metadata', async () => {
+    const batch = previewBatch('Alo');
+    batch.messages[0] = {
+      ...batch.messages[0],
+      remoteId: 'div_ReceivedMsg_Text',
+      completeness: 'full',
+      sender: 'unknown',
+      occurredAt: '2026-09-12T11:05:00.000Z',
+    };
+    await repository.saveBatch('zalo-a', batch);
+    await repository.saveBatch('zalo-a', {
+      ...batch,
+      messages: [
+        {
+          ...batch.messages[0],
+          remoteId: '8255778541095@1789210351222_4500',
+          sender: 'them',
+          occurredAt: '2026-09-12T10:52:31.222Z',
+        },
+      ],
+    });
+
+    expect(await repository.getMessages('zalo-a', 'lucy')).toEqual([
+      expect.objectContaining({
+        remoteId: '8255778541095@1789210351222_4500',
+        sender: 'them',
+        occurredAt: '2026-09-12T10:52:31.222Z',
+      }),
+    ]);
+  });
+
   it('searches conversations and returns messages chronologically', async () => {
     const batch = previewBatch();
     batch.messages.push({
@@ -165,10 +196,7 @@ describe('ZaloArchiveRepository', () => {
       expect.objectContaining({ text: 'Alo' }),
     ]);
     expect(
-      await repository.getMessages(
-        'zalo-a',
-        'lucyNGƯỜI LẠKhông có nhóm chung',
-      ),
+      await repository.getMessages('zalo-a', 'lucyNGƯỜI LẠKhông có nhóm chung'),
     ).toEqual([]);
   });
 });

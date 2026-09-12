@@ -77,6 +77,25 @@ export class ZaloArchiveRepository {
       }
 
       for (const message of batch.messages) {
+        const normalizedConversationKey = normalizeText(
+          message.conversationKey,
+        );
+        const normalizedMessageText = normalizeText(message.text);
+        if (message.remoteId?.includes('@') && normalizedMessageText) {
+          const authoritativeDedupeKey = messageDedupeKey(message);
+          await this.run(
+            `DELETE FROM zalo_messages
+             WHERE service_id = ? AND conversation_key = ?
+               AND text = ? AND dedupe_key <> ?
+               AND (remote_id IS NULL OR INSTR(remote_id, '@') = 0)`,
+            [
+              serviceId,
+              normalizedConversationKey,
+              normalizedMessageText,
+              authoritativeDedupeKey,
+            ],
+          );
+        }
         await this.run(
           `INSERT INTO zalo_messages
             (service_id, conversation_key, dedupe_key, remote_id, sender, kind, text, occurred_at, completeness)
@@ -89,15 +108,28 @@ export class ZaloArchiveRepository {
              completeness = CASE
                WHEN completeness = 'full' OR excluded.completeness = 'full' THEN 'full'
                ELSE 'preview'
+             END,
+             remote_id = COALESCE(excluded.remote_id, remote_id),
+             sender = CASE
+               WHEN excluded.completeness = 'full' THEN excluded.sender
+               ELSE sender
+             END,
+             kind = CASE
+               WHEN excluded.completeness = 'full' THEN excluded.kind
+               ELSE kind
+             END,
+             occurred_at = CASE
+               WHEN excluded.completeness = 'full' THEN excluded.occurred_at
+               ELSE occurred_at
              END`,
           [
             serviceId,
-            normalizeText(message.conversationKey),
+            normalizedConversationKey,
             messageDedupeKey(message),
             message.remoteId ? normalizeText(message.remoteId) : null,
             message.sender,
             message.kind,
-            normalizeText(message.text),
+            normalizedMessageText,
             message.occurredAt,
             message.completeness,
           ],
@@ -235,7 +267,9 @@ export class ZaloArchiveRepository {
             const name = normalizeText(
               conversation.display_name,
             ).toLocaleLowerCase();
-            return malformedKey.startsWith(key) || malformedKey.startsWith(name);
+            return (
+              malformedKey.startsWith(key) || malformedKey.startsWith(name)
+            );
           });
         if (!target) continue;
         await this.run(
