@@ -55,6 +55,45 @@ describe('Zalo archive collector', () => {
     );
   });
 
+  it('groups the opened chat under the matching conversation id', () => {
+    const row = element({
+      attributes: { 'data-id': 'conversation-7' },
+      matches: {
+        '[data-translate-inner], [class*="name"], [class*="title"]': [
+          element({ text: 'Lucy' }),
+        ],
+        '[class*="preview"], [class*="subtitle"], [class*="last-msg"]': [],
+        '[class*="unread"], [class*="badge"]': [],
+      },
+    });
+    const message = element({
+      text: 'Nội dung đầy đủ',
+      attributes: { 'data-msg-id': 'message-9', class: 'incoming message-item' },
+      matches: { img: [], '[class*="file"], [data-file-name]': [] },
+    });
+    const root = element({
+      matches: {
+        '[data-id][class*="conv"], [data-conversation-id], [class*="chat-item"], [class*="conv-item"]': [row],
+        'header [class*="name"], header [class*="title"], [class*="chat-info"] [class*="name"]': [
+          element({ text: 'Lucy' }),
+        ],
+        '[data-id][class*="message"], [data-msg-id], [class*="message-item"]': [message],
+      },
+    });
+
+    const result = collectZaloArchiveSnapshot(
+      root as unknown as Document,
+      '2026-09-12T08:10:00.000Z',
+    );
+    expect(result.messages).toEqual([
+      expect.objectContaining({
+        conversationKey: 'conversation-7',
+        remoteId: 'message-9',
+        completeness: 'full',
+      }),
+    ]);
+  });
+
   it('does nothing outside Zalo and cleans resources', () => {
     const send = jest.fn();
     const disconnect = jest.fn();

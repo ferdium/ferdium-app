@@ -16,6 +16,9 @@ describe('ZaloArchiveSection layout', () => {
     expect(source).toContain('Bản xem trước');
     expect(source).toContain('Chưa đọc');
     expect(source).not.toContain('Gửi tin');
+    expect(source).toContain('zalo-archive__account-list');
+    expect(source).toContain('zalo-archive__chat-pane');
+    expect(source).toContain('Chọn một tài khoản để xem lịch sử');
   });
 
   it('is mounted for exact Zalo recipe only', () => {

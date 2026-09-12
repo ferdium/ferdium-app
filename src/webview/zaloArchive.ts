@@ -97,7 +97,12 @@ export const collectZaloArchiveSnapshot = (
   }
 
   const activeName = clean(root.querySelector(ACTIVE_NAME)?.textContent);
-  const activeKey = activeName;
+  const activeKey =
+    conversations.find(
+      conversation =>
+        clean(conversation.displayName).toLocaleLowerCase() ===
+        activeName.toLocaleLowerCase(),
+    )?.conversationKey ?? activeName;
   if (activeKey) {
     for (const row of Array.from(root.querySelectorAll(MESSAGE_ROWS))) {
       const text = clean(row.textContent);

@@ -155,22 +155,18 @@ export default class ZaloArchiveSection extends Component<Props, State> {
             <header>
               <button
                 type="button"
-                onClick={() =>
-                  selected
-                    ? this.setState({ selected: null, messages: [] })
-                    : this.setState({ open: false })
-                }
-                aria-label={selected ? 'Quay lại danh sách' : 'Đóng lịch sử'}
+                onClick={() => this.setState({ open: false })}
+                aria-label="Đóng lịch sử"
               >
-                ←
+                ×
               </button>
               <span>
-                <strong>{selected?.displayName ?? 'Lịch sử tin nhắn'}</strong>
-                <small>Dữ liệu chỉ đọc</small>
+                <strong>Lịch sử tin nhắn Zalo</strong>
+                <small>Dữ liệu chỉ đọc · phân theo từng tài khoản</small>
               </span>
             </header>
-            {!selected ? (
-              <>
+            <div className="zalo-archive__split-view">
+              <aside className="zalo-archive__account-list">
                 <input
                   type="search"
                   value={query}
@@ -185,6 +181,12 @@ export default class ZaloArchiveSection extends Component<Props, State> {
                   {conversations.map(conversation => (
                     <button
                       key={conversation.conversationKey}
+                      className={
+                        selected?.conversationKey ===
+                        conversation.conversationKey
+                          ? 'is-selected'
+                          : ''
+                      }
                       type="button"
                       onClick={() => void this.selectConversation(conversation)}
                     >
@@ -197,23 +199,42 @@ export default class ZaloArchiveSection extends Component<Props, State> {
                     </button>
                   ))}
                 </div>
-              </>
-            ) : (
-              <div className="zalo-archive__messages">
-                {messages.map(message => (
-                  <article
-                    key={message.dedupeKey}
-                    className={`is-${message.sender}`}
-                  >
-                    <p>{message.text || `[${message.kind}]`}</p>
-                    <small>{formatTime(message.occurredAt)}</small>
-                    {message.completeness === 'preview' && (
-                      <span>Bản xem trước · Chưa đọc</span>
-                    )}
-                  </article>
-                ))}
-              </div>
-            )}
+              </aside>
+              <main className="zalo-archive__chat-pane">
+                {selected ? (
+                  <>
+                    <header>
+                      <strong>{selected.displayName}</strong>
+                      <small>
+                        {messages.length} tin đã lưu ·{' '}
+                        {formatTime(selected.observedAt)}
+                      </small>
+                    </header>
+                    <div className="zalo-archive__messages">
+                      {messages.map(message => (
+                        <article
+                          key={message.dedupeKey}
+                          className={`is-${message.sender}`}
+                        >
+                          <p>{message.text || `[${message.kind}]`}</p>
+                          <small>{formatTime(message.occurredAt)}</small>
+                          {message.completeness === 'preview' && (
+                            <span>Bản xem trước · Chưa đọc</span>
+                          )}
+                        </article>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <div className="zalo-archive__empty-chat">
+                    <strong>Chọn một tài khoản để xem lịch sử</strong>
+                    <small>
+                      Mỗi tài khoản được lưu thành một cuộc chat riêng.
+                    </small>
+                  </div>
+                )}
+              </main>
+            </div>
           </section>
         )}
       </section>
