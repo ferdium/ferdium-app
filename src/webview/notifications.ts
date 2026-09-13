@@ -31,25 +31,40 @@ export class NotificationsHandler {
 }
 
 export const notificationsClassDefinition = `(() => {
-// Changed the class name for clarity purpose
-class WrapNotification {
-  
+class WrapNotification extends EventTarget {
   static permission = 'granted';
 
   constructor(title = '', options = {}) {
+    super();
+
     this._onclick = null;
+    this._onclickListener = event => this._onclick?.call(this, event);
+
+    // Keep the properties that notification click handlers commonly use.
+    // In particular, services often store their destination in the data field.
+    this.title = String(title);
+    this.dir = options.dir || 'auto';
+    this.lang = options.lang || '';
+    this.body = options.body || '';
+    this.tag = options.tag || '';
+    this.icon = options.icon || '';
+    this.badge = options.badge || '';
+    this.image = options.image || '';
+    this.data = options.data ?? null;
+    this.timestamp = options.timestamp ?? Date.now();
+    this.renotify = Boolean(options.renotify);
+    this.silent = options.silent ?? null;
+    this.requireInteraction = Boolean(options.requireInteraction);
+    this.actions = Array.isArray(options.actions) ? options.actions : [];
+
     this._displayNotification(title, options);
   }
 
   _displayNotification(title, options) {
     window.ferdium
       .displayNotification(title, options)
-      .then((value) => {  
-        // When clicked, the assigned onclick will execute
-        if (this._onclick)
-        {
-          this._onclick();
-        }
+      .then(() => {
+        this.dispatchEvent(new Event('click'));
       });
   }
 
@@ -65,22 +80,25 @@ class WrapNotification {
   }
 
   close() {
-    if (this._notification) {
-      this._notification = null;
-      // Clean-up
-      this._onclick = null
+    this.onclick = null;
+  }
+
+  set onclick(callback) {
+    const hadClickHandler = typeof this._onclick === 'function';
+    this._onclick = typeof callback === 'function' ? callback : null;
+
+    if (!hadClickHandler && this._onclick) {
+      this.addEventListener('click', this._onclickListener);
+    } else if (hadClickHandler && !this._onclick) {
+      this.removeEventListener('click', this._onclickListener);
     }
   }
 
-  // Monkey-patching the onclick setter method
-  set onclick(callback) {
-    this._onclick = callback;
+  get onclick() {
+    return this._onclick;
   }
 }
 
-  // Copy prototype of the original Notification object before monkey-patch
-  const OriginalNotification = window.Notification;
-  Object.setPrototypeOf(WrapNotification.prototype, OriginalNotification.prototype);
   window.Notification = WrapNotification;
 
   // some sites use service workers for notifications, but electron doesn't support this
