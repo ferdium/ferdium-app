@@ -34,6 +34,7 @@ import {
   notificationsClassDefinition,
 } from './notifications';
 import { getDisplayMediaSelector, screenShareJs } from './screenshare';
+import installSendGuard from './sendGuard';
 import SessionHandler from './sessionHandler';
 import {
   getSpellcheckerLocaleByFuzzyIdentifier,
@@ -54,6 +55,9 @@ import type Service from '../models/Service';
 window.chrome.runtime.sendMessage = noop;
 
 const debug = require('../preload-safe-debug')('Ferdium:Plugin');
+
+const destroySendGuard = installSendGuard();
+window.addEventListener('unload', destroySendGuard, { once: true });
 
 const badgeHandler = new BadgeHandler();
 
