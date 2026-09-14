@@ -1,6 +1,6 @@
 import type { PathLike } from 'node:fs';
-import type { OpenDialogOptions } from 'electron';
-import { BrowserWindow, dialog, ipcMain } from 'electron';
+import type { BrowserView, BrowserWindow, OpenDialogOptions } from 'electron';
+import { dialog, ipcMain } from 'electron';
 import { download } from 'electron-dl';
 import { writeFileSync } from 'fs-extra';
 
@@ -28,9 +28,7 @@ export default (params: {
 }) => {
   ipcMain.on(
     'download-file',
-    async (_event, { url, content, fileOptions = {} }) => {
-      const win = BrowserWindow.getFocusedWindow();
-
+    async (event, { url, content, fileOptions = {} }) => {
       try {
         if (content) {
           try {
@@ -52,9 +50,15 @@ export default (params: {
             console.error(error);
           }
         } else {
-          const dl = await download(win!, url, {
-            saveAs: true,
-          });
+          // electron-dl reads the session off `webContents`. Use the service
+          // webview that asked rather than the focused Ferdium window: only the
+          // service partition has the cookies authenticated URLs need, and
+          // without them Google Chat attachments resolve to ServiceLogin.html.
+          const dl = await download(
+            { webContents: event.sender } as BrowserView,
+            url,
+            { saveAs: true },
+          );
           debug('File saved to', dl.savePath);
         }
       } catch (error) {
