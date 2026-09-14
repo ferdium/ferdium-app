@@ -484,6 +484,7 @@ export default class ServicesStore extends TypedStore {
       spellcheckerLanguage:
         SPELLCHECKER_LOCALES[this.stores.settings.app.spellcheckerLanguage],
       userAgentPref: '',
+      pollDelay: DEFAULT_SERVICE_SETTINGS.pollDelay,
       ...serviceData,
     };
 
@@ -1454,8 +1455,6 @@ export default class ServicesStore extends TypedStore {
   _initRecipePolling(serviceId: string) {
     const service = this.one(serviceId);
 
-    const delay = ms('2s');
-
     if (service) {
       if (service.timer !== null) {
         clearTimeout(service.timer);
@@ -1466,7 +1465,7 @@ export default class ServicesStore extends TypedStore {
 
         service.webview.send('poll');
 
-        service.timer = setTimeout(loop, delay);
+        service.timer = setTimeout(loop, service.pollDelay);
         service.lastPoll = Date.now();
       };
 

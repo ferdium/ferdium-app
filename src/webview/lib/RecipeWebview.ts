@@ -58,8 +58,13 @@ class RecipeWebview {
    * Initialize the loop
    *
    * @param {Function}        Function that will be executed
+   * @param {String}          Interval which drive the loop in `ms` library format
    */
-  loop(fn) {
+  loop(fn, interval) {
+    if (interval && typeof interval === 'string') {
+      ipcRenderer.sendToHost('set-loop-delay', interval);
+    }
+
     this.loopFunc = fn;
   }
 
