@@ -229,8 +229,10 @@ export default class AppStore extends TypedStore {
 
     // Check if system is muted
     // There are no events to subscribe so we need to poll every 5s
-    this._systemDND();
-    setInterval(() => this._systemDND(), ms('5s'));
+    if (isMac) {
+      this._systemDNDMac();
+      setInterval(() => this._systemDNDMac(), ms('5s'));
+    }
 
     this.fetchDataInterval = setInterval(() => {
       this.stores.user.getUserInfoRequest.invalidate({
@@ -856,10 +858,13 @@ export default class AppStore extends TypedStore {
     return autoLauncher.isEnabled() || false;
   }
 
-  async _systemDND() {
-    debug('Checking if Do Not Disturb Mode is on');
-    const dnd = await ipcRenderer.invoke('get-dnd');
-    debug('Do not disturb mode is', dnd);
+  /**
+   * This method could be refactored to be used on all desktop environments,
+   * but at the moment it only supports MacOS
+   */
+  async _systemDNDMac() {
+    const dnd = await ipcRenderer.invoke('get-dnd-macos');
+    debug('Checking if Do Not Disturb Mode is on :', dnd);
     if (
       dnd !== this.stores.settings.all.app.isAppMuted &&
       !this.isSystemMuteOverridden
