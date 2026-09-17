@@ -129,9 +129,6 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
 
     const { locked, automaticUpdates, useCompactWorkspaceDrawer } =
       settings.app;
-    if (locked) {
-      return <LockedScreen />;
-    }
 
     return (
       <>
@@ -220,6 +217,11 @@ class AppLayout extends Component<PropsWithChildren<IProps>, IState> {
               </div>
               <Todos />
             </div>
+            {locked && (
+              <div className="app__locked">
+                <LockedScreen />
+              </div>
+            )}
           </div>
         </ErrorBoundary>
       </>

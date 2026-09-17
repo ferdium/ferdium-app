@@ -38,12 +38,7 @@ class LockedScreen extends Component<IProps, IState> {
     }
 
     if (hash(String(password)) === String(correctPassword)) {
-      this.props.actions!.settings.update({
-        type: 'app',
-        data: {
-          locked: false,
-        },
-      });
+      this.unlock();
     } else {
       this.setState({
         error: true,
@@ -58,6 +53,9 @@ class LockedScreen extends Component<IProps, IState> {
         locked: false,
       },
     });
+    // Services stayed mounted while locked, so hand focus back to the one
+    // that is active instead of leaving it on the (now hidden) password field.
+    this.props.actions!.service.focusActiveService();
   }
 
   render(): ReactElement {
