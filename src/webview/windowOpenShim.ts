@@ -28,8 +28,13 @@ export const windowOpenShim = `(() => {
       return nativeOpen.call(window, url, frameName, features);
     }
 
-    // A bare window.open(url) is a link, not a window: open it externally.
+    // A bare window.open(url) is normally a link, so it opens externally.
+    // "Open URLs within Ferdium" (trapLinkClicks) asks for it to take the
+    // same real-window path as the branch above instead, keeping opener.
     if (url != null && String(url) !== '') {
+      if (window.ferdium.shouldTrapLinkClicks()) {
+        return nativeOpen.call(window, url, frameName, 'popup=yes');
+      }
       openExternally(url);
       return null;
     }
