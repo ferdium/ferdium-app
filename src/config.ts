@@ -215,6 +215,12 @@ const publicPrivateWebRTCIPHandlingPolicy =
   'default_public_and_private_interfaces';
 const disableWebRTCIPHandlingPolicy = 'disable_non_proxied_udp';
 
+export type WebRTCIPHandlingPolicy =
+  | 'disable_non_proxied_udp'
+  | 'default'
+  | 'default_public_interface_only'
+  | 'default_public_and_private_interfaces';
+
 // NOTE: For internationalized version, use getI18nConfigObjects().WEBRTC_IP_HANDLING_POLICY
 export const WEBRTC_IP_HANDLING_POLICY = {
   [defaultWebRTCIPHandlingPolicy]: 'Expose user public and local IPs',
@@ -673,6 +679,8 @@ export const DEFAULT_SERVICE_SETTINGS = {
   customIcon: false,
   isDarkModeEnabled: false,
   isProgressbarEnabled: false,
+  // An empty value inherits the application-wide WebRTC policy.
+  webRTCIPHandlingPolicy: '',
   // Note: Do NOT change these default values. If they change, then the corresponding changes in the recipes needs to be done
   hasDirectMessages: true,
   hasIndirectMessages: false,
