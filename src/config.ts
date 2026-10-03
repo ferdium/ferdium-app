@@ -669,6 +669,7 @@ export const DEFAULT_SERVICE_SETTINGS = {
   isMediaBadgeEnabled: false,
   trapLinkClicks: false,
   useFavicon: false,
+  showNameInSidebar: false,
   isMuted: false,
   customIcon: false,
   isDarkModeEnabled: false,
