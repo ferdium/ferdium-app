@@ -306,6 +306,10 @@ const messages = defineMessages({
     id: 'settings.app.form.showServiceName',
     defaultMessage: 'Display service name under the icon',
   },
+  compactServiceSidebar: {
+    id: 'settings.app.form.compactServiceSidebar',
+    defaultMessage: 'Use compact service sidebar',
+  },
   showMessageBadgeWhenMuted: {
     id: 'settings.app.form.showMessagesBadgesWhenMuted',
     defaultMessage: 'Show unread message badge when notifications are disabled',
@@ -477,6 +481,7 @@ class EditSettingsScreen extends Component<
       enableGlobalHideShortcut: Boolean(settingsData.enableGlobalHideShortcut),
       showDisabledServices: Boolean(settingsData.showDisabledServices),
       showServiceName: Boolean(settingsData.showServiceName),
+      compactServiceSidebar: Boolean(settingsData.compactServiceSidebar),
       darkMode: Boolean(settingsData.darkMode),
       adaptableDarkMode: Boolean(settingsData.adaptableDarkMode),
       universalDarkMode: Boolean(settingsData.universalDarkMode),
@@ -1052,6 +1057,15 @@ class EditSettingsScreen extends Component<
             DEFAULT_APP_SETTINGS.showServiceName,
           ),
           default: DEFAULT_APP_SETTINGS.showServiceName,
+          type: 'checkbox',
+        },
+        compactServiceSidebar: {
+          label: intl.formatMessage(messages.compactServiceSidebar),
+          value: ifUndefined<boolean>(
+            settings.all.app.compactServiceSidebar,
+            DEFAULT_APP_SETTINGS.compactServiceSidebar,
+          ),
+          default: DEFAULT_APP_SETTINGS.compactServiceSidebar,
           type: 'checkbox',
         },
         showMessageBadgeWhenMuted: {

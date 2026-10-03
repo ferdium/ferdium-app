@@ -20,8 +20,11 @@
 ![GitHub downloads (by tag)](https://img.shields.io/github/downloads/ferdium/ferdium-app/latest/total?color=blue)
 
 [![Open Collective backers](https://img.shields.io/static/v1?label=Contribute%20on%20Open%20Collective&message=Donate%20to%20Ferdium&color=9cf&logo=open-collective)](https://opencollective.com/ferdium#category-CONTRIBUTE)
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 <a href='#contributors-'><img src='https://img.shields.io/badge/contributors-336-default.svg?logo=github&color=6c64e4' alt='Contributors'/></a>
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 - [Ferdium](#ferdium)
@@ -29,6 +32,7 @@
   - [Download](#download)
   - [Migrating from Ferdi](#migrating-from-ferdi)
   - [Styling](#styling)
+  - [Sidebar customization](#sidebar-customization)
   - [Contributing](#contributing)
   - [Contributors ✨](#contributors-)
 
@@ -75,6 +79,16 @@ You can style Ferdium's UI with the `USER_DATA/Ferdium/config/custom.css` file.
 > - **Windows**: `%APPDATA%`
 > - **Linux**: `$XDG_CONFIG_HOME` or `~/.config/`
 > - **MacOS**: `~/Library/Application Support`
+
+## Sidebar customization
+
+The service sidebar can display service names and can be adjusted for different
+screen sizes. Right-click the sidebar or a service icon to change its width,
+toggle service names, select the service-name text size, or enable the compact
+layout. Long service names stay on one line and are truncated when necessary;
+their full value remains available in the tooltip.
+
+See [Sidebar customization](docs/SIDEBAR_CUSTOMIZATION.md) for details.
 
 ## Contributing
 
