@@ -174,6 +174,9 @@ export default class Service {
 
   @observable useFavicon: boolean = DEFAULT_SERVICE_SETTINGS.useFavicon;
 
+  @observable showNameInSidebar: boolean =
+    DEFAULT_SERVICE_SETTINGS.showNameInSidebar;
+
   @action _setAutoRun() {
     if (!this.isEnabled) {
       this.webview = null;
@@ -208,6 +211,10 @@ export default class Service {
     this.customUrl = ifUndefined<string>(data.customUrl, this.customUrl);
     this.iconUrl = ifUndefined<string>(data.iconUrl, this.iconUrl);
     this.useFavicon = ifUndefined<boolean>(data.useFavicon, this.useFavicon);
+    this.showNameInSidebar = ifUndefined<boolean>(
+      data.showNameInSidebar,
+      this.showNameInSidebar,
+    );
     this.order = ifUndefined<number>(data.order, this.order);
     this.isEnabled = ifUndefined<boolean>(data.isEnabled, this.isEnabled);
     this.isNotificationEnabled = ifUndefined<boolean>(
