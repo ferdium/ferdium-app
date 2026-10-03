@@ -1,3 +1,4 @@
+import { Menu } from '@electron/remote';
 import {
   mdiBell,
   mdiBellOff,
@@ -12,7 +13,6 @@ import {
   mdiViewGrid,
   mdiViewSplitVertical,
 } from '@mdi/js';
-import { Menu } from '@electron/remote';
 import { inject, observer } from 'mobx-react';
 import { Component } from 'react';
 import {
