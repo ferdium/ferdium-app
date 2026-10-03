@@ -12,6 +12,7 @@ import {
   mdiViewGrid,
   mdiViewSplitVertical,
 } from '@mdi/js';
+import { Menu } from '@electron/remote';
 import { inject, observer } from 'mobx-react';
 import { Component } from 'react';
 import {
@@ -21,6 +22,7 @@ import {
 } from 'react-intl';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import type { Actions } from '../../actions/lib/actions';
+import { getI18nConfigObjects } from '../../config';
 import {
   addNewServiceShortcutKey,
   downloadsShortcutKey,
@@ -76,6 +78,30 @@ const messages = defineMessages({
     id: 'sidebar.lockFerdium',
     defaultMessage: 'Lock Ferdium',
   },
+  sidebarWidth: {
+    id: 'settings.app.form.serviceRibbonWidth',
+    defaultMessage: 'Sidebar width',
+  },
+  showServiceName: {
+    id: 'settings.app.form.showServiceName',
+    defaultMessage: 'Display service name under the icon',
+  },
+  compactServiceSidebar: {
+    id: 'settings.app.form.compactServiceSidebar',
+    defaultMessage: 'Use compact service sidebar',
+  },
+  serviceNameFontSize: {
+    id: 'sidebar.serviceNameFontSize',
+    defaultMessage: 'Service name text size',
+  },
+  automaticFontSize: {
+    id: 'sidebar.automaticFontSize',
+    defaultMessage: 'Automatic',
+  },
+  fontSizeTruncationNotice: {
+    id: 'sidebar.fontSizeTruncationNotice',
+    defaultMessage: 'Long names are truncated; shorten or hide the name',
+  },
 });
 
 interface IProps extends WrappedComponentProps {
@@ -129,6 +155,102 @@ class Sidebar extends Component<IProps, IState> {
     this.state = {
       tooltipEnabled: true,
     };
+  }
+
+  componentDidMount() {
+    const { isMenuCollapsed, useHorizontalStyle } =
+      this.props.stores!.settings.all.app;
+
+    if (!isMenuCollapsed && !useHorizontalStyle) {
+      this.props.toggleCollapseMenu();
+    }
+  }
+
+  collapseUtilityMenuOnMouseLeave() {
+    const { isMenuCollapsed, useHorizontalStyle } =
+      this.props.stores!.settings.all.app;
+
+    if (!isMenuCollapsed && !useHorizontalStyle) {
+      this.props.toggleCollapseMenu();
+    }
+  }
+
+  showSidebarContextMenu(event) {
+    if ((event.target as HTMLElement).closest('.tab-item')) return;
+
+    event.preventDefault();
+
+    const { intl, actions, stores } = this.props;
+    const sidebarWidths = getI18nConfigObjects(intl).SIDEBAR_WIDTH;
+    const currentSidebarWidth = Number(stores!.settings.app.serviceRibbonWidth);
+    const currentFontSize = Number(
+      stores!.settings.app.serviceNameFontSize || 0,
+    );
+    const fontSizes = [0, 10, 12, 14, 16, 18, 20];
+    const menu = Menu.buildFromTemplate([
+      {
+        label: intl.formatMessage(messages.sidebarWidth),
+        submenu: Object.entries(sidebarWidths).map(([width, label]) => ({
+          label,
+          type: 'radio' as const,
+          checked: Number(width) === currentSidebarWidth,
+          click: () => {
+            actions!.settings.update({
+              type: 'app',
+              data: { serviceRibbonWidth: Number(width) },
+            });
+          },
+        })),
+      },
+      {
+        label: intl.formatMessage(messages.showServiceName),
+        type: 'checkbox',
+        checked: stores!.settings.app.showServiceName,
+        click: menuItem => {
+          actions!.settings.update({
+            type: 'app',
+            data: { showServiceName: menuItem.checked },
+          });
+        },
+      },
+      {
+        label: intl.formatMessage(messages.serviceNameFontSize),
+        submenu: [
+          ...fontSizes.map(size => ({
+            label:
+              size === 0
+                ? intl.formatMessage(messages.automaticFontSize)
+                : `${size} px`,
+            type: 'radio' as const,
+            checked: size === currentFontSize,
+            click: () => {
+              actions!.settings.update({
+                type: 'app',
+                data: { serviceNameFontSize: size },
+              });
+            },
+          })),
+          { type: 'separator' as const },
+          {
+            label: intl.formatMessage(messages.fontSizeTruncationNotice),
+            enabled: false,
+          },
+        ],
+      },
+      {
+        label: intl.formatMessage(messages.compactServiceSidebar),
+        type: 'checkbox',
+        checked: stores!.settings.app.compactServiceSidebar,
+        click: menuItem => {
+          actions!.settings.update({
+            type: 'app',
+            data: { compactServiceSidebar: menuItem.checked },
+          });
+        },
+      },
+    ]);
+
+    menu.popup();
   }
 
   enableToolTip() {
@@ -191,7 +313,11 @@ class Sidebar extends Component<IProps, IState> {
     const { isDownloading, justFinishedDownloading } = stores!.app;
 
     return (
-      <div className="sidebar">
+      <div
+        className="sidebar"
+        onContextMenu={event => this.showSidebarContextMenu(event)}
+        onMouseLeave={() => this.collapseUtilityMenuOnMouseLeave()}
+      >
         <Tabbar
           useHorizontalStyle={stores!.settings.all.app.useHorizontalStyle}
           showMessageBadgeWhenMutedSetting={

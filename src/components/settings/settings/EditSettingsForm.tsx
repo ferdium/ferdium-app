@@ -791,6 +791,7 @@ class EditSettingsForm extends Component<IProps, IState> {
 
                 <Toggle {...form.$('showDisabledServices').bind()} />
                 <Toggle {...form.$('showServiceName').bind()} />
+                <Toggle {...form.$('compactServiceSidebar').bind()} />
 
                 {isUseGrayscaleServicesEnabled && <Hr />}
 

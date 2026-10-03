@@ -20,6 +20,7 @@ import {
 import injectSheet, { type WithStylesProps } from 'react-jss';
 import { SortableElement } from 'react-sortable-hoc';
 import type { Stores } from '../../../@types/stores.types';
+import { getI18nConfigObjects } from '../../../config';
 import { altKey, cmdOrCtrlShortcutKey, shiftKey } from '../../../environment';
 import globalMessages from '../../../i18n/globalMessages';
 import type Service from '../../../models/Service';
@@ -83,6 +84,30 @@ const messages = defineMessages({
   confirmDeleteService: {
     id: 'tabs.item.confirmDeleteService',
     defaultMessage: 'Do you really want to delete the {serviceName} service?',
+  },
+  sidebarWidth: {
+    id: 'settings.app.form.serviceRibbonWidth',
+    defaultMessage: 'Sidebar width',
+  },
+  showServiceName: {
+    id: 'settings.app.form.showServiceName',
+    defaultMessage: 'Display service name under the icon',
+  },
+  compactServiceSidebar: {
+    id: 'settings.app.form.compactServiceSidebar',
+    defaultMessage: 'Use compact service sidebar',
+  },
+  serviceNameFontSize: {
+    id: 'sidebar.serviceNameFontSize',
+    defaultMessage: 'Service name text size',
+  },
+  automaticFontSize: {
+    id: 'sidebar.automaticFontSize',
+    defaultMessage: 'Automatic',
+  },
+  fontSizeTruncationNotice: {
+    id: 'sidebar.fontSizeTruncationNotice',
+    defaultMessage: 'Long names are truncated; shorten or hide the name',
   },
 });
 
@@ -274,8 +299,17 @@ class TabItem extends Component<IProps, IState> {
       showMessageBadgeWhenMutedSetting,
       showServiceNameSetting,
       showMessageBadgesEvenWhenMuted,
+      stores,
     } = this.props;
     const { intl } = this.props;
+    const sidebarWidths = getI18nConfigObjects(intl).SIDEBAR_WIDTH;
+    const currentSidebarWidth = Number(
+      stores!.settings.all.app.serviceRibbonWidth,
+    );
+    const currentFontSize = Number(
+      stores!.settings.all.app.serviceNameFontSize || 0,
+    );
+    const fontSizes = [0, 10, 12, 14, 16, 18, 20];
 
     const menuTemplate: MenuItemConstructorOptions[] = [
       {
@@ -342,6 +376,68 @@ class TabItem extends Component<IProps, IState> {
         click: () =>
           service.isHibernating ? wakeUpService() : hibernateService(),
         enabled: service.isEnabled && service.canHibernate,
+      },
+      {
+        label: intl.formatMessage(messages.sidebarWidth),
+        submenu: Object.entries(sidebarWidths).map(([width, label]) => ({
+          label,
+          type: 'radio',
+          checked: Number(width) === currentSidebarWidth,
+          click: () => {
+            window['ferdium'].actions.settings.update({
+              type: 'app',
+              data: {
+                serviceRibbonWidth: Number(width),
+              },
+            });
+          },
+        })),
+      },
+      {
+        label: intl.formatMessage(messages.showServiceName),
+        type: 'checkbox',
+        checked: stores!.settings.all.app.showServiceName,
+        click: menuItem => {
+          window['ferdium'].actions.settings.update({
+            type: 'app',
+            data: { showServiceName: menuItem.checked },
+          });
+        },
+      },
+      {
+        label: intl.formatMessage(messages.serviceNameFontSize),
+        submenu: [
+          ...fontSizes.map(size => ({
+            label:
+              size === 0
+                ? intl.formatMessage(messages.automaticFontSize)
+                : `${size} px`,
+            type: 'radio' as const,
+            checked: size === currentFontSize,
+            click: () => {
+              window['ferdium'].actions.settings.update({
+                type: 'app',
+                data: { serviceNameFontSize: size },
+              });
+            },
+          })),
+          { type: 'separator' as const },
+          {
+            label: intl.formatMessage(messages.fontSizeTruncationNotice),
+            enabled: false,
+          },
+        ],
+      },
+      {
+        label: intl.formatMessage(messages.compactServiceSidebar),
+        type: 'checkbox',
+        checked: stores!.settings.all.app.compactServiceSidebar,
+        click: menuItem => {
+          window['ferdium'].actions.settings.update({
+            type: 'app',
+            data: { compactServiceSidebar: menuItem.checked },
+          });
+        },
       },
       {
         label: intl.formatMessage(globalMessages.clearCache),

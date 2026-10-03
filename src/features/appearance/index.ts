@@ -179,6 +179,7 @@ const generateWebviewLayoutStyle = (paddingSize, borderRadius) => {
 const generateServiceRibbonWidthStyle = (
   widthStr,
   iconSizeStr,
+  serviceNameFontSize,
   horizontal,
   isLabelEnabled,
   sidebarServicesLocation,
@@ -192,47 +193,45 @@ const generateServiceRibbonWidthStyle = (
   const tabItemWidthBias = 1;
   const verticalStyleOffset = 29;
 
-  let fontSize: number;
   let tabItemHeightBias: number;
   let sidebarSizeBias: number;
 
   switch (width) {
     case 35: {
-      fontSize = 9;
       tabItemHeightBias = 25;
       sidebarSizeBias = 48;
       break;
     }
     case 45: {
-      fontSize = 10;
       tabItemHeightBias = 21;
       sidebarSizeBias = 44;
       break;
     }
     case 80: {
-      fontSize = 11;
       tabItemHeightBias = 3;
       sidebarSizeBias = 27;
       break;
     }
     case 90: {
-      fontSize = 12;
       tabItemHeightBias = 0;
       sidebarSizeBias = 25;
       break;
     }
     case 100: {
-      fontSize = 13;
       tabItemHeightBias = 2;
       sidebarSizeBias = 25;
       break;
     }
     default: {
-      fontSize = 11;
       tabItemHeightBias = 13;
       sidebarSizeBias = 37;
     }
   }
+
+  // Keep labels proportional to their icons without becoming unreadable on
+  // the narrow sidebar presets.
+  const automaticFontSize = Math.min(16, Math.max(12, Math.round(width * 0.2)));
+  const fontSize = Number(serviceNameFontSize) || automaticFontSize;
 
   if (!isLabelEnabled) {
     sidebarSizeBias = 22;
@@ -370,8 +369,28 @@ const generateServiceRibbonWidthStyle = (
       flex-shrink: 0;
     }
     .tab-item .tab-item__icon {
-      width: ${minimumAdjustedIconSize}px !important;
+      width: ${width - 4}px !important;
       ${useGrayscaleServices ? graysacleServices : null},
+    }
+    ${
+      isLabelEnabled
+        ? `
+    .tab-item.is-label-enabled {
+      height: auto !important;
+      min-height: ${width + 14}px !important;
+      padding-bottom: 3px;
+    }
+    .tab-item .tab-item__label {
+      display: block;
+      font-size: ${fontSize}px !important;
+      line-height: ${fontSize + 2}px;
+      overflow: hidden;
+      padding: 0 1px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    `
+        : ''
     }
     .sidebar__button {
       align-items: center;
@@ -386,6 +405,66 @@ const generateServiceRibbonWidthStyle = (
     }
     .todos__todos-panel--expanded {
       width: calc(100% - ${300 + width}px) !important;
+    }
+  `;
+};
+
+const generateCompactServiceSidebarStyle = (
+  compactServiceSidebar: boolean,
+  horizontal: boolean,
+  serviceRibbonWidth: number,
+  serviceNameFontSize: number,
+) => {
+  if (!compactServiceSidebar || horizontal) return '';
+
+  const compactIconSize = serviceRibbonWidth - 4;
+  const compactRowHeight = Math.max(46, compactIconSize + 4);
+  const compactLabelledRowHeight = compactIconSize + 18;
+  const automaticFontSize = Math.min(
+    16,
+    Math.max(12, Math.round(serviceRibbonWidth * 0.2)),
+  );
+  const compactLabelFontSize = Number(serviceNameFontSize) || automaticFontSize;
+
+  return `
+    .sidebar .tabs {
+      gap: 2px !important;
+    }
+    .sidebar .tab-item {
+      height: ${compactRowHeight}px !important;
+      min-height: ${compactRowHeight}px !important;
+      justify-content: center !important;
+      gap: 2px;
+    }
+    .sidebar .tab-item.is-label-enabled {
+      height: auto !important;
+      min-height: ${compactLabelledRowHeight}px !important;
+    }
+    .sidebar .tab-item .tab-item__icon {
+      width: ${compactIconSize}px !important;
+    }
+    .sidebar .tab-item .tab-item__label {
+      font-size: ${compactLabelFontSize}px !important;
+      line-height: ${compactLabelFontSize + 2}px;
+      letter-spacing: normal;
+      padding: 0 1px;
+    }
+    .sidebar .tab-item .tab-item__message-count {
+      top: 3px;
+      right: 3px;
+      min-height: 16px;
+      min-width: 16px;
+      padding: 0 4px;
+      font-size: 10px;
+    }
+    .sidebar .tab-item.is-active {
+      background: rgba(128, 128, 128, 0.12) !important;
+      border-color: rgba(128, 128, 128, 0.18) !important;
+    }
+    .sidebar .tab-item .tab-item__label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   `;
 };
@@ -572,10 +651,12 @@ const generateStyle = (settings, app) => {
     useGrayscaleServices,
     grayscaleServicesDim,
     iconSize,
+    serviceNameFontSize,
     showDragArea,
     useHorizontalStyle,
     alwaysShowWorkspaces,
     showServiceName,
+    compactServiceSidebar,
     useCompactWorkspaceDrawer,
     webviewPaddingSize,
     serviceWebviewBorderRadius,
@@ -599,6 +680,7 @@ const generateStyle = (settings, app) => {
   style += generateServiceRibbonWidthStyle(
     serviceRibbonWidth,
     iconSize,
+    serviceNameFontSize,
     useHorizontalStyle,
     showServiceName,
     sidebarServicesLocation,
@@ -606,6 +688,13 @@ const generateStyle = (settings, app) => {
     grayscaleServicesDim,
     shouldShowDragArea,
     isFullScreen,
+  );
+
+  style += generateCompactServiceSidebarStyle(
+    compactServiceSidebar,
+    useHorizontalStyle,
+    serviceRibbonWidth,
+    serviceNameFontSize,
   );
 
   style += generateCompactWorkspaceDrawerStyle(
@@ -715,6 +804,8 @@ export default function initAppearance(stores) {
       settings.all.app.useHorizontalStyle,
       settings.all.app.alwaysShowWorkspaces,
       settings.all.app.showServiceName,
+      settings.all.app.serviceNameFontSize,
+      settings.all.app.compactServiceSidebar,
       settings.all.app.useCompactWorkspaceDrawer,
       settings.all.app.webviewPaddingSize,
       settings.all.app.serviceWebviewBorderRadius,
