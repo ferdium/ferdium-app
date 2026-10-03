@@ -152,6 +152,11 @@ const messages = defineMessages({
     id: 'settings.service.reloadRequired',
     defaultMessage: 'Changes require reload of the service',
   },
+  webRTCIPHandlingPolicyInfo: {
+    id: 'settings.service.form.webRTCIPHandlingPolicy.info',
+    defaultMessage:
+      'Override the global WebRTC policy for this service. Some calling services require public or local IP exposure to connect audio.',
+  },
   maxFileSize: {
     id: 'settings.service.form.maxFileSize',
     defaultMessage: 'Maximum filesize:',
@@ -458,6 +463,13 @@ class EditServiceForm extends Component<IProps, IState> {
                 <Select field={form.$('spellcheckerLanguage')} />
               </div>
             )}
+
+            <div className="settings__settings-group">
+              <Select field={form.$('webRTCIPHandlingPolicy')} />
+              <p className="settings__help">
+                {intl.formatMessage(messages.webRTCIPHandlingPolicyInfo)}
+              </p>
+            </div>
 
             {isProxyFeatureEnabled && (
               <div className="settings__settings-group">

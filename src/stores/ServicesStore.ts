@@ -481,6 +481,7 @@ export default class ServicesStore extends TypedStore {
       customIcon: DEFAULT_SERVICE_SETTINGS.customIcon,
       isDarkModeEnabled: DEFAULT_SERVICE_SETTINGS.isDarkModeEnabled,
       isProgressbarEnabled: DEFAULT_SERVICE_SETTINGS.isProgressbarEnabled,
+      webRTCIPHandlingPolicy: DEFAULT_SERVICE_SETTINGS.webRTCIPHandlingPolicy,
       spellcheckerLanguage:
         SPELLCHECKER_LOCALES[this.stores.settings.app.spellcheckerLanguage],
       userAgentPref: '',
@@ -575,6 +576,7 @@ export default class ServicesStore extends TypedStore {
         result.find(c => c.id === serviceId),
         newData,
       );
+      service.applyWebRTCIPHandlingPolicy();
     });
 
     await request.promise;
