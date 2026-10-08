@@ -209,6 +209,8 @@
   "sandbox.addCustomSandbox": "Benutzerdefinierte Sandbox hinzufügen",
   "sandbox.addSelected": "Ausgewählte hinzufügen",
   "sandbox.availableServices": "Verfügbare Dienste",
+  "sandbox.removeAll": "Alles entfernen",
+  "sandbox.removeSelected": "Ausgewählte entfernen",
   "service.crashHandler.action": "{name} neu laden",
   "service.crashHandler.autoReload": "{name} wird in {seconds} Sekunden automatisch wiederhergestellt",
   "service.crashHandler.headline": "Oh nein!",
