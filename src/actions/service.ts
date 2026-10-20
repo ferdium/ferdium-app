@@ -75,6 +75,10 @@ export default <ActionDefinitions>{
   openWindow: {
     event: PropTypes.object.isRequired,
   },
+  openUrl: {
+    url: PropTypes.string.isRequired,
+  },
+  clearUnmatchedUrl: {},
   reload: {
     serviceId: PropTypes.string.isRequired,
   },

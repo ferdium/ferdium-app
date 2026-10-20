@@ -39,7 +39,7 @@ import {
 import { ifUndefined } from './jsUtils';
 
 import Settings from './electron/Settings';
-import handleDeepLink, { getDeepLinkFromArgs } from './electron/deepLinking';
+import handleDeepLink, { handleLaunchArgs } from './electron/deepLinking';
 import './electron/exception';
 // eslint-disable-next-line import/no-cycle
 import ipcApi from './electron/ipc-api';
@@ -171,11 +171,7 @@ if (gotTheLock) {
       // macOS delivers deep links through the 'open-url' event instead
       if (!isMac) {
         onDidLoad((window: BrowserWindow) => {
-          const deepLink = getDeepLinkFromArgs(argv);
-
-          if (deepLink) {
-            handleDeepLink(window, deepLink);
-          }
+          handleLaunchArgs(window, argv);
         });
       }
 
@@ -458,11 +454,7 @@ const createWindow = () => {
   // Deep linking on app launch; macOS delivers deep links through the 'open-url' event instead
   if (!isMac) {
     onDidLoad((window: BrowserWindow) => {
-      const deepLink = getDeepLinkFromArgs(process.argv);
-
-      if (deepLink) {
-        handleDeepLink(window, deepLink);
-      }
+      handleLaunchArgs(window, process.argv);
     });
   }
 

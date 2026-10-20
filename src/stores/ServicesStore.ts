@@ -2,7 +2,15 @@ import { join } from 'node:path';
 import { ipcRenderer, shell } from 'electron';
 import { ensureFileSync, pathExistsSync, writeFileSync } from 'fs-extra';
 import { debounce, remove } from 'lodash';
-import { action, computed, makeObservable, observable, reaction } from 'mobx';
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+  reaction,
+  runInAction,
+  when,
+} from 'mobx';
 import ms from 'ms';
 
 import type { Stores } from '../@types/stores.types';
@@ -12,6 +20,7 @@ import { DEFAULT_SERVICE_SETTINGS, KEEP_WS_LOADED_USID } from '../config';
 import { ferdiumVersion } from '../environment-remote';
 import { workspaceStore } from '../features/workspaces';
 import { writeTextToClipboard } from '../helpers/clipboard-helpers';
+import { findServiceForUrl } from '../helpers/open-url-helpers';
 import {
   getDevRecipeDirectory,
   getRecipeDirectory,
@@ -66,6 +75,9 @@ export default class ServicesStore extends TypedStore {
   // No service ID should be in the list multiple times, not all service IDs have to be in the list
   @observable lastUsedServices: string[] = [];
 
+  // A url Ferdium was asked to open that matches none of the displayed services
+  @observable unmatchedUrl: string | null = null;
+
   private toggleToTalkCallback = () => this.active?.toggleToTalk();
 
   constructor(stores: Stores, api: ApiInterface, actions: Actions) {
@@ -110,6 +122,10 @@ export default class ServicesStore extends TypedStore {
     );
     this.actions.service.setDialogTitle.listen(this._setDialogTitle.bind(this));
     this.actions.service.openWindow.listen(this._openWindow.bind(this));
+    this.actions.service.openUrl.listen(this._openUrl.bind(this));
+    this.actions.service.clearUnmatchedUrl.listen(
+      this._clearUnmatchedUrl.bind(this),
+    );
     this.actions.service.filter.listen(this._filter.bind(this));
     this.actions.service.resetFilter.listen(this._resetFilter.bind(this));
     this.actions.service.resetStatus.listen(this._resetStatus.bind(this));
@@ -1021,6 +1037,32 @@ export default class ServicesStore extends TypedStore {
       event.preventDefault();
       this.actions.app.openExternalUrl({ url: event.url });
     }
+  }
+
+  async _openUrl({ url }: { url: string }) {
+    // When the url launched Ferdium, the services may not be loaded yet
+    await when(() => this.allServicesRequest.wasExecuted);
+
+    const service = findServiceForUrl(this.allDisplayed, url);
+
+    if (!service) {
+      debug('No service matches url', url);
+      runInAction(() => {
+        this.unmatchedUrl = url;
+      });
+
+      return;
+    }
+
+    this._setActive({ serviceId: service.id });
+
+    // A hibernated service only gets its webview after waking up
+    await when(() => service.webview !== null && service.isAttached);
+    service.webview?.loadURL(url);
+  }
+
+  @action _clearUnmatchedUrl() {
+    this.unmatchedUrl = null;
   }
 
   @action _filter({ needle }) {

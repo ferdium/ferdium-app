@@ -7,6 +7,7 @@ import { ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
 import type { StoresProps } from '../../@types/ferdium-components.types';
 import AppLayout from '../../components/layout/AppLayout';
 import Sidebar from '../../components/layout/Sidebar';
+import UnmatchedUrlDialog from '../../components/services/UnmatchedUrlDialog';
 import Services from '../../components/services/content/Services';
 import AppLoader from '../../components/ui/AppLoader';
 import { workspaceStore } from '../../features/workspaces';
@@ -17,6 +18,11 @@ interface IProps extends StoresProps {}
 @inject('stores', 'actions')
 @observer
 class AppLayoutContainer extends Component<IProps> {
+  // A stable reference, so the unmatched url dialog doesn't reopen on every render
+  clearUnmatchedUrl = (): void => {
+    this.props.actions.service.clearUnmatchedUrl();
+  };
+
   render(): ReactElement {
     const { app, features, services, ui, settings, requests, user, router } =
       this.props.stores;
@@ -165,6 +171,10 @@ class AppLayoutContainer extends Component<IProps> {
           >
             <Outlet />
           </AppLayout>
+          <UnmatchedUrlDialog
+            url={services.unmatchedUrl}
+            onClose={this.clearUnmatchedUrl}
+          />
         </ThemeProvider>
       </MUIThemeProvider>
     );
