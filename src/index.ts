@@ -168,15 +168,19 @@ if (gotTheLock) {
       }
       mainWindow.focus();
 
-      if (isWindows) {
+      // macOS delivers deep links through the 'open-url' event instead
+      if (!isMac) {
         onDidLoad((window: BrowserWindow) => {
-          // Keep only command line / deep linked arguments
           const deepLink = getDeepLinkFromArgs(argv);
 
           if (deepLink) {
             handleDeepLink(window, deepLink);
           }
+        });
+      }
 
+      if (isWindows) {
+        onDidLoad((window: BrowserWindow) => {
           if (argv.includes('--reset-window')) {
             // Needs to be delayed to not interfere with mainWindow.restore();
             setTimeout(() => {
@@ -451,8 +455,8 @@ const createWindow = () => {
     mainWindow.webContents.openDevTools();
   }
 
-  // Windows deep linking handling on app launch
-  if (isWindows) {
+  // Deep linking on app launch; macOS delivers deep links through the 'open-url' event instead
+  if (!isMac) {
     onDidLoad((window: BrowserWindow) => {
       const deepLink = getDeepLinkFromArgs(process.argv);
 
