@@ -576,6 +576,7 @@ export const DEFAULT_APP_SETTINGS = {
   reloadAfterResumeTime: 10,
   enableSystemTray: true,
   startMinimized: false,
+  openAppLinksInFerdium: false,
   confirmOnQuit: false,
   minimizeToSystemTray: false,
   closeToSystemTray: false,

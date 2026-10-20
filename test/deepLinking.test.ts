@@ -89,6 +89,16 @@ describe('deepLinking', () => {
       ).toBe('http://t.me/ferdium');
     });
 
+    it('extracts an app link of a service', () => {
+      expect(
+        getExternalUrlFromArgs([
+          '/opt/Ferdium/ferdium',
+          '--no-sandbox',
+          'slack://channel?team=T0123456789&id=C0123456789',
+        ]),
+      ).toBe('slack://channel?team=T0123456789&id=C0123456789');
+    });
+
     it('ignores Ferdium deep links and other arguments', () => {
       expect(
         getExternalUrlFromArgs([

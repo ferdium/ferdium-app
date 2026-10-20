@@ -8,8 +8,15 @@ export function getDeepLinkFromArgs(args: string[]): string | undefined {
   return args.find(arg => arg.startsWith(protocolPrefix));
 }
 
+/**
+ * Finds a link Ferdium was asked to open: an http(s) url, or the app link of a
+ * service such as slack://. Ferdium's own deep links are handled separately.
+ */
 export function getExternalUrlFromArgs(args: string[]): string | undefined {
-  return args.find(arg => /^https?:\/\//i.test(arg));
+  return args.find(
+    arg =>
+      /^[a-z][\d+.a-z-]*:\/\//i.test(arg) && !arg.startsWith(protocolPrefix),
+  );
 }
 
 export function handleExternalUrl(window: BrowserWindow, url: string): void {

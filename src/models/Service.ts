@@ -90,6 +90,10 @@ export default class Service {
 
   @observable trapLinkClicks: boolean = DEFAULT_SERVICE_SETTINGS.trapLinkClicks;
 
+  // Details the recipe learned from the page (e.g. a workspace id) to recognize
+  // links that belong to this service, see Recipe.resolveLink
+  @observable linkContext: Record<string, string> = {};
+
   @observable isIndirectMessageBadgeEnabled: boolean = true;
 
   @observable iconUrl: string = '';
@@ -226,6 +230,10 @@ export default class Service {
     this.trapLinkClicks = ifUndefined<boolean>(
       data.trapLinkClicks,
       this.trapLinkClicks,
+    );
+    this.linkContext = ifUndefined<Record<string, string>>(
+      data.linkContext,
+      this.linkContext,
     );
     this.isIndirectMessageBadgeEnabled = ifUndefined<boolean>(
       data.isIndirectMessageBadgeEnabled,

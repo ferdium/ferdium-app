@@ -4,6 +4,7 @@ import { ensureFileSync, pathExistsSync, writeFileSync } from 'fs-extra';
 import { debounce, remove } from 'lodash';
 import {
   action,
+  comparer,
   computed,
   makeObservable,
   observable,
@@ -20,7 +21,10 @@ import { DEFAULT_SERVICE_SETTINGS, KEEP_WS_LOADED_USID } from '../config';
 import { ferdiumVersion } from '../environment-remote';
 import { workspaceStore } from '../features/workspaces';
 import { writeTextToClipboard } from '../helpers/clipboard-helpers';
-import { findServiceForUrl } from '../helpers/open-url-helpers';
+import {
+  getAppLinkProtocols,
+  resolveServiceLink,
+} from '../helpers/open-url-helpers';
 import {
   getDevRecipeDirectory,
   getRecipeDirectory,
@@ -170,6 +174,19 @@ export default class ServicesStore extends TypedStore {
   }
 
   setup() {
+    // Register Ferdium for the app link protocols of the user's recipes, or
+    // unregister it, whenever the setting or the services change
+    reaction(
+      () => ({
+        enabled: Boolean(this.stores.settings.app.openAppLinksInFerdium),
+        protocols: getAppLinkProtocols(this.all),
+      }),
+      appLinkProtocols => {
+        ipcRenderer.send('set-app-link-protocols', appLinkProtocols);
+      },
+      { equals: comparer.structural, fireImmediately: true },
+    );
+
     // Single key reactions for the sake of your CPU
     reaction(
       () => this.stores.settings.app.enableSpellchecking,
@@ -979,6 +996,22 @@ export default class ServicesStore extends TypedStore {
 
         break;
       }
+      case 'link-context': {
+        const linkContext = args[0];
+        if (
+          JSON.stringify(service.linkContext) !== JSON.stringify(linkContext)
+        ) {
+          service.linkContext = linkContext;
+
+          this.actions.service.updateService({
+            serviceId,
+            serviceData: { linkContext },
+            redirect: false,
+          });
+        }
+
+        break;
+      }
       case 'new-window': {
         const url = args[0];
 
@@ -1043,9 +1076,9 @@ export default class ServicesStore extends TypedStore {
     // When the url launched Ferdium, the services may not be loaded yet
     await when(() => this.allServicesRequest.wasExecuted);
 
-    const service = findServiceForUrl(this.allDisplayed, url);
+    const match = resolveServiceLink(this.allDisplayed, url);
 
-    if (!service) {
+    if (!match) {
       debug('No service matches url', url);
       runInAction(() => {
         this.unmatchedUrl = url;
@@ -1054,11 +1087,23 @@ export default class ServicesStore extends TypedStore {
       return;
     }
 
+    const { service } = match;
     this._setActive({ serviceId: service.id });
 
     // A hibernated service only gets its webview after waking up
     await when(() => service.webview !== null && service.isAttached);
-    service.webview?.loadURL(url);
+    const { webview } = service;
+    if (!webview) {
+      return;
+    }
+
+    debug('Open url in service', service.name, match.url);
+
+    try {
+      await webview.loadURL(match.url);
+    } catch (error) {
+      debug('Loading url in service failed', match.url, error);
+    }
   }
 
   @action _clearUnmatchedUrl() {

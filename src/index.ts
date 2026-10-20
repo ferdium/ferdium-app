@@ -865,6 +865,21 @@ ipcMain.on('stop-find-in-page', (e, action) => {
   e.returnValue = null;
 });
 
+ipcMain.on(
+  'set-app-link-protocols',
+  (_e, { enabled, protocols }: { enabled: boolean; protocols: string[] }) => {
+    for (const protocol of protocols) {
+      if (enabled && !app.isDefaultProtocolClient(protocol)) {
+        debug('Registering as handler for app links', protocol);
+        app.setAsDefaultProtocolClient(protocol);
+      } else if (!enabled && app.isDefaultProtocolClient(protocol)) {
+        // Not supported on Linux, where the registration stays
+        app.removeAsDefaultProtocolClient(protocol);
+      }
+    }
+  },
+);
+
 ipcMain.on('set-spellchecker-locales', (_e, { locale, serviceId }) => {
   if (serviceId === undefined) {
     return;
