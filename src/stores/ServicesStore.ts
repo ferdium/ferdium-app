@@ -12,6 +12,7 @@ import { DEFAULT_SERVICE_SETTINGS, KEEP_WS_LOADED_USID } from '../config';
 import { ferdiumVersion } from '../environment-remote';
 import { workspaceStore } from '../features/workspaces';
 import { writeTextToClipboard } from '../helpers/clipboard-helpers';
+import { getServicePartition } from '../helpers/partition-helpers';
 import {
   getDevRecipeDirectory,
   getRecipeDirectory,
@@ -651,7 +652,16 @@ export default class ServicesStore extends TypedStore {
 
   @action async _clearCache({ serviceId }) {
     this.clearCacheRequest.reset();
-    const request = this.clearCacheRequest.execute(serviceId);
+    const service = this.one(serviceId);
+    const partition = service
+      ? getServicePartition({
+          sandboxes: this.stores.app.sandboxServices,
+          serviceId,
+          fallbackPartition: service.partition,
+          useSandboxes: this.stores.settings.all.app.sandboxServices,
+        })
+      : undefined;
+    const request = this.clearCacheRequest.execute(serviceId, partition);
     await request.promise;
   }
 

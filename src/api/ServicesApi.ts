@@ -28,7 +28,7 @@ export default class ServicesApi {
     return this.server.reorderService(data);
   }
 
-  clearCache(serviceId: string) {
-    return this.local.clearCache(serviceId);
+  clearCache(serviceId: string, partition?: string) {
+    return this.local.clearCache(serviceId, partition);
   }
 }
