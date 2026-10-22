@@ -9,13 +9,19 @@ import {
 } from '@electron/remote';
 import AutoLaunch from 'auto-launch';
 import { ipcRenderer } from 'electron';
-import { readJsonSync, readdirSync, writeJsonSync } from 'fs-extra';
+import {
+  pathExistsSync,
+  readJsonSync,
+  readdirSync,
+  writeJsonSync,
+} from 'fs-extra';
 import {
   action,
   computed,
   makeObservable,
   observable,
   onBecomeObserved,
+  reaction,
 } from 'mobx';
 import moment from 'moment';
 import ms from 'ms';
@@ -38,10 +44,8 @@ import {
 } from '../environment-remote';
 import sleep from '../helpers/async-helpers';
 import { getLocale, getTranslatedText } from '../helpers/i18n-helpers';
-import {
-  getServiceIdsFromPartitions,
-  removeServicePartitionDirectory,
-} from '../helpers/service-helpers';
+import { removeServicePartitionDirectory } from '../helpers/service-helpers';
+import { findOrphanPartitionDirectories } from '../helpers/partition-helpers';
 import { openExternalUrl } from '../helpers/url-helpers';
 import generatedTranslations from '../i18n/translations';
 import { cleanseJSObject } from '../jsUtils';
@@ -384,40 +388,53 @@ export default class AppStore extends TypedStore {
   _initializeSandboxes() {
     this._readSandboxes();
 
-    // Check partitions of the sandboxes that no longer exist
-    const dir = readdirSync(userDataPath('Partitions'));
-    dir
-      .filter(d => d.startsWith('sandbox-'))
-      .forEach(d => {
-        if (
-          !this.sandboxServices.some(s =>
-            s.id.includes(d.replace('sandbox-', '')),
-          )
-        ) {
-          try {
-            removeServicePartitionDirectory(d);
-          } catch (error) {
-            console.error(
-              'Error while checking service partition directory -',
-              error,
-            );
-          }
+    // Services load after the stores are constructed, so the orphan sweep waits
+    // for the first non-empty list. It must never run against an empty list:
+    // that also happens when the API call fails, and it would delete every
+    // partition on disk.
+    reaction(
+      () => this.stores.services.all.length,
+      length => {
+        if (length === 0 || this.orphanPartitionsChecked) {
+          return;
         }
-      });
 
-    // Check if services in sandboxes still exists, if so, remove their partitions (NOT WORKING!)
-    // this.sandboxServices.forEach(sandbox => {
-    //   sandbox.services.forEach(serviceId => {
-    //     try {
-    //       removeServicePartitionDirectory(serviceId, true);
-    //     } catch (error) {
-    //       console.error(
-    //         'Error while checking service partition directory -',
-    //         error,
-    //       );
-    //     }
-    //   });
-    // });
+        this.orphanPartitionsChecked = true;
+        this._removeOrphanPartitions();
+      },
+      { fireImmediately: true },
+    );
+  }
+
+  orphanPartitionsChecked = false;
+
+  @action _removeOrphanPartitions() {
+    const partitionsDirectory = userDataPath('Partitions');
+    if (!pathExistsSync(partitionsDirectory)) {
+      return;
+    }
+
+    const serviceIds = this.stores.services.all.map(service => service.id);
+    const sandboxIds = this.sandboxServices
+      .filter(sandbox => sandbox.services.some(id => serviceIds.includes(id)))
+      .map(sandbox => sandbox.id);
+
+    const orphans = findOrphanPartitionDirectories(
+      readdirSync(partitionsDirectory),
+      { serviceIds, sandboxIds },
+    );
+
+    for (const directory of orphans) {
+      try {
+        removeServicePartitionDirectory(directory);
+        debug(`Removed orphan service partition "${directory}"`);
+      } catch (error) {
+        console.error(
+          'Error while removing orphan service partition directory -',
+          error,
+        );
+      }
+    }
   }
 
   _readSandboxes() {
@@ -633,17 +650,22 @@ export default class AppStore extends TypedStore {
   @action async _clearAllCache() {
     this.isClearingAllCache = true;
     const clearAppCache = this.clearAppCacheRequest.execute();
-    const allServiceIds = await getServiceIdsFromPartitions();
-    const allOrphanedServiceIds = allServiceIds.filter(
-      id =>
-        !this.stores.services.all.some(
-          s => id.replace('service-', '') === s.id,
-        ),
-    );
+    const partitionsDirectory = userDataPath('Partitions');
+    const directories = pathExistsSync(partitionsDirectory)
+      ? readdirSync(partitionsDirectory)
+      : [];
+    const serviceIds = this.stores.services.all.map(service => service.id);
+    const sandboxIds = this.sandboxServices
+      .filter(sandbox => sandbox.services.some(id => serviceIds.includes(id)))
+      .map(sandbox => sandbox.id);
+    const orphanDirectories = findOrphanPartitionDirectories(directories, {
+      serviceIds,
+      sandboxIds,
+    });
 
     try {
       await Promise.all(
-        allOrphanedServiceIds.map(id => removeServicePartitionDirectory(id)),
+        orphanDirectories.map(id => removeServicePartitionDirectory(id)),
       );
     } catch (error) {
       // eslint-disable-next-line no-console

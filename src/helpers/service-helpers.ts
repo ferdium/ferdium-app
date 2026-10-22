@@ -7,6 +7,12 @@ import {
 } from 'fs-extra';
 import { userDataPath } from '../environment-remote';
 
+import {
+  findSandboxForService,
+  getServicePartition,
+  type SandboxLike,
+} from './partition-helpers';
+
 const RETRYABLE_PARTITION_REMOVAL_ERROR_CODES = new Set([
   'EACCES',
   'EBUSY',
@@ -143,6 +149,48 @@ export async function getServiceIdsFromPartitions(): Promise<string[]> {
   const files = readdirSync(getServicePartitionsDirectory());
   return files.filter(n => n !== '__chrome_extension');
 }
+
+/**
+ * Sandboxes are stored on disk (config/sandboxes.json) and are also needed by
+ * the renderer paths that run before the stores are populated (e.g. service
+ * deletion), so they are read directly instead of going through the store.
+ */
+export const readSandboxes = (): SandboxLike[] => {
+  try {
+    const data = readJsonSync(userDataPath('config', 'sandboxes.json'));
+    return Array.isArray(data) ? data : [];
+  } catch {
+    return [];
+  }
+};
+
+export const getPartitionForService = (
+  serviceId: string,
+  fallbackPartition?: string,
+  useSandboxes = true,
+): string =>
+  getServicePartition({
+    sandboxes: readSandboxes(),
+    serviceId,
+    fallbackPartition,
+    useSandboxes,
+  });
+
+/**
+ * Removes every partition owned by a service. A sandbox partition is shared by
+ * all services in the group, so it is only removed when this was the last one.
+ */
+export const removeServiceAndSandboxPartitions = (serviceId: string): void => {
+  removeServicePartitionDirectory(serviceId, true);
+
+  const sandbox = findSandboxForService(readSandboxes(), serviceId);
+  const remainingServices =
+    sandbox?.services.filter(id => id !== serviceId) ?? [];
+
+  if (sandbox && remainingServices.length === 0) {
+    removeServicePartitionDirectory(`sandbox-${sandbox.id}`);
+  }
+};
 
 // Persistent Electron sessions can keep files open for the lifetime of the app.
 // ServerApi imports this helper before service webviews are created, so this is
