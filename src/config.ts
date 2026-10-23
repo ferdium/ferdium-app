@@ -692,6 +692,7 @@ export const DEFAULT_SERVICE_SETTINGS = {
   darkReaderBrightness: 100,
   darkReaderContrast: 90,
   darkReaderSepia: 10,
+  pollDelay: 2000 /* 2000ms */,
 };
 
 export const DEFAULT_SHORTCUTS = {
