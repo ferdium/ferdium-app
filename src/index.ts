@@ -302,6 +302,8 @@ const createWindow = () => {
       // setPermissionCheckHandler additionally allows hid/serial/usb feature detection
       // (actual device access is gated by select-hid-device/select-usb-device events).
       const ses = contents.session;
+      let externalPopupCount = 0;
+
       if (!(ses as any)._permissionHandlersSet) {
         (ses as any)._permissionHandlersSet = true;
 
@@ -350,6 +352,10 @@ const createWindow = () => {
       }
 
       contents.setWindowOpenHandler(({ url, disposition, features }) => {
+        if (url === 'about:blank' || url === 'about:blank#blocked') {
+          externalPopupCount += 1;
+        }
+
         // window.open() calls that ask for a window (a target name or window
         // features) arrive with the 'new-window' disposition. OAuth popups
         // (Google, Microsoft, etc.) need window.opener preserved so the parent
@@ -394,6 +400,24 @@ const createWindow = () => {
       contents.on('did-create-window', child => {
         enableWebContents(child.webContents);
         child.webContents.setWebRTCIPHandlingPolicy(webRTCIPHandlingPolicy);
+
+        // Outlook creates an about:blank popup and navigates it through its
+        // WindowProxy. Capture that navigation on the child window itself.
+        if (externalPopupCount > 0) {
+          externalPopupCount -= 1;
+          child.webContents.on('will-navigate', (event, childUrl) => {
+            if (
+              childUrl === 'about:blank' ||
+              childUrl === 'about:blank#blocked'
+            ) {
+              return;
+            }
+
+            event.preventDefault();
+            openExternalUrl(childUrl);
+            child.close();
+          });
+        }
       });
       // Handle will download event from main process (prevent download dialog)
       contents.session.on('will-download', (_e, item) => {
