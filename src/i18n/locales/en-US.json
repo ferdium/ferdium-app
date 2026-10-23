@@ -236,6 +236,8 @@
   "service.hibernating.message": "This service is currently hibernating.",
   "service.screenshare.cancel": "Cancel",
   "service.screenshare.loading": "Loading screens and windows",
+  "service.unmatchedUrl.detail": "{url} doesn't match any of your services.",
+  "service.unmatchedUrl.title": "No service for this link",
   "service.webviewLoader.loading": "Loading {service}",
   "services.getStarted": "Get started",
   "services.login": "Please login to use Ferdium.",

@@ -39,7 +39,7 @@ import {
 import { ifUndefined } from './jsUtils';
 
 import Settings from './electron/Settings';
-import handleDeepLink, { getDeepLinkFromArgs } from './electron/deepLinking';
+import handleDeepLink, { handleLaunchArgs } from './electron/deepLinking';
 import './electron/exception';
 // eslint-disable-next-line import/no-cycle
 import ipcApi from './electron/ipc-api';
@@ -168,15 +168,15 @@ if (gotTheLock) {
       }
       mainWindow.focus();
 
+      // macOS delivers deep links through the 'open-url' event instead
+      if (!isMac) {
+        onDidLoad((window: BrowserWindow) => {
+          handleLaunchArgs(window, argv);
+        });
+      }
+
       if (isWindows) {
         onDidLoad((window: BrowserWindow) => {
-          // Keep only command line / deep linked arguments
-          const deepLink = getDeepLinkFromArgs(argv);
-
-          if (deepLink) {
-            handleDeepLink(window, deepLink);
-          }
-
           if (argv.includes('--reset-window')) {
             // Needs to be delayed to not interfere with mainWindow.restore();
             setTimeout(() => {
@@ -451,14 +451,10 @@ const createWindow = () => {
     mainWindow.webContents.openDevTools();
   }
 
-  // Windows deep linking handling on app launch
-  if (isWindows) {
+  // Deep linking on app launch; macOS delivers deep links through the 'open-url' event instead
+  if (!isMac) {
     onDidLoad((window: BrowserWindow) => {
-      const deepLink = getDeepLinkFromArgs(process.argv);
-
-      if (deepLink) {
-        handleDeepLink(window, deepLink);
-      }
+      handleLaunchArgs(window, process.argv);
     });
   }
 
