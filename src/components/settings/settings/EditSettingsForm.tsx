@@ -53,6 +53,11 @@ const debug = require('../../../preload-safe-debug')(
 );
 
 const messages = defineMessages({
+  openAppLinksInFerdiumInfo: {
+    id: 'settings.app.openAppLinksInFerdiumInfo',
+    defaultMessage:
+      'Ferdium becomes the handler for the app links of your services, like the "Open in app" button on a Slack web page. Turning this off again is not possible on Linux; remove the handler there with xdg-mime.',
+  },
   headlineGeneral: {
     id: 'settings.app.headlineGeneral',
     defaultMessage: 'General',
@@ -692,6 +697,17 @@ class EditSettingsForm extends Component<IProps, IState> {
                         <Hr />
                       </>
                     )}
+                  </>
+                )}
+
+                {/* macOS only allows protocols declared when the app is built */}
+                {!isMac && (
+                  <>
+                    <Toggle {...form.$('openAppLinksInFerdium').bind()} />
+                    <p className="settings__help indented__help">
+                      {intl.formatMessage(messages.openAppLinksInFerdiumInfo)}
+                    </p>
+                    <Hr />
                   </>
                 )}
 

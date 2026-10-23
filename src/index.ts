@@ -39,7 +39,7 @@ import {
 import { ifUndefined } from './jsUtils';
 
 import Settings from './electron/Settings';
-import handleDeepLink, { getDeepLinkFromArgs } from './electron/deepLinking';
+import handleDeepLink, { handleLaunchArgs } from './electron/deepLinking';
 import './electron/exception';
 // eslint-disable-next-line import/no-cycle
 import ipcApi from './electron/ipc-api';
@@ -168,15 +168,15 @@ if (gotTheLock) {
       }
       mainWindow.focus();
 
+      // macOS delivers deep links through the 'open-url' event instead
+      if (!isMac) {
+        onDidLoad((window: BrowserWindow) => {
+          handleLaunchArgs(window, argv);
+        });
+      }
+
       if (isWindows) {
         onDidLoad((window: BrowserWindow) => {
-          // Keep only command line / deep linked arguments
-          const deepLink = getDeepLinkFromArgs(argv);
-
-          if (deepLink) {
-            handleDeepLink(window, deepLink);
-          }
-
           if (argv.includes('--reset-window')) {
             // Needs to be delayed to not interfere with mainWindow.restore();
             setTimeout(() => {
@@ -451,14 +451,10 @@ const createWindow = () => {
     mainWindow.webContents.openDevTools();
   }
 
-  // Windows deep linking handling on app launch
-  if (isWindows) {
+  // Deep linking on app launch; macOS delivers deep links through the 'open-url' event instead
+  if (!isMac) {
     onDidLoad((window: BrowserWindow) => {
-      const deepLink = getDeepLinkFromArgs(process.argv);
-
-      if (deepLink) {
-        handleDeepLink(window, deepLink);
-      }
+      handleLaunchArgs(window, process.argv);
     });
   }
 
@@ -868,6 +864,21 @@ ipcMain.on('stop-find-in-page', (e, action) => {
   }
   e.returnValue = null;
 });
+
+ipcMain.on(
+  'set-app-link-protocols',
+  (_e, { enabled, protocols }: { enabled: boolean; protocols: string[] }) => {
+    for (const protocol of protocols) {
+      if (enabled && !app.isDefaultProtocolClient(protocol)) {
+        debug('Registering as handler for app links', protocol);
+        app.setAsDefaultProtocolClient(protocol);
+      } else if (!enabled && app.isDefaultProtocolClient(protocol)) {
+        // Not supported on Linux, where the registration stays
+        app.removeAsDefaultProtocolClient(protocol);
+      }
+    }
+  },
+);
 
 ipcMain.on('set-spellchecker-locales', (_e, { locale, serviceId }) => {
   if (serviceId === undefined) {

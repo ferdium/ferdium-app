@@ -200,6 +200,14 @@ class RecipeWebview {
     ipcRenderer.sendToHost('avatar', avatarUrl);
   }
 
+  /**
+   * Stores details about this service that its recipe needs to recognize links
+   * that belong to it, like the id of a workspace. See Recipe.resolveLink.
+   */
+  setLinkContext(linkContext: Record<string, string>) {
+    ipcRenderer.sendToHost('link-context', linkContext);
+  }
+
   openNewWindow(url) {
     ipcRenderer.sendToHost('new-window', url);
   }

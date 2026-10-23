@@ -307,6 +307,12 @@ export default class AppStore extends TypedStore {
       this.stores.router.push(url);
     });
 
+    // Handle an http(s) url Ferdium was launched with, e.g. from a link handler
+    ipcRenderer.on('openUrlInService', (_, { url }) => {
+      debug('Open url in service', url);
+      this.actions.service.openUrl({ url });
+    });
+
     ipcRenderer.on('muteApp', () => {
       this._toggleMuteApp();
     });

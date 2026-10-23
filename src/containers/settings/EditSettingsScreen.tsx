@@ -71,6 +71,10 @@ const messages = defineMessages({
     id: 'settings.app.form.enableMenuBar',
     defaultMessage: 'Always show Ferdium in Menu Bar',
   },
+  openAppLinksInFerdium: {
+    id: 'settings.app.form.openAppLinksInFerdium',
+    defaultMessage: 'Open app links (like slack://) in Ferdium',
+  },
   reloadAfterResume: {
     id: 'settings.app.form.reloadAfterResume',
     defaultMessage: 'Reload Ferdium after system resume',
@@ -435,6 +439,7 @@ class EditSettingsScreen extends Component<
         trayDependencySatisfied && Boolean(settingsData.runInBackground),
       enableSystemTray,
       reloadAfterResume: Boolean(settingsData.reloadAfterResume),
+      openAppLinksInFerdium: Boolean(settingsData.openAppLinksInFerdium),
       reloadAfterResumeTime: Number(settingsData.reloadAfterResumeTime),
       startMinimized:
         trayDependencySatisfied && Boolean(settingsData.startMinimized),
@@ -770,6 +775,15 @@ class EditSettingsScreen extends Component<
             DEFAULT_APP_SETTINGS.enableSystemTray,
           ),
           default: DEFAULT_APP_SETTINGS.enableSystemTray,
+          type: 'checkbox',
+        },
+        openAppLinksInFerdium: {
+          label: intl.formatMessage(messages.openAppLinksInFerdium),
+          value: ifUndefined<boolean>(
+            settings.all.app.openAppLinksInFerdium,
+            DEFAULT_APP_SETTINGS.openAppLinksInFerdium,
+          ),
+          default: DEFAULT_APP_SETTINGS.openAppLinksInFerdium,
           type: 'checkbox',
         },
         reloadAfterResume: {

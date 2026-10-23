@@ -110,6 +110,7 @@ export interface AppStore extends TypedStore {
   isSystemMuteOverridden: () => void;
   locale: string;
   lockedPassword: string;
+  openAppLinksInFerdium: boolean;
   reloadAfterResume: boolean;
   reloadAfterResumeTime: number;
   searchEngine: string;

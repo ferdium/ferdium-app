@@ -2,6 +2,7 @@ import { join } from 'node:path';
 import { pathExistsSync } from 'fs-extra';
 import semver from 'semver';
 import { DEFAULT_SERVICE_SETTINGS } from '../config';
+import type { LinkContext } from '../helpers/open-url-helpers';
 import { ifUndefined } from '../jsUtils';
 
 interface RecipeData {
@@ -25,6 +26,7 @@ interface RecipeData {
     local?: boolean;
     message?: string;
     allowFavoritesDelineationInUnreadCount?: boolean;
+    protocols?: string[];
   };
   defaultIcon: string;
 }
@@ -49,6 +51,7 @@ export interface IRecipe {
   disablewebsecurity: boolean;
   path: string;
   partition: string;
+  protocols: string[];
   local: boolean;
   defaultIcon: string;
 
@@ -59,6 +62,8 @@ export interface IRecipe {
   readonly modifyRequestHeaders?: () => void;
 
   readonly knownCertificateHosts?: () => void;
+
+  readonly resolveLink: (link: string, context: LinkContext) => string | null;
 
   readonly events?: null | ((key: string) => string);
 
@@ -118,6 +123,9 @@ export default class Recipe implements IRecipe {
 
   // TODO: [TS DEBT] introduced to address missing function but need to check how validateUrl is inherited / implemented in recipe
   validateUrl?: (url: string) => boolean;
+
+  // App link protocols (e.g. slack) this recipe can open, see resolveLink
+  protocols: string[] = [];
 
   // TODO: Need to reconcile which of these are optional/mandatory
   constructor(data: RecipeData) {
@@ -183,6 +191,10 @@ export default class Recipe implements IRecipe {
       this.disablewebsecurity,
     );
     this.local = ifUndefined<boolean>(data.config.local, this.local);
+    this.protocols = ifUndefined<string[]>(
+      data.config.protocols,
+      this.protocols,
+    );
     this.message = ifUndefined<string>(data.config.message, this.message);
     this.allowFavoritesDelineationInUnreadCount = ifUndefined<boolean>(
       data.config.allowFavoritesDelineationInUnreadCount,
@@ -192,6 +204,15 @@ export default class Recipe implements IRecipe {
     // computed
     this.path = data.path;
     this.partition = ifUndefined<string>(data.config.partition, this.partition);
+  }
+
+  /**
+   * Returns the url this service should load for a link Ferdium was asked to open,
+   * or null when the link doesn't belong to this service. A recipe overrides this
+   * in its index.js to claim its app links (e.g. slack://) or rewrite urls.
+   */
+  resolveLink(): string | null {
+    return null;
   }
 
   // TODO: Need to remove this if its not used anywhere
