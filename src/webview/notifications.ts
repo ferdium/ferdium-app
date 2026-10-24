@@ -32,23 +32,33 @@ export class NotificationsHandler {
 
 export const notificationsClassDefinition = `(() => {
 // Changed the class name for clarity purpose
-class WrapNotification {
-  
+class WrapNotification extends EventTarget {
   static permission = 'granted';
 
   constructor(title = '', options = {}) {
+    super();
+    this.title = String(title);
+    this.body = typeof options.body === 'string' ? options.body : '';
+    this.data = options.data;
+    this.tag = typeof options.tag === 'string' ? options.tag : '';
+    this.icon = typeof options.icon === 'string' ? options.icon : '';
+    this.dir = typeof options.dir === 'string' ? options.dir : 'auto';
+    this.lang = typeof options.lang === 'string' ? options.lang : '';
+    this.silent = Boolean(options.silent);
     this._onclick = null;
+    this._notification = this;
+
     this._displayNotification(title, options);
   }
 
   _displayNotification(title, options) {
     window.ferdium
       .displayNotification(title, options)
-      .then((value) => {  
-        // When clicked, the assigned onclick will execute
-        if (this._onclick)
-        {
-          this._onclick();
+      .then(() => {
+        const event = new Event('click');
+        this.dispatchEvent(event);
+        if (typeof this._onclick === 'function') {
+          this._onclick.call(this, event);
         }
       });
   }
@@ -67,30 +77,59 @@ class WrapNotification {
   close() {
     if (this._notification) {
       this._notification = null;
-      // Clean-up
-      this._onclick = null
+      this._onclick = null;
     }
   }
 
-  // Monkey-patching the onclick setter method
+  get onclick() {
+    return this._onclick;
+  }
+
   set onclick(callback) {
     this._onclick = callback;
   }
 }
 
-  // Copy prototype of the original Notification object before monkey-patch
   const OriginalNotification = window.Notification;
   Object.setPrototypeOf(WrapNotification.prototype, OriginalNotification.prototype);
   window.Notification = WrapNotification;
 
-  // some sites use service workers for notifications, but electron doesn't support this
-  // this is a monkey patch to redirect them to window.Notification instead
   window.ServiceWorkerRegistration.prototype.showNotification = function (
     title = '',
     options = {},
   ) {
-    // passing all of options causes notifications to only appear sometimes
-    // but the only option that actually matters is body
-    new WrapNotification(title, { body: options.body });
+    const notif = new WrapNotification(title, options);
+
+    notif.addEventListener('click', () => {
+      const bannerKey = options?.data?.notificationBannerKey;
+      if (bannerKey && window.navigator.serviceWorker?.controller) {
+        try {
+          const channel = new MessageChannel();
+          const event = new Event('message');
+          Object.assign(event, {
+            data: { action: 'NOTIFICATION_BANNER_CLICKED', bannerKey },
+            ports: [channel.port2],
+            source: window.navigator.serviceWorker.controller,
+          });
+          window.navigator.serviceWorker.dispatchEvent(event);
+        } catch {}
+      }
+
+      if (window.navigator.serviceWorker?.controller) {
+        try {
+          window.navigator.serviceWorker.controller.postMessage({
+            type: 'NOTIFICATION_CLICK',
+            notification: {
+              title,
+              body: options?.body,
+              data: options?.data,
+              tag: options?.tag,
+            },
+          });
+        } catch {}
+      }
+    });
+
+    return Promise.resolve();
   };
 })();`;
