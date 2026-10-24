@@ -4,20 +4,29 @@ import { windowOpenShim } from '../../src/webview/windowOpenShim';
 
 const NATIVE_RESULT = { native: true };
 
-function installShim() {
+function installShim({ trapLinkClicks = false } = {}) {
   const external = jest.fn();
   const nativeOpen = jest.fn<unknown, unknown[]>(() => NATIVE_RESULT);
+  const shouldTrapLinkClicks = jest.fn(() => trapLinkClicks);
   const window: {
-    ferdium: { open: jest.Mock };
+    ferdium: { open: jest.Mock; shouldTrapLinkClicks: jest.Mock };
     open: (...args: unknown[]) => unknown;
-  } = { ferdium: { open: external }, open: nativeOpen };
+  } = {
+    ferdium: { open: external, shouldTrapLinkClicks },
+    open: nativeOpen,
+  };
   runInNewContext(`"use strict"; (() => { ${windowOpenShim} })();`, {
     window,
     setInterval,
     clearInterval,
     setTimeout,
   });
-  return { external, nativeOpen, windowOpen: window.open };
+  return {
+    external,
+    nativeOpen,
+    shouldTrapLinkClicks,
+    windowOpen: window.open,
+  };
 }
 
 const flushTimers = () =>
@@ -99,6 +108,32 @@ describe('windowOpenShim', () => {
       windowOpen('https://example.com/', '', '');
       expect(external).toHaveBeenCalledWith('https://example.com/');
       expect(nativeOpen).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('when the service has "Open URLs within Ferdium" enabled', () => {
+    it('opens a bare window.open(url) as a real popup instead of externally', () => {
+      const { external, nativeOpen, windowOpen } = installShim({
+        trapLinkClicks: true,
+      });
+      const result = windowOpen('https://accounts.google.com/o/oauth2/auth');
+      expect(nativeOpen).toHaveBeenCalledWith(
+        'https://accounts.google.com/o/oauth2/auth',
+        undefined,
+        'popup=yes',
+      );
+      expect(result).toBe(NATIVE_RESULT);
+      expect(external).not.toHaveBeenCalled();
+    });
+
+    it('still opens externally when there is no url', async () => {
+      const { external, nativeOpen, windowOpen } = installShim({
+        trapLinkClicks: true,
+      });
+      windowOpen(null);
+      await flushTimers();
+      expect(nativeOpen).not.toHaveBeenCalled();
+      expect(external).not.toHaveBeenCalled();
     });
   });
 

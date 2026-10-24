@@ -63,6 +63,11 @@ const sessionHandler = new SessionHandler();
 
 const notificationsHandler = new NotificationsHandler();
 
+// Assigned once RecipeController is constructed, below. windowOpenShim.ts
+// reads service.trapLinkClicks through it via shouldTrapLinkClicks.
+// biome-ignore lint/style/useConst: assigned after RecipeController is defined, further down this file
+let recipeController: RecipeController; // eslint-disable-line no-use-before-define
+
 // We can't override APIs here, so we first expose functions via 'window.ferdium',
 // then overwrite the corresponding field of the window object by injected JS.
 contextBridge.exposeInMainWorld('ferdium', {
@@ -76,6 +81,8 @@ contextBridge.exposeInMainWorld('ferdium', {
       ipcRenderer.sendToHost('new-window', url);
     }
   },
+  shouldTrapLinkClicks: () =>
+    Boolean(recipeController?.settings.service.trapLinkClicks),
   setBadge: (
     direct: string | number | null | undefined,
     indirect: string | number | null | undefined,
@@ -462,5 +469,4 @@ class RecipeController {
   }
 }
 
-/* eslint-disable no-new */
-new RecipeController();
+recipeController = new RecipeController();
