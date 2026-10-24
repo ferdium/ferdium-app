@@ -41,7 +41,10 @@ import {
   loadRecipeConfig,
 } from '../../helpers/recipe-helpers';
 
-import { removeServicePartitionDirectory } from '../../helpers/service-helpers';
+import {
+  getPartitionForService,
+  removeServiceAndSandboxPartitions,
+} from '../../helpers/service-helpers';
 
 const debug = require('../../preload-safe-debug')('Ferdium:ServerApi');
 
@@ -328,12 +331,15 @@ export default class ServerApi {
     // a corrupt IndexedDB database (for example WhatsApp's login database)
     // while filesystem cleanup is deferred until the next app start.
     try {
-      await ipcRenderer.invoke('clear-storage-data', { serviceId: id });
+      await ipcRenderer.invoke('clear-storage-data', {
+        serviceId: id,
+        partition: getPartitionForService(id),
+      });
     } catch (error) {
       debug('Unable to clear service storage before partition removal', error);
     }
 
-    removeServicePartitionDirectory(id, true);
+    removeServiceAndSandboxPartitions(id);
 
     debug('ServerApi::deleteService resolves', data);
     return data;

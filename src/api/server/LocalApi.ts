@@ -46,20 +46,7 @@ export default class LocalApi {
     });
   }
 
-  async clearCache(serviceId: string | null = null) {
-    const targetsToClear = {
-      storages: [
-        'filesystem',
-        'indexdb',
-        'shadercache',
-        'serviceworkers',
-        'cachestorage',
-      ],
-    };
-    await ipcRenderer.invoke('clear-storage-data', {
-      serviceId,
-      targetsToClear,
-    });
-    return ipcRenderer.invoke('clear-cache', { serviceId });
+  async clearCache(serviceId: string | null = null, partition?: string) {
+    return ipcRenderer.invoke('clear-cache', { serviceId, partition });
   }
 }

@@ -101,6 +101,7 @@ export interface AppStore extends TypedStore {
   get(key: string): any;
   getAppCacheSizeRequest: () => void;
   healthCheckRequest: () => void;
+  sandboxServices: { id: string; name: string; services: string[] }[];
   isClearingAllCache: () => void;
   isAppMuted: boolean;
   isFocused: () => void;
