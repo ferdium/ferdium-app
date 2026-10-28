@@ -446,8 +446,9 @@ const createWindow = () => {
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
-  // Open the DevTools.
-  if (isDevMode || process.argv.includes('--devtools')) {
+  // Keep development windows uncluttered by default. DevTools remain
+  // available from View -> Toggle Developer Tools or Cmd/Ctrl+Alt+I.
+  if (process.argv.includes('--devtools')) {
     mainWindow.webContents.openDevTools();
   }
 
@@ -585,6 +586,11 @@ const createWindow = () => {
   ) {
     mainWindow.hide();
   } else {
+    if (isDevMode) {
+      // Fill the usable desktop without entering macOS full-screen mode.
+      mainWindow.setFullScreen(false);
+      mainWindow.maximize();
+    }
     mainWindow.show();
   }
 
