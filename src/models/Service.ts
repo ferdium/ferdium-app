@@ -5,7 +5,11 @@ import { action, autorun, computed, makeObservable, observable } from 'mobx';
 import type ElectronWebView from 'react-electron-web-view';
 
 import { needsToken } from '../api/apiBase';
-import { DEFAULT_SERVICE_ORDER, DEFAULT_SERVICE_SETTINGS } from '../config';
+import {
+  DEFAULT_SERVICE_ORDER,
+  DEFAULT_SERVICE_SETTINGS,
+  type WebRTCIPHandlingPolicy,
+} from '../config';
 import { isMac } from '../environment';
 import { todosStore } from '../features/todos';
 import { getFaviconUrl } from '../helpers/favicon-helpers';
@@ -105,6 +109,9 @@ export default class Service {
 
   @observable isProgressbarEnabled: boolean =
     DEFAULT_SERVICE_SETTINGS.isProgressbarEnabled;
+
+  @observable webRTCIPHandlingPolicy: WebRTCIPHandlingPolicy | '' =
+    DEFAULT_SERVICE_SETTINGS.webRTCIPHandlingPolicy;
 
   @observable darkReaderSettings: DarkReaderInterface = {
     brightness: 100,
@@ -243,6 +250,10 @@ export default class Service {
     this.isProgressbarEnabled = ifUndefined<boolean>(
       data.isProgressbarEnabled,
       this.isProgressbarEnabled,
+    );
+    this.webRTCIPHandlingPolicy = ifUndefined<WebRTCIPHandlingPolicy | ''>(
+      data.webRTCIPHandlingPolicy,
+      this.webRTCIPHandlingPolicy,
     );
     this.hasCustomUploadedIcon = ifUndefined<boolean>(
       data.iconId?.length > 0,
@@ -520,6 +531,26 @@ export default class Service {
     return this.recipe.partition || `persist:service-${this.id}`;
   }
 
+  private effectiveWebRTCIPHandlingPolicy(): WebRTCIPHandlingPolicy {
+    const globalPolicy = window['ferdium'].stores.settings.all.app
+      .webRTCIPHandlingPolicy as WebRTCIPHandlingPolicy;
+    return this.webRTCIPHandlingPolicy || globalPolicy;
+  }
+
+  applyWebRTCIPHandlingPolicy(target?: WebContents): void {
+    if (!target && !this.webview) return;
+
+    try {
+      const targetContents =
+        target ?? webContents.fromId(this.webview!.getWebContentsId());
+      targetContents?.setWebRTCIPHandlingPolicy(
+        this.effectiveWebRTCIPHandlingPolicy(),
+      );
+    } catch (error) {
+      debug('Unable to apply WebRTC IP handling policy', this.name, error);
+    }
+  }
+
   initializeWebViewEvents({ handleIPCMessage, openWindow, stores }): void {
     const { webview } = this;
     if (!webview) {
@@ -697,10 +728,16 @@ export default class Service {
     });
 
     if (webviewWebContents) {
+      this.applyWebRTCIPHandlingPolicy();
+
       if (initializedWebContents.has(webviewWebContents)) {
         return;
       }
       initializedWebContents.add(webviewWebContents);
+
+      webviewWebContents.on('did-create-window', child => {
+        this.applyWebRTCIPHandlingPolicy(child.webContents);
+      });
 
       // TODO: Modify this logic once https://github.com/electron/electron/issues/40674 is fixed
       // This is a workaround for the issue where the zoom in shortcut is not working

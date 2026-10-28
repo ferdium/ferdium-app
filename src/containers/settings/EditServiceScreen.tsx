@@ -12,7 +12,11 @@ import EditServiceForm from '../../components/settings/services/EditServiceForm'
 import ServiceError from '../../components/settings/services/ServiceError';
 import ErrorBoundary from '../../components/util/ErrorBoundary';
 import withParams from '../../components/util/WithParams';
-import { DEFAULT_APP_SETTINGS, DEFAULT_SERVICE_SETTINGS } from '../../config';
+import {
+  DEFAULT_APP_SETTINGS,
+  DEFAULT_SERVICE_SETTINGS,
+  getI18nConfigObjects,
+} from '../../config';
 import { config as proxyFeature } from '../../features/serviceProxy';
 import { getSelectOptions } from '../../helpers/i18n-helpers';
 import { url, oneRequired, required } from '../../helpers/validation-helpers';
@@ -99,6 +103,14 @@ const messages = defineMessages({
   useFavicon: {
     id: 'settings.service.form.useFavicon',
     defaultMessage: 'Use service favicon instead of default or custom icon',
+  },
+  webRTCIPHandlingPolicy: {
+    id: 'settings.service.form.webRTCIPHandlingPolicy',
+    defaultMessage: 'WebRTC IP Handling Policy',
+  },
+  useGlobalWebRTCIPHandlingPolicy: {
+    id: 'settings.service.form.webRTCIPHandlingPolicy.useGlobal',
+    defaultMessage: 'Use global setting',
   },
   onlyShowFavoritesInUnreadCount: {
     id: 'settings.service.form.onlyShowFavoritesInUnreadCount',
@@ -190,6 +202,14 @@ class EditServiceScreen extends Component<IProps> {
         stores.settings.app.spellcheckerLanguage === 'automatic'
           ? ''
           : intl.formatMessage(globalMessages.spellcheckerAutomaticDetection),
+    });
+
+    const webRTCIPHandlingPolicies = getSelectOptions({
+      locales: getI18nConfigObjects(intl).WEBRTC_IP_HANDLING_POLICY,
+      resetToDefaultText: intl.formatMessage(
+        messages.useGlobalWebRTCIPHandlingPolicy,
+      ),
+      sort: false,
     });
 
     const config: FormFields = {
@@ -338,6 +358,15 @@ class EditServiceScreen extends Component<IProps> {
             DEFAULT_APP_SETTINGS.userAgentPref,
           ),
           default: DEFAULT_APP_SETTINGS.userAgentPref,
+        },
+        webRTCIPHandlingPolicy: {
+          label: intl.formatMessage(messages.webRTCIPHandlingPolicy),
+          value: ifUndefined<string>(
+            service?.webRTCIPHandlingPolicy,
+            DEFAULT_SERVICE_SETTINGS.webRTCIPHandlingPolicy,
+          ),
+          default: DEFAULT_SERVICE_SETTINGS.webRTCIPHandlingPolicy,
+          options: webRTCIPHandlingPolicies,
         },
       },
     };
