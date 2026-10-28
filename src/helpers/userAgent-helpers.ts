@@ -2,12 +2,15 @@ import { cpus } from 'node:os';
 import macosVersion from 'macos-version';
 import {
   chromeVersion,
+  electronVersion,
   is64Bit,
   isMac,
   isWindows,
   osArch,
   osRelease,
 } from '../environment';
+// @ts-expect-error Cannot find module '../package.json' or its corresponding type declarations.
+import { version as ferdiumVersion } from '../package.json';
 
 const macOS = () => {
   const version = macosVersion() ?? '';
@@ -42,5 +45,5 @@ export default function userAgent() {
     platformString = linux();
   }
 
-  return `Mozilla/5.0 (${platformString}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chromeVersion} Safari/537.36`;
+  return `Mozilla/5.0 (${platformString}) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chromeVersion} Safari/537.36 Ferdium/${ferdiumVersion} (Electron ${electronVersion})`;
 }
