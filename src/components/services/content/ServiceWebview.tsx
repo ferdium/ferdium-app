@@ -107,7 +107,9 @@ class ServiceWebview extends Component<IProps> {
       return;
     }
 
-    if (this.props.service.isActive) {
+    if (this.props.stores?.settings.app.locked) {
+      debug('Refocus not required - App is locked');
+    } else if (this.props.service.isActive) {
       webview.view.blur();
       webview.view.focus();
     } else {

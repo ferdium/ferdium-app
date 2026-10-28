@@ -134,6 +134,25 @@ body.win32:not(.isFullScreen) .app .app__content {
   z-index: 99999999;
 }
 
+// Full-window overlay shown while the app is locked. Services stay mounted
+// underneath so they keep running (notifications, unread counts) and do not
+// reload on unlock. Sits above the settings modal; on Windows it starts below
+// the custom title bar so the window can still be moved, minimized or closed.
+.app__locked {
+  background: $dark-theme-gray-darkest;
+  inset: 0;
+  position: fixed;
+  z-index: 10000;
+
+  .auth {
+    height: 100%;
+  }
+}
+
+body.win32:not(.isFullScreen) .app__locked {
+  top: 28px;
+}
+
 .window-draggable {
   height: 28px;
   left: 0;

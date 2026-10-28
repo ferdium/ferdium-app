@@ -773,6 +773,11 @@ export default class ServicesStore extends TypedStore {
   }
 
   @action _focusActiveService(focusEvent = null) {
+    if (this.stores.settings.all.app.locked) {
+      debug('App is locked - not focusing active service');
+      return;
+    }
+
     if (this.stores.user.isLoggedIn) {
       // TODO: add checks to not focus service when router path is /settings or /auth
       const service = this.active;
