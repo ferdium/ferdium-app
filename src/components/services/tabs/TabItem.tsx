@@ -383,6 +383,7 @@ class TabItem extends Component<IProps, IState> {
       service.isMediaBadgeEnabled &&
       service.isMediaPlaying &&
       service.isEnabled;
+    const showServiceName = showServiceNameSetting || service.showNameInSidebar;
     const mediaBadge = (
       <Icon icon={mdiVolumeSource} className="tab-item__icon" />
     );
@@ -396,7 +397,7 @@ class TabItem extends Component<IProps, IState> {
           'is-active': service.isActive,
           'has-custom-icon': service.hasCustomIcon,
           'is-disabled': !service.isEnabled,
-          'is-label-enabled': showServiceNameSetting,
+          'is-label-enabled': showServiceName,
         })}
         onClick={clickHandler}
         onKeyDown={noop}
@@ -412,7 +413,7 @@ class TabItem extends Component<IProps, IState> {
         })}`}
       >
         <img src={service.icon} className="tab-item__icon" alt="" />
-        {showServiceNameSetting && (
+        {showServiceName && (
           <span className="tab-item__label">{service.name}</span>
         )}
         {showNotificationBadge && (

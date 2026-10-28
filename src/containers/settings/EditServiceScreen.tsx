@@ -100,6 +100,10 @@ const messages = defineMessages({
     id: 'settings.service.form.useFavicon',
     defaultMessage: 'Use service favicon instead of default or custom icon',
   },
+  showNameInSidebar: {
+    id: 'settings.service.form.showNameInSidebar',
+    defaultMessage: 'Display this service name under its icon',
+  },
   onlyShowFavoritesInUnreadCount: {
     id: 'settings.service.form.onlyShowFavoritesInUnreadCount',
     defaultMessage: 'Only show Favorites in unread count',
@@ -269,6 +273,15 @@ class EditServiceScreen extends Component<IProps> {
             DEFAULT_SERVICE_SETTINGS.useFavicon,
           ),
           default: DEFAULT_SERVICE_SETTINGS.useFavicon,
+          type: 'checkbox',
+        },
+        showNameInSidebar: {
+          label: intl.formatMessage(messages.showNameInSidebar),
+          value: ifUndefined<boolean>(
+            service?.showNameInSidebar,
+            DEFAULT_SERVICE_SETTINGS.showNameInSidebar,
+          ),
+          default: DEFAULT_SERVICE_SETTINGS.showNameInSidebar,
           type: 'checkbox',
         },
         isMuted: {

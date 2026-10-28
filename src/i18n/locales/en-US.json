@@ -485,6 +485,7 @@
   "settings.service.form.recipeFileInfo": "Your user files will be inserted into the webpage so you can customize services in any way you like. User files are only stored locally and are not transferred to other computers using the same account.",
   "settings.service.form.recipeVersion": "Recipe version:",
   "settings.service.form.saveButton": "Save service",
+  "settings.service.form.showNameInSidebar": "Display this service name under its icon",
   "settings.service.form.tabHosted": "Hosted",
   "settings.service.form.tabOnPremise": "Self hosted ⭐️",
   "settings.service.form.team": "Team",
