@@ -18,6 +18,9 @@ export default <ActionDefinitions>{
     url: PropTypes.string.isRequired,
   },
   checkForUpdates: {},
+  setLastUpdateCheckTime: {
+    time: PropTypes.string.isRequired,
+  },
   resetUpdateStatus: {},
   installUpdate: {},
   healthCheck: {},

@@ -1524,6 +1524,7 @@ class EditSettingsScreen extends Component<
           openProcessManager={() => this.openProcessManager()}
           isOnline={app.isOnline}
           serverURL={importExportURL()}
+          lastUpdateCheckTime={app.lastUpdateCheckTime}
         />
       </ErrorBoundary>
     );
