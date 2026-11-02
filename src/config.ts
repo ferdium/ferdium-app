@@ -615,8 +615,8 @@ export const DEFAULT_APP_SETTINGS = {
   scheduledDNDStart: '17:00',
   scheduledDNDEnd: '09:00',
   hibernateOnStartup: true,
-  hibernationStrategy: '300', // seconds
-  wakeUpStrategy: '300', // seconds
+  hibernationStrategy: '120', // seconds
+  wakeUpStrategy: '0', // seconds -- 0 means disabled (wake only on user interaction)
   wakeUpHibernationStrategy: '0', // seconds -- 0 means do the same as hibernationStrategy
   wakeUpHibernationSplay: true,
   inactivityLock: 0,
@@ -662,8 +662,8 @@ export const DEFAULT_APP_SETTINGS = {
 
 export const DEFAULT_SERVICE_SETTINGS = {
   isEnabled: true,
-  isHibernationEnabled: false,
-  isWakeUpEnabled: true,
+  isHibernationEnabled: true,
+  isWakeUpEnabled: false,
   isNotificationEnabled: true,
   isBadgeEnabled: true,
   isMediaBadgeEnabled: false,
