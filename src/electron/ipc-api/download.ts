@@ -82,4 +82,14 @@ export default (params: {
 
     return result.filePaths[0];
   });
+
+  ipcMain.handle('external-browser-select', async () => {
+    const result = await dialog.showOpenDialog(params.mainWindow, {
+      properties: ['openFile'],
+    });
+
+    if (result.canceled) return null;
+
+    return result.filePaths[0];
+  });
 };
