@@ -19,10 +19,7 @@ import {
   TRANSLATOR_ENGINE_GOOGLE,
   TRANSLATOR_ENGINE_LIBRETRANSLATE,
 } from '../config';
-import {
-  writeImageDataUrlToClipboard,
-  writeTextToClipboard,
-} from '../helpers/clipboard-helpers';
+import { writeTextToClipboard } from '../helpers/clipboard-helpers';
 import { openExternalUrl } from '../helpers/url-helpers';
 import type IContextMenuParams from '../models/IContextMenuParams';
 
@@ -734,12 +731,11 @@ export class ContextMenuBuilder {
     const copyImage = new MenuItem({
       label: this.stringTable.copyImage(),
       click: () => {
-        const result = this.convertImageToBase64(
-          menuInfo.srcURL,
-          (dataURL: string) => {
-            writeImageDataUrlToClipboard(dataURL).catch(console.error);
-          },
-        );
+        // Copy what the page already rendered instead of re-requesting srcURL
+        // through a crossOrigin <img>: that request carries an Origin header,
+        // and authenticated endpoints such as Google Chat attachments answer
+        // it with an empty 204, so the image never loads.
+        this.getWebContents().copyImageAt(menuInfo.x, menuInfo.y);
 
         this._sendNotificationOnClipboardEvent(
           menuInfo.clipboardNotifications,
@@ -749,7 +745,6 @@ export class ContextMenuBuilder {
               `Image copied from URL: ${menuInfo.srcURL}`,
             ).replace('{url}', menuInfo.srcURL),
         );
-        return result;
       },
     });
 
