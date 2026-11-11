@@ -35,6 +35,13 @@ const ServicesStore = jest.requireActual<
   typeof import('../../src/stores/ServicesStore')
 >('../../src/stores/ServicesStore').default;
 
+function buildStoreWithActiveService(active: unknown) {
+  const store = Object.create(ServicesStore.prototype) as ServicesStoreClass;
+  Object.defineProperty(store, 'active', { value: active });
+  store._focusActiveService = jest.fn();
+  return store;
+}
+
 describe('ServicesStore', () => {
   it('clears UserAgent webview reference when detaching a service', () => {
     const store = Object.create(ServicesStore.prototype) as ServicesStoreClass;
@@ -52,5 +59,36 @@ describe('ServicesStore', () => {
     expect(userAgentModel.setWebviewReference).toHaveBeenCalledWith(null);
     expect(service.webview).toBeNull();
     expect(service.isAttached).toBe(false);
+  });
+
+  describe('_focusServiceReaction', () => {
+    beforeEach(() => {
+      jest.useFakeTimers();
+    });
+
+    afterEach(() => {
+      jest.useRealTimers();
+    });
+
+    it('waits for the new service to be rendered before focusing it', () => {
+      const store = buildStoreWithActiveService({ id: 'service' });
+
+      store._focusServiceReaction();
+
+      expect(store._focusActiveService).not.toHaveBeenCalled();
+
+      jest.runAllTimers();
+
+      expect(store._focusActiveService).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not focus anything when no service is active', () => {
+      const store = buildStoreWithActiveService(null);
+
+      store._focusServiceReaction();
+      jest.runAllTimers();
+
+      expect(store._focusActiveService).not.toHaveBeenCalled();
+    });
   });
 });

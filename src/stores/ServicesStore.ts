@@ -1272,7 +1272,8 @@ export default class ServicesStore extends TypedStore {
   _focusServiceReaction() {
     if (this.active) {
       // The action is untracked: title/settings changes must not refocus a page.
-      this._focusActiveService();
+      // Deferred so the new service's webview is visible when it takes focus.
+      setTimeout(() => this._focusActiveService(), 0);
     }
   }
 
