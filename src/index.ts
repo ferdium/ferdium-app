@@ -40,6 +40,7 @@ import { ifUndefined } from './jsUtils';
 
 import Settings from './electron/Settings';
 import handleDeepLink, { getDeepLinkFromArgs } from './electron/deepLinking';
+import { setUniqueSavePath } from './electron/downloadSavePath';
 import './electron/exception';
 // eslint-disable-next-line import/no-cycle
 import ipcApi from './electron/ipc-api';
@@ -403,7 +404,7 @@ const createWindow = () => {
         ) as string;
 
         if (downloadFolderPath !== '') {
-          item.setSavePath(join(downloadFolderPath, item.getFilename()));
+          setUniqueSavePath(item, downloadFolderPath);
         }
       });
     }
