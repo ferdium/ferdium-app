@@ -334,8 +334,10 @@ class UserController {
     );
 
     // store the old serviceId as the key for future lookup
+    // Exports from a Ferdium server use snake_case keys (service_id, recipe_id)
     // eslint-disable-next-line no-param-reassign
-    serviceIdTranslation[service.serviceId] = newServiceId;
+    serviceIdTranslation[service.serviceId || service.service_id] =
+      newServiceId;
 
     if (service.settings) {
       // eslint-disable-next-line no-param-reassign
@@ -345,7 +347,7 @@ class UserController {
     await Service.create({
       serviceId: newServiceId,
       name: service.name,
-      recipeId: service.recipeId,
+      recipeId: service.recipeId || service.recipe_id,
       settings: JSON.stringify(service.settings || {}),
     });
   }
