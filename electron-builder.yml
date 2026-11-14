@@ -53,6 +53,19 @@ appImage:
 
 deb:
   artifactName: "${productName}-${os}-${version}-${arch}.${ext}"
+  # electron-builder's default list plus libgbm1 and libasound2, which the Electron binary links against
+  depends:
+    - libgtk-3-0
+    - libnotify4
+    - libnss3
+    - libxss1
+    - libxtst6
+    - xdg-utils
+    - libatspi2.0-0
+    - libuuid1
+    - libsecret-1-0
+    - libgbm1
+    - libasound2
 
 rpm:
   artifactName: "${productName}-${os}-${version}-${arch}.${ext}"
